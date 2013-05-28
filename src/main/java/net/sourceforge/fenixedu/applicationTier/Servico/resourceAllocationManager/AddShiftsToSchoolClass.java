@@ -16,7 +16,7 @@ public class AddShiftsToSchoolClass {
     @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
     @Service
     public static void run(InfoClass infoClass, List<String> shiftOIDs) throws FenixServiceException {
-        final SchoolClass schoolClass = RootDomainObject.getInstance().readSchoolClassByOID(infoClass.getIdInternal());
+        final SchoolClass schoolClass = RootDomainObject.getInstance().readSchoolClassByOID(infoClass.getExternalId());
         if (schoolClass == null) {
             throw new InvalidArgumentsServiceException();
         }

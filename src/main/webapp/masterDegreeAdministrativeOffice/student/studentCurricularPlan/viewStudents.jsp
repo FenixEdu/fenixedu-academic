@@ -18,11 +18,11 @@
 	</tr>
 	<logic:iterate id="infoStudent" name="studentList" indexId="index">
 		<bean:define id="seeStudentCurricularPlansLink">
-			/seeStudentCurricularPlans.do?studentId=<bean:write name="infoStudent" property="idInternal"/>
+			/seeStudentCurricularPlans.do?studentId=<bean:write name="infoStudent" property="externalId"/>
 		</bean:define>
 <%--
 		<bean:define id="qqCoisaLink">
-			/qqCoisa.do?studentId=<bean:write name="infoStudent" property="idInternal"/>
+			/qqCoisa.do?studentId=<bean:write name="infoStudent" property="externalId"/>
 		</bean:define>
 --%>
 		<tr>

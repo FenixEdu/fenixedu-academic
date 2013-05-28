@@ -44,10 +44,11 @@ public class ShowProfessorshipsDA extends FenixDispatchAction {
         final ExecutionSemester selectedExecutionPeriod;
         if (executionPeriodIDString == null) {
             selectedExecutionPeriod = ExecutionSemester.readActualExecutionSemester();
-            dynaActionForm.set("executionPeriodID", selectedExecutionPeriod.getIdInternal().toString());
+            dynaActionForm.set("executionPeriodID", selectedExecutionPeriod.getExternalId().toString());
+            dynaActionForm.set("executionPeriodID", selectedExecutionPeriod.getExternalId().toString());
         } else if (executionPeriodIDString.length() > 0) {
             selectedExecutionPeriod = rootDomainObject.readExecutionSemesterByOID(Integer.valueOf(executionPeriodIDString));
-            dynaActionForm.set("executionPeriodID", selectedExecutionPeriod.getIdInternal().toString());
+            dynaActionForm.set("executionPeriodID", selectedExecutionPeriod.getExternalId().toString());
         } else {
             selectedExecutionPeriod = null;
             dynaActionForm.set("executionPeriodID", "");

@@ -53,7 +53,7 @@ public class ManageEnrolmentModelDA extends FenixDispatchAction {
         }
 
         return redirect("/student.do?method=visualizeRegistration&registrationID="
-                + enrolmentModelFactoryEditor.getRegistration().getIdInternal(), request);
+                + enrolmentModelFactoryEditor.getRegistration().getExternalId(), request);
     }
 
     public ActionForward postback(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {

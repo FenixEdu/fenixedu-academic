@@ -231,7 +231,7 @@ public class ProjectManagementBackingBean extends EvaluationManagementBackingBea
         if (this.groupingID == null && this.getProject() != null) {
             Grouping grouping = this.getProject().getGrouping();
 
-            this.groupingID = (grouping != null) ? grouping.getIdInternal() : null;
+            this.groupingID = (grouping != null) ? grouping.getExternalId() : null;
         }
         return groupingID;
     }
@@ -267,7 +267,7 @@ public class ProjectManagementBackingBean extends EvaluationManagementBackingBea
             this.executionCourseGroupings = new ArrayList<SelectItem>();
 
             for (Grouping grouping : getExecutionCourse().getGroupings()) {
-                this.executionCourseGroupings.add(new SelectItem(grouping.getIdInternal(), grouping.getName()));
+                this.executionCourseGroupings.add(new SelectItem(grouping.getExternalId(), grouping.getName()));
             }
         }
 

@@ -18,7 +18,7 @@ public class GivenCreditsEntry extends CreditsCurriculumEntry {
     }
 
     @Override
-    public Integer getIdInternal() {
+    public Integer getExternalId() {
         return givenCredits.intValue();
     }
 

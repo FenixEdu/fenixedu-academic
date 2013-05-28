@@ -25,7 +25,7 @@
 			<h:outputText value="<td style='width: 140px'>" escape="false"/>
 			<h:outputLink value="#{ManagerDegreeManagement.request.contextPath}/manager/bolonha/curricularPlans/viewDegree.faces">
 				<h:outputFormat value="#{bolonhaBundle['view']}"/>
-				<f:param name="degreeId" value="#{degree.idInternal}"/>
+				<f:param name="degreeId" value="#{degree.externalId}"/>
 			</h:outputLink>
 	
 			<h:outputText value="</td></tr>" escape="false"/>
@@ -48,7 +48,7 @@
 				<h:outputText value="<td>" escape="false"/>
 				<h:outputLink value="#{ManagerDegreeManagement.request.contextPath}/manager/bolonha/curricularPlans/viewCurricularPlan.faces">
 					<h:outputText value="#{bolonhaBundle['view']}" />
-					<f:param name="degreeCurricularPlanID" value="#{degreeCurricularPlan.idInternal}"/>
+					<f:param name="degreeCurricularPlanID" value="#{degreeCurricularPlan.externalId}"/>
 					<f:param name="organizeBy" value="groups"/>
 					<f:param name="showRules" value="false"/>
 					<f:param name="hideCourses" value="false"/>
@@ -57,7 +57,7 @@
 				<h:outputText value=" , " escape="false" rendered="#{degreeCurricularPlan.userCanBuild}"/>
 				<h:outputLink value="#{ManagerDegreeManagement.request.contextPath}/manager/bolonha/curricularPlans/editCurricularPlan.faces">
 					<h:outputText value="#{bolonhaBundle['edit']}" />
-					<f:param name="degreeCurricularPlanID" value="#{degreeCurricularPlan.idInternal}"/>
+					<f:param name="degreeCurricularPlanID" value="#{degreeCurricularPlan.externalId}"/>
 					<f:param name="organizeBy" value="groups"/>
 					<f:param name="showRules" value="false"/>
 					<f:param name="hideCourses" value="false"/>
@@ -66,7 +66,7 @@
 				<h:outputText value=" , " escape="false" rendered="#{degreeCurricularPlan.userCanBuild}"/>
 				<h:outputLink value="#{ManagerDegreeManagement.request.contextPath}/manager/bolonha/curricularPlans/buildCurricularPlan.faces" rendered="#{degreeCurricularPlan.userCanBuild}">
 					<h:outputText value="#{bolonhaBundle['manageCurricularPlan']}" />
-					<f:param name="degreeCurricularPlanID" value="#{degreeCurricularPlan.idInternal}"/>
+					<f:param name="degreeCurricularPlanID" value="#{degreeCurricularPlan.externalId}"/>
 					<f:param name="organizeBy" value="groups"/>
 					<f:param name="showRules" value="false"/>
 					<f:param name="hideCourses" value="false"/>					
@@ -97,7 +97,7 @@
 			<h:outputText value="<td style='width: 140px'>" escape="false"/>
 			<h:outputLink value="#{ManagerDegreeManagement.request.contextPath}/manager/bolonha/curricularPlans/viewDegree.faces">
 				<h:outputFormat value="#{bolonhaBundle['view']}"/>
-				<f:param name="degreeId" value="#{degree.idInternal}"/>
+				<f:param name="degreeId" value="#{degree.externalId}"/>
 			</h:outputLink>
 			<h:outputText value="</td></tr>" escape="false"/>
 
@@ -115,7 +115,7 @@
 				<h:outputText value="<td>" escape="false"/>
 				<h:outputLink value="#{ManagerDegreeManagement.request.contextPath}/manager/bolonha/curricularPlans/viewCurricularPlan.faces">
 					<h:outputText value="#{bolonhaBundle['view']}" />
-					<f:param name="degreeCurricularPlanID" value="#{degreeCurricularPlan.idInternal}"/>
+					<f:param name="degreeCurricularPlanID" value="#{degreeCurricularPlan.externalId}"/>
 					<f:param name="organizeBy" value="groups"/>
 					<f:param name="showRules" value="false"/>
 					<f:param name="hideCourses" value="false"/>
@@ -124,7 +124,7 @@
 				<h:outputText value=" , " escape="false" rendered="#{degreeCurricularPlan.userCanBuild}"/>
 				<h:outputLink value="#{ManagerDegreeManagement.request.contextPath}/manager/bolonha/curricularPlans/buildCurricularPlan.faces" rendered="#{degreeCurricularPlan.userCanBuild}">
 					<h:outputText value="#{bolonhaBundle['manageCurricularPlan']}" />
-					<f:param name="degreeCurricularPlanID" value="#{degreeCurricularPlan.idInternal}"/>
+					<f:param name="degreeCurricularPlanID" value="#{degreeCurricularPlan.externalId}"/>
 					<f:param name="organizeBy" value="groups"/>
 					<f:param name="showRules" value="false"/>
 					<f:param name="hideCourses" value="false"/>					

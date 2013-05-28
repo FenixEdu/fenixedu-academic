@@ -11,12 +11,12 @@
      ======================  -->
 <div>   
     <logic:iterate id="crumb" name="crumbs">
-        <html:link page="/module/view.do" paramId="module" paramName="crumb" paramProperty="idInternal">
+        <html:link page="/module/view.do" paramId="module" paramName="crumb" paramProperty="externalId">
             <fr:view name="crumb" property="name"/>
         </html:link> &gt;
     </logic:iterate>
     
-    <html:link page="/module/view.do" paramId="module" paramName="module" paramProperty="idInternal">
+    <html:link page="/module/view.do" paramId="module" paramName="module" paramProperty="externalId">
         <fr:view name="module" property="name"/>
     </html:link>
 </div>
@@ -37,7 +37,7 @@
          edit form
      ======================  -->
 
-<bean:define id="id" name="module" property="idInternal"/>
+<bean:define id="id" name="module" property="externalId"/>
 
 <fr:edit name="module" layout="tabular" schema="functionalities.module.edit" action="<%= "/module/view.do?module=" + id %>">
 	<fr:layout>

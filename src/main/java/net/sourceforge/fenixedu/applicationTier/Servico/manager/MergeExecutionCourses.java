@@ -150,11 +150,11 @@ public class MergeExecutionCourses {
             metadata.setExecutionCourse(executionCourseTo);
         }
         List<DistributedTest> distributedTests =
-                TestScope.readDistributedTestsByTestScope(executionCourseFrom.getClass(), executionCourseFrom.getIdInternal());
+                TestScope.readDistributedTestsByTestScope(executionCourseFrom.getClass(), executionCourseFrom.getExternalId());
         for (final DistributedTest distributedTest : distributedTests) {
             final TestScope testScope = distributedTest.getTestScope();
             testScope.setDomainObject(executionCourseTo);
-            testScope.setKeyClass(executionCourseTo.getIdInternal());
+            testScope.setKeyClass(executionCourseTo.getExternalId());
         }
     }
 

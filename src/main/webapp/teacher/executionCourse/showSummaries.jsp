@@ -8,7 +8,7 @@
 <logic:present name="showSummariesBean">
 	<h2><bean:message key="label.summaries.management"/></h2>
 
-	<bean:define id="executionCourseID" name="showSummariesBean" property="executionCourse.idInternal" />
+	<bean:define id="executionCourseID" name="showSummariesBean" property="executionCourse.externalId" />
 	
 	<logic:messagesPresent message="true">
 		<p>
@@ -24,7 +24,7 @@
 		<p><bean:message key="label.summaries.management.instructions.part1"/></p>
 		<p><bean:message key="label.summaries.management.instructions.part2"/>:</p>
 		<p>
-			<bean:define id="insertSummaryLink">/summariesManagement.do?method=prepareInsertSummary&amp;page=0&amp;executionCourseID=<bean:write name="showSummariesBean" property="executionCourse.idInternal"/></bean:define>				
+			<bean:define id="insertSummaryLink">/summariesManagement.do?method=prepareInsertSummary&amp;page=0&amp;executionCourseID=<bean:write name="showSummariesBean" property="executionCourse.externalId"/></bean:define>				
 			<span class="gen-button" style="margin-left: 2em;">
 				<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
 				<html:link page="<%= insertSummaryLink %>"><bean:message key="label.insertSummary"/></html:link> <bean:message key="link.summary.insert.info"/>				
@@ -32,7 +32,7 @@
 		</p>
 		<p><bean:message key="label.summaries.management.instructions.part3"/>:</p>
 		<p>
-			<bean:define id="showSummariesCalendarLink">/summariesManagement.do?method=showSummariesCalendar&amp;page=0&amp;executionCourseID=<bean:write name="showSummariesBean" property="executionCourse.idInternal"/></bean:define>			
+			<bean:define id="showSummariesCalendarLink">/summariesManagement.do?method=showSummariesCalendar&amp;page=0&amp;executionCourseID=<bean:write name="showSummariesBean" property="executionCourse.externalId"/></bean:define>			
 			<span class="gen-button" style="margin-left: 2em;">
 				<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
 				<html:link page="<%= showSummariesCalendarLink %>"><bean:message key="label.show.summaries.calendar"/></html:link>				
@@ -172,8 +172,8 @@
 			</p>
 			
 			<div class="gen-button">
-				<bean:define id="editSummaryLink">/summariesManagement.do?method=prepareEditSummary&amp;page=0&amp;executionCourseID=<bean:write name="showSummariesBean" property="executionCourse.idInternal"/>&amp;summaryID=<bean:write name="summary" property="idInternal"/></bean:define>
-				<bean:define id="deleteSummaryLink">/summariesManagement.do?method=deleteSummary&amp;page=0&amp;executionCourseID=<bean:write name="showSummariesBean" property="executionCourse.idInternal"/>&amp;summaryID=<bean:write name="summary" property="idInternal"/></bean:define>	
+				<bean:define id="editSummaryLink">/summariesManagement.do?method=prepareEditSummary&amp;page=0&amp;executionCourseID=<bean:write name="showSummariesBean" property="executionCourse.externalId"/>&amp;summaryID=<bean:write name="summary" property="externalId"/></bean:define>
+				<bean:define id="deleteSummaryLink">/summariesManagement.do?method=deleteSummary&amp;page=0&amp;executionCourseID=<bean:write name="showSummariesBean" property="executionCourse.externalId"/>&amp;summaryID=<bean:write name="summary" property="externalId"/></bean:define>	
 				<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
 				<html:link page="<%= editSummaryLink %>">
 					<bean:message key="button.edit" /> 

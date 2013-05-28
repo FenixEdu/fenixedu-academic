@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.util.State;
 public class ReadDegreeCandidates {
 
     public static List run(InfoExecutionDegree infoExecutionDegree) {
-        final ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
+        final ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(infoExecutionDegree.getExternalId());
         return createInfoMasterDegreeCandidates(executionDegree.getMasterDegreeCandidatesSet());
     }
 

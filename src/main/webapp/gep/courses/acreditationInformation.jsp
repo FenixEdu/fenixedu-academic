@@ -12,9 +12,9 @@
 			<%-- page is to show information of a given execution degree --%>
 
 			<logic:iterate id="curricularCourse" name="infoSiteCourseInformation" property="infoCurricularCourses">
-				<bean:define id="degreeCurricularPlanId" name="infoExecutionDegree" property="infoDegreeCurricularPlan.idInternal"/>
+				<bean:define id="degreeCurricularPlanId" name="infoExecutionDegree" property="infoDegreeCurricularPlan.externalId"/>
 				<logic:equal name="curricularCourse" 
-	  						 property="infoDegreeCurricularPlan.idInternal" 
+	  						 property="infoDegreeCurricularPlan.externalId" 
 	  						 value="<%= degreeCurricularPlanId.toString() %>">
 					<h2><bean:message key="label.acred.courseInfo" bundle="GEP_RESOURCES"/></h2>
 					<h3>
@@ -76,7 +76,7 @@
 							<td colspan="3">
 								<% request.setAttribute("locale", net.sourceforge.fenixedu.util.LocaleFactory.pt_PT); %>
 								<% session.setAttribute("locale", net.sourceforge.fenixedu.util.LocaleFactory.pt_PT); %>
-								<bean:define id="objectCode" name="infoSiteCourseInformation" property="infoExecutionCourse.idInternal"/>
+								<bean:define id="objectCode" name="infoSiteCourseInformation" property="infoExecutionCourse.externalId"/>
 								<bean:define id="courseURL" type="java.lang.String">
 									<bean:message key="fenix.url" bundle="GLOBAL_RESOURCES"/><bean:write name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.sigla"/>/<bean:message key="courseSite.url.subpattern" bundle="GLOBAL_RESOURCES" locale="locale"/>/<bean:write name="curricularCourse" property="acronym"/>/<string:replace replace="/" with="-"><bean:write name="infoExecutionDegree" property="infoExecutionYear.year"/></string:replace>/<string:replace replace=" " with="-"><bean:write name="infoSiteCourseInformation" property="infoExecutionCourse.infoExecutionPeriod.name"/></string:replace>
 								</bean:define>
@@ -124,7 +124,7 @@
 						<logic:iterate id="infoTeacherId" name="infoSiteCourseInformation" property="infoLecturingTeachers" type="net.sourceforge.fenixedu.dataTransferObject.InfoTeacher">
 							<bean:define id="present">false</bean:define>
 							<logic:iterate id="infoResponsible" name="infoSiteCourseInformation" property="infoResponsibleTeachers" type="net.sourceforge.fenixedu.dataTransferObject.InfoTeacher">
-								<logic:equal name="infoResponsible" property="idInternal" value="<%=infoTeacherId.getIdInternal().toString()%>">
+								<logic:equal name="infoResponsible" property="externalId" value="<%=infoTeacherId.getExternalId().toString()%>">
 									<bean:define id="present">true</bean:define>
 								</logic:equal>
 							</logic:iterate>
@@ -177,9 +177,9 @@
 						    2.&nbsp;<bean:message key="label.ects.objectives"
 										  bundle="GEP_RESOURCES"/></strong></td>
 						</tr>
-						<bean:define id="curricularCourseId" name="curricularCourse" property="idInternal" />
+						<bean:define id="curricularCourseId" name="curricularCourse" property="externalId" />
 						<logic:iterate id="infoCurriculum" name="infoSiteCourseInformation" property="infoCurriculums">
-							<logic:equal name="infoCurriculum" property="infoCurricularCourse.idInternal" value="<%= curricularCourseId.toString() %>">
+							<logic:equal name="infoCurriculum" property="infoCurricularCourse.externalId" value="<%= curricularCourseId.toString() %>">
 								<tr>
 									<td colspan="7">
 										 <p><bean:write name="infoCurriculum" property="generalObjectives" filter="false"/></p>
@@ -196,7 +196,7 @@
 						  </td>
 						</tr>
 						<logic:iterate id="infoCurriculum" name="infoSiteCourseInformation" property="infoCurriculums">
-							<logic:equal name="infoCurriculum" property="infoCurricularCourse.idInternal" value="<%= curricularCourseId.toString() %>">
+							<logic:equal name="infoCurriculum" property="infoCurricularCourse.externalId" value="<%= curricularCourseId.toString() %>">
 								<tr>
 									<td colspan="7">
 										 <p><bean:write name="infoCurriculum" property="program" filter="false"/></p>
@@ -352,7 +352,7 @@
 						<td colspan="3">
 							<% request.setAttribute("locale", net.sourceforge.fenixedu.util.LocaleFactory.pt_PT); %>
 							<% session.setAttribute("locale", net.sourceforge.fenixedu.util.LocaleFactory.pt_PT); %>
-							<bean:define id="objectCode" name="infoSiteCourseInformation" property="infoExecutionCourse.idInternal"/>
+							<bean:define id="objectCode" name="infoSiteCourseInformation" property="infoExecutionCourse.externalId"/>
 							<bean:define id="courseURL" type="java.lang.String">
 								<bean:message key="fenix.url" bundle="GLOBAL_RESOURCES"/><bean:write name="curricularCourse" property="infoDegreeCurricularPlan.infoDegree.sigla"/>/<bean:message key="courseSite.url.subpattern" bundle="GLOBAL_RESOURCES" locale="locale"/>/<bean:write name="curricularCourse" property="acronym"/>/<string:replace replace="/" with="-"><bean:write name="infoSiteCourseInformation" property="infoExecutionCourse.infoExecutionPeriod.infoExecutionYear.year"/></string:replace>/<string:replace replace=" " with="-"><bean:write name="infoSiteCourseInformation" property="infoExecutionCourse.infoExecutionPeriod.name"/></string:replace>
 							</bean:define>
@@ -400,7 +400,7 @@
 					<logic:iterate id="infoTeacherId" name="infoSiteCourseInformation" property="infoLecturingTeachers" type="net.sourceforge.fenixedu.dataTransferObject.InfoTeacher">
 						<bean:define id="present">false</bean:define>
 						<logic:iterate id="infoResponsible" name="infoSiteCourseInformation" property="infoResponsibleTeachers" type="net.sourceforge.fenixedu.dataTransferObject.InfoTeacher">
-							<logic:equal name="infoResponsible" property="idInternal" value="<%=infoTeacherId.getIdInternal().toString()%>">
+							<logic:equal name="infoResponsible" property="externalId" value="<%=infoTeacherId.getExternalId().toString()%>">
 								<bean:define id="present">true</bean:define>
 							</logic:equal>
 						</logic:iterate>
@@ -453,9 +453,9 @@
 					    2.&nbsp;<bean:message key="label.ects.objectives"
 									  bundle="GEP_RESOURCES"/></strong></td>
 					</tr>
-					<bean:define id="curricularCourseId" name="curricularCourse" property="idInternal" />
+					<bean:define id="curricularCourseId" name="curricularCourse" property="externalId" />
 					<logic:iterate id="infoCurriculum" name="infoSiteCourseInformation" property="infoCurriculums">
-						<logic:equal name="infoCurriculum" property="infoCurricularCourse.idInternal" value="<%= curricularCourseId.toString() %>">
+						<logic:equal name="infoCurriculum" property="infoCurricularCourse.externalId" value="<%= curricularCourseId.toString() %>">
 							<tr>
 								<td colspan="7">
 									 <p><bean:write name="infoCurriculum" property="generalObjectives" filter="false"/></p>
@@ -472,7 +472,7 @@
 					  </td>
 					</tr>
 					<logic:iterate id="infoCurriculum" name="infoSiteCourseInformation" property="infoCurriculums">
-						<logic:equal name="infoCurriculum" property="infoCurricularCourse.idInternal" value="<%= curricularCourseId.toString() %>">
+						<logic:equal name="infoCurriculum" property="infoCurricularCourse.externalId" value="<%= curricularCourseId.toString() %>">
 							<tr>
 								<td colspan="7">
 									 <p><bean:write name="infoCurriculum" property="program" filter="false"/></p>

@@ -33,7 +33,7 @@ public class ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod {
             InfoExecutionPeriod infoExecutionPeriod) {
         InfoViewExamByDayAndShift infoViewExamByDayAndShift = new InfoViewExamByDayAndShift();
 
-        ExecutionSemester executionSemester = RootDomainObject.getInstance().readExecutionSemesterByOID(infoExecutionPeriod.getIdInternal());
+        ExecutionSemester executionSemester = RootDomainObject.getInstance().readExecutionSemesterByOID(infoExecutionPeriod.getExternalId());
         ExecutionCourse executionCourse = executionSemester.getExecutionCourseByInitials(executionCourseInitials);
 
         List<Exam> associatedExams = new ArrayList();

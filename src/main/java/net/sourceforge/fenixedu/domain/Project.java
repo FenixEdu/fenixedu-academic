@@ -34,7 +34,7 @@ public class Project extends Project_Base {
                         for (final ExecutionCourse executionCourse : project.getAssociatedExecutionCoursesSet()) {
                             for (Attends attend : executionCourse.getAttendsSet()) {
                                 try {
-                                    GroupEnrolment.run(grouping.getIdInternal(), null, ++groupCount, new ArrayList<String>(),
+                                    GroupEnrolment.run(grouping.getExternalId(), null, ++groupCount, new ArrayList<String>(),
                                             attend.getRegistration().getStudent().getPerson().getUsername());
                                 } catch (FenixServiceException e) {
                                     // TODO Auto-generated catch block

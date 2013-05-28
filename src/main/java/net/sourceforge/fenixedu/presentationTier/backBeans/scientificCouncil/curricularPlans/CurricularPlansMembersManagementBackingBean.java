@@ -41,7 +41,7 @@ public class CurricularPlansMembersManagementBackingBean extends FenixBackingBea
             Person person = Person.findByUsername(this.istIdToAdd);
 
             if (person != null) {
-                Integer[] personToAdd = new Integer[] { person.getIdInternal() };
+                Integer[] personToAdd = new Integer[] { person.getExternalId() };
 
                 UpdateDegreeCurricularPlanMembersGroup.run(getDegreeCurricularPlan(), personToAdd, null);
             }
@@ -76,7 +76,7 @@ public class CurricularPlansMembersManagementBackingBean extends FenixBackingBea
         List<SelectItem> result = new ArrayList<SelectItem>();
         result.add(new SelectItem(0, scouncilBundle.getString("choose")));
         for (Department department : rootDomainObject.getDepartments()) {
-            result.add(new SelectItem(department.getIdInternal(), department.getRealName()));
+            result.add(new SelectItem(department.getExternalId(), department.getRealName()));
         }
 
         return result;
@@ -88,7 +88,7 @@ public class CurricularPlansMembersManagementBackingBean extends FenixBackingBea
         Group curricularPlanMembersGroup = getDegreeCurricularPlan().getCurricularPlanMembersGroup();
         if (curricularPlanMembersGroup != null) {
             for (Person person : curricularPlanMembersGroup.getElements()) {
-                result.add(new SelectItem(person.getIdInternal(), person.getName() + " (" + person.getUsername() + ")"));
+                result.add(new SelectItem(person.getExternalId(), person.getName() + " (" + person.getUsername() + ")"));
             }
         }
 
@@ -123,7 +123,7 @@ public class CurricularPlansMembersManagementBackingBean extends FenixBackingBea
             for (Employee departmentEmployee : employees) {
                 Person person = departmentEmployee.getPerson();
                 if (curricularPlanMembersGroup == null || !curricularPlanMembersGroup.isMember(person)) {
-                    result.add(new SelectItem(person.getIdInternal(), person.getName() + " (" + person.getUsername() + ")"));
+                    result.add(new SelectItem(person.getExternalId(), person.getName() + " (" + person.getUsername() + ")"));
                 }
             }
         }

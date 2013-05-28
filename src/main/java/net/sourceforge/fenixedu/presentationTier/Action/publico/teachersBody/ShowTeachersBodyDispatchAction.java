@@ -75,7 +75,7 @@ public class ShowTeachersBodyDispatchAction extends FenixDispatchAction {
             if (executionDegrees != null && executionDegrees.size() > 0) {
                 // put execution year in the form
                 if (executionYearId == null) {
-                    executionYearId = ((InfoExecutionDegree) executionDegrees.get(0)).getInfoExecutionYear().getIdInternal();
+                    executionYearId = ((InfoExecutionDegree) executionDegrees.get(0)).getInfoExecutionYear().getExternalId();
 
                     executionYearForm.set("executionYearId", executionYearId);
                 }
@@ -94,7 +94,7 @@ public class ShowTeachersBodyDispatchAction extends FenixDispatchAction {
             Iterator iter = executionYears.iterator();
             while (iter.hasNext()) {
                 InfoExecutionYear year = (InfoExecutionYear) iter.next();
-                if (year.getIdInternal().intValue() == executionYearId.intValue()) {
+                if (year.getExternalId().intValue() == executionYearId.intValue()) {
                     request.setAttribute("searchDetails", makeBodyHeader(year.getYear(), semester, teacherType));
                     break;
                 }

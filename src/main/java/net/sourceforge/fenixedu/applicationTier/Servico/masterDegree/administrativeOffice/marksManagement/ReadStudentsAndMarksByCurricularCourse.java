@@ -90,7 +90,7 @@ public class ReadStudentsAndMarksByCurricularCourse {
                 EnrolmentEvaluation elem = (EnrolmentEvaluation) iter.next();
                 InfoEnrolmentEvaluation infoEnrolmentEvaluation =
                         InfoEnrolmentEvaluationWithResponsibleForGrade.newInfoFromDomain(elem);
-                infoEnrolmentEvaluation.setIdInternal(elem.getIdInternal());
+                infoEnrolmentEvaluation.setExternalId(elem.getExternalId());
 
                 infoEnrolmentEvaluation.setInfoEnrolment(InfoEnrolment.newInfoFromDomain(elem.getEnrolment()));
                 infoEnrolmentEvaluations.add(infoEnrolmentEvaluation);

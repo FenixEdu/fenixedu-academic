@@ -29,7 +29,7 @@ public class ChangePersonalStudentInfo {
     @Service
     public static InfoPerson run(InfoPersonEditor newInfoPerson) throws FenixServiceException {
 
-        final Person person = (Person) RootDomainObject.getInstance().readPartyByOID(newInfoPerson.getIdInternal());
+        final Person person = (Person) RootDomainObject.getInstance().readPartyByOID(newInfoPerson.getExternalId());
         if (person == null) {
             throw new ExcepcaoInexistente("error.changePersonalStudentInfo.noPerson");
         }

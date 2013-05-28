@@ -31,7 +31,7 @@ public class ExamProcessor extends PathProcessor {
             return false;
         } else {
             ExamProcessorContext ownContext = (ExamProcessorContext) context;
-            doForward(context, ownContext.getParent().getDegree().getIdInternal());
+            doForward(context, ownContext.getParent().getDegree().getExternalId());
             return true;
         }
     }

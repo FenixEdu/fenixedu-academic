@@ -24,7 +24,7 @@
 		   	<bean:define id="curricularCourse" name="curricularCourseElem" property="name"/>
 				<tr>
 					<td>
-						<html:link page="<%= path + ".do?method=chooseCurricularCourse&amp;courseID=" + curricularCourseElem.getIdInternal() + "&amp;executionYear=" + pageContext.findAttribute("executionYear") + "&amp;jspTitle=" + pageContext.findAttribute("jspTitle") + "&amp;degree=" + pageContext.findAttribute("degree") + "&amp;curricularCourse=" + pageContext.findAttribute("curricularCourse") %>">
+						<html:link page="<%= path + ".do?method=chooseCurricularCourse&amp;courseID=" + curricularCourseElem.getExternalId() + "&amp;executionYear=" + pageContext.findAttribute("executionYear") + "&amp;jspTitle=" + pageContext.findAttribute("jspTitle") + "&amp;degree=" + pageContext.findAttribute("degree") + "&amp;curricularCourse=" + pageContext.findAttribute("curricularCourse") %>">
 							<bean:write name="curricularCourseElem" property="name"/>
 						</html:link>
 					</td>

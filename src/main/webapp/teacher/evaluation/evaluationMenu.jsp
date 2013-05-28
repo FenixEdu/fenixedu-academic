@@ -7,7 +7,7 @@
 
 <ul>
 	<logic:present name="executionCourse">
-		<bean:define id="executionCourseID" name="executionCourse" property="idInternal" />
+		<bean:define id="executionCourseID" name="executionCourse" property="externalId" />
 	</logic:present>
 	<logic:notPresent name="executionCourse">
 		<bean:define id="executionCourseID" name="executionCourseID"/>

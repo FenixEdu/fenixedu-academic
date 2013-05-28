@@ -26,10 +26,10 @@
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle1 thlight tdcenter" />
 		<fr:property name="columnClasses" value="smalltxt,smalltxt,smalltxt,smalltxt,smalltxt,aleft smalltxt nowrap,smalltxt,smalltxt,smalltxt,smalltxt nowrap," />
-		<fr:property name="linkFormat(view)" value="/documentRequest.do?method=viewDocumentRequest&documentRequestId=${idInternal}"/>
+		<fr:property name="linkFormat(view)" value="/documentRequest.do?method=viewDocumentRequest&documentRequestId=${externalId}"/>
 		<fr:property name="key(view)" value="label.view"/>
 		<fr:property name="bundle(view)" value="APPLICATION_RESOURCES"/>
-		<fr:property name="linkFormat(cancel)" value="/documentRequest.do?method=prepareCancelAcademicServiceRequest&academicServiceRequestId=${idInternal}&registrationID=${registration.idInternal}"/>
+		<fr:property name="linkFormat(cancel)" value="/documentRequest.do?method=prepareCancelAcademicServiceRequest&academicServiceRequestId=${externalId}&registrationID=${registration.externalId}"/>
 		<fr:property name="key(cancel)" value="label.cancel"/>
 		<fr:property name="bundle(cancel)" value="APPLICATION_RESOURCES"/>
 		<fr:property name="visibleIf(cancel)" value="loggedPersonCanCancel"/>

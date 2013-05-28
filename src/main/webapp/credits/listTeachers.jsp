@@ -12,7 +12,7 @@
 		<bean:size id="numberOfTeachers" name="departmentTeachersDTO" property="infoTeacherList"/>
 		<html:select bundle="HTMLALT_RESOURCES" altKey="select.teacherOID" property="teacherOID" value="0" style="display:inline">
 			<logic:iterate id="infoTeacher" name="departmentTeachersDTO" property="infoTeacherList">
-				<option value="<jsp:getProperty name='infoTeacher' property='idInternal'/>">
+				<option value="<jsp:getProperty name='infoTeacher' property='externalId'/>">
 					<jsp:getProperty name="infoTeacher" property="teacherId"/> - <bean:write name="infoTeacher" property="infoPerson.nome"/>
 				</option>
 			</logic:iterate>
@@ -33,7 +33,7 @@
 						<jsp:getProperty name="infoTeacher" property="teacherId"/>
 					</td>
 					<td>
-						<html:link page="/creditsManagement.do?method=prepare&amp;page=0" paramName="infoTeacher" paramProperty="idInternal" paramId	="teacherOID">
+						<html:link page="/creditsManagement.do?method=prepare&amp;page=0" paramName="infoTeacher" paramProperty="externalId" paramId	="teacherOID">
 							<bean:write name="infoTeacher" property="infoPerson.nome"/>
 						</html:link>
 					</td>

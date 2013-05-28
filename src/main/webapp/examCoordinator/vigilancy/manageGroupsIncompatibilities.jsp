@@ -33,7 +33,7 @@
 			<fr:view name="vigilantWrapper" property="person.name"/> 
 			<span class="greytxt2"><bean:message key="label.vigilancy.incompatibleWith" bundle="VIGILANCY_RESOURCES"/> </span>
 			<fr:view name="vigilantWrapper" property="person.incompatibleVigilant.name"/> 
-			<a href="<%= request.getContextPath() + "/examCoordination/vigilancy/vigilantGroupManagement.do?method=deleteIncompatibility&oid=" + vigilantWrapper.getIdInternal() + "&gid=" + vigilantGroup.getIdInternal() %>">
+			<a href="<%= request.getContextPath() + "/examCoordination/vigilancy/vigilantGroupManagement.do?method=deleteIncompatibility&oid=" + vigilantWrapper.getExternalId() + "&gid=" + vigilantGroup.getExternalId() %>">
 				<bean:message key="label.vigilancy.delete" bundle="VIGILANCY_RESOURCES"/>
 			</a>
 		</li>
@@ -42,7 +42,7 @@
 </logic:notEmpty>
 
 <p>
-	<html:link page="<%= "/vigilancy/vigilantGroupManagement.do?method=prepareAddIncompatiblePersonToVigilant&gid=" + vigilantGroup.getIdInternal() %>">
+	<html:link page="<%= "/vigilancy/vigilantGroupManagement.do?method=prepareAddIncompatiblePersonToVigilant&gid=" + vigilantGroup.getExternalId() %>">
 		<bean:message key="label.vigilancy.addIncompatibilityToVigilant" bundle="VIGILANCY_RESOURCES"/>
 	</html:link>
 </p>

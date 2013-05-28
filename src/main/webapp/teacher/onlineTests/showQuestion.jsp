@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <logic:present name="iquestion">
 <bean:define id="showResponses" value='<%=request.getParameter("showResponses")%>'/>
-<bean:define id="questionCode" name="iquestion" property="idInternal"/>
+<bean:define id="questionCode" name="iquestion" property="externalId"/>
 <bean:define id="metadataCode" name="metadataId" />
 
 <bean:size id="subQuestionsSize" name="iquestion" property="subQuestions"/>

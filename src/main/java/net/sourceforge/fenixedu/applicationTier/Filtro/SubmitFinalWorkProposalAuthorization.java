@@ -23,13 +23,13 @@ public class SubmitFinalWorkProposalAuthorization {
     public void execute(InfoProposalEditor infoProposal) throws NotAuthorizedException {
         final IUserView userView = AccessControl.getUserView();
         final InfoProposalEditor infoProposalEditor = infoProposal;
-        if (infoProposalEditor.getIdInternal() != null) {
-            final Proposal proposal = RootDomainObject.getInstance().readProposalByOID(infoProposalEditor.getIdInternal());
+        if (infoProposalEditor.getExternalId() != null) {
+            final Proposal proposal = RootDomainObject.getInstance().readProposalByOID(infoProposalEditor.getExternalId());
             if (!authorized(userView.getPerson(), proposal)) {
                 throw new NotAuthorizedException();
             }
         } else {
-            final Integer executionDegreeId = infoProposalEditor.getExecutionDegree().getIdInternal();
+            final Integer executionDegreeId = infoProposalEditor.getExecutionDegree().getExternalId();
             final ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeId);
             final Scheduleing scheduleing = executionDegree.getScheduling();
             if (!authorized(userView.getPerson(), scheduleing)) {

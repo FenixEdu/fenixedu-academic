@@ -36,7 +36,7 @@
 			<bean:define id="classOID"
 						 type="java.lang.Integer"
 						 name="classView"
-						 property="idInternal"/>
+						 property="externalId"/>
 		<tr>
 		  <td nowrap="nowrap" class="listClasses">
 		   		<html:link page="<%= "/ClassManagerDA.do?method=viewClass&amp;"

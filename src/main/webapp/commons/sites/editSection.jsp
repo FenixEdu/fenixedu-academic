@@ -26,7 +26,7 @@
     </div>
 </logic:messagesPresent>
 
-<bean:define id="sectionId" name="section" property="idInternal"/>
+<bean:define id="sectionId" name="section" property="externalId"/>
 <fr:edit name="section" type="net.sourceforge.fenixedu.domain.Section" schema="net.sourceforge.fenixedu.domain.SectionEditor"
 		action="<%= String.format("%s?method=section&amp;%s&amp;sectionID=%s", actionName, context, sectionId)  %>">
 	<fr:layout name="tabular">

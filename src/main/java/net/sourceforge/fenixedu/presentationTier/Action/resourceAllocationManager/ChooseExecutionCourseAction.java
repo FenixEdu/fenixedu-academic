@@ -49,7 +49,7 @@ public class ChooseExecutionCourseAction extends FenixDateAndTimeAndClassAndExec
 
         if (courseInitials != null && !courseInitials.equals("")) {
             final ExecutionSemester executionSemester =
-                    RootDomainObject.getInstance().readExecutionSemesterByOID(infoExecutionPeriod.getIdInternal());
+                    RootDomainObject.getInstance().readExecutionSemesterByOID(infoExecutionPeriod.getExternalId());
             final ExecutionCourse executionCourse = executionSemester.getExecutionCourseByInitials(courseInitials);
             final InfoExecutionCourse infoCourse = InfoExecutionCourse.newInfoFromDomain(executionCourse);
 

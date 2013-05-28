@@ -71,9 +71,9 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
             } else {
                 request.setAttribute("siteView", siteView);
                 request.setAttribute("executionCourseCode", ((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse()
-                        .getIdInternal());
+                        .getExternalId());
                 request.setAttribute("executionPeriodCode", ((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse()
-                        .getInfoExecutionPeriod().getIdInternal());
+                        .getInfoExecutionPeriod().getExternalId());
 
             }
         } catch (NonExistingServiceException e) {

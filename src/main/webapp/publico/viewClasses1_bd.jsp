@@ -109,7 +109,7 @@
 				</tr>		
 				<logic:iterate id="classview" name="classList" indexId="row">
 					<% String rowColor = row.intValue() % 2 == 0 ? "bgwhite" : "bluecell" ; %>
-					<bean:define id="classId" name="classview" property="idInternal"/>
+					<bean:define id="classId" name="classview" property="externalId"/>
 					<tr>
 					    <td class="<%= rowColor %>">	
 							<html:link page="<%= "/viewClassTimeTableNew.do?executionPeriodOID="

@@ -93,7 +93,7 @@ public class TestModelsManagementAction extends FenixDispatchAction {
 
         CreateModelGroup.run(bean.getModelGroup(), bean.getName());
 
-        request.setAttribute("oid", bean.getTestModel().getIdInternal());
+        request.setAttribute("oid", bean.getTestModel().getExternalId());
 
         RenderUtils.invalidateViewState("create-model-group");
 
@@ -332,7 +332,7 @@ public class TestModelsManagementAction extends FenixDispatchAction {
 
         DeleteModelRestriction.run(modelRestriction);
 
-        return new ActionForward(request.getParameter("returnTo") + "&oid=" + testModel.getIdInternal(), true);
+        return new ActionForward(request.getParameter("returnTo") + "&oid=" + testModel.getExternalId(), true);
     }
 
     public ActionForward prepareGenerateTests(ActionMapping mapping, ActionForm form, HttpServletRequest request,

@@ -152,7 +152,7 @@ public class GeneratedDocumentsDA extends FenixDispatchAction {
 
         try {
             final AnnualIRSDeclarationDocument document = getDomainObject(request, "annualIRSDocumentOid");
-            request.setAttribute("personId", document.getAddressee().getIdInternal());
+            request.setAttribute("personId", document.getAddressee().getExternalId());
 
             final IRSDeclarationDTO declarationDTO =
                     new IRSDeclarationDTO(document.getYear().intValue(), document.getAddressee());

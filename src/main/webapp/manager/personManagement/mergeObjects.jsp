@@ -7,10 +7,10 @@
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 
 <bean:define id="linkLeft">
-	/mergeObjects.do?method=mergeProperty&classToMerge=<bean:write name="classToMerge" />&object2IdInternal=<bean:write name="object2IdInternal" />&object1IdInternal=<bean:write name="object1IdInternal" />&source=2&slotName=
+	/mergeObjects.do?method=mergeProperty&classToMerge=<bean:write name="classToMerge" />&object2ExternalId=<bean:write name="object2ExternalId" />&object1ExternalId=<bean:write name="object1ExternalId" />&source=2&slotName=
 </bean:define>
 <bean:define id="linkRight">
-	/mergeObjects.do?method=mergeProperty&classToMerge=<bean:write name="classToMerge" />&object2IdInternal=<bean:write name="object2IdInternal" />&object1IdInternal=<bean:write name="object1IdInternal" />&source=1&slotName=
+	/mergeObjects.do?method=mergeProperty&classToMerge=<bean:write name="classToMerge" />&object2ExternalId=<bean:write name="object2ExternalId" />&object1ExternalId=<bean:write name="object1ExternalId" />&source=1&slotName=
 </bean:define>
 
 <table>
@@ -51,10 +51,10 @@
 	</logic:iterate>
 	
 	<bean:define id="linkDeleteLeft">
-		/mergeObjects.do?method=delete&classToMerge=<bean:write name="classToMerge" />&object2IdInternal=<bean:write name="object2IdInternal" />&object1IdInternal=<bean:write name="object1IdInternal" />&objectIdInternal=<bean:write name="object1IdInternal" />
+		/mergeObjects.do?method=delete&classToMerge=<bean:write name="classToMerge" />&object2ExternalId=<bean:write name="object2ExternalId" />&object1ExternalId=<bean:write name="object1ExternalId" />&objectExternalId=<bean:write name="object1ExternalId" />
 	</bean:define>
 	<bean:define id="linkDeleteRight">
-		/mergeObjects.do?method=delete&classToMerge=<bean:write name="classToMerge" />&object2IdInternal=<bean:write name="object2IdInternal" />&object1IdInternal=<bean:write name="object1IdInternal" />&objectIdInternal=<bean:write name="object2IdInternal" />
+		/mergeObjects.do?method=delete&classToMerge=<bean:write name="classToMerge" />&object2ExternalId=<bean:write name="object2ExternalId" />&object1ExternalId=<bean:write name="object1ExternalId" />&objectExternalId=<bean:write name="object2ExternalId" />
 	</bean:define>		
 	<tr>
 		<td></td>

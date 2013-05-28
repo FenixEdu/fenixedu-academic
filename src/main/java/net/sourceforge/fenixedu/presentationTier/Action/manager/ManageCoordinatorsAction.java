@@ -67,8 +67,8 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
         DynaActionForm coordinatorsForm = (DynaActionForm) actionForm;
         coordinatorsForm.set("responsibleCoordinatorsIds", responsibleCoordinatorsIds);
         request.setAttribute("infoExecutionDegree", infoExecutionDegree);
-        request.setAttribute("degreeId", infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getIdInternal());
-        request.setAttribute("degreeCurricularPlanId", infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal());
+        request.setAttribute("degreeId", infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getExternalId());
+        request.setAttribute("degreeCurricularPlanId", infoExecutionDegree.getInfoDegreeCurricularPlan().getExternalId());
 
         return mapping.findForward("manageCoordinators");
     }
@@ -94,7 +94,7 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
         while (listIterator.hasNext()) {
             InfoCoordinator infoCoordinator = (InfoCoordinator) listIterator.next();
 
-            responsibleCoordinatorsIdsList.add(infoCoordinator.getIdInternal());
+            responsibleCoordinatorsIdsList.add(infoCoordinator.getExternalId());
         }
 
         return (Integer[]) responsibleCoordinatorsIdsList.toArray(new Integer[] {});
@@ -125,8 +125,8 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
         }
 
         request.setAttribute("infoExecutionDegree", infoExecutionDegree);
-        request.setAttribute("degreeId", infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getIdInternal());
-        request.setAttribute("degreeCurricularPlanId", infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal());
+        request.setAttribute("degreeId", infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getExternalId());
+        request.setAttribute("degreeCurricularPlanId", infoExecutionDegree.getInfoDegreeCurricularPlan().getExternalId());
 
         return mapping.findForward("insertCoordinator");
     }

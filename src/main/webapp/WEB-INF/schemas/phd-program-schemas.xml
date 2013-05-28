@@ -1183,7 +1183,7 @@
 
 <schema name="AcademicAdminOffice.PhdIndividualProgramProcess.view.student.information" type="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess" bundle="PHD_RESOURCES">
 	<slot name="student.number" read-only="true" layout="conditional-link">
-		<property name="linkFormat" value="/student.do?method=visualizeRegistration&amp;registrationID=${registration.idInternal}"/>
+		<property name="linkFormat" value="/student.do?method=visualizeRegistration&amp;registrationID=${registration.externalId}"/>
 		<property name="contextRelative" value="true"/>
 		<property name="moduleRelative" value="true"/>
         <property name="useParent" value="true"/>

@@ -1,6 +1,7 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <%@ page import="java.util.ArrayList" %>
@@ -18,7 +19,7 @@
 <logic:present name="infoDegreeCurricularPlan">
     <br/>
 			<bean:define id="degreeType" name="infoDegreeCurricularPlan" property="infoDegree.degreeType" />	
-			<bean:define id="degreeCurricularPlanID" name="infoDegreeCurricularPlan" property="idInternal" />
+			<bean:define id="degreeCurricularPlanID" name="infoDegreeCurricularPlan" property="externalId" />
 			<bean:define id="institutionUrl" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/></bean:define>
 				<div class="breadcumbs mvert0"><a href="<%= institutionUrl %>"><%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a>
 				<bean:define id="degreeType" name="infoDegreeCurricularPlan" property="infoDegree.degreeType" />	

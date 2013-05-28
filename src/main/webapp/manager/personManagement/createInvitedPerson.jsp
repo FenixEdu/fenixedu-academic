@@ -54,7 +54,7 @@
 			
 			<br/>				
 			&nbsp;&nbsp;<em><bean:message key="label.choose.responsibility.unit" bundle="MANAGER_RESOURCES"/></em>
-			<bean:define id="goToPrepareCreateInvitedPersonURL2" type="java.lang.String">/manager/createInvitedPerson.do?method=prepareCreateInvitedPerson&name=<bean:write name="invitedPersonBean" property="name"/>&idDocumentType=<bean:write name="invitedPersonBean" property="idDocumentType"/>&documentIdNumber=<bean:write name="invitedPersonBean" property="documentIdNumber"/>&unitID=<bean:write name="invitedPersonBean" property="unit.idInternal"/></bean:define>
+			<bean:define id="goToPrepareCreateInvitedPersonURL2" type="java.lang.String">/manager/createInvitedPerson.do?method=prepareCreateInvitedPerson&name=<bean:write name="invitedPersonBean" property="name"/>&idDocumentType=<bean:write name="invitedPersonBean" property="idDocumentType"/>&documentIdNumber=<bean:write name="invitedPersonBean" property="documentIdNumber"/>&unitID=<bean:write name="invitedPersonBean" property="unit.externalId"/></bean:define>
 			<un:tree initialUnit="initialUnit" unitParamName="responsibilityUnitID" path="<%= goToPrepareCreateInvitedPersonURL2 %>" state="true"/>								
 						
 			<br/>			

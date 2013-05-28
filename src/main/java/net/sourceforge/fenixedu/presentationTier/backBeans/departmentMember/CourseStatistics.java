@@ -86,7 +86,7 @@ public class CourseStatistics extends FenixBackingBean {
                 if (infoExecutionPeriod == null) {
                     executionPeriodId = (Integer) this.getExecutionPeriods().get(this.executionPeriods.size() - 1).getValue();
                 } else {
-                    executionPeriodId = infoExecutionPeriod.getIdInternal();
+                    executionPeriodId = infoExecutionPeriod.getExternalId();
                 }
             }
 
@@ -126,9 +126,9 @@ public class CourseStatistics extends FenixBackingBean {
             List<SelectItem> result = new ArrayList<SelectItem>();
             for (InfoExecutionYear executionYear : executionYearsList) {
                 List<ExecutionSemester> executionSemesters =
-                        rootDomainObject.readExecutionYearByOID(executionYear.getIdInternal()).getExecutionPeriods();
+                        rootDomainObject.readExecutionYearByOID(executionYear.getExternalId()).getExecutionPeriods();
                 for (ExecutionSemester executionSemester : executionSemesters) {
-                    result.add(new SelectItem(executionSemester.getIdInternal(), executionSemester.getExecutionYear().getYear()
+                    result.add(new SelectItem(executionSemester.getExternalId(), executionSemester.getExecutionYear().getYear()
                             + " - " + executionSemester.getName()));
                 }
             }
@@ -138,7 +138,7 @@ public class CourseStatistics extends FenixBackingBean {
     }
 
     private void loadCompetenceCourses() throws  FenixServiceException {
-        Integer departmentID = getUserView().getPerson().getTeacher().getLastWorkingDepartment().getIdInternal();
+        Integer departmentID = getUserView().getPerson().getTeacher().getLastWorkingDepartment().getExternalId();
         competenceCourses =
                 ComputeCompetenceCourseStatistics.runComputeCompetenceCourseStatistics(departmentID, this.getExecutionPeriodId());
     }

@@ -90,7 +90,7 @@ public class TeacherInformationAction extends FenixDispatchAction {
         InfoTeacher infoTeacher = new InfoTeacher(RootDomainObject.getInstance().readTeacherByOID(teacherId));
 
         InfoServiceProviderRegime infoServiceProviderRegime = new InfoServiceProviderRegime();
-        infoServiceProviderRegime.setIdInternal(serviceProviderRegimeId);
+        infoServiceProviderRegime.setExternalId(serviceProviderRegimeId);
         infoServiceProviderRegime.setProviderRegimeType(providerRegimeType);
         infoServiceProviderRegime.setInfoTeacher(infoTeacher);
 
@@ -123,21 +123,21 @@ public class TeacherInformationAction extends FenixDispatchAction {
         InfoTeacher infoTeacher = new InfoTeacher(RootDomainObject.getInstance().readTeacherByOID(teacherId));
 
         InfoOrientation degreeOrientation = new InfoOrientation();
-        degreeOrientation.setIdInternal(degreeOrientationId);
+        degreeOrientation.setExternalId(degreeOrientationId);
         degreeOrientation.setNumberOfStudents(degreeStudentsNumber);
         degreeOrientation.setOrientationType(OrientationType.DEGREE);
         degreeOrientation.setDescription(degreeDescription);
         degreeOrientation.setInfoTeacher(infoTeacher);
 
         InfoOrientation masterOrientation = new InfoOrientation();
-        masterOrientation.setIdInternal(masterOrientationId);
+        masterOrientation.setExternalId(masterOrientationId);
         masterOrientation.setNumberOfStudents(masterStudentsNumber);
         masterOrientation.setOrientationType(OrientationType.MASTER);
         masterOrientation.setDescription(masterDescription);
         masterOrientation.setInfoTeacher(infoTeacher);
 
         InfoOrientation phdOrientation = new InfoOrientation();
-        phdOrientation.setIdInternal(phdOrientationId);
+        phdOrientation.setExternalId(phdOrientationId);
         phdOrientation.setNumberOfStudents(phdStudentsNumber);
         phdOrientation.setOrientationType(OrientationType.PHD);
         phdOrientation.setDescription(phdDescription);
@@ -181,35 +181,35 @@ public class TeacherInformationAction extends FenixDispatchAction {
         InfoTeacher infoTeacher = new InfoTeacher(RootDomainObject.getInstance().readTeacherByOID(teacherId));
 
         InfoPublicationsNumber comunicationPublicationsNumber = new InfoPublicationsNumber();
-        comunicationPublicationsNumber.setIdInternal(comunicationPublicationsNumberId);
+        comunicationPublicationsNumber.setExternalId(comunicationPublicationsNumberId);
         comunicationPublicationsNumber.setNational(comunicationNational);
         comunicationPublicationsNumber.setInternational(comunicationInternational);
         comunicationPublicationsNumber.setPublicationType(PublicationType.COMUNICATION);
         comunicationPublicationsNumber.setInfoTeacher(infoTeacher);
 
         InfoPublicationsNumber magArticlePublicationsNumber = new InfoPublicationsNumber();
-        magArticlePublicationsNumber.setIdInternal(magArticlePublicationsNumberId);
+        magArticlePublicationsNumber.setExternalId(magArticlePublicationsNumberId);
         magArticlePublicationsNumber.setNational(magArticleNational);
         magArticlePublicationsNumber.setInternational(magArticleInternational);
         magArticlePublicationsNumber.setPublicationType(PublicationType.MAG_ARTICLE);
         magArticlePublicationsNumber.setInfoTeacher(infoTeacher);
 
         InfoPublicationsNumber authorBookPublicationsNumber = new InfoPublicationsNumber();
-        authorBookPublicationsNumber.setIdInternal(authorBookPublicationsNumberId);
+        authorBookPublicationsNumber.setExternalId(authorBookPublicationsNumberId);
         authorBookPublicationsNumber.setNational(authorBookNational);
         authorBookPublicationsNumber.setInternational(authorBookInternational);
         authorBookPublicationsNumber.setPublicationType(PublicationType.AUTHOR_BOOK);
         authorBookPublicationsNumber.setInfoTeacher(infoTeacher);
 
         InfoPublicationsNumber editorBookPublicationsNumber = new InfoPublicationsNumber();
-        editorBookPublicationsNumber.setIdInternal(editorBookPublicationsNumberId);
+        editorBookPublicationsNumber.setExternalId(editorBookPublicationsNumberId);
         editorBookPublicationsNumber.setNational(editorBookNational);
         editorBookPublicationsNumber.setInternational(editorBookInternational);
         editorBookPublicationsNumber.setPublicationType(PublicationType.EDITOR_BOOK);
         editorBookPublicationsNumber.setInfoTeacher(infoTeacher);
 
         InfoPublicationsNumber articlesChaptersPublicationsNumber = new InfoPublicationsNumber();
-        articlesChaptersPublicationsNumber.setIdInternal(articlesChaptersPublicationsNumberId);
+        articlesChaptersPublicationsNumber.setExternalId(articlesChaptersPublicationsNumberId);
         articlesChaptersPublicationsNumber.setNational(articlesChaptersNational);
         articlesChaptersPublicationsNumber.setInternational(articlesChaptersInternational);
         articlesChaptersPublicationsNumber.setPublicationType(PublicationType.ARTICLES_CHAPTERS);
@@ -243,7 +243,7 @@ public class TeacherInformationAction extends FenixDispatchAction {
         InfoTeacher infoTeacher = new InfoTeacher(RootDomainObject.getInstance().readTeacherByOID(teacherId));
 
         InfoWeeklyOcupation infoWeeklyOcupation = new InfoWeeklyOcupation();
-        infoWeeklyOcupation.setIdInternal(weeklyOcupationId);
+        infoWeeklyOcupation.setExternalId(weeklyOcupationId);
         infoWeeklyOcupation.setManagement(management);
         infoWeeklyOcupation.setOther(other);
         infoWeeklyOcupation.setResearch(research);
@@ -280,12 +280,12 @@ public class TeacherInformationAction extends FenixDispatchAction {
             InfoTeacher infoTeacher = infoWeeklyOcupation.getInfoTeacher();
 
             DynaActionForm dynaForm = (DynaActionForm) form;
-            dynaForm.set("teacherId", infoTeacher.getIdInternal());
-            dynaForm.set("serviceProviderRegimeId", infoServiceProviderRegime.getIdInternal());
+            dynaForm.set("teacherId", infoTeacher.getExternalId());
+            dynaForm.set("serviceProviderRegimeId", infoServiceProviderRegime.getExternalId());
             ProviderRegimeType providerRegimeType = infoServiceProviderRegime.getProviderRegimeType();
             dynaForm.set("serviceProviderRegimeTypeName", providerRegimeType == null ? null : providerRegimeType.getName());
 
-            dynaForm.set("weeklyOcupationId", infoWeeklyOcupation.getIdInternal());
+            dynaForm.set("weeklyOcupationId", infoWeeklyOcupation.getExternalId());
             Integer management = infoWeeklyOcupation.getManagement();
             dynaForm.set("management", management == null ? new String() : management.toString());
             Integer research = infoWeeklyOcupation.getResearch();
@@ -300,7 +300,7 @@ public class TeacherInformationAction extends FenixDispatchAction {
             Iterator iter = infoOrientations.iterator();
             while (iter.hasNext()) {
                 InfoOrientation infoOrientation = (InfoOrientation) iter.next();
-                Integer orientationId = infoOrientation.getIdInternal();
+                Integer orientationId = infoOrientation.getExternalId();
                 Integer numberOfStudents = infoOrientation.getNumberOfStudents();
                 String description = infoOrientation.getDescription();
                 if (infoOrientation.getOrientationType().equals(OrientationType.DEGREE)) {
@@ -321,7 +321,7 @@ public class TeacherInformationAction extends FenixDispatchAction {
             iter = infoPublicationsNumbers.iterator();
             while (iter.hasNext()) {
                 InfoPublicationsNumber infoPublicationsNumber = (InfoPublicationsNumber) iter.next();
-                Integer publicationsNumberId = infoPublicationsNumber.getIdInternal();
+                Integer publicationsNumberId = infoPublicationsNumber.getExternalId();
                 Integer national = infoPublicationsNumber.getNational();
                 Integer international = infoPublicationsNumber.getInternational();
 

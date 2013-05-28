@@ -96,7 +96,7 @@ public class ChooseDeclarationInfoAction extends FenixDispatchAction {
         List enrolmentList = null;
 
         // try {
-        enrolmentList = GetEnrolmentList.run(infoStudentCurricularPlan.getIdInternal());
+        enrolmentList = GetEnrolmentList.run(infoStudentCurricularPlan.getExternalId());
 
         // } catch (NonExistingServiceException e) {
         // throw new NonExistingActionException("Inscrição", e);

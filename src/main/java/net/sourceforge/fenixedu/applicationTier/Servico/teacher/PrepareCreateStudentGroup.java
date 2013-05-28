@@ -57,7 +57,7 @@ public class PrepareCreateStudentGroup {
             infoSiteStudentInformation.setName(person.getName());
             infoSiteStudentInformation.setNumber(registration.getNumber());
             infoSiteStudentInformation.setUsername(person.getUsername());
-            infoSiteStudentInformation.setPersonID(person.getIdInternal());
+            infoSiteStudentInformation.setPersonID(person.getExternalId());
             infoStudentInformationList.add(infoSiteStudentInformation);
         }
 

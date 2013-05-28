@@ -11,7 +11,7 @@
 <bean:define id="degree" name="site" property="degree" toScope="request"/>
 
 <bean:define id="institutionUrl" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/></bean:define>
-<bean:define id="degreeId" name="degree" property="idInternal"/>
+<bean:define id="degreeId" name="degree" property="externalId"/>
 
 <div class="breadcumbs mvert0">
     <a href="<%= institutionUrl %>"><%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a>
@@ -27,7 +27,7 @@
     <logic:present name="sectionCrumbs">
         <logic:iterate id="crumbSection" name="sectionCrumbs">
             &nbsp;&gt;&nbsp;
-            <bean:define id="crumbSectionId" name="crumbSection" property="idInternal"/>
+            <bean:define id="crumbSectionId" name="crumbSection" property="externalId"/>
             <html:link page="<%= String.format("/showDegreeSiteContent.do?method=section&amp;degreeID=%s&amp;sectionID=%s", degreeId, crumbSectionId) %>">
                 <fr:view name="crumbSection" property="name"/>
             </html:link>
@@ -58,4 +58,4 @@
 <bean:define id="site" name="degree" property="site" toScope="request"/>
 <bean:define id="siteActionName" value="/showDegreeSiteContent.do" toScope="request"/>
 <bean:define id="siteContextParam" value="degreeID" toScope="request"/>
-<bean:define id="siteContextParamValue" name="degree" property="idInternal" toScope="request"/>
+<bean:define id="siteContextParamValue" name="degree" property="externalId" toScope="request"/>

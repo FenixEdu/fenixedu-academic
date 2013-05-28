@@ -37,9 +37,9 @@
 					</logic:equal>
 					<logic:notEqual name="numElements" value="0">
 						<html:link page="<%= "/degreeCurricularPlan/equivalencyPlan.do?method=showTable&amp;degreeCurricularPlanID="
-								+ degreeCurricularPlan.getIdInternal() + "&amp;equivalencePlanID="
-								+ equivalencePlan.getIdInternal() + "&amp;degreeModuleID="
-								+ curricularCourse.getIdInternal() %>">
+								+ degreeCurricularPlan.getExternalId() + "&amp;equivalencePlanID="
+								+ equivalencePlan.getExternalId() + "&amp;degreeModuleID="
+								+ curricularCourse.getExternalId() %>">
 							<bean:message key="link.equivalencies.for.curricular.course.view" bundle="APPLICATION_RESOURCES"/>
 						</html:link>
 					</logic:notEqual>
@@ -75,9 +75,9 @@
 					</logic:equal>
 					<logic:notEqual name="numElements" value="0">
 						<html:link page="<%= "/degreeCurricularPlan/equivalencyPlan.do?method=showTable&amp;degreeCurricularPlanID="
-								+ degreeCurricularPlan.getIdInternal() + "&amp;equivalencePlanID="
-								+ equivalencePlan.getIdInternal() + "&amp;degreeModuleID="
-								+ courseGroup.getIdInternal() %>">
+								+ degreeCurricularPlan.getExternalId() + "&amp;equivalencePlanID="
+								+ equivalencePlan.getExternalId() + "&amp;degreeModuleID="
+								+ courseGroup.getExternalId() %>">
 							<bean:message key="link.equivalencies.for.course.group.view" bundle="APPLICATION_RESOURCES"/>
 						</html:link>
 					</logic:notEqual>

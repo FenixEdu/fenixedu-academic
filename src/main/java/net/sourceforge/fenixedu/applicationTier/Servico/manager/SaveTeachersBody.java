@@ -26,7 +26,7 @@ public class SaveTeachersBody {
         for (int i = 0; i < professorships.size(); i++) {
             final Professorship professorship = professorships.get(i);
             final Teacher teacher = professorship.getTeacher();
-            final Integer teacherID = teacher.getIdInternal();
+            final Integer teacherID = teacher.getExternalId();
             if (auxProfessorshipTeacherIDs.contains(teacherID)) {
                 if (responsibleTeachersIds.contains(teacherID) && !professorship.getResponsibleFor()) {
                     professorship.setResponsibleFor(Boolean.TRUE);

@@ -52,7 +52,7 @@
 					<fr:property name="suffixes" value=",º ano,º sem"/>
 					<fr:property name="checkable" value="true" />
 					<fr:property name="checkboxName" value="selectedCurricularCourses" />
-					<fr:property name="checkboxValue" value="curricularCourse.idInternal" />
+					<fr:property name="checkboxValue" value="curricularCourse.externalId" />
 					<fr:property name="selectAllShown" value="true" />
 					<fr:property name="selectAllLocation" value="bottom" />
 				</fr:layout>

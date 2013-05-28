@@ -140,7 +140,7 @@ public class SelectCandidatesDispatchAction extends FenixDispatchAction {
         Iterator iterator = candidateList.iterator();
         int i = 0;
         while (iterator.hasNext()) {
-            ids[i++] = ((InfoMasterDegreeCandidate) iterator.next()).getIdInternal().toString();
+            ids[i++] = ((InfoMasterDegreeCandidate) iterator.next()).getExternalId().toString();
         }
 
         approvalForm.set("candidatesID", ids);
@@ -544,7 +544,7 @@ public class SelectCandidatesDispatchAction extends FenixDispatchAction {
         for (int i = 0; i < candidateList.length; i++) {
             InfoCandidateApproval infoCandidateApproval = new InfoCandidateApproval();
             infoCandidateApproval.setCandidateName(((InfoMasterDegreeCandidate) candidates.get(i)).getInfoPerson().getNome());
-            infoCandidateApproval.setIdInternal(new Integer(ids[i]));
+            infoCandidateApproval.setExternalId(new Integer(ids[i]));
             if ((substitutes[i] != null) && (substitutes[i].length() > 0)) {
                 infoCandidateApproval.setOrderPosition(new Integer(substitutes[i]));
             } else {

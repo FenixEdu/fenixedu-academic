@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-<bean:define id="personId" name="receipt" property="person.idInternal" />
+<bean:define id="personId" name="receipt" property="person.externalId" />
 <h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"
 	key="label.payments.management" /></h2>
 
@@ -43,7 +43,7 @@
 			value="tstyle4 mtop05 mbottom0 width700px" />
 		<fr:property name="columnClasses"
 			value="width8em acenter, width30em acenter,width8em acenter,width15em aright" />
-		<fr:property name="sortBy" value="whenRegistered=asc,idInternal=asc" />
+		<fr:property name="sortBy" value="whenRegistered=asc,externalId=asc" />
 	</fr:layout>
 </fr:view>
 

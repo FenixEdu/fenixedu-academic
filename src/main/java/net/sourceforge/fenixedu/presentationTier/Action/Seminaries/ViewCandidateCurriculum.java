@@ -71,7 +71,7 @@ public class ViewCandidateCurriculum extends FenixAction {
                     selectedSCP = cp;
                 }
             }
-            enrollments = ReadStudentCurriculum.runReadStudentCurriculum(null, selectedSCP.getIdInternal());
+            enrollments = ReadStudentCurriculum.runReadStudentCurriculum(null, selectedSCP.getExternalId());
         } catch (NonExistingServiceException e) {
             throw new FenixActionException(e);
         }

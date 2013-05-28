@@ -189,7 +189,7 @@ public class InfoDegreeInfo extends InfoObject implements ISiteComponent {
     @Override
     public String toString() {
         String result = "[INFODEGREE_INFO:";
-        result += " codigo interno= " + getIdInternal();
+        result += " codigo interno= " + getExternalId();
         result += " degree= " + getInfoDegree();
         result += " descri��o= " + getDescription();
         result += " objectivos= " + getObjectives();

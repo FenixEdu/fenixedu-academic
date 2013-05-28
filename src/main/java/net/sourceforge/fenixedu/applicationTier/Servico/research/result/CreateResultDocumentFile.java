@@ -31,8 +31,8 @@ public class CreateResultDocumentFile {
      * @param result
      * @return filePath
      * 
-     *         Path examples: /Research/Results/Publications/pub{idInternal}/
-     *         /Research/Results/Patents/pat{idInternal}/
+     *         Path examples: /Research/Results/Publications/pub{externalId}/
+     *         /Research/Results/Patents/pat{externalId}/
      */
     private static VirtualPath getVirtualPath(ResearchResult result) {
         final VirtualPath filePath = new VirtualPath();
@@ -42,11 +42,11 @@ public class CreateResultDocumentFile {
 
         if (result instanceof ResearchResultPublication) {
             filePath.addNode(new VirtualPathNode("Publications", "Publications"));
-            filePath.addNode(new VirtualPathNode("pub" + result.getIdInternal(), "pub" + result.getIdInternal().toString()));
+            filePath.addNode(new VirtualPathNode("pub" + result.getExternalId(), "pub" + result.getExternalId().toString()));
         }
         if (result instanceof ResearchResultPatent) {
             filePath.addNode(new VirtualPathNode("Patents", "Patents"));
-            filePath.addNode(new VirtualPathNode("pat" + result.getIdInternal(), "pat" + result.getIdInternal().toString()));
+            filePath.addNode(new VirtualPathNode("pat" + result.getExternalId(), "pat" + result.getExternalId().toString()));
         }
 
         return filePath;

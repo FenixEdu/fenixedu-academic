@@ -16,7 +16,7 @@ public class CreateDelegateCandidacyPeriod {
     @Checked("RolePredicates.PEDAGOGICAL_COUNCIL_PREDICATE")
     @Service
     public static void run(ElectionPeriodBean bean) throws FenixServiceException {
-        final Integer degreeOID = bean.getDegree().getIdInternal();
+        final Integer degreeOID = bean.getDegree().getExternalId();
 
         run(bean, degreeOID.toString());
     }

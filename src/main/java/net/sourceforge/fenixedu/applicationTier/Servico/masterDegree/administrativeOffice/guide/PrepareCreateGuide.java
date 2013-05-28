@@ -54,7 +54,7 @@ public class PrepareCreateGuide {
 
         ExecutionDegree executionDegree = null;
 
-        executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
+        executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(infoExecutionDegree.getExternalId());
 
         // Check if the Requester is a Candidate
         if (requesterType.equals(GuideRequester.CANDIDATE.name())) {
@@ -114,14 +114,14 @@ public class PrepareCreateGuide {
                 throw new NonExistingServiceException("O Aluno", null);
             }
 
-            final Integer degreeCurricularPlanID = degreeCurricularPlan.getIdInternal();
+            final Integer degreeCurricularPlanID = degreeCurricularPlan.getExternalId();
             List studentCurricularPlanList =
                     (List) CollectionUtils.select(registration.getStudentCurricularPlans(), new Predicate() {
 
                         @Override
                         public boolean evaluate(Object arg0) {
                             StudentCurricularPlan scp = (StudentCurricularPlan) arg0;
-                            return scp.getDegreeCurricularPlan().getIdInternal().equals(degreeCurricularPlanID);
+                            return scp.getDegreeCurricularPlan().getExternalId().equals(degreeCurricularPlanID);
                         }
                     });
 

@@ -43,7 +43,7 @@
 			if(userView.getUtilizador().startsWith("D"))
 			{
 				InfoStudentCurricularPlan infoScp = (InfoStudentCurricularPlan) ((List) studentCPList).get(0);
-				Integer personCode = infoScp.getInfoStudent().getInfoPerson().getIdInternal();
+				Integer personCode = infoScp.getInfoStudent().getInfoPerson().getExternalId();
 		%>
 		
 	    <html:img align="middle" src="<%= request.getContextPath() +"/person/viewPhoto.do?personCode="+personCode.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" />
@@ -55,7 +55,7 @@
 	<% } %>
     	<logic:iterate id="studentCP" name="studentCPList" >
         	<bean:define id="studentCPLink">
-        		<bean:write name="link"/><bean:write name="studentCP" property="idInternal" />
+        		<bean:write name="link"/><bean:write name="studentCP" property="externalId" />
         	</bean:define>
         	<bean:define id="linkDescription">
         		<bean:write name="studentCP" property="infoStudent.number" /> - 

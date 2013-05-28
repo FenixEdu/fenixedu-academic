@@ -22,7 +22,7 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
     static {
         ((ComparatorChain) CURRICULAR_COURSE_NAME_COMPARATOR).addComparator(new BeanComparator("curricularCourse.name", Collator
                 .getInstance()));
-        ((ComparatorChain) CURRICULAR_COURSE_NAME_COMPARATOR).addComparator(new BeanComparator("curricularCourse.idInternal"));
+        ((ComparatorChain) CURRICULAR_COURSE_NAME_COMPARATOR).addComparator(new BeanComparator("curricularCourse.externalId"));
     }
 
     public CurricularCourseScope() {
@@ -205,8 +205,8 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
         }
 
         @Override
-        public Integer getIdInternal() {
-            return curricularCourseScope.getIdInternal();
+        public Integer getExternalId() {
+            return curricularCourseScope.getExternalId();
         }
 
         @Override

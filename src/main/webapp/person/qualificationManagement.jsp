@@ -37,9 +37,9 @@
 	<td class="listClasses">
 		<div class="gen-button">
 			<html:link page="/qualificationForm.do?method=prepareEdit&amp;page=0" 
-					   paramId="idInternal" 
+					   paramId="externalId" 
 					   paramName="infoQualification" 
-					   paramProperty="idInternal">
+					   paramProperty="externalId">
 				<bean:message key="label.edit" />
 			</html:link>
 		</div>
@@ -47,9 +47,9 @@
 	<td class="listClasses">
 		<div class="gen-button">
 			<html:link page="/qualificationForm.do?method=delete&amp;page=0" 
-					   paramId="idInternal" 
+					   paramId="externalId" 
 					   paramName="infoQualification" 
-					   paramProperty="idInternal">
+					   paramProperty="externalId">
 				<bean:message key="label.delete" />
 			</html:link>
 		</div>
@@ -60,9 +60,9 @@
 <br />
 <div class="gen-button">
 	<html:link page="/qualificationForm.do?method=prepareEdit&amp;page=0" 
-			   paramId="infoPerson#idInternal" 
+			   paramId="infoPerson#externalId" 
 			   paramName="infoSiteQualifications" 
-			   paramProperty="infoPerson.idInternal" >
+			   paramProperty="infoPerson.externalId" >
 		<bean:message key="message.qualification.insert" />
 	</html:link>
 </div>

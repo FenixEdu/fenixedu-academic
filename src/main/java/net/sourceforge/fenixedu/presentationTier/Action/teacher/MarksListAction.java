@@ -45,7 +45,7 @@ public class MarksListAction extends FenixDispatchAction {
 
             request.setAttribute("siteView", siteView);
             request.setAttribute("objectCode", ((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse()
-                    .getIdInternal());
+                    .getExternalId());
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }

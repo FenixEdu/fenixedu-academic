@@ -8,7 +8,7 @@
 <br />
 <h2><bean:message key="label.edit" bundle="ACADEMIC_OFFICE_RESOURCES"/> <bean:message name="editUnitBean" property="unitType.name" bundle="ENUMERATION_RESOURCES" /></h2>
 
-<bean:define id="unitId">&oid=<bean:write name="editUnitBean" property="externalUnit.idInternal" /></bean:define>
+<bean:define id="unitId">&oid=<bean:write name="editUnitBean" property="externalUnit.externalId" /></bean:define>
 
 <html:messages property="error" message="true" id="errMsg" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<p>

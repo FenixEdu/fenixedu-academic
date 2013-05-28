@@ -14,8 +14,7 @@ public class EditExecutionCourseInfo {
     @Service
     public static InfoExecutionCourse run(InfoExecutionCourseEditor infoExecutionCourse) throws InvalidArgumentsServiceException {
 
-        final ExecutionCourse executionCourse =
-                RootDomainObject.getInstance().readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
+        final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(infoExecutionCourse.getExternalId());
         if (executionCourse == null) {
             throw new InvalidArgumentsServiceException();
         }

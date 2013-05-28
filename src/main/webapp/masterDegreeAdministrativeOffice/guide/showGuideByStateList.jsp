@@ -52,7 +52,7 @@
 						</html:link>
 					</td>
 					<td class="listClasses">
-						<bean:define id="personID" name="guide" property="infoPerson.idInternal" />
+						<bean:define id="personID" name="guide" property="infoPerson.externalId" />
 						<html:link page="<%= "/guideListingByYear.do?method=chooseGuideByPerson&page=0&personID="
 								+ pageContext.findAttribute("personID") %>">
 							<bean:write name="guide" property="infoPerson.nome" />

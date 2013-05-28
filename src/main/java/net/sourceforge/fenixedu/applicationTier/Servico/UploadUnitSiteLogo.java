@@ -60,7 +60,7 @@ public class UploadUnitSiteLogo {
         VirtualPathNode[] nodes =
                 { new VirtualPathNode("Site", "Site"), new VirtualPathNode("Unit", "Unit"),
                         new VirtualPathNode(site.getUnit().getNameWithAcronym(), site.getUnit().getNameWithAcronym()),
-                        new VirtualPathNode("Logo" + site.getIdInternal(), "Logo") };
+                        new VirtualPathNode("Logo" + site.getExternalId(), "Logo") };
 
         VirtualPath path = new VirtualPath();
         for (VirtualPathNode node : nodes) {

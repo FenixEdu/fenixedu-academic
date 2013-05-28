@@ -21,7 +21,7 @@ public class ResponsibleCoordinators {
         }
 
         for (final Coordinator coordinator : executionDegree.getCoordinatorsListSet()) {
-            coordinator.setResponsible(coordinatorsToBeResponsibleIDs.contains(coordinator.getIdInternal()));
+            coordinator.setResponsible(coordinatorsToBeResponsibleIDs.contains(coordinator.getExternalId()));
         }
     }
 }

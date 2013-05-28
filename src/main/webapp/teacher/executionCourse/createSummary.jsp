@@ -47,7 +47,7 @@ function check(e,v){
 		document.getElementById('instructionsButton').className="dblock";
 	</script>
 
-	<bean:define id="executionCourseID" name="summariesManagementBean" property="executionCourse.idInternal" />
+	<bean:define id="executionCourseID" name="summariesManagementBean" property="executionCourse.externalId" />
 	
 	<fr:hasMessages for="summariesManagementBeanWithSummary" type="conversion">
 		<p><span class="error0">			

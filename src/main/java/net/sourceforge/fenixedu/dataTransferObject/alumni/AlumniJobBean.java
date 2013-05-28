@@ -52,7 +52,7 @@ public class AlumniJobBean implements Serializable {
         setApplicationType(job.getJobApplicationType());
         setContractType(job.getContractType());
         setSalaryType(job.getSalaryType());
-        setJobId(job.getIdInternal());
+        setJobId(job.getExternalId());
         setSalary(job.getSalary());
     }
 

@@ -10,9 +10,9 @@
 	<h2><bean:message key="label.student.enrollment.enrolIn" bundle="ACADEMIC_OFFICE_RESOURCES" /> <bean:message  key="<%=cycleTypeToEnrolQualifiedName.toString()%>" bundle="ENUMERATION_RESOURCES"/></h2>
 	
 	
-	<bean:define id="studentCurricularPlanId" name="cycleEnrolmentBean" property="studentCurricularPlan.idInternal" />
-	<bean:define id="registrationId" name="cycleEnrolmentBean" property="studentCurricularPlan.registration.idInternal" />
-	<bean:define id="executionPeriodId" name="cycleEnrolmentBean" property="executionPeriod.idInternal" />
+	<bean:define id="studentCurricularPlanId" name="cycleEnrolmentBean" property="studentCurricularPlan.externalId" />
+	<bean:define id="registrationId" name="cycleEnrolmentBean" property="studentCurricularPlan.registration.externalId" />
+	<bean:define id="executionPeriodId" name="cycleEnrolmentBean" property="executionPeriod.externalId" />
 	<bean:define id="withRules" name="withRules" />
 	<bean:define id="process" name="process" />  
 	
@@ -33,7 +33,7 @@
 	
 		<input type="hidden" name="method" />
 		<input type="hidden" name="withRules" value="<%=withRules.toString()%>"/>
-		<input type="hidden" name="processId" value="<%= ((MobilityIndividualApplicationProcess) process).getIdInternal().toString() %>"/>
+		<input type="hidden" name="processId" value="<%= ((MobilityIndividualApplicationProcess) process).getExternalId().toString() %>"/>
 		<logic:messagesPresent message="true">
 			<div class="error0" style="padding: 0.5em;">
 			<html:messages id="messages" message="true" bundle="APPLICATION_RESOURCES">

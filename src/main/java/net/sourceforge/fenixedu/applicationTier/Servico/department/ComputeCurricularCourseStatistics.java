@@ -131,7 +131,7 @@ public class ComputeCurricularCourseStatistics {
 
             // Add to result
             result.format("%s\t%s\t%d\t%s\t%d\t%s\t%d\t%d\t%d\t%d\t%d\n", curricularCourse.getCode(), curricularCourse.getName(),
-                    executionCourse.getIdInternal(), executionCourse.getSigla(), enrolmentDCP.getIdInternal(),
+                    executionCourse.getExternalId(), executionCourse.getSigla(), enrolmentDCP.getExternalId(),
                     enrolmentDCP.getName(), semester, year, firstEnrolledCount, secondEnrolledCount, dcpEnrolments.size());
         }
     }

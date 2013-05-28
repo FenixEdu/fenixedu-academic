@@ -21,7 +21,7 @@ public class InsertExecutionCourseAtExecutionPeriod {
 
         final ExecutionSemester executionSemester =
                 RootDomainObject.getInstance().readExecutionSemesterByOID(
-                        infoExecutionCourse.getInfoExecutionPeriod().getIdInternal());
+                        infoExecutionCourse.getInfoExecutionPeriod().getExternalId());
         if (executionSemester == null) {
             throw new DomainException("message.nonExistingExecutionPeriod");
         }

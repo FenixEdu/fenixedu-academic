@@ -21,7 +21,7 @@
     </p>
 </div>
 
-<bean:define id="executionCourseId" name="executionCourse" property="idInternal"/>
+<bean:define id="executionCourseId" name="executionCourse" property="externalId"/>
 
 <fr:form action="<%= "/generateArchive.do?method=generate&amp;executionCourseID=" + executionCourseId %>">
     <fr:edit id="options" name="options" schema="executionCourse.archive.options">

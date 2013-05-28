@@ -25,9 +25,9 @@ public class ReadCurricularCourse {
      * 
      * @throws ExcepcaoPersistencia
      */
-    protected InfoCurricularCourse run(Integer idInternal) throws FenixServiceException {
+    protected InfoCurricularCourse run(Integer externalId) throws FenixServiceException {
         CurricularCourse curricularCourse;
-        curricularCourse = (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(idInternal);
+        curricularCourse = (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(externalId);
 
         if (curricularCourse == null) {
             throw new NonExistingServiceException();
@@ -41,15 +41,15 @@ public class ReadCurricularCourse {
     private static final ReadCurricularCourse serviceInstance = new ReadCurricularCourse();
 
     @Service
-    public static InfoCurricularCourse runReadCurricularCourse(Integer idInternal) throws FenixServiceException,
+    public static InfoCurricularCourse runReadCurricularCourse(Integer externalId) throws FenixServiceException,
             NotAuthorizedException {
         try {
-            ManagerOrSeminariesCoordinatorFilter.instance.execute(idInternal);
-            return serviceInstance.run(idInternal);
+            ManagerOrSeminariesCoordinatorFilter.instance.execute(externalId);
+            return serviceInstance.run(externalId);
         } catch (NotAuthorizedException ex1) {
             try {
                 OperatorAuthorizationFilter.instance.execute();
-                return serviceInstance.run(idInternal);
+                return serviceInstance.run(externalId);
             } catch (NotAuthorizedException ex2) {
                 throw ex2;
             }

@@ -76,8 +76,8 @@
 			<h:dataTable value="#{evaluationManagementBackingBean.notSubmitedMarks}" var="attend" headerClass="listClasses-header" columnClasses="listClasses">
 				<h:column>
 					<f:facet name="header"><h:outputText value="#{bundle['label.toSubmit']}"/></f:facet>
-					<h:outputText rendered="#{(!empty attend.finalMark) && (!empty attend.finalMark.mark)}" escape="false" value="<input alt='input.selectedMarks' type='checkbox' id='selectedMarks' name='selectedMarks' checked='checked' value='#{attend.idInternal}'/>"/>
-					<h:outputText rendered="#{(empty attend.finalMark) || (empty attend.finalMark.mark)}" escape="false" value="<input alt='input.selectedMarks' type='checkbox' id='selectedMarks' name='selectedMarks' value='#{attend.idInternal}'/>"/>				
+					<h:outputText rendered="#{(!empty attend.finalMark) && (!empty attend.finalMark.mark)}" escape="false" value="<input alt='input.selectedMarks' type='checkbox' id='selectedMarks' name='selectedMarks' checked='checked' value='#{attend.externalId}'/>"/>
+					<h:outputText rendered="#{(empty attend.finalMark) || (empty attend.finalMark.mark)}" escape="false" value="<input alt='input.selectedMarks' type='checkbox' id='selectedMarks' name='selectedMarks' value='#{attend.externalId}'/>"/>				
 				</h:column>
 				<h:column>
 					<f:facet name="header"><h:outputText value="#{bundle['label.number']}"/></f:facet>

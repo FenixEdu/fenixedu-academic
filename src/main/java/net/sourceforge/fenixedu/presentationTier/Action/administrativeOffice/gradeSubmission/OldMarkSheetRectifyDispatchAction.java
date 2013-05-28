@@ -89,10 +89,10 @@ public class OldMarkSheetRectifyDispatchAction extends OldMarkSheetCreateDispatc
 
         StringBuilder stringBuilder = new StringBuilder();
 
-        stringBuilder.append("&epID=").append(createBean.getExecutionPeriod().getIdInternal());
-        stringBuilder.append("&dID=").append(createBean.getDegree().getIdInternal());
-        stringBuilder.append("&dcpID=").append(createBean.getDegreeCurricularPlan().getIdInternal());
-        stringBuilder.append("&ccID=").append(createBean.getCurricularCourse().getIdInternal());
+        stringBuilder.append("&epID=").append(createBean.getExecutionPeriod().getExternalId());
+        stringBuilder.append("&dID=").append(createBean.getDegree().getExternalId());
+        stringBuilder.append("&dcpID=").append(createBean.getDegreeCurricularPlan().getExternalId());
+        stringBuilder.append("&ccID=").append(createBean.getCurricularCourse().getExternalId());
 
         if (createBean.getTeacherId() != null) {
             stringBuilder.append("&tn=").append(createBean.getTeacherId());

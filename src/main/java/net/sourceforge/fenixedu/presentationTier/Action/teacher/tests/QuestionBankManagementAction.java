@@ -190,7 +190,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
 
         AssociateParent.run(groupElementBean.getParent(), groupElementBean.getChild());
 
-        request.setAttribute("oid", groupElementBean.getChild().getIdInternal());
+        request.setAttribute("oid", groupElementBean.getChild().getExternalId());
 
         return editTestElement(mapping, form, request, response);
     }
@@ -201,7 +201,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
 
         DisassociateParent.run(groupElementBean.getParent(), groupElementBean.getChild());
 
-        request.setAttribute("oid", groupElementBean.getChild().getIdInternal());
+        request.setAttribute("oid", groupElementBean.getChild().getExternalId());
 
         return editTestElement(mapping, form, request, response);
     }
@@ -296,7 +296,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
             HttpServletResponse response) throws  FenixServiceException {
         NewQuestion question = (NewQuestion) getMetaObject("create-grade");
 
-        request.setAttribute("oid", question.getIdInternal());
+        request.setAttribute("oid", question.getExternalId());
 
         return this.editTestElement(mapping, form, request, response);
     }
@@ -432,7 +432,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
             HttpServletResponse response) throws  FenixServiceException {
         NewQuestionGroup questionGroup = (NewQuestionGroup) getMetaObject("createQuestionGroup");
 
-        request.setAttribute("oid", questionGroup.getIdInternal());
+        request.setAttribute("oid", questionGroup.getExternalId());
 
         return this.editTestElement(mapping, form, request, response);
     }
@@ -457,7 +457,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
                 CreateAtomicQuestion.run(atomicQuestionTypeBean.getParentQuestionGroup(),
                         atomicQuestionTypeBean.getQuestionType());
 
-        request.setAttribute("oid", atomicQuestion.getIdInternal());
+        request.setAttribute("oid", atomicQuestion.getExternalId());
 
         return this.editTestElement(mapping, form, request, response);
     }
@@ -496,7 +496,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
 
         DeleteCorrector.run(corrector);
 
-        request.setAttribute("oid", atomicQuestion.getIdInternal());
+        request.setAttribute("oid", atomicQuestion.getExternalId());
 
         return this.editTestElement(mapping, form, request, response);
     }
@@ -531,7 +531,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
 
         DeleteValidator.run(atomicQuestion);
 
-        request.setAttribute("oid", atomicQuestion.getIdInternal());
+        request.setAttribute("oid", atomicQuestion.getExternalId());
 
         return this.editTestElement(mapping, form, request, response);
     }
@@ -544,7 +544,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
 
         DeletePreCondition.run(question);
 
-        request.setAttribute("oid", question.getIdInternal());
+        request.setAttribute("oid", question.getExternalId());
 
         return this.editTestElement(mapping, form, request, response);
     }
@@ -568,7 +568,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
 
         NewChoice choice = (NewChoice) rootDomainObject.readNewTestElementByOID(choiceId);
 
-        request.setAttribute("oid", choice.getMultipleChoiceQuestion().getIdInternal());
+        request.setAttribute("oid", choice.getMultipleChoiceQuestion().getExternalId());
 
         DeleteChoice.run(choice);
 
@@ -583,7 +583,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
 
         DeleteGrade.run(question);
 
-        request.setAttribute("oid", question.getIdInternal());
+        request.setAttribute("oid", question.getExternalId());
 
         return this.editTestElement(mapping, form, request, response);
     }
@@ -617,10 +617,10 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
         if (parentQuestionGroupId != null) {
             request.setAttribute("oid", parentQuestionGroupId);
         } else if (parentQuestionGroups.size() == 1) {
-            request.setAttribute("oid", parentQuestionGroups.get(0).getIdInternal());
+            request.setAttribute("oid", parentQuestionGroups.get(0).getExternalId());
             return editTestElement(mapping, form, request, response);
         } else {
-            request.setAttribute("oid", questionBank.getIdInternal());
+            request.setAttribute("oid", questionBank.getExternalId());
         }
 
         return this.editTestElement(mapping, form, request, response);
@@ -635,7 +635,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
 
         SwitchPosition.run(choice, relativePosition);
 
-        request.setAttribute("oid", choice.getMultipleChoiceQuestion().getIdInternal());
+        request.setAttribute("oid", choice.getMultipleChoiceQuestion().getExternalId());
         return this.editTestElement(mapping, form, request, response);
     }
 
@@ -648,7 +648,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
 
         SwitchPosition.run(corrector, relativePosition);
 
-        request.setAttribute("oid", corrector.getAtomicQuestion().getIdInternal());
+        request.setAttribute("oid", corrector.getAtomicQuestion().getExternalId());
         return this.editTestElement(mapping, form, request, response);
     }
 

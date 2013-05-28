@@ -21,7 +21,7 @@ public class EditSite {
     protected Boolean run(InfoSite infoSiteOld, final String alternativeSite, final String mail, final String initialStatement,
             final String introduction) throws FenixServiceException {
         final ExecutionCourse executionCourse =
-                RootDomainObject.getInstance().readExecutionCourseByOID(infoSiteOld.getInfoExecutionCourse().getIdInternal());
+                RootDomainObject.getInstance().readExecutionCourseByOID(infoSiteOld.getInfoExecutionCourse().getExternalId());
         final ExecutionCourseSite site = executionCourse.getSite();
 
         site.edit(initialStatement, introduction, mail, alternativeSite);
@@ -36,7 +36,7 @@ public class EditSite {
     @Service
     public static Boolean runEditSite(InfoSite infoSiteOld, String alternativeSite, String mail, String initialStatement,
             String introduction) throws FenixServiceException, NotAuthorizedException {
-        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(infoSiteOld.getInfoExecutionCourse().getIdInternal());
+        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(infoSiteOld.getInfoExecutionCourse().getExternalId());
         return serviceInstance.run(infoSiteOld, alternativeSite, mail, initialStatement, introduction);
     }
 

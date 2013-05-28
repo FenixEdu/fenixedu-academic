@@ -25,7 +25,7 @@
 					<fr:property name="link(view)"
 						value="<%="/viewInquiriesResults.do?method=selectExecutionCourse&executionCourseID="+executionCourseID%>" />
 					<fr:property name="key(view)" value="label.view" />
-					<fr:property name="param(view)" value="oid/executionDegreeID,degreeCurricularPlan.idInternal/degreeCurricularPlanID" />
+					<fr:property name="param(view)" value="oid/executionDegreeID,degreeCurricularPlan.externalId/degreeCurricularPlanID" />
 				</fr:layout>
 		</fr:view></td></tr>
 	</logic:iterate>

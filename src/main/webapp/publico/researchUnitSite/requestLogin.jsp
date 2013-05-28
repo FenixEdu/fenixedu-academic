@@ -19,7 +19,7 @@
 <logic:notPresent name="loginBean">
 	<logic:present name="loginRequest">
 		<bean:define id="unitNames" name="loginRequest" property="user.person.workingResearchUnitNames" toScope="request" type="java.lang.String"/>
-		<bean:define id="requestID" name="loginRequest" property="idInternal"/>
+		<bean:define id="requestID" name="loginRequest" property="externalId"/>
 		<p class="mbottom0"><bean:message key="label.loginRequest.introduction" bundle="SITE_RESOURCES" arg0="<%= unitNames%>"/></p>
 		<p class="mtop0"><bean:message key="label.loginRequest.docID" bundle="SITE_RESOURCES"/></p>
 		<p class="mbottom05">

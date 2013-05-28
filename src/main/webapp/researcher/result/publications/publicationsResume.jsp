@@ -9,7 +9,7 @@
 <bean:define id="currentSchema" name="currentSchema" scope="request" type="java.lang.String"/>
 <table class="publications mtop1">
 <logic:iterate id="result" name="results" scope="request">
-        <bean:define id="resultId" name="result" property="idInternal"/>
+        <bean:define id="resultId" name="result" property="externalId"/>
 	<tr>
 	    <td class="priority">
 	    <logic:present name="preferredSetting">

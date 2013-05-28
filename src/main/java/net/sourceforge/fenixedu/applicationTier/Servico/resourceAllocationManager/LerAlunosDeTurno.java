@@ -25,7 +25,7 @@ public class LerAlunosDeTurno {
     public static List<InfoStudent> run(ShiftKey keyTurno) {
 
         final ExecutionCourse executionCourse =
-                RootDomainObject.getInstance().readExecutionCourseByOID(keyTurno.getInfoExecutionCourse().getIdInternal());
+                RootDomainObject.getInstance().readExecutionCourseByOID(keyTurno.getInfoExecutionCourse().getExternalId());
         final Shift shift = executionCourse.findShiftByName(keyTurno.getShiftName());
 
         List<Registration> alunos = shift.getStudents();

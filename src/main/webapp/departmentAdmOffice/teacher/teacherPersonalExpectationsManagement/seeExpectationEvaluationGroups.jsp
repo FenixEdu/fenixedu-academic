@@ -73,7 +73,7 @@
 							</logic:notEmpty>
 						</td>
 						<td>																					
-							<bean:define id="createGroupURL">/defineExpectationEvaluationGroups.do?method=manageGroups&amp;teacherID=<bean:write name="teacher" property="idInternal"/>&amp;executionYearID=<bean:write name="executionYear" property="idInternal"/></bean:define>														
+							<bean:define id="createGroupURL">/defineExpectationEvaluationGroups.do?method=manageGroups&amp;teacherID=<bean:write name="teacher" property="externalId"/>&amp;executionYearID=<bean:write name="executionYear" property="externalId"/></bean:define>														
 							<html:link page="<%= createGroupURL %>">
 								<bean:message key="label.manage.groups" bundle="DEPARTMENT_ADM_OFFICE_RESOURCES"/>
 							</html:link>						

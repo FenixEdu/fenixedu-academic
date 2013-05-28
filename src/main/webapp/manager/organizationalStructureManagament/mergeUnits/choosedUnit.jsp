@@ -42,12 +42,12 @@
 		<logic:notEmpty name="earthUnit">		
 					
 			<p class="mtop15 mbottom05"><strong><bean:message key="label.choose.destination.unit.official" bundle="MANAGER_RESOURCES"/></strong></p>	
-			<bean:define id="officialURL">/manager/unitsMerge.do?method=mergeWithOfficial&amp;fromUnitID=<bean:write name="externalUnit" property="idInternal"/></bean:define>
+			<bean:define id="officialURL">/manager/unitsMerge.do?method=mergeWithOfficial&amp;fromUnitID=<bean:write name="externalUnit" property="externalId"/></bean:define>
 			<un:tree initialUnit="earthUnit" unitParamName="unitID" path="<%= officialURL %>" state="true"/>				
 
 			<logic:notEmpty name="externalInstitutionUnit">
 				<p class="mtop15 mbottom05"><strong><bean:message key="label.choose.destination.unit.not.official" bundle="MANAGER_RESOURCES"/></strong></p>					
-				<bean:define id="noOfficialURL">/manager/unitsMerge.do?method=mergeWithNoOfficialUnits&amp;fromUnitID=<bean:write name="externalUnit" property="idInternal"/></bean:define>		
+				<bean:define id="noOfficialURL">/manager/unitsMerge.do?method=mergeWithNoOfficialUnits&amp;fromUnitID=<bean:write name="externalUnit" property="externalId"/></bean:define>		
 				<un:tree initialUnit="externalInstitutionUnit" unitParamName="unitID" path="<%= noOfficialURL %>" state="true"/>
 			</logic:notEmpty>
 

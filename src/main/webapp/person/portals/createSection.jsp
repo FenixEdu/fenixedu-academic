@@ -9,7 +9,7 @@
 
 <html:xhtml/>
 
-<bean:define id="cid" name="container" property="idInternal"/>
+<bean:define id="cid" name="container" property="externalId"/>
 
 <fr:edit id="createSection" name="bean" schema="create.section.for.container" action="<%= "/contentManagement.do?method=createSection&contentId=" + cid%>"> 
 	<fr:layout name="tabular">

@@ -89,7 +89,7 @@ public class RegistrationDA extends StudentRegistrationDA {
         final Registration registration = getAndSetRegistration(request);
 
         request.setAttribute("registrationCurriculumBean", getRegistrationCurriculumBeanFromViewState());
-        request.setAttribute("degreeCurricularPlanID", registration.getLastDegreeCurricularPlan().getIdInternal());
+        request.setAttribute("degreeCurricularPlanID", registration.getLastDegreeCurricularPlan().getExternalId());
 
         return mapping.findForward("chooseCycleForViewRegistrationCurriculum");
     }
@@ -193,7 +193,7 @@ public class RegistrationDA extends StudentRegistrationDA {
             return mapping.findForward("registrationConclusion");
         }
 
-        request.setAttribute("registrationId", registrationConclusionBean.getRegistration().getIdInternal());
+        request.setAttribute("registrationId", registrationConclusionBean.getRegistration().getExternalId());
         return visualizeRegistration(mapping, form, request, response);
 
     }
@@ -297,7 +297,7 @@ public class RegistrationDA extends StudentRegistrationDA {
         final AddAttendsBean addAttendsBean = (AddAttendsBean) getObjectFromViewState("addAttendsBean");
         final ExecutionCourse executionCourse = addAttendsBean.getExecutionCourse();
 
-        WriteStudentAttendingCourse.runWriteStudentAttendingCourse( registration, executionCourse.getIdInternal() );
+        WriteStudentAttendingCourse.runWriteStudentAttendingCourse( registration, executionCourse.getExternalId() );
 
         return viewAttends(mapping, actionForm, request, response);
     }

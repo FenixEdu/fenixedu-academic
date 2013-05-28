@@ -185,12 +185,12 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
 
             if (name != null && name.length() > 0 && !room.getNome().equalsIgnoreCase(name)) {
                 matchesCriteria = false;
-            } else if (building != null && !room.getBuilding().getIdInternal().equals(building)) {
+            } else if (building != null && !room.getBuilding().getExternalId().equals(building)) {
                 matchesCriteria = false;
             } else if (floor != null && !room.getPiso().equals(floor)) {
                 matchesCriteria = false;
             } else if (type != null && type.length() > 0
-                    && (room.getTipo() == null || !room.getTipo().getIdInternal().toString().equals(type))) {
+                    && (room.getTipo() == null || !room.getTipo().getExternalId().toString().equals(type))) {
                 matchesCriteria = false;
             } else if (normalCapacity != null && room.getCapacidadeNormal().intValue() < normalCapacity.intValue()) {
                 matchesCriteria = false;
@@ -227,7 +227,7 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
             final Set<Integer> selectedRoomIDs) {
         final Collection<AllocatableSpace> rooms = new ArrayList<AllocatableSpace>(selectedRoomIDs.size());
         for (final AllocatableSpace room : allRooms) {
-            if (selectedRoomIDs.contains(room.getIdInternal())) {
+            if (selectedRoomIDs.contains(room.getExternalId())) {
                 rooms.add(room);
             }
         }
@@ -247,7 +247,7 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
         final List<Building> buildings = (List<Building>) getBuildings();
         final List<SelectItem> buildingSelectItems = new ArrayList<SelectItem>();
         for (final Building building : buildings) {
-            buildingSelectItems.add(new SelectItem(building.getIdInternal().toString(), building.getName()));
+            buildingSelectItems.add(new SelectItem(building.getExternalId().toString(), building.getName()));
         }
         Collections.sort(buildingSelectItems, SELECT_ITEM_LABEL_COMPARATOR);
         return buildingSelectItems;
@@ -259,7 +259,7 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
         for (RoomClassification classification : RoomClassification
                 .sortByRoomClassificationAndCode(roomClassificationsForEducation)) {
             if (classification.hasParentRoomClassification()) {
-                roomTypeSelectItems.add(new SelectItem(String.valueOf(classification.getIdInternal()), classification
+                roomTypeSelectItems.add(new SelectItem(String.valueOf(classification.getExternalId()), classification
                         .getPresentationCode() + " - " + classification.getName().getContent(Language.getLanguage())));
             }
         }
@@ -351,12 +351,12 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
         CurricularYear curricularYear = CurricularYear.readByYear(year);
 
         final Map<String, String> linkParameters = new HashMap<String, String>();
-        linkParameters.put("executionCourseID", executionCourse.getIdInternal().toString());
-        linkParameters.put("evaluationID", writtenEvaluation.getIdInternal().toString());
-        linkParameters.put("executionPeriodID", executionSemester.getIdInternal().toString());
-        linkParameters.put("executionDegreeID", executionDegree.getIdInternal().toString());
+        linkParameters.put("executionCourseID", executionCourse.getExternalId().toString());
+        linkParameters.put("evaluationID", writtenEvaluation.getExternalId().toString());
+        linkParameters.put("executionPeriodID", executionSemester.getExternalId().toString());
+        linkParameters.put("executionDegreeID", executionDegree.getExternalId().toString());
         if (curricularYear != null) {
-            linkParameters.put("curricularYearID", curricularYear.getIdInternal().toString());
+            linkParameters.put("curricularYearID", curricularYear.getExternalId().toString());
         }
         linkParameters.put("evaluationTypeClassname", writtenEvaluation.getClass().getName());
         linkParameters.put("academicInterval", getAcademicInterval());

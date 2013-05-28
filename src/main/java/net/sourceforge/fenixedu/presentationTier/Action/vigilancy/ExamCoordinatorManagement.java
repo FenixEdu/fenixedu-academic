@@ -77,11 +77,11 @@ public class ExamCoordinatorManagement extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         String oid = request.getParameter("oid");
-        Integer idInternal = Integer.valueOf(oid);
+        Integer externalId = Integer.valueOf(oid);
         String departmentId = request.getParameter("deparmentId");
         String unitId = request.getParameter("unitId");
 
-        ExamCoordinator coordinator = (ExamCoordinator) RootDomainObject.readDomainObjectByOID(ExamCoordinator.class, idInternal);
+        ExamCoordinator coordinator = (ExamCoordinator) RootDomainObject.readDomainObjectByOID(ExamCoordinator.class, externalId);
 
         DeleteExamCoordinator.run(coordinator);
 

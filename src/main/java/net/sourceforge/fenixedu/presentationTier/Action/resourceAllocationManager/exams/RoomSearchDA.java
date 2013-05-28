@@ -150,7 +150,7 @@ public class RoomSearchDA extends FenixContextDispatchAction {
             int i = 0;
             while (iter.hasNext()) {
                 InfoRoom elem = iter.next();
-                availableRoomId[i] = elem.getIdInternal().toString();
+                availableRoomId[i] = elem.getExternalId().toString();
             }
             request.setAttribute(PresentationConstants.AVAILABLE_ROOMS_ID, availableRoomId);
 

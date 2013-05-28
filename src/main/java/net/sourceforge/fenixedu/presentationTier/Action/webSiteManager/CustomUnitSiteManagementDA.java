@@ -217,7 +217,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
         UnitSiteBanner banner = getBanner(request);
 
         if (banner != null) {
-            request.setAttribute("editBanner" + banner.getIdInternal(), true);
+            request.setAttribute("editBanner" + banner.getExternalId(), true);
             request.setAttribute("editBannerBean", new BannerBean(banner));
         }
 
@@ -229,7 +229,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
         Integer bannerId = getId(request.getParameter("bannerID"));
 
         for (UnitSiteBanner banner : site.getBanners()) {
-            if (banner.getIdInternal().equals(bannerId)) {
+            if (banner.getExternalId().equals(bannerId)) {
                 return banner;
             }
         }
@@ -276,7 +276,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
         Integer bannerId = getId(request.getParameter("bannerID"));
 
         for (UnitSiteBanner banner : site.getBanners()) {
-            if (banner.getIdInternal().equals(bannerId)) {
+            if (banner.getExternalId().equals(bannerId)) {
                 DeleteUnitSiteBanner.runDeleteUnitSiteBanner(site, banner);
                 break;
             }
@@ -335,7 +335,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
         Integer linkId = getId(request.getParameter("linkID"));
 
         for (UnitSiteLink link : site.getTopLinks()) {
-            if (link.getIdInternal().equals(linkId)) {
+            if (link.getExternalId().equals(linkId)) {
                 DeleteUnitSiteLink.runDeleteUnitSiteLink(site, link);
                 break;
             }
@@ -370,7 +370,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
         Integer linkId = getId(request.getParameter("linkID"));
 
         for (UnitSiteLink link : site.getFooterLinks()) {
-            if (link.getIdInternal().equals(linkId)) {
+            if (link.getExternalId().equals(linkId)) {
                 DeleteUnitSiteLink.runDeleteUnitSiteLink(site, link);
                 break;
             }
@@ -493,7 +493,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
     }
 
     private Person getSelectedPerson(HttpServletRequest request) {
-        Integer id = getIdInternal(request, "personID");
+        Integer id = getExternalId(request, "personID");
         if (id != null) {
             return (Person) RootDomainObject.getInstance().readPartyByOID(id);
         }
@@ -580,7 +580,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
     }
 
     private Unit getTargetUnit(HttpServletRequest request) {
-        Integer id = getIdInternal(request, "unitID");
+        Integer id = getExternalId(request, "unitID");
         return (Unit) RootDomainObject.getInstance().readPartyByOID(id);
     }
 
@@ -627,7 +627,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
     }
 
     private Function getTargetFunction(HttpServletRequest request) {
-        Integer id = getIdInternal(request, "functionID");
+        Integer id = getExternalId(request, "functionID");
         return (Function) RootDomainObject.getInstance().readAccountabilityTypeByOID(id);
     }
 
@@ -685,7 +685,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
     }
 
     private PersonFunction getPersonFunction(HttpServletRequest request) {
-        Integer id = getIdInternal(request, "personFunctionID");
+        Integer id = getExternalId(request, "personFunctionID");
         return (PersonFunction) RootDomainObject.getInstance().readAccountabilityByOID(id);
     }
 
@@ -717,7 +717,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 
         Integer managerId = getId(request.getParameter("managerID"));
         for (Person manager : site.getManagers()) {
-            if (manager.getIdInternal().equals(managerId)) {
+            if (manager.getExternalId().equals(managerId)) {
                 try {
                     removeUnitSiteManager(site, manager);
                 } catch (DomainException e) {

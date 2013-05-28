@@ -23,8 +23,8 @@ public class DelegateCurricularCourseStudentsGroup extends LeafGroup {
     private final Integer executionYearId;
 
     public DelegateCurricularCourseStudentsGroup(CurricularCourse curricularCourse, ExecutionYear executionYear) {
-        curricularCourseId = curricularCourse.getIdInternal();
-        executionYearId = executionYear.getIdInternal();
+        curricularCourseId = curricularCourse.getExternalId();
+        executionYearId = executionYear.getExternalId();
     }
 
     @Override

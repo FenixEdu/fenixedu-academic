@@ -830,7 +830,7 @@
 	</slot>
 	<slot name="name" layout="link" key="label.testModel.name">
 		<property name="linkFormat"
-			value="/tests/testModels.do?method=editTestModel&amp;oid=${idInternal}" />
+			value="/tests/testModels.do?method=editTestModel&amp;oid=${externalId}" />
 		<property name="useParent" value="true" />
 		<property name="contextRelative" value="true" />
 		<property name="moduleRelative" value="true" />
@@ -1070,7 +1070,7 @@
 	bundle="TESTS_RESOURCES">
 	<slot name="name" layout="link" key="label.testModel.name">
 		<property name="linkFormat"
-			value="/tests/tests.do?method=viewTestGroup&amp;oid=${idInternal}" />
+			value="/tests/tests.do?method=viewTestGroup&amp;oid=${externalId}" />
 		<property name="useParent" value="true" />
 		<property name="contextRelative" value="true" />
 		<property name="moduleRelative" value="true" />
@@ -1100,7 +1100,7 @@
 	bundle="TESTS_RESOURCES">
 	<slot name="name" layout="link" key="label.testModel.name">
 		<property name="linkFormat"
-			value="/tests/tests.do?method=viewTestGroup&amp;oid=${idInternal}" />
+			value="/tests/tests.do?method=viewTestGroup&amp;oid=${externalId}" />
 		<property name="useParent" value="true" />
 		<property name="contextRelative" value="true" />
 		<property name="moduleRelative" value="true" />
@@ -1129,7 +1129,7 @@
 	bundle="TESTS_RESOURCES">
 	<slot name="person" layout="link">
 		<property name="linkFormat"
-			value="/tests/tests.do?method=correctByPerson&amp;testGroupId=${test.testGroup.idInternal}&amp;personId=${person.idInternal}" />
+			value="/tests/tests.do?method=correctByPerson&amp;testGroupId=${test.testGroup.externalId}&amp;personId=${person.externalId}" />
 		<property name="subLayout" value="format-name-number" />
 		<property name="useParent" value="true" />
 		<property name="contextRelative" value="true" />
@@ -1163,7 +1163,7 @@
 	bundle="TESTS_RESOURCES">
 	<slot name="position" layout="link">
 		<property name="linkFormat"
-			value="/tests/tests.do?method=viewTest&amp;oid=${idInternal}" />
+			value="/tests/tests.do?method=viewTest&amp;oid=${externalId}" />
 		<property name="useParent" value="true" />
 		<property name="contextRelative" value="true" />
 		<property name="moduleRelative" value="true" />
@@ -1176,7 +1176,7 @@
 	<slot name="executionCourse.nome" key="label.executionCourse.name" />
 	<slot name="name" layout="link" key="label.testModel.name">
 		<property name="linkFormat"
-			value="/tests/tests.do?method=viewTest&amp;oid=${idInternal}" />
+			value="/tests/tests.do?method=viewTest&amp;oid=${externalId}" />
 		<property name="useParent" value="true" />
 		<property name="contextRelative" value="true" />
 		<property name="moduleRelative" value="true" />

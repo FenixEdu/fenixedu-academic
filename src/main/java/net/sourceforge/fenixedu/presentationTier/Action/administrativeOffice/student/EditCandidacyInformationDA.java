@@ -48,7 +48,7 @@ public class EditCandidacyInformationDA extends FenixDispatchAction {
     private PersonalInformationBean getPersonalInformationBean(HttpServletRequest request) {
         ChooseRegistrationOrPhd chooseRegistrationOrPhd = getRenderedObject("choosePhdOrRegistration");
         if (chooseRegistrationOrPhd.getPhdRegistrationWrapper() == null) {
-            request.setAttribute("studentID", chooseRegistrationOrPhd.getStudent().getIdInternal());
+            request.setAttribute("studentID", chooseRegistrationOrPhd.getStudent().getExternalId());
             return null;
         }
         ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
@@ -125,7 +125,7 @@ public class EditCandidacyInformationDA extends FenixDispatchAction {
             return mapping.findForward("editCandidacyInformation");
         }
 
-        request.setAttribute("studentID", personalInformationBean.getStudent().getIdInternal());
+        request.setAttribute("studentID", personalInformationBean.getStudent().getExternalId());
         return mapping.findForward("visualizeStudent");
     }
 

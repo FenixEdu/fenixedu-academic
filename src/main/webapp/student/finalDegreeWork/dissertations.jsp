@@ -16,7 +16,7 @@
 	<html:form action="/finalDegreeWorkCandidacy" focus="executionDegreeOID">
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="somemethod"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
-		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" property="idInternal"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.externalId" property="externalId"/>
 		<p class="mbottom05">
 			<bean:message key="label.finalDegreeWork.dissertations.info"/>:
 		</p>
@@ -24,7 +24,7 @@
 			<html:select bundle="HTMLALT_RESOURCES" property="executionYearOID" size="1"
 						 onchange='this.form.method.value=\'selectDissertationsExecutionYear\';this.form.page.value=\'0\';this.form.submit();'>
 				<html:option value=""><!-- w3c complient--></html:option>
-				<html:options property="idInternal"
+				<html:options property="externalId"
 							  labelProperty="nextYearsYearString"
 							  collection="executionYears" />
 			</html:select>
@@ -33,7 +33,7 @@
 			<html:select bundle="HTMLALT_RESOURCES" property="executionDegreeOID" size="1"
 						 onchange='this.form.method.value=\'selectDissertationsExecutionDegree\';this.form.page.value=\'0\';this.form.submit();'>
 				<html:option value=""><!-- w3c complient--></html:option>
-				<html:options property="idInternal"
+				<html:options property="externalId"
 							  labelProperty="infoDegreeCurricularPlan.label"
 							  collection="infoExecutionDegrees" />
 			</html:select>

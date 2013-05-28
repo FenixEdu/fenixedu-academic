@@ -69,12 +69,12 @@ public class FinalDegreeWorkProposalHeader extends InfoObject {
     }
 
     @Override
-    public Integer getIdInternal() {
-        return getProposal().getIdInternal();
+    public Integer getExternalId() {
+        return getProposal().getExternalId();
     }
 
     @Override
-    public void setIdInternal(Integer integer) {
+    public void setExternalId(Integer integer) {
         throw new Error("Method should not be called!");
     }
 
@@ -111,7 +111,7 @@ public class FinalDegreeWorkProposalHeader extends InfoObject {
      * @return Returns the coorientatorOID.
      */
     public Integer getCoorientatorOID() {
-        return getProposal().getCoorientator().getIdInternal();
+        return getProposal().getCoorientator().getExternalId();
     }
 
     /**
@@ -125,7 +125,7 @@ public class FinalDegreeWorkProposalHeader extends InfoObject {
      * @return Returns the orientatorOID.
      */
     public Integer getOrientatorOID() {
-        return getProposal().getOrientator().getIdInternal();
+        return getProposal().getOrientator().getExternalId();
     }
 
     /**
@@ -183,7 +183,7 @@ public class FinalDegreeWorkProposalHeader extends InfoObject {
     }
 
     public Integer getExecutionDegreeOID() {
-        return getExecutionDegree().getIdInternal();
+        return getExecutionDegree().getExternalId();
     }
 
     public String getExecutionYear() {

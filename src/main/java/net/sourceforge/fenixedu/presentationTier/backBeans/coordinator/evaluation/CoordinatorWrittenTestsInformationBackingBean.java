@@ -39,7 +39,7 @@ public class CoordinatorWrittenTestsInformationBackingBean extends CoordinatorEv
                 final List<WrittenTest> associatedWrittenTests = executionCourse.getAssociatedWrittenTests();
                 if (!associatedWrittenTests.isEmpty()) {
                     Collections.sort(associatedWrittenTests, new BeanComparator("dayDate"));
-                    writtenTests.put(executionCourse.getIdInternal(), associatedWrittenTests);
+                    writtenTests.put(executionCourse.getExternalId(), associatedWrittenTests);
                     processWrittenTestAdditionalValues(associatedWrittenTests);
                     this.executionCoursesWithWrittenTests.add(executionCourse);
                 }
@@ -60,8 +60,8 @@ public class CoordinatorWrittenTestsInformationBackingBean extends CoordinatorEv
             if (buffer.length() > 0) {
                 buffer.deleteCharAt(buffer.length() - 1);
             }
-            writtenTestsRooms.put(writtenTest.getIdInternal(), buffer.toString());
-            writtenTestsFreeSpace.put(writtenTest.getIdInternal(),
+            writtenTestsRooms.put(writtenTest.getExternalId(), buffer.toString());
+            writtenTestsFreeSpace.put(writtenTest.getExternalId(),
                     Integer.valueOf(totalCapacity - writtenTest.getWrittenEvaluationEnrolmentsCount()));
         }
     }
@@ -99,9 +99,9 @@ public class CoordinatorWrittenTestsInformationBackingBean extends CoordinatorEv
                     final Map<String, String> linkParameters = new HashMap<String, String>();
                     linkParameters.put("degreeCurricularPlanID", getDegreeCurricularPlanID().toString());
                     linkParameters.put("executionPeriodID", getExecutionPeriodID().toString());
-                    linkParameters.put("executionCourseID", executionCourse.getIdInternal().toString());
+                    linkParameters.put("executionCourseID", executionCourse.getExternalId().toString());
                     linkParameters.put("curricularYearID", getCurricularYearID().toString());
-                    linkParameters.put("evaluationID", writtenTestToDisplay.getIdInternal().toString());
+                    linkParameters.put("evaluationID", writtenTestToDisplay.getExternalId().toString());
                     calendarLink.setLinkParameters(linkParameters);
                     writtenTestCalendarLinks.add(calendarLink);
                 }

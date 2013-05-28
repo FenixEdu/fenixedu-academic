@@ -24,7 +24,7 @@ public class CriarTurma {
     public static Object run(final String className, final Integer curricularYear, final InfoExecutionDegree infoExecutionDegree,
             final AcademicInterval academicInterval) throws ExistingServiceException {
 
-        final ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
+        final ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(infoExecutionDegree.getExternalId());
 
         final SchoolClass schoolClass = new SchoolClass(executionDegree, academicInterval, className, curricularYear);
         return InfoClass.newInfoFromDomain(schoolClass);
@@ -34,9 +34,9 @@ public class CriarTurma {
     public static Object run(final String className, final Integer curricularYear, final InfoExecutionDegree infoExecutionDegree,
             final InfoExecutionPeriod infoExecutionPeriod) throws ExistingServiceException {
 
-        final ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
+        final ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(infoExecutionDegree.getExternalId());
         final ExecutionSemester executionSemester =
-                RootDomainObject.getInstance().readExecutionSemesterByOID(infoExecutionPeriod.getIdInternal());
+                RootDomainObject.getInstance().readExecutionSemesterByOID(infoExecutionPeriod.getExternalId());
 
         final SchoolClass schoolClass = new SchoolClass(executionDegree, executionSemester, className, curricularYear);
         return InfoClass.newInfoFromDomain(schoolClass);

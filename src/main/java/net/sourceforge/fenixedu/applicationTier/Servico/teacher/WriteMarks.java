@@ -53,7 +53,7 @@ public class WriteMarks {
         for (final StudentMark studentMark : marks) {
             final Attends attend = findAttend(executionCourse, studentMark.studentNumber, exceptionList);
             if (attend != null) {
-                result.add(new AttendsMark(attend.getIdInternal(), studentMark.mark));
+                result.add(new AttendsMark(attend.getExternalId(), studentMark.mark));
             }
         }
 
@@ -154,7 +154,7 @@ public class WriteMarks {
 
     private static Attends findAttend(final ExecutionCourse executionCourse, final Integer attendId) {
         for (final Attends attend : executionCourse.getAttends()) {
-            if (attend.getIdInternal().equals(attendId)) {
+            if (attend.getExternalId().equals(attendId)) {
                 return attend;
             }
         }

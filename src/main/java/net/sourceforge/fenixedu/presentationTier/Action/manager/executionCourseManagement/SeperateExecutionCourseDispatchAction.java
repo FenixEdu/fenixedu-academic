@@ -165,7 +165,7 @@ public class SeperateExecutionCourseDispatchAction extends FenixDispatchAction {
                         infoExecutionDegree.getInfoDegreeCurricularPlan().getDegreeCurricularPlan()
                                 .getPresentationName(infoExecutionDegree.getInfoExecutionYear().getExecutionYear());
 
-                return new LabelValueBean(label, infoExecutionDegree.getIdInternal().toString());
+                return new LabelValueBean(label, infoExecutionDegree.getExternalId().toString());
             }
 
         });
@@ -193,7 +193,7 @@ public class SeperateExecutionCourseDispatchAction extends FenixDispatchAction {
 
             List executionCourses =
                     ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYear.run(new Integer(
-                            destinationExecutionDegreeId), infoExecutionCourse.getInfoExecutionPeriod().getIdInternal(),
+                            destinationExecutionDegreeId), infoExecutionCourse.getInfoExecutionPeriod().getExternalId(),
                             new Integer(destinationCurricularYear));
             executionCourses.remove(infoExecutionCourse);
             Collections.sort(executionCourses, new BeanComparator("nome"));
@@ -264,7 +264,7 @@ public class SeperateExecutionCourseDispatchAction extends FenixDispatchAction {
                         originExecutionDegreesString, originExecutionCourse.getDegreePresentationString(),
                         destinationExecutionCourseName, destinationExecutionCourse.getDegreePresentationString(),
                         originExecutionDegree.getDegree().getSigla());
-                request.setAttribute("executionCourseId", destinationExecutionCourse.getIdInternal().toString());
+                request.setAttribute("executionCourseId", destinationExecutionCourse.getExternalId().toString());
             }
 
         } catch (DomainException e) {
@@ -338,7 +338,7 @@ public class SeperateExecutionCourseDispatchAction extends FenixDispatchAction {
                         originCourseName, originExecutionDegreesString, originExecutionCourse.getDegreePresentationString(),
                         destinationExecutionCourseName, destinationExecutionCourse.getDegreePresentationString(),
                         originExecutionDegree.getDegree().getSigla());
-                request.setAttribute("executionCourseId", destinationExecutionCourse.getIdInternal().toString());
+                request.setAttribute("executionCourseId", destinationExecutionCourse.getExternalId().toString());
             }
 
         } catch (DomainException e) {

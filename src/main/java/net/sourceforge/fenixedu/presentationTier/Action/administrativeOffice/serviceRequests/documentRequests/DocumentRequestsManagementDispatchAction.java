@@ -345,7 +345,7 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
         }
 
         if (documentRequestCreateBean.getChosenDocumentRequestType().isAllowedToQuickDeliver()) {
-            request.setAttribute("academicServiceRequestId", documentRequest.getIdInternal());
+            request.setAttribute("academicServiceRequestId", documentRequest.getExternalId());
             return mapping.findForward("processNewAcademicServiceRequest");
         } else {
             addActionMessage(request, "document.request.created.with.success");
@@ -358,7 +358,7 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
         forwardBuilded.setName(forward.getName());
         forwardBuilded.setRedirect(true);
         StringBuilder path = new StringBuilder(forward.getPath());
-        // path.append("&registrationID=").append(registration.getIdInternal());
+        // path.append("&registrationID=").append(registration.getExternalId());
         forwardBuilded.setPath(path.toString());
         return forwardBuilded;
     }

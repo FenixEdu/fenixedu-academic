@@ -100,7 +100,7 @@ function cleanSelect() {
 		<tr>	
 			<td>
 			<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.selected" property="selected" onclick="cleanSelect()">
-			<bean:write name="infoStudent" property="idInternal"/>
+			<bean:write name="infoStudent" property="externalId"/>
 			</html:multibox>
 			</td>
 			<td><bean:write name="infoStudent" property="number"/>

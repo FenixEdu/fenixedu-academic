@@ -18,7 +18,7 @@ public class ReadStudentsByPerson {
     protected List run(InfoPerson infoPerson) {
         final List<InfoStudent> result = new ArrayList<InfoStudent>();
 
-        Person person = (Person) RootDomainObject.getInstance().readPartyByOID(infoPerson.getIdInternal());
+        Person person = (Person) RootDomainObject.getInstance().readPartyByOID(infoPerson.getExternalId());
         for (final Registration registration : person.getStudents()) {
             result.add(InfoStudent.newInfoFromDomain(registration));
         }

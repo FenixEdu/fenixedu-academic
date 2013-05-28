@@ -25,7 +25,7 @@ public class EndCurricularCourseScope {
         }
 
         CurricularCourseScope oldCurricularCourseScope =
-                RootDomainObject.getInstance().readCurricularCourseScopeByOID(newInfoCurricularCourseScope.getIdInternal());
+                RootDomainObject.getInstance().readCurricularCourseScopeByOID(newInfoCurricularCourseScope.getExternalId());
         if (oldCurricularCourseScope == null) {
             throw new NonExistingServiceException("message.non.existing.curricular.course.scope", null);
         }

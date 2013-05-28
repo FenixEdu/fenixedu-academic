@@ -42,7 +42,7 @@
 	
 	<!-- Foto -->
 	<div style="float: right;" class="printhidden">
-		<bean:define id="personID" name="registration" property="student.person.idInternal"/>
+		<bean:define id="personID" name="registration" property="student.person.externalId"/>
 		<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
 	</div>
 	
@@ -82,7 +82,7 @@
 	<p class="mtop0">
 	<span>
 		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-		<html:link page="/registration.do?method=prepareViewRegistrationCurriculum" paramId="registrationID" paramName="registration" paramProperty="idInternal">
+		<html:link page="/registration.do?method=prepareViewRegistrationCurriculum" paramId="registrationID" paramName="registration" paramProperty="externalId">
 			<bean:message key="link.registration.viewCurriculum" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 		</html:link>
 	</span>
@@ -180,7 +180,7 @@
 	
 	<div class="mtop15">
 		<bean:define id="graph" type="java.lang.String">
-			<%= request.getContextPath() %>/student/viewCurriculumGraph.do?method=createAreaXYChart&registrationOID=<%= registration.getIdInternal() %>
+			<%= request.getContextPath() %>/student/viewCurriculumGraph.do?method=createAreaXYChart&registrationOID=<%= registration.getExternalId() %>
 		</bean:define>
 		<html:img align="middle" src="<%= graph %>"/>
 	</div>

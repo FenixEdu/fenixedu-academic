@@ -151,7 +151,7 @@ public class ShiftEnrollmentTimeTableLessonContentRenderer implements LessonSlot
                             + "/resourceAllocationManager/studentShiftEnrollmentManager.do?method=unEnroleStudentFromShift&registrationOID=");
         }
 
-        strBuffer.append(getStudentID()).append("&shiftId=").append(lesson.getInfoShift().getIdInternal());
+        strBuffer.append(getStudentID()).append("&shiftId=").append(lesson.getInfoShift().getExternalId());
         strBuffer.append("&classId=").append(getClassID()).append("&executionCourseID=").append(getExecutionCourseID())
                 .append("\">");
         return strBuffer;

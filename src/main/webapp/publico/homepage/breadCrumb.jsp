@@ -21,7 +21,7 @@
                 <bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/><bean:message key="link.institution.structure" bundle="GLOBAL_RESOURCES"/>
             </bean:define>
             <bean:define id="departmentUnitID" type="java.lang.String">
-                <bean:write name="homepage" property="person.employee.currentDepartmentWorkingPlace.departmentUnit.idInternal"/>
+                <bean:write name="homepage" property="person.employee.currentDepartmentWorkingPlace.departmentUnit.externalId"/>
             </bean:define>
         
         	
@@ -53,6 +53,6 @@
     <bean:define id="site" name="homepage" toScope="request"/>
     <bean:define id="siteActionName" value="/viewHomepage.do" toScope="request"/>
     <bean:define id="siteContextParam" value="homepageID" toScope="request"/>
-    <bean:define id="siteContextParamValue" name="homepage" property="idInternal" toScope="request"/>
+    <bean:define id="siteContextParamValue" name="homepage" property="externalId" toScope="request"/>
     
 </logic:present>

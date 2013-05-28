@@ -74,7 +74,7 @@ public class VisualizeExternalPersonsDispatchAction extends FenixDispatchAction 
                     while (it.hasNext()) {
                         infoInstitution = (Unit) it.next();
                         infoInstitutionsValueBeanList.add(new LabelValueBean(infoInstitution.getName(), infoInstitution
-                                .getIdInternal().toString()));
+                                .getExternalId().toString()));
                     }
 
                     request.setAttribute(PresentationConstants.WORK_LOCATIONS_LIST, infoInstitutionsValueBeanList);

@@ -114,7 +114,7 @@ public class PresentationMaterialManagementAction extends FenixDispatchAction {
 
         NewPresentationMaterial presentationMaterial = rootDomainObject.readNewPresentationMaterialByOID(presentationMaterialId);
 
-        request.setAttribute("oid", presentationMaterial.getTestElement().getIdInternal());
+        request.setAttribute("oid", presentationMaterial.getTestElement().getExternalId());
 
         if (presentationMaterial instanceof NewMathMlMaterial) {
             DeletePresentationMaterial.run((NewMathMlMaterial) presentationMaterial);
@@ -237,6 +237,6 @@ public class PresentationMaterialManagementAction extends FenixDispatchAction {
     }
 
     private ActionForward getReturnAction(HttpServletRequest request, NewTestElement testElement) {
-        return new ActionForward(request.getParameter("returnTo") + "&oid=" + testElement.getIdInternal(), true);
+        return new ActionForward(request.getParameter("returnTo") + "&oid=" + testElement.getExternalId(), true);
     }
 }

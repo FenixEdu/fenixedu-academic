@@ -40,7 +40,7 @@
        		<fr:property name="sortUrl" value="<%= "/competenceCourses/searchCompetenceCourses.do?method=sortSearch&searchName=" + searchName + "&searchCode=" + searchCode %>"/>
 			<fr:property name="sortableSlots" value="name, code"/>
 			<fr:property name="sortBy" value="<%= request.getParameter("sortBy") == null ? "curricularStage=desc, departmentUnit.acronym=asc, name=asc" : request.getParameter("sortBy") %>"/>
-			<fr:link name="showApprovedCompetenceCourse" label="show" link="/competenceCourses/showCompetenceCourse.faces?action=ccm&competenceCourseID=${idInternal}" target="_blank" condition="loggedPersonAllowedToView"/>
+			<fr:link name="showApprovedCompetenceCourse" label="show" link="/competenceCourses/showCompetenceCourse.faces?action=ccm&competenceCourseID=${externalId}" target="_blank" condition="loggedPersonAllowedToView"/>
 		</fr:layout>
 	</fr:view>
 </logic:present>

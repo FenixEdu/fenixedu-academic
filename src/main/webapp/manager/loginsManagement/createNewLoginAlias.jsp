@@ -21,7 +21,7 @@
 
 	<logic:notEmpty name="loginAliasBean">
 		<bean:define id="createNewAliasURL" value="/loginsManagement.do?method=createNewLoginAlias"/>		
-		<bean:define id="manageAliasURL" type="java.lang.String">/loginsManagement.do?method=prepareManageAlias&personID=<bean:write name="loginAliasBean" property="login.user.person.idInternal"/></bean:define>		
+		<bean:define id="manageAliasURL" type="java.lang.String">/loginsManagement.do?method=prepareManageAlias&personID=<bean:write name="loginAliasBean" property="login.user.person.externalId"/></bean:define>		
 		
 		<p class="infoop2">
 			<b><bean:message key="label.name" bundle="MANAGER_RESOURCES"/>:</b> <bean:write name="loginAliasBean" property="login.user.person.name"/><br/>

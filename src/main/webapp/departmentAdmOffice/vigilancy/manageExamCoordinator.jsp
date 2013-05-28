@@ -40,13 +40,13 @@ name="bean" schema="selectUnitInVigilantGroup"/>
 	<fr:property name="sortBy" value="executionYear=desc, person.name=asc" />
 	<fr:property name="key(apagar)" value="label.delete"/>
 	<fr:property name="bundle(apagar)" value="VIGILANCY_RESOURCES"/>
-	<fr:property name="link(apagar)" value="<%= "/vigilancy/examCoordinatorManagement.do?method=deleteExamCoordinator&unitId=" + bean.getSelectedUnit().getIdInternal() + "&deparmentId=" + bean.getSelectedDepartment().getIdInternal() %>"/>
-	<fr:property name="param(apagar)" value="idInternal/oid"/>
+	<fr:property name="link(apagar)" value="<%= "/vigilancy/examCoordinatorManagement.do?method=deleteExamCoordinator&unitId=" + bean.getSelectedUnit().getExternalId() + "&deparmentId=" + bean.getSelectedDepartment().getExternalId() %>"/>
+	<fr:property name="param(apagar)" value="externalId/oid"/>
 	<fr:property name="visibleIf(apagar)" value="executionYear.current"/>
 </fr:layout>
 </fr:view>
 <p class="mtop05 mbottom2">
-	<html:link page="<%="/vigilancy/examCoordinatorManagement.do?method=editExamCoordinators&unitId=" + bean.getSelectedUnit().getIdInternal() + "&deparmentId=" + bean.getSelectedDepartment().getIdInternal() %>">
+	<html:link page="<%="/vigilancy/examCoordinatorManagement.do?method=editExamCoordinators&unitId=" + bean.getSelectedUnit().getExternalId() + "&deparmentId=" + bean.getSelectedDepartment().getExternalId() %>">
 	<bean:message key="label.vigilancy.editPreviledges" bundle="VIGILANCY_RESOURCES"/>
 	</html:link>
 </p>

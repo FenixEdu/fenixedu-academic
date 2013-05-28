@@ -39,7 +39,7 @@
 </logic:notEmpty>
 
 <logic:equal name="infoCurriculum" property="infoCurricularCourse.basic" value="true">
-<bean:define id="curriculumId" name="infoCurriculum" property="idInternal"/>
+<bean:define id="curriculumId" name="infoCurriculum" property="externalId"/>
 <br/>
 <br/>
 <br/>
@@ -52,7 +52,7 @@
 </logic:present>
 <logic:notPresent name="component" property="infoCurriculum">
 <bean:define id="infoCurricularCourse" name="component" property="infoCurricularCourse"/>
-<bean:define id="curricularCourseId" name="infoCurricularCourse" property="idInternal"/>
+<bean:define id="curricularCourseId" name="infoCurricularCourse" property="externalId"/>
 <bean:message key="message.curriculum.notAvailable"/>
 <br/>
 <br/>

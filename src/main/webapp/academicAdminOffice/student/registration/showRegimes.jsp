@@ -9,14 +9,14 @@
 
 
 <p>
-	<html:link page="/student.do?method=visualizeRegistration" paramId="registrationID" paramName="registration" paramProperty="idInternal">
+	<html:link page="/student.do?method=visualizeRegistration" paramId="registrationID" paramName="registration" paramProperty="externalId">
 		<bean:message key="link.student.back" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 	</html:link>
 </p>
 
 
 <div style="float: right;">
-	<bean:define id="personID" name="registration" property="student.person.idInternal"/>
+	<bean:define id="personID" name="registration" property="student.person.externalId"/>
 	<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
 </div>
 
@@ -34,7 +34,7 @@
 <h3 class="mbottom05"><bean:message key="registration.regimes" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 <ul class="list5">
 	<li>
-		<html:link page="/registration.do?method=prepareCreateRegime" paramId="registrationId" paramName="registration" paramProperty="idInternal">
+		<html:link page="/registration.do?method=prepareCreateRegime" paramId="registrationId" paramName="registration" paramProperty="externalId">
 			<bean:message key="registration.regime.create" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 		</html:link>
 	</li>
@@ -45,13 +45,13 @@
 </logic:empty>
 
 <logic:notEmpty name="registrationRegimes">
-	<bean:define id="registrationId" name="registration" property="idInternal" />
+	<bean:define id="registrationId" name="registration" property="externalId" />
 
 	<fr:view name="registrationRegimes" schema="RegistrationRegime.view">
 		<fr:layout name="tabular-sortable">
 			<fr:property name="classes" value="tstyle4 thright thlight mtop05"/>
 			<fr:property name="link(delete)" value='<%= "/registration.do?method=deleteRegime&amp;registrationId=" + registrationId.toString() %>' />
-			<fr:property name="param(delete)" value="idInternal/registrationRegimeId" />
+			<fr:property name="param(delete)" value="externalId/registrationRegimeId" />
 			<fr:property name="key(delete)" value="label.delete"/>
 			<fr:property name="bundle(delete)" value="ACADEMIC_OFFICE_RESOURCES"/>
 			<fr:property name="confirmationKey(delete)" value="registration.confirm.delete.regime" />

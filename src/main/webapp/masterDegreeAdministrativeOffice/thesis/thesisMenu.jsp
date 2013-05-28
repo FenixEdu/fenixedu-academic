@@ -5,7 +5,7 @@
 <%@ page import="net.sourceforge.fenixedu.domain.student.Registration" %>
 
 <bean:define id="student" name="<%= PresentationConstants.STUDENT %>" scope="request" />
-<bean:define id="scpID" name="studentCurricularPlan" property="idInternal" scope="request" />
+<bean:define id="scpID" name="studentCurricularPlan" property="externalId" scope="request" />
 
 <%
 	java.util.Hashtable paramsChange = new java.util.Hashtable();

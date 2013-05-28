@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <html:xhtml/>
 
-<bean:define id="executionCourseId" name="executionCourse" property="idInternal"/>
+<bean:define id="executionCourseId" name="executionCourse" property="externalId"/>
 <bean:define id="optional" name="optional" type="java.lang.Boolean"/>
 
 <h2><bean:message key="link.bibliography" /></h2>

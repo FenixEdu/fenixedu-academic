@@ -30,8 +30,8 @@
 					<b><%= roomIndex.intValue() + 1 %>.</b>
 				</td>
 				<td>
-					<html:select bundle="HTMLALT_RESOURCES" altKey="select.rooms" property="rooms" value="<%= infoRoom.getIdInternal().toString() %>">
-						<html:options collection="rooms" property="idInternal" labelProperty="nome" />
+					<html:select bundle="HTMLALT_RESOURCES" altKey="select.rooms" property="rooms" value="<%= infoRoom.getExternalId().toString() %>">
+						<html:options collection="rooms" property="externalId" labelProperty="nome" />
 					</html:select>
 				</td>
 			</tr> 

@@ -16,12 +16,12 @@
 			<bean:message key="link.teacherServiceDistribution"/>
 		</html:link>
 		>
-		<html:link page='<%= "/tsdProcess.do?method=showTSDProcessServices&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getIdInternal().toString() %>'>
+		<html:link page='<%= "/tsdProcess.do?method=showTSDProcessServices&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getExternalId().toString() %>'>
 			<bean:write name="tsdProcess" property="name"/>&nbsp;
 			<bean:write name="tsdProcess" property="executionYear.year"/>
 		</html:link>
 		>
-		<html:link page='<%= "/tsdTeachersGroup.do?method=prepareForTSDTeachersGroupServices&amp;tsdID=" + ((TSDProcess) request.getAttribute("tsdProcess")).getCurrentTSDProcessPhase().getRootTSD().getIdInternal().toString() %>'>
+		<html:link page='<%= "/tsdTeachersGroup.do?method=prepareForTSDTeachersGroupServices&amp;tsdID=" + ((TSDProcess) request.getAttribute("tsdProcess")).getCurrentTSDProcessPhase().getRootTSD().getExternalId().toString() %>'>
 			<bean:message key="link.teacherServiceDistribution.manageRootGrouping"/>
 		</html:link>
 		>
@@ -54,7 +54,7 @@
 		</th>
 		<td>
 			<html:select property="executionPeriod">
-				<html:options collection="executionPeriodsList" property="idInternal" labelProperty="name"/>
+				<html:options collection="executionPeriodsList" property="externalId" labelProperty="name"/>
 			</html:select>  
 		</td>
 	</tr>
@@ -69,7 +69,7 @@
 			<logic:iterate name="curricularPlansList" id="plan">
 				<td>
 				<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.planArray" property="curricularPlansArray">
-					<bean:write name="plan" property="idInternal"/>
+					<bean:write name="plan" property="externalId"/>
 				</html:multibox>
 				<bean:write name="plan" property="name"/>
 				</td>
@@ -112,7 +112,7 @@
 <br/>
 <br/>
 
-<html:link page='<%= "/tsdTeachersGroup.do?method=prepareForTSDTeachersGroupServices&amp;tsdID=" + ((TSDProcess) request.getAttribute("tsdProcess")).getCurrentTSDProcessPhase().getRootTSD().getIdInternal().toString() %>'>
+<html:link page='<%= "/tsdTeachersGroup.do?method=prepareForTSDTeachersGroupServices&amp;tsdID=" + ((TSDProcess) request.getAttribute("tsdProcess")).getCurrentTSDProcessPhase().getRootTSD().getExternalId().toString() %>'>
 	<bean:message key="link.back"/>
 </html:link>
 

@@ -12,7 +12,7 @@
 	<br />
 </html:messages>
 
-<bean:define id="processId" name="process" property="idInternal" />
+<bean:define id="processId" name="process" property="externalId" />
 
 <fr:form action='<%="/caseHandlingOver23IndividualCandidacyProcess.do?userAction=editCandidacy&processId=" + processId.toString() %>' id="over23CandidacyForm">
 	<input type="hidden" id="methodId" name="method" value="executeEditCandidacyInformation"/>
@@ -59,7 +59,7 @@
 				<tr>
 					<td><bean:write name="degree" property="presentationName" /> - <bean:write name="degree" property="sigla" /></td>
 					<td>
-						<bean:define id="degreeId" name="degree" property="idInternal" />
+						<bean:define id="degreeId" name="degree" property="externalId" />
 						<html:hidden property="degreeToDelete" value="<%= degreeId.toString() %>" />
 						<html:submit onclick="this.form.method.value='removeDegreeFromCandidacyWhenEditing';return true;"><bean:message key="label.remove" bundle="APPLICATION_RESOURCES" /></html:submit>
 					</td>

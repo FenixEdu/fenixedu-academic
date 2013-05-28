@@ -139,12 +139,12 @@ public class ShowCourseSiteAction extends FenixContextDispatchAction {
                     ExecutionCourseSiteComponentService.runExecutionCourseSiteComponentService(commonComponent,
                             firstPageComponent, null, executionCourseId, null, null);
 
-            request.setAttribute("objectCode", ((InfoSiteFirstPage) siteView.getComponent()).getSiteIdInternal());
+            request.setAttribute("objectCode", ((InfoSiteFirstPage) siteView.getComponent()).getSiteExternalId());
             request.setAttribute("siteView", siteView);
             request.setAttribute("executionCourseCode", ((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse()
-                    .getIdInternal());
+                    .getExternalId());
             request.setAttribute("executionPeriodCode", ((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse()
-                    .getInfoExecutionPeriod().getIdInternal());
+                    .getInfoExecutionPeriod().getExternalId());
             if (siteView.getComponent() instanceof InfoSiteSection) {
                 request.setAttribute("infoSection", ((InfoSiteSection) siteView.getComponent()).getSection());
             }

@@ -60,7 +60,7 @@ public class ChangeMasterDegreeThesisData {
 
         if (masterDegreeThesisDataVersionWithChosenDissertationTitle != null) {
             if (!masterDegreeThesisDataVersionWithChosenDissertationTitle.getMasterDegreeThesis().getStudentCurricularPlan()
-                    .getIdInternal().equals(studentCurricularPlanID)) {
+                    .getExternalId().equals(studentCurricularPlanID)) {
                 throw new ExistingServiceException("error.exception.masterDegree.dissertationTitleAlreadyChosen");
             }
         }

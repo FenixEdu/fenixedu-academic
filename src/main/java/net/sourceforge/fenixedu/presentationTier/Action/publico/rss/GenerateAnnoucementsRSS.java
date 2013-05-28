@@ -27,9 +27,9 @@ public class GenerateAnnoucementsRSS extends FenixDispatchAction {
         }
         final ExecutionCourseAnnouncementBoard announcementBoard = executionCourse.getBoard();
         if (announcementBoard == null) {
-            return forward("/publico/executionCourse.do?method=notFound&executionCourseID=" + executionCourse.getIdInternal());
+            return forward("/publico/executionCourse.do?method=notFound&executionCourseID=" + executionCourse.getExternalId());
         }
-        return forward("/external/announcementsRSS.do?announcementBoardId=" + announcementBoard.getIdInternal());
+        return forward("/external/announcementsRSS.do?announcementBoardId=" + announcementBoard.getExternalId());
     }
 
     private ActionForward forward(String purl) {

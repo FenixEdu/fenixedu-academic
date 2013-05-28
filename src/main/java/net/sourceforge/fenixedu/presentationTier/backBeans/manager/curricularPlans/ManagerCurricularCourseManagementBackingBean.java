@@ -259,28 +259,28 @@ public class ManagerCurricularCourseManagementBackingBean extends CurricularCour
         final List<ExecutionDegree> executionDegrees = getDegreeCurricularPlan().getExecutionDegrees();
         if (executionDegrees.isEmpty()) {
             for (final ExecutionYear executionYear : ExecutionYear.readNotClosedExecutionYears()) {
-                result.add(new SelectItem(executionYear.getIdInternal(), executionYear.getYear()));
+                result.add(new SelectItem(executionYear.getExternalId(), executionYear.getYear()));
             }
             if (getExecutionYearID() == null) {
-                setExecutionYearID(ExecutionYear.readCurrentExecutionYear().getIdInternal());
+                setExecutionYearID(ExecutionYear.readCurrentExecutionYear().getExternalId());
             }
         } else {
             for (final ExecutionDegree executionDegree : executionDegrees) {
-                result.add(new SelectItem(executionDegree.getExecutionYear().getIdInternal(), executionDegree.getExecutionYear()
+                result.add(new SelectItem(executionDegree.getExecutionYear().getExternalId(), executionDegree.getExecutionYear()
                         .getYear()));
             }
             if (getExecutionYearID() == null) {
-                setExecutionYearID(getDegreeCurricularPlan().getMostRecentExecutionDegree().getExecutionYear().getIdInternal());
+                setExecutionYearID(getDegreeCurricularPlan().getMostRecentExecutionDegree().getExecutionYear().getExternalId());
             }
         }
     }
 
     private void readPreBolonhaExecutionYears(final List<SelectItem> result) {
         for (final ExecutionYear executionYear : rootDomainObject.getExecutionYears()) {
-            result.add(new SelectItem(executionYear.getIdInternal(), executionYear.getYear()));
+            result.add(new SelectItem(executionYear.getExternalId(), executionYear.getYear()));
         }
         if (getExecutionYearID() == null) {
-            setExecutionYearID(ExecutionYear.readCurrentExecutionYear().getIdInternal());
+            setExecutionYearID(ExecutionYear.readCurrentExecutionYear().getExternalId());
         }
     }
 
@@ -295,7 +295,7 @@ public class ManagerCurricularCourseManagementBackingBean extends CurricularCour
 
         final List<SelectItem> result = new ArrayList<SelectItem>();
         for (final ExecutionSemester semester : semesters) {
-            result.add(new SelectItem(semester.getIdInternal(), semester.getQualifiedName()));
+            result.add(new SelectItem(semester.getExternalId(), semester.getQualifiedName()));
         }
         return result;
     }

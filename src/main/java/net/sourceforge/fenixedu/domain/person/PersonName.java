@@ -78,7 +78,7 @@ public class PersonName extends PersonName_Base implements Comparable<PersonName
     @Override
     public int compareTo(PersonName personName) {
         final int stringCompare = getName().compareTo(personName.getName());
-        return stringCompare == 0 ? getIdInternal().compareTo(personName.getIdInternal()) : stringCompare;
+        return stringCompare == 0 ? getExternalId().compareTo(personName.getExternalId()) : stringCompare;
     }
 
     @Override

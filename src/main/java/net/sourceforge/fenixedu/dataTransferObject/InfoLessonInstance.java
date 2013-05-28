@@ -33,8 +33,8 @@ public class InfoLessonInstance extends InfoShowOccupation {
     }
 
     @Override
-    public Integer getIdInternal() {
-        return getLessonInstance().getIdInternal();
+    public Integer getExternalId() {
+        return getLessonInstance().getExternalId();
     }
 
     @Override

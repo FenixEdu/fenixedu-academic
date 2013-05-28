@@ -578,7 +578,7 @@
 	<slot name="spaceFullPath" layout="separator-list">		
 		<property name="eachSchema" value="FindPersonSpaceNameSchema" />	
 		<property name="eachLayout" value="values" />
-		<property name="param" value="idInternal/spaceID" />
+		<property name="param" value="externalId/spaceID" />
 		<property name="link" value="/publico/findSpaces.do?method=viewSpace" />
 		<property name="targetBlank" value="true" />		
 	</slot>
@@ -670,7 +670,7 @@
 	<slot name="spaceFullPath" layout="separator-list" key="label.space.fullPath">		
 		<property name="eachSchema" value="FindPersonSpaceNameSchema" />	
 		<property name="eachLayout" value="values" />
-		<property name="param" value="spaceInformation.idInternal/spaceInformationID" />
+		<property name="param" value="spaceInformation.externalId/spaceInformationID" />
 		<property name="link" value="/SpaceManager/manageSpaces.do?method=manageSpace" />			
 	</slot>
 	<slot name="class" layout="label" key="label.space.type">

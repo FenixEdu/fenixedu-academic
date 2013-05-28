@@ -32,13 +32,13 @@
 			<h:outputText value="<li>" escape="false"/>
 			<h:outputLink value="../curricularPlans/viewCurricularPlan.faces" target="_blank">
 				<h:outputText value="#{curricularCourse.parentDegreeCurricularPlan.name}" escape="false"/>
-				<f:param name="degreeCurricularPlanID" value="#{curricularCourse.parentDegreeCurricularPlan.idInternal}"/>
+				<f:param name="degreeCurricularPlanID" value="#{curricularCourse.parentDegreeCurricularPlan.externalId}"/>
 				<f:param name="action" value="close"/>
 			</h:outputLink>
 			<h:outputText value=" > "/>
 			<h:outputLink value="../curricularPlans/viewCurricularCourse.faces" target="_blank">
 				<h:outputText value="#{curricularCourse.name}" escape="false"/>
-				<f:param name="curricularCourseID" value="#{curricularCourse.idInternal}"/>
+				<f:param name="curricularCourseID" value="#{curricularCourse.externalId}"/>
 				<f:param name="action" value="close"/>
 			</h:outputLink>
 			<h:outputText value="</li>" escape="false"/>
@@ -70,7 +70,7 @@
 	<h:outputText value="<p class='mtop1'>" escape="false"/>
 	<h:outputLink value="editCompetenceCourse.faces">
 		<h:outputText value="#{bolonhaBundle['edit']}"/>
-		<f:param name="competenceCourseID" value="#{CompetenceCourseManagement.competenceCourse.idInternal}"/>
+		<f:param name="competenceCourseID" value="#{CompetenceCourseManagement.competenceCourse.externalId}"/>
 		<f:param name="action" value="viewccm"/>
 	</h:outputLink>
 	<h:outputText value="</p></div>" escape="false"/>
@@ -216,7 +216,7 @@
 	<h:outputText value="</div>" escape="false"/>
 
 	<h:form>
-		<h:outputText escape="false" value="<input alt='input.competenceCourseID' id='competenceCourseID' name='competenceCourseID' type='hidden' value='#{CompetenceCourseManagement.competenceCourse.idInternal}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.competenceCourseID' id='competenceCourseID' name='competenceCourseID' type='hidden' value='#{CompetenceCourseManagement.competenceCourse.externalId}'/>"/>
 		<h:outputText escape="false" value="<input alt='input.action' id='action' name='action' type='hidden' value='#{CompetenceCourseManagement.action}'/>"/>
 		<h:panelGroup rendered="#{!empty CompetenceCourseManagement.action}">
 			<h:commandButton alt="#{htmlAltBundle['commandButton.back']}" immediate="true" styleClass="inputbutton" action="competenceCoursesManagement" value="#{bolonhaBundle['back']}" />

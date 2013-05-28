@@ -71,10 +71,10 @@ public class ManageExecutionPeriodsDA extends FenixDispatchAction {
 
     public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 
-        final String idInternal = request.getParameter("executionPeriodID");
+        final String externalId = request.getParameter("executionPeriodID");
         try {
             ExecutionSemester executionSemester =
-                    (ExecutionSemester) rootDomainObject.readExecutionIntervalByOID(Integer.valueOf(idInternal));
+                    (ExecutionSemester) rootDomainObject.readExecutionIntervalByOID(Integer.valueOf(externalId));
             request.setAttribute("executionPeriod", executionSemester);
         } catch (DomainException e) {
             addActionMessage("error", request, e.getMessage());

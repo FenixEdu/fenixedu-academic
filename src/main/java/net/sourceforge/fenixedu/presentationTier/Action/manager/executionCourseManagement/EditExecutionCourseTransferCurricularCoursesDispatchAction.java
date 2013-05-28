@@ -201,7 +201,7 @@ public class EditExecutionCourseTransferCurricularCoursesDispatchAction extends 
 
     private String separateLabel(HttpServletRequest request, String property, String id, String name) {
 
-        // the value returned to action is a string name~idInternal
+        // the value returned to action is a string name~externalId
         String object = (String) request.getAttribute(property);
         if (StringUtils.isEmpty(object)) {
             object = request.getParameter(property);

@@ -121,7 +121,7 @@ public class OptionalCurricularCoursesLocationManagementDA extends FenixDispatch
 
     private Enrolment getEnrolment(final List<Enrolment> enrolments, final Integer enrolmentId) {
         for (final Enrolment enrolment : enrolments) {
-            if (enrolment.getIdInternal().equals(enrolmentId)) {
+            if (enrolment.getExternalId().equals(enrolmentId)) {
                 return enrolment;
             }
         }

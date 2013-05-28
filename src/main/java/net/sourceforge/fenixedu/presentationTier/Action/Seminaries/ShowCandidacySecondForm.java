@@ -52,8 +52,8 @@ public class ShowCandidacySecondForm extends FenixAction {
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixActionException {
         IUserView userView = getUserView(request);
-        // idInternal is equivalency's IdInternal
-        String equivalencyIDString = request.getParameter("idInternal");
+        // externalId is equivalency's ExternalId
+        String equivalencyIDString = request.getParameter("externalId");
         String themeIDString = request.getParameter("themeID");
         Integer equivalencyID = null;
         Integer themeID = null;

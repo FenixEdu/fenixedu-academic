@@ -528,7 +528,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         List<WrittenTest> writtenTestList = new ArrayList();
         for (WrittenTest writtenTest : executionCourse.getAssociatedWrittenTests()) {
             writtenTestList.add(writtenTest);
-            canManageRoomsMap.put(writtenTest.getIdInternal(), writtenTest.canTeacherChooseRoom(executionCourse, teacher));
+            canManageRoomsMap.put(writtenTest.getExternalId(), writtenTest.canTeacherChooseRoom(executionCourse, teacher));
         }
 
         Collections.sort(writtenTestList, new BeanComparator("dayDate"));
@@ -681,8 +681,8 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         if (executionCourse != null) {
             for (final Attends attends : getExecutionCourseAttends()) {
                 final Mark mark = attends.getMarkByEvaluation(evaluation);
-                if (mark != null && !marks.containsKey(attends.getIdInternal())) {
-                    marks.put(attends.getIdInternal(), mark.getMark());
+                if (mark != null && !marks.containsKey(attends.getExternalId())) {
+                    marks.put(attends.getExternalId(), mark.getMark());
                 }
             }
         }
@@ -815,7 +815,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
             stringBuilder.append("&");
             stringBuilder.append(PresentationConstants.EXECUTION_PERIOD_OID);
             stringBuilder.append("=");
-            stringBuilder.append(executionCourse.getExecutionPeriod().getIdInternal());
+            stringBuilder.append(executionCourse.getExecutionPeriod().getExternalId());
             if (selectedBegin != null && selectedBegin.length() > 0 && selectedBegin.equals("true")) {
                 stringBuilder.append("selectedBegin=");
                 stringBuilder.append(DateFormatUtil.format("HH:mm", this.getBegin().getTime()));
@@ -875,7 +875,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     private AllocatableSpace getRoom(final Integer roomID) throws FenixServiceException {
         for (final WrittenEvaluationSpaceOccupation roomOccupation : ((WrittenEvaluation) getEvaluation())
                 .getWrittenEvaluationSpaceOccupations()) {
-            if (roomOccupation.getRoom().getIdInternal().equals(roomID)) {
+            if (roomOccupation.getRoom().getExternalId().equals(roomID)) {
                 return roomOccupation.getRoom();
             }
         }
@@ -897,7 +897,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         Collections.sort(roomOccupations, new ReverseComparator(new BeanComparator("room.examCapacity")));
         int count = 0;
         for (final WrittenEvaluationSpaceOccupation roomOccupation : roomOccupations) {
-            evaluationRooms.put(roomOccupation.getRoom().getIdInternal(), Integer.valueOf(++count));
+            evaluationRooms.put(roomOccupation.getRoom().getExternalId(), Integer.valueOf(++count));
         }
         return evaluationRooms;
     }
@@ -930,7 +930,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
                 new ArrayList<SelectItem>(((WrittenEvaluation) getEvaluation()).getWrittenEvaluationSpaceOccupationsCount());
         for (final WrittenEvaluationSpaceOccupation roomOccupation : ((WrittenEvaluation) getEvaluation())
                 .getWrittenEvaluationSpaceOccupations()) {
-            result.add(new SelectItem(roomOccupation.getRoom().getIdInternal(), (roomOccupation.getRoom()).getIdentification()));
+            result.add(new SelectItem(roomOccupation.getRoom().getExternalId(), (roomOccupation.getRoom()).getIdentification()));
         }
         return result;
     }
@@ -962,7 +962,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         final List<AllocatableSpace> rooms = getEvaluationRooms();
         final List<Integer> result = new ArrayList(rooms.size());
         for (final AllocatableSpace room : rooms) {
-            result.add(room.getIdInternal());
+            result.add(room.getExternalId());
         }
         return result;
     }
@@ -1206,7 +1206,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         WrittenTest writtenTest = (WrittenTest) getEvaluation();
         Teacher teacher = AccessControl.getPerson().getTeacher();
         for (AllocatableSpace room : writtenTest.getAvailableRooms()) {
-            SelectItem selectItem = new SelectItem(room.getIdInternal(), room.getIdentification());
+            SelectItem selectItem = new SelectItem(room.getExternalId(), room.getIdentification());
             selectItem.setDisabled(!writtenTest.canTeacherRemoveRoom(getExecutionCourse().getExecutionPeriod(), teacher, room));
             result.add(selectItem);
         }
@@ -1217,7 +1217,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         if (roomsToAssociate == null) {
             List<Integer> roomIds = new ArrayList<Integer>();
             for (AllocatableSpace room : ((WrittenTest) getEvaluation()).getAssociatedRooms()) {
-                roomIds.add(room.getIdInternal());
+                roomIds.add(room.getExternalId());
             }
             roomsToAssociate = roomIds.toArray(new Integer[] {});
         }

@@ -118,7 +118,7 @@ public class SearchDegreeLogBean implements Serializable {
     public String getSearchElementsAsParameters() {
         String parameters = "";
 
-        parameters += "&amp;degree=" + getDegree().getIdInternal();
+        parameters += "&amp;degree=" + getDegree().getExternalId();
         if (viewPhoto) {
             parameters += "&amp;viewPhoto=true";
         }

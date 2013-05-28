@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-<bean:define id="prizeID" name="prize" property="idInternal"/>
+<bean:define id="prizeID" name="prize" property="externalId"/>
 
 <em><bean:message bundle="RESEARCHER_RESOURCES" key="label.researchPortal"/></em>
 <h2><bean:message bundle="RESEARCHER_RESOURCES" key="label.prizeAuthors"/></h2>
@@ -27,7 +27,7 @@
 			<fr:property name="classes" value="tstyle2"/>
 			<logic:notEqual name="prize" property="lastParticipation" value="true">
 				<fr:property name="link(remove)" value="<%= "/prizes/prizeManagement.do?method=removePersonFromPrize&oid=" + prizeID %>"/>
-				<fr:property name="param(remove)" value="idInternal/pid"/>
+				<fr:property name="param(remove)" value="externalId/pid"/>
 				<fr:property name="key(remove)" value="link.remove"/>
 				<fr:property name="bundle(remove)" value="RESEARCHER_RESOURCES"/>
 			</logic:notEqual>

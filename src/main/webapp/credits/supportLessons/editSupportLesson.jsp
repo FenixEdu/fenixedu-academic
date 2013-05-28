@@ -9,7 +9,7 @@
 <jsp:include page="../teacherCreditsStyles.jsp"/>
 
 <bean:define id="teacher" name="professorship" property="teacher" scope="request" />
-<bean:define id="executionPeriodId" name="professorship" property="executionCourse.executionPeriod.idInternal"/>
+<bean:define id="executionPeriodId" name="professorship" property="executionCourse.executionPeriod.externalId"/>
 
 <h3><bean:message key="label.teacherCreditsSheet.supportLessons" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></h3>
 
@@ -52,7 +52,7 @@
 <html:form action="/supportLessonsManagement">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="editSupportLesson"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>	
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" property="idInternal"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.externalId" property="externalId"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.supportLessonID" property="supportLessonID"/>	
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.professorshipID" property="professorshipID"/>	
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionPeriodId" property="executionPeriodId"/>		

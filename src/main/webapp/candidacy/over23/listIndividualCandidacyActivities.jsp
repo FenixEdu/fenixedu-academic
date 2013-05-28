@@ -5,7 +5,7 @@
 <html:xhtml/>
 
 <bean:define id="processName" name="processName" />
-<bean:define id="parentProcessId" name="parentProcess" property="idInternal" />
+<bean:define id="parentProcessId" name="parentProcess" property="externalId" />
 
 <em><bean:message key="label.candidacies" bundle="APPLICATION_RESOURCES"/></em>
 <logic:notEmpty name="process">
@@ -18,7 +18,7 @@
 <br/>
 
 <logic:notEmpty name="process">
-	<bean:define id="processId" name="process" property="idInternal" />
+	<bean:define id="processId" name="process" property="externalId" />
 	
 	<logic:notEmpty name="activities">
 		<%-- list process activities --%>

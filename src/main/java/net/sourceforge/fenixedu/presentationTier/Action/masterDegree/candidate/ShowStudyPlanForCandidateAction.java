@@ -31,7 +31,7 @@ public class ShowStudyPlanForCandidateAction extends FenixAction {
         if (infoMasterDegreeCandidate != null) {
             request.setAttribute("masterDegreeCandidate", infoMasterDegreeCandidate);
             request.setAttribute("candidateStudyPlan",
-                    getCandidateStudyPlanByCandidateID(infoMasterDegreeCandidate.getIdInternal(), userView));
+                    getCandidateStudyPlanByCandidateID(infoMasterDegreeCandidate.getExternalId(), userView));
         }
 
         return mapping.findForward("Sucess");

@@ -79,8 +79,8 @@
 			<td>
 			<logic:equal name="entry" property="equivalencePlanEntry.equivalencePlan.class.name" value="net.sourceforge.fenixedu.domain.StudentCurricularPlanEquivalencePlan">
 				<html:link page="<%= "/degreeCurricularPlan/studentEquivalencyPlan.do?method=deleteEquivalency&amp;degreeCurricularPlanID="
-						+ degreeCurricularPlan.getIdInternal() + "&amp;equivalencePlanEntryID="
-						+ entry.getEquivalencePlanEntry().getIdInternal() + "&amp;studentNumber="
+						+ degreeCurricularPlan.getExternalId() + "&amp;equivalencePlanEntryID="
+						+ entry.getEquivalencePlanEntry().getExternalId() + "&amp;studentNumber="
 						+ student.getNumber() %>">
 					<bean:message key="link.delete" bundle="APPLICATION_RESOURCES"/>
 				</html:link>
@@ -88,16 +88,16 @@
 			<logic:notEqual name="entry" property="equivalencePlanEntry.equivalencePlan.class.name" value="net.sourceforge.fenixedu.domain.StudentCurricularPlanEquivalencePlan">
 				<logic:equal name="entry" property="removalEntry" value="true">
 					<html:link page="<%= "/degreeCurricularPlan/studentEquivalencyPlan.do?method=activate&amp;degreeCurricularPlanID="
-							+ degreeCurricularPlan.getIdInternal() + "&amp;equivalencePlanEntryID="
-							+ entry.getEquivalencePlanEntry().getIdInternal() + "&amp;studentNumber="
+							+ degreeCurricularPlan.getExternalId() + "&amp;equivalencePlanEntryID="
+							+ entry.getEquivalencePlanEntry().getExternalId() + "&amp;studentNumber="
 							+ student.getNumber() %>">
 						<bean:message key="link.activate" bundle="APPLICATION_RESOURCES"/>
 					</html:link>
 				</logic:equal>
 				<logic:notEqual name="entry" property="removalEntry" value="true">
 					<html:link page="<%= "/degreeCurricularPlan/studentEquivalencyPlan.do?method=deactivate&amp;degreeCurricularPlanID="
-							+ degreeCurricularPlan.getIdInternal() + "&amp;equivalencePlanEntryID="
-							+ entry.getEquivalencePlanEntry().getIdInternal() + "&amp;studentNumber="
+							+ degreeCurricularPlan.getExternalId() + "&amp;equivalencePlanEntryID="
+							+ entry.getEquivalencePlanEntry().getExternalId() + "&amp;studentNumber="
 							+ student.getNumber() %>">
 						<bean:message key="link.deactivate" bundle="APPLICATION_RESOURCES"/>
 					</html:link>

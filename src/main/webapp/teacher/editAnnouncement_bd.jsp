@@ -90,7 +90,7 @@
 <bean:message key="message.text.editor.requires"/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="editAnnouncement" />
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode"  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
-<bean:define id="announcementCode" name="announcement" property="idInternal" />
+<bean:define id="announcementCode" name="announcement" property="externalId" />
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.announcementCode"  property="announcementCode" value="<%= announcementCode.toString() %>" />
 
 </html:form>

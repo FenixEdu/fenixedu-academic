@@ -70,7 +70,7 @@ public class ManageThesisDA extends AbstractManageThesisDA {
 
     private void setFilterContext(HttpServletRequest request, ExecutionYear executionYear) {
         request.setAttribute("executionYear", executionYear);
-        request.setAttribute("executionYearId", executionYear == null ? "" : executionYear.getIdInternal());
+        request.setAttribute("executionYearId", executionYear == null ? "" : executionYear.getExternalId());
     }
 
     @Override
@@ -552,7 +552,7 @@ public class ManageThesisDA extends AbstractManageThesisDA {
 
         Thesis thesis = getThesis(request);
         for (ThesisEvaluationParticipant participant : thesis.getVowels()) {
-            if (participant.getIdInternal().equals(id)) {
+            if (participant.getExternalId().equals(id)) {
                 return participant;
             }
         }

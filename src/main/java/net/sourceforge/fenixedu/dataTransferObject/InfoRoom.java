@@ -68,12 +68,12 @@ public class InfoRoom extends InfoObject implements Comparable {
     }
 
     @Override
-    public Integer getIdInternal() {
-        return getRoom().getIdInternal();
+    public Integer getExternalId() {
+        return getRoom().getExternalId();
     }
 
     @Override
-    public void setIdInternal(Integer integer) {
+    public void setExternalId(Integer integer) {
         throw new Error("Method should not be called!");
     }
 

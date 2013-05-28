@@ -32,9 +32,9 @@ public class CreateLesson {
 
         final ExecutionSemester executionSemester =
                 RootDomainObject.getInstance().readExecutionSemesterByOID(infoShift.getInfoDisciplinaExecucao().getInfoExecutionPeriod()
-                        .getIdInternal());
+                        .getExternalId());
 
-        final Shift shift = RootDomainObject.getInstance().readShiftByOID(infoShift.getIdInternal());
+        final Shift shift = RootDomainObject.getInstance().readShiftByOID(infoShift.getExternalId());
 
         AllocatableSpace room = null;
         if (infoRoomOccupation != null) {

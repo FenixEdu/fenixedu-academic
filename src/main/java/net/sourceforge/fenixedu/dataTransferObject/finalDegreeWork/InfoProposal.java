@@ -38,12 +38,12 @@ public class InfoProposal extends InfoObject {
     }
 
     @Override
-    public Integer getIdInternal() {
-        return getProposal().getIdInternal();
+    public Integer getExternalId() {
+        return getProposal().getExternalId();
     }
 
     @Override
-    public void setIdInternal(Integer integer) {
+    public void setExternalId(Integer integer) {
         throw new Error("Method should not be called!");
     }
 

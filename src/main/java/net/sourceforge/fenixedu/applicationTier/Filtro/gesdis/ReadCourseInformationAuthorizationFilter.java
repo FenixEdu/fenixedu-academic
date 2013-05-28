@@ -31,7 +31,7 @@ public class ReadCourseInformationAuthorizationFilter extends DomainObjectAuthor
 
         for (final Professorship professorship : person.getProfessorshipsSet()) {
             final ExecutionCourse executionCourse = professorship.getExecutionCourse();
-            if (executionCourse.getIdInternal().equals(executionCourseID)) {
+            if (executionCourse.getExternalId().equals(executionCourseID)) {
                 return true;
             }
         }

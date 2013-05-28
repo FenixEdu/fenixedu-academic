@@ -74,11 +74,11 @@
 		<bean:define id="classOID"
 					 type="java.lang.Integer"
 					 name="classView"
-					 property="idInternal"/>
+					 property="externalId"/>
 		<tr>
        		<td>
 				<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.selectedItems" property="selectedItems">
-					<bean:write name="classView" property="idInternal"/>
+					<bean:write name="classView" property="externalId"/>
 				</html:multibox>
 			</td>
 			<td>

@@ -21,21 +21,21 @@ public class EditCurricularCourseScope {
         CurricularSemester newCurricularSemester = null;
         Branch newBranch = null;
 
-        Integer branchId = newInfoCurricularCourseScope.getInfoBranch().getIdInternal();
+        Integer branchId = newInfoCurricularCourseScope.getInfoBranch().getExternalId();
         newBranch = RootDomainObject.getInstance().readBranchByOID(branchId);
 
         if (newBranch == null) {
             throw new NonExistingServiceException("message.non.existing.branch", null);
         }
 
-        Integer curricularSemesterId = newInfoCurricularCourseScope.getInfoCurricularSemester().getIdInternal();
+        Integer curricularSemesterId = newInfoCurricularCourseScope.getInfoCurricularSemester().getExternalId();
         newCurricularSemester = RootDomainObject.getInstance().readCurricularSemesterByOID(curricularSemesterId);
 
         if (newCurricularSemester == null) {
             throw new NonExistingServiceException("message.non.existing.curricular.semester", null);
         }
 
-        oldCurricularCourseScope = RootDomainObject.getInstance().readCurricularCourseScopeByOID(newInfoCurricularCourseScope.getIdInternal());
+        oldCurricularCourseScope = RootDomainObject.getInstance().readCurricularCourseScopeByOID(newInfoCurricularCourseScope.getExternalId());
 
         if (oldCurricularCourseScope == null) {
             throw new NonExistingServiceException("message.non.existing.curricular.course.scope", null);

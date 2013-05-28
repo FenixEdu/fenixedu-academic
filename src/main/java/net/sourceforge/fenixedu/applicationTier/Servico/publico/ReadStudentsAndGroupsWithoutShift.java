@@ -69,7 +69,7 @@ public class ReadStudentsAndGroupsWithoutShift {
 
                 infoSiteStudentInformation.setEmail(attend.getRegistration().getPerson().getEmail());
 
-                infoSiteStudentInformation.setPersonID(attend.getRegistration().getPerson().getIdInternal());
+                infoSiteStudentInformation.setPersonID(attend.getRegistration().getPerson().getExternalId());
 
                 infoSiteStudentAndGroup.setInfoSiteStudentInformation(infoSiteStudentInformation);
 

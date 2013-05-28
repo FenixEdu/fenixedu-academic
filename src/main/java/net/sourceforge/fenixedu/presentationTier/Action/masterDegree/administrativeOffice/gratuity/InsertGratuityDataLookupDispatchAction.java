@@ -173,7 +173,7 @@ public class InsertGratuityDataLookupDispatchAction extends FenixLookupDispatchA
             return mapping.getInputForward();
         }
 
-        Integer degreeId = new Integer(infoGratuityValues.getInfoExecutionDegree().getIdInternal().intValue());
+        Integer degreeId = new Integer(infoGratuityValues.getInfoExecutionDegree().getExternalId().intValue());
 
         infoGratuityValues = null;
 
@@ -203,7 +203,7 @@ public class InsertGratuityDataLookupDispatchAction extends FenixLookupDispatchA
         infoGratuityValues.setInfoEmployee(new InfoEmployee(userView.getPerson().getEmployee()));
 
         if ((String) actionForm.get("gratuityId") != null && ((String) actionForm.get("gratuityId")).length() > 0) {
-            infoGratuityValues.setIdInternal(Integer.valueOf((String) actionForm.get("gratuityId")));
+            infoGratuityValues.setExternalId(Integer.valueOf((String) actionForm.get("gratuityId")));
         }
 
         if (actionForm.get("annualValue") != null && ((String) actionForm.get("annualValue")).length() > 0) {

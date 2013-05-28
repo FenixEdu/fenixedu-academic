@@ -24,7 +24,7 @@
 		<logic:iterate id="courseResult" name="studentInquiriesCourseResults" type="net.sourceforge.fenixedu.dataTransferObject.oldInquiries.StudentInquiriesCourseResultBean" >
 			<p class="mtop2">
 				<b><bean:message key="link.teachingInquiries.cuResults" bundle="INQUIRIES_RESOURCES"/></b> - 
-				<html:link page="<%= "/executionCourse.do?method=showInquiryCourseResult&resultId=" + courseResult.getStudentInquiriesCourseResult().getIdInternal() %>" target="_blank">
+				<html:link page="<%= "/executionCourse.do?method=showInquiryCourseResult&resultId=" + courseResult.getStudentInquiriesCourseResult().getExternalId() %>" target="_blank">
 					<bean:write name="courseResult" property="studentInquiriesCourseResult.executionCourse.nome" /> - 				
 					<bean:write name="courseResult" property="studentInquiriesCourseResult.executionDegree.degreeCurricularPlan.name" />
 				</html:link>
@@ -34,7 +34,7 @@
 				<ul>
 					<logic:iterate id="teachingResult" name="courseResult" property="studentInquiriesTeachingResults" type="net.sourceforge.fenixedu.domain.oldInquiries.StudentInquiriesTeachingResult">
 						<li>
-							<html:link page="<%= "/executionCourse.do?method=showInquiryTeachingResult&resultId=" + teachingResult.getIdInternal() %>" target="_blank">
+							<html:link page="<%= "/executionCourse.do?method=showInquiryTeachingResult&resultId=" + teachingResult.getExternalId() %>" target="_blank">
 								<bean:write name="teachingResult" property="professorship.person.name" />
 								&nbsp;(<bean:message name="teachingResult" property="shiftType.name"  bundle="ENUMERATION_RESOURCES"/>)<br/>
 							</html:link>
@@ -51,7 +51,7 @@
 			<logic:notEmpty name="professorship" property="teachingInquiry">
 				<logic:equal name="professorship" property="teachingInquiry.reportDisclosureToAcademicComunity" value="true">
 					<li>
-						<bean:define id="teachingInquiryID" name="professorship" property="teachingInquiry.idInternal" />
+						<bean:define id="teachingInquiryID" name="professorship" property="teachingInquiry.externalId" />
 						<html:link page="<%= "/executionCourse.do?method=showInquiryTeachingReport&teachingInquiry=" + teachingInquiryID + "&amp;degreeCurricularPlanID=" + request.getAttribute("degreeCurricularPlanID")  %>" target="_blank">
 							<bean:write name="professorship" property="person.name"/>
 						</html:link>
@@ -66,7 +66,7 @@
 	    <logic:iterate id="delegateInquiry" name="executionCourse" property="yearDelegateCourseInquiries">
 	    	<logic:equal name="delegateInquiry" property="reportDisclosureAuthorization" value="YES">
 		        <li>
-		            <bean:define id="delegateInquiryID" name="delegateInquiry" property="idInternal" />
+		            <bean:define id="delegateInquiryID" name="delegateInquiry" property="externalId" />
 		            <html:link page="<%= "/executionCourse.do?method=showYearDelegateInquiryReport&yearDelegateInquiryId=" + delegateInquiryID + "&amp;degreeCurricularPlanID=" + request.getAttribute("degreeCurricularPlanID")  %>" target="_blank">
 		                <bean:write name="delegateInquiry" property="delegate.registration.student.person.name"/>
 		            </html:link>

@@ -41,7 +41,7 @@
 									</td>
 									<logic:greaterThan name="infoRestrictionsSize" value="1">
 										<td class="listClasses">
-											<bean:define id="restrictionID" name="restriction" property="idInternal"/>
+											<bean:define id="restrictionID" name="restriction" property="externalId"/>
 											<html:link module="/manager" page='<%="/deleteRestriction.do?degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId") + "&amp;restrictionId=" + restrictionID.toString()%>'>
 												<bean:message bundle="MANAGER_RESOURCES" key="message.manager.delete"/>
 											</html:link>
@@ -52,7 +52,7 @@
 						</table>
 					</td>
 					<td class="listClasses">
-						<bean:define id="precedenceID" name="precedence" property="idInternal"/>
+						<bean:define id="precedenceID" name="precedence" property="externalId"/>
 						<html:link module="/manager" page='<%="/deletePrecedence.do?degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId") + "&amp;precedenceId=" + precedenceID.toString()%>'>
 							<bean:message bundle="MANAGER_RESOURCES" key="message.manager.delete"/>
 						</html:link>

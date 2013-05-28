@@ -25,7 +25,7 @@
 
 <br/>
 <logic:present name="searchBean" property="executionYear">
-	<bean:define id="statsUrl">/listCourseResponsibles.do?method=downloadStatistics&executionYearId=<bean:write name="searchBean" property="executionYear.idInternal"/></bean:define>
+	<bean:define id="statsUrl">/listCourseResponsibles.do?method=downloadStatistics&executionYearId=<bean:write name="searchBean" property="executionYear.externalId"/></bean:define>
 	<html:link action="<%= statsUrl %>">
 		<html:img border="0" src='<%= request.getContextPath() + "/images/excel.gif"%>' altKey="excel" bundle="IMAGE_RESOURCES"/>
 		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="link.download.statistics"/>

@@ -22,7 +22,7 @@
 				<jsp:include page="spaceCrumbs.jsp"/>
 			</div>	
 								
-			<bean:define id="backLink">/manageSpaces.do?method=manageSpace&amp;spaceInformationID=<bean:write name="moveSpaceBean" property="space.spaceInformation.idInternal"/></bean:define>		
+			<bean:define id="backLink">/manageSpaces.do?method=manageSpace&amp;spaceInformationID=<bean:write name="moveSpaceBean" property="space.spaceInformation.externalId"/></bean:define>		
 			<ul class="mvert15 list5">
 				<li>
 					<html:link page="<%= backLink %>">
@@ -52,8 +52,8 @@
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle4"/>
 						<fr:property name="columnClasses" value=",acenter,acenter,acenter,acenter,acenter,,,"/>
-			   			<fr:property name="link(merge)" value="<%= "/manageSpaces.do?method=compareDestinationRoomWithFromRoom&fromRoomID=" + ((Space)space).getIdInternal().toString() %>"/>
-			            <fr:property name="param(merge)" value="idInternal/destinationRoomID"/>
+			   			<fr:property name="link(merge)" value="<%= "/manageSpaces.do?method=compareDestinationRoomWithFromRoom&fromRoomID=" + ((Space)space).getExternalId().toString() %>"/>
+			            <fr:property name="param(merge)" value="externalId/destinationRoomID"/>
 				        <fr:property name="key(merge)" value="label.choose"/>
 			            <fr:property name="bundle(merge)" value="SPACE_RESOURCES"/>
 			            <fr:property name="order(merge)" value="0"/>	

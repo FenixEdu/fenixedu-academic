@@ -40,7 +40,7 @@ public class InfoShift extends InfoObject {
                 return c2;
             }
             final int c3 = o1.getLessonsStringComparator().compareTo(o2.getLessonsStringComparator());
-            return c3 == 0 ? o1.getShift().getIdInternal().compareTo(o2.getShift().getIdInternal()) : c3;
+            return c3 == 0 ? o1.getShift().getExternalId().compareTo(o2.getShift().getExternalId()) : c3;
         }
 
     };
@@ -168,12 +168,12 @@ public class InfoShift extends InfoObject {
     }
 
     @Override
-    public Integer getIdInternal() {
-        return getShift().getIdInternal();
+    public Integer getExternalId() {
+        return getShift().getExternalId();
     }
 
     @Override
-    public void setIdInternal(Integer integer) {
+    public void setExternalId(Integer integer) {
         throw new Error("Method should not be called!");
     }
 
@@ -200,8 +200,8 @@ public class InfoShift extends InfoObject {
      */
     @Override
     public int hashCode() {
-        if (this.getIdInternal() != null) {
-            return this.getIdInternal().intValue();
+        if (this.getExternalId() != null) {
+            return this.getExternalId().intValue();
         }
 
         return 0;

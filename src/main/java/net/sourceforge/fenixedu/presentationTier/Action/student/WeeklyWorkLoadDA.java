@@ -115,7 +115,7 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
         final ExecutionSemester selectedExecutionPeriod = findExecutionPeriod(executionSemesters, executionPeriodID);
         request.setAttribute("selectedExecutionPeriod", selectedExecutionPeriod);
 
-        dynaActionForm.set("executionPeriodID", selectedExecutionPeriod.getIdInternal().toString());
+        dynaActionForm.set("executionPeriodID", selectedExecutionPeriod.getExternalId().toString());
 
         // if (selectedExecutionPeriod.isCurrent()) {
         // request.setAttribute("weeks", getWeeks(selectedExecutionPeriod));
@@ -247,7 +247,7 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
             if (executionPeriodID == null && executionSemester.getState().equals(PeriodState.CURRENT)) {
                 return executionSemester;
             }
-            if (executionPeriodID != null && executionSemester.getIdInternal().equals(executionPeriodID)) {
+            if (executionPeriodID != null && executionSemester.getExternalId().equals(executionPeriodID)) {
                 return executionSemester;
             }
         }

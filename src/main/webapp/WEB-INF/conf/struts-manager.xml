@@ -408,8 +408,8 @@
             </form-bean>
             <!-- ========== PERSONS MERGE ========== -->
             <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="objectsMergeForm">
-                  <form-property type="java.lang.Integer" name="object1IdInternal"></form-property>
-                  <form-property type="java.lang.Integer" name="object2IdInternal"></form-property>
+                  <form-property type="java.lang.Integer" name="object1ExternalId"></form-property>
+                  <form-property type="java.lang.Integer" name="object2ExternalId"></form-property>
                   <form-property type="java.lang.String" name="classToMerge"></form-property>
                   <form-property type="java.lang.String" name="method"></form-property>
             </form-bean>

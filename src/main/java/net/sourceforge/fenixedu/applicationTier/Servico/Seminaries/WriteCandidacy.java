@@ -32,27 +32,27 @@ public class WriteCandidacy {
         candidacy.setMotivation(infoCandidacy.getMotivation());
 
         // Modality
-        final Modality modality = RootDomainObject.getInstance().readModalityByOID(infoCandidacy.getInfoModality().getIdInternal());
+        final Modality modality = RootDomainObject.getInstance().readModalityByOID(infoCandidacy.getInfoModality().getExternalId());
         candidacy.setModality(modality);
 
         // Registration
-        final Registration readStudent = RootDomainObject.getInstance().readRegistrationByOID(infoCandidacy.getInfoStudent().getIdInternal());
+        final Registration readStudent = RootDomainObject.getInstance().readRegistrationByOID(infoCandidacy.getInfoStudent().getExternalId());
         candidacy.setStudent(readStudent);
 
         // Seminary
-        final Seminary readSeminary = RootDomainObject.getInstance().readSeminaryByOID(infoCandidacy.getInfoSeminary().getIdInternal());
+        final Seminary readSeminary = RootDomainObject.getInstance().readSeminaryByOID(infoCandidacy.getInfoSeminary().getExternalId());
         candidacy.setSeminary(readSeminary);
 
         // Curricular Course
         final CurricularCourse readCurricularCourse =
-                (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(infoCandidacy.getCurricularCourse().getIdInternal());
+                (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(infoCandidacy.getCurricularCourse().getExternalId());
         candidacy.setCurricularCourse(readCurricularCourse);
 
         // Theme
-        if (modality.getIdInternal().equals(infoCandidacy.getInfoModality().getIdInternal())) {
+        if (modality.getExternalId().equals(infoCandidacy.getInfoModality().getExternalId())) {
             candidacy.setTheme(null);
         } else {
-            final Theme readTheme = RootDomainObject.getInstance().readThemeByOID(infoCandidacy.getTheme().getIdInternal());
+            final Theme readTheme = RootDomainObject.getInstance().readThemeByOID(infoCandidacy.getTheme().getExternalId());
             candidacy.setTheme(readTheme);
         }
         if (!infoCandidacy.getInfoSeminary().getHasThemes().booleanValue()) {
@@ -65,7 +65,7 @@ public class WriteCandidacy {
 
             caseStudyChoice.setOrder(infoCaseStudyChoice.getOrder());
 
-            final CaseStudy caseStudy = RootDomainObject.getInstance().readCaseStudyByOID(infoCaseStudyChoice.getCaseStudy().getIdInternal());
+            final CaseStudy caseStudy = RootDomainObject.getInstance().readCaseStudyByOID(infoCaseStudyChoice.getCaseStudy().getExternalId());
             caseStudyChoice.setCaseStudy(caseStudy);
 
             caseStudyChoice.setCandidacy(candidacy);

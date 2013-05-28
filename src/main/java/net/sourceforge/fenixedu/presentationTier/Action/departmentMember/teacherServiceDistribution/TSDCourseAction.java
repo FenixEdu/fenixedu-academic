@@ -104,8 +104,8 @@ public class TSDCourseAction extends FenixDispatchAction {
         ExecutionSemester selectedExecutionPeriod = getSelectedExecutionPeriod(userView, dynaForm, null);
         TeacherServiceDistribution tsd = getSelectedTeacherServiceDistribution(dynaForm);
 
-        SetTSDCourseType.runSetTSDCourseType(selectedCompetenceCourse.getIdInternal(), tsd.getIdInternal(),
-                selectedExecutionPeriod.getIdInternal(), selectedTSDCourseType.toString());
+        SetTSDCourseType.runSetTSDCourseType(selectedCompetenceCourse.getExternalId(), tsd.getExternalId(),
+                selectedExecutionPeriod.getExternalId(), selectedTSDCourseType.toString());
 
         dynaForm.set("tsdCurricularCourse", null);
         dynaForm.set("tsdCurricularCourseGroup", null);
@@ -146,10 +146,10 @@ public class TSDCourseAction extends FenixDispatchAction {
 
         if (tsdCurricularCourseToGroupArray.length > 0) {
             TSDCurricularCourseGroup tsdCurricularCourseGroup =
-                    CreateTSDCurricularCourseGroup.runCreateTSDCurricularCourseGroup(tsd.getIdInternal(),
+                    CreateTSDCurricularCourseGroup.runCreateTSDCurricularCourseGroup(tsd.getExternalId(),
                             tsdCurricularCourseToGroupArray);
 
-            dynaForm.set("tsdCurricularCourseGroup", tsdCurricularCourseGroup.getIdInternal());
+            dynaForm.set("tsdCurricularCourseGroup", tsdCurricularCourseGroup.getExternalId());
         }
 
         return loadTSDCourses(mapping, form, request, response);
@@ -172,7 +172,7 @@ public class TSDCourseAction extends FenixDispatchAction {
 
         TSDCurricularCourseGroup selectedTSDCurricularCourseGroup = getSelectedTSDCurricularCourseGroup(dynaForm, null);
 
-        DeleteTSDCurricularCourseGroup.runDeleteTSDCurricularCourseGroup(selectedTSDCurricularCourseGroup.getIdInternal());
+        DeleteTSDCurricularCourseGroup.runDeleteTSDCurricularCourseGroup(selectedTSDCurricularCourseGroup.getExternalId());
 
         dynaForm.set("tsdCourseType", TSDCourseType.NOT_DETERMINED.toString());
         dynaForm.set("tsdCurricularCourseGroup", null);
@@ -250,8 +250,8 @@ public class TSDCourseAction extends FenixDispatchAction {
     private void createDefaultTSDCurricularCourses(IUserView userView, TeacherServiceDistribution tsd,
             CompetenceCourse competenceCourse, TSDProcessPhase currentTSDProcessPhase, ExecutionSemester selectedExecutionPeriod,
             Boolean activateCourses) throws FenixServiceException {
-        CreateTSDCurricularCourses.runCreateTSDCurricularCourses(tsd.getIdInternal(), competenceCourse.getIdInternal(),
-                currentTSDProcessPhase.getIdInternal(), selectedExecutionPeriod.getIdInternal(), activateCourses);
+        CreateTSDCurricularCourses.runCreateTSDCurricularCourses(tsd.getExternalId(), competenceCourse.getExternalId(),
+                currentTSDProcessPhase.getExternalId(), selectedExecutionPeriod.getExternalId(), activateCourses);
     }
 
     private List<ExecutionSemester> getOrderedExecutionPeriods(IUserView userView, DynaActionForm dynaForm)
@@ -279,13 +279,13 @@ public class TSDCourseAction extends FenixDispatchAction {
         request.setAttribute("selectedTSDCourseType", selectedTSDCourseType.toString());
 
         dynaForm.set("tsdCourseType", selectedTSDCourseType.toString());
-        dynaForm.set("competenceCourse", selectedTSDCompetenceCourse.getIdInternal());
+        dynaForm.set("competenceCourse", selectedTSDCompetenceCourse.getExternalId());
 
         if (selectedTSDCurricularCourse != null) {
-            dynaForm.set("tsdCurricularCourse", selectedTSDCurricularCourse.getIdInternal());
+            dynaForm.set("tsdCurricularCourse", selectedTSDCurricularCourse.getExternalId());
         }
         if (selectedTSDCurricularCourseGroup != null) {
-            dynaForm.set("tsdCurricularCourseGroup", selectedTSDCurricularCourseGroup.getIdInternal());
+            dynaForm.set("tsdCurricularCourseGroup", selectedTSDCurricularCourseGroup.getExternalId());
         }
 
         TSDCourse selectedTSDCourse = null;
@@ -378,7 +378,7 @@ public class TSDCourseAction extends FenixDispatchAction {
                 TeacherServiceDistributionDTOEntry
                         .getTeacherServiceDistributionOptionEntriesForPerson(phase, person, false, true);
 
-        dynaForm.set("tsd", tsdOptionEntryList.get(0).getTeacherServiceDistribution().getIdInternal());
+        dynaForm.set("tsd", tsdOptionEntryList.get(0).getTeacherServiceDistribution().getExternalId());
         dynaForm.set("tsdCourseType", TSDCourseType.NOT_DETERMINED.toString());
         dynaForm.set("competenceCourse", null);
         dynaForm.set("tsdCurricularCourse", null);
@@ -429,10 +429,10 @@ public class TSDCourseAction extends FenixDispatchAction {
         TSDCourse tsdCourse = rootDomainObject.readTSDCourseByOID(selectedTSDCourseId);
 
         if (tsdCourse instanceof TSDCurricularCourse) {
-            dynaForm.set("tsdCurricularCourse", tsdCourse.getIdInternal());
+            dynaForm.set("tsdCurricularCourse", tsdCourse.getExternalId());
 
         } else if (tsdCourse instanceof TSDCurricularCourseGroup) {
-            dynaForm.set("tsdCurricularCourseGroup", tsdCourse.getIdInternal());
+            dynaForm.set("tsdCurricularCourseGroup", tsdCourse.getExternalId());
 
         }
 
@@ -440,13 +440,13 @@ public class TSDCourseAction extends FenixDispatchAction {
         TeacherServiceDistribution tsd = getSelectedTeacherServiceDistribution(dynaForm);
 
         ExecutionSemester period = tsdCourse.getExecutionPeriod();
-        dynaForm.set("executionPeriod", period.getIdInternal());
+        dynaForm.set("executionPeriod", period.getExternalId());
 
         if (tsdCourse instanceof TSDCompetenceCourse || tsdCourse instanceof TSDVirtualCourseGroup) {
-            dynaForm.set("competenceCourse", tsdCourse.getIdInternal());
+            dynaForm.set("competenceCourse", tsdCourse.getExternalId());
         } else {
             dynaForm.set("competenceCourse",
-                    tsd.getTSDCompetenceCourse(tsdCourse.getCompetenceCourse(), tsdCourse.getExecutionPeriod()).getIdInternal());
+                    tsd.getTSDCompetenceCourse(tsdCourse.getCompetenceCourse(), tsdCourse.getExecutionPeriod()).getExternalId());
         }
 
         if (request.getParameter("notTSDCourseViewLink") == null) {

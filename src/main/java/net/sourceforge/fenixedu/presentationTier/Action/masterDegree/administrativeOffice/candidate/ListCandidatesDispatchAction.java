@@ -167,7 +167,7 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
         }
         if (result.size() == 1) {
             InfoMasterDegreeCandidate infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) result.get(0);
-            request.setAttribute("candidateID", infoMasterDegreeCandidate.getIdInternal());
+            request.setAttribute("candidateID", infoMasterDegreeCandidate.getExternalId());
             request.setAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE_LIST, result);
             return mapping.findForward("ActionReady");
         }
@@ -462,7 +462,7 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
         String pass = null;
         try {
             final Person person =
-                    (Person) rootDomainObject.readPartyByOID(infoMasterDegreeCandidate.getInfoPerson().getIdInternal());
+                    (Person) rootDomainObject.readPartyByOID(infoMasterDegreeCandidate.getInfoPerson().getExternalId());
             pass = GenerateNewPasswordService.run(person);
         } catch (FenixServiceException e) {
             throw new FenixActionException();
@@ -560,7 +560,7 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
         editCandidateForm.set("majorDegree", infoMasterDegreeCandidate.getMajorDegree());
         editCandidateForm.set("majorDegreeSchool", infoMasterDegreeCandidate.getMajorDegreeSchool());
 
-        editCandidateForm.set("candidateID", infoMasterDegreeCandidate.getIdInternal());
+        editCandidateForm.set("candidateID", infoMasterDegreeCandidate.getExternalId());
 
         if ((infoPerson.getSexo() != null)) {
             editCandidateForm.set("sex", infoPerson.getSexo().toString());

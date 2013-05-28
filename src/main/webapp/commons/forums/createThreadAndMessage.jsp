@@ -24,7 +24,7 @@
 		<br/><br/>
 	</logic:messagesPresent>
 	
-	<bean:define id="forumId" name="forum" property="idInternal"/>
+	<bean:define id="forumId" name="forum" property="externalId"/>
 	
 	<fr:create id="createThreadAndMessage"
 			type="net.sourceforge.fenixedu.dataTransferObject.messaging.CreateConversationThreadAndMessageBean" 

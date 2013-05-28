@@ -39,7 +39,7 @@ public abstract class AbstractReadProfessorshipsAction extends Action {
 
         InfoTeacher infoTeacher = getInfoTeacher(request, dynaForm);
 
-        List detailedInfoProfessorshipList = getDetailedProfessorships(userView, infoTeacher.getIdInternal(), dynaForm, request);
+        List detailedInfoProfessorshipList = getDetailedProfessorships(userView, infoTeacher.getExternalId(), dynaForm, request);
 
         ComparatorChain chain = new ComparatorChain();
 
@@ -66,7 +66,7 @@ public abstract class AbstractReadProfessorshipsAction extends Action {
         if (infoTeacher == null) {
             final IUserView userView = UserView.getUser();
             infoTeacher =
-                    (InfoTeacher) ReadTeacherByOID.runReadTeacherByOID(Integer.valueOf(dynaForm.get("idInternal").toString()));
+                    (InfoTeacher) ReadTeacherByOID.runReadTeacherByOID(Integer.valueOf(dynaForm.get("externalId").toString()));
             request.setAttribute("infoTeacher", infoTeacher);
 
         }

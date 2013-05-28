@@ -27,7 +27,7 @@ public class PersonRotationPaymentCodeGenerator extends PaymentCodeGenerator {
 
             int comparationResult = leftCodeControlDigits.compareTo(rightCodeControlDigits);
 
-            return (comparationResult == 0) ? leftPaymentCode.getIdInternal().compareTo(rightPaymentCode.getIdInternal()) : comparationResult;
+            return (comparationResult == 0) ? leftPaymentCode.getExternalId().compareTo(rightPaymentCode.getExternalId()) : comparationResult;
         }
     };
 

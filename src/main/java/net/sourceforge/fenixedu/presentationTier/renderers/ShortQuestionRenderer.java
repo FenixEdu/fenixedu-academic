@@ -45,7 +45,7 @@ public class ShortQuestionRenderer extends OutputRenderer {
             NewQuestionBank questionBank = (NewQuestionBank) object;
             Properties properties = new Properties();
             properties.setProperty("linkFormat",
-                    "/tests/questionBank.do?method=manageQuestionBank&view=tree&oid=" + questionBank.getIdInternal());
+                    "/tests/questionBank.do?method=manageQuestionBank&view=tree&oid=" + questionBank.getExternalId());
             properties.setProperty("text", RenderUtils.getResourceString("TESTS_RESOURCES", "title.managePermissionUnits") + " "
                     + questionBank.getOwner().getName());
             properties.setProperty("useParent", "true");
@@ -67,7 +67,7 @@ public class ShortQuestionRenderer extends OutputRenderer {
             NewQuestionGroup questionGroup = (NewQuestionGroup) object;
             Properties properties = new Properties();
             properties.setProperty("linkFormat",
-                    "/tests/questionBank.do?method=editTestElement&oid=" + questionGroup.getIdInternal());
+                    "/tests/questionBank.do?method=editTestElement&oid=" + questionGroup.getExternalId());
             properties.setProperty("text", questionGroup.getName());
             properties.setProperty("useParent", "true");
             properties.setProperty("contextRelative", "true");
@@ -87,7 +87,7 @@ public class ShortQuestionRenderer extends OutputRenderer {
         public HtmlComponent createComponent(Object object, Class type) {
             NewAllGroup allGroup = (NewAllGroup) object;
             Properties properties = new Properties();
-            properties.setProperty("linkFormat", "/tests/questionBank.do?method=editTestElement&oid=" + allGroup.getIdInternal());
+            properties.setProperty("linkFormat", "/tests/questionBank.do?method=editTestElement&oid=" + allGroup.getExternalId());
             properties.setProperty("text", RenderUtils.getResourceString("TESTS_RESOURCES", "label.allGroup"));
             properties.setProperty("useParent", "true");
             properties.setProperty("contextRelative", "true");

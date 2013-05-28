@@ -25,7 +25,7 @@ public class ReadShiftsByTypeFromExecutionCourse {
     @Checked("RolePredicates.STUDENT_PREDICATE")
     @Service
     public static List run(InfoExecutionCourse infoExecutionCourse, ShiftType tipoAula) {
-        final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
+        final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(infoExecutionCourse.getExternalId());
         final Set<Shift> shifts = executionCourse.findShiftByType(tipoAula);
 
         return (List) CollectionUtils.collect(shifts, new Transformer() {

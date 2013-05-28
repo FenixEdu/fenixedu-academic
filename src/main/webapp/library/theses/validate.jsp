@@ -8,7 +8,7 @@
 
 <%@page import="net.sourceforge.fenixedu.domain.thesis.Thesis"%><html:xhtml />
 
-<bean:define id="thesisId" name="thesis" property="idInternal" />
+<bean:define id="thesisId" name="thesis" property="externalId" />
 <bean:define id="thesisState" name="thesis" property="libraryState.name" />
 <bean:define id="person"
 	name="<%=pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE%>"
@@ -72,8 +72,8 @@
 			action="<%="/theses/validate.do?method=view&amp;thesisID=" + thesisId + request.getAttribute("searchArgs") %>">
 			<fr:create id="cancel" type="net.sourceforge.fenixedu.domain.thesis.ThesisLibraryCancelOperation"
 				schema="library.thesis.cancel">
-				<fr:hidden slot="thesisId" name="thesis" property="idInternal" />
-				<fr:hidden slot="performerId" name="person" property="idInternal" />
+				<fr:hidden slot="thesisId" name="thesis" property="externalId" />
+				<fr:hidden slot="performerId" name="person" property="externalId" />
 			</fr:create>
 			<html:submit>
 				<bean:message key="thesis.validation.button.cancel" />
@@ -87,8 +87,8 @@
 		type="net.sourceforge.fenixedu.domain.thesis.ThesisLibraryArchiveOperation"
 		schema="library.thesis.validate"
 		action="<%="/theses/validate.do?method=view&amp;thesisID=" + thesisId + request.getAttribute("searchArgs") %>">
-		<fr:hidden slot="thesisId" name="thesis" property="idInternal" />
-		<fr:hidden slot="performerId" name="person" property="idInternal" />
+		<fr:hidden slot="thesisId" name="thesis" property="externalId" />
+		<fr:hidden slot="performerId" name="person" property="externalId" />
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thlight thright mvert05 thmiddle" />
 		</fr:layout>
@@ -101,8 +101,8 @@
 	<fr:create id="pending" type="net.sourceforge.fenixedu.domain.thesis.ThesisLibraryPendingOperation"
 		schema="library.thesis.pending"
 		action="<%="/theses/validate.do?method=view&amp;thesisID=" + thesisId + request.getAttribute("searchArgs") %>">
-		<fr:hidden slot="thesisId" name="thesis" property="idInternal" />
-		<fr:hidden slot="performerId" name="person" property="idInternal" />
+		<fr:hidden slot="thesisId" name="thesis" property="externalId" />
+		<fr:hidden slot="performerId" name="person" property="externalId" />
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thlight thright mvert05 thtop" />
 		</fr:layout>
@@ -115,8 +115,8 @@
     <fr:create id="edit" type="net.sourceforge.fenixedu.domain.thesis.ThesisLibraryPendingOperation"
         schema="library.thesis.pending"
         action="<%="/theses/validate.do?method=view&amp;thesisID=" + thesisId + request.getAttribute("searchArgs") %>">
-        <fr:hidden slot="thesisId" name="thesis" property="idInternal" />
-        <fr:hidden slot="performerId" name="person" property="idInternal" />
+        <fr:hidden slot="thesisId" name="thesis" property="externalId" />
+        <fr:hidden slot="performerId" name="person" property="externalId" />
         <fr:layout name="tabular">
             <fr:property name="classes" value="tstyle5 thlight thright mvert05 thtop" />
         </fr:layout>

@@ -333,10 +333,10 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
             HttpServletResponse response) throws  FenixServiceException {
 
         CompetenceCourse course = getCompetenceCourse(request);
-        Integer idInternal = Integer.valueOf(request.getParameter("oid"));
+        Integer externalId = Integer.valueOf(request.getParameter("oid"));
 
         for (CompetenceCourseInformation information : course.getCompetenceCourseInformations()) {
-            if (information.getIdInternal().intValue() == idInternal.intValue()) {
+            if (information.getExternalId().intValue() == externalId.intValue()) {
                 request.setAttribute("information", information);
             }
         }

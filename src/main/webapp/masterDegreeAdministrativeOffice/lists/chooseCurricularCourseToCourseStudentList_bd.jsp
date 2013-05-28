@@ -18,9 +18,9 @@
 	<table>
 		<!-- CurricularCourse -->
 		<logic:iterate id="curricularCourseElem" name="curricularCourses">
-		   	<bean:define id="courseID" name="curricularCourseElem" property="idInternal"/>
+		   	<bean:define id="courseID" name="curricularCourseElem" property="externalId"/>
 		   	<bean:define id="curricularCourse" name="curricularCourseElem" property="name"/>
-		   	<bean:define id="curricularPlanID" name="curricularCourseElem" property="infoDegreeCurricularPlan.idInternal"/>
+		   	<bean:define id="curricularPlanID" name="curricularCourseElem" property="infoDegreeCurricularPlan.externalId"/>
 
 			<html:link page="<%= "/listCourseStudents.do?method=getStudentsFromCourse&amp;scopeCode=" + courseID + "&amp;degree=" + pageContext.findAttribute("degree") + "&amp;curricularCourse=" + pageContext.findAttribute("curricularCourse")+"&amp;curricularPlanID=" + curricularPlanID%>">
 				<bean:write name="curricularCourseElem" property="name"/>

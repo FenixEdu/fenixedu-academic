@@ -38,7 +38,7 @@ public class PrepareStudentDataForThesisOperationsDispatchAction extends FenixDi
                 rootDomainObject.readStudentCurricularPlanByOID((Integer) ((DynaActionForm) form).get("scpID"));
 
         request.setAttribute(PresentationConstants.STUDENT, studentCurricularPlan.getRegistration());
-        request.setAttribute("scpID", studentCurricularPlan.getIdInternal());
+        request.setAttribute("scpID", studentCurricularPlan.getExternalId());
         request.setAttribute("studentCurricularPlan", studentCurricularPlan);
 
         return studentCurricularPlan.getMasterDegreeThesis() != null ? mapping.findForward("success") : mapping

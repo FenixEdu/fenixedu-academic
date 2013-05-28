@@ -47,7 +47,7 @@ public class ExecutionCoursePublicAnnouncementManagement extends PublicAnnouncem
         if (executionCourseIDString == null) {
             ExecutionCourseSite site =
                     (ExecutionCourseSite) AbstractFunctionalityContext.getCurrentContext(request).getSelectedContainer();
-            return site.getSiteExecutionCourse().getIdInternal();
+            return site.getSiteExecutionCourse().getExternalId();
         }
 
         return Integer.valueOf(executionCourseIDString);

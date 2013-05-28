@@ -19,7 +19,7 @@ public class RemoveClasses {
     @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
     @Service
     public static Boolean run(InfoShift infoShift, List classOIDs) {
-        final Shift shift = RootDomainObject.getInstance().readShiftByOID(infoShift.getIdInternal());
+        final Shift shift = RootDomainObject.getInstance().readShiftByOID(infoShift.getExternalId());
 
         for (int i = 0; i < classOIDs.size(); i++) {
             final SchoolClass schoolClass = RootDomainObject.getInstance().readSchoolClassByOID((Integer) classOIDs.get(i));

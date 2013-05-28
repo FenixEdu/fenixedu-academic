@@ -28,7 +28,7 @@ public class ReadAvailableShiftsForClass {
 
         List infoShifts = null;
 
-        SchoolClass schoolClass = RootDomainObject.getInstance().readSchoolClassByOID(infoClass.getIdInternal());
+        SchoolClass schoolClass = RootDomainObject.getInstance().readSchoolClassByOID(infoClass.getExternalId());
         Set<Shift> shifts = schoolClass.findAvailableShifts();
 
         infoShifts = (List) CollectionUtils.collect(shifts, new Transformer() {

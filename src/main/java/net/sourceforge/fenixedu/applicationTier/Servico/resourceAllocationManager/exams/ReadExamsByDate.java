@@ -71,8 +71,8 @@ public class ReadExamsByDate {
 
         for (final DegreeModuleScope degreeModuleScope : exam.getDegreeModuleScopes()) {
             final CurricularCourse curricularCourse = degreeModuleScope.getCurricularCourse();
-            if (!curricularCourseIDs.contains(curricularCourse.getIdInternal())) {
-                curricularCourseIDs.add(curricularCourse.getIdInternal());
+            if (!curricularCourseIDs.contains(curricularCourse.getExternalId())) {
+                curricularCourseIDs.add(curricularCourse.getExternalId());
                 result.add(InfoDegree.newInfoFromDomain(curricularCourse.getDegreeCurricularPlan().getDegree()));
                 numberStudentes += calculateNumberOfEnrolmentStudents(curricularCourse, executionSemester);
             }

@@ -154,7 +154,7 @@ public class ExamSearchByDegreeAndYear extends FenixContextDispatchAction {
         if (index != -1) {
             infoExecutionDegree = (InfoExecutionDegree) executionDegreeList.get(index);
             request.setAttribute(PresentationConstants.EXECUTION_DEGREE, infoExecutionDegree);
-            request.setAttribute(PresentationConstants.EXECUTION_DEGREE_OID, infoExecutionDegree.getIdInternal().toString());
+            request.setAttribute(PresentationConstants.EXECUTION_DEGREE_OID, infoExecutionDegree.getExternalId().toString());
             infoExamsMap.add(getExamsMap(request, curricularYears, infoExecutionDegree, infoExecutionPeriod));
             request.setAttribute(PresentationConstants.INFO_EXAMS_MAP, infoExamsMap);
         } else {

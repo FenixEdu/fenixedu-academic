@@ -19,7 +19,7 @@
 <bean:define id="hoursPattern">HH : mm</bean:define>
 <bean:define id="infoLessons" name="infoLessons"/>
 <bean:define id="registrationOID" name="registrationOID"/>
-<bean:define id="classId" name="selectedSchoolClass" property="idInternal"/>
+<bean:define id="classId" name="selectedSchoolClass" property="externalId"/>
 <bean:define id="infoClasslessonsEndTime" name="infoClasslessonsEndTime"/>
 <bean:define id="infoLessonsEndTime" name="infoLessonsEndTime"/>
 <bean:define id="infoClasslessons" name="infoClasslessons"/>	
@@ -47,7 +47,7 @@
 
 	<logic:present name="executionCourse">
 		<bean:define id="executionCourseID" name="executionCourse"
-			property="idInternal" />
+			property="externalId" />
 		<app:gerarHorario name="infoClasslessons"
 			type="<%= TimeTableType.SHIFT_ENROLLMENT_TIMETABLE %>"
 			studentID="<%= registrationOID.toString() %>"
@@ -74,7 +74,7 @@
 
 	<logic:present name="executionCourse">
 		<bean:define id="executionCourseID" name="executionCourse"
-			property="idInternal" />
+			property="externalId" />
 		<app:gerarHorario name="infoLessons"
 			type="<%= TimeTableType.SHIFT_ENROLLMENT_TIMETABLE %>"
 			studentID="<%= registrationOID.toString() %>"
@@ -99,7 +99,7 @@
 
 	<logic:present name="executionCourse">
 		<bean:define id="executionCourseID" name="executionCourse"
-			property="idInternal" />
+			property="externalId" />
 		<app:gerarHorario name="infoClasslessons"
 			type="<%= TimeTableType.SHIFT_ENROLLMENT_TIMETABLE %>"
 			studentID="<%= registrationOID.toString() %>"
@@ -126,7 +126,7 @@
 
 	<logic:present name="executionCourse">
 		<bean:define id="executionCourseID" name="executionCourse"
-			property="idInternal" />
+			property="externalId" />
 		<app:gerarHorario name="infoLessons"
 			type="<%= TimeTableType.SHIFT_ENROLLMENT_TIMETABLE %>"
 			studentID="<%= registrationOID.toString() %>"

@@ -38,7 +38,7 @@ public class CoordinatorProjectsInformationBackingBean extends CoordinatorEvalua
                 if (!executionCourse.getAssociatedProjects().isEmpty()) {
                     Collections.sort(associatedProjects, new BeanComparator("begin"));
                     this.executionCoursesWithProjects.add(executionCourse);
-                    this.projects.put(executionCourse.getIdInternal(), associatedProjects);
+                    this.projects.put(executionCourse.getExternalId(), associatedProjects);
                 } else {
                     this.executionCoursesWithoutProjects.add(executionCourse);
                 }
@@ -72,9 +72,9 @@ public class CoordinatorProjectsInformationBackingBean extends CoordinatorEvalua
                     final Map<String, String> linkParameters = new HashMap<String, String>();
                     linkParameters.put("degreeCurricularPlanID", getDegreeCurricularPlanID().toString());
                     linkParameters.put("executionPeriodID", getExecutionPeriodID().toString());
-                    linkParameters.put("executionCourseID", executionCourse.getIdInternal().toString());
+                    linkParameters.put("executionCourseID", executionCourse.getExternalId().toString());
                     linkParameters.put("curricularYearID", getCurricularYearID().toString());
-                    linkParameters.put("evaluationID", project.getIdInternal().toString());
+                    linkParameters.put("evaluationID", project.getExternalId().toString());
 
                     calendarLinkBegin.setLinkParameters(linkParameters);
                     calendarLinkEnd.setLinkParameters(linkParameters);

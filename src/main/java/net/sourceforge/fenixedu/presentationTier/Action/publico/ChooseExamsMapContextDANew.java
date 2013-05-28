@@ -107,15 +107,15 @@ public class ChooseExamsMapContextDANew extends FenixContextDispatchAction {
         }
 
         if (degreeCurricularPlan != null) {
-            request.setAttribute("degreeCurricularPlanID", degreeCurricularPlan.getIdInternal());
+            request.setAttribute("degreeCurricularPlanID", degreeCurricularPlan.getExternalId());
 
-            if (!degreeCurricularPlan.getDegree().getIdInternal().equals(degreeId)) {
+            if (!degreeCurricularPlan.getDegree().getExternalId().equals(degreeId)) {
                 throw new FenixActionException();
             }
 
             // lista
             List<LabelValueBean> executionPeriodsLabelValueList =
-                    buildExecutionPeriodsLabelValueList(degreeCurricularPlan.getIdInternal());
+                    buildExecutionPeriodsLabelValueList(degreeCurricularPlan.getExternalId());
             if (executionPeriodsLabelValueList.size() > 1) {
                 request.setAttribute("lista", executionPeriodsLabelValueList);
             } else {
@@ -133,14 +133,14 @@ public class ChooseExamsMapContextDANew extends FenixContextDispatchAction {
         if (executionPeriodID != null) {
             infoExecutionPeriod = ReadExecutionPeriodByOID.run(executionPeriodID);
         }
-        request.setAttribute("indice", infoExecutionPeriod.getIdInternal());
-        chooseExamContextoForm.set("indice", infoExecutionPeriod.getIdInternal());
+        request.setAttribute("indice", infoExecutionPeriod.getExternalId());
+        chooseExamContextoForm.set("indice", infoExecutionPeriod.getExternalId());
         RequestUtils.setExecutionPeriodToRequest(request, infoExecutionPeriod);
         request.setAttribute(PresentationConstants.EXECUTION_PERIOD, infoExecutionPeriod);
-        request.setAttribute(PresentationConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getIdInternal().toString());
+        request.setAttribute(PresentationConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getExternalId().toString());
 
         final ExecutionSemester executionSemester =
-                rootDomainObject.readExecutionSemesterByOID(infoExecutionPeriod.getIdInternal());
+                rootDomainObject.readExecutionSemesterByOID(infoExecutionPeriod.getExternalId());
         ExecutionDegree executionDegree = null;
 
         if (degreeCurricularPlan != null) {
@@ -151,11 +151,11 @@ public class ChooseExamsMapContextDANew extends FenixContextDispatchAction {
                 if (executionDegree != null) {
                     infoExecutionPeriod =
                             InfoExecutionPeriod.newInfoFromDomain(executionDegree.getExecutionYear().getExecutionSemesterFor(1));
-                    request.setAttribute("indice", infoExecutionPeriod.getIdInternal());
-                    chooseExamContextoForm.set("indice", infoExecutionPeriod.getIdInternal());
+                    request.setAttribute("indice", infoExecutionPeriod.getExternalId());
+                    chooseExamContextoForm.set("indice", infoExecutionPeriod.getExternalId());
                     RequestUtils.setExecutionPeriodToRequest(request, infoExecutionPeriod);
                     request.setAttribute(PresentationConstants.EXECUTION_PERIOD, infoExecutionPeriod);
-                    request.setAttribute(PresentationConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getIdInternal()
+                    request.setAttribute(PresentationConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getExternalId()
                             .toString());
                 }
             }
@@ -164,7 +164,7 @@ public class ChooseExamsMapContextDANew extends FenixContextDispatchAction {
         if (executionDegree != null) {
             InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
             request.setAttribute(PresentationConstants.EXECUTION_DEGREE, infoExecutionDegree);
-            request.setAttribute("executionDegreeID", infoExecutionDegree.getIdInternal().toString());
+            request.setAttribute("executionDegreeID", infoExecutionDegree.getExternalId().toString());
             RequestUtils.setExecutionDegreeToRequest(request, infoExecutionDegree);
         } else {
             return mapping.findForward("viewExamsMap");

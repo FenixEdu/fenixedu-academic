@@ -28,7 +28,7 @@
 <br/>
 <h3><bean:message key="label.studentDismissal.add.courses" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 <bean:define id="dismissalTypeName" name="dismissalBean" property="dismissalType.name" />
-<bean:define id="scpID" name="dismissalBean" property="studentCurricularPlan.idInternal" />
+<bean:define id="scpID" name="dismissalBean" property="studentCurricularPlan.externalId" />
 
 <fr:form action="<%= "/studentSubstitutions.do?scpID=" + scpID.toString() %>">
 	<html:hidden property="method" value="stepThree"/>

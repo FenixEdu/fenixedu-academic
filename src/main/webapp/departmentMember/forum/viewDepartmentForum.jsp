@@ -19,7 +19,7 @@
 		
 		<tr>
 			<td>
-				<html:link action="<%=String.format("/departmentForum.do?method=viewForum&forumId=%s",forum.getIdInternal())%>">
+				<html:link action="<%=String.format("/departmentForum.do?method=viewForum&forumId=%s",forum.getExternalId())%>">
 					<bean:write name="forum" property="name"/>
 				</html:link>
 			</td>

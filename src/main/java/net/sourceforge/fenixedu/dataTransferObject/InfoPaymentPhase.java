@@ -26,7 +26,7 @@ public class InfoPaymentPhase extends InfoObject {
     public String toString() {
         StringBuilder object = new StringBuilder();
         object =
-                object.append("\n[InfoPaymentPhase: ").append("idInternal= ").append(getIdInternal()).append(" starDate= ")
+                object.append("\n[InfoPaymentPhase: ").append("externalId= ").append(getExternalId()).append(" starDate= ")
                         .append(startDate).append("; endDate= ").append(endDate).append("; value= ").append(value)
                         .append("; description= ").append(description).append("\n");
 
@@ -127,7 +127,7 @@ public class InfoPaymentPhase extends InfoObject {
         InfoPaymentPhase infoPaymentPhase = new InfoPaymentPhase();
         infoPaymentPhase.setDescription(paymentPhase.getDescription());
         infoPaymentPhase.setEndDate(paymentPhase.getEndDate());
-        infoPaymentPhase.setIdInternal(paymentPhase.getIdInternal());
+        infoPaymentPhase.setExternalId(paymentPhase.getExternalId());
         infoPaymentPhase.setStartDate(paymentPhase.getStartDate());
         infoPaymentPhase.setValue(paymentPhase.getValue());
 

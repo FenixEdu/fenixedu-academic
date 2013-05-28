@@ -39,8 +39,8 @@
 			</logic:notEmpty>
 			<tr>
 				<td align="left">
-					<bean:define id="objectCode" name="item" property="idInternal"/>
-					<bean:define id="objectCode2" name="infoWebSiteSection" property="idInternal"/>
+					<bean:define id="objectCode" name="item" property="externalId"/>
+					<bean:define id="objectCode2" name="infoWebSiteSection" property="externalId"/>
 					<bean:write name="item" property="excerpt"/>
 					(<html:link page="<%="/viewWebSiteSection.do?method=viewAllPublishedItemsFromSection&amp;objectCode=" + objectCode + "&amp;objectCode2=" + objectCode2 %>">
 						<bean:message key="link.more"/>

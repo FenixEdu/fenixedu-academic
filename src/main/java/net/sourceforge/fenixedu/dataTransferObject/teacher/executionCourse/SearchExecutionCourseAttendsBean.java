@@ -260,7 +260,7 @@ public class SearchExecutionCourseAttendsBean implements Serializable {
     public String getSearchElementsAsParameters() {
         String parameters = "";
 
-        parameters += "&amp;executionCourse=" + getExecutionCourse().getIdInternal();
+        parameters += "&amp;executionCourse=" + getExecutionCourse().getExternalId();
         if (viewPhoto) {
             parameters += "&amp;viewPhoto=true";
         }
@@ -279,13 +279,13 @@ public class SearchExecutionCourseAttendsBean implements Serializable {
         if (getDegreeCurricularPlans() != null) {
             parameters += "&amp;degreeCurricularPlans=";
             for (DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlans()) {
-                parameters += degreeCurricularPlan.getIdInternal() + ":";
+                parameters += degreeCurricularPlan.getExternalId() + ":";
             }
         }
         if (getShifts() != null) {
             parameters += "&amp;shifts=";
             for (Shift shift : getShifts()) {
-                parameters += shift.getIdInternal() + ":";
+                parameters += shift.getExternalId() + ":";
             }
         }
 

@@ -16,7 +16,7 @@
 				<html:option value="-1" key="label.seminary.candidaciesGrid.select">
 					<bean:message key="label.seminary.candidaciesGrid.select"/>
 				</html:option>
-				<html:options collection="seminaries" property="idInternal" labelProperty="name"/>
+				<html:options collection="seminaries" property="externalId" labelProperty="name"/>
 			</html:select>
 			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submition" styleClass="button" value="OK" property="submition"/>
 		</p>

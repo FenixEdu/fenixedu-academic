@@ -38,6 +38,7 @@ import org.apache.struts.validator.DynaValidatorForm;
  * 
  */
 public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
+
     public ActionForward editExecutionCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
 
@@ -200,7 +201,7 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
         DynaActionForm editExecutionCourseForm = (DynaActionForm) actionForm;
 
         try {
-            infoExecutionCourse.setIdInternal(new Integer((String) editExecutionCourseForm.get("executionCourseId")));
+            infoExecutionCourse.setExternalId(new Integer((String) editExecutionCourseForm.get("executionCourseId")));
             infoExecutionCourse.setNome((String) editExecutionCourseForm.get("name"));
             infoExecutionCourse.setSigla((String) editExecutionCourseForm.get("code"));
             infoExecutionCourse.setComment((String) editExecutionCourseForm.get("comment"));
@@ -219,7 +220,7 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
 
         DynaActionForm executionCourseForm = (DynaActionForm) form;
 
-        // the value returned to action is a string name~idInternal
+        // the value returned to action is a string name~externalId
         String object = (String) executionCourseForm.get(property);
         if (object == null || object.length() <= 0) {
             object = (String) request.getAttribute(property);

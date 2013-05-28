@@ -81,7 +81,7 @@ public class CreateGuideFromTransactions {
 
         // Get the Execution Degree
         ExecutionDegree executionDegree =
-                RootDomainObject.getInstance().readExecutionDegreeByOID(infoGuide.getInfoExecutionDegree().getIdInternal());
+                RootDomainObject.getInstance().readExecutionDegreeByOID(infoGuide.getInfoExecutionDegree().getExternalId());
 
         Party contributor = Party.readByContributorNumber(infoGuide.getInfoContributor().getContributorNumber());
         Person person = Person.readPersonByUsername(infoGuide.getInfoPerson().getUsername());

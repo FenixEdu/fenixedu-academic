@@ -18,7 +18,7 @@ public class RemoverTurno {
     @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
     @Service
     public static Object run(final InfoShift infoShift, final InfoClass infoClass) {
-        final Shift shift = RootDomainObject.getInstance().readShiftByOID(infoShift.getIdInternal());
+        final Shift shift = RootDomainObject.getInstance().readShiftByOID(infoShift.getExternalId());
         if (shift == null) {
             return Boolean.FALSE;
         }
@@ -26,7 +26,7 @@ public class RemoverTurno {
             @Override
             public boolean evaluate(Object arg0) {
                 final SchoolClass schoolClass = (SchoolClass) arg0;
-                return schoolClass.getIdInternal().equals(infoClass.getIdInternal());
+                return schoolClass.getExternalId().equals(infoClass.getExternalId());
             }
         });
         if (schoolClass == null) {

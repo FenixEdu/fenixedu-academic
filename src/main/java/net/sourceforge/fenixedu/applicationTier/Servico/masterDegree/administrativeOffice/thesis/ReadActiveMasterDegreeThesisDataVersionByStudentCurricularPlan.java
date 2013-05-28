@@ -27,7 +27,7 @@ public class ReadActiveMasterDegreeThesisDataVersionByStudentCurricularPlan {
         InfoMasterDegreeThesisDataVersion infoMasterDegreeThesisDataVersion = null;
 
         StudentCurricularPlan studentCurricularPlan =
-                RootDomainObject.getInstance().readStudentCurricularPlanByOID(infoStudentCurricularPlan.getIdInternal());
+                RootDomainObject.getInstance().readStudentCurricularPlanByOID(infoStudentCurricularPlan.getExternalId());
 
         MasterDegreeThesisDataVersion masterDegreeThesisDataVersion =
                 studentCurricularPlan.readActiveMasterDegreeThesisDataVersion();

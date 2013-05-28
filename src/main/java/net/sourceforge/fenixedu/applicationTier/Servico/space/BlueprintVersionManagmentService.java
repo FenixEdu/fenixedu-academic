@@ -37,7 +37,7 @@ public abstract class BlueprintVersionManagmentService {
             final Person person, final Blueprint blueprint) throws IOException {
 
         final String filename =
-                blueprintSubmissionBean.getSpaceInformation().getIdInternal() + String.valueOf(System.currentTimeMillis());
+                blueprintSubmissionBean.getSpaceInformation().getExternalId() + String.valueOf(System.currentTimeMillis());
         final byte[] contents = readInputStream(blueprintSubmissionBean.getInputStream());
 
         final String displayName = blueprintSubmissionBean.getFilename();
@@ -58,7 +58,7 @@ public abstract class BlueprintVersionManagmentService {
     protected VirtualPath getVirtualPath(SpaceInformation spaceInformation) {
         final VirtualPath filePath = new VirtualPath();
         filePath.addNode(new VirtualPathNode("Spaces", "Spaces"));
-        filePath.addNode(new VirtualPathNode("Spaces" + spaceInformation.getSpace().getIdInternal(), spaceInformation
+        filePath.addNode(new VirtualPathNode("Spaces" + spaceInformation.getSpace().getExternalId(), spaceInformation
                 .getPresentationName()));
         filePath.addNode(new VirtualPathNode("Blueprints", "Blueprints"));
         return filePath;

@@ -111,7 +111,7 @@ public class InfoContributor extends InfoObject {
             String areaCode, String areaOfAreaCode, String area, String parishOfResidence, String districtSubdivisionOfResidence,
             String districtOfResidence) throws FenixServiceException {
 
-        final Party storedContributor = RootDomainObject.getInstance().readPartyByOID(getIdInternal());
+        final Party storedContributor = RootDomainObject.getInstance().readPartyByOID(getExternalId());
         if (storedContributor == null) {
             throw new NonExistingServiceException();
         }

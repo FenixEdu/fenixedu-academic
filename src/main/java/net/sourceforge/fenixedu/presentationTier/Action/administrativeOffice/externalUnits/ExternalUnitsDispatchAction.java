@@ -216,8 +216,8 @@ public class ExternalUnitsDispatchAction extends FenixDispatchAction {
         try {
             final Unit unit = CreateExternalUnit.run(externalUnitBean);
             final Integer oid =
-                    (!externalUnitBean.getParentUnit().isPlanetUnit()) ? externalUnitBean.getParentUnit().getIdInternal() : unit
-                            .getIdInternal();
+                    (!externalUnitBean.getParentUnit().isPlanetUnit()) ? externalUnitBean.getParentUnit().getExternalId() : unit
+                            .getExternalId();
             request.setAttribute("oid", oid);
             return viewUnit(mapping, actionForm, request, response);
 
@@ -238,7 +238,7 @@ public class ExternalUnitsDispatchAction extends FenixDispatchAction {
 
         try {
             EditExternalUnit.run(externalUnitBean);
-            request.setAttribute("oid", externalUnitBean.getExternalUnit().getIdInternal());
+            request.setAttribute("oid", externalUnitBean.getExternalUnit().getExternalId());
             return viewUnit(mapping, actionForm, request, response);
 
         } catch (final IllegalDataAccessException e) {
@@ -317,7 +317,7 @@ public class ExternalUnitsDispatchAction extends FenixDispatchAction {
         try {
             CreateExternalCurricularCourse.run(externalCurricularCourseBean);
 
-            request.setAttribute("oid", externalCurricularCourseBean.getParentUnit().getIdInternal());
+            request.setAttribute("oid", externalCurricularCourseBean.getParentUnit().getExternalId());
             return viewUnit(mapping, actionForm, request, response);
 
         } catch (final NotAuthorizedException e) {
@@ -370,7 +370,7 @@ public class ExternalUnitsDispatchAction extends FenixDispatchAction {
         try {
             EditExternalCurricularCourse.run(externalCurricularCourseBean);
 
-            request.setAttribute("oid", externalCurricularCourseBean.getExternalCurricularCourse().getIdInternal());
+            request.setAttribute("oid", externalCurricularCourseBean.getExternalCurricularCourse().getExternalId());
             return viewExternalCurricularCourse(mapping, actionForm, request, response);
 
         } catch (final IllegalDataAccessException e) {
@@ -415,7 +415,7 @@ public class ExternalUnitsDispatchAction extends FenixDispatchAction {
         try {
             EditExternalEnrolment.run(externalEnrolmentBean, externalEnrolmentBean.getExternalEnrolment().getRegistration());
 
-            request.setAttribute("oid", externalEnrolmentBean.getExternalCurricularCourse().getIdInternal());
+            request.setAttribute("oid", externalEnrolmentBean.getExternalCurricularCourse().getExternalId());
             return viewExternalCurricularCourse(mapping, actionForm, request, response);
 
         } catch (final IllegalDataAccessException e) {

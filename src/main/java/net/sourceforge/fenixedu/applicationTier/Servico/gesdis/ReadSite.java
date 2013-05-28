@@ -12,7 +12,7 @@ public class ReadSite {
 
     @Service
     public static InfoSite run(InfoExecutionCourse infoExecutionCourse) {
-        final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
+        final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(infoExecutionCourse.getExternalId());
         final ExecutionCourseSite site = executionCourse.getSite();
         if (site != null) {
             final InfoSite infoSite = InfoSite.newInfoFromDomain(site);

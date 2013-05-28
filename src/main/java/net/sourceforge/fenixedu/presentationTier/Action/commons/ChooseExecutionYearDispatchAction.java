@@ -101,7 +101,7 @@ public class ChooseExecutionYearDispatchAction extends FenixDispatchAction {
                 InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) input;
                 LabelValueBean labelValueBean =
                         new LabelValueBean(infoExecutionDegree.getInfoExecutionYear().getYear(), infoExecutionDegree
-                                .getIdInternal().toString());
+                                .getExternalId().toString());
                 return labelValueBean;
             }
         }, executionYearsLabels);

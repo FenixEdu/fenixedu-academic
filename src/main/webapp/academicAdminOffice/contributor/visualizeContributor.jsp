@@ -54,7 +54,7 @@
 	
 	<ul>
 		<li>
-		    <html:link page="/editContributor.do?method=prepareEdit" paramId="contributorId" paramName="contributor" paramProperty="idInternal">
+		    <html:link page="/editContributor.do?method=prepareEdit" paramId="contributorId" paramName="contributor" paramProperty="externalId">
 		    	<bean:message key="label.action.contributors.edit" />
 		    </html:link>
 	    </li>

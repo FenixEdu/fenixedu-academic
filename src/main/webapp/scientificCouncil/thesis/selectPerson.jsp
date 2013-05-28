@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 <bean:define id="thesisOid" name="thesis" property="externalId"/>
-<bean:define id="thesisId" name="thesis" property="idInternal"/>
+<bean:define id="thesisId" name="thesis" property="externalId"/>
 <bean:define id="degreeId" name="degreeId"/>
 <bean:define id="executionYearId" name="executionYearId"/>
 

@@ -40,7 +40,7 @@ public class ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYe
         final ComparatorChain comparator = new ComparatorChain();
         comparator.addComparator(new BeanComparator("curricularYear"));
         comparator.addComparator(new BeanComparator("curricularSemester"));
-        comparator.addComparator(new BeanComparator("curricularCourse.idInternal"));
+        comparator.addComparator(new BeanComparator("curricularCourse.externalId"));
         comparator.addComparator(new BeanComparator("branch"));
 
         final SortedSet<DegreeModuleScope> scopes = new TreeSet<DegreeModuleScope>(comparator);
@@ -62,7 +62,7 @@ public class ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYe
         final ComparatorChain comparator = new ComparatorChain();
         comparator.addComparator(new BeanComparator("curricularYear"));
         comparator.addComparator(new BeanComparator("curricularSemester"));
-        comparator.addComparator(new BeanComparator("curricularCourse.idInternal"));
+        comparator.addComparator(new BeanComparator("curricularCourse.externalId"));
         comparator.addComparator(new BeanComparator("branch"));
 
         final SortedSet<DegreeModuleScope> scopes = new TreeSet<DegreeModuleScope>(comparator);

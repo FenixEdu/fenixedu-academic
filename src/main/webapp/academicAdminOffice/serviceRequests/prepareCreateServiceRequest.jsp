@@ -16,7 +16,7 @@
 </html:messages>
 
 <div style="float: right;">
-	<bean:define id="personID" name="academicServiceRequestCreateBean" property="registration.student.person.idInternal"/>
+	<bean:define id="personID" name="academicServiceRequestCreateBean" property="registration.student.person.externalId"/>
 	<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
 </div>
 
@@ -42,7 +42,7 @@
 </fr:view>
 </logic:present>
 
-<bean:define id="registrationID" name="academicServiceRequestCreateBean" property="registration.idInternal" />
+<bean:define id="registrationID" name="academicServiceRequestCreateBean" property="registration.externalId" />
 
 <fr:form action="<%= "/academicServiceRequestsManagement.do?registrationID=" + registrationID.toString() %>">
 	<html:hidden property="method" value="confirmCreateServiceRequest" />

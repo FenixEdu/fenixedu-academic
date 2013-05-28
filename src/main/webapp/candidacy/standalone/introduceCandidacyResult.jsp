@@ -12,7 +12,7 @@
 	<br />
 </html:messages>
 
-<bean:define id="processId" name="process" property="idInternal" />
+<bean:define id="processId" name="process" property="externalId" />
 
 <fr:form action='<%="/caseHandlingStandaloneIndividualCandidacyProcess.do?processId=" + processId.toString() %>'>
  	<html:hidden property="method" value="executeIntroduceCandidacyResult" />

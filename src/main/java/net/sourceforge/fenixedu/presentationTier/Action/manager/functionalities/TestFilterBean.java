@@ -117,7 +117,7 @@ public class TestFilterBean implements Serializable {
     private void updateInfo(Person person) {
         if (person != null) {
             setPerson(person);
-            setPersonId(person.getIdInternal());
+            setPersonId(person.getExternalId());
         }
     }
 

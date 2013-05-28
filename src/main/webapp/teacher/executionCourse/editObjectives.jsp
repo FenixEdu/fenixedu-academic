@@ -30,7 +30,7 @@
 		<bean:write name="curricularCourse" property="name"/>
 	</h3>
 
-	<bean:define id="url" type="java.lang.String">/editObjectives.do?method=editObjectives&amp;executionCourseID=<bean:write name="executionCourse" property="idInternal"/></bean:define>
+	<bean:define id="url" type="java.lang.String">/editObjectives.do?method=editObjectives&amp;executionCourseID=<bean:write name="executionCourse" property="externalId"/></bean:define>
 	<bean:define id="curricularCourse" name="curricularCourse" type="net.sourceforge.fenixedu.domain.CurricularCourse"/>
 
 	<bean:define id="curriculumFactoryEditCurriculum" name="curricularCourse" property="curriculumFactoryEditCurriculum" type="net.sourceforge.fenixedu.domain.CurricularCourse.CurriculumFactoryEditCurriculum"/>

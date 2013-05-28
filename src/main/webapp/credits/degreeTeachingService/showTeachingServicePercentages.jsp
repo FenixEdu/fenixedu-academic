@@ -10,9 +10,9 @@
 
 <bean:define id="hoursPattern">HH : mm</bean:define>
 <bean:define id="teacher" name="professorship" property="teacher" scope="request" />
-<bean:define id="teacherId" name="teacher" property="idInternal" />
+<bean:define id="teacherId" name="teacher" property="externalId" />
 <bean:define id="executionCourse" name="professorship" property="executionCourse" scope="request" />
-<bean:define id="executionPeriodId" name="executionCourse" property="executionPeriod.idInternal" />
+<bean:define id="executionPeriodId" name="executionCourse" property="executionPeriod.externalId" />
 
 <h3><bean:message key="label.teacherCreditsSheet.professorships" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></h3>
 
@@ -98,7 +98,7 @@
 							<td>
 								<logic:greaterThan name="availablePercentage" value="0">
 										<bean:define id="propertyName">
-											teacherPercentageMap(<bean:write name="shift" property="idInternal"/>)
+											teacherPercentageMap(<bean:write name="shift" property="externalId"/>)
 										</bean:define>
 										<html:text alt='<%= propertyName %>' property='<%= propertyName %>' size="4" /> %
 								</logic:greaterThan>
@@ -161,7 +161,7 @@
 							<td rowspan="<%= lessonsSize %>">
 								<logic:greaterThan name="availablePercentage" value="0">
 									<bean:define id="propertyName">
-										teacherPercentageMap(<bean:write name="shift" property="idInternal"/>)
+										teacherPercentageMap(<bean:write name="shift" property="externalId"/>)
 									</bean:define>
 									<html:text alt='<%= propertyName %>' property='<%= propertyName %>' size="4" /> %
 								</logic:greaterThan>
@@ -230,7 +230,7 @@
 
 <h3 class="separator2 mtop2"><bean:message key="label.teacherCreditsSheet.supportLessons" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></h3>
 
-<bean:define id="link" type="java.lang.String">/supportLessonsManagement.do?method=prepareEdit&amp;page=0&amp;professorshipID=<bean:write name="professorship" property="idInternal"/></bean:define>
+<bean:define id="link" type="java.lang.String">/supportLessonsManagement.do?method=prepareEdit&amp;page=0&amp;professorshipID=<bean:write name="professorship" property="externalId"/></bean:define>
 <html:link page="<%= link %>"><bean:message key="link.support-lesson.create"/></html:link>
 
 <bean:define id="supportLessonList" name="professorship" property="supportLessonsOrderedByStartTimeAndWeekDay"/>
@@ -245,7 +245,7 @@
 			<th><bean:message key="label.support-lesson.delete"/></th>																		
 		</tr>
 
-		<bean:define id="linkDelete" type="java.lang.String">/supportLessonsManagement.do?method=deleteSupportLesson&amp;page=0&amp;professorshipID=<bean:write name="professorship" property="idInternal"/></bean:define>
+		<bean:define id="linkDelete" type="java.lang.String">/supportLessonsManagement.do?method=deleteSupportLesson&amp;page=0&amp;professorshipID=<bean:write name="professorship" property="externalId"/></bean:define>
 		<logic:iterate id="supportLesson" name="supportLessonList">
 			<tr>
 				<td>
@@ -265,12 +265,12 @@
 					<bean:write name="supportLesson" property="place"/>
 				</td>			
 				<td >
-					<html:link page="<%= link %>" paramId="supportLessonID" paramName="supportLesson" paramProperty="idInternal" >
+					<html:link page="<%= link %>" paramId="supportLessonID" paramName="supportLesson" paramProperty="externalId" >
 						<bean:message key="link.edit"/>
 					</html:link>
 				</td>
 				<td >
-					<html:link page="<%= linkDelete %>" paramId="supportLessonID" paramName="supportLesson" paramProperty="idInternal" >
+					<html:link page="<%= linkDelete %>" paramId="supportLessonID" paramName="supportLesson" paramProperty="externalId" >
 						<bean:message key="link.delete"/>
 					</html:link>
 				</td>

@@ -26,7 +26,7 @@ public abstract class ReadDomainObjectService {
         return infoObject;
     }
 
-    protected abstract DomainObject readDomainObject(final Integer idInternal);
+    protected abstract DomainObject readDomainObject(final Integer externalId);
 
     protected abstract InfoObject newInfoFromDomain(DomainObject domainObject);
 

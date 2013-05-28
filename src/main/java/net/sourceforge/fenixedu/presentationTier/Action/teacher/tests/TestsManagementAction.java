@@ -83,7 +83,7 @@ public class TestsManagementAction extends FenixDispatchAction {
 
         NewTestGroup testGroup = rootDomainObject.readNewTestGroupByOID(testGroupId);
 
-        request.setAttribute("oid", testGroup.getOrderedTests().get(0).getIdInternal());
+        request.setAttribute("oid", testGroup.getOrderedTests().get(0).getExternalId());
         request.setAttribute("executionCourse", testGroup.getExecutionCourse());
 
         return this.viewTest(mapping, form, request, response);
@@ -109,7 +109,7 @@ public class TestsManagementAction extends FenixDispatchAction {
 
         PublishTestGroup.run(testGroup);
 
-        request.setAttribute("oid", testGroup.getExecutionCourse().getIdInternal());
+        request.setAttribute("oid", testGroup.getExecutionCourse().getExternalId());
 
         return this.manageTests(mapping, form, request, response);
     }
@@ -122,7 +122,7 @@ public class TestsManagementAction extends FenixDispatchAction {
 
         UnpublishTestGroup.run(testGroup);
 
-        request.setAttribute("oid", testGroup.getExecutionCourse().getIdInternal());
+        request.setAttribute("oid", testGroup.getExecutionCourse().getExternalId());
 
         return this.manageTests(mapping, form, request, response);
     }
@@ -145,7 +145,7 @@ public class TestsManagementAction extends FenixDispatchAction {
 
         NewTestGroup testGroup = rootDomainObject.readNewTestGroupByOID(testGroupId);
 
-        request.setAttribute("oid", testGroup.getExecutionCourse().getIdInternal());
+        request.setAttribute("oid", testGroup.getExecutionCourse().getExternalId());
 
         DeleteTestGroup.run(testGroup);
 
@@ -160,7 +160,7 @@ public class TestsManagementAction extends FenixDispatchAction {
 
         FinishTestGroup.run(testGroup);
 
-        request.setAttribute("oid", testGroup.getExecutionCourse().getIdInternal());
+        request.setAttribute("oid", testGroup.getExecutionCourse().getExternalId());
 
         return this.manageTests(mapping, form, request, response);
     }
@@ -173,7 +173,7 @@ public class TestsManagementAction extends FenixDispatchAction {
 
         PublishGrades.run(testGroup);
 
-        request.setAttribute("oid", testGroup.getExecutionCourse().getIdInternal());
+        request.setAttribute("oid", testGroup.getExecutionCourse().getExternalId());
 
         return this.manageTests(mapping, form, request, response);
     }

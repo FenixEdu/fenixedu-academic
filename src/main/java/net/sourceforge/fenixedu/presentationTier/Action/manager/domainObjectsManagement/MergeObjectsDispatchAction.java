@@ -61,17 +61,17 @@ public class MergeObjectsDispatchAction extends FenixDispatchAction {
 
         DynaActionForm actionForm = (DynaActionForm) form;
         String classToMerge = (String) actionForm.get("classToMerge");
-        Integer object1IdInternal = (Integer) actionForm.get("object1IdInternal");
-        Integer object2IdInternal = (Integer) actionForm.get("object2IdInternal");
+        Integer object1ExternalId = (Integer) actionForm.get("object1ExternalId");
+        Integer object2ExternalId = (Integer) actionForm.get("object2ExternalId");
 
         if (classToMerge.length() == 0) {
             classToMerge = request.getParameter("classToMerge");
-            object1IdInternal = Integer.valueOf(request.getParameter("object1IdInternal"));
-            object2IdInternal = Integer.valueOf(request.getParameter("object2IdInternal"));
+            object1ExternalId = Integer.valueOf(request.getParameter("object1ExternalId"));
+            object2ExternalId = Integer.valueOf(request.getParameter("object2ExternalId"));
         }
 
-        DomainObject domainObject1 = rootDomainObject.readDomainObjectByOID(Class.forName(classToMerge), object1IdInternal);
-        DomainObject domainObject2 = rootDomainObject.readDomainObjectByOID(Class.forName(classToMerge), object2IdInternal);
+        DomainObject domainObject1 = rootDomainObject.readDomainObjectByOID(Class.forName(classToMerge), object1ExternalId);
+        DomainObject domainObject2 = rootDomainObject.readDomainObjectByOID(Class.forName(classToMerge), object2ExternalId);
 
         if (domainObject1 == null || domainObject2 == null) {
             request.setAttribute("domainClasses", getClasses());
@@ -159,8 +159,8 @@ public class MergeObjectsDispatchAction extends FenixDispatchAction {
 
         request.setAttribute("slots", results);
         request.setAttribute("classToMerge", classToMerge);
-        request.setAttribute("object1IdInternal", domainObject1.getIdInternal());
-        request.setAttribute("object2IdInternal", domainObject2.getIdInternal());
+        request.setAttribute("object1ExternalId", domainObject1.getExternalId());
+        request.setAttribute("object2ExternalId", domainObject2.getExternalId());
 
         return mapping.findForward("displayObjects");
     }
@@ -179,9 +179,9 @@ public class MergeObjectsDispatchAction extends FenixDispatchAction {
     private void fillDtoWithSimpleProperty(Role roleSlot, MergeSlotDTO mergeSlot, Object reference, String order) {
         if (reference != null) {
             if (roleSlot.getType() instanceof DomainClass) {
-                final long idInternal = ((DomainObject) reference).getOID();
-                mergeSlot.setValueProperty(order, "OID: " + idInternal);
-                mergeSlot.setValueLinkProperty(order, "/domainbrowser/showObj?OID=" + idInternal);
+                final long externalId = ((DomainObject) reference).getOID();
+                mergeSlot.setValueProperty(order, "OID: " + externalId);
+                mergeSlot.setValueLinkProperty(order, "/domainbrowser/showObj?OID=" + externalId);
             } else {
                 // enum ??
                 mergeSlot.setValueProperty(order, reference.toString());
@@ -198,11 +198,11 @@ public class MergeObjectsDispatchAction extends FenixDispatchAction {
         IUserView userView = UserView.getUser();
 
         String classToMerge = request.getParameter("classToMerge");
-        Integer object1IdInternal = Integer.valueOf(request.getParameter("object1IdInternal"));
-        Integer object2IdInternal = Integer.valueOf(request.getParameter("object2IdInternal"));
+        Integer object1ExternalId = Integer.valueOf(request.getParameter("object1ExternalId"));
+        Integer object2ExternalId = Integer.valueOf(request.getParameter("object2ExternalId"));
 
-        DomainObject domainObject1 = rootDomainObject.readDomainObjectByOID(Class.forName(classToMerge), object1IdInternal);
-        DomainObject domainObject2 = rootDomainObject.readDomainObjectByOID(Class.forName(classToMerge), object2IdInternal);
+        DomainObject domainObject1 = rootDomainObject.readDomainObjectByOID(Class.forName(classToMerge), object1ExternalId);
+        DomainObject domainObject2 = rootDomainObject.readDomainObjectByOID(Class.forName(classToMerge), object2ExternalId);
 
         Integer sourceOrder = Integer.valueOf(request.getParameter("source"));
         String slotName = request.getParameter("slotName");
@@ -219,12 +219,12 @@ public class MergeObjectsDispatchAction extends FenixDispatchAction {
             NoSuchMethodException, ClassNotFoundException {
 
         IUserView userView = UserView.getUser();
-        Integer objectIdInternal = Integer.valueOf(request.getParameter("objectIdInternal"));
+        Integer objectExternalId = Integer.valueOf(request.getParameter("objectExternalId"));
 
         final String classToMerge = request.getParameter("classToMerge");
 
         try {
-            DeleteObjectByOID.run(Class.forName(classToMerge), objectIdInternal);
+            DeleteObjectByOID.run(Class.forName(classToMerge), objectExternalId);
         } catch (DomainException e) {
             e.printStackTrace();
             return chooseObjects(mapping, form, request, response);

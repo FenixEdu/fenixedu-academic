@@ -26,7 +26,7 @@ import pt.ist.fenixWebFramework.services.Service;
 public class SubmitFinalWorkProposal {
 
     protected void run(InfoProposalEditor infoProposal) throws FenixServiceException {
-        Integer executionDegreeId = infoProposal.getExecutionDegree().getIdInternal();
+        Integer executionDegreeId = infoProposal.getExecutionDegree().getExternalId();
         ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeId);
 
         Scheduleing scheduleing = executionDegree.getScheduling();
@@ -35,8 +35,8 @@ public class SubmitFinalWorkProposal {
         }
 
         Proposal proposal = null;
-        if (infoProposal.getIdInternal() != null) {
-            proposal = RootDomainObject.getInstance().readProposalByOID(infoProposal.getIdInternal());
+        if (infoProposal.getExternalId() != null) {
+            proposal = RootDomainObject.getInstance().readProposalByOID(infoProposal.getExternalId());
         }
         if (proposal == null) {
             proposal = new Proposal();
@@ -86,8 +86,8 @@ public class SubmitFinalWorkProposal {
         if (infoProposal.getBranches() != null && !infoProposal.getBranches().isEmpty()) {
             for (int i = 0; i < infoProposal.getBranches().size(); i++) {
                 InfoBranch infoBranch = (InfoBranch) infoProposal.getBranches().get(i);
-                if (infoBranch != null && infoBranch.getIdInternal() != null) {
-                    Branch branch = RootDomainObject.getInstance().readBranchByOID(infoBranch.getIdInternal());
+                if (infoBranch != null && infoBranch.getExternalId() != null) {
+                    Branch branch = RootDomainObject.getInstance().readBranchByOID(infoBranch.getExternalId());
                     if (branch != null) {
                         proposal.getBranches().add(branch);
                     }

@@ -39,10 +39,10 @@
 	<p>
 		<strong><bean:write name="edit" property="curricularCourse.name"/></strong>
 		
-		<bean:define id="executionPeriodID" name="edit" property="executionPeriod.idInternal" />
-		<bean:define id="degreeID" name="edit" property="degree.idInternal" />
-		<bean:define id="degreeCurricularPlanID" name="edit" property="degreeCurricularPlan.idInternal" />
-		<bean:define id="curricularCourseID" name="edit" property="curricularCourse.idInternal" />
+		<bean:define id="executionPeriodID" name="edit" property="executionPeriod.externalId" />
+		<bean:define id="degreeID" name="edit" property="degree.externalId" />
+		<bean:define id="degreeCurricularPlanID" name="edit" property="degreeCurricularPlan.externalId" />
+		<bean:define id="curricularCourseID" name="edit" property="curricularCourse.externalId" />
 	
 		<bean:define id="url" name="url"/>	
 	
@@ -58,7 +58,7 @@
 				<fr:property name="classes" value="tstyle4" />
 				<fr:property name="link(removeGrades)" value='<%= "/markSheetManagement.do?method=listMarkSheet" + url %>'/>
 				<fr:property name="key(removeGrades)" value="label.remove.grades"/>
-				<fr:property name="param(removeGrades)" value="idInternal/msID"/>				
+				<fr:property name="param(removeGrades)" value="externalId/msID"/>				
 				<fr:property name="bundle(removeGrades)" value="ACADEMIC_OFFICE_RESOURCES" />				
 			</fr:layout>
 		</fr:view>

@@ -96,9 +96,9 @@ public class PrintMarkSheetDispatchAction extends MarkSheetDispatchAction {
         buildPeriods(request);
         buildDegreeCurricularPlans(request, employee, executionSemester);
 
-        form.set("ecID", executionSemester.getIdInternal().toString());
+        form.set("ecID", executionSemester.getExternalId().toString());
         if (degreeCurricularPlan != null) {
-            form.set("dcpID", degreeCurricularPlan.getIdInternal().toString());
+            form.set("dcpID", degreeCurricularPlan.getExternalId().toString());
         }
 
         return mapping.findForward("choosePrinterMarkSheetsWeb");
@@ -117,7 +117,7 @@ public class PrintMarkSheetDispatchAction extends MarkSheetDispatchAction {
 
         for (final DegreeCurricularPlan dcp : dcps) {
             if (degreesForMarksheets.contains(dcp.getDegree())) {
-                result.add(new LabelValueBean(dcp.getPresentationName(semester.getExecutionYear()), dcp.getIdInternal()
+                result.add(new LabelValueBean(dcp.getPresentationName(semester.getExecutionYear()), dcp.getExternalId()
                         .toString()));
             }
         }
@@ -131,7 +131,7 @@ public class PrintMarkSheetDispatchAction extends MarkSheetDispatchAction {
 
         final List<LabelValueBean> periods = new ArrayList<LabelValueBean>();
         for (final ExecutionSemester period : notClosedExecutionPeriods) {
-            periods.add(new LabelValueBean(period.getExecutionYear().getYear() + " - " + period.getName(), period.getIdInternal()
+            periods.add(new LabelValueBean(period.getExecutionYear().getYear() + " - " + period.getName(), period.getExternalId()
                     .toString()));
         }
 

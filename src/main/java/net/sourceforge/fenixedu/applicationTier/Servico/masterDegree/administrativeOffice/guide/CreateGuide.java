@@ -76,12 +76,12 @@ public class CreateGuide {
         infoGuideSituation.setDate(calendar.getTime());
         infoGuideSituation.setSituation(situationOfGuide);
 
-        Person person = (Person) RootDomainObject.getInstance().readPartyByOID(infoGuide.getInfoPerson().getIdInternal());
+        Person person = (Person) RootDomainObject.getInstance().readPartyByOID(infoGuide.getInfoPerson().getExternalId());
         ExecutionDegree executionDegree =
-                RootDomainObject.getInstance().readExecutionDegreeByOID(infoGuide.getInfoExecutionDegree().getIdInternal());
+                RootDomainObject.getInstance().readExecutionDegreeByOID(infoGuide.getInfoExecutionDegree().getExternalId());
         final Party contributor =
                 infoGuide.getInfoContributor() != null ? RootDomainObject.getInstance().readPartyByOID(infoGuide.getInfoContributor()
-                        .getIdInternal()) : person;
+                        .getExternalId()) : person;
 
         Guide guide = new Guide();
         guide.setExecutionDegree(executionDegree);

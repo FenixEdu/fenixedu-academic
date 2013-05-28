@@ -38,10 +38,10 @@
 			<logic:iterate id="infoExecutionPeriod" name="<%= PresentationConstants.LIST_EXECUTION_PERIODS %>">
 				<tr>
 					<td class="listClasses">
-						<html:link module="/manager" page="<%= "/associateExecutionCourseToCurricularCourse.do?method=prepare&degreeId=" + request.getParameter("degreeId") + "&degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId") + "&curricularCourseId=" + request.getParameter("curricularCourseId") + "&amp;name=" + request.getParameter("name") %>" paramId="executionPeriodId" paramName="infoExecutionPeriod" paramProperty="idInternal"><bean:write name="infoExecutionPeriod" property="name" /></html:link>
+						<html:link module="/manager" page="<%= "/associateExecutionCourseToCurricularCourse.do?method=prepare&degreeId=" + request.getParameter("degreeId") + "&degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId") + "&curricularCourseId=" + request.getParameter("curricularCourseId") + "&amp;name=" + request.getParameter("name") %>" paramId="executionPeriodId" paramName="infoExecutionPeriod" paramProperty="externalId"><bean:write name="infoExecutionPeriod" property="name" /></html:link>
 					</td>
 					<td class="listClasses">
-						<html:link module="/manager" page="<%= "/associateExecutionCourseToCurricularCourse.do?method=prepare&degreeId=" + request.getParameter("degreeId") + "&degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId") + "&curricularCourseId=" + request.getParameter("curricularCourseId") + "&amp;name=" + request.getParameter("name") %>" paramId="executionPeriodId" paramName="infoExecutionPeriod" paramProperty="idInternal"><bean:write name="infoExecutionPeriod" property="infoExecutionYear.year" /></html:link>
+						<html:link module="/manager" page="<%= "/associateExecutionCourseToCurricularCourse.do?method=prepare&degreeId=" + request.getParameter("degreeId") + "&degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId") + "&curricularCourseId=" + request.getParameter("curricularCourseId") + "&amp;name=" + request.getParameter("name") %>" paramId="executionPeriodId" paramName="infoExecutionPeriod" paramProperty="externalId"><bean:write name="infoExecutionPeriod" property="infoExecutionYear.year" /></html:link>
 					</td>
 					<td class="listClasses">
 						<bean:write name="infoExecutionPeriod" property="state" />
@@ -53,10 +53,10 @@
 			<logic:iterate id="infoExecutionPeriod" name="<%= PresentationConstants.LIST_EXECUTION_PERIODS %>">
 				<tr>
 					<td class="listClasses">
-						<html:link module="/manager" page="/readExecutionCourses.do" paramId="executionPeriodId" paramName="infoExecutionPeriod" paramProperty="idInternal"><bean:write name="infoExecutionPeriod" property="name" /></html:link>
+						<html:link module="/manager" page="/readExecutionCourses.do" paramId="executionPeriodId" paramName="infoExecutionPeriod" paramProperty="externalId"><bean:write name="infoExecutionPeriod" property="name" /></html:link>
 					</td>
 					<td class="listClasses">
-						<html:link module="/manager" page="/readExecutionCourses.do" paramId="executionPeriodId" paramName="infoExecutionPeriod" paramProperty="idInternal"><bean:write name="infoExecutionPeriod" property="infoExecutionYear.year" /></html:link>
+						<html:link module="/manager" page="/readExecutionCourses.do" paramId="executionPeriodId" paramName="infoExecutionPeriod" paramProperty="externalId"><bean:write name="infoExecutionPeriod" property="infoExecutionYear.year" /></html:link>
 					</td>
 					<td class="listClasses">
 						<bean:write name="infoExecutionPeriod" property="state" />

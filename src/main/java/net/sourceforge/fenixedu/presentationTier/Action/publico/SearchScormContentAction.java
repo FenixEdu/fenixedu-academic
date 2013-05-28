@@ -128,10 +128,10 @@ public class SearchScormContentAction extends SearchDSpaceGeneralAction {
         searchPath.addNode(new VirtualPathNode("Courses", "Courses"));
         ExecutionYear executionYear = bean.getExecutionYear();
         if (executionYear != null) {
-            searchPath.addNode(new VirtualPathNode("EY" + executionYear.getIdInternal(), executionYear.getYear()));
+            searchPath.addNode(new VirtualPathNode("EY" + executionYear.getExternalId(), executionYear.getYear()));
             ExecutionSemester executionSemester = bean.getExecutionPeriod();
             if (executionSemester != null) {
-                searchPath.addNode(new VirtualPathNode("EP" + executionSemester.getIdInternal(), executionSemester.getName()));
+                searchPath.addNode(new VirtualPathNode("EP" + executionSemester.getExternalId(), executionSemester.getName()));
             }
         }
 

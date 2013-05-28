@@ -15,11 +15,11 @@
 <bean:define id="questionGroup" name="questionBank" type="net.sourceforge.fenixedu.domain.tests.NewQuestionGroup" toScope="request" />
 
 <ul>
-<li><html:link page="/tests/questionBank.do?method=prepareCreateQuestionGroup" paramId="oid" paramName="questionBank" paramProperty="idInternal">Criar grupo</html:link></li>
-<li><html:link page="/tests/questionBank.do?method=prepareCreateAtomicQuestion" paramId="oid" paramName="questionBank" paramProperty="idInternal">Criar pergunta</html:link></li>
-<li><html:link page="/tests/questionBank.do?method=manageQuestionBank&amp;view=linear" paramId="oid" paramName="questionBank" paramProperty="idInternal">Ver lista de grupos</html:link></li>
+<li><html:link page="/tests/questionBank.do?method=prepareCreateQuestionGroup" paramId="oid" paramName="questionBank" paramProperty="externalId">Criar grupo</html:link></li>
+<li><html:link page="/tests/questionBank.do?method=prepareCreateAtomicQuestion" paramId="oid" paramName="questionBank" paramProperty="externalId">Criar pergunta</html:link></li>
+<li><html:link page="/tests/questionBank.do?method=manageQuestionBank&amp;view=linear" paramId="oid" paramName="questionBank" paramProperty="externalId">Ver lista de grupos</html:link></li>
 <%--<logic:equal name="isOwnBank" value="true">
-<li><html:link page="/tests/questionBank.do?method=prepareManagePermissionUnits" paramId="oid" paramName="UserView" paramProperty="person.questionBank.idInternal">Gerir permiss�es</html:link></li>
+<li><html:link page="/tests/questionBank.do?method=prepareManagePermissionUnits" paramId="oid" paramName="UserView" paramProperty="person.questionBank.externalId">Gerir permiss�es</html:link></li>
 </logic:equal>--%>
 </ul>
 

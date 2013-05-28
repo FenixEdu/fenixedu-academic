@@ -191,7 +191,7 @@ public class CandidateRegistrationDispatchAction extends FenixDispatchAction {
             }
 
             candidateRegistration.set("studentCurricularPlanID", infoCandidateRegistration.getInfoStudentCurricularPlan()
-                    .getIdInternal());
+                    .getExternalId());
             request.setAttribute("infoCandidateRegistration", infoCandidateRegistration);
 
             return mapping.findForward("ShowResult");

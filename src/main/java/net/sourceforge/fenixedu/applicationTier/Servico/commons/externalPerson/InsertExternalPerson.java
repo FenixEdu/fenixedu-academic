@@ -82,7 +82,7 @@ public class InsertExternalPerson {
         String personName = arguments.getPersonName();
         Unit organization = arguments.getUnit();
         storedExternalContract =
-                ExternalContract.readByPersonNameAddressAndInstitutionID(personName, null, organization.getIdInternal());
+                ExternalContract.readByPersonNameAddressAndInstitutionID(personName, null, organization.getExternalId());
         if (storedExternalContract != null) {
             throw new ExistingServiceException("error.exception.commons.ExternalContract.existingExternalContract");
         }

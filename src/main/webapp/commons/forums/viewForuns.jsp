@@ -15,7 +15,7 @@
 		    <fr:property name="classes" value="style1"/>
       		<fr:property name="columnClasses" value="listClasses,"/>
 			<fr:property name="link(view)" value="<%= contextPrefix + "method=viewForum" %>"/>
-			<fr:property name="param(view)" value="idInternal/forumId"/>
+			<fr:property name="param(view)" value="externalId/forumId"/>
 			<fr:property name="key(view)" value="messaging.viewForum.link"/>
 			<fr:property name="bundle(view)" value="MESSAGING_RESOURCES"/>
 		</fr:layout>

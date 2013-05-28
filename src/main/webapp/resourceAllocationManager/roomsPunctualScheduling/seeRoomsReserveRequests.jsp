@@ -44,7 +44,7 @@
 				<th><bean:message key="label.rooms.reserve.action" bundle="SOP_RESOURCES"/></th>	
 			</tr>
 			<bean:define id="myRequest" name="specificRequest" type="net.sourceforge.fenixedu.domain.PunctualRoomsOccupationRequest"/>
-			<bean:define id="seeReserveURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserveRequest&amp;reserveRequestID=<bean:write name="myRequest" property="idInternal"/></bean:define>
+			<bean:define id="seeReserveURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserveRequest&amp;reserveRequestID=<bean:write name="myRequest" property="externalId"/></bean:define>
 				<tr>
 					<td class="acenter">
 						<html:link page="<%= seeReserveURL %>">
@@ -78,7 +78,7 @@
 					</td>
 
 					<td class="nowrap">
-						<bean:define id="closeRequestURL">/roomsReserveManagement.do?method=closeRequest&amp;reserveRequestID=<bean:write name="myRequest" property="idInternal"/></bean:define>
+						<bean:define id="closeRequestURL">/roomsReserveManagement.do?method=closeRequest&amp;reserveRequestID=<bean:write name="myRequest" property="externalId"/></bean:define>
 						<html:link page="<%= closeRequestURL %>">
 							<bean:message key="label.resolve.rooms.reserve.request" bundle="SOP_RESOURCES"/>
 						</html:link>											
@@ -104,7 +104,7 @@
 				<th><bean:message key="label.rooms.reserve.action" bundle="SOP_RESOURCES"/></th>	
 			</tr>
 			<logic:iterate id="myRequest" name="personRequests" type="net.sourceforge.fenixedu.domain.PunctualRoomsOccupationRequest">
-				<bean:define id="seeReserveURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserveRequest&amp;reserveRequestID=<bean:write name="myRequest" property="idInternal"/></bean:define>					
+				<bean:define id="seeReserveURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserveRequest&amp;reserveRequestID=<bean:write name="myRequest" property="externalId"/></bean:define>					
 				<tr>
 					<td class="acenter">						
 						<html:link page="<%= seeReserveURL %>">
@@ -138,7 +138,7 @@
 					</td>
 
 					<td class="nowrap">
-						<bean:define id="closeRequestURL">/roomsReserveManagement.do?method=closeRequest&amp;reserveRequestID=<bean:write name="myRequest" property="idInternal"/></bean:define>
+						<bean:define id="closeRequestURL">/roomsReserveManagement.do?method=closeRequest&amp;reserveRequestID=<bean:write name="myRequest" property="externalId"/></bean:define>
 						<html:link page="<%= closeRequestURL %>">
 							<bean:message key="label.resolve.rooms.reserve.request" bundle="SOP_RESOURCES"/>
 						</html:link>											
@@ -166,7 +166,7 @@
 				<th><bean:message key="label.rooms.reserve.action" bundle="SOP_RESOURCES"/></th>	
 			</tr>
 			<logic:iterate id="newRequest" name="newRequests">
-				<bean:define id="seeReserveURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserveRequest&amp;reserveRequestID=<bean:write name="newRequest" property="idInternal"/></bean:define>
+				<bean:define id="seeReserveURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserveRequest&amp;reserveRequestID=<bean:write name="newRequest" property="externalId"/></bean:define>
 				<tr>
 					<td class="acenter">
 						<html:link page="<%= seeReserveURL %>">
@@ -186,7 +186,7 @@
 						<acronym title="<%= requestorName %>"><bean:write name="newRequest" property="requestor.username"/></acronym>
 					</td>															
 					<td>
-						<bean:define id="openRequestURL">/roomsReserveManagement.do?method=openRequest&amp;reserveRequestID=<bean:write name="newRequest" property="idInternal"/></bean:define>
+						<bean:define id="openRequestURL">/roomsReserveManagement.do?method=openRequest&amp;reserveRequestID=<bean:write name="newRequest" property="externalId"/></bean:define>
 						<html:link page="<%= openRequestURL %>">
 							<bean:message key="label.open.rooms.reserve.request" bundle="SOP_RESOURCES"/>
 						</html:link>											
@@ -214,7 +214,7 @@
 				<th><bean:message key="label.rooms.reserve.action" bundle="SOP_RESOURCES"/></th>	
 			</tr>
 			<logic:iterate id="openedRequest" name="openedRequests">
-				<bean:define id="seeReserveURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserveRequest&amp;reserveRequestID=<bean:write name="openedRequest" property="idInternal"/></bean:define>
+				<bean:define id="seeReserveURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserveRequest&amp;reserveRequestID=<bean:write name="openedRequest" property="externalId"/></bean:define>
 				<tr>
 					<td class="acenter">
 						<html:link page="<%= seeReserveURL %>">
@@ -251,7 +251,7 @@
 						</logic:empty>
 					</td>	
 					<td>
-						<bean:define id="closeRequestURL">/roomsReserveManagement.do?method=closeRequest&amp;reserveRequestID=<bean:write name="openedRequest" property="idInternal"/></bean:define>
+						<bean:define id="closeRequestURL">/roomsReserveManagement.do?method=closeRequest&amp;reserveRequestID=<bean:write name="openedRequest" property="externalId"/></bean:define>
 						<html:link page="<%= closeRequestURL %>">
 							<bean:message key="label.resolve.rooms.reserve.request" bundle="SOP_RESOURCES"/>
 						</html:link>											
@@ -285,7 +285,7 @@
 				<th><bean:message key="label.rooms.reserve.action" bundle="SOP_RESOURCES"/></th>	
 			</tr>
 			<logic:iterate id="resolvedRequest" name="resolvedRequests" type="net.sourceforge.fenixedu.domain.PunctualRoomsOccupationRequest">
-				<bean:define id="seeReserveURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserveRequest&amp;reserveRequestID=<bean:write name="resolvedRequest" property="idInternal"/></bean:define>					
+				<bean:define id="seeReserveURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserveRequest&amp;reserveRequestID=<bean:write name="resolvedRequest" property="externalId"/></bean:define>					
 				<tr>
 					<td class="acenter">
 						<html:link page="<%= seeReserveURL %>">
@@ -330,7 +330,7 @@
 						</logic:empty>
 					</td>						
 					<td>
-						<bean:define id="openRequestURL">/roomsReserveManagement.do?method=openRequest&amp;reserveRequestID=<bean:write name="resolvedRequest" property="idInternal"/></bean:define>
+						<bean:define id="openRequestURL">/roomsReserveManagement.do?method=openRequest&amp;reserveRequestID=<bean:write name="resolvedRequest" property="externalId"/></bean:define>
 						<html:link page="<%= openRequestURL %>">
 							<bean:message key="label.reopen.rooms.reserve.request" bundle="SOP_RESOURCES"/>
 						</html:link>											

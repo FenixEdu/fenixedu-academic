@@ -23,7 +23,7 @@ public class PhdNotification extends PhdNotification_Base {
 
             int result = left.getNumber().compareTo(right.getNumber());
 
-            return result == 0 ? left.getIdInternal().compareTo(right.getIdInternal()) : result;
+            return result == 0 ? left.getExternalId().compareTo(right.getExternalId()) : result;
 
         };
     };

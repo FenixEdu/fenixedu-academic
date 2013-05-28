@@ -56,13 +56,13 @@
 </logic:notPresent>
 
 
-<bean:define id="personId" name="editReceiptBean" property="receipt.person.idInternal" />
+<bean:define id="personId" name="editReceiptBean" property="receipt.person.externalId" />
 <p class="mbottom05"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.newContributor" /></strong></p>
 
 
 
 
-<bean:define id="receiptId" name="editReceiptBean" property="receipt.idInternal" />
+<bean:define id="receiptId" name="editReceiptBean" property="receipt.externalId" />
 
 <fr:form action="<%="/receipts.do?personId=" + personId.toString() %>">
 	<input type="hidden" name="method" value=""/>

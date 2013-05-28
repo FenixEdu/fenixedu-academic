@@ -23,7 +23,7 @@ public class AnnualTeachingCreditsDocument extends AnnualTeachingCreditsDocument
     private VirtualPath getfilePath(String filename) {
         final VirtualPath filePath = new VirtualPath();
         filePath.addNode(new VirtualPathNode("AnnualTeachingCreditsDocuments", "Teaching Credits Documents"));
-        filePath.addNode(new VirtualPathNode("AnnualTeachingCreditsDocument" + getIdInternal(), filename));
+        filePath.addNode(new VirtualPathNode("AnnualTeachingCreditsDocument" + getExternalId(), filename));
         return filePath;
     }
 

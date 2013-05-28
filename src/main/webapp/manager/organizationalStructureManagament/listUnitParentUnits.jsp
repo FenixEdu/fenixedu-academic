@@ -63,14 +63,14 @@
 				<f:facet name="header">
 					<h:outputText value="#{bundle['title.relation.type']}" />
 				</f:facet>								
-				<h:outputText value="#{organizationalStructureBackingBean.unitRelationsAccountabilityTypes[accountability.idInternal]}" escape="false"/>									
+				<h:outputText value="#{organizationalStructureBackingBean.unitRelationsAccountabilityTypes[accountability.externalId]}" escape="false"/>									
 			</h:column>	
 			<h:column>
 				<f:facet name="header">
 					<h:outputText value="#{bundle['message.action']}" />
 				</f:facet>
 				<h:commandLink action="#{organizationalStructureBackingBean.disassociateParentUnit}" value="#{bundle['button.choose']}">
-					<f:param id="accountabilityID" name="accountabilityID" value="#{accountability.idInternal}"/>
+					<f:param id="accountabilityID" name="accountabilityID" value="#{accountability.externalId}"/>
 				</h:commandLink> 				
 			</h:column>						
 		</h:dataTable>				

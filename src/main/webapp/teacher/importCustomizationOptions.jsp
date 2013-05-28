@@ -8,7 +8,7 @@
 
 <logic:present name="executionCourse">
 
-	<bean:define id="executionCourseID" name="executionCourse" property="idInternal"/>		
+	<bean:define id="executionCourseID" name="executionCourse" property="externalId"/>		
 	<bean:define id="showCustomizationOptions">/alternativeSite.do?method=prepareCustomizationOptions&amp;objectCode=<bean:write name="executionCourseID"/></bean:define>	
 	<bean:define id="submitURL">/alternativeSite.do?method=submitDataToImportCustomizationOptions&amp;objectCode=<bean:write name="executionCourseID"/></bean:define>	
 	<bean:define id="chooseExecutionPeriodUrl">/alternativeSite.do?method=submitDataToImportCustomizationOptionsPostBack&amp;objectCode=<bean:write name="executionCourseID"/></bean:define>	

@@ -52,7 +52,7 @@ public class PrepareCandidateApprovalDispatchAction extends FenixDispatchAction 
         request.setAttribute("degree", infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla());
         request.setAttribute("executionYear", infoExecutionDegree.getInfoExecutionYear().getYear());
 
-        request.setAttribute("executionDegreeID", infoExecutionDegree.getIdInternal());
+        request.setAttribute("executionDegreeID", infoExecutionDegree.getExternalId());
 
         return mapping.findForward("ExecutionDegreeChosen");
     }

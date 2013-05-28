@@ -28,30 +28,30 @@
 
 <ul>
 	<!--  <li>
-		<bean:define id="url1">/studentDismissals.do?method=prepare&amp;scpID=<bean:write name="studentCurricularPlan" property="idInternal" /></bean:define>
+		<bean:define id="url1">/studentDismissals.do?method=prepare&amp;scpID=<bean:write name="studentCurricularPlan" property="externalId" /></bean:define>
 		<html:link action='<%= url1 %>'><bean:message key="label.studentDismissal.create" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
 	</li> -->
 	<li>
-		<bean:define id="url2">/studentSubstitutions.do?method=prepare&amp;scpID=<bean:write name="studentCurricularPlan" property="idInternal" /></bean:define>
+		<bean:define id="url2">/studentSubstitutions.do?method=prepare&amp;scpID=<bean:write name="studentCurricularPlan" property="externalId" /></bean:define>
 		<html:link action='<%= url2 %>'><bean:message key="label.studentSubstitution.create" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
 	</li>
 	<li>
-		<bean:define id="url2">/studentEquivalences.do?method=prepare&amp;scpID=<bean:write name="studentCurricularPlan" property="idInternal" /></bean:define>
+		<bean:define id="url2">/studentEquivalences.do?method=prepare&amp;scpID=<bean:write name="studentCurricularPlan" property="externalId" /></bean:define>
 		<html:link action='<%= url2 %>'><bean:message key="label.studentEquivalence.create" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
 	</li>
 	<li>
-		<bean:define id="url3">/studentCredits.do?method=prepare&amp;scpID=<bean:write name="studentCurricularPlan" property="idInternal" /></bean:define>
+		<bean:define id="url3">/studentCredits.do?method=prepare&amp;scpID=<bean:write name="studentCurricularPlan" property="externalId" /></bean:define>
 		<html:link action='<%= url3 %>'><bean:message key="label.studentCredits.create" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
 	</li>
 		<li>
-		<bean:define id="url4">/studentInternalSubstitutions.do?method=prepare&amp;scpID=<bean:write name="studentCurricularPlan" property="idInternal" /></bean:define>
+		<bean:define id="url4">/studentInternalSubstitutions.do?method=prepare&amp;scpID=<bean:write name="studentCurricularPlan" property="externalId" /></bean:define>
 		<html:link action='<%= url4 %>'><bean:message key="label.studentInternalSubstitution.create" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
 	</li>
 	
 
 </ul>
-<bean:define id="scpID" name="studentCurricularPlan" property="idInternal" />
-<bean:define id="studentId" name="studentCurricularPlan" property="registration.student.idInternal" />
+<bean:define id="scpID" name="studentCurricularPlan" property="externalId" />
+<bean:define id="studentId" name="studentCurricularPlan" property="registration.student.externalId" />
 <fr:form action="<%= "/studentDismissals.do?scpID="+ scpID.toString() + "&studentId=" + studentId.toString() %>">
 
 	<br/>
@@ -65,7 +65,7 @@
 				<fr:property name="columnClasses" value=",inobullet ulmvert0,inobullet ulmvert0,," />
 				<fr:property name="checkable" value="true" />
 				<fr:property name="checkboxName" value="creditsToDelete" />
-				<fr:property name="checkboxValue" value="idInternal" />	
+				<fr:property name="checkboxValue" value="externalId" />	
 			</fr:layout>
 		</fr:view>
 		<html:submit><bean:message key="button.delete" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:submit>

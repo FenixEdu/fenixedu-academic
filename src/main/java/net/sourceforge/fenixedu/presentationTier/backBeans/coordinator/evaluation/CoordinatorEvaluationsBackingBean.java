@@ -104,7 +104,7 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
             executionPeriodID = getAndHoldIntegerParameter("executionPeriodID");
             if (executionPeriodID == null) {
                 final ExecutionSemester executionSemester = getCurrentExecutionPeriod();
-                executionPeriodID = executionSemester.getIdInternal();
+                executionPeriodID = executionSemester.getExternalId();
             }
         }
         return executionPeriodID;
@@ -157,7 +157,7 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
             final SelectItem selectItem = new SelectItem();
             selectItem.setLabel(StringAppender.append(executionSemester.getName(), " - ", executionSemester.getExecutionYear()
                     .getYear()));
-            selectItem.setValue(executionSemester.getIdInternal());
+            selectItem.setValue(executionSemester.getExternalId());
             selectItems.add(selectItem);
         }
         return selectItems;
@@ -224,7 +224,7 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
 
     static {
         ((ComparatorChain) executionCourseComparator).addComparator(new BeanComparator("nome"));
-        ((ComparatorChain) executionCourseComparator).addComparator(new BeanComparator("idInternal"));
+        ((ComparatorChain) executionCourseComparator).addComparator(new BeanComparator("externalId"));
     }
 
     private static final Comparator evaluationComparator = new Comparator() {
@@ -395,11 +395,11 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
     private void addLinkParameters(final CalendarLink calendarLink, final ExecutionCourse executionCourse,
             final Evaluation evaluation) {
         calendarLink.addLinkParameter("degreeCurricularPlanID", getDegreeCurricularPlanID().toString());
-        calendarLink.addLinkParameter("executionPeriodID", executionCourse.getExecutionPeriod().getIdInternal().toString());
-        calendarLink.addLinkParameter("executionCourseID", executionCourse.getIdInternal().toString());
+        calendarLink.addLinkParameter("executionPeriodID", executionCourse.getExecutionPeriod().getExternalId().toString());
+        calendarLink.addLinkParameter("executionCourseID", executionCourse.getExternalId().toString());
         calendarLink
                 .addLinkParameter("curricularYearID", (getCurricularYearID() != null) ? getCurricularYearID().toString() : "");
-        calendarLink.addLinkParameter("evaluationID", evaluation.getIdInternal().toString());
+        calendarLink.addLinkParameter("evaluationID", evaluation.getExternalId().toString());
         calendarLink.addLinkParameter("evaluationType", evaluation.getClass().getName());
     }
 
@@ -432,7 +432,7 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
         selectItems.add(new SelectItem("", messages.getMessage(locale, "public.curricular.years.all")));
         final List<ExecutionCourse> executionCourses = getExecutionCourses();
         for (ExecutionCourse executionCourse : executionCourses) {
-            selectItems.add(new SelectItem(executionCourse.getIdInternal(), executionCourse.getNome()));
+            selectItems.add(new SelectItem(executionCourse.getExternalId(), executionCourse.getNome()));
         }
         return selectItems;
     }
@@ -518,7 +518,7 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
         final List<String> degreeModuleScopeIDs = getDegreeModuleScopeIDs(executionCourse);
 
         try {
-            EditWrittenEvaluation.runEditWrittenEvaluation(executionCourse.getIdInternal(),
+            EditWrittenEvaluation.runEditWrittenEvaluation(executionCourse.getExternalId(),
                     DateFormatUtil.parse("dd/MM/yyyy", getDate()), DateFormatUtil.parse("HH:mm", getBeginTime()),
                     DateFormatUtil.parse("HH:mm", getEndTime()), executionCourseIDs, degreeModuleScopeIDs, null,
                     getEvaluationID(), null, getDescription(), null);
@@ -621,7 +621,7 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
             this.executionCourseGroupings = new ArrayList<SelectItem>();
 
             for (Grouping grouping : getExecutionCourse().getGroupings()) {
-                this.executionCourseGroupings.add(new SelectItem(grouping.getIdInternal(), grouping.getName()));
+                this.executionCourseGroupings.add(new SelectItem(grouping.getExternalId(), grouping.getName()));
             }
 
         }
@@ -651,7 +651,7 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
         if (this.groupingID == null && getProject() != null) {
             Grouping grouping = getProject().getGrouping();
 
-            this.groupingID = (grouping != null) ? grouping.getIdInternal() : null;
+            this.groupingID = (grouping != null) ? grouping.getExternalId() : null;
         }
         return groupingID;
     }

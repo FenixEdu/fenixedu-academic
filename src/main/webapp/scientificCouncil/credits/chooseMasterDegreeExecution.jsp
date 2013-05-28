@@ -15,7 +15,7 @@
 			<th><bean:message key="label.credits.choose.ExecutionYear"/>:</th>
 			<td>
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionYearID" property="executionYearID" size="1" onchange="this.form.method.value='prepare';this.form.submit();">
-					<html:options collection="executionYears" property="idInternal" labelProperty="year"/>
+					<html:options collection="executionYears" property="externalId" labelProperty="year"/>
 				</html:select>
 				<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
 			</td>
@@ -24,7 +24,7 @@
 			<th><bean:message key="label.credits.choose.masterDegreeCurricularPlan"/>:</th>
 			<td>
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionDegreeID" property="executionDegreeID" size="1" >
-					<html:options collection="masterDegreeExecutions" property="idInternal" labelProperty="degreeCurricularPlan.name"/>
+					<html:options collection="masterDegreeExecutions" property="externalId" labelProperty="degreeCurricularPlan.name"/>
 				</html:select>
 			</td>
 		</tr>

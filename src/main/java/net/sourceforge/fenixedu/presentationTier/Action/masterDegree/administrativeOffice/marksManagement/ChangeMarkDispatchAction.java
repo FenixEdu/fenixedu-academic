@@ -141,7 +141,7 @@ public class ChangeMarkDispatchAction extends FenixDispatchAction {
 
             newEnrolmentEvaluation =
                     ReadInfoEnrolmentEvaluationByEvaluationOID.run(userView, studentNumber, DegreeType.MASTER_DEGREE,
-                            infoEnrolmentTemp.getIdInternal());
+                            infoEnrolmentTemp.getExternalId());
         } catch (ExistingServiceException e) {
             throw new ExistingActionException(e);
         }

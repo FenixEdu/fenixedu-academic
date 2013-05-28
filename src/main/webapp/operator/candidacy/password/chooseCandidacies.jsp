@@ -20,7 +20,7 @@
 				<fr:property name="classes" value="tstyle4 thlight thcenter" />
 				<fr:property name="checkable" value="true" />
 				<fr:property name="checkboxName" value="candidacyIdsToProcess" />
-				<fr:property name="checkboxValue" value="idInternal" />		
+				<fr:property name="checkboxValue" value="externalId" />		
 				<fr:property name="sortBy" value="number=asc"/>
 				<fr:property name="selectAllShown" value="true"/>
 				<fr:property name="selectAllLocation" value="both"/>

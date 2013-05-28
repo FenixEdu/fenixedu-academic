@@ -33,13 +33,13 @@
 				</html:link>
 			</li>
 			<li>
-				<html:link page="/loginsManagement.do?method=prepareManageAlias" paramId="personID" paramName="login" paramProperty="user.person.idInternal">
+				<html:link page="/loginsManagement.do?method=prepareManageAlias" paramId="personID" paramName="login" paramProperty="user.person.externalId">
 					<bean:message key="link.manage.login.alias" bundle="MANAGER_RESOURCES"/>
 				</html:link>			
 			</li>
 		</ul>
 		
-		<p><html:link page="/loginsManagement.do?method=prepareCreateLoginTimeInterval" paramId="loginID" paramName="login" paramProperty="idInternal">
+		<p><html:link page="/loginsManagement.do?method=prepareCreateLoginTimeInterval" paramId="loginID" paramName="login" paramProperty="externalId">
 			<bean:message key="label.create.new.login.period" bundle="MANAGER_RESOURCES"/>
 		</html:link></p>
 		
@@ -52,13 +52,13 @@
 						<fr:property name="columnClasses" value="aleft,,,,"/>   		
 						
 						<fr:property name="link(edit)" value="/loginsManagement.do?method=prepareEditLoginTimeInterval"/>
-			            <fr:property name="param(edit)" value="idInternal/loginPeriodID"/>
+			            <fr:property name="param(edit)" value="externalId/loginPeriodID"/>
 				        <fr:property name="key(edit)" value="link.edit"/>
 			            <fr:property name="bundle(edit)" value="MANAGER_RESOURCES"/>
 			            <fr:property name="order(edit)" value="0"/>	
 			            
 						<fr:property name="link(delete)" value="/loginsManagement.do?method=deleteLoginTimeInterval"/>
-			            <fr:property name="param(delete)" value="idInternal/loginPeriodID"/>
+			            <fr:property name="param(delete)" value="externalId/loginPeriodID"/>
 				        <fr:property name="key(delete)" value="link.delete"/>
 			            <fr:property name="bundle(delete)" value="MANAGER_RESOURCES"/>
 			            <fr:property name="order(delete)" value="1"/>	

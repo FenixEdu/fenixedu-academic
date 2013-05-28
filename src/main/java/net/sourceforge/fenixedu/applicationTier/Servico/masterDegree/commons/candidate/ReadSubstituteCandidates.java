@@ -30,9 +30,9 @@ public class ReadSubstituteCandidates {
                     || candidateList[i].equals(SituationName.SUBSTITUTE_CONDICIONAL_FINALIST_STRING)
                     || candidateList[i].equals(SituationName.SUBSTITUTE_CONDICIONAL_OTHER_STRING)) {
 
-                Integer idInternal = new Integer(ids[i]);
+                Integer externalId = new Integer(ids[i]);
 
-                MasterDegreeCandidate masterDegreeCandidateToWrite = RootDomainObject.getInstance().readMasterDegreeCandidateByOID(idInternal);
+                MasterDegreeCandidate masterDegreeCandidateToWrite = RootDomainObject.getInstance().readMasterDegreeCandidateByOID(externalId);
                 result.add(InfoMasterDegreeCandidateWithInfoPerson.newInfoFromDomain(masterDegreeCandidateToWrite));
             }
         }

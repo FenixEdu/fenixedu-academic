@@ -24,7 +24,7 @@ public class Entry extends Entry_Base {
         @Override
         public int compare(Entry leftEntry, Entry rightEntry) {
             int comparationResult = leftEntry.getWhenRegistered().compareTo(rightEntry.getWhenRegistered());
-            return (comparationResult == 0) ? leftEntry.getIdInternal().compareTo(rightEntry.getIdInternal()) : comparationResult;
+            return (comparationResult == 0) ? leftEntry.getExternalId().compareTo(rightEntry.getExternalId()) : comparationResult;
         }
     };
 

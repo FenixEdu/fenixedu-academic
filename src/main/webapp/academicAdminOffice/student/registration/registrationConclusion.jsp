@@ -10,7 +10,7 @@
 	
 
 <p>
-	<html:link page="/student.do?method=visualizeRegistration" paramId="registrationID" paramName="registrationConclusionBean" paramProperty="registration.idInternal">
+	<html:link page="/student.do?method=visualizeRegistration" paramId="registrationID" paramName="registrationConclusionBean" paramProperty="registration.externalId">
 		<bean:message key="link.student.back" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 	</html:link>
 </p>
@@ -36,7 +36,7 @@
 <logic:equal name="registrationConclusionBean" property="hasAccessToRegistrationConclusionProcess" value="true">
 
 	<div style="float: right;">
-		<bean:define id="personID" name="registrationConclusionBean" property="registration.student.person.idInternal"/>
+		<bean:define id="personID" name="registrationConclusionBean" property="registration.student.person.externalId"/>
 		<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
 	</div>
 	
@@ -202,14 +202,14 @@
 		</logic:equal>
 	
 		<p class="mtop05">
-			<bean:define id="registrationId" name="registrationConclusionBean" property="registration.idInternal" />		
+			<bean:define id="registrationId" name="registrationConclusionBean" property="registration.externalId" />		
 			<logic:empty name="registrationConclusionBean" property="cycleCurriculumGroup">
 				<html:link action="<%="/registration.do?method=prepareRegistrationConclusionDocument&amp;registrationId=" + registrationId %>" target="_blank">
 					Folha de <bean:message key="student.registrationConclusionProcess" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 				</html:link>
 			</logic:empty>
 			<logic:notEmpty name="registrationConclusionBean" property="cycleCurriculumGroup">
-				<bean:define id="cycleCurriculumGroupId" name="registrationConclusionBean" property="cycleCurriculumGroup.idInternal" />
+				<bean:define id="cycleCurriculumGroupId" name="registrationConclusionBean" property="cycleCurriculumGroup.externalId" />
 				<html:link action="<%="/registration.do?method=prepareRegistrationConclusionDocument&amp;registrationId=" + registrationId + "&amp;cycleCurriculumGroupId=" + cycleCurriculumGroupId %>" target="_blank">
 					Folha de <bean:message key="student.registrationConclusionProcess" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 				</html:link>

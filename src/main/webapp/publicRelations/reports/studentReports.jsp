@@ -57,7 +57,7 @@
 
 <logic:present name="showLink">
 
-<bean:define id="executionYearID" name="studentReportPredicate" property="executionYear.idInternal"/>
+<bean:define id="executionYearID" name="studentReportPredicate" property="executionYear.externalId"/>
 <bean:define id="active" name="studentReportPredicate" property="active"/>
 <bean:define id="concluded" name="studentReportPredicate" property="concluded"/>
 <bean:define id="args" type="java.lang.String">executionYearID=<bean:write name="executionYearID"/>&amp;active=<bean:write name="active"/>&amp;concluded=<bean:write name="concluded"/></bean:define>

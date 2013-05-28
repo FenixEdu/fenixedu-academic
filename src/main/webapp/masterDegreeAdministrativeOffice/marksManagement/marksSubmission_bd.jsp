@@ -74,9 +74,9 @@
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.sizeList" property="sizeList" value="<%= size.toString() %>" />							
 					    			    		
 	    	<logic:iterate id="enrolmentEvaluation" name="infoSiteEnrolmentEvaluation" property="enrolmentEvaluations" type="net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation" indexId="evaluationId" >
-	    		<bean:define id="studentCode" name="enrolmentEvaluation" property="infoEnrolment.infoStudentCurricularPlan.infoStudent.idInternal" />
-	    		<bean:define id="enrolmentCode" name="enrolmentEvaluation" property="infoEnrolment.idInternal" />
-	    		<bean:define id="idInternal" name="enrolmentEvaluation" property="idInternal" />
+	    		<bean:define id="studentCode" name="enrolmentEvaluation" property="infoEnrolment.infoStudentCurricularPlan.infoStudent.externalId" />
+	    		<bean:define id="enrolmentCode" name="enrolmentEvaluation" property="infoEnrolment.externalId" />
+	    		<bean:define id="externalId" name="enrolmentEvaluation" property="externalId" />
 	    		<bean:define id="gradeValue" value=""/>	
 	    		<logic:notEmpty name="enrolmentEvaluation" property="gradeValue" >
 		    		<bean:define id="gradeValue" >
@@ -95,7 +95,7 @@
 						<html:text bundle="HTMLALT_RESOURCES" altKey="text.grade" name="enrolmentEvaluation" property="grade" value="<%= gradeValue.toString() %>" size="4" indexed="true" />
 	 					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentCode" name="enrolmentEvaluation" property="studentCode" value="<%= studentCode.toString() %>" indexed="true" />
 	 					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.enrolmentCode" name="enrolmentEvaluation" property="enrolmentCode" value="<%= enrolmentCode.toString() %>" indexed="true" />
-	 					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" name="enrolmentEvaluation" property="idInternal" value="<%= idInternal.toString() %>" indexed="true" />
+	 					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.externalId" name="enrolmentEvaluation" property="externalId" value="<%= externalId.toString() %>" indexed="true" />
 					</td>
 				</tr>
 	    	</logic:iterate>

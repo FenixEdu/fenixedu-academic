@@ -10,7 +10,7 @@
 <h2><fr:view name="testModel" property="name" /></h2>
 
 <bean:define id="testModel" name="testModel" type="net.sourceforge.fenixedu.domain.tests.NewTestModel" />
-<bean:define id="testModelId"><bean:write name="testModel" property="idInternal" /></bean:define>
+<bean:define id="testModelId"><bean:write name="testModel" property="externalId" /></bean:define>
 
 <script type="text/javascript" language="javascript" src="<%= request.getContextPath() + "/javascript/tests/teacher.js" %>"></script>
 
@@ -25,13 +25,13 @@
 	</li>
 	<li>
 		<f:parameterLink page="/tests/testModels.do?method=selectQuestions">
-			<f:parameter id="oid" name="testModel" property="idInternal" />
+			<f:parameter id="oid" name="testModel" property="externalId" />
 			<bean:message key="message.toSelect" bundle="TESTS_RESOURCES" />
 		</f:parameterLink>
 	</li>
 	<li>
 		<f:parameterLink page="/tests/testModels.do?method=sortTestModel">
-			<f:parameter id="oid" name="testModel" property="idInternal" />
+			<f:parameter id="oid" name="testModel" property="externalId" />
 			<bean:message key="message.toSort" bundle="TESTS_RESOURCES" />
 		</f:parameterLink>
 	</li>
@@ -86,9 +86,9 @@
 <div>
 	<strong><bean:message key="label.testElement.presentationMaterials" bundle="TESTS_RESOURCES" />:</strong>
 	(<f:parameterLink page="/tests/questionBank/presentationMaterial.do?method=prepareEditPresentationMaterials">
-	 	<f:parameter id="oid" name="testModel" property="idInternal" />
+	 	<f:parameter id="oid" name="testModel" property="externalId" />
 	 	<f:parameter id="returnPath" value="/tests/testModels.do?method=editTestModel" />
-	 	<f:parameter id="returnId" name="testModel" property="idInternal" />
+	 	<f:parameter id="returnId" name="testModel" property="externalId" />
 	 	<f:parameter id="contextKey" value="message.testModels.manage" />
 	 	<bean:message key="message.question.edit" bundle="TESTS_RESOURCES" />
 	 </f:parameterLink>)

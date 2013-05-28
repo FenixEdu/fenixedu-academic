@@ -101,7 +101,7 @@ public class ViewExamsMapDANew extends FenixContextDispatchAction {
         InfoExecutionPeriod infoExecutionPeriod =
                 (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
         request.setAttribute(PresentationConstants.EXECUTION_PERIOD, infoExecutionPeriod);
-        request.setAttribute(PresentationConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getIdInternal().toString());
+        request.setAttribute(PresentationConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getExternalId().toString());
 
         // executionDegreeID
         Integer executionDegreeId = getFromRequest("executionDegreeID", request);

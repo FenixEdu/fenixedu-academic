@@ -37,8 +37,8 @@
 
 <br />
 
-<bean:define id="eventId" name="createInsuranceExemptionBean" property="insuranceEvent.idInternal" />
-<bean:define id="personId" name="createInsuranceExemptionBean" property="insuranceEvent.person.idInternal" />
+<bean:define id="eventId" name="createInsuranceExemptionBean" property="insuranceEvent.externalId" />
+<bean:define id="personId" name="createInsuranceExemptionBean" property="insuranceEvent.person.externalId" />
 <fr:form action="<%="/exemptionsManagement.do?personId=" + personId + "&amp;eventId=" + eventId%>">
 
 	<input alt="input.method" type="hidden" name="method" value="" />

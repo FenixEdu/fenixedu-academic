@@ -74,7 +74,7 @@ public class EditDistributedTest {
             /*
              * persistentSupport.getIPersistentMark().deleteByEvaluation(onlineTest
              * ); persistentObject.deleteByOID(OnlineTest.class,
-             * onlineTest.getIdInternal());
+             * onlineTest.getExternalId());
              */
         } else if (change2EvaluationType) {
             // Change to evaluation test

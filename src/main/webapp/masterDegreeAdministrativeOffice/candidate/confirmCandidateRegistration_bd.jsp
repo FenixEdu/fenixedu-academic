@@ -53,7 +53,7 @@
 				</td>
 				<td>
 					<html:select bundle="HTMLALT_RESOURCES" altKey="select.branchID" property="branchID">
-		                <html:options collection="branchList" property="idInternal" labelProperty="name"/>
+		                <html:options collection="branchList" property="externalId" labelProperty="name"/>
 		            </html:select>
 				</td>
 			</tr>

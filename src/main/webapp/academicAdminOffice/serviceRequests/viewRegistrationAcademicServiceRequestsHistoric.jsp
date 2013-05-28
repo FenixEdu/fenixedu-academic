@@ -12,7 +12,7 @@
 </html:messages>
 
 <div style="float: right;">
-	<bean:define id="personID" name="registration" property="student.person.idInternal"/>
+	<bean:define id="personID" name="registration" property="student.person.externalId"/>
 	<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
 </div>
 
@@ -46,10 +46,10 @@
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4 thlight mtop0" />
 			<fr:property name="columnClasses" value="smalltxt acenter nowrap,smalltxt acenter nowrap,acenter,,acenter,tdhl1 nowrap,,acenter nowrap,nowrap" />
-			<fr:property name="linkFormat(view)" value="/academicServiceRequestsManagement.do?method=viewAcademicServiceRequest&academicServiceRequestId=${idInternal}&backAction=academicServiceRequestsManagement&backMethod=viewRegistrationAcademicServiceRequestsHistoric"/>
+			<fr:property name="linkFormat(view)" value="/academicServiceRequestsManagement.do?method=viewAcademicServiceRequest&academicServiceRequestId=${externalId}&backAction=academicServiceRequestsManagement&backMethod=viewRegistrationAcademicServiceRequestsHistoric"/>
 			<fr:property name="key(view)" value="view"/>
 
-            <fr:property name="linkFormat(print)" value="/documentRequestsManagement.do?method=downloadDocument&amp;documentRequestId=${idInternal}&amp;"/>
+            <fr:property name="linkFormat(print)" value="/documentRequestsManagement.do?method=downloadDocument&amp;documentRequestId=${externalId}&amp;"/>
             <fr:property name="key(print)" value="print"/>
             <fr:property name="visibleIf(print)" value="downloadPossible"/>
 			<fr:property name="sortBy" value="requestDate=desc, activeSituation.situationDate=desc, urgentRequest=desc, description=asc"/>
@@ -67,7 +67,7 @@
 
 <p class="mtop2">
 	<html:form action="/student.do?method=visualizeRegistration">
-		<bean:define id="registrationID" name="registration" property="idInternal"/>
+		<bean:define id="registrationID" name="registration" property="externalId"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.registrationID" property="registrationID" value="<%=registrationID.toString()%>"/>
 		<html:submit><bean:message key="link.student.back" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:submit>
 	</html:form>

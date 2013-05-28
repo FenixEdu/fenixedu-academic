@@ -37,7 +37,7 @@
     			<td class="listClasses">
     				<html:link page="/fillCandidacy.do" 
     						   paramName="equivalency" 
-    						   paramProperty="idInternal" 
+    						   paramProperty="externalId" 
     						   paramId="objectCode">
     								<bean:message key="label.seminaryEnroll" />
     				</html:link>

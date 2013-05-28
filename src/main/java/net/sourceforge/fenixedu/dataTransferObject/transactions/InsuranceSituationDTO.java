@@ -28,10 +28,10 @@ public class InsuranceSituationDTO extends InfoObject {
     }
 
     /**
-     * @param idInternal
+     * @param externalId
      */
-    public InsuranceSituationDTO(Integer idInternal) {
-        super(idInternal);
+    public InsuranceSituationDTO(Integer externalId) {
+        super(externalId);
 
     }
 

@@ -122,7 +122,7 @@ public class InsertGratuityDataDispatchAction extends FenixDispatchAction {
                     duplicateInfoDegree(executionDegreeList, infoExecutionDegree) ? "-"
                             + infoExecutionDegree.getInfoDegreeCurricularPlan().getName() : "";
 
-            executionDegreeLabels.add(new LabelValueBean(name, name + "#" + infoExecutionDegree.getIdInternal().toString()));
+            executionDegreeLabels.add(new LabelValueBean(name, name + "#" + infoExecutionDegree.getExternalId().toString()));
         }
         return executionDegreeLabels;
     }
@@ -180,8 +180,8 @@ public class InsertGratuityDataDispatchAction extends FenixDispatchAction {
     }
 
     private void fillForm(DynaValidatorForm aForm, InfoGratuityValues infoGratuityValues) {
-        if (infoGratuityValues.getIdInternal() != null) {
-            aForm.set("gratuityId", infoGratuityValues.getIdInternal().toString());
+        if (infoGratuityValues.getExternalId() != null) {
+            aForm.set("gratuityId", infoGratuityValues.getExternalId().toString());
         }
         if (doubleFilled(infoGratuityValues.getAnualValue())) {
             aForm.set("annualValue", infoGratuityValues.getAnualValue().toString());

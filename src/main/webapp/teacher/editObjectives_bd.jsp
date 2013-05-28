@@ -13,7 +13,7 @@
 		<logic:present name="siteView" property="component">
 			<bean:define id="curriculum" name="siteView" property="component"/>
 			<h3><bean:write name="curriculum" property="infoCurricularCourse.name"/> -- <bean:write name="curriculum" property="infoCurricularCourse.infoDegreeCurricularPlan.infoDegree.nome"/></h3>
-			<bean:define id="curricularCourseCode" name="curriculum" property="infoCurricularCourse.idInternal"/>
+			<bean:define id="curricularCourseCode" name="curriculum" property="infoCurricularCourse.externalId"/>
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.curricularCourseCode" property="curricularCourseCode" value="<%= curricularCourseCode.toString() %>"/>
 		</logic:present>
 	

@@ -40,7 +40,7 @@
 			<fr:property name="headerClasses" value="acenter" />
             <fr:property name="link(edit)" value="/editGrantCostCenter.do?method=prepareEditGrantCostCenterForm" />
 			<fr:property name="key(edit)" value="link.edit" />
-			<fr:property name="param(edit)" value="idInternal/idGrantCostCenter" />
+			<fr:property name="param(edit)" value="externalId/idGrantCostCenter" />
 		</fr:layout>
 	</fr:view> 
 

@@ -125,7 +125,7 @@ public class CreateReimbursementGuideDispatchAction extends FenixDispatchAction 
             }
 
             Integer reimbursementGuideID =
-                    CreateReimbursementGuide.run(infoGuide.getIdInternal(), remarks, infoReimbursementGuideEntries, userView);
+                    CreateReimbursementGuide.run(infoGuide.getExternalId(), remarks, infoReimbursementGuideEntries, userView);
 
             request.setAttribute(PresentationConstants.REIMBURSEMENT_GUIDE, reimbursementGuideID);
 

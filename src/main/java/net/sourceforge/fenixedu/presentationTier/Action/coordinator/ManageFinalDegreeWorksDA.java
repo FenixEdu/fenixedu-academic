@@ -29,14 +29,14 @@ public class ManageFinalDegreeWorksDA extends FenixDispatchAction {
 
         final DegreeCurricularPlan degreeCurricularPlan = readDegreeCurricularPlan(request);
         request.setAttribute("degreeCurricularPlan", degreeCurricularPlan);
-        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlan.getIdInternal().toString());
+        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlan.getExternalId().toString());
 
         final DynaActionForm dynaActionForm = (DynaActionForm) form;
         final String executionDegreeIDString = dynaActionForm.getString("executionDegreeID");
         final ExecutionDegree executionDegree;
         if (executionDegreeIDString == null || executionDegreeIDString.length() == 0) {
             executionDegree = findExecutionDegree(degreeCurricularPlan);
-            dynaActionForm.set("executionDegreeID", executionDegree.getIdInternal().toString());
+            dynaActionForm.set("executionDegreeID", executionDegree.getExternalId().toString());
         } else {
             executionDegree = findExecutionDegree(degreeCurricularPlan, Integer.valueOf(executionDegreeIDString));
         }
@@ -47,7 +47,7 @@ public class ManageFinalDegreeWorksDA extends FenixDispatchAction {
 
     private ExecutionDegree findExecutionDegree(final DegreeCurricularPlan degreeCurricularPlan, final Integer executionDegreeID) {
         for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegrees()) {
-            if (executionDegree.getIdInternal().equals(executionDegreeID)) {
+            if (executionDegree.getExternalId().equals(executionDegreeID)) {
                 return executionDegree;
             }
         }

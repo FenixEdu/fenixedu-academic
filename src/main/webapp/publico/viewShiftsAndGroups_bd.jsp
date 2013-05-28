@@ -21,7 +21,7 @@
 	<logic:notEmpty name="component" property="infoSiteGroupsByShiftList">	
 		<h2>
 			<bean:define id="groupProperties" name="component" property="infoGrouping" />
-			<bean:define id="groupPropertiesId" name="groupProperties" property="idInternal" />
+			<bean:define id="groupPropertiesId" name="groupProperties" property="externalId" />
 			<bean:message key="label.grouping"/>:
 			<bean:write name="groupProperties" property="name" />
 		</h2>
@@ -91,7 +91,7 @@
                         <logic:notEmpty name="infoSiteGroupsByShift" property="infoSiteStudentGroupsList">
                         [<logic:iterate id="infoSiteStudentGroup" name="infoSiteGroupsByShift" property="infoSiteStudentGroupsList" >
 							<bean:define id="infoStudentGroup" name="infoSiteStudentGroup" property="infoStudentGroup"/>	
-                        	<html:link page="<%= "/viewSite.do" + "?method=viewStudentGroupInformationAction&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;executionPeriodOID=" + pageContext.findAttribute(PresentationConstants.EXECUTION_PERIOD_OID) + "&amp;groupProperties=" + pageContext.findAttribute("groupPropertiesId") %>" paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="idInternal">
+                        	<html:link page="<%= "/viewSite.do" + "?method=viewStudentGroupInformationAction&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;executionPeriodOID=" + pageContext.findAttribute(PresentationConstants.EXECUTION_PERIOD_OID) + "&amp;groupProperties=" + pageContext.findAttribute("groupPropertiesId") %>" paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="externalId">
 								<bean:write name="infoStudentGroup" property="groupNumber"/>
 							</html:link>
 						</logic:iterate>]
@@ -110,7 +110,7 @@
 		<logic:notEmpty name="infoSiteGroupsByShift" property="infoSiteShift.infoShift">
 		<bean:define id="infoSiteShift" name="infoSiteGroupsByShift" property="infoSiteShift"/>	
 			<bean:define id="infoShift" name="infoSiteShift" property="infoShift"/>	
-			<bean:define id="shiftCode" name="infoShift" property="idInternal"/>
+			<bean:define id="shiftCode" name="infoShift" property="externalId"/>
 				<logic:iterate id="infoLesson" name="infoShift" property="infoLessons" length="1" indexId="infoLessonIndex">
             		<% Integer iH = new Integer(((InfoLesson) infoLesson).getInicio().get(Calendar.HOUR_OF_DAY)); %>
                 	<% Integer iM = new Integer(((InfoLesson) infoLesson).getInicio().get(Calendar.MINUTE)); %>
@@ -143,7 +143,7 @@
                         <logic:notEmpty name="infoSiteGroupsByShift" property="infoSiteStudentGroupsList">
                         [<logic:iterate id="infoSiteStudentGroup" name="infoSiteGroupsByShift" property="infoSiteStudentGroupsList" >
 							<bean:define id="infoStudentGroup" name="infoSiteStudentGroup" property="infoStudentGroup"/>	
-                        	<html:link page="<%= "/viewSite.do" + "?method=viewStudentGroupInformationAction&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;executionPeriodOID=" + pageContext.findAttribute(PresentationConstants.EXECUTION_PERIOD_OID) + "&amp;groupProperties=" + pageContext.findAttribute("groupPropertiesId") %>" paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="idInternal">
+                        	<html:link page="<%= "/viewSite.do" + "?method=viewStudentGroupInformationAction&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;executionPeriodOID=" + pageContext.findAttribute(PresentationConstants.EXECUTION_PERIOD_OID) + "&amp;groupProperties=" + pageContext.findAttribute("groupPropertiesId") %>" paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="externalId">
 								<bean:write name="infoStudentGroup" property="groupNumber"/>
 							</html:link>
 						</logic:iterate>]

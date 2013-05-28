@@ -30,7 +30,7 @@ public class DomainObjectActionLog extends DomainObjectActionLog_Base {
         setRootDomainObject(RootDomainObject.getInstance());
         setPerson(person);
         setPersonUsername(person.getUsername());
-        setKeyDomainObject(domainObject.getIdInternal());
+        setKeyDomainObject(domainObject.getExternalId());
         setDomainObjectClassName(domainObject.getClass().getName());
         setAction(action);
         setInstant(new DateTime());

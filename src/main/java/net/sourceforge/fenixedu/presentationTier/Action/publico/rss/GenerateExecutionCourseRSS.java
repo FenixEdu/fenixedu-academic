@@ -33,14 +33,14 @@ public abstract class GenerateExecutionCourseRSS extends InformaRSSAction {
             final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : "";
             final String commonLocalUrl =
                     StringAppender.append(context, "/publico/executionCourse.do?method=", getMethodName(), "&executionCourseID=",
-                            executionCourse.getIdInternal().toString(), "&", ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME,
+                            executionCourse.getExternalId().toString(), "&", ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME,
                             "=", executionCourse.getSite().getReversePath(), "#");
 
             for (final DomainObject domainObject : ((Collection<DomainObject>) getObjects(executionCourse))) {
                 final ItemIF item = new Item();
                 fillItem(item, domainObject);
                 item.setGuid(getItemGuidIF(item, domainObject));
-                final String localUrl = commonLocalUrl + getIdPrefix() + domainObject.getIdInternal().toString();
+                final String localUrl = commonLocalUrl + getIdPrefix() + domainObject.getExternalId().toString();
                 item.setLink(new URL(request.getScheme(), request.getServerName(), request.getServerPort(), localUrl));
                 channel.addItem(item);
             }

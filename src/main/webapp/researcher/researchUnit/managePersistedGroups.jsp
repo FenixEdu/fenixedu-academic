@@ -6,7 +6,7 @@
 
 <jsp:include flush="true" page="../../commons/PersistentMemberGroups/managePersistedGroups.jsp"/>
 
-<bean:define id="unitID" name="unit" property="idInternal"/>
+<bean:define id="unitID" name="unit" property="externalId"/>
 
 <logic:equal name="unit" property="currentUserAbleToDefineGroups" value="true">
 

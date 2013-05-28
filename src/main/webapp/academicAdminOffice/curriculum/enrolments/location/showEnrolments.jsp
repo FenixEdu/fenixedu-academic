@@ -6,7 +6,7 @@
 
 <h2><strong><bean:message key="label.optionalCurricularCourses.move"	bundle="ACADEMIC_OFFICE_RESOURCES" /></strong></h2>
 
-<bean:define id="studentCurricularPlanId" name="studentCurricularPlan" property="idInternal" />
+<bean:define id="studentCurricularPlanId" name="studentCurricularPlan" property="externalId" />
 <fr:form action="<%="/optionalCurricularCoursesLocation.do?scpID=" + studentCurricularPlanId.toString() %>">
 	<input type="hidden" name="method" />
 	
@@ -27,7 +27,7 @@
 			
 			<fr:property name="checkable" value="true" />
 			<fr:property name="checkboxName" value="enrolmentsToChange" />
-			<fr:property name="checkboxValue" value="idInternal" />	
+			<fr:property name="checkboxValue" value="externalId" />	
 		</fr:layout>
 	</fr:view>
 	

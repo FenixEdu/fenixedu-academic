@@ -26,7 +26,7 @@
 	</span>
 </p>
 
-<bean:define id="personID" name="libraryCardDTO" property="person.idInternal"/>
+<bean:define id="personID" name="libraryCardDTO" property="person.externalId"/>
 
 <fr:form action="/cardManagement.do?method=createCard">
 	<fr:edit id="libraryCardSearch" name="libraryCardSearch" visible="false"/>

@@ -72,14 +72,14 @@
 		<h:outputText value="<p class='mtop15'>" escape="false" />
 		<h:outputLink value="editCurricularPlanMembersGroup.faces">
 			<h:outputText value="#{scouncilBundle['accessGroupManagement']}" />
-			<f:param name="dcpId" value="#{CurricularPlansMembersManagementBackingBean.degreeCurricularPlan.idInternal}"/>
+			<f:param name="dcpId" value="#{CurricularPlansMembersManagementBackingBean.degreeCurricularPlan.externalId}"/>
 		</h:outputLink>
 		<h:outputText value="</p>" escape="false" />
 		
 		<!-- Your ticket out of hell! / Diogo was here. ;)-->
 		<h:outputText value="<br/><br/><p><strong>#{scouncilBundle['label.coordinationTeams']}</strong><p/>" escape="false" />
 		<h:outputText value="<p>#{scouncilBundle['editCoordinationExplanation']}<p/>" escape="false" />
-		<h:outputText value="<p><a href='#{CurricularPlansMembersManagementBackingBean.contextPath}/scientificCouncil/curricularPlans/editExecutionDegreeCoordination.do?method=prepareEditCoordination&degreeCurricularPlanId=#{CurricularPlansMembersManagementBackingBean.degreeCurricularPlan.idInternal}'>" escape="false"/>
+		<h:outputText value="<p><a href='#{CurricularPlansMembersManagementBackingBean.contextPath}/scientificCouncil/curricularPlans/editExecutionDegreeCoordination.do?method=prepareEditCoordination&degreeCurricularPlanId=#{CurricularPlansMembersManagementBackingBean.degreeCurricularPlan.externalId}'>" escape="false"/>
 				<h:outputText value="#{scouncilBundle['accessCoordination']}"/>
 		<h:outputText value="</a></p>" escape="false"/>
 		<!-- Hack ends here. -->

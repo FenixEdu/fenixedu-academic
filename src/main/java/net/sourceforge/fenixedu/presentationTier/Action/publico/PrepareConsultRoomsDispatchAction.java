@@ -62,7 +62,7 @@ public class PrepareConsultRoomsDispatchAction extends FenixContextDispatchActio
 
             indexForm.set("index", new Integer(executionPeriods.indexOf((selectedExecutionPeriod))));
             request.setAttribute(PresentationConstants.EXECUTION_PERIOD, selectedExecutionPeriod);
-            request.setAttribute(PresentationConstants.EXECUTION_PERIOD_OID, selectedExecutionPeriod.getIdInternal().toString());
+            request.setAttribute(PresentationConstants.EXECUTION_PERIOD_OID, selectedExecutionPeriod.getExternalId().toString());
         }
         // ----------------------------------------------------------
 
@@ -90,7 +90,7 @@ public class PrepareConsultRoomsDispatchAction extends FenixContextDispatchActio
             InfoExecutionPeriod selectedExecutionPeriod = (InfoExecutionPeriod) infoExecutionPeriods.get(index.intValue());
             // Set selected executionPeriod in request
             request.setAttribute(PresentationConstants.EXECUTION_PERIOD, selectedExecutionPeriod);
-            request.setAttribute(PresentationConstants.EXECUTION_PERIOD_OID, selectedExecutionPeriod.getIdInternal().toString());
+            request.setAttribute(PresentationConstants.EXECUTION_PERIOD_OID, selectedExecutionPeriod.getExternalId().toString());
         }
 
         return mapping.findForward("choose");

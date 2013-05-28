@@ -348,7 +348,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
         if (selectedExecutionYearID == null) {
             selectedExecutionYearID = getAndHoldIntegerParameter("selectedExecutionYearId");
             if (selectedExecutionYearID == null) {
-                selectedExecutionYearID = ExecutionYear.readCurrentExecutionYear().getIdInternal();
+                selectedExecutionYearID = ExecutionYear.readCurrentExecutionYear().getExternalId();
             }
         }
         return selectedExecutionYearID;
@@ -361,7 +361,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
     public List<SelectItem> getOpenExecutionYears() {
         List<SelectItem> selectItems = new ArrayList<SelectItem>();
         for (ExecutionYear executionYear : ExecutionYear.readNotClosedExecutionYears()) {
-            selectItems.add(new SelectItem(executionYear.getIdInternal(), executionYear.getYear()));
+            selectItems.add(new SelectItem(executionYear.getExternalId(), executionYear.getYear()));
         }
         return selectItems;
     }
@@ -373,7 +373,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
                     (getSelectedExecutionYear() != null) ? getSelectedExecutionYear() : ExecutionYear.readCurrentExecutionYear();
 
             DegreeInfo degreeInfo = getDegreeInfo(executionYear);
-            setSelectedExecutionYearId(degreeInfo.getExecutionYear().getIdInternal());
+            setSelectedExecutionYearId(degreeInfo.getExecutionYear().getExternalId());
             this.nameInputComponent.setValue(degreeInfo.getName().getContent(Language.pt));
         }
         return this.nameInputComponent;
@@ -404,7 +404,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
         if (degreeInfo == null) {
             degreeInfo = getDegree().getMostRecentDegreeInfo();
             // setSelectedExecutionYearId(degreeInfo.getExecutionYear().
-            // getIdInternal());
+            // getExternalId());
         }
         return degreeInfo;
     }

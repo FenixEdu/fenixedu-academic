@@ -25,8 +25,8 @@ public class InfoMasterDegreeThesis extends InfoObject {
     @Override
     public String toString() {
         String result = "[" + this.getClass().getName() + ": \n";
-        result += "idInternal = " + getIdInternal() + "; \n";
-        result += "infoStudentCurricularPlan = " + this.infoStudentCurricularPlan.getIdInternal() + "; \n";
+        result += "externalId = " + getExternalId() + "; \n";
+        result += "infoStudentCurricularPlan = " + this.infoStudentCurricularPlan.getExternalId() + "; \n";
         result += "] \n";
 
         return result;

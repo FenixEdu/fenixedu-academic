@@ -246,7 +246,7 @@ public class InfoDistributedTest extends InfoObject {
         if (obj instanceof InfoDistributedTest) {
             InfoDistributedTest infoDistributedTest = (InfoDistributedTest) obj;
             result =
-                    (getIdInternal().equals(infoDistributedTest.getIdInternal()))
+                    (getExternalId().equals(infoDistributedTest.getExternalId()))
                             && (getTitle().equals(infoDistributedTest.getTitle()))
                             && (getBeginDate().equals(infoDistributedTest.getBeginDate()))
                             && (getBeginHour().equals(infoDistributedTest.getBeginHour()))

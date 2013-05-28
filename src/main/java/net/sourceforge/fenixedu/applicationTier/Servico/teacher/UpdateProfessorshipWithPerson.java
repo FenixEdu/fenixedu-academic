@@ -14,7 +14,7 @@ public class UpdateProfessorshipWithPerson {
     public static Boolean run(Person person, ExecutionYear executionYear, final List executionCourseResponsabilities)
             throws MaxResponsibleForExceed, InvalidCategory, NotAuthorizedException {
         AbstractModifyProfessorshipWithPerson.run(person);
-        person.updateResponsabilitiesFor(executionYear.getIdInternal(), executionCourseResponsabilities);
+        person.updateResponsabilitiesFor(executionYear.getExternalId(), executionCourseResponsabilities);
         return true;
     }
 }

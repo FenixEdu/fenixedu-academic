@@ -103,7 +103,7 @@ public abstract class ResultPublicationBean implements Serializable {
 
     private Month month;
 
-    private Integer idInternal;
+    private Integer externalId;
 
     private Boolean createEvent = Boolean.FALSE;
 
@@ -203,7 +203,7 @@ public abstract class ResultPublicationBean implements Serializable {
     }
 
     protected void fillCommonFields(ResearchResultPublication publication) {
-        this.setIdInternal(publication.getIdInternal());
+        this.setExternalId(publication.getExternalId());
         this.setTitle(publication.getTitle());
         this.setNote(publication.getNote());
         this.setUrl(publication.getUrl());
@@ -216,7 +216,7 @@ public abstract class ResultPublicationBean implements Serializable {
     }
 
     protected void fillCommonBeanFields(ResultPublicationBean bean) {
-        this.setIdInternal(bean.getIdInternal());
+        this.setExternalId(bean.getExternalId());
         this.setTitle(bean.getTitle());
         this.setNote(bean.getNote());
         this.setUrl(bean.getUrl());
@@ -445,12 +445,12 @@ public abstract class ResultPublicationBean implements Serializable {
         this.publicationType = publicationType;
     }
 
-    public Integer getIdInternal() {
-        return idInternal;
+    public Integer getExternalId() {
+        return externalId;
     }
 
-    public void setIdInternal(Integer idInternal) {
-        this.idInternal = idInternal;
+    public void setExternalId(Integer externalId) {
+        this.externalId = externalId;
     }
 
     public ResultParticipationRole getRole() {

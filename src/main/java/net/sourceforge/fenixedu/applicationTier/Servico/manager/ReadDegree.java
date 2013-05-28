@@ -23,8 +23,8 @@ public class ReadDegree {
      */
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
-    public static InfoDegree run(Integer idInternal) throws FenixServiceException {
-        final Degree degree = RootDomainObject.getInstance().readDegreeByOID(idInternal);
+    public static InfoDegree run(Integer externalId) throws FenixServiceException {
+        final Degree degree = RootDomainObject.getInstance().readDegreeByOID(externalId);
 
         if (degree == null) {
             throw new NonExistingServiceException();

@@ -68,7 +68,7 @@ public class TSDProcessValuationAction extends FenixDispatchAction {
         DynaActionForm dynaForm = (DynaActionForm) form;
 
         TSDProcessPhase selectedTSDProcessPhase = getSelectedTSDProcessPhase(userView, dynaForm);
-        dynaForm.set("tsd", selectedTSDProcessPhase.getRootTSD().getIdInternal());
+        dynaForm.set("tsd", selectedTSDProcessPhase.getRootTSD().getExternalId());
 
         return loadTSDProcess(mapping, form, request, response);
     }
@@ -137,7 +137,7 @@ public class TSDProcessValuationAction extends FenixDispatchAction {
 
         if (selectedTSDProcessPhase == null) {
             selectedTSDProcessPhase = tsdProcess.getCurrentTSDProcessPhase();
-            dynaForm.set("tsdProcessPhase", selectedTSDProcessPhase.getIdInternal());
+            dynaForm.set("tsdProcessPhase", selectedTSDProcessPhase.getExternalId());
         }
         TeacherServiceDistribution rootTeacherServiceDistribution = selectedTSDProcessPhase.getRootTSD();
         TeacherServiceDistribution selectedTSD =
@@ -232,7 +232,7 @@ public class TSDProcessValuationAction extends FenixDispatchAction {
 
         if (selectedTSDProcessPhase == null) {
             selectedTSDProcessPhase = tsdProcess.getCurrentTSDProcessPhase();
-            dynaForm.set("tsdProcessPhase", selectedTSDProcessPhase.getIdInternal());
+            dynaForm.set("tsdProcessPhase", selectedTSDProcessPhase.getExternalId());
         }
         TeacherServiceDistribution rootTeacherServiceDistribution = selectedTSDProcessPhase.getRootTSD();
         TeacherServiceDistribution selectedTSD =
@@ -506,9 +506,9 @@ public class TSDProcessValuationAction extends FenixDispatchAction {
             TeacherServiceDistribution selectedTeacherServiceDistribution, ExecutionSemester executionSemester)
             throws FenixServiceException {
         Map<Integer, Pair<Integer, Integer>> tsdProcessIdMap = new HashMap<Integer, Pair<Integer, Integer>>();
-        tsdProcessIdMap.put(selectedTSDProcessPhase.getIdInternal(),
-                new Pair<Integer, Integer>(selectedTeacherServiceDistribution.getIdInternal(),
-                        (executionSemester == null) ? 0 : executionSemester.getIdInternal()));
+        tsdProcessIdMap.put(selectedTSDProcessPhase.getExternalId(),
+                new Pair<Integer, Integer>(selectedTeacherServiceDistribution.getExternalId(),
+                        (executionSemester == null) ? 0 : executionSemester.getExternalId()));
 
         return ReadTSDTeachersFromTSDProcesses.runReadTSDTeachersFromTSDProcesses(tsdProcessIdMap);
     }
@@ -518,9 +518,9 @@ public class TSDProcessValuationAction extends FenixDispatchAction {
             TeacherServiceDistribution selectedTeacherServiceDistribution, ExecutionSemester executionSemester)
             throws FenixServiceException {
         Map<Integer, Pair<Integer, Integer>> tsdProcessIdMap = new HashMap<Integer, Pair<Integer, Integer>>();
-        tsdProcessIdMap.put(selectedTSDProcessPhase.getIdInternal(),
-                new Pair<Integer, Integer>(selectedTeacherServiceDistribution.getIdInternal(),
-                        (executionSemester == null) ? 0 : executionSemester.getIdInternal()));
+        tsdProcessIdMap.put(selectedTSDProcessPhase.getExternalId(),
+                new Pair<Integer, Integer>(selectedTeacherServiceDistribution.getExternalId(),
+                        (executionSemester == null) ? 0 : executionSemester.getExternalId()));
 
         return ReadTSDCoursesFromTSDProcesses.runReadTSDCoursesFromTSDProcesses(tsdProcessIdMap);
     }

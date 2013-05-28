@@ -20,24 +20,24 @@
 			<tr>
 				<logic:equal name="canEdit" value="true">
 						<td class="listClasses">
-							<html:link page="/studentReport.do?page=0&amp;method=prepareEdit" paramId="curricularCourseId" paramName="infoCurricularCourse" paramProperty="idInternal">
+							<html:link page="/studentReport.do?page=0&amp;method=prepareEdit" paramId="curricularCourseId" paramName="infoCurricularCourse" paramProperty="externalId">
 								<bean:write name="infoCurricularCourse" property="code"/>
 							</html:link>
 						</td>			
 						<td class="listClasses" style="text-align:left">
-							<html:link page="/studentReport.do?page=0&amp;method=prepareEdit" paramId="curricularCourseId" paramName="infoCurricularCourse" paramProperty="idInternal">
+							<html:link page="/studentReport.do?page=0&amp;method=prepareEdit" paramId="curricularCourseId" paramName="infoCurricularCourse" paramProperty="externalId">
 								<bean:write name="infoCurricularCourse" property="name"/>
 							</html:link>
 						</td>
 				</logic:equal>
 				<logic:equal name="canEdit" value="false">
 					<td class="listClasses">
-						<html:link page="/studentReport.do?page=0&amp;method=read" paramId="curricularCourseId" paramName="infoCurricularCourse" paramProperty="idInternal">
+						<html:link page="/studentReport.do?page=0&amp;method=read" paramId="curricularCourseId" paramName="infoCurricularCourse" paramProperty="externalId">
 							<bean:write name="infoCurricularCourse" property="code"/>
 						</html:link>
 					</td>
 					<td class="listClasses" style="text-align:left">					
-						<html:link page="/studentReport.do?page=0&amp;method=read" paramId="curricularCourseId" paramName="infoCurricularCourse" paramProperty="idInternal">
+						<html:link page="/studentReport.do?page=0&amp;method=read" paramId="curricularCourseId" paramName="infoCurricularCourse" paramProperty="externalId">
 							<bean:write name="infoCurricularCourse" property="name"/>
 						</html:link>
 					</td>

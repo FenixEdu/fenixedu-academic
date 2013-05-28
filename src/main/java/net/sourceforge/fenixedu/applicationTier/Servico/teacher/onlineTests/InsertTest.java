@@ -22,7 +22,7 @@ public class InsertTest {
             testScope = new TestScope(ExecutionCourse.class.getName(), executionCourseId);
         }
         Test test = new Test(title, information, testScope);
-        return test.getIdInternal();
+        return test.getExternalId();
     }
 
     // Service Invokers migrated from Berserk

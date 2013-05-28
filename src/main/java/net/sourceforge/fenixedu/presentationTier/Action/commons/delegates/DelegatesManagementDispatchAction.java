@@ -398,7 +398,7 @@ public abstract class DelegatesManagementDispatchAction extends FenixDispatchAct
             return prepareViewDelegates(mapping, actionForm, request, response);
         }
 
-        request.setAttribute("selectedVotingPeriod", election.getIdInternal().toString());
+        request.setAttribute("selectedVotingPeriod", election.getExternalId().toString());
         return mapping.findForward("showPossibleDelegates");
     }
 
@@ -409,7 +409,7 @@ public abstract class DelegatesManagementDispatchAction extends FenixDispatchAct
 
         DelegateElection election = delegate.getLastElectedDelegateElection();
 
-        request.setAttribute("selectedVotingPeriod", election.getIdInternal().toString());
+        request.setAttribute("selectedVotingPeriod", election.getExternalId().toString());
         return mapping.findForward("showPossibleDelegates");
     }
 

@@ -93,7 +93,7 @@ public class AnnouncementRSS extends RSSAction {
         stringBuilder.append("_");
         stringBuilder.append(request.getServerName());
         stringBuilder.append("_announcement_");
-        stringBuilder.append(announcement.getIdInternal());
+        stringBuilder.append(announcement.getExternalId());
         return stringBuilder.toString();
     }
 
@@ -163,7 +163,7 @@ public class AnnouncementRSS extends RSSAction {
         AnnouncementBoard board = this.getSelectedBoard(request);
         buffer.append(this.getAnnouncementBoardFeedServicePrefix(request)).append("?");
         if (board != null) {
-            buffer.append("announcementBoardId=").append(board.getIdInternal());
+            buffer.append("announcementBoardId=").append(board.getExternalId());
         }
         return buffer.toString();
     }

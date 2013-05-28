@@ -65,7 +65,7 @@ public class UnitSiteVisualizationDA extends SiteVisualizationDA {
     }
 
     protected Object getContextParamValue(HttpServletRequest request) {
-        return getUnit(request).getIdInternal();
+        return getUnit(request).getExternalId();
     }
 
     protected String getMappingPath(ActionMapping mapping, String name) {
@@ -154,7 +154,7 @@ public class UnitSiteVisualizationDA extends SiteVisualizationDA {
                 subunits.add(sub);
 
                 String siteUrl = getSiteUrl(mapping, sub);
-                request.setAttribute("viewSite" + sub.getIdInternal(), siteUrl);
+                request.setAttribute("viewSite" + sub.getExternalId(), siteUrl);
             }
         }
 
@@ -169,7 +169,7 @@ public class UnitSiteVisualizationDA extends SiteVisualizationDA {
             forward = mapping.findForward("viewUnitSite");
         }
 
-        return String.format(forward.getPath(), sub.getIdInternal(), sub.getSite().getIdInternal());
+        return String.format(forward.getPath(), sub.getExternalId(), sub.getSite().getExternalId());
     }
 
     public ActionForward showPublications(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

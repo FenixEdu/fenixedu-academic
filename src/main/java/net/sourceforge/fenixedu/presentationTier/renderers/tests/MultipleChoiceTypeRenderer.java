@@ -34,7 +34,7 @@ public class MultipleChoiceTypeRenderer extends AnswerTypeRenderer {
      * StringBuilder stringBuffer = new StringBuilder();
      * 
      * for (NewChoice choice : choices) {
-     * stringBuffer.append(choice.getIdInternal()); stringBuffer.append(" "); }
+     * stringBuffer.append(choice.getExternalId()); stringBuffer.append(" "); }
      * 
      * return stringBuffer.toString(); } }
      * 

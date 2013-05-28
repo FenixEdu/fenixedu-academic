@@ -117,7 +117,7 @@ public class AlumniFormationManagementDA extends AlumniEntityManagementDA {
         final Integer formationId = getIntegerFromRequest(request, "formationId");
         final Qualification qualification = RootDomainObject.getInstance().readQualificationByOID(formationId);
         final AlumniFormation formation = AlumniFormation.buildFrom((Formation) qualification);
-        request.setAttribute("formationEducationArea", formation.getEducationArea().getIdInternal());
+        request.setAttribute("formationEducationArea", formation.getEducationArea().getExternalId());
         request.setAttribute("alumniFormation", formation);
         return mapping.findForward("alumniEditFormation");
     }

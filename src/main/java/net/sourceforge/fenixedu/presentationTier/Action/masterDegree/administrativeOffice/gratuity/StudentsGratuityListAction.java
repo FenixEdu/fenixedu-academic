@@ -141,7 +141,7 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
                     duplicateInfoDegree(executionDegreeList, infoExecutionDegree) ? "-"
                             + infoExecutionDegree.getInfoDegreeCurricularPlan().getName() : "";
 
-            executionDegreeLabels.add(new LabelValueBean(name, name + ">" + infoExecutionDegree.getIdInternal().toString()));
+            executionDegreeLabels.add(new LabelValueBean(name, name + ">" + infoExecutionDegree.getExternalId().toString()));
         }
         return executionDegreeLabels;
     }
@@ -299,7 +299,7 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
         try {
             gratuityList =
                     (HashMap) ReadGratuitySituationListByExecutionDegreeAndSpecialization
-                            .runReadGratuitySituationListByExecutionDegreeAndSpecialization(infoExecutionDegree.getIdInternal(),
+                            .runReadGratuitySituationListByExecutionDegreeAndSpecialization(infoExecutionDegree.getExternalId(),
                                     infoExecutionDegree.getInfoExecutionYear().getYear(), specialization, situation);
         } catch (FenixServiceException exception) {
             exception.printStackTrace();
@@ -361,7 +361,7 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
         }
 
         List infoExecutionDegrees = null;
-        Integer degreeCurricularPlanID = infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal();
+        Integer degreeCurricularPlanID = infoExecutionDegree.getInfoDegreeCurricularPlan().getExternalId();
 
         try {
             infoExecutionDegrees =
@@ -371,8 +371,8 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
             throw new FenixActionException(exception);
         }
 
-        Integer firstExecutionDegreeID = ((InfoExecutionDegree) infoExecutionDegrees.get(0)).getIdInternal();
-        Integer secondExecutionDegreeID = ((InfoExecutionDegree) infoExecutionDegrees.get(1)).getIdInternal();
+        Integer firstExecutionDegreeID = ((InfoExecutionDegree) infoExecutionDegrees.get(0)).getExternalId();
+        Integer secondExecutionDegreeID = ((InfoExecutionDegree) infoExecutionDegrees.get(1)).getExternalId();
 
         if (executionDegreeID.equals(firstExecutionDegreeID)) {
             degree = (degree.substring(0, degree.lastIndexOf('>') + 1)).concat(secondExecutionDegreeID.toString());
@@ -422,13 +422,13 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
      * @return Integer whith execution degree id internal
      */
     private Integer findExecutionDegreeId(String degree) {
-        Integer idInternal = null;
+        Integer externalId = null;
         // if degree is the string "all", then all degrees are desirable
         if (!degree.equals("all")) {
             String idInString = degree.substring(degree.indexOf(">") + 1, degree.length());
             try {
                 if (idInString.length() != 0) {
-                    idInternal = Integer.valueOf(idInString);
+                    externalId = Integer.valueOf(idInString);
                 }
             } catch (NumberFormatException numberFormatException) {
                 numberFormatException.printStackTrace();
@@ -436,6 +436,6 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
             }
         }
 
-        return idInternal;
+        return externalId;
     }
 }

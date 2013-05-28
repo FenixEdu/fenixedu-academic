@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-<bean:define id="projectId" name="selectedProject" property="idInternal" />
+<bean:define id="projectId" name="selectedProject" property="externalId" />
 <bean:define id="projectName" name="selectedProject" property="title.content" />
 
 <em>Projectos</em> <!-- tobundle -->
@@ -30,7 +30,7 @@
 		action="<%= "/projects/editProject.do?method=prepareEditParticipants&projectId=" + projectId %>">
 		<fr:layout>
 			<fr:property name="link(remove)" value="<%= "/projects/editProject.do?method=removeParticipant&projectId=" + projectId %>"/>
-			<fr:property name="param(remove)" value="idInternal/participantId"/>
+			<fr:property name="param(remove)" value="externalId/participantId"/>
 			<fr:property name="key(remove)" value="researcher.project.editProject.participations.remove"/>
 			<fr:property name="bundle(remove)" value="RESEARCHER_RESOURCES"/>
 			<fr:property name="classes" value="tstyle1"/>

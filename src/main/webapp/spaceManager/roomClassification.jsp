@@ -92,12 +92,12 @@
 			if(net.sourceforge.fenixedu.domain.space.Space.personIsSpacesAdministrator(person)){
 		%>
 		<fr:property name="link(edit)" value="/roomClassification.do?method=prepareRoomClassification"/>
-		<fr:property name="param(edit)" value="idInternal/roomClassificationID"/>
+		<fr:property name="param(edit)" value="externalId/roomClassificationID"/>
         <fr:property name="key(edit)" value="space.manager.room.link.edit"/>
         <fr:property name="bundle(edit)" value="SPACE_RESOURCES"/>
 		
 		<fr:property name="link(delete)" value="/roomClassification.do?method=deleteRoomClassification"/>
-		<fr:property name="param(delete)" value="idInternal/roomClassificationID"/>
+		<fr:property name="param(delete)" value="externalId/roomClassificationID"/>
         <fr:property name="key(delete)" value="space.manager.room.link.delete"/>
         <fr:property name="bundle(delete)" value="SPACE_RESOURCES"/>        
         <%

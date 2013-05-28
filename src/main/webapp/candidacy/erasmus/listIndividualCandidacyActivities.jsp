@@ -5,7 +5,7 @@
 <html:xhtml/>
 
 <bean:define id="processName" name="processName" />
-<bean:define id="parentProcessId" name="parentProcess" property="idInternal" />
+<bean:define id="parentProcessId" name="parentProcess" property="externalId" />
 <bean:define id="individualCandidacyProcess" name="process"/>
 
 <em><bean:message key="label.candidacies" bundle="APPLICATION_RESOURCES"/></em>
@@ -23,7 +23,7 @@
 
 
 <logic:notEmpty name="process">
-	<bean:define id="processId" name="process" property="idInternal" />
+	<bean:define id="processId" name="process" property="externalId" />
 	<bean:define id="candidacy" name="process" property="candidacy" />
 	
 	<logic:notEmpty name="activities">
@@ -217,7 +217,7 @@
 			</fr:layout>
 		</fr:view>
 		
-		<bean:define id="registrationOID" name="individualCandidacyProcess" property="candidacy.registration.idInternal" />
+		<bean:define id="registrationOID" name="individualCandidacyProcess" property="candidacy.registration.externalId" />
 		
 		<logic:present role="TEACHER">
 			<html:link action="<%= "/viewCurriculum.do?method=prepare&registrationOID=" + registrationOID %>" target="_blank">

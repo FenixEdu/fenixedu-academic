@@ -30,19 +30,19 @@ public class InsertCurricularCourseScopeAtCurricularCourse {
         try {
             curricularSemester =
                     RootDomainObject.getInstance().readCurricularSemesterByOID(infoCurricularCourseScope.getInfoCurricularSemester()
-                            .getIdInternal());
+                            .getExternalId());
             if (curricularSemester == null) {
                 throw new NonExistingServiceException("message.non.existing.curricular.semester", null);
             }
 
             CurricularCourse curricularCourse =
                     (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(infoCurricularCourseScope.getInfoCurricularCourse()
-                            .getIdInternal());
+                            .getExternalId());
             if (curricularCourse == null) {
                 throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
             }
 
-            branch = RootDomainObject.getInstance().readBranchByOID(infoCurricularCourseScope.getInfoBranch().getIdInternal());
+            branch = RootDomainObject.getInstance().readBranchByOID(infoCurricularCourseScope.getInfoBranch().getExternalId());
             if (branch == null) {
                 throw new NonExistingServiceException("message.non.existing.branch", null);
             }

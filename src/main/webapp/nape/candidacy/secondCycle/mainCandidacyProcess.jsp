@@ -33,7 +33,7 @@
 					<td>
 						<html:select bundle="HTMLALT_RESOURCES" property="executionIntervalId" onchange="this.form.submit();">
 							<html:option value=""><!-- w3c complient --></html:option>
-							<html:options collection="executionIntervals" property="idInternal" labelProperty="qualifiedName"/>
+							<html:options collection="executionIntervals" property="externalId" labelProperty="qualifiedName"/>
 						</html:select>
 					</td>
 				</tr>
@@ -43,7 +43,7 @@
 					<td>
 						<html:select bundle="HTMLALT_RESOURCES" property="selectedProcessId">
 							<html:option value=""><!-- w3c complient --></html:option>
-							<html:options collection="candidacyProcesses" property="idInternal" labelProperty="candidacyPeriod.presentationName"/>
+							<html:options collection="candidacyProcesses" property="externalId" labelProperty="candidacyPeriod.presentationName"/>
 						</html:select>
 					</td>
 				</tr>
@@ -63,7 +63,7 @@
 <logic:notEmpty name="process">
 	<h2><bean:write name="process" property="displayName" /> </h2>
 
-	<bean:define id="processId" name="process" property="idInternal" />
+	<bean:define id="processId" name="process" property="externalId" />
 	<bean:define id="childProcessName" name="childProcessName" />
 	<bean:size id="candidacyProcessesSize" name="candidacyProcesses" />
 
@@ -78,7 +78,7 @@
 				<td>
 					<html:select bundle="HTMLALT_RESOURCES" property="executionIntervalId" onchange="this.form.submit();">
 						<html:option value=""><!-- w3c complient --></html:option>
-						<html:options collection="executionIntervals" property="idInternal" labelProperty="name"/>
+						<html:options collection="executionIntervals" property="externalId" labelProperty="name"/>
 					</html:select>
 				</td>
 			</tr>
@@ -89,7 +89,7 @@
 						<td>
 							<html:select bundle="HTMLALT_RESOURCES" property="selectedProcessId">
 								<html:option value=""><!-- w3c complient --></html:option>
-								<html:options collection="candidacyProcesses" property="idInternal" labelProperty="candidacyPeriod.presentationName"/>
+								<html:options collection="candidacyProcesses" property="externalId" labelProperty="candidacyPeriod.presentationName"/>
 							</html:select>
 						</td>
 					</tr>
@@ -150,7 +150,7 @@
 				<fr:property name="classes" value="tstyle4 thcenter thcenter thcenter"/>
 				<fr:property name="columnClasses" value="tdcenter, tdcenter, tdcenter, "/>
 
-				<fr:property name="linkFormat(viewProcess)" value='<%= "/caseHandling" + childProcessName.toString() + ".do?method=listProcessAllowedActivities&amp;processId=${idInternal}"%>' />
+				<fr:property name="linkFormat(viewProcess)" value='<%= "/caseHandling" + childProcessName.toString() + ".do?method=listProcessAllowedActivities&amp;processId=${externalId}"%>' />
 				<fr:property name="key(viewProcess)" value="label.candidacy.show.candidate"/>
 				<fr:property name="bundle(viewProcess)" value="APPLICATION_RESOURCES"/>
 							

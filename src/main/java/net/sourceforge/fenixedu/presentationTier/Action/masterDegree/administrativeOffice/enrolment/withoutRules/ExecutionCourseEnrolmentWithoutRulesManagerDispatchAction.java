@@ -121,7 +121,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
         for (int i = (size - 1); i >= 0; i--) {
             InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) executionPeriods.get(i);
             if (infoExecutionPeriod.getState().equals(PeriodState.CURRENT)) {
-                form.set("executionPeriod", infoExecutionPeriod.getIdInternal().toString());
+                form.set("executionPeriod", infoExecutionPeriod.getExternalId().toString());
                 break;
             }
         }
@@ -136,7 +136,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
 
                 LabelValueBean executionYear =
                         new LabelValueBean(infoExecutionPeriod.getName() + " - "
-                                + infoExecutionPeriod.getInfoExecutionYear().getYear(), infoExecutionPeriod.getIdInternal()
+                                + infoExecutionPeriod.getInfoExecutionYear().getYear(), infoExecutionPeriod.getExternalId()
                                 .toString());
                 return executionYear;
             }
@@ -304,7 +304,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
             List<ExecutionDegree> intersection =
                     (List<ExecutionDegree>) CollectionUtils.intersection(executionDegrees, studentCurricularPlan
                             .getDegreeCurricularPlan().getExecutionDegreesSet());
-            form.set("executionDegree", intersection.get(0).getIdInternal().toString());
+            form.set("executionDegree", intersection.get(0).getExternalId().toString());
         }
     }
 
@@ -410,7 +410,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
     private Object getInitializedMap(List<CurricularCourse2Enroll> curricularCourses2Enroll) {
         final Map result = new HashMap();
         for (final CurricularCourse2Enroll curricularCourse2Enroll : curricularCourses2Enroll) {
-            result.put(curricularCourse2Enroll.getCurricularCourse().getIdInternal(), Integer.valueOf(0));
+            result.put(curricularCourse2Enroll.getCurricularCourse().getExternalId(), Integer.valueOf(0));
         }
         return result;
     }

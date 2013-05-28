@@ -178,7 +178,7 @@ public class ViewTeacherService extends FenixBackingBean {
 
         for (InfoExecutionYear executionYear : executionYears) {
             if (executionYear.getExecutionYear().isBeforeOrEquals(lastExecutionSemester.getExecutionYear())) {
-                result.add(new SelectItem(executionYear.getIdInternal(), executionYear.getYear()));
+                result.add(new SelectItem(executionYear.getExternalId(), executionYear.getYear()));
             }
         }
 
@@ -227,7 +227,7 @@ public class ViewTeacherService extends FenixBackingBean {
 
         this.teacherServiceDTO =
                 ReadTeacherServiceDistributionByTeachers.runReadTeacherServiceDistributionByTeachers(getUserView().getPerson()
-                        .getEmployee().getCurrentDepartmentWorkingPlace().getIdInternal(), ExecutionPeriodsIDs);
+                        .getEmployee().getCurrentDepartmentWorkingPlace().getExternalId(), ExecutionPeriodsIDs);
 
     }
 
@@ -236,11 +236,11 @@ public class ViewTeacherService extends FenixBackingBean {
         List<Integer> ExecutionPeriodsIDs = buildExecutionPeriodsIDsList();
 
         Object[] args =
-                { getUserView().getPerson().getEmployee().getCurrentDepartmentWorkingPlace().getIdInternal(), ExecutionPeriodsIDs };
+                { getUserView().getPerson().getEmployee().getCurrentDepartmentWorkingPlace().getExternalId(), ExecutionPeriodsIDs };
 
         this.executionCourseServiceDTO =
                 ReadTeacherServiceDistributionByCourse.runReadTeacherServiceDistributionByCourse(getUserView().getPerson()
-                        .getEmployee().getCurrentDepartmentWorkingPlace().getIdInternal(), ExecutionPeriodsIDs);
+                        .getEmployee().getCurrentDepartmentWorkingPlace().getExternalId(), ExecutionPeriodsIDs);
 
     }
 
@@ -249,7 +249,7 @@ public class ViewTeacherService extends FenixBackingBean {
 
         Collections.sort(executionPeriods, new BeanComparator("beginDate"));
 
-        InfoExecutionPeriod previousExecutionPeriod = ReadPreviousExecutionPeriod.run(executionPeriods.get(0).getIdInternal());
+        InfoExecutionPeriod previousExecutionPeriod = ReadPreviousExecutionPeriod.run(executionPeriods.get(0).getExternalId());
 
         if (previousExecutionPeriod != null) {
             previousExecutionYear = previousExecutionPeriod.getInfoExecutionYear();
@@ -260,7 +260,7 @@ public class ViewTeacherService extends FenixBackingBean {
         List<Integer> periodsIDsList = new ArrayList<Integer>();
 
         for (InfoExecutionPeriod executionPeriod : executionPeriods) {
-            periodsIDsList.add(executionPeriod.getIdInternal());
+            periodsIDsList.add(executionPeriod.getExternalId());
         }
 
         List<Integer> returnList = new ArrayList<Integer>();

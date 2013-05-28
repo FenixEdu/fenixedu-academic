@@ -150,7 +150,7 @@ public class EditCurricularCourseDA extends FenixDispatchAction {
         newInfoCurricularCourse.setNameEn(nameEn);
         newInfoCurricularCourse.setCode(code);
         newInfoCurricularCourse.setAcronym(acronym);
-        newInfoCurricularCourse.setIdInternal(oldCurricularCourseId);
+        newInfoCurricularCourse.setExternalId(oldCurricularCourseId);
 
         CurricularCourseType type = CurricularCourseType.valueOf(typeString);
         newInfoCurricularCourse.setType(type);

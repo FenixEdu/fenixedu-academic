@@ -329,7 +329,7 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
                 if (i < candidateEnrolments.size()) {
                     selection[i] = ((InfoCandidateEnrolment) candidateEnrolments.get(i))
                     // .getInfoCurricularCourseScope()
-                            .getInfoCurricularCourse().getIdInternal();
+                            .getInfoCurricularCourse().getExternalId();
                 } else {
                     selection[i] = null;
                 }
@@ -551,7 +551,7 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
                     duplicateInfoDegree(executionDegreeList, infoExecutionDegree) ? "-"
                             + infoExecutionDegree.getInfoDegreeCurricularPlan().getName() : "";
 
-            executionDegreeLabels.add(new LabelValueBean(name, infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal()
+            executionDegreeLabels.add(new LabelValueBean(name, infoExecutionDegree.getInfoDegreeCurricularPlan().getExternalId()
                     .toString()));
         }
         return executionDegreeLabels;

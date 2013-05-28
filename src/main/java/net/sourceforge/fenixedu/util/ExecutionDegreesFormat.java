@@ -55,7 +55,7 @@ public class ExecutionDegreesFormat extends FenixUtil {
                     duplicateInfoDegree(executionDegreeList, infoExecutionDegree) ? " - "
                             + infoExecutionDegree.getInfoDegreeCurricularPlan().getName() : "";
 
-            executionDegreeLabels.add(new LabelValueBean(name, infoExecutionDegree.getIdInternal().toString()));
+            executionDegreeLabels.add(new LabelValueBean(name, infoExecutionDegree.getExternalId().toString()));
         }
         return executionDegreeLabels;
     }
@@ -73,7 +73,7 @@ public class ExecutionDegreesFormat extends FenixUtil {
                     duplicateInfoDegree(executionDegreeList, infoExecutionDegree) ? " - "
                             + infoExecutionDegree.getInfoDegreeCurricularPlan().getName() : "";
 
-            executionDegreeLabels.add(new LabelValueBean(name, name + "~" + infoExecutionDegree.getIdInternal().toString()));
+            executionDegreeLabels.add(new LabelValueBean(name, name + "~" + infoExecutionDegree.getExternalId().toString()));
         }
         return executionDegreeLabels;
     }
@@ -112,7 +112,7 @@ public class ExecutionDegreesFormat extends FenixUtil {
                     (addDegreeCurricularPlanName(executionDegree, executionDegrees)) ? " - "
                             + executionDegree.getDegreeCurricularPlan().getName() : "";
 
-            result.add(new LabelValueBean(name, executionDegree.getIdInternal().toString()));
+            result.add(new LabelValueBean(name, executionDegree.getExternalId().toString()));
         }
 
         return result;

@@ -50,9 +50,9 @@ public class ReadDistributedTestMarks {
         HashMap<Integer, InfoStudentTestQuestionMark> infoStudentTestQuestionMarkList =
                 new HashMap<Integer, InfoStudentTestQuestionMark>();
         for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {
-            if (infoStudentTestQuestionMarkList.containsKey(studentTestQuestion.getStudent().getIdInternal())) {
+            if (infoStudentTestQuestionMarkList.containsKey(studentTestQuestion.getStudent().getExternalId())) {
                 InfoStudentTestQuestionMark infoStudentTestQuestionMark =
-                        infoStudentTestQuestionMarkList.get(studentTestQuestion.getStudent().getIdInternal());
+                        infoStudentTestQuestionMarkList.get(studentTestQuestion.getStudent().getExternalId());
                 ParseSubQuestion parse = new ParseSubQuestion();
                 Question question = studentTestQuestion.getQuestion();
                 try {
@@ -70,7 +70,7 @@ public class ReadDistributedTestMarks {
                 }
                 infoStudentTestQuestionMark.addToMaximumMark(studentTestQuestion.getTestQuestionValue());
             } else {
-                infoStudentTestQuestionMarkList.put(studentTestQuestion.getStudent().getIdInternal(),
+                infoStudentTestQuestionMarkList.put(studentTestQuestion.getStudent().getExternalId(),
                         InfoStudentTestQuestionMark.newInfoFromDomain(studentTestQuestion));
             }
         }

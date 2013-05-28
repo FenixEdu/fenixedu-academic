@@ -89,7 +89,7 @@ public class ShowDegreeSiteAction extends FenixDispatchAction {
         if (degree == null) {
             throw new FenixActionException();
         }
-        request.setAttribute("degreeID", degree.getIdInternal());
+        request.setAttribute("degreeID", degree.getExternalId());
         request.setAttribute("degree", degree);
 
         Unit unit = degree.getUnit();
@@ -214,7 +214,7 @@ public class ShowDegreeSiteAction extends FenixDispatchAction {
 
         final ActionErrors errors = new ActionErrors();
         InfoDegreeCurricularPlan infoDegreeCurricularPlan =
-                getInfoDegreeCurricularPlan(executionDegreeId, degree.getIdInternal(), degreeCurricularPlanId, mapping, request,
+                getInfoDegreeCurricularPlan(executionDegreeId, degree.getExternalId(), degreeCurricularPlanId, mapping, request,
                         errors);
         if (infoDegreeCurricularPlan == null) {
             addErrorMessage(request, "impossibleDegreeSite", "error.impossibleCurricularPlan");
@@ -238,7 +238,7 @@ public class ShowDegreeSiteAction extends FenixDispatchAction {
         Boolean inEnglish = FenixContextDispatchAction.getFromRequestBoolean("inEnglish", request);
         request.setAttribute("inEnglish", inEnglish);
 
-        List<InfoOldInquiriesSummary> allSummariesDegree = ReadOldIquiriesSummaryByDegreeID.run(degree.getIdInternal());
+        List<InfoOldInquiriesSummary> allSummariesDegree = ReadOldIquiriesSummaryByDegreeID.run(degree.getExternalId());
 
         List<InfoExecutionPeriod> infoExecutionPeriods = ReadExecutionPeriods.run();
         List<InfoExecutionPeriod> executionPeriodList = new ArrayList<InfoExecutionPeriod>(infoExecutionPeriods);
@@ -269,7 +269,7 @@ public class ShowDegreeSiteAction extends FenixDispatchAction {
 
         final ActionErrors errors = new ActionErrors();
         InfoDegreeCurricularPlan infoDegreeCurricularPlan =
-                getInfoDegreeCurricularPlan(executionDegreeId, degree.getIdInternal(), degreeCurricularPlanId, mapping, request,
+                getInfoDegreeCurricularPlan(executionDegreeId, degree.getExternalId(), degreeCurricularPlanId, mapping, request,
                         errors);
         if (infoDegreeCurricularPlan == null) {
             addErrorMessage(request, "impossibleDegreeSite", "error.impossibleDegreeSite");
@@ -286,7 +286,7 @@ public class ShowDegreeSiteAction extends FenixDispatchAction {
 
             List<InfoOldInquiriesSummary> oldInquiriesSummaries = new ArrayList<InfoOldInquiriesSummary>();
             for (InfoOldInquiriesSummary iois : allSummariesDegree) {
-                if (iois.getExecutionPeriod().getIdInternal().equals(executionPeriodId)) {
+                if (iois.getExecutionPeriod().getExternalId().equals(executionPeriodId)) {
                     if ((iois.getNumberEnrollments() > 0) && (iois.getNumberApproved() >= 0) && (iois.getNumberEvaluated() > 0)) {
                         oldInquiriesSummaries.add(iois);
                     }
@@ -351,7 +351,7 @@ public class ShowDegreeSiteAction extends FenixDispatchAction {
             }
 
             request.setAttribute(PresentationConstants.INFO_EXECUTION_DEGREE_KEY, infoExecutionDegree);
-            request.setAttribute("executionDegreeID", infoExecutionDegree.getIdInternal());
+            request.setAttribute("executionDegreeID", infoExecutionDegree.getExternalId());
             return infoExecutionDegree.getInfoDegreeCurricularPlan();
         } catch (Exception e) {
             return null;
@@ -383,7 +383,7 @@ public class ShowDegreeSiteAction extends FenixDispatchAction {
         // find information about this degree curricular plan
         if (degreeCurricularPlanId != null) {
             for (InfoDegreeCurricularPlan infoDegreeCurricularPlanElem : infoDegreeCurricularPlanList) {
-                if (infoDegreeCurricularPlanElem.getIdInternal().equals(degreeCurricularPlanId)) {
+                if (infoDegreeCurricularPlanElem.getExternalId().equals(degreeCurricularPlanId)) {
                     request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlanElem);
                     return infoDegreeCurricularPlanElem;
                 }
@@ -408,7 +408,7 @@ public class ShowDegreeSiteAction extends FenixDispatchAction {
             degree = rootDomainObject.readDegreeByOID(degreeId);
         }
         if (degree != null) {
-            request.setAttribute("degreeID", degree.getIdInternal());
+            request.setAttribute("degreeID", degree.getExternalId());
             request.setAttribute("degree", degree);
         }
         return degree;

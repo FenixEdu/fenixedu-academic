@@ -57,7 +57,7 @@ public class AddStudentsToDistributedTest {
                 questionList.addAll(studentTestQuestionExample.getQuestion().getMetadata().getVisibleQuestions());
 
                 for (InfoStudent infoStudent : infoStudentList) {
-                    Registration registration = RootDomainObject.getInstance().readRegistrationByOID(infoStudent.getIdInternal());
+                    Registration registration = RootDomainObject.getInstance().readRegistrationByOID(infoStudent.getExternalId());
                     StudentTestQuestion studentTestQuestion = new StudentTestQuestion();
                     studentTestQuestion.setStudent(registration);
                     studentTestQuestion.setDistributedTest(distributedTest);

@@ -14,7 +14,7 @@
 		<fr:property name="sortBy" value="startDate=desc"/>	
 		<fr:property name="classes" value="tstyle1 thlight mtop025"/>
 		<fr:property name="columnClasses" value="acenter,acenter,,,acenter,"/>
-		<fr:property name="linkFormat(view)" value="/studentTutorship.do?method=showStudentRegistration&amp;studentNumber=${student.number}&amp;registrationOID=${idInternal}" />
+		<fr:property name="linkFormat(view)" value="/studentTutorship.do?method=showStudentRegistration&amp;studentNumber=${student.number}&amp;registrationOID=${externalId}" />
 		<fr:property name="key(view)" value="view.curricular.plans"/>
 		<fr:property name="bundle(view)" value="STUDENT_RESOURCES"/>
 		<fr:property name="contextRelative(view)" value="true"/>

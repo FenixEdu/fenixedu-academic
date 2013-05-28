@@ -45,7 +45,7 @@ public class ViewShiftTimeTableAction extends FenixContextAction {
             return mapping.getInputForward();
         }
         final InfoExecutionCourse infoExecutionCourse = RequestUtils.getExecutionCourseFromRequest(request);
-        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
+        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(infoExecutionCourse.getExternalId());
         Shift shift = null;
         for (final Shift shift2 : executionCourse.getAssociatedShifts()) {
             if (shift2.getNome().equals(shiftName)) {

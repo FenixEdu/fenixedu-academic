@@ -8,7 +8,7 @@
 	<logic:present name="infoCurriculum">
 		<h2><str:upperCase><bean:message key="link.cooordinator.degreeCurricularPlan.edit.curriculum"/></str:upperCase>&nbsp;<str:upperCase><bean:message key="label.coordinator.degreeCurricularPlan.current.information"/></str:upperCase>&nbsp;-&nbsp;<bean:write name="infoCurriculum" property="infoCurricularCourse.name"/></h2>
 		<html:form action="/degreeCurricularPlanManagement">
-			<bean:define id="infoCurriculumId" name="infoCurriculum" property="idInternal"/>
+			<bean:define id="infoCurriculumId" name="infoCurriculum" property="externalId"/>
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="editCurriculum"/>
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.infoCurriculumCode" property="infoCurriculumCode" value="<%=infoCurriculumId.toString()%>"/>
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.infoExecutionDegreeCode" property="infoExecutionDegreeCode" value="<%=pageContext.findAttribute("infoExecutionDegreeCode").toString()%>"/>
@@ -21,7 +21,7 @@
 						<table>
 							<tr>
 								<td width="75%">
-										<bean:define id="curricularCourseCode" name="infoCurriculum" property="infoCurricularCourse.idInternal"/>
+										<bean:define id="curricularCourseCode" name="infoCurriculum" property="infoCurricularCourse.externalId"/>
 										(<html:link page="<%="/degreeCurricularPlanManagement.do?method=viewActiveCurricularCourseInformation&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID") +"&amp;infoExecutionDegreeCode=" + pageContext.findAttribute("infoExecutionDegreeCode") +"&amp;infoCurricularCourseCode=" + curricularCourseCode %>">
 											<font color="#0066CC"><bean:message key="link.coordinator.degreeCurricularPlan.see"/>&nbsp;<bean:message key="label.coordinator.degreeCurricularPlan.current.information"/></font>
 										</html:link>)

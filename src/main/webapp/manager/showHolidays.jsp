@@ -23,7 +23,7 @@
 		    <fr:property name="classes" value="style1"/>
      		<fr:property name="columnClasses" value="listClasses"/>
 			<fr:property name="link(delete)" value="/manageHolidays.do?method=delete"/>
-			<fr:property name="param(delete)" value="idInternal/holidayID"/>
+			<fr:property name="param(delete)" value="externalId/holidayID"/>
 			<fr:property name="key(delete)" value="link.delete"/>
 			<fr:property name="bundle(delete)" value="MANAGER_RESOURCES"/>
 		</fr:layout>

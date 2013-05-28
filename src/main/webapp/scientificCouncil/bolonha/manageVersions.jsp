@@ -12,6 +12,6 @@
 		<fr:property name="columnClasses" value=",acenter,acenter"/>
 		<fr:property name="sortBy" value="name"/>
 	</fr:layout>
-	<fr:destination name="viewDepartmentRequests" path="/competenceCourses/manageVersions.do?method=displayRequest&departmentID=${idInternal}"/>
+	<fr:destination name="viewDepartmentRequests" path="/competenceCourses/manageVersions.do?method=displayRequest&departmentID=${externalId}"/>
 </fr:view>
 

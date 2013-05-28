@@ -25,7 +25,7 @@ public class ReadShiftsByClass {
     @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
     @Service
     public static Object run(InfoClass infoClass) {
-        SchoolClass schoolClass = RootDomainObject.getInstance().readSchoolClassByOID(infoClass.getIdInternal());
+        SchoolClass schoolClass = RootDomainObject.getInstance().readSchoolClassByOID(infoClass.getExternalId());
 
         List<Shift> shifts = schoolClass.getAssociatedShifts();
 

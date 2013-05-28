@@ -249,7 +249,7 @@ public class MarkSheetTeacherManagementDispatchAction extends ManageExecutionCou
         Collection<MarkSheet> associatedMarkSheets = executionCourse.getAssociatedMarkSheets();
 
         request.setAttribute("markSheets", associatedMarkSheets);
-        request.setAttribute("executionCourseID", executionCourse.getIdInternal());
+        request.setAttribute("executionCourseID", executionCourse.getExternalId());
         return mapping.findForward("viewSubmitedMarkSheets");
     }
 
@@ -259,7 +259,7 @@ public class MarkSheetTeacherManagementDispatchAction extends ManageExecutionCou
         Integer markSheetID = Integer.valueOf(request.getParameter("msID"));
         MarkSheet markSheet = rootDomainObject.readMarkSheetByOID(markSheetID);
         request.setAttribute("markSheet", markSheet);
-        request.setAttribute("executionCourseID", executionCourse.getIdInternal());
+        request.setAttribute("executionCourseID", executionCourse.getExternalId());
         return mapping.findForward("viewMarkSheet");
     }
 

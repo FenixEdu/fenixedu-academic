@@ -122,7 +122,7 @@
 					<logic:iterate id="event" name="ganttDiagram" property="events">					
 						<tr>					
 							<td class="padded">
-								<bean:define id="genericEventURL">/roomsPunctualScheduling.do?method=prepareView&amp;genericEventID=<bean:write name="event" property="idInternal"/></bean:define>
+								<bean:define id="genericEventURL">/roomsPunctualScheduling.do?method=prepareView&amp;genericEventID=<bean:write name="event" property="externalId"/></bean:define>
 								<html:link page="<%= genericEventURL %>">
 									<fr:view name="event" property="title"/>
 								</html:link>	

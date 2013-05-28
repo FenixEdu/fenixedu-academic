@@ -119,8 +119,8 @@ public class CourseLoadAndResponsiblesReportFile extends CourseLoadAndResponsibl
         row.setCell(degree.getNome());
         row.setCell(degree.getSigla());
         row.setCell(curricularCourse.getName());
-        row.setCell(curricularCourse.hasCompetenceCourse() ? curricularCourse.getCompetenceCourse().getIdInternal() : null);
-        row.setCell(executionCourse != null ? executionCourse.getIdInternal().toString() : "");
+        row.setCell(curricularCourse.hasCompetenceCourse() ? curricularCourse.getCompetenceCourse().getExternalId() : null);
+        row.setCell(executionCourse != null ? executionCourse.getExternalId().toString() : "");
         row.setCell(executionPeriod.getExecutionYear().getName());
         row.setCell(degreeModuleScope != null ? degreeModuleScope.getCurricularYear().toString() : "");
         if (curricularCourse.isAnual()) {

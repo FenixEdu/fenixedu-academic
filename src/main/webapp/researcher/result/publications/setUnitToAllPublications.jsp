@@ -47,7 +47,7 @@
 				<bean:write name="unit" property="name"/>
 			</td>
 			<td>
-				<bean:define id="unitID" name="unit" property="idInternal"/>
+				<bean:define id="unitID" name="unit" property="externalId"/>
 				<html:link action="<%="/publications/management.do?method=addUnitToAll&unitID=" + unitID + "&personId=" + personId %>" onclick='<%= pageContext.findAttribute("addConfirm").toString() %>'>
 					<bean:message key="label.addUnit" bundle="RESEARCHER_RESOURCES"/>
 				</html:link>

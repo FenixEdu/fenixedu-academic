@@ -43,7 +43,7 @@ public class NewMultipleChoiceQuestion extends NewMultipleChoiceQuestion_Base {
 
     private List<NewChoice> getRandomlyOrderedChoices() {
         Person person = AccessControl.getPerson();
-        Random random = new Random(person.getIdInternal());
+        Random random = new Random(person.getExternalId());
 
         int[] indexes = new int[this.getChoicesCount()];
         int[] shuffledIndexes = new int[this.getChoicesCount()];

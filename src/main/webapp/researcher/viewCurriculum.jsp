@@ -14,7 +14,7 @@
 <em><bean:message key="label.researchPortal" bundle="RESEARCHER_RESOURCES"/></em>
 <h2 id="header"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.viewCurriculum.title"/></h2>
 
-<bean:define id="personId" name="person" property="idInternal"/>
+<bean:define id="personId" name="person" property="externalId"/>
 
 <fr:form action="<%="/viewCurriculum.do?personOID=" + personId %>">
 <fr:edit id="executionYearIntervalBean" name="executionYearIntervalBean" visible="false"/>
@@ -355,7 +355,7 @@
 	<bean:define id="results" name="unstructureds" toScope="request"/>
     <table class="publications mtop1">
 		<logic:iterate id="result" name="results" scope="request">
- 			<bean:define id="resultId" name="result" property="idInternal"/>
+ 			<bean:define id="resultId" name="result" property="externalId"/>
  			<tr>
  			   <td>
 					<bean:define id="level" name="result" property="preferredLevel.name" type="java.lang.String" />
@@ -392,7 +392,7 @@
 		<fr:property name="htmlSeparator" value=", "/>
 		<fr:property name="indentation" value="false"/>
 	</fr:layout>
-	<fr:destination name="view.publication" module="" path="<%="/researcher/resultPublications/showResultForOthers.do?resultId=" + result.getIdInternal() %>"/>
+	<fr:destination name="view.publication" module="" path="<%="/researcher/resultPublications/showResultForOthers.do?resultId=" + result.getExternalId() %>"/>
 </fr:view>
 </li>
 </logic:iterate>	
@@ -418,7 +418,7 @@
 	<ul>
 	<logic:iterate id="result" name="resultPatents" type="net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPatent">
 		<li><strong>
-		<a href="<%= request.getContextPath() + "/researcher/resultPublications/showResultForOthers.do?resultId=" + result.getIdInternal() %>">
+		<a href="<%= request.getContextPath() + "/researcher/resultPublications/showResultForOthers.do?resultId=" + result.getExternalId() %>">
 		<fr:view name="result" property="title"/></a>	 			
 		</strong>
 		<span style="color: #888;">
@@ -547,7 +547,7 @@
 		
 		<ul class="listresearch">
 		<logic:iterate id="prize" name="prizes">
-			<bean:define id="prizeID" name="prize" property="idInternal"/>
+			<bean:define id="prizeID" name="prize" property="externalId"/>
 			<li class="mtop1">
 				<p class="mvert0">
 		 			<strong>
@@ -559,7 +559,7 @@
 			 		</span>
 		 		</p>
 		 		<logic:present name="prize" property="researchResult">
-				<bean:define id="resultId" name="prize" property="researchResult.idInternal"/>
+				<bean:define id="resultId" name="prize" property="researchResult.externalId"/>
 		 		<p class="mvert0">
 		 			<span>
 		 				<html:link page="<%= "/resultPublications/showPublication.do?resultId=" + resultId %>">

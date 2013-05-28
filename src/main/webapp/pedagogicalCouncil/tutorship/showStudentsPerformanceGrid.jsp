@@ -61,10 +61,10 @@ height: 50px;
         <logic:notEmpty name="performanceGridTable" property="performanceGridTableLines">
         
             <bean:define id="filtersBean" name="performanceGridFiltersBean" type="net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.StudentsPerformanceInfoBean"/>
-            <bean:define id="degreeOID" value="<%= filtersBean.getDegree().getIdInternal().toString() %>" />
-            <bean:define id="entryYearOID" value="<%= filtersBean.getStudentsEntryYear().getIdInternal().toString() %>" />
-            <bean:define id="monitoringYearOID" value="<%= filtersBean.getCurrentMonitoringYear().getIdInternal().toString() %>" />
-            <bean:define id="tutorOID" name="tutor" property="idInternal" />
+            <bean:define id="degreeOID" value="<%= filtersBean.getDegree().getExternalId().toString() %>" />
+            <bean:define id="entryYearOID" value="<%= filtersBean.getStudentsEntryYear().getExternalId().toString() %>" />
+            <bean:define id="monitoringYearOID" value="<%= filtersBean.getCurrentMonitoringYear().getExternalId().toString() %>" />
+            <bean:define id="tutorOID" name="tutor" property="externalId" />
             <bean:define id="args" value="<%="degreeOID=" + degreeOID + "&entryYearOID=" + entryYearOID + "&monitoringYearOID=" + monitoringYearOID + "&tutorOID=" +  tutorOID %>" />
         
             <p>
@@ -139,10 +139,10 @@ height: 50px;
     
         <logic:present name="performanceGridFiltersBean">
             <bean:define id="filtersBean" name="performanceGridFiltersBean" type="net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.StudentsPerformanceInfoBean"/>
-            <bean:define id="degreeOID" value="<%= filtersBean.getDegree().getIdInternal().toString() %>" />
-            <bean:define id="entryYearOID" value="<%= filtersBean.getStudentsEntryYear().getIdInternal().toString() %>" />
-            <bean:define id="monitoringYearOID" value="<%= filtersBean.getCurrentMonitoringYear().getIdInternal().toString() %>" />
-            <bean:define id="tutorOID" name="tutor" property="idInternal" />
+            <bean:define id="degreeOID" value="<%= filtersBean.getDegree().getExternalId().toString() %>" />
+            <bean:define id="entryYearOID" value="<%= filtersBean.getStudentsEntryYear().getExternalId().toString() %>" />
+            <bean:define id="monitoringYearOID" value="<%= filtersBean.getCurrentMonitoringYear().getExternalId().toString() %>" />
+            <bean:define id="tutorOID" name="tutor" property="externalId" />
             <bean:define id="parameters" value="<%="degreeOID=" + degreeOID + "&entryYearOID=" + entryYearOID + "&monitoringYearOID=" + monitoringYearOID + "&tutorOID=" +  tutorOID %>" />
             
             <div style="width: 400px; float: left;">

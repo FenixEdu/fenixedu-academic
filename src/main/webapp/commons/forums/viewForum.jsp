@@ -13,7 +13,7 @@
 </html:messages>
 
 <logic:present name="forum">
-	<bean:define id="forumId" name="forum" property="idInternal" />	
+	<bean:define id="forumId" name="forum" property="externalId" />	
 	<bean:define id="prefix" name="contextPrefix" type="java.lang.String"/>
 	<bean:define id="contextPrefix" value="<%= prefix + (prefix.contains("?") ? "&amp;" : "?") %>" type="java.lang.String"/>
 	<bean:define id="module" name="module"/>
@@ -48,7 +48,7 @@
 		<p>
 			<span class="gen-button">
 			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-			<html:link action="<%= contextPrefix + "method=prepareCreateThreadAndMessage"%>" paramId="forumId" paramName="forum" paramProperty="idInternal" styleClass="gen-button">
+			<html:link action="<%= contextPrefix + "method=prepareCreateThreadAndMessage"%>" paramId="forumId" paramName="forum" paramProperty="externalId" styleClass="gen-button">
 				<bean:message bundle="MESSAGING_RESOURCES" key="link.viewForum.createThread"/>
 			</html:link>
 			</span>
@@ -72,12 +72,12 @@
 		        <fr:property name="classes" value="tstyle2"/>
 		        <fr:property name="columnClasses" value=",,,acenter"/>
        			<fr:property name="link(view)" value="<%= contextPrefix + "method=viewThread"%>"/>
-				<fr:property name="param(view)" value="forum.idInternal/forumId,idInternal/threadId"/>
+				<fr:property name="param(view)" value="forum.externalId/forumId,externalId/threadId"/>
 				<fr:property name="key(view)" value="label.viewForum.viewThread"/>
 				<fr:property name="bundle(view)" value="MESSAGING_RESOURCES"/>
 		    </fr:layout>
 		    
-		    <fr:destination name="viewForum" path="<%= contextPrefix + "method=viewThread&amp;forumId=${forum.idInternal}&amp;threadId=${idInternal}" %>"/>
+		    <fr:destination name="viewForum" path="<%= contextPrefix + "method=viewThread&amp;forumId=${forum.externalId}&amp;threadId=${externalId}" %>"/>
 		</fr:view>
 	</logic:notEmpty>
 			

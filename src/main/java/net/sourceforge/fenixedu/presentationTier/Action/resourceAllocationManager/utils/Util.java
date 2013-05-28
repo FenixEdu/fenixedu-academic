@@ -49,7 +49,7 @@ public class Util {
         for (RoomClassification classification : RoomClassification.sortByRoomClassificationAndCode(roomClassifications)) {
             if (classification.hasParentRoomClassification()) {
                 tipos.add(new LabelValueBean(classification.getPresentationCode() + " - "
-                        + classification.getName().getContent(Language.getLanguage()), classification.getIdInternal().toString()));
+                        + classification.getName().getContent(Language.getLanguage()), classification.getExternalId().toString()));
             }
         }
 

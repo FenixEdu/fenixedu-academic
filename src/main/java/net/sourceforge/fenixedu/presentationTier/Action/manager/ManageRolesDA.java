@@ -92,7 +92,7 @@ public class ManageRolesDA extends FenixDispatchAction {
 
         final String[] roleOIDs = new String[roles.size()];
         for (int i = 0; i < roles.size(); i++) {
-            roleOIDs[i] = roles.get(i).getIdInternal().toString();
+            roleOIDs[i] = roles.get(i).getExternalId().toString();
         }
         rolesForm.set("roleOIDs", roleOIDs);
 

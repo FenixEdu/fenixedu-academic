@@ -244,7 +244,7 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
         final Integer selectedProcessId = getIntegerFromRequest(request, "selectedProcessId");
         if (selectedProcessId != null) {
             for (final MobilityApplicationPeriod applicationPeriod : executionInterval.getMobilityApplicationPeriods()) {
-                if (applicationPeriod.getMobilityApplicationProcess().getIdInternal().equals(selectedProcessId)) {
+                if (applicationPeriod.getMobilityApplicationProcess().getExternalId().equals(selectedProcessId)) {
                     return applicationPeriod.getMobilityApplicationProcess();
                 }
             }
@@ -259,8 +259,8 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
 
     protected void setCandidacyProcessInformation(final ActionForm actionForm, final MobilityApplicationProcess process) {
         final ErasmusCandidacyProcessForm form = (ErasmusCandidacyProcessForm) actionForm;
-        form.setSelectedProcessId(process.getIdInternal());
-        form.setExecutionIntervalId(process.getCandidacyExecutionInterval().getIdInternal());
+        form.setSelectedProcessId(process.getExternalId());
+        form.setExecutionIntervalId(process.getCandidacyExecutionInterval().getExternalId());
     }
 
     @Override

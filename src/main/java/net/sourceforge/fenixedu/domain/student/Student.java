@@ -801,7 +801,7 @@ public class Student extends Student_Base {
                 if (studentTestQuestion.getDistributedTest().getTestScope().getClassName()
                         .equals(ExecutionCourse.class.getName())
                         && studentTestQuestion.getDistributedTest().getTestScope().getKeyClass()
-                                .equals(executionCourse.getIdInternal())) {
+                                .equals(executionCourse.getExternalId())) {
                     Set<DistributedTest> tests = result.get(registration);
                     if (tests == null) {
                         tests = new HashSet<DistributedTest>();

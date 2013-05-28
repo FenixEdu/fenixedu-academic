@@ -38,7 +38,7 @@ public class ReadDegreesClassesLessons {
         List classes = new ArrayList();
         for (int i = 0; i < infoExecutionDegrees.size(); i++) {
             InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) infoExecutionDegrees.get(i);
-            ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
+            ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(infoExecutionDegree.getExternalId());
             List degreeClasses = executionDegree.getSchoolClasses();
             for (Iterator iterator = degreeClasses.iterator(); iterator.hasNext();) {
                 SchoolClass klass = (SchoolClass) iterator.next();

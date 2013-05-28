@@ -306,7 +306,7 @@ public class DomainBrowserServlet extends HttpServlet {
     }
 
     protected String guessDescAttribute(DomainClass domClass) {
-        String descAttr = "idInternal";
+        String descAttr = "externalId";
 
         for (String attr : getAllAttrs(domClass)) {
             if (attr.equals("name") || attr.equals("nome")) {

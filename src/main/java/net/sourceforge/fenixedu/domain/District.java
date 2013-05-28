@@ -11,7 +11,7 @@ public class District extends District_Base {
         @Override
         public int compare(District leftDistrict, District rightDistrict) {
             int comparationResult = leftDistrict.getName().compareTo(rightDistrict.getName());
-            return (comparationResult == 0) ? leftDistrict.getIdInternal().compareTo(rightDistrict.getIdInternal()) : comparationResult;
+            return (comparationResult == 0) ? leftDistrict.getExternalId().compareTo(rightDistrict.getExternalId()) : comparationResult;
         }
     };
 

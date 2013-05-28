@@ -32,13 +32,13 @@
 				<h:outputLink value="../curricularPlans/viewCurricularPlan.faces" target="_blank">
 					<h:outputText value="#{curricularCourse.parentDegreeCurricularPlan.name}" escape="false"/>
 					<f:param name="action" value="close"/>
-					<f:param name="dcpId" value="#{curricularCourse.parentDegreeCurricularPlan.idInternal}"/>
+					<f:param name="dcpId" value="#{curricularCourse.parentDegreeCurricularPlan.externalId}"/>
 				</h:outputLink>
 				<h:outputText value=" > "/>
 				<h:outputLink value="../curricularPlans/viewCurricularCourse.faces" target="_blank">
 					<h:outputText value="#{curricularCourse.name}" escape="false"/>
 					<f:param name="action" value="close"/>
-					<f:param name="curricularCourseID" value="#{curricularCourse.idInternal}"/>
+					<f:param name="curricularCourseID" value="#{curricularCourse.externalId}"/>
 				</h:outputLink>
 				<h:outputText value="</li>" escape="false"/>
 			</fc:dataRepeater>

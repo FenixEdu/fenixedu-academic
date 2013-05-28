@@ -69,7 +69,7 @@ public class InsertDistributedTest {
             if (distributedTestId == null) {
                 throw new Error("Creator thread was unable to create a distributed test!");
             }
-            Distributor.runThread(infoStudentList, distributedTestId, test.getIdInternal(), replacedContextPath);
+            Distributor.runThread(infoStudentList, distributedTestId, test.getExternalId(), replacedContextPath);
 
         } catch (InterruptedException e) {
             throw new Error(e);
@@ -112,8 +112,8 @@ public class InsertDistributedTest {
                 final String evaluationTitle, final Calendar beginDate, final Calendar beginHour, final Calendar endDate,
                 final Calendar endHour, final TestType testType, final CorrectionAvailability correctionAvaiability,
                 final Boolean imsFeedback, IUserView userView) {
-            this.executionCourseId = executionCourse.getIdInternal();
-            this.testId = test.getIdInternal();
+            this.executionCourseId = executionCourse.getExternalId();
+            this.testId = test.getExternalId();
             this.testInformation = testInformation;
             this.evaluationTitle = evaluationTitle;
             this.beginDate = beginDate;
@@ -169,7 +169,7 @@ public class InsertDistributedTest {
                 onlineTest.setDistributedTest(distributedTest);
             }
 
-            tempDistributedTestId = distributedTest.getIdInternal();
+            tempDistributedTestId = distributedTest.getExternalId();
 
             EvaluationManagementLog.createLog(executionCourse, "resources.MessagingResources",
                     "log.executionCourse.evaluation.tests.distribution.created", distributedTest.getTitle(),
@@ -194,8 +194,8 @@ public class InsertDistributedTest {
         private final Integer questionId;
 
         public QuestionPair(final TestQuestion testQuestion, final Question question) {
-            testQuestionId = testQuestion.getIdInternal();
-            questionId = question.getIdInternal();
+            testQuestionId = testQuestion.getExternalId();
+            questionId = question.getExternalId();
         }
 
         public TestQuestion getTestQuestion() {
@@ -301,7 +301,7 @@ public class InsertDistributedTest {
 
     private static void addAllQuestions(final List<Integer> questionList, final List<Question> visibleQuestions) {
         for (final Question question : visibleQuestions) {
-            questionList.add(question.getIdInternal());
+            questionList.add(question.getExternalId());
         }
     }
 
@@ -331,7 +331,7 @@ public class InsertDistributedTest {
         @Override
         public void doIt() {
             final DistributedTest distributedTest = RootDomainObject.getInstance().readDistributedTestByOID(distributedTestId);
-            final Registration registration = RootDomainObject.getInstance().readRegistrationByOID(infoStudent.getIdInternal());
+            final Registration registration = RootDomainObject.getInstance().readRegistrationByOID(infoStudent.getExternalId());
 
             for (final QuestionPair questionPair : questionList) {
                 final TestQuestion testQuestion = questionPair.getTestQuestion();

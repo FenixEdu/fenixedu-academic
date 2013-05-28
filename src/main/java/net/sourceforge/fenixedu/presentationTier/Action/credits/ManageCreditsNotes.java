@@ -38,7 +38,7 @@ public class ManageCreditsNotes extends FenixDispatchAction {
 
         dynaActionForm.set("noteType", noteType);
         dynaActionForm.set("teacherId", teacher.getExternalId());
-        dynaActionForm.set("executionPeriodId", executionSemester.getIdInternal());
+        dynaActionForm.set("executionPeriodId", executionSemester.getExternalId());
     }
 
     protected ActionForward editNote(HttpServletRequest request, DynaActionForm dynaActionForm, Teacher teacher,

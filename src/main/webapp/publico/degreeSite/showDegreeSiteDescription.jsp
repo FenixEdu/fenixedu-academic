@@ -65,7 +65,7 @@
 				<%--
 				<% final String appContext = net.sourceforge.fenixedu._development.PropertiesManager.getProperty("app.context"); %>
 				<% final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : ""; %>
-				<bean:define id="emailURL" type="java.lang.String"><%= request.getScheme() %>://<%= request.getServerName() %>:<%= request.getServerPort() %><%= context %>/publico/viewHomepage.do?method=emailPng&amp;personID=<bean:write name="responsibleCoordinatorTeacher" property="person.idInternal"/></bean:define>
+				<bean:define id="emailURL" type="java.lang.String"><%= request.getScheme() %>://<%= request.getServerName() %>:<%= request.getServerPort() %><%= context %>/publico/viewHomepage.do?method=emailPng&amp;personID=<bean:write name="responsibleCoordinatorTeacher" property="person.externalId"/></bean:define>
 				<html:img align="middle" src="<%= emailURL %>" altKey="email" bundle="IMAGE_RESOURCES"/>
 				--%>
 			</logic:empty>
@@ -107,12 +107,12 @@
                                 </tr>
                                 <tr>
                                     <td class="box_cell">
-                                        <bean:define id="degreeId" name="degree" property="idInternal"/>
+                                        <bean:define id="degreeId" name="degree" property="externalId"/>
                                         <logic:iterate id="announcement" name="announcements">
                                             <p style="padding-bottom: 0.9em;">
                                                 <fr:view name="announcement" property="lastModification" layout="no-time"/><br/> 
                                                 
-                                                <bean:define id="announcementId" name="announcement" property="idInternal"/>
+                                                <bean:define id="announcementId" name="announcement" property="externalId"/>
                                                 <html:link page="<%= String.format("/showDegreeAnnouncements.do?method=viewAnnouncement&amp;degreeID=%s&amp;announcementId=%s", degreeId, announcementId) %>">
                                                     <fr:view name="announcement" property="subject"/>
                                                 </html:link>

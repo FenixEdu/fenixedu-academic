@@ -19,7 +19,7 @@ public class AdvisoryBean {
 
     final DateTimeFormatter fmt = DateTimeFormat.forPattern("dd/MM/yyyy");
 
-    private Integer idInternal;
+    private Integer externalId;
     private Date created;
     private String subject;
     private Date expires;
@@ -27,7 +27,7 @@ public class AdvisoryBean {
     private String sender;
 
     public AdvisoryBean(int id, Attends attends, Interval responseWeek) {
-        idInternal = new Integer(id);
+        externalId = new Integer(id);
         created = new Date();
         expires = created;
         sender = messages.getMessage(locale, "weekly.work.load.advisory.from");
@@ -45,8 +45,8 @@ public class AdvisoryBean {
         return expires;
     }
 
-    public Integer getIdInternal() {
-        return idInternal;
+    public Integer getExternalId() {
+        return externalId;
     }
 
     public String getMessage() {

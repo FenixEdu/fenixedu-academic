@@ -35,13 +35,13 @@
 				<fr:property name="rowClasses" value="listClasses"/>					
 															
 	   			<fr:property name="link(edit)" value="/invitationsManagement.do?method=prepareEditPersonInvitation"/>
-	            <fr:property name="param(edit)" value="idInternal/invitationID"/>
+	            <fr:property name="param(edit)" value="externalId/invitationID"/>
 		        <fr:property name="key(edit)" value="link.edit.invitation"/>
 	            <fr:property name="bundle(edit)" value="MANAGER_RESOURCES"/>
 	            <fr:property name="order(edit)" value="0"/>		
 	            
 	            <fr:property name="link(delete)" value="<%= "/invitationsManagement.do?method=deletePersonInvitation&personID=" + personID  %>"/>
-	            <fr:property name="param(delete)" value="idInternal/invitationID"/>
+	            <fr:property name="param(delete)" value="externalId/invitationID"/>
 		        <fr:property name="key(delete)" value="label.delete"/>
 	            <fr:property name="bundle(delete)" value="MANAGER_RESOURCES"/>
 	            <fr:property name="order(delete)" value="1"/>		         					

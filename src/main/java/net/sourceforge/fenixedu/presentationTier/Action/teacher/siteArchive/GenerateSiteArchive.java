@@ -159,7 +159,7 @@ public class GenerateSiteArchive extends FenixDispatchAction {
 
         Resource resource =
                 new Resource("index.html", "/publico/executionCourse.do?method=firstPage&executionCourseID="
-                        + executionCourse.getIdInternal());
+                        + executionCourse.getExternalId());
         resource.addAllRules(globalRules);
         resource.addRule(new SimpleTransformRule(contextPath
                 + "/publico/announcementManagement.do\\?.*?announcementId=([0-9]+).*",
@@ -170,7 +170,7 @@ public class GenerateSiteArchive extends FenixDispatchAction {
             resource =
                     new Resource("announcements.html",
                             "/publico/announcementManagement.do?method=start&ommitArchive=true&executionCourseID="
-                                    + executionCourse.getIdInternal());
+                                    + executionCourse.getExternalId());
             resource.addAllRules(globalRules);
             resource.addRule(new SimpleTransformRule(contextPath
                     + "/publico/announcementManagement.do.*?announcementId=([0-9]+).*", "announcements.html#ID_$1"));
@@ -182,45 +182,45 @@ public class GenerateSiteArchive extends FenixDispatchAction {
         if (options.isPlanning()) {
             resource =
                     new Resource("planning.html", "/publico/executionCourse.do?method=lessonPlannings&executionCourseID="
-                            + executionCourse.getIdInternal());
+                            + executionCourse.getExternalId());
             resource.addAllRules(globalRules);
             fetcher.queue(resource);
         }
 
         resource =
                 new Resource("summaries.html", "/publico/executionCourse.do?method=summaries&ommitFilter=true&executionCourseID="
-                        + executionCourse.getIdInternal());
+                        + executionCourse.getExternalId());
         resource.addAllRules(globalRules);
         fetcher.queue(resource);
 
         resource =
                 new Resource("objectives.html", "/publico/executionCourse.do?method=objectives&executionCourseID="
-                        + executionCourse.getIdInternal());
+                        + executionCourse.getExternalId());
         resource.addAllRules(globalRules);
         fetcher.queue(resource);
 
         resource =
                 new Resource("program.html", "/publico/executionCourse.do?method=program&executionCourseID="
-                        + executionCourse.getIdInternal());
+                        + executionCourse.getExternalId());
         resource.addAllRules(globalRules);
         fetcher.queue(resource);
 
         resource =
                 new Resource("evaluation-method.html", "/publico/executionCourse.do?method=evaluationMethod&executionCourseID="
-                        + executionCourse.getIdInternal());
+                        + executionCourse.getExternalId());
         resource.addAllRules(globalRules);
         fetcher.queue(resource);
 
         resource =
                 new Resource("bibliography.html", "/publico/executionCourse.do?method=bibliographicReference&executionCourseID="
-                        + executionCourse.getIdInternal());
+                        + executionCourse.getExternalId());
         resource.addAllRules(globalRules);
         fetcher.queue(resource);
 
         if (options.isSchedule()) {
             resource =
                     new Resource("schedule.html", "/publico/executionCourse.do?method=schedule&executionCourseID="
-                            + executionCourse.getIdInternal());
+                            + executionCourse.getExternalId());
             resource.addAllRules(globalRules);
             resource.addRule(new SimpleTransformRule("(" + contextPath + "/publico/)?siteViewer.do.*", "#"));
             fetcher.queue(resource);
@@ -229,7 +229,7 @@ public class GenerateSiteArchive extends FenixDispatchAction {
         if (options.isShifts()) {
             resource =
                     new Resource("shifts.html", "/publico/executionCourse.do?method=shifts&executionCourseID="
-                            + executionCourse.getIdInternal());
+                            + executionCourse.getExternalId());
             resource.addAllRules(globalRules);
             resource.addRule(new SimpleTransformRule("(" + contextPath + "/publico/)?siteViewer.do.*", "#"));
             resource.addRule(new SimpleTransformRule("(" + contextPath
@@ -240,7 +240,7 @@ public class GenerateSiteArchive extends FenixDispatchAction {
         if (options.isGroupings()) {
             resource =
                     new Resource("groupings.html", "/publico/executionCourse.do?method=groupings&executionCourseID="
-                            + executionCourse.getIdInternal());
+                            + executionCourse.getExternalId());
             resource.addAllRules(globalRules);
             ResourceRule groupRule =
                     new ResourceRule(contextPath + "/publico/executionCourse.do\\?method=grouping.*?groupingID=([0-9]+).*",
@@ -253,7 +253,7 @@ public class GenerateSiteArchive extends FenixDispatchAction {
         if (options.isEvaluations()) {
             resource =
                     new Resource("evaluation.html", "/publico/executionCourse.do?method=evaluations&executionCourseID="
-                            + executionCourse.getIdInternal());
+                            + executionCourse.getExternalId());
             resource.addAllRules(globalRules);
             ResourceRule marksRule =
                     new ResourceRule(contextPath + "/publico/executionCourse.do\\?.*method=marks.*", "marks.html");
@@ -263,10 +263,10 @@ public class GenerateSiteArchive extends FenixDispatchAction {
         }
 
         for (Section section : executionCourse.getSite().getAssociatedSections()) {
-            String name = String.format("section-%s.html", section.getIdInternal());
+            String name = String.format("section-%s.html", section.getExternalId());
             String url =
                     String.format("/publico/executionCourse.do?method=section&executionCourseID=%s&sectionID=%s",
-                            executionCourse.getIdInternal(), section.getIdInternal());
+                            executionCourse.getExternalId(), section.getExternalId());
             resource = new Resource(name, url);
             resource.addAllRules(globalRules);
 

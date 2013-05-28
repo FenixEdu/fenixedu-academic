@@ -297,13 +297,13 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
                         addCell(BUNDLE.getString("label.departmentUnit.name"), competence.getDepartmentUnit().getName());
                         addCell(BUNDLE.getString("label.competenceCourse.name"), competence.getName(querySemester));
                         addCell(BUNDLE.getString("label.acronym"), competence.getAcronym(querySemester));
-                        addCell(BUNDLE.getString("label.idInternal"), competence.getIdInternal());
+                        addCell(BUNDLE.getString("label.externalId"), competence.getExternalId());
                         Set<String> ids = new HashSet<String>();
                         for (CurricularCourse course : competence.getAssociatedCurricularCoursesSet()) {
                             List<ExecutionCourse> executions = course.getExecutionCoursesByExecutionYear(year);
                             for (ExecutionCourse executionCourse : executions) {
-                                if (!ids.contains(executionCourse.getIdInternal().toString())) {
-                                    ids.add(executionCourse.getIdInternal().toString());
+                                if (!ids.contains(executionCourse.getExternalId().toString())) {
+                                    ids.add(executionCourse.getExternalId().toString());
                                 }
                             }
                         }

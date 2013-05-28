@@ -50,7 +50,7 @@ public class VerifyStudentGroupWithoutShift {
                 throw new InvalidArgumentsServiceException();
             }
         } else {
-            if (studentGroup.getShift().getIdInternal().intValue() != shiftCode.intValue()) {
+            if (studentGroup.getShift().getExternalId().intValue() != shiftCode.intValue()) {
                 throw new InvalidArgumentsServiceException();
             }
         }

@@ -79,9 +79,9 @@ public class UnavailablePeriodManagement extends FenixDispatchAction {
     public ActionForward deleteUnavailablePeriod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         String id = request.getParameter("oid");
-        Integer idInternal = Integer.valueOf(id);
+        Integer externalId = Integer.valueOf(id);
         UnavailablePeriod unavailablePeriod =
-                (UnavailablePeriod) RootDomainObject.readDomainObjectByOID(UnavailablePeriod.class, idInternal);
+                (UnavailablePeriod) RootDomainObject.readDomainObjectByOID(UnavailablePeriod.class, externalId);
 
         VigilantWrapper vigilant = unavailablePeriod.getPerson().getVigilantWrappers().get(0);
         deletePeriod(request);
@@ -231,10 +231,10 @@ public class UnavailablePeriodManagement extends FenixDispatchAction {
 
     private void prepareForEdit(HttpServletRequest request) {
         String id = request.getParameter("oid");
-        int idInternal = Integer.valueOf(id);
+        int externalId = Integer.valueOf(id);
 
         UnavailablePeriod unavailablePeriod =
-                (UnavailablePeriod) RootDomainObject.readDomainObjectByOID(UnavailablePeriod.class, idInternal);
+                (UnavailablePeriod) RootDomainObject.readDomainObjectByOID(UnavailablePeriod.class, externalId);
         UnavailablePeriodBean bean = new UnavailablePeriodBean();
         bean.setUnavailablePeriod(unavailablePeriod);
         bean.setBeginDate(unavailablePeriod.getBeginDate());
@@ -247,10 +247,10 @@ public class UnavailablePeriodManagement extends FenixDispatchAction {
 
     private void deletePeriod(HttpServletRequest request) throws  FenixServiceException {
         String id = request.getParameter("oid");
-        Integer idInternal = Integer.valueOf(id);
+        Integer externalId = Integer.valueOf(id);
 
         try {
-            DeleteUnavailablePeriodByOID.run(idInternal);
+            DeleteUnavailablePeriodByOID.run(externalId);
         } catch (DomainException e) {
             addActionMessage(request, e.getMessage());
         }

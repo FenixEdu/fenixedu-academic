@@ -121,7 +121,7 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
 
         final Integer executionPeriodID = getExecutionPeriodID(dynaActionForm);
         final ExecutionSemester selectedExecutionPeriod = findExecutionPeriod(executionSemesters, executionPeriodID);
-        dynaActionForm.set("executionPeriodID", selectedExecutionPeriod.getIdInternal().toString());
+        dynaActionForm.set("executionPeriodID", selectedExecutionPeriod.getExternalId().toString());
 
         final Collection<ExecutionDegree> executionDegrees = new ArrayList<ExecutionDegree>();
         for (final ExecutionDegree executionDegree : selectedExecutionPeriod.getExecutionYear()
@@ -153,13 +153,13 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
                 (DegreeCurricularPlan) setDomainObjectInRequest(dynaActionForm, request, DegreeCurricularPlan.class,
                         "degreeCurricularPlanID", "executionCourse");
         if (degreeCurricularPlan != null) {
-            request.setAttribute("degreeCurricularPlanID", degreeCurricularPlan.getIdInternal());
+            request.setAttribute("degreeCurricularPlanID", degreeCurricularPlan.getExternalId());
             for (final CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCourses()) {
                 for (final DegreeModuleScope degreeCourseScope : curricularCourse.getDegreeModuleScopes()) {
                     final CurricularYear curricularYear = CurricularYear.readByYear(degreeCourseScope.getCurricularYear());
                     curricularYears.add(curricularYear);
 
-                    if (curricularYearID == null || curricularYear.getIdInternal().equals(curricularYearID)) {
+                    if (curricularYearID == null || curricularYear.getExternalId().equals(curricularYearID)) {
                         for (final ExecutionCourse executionCourse : curricularCourse
                                 .getExecutionCoursesByExecutionPeriod(selectedExecutionPeriod)) {
                             executionCourses.add(executionCourse);
@@ -206,7 +206,7 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
             if (executionPeriodID == null && executionSemester.getState().equals(PeriodState.CURRENT)) {
                 return executionSemester;
             }
-            if (executionPeriodID != null && executionSemester.getIdInternal().equals(executionPeriodID)) {
+            if (executionPeriodID != null && executionSemester.getExternalId().equals(executionPeriodID)) {
                 return executionSemester;
             }
         }

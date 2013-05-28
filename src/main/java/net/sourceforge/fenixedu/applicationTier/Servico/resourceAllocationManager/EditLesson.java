@@ -25,7 +25,7 @@ public class EditLesson {
             InfoRoomOccupationEditor infoRoomOccupation, InfoShift infoShift, YearMonthDay newBeginDate, YearMonthDay newEndDate,
             Boolean createLessonInstances) throws FenixServiceException {
 
-        Lesson aula = RootDomainObject.getInstance().readLessonByOID(aulaAntiga.getIdInternal());
+        Lesson aula = RootDomainObject.getInstance().readLessonByOID(aulaAntiga.getExternalId());
 
         if (aula != null) {
 

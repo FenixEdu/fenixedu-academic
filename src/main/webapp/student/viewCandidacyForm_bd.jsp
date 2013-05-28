@@ -27,7 +27,7 @@
 			</td>
 			<td>
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.themeID" property="themeID">
-						<html:optionsCollection name="equivalency" property="themes" label="name" value="idInternal"/>
+						<html:optionsCollection name="equivalency" property="themes" label="name" value="externalId"/>
 				</html:select>
 			</td>
 		</logic:notEqual>
@@ -36,7 +36,7 @@
 		<td>
 		</td>
 		<td>
-			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" property="idInternal" name="equivalency"/>			
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.externalId" property="externalId" name="equivalency"/>			
 		</td>
 	</tr>
 	<tr>

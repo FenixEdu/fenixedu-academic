@@ -36,7 +36,7 @@
 								<td class="listClasses"><bean:write name="executionCourse" property="sigla"/>
 								</td>
 								<td class="listClasses">
-									<bean:define id="executionCourseId" name="executionCourse" property="idInternal"/> 
+									<bean:define id="executionCourseId" name="executionCourse" property="externalId"/> 
 									&nbsp;
 									<html:link module="/manager" module="/manager" page="<%="/editExecutionCourse.do?method=editExecutionCourse&amp;executionCourseId=" + executionCourseId.toString() + "&amp;executionPeriod=" + pageContext.findAttribute("executionPeriodName") + "~" + pageContext.findAttribute("executionPeriodId") + "&amp;executionDegree=" + pageContext.findAttribute("executionDegreeName") + "~" + pageContext.findAttribute("executionDegreeId") + "&amp;curYear=" + pageContext.findAttribute("curYear") + "&amp;executionCoursesNotLinked=" + pageContext.findAttribute("executionCoursesNotLinked")%>">
 										<bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.edit"/>

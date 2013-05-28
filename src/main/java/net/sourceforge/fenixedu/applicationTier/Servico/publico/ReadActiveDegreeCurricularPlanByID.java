@@ -51,7 +51,7 @@ public class ReadActiveDegreeCurricularPlanByID extends ReadDegreeCurricularPlan
 
     protected List run(InfoExecutionDegree infoExecutionDegree, InfoExecutionPeriod infoExecutionPeriod, Integer curricularYear,
             Locale locale) throws FenixServiceException {
-        final ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
+        final ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(infoExecutionDegree.getExternalId());
         final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
         if (degreeCurricularPlan == null) {
             throw new FenixServiceException("null degreeCurricularPlan");
@@ -59,9 +59,9 @@ public class ReadActiveDegreeCurricularPlanByID extends ReadDegreeCurricularPlan
 
         if (infoExecutionPeriod == null) {
             return groupScopesByCurricularYearAndCurricularCourseAndBranch(
-                    super.readActiveCurricularCourseScopes(degreeCurricularPlan.getIdInternal()), locale);
+                    super.readActiveCurricularCourseScopes(degreeCurricularPlan.getExternalId()), locale);
         }
-        ExecutionSemester executionSemester = RootDomainObject.getInstance().readExecutionSemesterByOID(infoExecutionPeriod.getIdInternal());
+        ExecutionSemester executionSemester = RootDomainObject.getInstance().readExecutionSemesterByOID(infoExecutionPeriod.getExternalId());
         if (executionSemester == null || executionSemester.getExecutionYear() == null) {
             throw new FenixServiceException("nullDegree");
         }

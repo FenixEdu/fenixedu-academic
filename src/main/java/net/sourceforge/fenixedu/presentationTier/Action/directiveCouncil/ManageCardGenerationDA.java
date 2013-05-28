@@ -571,8 +571,8 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
                         System.out.println("identifier: " + identifier);
                         for (final CardGenerationEntry cge : cardGenerationEntries) {
                             final Person p = cge.getPerson();
-                            System.out.println("CGE.id: " + cge.getIdInternal() + " " + "P.id: "
-                                    + (p == null ? "" : p.getIdInternal() + " (" + p.getUsername() + ")"));
+                            System.out.println("CGE.id: " + cge.getExternalId() + " " + "P.id: "
+                                    + (p == null ? "" : p.getExternalId() + " (" + p.getUsername() + ")"));
                             System.out.println(cge.getLine());
                         }
                         throw new Error("Card emitted matches multiple people! " + line);

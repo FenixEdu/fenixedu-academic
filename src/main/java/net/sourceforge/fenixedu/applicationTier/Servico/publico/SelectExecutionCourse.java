@@ -28,7 +28,7 @@ public class SelectExecutionCourse {
                         infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla());
         if (degreeCurricularPlan != null) {
             ExecutionSemester executionSemester =
-                    RootDomainObject.getInstance().readExecutionSemesterByOID(infoExecutionPeriod.getIdInternal());
+                    RootDomainObject.getInstance().readExecutionSemesterByOID(infoExecutionPeriod.getExternalId());
             List<ExecutionCourse> executionCourseList =
                     degreeCurricularPlan.getExecutionCoursesByExecutionPeriodAndSemesterAndYear(executionSemester,
                             curricularYear, infoExecutionPeriod.getSemester());

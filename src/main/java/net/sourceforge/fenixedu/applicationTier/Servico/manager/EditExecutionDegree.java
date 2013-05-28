@@ -17,18 +17,18 @@ public class EditExecutionDegree {
     @Service
     public static void run(InfoExecutionDegreeEditor infoExecutionDegree) throws FenixServiceException {
 
-        final ExecutionDegree oldExecutionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
+        final ExecutionDegree oldExecutionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(infoExecutionDegree.getExternalId());
         if (oldExecutionDegree == null) {
             throw new NonExistingServiceException("message.nonExistingExecutionDegree", null);
         }
 
-        final Campus campus = (Campus) RootDomainObject.getInstance().readResourceByOID(infoExecutionDegree.getInfoCampus().getIdInternal());
+        final Campus campus = (Campus) RootDomainObject.getInstance().readResourceByOID(infoExecutionDegree.getInfoCampus().getExternalId());
         if (campus == null) {
             throw new NonExistingServiceException("message.nonExistingCampus", null);
         }
 
         final ExecutionYear executionYear =
-                RootDomainObject.getInstance().readExecutionYearByOID(infoExecutionDegree.getInfoExecutionYear().getIdInternal());
+                RootDomainObject.getInstance().readExecutionYearByOID(infoExecutionDegree.getInfoExecutionYear().getExternalId());
         if (executionYear == null) {
             throw new NonExistingServiceException("message.non.existing.execution.year", null);
         }

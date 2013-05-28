@@ -108,7 +108,7 @@ public class CoordinatedDegreeInfo extends FenixAction {
                 request.setAttribute(PresentationConstants.MASTER_DEGREE, infoExecutionDegree);
 
                 final List<InfoMasterDegreeCandidate> infoMasterDegreeCandidates =
-                        ReadDegreeCandidates.run(degreeCurricularPlan.getIdInternal());
+                        ReadDegreeCandidates.run(degreeCurricularPlan.getExternalId());
                 request.setAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE_AMMOUNT,
                         Integer.valueOf(infoMasterDegreeCandidates.size()));
             }

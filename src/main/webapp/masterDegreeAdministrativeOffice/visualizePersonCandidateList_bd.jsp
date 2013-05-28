@@ -88,7 +88,7 @@
 
 
 		<bean:define id="candidateLink">
-			<bean:write name="link"/><bean:write name="candidate" property="idInternal"/>
+			<bean:write name="link"/><bean:write name="candidate" property="externalId"/>
 		</bean:define>
 		
       <p class="mvert05">

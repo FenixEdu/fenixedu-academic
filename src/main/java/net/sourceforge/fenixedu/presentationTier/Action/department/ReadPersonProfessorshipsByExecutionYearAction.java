@@ -113,7 +113,7 @@ public class ReadPersonProfessorshipsByExecutionYearAction extends Action {
 
         InfoPerson infoPerson = getInfoPerson(request, dynaForm);
 
-        List detailedInfoProfessorshipList = getDetailedProfessorships(userView, infoPerson.getIdInternal(), dynaForm, request);
+        List detailedInfoProfessorshipList = getDetailedProfessorships(userView, infoPerson.getExternalId(), dynaForm, request);
 
         ComparatorChain chain = new ComparatorChain();
 
@@ -135,7 +135,7 @@ public class ReadPersonProfessorshipsByExecutionYearAction extends Action {
         InfoPerson infoPerson = (InfoPerson) request.getAttribute("infoPerson");
         if (infoPerson == null) {
             final IUserView userView = UserView.getUser();
-            infoPerson = ReadPersonByID.run((Integer) dynaForm.get("idInternal"));
+            infoPerson = ReadPersonByID.run((Integer) dynaForm.get("externalId"));
             request.setAttribute("infoPerson", infoPerson);
 
         }
@@ -177,11 +177,11 @@ public class ReadPersonProfessorshipsByExecutionYearAction extends Action {
     private void prepareForm(DynaActionForm dynaForm, HttpServletRequest request) {
         InfoExecutionYear infoExecutionYear = (InfoExecutionYear) request.getAttribute("executionYear");
         InfoPerson infoPerson = (InfoPerson) request.getAttribute("infoPerson");
-        dynaForm.set("idInternal", infoPerson.getIdInternal());
+        dynaForm.set("externalId", infoPerson.getExternalId());
         dynaForm.set("teacherId", infoPerson.getIstUsername());
         dynaForm.set("teacherName", infoPerson.getIstUsername());
         if (dynaForm.get("executionYearId") == null) {
-            dynaForm.set("executionYearId", infoExecutionYear.getIdInternal());
+            dynaForm.set("executionYearId", infoExecutionYear.getExternalId());
         }
 
         List detailedProfessorshipList = (List) request.getAttribute("detailedProfessorshipList");
@@ -191,7 +191,7 @@ public class ReadPersonProfessorshipsByExecutionYearAction extends Action {
         for (int i = 0; i < detailedProfessorshipList.size(); i++) {
             DetailedProfessorship dps = (DetailedProfessorship) detailedProfessorshipList.get(i);
 
-            Integer executionCourseId = dps.getInfoProfessorship().getInfoExecutionCourse().getIdInternal();
+            Integer executionCourseId = dps.getInfoProfessorship().getInfoExecutionCourse().getExternalId();
             if (dps.getResponsibleFor().booleanValue()) {
                 executionCourseIds.add(executionCourseId);
             }
@@ -222,7 +222,7 @@ public class ReadPersonProfessorshipsByExecutionYearAction extends Action {
                 return false;
             }
         });
-        Person person = (Person) RootDomainObject.getInstance().readPartyByOID(infoPerson.getIdInternal());
+        Person person = (Person) RootDomainObject.getInstance().readPartyByOID(infoPerson.getExternalId());
         InfoDepartment teacherDepartment = null;
         if (person.getTeacher() != null) {
             Department department = person.getTeacher().getCurrentWorkingDepartment();

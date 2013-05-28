@@ -23,7 +23,7 @@
 
 <h3><bean:message key="label.student.enrollment.choose.externalUnit" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 
-<bean:define id="registrationId" name="registration" property="idInternal" />
+<bean:define id="registrationId" name="registration" property="externalId" />
 <bean:define id="contextInformation" name="contextInformation" />
 <bean:define id="parameters" name="parameters" />
 <logic:notEmpty name="parameters">
@@ -37,7 +37,7 @@
         <fr:property name="childrenFor(Unit)" value="sortedExternalChilds"/>
         <fr:property name="expandable" value="true"/>
     </fr:layout>
-    <fr:destination name="choose.ExternalCurricularCourses" path="<%= contextInformation.toString() + "method=chooseExternalCurricularCourses&amp;registrationId=" + registrationId + parameters + "&amp;externalUnitId=${idInternal}" %>"/>
+    <fr:destination name="choose.ExternalCurricularCourses" path="<%= contextInformation.toString() + "method=chooseExternalCurricularCourses&amp;registrationId=" + registrationId + parameters + "&amp;externalUnitId=${externalId}" %>"/>
 </fr:view>
 
 <fr:form action="<%= contextInformation.toString() + "method=backToMainPage" + parameters %>">

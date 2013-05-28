@@ -55,7 +55,7 @@
 		<bean:define id="testQuestionValue" value="<%= (new java.text.DecimalFormat("#0.##").format(Double.parseDouble(testQuestionValue.toString())).toString()) %>"/>		
 		<tr><td><b><bean:message key="message.tests.questionValue" /></b>&nbsp;<bean:write name="testQuestionValue"/></td></tr>
 		<bean:define id="thisQuestion" name="testQuestion" property="question" type="net.sourceforge.fenixedu.domain.onlineTests.Question"/>
-		<bean:define id="questionCode" name="thisQuestion" property="idInternal"/>
+		<bean:define id="questionCode" name="thisQuestion" property="externalId"/>
 		<tr><td><table><tr><td>
 			<div class="gen-button">
 			<html:link page="<%= "/testQuestionEdition.do?method=prepareEditTestQuestion&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;testCode=" + pageContext.findAttribute("testCode") +"&amp;questionCode=" +questionCode%>">
@@ -66,7 +66,7 @@
 			<bean:message key="link.removeTestQuestion" />
 			</html:link></div></td>
 		</tr></table><tr><td>
-		<bean:define id="metadataId" name="thisQuestion" property="metadata.idInternal"/>
+		<bean:define id="metadataId" name="thisQuestion" property="metadata.externalId"/>
 		<% request.setAttribute("iquestion", thisQuestion); 
 		request.setAttribute("metadataId", metadataId);%>
 		<jsp:include page="showQuestion.jsp">

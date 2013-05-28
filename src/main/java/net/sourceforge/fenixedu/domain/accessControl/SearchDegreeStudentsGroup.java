@@ -242,7 +242,7 @@ public class SearchDegreeStudentsGroup extends Group {
                     }
 
                     if (left.getRegistration().isConcluded() && right.getRegistration().isConcluded()) {
-                        return left.getIdInternal().compareTo(right.getIdInternal());
+                        return left.getExternalId().compareTo(right.getExternalId());
                     }
 
                     if (left.getRegistration().isConcluded()) {

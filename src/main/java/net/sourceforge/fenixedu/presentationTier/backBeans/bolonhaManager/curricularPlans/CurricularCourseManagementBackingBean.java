@@ -144,7 +144,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
             courseGroupID = getAndHoldIntegerParameter("courseGroupID");
             if (courseGroupID == null) {
                 courseGroupID =
-                        (getContext(getContextID()) != null) ? getContext(getContextID()).getParentCourseGroup().getIdInternal() : courseGroupID;
+                        (getContext(getContextID()) != null) ? getContext(getContextID()).getParentCourseGroup().getExternalId() : courseGroupID;
             }
         }
         return courseGroupID;
@@ -173,7 +173,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     public Integer getDepartmentUnitID() {
         if (getViewState().getAttribute("departmentUnitID") == null && getCurricularCourse() != null) {
             getViewState().setAttribute("departmentUnitID",
-                    getCurricularCourse().getCompetenceCourse().getDepartmentUnit().getIdInternal());
+                    getCurricularCourse().getCompetenceCourse().getDepartmentUnit().getExternalId());
         }
         return (Integer) getViewState().getAttribute("departmentUnitID");
     }
@@ -184,7 +184,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
 
     public Integer getCompetenceCourseID() {
         if (competenceCourseID == null && getCurricularCourse() != null) {
-            competenceCourseID = getCurricularCourse().getCompetenceCourse().getIdInternal();
+            competenceCourseID = getCurricularCourse().getCompetenceCourse().getExternalId();
         }
         return competenceCourseID;
     }
@@ -429,7 +429,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
 
     public Integer getBeginExecutionPeriodID() {
         if (getViewState().getAttribute("beginExecutionPeriodID") == null && getContext(getContextID()) != null) {
-            setBeginExecutionPeriodID(getContext(getContextID()).getBeginExecutionPeriod().getIdInternal());
+            setBeginExecutionPeriodID(getContext(getContextID()).getBeginExecutionPeriod().getExternalId());
         }
         return (Integer) getViewState().getAttribute("beginExecutionPeriodID");
     }
@@ -441,7 +441,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     public Integer getEndExecutionPeriodID() {
         if (getViewState().getAttribute("endExecutionPeriodID") == null && getContext(getContextID()) != null) {
             setEndExecutionPeriodID((getContext(getContextID()).getEndExecutionPeriod() != null) ? getContext(getContextID())
-                    .getEndExecutionPeriod().getIdInternal() : Integer.valueOf(NO_SELECTION));
+                    .getEndExecutionPeriod().getExternalId() : Integer.valueOf(NO_SELECTION));
         }
         return (Integer) getViewState().getAttribute("endExecutionPeriodID");
     }
@@ -469,7 +469,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         final List<SelectItem> result = new ArrayList<SelectItem>();
         for (final ExecutionSemester notClosedExecutionPeriod : notClosedExecutionPeriods) {
             if (minimumExecutionPeriod == null || notClosedExecutionPeriod.isAfterOrEquals(minimumExecutionPeriod)) {
-                result.add(new SelectItem(notClosedExecutionPeriod.getIdInternal(), notClosedExecutionPeriod.getName() + " "
+                result.add(new SelectItem(notClosedExecutionPeriod.getExternalId(), notClosedExecutionPeriod.getName() + " "
                         + notClosedExecutionPeriod.getExecutionYear().getYear()));
             }
         }
@@ -674,7 +674,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         final List<SelectItem> result = new ArrayList<SelectItem>();
         for (final Object departmentObject : RootDomainObject.getInstance().getDepartments()) {
             DepartmentUnit departmentUnit = ((Department) departmentObject).getDepartmentUnit();
-            result.add(new SelectItem(departmentUnit.getIdInternal(), departmentUnit.getName()));
+            result.add(new SelectItem(departmentUnit.getExternalId(), departmentUnit.getName()));
         }
         Collections.sort(result, new BeanComparator("label"));
         result.add(0, new SelectItem(this.NO_SELECTION, bolonhaBundle.getString("choose")));
@@ -687,15 +687,15 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
             if (department.getCompetenceCourseMembersGroup() != null
                     && department.getCompetenceCourseMembersGroup().isMember(getUserView().getPerson())) {
                 DepartmentUnit departmentUnit = department.getDepartmentUnit();
-                result.add(new SelectItem(departmentUnit.getIdInternal(), departmentUnit.getName()));
+                result.add(new SelectItem(departmentUnit.getExternalId(), departmentUnit.getName()));
             }
         }
         Collections.sort(result, new BeanComparator("label"));
         if (result.size() == 1) {
             Department personDepartment = getPersonDepartment();
             if (personDepartment != null
-                    && !result.get(0).getValue().equals(personDepartment.getDepartmentUnit().getIdInternal())) {
-                result.add(0, new SelectItem(personDepartment.getDepartmentUnit().getIdInternal(), personDepartment.getName()));
+                    && !result.get(0).getValue().equals(personDepartment.getDepartmentUnit().getExternalId())) {
+                result.add(0, new SelectItem(personDepartment.getDepartmentUnit().getExternalId(), personDepartment.getName()));
             }
         }
         return result;
@@ -717,7 +717,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
                         .getCompetenceCourseGroupUnits()) {
                     for (final CompetenceCourse competenceCourse : competenceCourseGroupUnit.getCompetenceCourses()) {
                         if (competenceCourse.getCurricularStage() != CurricularStage.DRAFT) {
-                            result.add(new SelectItem(competenceCourse.getIdInternal(), competenceCourse.getName() + " ("
+                            result.add(new SelectItem(competenceCourse.getExternalId(), competenceCourse.getName() + " ("
                                     + enumerationBundle.getString(competenceCourse.getCurricularStage().getName()) + ")"));
                         }
                     }
@@ -738,7 +738,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
             for (final DegreeModule degreeModule : degreeModules) {
                 pathName.append((pathName.length() == 0) ? "" : " > ").append(degreeModule.getName());
             }
-            result.add(new SelectItem(degreeModules.get(degreeModules.size() - 1).getIdInternal(), pathName.toString()));
+            result.add(new SelectItem(degreeModules.get(degreeModules.size() - 1).getExternalId(), pathName.toString()));
         }
         Collections.sort(result, new BeanComparator("label"));
         result.add(0, new SelectItem(this.NO_SELECTION, bolonhaBundle.getString("choose")));
@@ -753,17 +753,17 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         if (executionDegrees.isEmpty()) {
             final ExecutionYear executionYear =
                     getDegreeCurricularPlan().getRoot().getMinimumExecutionPeriod().getExecutionYear();
-            result.add(new SelectItem(executionYear.getIdInternal(), executionYear.getYear()));
+            result.add(new SelectItem(executionYear.getExternalId(), executionYear.getYear()));
             return result;
         }
 
         for (ExecutionDegree executionDegree : executionDegrees) {
-            result.add(new SelectItem(executionDegree.getExecutionYear().getIdInternal(), executionDegree.getExecutionYear()
+            result.add(new SelectItem(executionDegree.getExecutionYear().getExternalId(), executionDegree.getExecutionYear()
                     .getYear()));
         }
 
         if (getExecutionYearID() == null) {
-            setExecutionYearID(getDegreeCurricularPlan().getMostRecentExecutionDegree().getExecutionYear().getIdInternal());
+            setExecutionYearID(getDegreeCurricularPlan().getMostRecentExecutionDegree().getExecutionYear().getExternalId());
         }
 
         return result;

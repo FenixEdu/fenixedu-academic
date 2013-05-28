@@ -74,7 +74,7 @@ public class CreateReimbursementGuide {
             }
 
             GuideEntry guideEntry =
-                    RootDomainObject.getInstance().readGuideEntryByOID(infoReimbursementGuideEntry.getInfoGuideEntry().getIdInternal());
+                    RootDomainObject.getInstance().readGuideEntryByOID(infoReimbursementGuideEntry.getInfoGuideEntry().getExternalId());
             if (checkReimbursementGuideEntriesSum(infoReimbursementGuideEntry, guideEntry) == false) {
                 throw new InvalidReimbursementValueServiceException("error.exception.masterDegree.invalidReimbursementValue");
             }
@@ -109,7 +109,7 @@ public class CreateReimbursementGuide {
         reimbursementGuideSituation.setRemarks(remarks);
         reimbursementGuideSituation.setState(new State(State.ACTIVE));
 
-        return reimbursementGuide.getIdInternal();
+        return reimbursementGuide.getExternalId();
 
     }
 

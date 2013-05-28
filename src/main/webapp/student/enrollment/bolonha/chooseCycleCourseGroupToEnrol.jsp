@@ -9,7 +9,7 @@
 	<bean:define id="cycleTypeToEnrolQualifiedName" name="cycleEnrolmentBean" property="cycleTypeToEnrol.qualifiedName" />
 	<h2><bean:message key="label.enrollment.enrolIn" bundle="STUDENT_RESOURCES" /> <bean:message  key="<%=cycleTypeToEnrolQualifiedName.toString()%>" bundle="ENUMERATION_RESOURCES"/></h2>
 	
-	<bean:define id="registrationId" name="cycleEnrolmentBean" property="studentCurricularPlan.registration.idInternal" />
+	<bean:define id="registrationId" name="cycleEnrolmentBean" property="studentCurricularPlan.registration.externalId" />
 	
 	<logic:empty name="cycleEnrolmentBean" property="cycleDestinationAffinities">
 		<span class="error0">

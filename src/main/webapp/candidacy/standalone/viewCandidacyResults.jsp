@@ -7,7 +7,7 @@
 <em><bean:message key="label.candidacies" bundle="APPLICATION_RESOURCES"/></em>
 <h2><bean:message key="label.candidacy.introduce.results" bundle="APPLICATION_RESOURCES"/></h2>
 
-<bean:define id="processId" name="process" property="idInternal" />
+<bean:define id="processId" name="process" property="externalId" />
 
 <html:link action='<%= "/caseHandlingStandaloneCandidacyProcess.do?method=listProcesses&amp;processId=" + processId.toString() %>'>
 	« <bean:message key="label.back" bundle="APPLICATION_RESOURCES"/>

@@ -17,7 +17,7 @@ public class PhdIndividualProgramProcessNumber extends PhdIndividualProgramProce
                 @Override
                 public int compare(PhdIndividualProgramProcessNumber left, PhdIndividualProgramProcessNumber right) {
                     int comparationResult = left.getNumber().compareTo(right.getNumber());
-                    return (comparationResult == 0) ? left.getIdInternal().compareTo(right.getIdInternal()) : comparationResult;
+                    return (comparationResult == 0) ? left.getExternalId().compareTo(right.getExternalId()) : comparationResult;
                 }
             };
 

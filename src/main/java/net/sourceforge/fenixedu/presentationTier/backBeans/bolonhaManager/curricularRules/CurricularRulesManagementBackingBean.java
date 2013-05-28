@@ -99,7 +99,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
         if (degreeModuleID == null) {
             degreeModuleID = getAndHoldIntegerParameter("degreeModuleID");
             if (degreeModuleID == null && getCurricularRule() != null) {
-                degreeModuleID = getCurricularRule().getDegreeModuleToApplyRule().getIdInternal();
+                degreeModuleID = getCurricularRule().getDegreeModuleToApplyRule().getExternalId();
             }
         }
         return degreeModuleID;
@@ -237,9 +237,9 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
     public Integer getSelectedDegreeModuleID() {
         if (getViewState().getAttribute("selectedDegreeModuleID") == null && getCurricularRule() != null) {
             if (getCurricularRule() instanceof PrecedenceRule) {
-                setSelectedDegreeModuleID(((PrecedenceRule) getCurricularRule()).getPrecedenceDegreeModule().getIdInternal());
+                setSelectedDegreeModuleID(((PrecedenceRule) getCurricularRule()).getPrecedenceDegreeModule().getExternalId());
             } else if (getCurricularRule() instanceof Exclusiveness) {
-                setSelectedDegreeModuleID(((Exclusiveness) getCurricularRule()).getExclusiveDegreeModule().getIdInternal());
+                setSelectedDegreeModuleID(((Exclusiveness) getCurricularRule()).getExclusiveDegreeModule().getExternalId());
             }
         }
         return (Integer) getViewState().getAttribute("selectedDegreeModuleID");
@@ -252,7 +252,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
     public Integer getSelectedContextCourseGroupID() {
         if (getViewState().getAttribute("selectedContextCourseGroupID") == null && getCurricularRule() != null) {
             if (getCurricularRule().getContextCourseGroup() != null) {
-                setSelectedContextCourseGroupID(getCurricularRule().getContextCourseGroup().getIdInternal());
+                setSelectedContextCourseGroupID(getCurricularRule().getContextCourseGroup().getExternalId());
             }
         }
         return (Integer) getViewState().getAttribute("selectedContextCourseGroupID");
@@ -465,7 +465,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
         if (getViewState().getAttribute("selectedDegreeID") == null) {
             if (getCurricularRule() != null && getCurricularRule() instanceof AnyCurricularCourse) {
                 AnyCurricularCourse anyCurricularCourse = (AnyCurricularCourse) getCurricularRule();
-                setSelectedDegreeID(anyCurricularCourse.getDegree() != null ? anyCurricularCourse.getDegree().getIdInternal() : Integer
+                setSelectedDegreeID(anyCurricularCourse.getDegree() != null ? anyCurricularCourse.getDegree().getExternalId() : Integer
                         .valueOf(0));
             } else {
                 setSelectedDegreeID(Integer.valueOf(0));
@@ -483,7 +483,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
             if (getCurricularRule() != null && getCurricularRule() instanceof AnyCurricularCourse) {
                 AnyCurricularCourse anyCurricularCourse = (AnyCurricularCourse) getCurricularRule();
                 setSelectedDepartmentUnitID(anyCurricularCourse.getDepartmentUnit() != null ? anyCurricularCourse
-                        .getDepartmentUnit().getIdInternal() : Integer.valueOf(0));
+                        .getDepartmentUnit().getExternalId() : Integer.valueOf(0));
             } else {
                 setSelectedDepartmentUnitID(Integer.valueOf(0));
             }
@@ -519,7 +519,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
                             .valueOf(selectedDegreeType);
             for (final Degree degree : allDegrees) {
                 if (degree.isBolonhaDegree() && (bolonhaDegreeType == null || degree.getDegreeType() == bolonhaDegreeType)) {
-                    result.add(new SelectItem(degree.getIdInternal(), "["
+                    result.add(new SelectItem(degree.getExternalId(), "["
                             + enumerationResources.getString(degree.getDegreeType().name()) + "] " + degree.getNome()));
                 }
             }
@@ -543,7 +543,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
 
     public Integer getBeginExecutionPeriodID() {
         if (getViewState().getAttribute("beginExecutionPeriodID") == null && getCurricularRule() != null) {
-            setBeginExecutionPeriodID(getCurricularRule().getBegin().getIdInternal());
+            setBeginExecutionPeriodID(getCurricularRule().getBegin().getExternalId());
         }
         return (Integer) getViewState().getAttribute("beginExecutionPeriodID");
     }
@@ -555,7 +555,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
     public Integer getEndExecutionPeriodID() {
         if (getViewState().getAttribute("endExecutionPeriodID") == null && getCurricularRule() != null) {
             setEndExecutionPeriodID((getCurricularRule().getEnd() == null) ? Integer.valueOf(0) : getCurricularRule().getEnd()
-                    .getIdInternal());
+                    .getExternalId());
         }
         return (Integer) getViewState().getAttribute("endExecutionPeriodID");
     }
@@ -607,7 +607,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
 
         for (final ExecutionSemester notClosedExecutionPeriod : notClosedExecutionPeriods) {
             if (notClosedExecutionPeriod.isAfterOrEquals(currentExecutionPeriod)) {
-                result.add(new SelectItem(notClosedExecutionPeriod.getIdInternal(), notClosedExecutionPeriod.getName() + " "
+                result.add(new SelectItem(notClosedExecutionPeriod.getExternalId(), notClosedExecutionPeriod.getName() + " "
                         + notClosedExecutionPeriod.getExecutionYear().getYear()));
             }
         }
@@ -619,7 +619,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
         if (selectedCurricularRuleType != null
                 && selectedCurricularRuleType.equals(CurricularRuleType.ANY_CURRICULAR_COURSE.name())) {
             for (final Unit unit : UnitUtils.readAllDepartmentUnits()) {
-                result.add(new SelectItem(unit.getIdInternal(), unit.getName()));
+                result.add(new SelectItem(unit.getExternalId(), unit.getName()));
             }
             Collections.sort(result, new BeanComparator("label"));
         }
@@ -633,7 +633,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
             for (final Context context : getDegreeModule().getParentContexts()) {
                 final CourseGroup courseGroup = context.getParentCourseGroup();
                 if (!courseGroup.isRoot()) {
-                    result.add(new SelectItem(courseGroup.getIdInternal(), courseGroup.getName()));
+                    result.add(new SelectItem(courseGroup.getExternalId(), courseGroup.getName()));
                 }
             }
             Collections.sort(result, new BeanComparator("label"));
@@ -681,7 +681,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
                 for (final DegreeModule degreeModule : degreeModules) {
                     pathName.append((pathName.length() == 0) ? "" : " > ").append(degreeModule.getName());
                 }
-                result.add(new SelectItem(lastDegreeModule.getIdInternal(), pathName.toString()));
+                result.add(new SelectItem(lastDegreeModule.getExternalId(), pathName.toString()));
             }
         }
         Collections.sort(result, new BeanComparator("label"));

@@ -16,7 +16,7 @@
     <c:if test="${degree.firstCycle or degree.secondCycle}">
         <c:out value="${degree.presentationName}" />: 
         <c:forEach items="${degree.degreeCurricularPlans}" var="dcp">
-            <bean:define id="degreeCurricularPlanID"><c:out value="${dcp.idInternal}"></c:out></bean:define>
+            <bean:define id="degreeCurricularPlanID"><c:out value="${dcp.externalId}"></c:out></bean:define>
             <html:link page="<%="/viewInquiriesResults.do?method=prepare&amp;degreeCurricularPlanID=" + degreeCurricularPlanID.toString() %>">
                 <strong><c:out value="${dcp.name}" /></strong>
             </html:link>

@@ -19,10 +19,10 @@
 </p>
 
 <bean:define id="linkLeft">
-	/mergePersons.do?method=mergeProperty&classToMerge=<bean:write name="classToMerge" />&object2IdInternal=<bean:write name="mergePersonsBean" property="rightOid"/>&object1IdInternal=<bean:write name="mergePersonsBean" property="leftOid" />&source=2&slotName=
+	/mergePersons.do?method=mergeProperty&classToMerge=<bean:write name="classToMerge" />&object2ExternalId=<bean:write name="mergePersonsBean" property="rightOid"/>&object1ExternalId=<bean:write name="mergePersonsBean" property="leftOid" />&source=2&slotName=
 </bean:define>
 <bean:define id="linkRight">
-	/mergePersons.do?method=mergeProperty&classToMerge=<bean:write name="classToMerge" />&object2IdInternal=<bean:write name="mergePersonsBean" property="rightOid" />&object1IdInternal=<bean:write name="mergePersonsBean" property="leftOid" />&source=1&slotName=
+	/mergePersons.do?method=mergeProperty&classToMerge=<bean:write name="classToMerge" />&object2ExternalId=<bean:write name="mergePersonsBean" property="rightOid" />&object1ExternalId=<bean:write name="mergePersonsBean" property="leftOid" />&source=1&slotName=
 </bean:define>
 
 <table>
@@ -64,10 +64,10 @@
 
 <%-- 	
 	<bean:define id="linkDeleteLeft">
-		/mergePersons.do?method=delete&classToMerge=<bean:write name="classToMerge" />&object2IdInternal=<bean:write name="object2IdInternal" />&object1IdInternal=<bean:write name="object1IdInternal" />&objectIdInternal=<bean:write name="object1IdInternal" />
+		/mergePersons.do?method=delete&classToMerge=<bean:write name="classToMerge" />&object2ExternalId=<bean:write name="object2ExternalId" />&object1ExternalId=<bean:write name="object1ExternalId" />&objectExternalId=<bean:write name="object1ExternalId" />
 	</bean:define>
 	<bean:define id="linkDeleteRight">
-		/mergePersons.do?method=delete&classToMerge=<bean:write name="classToMerge" />&object2IdInternal=<bean:write name="object2IdInternal" />&object1IdInternal=<bean:write name="object1IdInternal" />&objectIdInternal=<bean:write name="object2IdInternal" />
+		/mergePersons.do?method=delete&classToMerge=<bean:write name="classToMerge" />&object2ExternalId=<bean:write name="object2ExternalId" />&object1ExternalId=<bean:write name="object1ExternalId" />&objectExternalId=<bean:write name="object2ExternalId" />
 	</bean:define>		
 	<tr>
 		<td></td>

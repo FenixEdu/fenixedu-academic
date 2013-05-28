@@ -20,7 +20,7 @@
 <logic:equal name="modelGroup" property="first" value="false">
 <f:parameterLink page="/tests/testModels.do?method=switchModelRestriction">
 	<f:parameter id="relativePosition" value="-1" />
-	<f:parameter id="oid" name="modelGroup" property="idInternal" />
+	<f:parameter id="oid" name="modelGroup" property="externalId" />
 	Cima
 </f:parameterLink>
 </logic:equal>
@@ -29,7 +29,7 @@
 <logic:equal name="modelGroup" property="last" value="false">
 <f:parameterLink page="/tests/testModels.do?method=switchModelRestriction">
 	<f:parameter id="relativePosition" value="1" />
-	<f:parameter id="oid" name="modelGroup" property="idInternal" />
+	<f:parameter id="oid" name="modelGroup" property="externalId" />
 	Baixo
 </f:parameterLink>)
 </logic:equal>

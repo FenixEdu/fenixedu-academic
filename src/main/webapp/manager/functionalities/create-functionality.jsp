@@ -12,7 +12,7 @@
 
 <div>
     <logic:iterate id="crumb" name="crumbs">
-        <html:link page="/module/view.do" paramId="module" paramName="crumb" paramProperty="idInternal">
+        <html:link page="/module/view.do" paramId="module" paramName="crumb" paramProperty="externalId">
             <fr:view name="crumb" property="name"/>
         </html:link> &gt;
     </logic:iterate>
@@ -34,7 +34,7 @@
          create form
      ======================  -->
 
-<bean:define id="id" name="module" property="idInternal"/>
+<bean:define id="id" name="module" property="externalId"/>
 
 <fr:create type="net.sourceforge.fenixedu.domain.functionalities.Functionality" 
            schema="functionalities.concrete.functionality.create"

@@ -30,9 +30,9 @@
 					</td>
 					<td class="highlight2 smalltxt" align="center" style="width: 14em;">
 						<html:link page="<%= "/degreeCurricularPlan/studentEquivalencyPlan.do?method=prepareAddEquivalency&amp;selectedDegreeCurricularPlanID="
-								+ selectedDegreeCurricularPlan.getIdInternal() + "&amp;equivalencePlanID="
-								+ equivalencePlan.getIdInternal() + "&amp;curriculumModuleID="
-								+ curriculumModule.getIdInternal() + "&amp;studentNumber="
+								+ selectedDegreeCurricularPlan.getExternalId() + "&amp;equivalencePlanID="
+								+ equivalencePlan.getExternalId() + "&amp;curriculumModuleID="
+								+ curriculumModule.getExternalId() + "&amp;studentNumber="
 									+ student.getNumber() %>">
 							<bean:message key="link.equivalency.add" bundle="APPLICATION_RESOURCES"/>
 						</html:link>
@@ -45,9 +45,9 @@
 						</logic:empty>
 						<logic:notEmpty name="equivalencyPlanEntryCurriculumModuleWrapper" property="equivalencePlanEntriesToApply">
 							<html:link page="<%= "/degreeCurricularPlan/studentEquivalencyPlan.do?method=showTable&amp;selectedDegreeCurricularPlanID="
-									+ selectedDegreeCurricularPlan.getIdInternal() + "&amp;equivalencePlanID="
-									+ equivalencePlan.getIdInternal() + "&amp;curriculumModuleID="
-									+ curriculumModule.getIdInternal() + "&amp;studentNumber="
+									+ selectedDegreeCurricularPlan.getExternalId() + "&amp;equivalencePlanID="
+									+ equivalencePlan.getExternalId() + "&amp;curriculumModuleID="
+									+ curriculumModule.getExternalId() + "&amp;studentNumber="
 									+ student.getNumber() 
 									%>">
 								<bean:message key="link.equivalencies.for.curricular.course.view" bundle="APPLICATION_RESOURCES"/>
@@ -72,9 +72,9 @@
 				</th>
 				<th class="smalltxt" align="center" style="width: 14em;">
 					<html:link page="<%= "/degreeCurricularPlan/studentEquivalencyPlan.do?method=prepareAddEquivalency&amp;selectedDegreeCurricularPlanID="
-							+ selectedDegreeCurricularPlan.getIdInternal() + "&amp;equivalencePlanID="
-							+ equivalencePlan.getIdInternal() + "&amp;curriculumModuleID="
-							+ curriculumModule.getIdInternal() + "&amp;studentNumber="
+							+ selectedDegreeCurricularPlan.getExternalId() + "&amp;equivalencePlanID="
+							+ equivalencePlan.getExternalId() + "&amp;curriculumModuleID="
+							+ curriculumModule.getExternalId() + "&amp;studentNumber="
 								+ student.getNumber() %>">
 						<bean:message key="link.equivalency.add" bundle="APPLICATION_RESOURCES"/>
 					</html:link>
@@ -87,9 +87,9 @@
 					</logic:empty>
 					<logic:notEmpty name="equivalencyPlanEntryCurriculumModuleWrapper" property="equivalencePlanEntriesToApply">
 						<html:link page="<%= "/degreeCurricularPlan/studentEquivalencyPlan.do?method=showTable&amp;selectedDegreeCurricularPlanID="
-								+ selectedDegreeCurricularPlan.getIdInternal() + "&amp;equivalencePlanID="
-								+ equivalencePlan.getIdInternal() + "&amp;curriculumModuleID="
-								+ curriculumModule.getIdInternal() + "&amp;studentNumber="
+								+ selectedDegreeCurricularPlan.getExternalId() + "&amp;equivalencePlanID="
+								+ equivalencePlan.getExternalId() + "&amp;curriculumModuleID="
+								+ curriculumModule.getExternalId() + "&amp;studentNumber="
 								+ student.getNumber() 
 								%>">
 							<bean:message key="link.equivalencies.for.curricular.course.view" bundle="APPLICATION_RESOURCES"/>

@@ -14,7 +14,7 @@
 		<logic:iterate id="degreeElem" name="<%=PresentationConstants.MASTER_DEGREE_LIST%>" type="net.sourceforge.fenixedu.dataTransferObject.InfoDegree">
 			<tr>
 				<td>
-					<html:link page="<%= "/marksManagement.do?method=prepareChooseDegreeCurricularPlan&amp;degreeId=" + degreeElem.getIdInternal()%>">
+					<html:link page="<%= "/marksManagement.do?method=prepareChooseDegreeCurricularPlan&amp;degreeId=" + degreeElem.getExternalId()%>">
 						<bean:write name="degreeElem" property="nome"/>
 						&nbsp;-&nbsp;<bean:write name="degreeElem" property="sigla"/>
 					</html:link>

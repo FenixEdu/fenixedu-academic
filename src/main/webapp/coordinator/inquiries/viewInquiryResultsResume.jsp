@@ -23,7 +23,7 @@
 		<p><bean:message key="message.coordinator.resume.inquiry.end" bundle="INQUIRIES_RESOURCES"/></p>
 	
 		<html:link action="<%= "/viewInquiriesResults.do?method=showCoordinatorInquiry&executionDegreeOID=" + executionDegree.getExternalId() 
-				 + "&degreeCurricularPlanID=" + executionDegree.getDegreeCurricularPlan().getIdInternal()
+				 + "&degreeCurricularPlanID=" + executionDegree.getDegreeCurricularPlan().getExternalId()
 				 + "&coordinatorOID=" + coordinator.getExternalId()	%>"
 				 paramName="executionPeriod" paramProperty="externalId" paramId="executionPeriodOID">
 				<b><bean:message key="link.inquiry.fillIn" bundle="INQUIRIES_RESOURCES"/> <bean:message key="label.inquiry.coordinator" bundle="INQUIRIES_RESOURCES"/></b>

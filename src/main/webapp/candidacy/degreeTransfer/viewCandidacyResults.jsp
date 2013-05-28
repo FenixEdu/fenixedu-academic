@@ -12,7 +12,7 @@
 	<br />
 </html:messages>
 
-<bean:define id="processId" name="process" property="idInternal" />
+<bean:define id="processId" name="process" property="externalId" />
 <bean:define id="processName" name="processName" />
 
 <fr:form action='<%= "/caseHandling" + processName + ".do?processId=" + processId.toString() %>'>
@@ -30,7 +30,7 @@
 		<bean:define id="degree" name="entry" property="key"/>
 		<bean:define id="individualCandidacyProcesses" name="entry" property="value"/>
 		
-		<bean:define id="degreeId" name="degree" property="idInternal" />
+		<bean:define id="degreeId" name="degree" property="externalId" />
 		<strong><bean:write name="degree" property="presentationName" /></strong>:
 		<html:link action='<%= "/caseHandling" + processName + ".do?method=prepareExecuteIntroduceCandidacyResultsForDegree&amp;processId=" + processId.toString() + "&amp;degreeId=" + degreeId.toString() %>' ><bean:message key="label.candidacy.introduce.results" bundle="APPLICATION_RESOURCES" /></html:link>
 		<br/>

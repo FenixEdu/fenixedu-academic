@@ -66,13 +66,13 @@ public class SendEmailReminderAction extends FenixDispatchAction {
 
         List<InfoDegreeCurricularPlan> degreeCurricularPlans =
                 ReadActiveDegreeCurricularPlansByExecutionYear
-                        .runReadActiveDegreeCurricularPlansByExecutionYear(currentExecutionYear.getIdInternal());
+                        .runReadActiveDegreeCurricularPlansByExecutionYear(currentExecutionYear.getExternalId());
 
         final ComparatorChain comparatorChain = new ComparatorChain();
         comparatorChain.addComparator(new BeanComparator("infoDegree.tipoCurso"));
         comparatorChain.addComparator(new BeanComparator("infoDegree.nome"));
         comparatorChain.addComparator(new BeanComparator("name"));
-        comparatorChain.addComparator(new BeanComparator("idInternal"));
+        comparatorChain.addComparator(new BeanComparator("externalId"));
         Collections.sort(degreeCurricularPlans, comparatorChain);
 
         request.setAttribute(InquiriesUtil.DEGREE_CURRICULAR_PLANS_LIST, degreeCurricularPlans);

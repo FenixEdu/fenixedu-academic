@@ -45,7 +45,7 @@
 				<fr:property name="classes" value="tstyle4" />
 				<fr:property name="checkable" value="true" />
 				<fr:property name="checkboxName" value="evaluationsToRemove" />
-				<fr:property name="checkboxValue" value="idInternal" />
+				<fr:property name="checkboxValue" value="externalId" />
 			</fr:layout>
 		</fr:view>
 		

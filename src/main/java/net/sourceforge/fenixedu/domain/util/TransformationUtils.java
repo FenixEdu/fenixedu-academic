@@ -21,7 +21,7 @@ public abstract class TransformationUtils {
             @Override
             public Object transform(Object input) {
                 DomainObject domainObject = (DomainObject) input;
-                return domainObject == null ? null : domainObject.getIdInternal();
+                return domainObject == null ? null : domainObject.getExternalId();
             }
         });
     }

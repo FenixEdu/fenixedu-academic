@@ -117,7 +117,7 @@ public class ExternalContract extends ExternalContract_Base {
             if (accountability instanceof ExternalContract) {
                 ExternalContract externalPerson = (ExternalContract) accountability;
                 if (externalPerson.hasPerson() && externalPerson.getPerson().getName().equals(name)
-                        && externalPerson.getInstitutionUnit().getIdInternal().equals(institutionID)
+                        && externalPerson.getInstitutionUnit().getExternalId().equals(institutionID)
                         && externalPerson.getPerson().hasDefaultPhysicalAddress()
                         && externalPerson.getPerson().getDefaultPhysicalAddress().getAddress().equals(address)) {
                     return externalPerson;
@@ -135,7 +135,7 @@ public class ExternalContract extends ExternalContract_Base {
         for (Accountability accountability : RootDomainObject.getInstance().getAccountabilitys()) {
             if (accountability instanceof ExternalContract) {
                 ExternalContract externalPerson = (ExternalContract) accountability;
-                if (accountabilityIDs.contains(externalPerson.getIdInternal())) {
+                if (accountabilityIDs.contains(externalPerson.getExternalId())) {
                     externalPersons.add(externalPerson);
                 }
             }

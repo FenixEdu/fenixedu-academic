@@ -5,7 +5,7 @@
 <html:xhtml/>
 
 <bean:define id="processName" name="processName" />
-<bean:define id="parentProcessId" name="parentProcess" property="idInternal" />
+<bean:define id="parentProcessId" name="parentProcess" property="externalId" />
 <bean:define id="individualCandidacyProcess" name="process"/>
 
 <em><bean:message key="label.candidacies" bundle="APPLICATION_RESOURCES"/></em>
@@ -20,7 +20,7 @@
 
 
 <logic:notEmpty name="process">
-	<bean:define id="processId" name="process" property="idInternal" />
+	<bean:define id="processId" name="process" property="externalId" />
 	
 	<logic:notEmpty name="activities">
 		<%-- list process activities --%>
@@ -40,7 +40,7 @@
 	<%-- original application --%>
 	<logic:notEmpty name="process" property="originalIndividualCandidacyProcess">
 		
-		<bean:define id="originalProcessId" name="process" property="originalIndividualCandidacyProcess.idInternal" />
+		<bean:define id="originalProcessId" name="process" property="originalIndividualCandidacyProcess.externalId" />
 
 		<div class="infoop-blue">
 			Esta candidatura foi transferida de um processo de candidaturas anterior. Para ver a candidatura original clique  

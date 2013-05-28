@@ -67,7 +67,7 @@ public class ReadExamsMap {
 
         if (degreeCurricularPlan != null) {
             ExecutionSemester executionSemester =
-                    RootDomainObject.getInstance().readExecutionSemesterByOID(infoExecutionPeriod.getIdInternal());
+                    RootDomainObject.getInstance().readExecutionSemesterByOID(infoExecutionPeriod.getExternalId());
             // Obtain execution courses and associated information
             // of the given execution degree for each curricular year
             // persistentSupportecified

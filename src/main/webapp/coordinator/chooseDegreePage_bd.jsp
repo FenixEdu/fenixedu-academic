@@ -23,7 +23,7 @@
 	
 	<logic:iterate id="infoDegreeCurricularPlan" name="coordinatedInfoDegreeCurricularPlans">
 		<bean:define id="degreeLink">
-			<bean:write name="link"/><bean:write name="infoDegreeCurricularPlan" property="idInternal"/>
+			<bean:write name="link"/><bean:write name="infoDegreeCurricularPlan" property="externalId"/>
 		</bean:define>            	
 
 		<tr>

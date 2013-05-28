@@ -119,10 +119,10 @@ public class MarkSheetSearchDispatchAction extends MarkSheetDispatchAction {
 
         StringBuilder stringBuilder = new StringBuilder();
 
-        stringBuilder.append("&epID=").append(searchBean.getExecutionPeriod().getIdInternal());
-        stringBuilder.append("&dID=").append(searchBean.getDegree().getIdInternal());
-        stringBuilder.append("&dcpID=").append(searchBean.getDegreeCurricularPlan().getIdInternal());
-        stringBuilder.append("&ccID=").append(searchBean.getCurricularCourse().getIdInternal());
+        stringBuilder.append("&epID=").append(searchBean.getExecutionPeriod().getExternalId());
+        stringBuilder.append("&dID=").append(searchBean.getDegree().getExternalId());
+        stringBuilder.append("&dcpID=").append(searchBean.getDegreeCurricularPlan().getExternalId());
+        stringBuilder.append("&ccID=").append(searchBean.getCurricularCourse().getExternalId());
 
         if (searchBean.getTeacherId() != null) {
             stringBuilder.append("&tn=").append(searchBean.getTeacherId());

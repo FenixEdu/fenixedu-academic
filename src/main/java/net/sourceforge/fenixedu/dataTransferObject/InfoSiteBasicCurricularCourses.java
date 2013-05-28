@@ -34,7 +34,7 @@ public class InfoSiteBasicCurricularCourses extends DataTranferObject implements
         Iterator iter = basicCurricularCourses.iterator();
         List result = new ArrayList();
         while (iter.hasNext()) {
-            result.add(((InfoCurricularCourse) iter.next()).getIdInternal());
+            result.add(((InfoCurricularCourse) iter.next()).getExternalId());
         }
         return result;
     }

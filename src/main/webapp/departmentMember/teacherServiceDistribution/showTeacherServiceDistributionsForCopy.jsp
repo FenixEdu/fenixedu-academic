@@ -37,7 +37,7 @@
 	<td>
 		<html:select property="executionYear" onchange="this.form.method.value='prepareForTSDProcessCopy'; this.form.submit();">
 			<html:option value="-1"><bean:message key="label.teacherServiceDistribution.all"/></html:option>
-			<html:options collection="executionYearList" property="idInternal" labelProperty="year"/>
+			<html:options collection="executionYearList" property="externalId" labelProperty="year"/>
 		</html:select>
 	</td>
 </tr>
@@ -49,7 +49,7 @@
 		<logic:notEmpty name="executionPeriodsList">
 			<html:select property="executionPeriod" onchange="this.form.method.value='prepareForTSDProcessCopy'; this.form.submit();">
 				<html:option value="-1"><bean:message key="label.teacherServiceDistribution.both"/></html:option>
-				<html:options collection="executionPeriodsList" property="idInternal" labelProperty="semester"/>
+				<html:options collection="executionPeriodsList" property="externalId" labelProperty="semester"/>
 			</html:select>
 		</logic:notEmpty>
 	</td>
@@ -84,7 +84,7 @@
 	<logic:iterate name="tsdProcessList" id="tsdProcess"> 
 		<tr>
 			<td>
-				<bean:define id="tsdProcessId" name="tsdProcess" property="idInternal" />
+				<bean:define id="tsdProcessId" name="tsdProcess" property="externalId" />
 				<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.tsdProcess" property="tsdProcess" value="<%= ((Integer)tsdProcessId).toString() %>"/>
 			</td>
 			<td class="highlight7" align="left" width="250">
@@ -115,7 +115,7 @@
 		</th>
 		<td>
 			<html:select property="executionYearForCopy">
-				<html:options collection="executionYearList" property="idInternal" labelProperty="year"/>
+				<html:options collection="executionYearList" property="externalId" labelProperty="year"/>
 			</html:select>
 		</td>
 	</tr>
@@ -126,7 +126,7 @@
 		<td>
 			<html:select property="executionPeriodForCopy">
 				<html:option value="-1"><bean:message key="label.teacherServiceDistribution.both"/></html:option>
-				<html:options collection="executionPeriodsListForCopy" property="idInternal" labelProperty="semester"/>
+				<html:options collection="executionPeriodsListForCopy" property="externalId" labelProperty="semester"/>
 			</html:select>
 		</td>
 	</tr>

@@ -54,15 +54,15 @@
     		</tr>
      	<logic:iterate id="enrolment" name="enrolmentList">
         	<bean:define id="studentLink">
-        		<bean:write name="link"/><bean:write name="enrolment" property="infoStudentCurricularPlan.idInternal"/>&amp;
+        		<bean:write name="link"/><bean:write name="enrolment" property="infoStudentCurricularPlan.externalId"/>&amp;
 				<logic:present name="<%= PresentationConstants.MASTER_DEGREE %>"  >
-					<bean:define id="infoExecutionDegree" name="<%= PresentationConstants.MASTER_DEGREE %>"/>executionDegreeId=<bean:write name="infoExecutionDegree" property="idInternal"/>&degreeCurricularPlanID=<%=degreeCurricularPlanID%>
+					<bean:define id="infoExecutionDegree" name="<%= PresentationConstants.MASTER_DEGREE %>"/>executionDegreeId=<bean:write name="infoExecutionDegree" property="externalId"/>&degreeCurricularPlanID=<%=degreeCurricularPlanID%>
 	    		</logic:present>
         	</bean:define>
         <tr>
         	<logic:equal name="viewPhoto" value="true">
 				<th>
-					<bean:define id="personID" name="enrolment" property="infoStudentCurricularPlan.infoStudent.infoPerson.idInternal"/>
+					<bean:define id="personID" name="enrolment" property="infoStudentCurricularPlan.infoStudent.infoPerson.externalId"/>
 					<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES"/>
 			   </th>
 			</logic:equal>

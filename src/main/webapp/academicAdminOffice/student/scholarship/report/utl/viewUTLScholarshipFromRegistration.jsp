@@ -9,7 +9,7 @@
 		
 
 	<p>
-		<html:link page="/student.do?method=visualizeRegistration" paramId="registrationID" paramName="registration" paramProperty="idInternal">
+		<html:link page="/student.do?method=visualizeRegistration" paramId="registrationID" paramName="registration" paramProperty="externalId">
 			<bean:message key="link.student.back" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 		</html:link>
 	</p>

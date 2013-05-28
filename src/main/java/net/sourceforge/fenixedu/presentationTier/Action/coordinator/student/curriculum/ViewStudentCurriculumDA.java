@@ -69,7 +69,7 @@ public class ViewStudentCurriculumDA extends FenixDispatchAction {
 
     private ActionForward getBolonhaTransitionRedirect(final ActionForm actionForm, final Student student) {
         final ActionForward actionForward = new ActionForward();
-        actionForward.setPath("/bolonhaTransitionManagement.do?method=prepare&studentId=" + student.getIdInternal());
+        actionForward.setPath("/bolonhaTransitionManagement.do?method=prepare&studentId=" + student.getExternalId());
 
         return actionForward;
 

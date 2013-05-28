@@ -73,12 +73,12 @@ public class ReadTeacherServiceDistributionByTeachers {
                         teacherCredits != null ? teacherCredits.getMandatoryLessonHours().doubleValue() : teacher
                                 .getMandatoryLessonHours(executionPeriodEntry);
 
-                if (returnDTO.isTeacherPresent(teacher.getIdInternal())) {
-                    returnDTO.addHoursToTeacher(teacher.getIdInternal(), mandatoryLessonHours);
+                if (returnDTO.isTeacherPresent(teacher.getExternalId())) {
+                    returnDTO.addHoursToTeacher(teacher.getExternalId(), mandatoryLessonHours);
                 } else {
                     Double accumulatedCredits = (startPeriod == null ? 0.0 : teacher.getBalanceOfCreditsUntil(endPeriod));
                     String category = professionalCategory != null ? professionalCategory.getName().getContent() : null;
-                    returnDTO.addTeacher(teacher.getIdInternal(), teacher.getPerson().getIstUsername(), category, teacher
+                    returnDTO.addTeacher(teacher.getExternalId(), teacher.getPerson().getIstUsername(), category, teacher
                             .getPerson().getName(), mandatoryLessonHours, accumulatedCredits);
                 }
 
@@ -93,10 +93,10 @@ public class ReadTeacherServiceDistributionByTeachers {
                     Map<Integer, Set<String>> degreeCurricularYearsMap = new LinkedHashMap<Integer, Set<String>>();
                     for (CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
                         Degree degree = curricularCourse.getDegreeCurricularPlan().getDegree();
-                        Integer degreeIdInternal = degree.getIdInternal();
-                        if (!degreeNameMap.containsKey(degreeIdInternal)) {
-                            degreeNameMap.put(degreeIdInternal, degree.getSigla());
-                            degreeCurricularYearsMap.put(degreeIdInternal, new LinkedHashSet<String>());
+                        Integer degreeExternalId = degree.getExternalId();
+                        if (!degreeNameMap.containsKey(degreeExternalId)) {
+                            degreeNameMap.put(degreeExternalId, degree.getSigla());
+                            degreeCurricularYearsMap.put(degreeExternalId, new LinkedHashSet<String>());
                         }
 
                         Set<String> curricularYears = new LinkedHashSet<String>();
@@ -108,21 +108,21 @@ public class ReadTeacherServiceDistributionByTeachers {
                                 curricularYears.add(curricularSemester.getCurricularYear().getYear().toString());
                             }
                         }
-                        degreeCurricularYearsMap.get(degreeIdInternal).addAll(curricularYears);
+                        degreeCurricularYearsMap.get(degreeExternalId).addAll(curricularYears);
                     }
 
                     Double hoursSpentByTeacher = StrictMath.ceil(teacher.getHoursLecturedOnExecutionCourse(executionCourse));
 
                     Duration timeSpentByTeacher = teacher.getLecturedDurationOnExecutionCourse(executionCourse);
 
-                    returnDTO.addExecutionCourseToTeacher(teacher.getIdInternal(), executionCourse.getIdInternal(),
+                    returnDTO.addExecutionCourseToTeacher(teacher.getExternalId(), executionCourse.getExternalId(),
                             executionCourse.getNome(), hoursSpentByTeacher.intValue(), timeSpentByTeacher, degreeNameMap,
                             degreeCurricularYearsMap, executionCourse.getExecutionPeriod().getName());
 
                 }
 
                 for (PersonFunction personFunction : teacher.getManagementFunctions(executionPeriodEntry)) {
-                    returnDTO.addManagementFunctionToTeacher(teacher.getIdInternal(), personFunction.getFunction().getName(),
+                    returnDTO.addManagementFunctionToTeacher(teacher.getExternalId(), personFunction.getFunction().getName(),
                             personFunction.getCredits());
                 }
 
@@ -133,7 +133,7 @@ public class ReadTeacherServiceDistributionByTeachers {
                 if (exemptionCredits > 0.0) {
                     Set<PersonContractSituation> serviceExemptions =
                             teacher.getValidTeacherServiceExemptions(executionPeriodEntry);
-                    returnDTO.addExemptionSituationToTeacher(teacher.getIdInternal(), serviceExemptions, exemptionCredits);
+                    returnDTO.addExemptionSituationToTeacher(teacher.getExternalId(), serviceExemptions, exemptionCredits);
                 }
             }
         }

@@ -41,7 +41,7 @@ public class UnitSiteManagementDA extends CustomUnitSiteManagementDA {
             return unit;
         }
 
-        Integer unitId = getIdInternal(request, "unitID");
+        Integer unitId = getExternalId(request, "unitID");
         return (Unit) RootDomainObject.getInstance().readPartyByOID(unitId);
     }
 
@@ -73,7 +73,7 @@ public class UnitSiteManagementDA extends CustomUnitSiteManagementDA {
     public ActionForward prepareCreateEntryPoint(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         request.setAttribute("multiLanguageStringBean", getMultiLanguageString());
-        request.setAttribute("siteOid", getSite(request).getIdInternal());
+        request.setAttribute("siteOid", getSite(request).getExternalId());
         return mapping.findForward("createEntryPoint");
     }
 

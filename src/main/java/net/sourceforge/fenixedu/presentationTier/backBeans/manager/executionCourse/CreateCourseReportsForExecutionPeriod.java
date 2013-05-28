@@ -33,7 +33,7 @@ public class CreateCourseReportsForExecutionPeriod extends FenixBackingBean {
             @Override
             public Object transform(Object arg0) {
                 InfoExecutionPeriod executionPeriod = (InfoExecutionPeriod) arg0;
-                return new SelectItem(executionPeriod.getIdInternal(), executionPeriod.getDescription());
+                return new SelectItem(executionPeriod.getExternalId(), executionPeriod.getDescription());
             }
 
         });

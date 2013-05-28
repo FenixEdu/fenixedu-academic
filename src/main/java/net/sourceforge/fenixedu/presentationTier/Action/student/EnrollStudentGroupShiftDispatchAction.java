@@ -153,12 +153,12 @@ public class EnrollStudentGroupShiftDispatchAction extends FenixDispatchAction {
             List shiftValues = new ArrayList();
             while (iter.hasNext()) {
                 infoShift = (InfoShift) iter.next();
-                value = infoShift.getIdInternal().toString();
+                value = infoShift.getExternalId().toString();
                 shiftValues.add(value);
                 label = infoShift.getNome();
                 shiftsList.add(new LabelValueBean(label, value));
             }
-            if (shiftsList.size() == 1 && shiftValues.contains(oldInfoShift.getIdInternal().toString())) {
+            if (shiftsList.size() == 1 && shiftValues.contains(oldInfoShift.getExternalId().toString())) {
                 ActionErrors actionErrors4 = new ActionErrors();
                 ActionError error4 = null;
                 error4 = new ActionError("errors.enrollStudentGroupShift.allShiftsFull");

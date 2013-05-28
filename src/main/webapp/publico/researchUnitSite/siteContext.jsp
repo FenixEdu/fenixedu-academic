@@ -10,7 +10,7 @@
 
 <bean:define id="siteActionName" value="/researchSite/viewResearchUnitSite.do" toScope="request"/>
 <bean:define id="siteContextParam" value="siteID" toScope="request"/>
-<bean:define id="siteContextParamValue" name="site" property="idInternal" toScope="request"/>
+<bean:define id="siteContextParamValue" name="site" property="externalId" toScope="request"/>
 <bean:define id="site" name="<%= FunctionalityContext.CONTEXT_KEY %>" property="selectedContainer" toScope="request"/>
 <bean:define id="unit" name="site" property="unit" toScope="request"/>
 <bean:define id="researchUnit" name="site" property="unit" toScope="request"/>

@@ -54,12 +54,12 @@ public class QualificationManagerAuthorizationFilter {
 
     private boolean isOwnQualification(IUserView userView, InfoQualification infoQualification) {
         boolean isNew =
-                (infoQualification.getIdInternal() == null) || (infoQualification.getIdInternal().equals(Integer.valueOf(0)));
+                (infoQualification.getExternalId() == null) || (infoQualification.getExternalId().equals(Integer.valueOf(0)));
         if (isNew) {
             return true;
         }
         final Qualification qualification =
-                RootDomainObject.getInstance().readQualificationByOID(infoQualification.getIdInternal());
+                RootDomainObject.getInstance().readQualificationByOID(infoQualification.getExternalId());
         return qualification.getPerson() == userView.getPerson();
     }
 }

@@ -41,7 +41,7 @@ public class ReadFilteredExamsMap {
         result.setInfoExecutionPeriod(infoExecutionPeriod);
         result.setCurricularYears(curricularYears);
 
-        ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
+        ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(infoExecutionDegree.getExternalId());
 
         obtainExamSeasonInfo(result, infoExecutionPeriod.getSemester(), executionDegree);
 
@@ -88,7 +88,7 @@ public class ReadFilteredExamsMap {
     private List<InfoExecutionCourse> obtainInfoExecutionCourses(List<Integer> curricularYears,
             InfoExecutionPeriod infoExecutionPeriod, ExecutionDegree executionDegree) {
         List<InfoExecutionCourse> result = new ArrayList<InfoExecutionCourse>();
-        ExecutionSemester executionSemester = RootDomainObject.getInstance().readExecutionSemesterByOID(infoExecutionPeriod.getIdInternal());
+        ExecutionSemester executionSemester = RootDomainObject.getInstance().readExecutionSemesterByOID(infoExecutionPeriod.getExternalId());
         for (Integer curricularYear : curricularYears) {
             // Obtain list of execution courses
             List<ExecutionCourse> executionCourses =
@@ -101,7 +101,7 @@ public class ReadFilteredExamsMap {
                 infoExecutionCourse.setCurricularYear(curricularYear);
 
                 List<InfoExam> associatedInfoExams =
-                        obtainInfoExams(executionDegree, infoExecutionPeriod.getIdInternal(), curricularYear, executionCourse);
+                        obtainInfoExams(executionDegree, infoExecutionPeriod.getExternalId(), curricularYear, executionCourse);
                 infoExecutionCourse.setFilteredAssociatedInfoExams(associatedInfoExams);
 
                 result.add(infoExecutionCourse);

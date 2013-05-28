@@ -103,7 +103,7 @@ public class ExternalPersonDA extends FenixDispatchAction {
 
             CreateParkingParty.run(person);
             final ActionForward actionForward =
-                    new ActionForward("/parking.do?plateNumber=&partyID=" + person.getIdInternal()
+                    new ActionForward("/parking.do?plateNumber=&partyID=" + person.getExternalId()
                             + "&method=showParkingPartyRequests");
             return actionForward;
         } else {

@@ -109,7 +109,7 @@ public class AssociateExecutionCourseToExamAction
                     duplicateInfoDegree(executionDegreeList, infoExecutionDegree) ? "-"
                             + infoExecutionDegree.getInfoDegreeCurricularPlan().getName() : "";
 
-            licenciaturas.add(new LabelValueBean(name, infoExecutionDegree.getIdInternal().toString()));
+            licenciaturas.add(new LabelValueBean(name, infoExecutionDegree.getExternalId().toString()));
         }
 
         request.setAttribute(PresentationConstants.DEGREES, licenciaturas);
@@ -120,7 +120,7 @@ public class AssociateExecutionCourseToExamAction
         InfoExecutionCourse infoExecutionCourse =
                 (InfoExecutionCourse) request.getAttribute(PresentationConstants.EXECUTION_COURSE);
 
-        request.setAttribute("executionCourseOID", infoExecutionCourse.getIdInternal());
+        request.setAttribute("executionCourseOID", infoExecutionCourse.getExternalId());
 
         return mapping.findForward("showForm");
     }
@@ -149,7 +149,7 @@ public class AssociateExecutionCourseToExamAction
         InfoExecutionCourse infoExecutionCourse =
                 (InfoExecutionCourse) request.getAttribute(PresentationConstants.EXECUTION_COURSE);
 
-        request.setAttribute("executionCourseOID", infoExecutionCourse.getIdInternal());
+        request.setAttribute("executionCourseOID", infoExecutionCourse.getExternalId());
 
         return mapping.findForward("forwardChoose");
     }

@@ -64,7 +64,7 @@
 					</th>
 				</tr>
 				<logic:iterate id="enrollment" name="studentCurrentSemesterEnrollments" type="net.sourceforge.fenixedu.domain.Enrolment">
-					<bean:define id="enrollmentId" name="enrollment" property="idInternal" />
+					<bean:define id="enrollmentId" name="enrollment" property="externalId" />
 					<tr>
 						<td class="listClasses">
 							<bean:write name="enrollment" property="curricularCourse.name"/>

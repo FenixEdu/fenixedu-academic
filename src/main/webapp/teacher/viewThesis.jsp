@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-<bean:define id="thesisId" name="thesis" property="idInternal" />
+<bean:define id="thesisId" name="thesis" property="externalId" />
 
 <html:xhtml />
 
@@ -23,7 +23,7 @@
 		value="DOCUMENTS_SUBMITTED">
 		<li><html:link
 			page="/thesisDocumentConfirmation.do?method=showConfirmationPage"
-			paramId="thesisID" paramName="thesis" paramProperty="idInternal">
+			paramId="thesisID" paramName="thesis" paramProperty="externalId">
 			<bean:message bundle="APPLICATION_RESOURCES"
 				key="link.thesis.confirm.documents" />
 		</html:link></li>

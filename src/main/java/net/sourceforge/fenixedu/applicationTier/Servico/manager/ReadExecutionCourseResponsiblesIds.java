@@ -29,7 +29,7 @@ public class ReadExecutionCourseResponsiblesIds {
         List<Integer> responsibleIDs = new ArrayList<Integer>();
         if (responsibles != null) {
             for (Professorship responsibleFor : responsibles) {
-                responsibleIDs.add(responsibleFor.getTeacher().getIdInternal());
+                responsibleIDs.add(responsibleFor.getTeacher().getExternalId());
             }
         }
         return responsibleIDs;

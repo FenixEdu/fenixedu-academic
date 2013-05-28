@@ -55,7 +55,7 @@ public class CreateMasterDegreeThesis {
         MasterDegreeThesisDataVersion storedMasterDegreeThesisDataVersion =
                 MasterDegreeThesisDataVersion.readActiveByDissertationTitle(dissertationTitle);
         if ((storedMasterDegreeThesisDataVersion != null)
-                && (!storedMasterDegreeThesisDataVersion.getMasterDegreeThesis().getStudentCurricularPlan().getIdInternal()
+                && (!storedMasterDegreeThesisDataVersion.getMasterDegreeThesis().getStudentCurricularPlan().getExternalId()
                         .equals(studentCurricularPlanID))) {
             throw new ExistingServiceException("error.exception.masterDegree.dissertationTitleAlreadyChosen");
         }

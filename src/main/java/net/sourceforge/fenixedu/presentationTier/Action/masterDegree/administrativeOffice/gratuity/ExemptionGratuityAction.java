@@ -131,7 +131,7 @@ public class ExemptionGratuityAction extends FenixDispatchAction {
         }
 
         if (infoStudentCurricularPlans.size() == 1) {
-            request.setAttribute("studentCurricularPlanID", (infoStudentCurricularPlans.get(0)).getIdInternal());
+            request.setAttribute("studentCurricularPlanID", (infoStudentCurricularPlans.get(0)).getExternalId());
             return mapping.findForward("readExemptionGratuity");
         }
 
@@ -178,7 +178,7 @@ public class ExemptionGratuityAction extends FenixDispatchAction {
         try {
             infoGratuityValues =
                     (InfoGratuityValues) ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear.run(infoStudentCurricularPlan
-                            .getInfoDegreeCurricularPlan().getIdInternal(), executionYear);
+                            .getInfoDegreeCurricularPlan().getExternalId(), executionYear);
         } catch (FenixServiceException fenixServiceException) {
             fenixServiceException.printStackTrace();
             errors.add("noGratuitySituation", new ActionError("error.impossible.insertExemptionGratuity"));
@@ -196,7 +196,7 @@ public class ExemptionGratuityAction extends FenixDispatchAction {
             return mapping.findForward("chooseStudent");
         }
 
-        request.setAttribute("gratuityValuesID", infoGratuityValues.getIdInternal());
+        request.setAttribute("gratuityValuesID", infoGratuityValues.getExternalId());
 
         // read gratuity situation of the student
         InfoGratuitySituation infoGratuitySituation = null;
@@ -204,7 +204,7 @@ public class ExemptionGratuityAction extends FenixDispatchAction {
         try {
             infoGratuitySituation =
                     (InfoGratuitySituation) ReadGratuitySituationByStudentCurricularPlanByGratuityValues.run(
-                            studentCurricularPlanID, infoGratuityValues.getIdInternal());
+                            studentCurricularPlanID, infoGratuityValues.getExternalId());
         } catch (FenixServiceException fenixServiceException) {
             fenixServiceException.printStackTrace();
             errors.add("noGratuitySituation", new ActionError("error.impossible.insertExemptionGratuity"));
@@ -213,7 +213,7 @@ public class ExemptionGratuityAction extends FenixDispatchAction {
         }
         // if infoGratuitySituation is null than it will be created in next step
         if (infoGratuitySituation != null) {
-            request.setAttribute("gratuitySituationID", infoGratuitySituation.getIdInternal());
+            request.setAttribute("gratuitySituationID", infoGratuitySituation.getExternalId());
         }
 
         DynaActionForm exemptionGrauityForm = (DynaActionForm) actionForm;

@@ -60,7 +60,7 @@
     </p>
 </logic:present>
 
-<bean:define id="oid" name="site" property="idInternal"/>
+<bean:define id="oid" name="site" property="externalId"/>
 <table class="tstyle5 thlight thright">
     <tr>
         <th class="valigntop"><bean:message key="label.site.logo" bundle="WEBSITEMANAGER_RESOURCES"/>:</th>

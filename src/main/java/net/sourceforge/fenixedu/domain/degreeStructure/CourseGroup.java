@@ -116,7 +116,7 @@ public class CourseGroup extends CourseGroup_Base {
     public void print(StringBuilder dcp, String tabs, Context previousContext) {
         String tab = tabs + "\t";
         dcp.append(tab);
-        dcp.append("[CG ").append(this.getIdInternal()).append("] ").append(this.getName()).append("\n");
+        dcp.append("[CG ").append(this.getExternalId()).append("] ").append(this.getName()).append("\n");
 
         for (Context context : this.getSortedChildContextsWithCurricularCourses()) {
             context.getChildDegreeModule().print(dcp, tab, context);

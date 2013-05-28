@@ -38,7 +38,7 @@
 				<bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.executionPeriod" />: 
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionPeriodID" property="executionPeriodID" size="1">
 					<html:option value=""></html:option>
-					<html:options collection="executionPeriods" property="idInternal" labelProperty="description"/>
+					<html:options collection="executionPeriods" property="externalId" labelProperty="description"/>
 				</html:select>
 			</th>
 		</tr>
@@ -55,7 +55,7 @@
 			<tr>
 				<td>
 					<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.degreeCurricularPlansIDs" property="degreeCurricularPlansIDs">
-						<bean:write name="degreeCurricularPlan" property="idInternal"/>
+						<bean:write name="degreeCurricularPlan" property="externalId"/>
 					</html:multibox>
 				</td>
 				<td>

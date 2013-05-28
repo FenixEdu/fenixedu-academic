@@ -45,7 +45,7 @@
 				</b>
 				<br/>
 				<br/>
-				<bean:define id="distributedTestCode" name="distributedTest" property="idInternal"/>
+				<bean:define id="distributedTestCode" name="distributedTest" property="externalId"/>
 				<html:link page="<%= "/testsManagement.do?method=downloadTestMarks&amp;distributedTestCode=" +pageContext.findAttribute("distributedTestCode")+ "&amp;objectCode=" +pageContext.findAttribute("objectCode")%>"><bean:message key="link.exportToExcel"/></html:link>
 				<br/>
 				<br/>
@@ -64,7 +64,7 @@
 					</tr>
 			</logic:equal>
 			<% if (new Integer(studentIndex).equals(new Integer(0))) {%>
-				<bean:define id="studentCode" name="studentTestQuestion" property="studentIdInternal"/>
+				<bean:define id="studentCode" name="studentTestQuestion" property="studentExternalId"/>
 				<tr>
 				<td class="listClasses"><bean:write name="studentTestQuestion" property="studentNumber"/></td>
 				<td class="listClasses"><bean:write name="studentTestQuestion" property="studentName"/></td>

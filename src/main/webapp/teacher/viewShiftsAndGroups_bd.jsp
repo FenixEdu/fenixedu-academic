@@ -19,7 +19,7 @@
 	<bean:define id="component" name="siteView" property="component" />
 	<bean:define id="numberOfStudentsOutsideAttendsSet" name="component" property="numberOfStudentsOutsideAttendsSet" />
 	<bean:define id="numberOfStudentsInsideAttendsSet" name="component" property="numberOfStudentsInsideAttendsSet" />
-	<bean:define id="groupingOID" name="component" property="infoGrouping.idInternal" />
+	<bean:define id="groupingOID" name="component" property="infoGrouping.externalId" />
 	<bean:define id="onclick">
 		return confirm('<bean:message key="message.confirm.delete.groupProperties"/>')
 	</bean:define>
@@ -253,7 +253,7 @@
 		                        [<logic:iterate id="infoSiteStudentGroup" name="infoSiteGroupsByShift" property="infoSiteStudentGroupsList" >
 									<bean:define id="infoStudentGroup" name="infoSiteStudentGroup" property="infoStudentGroup"/>
 									<bean:define id="urlString" type="java.lang.String">/viewStudentGroupInformation.do?method=viewStudentGroupInformation&amp;objectCode=<%= pageContext.findAttribute("objectCode") %>&amp;groupPropertiesCode=<%= request.getParameter("groupPropertiesCode") %></bean:define>
-		                        	<html:link page="<%= urlString %>" paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="idInternal">
+		                        	<html:link page="<%= urlString %>" paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="externalId">
 		               					<bean:write name="infoStudentGroup" property="groupNumber"/>
 									</html:link>
 								</logic:iterate>]
@@ -273,7 +273,7 @@
 		<logic:notEmpty name="infoSiteGroupsByShift" property="infoSiteShift.infoShift">
 				<bean:define id="infoSiteShift" name="infoSiteGroupsByShift" property="infoSiteShift"/>	
 				<bean:define id="infoShift" name="infoSiteShift" property="infoShift"/>	
-				<bean:define id="shiftCode" name="infoShift" property="idInternal"/>	
+				<bean:define id="shiftCode" name="infoShift" property="externalId"/>	
 								
 			 		<logic:empty name="infoShift" property="infoLessons">
 							<tr>
@@ -302,7 +302,7 @@
 		                        <logic:notEmpty name="infoSiteGroupsByShift" property="infoSiteStudentGroupsList">
 		                        [<logic:iterate id="infoSiteStudentGroup" name="infoSiteGroupsByShift" property="infoSiteStudentGroupsList" >
 									<bean:define id="infoStudentGroup" name="infoSiteStudentGroup" property="infoStudentGroup"/>	
-		                        	<html:link page="<%="/viewStudentGroupInformation.do?method=viewStudentGroupInformation&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;shiftCode=" + shiftCode.toString()+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode") %>" paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="idInternal">
+		                        	<html:link page="<%="/viewStudentGroupInformation.do?method=viewStudentGroupInformation&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;shiftCode=" + shiftCode.toString()+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode") %>" paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="externalId">
 		               					<bean:write name="infoStudentGroup" property="groupNumber"/>
 									</html:link>
 								</logic:iterate>]
@@ -368,7 +368,7 @@
 		                        <logic:notEmpty name="infoSiteGroupsByShift" property="infoSiteStudentGroupsList">
 		                        [<logic:iterate id="infoSiteStudentGroup" name="infoSiteGroupsByShift" property="infoSiteStudentGroupsList" >
 									<bean:define id="infoStudentGroup" name="infoSiteStudentGroup" property="infoStudentGroup"/>	
-		                        	<html:link page="<%="/viewStudentGroupInformation.do?method=viewStudentGroupInformation&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;shiftCode=" + shiftCode.toString()+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode") %>" paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="idInternal">
+		                        	<html:link page="<%="/viewStudentGroupInformation.do?method=viewStudentGroupInformation&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;shiftCode=" + shiftCode.toString()+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode") %>" paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="externalId">
 		               					<bean:write name="infoStudentGroup" property="groupNumber"/>
 									</html:link>
 								</logic:iterate>]

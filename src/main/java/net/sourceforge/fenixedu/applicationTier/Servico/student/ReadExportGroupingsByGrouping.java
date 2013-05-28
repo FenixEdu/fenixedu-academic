@@ -20,7 +20,7 @@ public class ReadExportGroupingsByGrouping {
         final List<InfoExportGrouping> infoExportGroupings = new ArrayList<InfoExportGrouping>(exportGroupings.size());
         for (final ExportGrouping exportGrouping : exportGroupings) {
             final InfoExportGrouping infoExportGrouping = new InfoExportGrouping();
-            infoExportGrouping.setIdInternal(exportGrouping.getIdInternal());
+            infoExportGrouping.setExternalId(exportGrouping.getExternalId());
             infoExportGrouping.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(exportGrouping.getExecutionCourse()));
             infoExportGroupings.add(infoExportGrouping);
         }

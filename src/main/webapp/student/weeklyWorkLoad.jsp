@@ -36,7 +36,7 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="0"/>
 	<bean:message key="label.semester"/>: 
 	<html:select bundle="HTMLALT_RESOURCES" property="executionPeriodID" onchange="this.form.submit();">
-		<html:options collection="executionPeriods" property="idInternal" labelProperty="qualifiedName"/>
+		<html:options collection="executionPeriods" property="externalId" labelProperty="qualifiedName"/>
 	</html:select>
 <%--
 	<logic:equal name="selectedExecutionPeriod" property="state.stateCode" value="C">
@@ -137,7 +137,7 @@
 
 	<html:form action="/weeklyWorkLoad.do">
 
-				 <bean:define id="attendsID" type="java.lang.Integer" name="attend" property="idInternal"/>		
+				 <bean:define id="attendsID" type="java.lang.Integer" name="attend" property="externalId"/>		
 				 <tr class="dnone">
 					<td >
 				 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="createFromForm"/>
@@ -350,7 +350,7 @@
 	</fr:view>
 	<br/>
 	<fr:edit name="weeklyWorkLoadBean" action="/weeklyWorkLoad.do?method=create" schema="weekly.work.load.bean">
-		<fr:hidden slot="attendsID" name="attend" property="idInternal"/>
+		<fr:hidden slot="attendsID" name="attend" property="externalId"/>
 	</fr:edit>
 	<br/>
 	<br/>

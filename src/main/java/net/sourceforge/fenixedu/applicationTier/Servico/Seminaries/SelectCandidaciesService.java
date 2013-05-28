@@ -47,7 +47,7 @@ public class SelectCandidaciesService {
             candidacyDTO.setUsername(registration.getPerson().getUsername());
             candidacyDTO.setEmail(registration.getPerson().getName());
             candidacyDTO.setInfoClassification(getInfoClassification(studentCurricularPlan.getEnrolments()));
-            candidacyDTO.setCandidacyId(candidacy.getIdInternal());
+            candidacyDTO.setCandidacyId(candidacy.getExternalId());
             if (candidacy.getApproved() != null) {
                 candidacyDTO.setApproved(candidacy.getApproved());
             } else {
@@ -98,7 +98,7 @@ public class SelectCandidaciesService {
             @Override
             public boolean evaluate(Object arg0) {
                 Seminary seminary = (Seminary) arg0;
-                return seminary.getIdInternal().equals(seminaryID);
+                return seminary.getExternalId().equals(seminaryID);
             }
         });
 

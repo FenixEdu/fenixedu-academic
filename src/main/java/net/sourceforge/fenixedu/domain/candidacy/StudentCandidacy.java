@@ -133,7 +133,7 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
 
         for (final Candidacy candidacy : RootDomainObject.getInstance().getCandidaciesSet()) {
             if (candidacy instanceof StudentCandidacy) {
-                if (studentCandidacyIds.contains(candidacy.getIdInternal())) {
+                if (studentCandidacyIds.contains(candidacy.getExternalId())) {
                     result.add((StudentCandidacy) candidacy);
                 }
             }

@@ -15,7 +15,7 @@
 <em><bean:message key="link.teacherServiceDistribution"/></em>
 <h2><bean:message key="link.teacherServiceDistribution.tsdCourseService"/></h2>
 
-<bean:define id="tsdProcessId" value="<%= ((TSDProcess) request.getAttribute("tsdProcess")).getIdInternal().toString() %>"/>
+<bean:define id="tsdProcessId" value="<%= ((TSDProcess) request.getAttribute("tsdProcess")).getExternalId().toString() %>"/>
 
 <p class="breadcumbs">
 	<em>
@@ -46,7 +46,7 @@
 	</th>
 	<td>
 		<html:select property="tsd" onchange="this.form.method.value='loadTeacherServiceDistribution'; this.form.submit();">
-			<html:options collection="tsdOptionEntryList" property="idInternal" labelProperty="name"/>
+			<html:options collection="tsdOptionEntryList" property="externalId" labelProperty="name"/>
 		</html:select>
 	</td>
 </tr>
@@ -56,7 +56,7 @@
 	</th>
 	<td>
 		<html:select property="executionPeriod" onchange="this.form.method.value='loadExecutionPeriod'; this.form.submit();">
-			<html:options collection="executionPeriodList" property="idInternal" labelProperty="semester"/>
+			<html:options collection="executionPeriodList" property="externalId" labelProperty="semester"/>
 		</html:select>
 	</td>
 </tr>
@@ -67,7 +67,7 @@
 	<th style="width: 100px;"><bean:message key="label.teacherServiceDistribution.competenceCourse"/>:</th>
 	<td>
 		<html:select property="competenceCourse" onchange="this.form.method.value='loadCompetenceCourse'; this.form.submit();">
-			<html:options collection="competenceCourseList" property="idInternal" labelProperty="name"/>
+			<html:options collection="competenceCourseList" property="externalId" labelProperty="name"/>
 		</html:select>							
 
 	</td>
@@ -92,7 +92,7 @@
 	</th>
 	<td>
 		<html:select property="tsdCurricularCourse" onchange="this.form.method.value='loadTSDCourses'; this.form.submit();">
-			<html:options collection="tsdCurricularCourseList" property="idInternal" labelProperty="degreeName"/>
+			<html:options collection="tsdCurricularCourseList" property="externalId" labelProperty="degreeName"/>
 		</html:select>							
 	</td>
 </tr>
@@ -106,7 +106,7 @@
 	<td>
 
 		<html:select property="tsdCurricularCourseGroup" onchange="this.form.method.value='loadTSDCourses'; document.forms[0].submit();">
-			<html:options collection="tsdCurricularCourseGroupList" property="idInternal" labelProperty="name"/>
+			<html:options collection="tsdCurricularCourseGroupList" property="externalId" labelProperty="name"/>
 		</html:select>
 		&nbsp;&nbsp;(
 <logic:notEmpty name="tsdCurricularCourseGroupList">
@@ -127,8 +127,8 @@
 <logic:notEqual name="selectedTSDCourseType" value="<%= TSDCourseType.NOT_DETERMINED.toString() %>">
 <logic:notPresent name="tsdCourseNotSelected">
 
-<bean:define id="tsdCourseId" name="selectedTSDCourse" property="idInternal"/>
-<bean:define id="tsdId" name="selectedTSD" property="idInternal"/>
+<bean:define id="tsdCourseId" name="selectedTSDCourse" property="externalId"/>
+<bean:define id="tsdId" name="selectedTSD" property="externalId"/>
 
 <br/>
 <br/>

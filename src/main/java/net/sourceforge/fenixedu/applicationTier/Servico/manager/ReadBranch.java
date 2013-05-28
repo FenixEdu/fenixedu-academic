@@ -13,8 +13,8 @@ public class ReadBranch {
 
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
-    public static InfoBranch run(Integer idInternal) throws FenixServiceException {
-        Branch branch = RootDomainObject.getInstance().readBranchByOID(idInternal);
+    public static InfoBranch run(Integer externalId) throws FenixServiceException {
+        Branch branch = RootDomainObject.getInstance().readBranchByOID(externalId);
         if (branch == null) {
             throw new NonExistingServiceException();
         }

@@ -26,7 +26,7 @@ public class MathMlMaterialRenderer extends StringRenderer {
         HtmlImage image = new HtmlImage();
 
         image.setSource(getContext().getViewState().getRequest().getContextPath() + "/mathml/MathMlServlet?oid="
-                + mathMlMaterial.getIdInternal());
+                + mathMlMaterial.getExternalId());
         image.setTitle("Equation");
 
         image.setClasses(classes);

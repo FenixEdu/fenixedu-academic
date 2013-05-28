@@ -47,9 +47,9 @@ public class ViewRoomFormAction extends FenixSelectedRoomsAndSelectedRoomIndexCo
         List<InfoRoom> infoRooms = (List<InfoRoom>) request.getAttribute(PresentationConstants.SELECTED_ROOMS);
         InfoRoom infoRoom = infoRooms.get(((Integer) indexForm.get("index")).intValue());
         request.setAttribute(PresentationConstants.ROOM, infoRoom);
-        request.setAttribute(PresentationConstants.ROOM_OID, infoRoom.getIdInternal());
+        request.setAttribute(PresentationConstants.ROOM_OID, infoRoom.getExternalId());
 
-        final AllocatableSpace room = (AllocatableSpace) rootDomainObject.readResourceByOID(infoRoom.getIdInternal());
+        final AllocatableSpace room = (AllocatableSpace) rootDomainObject.readResourceByOID(infoRoom.getExternalId());
         Calendar calendar = Calendar.getInstance();
         if (roomOccupationWeekBean.getWeekBean() == null) {
             calendar.setTime(roomOccupationWeekBean.getAcademicInterval().getStart().toDate());

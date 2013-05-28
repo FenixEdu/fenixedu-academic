@@ -19,9 +19,9 @@ public class LerTurmas {
     public static List<InfoClass> run(InfoExecutionDegree infoExecutionDegree, InfoExecutionPeriod infoExecutionPeriod,
             Integer curricularYear) {
 
-        final ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
+        final ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(infoExecutionDegree.getExternalId());
         final ExecutionSemester executionSemester =
-                RootDomainObject.getInstance().readExecutionSemesterByOID(infoExecutionPeriod.getIdInternal());
+                RootDomainObject.getInstance().readExecutionSemesterByOID(infoExecutionPeriod.getExternalId());
 
         final Set<SchoolClass> classes;
         if (curricularYear != null) {

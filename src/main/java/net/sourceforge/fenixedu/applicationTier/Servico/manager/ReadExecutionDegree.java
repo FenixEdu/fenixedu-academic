@@ -20,8 +20,8 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadExecutionDegree {
 
-    protected InfoExecutionDegree run(Integer idInternal) throws FenixServiceException {
-        final ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(idInternal);
+    protected InfoExecutionDegree run(Integer externalId) throws FenixServiceException {
+        final ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(externalId);
 
         if (executionDegree == null) {
             throw new NonExistingServiceException();
@@ -35,15 +35,15 @@ public class ReadExecutionDegree {
     private static final ReadExecutionDegree serviceInstance = new ReadExecutionDegree();
 
     @Service
-    public static InfoExecutionDegree runReadExecutionDegree(Integer idInternal) throws FenixServiceException,
+    public static InfoExecutionDegree runReadExecutionDegree(Integer externalId) throws FenixServiceException,
             NotAuthorizedException {
         try {
             ManagerAuthorizationFilter.instance.execute();
-            return serviceInstance.run(idInternal);
+            return serviceInstance.run(externalId);
         } catch (NotAuthorizedException ex1) {
             try {
                 CoordinatorAuthorizationFilter.instance.execute();
-                return serviceInstance.run(idInternal);
+                return serviceInstance.run(externalId);
             } catch (NotAuthorizedException ex2) {
                 throw ex2;
             }

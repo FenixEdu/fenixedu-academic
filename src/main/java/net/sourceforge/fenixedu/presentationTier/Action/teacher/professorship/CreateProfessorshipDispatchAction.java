@@ -152,7 +152,7 @@ public class CreateProfessorshipDispatchAction extends FenixDispatchAction {
                 public boolean evaluate(Object input) {
                     InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) input;
 
-                    return infoExecutionPeriod.getIdInternal().equals(executionPeriodId);
+                    return infoExecutionPeriod.getExternalId().equals(executionPeriodId);
                 }
             });
 

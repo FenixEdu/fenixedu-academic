@@ -70,10 +70,10 @@ public class ReadTeacherProfessorshipsByExecutionYearAction extends AbstractRead
     private void prepareForm(DynaActionForm dynaForm, HttpServletRequest request) {
         InfoExecutionYear infoExecutionYear = (InfoExecutionYear) request.getAttribute("executionYear");
         InfoTeacher infoTeacher = (InfoTeacher) request.getAttribute("infoTeacher");
-        dynaForm.set("idInternal", infoTeacher.getIdInternal());
-        dynaForm.set("teacherId", infoTeacher.getIdInternal().toString());
+        dynaForm.set("externalId", infoTeacher.getExternalId());
+        dynaForm.set("teacherId", infoTeacher.getExternalId().toString());
         if (dynaForm.get("executionYearId") == null) {
-            dynaForm.set("executionYearId", infoExecutionYear.getIdInternal());
+            dynaForm.set("executionYearId", infoExecutionYear.getExternalId());
         }
 
         List detailedProfessorshipList = (List) request.getAttribute("detailedProfessorshipList");
@@ -83,7 +83,7 @@ public class ReadTeacherProfessorshipsByExecutionYearAction extends AbstractRead
         for (int i = 0; i < detailedProfessorshipList.size(); i++) {
             DetailedProfessorship dps = (DetailedProfessorship) detailedProfessorshipList.get(i);
 
-            Integer executionCourseId = dps.getInfoProfessorship().getInfoExecutionCourse().getIdInternal();
+            Integer executionCourseId = dps.getInfoProfessorship().getInfoExecutionCourse().getExternalId();
             if (dps.getResponsibleFor().booleanValue()) {
                 executionCourseIds.add(executionCourseId);
             }

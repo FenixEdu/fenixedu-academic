@@ -104,7 +104,7 @@ public class AccountingEventPaymentCode extends AccountingEventPaymentCode_Base 
         if (LogLevel.WARN) {
             if (event.isCancelled()) {
                 logger.warn("############################ PROCESSING CODE FOR CANCELLED EVENT ###############################");
-                logger.warn("Event " + event.getIdInternal() + " for person " + event.getPerson().getIdInternal()
+                logger.warn("Event " + event.getExternalId() + " for person " + event.getPerson().getExternalId()
                         + " is cancelled");
                 logger.warn("Code Number: " + getCode());
                 logger.warn("################################################################################################");

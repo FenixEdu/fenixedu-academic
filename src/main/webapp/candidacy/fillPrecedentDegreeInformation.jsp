@@ -24,7 +24,7 @@ This page must be included using <%@ include file="/candidacy/fillPrecedentDegre
 
 --%>
 
-<bean:define id="parentProcessId" name="parentProcess" property="idInternal" />
+<bean:define id="parentProcessId" name="parentProcess" property="externalId" />
 <bean:define id="processName" name="processName" />
 
 <h3 class="mtop15 mbottom025"><bean:message key="label.candidacy.precedentDegreeInformation" bundle="APPLICATION_RESOURCES"/>:</h3>

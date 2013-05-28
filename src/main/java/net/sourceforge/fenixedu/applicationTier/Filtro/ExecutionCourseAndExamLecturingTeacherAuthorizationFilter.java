@@ -76,7 +76,7 @@ public class ExecutionCourseAndExamLecturingTeacherAuthorizationFilter extends A
 
             if (executionCourse != null && evaluationID != null) {
                 for (Evaluation associatedEvaluation : executionCourse.getAssociatedEvaluations()) {
-                    if (associatedEvaluation.getIdInternal().equals(evaluationID)) {
+                    if (associatedEvaluation.getExternalId().equals(evaluationID)) {
                         return true;
                     }
                 }

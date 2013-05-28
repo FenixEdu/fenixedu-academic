@@ -199,8 +199,8 @@ public class MergePersonsDA extends FenixDispatchAction {
 
         if (bean == null) {
             bean = new MergePersonsBean();
-            bean.setLeftOid(request.getParameter("object1IdInternal"));
-            bean.setRightOid(request.getParameter("object2IdInternal"));
+            bean.setLeftOid(request.getParameter("object1ExternalId"));
+            bean.setRightOid(request.getParameter("object2ExternalId"));
             bean.setCurrentClass(request.getParameter("classToMerge"));
         }
 
@@ -221,9 +221,9 @@ public class MergePersonsDA extends FenixDispatchAction {
     private void fillDtoWithSimpleProperty(Role roleSlot, MergeSlotDTO mergeSlot, Object reference, String order) {
         if (reference != null) {
             if (roleSlot.getType() instanceof DomainClass) {
-                final long idInternal = ((DomainObject) reference).getOID();
-                mergeSlot.setValueProperty(order, "OID: " + idInternal);
-                mergeSlot.setValueLinkProperty(order, "/domainbrowser/showObj?OID=" + idInternal);
+                final long externalId = ((DomainObject) reference).getOID();
+                mergeSlot.setValueProperty(order, "OID: " + externalId);
+                mergeSlot.setValueLinkProperty(order, "/domainbrowser/showObj?OID=" + externalId);
             } else {
                 // enum ??
                 mergeSlot.setValueProperty(order, reference.toString());
@@ -333,7 +333,7 @@ public class MergePersonsDA extends FenixDispatchAction {
         Student studentToRemove = domainObject2.getStudent();
 
         if (studentToRemove != null) {
-            DeleteObjectByOID.run(Student.class, studentToRemove.getIdInternal());
+            DeleteObjectByOID.run(Student.class, studentToRemove.getExternalId());
             request.setAttribute("studentRemoved", true);
         }
 

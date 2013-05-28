@@ -40,7 +40,7 @@ public class DegreeShowThesesDA extends PublicShowThesesDA {
             throw new FenixActionException();
         }
 
-        request.setAttribute("degreeID", degree.getIdInternal());
+        request.setAttribute("degreeID", degree.getExternalId());
         request.setAttribute("degree", degree);
 
         return degree;

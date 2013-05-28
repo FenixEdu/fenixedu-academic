@@ -36,9 +36,9 @@ public class VigilancyCourseGroupManagement extends FenixDispatchAction {
 
         VigilancyCourseGroupBean bean = new VigilancyCourseGroupBean();
         String oid = request.getParameter("gid");
-        Integer idInternal = Integer.valueOf(oid);
+        Integer externalId = Integer.valueOf(oid);
 
-        VigilantGroup group = (VigilantGroup) RootDomainObject.readDomainObjectByOID(VigilantGroup.class, idInternal);
+        VigilantGroup group = (VigilantGroup) RootDomainObject.readDomainObjectByOID(VigilantGroup.class, externalId);
         bean.setSelectedVigilantGroup(group);
         bean.setSelectedDepartment(getDepartment(group));
         request.setAttribute("bean", bean);

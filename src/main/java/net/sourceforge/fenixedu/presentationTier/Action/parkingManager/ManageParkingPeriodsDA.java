@@ -158,7 +158,7 @@ public class ManageParkingPeriodsDA extends FenixDispatchAction {
 
     public ActionForward editRequestPeriod(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        Integer parkingRequestPeriodToEditCode = new Integer(request.getParameter("idInternal"));
+        Integer parkingRequestPeriodToEditCode = new Integer(request.getParameter("externalId"));
         request.setAttribute("parkingRequestPeriodToEdit",
                 rootDomainObject.readParkingRequestPeriodByOID(parkingRequestPeriodToEditCode));
         return prepareManageRequestsPeriods(mapping, actionForm, request, response);
@@ -166,7 +166,7 @@ public class ManageParkingPeriodsDA extends FenixDispatchAction {
 
     public ActionForward deleteRequestPeriod(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        Integer parkingRequestPeriodToDeleteCode = new Integer(request.getParameter("idInternal"));
+        Integer parkingRequestPeriodToDeleteCode = new Integer(request.getParameter("externalId"));
         DeleteParkingRequestPeriod.run(parkingRequestPeriodToDeleteCode);
         return prepareManageRequestsPeriods(mapping, actionForm, request, response);
     }

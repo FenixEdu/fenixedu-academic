@@ -88,8 +88,8 @@ public class EditCurricularCourseScopeDA extends FenixDispatchAction {
             dynaForm.set("anotation", oldInfoCurricularCourseScope.getAnotation());
         }
 
-        dynaForm.set("branchId", oldInfoCurricularCourseScope.getInfoBranch().getIdInternal().toString());
-        dynaForm.set("curricularSemesterId", oldInfoCurricularCourseScope.getInfoCurricularSemester().getIdInternal().toString());
+        dynaForm.set("branchId", oldInfoCurricularCourseScope.getInfoBranch().getExternalId().toString());
+        dynaForm.set("curricularSemesterId", oldInfoCurricularCourseScope.getInfoCurricularSemester().getExternalId().toString());
 
         List result = null;
         try {
@@ -112,7 +112,7 @@ public class EditCurricularCourseScopeDA extends FenixDispatchAction {
         String label, value;
         while (iter.hasNext()) {
             infoBranch = (InfoBranch) iter.next();
-            value = infoBranch.getIdInternal().toString();
+            value = infoBranch.getExternalId().toString();
             label = infoBranch.getCode() + " - " + infoBranch.getName();
             branchesList.add(new LabelValueBean(label, value));
         }
@@ -164,7 +164,7 @@ public class EditCurricularCourseScopeDA extends FenixDispatchAction {
 
         InfoBranch infoBranch = new InfoBranch(rootDomainObject.readBranchByOID(branchId));
         newInfoCurricularCourseScope.setInfoBranch(infoBranch);
-        newInfoCurricularCourseScope.setIdInternal(oldCurricularCourseScopeId);
+        newInfoCurricularCourseScope.setExternalId(oldCurricularCourseScopeId);
 
         if (beginDateString.compareTo("") != 0) {
             Calendar beginDateCalendar = Calendar.getInstance();

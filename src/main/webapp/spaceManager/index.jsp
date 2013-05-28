@@ -28,7 +28,7 @@
 %>
 
 <logic:present name="selectedSpace">
-	<bean:write name="selectedSpace" property="idInternal"/>
+	<bean:write name="selectedSpace" property="externalId"/>
 </logic:present>
 
 <logic:notEmpty name="spaces">
@@ -48,7 +48,7 @@
 		</tr>		
 		<logic:iterate id="space" name="spaces">
 			<logic:notPresent name="space" property="suroundingSpace">
-				<bean:define id="urlToManage">/manageSpaces.do?method=manageSpace&page=0&spaceInformationID=<bean:write name="space" property="spaceInformation.idInternal"/></bean:define>
+				<bean:define id="urlToManage">/manageSpaces.do?method=manageSpace&page=0&spaceInformationID=<bean:write name="space" property="spaceInformation.externalId"/></bean:define>
 				<tr>
 					<td>
 						<logic:equal name="space" property="class.name" value="net.sourceforge.fenixedu.domain.space.Campus">

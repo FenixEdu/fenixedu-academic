@@ -61,7 +61,7 @@
 
 </html:form>
 
-<bean:define id="studentCurricularPlanId" name="optionalEnrolmentBean" property="studentCurricularPlan.idInternal" />
+<bean:define id="studentCurricularPlanId" name="optionalEnrolmentBean" property="studentCurricularPlan.externalId" />
 
 <html:form action="<%= "/bolonhaStudentEnrolment.do?method=cancelChooseOptionalCurricularCourseToEnrol" %>">
 <fr:context>

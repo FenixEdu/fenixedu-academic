@@ -97,7 +97,7 @@ public class Test extends Test_Base {
 
     public Question findQuestionByOID(Integer questionId) {
         for (TestQuestion testQuestion : this.getTestQuestions()) {
-            if (testQuestion.getQuestion().getIdInternal().equals(questionId)) {
+            if (testQuestion.getQuestion().getExternalId().equals(questionId)) {
                 return testQuestion.getQuestion();
             }
         }

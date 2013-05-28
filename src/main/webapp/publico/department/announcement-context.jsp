@@ -6,7 +6,7 @@
 
 <bean:define id="siteActionName" value="/department/departmentSite.do" toScope="request"/>
 <bean:define id="siteContextParam" value="selectedDepartmentUnitID" toScope="request"/>
-<bean:define id="siteContextParamValue" name="unit" property="idInternal" toScope="request"/>
+<bean:define id="siteContextParamValue" name="unit" property="externalId" toScope="request"/>
 
 <div class="breadcumbs mvert0">
     <bean:define id="institutionUrl">

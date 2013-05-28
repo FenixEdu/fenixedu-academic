@@ -43,14 +43,14 @@
 						
 						<h:outputText value=" | " escape="false"/>
 						<h:commandLink action="enterEditExam">
-							<f:param name="evaluationID" value="#{exam.idInternal}" />
+							<f:param name="evaluationID" value="#{exam.externalId}" />
 							<h:outputFormat value="#{bundle['link.edit']}" />
 						</h:commandLink>
 		
 						<h:outputText value="<p class='indent1 mvert05'>#{bundle['label.teacher.evaluation.enrolment.management']}: " escape="false"/>
 						<h:panelGroup rendered="#{!exam.specialSeason}">
 							<h:commandLink action="enterEditEnrolmentPeriod">
-								<f:param name="evaluationID" value="#{exam.idInternal}" />
+								<f:param name="evaluationID" value="#{exam.externalId}" />
 								<h:outputFormat value="#{bundle['link.evaluation.enrollment.period']}"/>
 							</h:commandLink>
 						</h:panelGroup>
@@ -62,7 +62,7 @@
 						
 						<h:panelGroup rendered="#{!exam.specialSeason}">
 							<h:commandLink action="enterShowStudentsEnroled">
-								<f:param name="evaluationID" value="#{exam.idInternal}" />
+								<f:param name="evaluationID" value="#{exam.externalId}" />
 								<h:outputFormat value="#{bundle['link.students.enrolled.inExam']}" />
 							</h:commandLink>
 						</h:panelGroup>
@@ -74,7 +74,7 @@
 						
 						<h:panelGroup rendered="#{!exam.specialSeason}">
 							<h:commandLink action="#{evaluationManagementBackingBean.checkIfCanDistributeStudentsByRooms}">
-								<f:param name="evaluationID" value="#{exam.idInternal}" />
+								<f:param name="evaluationID" value="#{exam.externalId}" />
 								<h:outputFormat value="#{bundle['link.students.distribution']}" />
 							</h:commandLink>
 						</h:panelGroup>
@@ -87,21 +87,21 @@
 					
 						<h:outputText value="<p class='indent1 mvert05'>#{bundle['label.students.listMarks']}: " escape="false"/>
 						<h:commandLink action="enterShowMarksListOptions">
-							<f:param name="evaluationID" value="#{exam.idInternal}" />
+							<f:param name="evaluationID" value="#{exam.externalId}" />
 							<h:outputFormat value="#{bundle['link.teacher.evaluation.grades']}" />
 						</h:commandLink>
 
 						<h:outputText value=" | " escape="false"/>
 						<h:commandLink action="enterPublishMarks">
-							<f:param name="evaluationID" value="#{exam.idInternal}" />
+							<f:param name="evaluationID" value="#{exam.externalId}" />
 							<h:outputFormat value="#{bundle['link.publishMarks']}" />
 						</h:commandLink>
 
 
 					<h:outputText escape="false" value="</p><p class='indent1 mvert05'>#{bundle['label.vigilancies']}: "/>
-					<h:outputLink value="#{evaluationManagementBackingBean.contextPath}/teacher/evaluation/vigilancy/vigilantsForEvaluation.do?method=viewVigilants&executionCourseID=#{evaluationManagementBackingBean.executionCourseID}&evaluationOID=#{exam.idInternal}"><h:outputText value="#{bundle['label.showVigilants']}"/></h:outputLink>
+					<h:outputLink value="#{evaluationManagementBackingBean.contextPath}/teacher/evaluation/vigilancy/vigilantsForEvaluation.do?method=viewVigilants&executionCourseID=#{evaluationManagementBackingBean.executionCourseID}&evaluationOID=#{exam.externalId}"><h:outputText value="#{bundle['label.showVigilants']}"/></h:outputLink>
 					<h:outputText value=" | " escape="false"/>
-					<h:outputLink value="#{evaluationManagementBackingBean.contextPath}/teacher/evaluation/vigilancy/vigilantsForEvaluation.do?method=editReport&executionCourseID=#{evaluationManagementBackingBean.executionCourseID}&evaluationOID=#{exam.idInternal}"><h:outputText value="#{bundle['label.editReport']}"/></h:outputLink>					
+					<h:outputLink value="#{evaluationManagementBackingBean.contextPath}/teacher/evaluation/vigilancy/vigilantsForEvaluation.do?method=editReport&executionCourseID=#{evaluationManagementBackingBean.executionCourseID}&evaluationOID=#{exam.externalId}"><h:outputText value="#{bundle['label.editReport']}"/></h:outputLink>					
 					<h:outputText value="</li></ul>" escape="false"/>
 					<h:outputText value="<br/>" escape="false"/>
 					</h:panelGroup>
@@ -121,7 +121,7 @@
 								<h:outputLink rendered="#{(degreeModuleScope.curricularCourse == curricularCourse)}" value="../../publico/executionCourse.do">
 									<h:outputText value="#{curricularCourse.degreeCurricularPlan.degree.sigla}" escape="false"/>
 									<f:param name="method" value="firstPage"/>
-									<f:param name="executionCourseID" value="#{associatedExecutionCourse.idInternal}"/>
+									<f:param name="executionCourseID" value="#{associatedExecutionCourse.externalId}"/>
 								</h:outputLink>
 								<fc:dataRepeater rendered="#{(degreeModuleScope.curricularCourse == curricularCourse) && firstCurricularCourse}" value="#{false}" var="firstCurricularCourse"/>
 							</fc:dataRepeater>

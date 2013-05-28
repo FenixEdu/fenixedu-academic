@@ -201,7 +201,7 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
                 for (final DegreeModule degreeModule : degreeModules) {
                     pathName.append((pathName.length() == 0) ? "" : " > ").append(degreeModule.getName());
                 }
-                result.add(new SelectItem(lastDegreeModule.getIdInternal(), pathName.toString()));
+                result.add(new SelectItem(lastDegreeModule.getExternalId(), pathName.toString()));
             }
         }
         Collections.sort(result, new BeanComparator("label"));

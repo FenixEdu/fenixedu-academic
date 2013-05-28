@@ -182,7 +182,7 @@ public class TSDCourseValuationAction extends FenixDispatchAction {
         TSDCourse tsdCourse = getSelectedTSDCourse(dynaForm);
         Map<String, Object> tsdCourseParameters = obtainStudentsParametersFromForm(dynaForm);
 
-        SetTSDCourse.runSetTSDCourse(tsdCourse.getIdInternal(), tsdCourseParameters);
+        SetTSDCourse.runSetTSDCourse(tsdCourse.getExternalId(), tsdCourseParameters);
 
         return loadTSDCourses(mapping, form, request, response, "courseValuationStudents");
     }
@@ -210,7 +210,7 @@ public class TSDCourseValuationAction extends FenixDispatchAction {
      * TSDCourse tsdCourse = getSelectedTSDCourse(dynaForm); Map<String, Object>
      * tsdCourseParameters = obtainRemoveParametersFromForm(dynaForm);
      * 
-     * Object[] parameters = new Object[] { tsdCourse.getIdInternal(),
+     * Object[] parameters = new Object[] { tsdCourse.getExternalId(),
      * tsdCourseParameters }; ServiceUtils.executeService( "SetTSDCourse",
      * parameters);
      * 
@@ -237,7 +237,7 @@ public class TSDCourseValuationAction extends FenixDispatchAction {
         TSDCourse tsdCourse = getSelectedTSDCourse(dynaForm);
         Map<String, Object> tsdCourseParameters = obtainWeightsParametersFromForm(dynaForm);
 
-        SetTSDCourse.runSetTSDCourse(tsdCourse.getIdInternal(), tsdCourseParameters);
+        SetTSDCourse.runSetTSDCourse(tsdCourse.getExternalId(), tsdCourseParameters);
 
         return loadTSDCourses(mapping, form, request, response, "courseValuationWeights");
     }
@@ -266,7 +266,7 @@ public class TSDCourseValuationAction extends FenixDispatchAction {
         TSDCourse tsdCourse = getSelectedTSDCourse(dynaForm);
         Map<String, Object> tsdCourseParameters = obtainHoursParametersFromForm(dynaForm);
 
-        SetTSDCourse.runSetTSDCourse(tsdCourse.getIdInternal(), tsdCourseParameters);
+        SetTSDCourse.runSetTSDCourse(tsdCourse.getExternalId(), tsdCourseParameters);
 
         return loadTSDCourses(mapping, form, request, response, "courseValuationHours");
     }

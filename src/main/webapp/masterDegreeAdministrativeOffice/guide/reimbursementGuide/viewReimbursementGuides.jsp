@@ -34,13 +34,13 @@
 		<logic:iterate id="reimbursementGuide" name="reimbursementGuidesList">
 			<tr>
 				<bean:define id="linkViewReimbursementGuideDetails">
-					/viewReimbursementGuideDetails.do?method=view&id=<bean:write name="reimbursementGuide" property="idInternal"/>
+					/viewReimbursementGuideDetails.do?method=view&id=<bean:write name="reimbursementGuide" property="externalId"/>
 				</bean:define>
 				<bean:define id="linkPrintReimbursementGuide">
-					/printReimbursementGuide.do?method=print&id=<bean:write name="reimbursementGuide" property="idInternal"/>
+					/printReimbursementGuide.do?method=print&id=<bean:write name="reimbursementGuide" property="externalId"/>
 				</bean:define>
 				<bean:define id="linkEditReimbursementGuideSituation">
-					/editReimbursementGuideSituation.do?method=prepare&id=<bean:write name="reimbursementGuide" property="idInternal"/>
+					/editReimbursementGuideSituation.do?method=prepare&id=<bean:write name="reimbursementGuide" property="externalId"/>
 				</bean:define>
 				
 				

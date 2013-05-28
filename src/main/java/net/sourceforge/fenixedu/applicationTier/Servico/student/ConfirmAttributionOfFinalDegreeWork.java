@@ -36,7 +36,7 @@ public class ConfirmAttributionOfFinalDegreeWork {
 
             FinalDegreeWorkGroup group = groupProposal.getFinalDegreeDegreeWorkGroup();
             if (group != null) {
-                if (!group.getIdInternal().equals(groupAttributed.getIdInternal())) {
+                if (!group.getExternalId().equals(groupAttributed.getExternalId())) {
                     throw new NoAttributionToConfirmException();
                 }
 

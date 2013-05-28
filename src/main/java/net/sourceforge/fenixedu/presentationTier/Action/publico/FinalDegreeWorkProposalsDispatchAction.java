@@ -67,7 +67,7 @@ public class FinalDegreeWorkProposalsDispatchAction extends FenixContextDispatch
         if (StringUtils.isEmpty(executionYearOID)) {
             InfoExecutionYear infoExecutionYear = InfoExecutionYear.newInfoFromDomain(ExecutionYear.readCurrentExecutionYear());
             if (infoExecutionYear != null) {
-                executionYearOID = infoExecutionYear.getIdInternal().toString();
+                executionYearOID = infoExecutionYear.getExternalId().toString();
                 finalWorkForm.set("executionYearOID", executionYearOID);
                 request.setAttribute("finalDegreeWorksForm", finalWorkForm);
             }
@@ -230,7 +230,7 @@ public class FinalDegreeWorkProposalsDispatchAction extends FenixContextDispatch
 
             for (int i = 0; i < branches.size(); i++) {
                 InfoBranch branch = (InfoBranch) branches.get(i);
-                if (branchOID.equals(branch.getIdInternal())) {
+                if (branchOID.equals(branch.getExternalId())) {
                     return true;
                 }
             }

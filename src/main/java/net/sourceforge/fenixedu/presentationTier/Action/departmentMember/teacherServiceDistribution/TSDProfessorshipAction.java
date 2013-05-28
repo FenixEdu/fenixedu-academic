@@ -102,7 +102,7 @@ public class TSDProfessorshipAction extends FenixDispatchAction {
             tsdCourse = selectedTSDCompetenceCourse;
         }
 
-        SetTSDProfessorship.runSetTSDProfessorship(tsdCourse.getIdInternal(), selectedTSDTeacher.getIdInternal(),
+        SetTSDProfessorship.runSetTSDProfessorship(tsdCourse.getExternalId(), selectedTSDTeacher.getExternalId(),
                 tsdProfessorshipParameters);
 
         return loadTSDProfessorships(mapping, form, request, response);
@@ -115,7 +115,7 @@ public class TSDProfessorshipAction extends FenixDispatchAction {
 
         TSDProfessorship selectedTSDProfessorship = getSelectedTSDProfessorship(userView, dynaForm);
 
-        DeleteTSDProfessorship.runDeleteTSDProfessorship(selectedTSDProfessorship.getIdInternal());
+        DeleteTSDProfessorship.runDeleteTSDProfessorship(selectedTSDProfessorship.getExternalId());
 
         return loadTSDProfessorships(mapping, form, request, response);
     }
@@ -143,7 +143,7 @@ public class TSDProfessorshipAction extends FenixDispatchAction {
         Boolean usingExtraCredits =
                 dynaForm.get("usingExtraCredits") == null ? false : (Boolean) dynaForm.get("usingExtraCredits");
 
-        SetExtraCreditsToTSDTeacher.runSetExtraCreditsToTSDTeacher(selectedTSDTeacher.getIdInternal(), extraCreditsName,
+        SetExtraCreditsToTSDTeacher.runSetExtraCreditsToTSDTeacher(selectedTSDTeacher.getExternalId(), extraCreditsName,
                 extraCreditsValue, usingExtraCredits);
 
         return loadTSDProfessorships(mapping, form, request, response);
@@ -259,18 +259,18 @@ public class TSDProfessorshipAction extends FenixDispatchAction {
         request.setAttribute("selectedTSDTeacher", new TSDTeacherDTOEntry(selectedTSDTeacher, selectedTeacherServiceDistribution
                 .getTSDProcessPhase().getTSDProcess().getExecutionPeriods()));
 
-        dynaForm.set("competenceCourse", selectedTSDCompetenceCourse.getIdInternal());
+        dynaForm.set("competenceCourse", selectedTSDCompetenceCourse.getExternalId());
 
         if (selectedTSDCurricularCourse != null) {
-            dynaForm.set("tsdCurricularCourse", selectedTSDCurricularCourse.getIdInternal());
+            dynaForm.set("tsdCurricularCourse", selectedTSDCurricularCourse.getExternalId());
         }
 
         if (selectedTSDCurricularCourseGroup != null) {
-            dynaForm.set("tsdCurricularCourseGroup", selectedTSDCurricularCourseGroup.getIdInternal());
+            dynaForm.set("tsdCurricularCourseGroup", selectedTSDCurricularCourseGroup.getExternalId());
         }
 
         if (selectedTSDTeacher != null) {
-            dynaForm.set("tsdTeacher", selectedTSDTeacher.getIdInternal());
+            dynaForm.set("tsdTeacher", selectedTSDTeacher.getExternalId());
         }
 
         TSDCourseType selectedTSDCourseType =
@@ -476,18 +476,18 @@ public class TSDProfessorshipAction extends FenixDispatchAction {
         TSDCourse tsdCourse = rootDomainObject.readTSDCourseByOID(selectedTSDCourseId);
 
         if (tsdCourse instanceof TSDCurricularCourse) {
-            dynaForm.set("tsdCurricularCourse", tsdCourse.getIdInternal());
+            dynaForm.set("tsdCurricularCourse", tsdCourse.getExternalId());
         } else if (tsdCourse instanceof TSDCurricularCourseGroup) {
-            dynaForm.set("tsdCurricularCourseGroup", tsdCourse.getIdInternal());
+            dynaForm.set("tsdCurricularCourseGroup", tsdCourse.getExternalId());
 
         }
 
         Integer selectedTSDTeacherId = new Integer(request.getParameter("tsdTeacher"));
         CompetenceCourse competenceCourse = tsdCourse.getCompetenceCourse();
 
-        dynaForm.set("competenceCourse", competenceCourse == null ? null : competenceCourse.getIdInternal());
+        dynaForm.set("competenceCourse", competenceCourse == null ? null : competenceCourse.getExternalId());
         dynaForm.set("tsdTeacher", selectedTSDTeacherId);
-        dynaForm.set("executionPeriod", tsdCourse.getExecutionPeriod().getIdInternal());
+        dynaForm.set("executionPeriod", tsdCourse.getExecutionPeriod().getExternalId());
         dynaForm.set("viewType", viewType);
 
         if (viewType == VIEW_PROFESSORSHIP_VALUATION_BY_COURSES) {

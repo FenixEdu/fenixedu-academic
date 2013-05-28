@@ -46,7 +46,7 @@ public class InfoCampus extends InfoObject {
     @Override
     public String toString() {
         String result = "[INFODEGREE_INFO:";
-        result += " codigo interno= " + getIdInternal();
+        result += " codigo interno= " + getExternalId();
         result += " name= " + getName();
         result += "]";
         return result;

@@ -379,7 +379,7 @@
 <br/>
 
 
-<bean:define id="idGrantOwner" name="infoGrantOwner" property="idInternal"/>
+<bean:define id="idGrantOwner" name="infoGrantOwner" property="externalId"/>
 <bean:define id="personExternalId" name="infoGrantOwner" property="personInfo.person.externalId"/>
 
 	<%-- Editar Bolseiro 
@@ -413,7 +413,7 @@
 <%-- Gerir contractos --%>
 <%-- <strong><p align='center'><bean:message key="label.grant.contract.manage"/></p></strong> --%>
 <bean:message key="message.grant.contract.manage" />:&nbsp;
-<html:link page='<%= "/manageGrantContract.do?method=prepareManageGrantContractForm&amp;idInternal=" +  idGrantOwner.toString() %>' > 
+<html:link page='<%= "/manageGrantContract.do?method=prepareManageGrantContractForm&amp;externalId=" +  idGrantOwner.toString() %>' > 
 	<bean:message key="link.manage.grant.contract" />
 </html:link>		
 	
@@ -423,9 +423,9 @@
 <%-- <strong><p align='center'><bean:message key="label.grant.qualification.manage"/></p></strong> --%>
 <bean:message key="message.grant.qualification.manage" />:&nbsp;
 <bean:define id="username" name="infoGrantOwner" property="personInfo.username"/>
-<bean:define id="idPerson" name="infoGrantOwner" property="personInfo.idInternal"/>
+<bean:define id="idPerson" name="infoGrantOwner" property="personInfo.externalId"/>
 <bean:define id="grantOwnerNumber" name="infoGrantOwner" property="grantOwnerNumber"/>
-<html:link page='<%= "/manageGrantQualification.do?method=prepareManageGrantQualificationForm&amp;idInternal=" +  idGrantOwner.toString() + "&amp;idPerson=" + idPerson.toString() + "&amp;username=" + username.toString() + "&amp;grantOwnerNumber=" + grantOwnerNumber.toString()%>' > 
+<html:link page='<%= "/manageGrantQualification.do?method=prepareManageGrantQualificationForm&amp;externalId=" +  idGrantOwner.toString() + "&amp;idPerson=" + idPerson.toString() + "&amp;username=" + username.toString() + "&amp;grantOwnerNumber=" + grantOwnerNumber.toString()%>' > 
 	<bean:message key="link.manage.grant.qualification" />
 </html:link>		
 

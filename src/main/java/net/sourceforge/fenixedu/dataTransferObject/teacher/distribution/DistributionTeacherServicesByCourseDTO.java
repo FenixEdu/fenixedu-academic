@@ -23,7 +23,7 @@ import org.joda.time.format.PeriodFormatterBuilder;
 public class DistributionTeacherServicesByCourseDTO extends DataTranferObject {
 
     public class TeacherExecutionCourseServiceDTO {
-        private Integer teacherIdInternal;
+        private Integer teacherExternalId;
 
         private String teacherName;
 
@@ -33,9 +33,9 @@ public class DistributionTeacherServicesByCourseDTO extends DataTranferObject {
 
         private Boolean teacherOfDepartment;
 
-        public TeacherExecutionCourseServiceDTO(Integer teacherIdInternal, String teacherName, Double hoursSpentByTeacher,
+        public TeacherExecutionCourseServiceDTO(Integer teacherExternalId, String teacherName, Double hoursSpentByTeacher,
                 Duration timeSpentByTeacher, Boolean teacherOfDepartment) {
-            this.teacherIdInternal = teacherIdInternal;
+            this.teacherExternalId = teacherExternalId;
             this.teacherName = teacherName;
             this.hoursSpentByTeacher = hoursSpentByTeacher;
             this.timeSpentByTeacher = timeSpentByTeacher;
@@ -51,8 +51,8 @@ public class DistributionTeacherServicesByCourseDTO extends DataTranferObject {
             return timeSpentByTeacher;
         }
 
-        public Integer getTeacherIdInternal() {
-            return teacherIdInternal;
+        public Integer getTeacherExternalId() {
+            return teacherExternalId;
         }
 
         public String getTeacherName() {
@@ -78,7 +78,7 @@ public class DistributionTeacherServicesByCourseDTO extends DataTranferObject {
     }
 
     public class ExecutionCourseDistributionServiceEntryDTO implements Comparable {
-        private Integer executionCourseIdInternal;
+        private Integer executionCourseExternalId;
 
         private String executionCourseName;
 
@@ -131,7 +131,7 @@ public class DistributionTeacherServicesByCourseDTO extends DataTranferObject {
 
         private List<TeacherExecutionCourseServiceDTO> teacherExecutionCourseServiceList;
 
-        public ExecutionCourseDistributionServiceEntryDTO(Integer executionCourseIdInternal, String executionCourseName,
+        public ExecutionCourseDistributionServiceEntryDTO(Integer executionCourseExternalId, String executionCourseName,
                 String executionCourseCampus, String executionCourseDegreeName, Set<String> executionCourseCurricularYearsList,
                 Integer executionCourseSemester, Integer executionCourseFirstTimeEnrollementStudentNumber,
                 Integer executionCourseSecondTimeEnrollementStudentNumber, Duration totalDuration,
@@ -145,7 +145,7 @@ public class DistributionTeacherServicesByCourseDTO extends DataTranferObject {
                 Double problemsStudentsNumberPerShift, Double tutorialOrientationStudentsNumberPerShift,
                 Double fieldWorkStudentsNumberPerShift, Double trainingPeriodStudentsNumberPerShift) {
 
-            this.executionCourseIdInternal = executionCourseIdInternal;
+            this.executionCourseExternalId = executionCourseExternalId;
             this.executionCourseName = executionCourseName;
             this.executionCourseCampus = executionCourseCampus;
             this.executionCourseCurricularYearsList = executionCourseCurricularYearsList;
@@ -203,8 +203,8 @@ public class DistributionTeacherServicesByCourseDTO extends DataTranferObject {
             return executionCourseFirstTimeEnrollementStudentNumber;
         }
 
-        public Integer getExecutionCourseIdInternal() {
-            return executionCourseIdInternal;
+        public Integer getExecutionCourseExternalId() {
+            return executionCourseExternalId;
         }
 
         public Double getExecutionCourseTotalHoursLecturedByTeachers() {
@@ -468,7 +468,7 @@ public class DistributionTeacherServicesByCourseDTO extends DataTranferObject {
         executionCourseMap = new HashMap<Integer, ExecutionCourseDistributionServiceEntryDTO>();
     }
 
-    public void addExecutionCourse(Integer executionCourseIdInternal, String executionCourseName, String executionCourseCampus,
+    public void addExecutionCourse(Integer executionCourseExternalId, String executionCourseName, String executionCourseCampus,
             String executionCourseDegreeName, Set<String> executionCourseCurricularYear, Integer executionCourseSemester,
             Integer executionCourseFirstTimeEnrollementStudentNumber, Integer executionCourseSecondTimeEnrollementStudentNumber,
             Duration totalDuration, Double executionCourseTheoreticalHours, Double executionCoursePraticalHours,
@@ -481,7 +481,7 @@ public class DistributionTeacherServicesByCourseDTO extends DataTranferObject {
             Double tutorialOrientationStudentsNumberPerShift, Double fieldWorkStudentsNumberPerShift,
             Double trainingPeriodStudentsNumberPerShift) {
         ExecutionCourseDistributionServiceEntryDTO t =
-                new ExecutionCourseDistributionServiceEntryDTO(executionCourseIdInternal, executionCourseName,
+                new ExecutionCourseDistributionServiceEntryDTO(executionCourseExternalId, executionCourseName,
                         executionCourseCampus, executionCourseDegreeName, executionCourseCurricularYear, executionCourseSemester,
                         executionCourseFirstTimeEnrollementStudentNumber, executionCourseSecondTimeEnrollementStudentNumber,
                         totalDuration, executionCourseTheoreticalHours, executionCoursePraticalHours,
@@ -493,15 +493,15 @@ public class DistributionTeacherServicesByCourseDTO extends DataTranferObject {
                         problemsStudentsNumberPerShift, tutorialOrientationStudentsNumberPerShift,
                         fieldWorkStudentsNumberPerShift, trainingPeriodStudentsNumberPerShift);
 
-        if (!executionCourseMap.containsKey(executionCourseIdInternal)) {
-            executionCourseMap.put(executionCourseIdInternal, t);
+        if (!executionCourseMap.containsKey(executionCourseExternalId)) {
+            executionCourseMap.put(executionCourseExternalId, t);
         }
     }
 
-    public void addTeacherToExecutionCourse(Integer keyExecutionCourse, Integer idInternalTeacher, String name,
+    public void addTeacherToExecutionCourse(Integer keyExecutionCourse, Integer externalIdTeacher, String name,
             Double hoursSpentByTeacher, Duration timeSpentByTeacher, boolean teacherBelongsToDepartment) {
         TeacherExecutionCourseServiceDTO teacher =
-                new TeacherExecutionCourseServiceDTO(idInternalTeacher, name, hoursSpentByTeacher, timeSpentByTeacher,
+                new TeacherExecutionCourseServiceDTO(externalIdTeacher, name, hoursSpentByTeacher, timeSpentByTeacher,
                         teacherBelongsToDepartment);
 
         ExecutionCourseDistributionServiceEntryDTO executionCourseEntry = executionCourseMap.get(keyExecutionCourse);

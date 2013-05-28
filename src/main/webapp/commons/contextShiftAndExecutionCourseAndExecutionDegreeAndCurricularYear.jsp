@@ -15,7 +15,7 @@
 	<bean:define id="shiftOID"
 				 type="java.lang.Integer"
 				 name="shift"
-				 property="idInternal"
+				 property="externalId"
 				 toScope="request"
 				 scope="request"/>
 </logic:present>

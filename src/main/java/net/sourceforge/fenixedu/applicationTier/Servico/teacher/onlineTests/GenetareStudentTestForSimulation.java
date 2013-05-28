@@ -48,7 +48,7 @@ public class GenetareStudentTestForSimulation {
         }
 
         InfoDistributedTest infoDistributedTest = new InfoDistributedTest();
-        infoDistributedTest.setIdInternal(testId);
+        infoDistributedTest.setExternalId(testId);
         infoDistributedTest.setInfoTestScope(InfoTestScope.newInfoFromDomain(testScope));
         infoDistributedTest.setTestType(testType);
         infoDistributedTest.setCorrectionAvailability(correctionAvailability);

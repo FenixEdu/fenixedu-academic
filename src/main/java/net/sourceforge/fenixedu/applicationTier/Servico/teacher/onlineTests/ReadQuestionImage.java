@@ -55,7 +55,7 @@ public class ReadQuestionImage {
         Question question = null;
         Test test = RootDomainObject.getInstance().readTestByOID(distributedTestId);
         for (TestQuestion testQuestion : test.getTestQuestions()) {
-            if (testQuestion.getQuestion().getIdInternal().equals(questionId)) {
+            if (testQuestion.getQuestion().getExternalId().equals(questionId)) {
                 question = testQuestion.getQuestion();
                 break;
             }

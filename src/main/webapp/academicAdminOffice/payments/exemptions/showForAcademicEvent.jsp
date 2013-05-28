@@ -30,8 +30,8 @@
 	</app:labelFormatter>
 </h3>
 
-<bean:define id="personId" name="person" property="idInternal" />
-<bean:define id="eventId" name="event" property="idInternal" />
+<bean:define id="personId" name="person" property="externalId" />
+<bean:define id="eventId" name="event" property="externalId" />
 <p class="mbottom05"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.exemptions"/></strong></p>
 
 <logic:notEmpty name="event" property="academicEventExemption">
@@ -44,7 +44,7 @@
 		</fr:layout>
 	</fr:view>
 
-	<bean:define id="certificateExemptionId" name="certificateExemption" property="idInternal" />
+	<bean:define id="certificateExemptionId" name="certificateExemption" property="externalId" />
 	<html:link action="<%="/exemptionsManagement.do?method=deleteExemption&amp;exemptionId=" + certificateExemptionId %>">
 		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.delete"/>
 	</html:link>
@@ -65,7 +65,7 @@
 </logic:empty>
 
 
-<bean:define id="personId" name="person" property="idInternal" />
+<bean:define id="personId" name="person" property="externalId" />
 <fr:form action="<%="/exemptionsManagement.do?method=showEventsToApplyExemption&amp;personId=" + personId%>">
 	<p class="mtop15">
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">

@@ -50,7 +50,7 @@
 		<h2 style="margin-top: 1em;"><bean:message key="label.photo" bundle="PHD_RESOURCES"/></h2>
 		
 		<div>
-			<bean:define id="photoCode" name="hashCode" property="person.personalPhotoEvenIfPending.idInternal" />
+			<bean:define id="photoCode" name="hashCode" property="person.personalPhotoEvenIfPending.externalId" />
 			<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrievePendingByID&amp;photoCode=" + photoCode.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
 		</div>
 	</logic:notEmpty>

@@ -27,7 +27,7 @@ public interface IEnrolment extends ICurriculumEntry {
     };
 
     @Override
-    Integer getIdInternal();
+    Integer getExternalId();
 
     Integer getFinalGrade();
 

@@ -8,10 +8,10 @@
 
 <fr:view name="content">
 	<fr:layout name="manage-content-bread-crumbs">
-		<fr:property name="linkFor(Section)" value="/contentManagement.do?method=viewContainer&contentId=${idInternal}"/>
-		<fr:property name="linkFor(Portal)" value="/contentManagement.do?method=viewContainer&contentId=${idInternal}"/>
-		<fr:property name="linkFor(Functionality)" value="/contentManagement.do?method=viewElement&contentId=${idInternal}"/>
-		<fr:property name="linkFor(FunctionalityCall)" value="/contentManagement.do?method=viewElement&contentId=${idInternal}"/>
+		<fr:property name="linkFor(Section)" value="/contentManagement.do?method=viewContainer&contentId=${externalId}"/>
+		<fr:property name="linkFor(Portal)" value="/contentManagement.do?method=viewContainer&contentId=${externalId}"/>
+		<fr:property name="linkFor(Functionality)" value="/contentManagement.do?method=viewElement&contentId=${externalId}"/>
+		<fr:property name="linkFor(FunctionalityCall)" value="/contentManagement.do?method=viewElement&contentId=${externalId}"/>
 	</fr:layout>
 </fr:view>
 
@@ -22,7 +22,7 @@
 		<fr:property name="classes" value="tstyle2"/>
 	</fr:layout>
 </fr:view>
-<bean:define id="cid" name="content" property="idInternal"/>
+<bean:define id="cid" name="content" property="externalId"/>
 
 <bean:message key="label.availableOperations" bundle="CONTENT_RESOURCES"/>:	
 
@@ -34,7 +34,7 @@
 </html:link>
 
 <logic:notEmpty name="parentContainer">
- <bean:define id="parentId" name="parentContainer" property="idInternal"/>
+ <bean:define id="parentId" name="parentContainer" property="externalId"/>
 	,
 	<html:link page="<%= "/contentManagement.do?method=deleteContent&amp;contentId=" + cid + "&amp;contentParentId=" + parentId %>" >
 		<bean:message key="delete.content" bundle="CONTENT_RESOURCES"/>

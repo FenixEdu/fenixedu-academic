@@ -59,7 +59,7 @@ function cleanSelect() {
 			<tr>
 				<td>
 					<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.roomsId" property="roomsId" onclick="cleanSelect()">
-						<bean:write name="infoRoom" property="idInternal"/>
+						<bean:write name="infoRoom" property="externalId"/>
 					</html:multibox>
 				</td>
 				<td>

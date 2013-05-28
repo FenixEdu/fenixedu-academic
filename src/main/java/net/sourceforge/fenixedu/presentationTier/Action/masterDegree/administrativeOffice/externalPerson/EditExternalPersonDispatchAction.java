@@ -76,7 +76,7 @@ public class EditExternalPersonDispatchAction extends FenixDispatchAction {
 
         editExternalPersonForm.set("externalPersonID", externalPersonId);
         editExternalPersonForm.set("name", infoExternalPerson.getInfoPerson().getNome());
-        editExternalPersonForm.set("institutionID", infoExternalPerson.getInfoInstitution().getIdInternal());
+        editExternalPersonForm.set("institutionID", infoExternalPerson.getInfoInstitution().getExternalId());
         editExternalPersonForm.set("address", infoExternalPerson.getInfoPerson().getMorada());
         editExternalPersonForm.set("phone", infoExternalPerson.getInfoPerson().getTelefone());
         editExternalPersonForm.set("mobile", infoExternalPerson.getInfoPerson().getTelemovel());
@@ -112,7 +112,7 @@ public class EditExternalPersonDispatchAction extends FenixDispatchAction {
 
                 while (it.hasNext()) {
                     infoInstitution = (Unit) it.next();
-                    institutionsValueBeanList.add(new LabelValueBean(infoInstitution.getName(), infoInstitution.getIdInternal()
+                    institutionsValueBeanList.add(new LabelValueBean(infoInstitution.getName(), infoInstitution.getExternalId()
                             .toString()));
                 }
 

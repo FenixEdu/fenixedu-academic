@@ -7,7 +7,7 @@
 
 <h2><bean:message key="label.summaries"/></h2>
 
-<bean:define id="executionCourseID" name="executionCourse" property="idInternal"/>
+<bean:define id="executionCourseID" name="executionCourse" property="externalId"/>
 <%
     if (request.getParameter("ommitFilter") == null) {
 %>
@@ -36,7 +36,7 @@
 				<html:select bundle="HTMLALT_RESOURCES" property="shiftID" onchange="this.form.submit();">
 					<html:option value="" key="label.showBy.all"/>
 					<logic:iterate id="shift" name="executionCourse" property="shiftsOrderedByLessons">
-						<bean:define id="shiftID" name="shift" property="idInternal"/>
+						<bean:define id="shiftID" name="shift" property="externalId"/>
 						<html:option value="<%= shiftID.toString() %>">
 							<logic:iterate id="lesson" type="net.sourceforge.fenixedu.domain.Lesson" name="shift" property="lessonsOrderedByWeekDayAndStartTime" length="1">
 								<bean:write name="lesson" property="diaSemana"/>
@@ -68,7 +68,7 @@
 				<html:select bundle="HTMLALT_RESOURCES" property="professorshipID" onchange="this.form.submit();">
 					<html:option value="0" key="label.showBy.all" />
 					<logic:iterate id="professorship" name="executionCourse" property="professorshipsSortedAlphabetically">
-						<bean:define id="professorshipID" name="professorship" property="idInternal"/>
+						<bean:define id="professorshipID" name="professorship" property="externalId"/>
 						<html:option value="<%= professorshipID.toString() %>">
 							<bean:write name="professorship" property="person.name"/>
 						</html:option>
@@ -102,7 +102,7 @@
 
 <logic:notEmpty name="summaries">
 	<logic:iterate id="summary" name="summaries" type="net.sourceforge.fenixedu.domain.Summary">	
-		<bean:define id="summaryIdDiv" type="java.lang.String">s<bean:write name ="summary" property="idInternal" /></bean:define>
+		<bean:define id="summaryIdDiv" type="java.lang.String">s<bean:write name ="summary" property="externalId" /></bean:define>
 		<div id="<%= summaryIdDiv %>" class="public_summary">
 			<logic:present name="summary" property="shift">
 				<p class="mtop2 mbottom0">

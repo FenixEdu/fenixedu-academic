@@ -15,8 +15,8 @@
 	</ul>
 </logic:messagesPresent>
 
-<bean:define id="eventId" name="event" property="idInternal" />
-<bean:define id="personId" name="event" property="person.idInternal" />
+<bean:define id="eventId" name="event" property="externalId" />
+<bean:define id="personId" name="event" property="person.externalId" />
 
 <p class="mtop15 mbottom05">
 <strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.event" /></strong></p>

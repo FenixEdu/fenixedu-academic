@@ -41,7 +41,7 @@ public class ChangeApplicationInfo {
             InfoPersonEditor infoPersonEditor, IUserView userView, Boolean isNewPerson) throws FenixServiceException {
 
         final ExecutionDegree executionDegree =
-                RootDomainObject.getInstance().readExecutionDegreeByOID(newMasterDegreeCandidate.getInfoExecutionDegree().getIdInternal());
+                RootDomainObject.getInstance().readExecutionDegreeByOID(newMasterDegreeCandidate.getInfoExecutionDegree().getExternalId());
 
         Person person =
                 Person.readByDocumentIdNumberAndIdDocumentType(newMasterDegreeCandidate.getInfoPerson()

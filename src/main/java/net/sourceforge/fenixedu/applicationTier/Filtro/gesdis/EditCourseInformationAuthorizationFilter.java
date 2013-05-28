@@ -51,7 +51,7 @@ public class EditCourseInformationAuthorizationFilter extends AuthorizationByRol
 
         InfoExecutionCourse infoExecutionCourse = infoCourseReport.getInfoExecutionCourse();
         ExecutionCourse executionCourse =
-                RootDomainObject.getInstance().readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
+                RootDomainObject.getInstance().readExecutionCourseByOID(infoExecutionCourse.getExternalId());
 
         List<Professorship> responsiblesFor = executionCourse.responsibleFors();
 

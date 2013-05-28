@@ -83,7 +83,7 @@ public abstract class FenixContextDispatchAction extends FenixDispatchAction {
 
                 for (InfoExecutionPeriod infoExecutionPeriodIter : infoExecutionPeriodsList) {
                     result.add(new LabelValueBean(infoExecutionPeriodIter.getName() + " - "
-                            + infoExecutionPeriodIter.getInfoExecutionYear().getYear(), infoExecutionPeriodIter.getIdInternal()
+                            + infoExecutionPeriodIter.getInfoExecutionYear().getYear(), infoExecutionPeriodIter.getExternalId()
                             .toString()));
                 }
             } catch (Exception e) {

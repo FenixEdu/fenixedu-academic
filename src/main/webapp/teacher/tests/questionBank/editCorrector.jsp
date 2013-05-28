@@ -12,7 +12,7 @@
 <bean:define id="bean" name="bean" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.PredicateBean" />
 
 <ul>
-<li><html:link page="/tests/questionBank.do?method=editTestElement" paramId="oid" paramName="bean" paramProperty="question.idInternal">Voltar</html:link></li>
+<li><html:link page="/tests/questionBank.do?method=editTestElement" paramId="oid" paramName="bean" paramProperty="question.externalId">Voltar</html:link></li>
 </ul>
 
 <h4><bean:message key="label.corrector.atomicQuestion" bundle="TESTS_RESOURCES" /></h4>
@@ -118,7 +118,7 @@
 			<fr:property name="sortBy" value="position" />
 			<fr:property name="checkable" value="true" />
 			<fr:property name="checkboxName" value="correctorOids" />
-			<fr:property name="checkboxValue" value="idInternal" />
+			<fr:property name="checkboxValue" value="externalId" />
 		</fr:layout>
 	</fr:view>
 <html:submit><bean:message key="message.delete" bundle="TESTS_RESOURCES" /></html:submit>

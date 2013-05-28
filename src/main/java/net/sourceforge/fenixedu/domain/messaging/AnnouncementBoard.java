@@ -69,7 +69,7 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
         @Override
         public int compare(AnnouncementBoard o1, AnnouncementBoard o2) {
             int result = -o1.getCreationDate().compareTo(o2.getCreationDate());
-            return (result == 0) ? o1.getIdInternal().compareTo(o2.getIdInternal()) : result;
+            return (result == 0) ? o1.getExternalId().compareTo(o2.getExternalId()) : result;
         }
     };
 
@@ -77,7 +77,7 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
         @Override
         public int compare(AnnouncementBoard o1, AnnouncementBoard o2) {
             int result = Collator.getInstance().compare(o1.getName().getContent(), o2.getName().getContent());
-            return (result == 0) ? o1.getIdInternal().compareTo(o2.getIdInternal()) : result;
+            return (result == 0) ? o1.getExternalId().compareTo(o2.getExternalId()) : result;
         }
     };
 
@@ -450,7 +450,7 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
 
         StringBuffer actionPath = new StringBuffer();
         actionPath.append("&announcementId=");
-        actionPath.append(announcement.getIdInternal());
+        actionPath.append(announcement.getExternalId());
 
         return actionPath.toString();
     }

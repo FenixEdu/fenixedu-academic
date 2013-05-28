@@ -6,7 +6,7 @@
 <html:xhtml/>
 
 <h2><bean:message key="label.inviteExternalPerson" bundle="WEBSITEMANAGER_RESOURCES"/></h2>
-<bean:define id="siteID" name="site" property="idInternal"/>
+<bean:define id="siteID" name="site" property="externalId"/>
 
 <fr:view name="bean" schema="research.contract.information">
 	<fr:layout>

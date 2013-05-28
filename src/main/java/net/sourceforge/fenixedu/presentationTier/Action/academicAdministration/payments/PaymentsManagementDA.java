@@ -69,7 +69,7 @@ public class PaymentsManagementDA extends FenixDispatchAction {
 
         final Collection<Person> persons = searchPerson(request, searchPersonBean);
         if (persons.size() == 1) {
-            request.setAttribute("personId", persons.iterator().next().getIdInternal());
+            request.setAttribute("personId", persons.iterator().next().getExternalId());
 
             return showOperations(mapping, form, request, response);
 
@@ -169,7 +169,7 @@ public class PaymentsManagementDA extends FenixDispatchAction {
             addActionMessage(request, ex.getKey(), ex.getArgs());
         }
 
-        request.setAttribute("personId", getEvent(request).getPerson().getIdInternal());
+        request.setAttribute("personId", getEvent(request).getPerson().getExternalId());
 
         return showEvents(mapping, form, request, response);
 
@@ -452,7 +452,7 @@ public class PaymentsManagementDA extends FenixDispatchAction {
             HttpServletResponse response) {
 
         final Discount discount = getDomainObject(request, "discountOid");
-        request.setAttribute("eventId", discount.getEvent().getIdInternal());
+        request.setAttribute("eventId", discount.getEvent().getExternalId());
 
         try {
             discount.delete();

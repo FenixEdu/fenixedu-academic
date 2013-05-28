@@ -111,7 +111,7 @@
 				bundle="ACADEMIC_OFFICE_RESOURCES">
 				<fr:slot name="serviceRequestNumber" key="label.serviceRequestNumber" layout="link">
 					<fr:property name="linkFormat"
-						value="/academicServiceRequestsManagement.do?backMethod=visualizeRegistration&amp;backAction=student&amp;academicServiceRequestId=${idInternal}&amp;method=viewAcademicServiceRequest" />
+						value="/academicServiceRequestsManagement.do?backMethod=visualizeRegistration&amp;backAction=student&amp;academicServiceRequestId=${externalId}&amp;method=viewAcademicServiceRequest" />
 					<fr:property name="contextRelative" value="true" />
 					<fr:property name="moduleRelative" value="true" />
 					<fr:property name="useParent" value="true" />
@@ -123,7 +123,7 @@
 					key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.studentCurricularPlan.student.studentNumber"
 					layout="link">
 					<fr:property name="linkFormat"
-						value="/student.do?method=visualizeRegistration&amp;registrationID=${registration.idInternal}" />
+						value="/student.do?method=visualizeRegistration&amp;registrationID=${registration.externalId}" />
 					<fr:property name="contextRelative" value="true" />
 					<fr:property name="moduleRelative" value="true" />
 					<fr:property name="useParent" value="true" />

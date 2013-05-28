@@ -7,7 +7,7 @@
 
 <h2><bean:message key="label.externalUnits.editExternalEnrolment" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 
-<bean:define id="externalCurricularCourseId">&oid=<bean:write name="externalEnrolmentBean" property="externalCurricularCourse.idInternal" /></bean:define>
+<bean:define id="externalCurricularCourseId">&oid=<bean:write name="externalEnrolmentBean" property="externalCurricularCourse.externalId" /></bean:define>
 
 <html:messages property="error" message="true" id="errMsg" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<p>
@@ -21,7 +21,7 @@
 <fr:form action="<%= contextInformation.toString() + parameters.toString() %>">
 	<html:hidden property="method" value="editExternalEnrolment"/>
 	
-	<bean:define id="registrationId" name="registration" property="idInternal" />
+	<bean:define id="registrationId" name="registration" property="externalId" />
 	<html:hidden property="registrationId" value="<%= registrationId.toString() %>"/>
 
 	<fr:edit id="editExternalEnrolmentBean" 

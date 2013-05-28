@@ -10,8 +10,8 @@
 
 <html:form action="/executionDegreesManagement">
 	<bean:define id="degreeType" name="executionDegree" property="degreeCurricularPlan.degree.degreeType.name" />
-	<bean:define id="degreeCurricularPlanID" name="executionDegree" property="degreeCurricularPlan.idInternal" />
-	<bean:define id="executionDegreeID" name="executionDegree" property="idInternal" />
+	<bean:define id="degreeCurricularPlanID" name="executionDegree" property="degreeCurricularPlan.externalId" />
+	<bean:define id="executionDegreeID" name="executionDegree" property="externalId" />
 
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="saveCoordinatorsInformation"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeType" property="degreeType" value="<%= degreeType.toString() %>"/>
@@ -23,7 +23,7 @@
 	
 	<ul style="list-style-type: square;">
 		<li>
-			<html:link module="/manager" action="/executionDegreesManagement.do?method=prepareInsertCoordinator" paramId="executionDegreeID" paramName="executionDegree" paramProperty="idInternal">
+			<html:link module="/manager" action="/executionDegreesManagement.do?method=prepareInsertCoordinator" paramId="executionDegreeID" paramName="executionDegree" paramProperty="externalId">
 				<bean:message bundle="MANAGER_RESOURCES" key="label.manager.insert.coordinator"/>
 			</html:link>
 		</li>
@@ -43,12 +43,12 @@
 					<td class='listClasses'><bean:write name="coordinator" property="person.name" /></td>
 					<td class='listClasses'>
 						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.responsibleCoordinatorsIDs" property="responsibleCoordinatorsIDs">
-									<bean:write name="coordinator" property="idInternal"/>
+									<bean:write name="coordinator" property="externalId"/>
 						</html:multibox>
 					</td>
 					<td class='listClasses'>
 						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.removeCoordinatorsIDs" property="removeCoordinatorsIDs">
-							<bean:write name="coordinator" property="idInternal"/>
+							<bean:write name="coordinator" property="externalId"/>
 						</html:multibox>
 					</td>
 				</tr>

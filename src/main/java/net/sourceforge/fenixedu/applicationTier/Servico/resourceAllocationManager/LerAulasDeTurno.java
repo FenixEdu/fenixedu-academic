@@ -23,7 +23,7 @@ public class LerAulasDeTurno {
     public static List run(ShiftKey shiftKey) {
 
         final ExecutionCourse executionCourse =
-                RootDomainObject.getInstance().readExecutionCourseByOID(shiftKey.getInfoExecutionCourse().getIdInternal());
+                RootDomainObject.getInstance().readExecutionCourseByOID(shiftKey.getInfoExecutionCourse().getExternalId());
         final Shift shift = executionCourse.findShiftByName(shiftKey.getShiftName());
 
         final List<InfoLesson> infoAulas = new ArrayList<InfoLesson>();

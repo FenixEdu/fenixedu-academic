@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<bean:define id="executionCourseIdInternal" name="<%= PresentationConstants.INFO_SITE %>" property="infoExecutionCourse.idInternal" />
+<bean:define id="executionCourseExternalId" name="<%= PresentationConstants.INFO_SITE %>" property="infoExecutionCourse.externalId" />
 <ul>
-  <li><html:link page='<%= "/executionCourseShiftsPercentageManager.do?method=show&amp;executionCourseInternalCode=" + executionCourseIdInternal.toString() %>'>Administração de créditos</html:link></li>
+  <li><html:link page='<%= "/executionCourseShiftsPercentageManager.do?method=show&amp;executionCourseInternalCode=" + executionCourseExternalId.toString() %>'>Administração de créditos</html:link></li>
 </ul>

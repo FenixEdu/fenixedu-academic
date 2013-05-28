@@ -222,7 +222,7 @@ public class InquiryCoordinatorResumeRenderer extends InquiryBlocksResumeRendere
         builder.append("&executionDegreeOID=").append(courseResumeResult.getExecutionDegree().getExternalId());
         builder.append("&executionCourseOID=").append(courseResumeResult.getExecutionCourse().getExternalId());
         builder.append("&degreeCurricularPlanID=").append(
-                courseResumeResult.getExecutionDegree().getDegreeCurricularPlan().getIdInternal());
+                courseResumeResult.getExecutionDegree().getDegreeCurricularPlan().getExternalId());
         builder.append("&backToResume=").append(courseResumeResult.isBackToResume());
         builder.append("&showAllComments=").append(courseResumeResult.isShowAllComments());
         builder.append("&allowComment=").append(courseResumeResult.isAllowComment());

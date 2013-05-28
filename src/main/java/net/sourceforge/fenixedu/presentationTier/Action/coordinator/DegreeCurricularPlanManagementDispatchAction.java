@@ -178,8 +178,8 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
                 }
                 equalCurricularCourseScopes = new ArrayList();
                 equalCurricularCourseScopes.add(curricularCourseScope);
-                curricularCourseScopesHashMap.put(curricularCourseScope.getIdInternal(), equalCurricularCourseScopes);
-                lastKey = curricularCourseScope.getIdInternal();
+                curricularCourseScopesHashMap.put(curricularCourseScope.getExternalId(), equalCurricularCourseScopes);
+                lastKey = curricularCourseScope.getExternalId();
             }
             request.setAttribute("allCurricularCourseScopes", allCurricularCourseScopes);
             request.setAttribute("curricularCourseScopesHashMap", curricularCourseScopesHashMap);
@@ -189,7 +189,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
 
     private List<InfoCurricularCourseScope> getInfoCurricularCourseScopes(InfoCurricularCourse infoCurricularCourse) {
         CurricularCourse curricularCourse =
-                (CurricularCourse) rootDomainObject.readDegreeModuleByOID(infoCurricularCourse.getIdInternal());
+                (CurricularCourse) rootDomainObject.readDegreeModuleByOID(infoCurricularCourse.getExternalId());
         List<InfoCurricularCourseScope> infoScopes =
                 (List) CollectionUtils.collect(curricularCourse.getScopes(), new Transformer() {
 
@@ -236,7 +236,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
                 ReadCurrentExecutionDegreeByDegreeCurricularPlanID
                         .runReadCurrentExecutionDegreeByDegreeCurricularPlanID(degreeCurricularPlanID);
 
-        infoExecutionDegreeCode = infoExecutionDegree.getIdInternal();
+        infoExecutionDegreeCode = infoExecutionDegree.getExternalId();
 
         // check that this user can edit curricular course information
         Boolean canEdit = new Boolean(false);

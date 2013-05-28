@@ -11,7 +11,7 @@
 	<span class="error0"> <bean:write name="message" /> </span>
 	<br />
 </html:messages>
-<bean:define id="processId" name="process" property="idInternal" />
+<bean:define id="processId" name="process" property="externalId" />
 
 <fr:form action='<%="/caseHandlingSecondCycleIndividualCandidacyProcess.do?processId=" + processId.toString() %>'>
  	<html:hidden property="method" value="executeChangeIndividualCandidacyState" />

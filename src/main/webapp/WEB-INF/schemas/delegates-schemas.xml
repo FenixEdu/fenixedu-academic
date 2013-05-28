@@ -219,7 +219,7 @@
 <schema name="delegates.showCurricularCourses.curricularCourseInfo" bundle="DELEGATES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.delegate.DelegateCurricularCourseBean">
 	<slot name="curricularCourse.name" key="label.curricularCourse" layout="link" >
 		<property name="useParent" value="true" />
-		<property name="linkFormat" value="/viewStudents.do?method=showStudentsByCurricularCourse&amp;curricularCourseID=${curricularCourse.idInternal}&amp;curricularYear=${curricularYear}&amp;executionPeriodOID=${executionPeriod.idInternal}&amp;year=${executionPeriod.executionYear.year}"/>
+		<property name="linkFormat" value="/viewStudents.do?method=showStudentsByCurricularCourse&amp;curricularCourseID=${curricularCourse.externalId}&amp;curricularYear=${curricularYear}&amp;executionPeriodOID=${executionPeriod.externalId}&amp;year=${executionPeriod.executionYear.year}"/>
 		<property name="moduleRelative" value="true"/>
 		<property name="contextRelative" value="true"/>
 	</slot>

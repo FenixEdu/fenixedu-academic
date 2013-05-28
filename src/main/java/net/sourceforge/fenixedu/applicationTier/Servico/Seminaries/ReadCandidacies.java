@@ -87,7 +87,7 @@ public class ReadCandidacies {
 
             // TODO: converte Modality into a enumeration
             if (theme != null) {
-                if (!candidacy.getTheme().equals(theme) && !(candidacy.getModality().getIdInternal().intValue() == 1)) {
+                if (!candidacy.getTheme().equals(theme) && !(candidacy.getModality().getExternalId().intValue() == 1)) {
                     continue;
                 }
             }
@@ -133,7 +133,7 @@ public class ReadCandidacies {
 
                 InfoCandidacyDetails candidacyDTO = new InfoCandidacyDetails();
                 candidacyDTO.setCurricularCourse(InfoCurricularCourse.newInfoFromDomain(candidacy.getCurricularCourse()));
-                candidacyDTO.setIdInternal(candidacy.getIdInternal());
+                candidacyDTO.setExternalId(candidacy.getExternalId());
                 candidacyDTO.setInfoClassification(getInfoClassification(enrollments));
                 candidacyDTO.setModality(InfoModality.newInfoFromDomain(candidacy.getModality()));
                 candidacyDTO.setMotivation(candidacy.getMotivation());

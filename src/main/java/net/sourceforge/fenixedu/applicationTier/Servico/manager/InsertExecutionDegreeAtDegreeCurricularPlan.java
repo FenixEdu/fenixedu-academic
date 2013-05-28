@@ -22,19 +22,19 @@ public class InsertExecutionDegreeAtDegreeCurricularPlan {
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
     public static void run(InfoExecutionDegreeEditor infoExecutionDegree) throws FenixServiceException {
-        final Campus campus = (Campus) RootDomainObject.getInstance().readResourceByOID(infoExecutionDegree.getInfoCampus().getIdInternal());
+        final Campus campus = (Campus) RootDomainObject.getInstance().readResourceByOID(infoExecutionDegree.getInfoCampus().getExternalId());
         if (campus == null) {
             throw new NonExistingServiceException("message.nonExistingCampus", null);
         }
 
         final DegreeCurricularPlan degreeCurricularPlan =
-                RootDomainObject.getInstance().readDegreeCurricularPlanByOID(infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal());
+                RootDomainObject.getInstance().readDegreeCurricularPlanByOID(infoExecutionDegree.getInfoDegreeCurricularPlan().getExternalId());
         if (degreeCurricularPlan == null) {
             throw new NonExistingServiceException("message.nonExistingDegreeCurricularPlan", null);
         }
 
         final ExecutionYear executionYear =
-                RootDomainObject.getInstance().readExecutionYearByOID(infoExecutionDegree.getInfoExecutionYear().getIdInternal());
+                RootDomainObject.getInstance().readExecutionYearByOID(infoExecutionDegree.getInfoExecutionYear().getExternalId());
         if (executionYear == null) {
             throw new NonExistingServiceException("message.non.existing.execution.year", null);
         }

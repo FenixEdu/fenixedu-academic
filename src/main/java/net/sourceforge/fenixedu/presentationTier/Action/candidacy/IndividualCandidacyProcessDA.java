@@ -125,7 +125,7 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
         request.setAttribute("canCreateChildProcess", canCreateProcess(getProcessType().getName()));
         request.setAttribute("childProcessName", getProcessType().getSimpleName());
         request.setAttribute("childProcesses", process.getChildProcesses());
-        request.setAttribute("executionIntervalId", process.getCandidacyExecutionInterval().getIdInternal());
+        request.setAttribute("executionIntervalId", process.getCandidacyExecutionInterval().getExternalId());
         request.setAttribute("executionIntervals",
                 ExecutionInterval.readExecutionIntervalsWithCandidacyPeriod(process.getCandidacyPeriod().getClass()));
     }

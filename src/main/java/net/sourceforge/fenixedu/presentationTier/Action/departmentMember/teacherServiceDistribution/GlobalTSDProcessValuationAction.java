@@ -98,8 +98,8 @@ public class GlobalTSDProcessValuationAction extends FenixDispatchAction {
         TSDProcessPhase phase = process.getOrderedPublishedTSDProcessPhases().get(0);
         TeacherServiceDistribution rootTSD = phase.getRootTSD();
 
-        dynaForm.set("tsd", rootTSD.getIdInternal());
-        dynaForm.set("tsdProcessPhase", phase.getIdInternal());
+        dynaForm.set("tsd", rootTSD.getExternalId());
+        dynaForm.set("tsdProcessPhase", phase.getExternalId());
     }
 
     public ActionForward changeToViewTeachers(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -206,9 +206,9 @@ public class GlobalTSDProcessValuationAction extends FenixDispatchAction {
             TeacherServiceDistribution selectedTeacherServiceDistribution, ExecutionSemester executionSemester)
             throws FenixServiceException {
         Map<Integer, Pair<Integer, Integer>> tsdProcessIdMap = new HashMap<Integer, Pair<Integer, Integer>>();
-        tsdProcessIdMap.put(selectedTSDProcessPhase.getIdInternal(),
-                new Pair<Integer, Integer>(selectedTeacherServiceDistribution.getIdInternal(),
-                        (executionSemester == null) ? 0 : executionSemester.getIdInternal()));
+        tsdProcessIdMap.put(selectedTSDProcessPhase.getExternalId(),
+                new Pair<Integer, Integer>(selectedTeacherServiceDistribution.getExternalId(),
+                        (executionSemester == null) ? 0 : executionSemester.getExternalId()));
 
         return ReadTSDTeachersFromTSDProcesses.runReadTSDTeachersFromTSDProcesses(tsdProcessIdMap);
     }
@@ -218,9 +218,9 @@ public class GlobalTSDProcessValuationAction extends FenixDispatchAction {
             TeacherServiceDistribution selectedTeacherServiceDistribution, ExecutionSemester executionSemester)
             throws FenixServiceException {
         Map<Integer, Pair<Integer, Integer>> tsdProcessIdMap = new HashMap<Integer, Pair<Integer, Integer>>();
-        tsdProcessIdMap.put(selectedTSDProcessPhase.getIdInternal(),
-                new Pair<Integer, Integer>(selectedTeacherServiceDistribution.getIdInternal(),
-                        (executionSemester == null) ? 0 : executionSemester.getIdInternal()));
+        tsdProcessIdMap.put(selectedTSDProcessPhase.getExternalId(),
+                new Pair<Integer, Integer>(selectedTeacherServiceDistribution.getExternalId(),
+                        (executionSemester == null) ? 0 : executionSemester.getExternalId()));
 
         return ReadTSDCoursesFromTSDProcesses.runReadTSDCoursesFromTSDProcesses(tsdProcessIdMap);
     }

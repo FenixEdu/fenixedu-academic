@@ -30,9 +30,9 @@
 				<logic:iterate id="professorship" name="person" property="professorships">			
 					<tr>
 						<td class="listClasses">
-							<bean:define id="internalId" name="professorship" property="idInternal"/>
+							<bean:define id="internalId" name="professorship" property="externalId"/>
 							<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.toDelete" name="professorship" property="responsibleFor" value="false" indexed="true"/> 
-							<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" name="professorship" property="idInternal" indexed="true" value="<%= internalId.toString() %>"/>
+							<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.externalId" name="professorship" property="externalId" indexed="true" value="<%= internalId.toString() %>"/>
 						</td>
 						<td class="listClasses"><bean:write name="professorship" property="executionCourse.nome"/></td>
 					</tr>
@@ -58,9 +58,9 @@
 				<logic:iterate id="responsibleFor" name="person" property="responsableProfessorships">			
 					<tr>
 						<td class="listClasses">
-							<bean:define id="internalId" name="responsibleFor" property="idInternal"/>
+							<bean:define id="internalId" name="responsibleFor" property="externalId"/>
 							<html:checkbox  bundle="HTMLALT_RESOURCES" altKey="checkbox.toDelete" name="responsibleFor" property="responsibleFor" indexed="true"/> 
-							<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" name="responsibleFor" property="idInternal" indexed="true" value="<%= internalId.toString() %>"/>
+							<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.externalId" name="responsibleFor" property="externalId" indexed="true" value="<%= internalId.toString() %>"/>
 						</td>
 						<td class="listClasses"><bean:write name="responsibleFor" property="executionCourse.nome"/></td>
 					</tr>

@@ -8,7 +8,7 @@
 <logic:present name="showSummariesCalendarBean">
 
 	<h2><bean:message key="label.summaries.calendar.title"/></h2>
-	<bean:define id="executionCourseID" name="showSummariesCalendarBean" property="executionCourse.idInternal" />
+	<bean:define id="executionCourseID" name="showSummariesCalendarBean" property="executionCourse.externalId" />
 	
 	<logic:messagesPresent message="true">
 		<p>

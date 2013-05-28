@@ -128,7 +128,7 @@
 </p>
 
 <div style="border: 1px solid #000; padding: 20px 20px 20px 20px;">
-    <bean:define id="personId" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.idInternal"/>
+    <bean:define id="personId" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.externalId"/>
     <pre>&lt;fr:view oid=&quot;<%= personId %>&quot; type=&quot;net.sourceforge.fenixedu.domain.Person&quot; layout=&quot;tabular&quot;/&gt;</pre>
 </div>
 

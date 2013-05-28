@@ -13,12 +13,12 @@ public class DeleteDegree {
 
     @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
     @Service
-    public static void run(Integer idInternal) throws FenixServiceException {
-        if (idInternal == null) {
+    public static void run(Integer externalId) throws FenixServiceException {
+        if (externalId == null) {
             throw new InvalidArgumentsServiceException();
         }
 
-        final Degree degreeToDelete = RootDomainObject.getInstance().readDegreeByOID(idInternal);
+        final Degree degreeToDelete = RootDomainObject.getInstance().readDegreeByOID(externalId);
 
         if (degreeToDelete == null) {
             throw new NonExistingServiceException();

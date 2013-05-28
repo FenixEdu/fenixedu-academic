@@ -50,7 +50,7 @@ public class EditContributorDispatchAction extends FenixDispatchAction {
         editContributorForm.set("parishOfResidence", infoContributor.getParishOfResidence());
         editContributorForm.set("districtSubdivisionOfResidence", infoContributor.getDistrictSubdivisionOfResidence());
         editContributorForm.set("districtOfResidence", infoContributor.getDistrictOfResidence());
-        editContributorForm.set("contributorId", infoContributor.getIdInternal());
+        editContributorForm.set("contributorId", infoContributor.getExternalId());
 
         return mapping.findForward("EditReady");
 

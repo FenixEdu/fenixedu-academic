@@ -63,7 +63,7 @@ public class ReadTeacherInChargeAction extends FenixAction {
             Integer teacherId;
             Iterator iter = infoTeachersList.iterator();
             while (iter.hasNext()) {
-                teacherId = ((InfoTeacher) iter.next()).getIdInternal();
+                teacherId = ((InfoTeacher) iter.next()).getExternalId();
                 teachersIds.add(teacherId);
             }
 
@@ -77,7 +77,7 @@ public class ReadTeacherInChargeAction extends FenixAction {
             if (infoNonAffiliatedTeachers != null) {
                 for (Iterator iterator = infoNonAffiliatedTeachers.iterator(); iterator.hasNext();) {
                     InfoNonAffiliatedTeacher infoNonAffiliatedTeacher = (InfoNonAffiliatedTeacher) iterator.next();
-                    nonAffiliatedTeacherID = infoNonAffiliatedTeacher.getIdInternal();
+                    nonAffiliatedTeacherID = infoNonAffiliatedTeacher.getExternalId();
                     nonAffiliatedTeacherIDs.add(nonAffiliatedTeacherID);
                 }
 

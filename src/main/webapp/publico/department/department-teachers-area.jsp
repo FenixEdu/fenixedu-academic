@@ -28,7 +28,7 @@
         <bean:message key="academic.units" bundle="PUBLIC_DEPARTMENT_RESOURCES"/> 
     </html:link>
     &nbsp;&gt;&nbsp;
-    <bean:define id="unitId" name="unit" property="idInternal"/>
+    <bean:define id="unitId" name="unit" property="externalId"/>
     <html:link page="<%= "/department/departmentSite.do?method=presentation&amp;selectedDepartmentUnitID=" + unitId %>">
         <fr:view name="department" property="nameI18n"/>
     </html:link>
@@ -65,7 +65,7 @@
 					<ul class="nobullet">
 						<logic:iterate id="area" name="areas" type="net.sourceforge.fenixedu.domain.organizationalStructure.Unit">
 							<li>
-								<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= "#" + area.getIdInternal()%>"><fr:view name="area" property="nameI18n"/></a><br/>
+								<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= "#" + area.getExternalId()%>"><fr:view name="area" property="nameI18n"/></a><br/>
 							</li>
 						</logic:iterate>
 					<logic:notEmpty name="teachersNoArea">
@@ -80,13 +80,13 @@
 	 
 <logic:iterate id="area" name="areas" type="net.sourceforge.fenixedu.domain.organizationalStructure.Unit" indexId="index">
 		
-	<h2 id="<%= area.getIdInternal() %>" class="greytxt mtop2 separator1">
+	<h2 id="<%= area.getExternalId() %>" class="greytxt mtop2 separator1">
 		<fr:view name="area" property="nameI18n"/>
 		<logic:notEqual name="index" value="0"><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#logoist" style="<%= "padding-left: 1em; background: url(" + request.getContextPath() + "/images/cross_up.gif) left center no-repeat;" %>"><bean:message key="link.top" bundle="PUBLIC_DEPARTMENT_RESOURCES"/></a></logic:notEqual>
 	</h2>
 
 	<bean:define id="byArea" value="true" toScope="request"/>
-	<logic:iterate id="t" name="teachers" property="<%= area.getIdInternal().toString() %>" type="net.sourceforge.fenixedu.domain.Teacher">
+	<logic:iterate id="t" name="teachers" property="<%= area.getExternalId().toString() %>" type="net.sourceforge.fenixedu.domain.Teacher">
 		<bean:define id="teacher" name="t" toScope="request"/>
 		<jsp:include page="department-teachers-card.jsp"/>
 	</logic:iterate>

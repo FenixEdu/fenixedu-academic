@@ -50,7 +50,7 @@ public class IndexAction extends Action {
 
     private void removeCreditsPointZeroExecutionPeriod(List<InfoExecutionPeriod> executionPeriodsNotClosed) {
         for (InfoExecutionPeriod infoExecutionPeriod : executionPeriodsNotClosed) {
-            if (infoExecutionPeriod.getIdInternal().equals(1)) {
+            if (infoExecutionPeriod.getExternalId().equals(1)) {
                 executionPeriodsNotClosed.remove(infoExecutionPeriod);
                 break;
             }
@@ -83,7 +83,7 @@ public class IndexAction extends Action {
                 public boolean evaluate(Object input) {
                     InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) input;
 
-                    return infoExecutionPeriod.getIdInternal().equals(executionPeriodId);
+                    return infoExecutionPeriod.getExternalId().equals(executionPeriodId);
                 }
             });
 

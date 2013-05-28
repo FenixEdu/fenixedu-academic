@@ -17,7 +17,7 @@ public class ApagarTurma {
     @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
     @Service
     public static Boolean run(InfoClass infoClass) {
-        RootDomainObject.getInstance().readSchoolClassByOID(infoClass.getIdInternal()).delete();
+        RootDomainObject.getInstance().readSchoolClassByOID(infoClass.getExternalId()).delete();
         return Boolean.TRUE;
     }
 

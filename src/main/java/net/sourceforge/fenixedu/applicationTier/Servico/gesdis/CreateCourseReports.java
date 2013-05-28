@@ -31,7 +31,7 @@ public class CreateCourseReports {
                 for (Evaluation evaluation : executionCourse.getAssociatedEvaluations()) {
                     if (evaluation instanceof FinalEvaluation) {
 
-                        if (courseReportsExecutionCoursesIDs.add(executionCourse.getIdInternal())) {
+                        if (courseReportsExecutionCoursesIDs.add(executionCourse.getExternalId())) {
                             CourseReport courseReport = new CourseReport();
                             courseReport.setExecutionCourse(executionCourse);
                         }

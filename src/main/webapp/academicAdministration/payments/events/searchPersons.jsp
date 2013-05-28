@@ -42,7 +42,7 @@
 			<fr:layout name="tabular" >
 				<fr:property name="classes" value="tstyle4"/>
 	        	<fr:property name="columnClasses" value="listClasses,,"/>
-				<fr:property name="linkFormat(view)" value="/paymentsManagement.do?method=showOperations&personId=${idInternal}" />
+				<fr:property name="linkFormat(view)" value="/paymentsManagement.do?method=showOperations&personId=${externalId}" />
 				<fr:property name="key(view)" value="label.view"/>
 				<fr:property name="bundle(view)" value="APPLICATION_RESOURCES"/>
 				<fr:property name="contextRelative(view)" value="true"/>	

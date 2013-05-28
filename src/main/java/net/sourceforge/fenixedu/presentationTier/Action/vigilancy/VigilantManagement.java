@@ -57,9 +57,9 @@ public class VigilantManagement extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         String id = request.getParameter("oid");
-        Integer idInternal = Integer.valueOf(id);
+        Integer externalId = Integer.valueOf(id);
         OtherCourseVigilancy vigilancy =
-                (OtherCourseVigilancy) RootDomainObject.readDomainObjectByOID(OtherCourseVigilancy.class, idInternal);
+                (OtherCourseVigilancy) RootDomainObject.readDomainObjectByOID(OtherCourseVigilancy.class, externalId);
 
         ConfirmConvoke.run(vigilancy);
 

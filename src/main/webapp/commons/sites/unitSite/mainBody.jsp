@@ -85,7 +85,7 @@
 					<bean:define id="rssBoard" name="announcement" property="announcementBoard"/>
 					
 					<div class="fright">
-						<html:link page="<%= String.format("%s?method=simple&amp;%s", announcementRSSAction, context) %>" paramId="announcementBoardId" paramName="rssBoard" paramProperty="idInternal">
+						<html:link page="<%= String.format("%s?method=simple&amp;%s", announcementRSSAction, context) %>" paramId="announcementBoardId" paramName="rssBoard" paramProperty="externalId">
 							<img src="<%= request.getContextPath() %>/images/rss_ico.png"/>
 						</html:link>
 					</div>
@@ -93,7 +93,7 @@
 			</logic:notEmpty>
 			
 			<logic:iterate id="announcement" name="announcements">
-				<bean:define id="announcementID" name="announcement" property="idInternal"/>
+				<bean:define id="announcementID" name="announcement" property="externalId"/>
 
 				<fr:view name="announcement">
 					<fr:layout name="view-announcement">
@@ -138,7 +138,7 @@
 				<bean:define id="rssBoard" name="announcementBoard"/>
 					
 					<div class="fright">
-						<html:link page="<%= String.format("%s?method=simple&amp;%s", eventRSSAction, context) %>" paramId="announcementBoardId" paramName="rssBoard" paramProperty="idInternal">
+						<html:link page="<%= String.format("%s?method=simple&amp;%s", eventRSSAction, context) %>" paramId="announcementBoardId" paramName="rssBoard" paramProperty="externalId">
 							<img src="<%= request.getContextPath() %>/images/rss_ico.png"/>
 						</html:link>
 					</div>
@@ -149,7 +149,7 @@
 			<logic:notEmpty name="today-events">
 				 <p class="mtop0 mbottom05" style="color: #555;"><em><bean:message key="label.events.occurring" bundle="MESSAGING_RESOURCES"/></em>:</p>
 				<logic:iterate id="announcement" name="today-events">
-				<bean:define id="announcementID" name="announcement" property="idInternal"/>
+				<bean:define id="announcementID" name="announcement" property="externalId"/>
 	
 				<fr:view name="announcement">
 					<fr:layout name="view-announcement">
@@ -165,7 +165,7 @@
 			<logic:notEmpty name="future-events">
 			    <p class="mtop0 mbottom05" style="color: #555;"><em><bean:message key="label.events.next" bundle="MESSAGING_RESOURCES"/></em>:</p>
 				<logic:iterate id="announcement" name="future-events">
-				<bean:define id="announcementID" name="announcement" property="idInternal"/>
+				<bean:define id="announcementID" name="announcement" property="externalId"/>
 	
 				<fr:view name="announcement">
 					<fr:layout name="view-announcement">
@@ -185,7 +185,7 @@
 			<p class="mtop0 mbottom05" style="color: #555;"><em><bean:message key="label.events.past" bundle="MESSAGING_RESOURCES"/></em>:</p>
 						
 			<logic:iterate id="announcement" name="eventAnnouncements">
-				<bean:define id="announcementID" name="announcement" property="idInternal"/>
+				<bean:define id="announcementID" name="announcement" property="externalId"/>
 	
 				<fr:view name="announcement">
 					<fr:layout name="view-announcement">

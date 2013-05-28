@@ -163,7 +163,7 @@ public class InsertStudentTestResponses {
             studentTestQuestionList = StudentTestQuestion.findStudentTestQuestions(registration, distributedTest);
             for (StudentTestQuestion stq : newTestQuestions) {
                 for (StudentTestQuestion question : studentTestQuestionList) {
-                    if (!question.getIdInternal().equals(stq.getIdInternal())
+                    if (!question.getExternalId().equals(stq.getExternalId())
                             && stq.getTestQuestionOrder().compareTo(question.getTestQuestionOrder()) <= 0) {
                         question.setTestQuestionOrder(new Integer(question.getTestQuestionOrder() + 1));
                     }

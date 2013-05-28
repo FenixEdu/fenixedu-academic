@@ -10,9 +10,9 @@
 
 <bean:define id="infoExecutionDegree" name="<%=PresentationConstants.MASTER_DEGREE%>" type="InfoExecutionDegree" />
 <bean:define id="infoDegreeCurricularPlan" name="infoExecutionDegree" property="infoDegreeCurricularPlan" />
-<bean:define id="degreeCurricularPlanID" name="infoDegreeCurricularPlan" property="idInternal" type="java.lang.Integer" />
+<bean:define id="degreeCurricularPlanID" name="infoDegreeCurricularPlan" property="externalId" type="java.lang.Integer" />
 <bean:define id="degreeCurricularPlanOID" name="infoDegreeCurricularPlan" property="externalId" />
-<bean:define id="executionDegreeID" name="infoExecutionDegree" property="idInternal" />
+<bean:define id="executionDegreeID" name="infoExecutionDegree" property="externalId" />
 
 <h2><bean:message key="link.coordinator.tutorTeachers" bundle="COORDINATOR_RESOURCES"/></h2>
 

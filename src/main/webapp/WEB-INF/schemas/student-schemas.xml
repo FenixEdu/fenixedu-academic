@@ -432,7 +432,7 @@
 	<slot name="person" key="label.empty" layout="view-as-image" bundle="DELEGATES_RESOURCES">
 		<property name="classes" value="column3"/>
 		<property name="contextRelative" value="true"/>
-		<property name="imageFormat" value="/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode=${student.person.idInternal}"/>	
+		<property name="imageFormat" value="/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode=${student.person.externalId}"/>	
 	</slot>		
 </schema>
 

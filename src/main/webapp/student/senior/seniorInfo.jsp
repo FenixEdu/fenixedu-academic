@@ -56,7 +56,7 @@
 		</fr:view>			
 	
 		<p class="invisible">
-			<html:link page="<%="/seniorInformation.do?method=prepare&amp;page=0&registrationOID=" + senior.getRegistration().getIdInternal().toString()%>">
+			<html:link page="<%="/seniorInformation.do?method=prepare&amp;page=0&registrationOID=" + senior.getRegistration().getExternalId().toString()%>">
 				<bean:message key="label.return" bundle="APPLICATION_RESOURCES"/>
 			</html:link>
 		</p>

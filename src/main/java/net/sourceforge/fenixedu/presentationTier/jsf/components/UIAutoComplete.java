@@ -79,11 +79,11 @@ public class UIAutoComplete extends UIInput {
         return UserView.getUser();
     }
 
-    private String getInputTextValue(IUserView userView, String className, Integer idInternal, String labelField) {
+    private String getInputTextValue(IUserView userView, String className, Integer externalId, String labelField) {
         Class clazz;
         try {
             clazz = Class.forName(className);
-            DomainObject domainObject = RootDomainObject.getInstance().readDomainObjectByOID(clazz, idInternal);
+            DomainObject domainObject = RootDomainObject.getInstance().readDomainObjectByOID(clazz, externalId);
 
             return BeanUtils.getProperty(domainObject, labelField);
 
@@ -223,9 +223,9 @@ public class UIAutoComplete extends UIInput {
                 Class clazz = Class.forName(className);
                 DomainObject domainObject = RootDomainObject.getInstance().readDomainObjectByOID(clazz, (Integer) newValue);
 
-                String correctLabelForIdInternal = BeanUtils.getProperty(domainObject, labelField);
+                String correctLabelForExternalId = BeanUtils.getProperty(domainObject, labelField);
 
-                if (correctLabelForIdInternal.equals(submittedInputTextValue) == false) {
+                if (correctLabelForExternalId.equals(submittedInputTextValue) == false) {
                     String errorMessage = getMessageFromBundle(context, INVALID_AUTO_COMPLETE_INPUT);
 
                     context.addMessage(getClientId(context), new FacesMessage(FacesMessage.SEVERITY_ERROR, errorMessage,

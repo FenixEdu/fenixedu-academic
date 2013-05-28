@@ -97,7 +97,7 @@ public class TestsStudentAction extends FenixDispatchAction {
 
         DeleteAnswer.run(atomicQuestion);
 
-        request.setAttribute("oid", testGroup.getIdInternal());
+        request.setAttribute("oid", testGroup.getExternalId());
 
         return this.viewTest(mapping, form, request, response);
     }
@@ -112,7 +112,7 @@ public class TestsStudentAction extends FenixDispatchAction {
 
         GiveUpQuestion.run(atomicQuestion);
 
-        request.setAttribute("oid", testGroup.getIdInternal());
+        request.setAttribute("oid", testGroup.getExternalId());
 
         return this.viewTest(mapping, form, request, response);
     }

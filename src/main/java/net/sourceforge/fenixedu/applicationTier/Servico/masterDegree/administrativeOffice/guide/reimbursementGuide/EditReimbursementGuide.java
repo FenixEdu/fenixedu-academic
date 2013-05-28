@@ -112,7 +112,7 @@ public class EditReimbursementGuide {
                     // reimbursementGuideEntry = (ReimbursementGuideEntry)
                     // reimbursementGuideEntryDAO
                     // .readByOID(ReimbursementGuideEntry.class,
-                    // reimbursementGuideEntry.getIdInternal());
+                    // reimbursementGuideEntry.getExternalId());
 
                     reimbursementTransaction =
                             new ReimbursementTransaction(reimbursementGuideEntry.getValue(), new Timestamp(Calendar.getInstance()
@@ -222,7 +222,7 @@ public class EditReimbursementGuide {
             // because of an OJB with cache bug we have to read the guide entry
             // again
             reimbursementGuideEntryTmp =
-                    RootDomainObject.getInstance().readReimbursementGuideEntryByOID(reimbursementGuideEntryTmp.getIdInternal());
+                    RootDomainObject.getInstance().readReimbursementGuideEntryByOID(reimbursementGuideEntryTmp.getExternalId());
 
             if (reimbursementGuideEntryTmp.getReimbursementGuide().getActiveReimbursementGuideSituation()
                     .getReimbursementGuideState().equals(ReimbursementGuideState.PAYED)) {

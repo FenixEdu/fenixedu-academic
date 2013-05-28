@@ -17,13 +17,13 @@
 <ul>
 	<li>
 		<f:parameterLink page="/tests/tests.do?method=manageTests">
-			<f:parameter id="oid" name="executionCourse" property="idInternal" />
+			<f:parameter id="oid" name="executionCourse" property="externalId" />
 			<bean:message key="message.back" bundle="TESTS_RESOURCES" />
 		</f:parameterLink>
 	</li>
 	<li>
 		<f:parameterLink page="/tests/tests.do?method=publishGrades">
-			<f:parameter id="oid" name="testGroup" property="idInternal" />
+			<f:parameter id="oid" name="testGroup" property="externalId" />
 			<bean:message key="message.publishGrades" bundle="TESTS_RESOURCES" />
 		</f:parameterLink>
 	</li>

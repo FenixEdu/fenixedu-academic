@@ -86,7 +86,7 @@ public class ViewTutorshipDA extends FenixDispatchAction {
     private Tutorship provideTutorship(HttpServletRequest request) {
         // If atribute "tutorshipId" is present
         if (request.getParameter("tutorshipId") != null) {
-            Integer tutorshipId = getIdInternal(request, "tutorshipId");
+            Integer tutorshipId = getExternalId(request, "tutorshipId");
             Tutorship tutorship = RootDomainObject.getInstance().readTutorshipByOID(tutorshipId);
             return tutorship;
         }
@@ -187,11 +187,11 @@ public class ViewTutorshipDA extends FenixDispatchAction {
         ChangeTutorshipBean tutorshipBean = initializeChangeBean(tutorship, tutorshipPeriodPartialBean.getEndDate());
         changeTutorshipBeans.add(tutorshipBean);
         if (request.getParameter("cancel") == null) {
-            Object[] args = new Object[] { executionDegree.getIdInternal(), changeTutorshipBeans };
+            Object[] args = new Object[] { executionDegree.getExternalId(), changeTutorshipBeans };
 
             List<TutorshipErrorBean> tutorshipsNotChanged = new ArrayList<TutorshipErrorBean>();
             try {
-                tutorshipsNotChanged = ChangeTutorship.runChangeTutorship(executionDegree.getIdInternal(), changeTutorshipBeans);
+                tutorshipsNotChanged = ChangeTutorship.runChangeTutorship(executionDegree.getExternalId(), changeTutorshipBeans);
             } catch (NotAuthorizedException fenixFilterExceptione) {
                 // TODO Auto-generated catch block
                 addActionMessage(request, fenixFilterExceptione.getMessage());
@@ -237,7 +237,7 @@ public class ViewTutorshipDA extends FenixDispatchAction {
 
         List<Tutorship> tutorshipToDelete = new ArrayList<Tutorship>();
         tutorshipToDelete.add(tutorship);
-        return DeleteTutorship.runDeleteTutorship(executionDegree.getIdInternal(), tutorshipToDelete);
+        return DeleteTutorship.runDeleteTutorship(executionDegree.getExternalId(), tutorshipToDelete);
 
     }
 
@@ -260,7 +260,7 @@ public class ViewTutorshipDA extends FenixDispatchAction {
         // Initialize Tutorship creation bean to use in InsertTutorship Service
         BeanInitializer.initializeBean(selectedStudentsAndTutorBean, teacher, executionDegree, student, endDate);
 
-        return InsertTutorship.runInsertTutorship(executionDegree.getIdInternal(), selectedStudentsAndTutorBean);
+        return InsertTutorship.runInsertTutorship(executionDegree.getExternalId(), selectedStudentsAndTutorBean);
     }
 
     private ExecutionDegree getExecutionDegree(Tutorship tutorship) {
@@ -387,7 +387,7 @@ public class ViewTutorshipDA extends FenixDispatchAction {
         if (creationCorrect) {
             List<Tutorship> tutorships = student.getActiveTutorships();
             Tutorship tutorship = tutorships.get(0);
-            request.setAttribute("tutorshipId", tutorship.getIdInternal());
+            request.setAttribute("tutorshipId", tutorship.getExternalId());
             request.setAttribute("success", "success");
         }
 

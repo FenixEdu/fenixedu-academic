@@ -202,7 +202,7 @@ public class ChangeApplicationInfoDispatchAction extends FenixDispatchAction {
         request.setAttribute(PresentationConstants.YEARS_KEY, Data.getYears());
         request.setAttribute(PresentationConstants.EXPIRATION_YEARS_KEY, Data.getExpirationYears());
         request.setAttribute(PresentationConstants.PERSONAL_INFO_KEY, masterDegreeCandidate.getInfoPerson());
-        changeApplicationInfoForm.set("candidateID", masterDegreeCandidate.getIdInternal());
+        changeApplicationInfoForm.set("candidateID", masterDegreeCandidate.getExternalId());
 
         // if New Person -> All personal info can be changed
         if (userView.getRoleTypes().size() == 2) {

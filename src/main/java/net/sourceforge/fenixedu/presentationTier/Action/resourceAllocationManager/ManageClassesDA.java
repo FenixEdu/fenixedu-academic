@@ -50,7 +50,7 @@ public class ManageClassesDA extends FenixExecutionDegreeAndCurricularYearContex
         InfoExecutionDegree infoExecutionDegree =
                 (InfoExecutionDegree) request.getAttribute(PresentationConstants.EXECUTION_DEGREE);
 
-        final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
+        final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoExecutionDegree.getExternalId());
 
         final Set<SchoolClass> classes;
         Integer curricularYear = infoCurricularYear.getYear();

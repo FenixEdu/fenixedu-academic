@@ -37,7 +37,7 @@ public class Context extends Context_Base implements Comparable<Context> {
         @Override
         public int compare(Context leftContext, Context rightContext) {
             int comparationResult = leftContext.getCurricularYear().compareTo(rightContext.getCurricularYear());
-            return (comparationResult == 0) ? leftContext.getIdInternal().compareTo(rightContext.getIdInternal()) : comparationResult;
+            return (comparationResult == 0) ? leftContext.getExternalId().compareTo(rightContext.getExternalId()) : comparationResult;
         }
     };
 
@@ -412,8 +412,8 @@ public class Context extends Context_Base implements Comparable<Context> {
         }
 
         @Override
-        public Integer getIdInternal() {
-            return context.getIdInternal();
+        public Integer getExternalId() {
+            return context.getExternalId();
         }
 
         @Override

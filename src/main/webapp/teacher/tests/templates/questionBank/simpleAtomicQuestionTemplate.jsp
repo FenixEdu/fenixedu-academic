@@ -9,9 +9,9 @@
 
 <ft:define id="testElement" type="net.sourceforge.fenixedu.domain.tests.NewAtomicQuestion" />
 <bean:define id="questionGroup" name="questionGroup" type="net.sourceforge.fenixedu.domain.tests.NewQuestionGroup" />
-<bean:define id="modelSelectDivId">testModelDiv<bean:write name="testElement" property="idInternal" /></bean:define>
-<bean:define id="modelSelectId">testModel<bean:write name="testElement" property="idInternal" /></bean:define>
-<bean:define id="questionId"><bean:write name="questionGroup" property="idInternal" /></bean:define>
+<bean:define id="modelSelectDivId">testModelDiv<bean:write name="testElement" property="externalId" /></bean:define>
+<bean:define id="modelSelectId">testModel<bean:write name="testElement" property="externalId" /></bean:define>
+<bean:define id="questionId"><bean:write name="questionGroup" property="externalId" /></bean:define>
 <bean:define id="modelSelectPath">/tests/questionBank.do?method=selectForModel#<bean:write name="modelSelectDivId" /></bean:define>
 
 <div>
@@ -28,10 +28,10 @@ Al�nea
 Pergunta
 </logic:equal>
 </strong>
-(<html:link page="/tests/questionBank.do?method=editTestElement" paramId="oid" paramName="testElement" paramProperty="idInternal">editar</html:link>, 
+(<html:link page="/tests/questionBank.do?method=editTestElement" paramId="oid" paramName="testElement" paramProperty="externalId">editar</html:link>, 
 <f:parameterLink page="/tests/questionBank.do?method=prepareDeleteQuestion">
-	<f:parameter id="parentQuestionGroupOid" name="questionGroup" property="idInternal" />
-	<f:parameter id="oid" name="testElement" property="idInternal" />
+	<f:parameter id="parentQuestionGroupOid" name="questionGroup" property="externalId" />
+	<f:parameter id="oid" name="testElement" property="externalId" />
 	apagar
 </f:parameterLink>
 <logic:equal name="testElement" property="belongsToAllGroup" value="false">

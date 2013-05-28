@@ -16,7 +16,7 @@
 
 
 
-<bean:define id="executionYearId" name="executionDegree" property="executionYear.idInternal" />
+<bean:define id="executionYearId" name="executionDegree" property="executionYear.externalId" />
 <logic:present name="registrationPeriod">
 	<fr:hasMessages for="editRegistrationPeriod" type="conversion">
 		<ul>

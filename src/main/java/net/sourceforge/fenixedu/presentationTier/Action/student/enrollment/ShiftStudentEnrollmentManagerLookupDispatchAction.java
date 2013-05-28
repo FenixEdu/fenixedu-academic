@@ -88,7 +88,7 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
         }
 
         request.setAttribute("registration", registration);
-        request.setAttribute("registrationOID", registration.getIdInternal().toString());
+        request.setAttribute("registrationOID", registration.getExternalId().toString());
         return registration;
     }
 
@@ -211,7 +211,7 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
         return (SchoolClass) CollectionUtils.find(schoolClassesToEnrol, new Predicate() {
             @Override
             public boolean evaluate(Object object) {
-                return ((SchoolClass) object).getIdInternal().equals(classId);
+                return ((SchoolClass) object).getExternalId().equals(classId);
             }
         });
     }

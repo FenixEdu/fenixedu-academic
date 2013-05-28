@@ -63,7 +63,7 @@ public class EditProjectDispatchAction extends FenixDispatchAction {
         final Integer oid = Integer.parseInt(request.getParameter("projectId"));
 
         for (Project project : rootDomainObject.getProjects()) {
-            if (project.getIdInternal().equals(oid)) {
+            if (project.getExternalId().equals(oid)) {
                 request.setAttribute("selectedProject", project);
                 List<ProjectParticipation> participations = new ArrayList<ProjectParticipation>();
                 for (ProjectParticipation participation : project.getProjectParticipations()) {
@@ -186,7 +186,7 @@ public class EditProjectDispatchAction extends FenixDispatchAction {
         final Integer oid = Integer.parseInt(request.getParameter("projectId"));
 
         for (Project project : rootDomainObject.getProjects()) {
-            if (project.getIdInternal().equals(oid)) {
+            if (project.getExternalId().equals(oid)) {
                 request.setAttribute("selectedProject", project);
                 List<ProjectEventAssociation> associations = project.getAssociatedEvents();
                 request.setAttribute("eventAssociations", associations);
@@ -269,7 +269,7 @@ public class EditProjectDispatchAction extends FenixDispatchAction {
         final Integer oid = Integer.parseInt(request.getParameter("projectId"));
 
         for (Project project : rootDomainObject.getProjects()) {
-            if (project.getIdInternal().equals(oid)) {
+            if (project.getExternalId().equals(oid)) {
                 request.setAttribute("selectedProject", project);
                 List<ProjectParticipation> unitParticipations = new ArrayList<ProjectParticipation>();
                 for (ProjectParticipation unitParticipation : project.getProjectParticipations()) {
@@ -319,7 +319,7 @@ public class EditProjectDispatchAction extends FenixDispatchAction {
         final Integer oid = Integer.parseInt(request.getParameter("projectId"));
 
         for (Project project : rootDomainObject.getProjects()) {
-            if (project.getIdInternal().equals(oid)) {
+            if (project.getExternalId().equals(oid)) {
                 request.setAttribute("selectedProject", project);
             }
         }

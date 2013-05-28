@@ -49,7 +49,7 @@ public class SelectRoomsFormAction extends FenixContextAction {
         InfoExecutionPeriod infoExecutionPeriod =
                 (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
 
-        request.setAttribute("objectCode", infoExecutionPeriod.getIdInternal());
+        request.setAttribute("objectCode", infoExecutionPeriod.getExternalId());
 
         ActionForward forward = mapping.getInputForward();
         if (infoRooms == null || infoRooms.isEmpty()) {
@@ -58,7 +58,7 @@ public class SelectRoomsFormAction extends FenixContextAction {
             saveErrors(request, errors);
         } else if (infoRooms.size() == 1) {
             InfoRoom infoRoom = (InfoRoom) infoRooms.get(0);
-            request.setAttribute("objectCode", infoExecutionPeriod.getIdInternal().toString());
+            request.setAttribute("objectCode", infoExecutionPeriod.getExternalId().toString());
             request.setAttribute("roomName", infoRoom.getNome());
 
             forward = mapping.findForward("one");

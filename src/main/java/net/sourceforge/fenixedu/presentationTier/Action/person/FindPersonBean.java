@@ -72,14 +72,14 @@ public class FindPersonBean implements Serializable {
 
     public Integer getDepartmentExternalId() {
         if (department != null && RoleType.TEACHER.equals(roleType)) {
-            return department.getIdInternal();
+            return department.getExternalId();
         }
         return null;
     }
 
     public Integer getDegreeExternalId() {
         if (degree != null && RoleType.STUDENT.equals(roleType)) {
-            return degree.getIdInternal();
+            return degree.getExternalId();
         }
         return null;
     }

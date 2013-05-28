@@ -163,7 +163,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         @Override
         public int compare(StudentCurricularPlan leftState, StudentCurricularPlan rightState) {
             int comparationResult = leftState.getStartDateYearMonthDay().compareTo(rightState.getStartDateYearMonthDay());
-            return (comparationResult == 0) ? leftState.getIdInternal().compareTo(rightState.getIdInternal()) : comparationResult;
+            return (comparationResult == 0) ? leftState.getExternalId().compareTo(rightState.getExternalId()) : comparationResult;
         }
     };
 
@@ -336,7 +336,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     final public String print() {
         if (hasRoot()) {
             final StringBuilder result = new StringBuilder();
-            result.append("[SCP ").append(this.getIdInternal()).append("] ").append(this.getName()).append("\n");
+            result.append("[SCP ").append(this.getExternalId()).append("] ").append(this.getName()).append("\n");
             result.append(getRoot().print(""));
             return result.toString();
         } else {
@@ -979,7 +979,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     final public Enrolment findEnrolmentByEnrolmentID(final Integer enrolmentID) {
         for (final Enrolment enrolment : getEnrolmentsSet()) {
-            if (enrolment.getIdInternal().equals(enrolmentID)) {
+            if (enrolment.getExternalId().equals(enrolmentID)) {
                 return enrolment;
             }
         }
@@ -1282,7 +1282,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
             final CurricularCourse curricularCourse, final ExecutionSemester executionSemester) {
 
         for (final Enrolment enrolment : getStudentEnrollmentsWithApprovedState()) {
-            if (enrolment.getCurricularCourse().getIdInternal().equals(curricularCourse.getIdInternal())
+            if (enrolment.getCurricularCourse().getExternalId().equals(curricularCourse.getExternalId())
                     && enrolment.isApproved() && (enrolment.getExecutionPeriod().compareTo(executionSemester) <= 0)) {
                 return true;
             }

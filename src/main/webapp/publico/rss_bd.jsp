@@ -55,8 +55,8 @@
 	<table>
 		<tr>
 			<td style="border-bottom: 1px solid #eee; padding: 0.5em 1em;"><strong><bean:message key="label.announcements"/></strong></td>
-			<td style="border-bottom: 1px solid #eee; padding: 0.5em 1em;"><a href="<%= linkRSS %><%="/external/announcementsRSS.do?announcementBoardId=" + ((net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard)pageContext.findAttribute("announcementBoard")).getIdInternal()%>"><%= linkRSS %><%="/external/announcementsRSS.do?announcementBoardId=" + ((net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard)pageContext.findAttribute("announcementBoard")).getIdInternal()%></a></td>
-			<td style="border-bottom: 1px solid #eee; padding: 0.5em 1em;"><a href="<%= linkRSS %><%="/external/announcementsRSS.do?announcementBoardId=" + ((net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard)pageContext.findAttribute("announcementBoard")).getIdInternal()%>"><img src="<%= request.getContextPath() %>/images/rss_ico.gif"></td>
+			<td style="border-bottom: 1px solid #eee; padding: 0.5em 1em;"><a href="<%= linkRSS %><%="/external/announcementsRSS.do?announcementBoardId=" + ((net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard)pageContext.findAttribute("announcementBoard")).getExternalId()%>"><%= linkRSS %><%="/external/announcementsRSS.do?announcementBoardId=" + ((net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard)pageContext.findAttribute("announcementBoard")).getExternalId()%></a></td>
+			<td style="border-bottom: 1px solid #eee; padding: 0.5em 1em;"><a href="<%= linkRSS %><%="/external/announcementsRSS.do?announcementBoardId=" + ((net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard)pageContext.findAttribute("announcementBoard")).getExternalId()%>"><img src="<%= request.getContextPath() %>/images/rss_ico.gif"></td>
 		</tr>
 	</table>
 </logic:present>

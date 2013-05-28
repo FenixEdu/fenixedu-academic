@@ -29,7 +29,7 @@ public class InfoCurricularCourse extends InfoObject implements Comparable, ISit
         @Override
         public int compare(InfoCurricularCourse o1, InfoCurricularCourse o2) {
             int result = Collator.getInstance().compare(o1.getName(), o2.getName());
-            return (result == 0) ? o1.getIdInternal().compareTo(o2.getIdInternal()) : result;
+            return (result == 0) ? o1.getExternalId().compareTo(o2.getExternalId()) : result;
         }
     };
 
@@ -310,8 +310,8 @@ public class InfoCurricularCourse extends InfoObject implements Comparable, ISit
     }
 
     @Override
-    public Integer getIdInternal() {
-        return getCurricularCourse().getIdInternal();
+    public Integer getExternalId() {
+        return getCurricularCourse().getExternalId();
     }
 
     public RegimeType getRegimeType() {

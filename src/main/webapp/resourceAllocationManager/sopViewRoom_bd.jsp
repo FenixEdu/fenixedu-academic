@@ -26,7 +26,7 @@
     </fr:edit>
 </fr:form>
 
-<bean:define id="execution_period_oid" name="roomOccupationWeekBean" property="executionSemester.idInternal" scope="request" />
+<bean:define id="execution_period_oid" name="roomOccupationWeekBean" property="executionSemester.externalId" scope="request" />
 
 <logic:present name="<%= PresentationConstants.ROOM%>" scope="request">
             <table class="tstyle4 tdcenter mvert15">

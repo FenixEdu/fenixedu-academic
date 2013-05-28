@@ -137,12 +137,12 @@ public class InfoCurricularCourseScope extends InfoObject {
     }
 
     @Override
-    public Integer getIdInternal() {
-        return getCurricularCourseScope().getIdInternal();
+    public Integer getExternalId() {
+        return getCurricularCourseScope().getExternalId();
     }
 
     @Override
-    public void setIdInternal(Integer integer) {
+    public void setExternalId(Integer integer) {
         throw new Error("Method should not be called!");
     }
 

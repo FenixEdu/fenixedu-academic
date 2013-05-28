@@ -52,7 +52,7 @@
     	
 	    	<logic:iterate id="candidate" name="candidateList" >
         		<bean:define id="candidateLink">
-    				<bean:write name="link"/><bean:write name="candidate" property="idInternal"/>
+    				<bean:write name="link"/><bean:write name="candidate" property="externalId"/>
     			</bean:define>
     			<tr>
 					<td class="listClasses">

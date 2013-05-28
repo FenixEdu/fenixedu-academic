@@ -21,8 +21,8 @@
 			
 			 <meta name="keywords" content="<%=keywords %>"/>
 	
-			<bean:define id="idInternal" name="announcement" property="announcementBoard.idInternal" />		
-			<bean:define id="linkRSSAnn" type="java.lang.String" toScope="request"><%=request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/external/announcementsRSS.do?announcementBoardId=" + idInternal%></bean:define>
+			<bean:define id="externalId" name="announcement" property="announcementBoard.externalId" />		
+			<bean:define id="linkRSSAnn" type="java.lang.String" toScope="request"><%=request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/external/announcementsRSS.do?announcementBoardId=" + externalId%></bean:define>
 		</logic:present>
 	</logic:notPresent>
 </logic:present>

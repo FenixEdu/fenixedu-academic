@@ -180,9 +180,9 @@ public abstract class RequestUtils {
             if (executionDegree.getInfoDegreeCurricularPlan().getInfoDegree() != null) {
                 request.setAttribute("degreeInitials", executionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla());
             }
-            request.setAttribute("degreeCurricularPlanID", executionDegree.getInfoDegreeCurricularPlan().getIdInternal());
+            request.setAttribute("degreeCurricularPlanID", executionDegree.getInfoDegreeCurricularPlan().getExternalId());
             request.setAttribute("executionDegree",
-                    RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegree.getIdInternal()));
+                    RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegree.getExternalId()));
         }
 
     }

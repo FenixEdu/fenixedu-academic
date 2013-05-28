@@ -26,7 +26,7 @@ public class DelegateStudentsGroup extends LeafGroup {
     private final Integer personFunctionId;
 
     public DelegateStudentsGroup(final PersonFunction delegateFunction, final FunctionType functionType) {
-        personFunctionId = delegateFunction.getIdInternal();
+        personFunctionId = delegateFunction.getExternalId();
         this.functionType = functionType;
     }
 

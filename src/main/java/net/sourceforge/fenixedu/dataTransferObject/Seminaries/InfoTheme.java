@@ -27,8 +27,8 @@ public class InfoTheme extends InfoObject {
 
     }
 
-    public InfoTheme(Integer idInternal) {
-        super(idInternal);
+    public InfoTheme(Integer externalId) {
+        super(externalId);
     }
 
     /**
@@ -77,7 +77,7 @@ public class InfoTheme extends InfoObject {
     public String toString() {
         String retorno;
         retorno = "[InfoTheme:";
-        retorno += "ID=" + this.getIdInternal();
+        retorno += "ID=" + this.getExternalId();
         retorno += "Name=" + this.getName();
         retorno += ",Description=" + this.getDescription();
         retorno += ",Short Name=" + this.getShortName() + "]";

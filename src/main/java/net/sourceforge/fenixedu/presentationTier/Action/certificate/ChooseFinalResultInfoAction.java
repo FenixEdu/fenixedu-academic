@@ -84,7 +84,7 @@ public class ChooseFinalResultInfoAction extends FenixDispatchAction {
             throw new FinalResulUnreachedActionException("");
         }
 
-        enrolmentList = GetEnrolmentList.run(infoStudentCurricularPlan.getIdInternal(), EnrollmentState.APROVED);
+        enrolmentList = GetEnrolmentList.run(infoStudentCurricularPlan.getExternalId(), EnrollmentState.APROVED);
 
         if (enrolmentList.size() == 0) {
             throw new NonExistingActionException("Inscrição em Disciplinas");

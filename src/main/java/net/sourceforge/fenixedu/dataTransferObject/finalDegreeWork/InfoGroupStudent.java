@@ -39,12 +39,12 @@ public class InfoGroupStudent extends InfoObject {
     }
 
     @Override
-    public Integer getIdInternal() {
-        return getGroupStudent().getIdInternal();
+    public Integer getExternalId() {
+        return getGroupStudent().getExternalId();
     }
 
     @Override
-    public void setIdInternal(Integer integer) {
+    public void setExternalId(Integer integer) {
         throw new Error("Method should not be called!");
     }
 

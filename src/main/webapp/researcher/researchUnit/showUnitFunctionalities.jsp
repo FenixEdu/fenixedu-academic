@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <html:xhtml/>
-<bean:define id="unitID" name="unit" property="idInternal"/>
+<bean:define id="unitID" name="unit" property="externalId"/>
 <bean:define id="unitExternalId" name="unit" property="externalId"/>
 
 <h2><fr:view name="unit" property="name"/> (<fr:view name="unit" property="acronym"/>)</h2>

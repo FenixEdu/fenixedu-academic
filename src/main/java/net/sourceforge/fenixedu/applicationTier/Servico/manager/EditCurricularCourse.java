@@ -33,7 +33,7 @@ public class EditCurricularCourse {
         String newNameEn = null;
         String newCode = null;
 
-        oldCurricularCourse = (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(newInfoCurricularCourse.getIdInternal());
+        oldCurricularCourse = (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(newInfoCurricularCourse.getExternalId());
 
         newName = newInfoCurricularCourse.getName();
         newNameEn = newInfoCurricularCourse.getNameEn();

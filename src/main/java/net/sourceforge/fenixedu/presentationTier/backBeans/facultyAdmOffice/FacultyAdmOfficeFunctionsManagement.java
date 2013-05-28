@@ -40,7 +40,7 @@ public class FacultyAdmOfficeFunctionsManagement extends ManagerFunctionsManagem
 
         buffer.append("<a href=\"").append(getContextPath())
                 .append("/facultyAdmOffice/functionsManagement/chooseFunction.faces?personID=").append(personID)
-                .append("&unitID=").append(parentUnit.getIdInternal()).append("\">").append(parentUnit.getName()).append("</a>")
+                .append("&unitID=").append(parentUnit.getExternalId()).append("\">").append(parentUnit.getName()).append("</a>")
                 .append("</li>");
 
         if (parentUnit.hasAnySubUnits()) {

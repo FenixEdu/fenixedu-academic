@@ -38,7 +38,7 @@
 		<%-- Invitation Unit --%>			
 		<p><b><bean:message key="label.host.unit" bundle="MANAGER_RESOURCES"/></b></p>		
 		<bean:write name="invitation" property="hostUnit.presentationNameWithParents"/>		
-		<bean:define id="goToChangeInvitationHostUnitDetailsURL" type="java.lang.String">/invitationsManagement.do?method=prepareEditPersonInvitationHostUnit&invitationID=<bean:write name="invitation" property="idInternal"/></bean:define> 		
+		<bean:define id="goToChangeInvitationHostUnitDetailsURL" type="java.lang.String">/invitationsManagement.do?method=prepareEditPersonInvitationHostUnit&invitationID=<bean:write name="invitation" property="externalId"/></bean:define> 		
 		<p><html:link page="<%= goToChangeInvitationHostUnitDetailsURL %>"><bean:message key="label.change" bundle="MANAGER_RESOURCES"/></html:link></p>		
 							
 		<%-- Responsible Entity --%>					
@@ -49,7 +49,7 @@
 		<logic:equal name="invitation" property="responsible.class.simpleName" value="Person">
 			<bean:write name="invitation" property="responsible.name"/>	(<bean:write name="invitation" property="responsible.username"/>)
 		</logic:equal>			
-		<bean:define id="goToChangeInvitationResponsibleDetailsURL" type="java.lang.String">/invitationsManagement.do?method=prepareEditPersonInvitationResponsible&invitationID=<bean:write name="invitation" property="idInternal"/></bean:define> 		
+		<bean:define id="goToChangeInvitationResponsibleDetailsURL" type="java.lang.String">/invitationsManagement.do?method=prepareEditPersonInvitationResponsible&invitationID=<bean:write name="invitation" property="externalId"/></bean:define> 		
 		<p><html:link page="<%= goToChangeInvitationResponsibleDetailsURL %>"><bean:message key="label.change" bundle="MANAGER_RESOURCES"/></html:link></p>		
 								
 		<%-- Invitation Interval --%>			
@@ -60,7 +60,7 @@
 		        <fr:property name="columnClasses" value=",,noborder"/>
 			</fr:layout>	
 		</fr:view>				
-		<bean:define id="goToChangeInvitationTimeIntervalDetailsURL" type="java.lang.String">/invitationsManagement.do?method=prepareEditPersonInvitationTimeInterval&invitationID=<bean:write name="invitation" property="idInternal"/></bean:define> 		
+		<bean:define id="goToChangeInvitationTimeIntervalDetailsURL" type="java.lang.String">/invitationsManagement.do?method=prepareEditPersonInvitationTimeInterval&invitationID=<bean:write name="invitation" property="externalId"/></bean:define> 		
 		<p><html:link page="<%= goToChangeInvitationTimeIntervalDetailsURL %>"><bean:message key="label.change" bundle="MANAGER_RESOURCES"/></html:link></p>		
 		
 	</logic:notEmpty>		

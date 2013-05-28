@@ -42,7 +42,7 @@ public class ManageTeacherAdviseServiceDispatchAction extends FenixDispatchActio
     protected void getAdviseServices(HttpServletRequest request, DynaActionForm dynaForm,
             final ExecutionSemester executionSemester, Teacher teacher) {
 
-        dynaForm.set("executionPeriodId", executionSemester.getIdInternal());
+        dynaForm.set("executionPeriodId", executionSemester.getExternalId());
         dynaForm.set("teacherId", teacher.getExternalId());
 
         TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);

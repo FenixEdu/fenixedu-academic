@@ -117,10 +117,10 @@
 	
 	 <%= group.getName() + ", " + group.getUnit().getName() %><span style="font-weight: normal;"> (
 	<logic:equal name="bean" property="executionYear.current" value="true">
-		<a href="<%= request.getContextPath() + "/examCoordination/vigilancy/vigilantGroupManagement.do?method=prepareEdition&forwardTo=attributes&oid=" + group.getIdInternal() %>"><bean:message key="label.edit" bundle="VIGILANCY_RESOURCES"/></a>, <a href="<%= request.getContextPath() + "/examCoordination/vigilancy/vigilantGroupManagement.do?method=deleteVigilantGroup&oid=" + group.getIdInternal() %>"><bean:message key="label.vigilancy.delete" bundle="VIGILANCY_RESOURCES"/></a>, 
+		<a href="<%= request.getContextPath() + "/examCoordination/vigilancy/vigilantGroupManagement.do?method=prepareEdition&forwardTo=attributes&oid=" + group.getExternalId() %>"><bean:message key="label.edit" bundle="VIGILANCY_RESOURCES"/></a>, <a href="<%= request.getContextPath() + "/examCoordination/vigilancy/vigilantGroupManagement.do?method=deleteVigilantGroup&oid=" + group.getExternalId() %>"><bean:message key="label.vigilancy.delete" bundle="VIGILANCY_RESOURCES"/></a>, 
 	</logic:equal>
-	<a href="<%= request.getContextPath() + "/examCoordination/vigilancy/vigilantGroupManagement.do?method=generateReportForGroup&oid=" + group.getIdInternal() %>"><bean:message key="label.generateStats" bundle="VIGILANCY_RESOURCES"/></a>, 
-	<a href="<%= request.getContextPath() + "/examCoordination/vigilancy/vigilantGroupManagement.do?method=showPoints&oid=" + group.getIdInternal() %>"><bean:message key="label.showPoints" bundle="VIGILANCY_RESOURCES"/></a>
+	<a href="<%= request.getContextPath() + "/examCoordination/vigilancy/vigilantGroupManagement.do?method=generateReportForGroup&oid=" + group.getExternalId() %>"><bean:message key="label.generateStats" bundle="VIGILANCY_RESOURCES"/></a>, 
+	<a href="<%= request.getContextPath() + "/examCoordination/vigilancy/vigilantGroupManagement.do?method=showPoints&oid=" + group.getExternalId() %>"><bean:message key="label.showPoints" bundle="VIGILANCY_RESOURCES"/></a>
 	)</span>
 	</th>
 </tr>
@@ -166,11 +166,11 @@
 	</logic:equal>
 	
 	<bean:message key="label.manage" bundle="VIGILANCY_RESOURCES"/>: 
-	<a href="<%= request.getContextPath() + "/examCoordination/vigilancy/vigilantGroupManagement.do?method=prepareBoundPropertyEdition&oid=" +  group.getIdInternal() %>"><bean:message key="label.vigilancy.editPermissions" bundle="VIGILANCY_RESOURCES"/></a>, 
-	<a href="<%= request.getContextPath() + "/examCoordination/vigilancy/vigilantGroupManagement.do?method=prepareStartPointsPropertyEdition&oid=" + group.getIdInternal() %>"><bean:message key="label.vigilancy.points" bundle="VIGILANCY_RESOURCES"/></a>,
-	<a href="<%= request.getContextPath() + "/examCoordination/vigilancy/vigilantGroupManagement.do?method=prepareGroupPointsPropertyEdition&oid=" + group.getIdInternal() %>"><bean:message key="label.vigilancy.vigilancyPoints" bundle="VIGILANCY_RESOURCES"/></a>, 
-	<a href="<%= request.getContextPath() + "/examCoordination/vigilancy/vigilancyCourseGroupManagement.do?method=prepareEdition&gid=" + group.getIdInternal() %>"> <bean:message key="label.vigilancy.courses" bundle="VIGILANCY_RESOURCES"/></a>, 
-	<a href="<%= request.getContextPath() + "/examCoordination/vigilancy/vigilantGroupManagement.do?method=prepareEdition&forwardTo=editCoordinators&oid=" + group.getIdInternal() %>"><bean:message key="label.vigilancy.examCoordinators" bundle="VIGILANCY_RESOURCES"/></a>  
+	<a href="<%= request.getContextPath() + "/examCoordination/vigilancy/vigilantGroupManagement.do?method=prepareBoundPropertyEdition&oid=" +  group.getExternalId() %>"><bean:message key="label.vigilancy.editPermissions" bundle="VIGILANCY_RESOURCES"/></a>, 
+	<a href="<%= request.getContextPath() + "/examCoordination/vigilancy/vigilantGroupManagement.do?method=prepareStartPointsPropertyEdition&oid=" + group.getExternalId() %>"><bean:message key="label.vigilancy.points" bundle="VIGILANCY_RESOURCES"/></a>,
+	<a href="<%= request.getContextPath() + "/examCoordination/vigilancy/vigilantGroupManagement.do?method=prepareGroupPointsPropertyEdition&oid=" + group.getExternalId() %>"><bean:message key="label.vigilancy.vigilancyPoints" bundle="VIGILANCY_RESOURCES"/></a>, 
+	<a href="<%= request.getContextPath() + "/examCoordination/vigilancy/vigilancyCourseGroupManagement.do?method=prepareEdition&gid=" + group.getExternalId() %>"> <bean:message key="label.vigilancy.courses" bundle="VIGILANCY_RESOURCES"/></a>, 
+	<a href="<%= request.getContextPath() + "/examCoordination/vigilancy/vigilantGroupManagement.do?method=prepareEdition&forwardTo=editCoordinators&oid=" + group.getExternalId() %>"><bean:message key="label.vigilancy.examCoordinators" bundle="VIGILANCY_RESOURCES"/></a>  
 	</td>
 </tr>
 </logic:equal>

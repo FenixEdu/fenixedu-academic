@@ -40,7 +40,7 @@ public class ExternalUnitResultBean extends AbstractExternalUnitResultBean {
         final List<LinkObject> result = new ArrayList<LinkObject>();
         for (final Unit unit : searchFullPath()) {
             final LinkObject linkObject = new LinkObject();
-            linkObject.setId(unit.getIdInternal());
+            linkObject.setId(unit.getExternalId());
             linkObject.setLabel(unit.getName());
             linkObject.setMethod("viewUnit");
             result.add(linkObject);

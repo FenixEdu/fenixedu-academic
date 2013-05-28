@@ -254,7 +254,7 @@ public class StudentDismissalsDA extends FenixDispatchAction {
 
     public ActionForward backViewRegistration(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
-        request.setAttribute("registrationId", getSCP(request).getRegistration().getIdInternal().toString());
+        request.setAttribute("registrationId", getSCP(request).getRegistration().getExternalId().toString());
         return mapping.findForward("visualizeRegistration");
     }
 

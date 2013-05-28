@@ -33,8 +33,8 @@ public class ReadQualification extends ReadDomainObjectService {
     }
 
     @Override
-    protected DomainObject readDomainObject(final Integer idInternal) {
-        return RootDomainObject.getInstance().readQualificationByOID(idInternal);
+    protected DomainObject readDomainObject(final Integer externalId) {
+        return RootDomainObject.getInstance().readQualificationByOID(externalId);
     }
 
     // Service Invokers migrated from Berserk
@@ -42,9 +42,9 @@ public class ReadQualification extends ReadDomainObjectService {
     private static final ReadQualification serviceInstance = new ReadQualification();
 
     @Service
-    public static InfoObject runReadQualification(Integer idInternal) throws NotAuthorizedException {
-        ReadQualificationAuthorizationFilter.instance.execute(idInternal);
-        return serviceInstance.run(idInternal);
+    public static InfoObject runReadQualification(Integer externalId) throws NotAuthorizedException {
+        ReadQualificationAuthorizationFilter.instance.execute(externalId);
+        return serviceInstance.run(externalId);
     }
 
 }

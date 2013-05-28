@@ -19,7 +19,7 @@ public class CriarTurno {
     @Service
     public static InfoShift run(InfoShiftEditor infoTurno) {
         final ExecutionCourse executionCourse =
-                RootDomainObject.getInstance().readExecutionCourseByOID(infoTurno.getInfoDisciplinaExecucao().getIdInternal());
+                RootDomainObject.getInstance().readExecutionCourseByOID(infoTurno.getInfoDisciplinaExecucao().getExternalId());
         final Shift newShift = new Shift(executionCourse, infoTurno.getTipos(), infoTurno.getLotacao());
         return InfoShift.newInfoFromDomain(newShift);
     }

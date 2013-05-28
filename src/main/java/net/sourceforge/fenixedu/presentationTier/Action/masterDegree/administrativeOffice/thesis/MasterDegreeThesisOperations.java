@@ -48,7 +48,7 @@ public class MasterDegreeThesisOperations extends FenixDispatchAction {
             if (form != null) {
                 DynaActionForm getStudentByNumberAndDegreeTypeForm = (DynaActionForm) form;
                 getStudentByNumberAndDegreeTypeForm.set("degreeType", DegreeType.MASTER_DEGREE.name());
-                getStudentByNumberAndDegreeTypeForm.set("scpID", studentCurricularPlan.getIdInternal());
+                getStudentByNumberAndDegreeTypeForm.set("scpID", studentCurricularPlan.getExternalId());
             }
 
             return true;

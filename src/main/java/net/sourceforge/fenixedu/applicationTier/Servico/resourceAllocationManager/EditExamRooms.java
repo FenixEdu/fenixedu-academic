@@ -26,7 +26,7 @@ public class EditExamRooms {
             finalRoomList.add((AllocatableSpace) RootDomainObject.getInstance().readResourceByOID(id));
         }
 
-        final Exam exam = (Exam) RootDomainObject.getInstance().readEvaluationByOID(infoExam.getIdInternal());
+        final Exam exam = (Exam) RootDomainObject.getInstance().readEvaluationByOID(infoExam.getExternalId());
         if (exam == null) {
             throw new NonExistingServiceException();
         }

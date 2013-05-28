@@ -13,12 +13,12 @@ public class DeleteDegreeCurricularPlan {
 
     @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
     @Service
-    public static void run(Integer idInternal) throws FenixServiceException {
-        if (idInternal == null) {
+    public static void run(Integer externalId) throws FenixServiceException {
+        if (externalId == null) {
             throw new InvalidArgumentsServiceException();
         }
 
-        final DegreeCurricularPlan dcpToDelete = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(idInternal);
+        final DegreeCurricularPlan dcpToDelete = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(externalId);
 
         if (dcpToDelete == null) {
             throw new NonExistingServiceException();

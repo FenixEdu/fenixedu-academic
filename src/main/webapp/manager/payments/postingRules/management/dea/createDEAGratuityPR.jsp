@@ -38,7 +38,7 @@
 </logic:messagesPresent>
 
 
-<bean:define id="degreeCurricularPlanId" name="degreeCurricularPlan" property="idInternal" />
+<bean:define id="degreeCurricularPlanId" name="degreeCurricularPlan" property="externalId" />
 
 <fr:form action="<%= "/postingRules.do?degreeCurricularPlanId=" + degreeCurricularPlanId %>">
 	<input type="hidden" name="method" value="" />

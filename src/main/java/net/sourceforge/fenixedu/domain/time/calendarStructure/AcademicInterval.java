@@ -202,7 +202,6 @@ public class AcademicInterval extends AbstractInterval implements Serializable {
             String academicCalendarExternalId = split[1];
             return new AcademicInterval(entryExternalId, academicCalendarExternalId);
         }
-
     }
 
     public String getResumedRepresentationInStringFormat() {

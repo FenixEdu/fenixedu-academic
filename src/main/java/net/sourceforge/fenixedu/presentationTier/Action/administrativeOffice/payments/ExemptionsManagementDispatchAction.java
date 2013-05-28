@@ -168,7 +168,7 @@ public class ExemptionsManagementDispatchAction extends PaymentsManagementDispat
 
         }
 
-        request.setAttribute("eventId", createGratuityExemptionBean.getGratuityEvent().getIdInternal());
+        request.setAttribute("eventId", createGratuityExemptionBean.getGratuityEvent().getExternalId());
 
         return showExemptions(mapping, form, request, response);
     }
@@ -177,7 +177,7 @@ public class ExemptionsManagementDispatchAction extends PaymentsManagementDispat
             HttpServletResponse response) {
 
         final Exemption exemption = getExemption(request);
-        request.setAttribute("eventId", exemption.getEvent().getIdInternal());
+        request.setAttribute("eventId", exemption.getEvent().getExternalId());
 
         try {
             DeleteExemption.run(exemption);
@@ -217,7 +217,7 @@ public class ExemptionsManagementDispatchAction extends PaymentsManagementDispat
         final CreateInstallmentPenaltyExemptionBean createInstallmentPenaltyExemptionBean =
                 (CreateInstallmentPenaltyExemptionBean) RenderUtils.getViewState("create-installment-penalty-exemption-bean")
                         .getMetaObject().getObject();
-        request.setAttribute("eventId", createInstallmentPenaltyExemptionBean.getGratuityEventWithPaymentPlan().getIdInternal());
+        request.setAttribute("eventId", createInstallmentPenaltyExemptionBean.getGratuityEventWithPaymentPlan().getExternalId());
 
         try {
             CreateInstallmentPenaltyExemption.run(getLoggedPerson(request), createInstallmentPenaltyExemptionBean);
@@ -298,7 +298,7 @@ public class ExemptionsManagementDispatchAction extends PaymentsManagementDispat
         final CreateImprovementOfApprovedEnrolmentPenaltyExemptionBean penaltyExemptionBean =
                 (CreateImprovementOfApprovedEnrolmentPenaltyExemptionBean) RenderUtils
                         .getViewState("create-penalty-exemption-bean").getMetaObject().getObject();
-        request.setAttribute("eventId", penaltyExemptionBean.getEvent().getIdInternal());
+        request.setAttribute("eventId", penaltyExemptionBean.getEvent().getExternalId());
 
         try {
             CreateImprovementOfApprovedEnrolmentPenaltyExemption.run(getLoggedPerson(request), penaltyExemptionBean);
@@ -334,7 +334,7 @@ public class ExemptionsManagementDispatchAction extends PaymentsManagementDispat
         final CreateAdministrativeOfficeFeeAndInsurancePenaltyExemptionBean penaltyExemptionBean =
                 (CreateAdministrativeOfficeFeeAndInsurancePenaltyExemptionBean) RenderUtils
                         .getViewState("create-penalty-exemption-bean").getMetaObject().getObject();
-        request.setAttribute("eventId", penaltyExemptionBean.getEvent().getIdInternal());
+        request.setAttribute("eventId", penaltyExemptionBean.getEvent().getExternalId());
 
         try {
             CreateAdministrativeOfficeFeeAndInsurancePenaltyExemption.run(getLoggedPerson(request), penaltyExemptionBean);
@@ -543,7 +543,7 @@ public class ExemptionsManagementDispatchAction extends PaymentsManagementDispat
 
         final CreatePhdRegistrationFeePenaltyExemptionBean penaltyExemptionBean =
                 getRenderedObject("create-penalty-exemption-bean");
-        request.setAttribute("eventId", penaltyExemptionBean.getEvent().getIdInternal());
+        request.setAttribute("eventId", penaltyExemptionBean.getEvent().getExternalId());
 
         try {
             CreatePhdRegistrationFeePenaltyExemption.run(getLoggedPerson(request), penaltyExemptionBean);

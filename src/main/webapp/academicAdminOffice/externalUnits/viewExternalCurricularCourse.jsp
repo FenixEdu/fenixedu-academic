@@ -14,7 +14,7 @@
 	</fr:layout>
 </fr:view>
 
-<bean:define id="externalCurricularCourseId">&amp;oid=<bean:write name="externalCurricularCourseBean" property="externalCurricularCourse.idInternal" /></bean:define>
+<bean:define id="externalCurricularCourseId">&amp;oid=<bean:write name="externalCurricularCourseBean" property="externalCurricularCourse.externalId" /></bean:define>
 
 <ul class="mtop15">
 	<li><html:link page="<%="/externalUnits.do?method=prepareEditExternalCurricularCourse" + externalCurricularCourseId %>"><bean:message key="label.externalUnits.editInformation" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:link></li>
@@ -32,7 +32,7 @@
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4 thlight mvert05"/>
 			<fr:property name="columnClasses" value="acenter,acenter,aleft,acenter,acenter,acenter,acenter"/>
-			<fr:property name="linkFormat(edit)" value="/externalUnits.do?method=prepareEditExternalEnrolment&oid=${idInternal}" />
+			<fr:property name="linkFormat(edit)" value="/externalUnits.do?method=prepareEditExternalEnrolment&oid=${externalId}" />
 			<fr:property name="key(edit)" value="label.edit"/>
 			<fr:property name="bundle(edit)" value="ACADEMIC_OFFICE_RESOURCES"/>
 		</fr:layout>

@@ -152,7 +152,7 @@ public class UnitAnnouncementBoardsManagement extends AnnouncementManagement {
         form.setReturnMethod(request.getParameter("returnMethod"));
         form.setName(board.getName().getContent());
         form.setMandatory(board.getMandatory());
-        form.setKeyUnit(board.getParty().getIdInternal());
+        form.setKeyUnit(board.getParty().getExternalId());
         form.setUnitBoardManagementPermittedGroupType(board.getUnitPermittedManagementGroupType() == null ? null : board
                 .getUnitPermittedManagementGroupType().name());
         form.setUnitBoardWritePermittedGroupType(board.getUnitPermittedWriteGroupType() == null ? null : board
@@ -188,7 +188,7 @@ public class UnitAnnouncementBoardsManagement extends AnnouncementManagement {
         form.setReturnAction(request.getParameter("returnAction"));
         form.setReturnMethod(request.getParameter("returnMethod"));
         form.setName(board.getName().getContent());
-        form.setKeyUnit(board.getParty().getIdInternal());
+        form.setKeyUnit(board.getParty().getExternalId());
 
         Collection<AnnouncementBoardApproversBean> approvers = new ArrayList<AnnouncementBoardApproversBean>();
         for (Person person : board.getUnit().getSite().getManagers()) {
@@ -276,7 +276,7 @@ public class UnitAnnouncementBoardsManagement extends AnnouncementManagement {
         Unit unit = this.getRequestedUnit(request);
         UnitAnnouncementBoardsManagementForm form = (UnitAnnouncementBoardsManagementForm) actionForm;
         form.setName(unit.getName());
-        form.setKeyUnit(unit.getIdInternal());
+        form.setKeyUnit(unit.getExternalId());
         form.setMandatory(false);
 
         super.viewAllBoards(mapping, form, request, response);

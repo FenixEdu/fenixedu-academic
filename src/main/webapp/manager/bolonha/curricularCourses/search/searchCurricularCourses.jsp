@@ -6,8 +6,8 @@
 <html:xhtml />
 
 <bean:define id="dcpId" name="degreeCurricularPlan" property="externalId" />
-<bean:define id="dcpIdInternal" name="degreeCurricularPlan" property="idInternal" />
-<bean:define id="executionYearId" name="currentExecutionYear" property="idInternal" />
+<bean:define id="dcpExternalId" name="degreeCurricularPlan" property="externalId" />
+<bean:define id="executionYearId" name="currentExecutionYear" property="externalId" />
 
 <h2><bean:message key="title.search.curricular.courses" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
 
@@ -52,7 +52,7 @@
 		<fr:layout name="tabular">
 
 			<fr:link 	name="edit" 
-						link="<%= String.format("/bolonha/curricularPlans/editCurricularCourse.faces?degreeCurricularPlanID=%s&contextID=${idInternal}&curricularCourseID=${childDegreeModule.idInternal}&organizeBy=groups&showRules=false&hideCourses=false&action=build&executionYearID=%s", dcpIdInternal, executionYearId) %>"
+						link="<%= String.format("/bolonha/curricularPlans/editCurricularCourse.faces?degreeCurricularPlanID=%s&contextID=${externalId}&curricularCourseID=${childDegreeModule.externalId}&organizeBy=groups&showRules=false&hideCourses=false&action=build&executionYearID=%s", dcpExternalId, executionYearId) %>"
 						label="label.edit,APPLICATION_RESOURCES"/>
 
 		</fr:layout>

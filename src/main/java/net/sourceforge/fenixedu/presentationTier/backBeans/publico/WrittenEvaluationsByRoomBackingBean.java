@@ -54,7 +54,7 @@ public class WrittenEvaluationsByRoomBackingBean extends
     private Map<String, String> constructLinkParameters(final ExecutionCourse executionCourse,
             final WrittenEvaluation writtenEvaluation) {
         final Map<String, String> linkParameters = new HashMap<String, String>();
-        linkParameters.put("executionCourseID", executionCourse.getIdInternal().toString());
+        linkParameters.put("executionCourseID", executionCourse.getExternalId().toString());
         linkParameters.put("method", "firstPage");
         linkParameters.put(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME, executionCourse.getSite().getReversePath());
         return linkParameters;

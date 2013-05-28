@@ -208,7 +208,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         ExecutionCourse executionCourseTo = rootDomainObject.readExecutionCourseByOID(getObjectCode(request));
 
         try {
-            ImportCustomizationOptions.runImportCustomizationOptions(executionCourseTo.getIdInternal(),
+            ImportCustomizationOptions.runImportCustomizationOptions(executionCourseTo.getExternalId(),
                     executionCourseTo.getSite(), executionCourseFrom.getSite());
         } catch (DomainException e) {
             addActionMessage(request, e.getKey(), e.getArgs());
@@ -316,7 +316,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
         InfoCurriculum infoCurriculumNew = new InfoCurriculum();
 
-        infoCurriculumNew.setIdInternal(curricularCourseCode);
+        infoCurriculumNew.setExternalId(curricularCourseCode);
         infoCurriculumNew.setGeneralObjectives((String) objectivesForm.get("generalObjectives"));
         infoCurriculumNew.setGeneralObjectivesEn((String) objectivesForm.get("generalObjectivesEn"));
         infoCurriculumNew.setOperacionalObjectives((String) objectivesForm.get("operacionalObjectives"));
@@ -402,7 +402,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         DynaActionForm programForm = (DynaActionForm) form;
 
         InfoCurriculum infoCurriculumNew = new InfoCurriculum();
-        infoCurriculumNew.setIdInternal(curricularCourseCode);
+        infoCurriculumNew.setExternalId(curricularCourseCode);
         infoCurriculumNew.setProgram((String) programForm.get("program"));
         infoCurriculumNew.setProgramEn((String) programForm.get("programEn"));
 
@@ -766,7 +766,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             request.setAttribute("siteView", siteView);
             request.setAttribute("listPersons", executionCourse.getProfessorships());
             request.setAttribute("objectCode", ((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse()
-                    .getIdInternal());
+                    .getExternalId());
             if (siteView.getComponent() instanceof InfoSiteSection) {
                 request.setAttribute("infoSection", ((InfoSiteSection) siteView.getComponent()).getSection());
             }
@@ -927,7 +927,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         InfoExecutionCourse infoExecutionCourse = ReadExecutionCourseByOID.run(objectCode);
         InfoExecutionPeriod infoExecutionPeriod = infoExecutionCourse.getInfoExecutionPeriod();
         request.setAttribute(PresentationConstants.EXECUTION_PERIOD, infoExecutionPeriod);
-        request.setAttribute(PresentationConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getIdInternal().toString());
+        request.setAttribute(PresentationConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getExternalId().toString());
 
         ISiteComponent shiftsAndGroupsView = new InfoSiteShiftsAndGroups();
         readSiteView(request, shiftsAndGroupsView, null, groupPropertiesCode, null);
@@ -1384,7 +1384,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         request.setAttribute("enrolmentPolicyValues", enrolmentPolicyValues);
         request.setAttribute("enrolmentPolicyNames", enrolmentPolicyNames);
 
-        final Grouping grouping = rootDomainObject.readGroupingByOID(infoGroupProperties.getIdInternal());
+        final Grouping grouping = rootDomainObject.readGroupingByOID(infoGroupProperties.getExternalId());
 
         String shiftType = (String) groupPropertiesForm.get("shiftType");
         if (getDifferentiatedCapacity(groupPropertiesForm) && shiftType.equalsIgnoreCase("Sem Turno")) {
@@ -1539,7 +1539,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         }
 
         InfoGrouping infoGroupProperties = new InfoGrouping();
-        infoGroupProperties.setIdInternal(groupPropertiesCode);
+        infoGroupProperties.setExternalId(groupPropertiesCode);
         infoGroupProperties.setEnrolmentBeginDay(enrolmentBeginDay);
         infoGroupProperties.setEnrolmentEndDay(enrolmentEndDay);
         infoGroupProperties.setEnrolmentPolicy(new EnrolmentGroupPolicyType(new Integer(enrolmentPolicy)));
@@ -2079,7 +2079,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             String label, value;
             while (iter.hasNext()) {
                 infoShift = (InfoShift) iter.next();
-                value = infoShift.getIdInternal().toString();
+                value = infoShift.getExternalId().toString();
                 label = infoShift.getNome();
                 shiftsList.add(new LabelValueBean(label, value));
             }
@@ -2204,7 +2204,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             String label, value;
             while (iter.hasNext()) {
                 infoShift = (InfoShift) iter.next();
-                value = infoShift.getIdInternal().toString();
+                value = infoShift.getExternalId().toString();
                 label = infoShift.getNome();
                 shiftsList.add(new LabelValueBean(label, value));
             }

@@ -88,7 +88,7 @@ public class TSDTeachersGroupAction extends FenixDispatchAction {
         List<Department> departmentList = new ArrayList<Department>(rootDomainObject.getDepartments());
         Collections.sort(departmentList, new BeanComparator("realName"));
 
-        dynaForm.set("department", selectedDepartment.getIdInternal());
+        dynaForm.set("department", selectedDepartment.getExternalId());
         request.setAttribute("departmentList", departmentList);
         request.setAttribute("tsdProcess", distribution);
 
@@ -114,7 +114,7 @@ public class TSDTeachersGroupAction extends FenixDispatchAction {
         List<Department> departmentList = new ArrayList<Department>(rootDomainObject.getDepartments());
         Collections.sort(departmentList, new BeanComparator("realName"));
 
-        dynaForm.set("department", selectedDepartment.getIdInternal());
+        dynaForm.set("department", selectedDepartment.getExternalId());
 
         request.setAttribute("departmentList", departmentList);
         request.setAttribute("tsdProcess", distribution);
@@ -131,7 +131,7 @@ public class TSDTeachersGroupAction extends FenixDispatchAction {
         TeacherServiceDistribution selectedTeacherServiceDistribution = getSelectedTeacherServiceDistribution(dynaForm);
 
         RemoveTeacherFromTeacherServiceDistributions.runRemoveTeacherFromTeacherServiceDistributions(
-                selectedTeacherServiceDistribution.getIdInternal(), selectedTSDTeacher.getIdInternal());
+                selectedTeacherServiceDistribution.getExternalId(), selectedTSDTeacher.getExternalId());
 
         return listTSDTeachers(mapping, form, request, response);
     }
@@ -145,7 +145,7 @@ public class TSDTeachersGroupAction extends FenixDispatchAction {
         TeacherServiceDistribution selectedTeacherServiceDistribution = getSelectedTeacherServiceDistribution(dynaForm);
 
         RemoveCourseFromTeacherServiceDistribution.runRemoveCourseFromTeacherServiceDistribution(
-                selectedTeacherServiceDistribution.getIdInternal(), selectedCourse.getIdInternal());
+                selectedTeacherServiceDistribution.getExternalId(), selectedCourse.getExternalId());
 
         return listTSDTeachers(mapping, form, request, response);
     }
@@ -160,7 +160,7 @@ public class TSDTeachersGroupAction extends FenixDispatchAction {
         TeacherServiceDistribution selectedTeacherServiceDistribution = getSelectedTeacherServiceDistribution(dynaForm);
 
         AddTeacherToTeacherServiceDistribution.runAddTeacherToTeacherServiceDistribution(
-                selectedTeacherServiceDistribution.getIdInternal(), selectedTeacher.getIdInternal());
+                selectedTeacherServiceDistribution.getExternalId(), selectedTeacher.getExternalId());
 
         return listTSDTeachers(mapping, form, request, response);
     }
@@ -175,7 +175,7 @@ public class TSDTeachersGroupAction extends FenixDispatchAction {
         CompetenceCourse selectedCourse = getSelectedCompetenceCourse(dynaForm);
 
         AddCourseToTeacherServiceDistribution.runAddCourseToTeacherServiceDistribution(
-                selectedTeacherServiceDistribution.getIdInternal(), selectedCourse.getIdInternal());
+                selectedTeacherServiceDistribution.getExternalId(), selectedCourse.getExternalId());
 
         return listTSDTeachers(mapping, form, request, response);
     }
@@ -249,8 +249,8 @@ public class TSDTeachersGroupAction extends FenixDispatchAction {
         Double requiredHours = Double.parseDouble((String) dynaForm.get("hours"));
 
         Boolean teacherSuccessfullyCreated =
-                CreateTSDTeacher.runCreateTSDTeacher(teacherName, selectedCategory.getIdInternal(), requiredHours,
-                        selectedTeacherServiceDistribution.getIdInternal());
+                CreateTSDTeacher.runCreateTSDTeacher(teacherName, selectedCategory.getExternalId(), requiredHours,
+                        selectedTeacherServiceDistribution.getExternalId());
 
         if (!teacherSuccessfullyCreated) {
             request.setAttribute("creationFailure", true);
@@ -273,10 +273,10 @@ public class TSDTeachersGroupAction extends FenixDispatchAction {
         String[] shiftTypesArray = (String[]) dynaForm.get("shiftTypesArray");
 
         TSDCourse course =
-                CreateTSDVirtualGroup.runCreateTSDVirtualGroup(courseName, selectedTeacherServiceDistribution.getIdInternal(),
+                CreateTSDVirtualGroup.runCreateTSDVirtualGroup(courseName, selectedTeacherServiceDistribution.getExternalId(),
                         executionPeriodId, shiftTypesArray, degreeCurricularPlansIdArray);
 
-        dynaForm.set("tsdCourse", course.getIdInternal());
+        dynaForm.set("tsdCourse", course.getExternalId());
 
         return listTSDTeachers(mapping, form, request, response);
     }

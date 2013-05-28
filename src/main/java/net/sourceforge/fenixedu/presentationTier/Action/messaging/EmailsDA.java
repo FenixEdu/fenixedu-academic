@@ -119,9 +119,9 @@ public class EmailsDA extends FenixDispatchAction {
         }
         if (isSenderUnique(sendersGroups, sendersGroupsCourses)) {
             if (sendersGroupsCourses.size() == 1) {
-                return viewSentEmails(mapping, request, (sendersGroupsCourses.iterator().next()).getIdInternal());
+                return viewSentEmails(mapping, request, (sendersGroupsCourses.iterator().next()).getExternalId());
             } else {
-                return viewSentEmails(mapping, request, sendersGroups.iterator().next().getIdInternal());
+                return viewSentEmails(mapping, request, sendersGroups.iterator().next().getExternalId());
             }
         }
         request.setAttribute("sendersGroups", sendersGroups);
@@ -182,7 +182,7 @@ public class EmailsDA extends FenixDispatchAction {
         } else {
             final Sender sender = message.getSender();
             MessageDeleteService.delete(message);
-            return viewSentEmails(mapping, request, sender.getIdInternal());
+            return viewSentEmails(mapping, request, sender.getExternalId());
         }
     }
 

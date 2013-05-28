@@ -32,14 +32,14 @@
 				</div>
 			</logic:notEmpty> 
 
-		   	<bean:define id="executionYearId" name="bean" property="executionYear.idInternal"/>
+		   	<bean:define id="executionYearId" name="bean" property="executionYear.externalId"/>
 		   				
 			<logic:empty name="expectation" property="autoEvaluation">
 				<p class="mbottom05"><em><bean:message key="label.noAutoEvaluationsForYear" /></em></p>				
 				<logic:equal name="expectation" property="allowedToEditAutoEvaluation" value="true">
 					<ul class="list5 mtop05">
 						<li>						
-							<bean:define id="executionYearId" name="bean" property="executionYear.idInternal"/>
+							<bean:define id="executionYearId" name="bean" property="executionYear.externalId"/>
 							<html:link page="<%= "/teacherExpectationAutoAvaliation.do?method=prepareEdit&amp;executionYearId=" + executionYearId%>">
 								<bean:message key="button.add" />
 							</html:link>		

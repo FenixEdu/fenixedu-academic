@@ -71,7 +71,7 @@ public class PersonFunctionsBean implements Serializable {
                 if (comparison != 0) {
                     return comparison;
                 } else {
-                    return f1.getIdInternal().compareTo(f2.getIdInternal());
+                    return f1.getExternalId().compareTo(f2.getExternalId());
                 }
             }
         }

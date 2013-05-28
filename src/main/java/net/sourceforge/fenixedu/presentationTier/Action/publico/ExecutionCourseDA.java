@@ -81,7 +81,7 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
         }
 
         request.setAttribute("executionCourse", executionCourse);
-        request.setAttribute("executionCourseID", executionCourse.getIdInternal());
+        request.setAttribute("executionCourseID", executionCourse.getExternalId());
 
         return super.execute(mapping, actionForm, request, response);
     }
@@ -319,7 +319,7 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
         final ExecutionCourse executionCourse = getExecutionCourse(request);
         for (final ExportGrouping exportGrouping : executionCourse.getExportGroupingsSet()) {
             final Grouping grouping = exportGrouping.getGrouping();
-            if (grouping.getIdInternal().equals(groupingID)) {
+            if (grouping.getExternalId().equals(groupingID)) {
                 return grouping;
             }
         }

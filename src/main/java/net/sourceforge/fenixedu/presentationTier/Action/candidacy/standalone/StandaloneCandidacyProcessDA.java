@@ -139,8 +139,8 @@ public class StandaloneCandidacyProcessDA extends CandidacyProcessDA {
 
     private void setCandidacyProcessInformation(final ActionForm actionForm, final StandaloneCandidacyProcess process) {
         final StandaloneCandidacyProcessForm form = (StandaloneCandidacyProcessForm) actionForm;
-        form.setSelectedProcessId(process.getIdInternal());
-        form.setExecutionIntervalId(process.getCandidacyExecutionInterval().getIdInternal());
+        form.setSelectedProcessId(process.getExternalId());
+        form.setExecutionIntervalId(process.getCandidacyExecutionInterval().getExternalId());
     }
 
     @Override
@@ -149,7 +149,7 @@ public class StandaloneCandidacyProcessDA extends CandidacyProcessDA {
         final Integer selectedProcessId = getIntegerFromRequest(request, "selectedProcessId");
         if (selectedProcessId != null) {
             for (final StandaloneCandidacyPeriod candidacyPeriod : executionInterval.getStandaloneCandidacyPeriods()) {
-                if (candidacyPeriod.getStandaloneCandidacyProcess().getIdInternal().equals(selectedProcessId)) {
+                if (candidacyPeriod.getStandaloneCandidacyProcess().getExternalId().equals(selectedProcessId)) {
                     return candidacyPeriod.getStandaloneCandidacyProcess();
                 }
             }

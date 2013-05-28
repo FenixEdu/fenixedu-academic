@@ -137,8 +137,8 @@ $(document).ready(function() {
 				
 				<bean:define id="canEditCreditsInfo" name="annualTeachingCreditsByPeriodBean" property="canEditTeacherCredits"/>
 				<logic:iterate id="professorship" name="annualTeachingCreditsByPeriodBean" property="professorships">
-					<bean:define id="professorshipID" name="professorship" property="idInternal"/>
-					<bean:define id="executionPeriodId" name="professorship" property="executionCourse.executionPeriod.idInternal"/>
+					<bean:define id="professorshipID" name="professorship" property="externalId"/>
+					<bean:define id="executionPeriodId" name="professorship" property="executionCourse.executionPeriod.externalId"/>
 					<bean:define id="totalNumberOfLessons" name="professorship" property="degreeTeachingServiceLessonRows"/>
 					<bean:size id="numberOfShifts" name="professorship" property="degreeTeachingServicesOrderedByShift"/>
 					<tr>
@@ -347,7 +347,7 @@ $(document).ready(function() {
 	<logic:notEmpty name="projectAndTutorialProfessorships">
 		<logic:iterate id="professorship" name="projectAndTutorialProfessorships">
 			<bean:define id="professorshipID" name="professorship" property="externalId"/>
-			<bean:define id="executionPeriodId" name="professorship" property="executionCourse.executionPeriod.idInternal"/>
+			<bean:define id="executionPeriodId" name="professorship" property="executionCourse.executionPeriod.externalId"/>
 			
 			<h3 class="mtop15 mbottom05">
 				<fr:view name="professorship" layout="values">

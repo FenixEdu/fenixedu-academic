@@ -147,7 +147,7 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
                     ReadTeachersCreditsResumeByPeriodAndUnit.run(departmentUnit, fromExecutionPeriod, untilExecutionPeriod);
             teachersCreditsByDepartment.put(department, teacherCreditsReportList);
             request.setAttribute("department", department);
-            request.setAttribute("departmentID", department.getIdInternal());
+            request.setAttribute("departmentID", department.getExternalId());
         }
 
         if (teachersCreditsByDepartment != null && !teachersCreditsByDepartment.isEmpty()) {
@@ -391,7 +391,7 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
 
             departmentTotalCredits.put(department, departmentPeriodTotalCredits);
             request.setAttribute("department", department);
-            request.setAttribute("departmentID", department.getIdInternal());
+            request.setAttribute("departmentID", department.getExternalId());
         }
 
         setTotals(request, untilExecutionYear, departmentTotalCredits);
@@ -528,7 +528,7 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
             if (!executionYear.getBeginDateYearMonthDay().isBefore(executionYear0304.getBeginDateYearMonthDay())
                     && !executionYear.isAfter(lastExecutionYear)) {
                 String label = executionYear.getYear();
-                filteredExecutionYears.add(new LabelValueBean(label, executionYear.getIdInternal().toString()));
+                filteredExecutionYears.add(new LabelValueBean(label, executionYear.getExternalId().toString()));
             }
         }
         Collections.sort(filteredExecutionYears, new BeanComparator("label"));

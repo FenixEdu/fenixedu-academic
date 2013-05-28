@@ -46,7 +46,7 @@ public class EditStudentCurricularCoursePlan extends FenixDispatchAction {
         try {
             branchList =
                     ReadBranchesByDegreeCurricularPlan.run(infoStudentCurricularPlan.getInfoDegreeCurricularPlan()
-                            .getIdInternal());
+                            .getExternalId());
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
@@ -61,7 +61,7 @@ public class EditStudentCurricularCoursePlan extends FenixDispatchAction {
         editStudentCurricularPlanForm.set("specialization", infoStudentCurricularPlan.getSpecialization().toString());
 
         if (infoStudentCurricularPlan.getInfoBranch() != null) {
-            editStudentCurricularPlanForm.set("branch", infoStudentCurricularPlan.getInfoBranch().getIdInternal());
+            editStudentCurricularPlanForm.set("branch", infoStudentCurricularPlan.getInfoBranch().getExternalId());
         }
 
         editStudentCurricularPlanForm.set("currentState", infoStudentCurricularPlan.getCurrentState().toString());
@@ -75,7 +75,7 @@ public class EditStudentCurricularCoursePlan extends FenixDispatchAction {
         for (Iterator iter = infoStudentCurricularPlan.getInfoEnrolments().iterator(); iter.hasNext();) {
             Object enrollment = iter.next();
             if (enrollment instanceof InfoEnrolmentInExtraCurricularCourse) {
-                Integer enrollmentId = ((InfoEnrolmentInExtraCurricularCourse) enrollment).getIdInternal();
+                Integer enrollmentId = ((InfoEnrolmentInExtraCurricularCourse) enrollment).getExternalId();
                 formValues[i] = enrollmentId.toString();
             }
             i++;
@@ -125,7 +125,7 @@ public class EditStudentCurricularCoursePlan extends FenixDispatchAction {
                 (Enrolment) rootDomainObject.readCurriculumModuleByOID(getIntegerFromRequest(request, "enrolmentID"));
         SetEnrolmentState.run(enrolment, EnrollmentState.ENROLLED);
 
-        request.setAttribute("studentCurricularPlanId", enrolment.getStudentCurricularPlan().getIdInternal());
+        request.setAttribute("studentCurricularPlanId", enrolment.getStudentCurricularPlan().getExternalId());
 
         return prepare(mapping, form, request, response);
     }

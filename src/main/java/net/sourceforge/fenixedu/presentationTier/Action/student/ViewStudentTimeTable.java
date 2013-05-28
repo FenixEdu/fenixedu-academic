@@ -65,7 +65,7 @@ public class ViewStudentTimeTable extends FenixDispatchAction {
 
         request.setAttribute("person", registration.getPerson());
         request.setAttribute("infoLessons", infoLessons);
-        request.setAttribute("registrationId", registration.getIdInternal());
+        request.setAttribute("registrationId", registration.getExternalId());
         return mapping.findForward("showTimeTable");
     }
 

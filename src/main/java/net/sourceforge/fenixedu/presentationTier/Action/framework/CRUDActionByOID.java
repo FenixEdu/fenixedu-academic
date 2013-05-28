@@ -87,7 +87,7 @@ public abstract class CRUDActionByOID extends FenixDispatchAction {
 
     private Integer getOIDProperty(ActionForm form) {
         try {
-            return new Integer(BeanUtils.getProperty(form, "idInternal"));
+            return new Integer(BeanUtils.getProperty(form, "externalId"));
         } catch (NumberFormatException e) {
         } catch (Exception e) {
         }
@@ -158,13 +158,13 @@ public abstract class CRUDActionByOID extends FenixDispatchAction {
         }
     }
 
-    protected abstract InfoObject readIt(Integer idInternal) throws NotAuthorizedException;
+    protected abstract InfoObject readIt(Integer externalId) throws NotAuthorizedException;
 
     protected abstract String getRequestAttribute();
 
-    protected abstract void deleteIt(Integer idInternal) throws NotAuthorizedException;
+    protected abstract void deleteIt(Integer externalId) throws NotAuthorizedException;
 
-    protected abstract void editIt(Integer idInternal, InfoObject bean) throws NotAuthorizedException, FenixServiceException;
+    protected abstract void editIt(Integer externalId, InfoObject bean) throws NotAuthorizedException, FenixServiceException;
 
     protected abstract String getInfoObjectClassName();
 }

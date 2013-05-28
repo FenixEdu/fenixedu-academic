@@ -50,7 +50,7 @@ public class WrittenEvaluationRoomDistribution {
 
         for (final Integer roomID : selectedRoomIDs) {
             for (final AllocatableSpace room : writtenEvaluationRooms) {
-                if (room.getIdInternal().equals(roomID)) {
+                if (room.getExternalId().equals(roomID)) {
                     selectedRooms.add(room);
                     break;
                 }

@@ -60,7 +60,7 @@
 					<fr:layout>
 						<fr:property name="classes" value="tstyle1 thlight mtop0 mbottom15 tdcenter"/>
 						<fr:property name="columnClasses" value=",aleft,,,"/>
-						<fr:property name="linkFormat(edit)" value="/viewStudentsByTutor.do?method=editStudent&studentID=${student.student.idInternal}&registrationID=${student.idInternal}" />
+						<fr:property name="linkFormat(edit)" value="/viewStudentsByTutor.do?method=editStudent&studentID=${student.student.externalId}&registrationID=${student.externalId}" />
 						<fr:property name="key(edit)" value="link.edit"/>
 						<fr:property name="bundle(edit)" value="APPLICATION_RESOURCES"/>
 						<fr:property name="contextRelative(edit)" value="true"/>
@@ -82,7 +82,7 @@
 					<fr:layout>
 						<fr:property name="classes" value="tstyle1 thlight mtop0 mbottom15 tdcenter"/>
 						<fr:property name="columnClasses" value=",aleft,,,"/>
-						<fr:property name="linkFormat(edit)" value="/viewStudentsByTutor.do?method=editStudent&studentID=${student.student.idInternal}&registrationID=${student.idInternal}" />
+						<fr:property name="linkFormat(edit)" value="/viewStudentsByTutor.do?method=editStudent&studentID=${student.student.externalId}&registrationID=${student.externalId}" />
 						<fr:property name="key(edit)" value="link.edit"/>
 						<fr:property name="bundle(edit)" value="APPLICATION_RESOURCES"/>
 						<fr:property name="contextRelative(edit)" value="true"/>

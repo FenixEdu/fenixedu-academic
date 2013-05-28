@@ -81,7 +81,7 @@ public class PrepareSelectExecutionCourseAction extends FenixContextAction {
                             infoExecutionCourseCode, commonComponent, firstPageComponent, objectCode, obj1, obj2);
             request.setAttribute("siteView", siteView);
             request.setAttribute("objectCode", ((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse()
-                    .getIdInternal());
+                    .getExternalId());
             if (siteView.getComponent() instanceof InfoSiteSection) {
                 request.setAttribute("infoSection", ((InfoSiteSection) siteView.getComponent()).getSection());
             }

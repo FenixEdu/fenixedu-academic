@@ -12,7 +12,7 @@
 <logic:present role="COORDINATOR">
 
 	<bean:define id="studentNumber" name="student" property="number" />
-	<bean:define id="studentId" name="student" property="idInternal" />
+	<bean:define id="studentId" name="student" property="externalId" />
 	<bean:define id="executionDegreeId" name="viewStudentCurriculumForm"
 		property="executionDegreeId" />
 	<bean:define id="degreeCurricularPlanId"

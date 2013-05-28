@@ -215,9 +215,9 @@ public class GeneratePaymentLettersFileByExecutionYearID {
 
                 GratuityLetterFileEntry gratuityLetterFileEntryInsurancePart = null;
 
-                if (studentsWithInsuranceChecked.contains(registration.getIdInternal()) == false) {
+                if (studentsWithInsuranceChecked.contains(registration.getExternalId()) == false) {
 
-                    studentsWithInsuranceChecked.add(registration.getIdInternal());
+                    studentsWithInsuranceChecked.add(registration.getExternalId());
 
                     List insuranceTransactionList =
                             registration.readAllNonReimbursedInsuranceTransactionsByExecutionYear(executionYear);

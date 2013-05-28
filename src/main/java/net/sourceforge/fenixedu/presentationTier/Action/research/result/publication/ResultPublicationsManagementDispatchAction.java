@@ -203,7 +203,7 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
             return listPublications(mapping, form, request, response);
         }
 
-        request.setAttribute("resultId", publication.getIdInternal());
+        request.setAttribute("resultId", publication.getExternalId());
         setRequestAttributes(request, publication);
         request.setAttribute("publicationCreated", true);
         return mapping.findForward("forwardToUnitAssociation");
@@ -250,7 +250,7 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
                     request.setAttribute("publicationBean", bean);
                     return mapping.findForward(forwardOnError);
                 }
-                request.setAttribute("resultId", publication.getIdInternal());
+                request.setAttribute("resultId", publication.getExternalId());
                 setRequestAttributes(request, publication);
                 return mapping.findForward(forwardOnFinish);
             }
@@ -331,7 +331,7 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
             result =
                     (ResearchResultPublication) RootDomainObject.readDomainObjectByOID(ResearchResult.class,
                             Integer.valueOf(resultId));
-            request.setAttribute("resultId", result.getIdInternal());
+            request.setAttribute("resultId", result.getExternalId());
         } else {
             result =
                     (ResearchResultPublication) RootDomainObject.readDomainObjectByOID(ResearchResult.class,
@@ -357,7 +357,7 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
 
     public ActionForward editData(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
         final ResultPublicationBean bean = getRenderedObject(null);
-        ResearchResult publicationChanged = ResearchResult.readByOid(bean.getIdInternal());
+        ResearchResult publicationChanged = ResearchResult.readByOid(bean.getExternalId());
 
         if (getFromRequest(request, "confirm") != null) {
 
@@ -381,8 +381,8 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
             }
         }
 
-        request.setAttribute("resultId", publicationChanged.getIdInternal());
-        bean.setIdInternal(publicationChanged.getIdInternal());
+        request.setAttribute("resultId", publicationChanged.getExternalId());
+        bean.setExternalId(publicationChanged.getExternalId());
         return showPublication(mapping, form, request, response);
     }
 
@@ -428,9 +428,9 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
             ResultPublicationType type = bean.getPublicationType();
             if (type != null) {
                 bean = bean.convertTo(type);
-                if (bean.getIdInternal() != null) {
+                if (bean.getExternalId() != null) {
                     final ResearchResultPublication result =
-                            (ResearchResultPublication) ResearchResult.readByOid(bean.getIdInternal());
+                            (ResearchResultPublication) ResearchResult.readByOid(bean.getExternalId());
                     if (result != null) {
                         if (!(ResultPublicationType.getTypeFromPublication(result) == type)) {
                             if (result.hasAnyResultDocumentFiles()) {
@@ -449,7 +449,7 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
         RenderUtils.invalidateViewState();
 
         request.setAttribute("publicationBean", bean);
-        if (bean != null && bean.getIdInternal() != null) {
+        if (bean != null && bean.getExternalId() != null) {
             return mapping.findForward("PreparedToEdit");
         }
         return mapping.findForward("PreparedToCreate");
@@ -534,7 +534,7 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
             return listPublications(mapping, form, request, response);
         }
 
-        request.setAttribute("resultId", publication.getIdInternal());
+        request.setAttribute("resultId", publication.getExternalId());
         setRequestAttributes(request, publication);
         return mapping.findForward(forwardOnFinish);
     }
@@ -612,7 +612,7 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
     public ActionForward setUnitToAll(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         Person person = getLoggedPerson(request);
-        request.setAttribute("personId", getLoggedPerson(request).getIdInternal());
+        request.setAttribute("personId", getLoggedPerson(request).getExternalId());
         request.setAttribute("units", getUnits(person));
         return mapping.findForward("setUnitToAll");
     }
@@ -670,7 +670,7 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
             }
         }
         addActionMessage(request, "message.confirm.add.unit.to.all.publications.successful");
-        request.setAttribute("personId", person.getIdInternal());
+        request.setAttribute("personId", person.getExternalId());
         request.setAttribute("units", getUnits(person));
         return mapping.findForward("setUnitToAll");
     }

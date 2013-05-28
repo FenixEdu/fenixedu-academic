@@ -41,7 +41,7 @@
 	
 	<logic:iterate id="testQuestion" name="infoStudentTestQuestionList" type="net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestion"/>
 	<bean:define id="distributedTest" name="testQuestion" property="distributedTest" type="net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoDistributedTest"/>
-	<bean:define id="distributedTestCode" name="distributedTest" property="idInternal"/>
+	<bean:define id="distributedTestCode" name="distributedTest" property="externalId"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.testInformation" property="testInformation" name="distributedTest" property="testInformation"/>
 	<bean:define id="testType" name="distributedTest" property="testType.type"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.testType" property="testType" value="<%=testType.toString()%>"/>
@@ -49,7 +49,7 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.availableCorrection" property="availableCorrection" value="<%=availableCorrection.toString()%>"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.imsFeedback" property="imsFeedback" name="distributedTest" property="imsFeedback"/>
 	
-	<bean:define id="objectCode" name="distributedTest" property="infoTestScope.infoObject.idInternal"/>
+	<bean:define id="objectCode" name="distributedTest" property="infoTestScope.infoObject.externalId"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode" value="<%= objectCode.toString() %>"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.distributedTestCode" property="distributedTestCode" value="<%= distributedTestCode.toString() %>"/>
 	<h2><bean:write name="distributedTest" property="title"/></h2>

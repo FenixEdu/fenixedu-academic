@@ -40,7 +40,7 @@
 		<logic:notEqual name="coordinator" property="responsible" value="true">
 			<logic:equal name="isResponsible" value="true">	
 				<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.coordinatorsIds" property="coordinatorsIds">
-					<bean:write name="coordinator" property="idInternal"/>
+					<bean:write name="coordinator" property="externalId"/>
 				</html:multibox >
 			</logic:equal>&nbsp;
 		</logic:notEqual>

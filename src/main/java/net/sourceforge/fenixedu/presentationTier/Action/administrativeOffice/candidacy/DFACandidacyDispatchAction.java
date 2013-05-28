@@ -276,7 +276,7 @@ public class DFACandidacyDispatchAction extends FenixDispatchAction {
         EditPrecedentDegreeInformation.run(precedentDegreeInformation);
 
         request.setAttribute("candidacyID", precedentDegreeInformation.getPrecedentDegreeInformation().getStudentCandidacy()
-                .getIdInternal());
+                .getExternalId());
 
         return mapping.findForward("alterSuccess");
     }
@@ -308,7 +308,7 @@ public class DFACandidacyDispatchAction extends FenixDispatchAction {
             request.setAttribute("candidacy", candidacy);
             // return mapping.findForward("showCandidacyValidateData");
         }
-        request.setAttribute("candidacyID", candidacy.getIdInternal().toString());
+        request.setAttribute("candidacyID", candidacy.getExternalId().toString());
         return viewCandidacy(mapping, actionForm, request, response);
     }
 

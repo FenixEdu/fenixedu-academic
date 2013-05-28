@@ -11,7 +11,7 @@
 
 
 <p>
-	<html:link page="/student.do?method=visualizeRegistration" paramId="registrationID" paramName="registration" paramProperty="idInternal">
+	<html:link page="/student.do?method=visualizeRegistration" paramId="registrationID" paramName="registration" paramProperty="externalId">
 		<bean:message key="link.student.back" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 	</html:link>
 </p>
@@ -23,7 +23,7 @@
 </html:messages>
 
 <div style="float: right;">
-	<bean:define id="personID" name="registration" property="student.person.idInternal"/>
+	<bean:define id="personID" name="registration" property="student.person.externalId"/>
 	<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
 </div>
 
@@ -62,7 +62,7 @@
 
 <span class="pleft1">	
 	<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-	<html:link page="/registration.do?method=prepareAddAttends" paramId="registrationId" paramName="registration" paramProperty="idInternal">
+	<html:link page="/registration.do?method=prepareAddAttends" paramId="registrationId" paramName="registration" paramProperty="externalId">
 		<bean:message key="label.add.attends" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 	</html:link>
 </span>
@@ -95,9 +95,9 @@
 						<% } %>
 					</td>
 					<td>
-						<bean:define id="url" type="java.lang.String">/registration.do?method=deleteShiftEnrolments&amp;attendsId=<bean:write name="attends" property="idInternal"/></bean:define>
+						<bean:define id="url" type="java.lang.String">/registration.do?method=deleteShiftEnrolments&amp;attendsId=<bean:write name="attends" property="externalId"/></bean:define>
 						<% if (hasAnyShiftEnrolments) { %>
-							<html:link page="<%= url %>" onclick="<%= confirmNonReversableOp.toString() %>" paramId="registrationId" paramName="registration" paramProperty="idInternal">
+							<html:link page="<%= url %>" onclick="<%= confirmNonReversableOp.toString() %>" paramId="registrationId" paramName="registration" paramProperty="externalId">
 								<bean:message key="label.delete.shift.enrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 							</html:link>
 						<% } %>
@@ -113,8 +113,8 @@
 					<td>
 						<% if (!hasAnyShiftEnrolments) { %>
 						<logic:notPresent name="attends" property="enrolment">
-							<bean:define id="url" type="java.lang.String">/registration.do?method=deleteAttends&amp;attendsId=<bean:write name="attends" property="idInternal"/></bean:define>
-							<html:link page="<%= url %>" onclick="<%= confirmNonReversableOp.toString() %>" paramId="registrationId" paramName="registration" paramProperty="idInternal">
+							<bean:define id="url" type="java.lang.String">/registration.do?method=deleteAttends&amp;attendsId=<bean:write name="attends" property="externalId"/></bean:define>
+							<html:link page="<%= url %>" onclick="<%= confirmNonReversableOp.toString() %>" paramId="registrationId" paramName="registration" paramProperty="externalId">
 								<bean:message key="label.delete.attends" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 							</html:link>
 						</logic:notPresent>
@@ -128,7 +128,7 @@
 
 <span class="pleft1">	
 	<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-	<html:link page="/registration.do?method=prepareAddAttends" paramId="registrationId" paramName="registration" paramProperty="idInternal">
+	<html:link page="/registration.do?method=prepareAddAttends" paramId="registrationId" paramName="registration" paramProperty="externalId">
 		<bean:message key="label.add.attends" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 	</html:link>
 </span>

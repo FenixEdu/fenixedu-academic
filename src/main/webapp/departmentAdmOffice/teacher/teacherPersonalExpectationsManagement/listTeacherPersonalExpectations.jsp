@@ -27,11 +27,11 @@
 		<logic:notEmpty name="teachersPersonalExpectations">
 		
 			<p>
-				<html:link page="/listTeachersPersonalExpectations.do?method=exportToExcel" paramId="executionYearId" paramName="executionYearBean" paramProperty="executionYear.idInternal">
+				<html:link page="/listTeachersPersonalExpectations.do?method=exportToExcel" paramId="executionYearId" paramName="executionYearBean" paramProperty="executionYear.externalId">
 					<html:img border="0" src="<%= request.getContextPath() + "/images/excel.gif"%>" altKey="excel" bundle="IMAGE_RESOURCES" />
 					<bean:message key="link.export.to.excel"/>						
 				</html:link>&nbsp;&nbsp;&nbsp;			
-				<html:link page="/listTeachersPersonalExpectations.do?method=exportToCSV" paramId="executionYearId" paramName="executionYearBean" paramProperty="executionYear.idInternal">
+				<html:link page="/listTeachersPersonalExpectations.do?method=exportToCSV" paramId="executionYearId" paramName="executionYearBean" paramProperty="executionYear.externalId">
 					<html:img border="0" src="<%= request.getContextPath() + "/images/icon_csv.gif"%>" altKey="excel" bundle="IMAGE_RESOURCES" />
 					<bean:message key="link.export.to.csv"/>						
 				</html:link>
@@ -52,7 +52,7 @@
 					<tr>
 						<td>
 							<logic:notEmpty name="mapEntry" property="value">
-								<html:link page="/listTeachersPersonalExpectations.do?method=seeTeacherPersonalExpectation" paramId="teacherPersonalExpectationID" paramName="mapEntry" paramProperty="value.idInternal">
+								<html:link page="/listTeachersPersonalExpectations.do?method=seeTeacherPersonalExpectation" paramId="teacherPersonalExpectationID" paramName="mapEntry" paramProperty="value.externalId">
 									<bean:write name="teacher" property="person.name"/>
 								</html:link>
 							</logic:notEmpty>

@@ -20,7 +20,7 @@ public class DeleteCredits {
 
     private static Credits getCreditsByID(StudentCurricularPlan studentCurricularPlan, Integer creditsID) {
         for (Credits credits : studentCurricularPlan.getCreditsSet()) {
-            if (credits.getIdInternal().equals(creditsID)) {
+            if (credits.getExternalId().equals(creditsID)) {
                 return credits;
             }
         }

@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="date"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
-<bean:define id="pid" name="portal" property="idInternal"/>
+<bean:define id="pid" name="portal" property="externalId"/>
 
 <p>
 <fr:view name="rootModule">
@@ -17,7 +17,7 @@
 	        <fr:property name="childrenFor(Module)" value="childrenAsContent"/>
 	        <fr:property name="schemaFor(Functionality)" value="functionalities.functionality.tree"/>	   			
 
-			<fr:destination name="functionality.view" path="<%= "/portalManagement.do?method=addToPool&elementId=${idInternal}&pid=" + pid%>"/>
+			<fr:destination name="functionality.view" path="<%= "/portalManagement.do?method=addToPool&elementId=${externalId}&pid=" + pid%>"/>
 	</fr:layout>
 </fr:view>
 </p>

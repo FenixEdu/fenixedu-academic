@@ -18,12 +18,12 @@ public class ExecutionCourseStatisticsDTO extends CourseStatisticsDTO {
         super();
     }
 
-    public ExecutionCourseStatisticsDTO(int idInternal, String name, int firstEnrolledCount, int firstApprovedCount,
+    public ExecutionCourseStatisticsDTO(int externalId, String name, int firstEnrolledCount, int firstApprovedCount,
             IGrade firstApprovedAverage, IGrade firstApprovedSum, int restEnrolledCount, int restApprovedCount,
             IGrade restApprovedAverage, IGrade restApprovedSum, int totalEnrolledCount, int totalApprovedCount,
             IGrade totalApprovedAverage, IGrade totalApprovedSum, List<String> degrees, String executionPeriod,
             String executionYear, String teacher) {
-        super(idInternal, name, firstEnrolledCount, firstApprovedCount, firstApprovedAverage, restEnrolledCount,
+        super(externalId, name, firstEnrolledCount, firstApprovedCount, firstApprovedAverage, restEnrolledCount,
                 restApprovedCount, restApprovedAverage, totalEnrolledCount, totalApprovedCount, totalApprovedAverage);
         this.executionPeriod = executionPeriod;
         this.teacher = teacher;

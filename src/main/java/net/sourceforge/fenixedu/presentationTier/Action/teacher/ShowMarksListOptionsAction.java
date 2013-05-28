@@ -54,7 +54,7 @@ public class ShowMarksListOptionsAction extends FenixDispatchAction {
         }
 
         request.setAttribute("siteView", siteView);
-        request.setAttribute("objectCode", ((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse().getIdInternal());
+        request.setAttribute("objectCode", ((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse().getExternalId());
         request.setAttribute("evaluationCode", evaluationCode);
 
         return mapping.findForward("showMarksListOptions");

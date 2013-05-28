@@ -32,7 +32,7 @@ public abstract class DegreeModuleScope {
                     if (cn != 0) {
                         return cn;
                     }
-                    return o1.getIdInternal().compareTo(o2.getIdInternal());
+                    return o1.getExternalId().compareTo(o2.getExternalId());
                 }
 
             };
@@ -64,7 +64,7 @@ public abstract class DegreeModuleScope {
                     if (cc == 0) {
                         return cc;
                     }
-                    return o1.getIdInternal().compareTo(o2.getIdInternal());
+                    return o1.getExternalId().compareTo(o2.getExternalId());
                 }
 
             };
@@ -74,14 +74,14 @@ public abstract class DegreeModuleScope {
         @Override
         public int compare(DegreeModuleScope o1, DegreeModuleScope o2) {
             final int c = o1.getCurricularCourse().getName().compareTo(o2.getCurricularCourse().getName());
-            return c == 0 ? o1.getIdInternal().compareTo(o2.getIdInternal()) : c;
+            return c == 0 ? o1.getExternalId().compareTo(o2.getExternalId()) : c;
         }
 
     };
 
     public abstract String getClassName();
 
-    public abstract Integer getIdInternal();
+    public abstract Integer getExternalId();
 
     public abstract Integer getCurricularSemester();
 
@@ -145,22 +145,22 @@ public abstract class DegreeModuleScope {
     }
 
     public String getKey() {
-        return getIdInternal() + KEY_SEPARATOR + getClassName();
+        return getExternalId() + KEY_SEPARATOR + getClassName();
     }
 
-    public static String getKey(Integer idInternal, String className) {
-        return idInternal + KEY_SEPARATOR + className;
+    public static String getKey(Integer externalId, String className) {
+        return externalId + KEY_SEPARATOR + className;
     }
 
     public static DegreeModuleScope getDegreeModuleScopeByKey(String key) {
         String[] split = key.split(KEY_SEPARATOR);
         if (split.length == 2) {
-            String idInternal = split[0];
+            String externalId = split[0];
             String className = split[1];
             try {
                 Class clazz = Class.forName(className);
                 DomainObject domainObject =
-                        RootDomainObject.getInstance().readDomainObjectByOID(clazz, Integer.valueOf(idInternal));
+                        RootDomainObject.getInstance().readDomainObjectByOID(clazz, Integer.valueOf(externalId));
                 if (domainObject != null && domainObject instanceof CurricularCourseScope) {
                     return ((CurricularCourseScope) domainObject).getDegreeModuleScopeCurricularCourseScope();
                 }

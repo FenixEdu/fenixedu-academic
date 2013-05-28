@@ -28,7 +28,7 @@ public class TestScope extends TestScope_Base {
         this();
         setDomainObject(object);
         setClassName(object.getClass().getName());
-        setKeyClass(object.getIdInternal());
+        setKeyClass(object.getExternalId());
     }
 
     public TestScope(String className, Integer classId) {
@@ -50,18 +50,18 @@ public class TestScope extends TestScope_Base {
         return domainObject;
     }
 
-    public static TestScope readByDomainObject(Class clazz, Integer idInternal) {
+    public static TestScope readByDomainObject(Class clazz, Integer externalId) {
         for (final TestScope testScope : RootDomainObject.getInstance().getTestScopes()) {
-            if (testScope.getKeyClass().equals(idInternal) && testScope.getClassName().equals(clazz.getName())) {
+            if (testScope.getKeyClass().equals(externalId) && testScope.getClassName().equals(clazz.getName())) {
                 return testScope;
             }
         }
         return null;
     }
 
-    public static List<DistributedTest> readDistributedTestsByTestScope(Class clazz, Integer idInternal) {
+    public static List<DistributedTest> readDistributedTestsByTestScope(Class clazz, Integer externalId) {
         List<DistributedTest> result = new ArrayList<DistributedTest>();
-        TestScope testScope = readByDomainObject(clazz, idInternal);
+        TestScope testScope = readByDomainObject(clazz, externalId);
         if (testScope != null) {
             result.addAll(testScope.getDistributedTests());
         }

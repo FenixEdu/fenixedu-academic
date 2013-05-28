@@ -98,13 +98,13 @@ public class TimetablesReportFile extends TimetablesReportFile_Base {
                                 row.setCell(semester.getSemester());
 
                                 // ID Execution Course
-                                row.setCell(executionCourse.getIdInternal());
+                                row.setCell(executionCourse.getExternalId());
 
                                 // OID Execution Course
                                 row.setCell(String.valueOf(executionCourse.getOid()));
 
                                 // ID Turno
-                                row.setCell(service.getShift().getIdInternal());
+                                row.setCell(service.getShift().getExternalId());
 
                                 // Nome Turno
                                 row.setCell(service.getShift().getNome());
@@ -160,13 +160,13 @@ public class TimetablesReportFile extends TimetablesReportFile_Base {
                                 row.setCell(semester.getSemester());
 
                                 // ID Execution Course
-                                row.setCell(executionCourse.getIdInternal());
+                                row.setCell(executionCourse.getExternalId());
 
                                 // OID Execution Course
                                 row.setCell(String.valueOf(executionCourse.getOid()));
 
                                 // ID Turno
-                                row.setCell(lesson.getShift().getIdInternal());
+                                row.setCell(lesson.getShift().getExternalId());
 
                                 // Nome Turno
                                 row.setCell(lesson.getShift().getNome());

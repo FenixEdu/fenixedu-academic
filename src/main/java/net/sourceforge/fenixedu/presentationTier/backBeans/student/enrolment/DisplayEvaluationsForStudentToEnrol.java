@@ -64,7 +64,7 @@ public class DisplayEvaluationsForStudentToEnrol extends FenixBackingBean {
             Collections.sort(infoExecutionPeriods, comparatorChain);
             for (final InfoExecutionPeriod infoExecutionPeriod : infoExecutionPeriods) {
                 final SelectItem selectItem = new SelectItem();
-                selectItem.setValue(infoExecutionPeriod.getIdInternal());
+                selectItem.setValue(infoExecutionPeriod.getExternalId());
                 selectItem.setLabel(infoExecutionPeriod.getName() + " - " + infoExecutionPeriod.getInfoExecutionYear().getYear());
                 this.executionPeriodsLabels.add(selectItem);
             }
@@ -131,7 +131,7 @@ public class DisplayEvaluationsForStudentToEnrol extends FenixBackingBean {
                     } catch (final DomainException e) {
                         getEvaluationsWithoutEnrolmentPeriod().add(exam);
                     } finally {
-                        getExecutionCourses().put(exam.getIdInternal(), exam.getAttendingExecutionCoursesFor(registration));
+                        getExecutionCourses().put(exam.getExternalId(), exam.getAttendingExecutionCoursesFor(registration));
                     }
                 }
             }
@@ -145,7 +145,7 @@ public class DisplayEvaluationsForStudentToEnrol extends FenixBackingBean {
                     } catch (final DomainException e) {
                         getEvaluationsWithoutEnrolmentPeriod().add(writtenTest);
                     } finally {
-                        getExecutionCourses().put(writtenTest.getIdInternal(),
+                        getExecutionCourses().put(writtenTest.getExternalId(),
                                 writtenTest.getAttendingExecutionCoursesFor(registration));
                     }
                 }
@@ -165,7 +165,7 @@ public class DisplayEvaluationsForStudentToEnrol extends FenixBackingBean {
                         } catch (final DomainException e) {
                             getEvaluationsWithoutEnrolmentPeriod().add(exam);
                         } finally {
-                            getExecutionCourses().put(exam.getIdInternal(), exam.getAttendingExecutionCoursesFor(registration));
+                            getExecutionCourses().put(exam.getExternalId(), exam.getAttendingExecutionCoursesFor(registration));
                         }
                     }
                 }
@@ -180,7 +180,7 @@ public class DisplayEvaluationsForStudentToEnrol extends FenixBackingBean {
                     } catch (final DomainException e) {
                         getEvaluationsWithoutEnrolmentPeriod().add(writtenTest);
                     } finally {
-                        getExecutionCourses().put(writtenTest.getIdInternal(),
+                        getExecutionCourses().put(writtenTest.getExternalId(),
                                 writtenTest.getAttendingExecutionCoursesFor(registration));
                     }
                 }
@@ -239,7 +239,7 @@ public class DisplayEvaluationsForStudentToEnrol extends FenixBackingBean {
             this.executionPeriodID = Integer.valueOf(getRequestParameter("executionPeriodID"));
         }
         if (this.executionPeriodID == null) {
-            this.executionPeriodID = getCurrentExecutionPeriod().getIdInternal();
+            this.executionPeriodID = getCurrentExecutionPeriod().getExternalId();
         }
         return executionPeriodID;
     }

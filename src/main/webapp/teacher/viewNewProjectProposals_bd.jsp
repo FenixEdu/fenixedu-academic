@@ -55,7 +55,7 @@
             <logic:iterate id="infoGroupProperties" name="component" property="infoGroupPropertiesList" >
                 <tr>
                     <td class="listClasses" align="left">
-                        <b><html:link page="<%= "/importGroupProperties.do?method=prepareImportGroupProperties&amp;objectCode=" + pageContext.findAttribute("objectCode")%>" paramId="groupPropertiesCode" paramName="infoGroupProperties" paramProperty="idInternal">
+                        <b><html:link page="<%= "/importGroupProperties.do?method=prepareImportGroupProperties&amp;objectCode=" + pageContext.findAttribute("objectCode")%>" paramId="groupPropertiesCode" paramName="infoGroupProperties" paramProperty="externalId">
 							<bean:write name="infoGroupProperties" property="name"/></html:link></b>
                     </td>
                                         

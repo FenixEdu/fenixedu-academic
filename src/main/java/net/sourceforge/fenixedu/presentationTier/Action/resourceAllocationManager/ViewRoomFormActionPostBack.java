@@ -60,9 +60,9 @@ public class ViewRoomFormActionPostBack extends FenixDispatchAction {
     public void fillRequestData(RoomOccupationWeekBean roomOccupationWeekBean, HttpServletRequest request)
             throws FenixServiceException {
         request.setAttribute(PresentationConstants.ROOM, roomOccupationWeekBean.getRoom());
-        request.setAttribute(PresentationConstants.ROOM_OID, roomOccupationWeekBean.getRoom().getIdInternal());
+        request.setAttribute(PresentationConstants.ROOM_OID, roomOccupationWeekBean.getRoom().getExternalId());
         final AllocatableSpace room =
-                (AllocatableSpace) rootDomainObject.readResourceByOID(roomOccupationWeekBean.getRoom().getIdInternal());
+                (AllocatableSpace) rootDomainObject.readResourceByOID(roomOccupationWeekBean.getRoom().getExternalId());
         Calendar calendar = Calendar.getInstance();
         if (roomOccupationWeekBean.getWeekBean() == null) {
             calendar.setTime(roomOccupationWeekBean.getAcademicInterval().getStart().toDate());

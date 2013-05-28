@@ -38,7 +38,7 @@
 			<fr:property name="headerClasses" value="acenter" />
             <fr:property name="link(edit)" value="/editGrantType.do?method=prepareEditGrantTypeForm" />
 			<fr:property name="key(edit)" value="link.edit" />
-			<fr:property name="param(edit)" value="idInternal/idGrantType" />
+			<fr:property name="param(edit)" value="externalId/idGrantType" />
 		</fr:layout>
 	</fr:view> 
 </logic:present>

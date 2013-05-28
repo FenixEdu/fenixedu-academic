@@ -52,9 +52,9 @@
 				
 					<strong><bean:write name="registration" property="lastStudentCurricularPlan.degreeCurricularPlan.degree.sigla"/> - <bean:write name="registration" property="lastStudentCurricularPlan.degreeCurricularPlan.degree.name"/></strong> (<bean:message name="registration" property="activeStateType.qualifiedName" bundle="ENUMERATION_RESOURCES" />)
 					
-					<html:link page="/manageRegistrationState.do?method=prepare" paramId="registrationId" paramName="registration" paramProperty="idInternal"><bean:message key="link.student.manageRegistrationState" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
+					<html:link page="/manageRegistrationState.do?method=prepare" paramId="registrationId" paramName="registration" paramProperty="externalId"><bean:message key="link.student.manageRegistrationState" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
 					,
-					<html:link action="/registrationConclusion.do?method=show" paramId="registrationId" paramName="registration" paramProperty="idInternal" ><bean:message  key="student.registrationConclusionProcess" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
+					<html:link action="/registrationConclusion.do?method=show" paramId="registrationId" paramName="registration" paramProperty="externalId" ><bean:message  key="student.registrationConclusionProcess" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
 				
 				
 					<logic:notEmpty name="registration" property="lastStudentCurricularPlan.externalCurriculumGroups">
@@ -84,21 +84,21 @@
 							<fr:property name="classes" value="tstyle4" />
 					
 							<fr:link name="view" label="link.student.viewCurriculum,ACADEMIC_OFFICE_RESOURCES" order="1"
-							 	link="/bolonhaStudentEnrolment.do?method=viewStudentCurriculum&scpId=${idInternal}" />
+							 	link="/bolonhaStudentEnrolment.do?method=viewStudentCurriculum&scpId=${externalId}" />
 					
 							<fr:link name="enrol" label="link.student.enrolInCourses,ACADEMIC_OFFICE_RESOURCES" order="2"
-							 	link="/bolonhaStudentEnrolment.do?method=prepareChooseExecutionPeriod&scpId=${idInternal}"
+							 	link="/bolonhaStudentEnrolment.do?method=prepareChooseExecutionPeriod&scpId=${externalId}"
 							 	condition="!transition" />
 							 	
 							<fr:link name="move" label="label.course.moveEnrolments,ACADEMIC_OFFICE_RESOURCES" order="3"
-							 	link="/curriculumLinesLocationManagement.do?method=prepareWithoutRules&scpID=${idInternal}"
+							 	link="/curriculumLinesLocationManagement.do?method=prepareWithoutRules&scpID=${externalId}"
 							 	condition="!transition" />
 
 							<fr:link name="dismissals" label="link.student.dismissal.management,ACADEMIC_OFFICE_RESOURCES" order="4"
-							 	link="/studentDismissals.do?method=manage&scpID=${idInternal}" />
+							 	link="/studentDismissals.do?method=manage&scpID=${externalId}" />
 
 							<fr:link name="transit" label="link.student.transitToBolonha,ACADEMIC_OFFICE_RESOURCES" order="5"
-							 	link="/bolonhaStudentEnrolment.do?method=prepareTransit&scpId=${idInternal}"
+							 	link="/bolonhaStudentEnrolment.do?method=prepareTransit&scpId=${externalId}"
 							 	condition="transition" />
 							 	
 						</fr:layout>

@@ -7,7 +7,7 @@
 <logic:present name="announcementBoard">
 	<bean:define id="contextPrefix" name="contextPrefix" />
 	<bean:define id="extraParameters" name="extraParameters" />
-	<bean:define id="announcementBoardId" name="announcementBoard" property="idInternal"/>
+	<bean:define id="announcementBoardId" name="announcementBoard" property="externalId"/>
 	<h2>
 		<bean:write name="announcementBoard" property="name"/>
 	</h2>

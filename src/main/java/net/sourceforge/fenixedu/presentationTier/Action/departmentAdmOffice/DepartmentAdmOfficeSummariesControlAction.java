@@ -35,7 +35,7 @@ public class DepartmentAdmOfficeSummariesControlAction extends SummariesControlA
         for (Department department : manageableDepartments) {
             LabelValueBean bean = new LabelValueBean();
             bean.setLabel(department.getRealName());
-            bean.setValue(department.getIdInternal().toString());
+            bean.setValue(department.getExternalId().toString());
             departments.add(bean);
         }
         request.setAttribute("departments", departments);

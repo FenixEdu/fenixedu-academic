@@ -86,12 +86,12 @@ public class CreateEditCompetenceCourseDispatchAction extends FenixDispatchActio
         request.setAttribute("competenceCourse", competenceCourse);
 
         DynaActionForm actionForm = (DynaActionForm) form;
-        actionForm.set("competenceCourseID", competenceCourse.getIdInternal());
+        actionForm.set("competenceCourseID", competenceCourse.getExternalId());
         actionForm.set("code", competenceCourse.getCode());
         actionForm.set("name", competenceCourse.getName());
         List<Integer> departmentIDs = new ArrayList<Integer>();
         for (InfoDepartment department : competenceCourse.getDepartments()) {
-            departmentIDs.add(department.getIdInternal());
+            departmentIDs.add(department.getExternalId());
         }
         Integer[] a = new Integer[departmentIDs.size()];
         departmentIDs.toArray(a);

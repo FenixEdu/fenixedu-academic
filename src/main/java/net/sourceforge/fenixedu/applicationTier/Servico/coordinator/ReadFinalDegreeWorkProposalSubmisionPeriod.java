@@ -25,7 +25,7 @@ public class ReadFinalDegreeWorkProposalSubmisionPeriod {
 
             if (scheduleing != null) {
                 infoScheduleing = new InfoScheduleing();
-                infoScheduleing.setIdInternal(scheduleing.getIdInternal());
+                infoScheduleing.setExternalId(scheduleing.getExternalId());
                 infoScheduleing.setStartOfProposalPeriod(scheduleing.getStartOfProposalPeriod());
                 infoScheduleing.setEndOfProposalPeriod(scheduleing.getEndOfProposalPeriod());
                 infoScheduleing.setStartOfCandidacyPeriod(scheduleing.getStartOfCandidacyPeriod());

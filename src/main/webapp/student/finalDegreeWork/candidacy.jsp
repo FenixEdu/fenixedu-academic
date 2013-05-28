@@ -18,7 +18,7 @@
 	<html:form action="/finalDegreeWorkCandidacy" focus="executionDegreeOID">
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="selectExecutionYear"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
-		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" property="idInternal"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.externalId" property="externalId"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentToRemove" property="studentToRemove"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedGroupProposal" property="selectedGroupProposal"/>
 
@@ -26,7 +26,7 @@
 		<html:select bundle="HTMLALT_RESOURCES" property="executionYearOID" size="1"
 					 onchange='this.form.method.value=\'selectExecutionYear\';this.form.page.value=\'0\';this.form.submit();'>
 			<html:option value=""><!-- w3c complient--></html:option>
-			<html:options property="idInternal"
+			<html:options property="externalId"
 						  labelProperty="nextYearsYearString"
 					  	collection="executionYears" />
 		</html:select>
@@ -115,8 +115,8 @@
 			</ul>
 			<!-- HAS_CONTEXT --><html:link href="<%= request.getContextPath()
 					+ "/publico/finalDegreeWorks.do?method=search&" + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.buildContextAttribute("/student")
-					+ "&amp;executionYearOID=" + executionDegree.getExecutionYear().getIdInternal()
-					+ "&amp;executionDegreeOID=" + executionDegree.getIdInternal() %>"
+					+ "&amp;executionYearOID=" + executionDegree.getExecutionYear().getExternalId()
+					+ "&amp;executionDegreeOID=" + executionDegree.getExternalId() %>"
 					target="blank">
 				<bean:message key="label.final.degree.work.proposals.list" bundle="APPLICATION_RESOURCES"/>
 			</html:link>
@@ -148,7 +148,7 @@
 	<html:form action="/finalDegreeWorkCandidacy" focus="executionDegreeOID">
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="selectExecutionYear"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
-		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" property="idInternal"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.externalId" property="externalId"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentToRemove" property="studentToRemove"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedGroupProposal" property="selectedGroupProposal"/>
 
@@ -179,7 +179,7 @@
 					</td>
 					<td class="listClasses">
 						<bean:define id="onClick">
-							this.form.method.value='removeStudent';this.form.studentToRemove.value='<bean:write name="student" property="idInternal"/>';
+							this.form.method.value='removeStudent';this.form.studentToRemove.value='<bean:write name="student" property="externalId"/>';
 						</bean:define>
 						<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick='<%= onClick.toString() %>'>
 							<bean:message key="label.finalDegreeWork.group.remove"/>
@@ -237,9 +237,9 @@
 						<td class="listClasses" rowspan="2">
 							<bean:define id="groupProposalOrderOfPreference" name="groupProposal" property="orderOfPreference"/>
 							<bean:define id="onChange">
-								this.form.method.value='changePreferenceOrder';this.form.selectedGroupProposal.value='<bean:write name="groupProposal" property="idInternal"/>';this.form.submit();
+								this.form.method.value='changePreferenceOrder';this.form.selectedGroupProposal.value='<bean:write name="groupProposal" property="externalId"/>';this.form.submit();
 							</bean:define>
-							<bean:define id="propertyName">orderOfProposalPreference<bean:write name="groupProposal" property="idInternal"/></bean:define>
+							<bean:define id="propertyName">orderOfProposalPreference<bean:write name="groupProposal" property="externalId"/></bean:define>
 							<html:text alt='<%= propertyName %>' property='<%= propertyName %>' size="2"
 									   value='<%= groupProposalOrderOfPreference.toString() %>'
 									   onchange='<%= onChange.toString() %>'
@@ -254,7 +254,7 @@
 							<bean:write name="groupProposal" property="finalDegreeWorkProposal.proposalNumber"/>
 						</td>
 						<td class="listClasses" rowspan="2">
-							<bean:define id="proposalID" name="groupProposal" property="finalDegreeWorkProposal.idInternal"/>
+							<bean:define id="proposalID" name="groupProposal" property="finalDegreeWorkProposal.externalId"/>
 							<html:link target="_blank" href="<%= request.getContextPath() + "/publico/finalDegreeWorks.do?method=viewFinalDegreeWorkProposal&amp;finalDegreeWorkProposalOID=" + proposalID.toString() %>">
 								<bean:write name="groupProposal" property="finalDegreeWorkProposal.title"/>
 					        </html:link>
@@ -267,7 +267,7 @@
 						</td>
 						<td class="listClasses" rowspan="2">
 							<bean:define id="onClick">
-								this.form.method.value='removeProposal';this.form.selectedGroupProposal.value='<bean:write name="groupProposal" property="idInternal"/>';
+								this.form.method.value='removeProposal';this.form.selectedGroupProposal.value='<bean:write name="groupProposal" property="externalId"/>';
 							</bean:define>
 							<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick='<%= onClick.toString() %>'>
 								<bean:message key="label.finalDegreeWork.group.remove"/>

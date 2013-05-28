@@ -79,20 +79,20 @@ public class TSDProcessAction extends FenixDispatchAction {
             ExecutionYear selectedExecutionYear = getSelectedExecutionYear(userView, dynaForm, null);
 
             for (ExecutionSemester executionSemester : selectedExecutionYear.getExecutionPeriods()) {
-                selectedExecutionPeriodIdList.add(executionSemester.getIdInternal());
+                selectedExecutionPeriodIdList.add(executionSemester.getExternalId());
             }
         } else {
             selectedExecutionPeriodIdList.add(selectedExecutionPeriodId);
         }
 
-        Integer selectedDepartmentId = userView.getPerson().getTeacher().getCurrentWorkingDepartment().getIdInternal();
+        Integer selectedDepartmentId = userView.getPerson().getTeacher().getCurrentWorkingDepartment().getExternalId();
         String name = (String) dynaForm.get("name");
 
         TSDProcess tsdProcess =
                 CreateTSDProcess.runCreateTSDProcess(selectedExecutionPeriodIdList, selectedDepartmentId, userView.getPerson()
-                        .getIdInternal(), name);
+                        .getExternalId(), name);
 
-        return loadTSDProcessServices(mapping, request, tsdProcess.getIdInternal(), userView);
+        return loadTSDProcessServices(mapping, request, tsdProcess.getExternalId(), userView);
     }
 
     public ActionForward prepareForTSDProcessEdition(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -248,12 +248,12 @@ public class TSDProcessAction extends FenixDispatchAction {
 
         if (tsdProcessList.size() > 0) {
             Collections.sort(tsdProcessList, new BeanComparator("name"));
-            dynaForm.set("tsdProcess", tsdProcessList.get(0).getIdInternal());
+            dynaForm.set("tsdProcess", tsdProcessList.get(0).getExternalId());
         }
 
         request.setAttribute("departmentName", userView.getPerson().getEmployee().getCurrentDepartmentWorkingPlace()
                 .getRealName());
-        dynaForm.set("executionYearForCopy", selectedExecutionYearForCopy.getIdInternal());
+        dynaForm.set("executionYearForCopy", selectedExecutionYearForCopy.getExternalId());
         request.setAttribute("executionYearList", executionYearList);
         request.setAttribute("executionPeriodsList", executionPeriodList);
         request.setAttribute("executionPeriodsListForCopy", executionPeriodListForCopy);
@@ -274,19 +274,19 @@ public class TSDProcessAction extends FenixDispatchAction {
 
         List<Integer> selectedExecutionPeriodListForCopyId = new ArrayList<Integer>();
         if (selectedExecutionPeriodForCopy != null) {
-            selectedExecutionPeriodListForCopyId.add(selectedExecutionPeriodForCopy.getIdInternal());
+            selectedExecutionPeriodListForCopyId.add(selectedExecutionPeriodForCopy.getExternalId());
         } else {
             for (ExecutionSemester executionSemester : selectedExecutionYear.getExecutionPeriods()) {
-                selectedExecutionPeriodListForCopyId.add(executionSemester.getIdInternal());
+                selectedExecutionPeriodListForCopyId.add(executionSemester.getExternalId());
             }
         }
 
         TSDProcess tsdProcess =
-                CopyTSDProcess.runCopyTSDProcess(selectedExecutionPeriodListForCopyId, selectedTSDProcess.getIdInternal(),
-                        userView.getPerson().getIdInternal(), name);
+                CopyTSDProcess.runCopyTSDProcess(selectedExecutionPeriodListForCopyId, selectedTSDProcess.getExternalId(),
+                        userView.getPerson().getExternalId(), name);
 
         request.setAttribute("tsdProcess", tsdProcess);
-        return loadTSDProcessServices(mapping, request, tsdProcess.getIdInternal(), userView);
+        return loadTSDProcessServices(mapping, request, tsdProcess.getExternalId(), userView);
     }
 
     public ActionForward deleteTSDProcessServices(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -331,7 +331,7 @@ public class TSDProcessAction extends FenixDispatchAction {
 
     private void setCurrentExecutionYearInDynamicForm(IUserView userView, DynaActionForm dynaForm, ExecutionYear executionYear)
             throws FenixServiceException {
-        dynaForm.set("executionYear", executionYear.getIdInternal());
+        dynaForm.set("executionYear", executionYear.getExternalId());
     }
 
     private ExecutionYear getCurrentExecutionYear(List<ExecutionYear> executionYearList) {

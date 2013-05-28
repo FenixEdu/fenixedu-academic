@@ -80,7 +80,7 @@ public class UICurricularCourse extends UIDegreeModule {
                 StringBuilder buffer = new StringBuilder();
                 buffer.append(tabs);
                 buffer.append("[LEVEL ").append(new Integer(this.depth)).append("]");
-                buffer.append("[CC ").append(this.curricularCourse.getIdInternal()).append("][");
+                buffer.append("[CC ").append(this.curricularCourse.getExternalId()).append("][");
                 buffer.append(previousContext.getCurricularPeriod().getOrderByType(AcademicPeriod.YEAR)).append("Y,");
                 buffer.append(previousContext.getCurricularPeriod().getOrderByType(AcademicPeriod.SEMESTER)).append("S] ");
                 buffer.append(this.curricularCourse.getName(lastExecutionPeriod));
@@ -114,7 +114,7 @@ public class UICurricularCourse extends UIDegreeModule {
         if (linkable) {
             writer.startElement("a", this);
             if (this.curricularCourse.isBolonhaDegree()) {
-                encodeLinkHref("viewCurricularCourse.faces", "&curricularCourseID=" + this.curricularCourse.getIdInternal(),
+                encodeLinkHref("viewCurricularCourse.faces", "&curricularCourseID=" + this.curricularCourse.getExternalId(),
                         false);
             } else {
                 encodeNonBolonhaLinkHref();
@@ -133,14 +133,14 @@ public class UICurricularCourse extends UIDegreeModule {
         final StringBuilder href = new StringBuilder();
         href.append("showCourseSite.do?method=showCurricularCourseSite");
 
-        href.append("&curricularCourseID=").append(this.curricularCourse.getIdInternal());
-        href.append("&degreeID=").append(this.curricularCourse.getDegree().getIdInternal());
-        href.append("&degreeCurricularPlanID=").append(this.curricularCourse.getDegreeCurricularPlan().getIdInternal());
+        href.append("&curricularCourseID=").append(this.curricularCourse.getExternalId());
+        href.append("&degreeID=").append(this.curricularCourse.getDegree().getExternalId());
+        href.append("&degreeCurricularPlanID=").append(this.curricularCourse.getDegreeCurricularPlan().getExternalId());
 
         final Map<String, String> requestParameterMap = this.facesContext.getExternalContext().getRequestParameterMap();
         if (this.executionYear != null) {
             final ExecutionSemester executionSemester = this.executionYear.getLastExecutionPeriod();
-            href.append("&executionPeriodOID=").append(executionSemester.getIdInternal());
+            href.append("&executionPeriodOID=").append(executionSemester.getExternalId());
         } else if (requestParameterMap.get("executionPeriodOID") != null) {
             href.append("&executionPeriodOID=").append(requestParameterMap.get("executionPeriodOID"));
         }
@@ -305,12 +305,12 @@ public class UICurricularCourse extends UIDegreeModule {
         writer.writeAttribute("align", "right", null);
         writer.writeAttribute("style", "width: 9em;", null);
         if (loggedPersonCanManageDegreeCurricularPlans()) {
-            encodeLink("editCurricularCourse.faces", "&contextID=" + this.previousContext.getIdInternal()
-                    + "&curricularCourseID=" + this.curricularCourse.getIdInternal(), false, "edit");
+            encodeLink("editCurricularCourse.faces", "&contextID=" + this.previousContext.getExternalId()
+                    + "&curricularCourseID=" + this.curricularCourse.getExternalId(), false, "edit");
             // if (this.executionYear == null) {
             writer.append(" , ");
-            encodeLink("deleteCurricularCourseContext.faces", "&contextID=" + this.previousContext.getIdInternal()
-                    + "&curricularCourseID=" + this.curricularCourse.getIdInternal(), false, "delete");
+            encodeLink("deleteCurricularCourseContext.faces", "&contextID=" + this.previousContext.getExternalId()
+                    + "&curricularCourseID=" + this.curricularCourse.getExternalId(), false, "delete");
             // }
         }
         writer.endElement("td");
@@ -322,7 +322,7 @@ public class UICurricularCourse extends UIDegreeModule {
         writer.writeAttribute("style", "width: 9em;", null);
         if (loggedPersonCanManageDegreeCurricularPlans()) {
             encodeLink(module + "/curricularRules/createCurricularRule.faces",
-                    "&degreeModuleID=" + this.curricularCourse.getIdInternal(), false, "setCurricularRule");
+                    "&degreeModuleID=" + this.curricularCourse.getExternalId(), false, "setCurricularRule");
         }
         writer.endElement("td");
     }

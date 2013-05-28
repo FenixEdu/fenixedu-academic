@@ -16,7 +16,7 @@ public class CreditNoteEntry extends CreditNoteEntry_Base {
             int comparationResult =
                     leftCreditNoteEntry.getAccountingEntry().getWhenRegistered()
                             .compareTo(rightCreditNoteEntry.getAccountingEntry().getWhenRegistered());
-            return (comparationResult == 0) ? leftCreditNoteEntry.getIdInternal().compareTo(rightCreditNoteEntry.getIdInternal()) : comparationResult;
+            return (comparationResult == 0) ? leftCreditNoteEntry.getExternalId().compareTo(rightCreditNoteEntry.getExternalId()) : comparationResult;
         }
     };
 

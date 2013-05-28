@@ -28,7 +28,7 @@ public class EditEvaluation {
     @Service
     public static Boolean runEditEvaluation(ExecutionCourse executionCourse, MultiLanguageString evaluationMethod)
             throws NotAuthorizedException {
-        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourse.getIdInternal());
+        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourse.getExternalId());
         return serviceInstance.run(executionCourse, evaluationMethod);
     }
 

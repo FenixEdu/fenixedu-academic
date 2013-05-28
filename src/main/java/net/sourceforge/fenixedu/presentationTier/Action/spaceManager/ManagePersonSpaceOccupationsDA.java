@@ -45,7 +45,7 @@ public class ManagePersonSpaceOccupationsDA extends FenixDispatchAction {
             actionMessages.add("error", new ActionMessage("error.logged.person.not.authorized.to.make.operation"));
             saveMessages(request, actionMessages);
         }
-        request.setAttribute("spaceInformationID", spaceInformation.getIdInternal());
+        request.setAttribute("spaceInformationID", spaceInformation.getExternalId());
         return mapping.findForward("ManageSpace");
     }
 

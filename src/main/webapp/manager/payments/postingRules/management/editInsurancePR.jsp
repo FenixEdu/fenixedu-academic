@@ -23,7 +23,7 @@
 	property="class.simpleName" />
 
 <bean:define id="postingRuleId" name="postingRule"
-	property="idInternal" />
+	property="externalId" />
 
 <fr:edit id="postingRuleEditor" name="postingRule"
 	schema="<%=postingRuleEditorClassName + ".edit"%>">

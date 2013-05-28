@@ -46,7 +46,7 @@ public class ResultsManagementAction extends FenixDispatchAction {
             return backToResultList(mapping, form, request, response);
         }
 
-        request.setAttribute("resultId", result.getIdInternal());
+        request.setAttribute("resultId", result.getExternalId());
         if (result instanceof ResearchResultPatent) {
             return mapping.findForward("editPatent");
         } else if (result instanceof ResearchResultPublication) {
@@ -133,7 +133,7 @@ public class ResultsManagementAction extends FenixDispatchAction {
                     result = (ResearchResult) object;
                 }
                 if (object instanceof ResultPublicationBean) {
-                    result = ResearchResult.readByOid(((ResultPublicationBean) object).getIdInternal());
+                    result = ResearchResult.readByOid(((ResultPublicationBean) object).getExternalId());
                 }
 
             } catch (Exception e) {

@@ -41,11 +41,11 @@
 			return confirm('<bean:message key="message.confirm.remove.class"/>')
 		</bean:define>
 	<logic:iterate id="shiftClass" name="shift" property="infoClasses">
-		<bean:define id="classOID" name="shiftClass" property="idInternal"/>
+		<bean:define id="classOID" name="shiftClass" property="externalId"/>
 			<tr>
               	<td>
 					<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.selectedItems" property="selectedItems">
-						<bean:write name="shiftClass" property="idInternal"/>
+						<bean:write name="shiftClass" property="externalId"/>
 					</html:multibox>
 				</td>
 				<td>

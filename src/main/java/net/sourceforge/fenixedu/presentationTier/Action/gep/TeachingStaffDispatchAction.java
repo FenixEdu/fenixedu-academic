@@ -73,7 +73,7 @@ public class TeachingStaffDispatchAction extends FenixDispatchAction {
         IUserView userView = UserView.getUser();
 
         final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
-        Integer executionYearID = executionYear.getIdInternal();
+        Integer executionYearID = executionYear.getExternalId();
         Object[] args = { executionYearID };
 
         List degreeCurricularPlans =

@@ -39,7 +39,7 @@
 			<fr:property name="link(view)" value="/emails.do?method=viewEmail"/>
 			<fr:property name="bundle(view)" value="APPLICATION_RESOURCES"/>
 			<fr:property name="key(view)" value="link.view"/>
-			<fr:property name="param(view)" value="idInternal/messagesId"/>
+			<fr:property name="param(view)" value="externalId/messagesId"/>
 			<fr:property name="order(view)" value="1"/>
 			<fr:property name="sortBy" value="created=desc"/>
 		</fr:layout>
@@ -55,7 +55,7 @@
 			<fr:property name="link(view)" value="/emails.do?method=viewSentEmails"/>
 			<fr:property name="bundle(view)" value="APPLICATION_RESOURCES"/>
 			<fr:property name="key(view)" value="link.view"/>
-			<fr:property name="param(view)" value="idInternal/senderId"/>
+			<fr:property name="param(view)" value="externalId/senderId"/>
 			<fr:property name="order(view)" value="1"/>
 		</fr:layout>
 	</fr:view>
@@ -70,7 +70,7 @@
 			<fr:property name="link(view)" value="/emails.do?method=viewSentEmails"/>
 			<fr:property name="bundle(view)" value="APPLICATION_RESOURCES"/>
 			<fr:property name="key(view)" value="link.view"/>
-			<fr:property name="param(view)" value="idInternal/senderId"/>
+			<fr:property name="param(view)" value="externalId/senderId"/>
 			<fr:property name="order(view)" value="1"/>
 		</fr:layout>
 	</fr:view>
@@ -103,7 +103,7 @@
 				<fr:property name="link(view)" value="/emails.do?method=viewSentEmails"/>
 				<fr:property name="bundle(view)" value="APPLICATION_RESOURCES"/>
 				<fr:property name="key(view)" value="link.view"/>
-				<fr:property name="param(view)" value="idInternal/senderId"/>
+				<fr:property name="param(view)" value="externalId/senderId"/>
 				<fr:property name="order(view)" value="1"/>
 			</fr:layout>
 		</fr:view>

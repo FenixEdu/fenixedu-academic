@@ -417,11 +417,11 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         if (selectedDepartmentUnitID == null) {
             Container site = AbstractFunctionalityContext.getCurrentContext(getRequest()).getSelectedContainer();
             if (site != null && site instanceof DepartmentSite) {
-                selectedDepartmentUnitID = ((DepartmentSite) site).getDepartment().getDepartmentUnit().getIdInternal();
+                selectedDepartmentUnitID = ((DepartmentSite) site).getDepartment().getDepartmentUnit().getExternalId();
             } else if (getAndHoldIntegerParameter("selectedDepartmentUnitID") != null) {
                 selectedDepartmentUnitID = getAndHoldIntegerParameter("selectedDepartmentUnitID");
             } else if (getPersonDepartment() != null) {
-                selectedDepartmentUnitID = getPersonDepartment().getDepartmentUnit().getIdInternal();
+                selectedDepartmentUnitID = getPersonDepartment().getDepartmentUnit().getExternalId();
             }
         }
         return selectedDepartmentUnitID;
@@ -926,7 +926,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         for (final Object departmentObject : RootDomainObject.readAllDomainObjects(Department.class)) {
             DepartmentUnit departmentUnit = ((Department) departmentObject).getDepartmentUnit();
             if (departmentUnit.isActive(getExecutionSemester().getBeginDateYearMonthDay())) {
-                result.add(new SelectItem(departmentUnit.getIdInternal(), departmentUnit.getName()));
+                result.add(new SelectItem(departmentUnit.getExternalId(), departmentUnit.getName()));
             }
         }
         Collections.sort(result, new BeanComparator("label"));
@@ -956,7 +956,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         if (transferToDepartmentUnitID != null && transferToDepartmentUnitID != 0) {
             for (final ScientificAreaUnit unit : readDepartmentUnitToTransferTo(transferToDepartmentUnitID)
                     .getScientificAreaUnits()) {
-                result.add(new SelectItem(unit.getIdInternal(), unit.getName()));
+                result.add(new SelectItem(unit.getExternalId(), unit.getName()));
             }
         }
         Collections.sort(result, new BeanComparator("label"));
@@ -996,7 +996,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         if (transferToScientificAreaUnitID != null && transferToScientificAreaUnitID != 0) {
             for (final Unit unit : readScientificAreaUnitToTransferTo(transferToScientificAreaUnitID)
                     .getCompetenceCourseGroupUnits()) {
-                result.add(new SelectItem(unit.getIdInternal(), unit.getName()));
+                result.add(new SelectItem(unit.getExternalId(), unit.getName()));
             }
         }
         Collections.sort(result, new BeanComparator("label"));
@@ -1072,11 +1072,11 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
             if (getCompetenceCourse().getCompetenceCourseInformationsCount() == 1) {
                 executionSemesterID =
                         getCompetenceCourse().getCompetenceCourseInformationsSet().iterator().next().getExecutionPeriod()
-                                .getIdInternal();
+                                .getExternalId();
             }
         }
         if (executionSemesterID == null) {
-            executionSemesterID = currentSemester.getIdInternal();
+            executionSemesterID = currentSemester.getExternalId();
         }
         return executionSemesterID;
     }
@@ -1095,7 +1095,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
             executionYearID = getAndHoldIntegerParameter("executionYearID");
         }
         if (executionYearID == null) {
-            executionYearID = ExecutionYear.readCurrentExecutionYear().getIdInternal();
+            executionYearID = ExecutionYear.readCurrentExecutionYear().getExternalId();
         }
         return executionYearID;
     }
@@ -1120,7 +1120,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     private List<SelectItem> readExecutionSemesterLabels() {
         final List<SelectItem> result = new ArrayList<SelectItem>();
         for (ExecutionSemester semester : getOrderedCompetenceCourseExecutionSemesters()) {
-            result.add(new SelectItem(semester.getIdInternal(), semester.getQualifiedName()));
+            result.add(new SelectItem(semester.getExternalId(), semester.getQualifiedName()));
         }
         return result;
     }
@@ -1141,7 +1141,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         final List<SelectItem> result = new ArrayList<SelectItem>();
         ExecutionSemester semester = ExecutionSemester.readActualExecutionSemester();
         while (semester != null) {
-            result.add(new SelectItem(semester.getIdInternal(), semester.getQualifiedName()));
+            result.add(new SelectItem(semester.getExternalId(), semester.getQualifiedName()));
             semester = semester.getNextExecutionPeriod();
         }
         return result;
@@ -1162,7 +1162,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     private List<SelectItem> readCompetenceCourseExecutionSemesterLabels() {
         final List<SelectItem> result = new ArrayList<SelectItem>();
         for (ExecutionSemester semester : getOrderedCompetenceCourseExecutionSemesters()) {
-            result.add(new SelectItem(semester.getIdInternal(), semester.getQualifiedName()));
+            result.add(new SelectItem(semester.getExternalId(), semester.getQualifiedName()));
         }
         return result;
     }
@@ -1205,7 +1205,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
             selectedYears = new ArrayList<SelectItem>();
             for (ExecutionYear executionYear : ExecutionYear.readNotClosedExecutionYears()) {
                 if (year == null || executionYear.isAfterOrEquals(year)) {
-                    selectedYears.add(new SelectItem(executionYear.getIdInternal(), executionYear.getYear()));
+                    selectedYears.add(new SelectItem(executionYear.getExternalId(), executionYear.getYear()));
                 }
             }
             Collections.sort(selectedYears, new ReverseComparator(new BeanComparator("label")));

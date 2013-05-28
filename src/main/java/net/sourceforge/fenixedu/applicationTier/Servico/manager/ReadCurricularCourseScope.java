@@ -25,10 +25,10 @@ public class ReadCurricularCourseScope {
      */
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
-    public static InfoCurricularCourseScope run(Integer idInternal) throws FenixServiceException {
+    public static InfoCurricularCourseScope run(Integer externalId) throws FenixServiceException {
         CurricularCourseScope curricularCourseScope;
 
-        curricularCourseScope = RootDomainObject.getInstance().readCurricularCourseScopeByOID(idInternal);
+        curricularCourseScope = RootDomainObject.getInstance().readCurricularCourseScopeByOID(externalId);
 
         if (curricularCourseScope == null) {
             throw new NonExistingServiceException();

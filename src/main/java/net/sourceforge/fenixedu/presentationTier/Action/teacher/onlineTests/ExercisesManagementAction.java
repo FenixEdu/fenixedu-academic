@@ -766,7 +766,7 @@ public class ExercisesManagementAction extends FenixDispatchAction {
         ParseSubQuestion parse = new ParseSubQuestion();
         if (variationCode != null) {
             for (Question question : metadata.getVisibleQuestions()) {
-                if ((question.getIdInternal().equals(variationCode) || variationCode.intValue() == -2)
+                if ((question.getExternalId().equals(variationCode) || variationCode.intValue() == -2)
                         && (question.getSubQuestions() == null || question.getSubQuestions().size() == 0)) {
                     try {
                         question = parse.parseSubQuestion(question, path);

@@ -94,7 +94,7 @@ public class EndCurricularCourseScopeDA extends FenixDispatchAction {
         Integer oldCurricularCourseScopeId = new Integer(request.getParameter("curricularCourseScopeId"));
 
         InfoCurricularCourseScopeEditor newInfoCurricularCourseScope = new InfoCurricularCourseScopeEditor();
-        newInfoCurricularCourseScope.setIdInternal(oldCurricularCourseScopeId);
+        newInfoCurricularCourseScope.setExternalId(oldCurricularCourseScopeId);
 
         String beginDateString = (String) dynaForm.get("beginDate");
         String endDateString = (String) dynaForm.get("endDate");

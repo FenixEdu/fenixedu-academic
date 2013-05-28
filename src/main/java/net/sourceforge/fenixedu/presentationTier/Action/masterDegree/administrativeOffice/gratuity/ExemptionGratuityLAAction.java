@@ -109,7 +109,7 @@ public class ExemptionGratuityLAAction extends FenixLookupDispatchAction {
 
         InfoGratuitySituation infoGratuitySituation = new InfoGratuitySituation();
         if (gratuitySituationID != null) {
-            infoGratuitySituation.setIdInternal(Integer.valueOf(gratuitySituationID));
+            infoGratuitySituation.setExternalId(Integer.valueOf(gratuitySituationID));
         }
 
         // Registration Curricular Plan
@@ -120,7 +120,7 @@ public class ExemptionGratuityLAAction extends FenixLookupDispatchAction {
 
         // Gratuity Values
         InfoGratuityValues infoGratuityValues = new InfoGratuityValues();
-        infoGratuityValues.setIdInternal(Integer.valueOf(gratuityValuesID));
+        infoGratuityValues.setExternalId(Integer.valueOf(gratuityValuesID));
         infoGratuitySituation.setInfoGratuityValues(infoGratuityValues);
 
         // employee who made register

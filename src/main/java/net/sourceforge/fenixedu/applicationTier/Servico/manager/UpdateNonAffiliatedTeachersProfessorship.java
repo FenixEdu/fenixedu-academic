@@ -24,7 +24,7 @@ public class UpdateNonAffiliatedTeachersProfessorship {
 
         List<NonAffiliatedTeacher> nonAffiliatedTeachersToRemove = new ArrayList<NonAffiliatedTeacher>();
         for (NonAffiliatedTeacher nonAffiliatedTeacher : executionCourse.getNonAffiliatedTeachers()) {
-            if (!nonAffiliatedTeachersIds.contains(nonAffiliatedTeacher.getIdInternal())) {
+            if (!nonAffiliatedTeachersIds.contains(nonAffiliatedTeacher.getExternalId())) {
                 nonAffiliatedTeachersToRemove.add(nonAffiliatedTeacher);
             }
         }

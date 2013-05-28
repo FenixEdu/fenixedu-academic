@@ -153,7 +153,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     public void print(StringBuilder dcp, String tabs, Context previousContext) {
         String tab = tabs + "\t";
         dcp.append(tab);
-        dcp.append("[CC ").append(getIdInternal()).append("][");
+        dcp.append("[CC ").append(getExternalId()).append("][");
         dcp.append(previousContext.getCurricularPeriod().getOrderByType(AcademicPeriod.YEAR)).append("Y,");
         dcp.append(previousContext.getCurricularPeriod().getOrderByType(AcademicPeriod.SEMESTER)).append("S]\t");
         dcp.append("[B:").append(previousContext.getBeginExecutionPeriod().getBeginDateYearMonthDay());

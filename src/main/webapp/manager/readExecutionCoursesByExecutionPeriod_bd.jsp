@@ -62,7 +62,7 @@
 					<bean:define id="infoExecutionCourse" name="infoExecutionCourse"/>		
 					<tr>
 						<td class="listClasses">
-							<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.executionCourseId" property="executionCourseId" idName="infoExecutionCourse" value="idInternal" />	
+							<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.executionCourseId" property="executionCourseId" idName="infoExecutionCourse" value="externalId" />	
 						</td>			
 						<td class="listClasses" style="text-align:left"><bean:write name="infoExecutionCourse" property="nome"/>
 						</td>
@@ -115,7 +115,7 @@
 				<tr>
 					<td class="listClasses">
 						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.internalIds" property="internalIds">
-							<bean:write name="infoExecutionCourse" property="idInternal"/>
+							<bean:write name="infoExecutionCourse" property="externalId"/>
 						</html:multibox>
 					</td>	
 					<td class="listClasses" style="text-align:left"><bean:write name="infoExecutionCourse" property="nome"/>

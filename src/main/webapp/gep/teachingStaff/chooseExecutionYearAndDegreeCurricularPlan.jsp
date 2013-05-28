@@ -11,7 +11,7 @@
 
 <html:form action="/teachingStaff">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="selectExecutionDegree"/>
-	<bean:define id="executionYearID" type="java.lang.Integer" name="executionYear" property="idInternal"/>
+	<bean:define id="executionYearID" type="java.lang.Integer" name="executionYear" property="externalId"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionYearID" property="executionYearID" value="<%= executionYearID.toString() %>"/>
 
 	<logic:present name="degreeCurricularPlans">
@@ -19,7 +19,7 @@
 			<logic:iterate id="degreeCurricularPlan" name="degreeCurricularPlans">
 					<tr>
 						<td>
-							<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.degreeCurricularPlanID" property="degreeCurricularPlanID" idName="degreeCurricularPlan" value="idInternal" />
+							<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.degreeCurricularPlanID" property="degreeCurricularPlanID" idName="degreeCurricularPlan" value="externalId" />
 						</td>
 						<td>
 							<bean:message name="degreeCurricularPlan" property="infoDegree.degreeType.name" bundle="ENUMERATION_RESOURCES"/>

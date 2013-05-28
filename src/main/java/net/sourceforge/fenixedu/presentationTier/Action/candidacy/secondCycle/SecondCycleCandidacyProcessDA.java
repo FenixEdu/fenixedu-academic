@@ -186,8 +186,8 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
 
     protected void setCandidacyProcessInformation(final ActionForm actionForm, final SecondCycleCandidacyProcess process) {
         final SecondCycleCandidacyProcessForm form = (SecondCycleCandidacyProcessForm) actionForm;
-        form.setSelectedProcessId(process.getIdInternal());
-        form.setExecutionIntervalId(process.getCandidacyExecutionInterval().getIdInternal());
+        form.setSelectedProcessId(process.getExternalId());
+        form.setExecutionIntervalId(process.getCandidacyExecutionInterval().getExternalId());
     }
 
     @Override
@@ -202,7 +202,7 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
         final Integer selectedProcessId = getIntegerFromRequest(request, "selectedProcessId");
         if (selectedProcessId != null) {
             for (final SecondCycleCandidacyPeriod candidacyPeriod : executionInterval.getSecondCycleCandidacyPeriods()) {
-                if (candidacyPeriod.getSecondCycleCandidacyProcess().getIdInternal().equals(selectedProcessId)) {
+                if (candidacyPeriod.getSecondCycleCandidacyProcess().getExternalId().equals(selectedProcessId)) {
                     return candidacyPeriod.getSecondCycleCandidacyProcess();
                 }
             }

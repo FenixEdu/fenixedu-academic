@@ -110,12 +110,12 @@ public class InfoMasterDegreeThesisDataVersion extends InfoObject {
     @Override
     public String toString() {
         String result = "[" + this.getClass().getName() + ": \n";
-        result += "idInternal = " + getIdInternal() + "; \n";
-        result += "infoMasterDegreeThesis = " + this.infoMasterDegreeThesis.getIdInternal() + "; \n";
+        result += "externalId = " + getExternalId() + "; \n";
+        result += "infoMasterDegreeThesis = " + this.infoMasterDegreeThesis.getExternalId() + "; \n";
         result += "infoExternalAssistentGuiders = " + this.infoExternalAssistentGuiders.toString() + "; \n";
         result += "infoAssistentGuiders = " + this.infoAssistentGuiders.toString() + "; \n";
         result += "infoGuiders" + this.infoGuiders.toString() + "; \n";
-        result += "infoResponsibleEmployee = " + this.infoResponsibleEmployee.getIdInternal() + "; \n";
+        result += "infoResponsibleEmployee = " + this.infoResponsibleEmployee.getExternalId() + "; \n";
         result += "dissertationTitle = " + this.dissertationTitle.toString() + "; \n";
         result += "lastModification = " + this.lastModification.toString() + "; \n";
         result += "currentState = " + this.currentState.toString() + "; \n";

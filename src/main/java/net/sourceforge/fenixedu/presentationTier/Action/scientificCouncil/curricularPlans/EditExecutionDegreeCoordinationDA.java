@@ -64,11 +64,11 @@ public class EditExecutionDegreeCoordinationDA extends FenixDispatchAction {
         if (backTo.equals("byYears")) {
             backPath =
                     "/curricularPlans/editExecutionDegreeCoordination.do?method=editByYears&executionYearId="
-                            + executionDegree.getExecutionYear().getIdInternal().toString();
+                            + executionDegree.getExecutionYear().getExternalId().toString();
         } else {
             backPath =
                     "/curricularPlans/editExecutionDegreeCoordination.do?method=prepareEditCoordination&degreeCurricularPlanId="
-                            + executionDegree.getDegreeCurricularPlan().getIdInternal().toString();
+                            + executionDegree.getDegreeCurricularPlan().getExternalId().toString();
         }
 
         ExecutionDegreeCoordinatorsBean coordsBean = new ExecutionDegreeCoordinatorsBean(executionDegree);

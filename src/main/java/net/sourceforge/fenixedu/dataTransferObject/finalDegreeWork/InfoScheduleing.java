@@ -65,7 +65,7 @@ public class InfoScheduleing extends InfoObject {
     @Override
     public String toString() {
         String result = "[InfoScheduleing";
-        result += ", idInternal=" + getIdInternal();
+        result += ", externalId=" + getExternalId();
         result += ", InfoDegreeCurricularPlan=" + getExecutionDegree();
         result += "]";
         return result;

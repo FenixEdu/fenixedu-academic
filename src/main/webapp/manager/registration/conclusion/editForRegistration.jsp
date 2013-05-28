@@ -8,7 +8,7 @@
 <logic:present role="MANAGER">
 	<h3><bean:message key="student.registrationConclusionProcess" bundle="ACADEMIC_OFFICE_RESOURCES" /></h3>
 	
-	<bean:define id="registrationId" name="registration" property="idInternal" />
+	<bean:define id="registrationId" name="registration" property="externalId" />
 	 
 	<fr:edit name="registration"
 		schema="Registration.editConclusionInformation">

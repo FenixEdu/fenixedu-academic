@@ -49,7 +49,7 @@ public class ShowClassesDispatchAction extends FenixDispatchAction {
     public Degree getDegree(HttpServletRequest request) throws FenixActionException {
         final Degree degree = ShowDegreeSiteAction.getDegree(request);
         if (degree != null) {
-            request.setAttribute("degreeID", degree.getIdInternal());
+            request.setAttribute("degreeID", degree.getExternalId());
             request.setAttribute("degree", degree);
         }
         return degree;
@@ -62,7 +62,7 @@ public class ShowClassesDispatchAction extends FenixDispatchAction {
         getInfoDegreeCurricularPlan(request, degree);
 
         final Integer executionPeriodID =
-                ((InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD)).getIdInternal();
+                ((InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD)).getExternalId();
         final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
 
         if (executionSemester != null) {
@@ -143,7 +143,7 @@ public class ShowClassesDispatchAction extends FenixDispatchAction {
 
     private void getInfoDegreeCurricularPlan(HttpServletRequest request, Degree degree) {
 
-        InfoDegree infoDegree = ReadDegreeByOID.run(degree.getIdInternal());
+        InfoDegree infoDegree = ReadDegreeByOID.run(degree.getExternalId());
         request.setAttribute("infoDegree", infoDegree);
     }
 

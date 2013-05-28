@@ -99,8 +99,8 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
         if (thesis != null) {
             final ThesisPresentationState thesisPresentationState = ThesisPresentationState.getThesisPresentationState(thesis);
             request.setAttribute("thesisPresentationState", thesisPresentationState);
-            request.setAttribute("degreeID", thesis.getDegree().getIdInternal());
-            request.setAttribute("executionYearID", thesis.getExecutionYear().getIdInternal());
+            request.setAttribute("degreeID", thesis.getDegree().getExternalId());
+            request.setAttribute("executionYearID", thesis.getExecutionYear().getExternalId());
         }
 
         Degree degree = getDegree(request);
@@ -157,9 +157,9 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
 
     private void setFilterContext(HttpServletRequest request, Degree degree, ExecutionYear executionYear) {
         request.setAttribute("degree", degree);
-        request.setAttribute("degreeId", degree == null ? "" : degree.getIdInternal());
+        request.setAttribute("degreeId", degree == null ? "" : degree.getExternalId());
         request.setAttribute("executionYear", executionYear);
-        request.setAttribute("executionYearId", executionYear == null ? "" : executionYear.getIdInternal());
+        request.setAttribute("executionYearId", executionYear == null ? "" : executionYear.getExternalId());
     }
 
     private Degree getDegree(HttpServletRequest request) {
@@ -817,7 +817,7 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
 
         Thesis thesis = getThesis(request);
         for (ThesisEvaluationParticipant participant : thesis.getVowels()) {
-            if (participant.getIdInternal().equals(id)) {
+            if (participant.getExternalId().equals(id)) {
                 return participant;
             }
         }

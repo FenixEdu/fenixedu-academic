@@ -20,7 +20,7 @@
 			 (<bean:write name="registration" property="number"/>)
 			<br/>
 			<logic:iterate id="studentCurricularPlan" name="registration" property="studentCurricularPlans">
-				<html:radio property="scpID" value="idInternal" idName="studentCurricularPlan"/>
+				<html:radio property="scpID" value="externalId" idName="studentCurricularPlan"/>
 				<bean:write name="studentCurricularPlan" property="name"/>
 				<logic:notEmpty name="studentCurricularPlan" property="masterDegreeThesis">
 					<strong><bean:message key="label.masterDegree.administrativeOffice.thesis.hasThesis"/></strong>

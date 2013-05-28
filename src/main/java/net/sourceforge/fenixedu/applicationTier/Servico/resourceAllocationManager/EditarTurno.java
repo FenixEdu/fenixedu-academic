@@ -18,9 +18,9 @@ public class EditarTurno {
     @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
     @Service
     public static Object run(InfoShift infoShiftOld, InfoShiftEditor infoShiftNew) {
-        final Shift shiftToEdit = RootDomainObject.getInstance().readShiftByOID(infoShiftOld.getIdInternal());
+        final Shift shiftToEdit = RootDomainObject.getInstance().readShiftByOID(infoShiftOld.getExternalId());
         final ExecutionCourse newExecutionCourse =
-                RootDomainObject.getInstance().readExecutionCourseByOID(infoShiftNew.getInfoDisciplinaExecucao().getIdInternal());
+                RootDomainObject.getInstance().readExecutionCourseByOID(infoShiftNew.getInfoDisciplinaExecucao().getExternalId());
         shiftToEdit.edit(infoShiftNew.getTipos(), infoShiftNew.getLotacao(), newExecutionCourse, infoShiftNew.getNome(),
                 infoShiftNew.getComment());
         return InfoShift.newInfoFromDomain(shiftToEdit);

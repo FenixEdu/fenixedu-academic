@@ -47,9 +47,9 @@ public class InfoMasterDegreeProofVersion extends InfoObject {
     @Override
     public String toString() {
         String result = "[" + this.getClass().getName() + ": \n";
-        result += "idInternal = " + getIdInternal() + "; \n";
-        result += "infoMasterDegreeThesis = " + this.infoMasterDegreeThesis.getIdInternal() + "; \n";
-        result += "infoResponsibleEmployee = " + this.infoResponsibleEmployee.getIdInternal() + "; \n";
+        result += "externalId = " + getExternalId() + "; \n";
+        result += "infoMasterDegreeThesis = " + this.infoMasterDegreeThesis.getExternalId() + "; \n";
+        result += "infoResponsibleEmployee = " + this.infoResponsibleEmployee.getExternalId() + "; \n";
         result += "lastModification = " + this.lastModification.toString() + "; \n";
         result += "proofDate = " + this.proofDate.toString() + "; \n";
         result += "thesisDeliveryDate = " + this.thesisDeliveryDate.toString() + "; \n";

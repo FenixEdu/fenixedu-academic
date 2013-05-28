@@ -194,8 +194,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         }
 
         buffer.append("<a href=\"").append(getContextPath()).append("/manager/organizationalStructureManagament/")
-                .append("chooseParentUnit.faces?").append("unitID=").append(this.getUnit().getIdInternal())
-                .append("&chooseUnitID=").append(parentUnit.getIdInternal()).append("\">")
+                .append("chooseParentUnit.faces?").append("unitID=").append(this.getUnit().getExternalId())
+                .append("&chooseUnitID=").append(parentUnit.getExternalId()).append("\">")
                 .append(parentUnit.getNameWithAcronym()).append("</a>").append("</li>");
 
         if (!subUnits.isEmpty()) {
@@ -287,7 +287,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         }
 
         buffer.append("<a href=\"").append(getContextPath()).append("/manager/organizationalStructureManagament/")
-                .append("unitDetails.faces?").append("unitID=").append(parentUnit.getIdInternal()).append("\">")
+                .append("unitDetails.faces?").append("unitID=").append(parentUnit.getExternalId()).append("\">")
                 .append(parentUnit.getNameWithAcronym()).append("</a>").append("</li>");
 
         if (!subUnits.isEmpty()) {
@@ -331,9 +331,9 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         }
 
         buffer.append("<a href=\"").append(getContextPath()).append("/manager/organizationalStructureManagament/")
-                .append("chooseFunction.faces?").append("unitID=").append(this.getUnit().getIdInternal())
-                .append("&chooseUnitID=").append(parentUnit.getIdInternal()).append("&functionID=")
-                .append(this.getFunction().getIdInternal()).append("\">").append(parentUnit.getNameWithAcronym()).append("</a>")
+                .append("chooseFunction.faces?").append("unitID=").append(this.getUnit().getExternalId())
+                .append("&chooseUnitID=").append(parentUnit.getExternalId()).append("&functionID=")
+                .append(this.getFunction().getExternalId()).append("\">").append(parentUnit.getNameWithAcronym()).append("</a>")
                 .append("</li>");
 
         if (!subUnits.isEmpty()) {
@@ -397,7 +397,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         for (Department department : allDepartments) {
             selectItem = new SelectItem();
             selectItem.setLabel(department.getRealName());
-            selectItem.setValue(department.getIdInternal().toString());
+            selectItem.setValue(department.getExternalId().toString());
             list.add(selectItem);
         }
 
@@ -420,7 +420,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
                     administrativeOffice.getAdministrativeOfficeType().getClass().getSimpleName() + "."
                             + administrativeOffice.getAdministrativeOfficeType().getName();
             selectItem.setLabel(hasKey(bundle, name) ? bundle.getString(name) : name);
-            selectItem.setValue(administrativeOffice.getIdInternal().toString());
+            selectItem.setValue(administrativeOffice.getExternalId().toString());
             list.add(selectItem);
         }
 
@@ -460,7 +460,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
                 }
             }
 
-            selectItem.setValue(degree.getIdInternal().toString());
+            selectItem.setValue(degree.getExternalId().toString());
             list.add(selectItem);
         }
 
@@ -492,7 +492,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         for (Campus campus : activeCampus) {
             SelectItem selectItem = new SelectItem();
             selectItem.setLabel(campus.getName());
-            selectItem.setValue(campus.getIdInternal().toString());
+            selectItem.setValue(campus.getExternalId().toString());
             list.add(selectItem);
         }
         Collections.sort(list, new BeanComparator("label"));
@@ -642,7 +642,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         unitName = unitName.with(Language.en, this.getUnitNameEn());
 
         try {
-            EditUnit.run(this.getChooseUnit().getIdInternal(), unitName, this.getUnitNameCard(), this.getUnitCostCenter(),
+            EditUnit.run(this.getChooseUnit().getExternalId(), unitName, this.getUnitNameCard(), this.getUnitCostCenter(),
                     this.getUnitAcronym(), datesResult.getBeginDate(), datesResult.getEndDate(), parameters.getDepartmentID(),
                     parameters.getDegreeID(), parameters.getAdministrativeOfficeID(), this.getUnitWebAddress(),
                     this.getUnitClassification(), this.getCanBeResponsibleOfSpaces(), parameters.getCampusID());
@@ -681,7 +681,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
                 AccountabilityType.readByType(AccountabilityTypeEnum.valueOf(getUnitRelationTypeValue()));
 
         try {
-            AssociateParentUnit.run(this.getUnit().getIdInternal(), this.getChooseUnit().getIdInternal(), accountabilityType);
+            AssociateParentUnit.run(this.getUnit().getExternalId(), this.getChooseUnit().getExternalId(), accountabilityType);
         } catch (DomainException e) {
             setErrorMessage(e.getMessage());
             return "";
@@ -724,7 +724,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
         try {
             CreateFunction.run(functionName, datesResult.getBeginDate(), datesResult.getEndDate(), type, this.getUnit()
-                    .getIdInternal());
+                    .getExternalId());
         } catch (DomainException e) {
             setErrorMessage(e.getMessage());
             return "";
@@ -748,7 +748,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         functionName = functionName.with(Language.en, this.getFunctionNameEn());
 
         try {
-            EditFunction.run(this.getFunction().getIdInternal(), functionName, datesResult.getBeginDate(),
+            EditFunction.run(this.getFunction().getExternalId(), functionName, datesResult.getBeginDate(),
                     datesResult.getEndDate(), type);
         } catch (DomainException e) {
             setErrorMessage(e.getMessage());
@@ -761,7 +761,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     public String associateInherentParentFunction() throws  FenixServiceException {
         Function function = this.getFunction();
         try {
-            AddParentInherentFunction.run(function.getIdInternal(), this.principalFunctionID);
+            AddParentInherentFunction.run(function.getExternalId(), this.principalFunctionID);
         } catch (DomainException e) {
             setErrorMessage(e.getMessage());
             return "";
@@ -785,7 +785,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         Function function = this.getFunction();
 
         try {
-            RemoveParentInherentFunction.run(function.getIdInternal());
+            RemoveParentInherentFunction.run(function.getExternalId());
         } catch (FenixServiceException e) {
             setErrorMessage(e.getMessage());
             return "";
@@ -854,19 +854,19 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     }
 
     private void openULTag(Unit parentUnit, StringBuilder buffer, Unit parentUnitParent) {
-        buffer.append("<ul class='mvert0 nobullet' id=\"").append("aa").append(parentUnit.getIdInternal())
-                .append((parentUnitParent != null) ? parentUnitParent.getIdInternal() : "").append("\" ")
+        buffer.append("<ul class='mvert0 nobullet' id=\"").append("aa").append(parentUnit.getExternalId())
+                .append((parentUnitParent != null) ? parentUnitParent.getExternalId() : "").append("\" ")
                 .append("style='display:none'>\r\n");
     }
 
     private void putImage(Unit parentUnit, StringBuilder buffer, Unit parentUnitParent) {
 
         buffer.append("<img ").append("src='").append(getContextPath()).append("/images/toggle_plus10.gif' id=\"")
-                .append(parentUnit.getIdInternal()).append((parentUnitParent != null) ? parentUnitParent.getIdInternal() : "")
+                .append(parentUnit.getExternalId()).append((parentUnitParent != null) ? parentUnitParent.getExternalId() : "")
                 .append("\" ").append("indexed='true' onClick=\"").append("check(document.getElementById('").append("aa")
-                .append(parentUnit.getIdInternal()).append((parentUnitParent != null) ? parentUnitParent.getIdInternal() : "")
-                .append("'),document.getElementById('").append(parentUnit.getIdInternal())
-                .append((parentUnitParent != null) ? parentUnitParent.getIdInternal() : "").append("'));return false;")
+                .append(parentUnit.getExternalId()).append((parentUnitParent != null) ? parentUnitParent.getExternalId() : "")
+                .append("'),document.getElementById('").append(parentUnit.getExternalId())
+                .append((parentUnitParent != null) ? parentUnitParent.getExternalId() : "").append("'));return false;")
                 .append("\"> ");
     }
 
@@ -997,7 +997,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
                 String accountabilityTypeName = accountability.getAccountabilityType().getType().getName();
                 if (accountability.getParentParty().isUnit()) {
                     getUnitRelationsAccountabilityTypes()
-                            .put(accountability.getIdInternal(),
+                            .put(accountability.getExternalId(),
                                     hasKey(bundle, accountabilityTypeName) ? bundle.getString(accountabilityTypeName) : accountabilityTypeName);
                 }
             }
@@ -1011,17 +1011,17 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
             for (Accountability accountability : unit.getChildsSet()) {
                 String accountabilityTypeName = accountability.getAccountabilityType().getType().getName();
                 if (accountability.getChildParty().isUnit()) {
-                    Integer subUnitIdInternal = accountability.getChildParty().getIdInternal();
-                    if (getUnitRelationsAccountabilityTypes().containsKey(subUnitIdInternal)) {
+                    Integer subUnitExternalId = accountability.getChildParty().getExternalId();
+                    if (getUnitRelationsAccountabilityTypes().containsKey(subUnitExternalId)) {
                         getUnitRelationsAccountabilityTypes().put(
-                                subUnitIdInternal,
-                                getUnitRelationsAccountabilityTypes().get(subUnitIdInternal).concat(
+                                subUnitExternalId,
+                                getUnitRelationsAccountabilityTypes().get(subUnitExternalId).concat(
                                         ", "
                                                 + (hasKey(bundle, accountabilityTypeName) ? bundle
                                                         .getString(accountabilityTypeName) : accountabilityTypeName)));
                     } else {
                         getUnitRelationsAccountabilityTypes()
-                                .put(subUnitIdInternal,
+                                .put(subUnitExternalId,
                                         (hasKey(bundle, accountabilityTypeName) ? bundle.getString(accountabilityTypeName) : accountabilityTypeName));
                     }
                 }
@@ -1203,7 +1203,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     public String getAdministrativeOfficeID() throws  FenixServiceException {
         if (this.administrativeOfficeID == null && this.getChooseUnit() != null
                 && this.getChooseUnit().getAdministrativeOffice() != null) {
-            this.administrativeOfficeID = this.getChooseUnit().getAdministrativeOffice().getIdInternal().toString();
+            this.administrativeOfficeID = this.getChooseUnit().getAdministrativeOffice().getExternalId().toString();
         }
         return administrativeOfficeID;
     }
@@ -1214,7 +1214,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     public String getDegreeID() throws  FenixServiceException {
         if (this.degreeID == null && this.getChooseUnit() != null && this.getChooseUnit().getDegree() != null) {
-            this.degreeID = this.getChooseUnit().getDegree().getIdInternal().toString();
+            this.degreeID = this.getChooseUnit().getDegree().getExternalId().toString();
         }
         return degreeID;
     }
@@ -1225,7 +1225,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     public String getDepartmentID() throws  FenixServiceException {
         if (this.departmentID == null && this.getChooseUnit() != null && this.getChooseUnit().getDepartment() != null) {
-            this.departmentID = this.getChooseUnit().getDepartment().getIdInternal().toString();
+            this.departmentID = this.getChooseUnit().getDepartment().getExternalId().toString();
         }
         return departmentID;
     }
@@ -1236,7 +1236,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     public String getCampusID() throws  FenixServiceException {
         if (this.campusID == null && this.getChooseUnit() != null && this.getChooseUnit().getCampus() != null) {
-            this.campusID = this.getChooseUnit().getCampus().getIdInternal().toString();
+            this.campusID = this.getChooseUnit().getCampus().getExternalId().toString();
         }
         return this.campusID;
     }
@@ -1318,12 +1318,12 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
             } else if (mode == 2) {
                 this.departmentID =
-                        (bean.getUnit().getDepartment() != null) ? bean.getUnit().getDepartment().getIdInternal() : null;
-                this.degreeID = (bean.getUnit().getDegree() != null) ? bean.getUnit().getDegree().getIdInternal() : null;
+                        (bean.getUnit().getDepartment() != null) ? bean.getUnit().getDepartment().getExternalId() : null;
+                this.degreeID = (bean.getUnit().getDegree() != null) ? bean.getUnit().getDegree().getExternalId() : null;
                 this.administrativeOfficeID =
                         (bean.getUnit().getAdministrativeOffice() != null) ? bean.getUnit().getAdministrativeOffice()
-                                .getIdInternal() : null;
-                this.campusID = (bean.getUnit().getCampus() != null) ? bean.getUnit().getCampus().getIdInternal() : null;
+                                .getExternalId() : null;
+                this.campusID = (bean.getUnit().getCampus() != null) ? bean.getUnit().getCampus().getExternalId() : null;
             }
         }
 
@@ -1438,13 +1438,13 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
             if (index == parentUnitsPathWithoutAggregateUnits.size()) {
                 result.append("<a href=\"").append(getContextPath())
                         .append("/manager/organizationalStructureManagament/unitDetails.faces?unitID=")
-                        .append(parentUnit.getIdInternal()).append("\">");
+                        .append(parentUnit.getExternalId()).append("\">");
                 result.append(parentUnit.getNameWithAcronym());
                 result.append("</a>");
             } else {
                 result.append("<a href=\"").append(getContextPath())
                         .append("/manager/organizationalStructureManagament/unitDetails.faces?unitID=")
-                        .append(parentUnit.getIdInternal()).append("\">");
+                        .append(parentUnit.getExternalId()).append("\">");
                 result.append(parentUnit.getNameWithAcronym());
                 result.append("</a> - ");
             }

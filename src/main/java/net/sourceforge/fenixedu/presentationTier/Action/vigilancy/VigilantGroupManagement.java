@@ -163,10 +163,10 @@ public class VigilantGroupManagement extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         String oid = request.getParameter("oid");
-        Integer idInternal = Integer.valueOf(oid);
+        Integer externalId = Integer.valueOf(oid);
 
         VigilantWrapper vigilantWrapper =
-                (VigilantWrapper) RootDomainObject.readDomainObjectByOID(VigilantWrapper.class, idInternal);
+                (VigilantWrapper) RootDomainObject.readDomainObjectByOID(VigilantWrapper.class, externalId);
 
         RemoveIncompatiblePerson.run(vigilantWrapper);
 
@@ -292,10 +292,10 @@ public class VigilantGroupManagement extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         String oid = request.getParameter("oid");
-        Integer idInternal = Integer.valueOf(oid);
+        Integer externalId = Integer.valueOf(oid);
         String forwardTo = request.getParameter("forwardTo");
 
-        VigilantGroup group = (VigilantGroup) RootDomainObject.readDomainObjectByOID(VigilantGroup.class, idInternal);
+        VigilantGroup group = (VigilantGroup) RootDomainObject.readDomainObjectByOID(VigilantGroup.class, externalId);
         prepareBeanForVigilantGroupEdition(request, group);
         return mapping.findForward(forwardTo);
     }
@@ -338,10 +338,10 @@ public class VigilantGroupManagement extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         String oid = request.getParameter("oid");
-        Integer idInternal = Integer.valueOf(oid);
+        Integer externalId = Integer.valueOf(oid);
 
         try {
-            DeleteVigilantGroupByOID.run(idInternal);
+            DeleteVigilantGroupByOID.run(externalId);
         } catch (DomainException e) {
             addActionMessage(request, e.getMessage());
         }

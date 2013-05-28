@@ -22,7 +22,7 @@
 			<td class="listClasses">
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.degreeID" property="degreeID" onchange="this.form.submit();">
 					<html:option value=""/>
-					<html:options collection="infoDegrees" labelProperty="presentationName" property="idInternal"/>
+					<html:options collection="infoDegrees" labelProperty="presentationName" property="externalId"/>
 				</html:select>
 				<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
 					<bean:message bundle="DEGREE_ADM_OFFICE" key="button.submit"/>
@@ -37,7 +37,7 @@
 				<td class="listClasses">
 					<html:select bundle="HTMLALT_RESOURCES" altKey="select.degreeCurricularPlanID" property="degreeCurricularPlanID" onchange="this.form.submit();">
 						<html:option value=""/>
-						<html:options collection="infoDegreeCurricularPlans" labelProperty="name" property="idInternal"/>
+						<html:options collection="infoDegreeCurricularPlans" labelProperty="name" property="externalId"/>
 					</html:select>
 					<html:submit styleId="javascriptButtonID2" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
 						<bean:message bundle="DEGREE_ADM_OFFICE" key="button.submit"/>
@@ -114,7 +114,7 @@
 						<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeID" property="degreeID" value="<%= degreeID %>"/>
 						<bean:define id="degreeCurricularPlanID" name="curricularCourseEquivalenciesForm" property="degreeCurricularPlanID" type="java.lang.String"/>
 						<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeCurricularPlanID" property="degreeCurricularPlanID" value="<%= degreeCurricularPlanID %>"/>
-						<bean:define id="curricularCourseEquivalencyID" name="curricularCourseEquivalence" property="idInternal" type="java.lang.Integer"/>
+						<bean:define id="curricularCourseEquivalencyID" name="curricularCourseEquivalence" property="externalId" type="java.lang.Integer"/>
 						<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.curricularCourseEquivalencyID" property="curricularCourseEquivalencyID" value="<%= curricularCourseEquivalencyID.toString() %>"/>
 
 						<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">

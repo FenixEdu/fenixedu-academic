@@ -61,7 +61,7 @@
 
 <logic:notEqual name="candidacy" property="activeCandidacySituation.canCandidacyDataBeValidated" value="true">
 	<bean:define id="link">
-		/listDFACandidacy.do?method=viewCandidacy&candidacyID=<bean:write name="candidacy" property="idInternal" />
+		/listDFACandidacy.do?method=viewCandidacy&candidacyID=<bean:write name="candidacy" property="externalId" />
 	</bean:define>	
 	<html:link action="<%= link %>" >
 		<bean:message key="link.candidacy.back" bundle="ADMIN_OFFICE_RESOURCES" />

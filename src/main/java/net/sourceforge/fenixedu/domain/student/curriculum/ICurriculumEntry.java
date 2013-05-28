@@ -18,7 +18,7 @@ public interface ICurriculumEntry {
     static final Comparator<ICurriculumEntry> COMPARATOR_BY_ID = new Comparator<ICurriculumEntry>() {
         @Override
         public int compare(ICurriculumEntry o1, ICurriculumEntry o2) {
-            return o1.getIdInternal().compareTo(o2.getIdInternal());
+            return o1.getExternalId().compareTo(o2.getExternalId());
         }
     };
 
@@ -139,7 +139,7 @@ public interface ICurriculumEntry {
         }
     };
 
-    Integer getIdInternal();
+    Integer getExternalId();
 
     String getCode();
 

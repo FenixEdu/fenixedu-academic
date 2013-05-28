@@ -55,7 +55,7 @@ public class ViewEnroledExecutionCoursesAction extends FenixDispatchAction {
 
     private Registration getRegistrationByID(final Student student, final Integer registrationId) {
         for (final Registration registration : student.getActiveRegistrations()) {
-            if (registration.getIdInternal().equals(registrationId)) {
+            if (registration.getExternalId().equals(registrationId)) {
                 return registration;
             }
         }

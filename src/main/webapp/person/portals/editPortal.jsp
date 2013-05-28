@@ -23,14 +23,14 @@ action="/portalManagement.do?method=editPortal">
 
 <bean:message key="label.pool.contents" bundle="CONTENT_RESOURCES"/>:
 
-<bean:define id="portalId" name="bean" property="portal.idInternal"/>
+<bean:define id="portalId" name="bean" property="portal.externalId"/>
 
 <fr:view name="bean" property="portal.pool" schema="content.in.tree"> 
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle2"/>
 		<fr:property name="bundle(delete)" value="APPLICATION_RESOURCES"/>
 		<fr:property name="key(delete)" value="label.delete"/>
-		<fr:property name="linkFormat(delete)" value="<%= "/portalManagement.do?method=deleteFromPool&elementId=${idInternal}&pid=" + portalId %>"/>
+		<fr:property name="linkFormat(delete)" value="<%= "/portalManagement.do?method=deleteFromPool&elementId=${externalId}&pid=" + portalId %>"/>
 	</fr:layout>
 </fr:view>
 

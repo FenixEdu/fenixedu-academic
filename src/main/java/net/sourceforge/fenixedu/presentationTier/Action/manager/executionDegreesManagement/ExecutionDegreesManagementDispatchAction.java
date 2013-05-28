@@ -92,7 +92,7 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
         final List<Integer> responsibleCoordinatorsList = new ArrayList<Integer>();
         for (final Coordinator coordinator : executionDegree.getCoordinatorsListSet()) {
             if (coordinator.isResponsible()) {
-                responsibleCoordinatorsList.add(coordinator.getIdInternal());
+                responsibleCoordinatorsList.add(coordinator.getExternalId());
             }
         }
         form.set("responsibleCoordinatorsIDs",
@@ -161,8 +161,8 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
             request.setAttribute("executionYears", ExecutionYear.readNotClosedExecutionYears());
             request.setAttribute("campus", Campus.getAllActiveCampus());
 
-            form.set("executionYearID", executionDegree.getExecutionYear().getIdInternal());
-            form.set("campusID", executionDegree.getCampus().getIdInternal());
+            form.set("executionYearID", executionDegree.getExecutionYear().getExternalId());
+            form.set("campusID", executionDegree.getCampus().getExternalId());
 
             final String dateFormat = "dd/MM/yyyy";
             form.set("periodLessonsFirstSemesterBegin", executionDegree.getPeriodLessonsFirstSemester().getStartYearMonthDay()
@@ -295,7 +295,7 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
         final List<LabelValueBean> degreeCurricularPlans = new ArrayList<LabelValueBean>();
         for (final DegreeCurricularPlan degreeCurricularPlan : toShow) {
             degreeCurricularPlans.add(new LabelValueBean(degreeCurricularPlan.getDegree().getName() + " > "
-                    + degreeCurricularPlan.getName(), degreeCurricularPlan.getIdInternal().toString()));
+                    + degreeCurricularPlan.getName(), degreeCurricularPlan.getExternalId().toString()));
         }
 
         degreeCurricularPlans.add(0, new LabelValueBean(enumerationResources.getString("dropDown.Default"), ""));

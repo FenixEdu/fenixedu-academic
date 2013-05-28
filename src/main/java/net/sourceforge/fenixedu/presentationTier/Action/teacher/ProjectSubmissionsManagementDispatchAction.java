@@ -200,14 +200,14 @@ public class ProjectSubmissionsManagementDispatchAction extends FenixDispatchAct
         final String projectExtId = request.getParameter("projectOID");
         if (projectExtId != null) {
             final Project project = Project.fromExternalId(projectExtId);
-            request.setAttribute("projectID", project.getIdInternal().toString());
+            request.setAttribute("projectID", project.getExternalId().toString());
             return project;
         }
         final Person person = getUserView(request).getPerson();
         final Integer projectId = getRequestParameterAsInteger(request, "projectID");
         for (final Professorship professorship : person.getProfessorships()) {
             for (final Project project : professorship.getExecutionCourse().getAssociatedProjects()) {
-                if (project.getIdInternal().equals(projectId)) {
+                if (project.getExternalId().equals(projectId)) {
                     request.setAttribute("projectOID", project.getExternalId());
                     return project;
                 }

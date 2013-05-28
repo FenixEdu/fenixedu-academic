@@ -51,7 +51,7 @@
                         
                         
 			        	<bean:define id="personLink">
-			        		/guideListingByYear.do?method=chooseGuideByPerson<%= "&" %>page=0<%= "&" %>personID=<bean:write name="guide" property="infoPerson.idInternal"/>
+			        		/guideListingByYear.do?method=chooseGuideByPerson<%= "&" %>page=0<%= "&" %>personID=<bean:write name="guide" property="infoPerson.externalId"/>
 			        	</bean:define>
 
                         <td><html:link page='<%= pageContext.findAttribute("personLink").toString() %>'>

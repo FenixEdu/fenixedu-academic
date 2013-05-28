@@ -31,7 +31,7 @@
 			<bean:define id="schemaName" value="departmentAdmOffice.credits.period.view" />
 		</logic:equal>
 		
-		<bean:define id="URL">/defineCreditsPeriods.do?executionPeriodId=<bean:write name="teacherCreditsBean" property="executionPeriod.idInternal"/></bean:define>
+		<bean:define id="URL">/defineCreditsPeriods.do?executionPeriodId=<bean:write name="teacherCreditsBean" property="executionPeriod.externalId"/></bean:define>
 		
 		<fr:form action="<%= URL %>">
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" name="creditsPeriodForm" value="editPeriod"/>	

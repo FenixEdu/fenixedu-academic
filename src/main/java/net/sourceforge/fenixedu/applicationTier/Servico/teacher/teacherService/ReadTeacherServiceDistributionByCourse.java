@@ -67,10 +67,10 @@ public class ReadTeacherServiceDistributionByCourse {
                     for (ExecutionCourse executionCourseEntry : curricularCourseEntry
                             .getExecutionCoursesByExecutionPeriod(executionPeriodEntry)) {
 
-                        if (executionCoursesMap.containsKey(executionCourseEntry.getIdInternal())) {
-                            returnDTO.addDegreeNameToExecutionCourse(executionCourseEntry.getIdInternal(), curricularCourseEntry
+                        if (executionCoursesMap.containsKey(executionCourseEntry.getExternalId())) {
+                            returnDTO.addDegreeNameToExecutionCourse(executionCourseEntry.getExternalId(), curricularCourseEntry
                                     .getDegreeCurricularPlan().getDegree().getSigla());
-                            returnDTO.addCurricularYearsToExecutionCourse(executionCourseEntry.getIdInternal(),
+                            returnDTO.addCurricularYearsToExecutionCourse(executionCourseEntry.getExternalId(),
                                     curricularYearsSet);
                             continue;
                         }
@@ -118,7 +118,7 @@ public class ReadTeacherServiceDistributionByCourse {
                         String campus =
                                 getCampusForCurricularCourseAndExecutionPeriod(curricularCourseEntry, executionPeriodEntry);
 
-                        returnDTO.addExecutionCourse(executionCourseEntry.getIdInternal(), executionCourseEntry.getNome(),
+                        returnDTO.addExecutionCourse(executionCourseEntry.getExternalId(), executionCourseEntry.getNome(),
                                 campus, curricularCourseEntry.getDegreeCurricularPlan().getDegree().getSigla(),
                                 curricularYearsSet, executionCourseEntry.getExecutionPeriod().getSemester(),
                                 executionCourseFirstTimeEnrollementStudentNumber,
@@ -140,7 +140,7 @@ public class ReadTeacherServiceDistributionByCourse {
 
                         fillExecutionCourseDTOWithTeachers(returnDTO, executionCourseEntry, department);
 
-                        executionCoursesMap.put(executionCourseEntry.getIdInternal(), true);
+                        executionCoursesMap.put(executionCourseEntry.getExternalId(), true);
 
                     }
                 }
@@ -189,7 +189,7 @@ public class ReadTeacherServiceDistributionByCourse {
                 continue;
             }
 
-            Integer teacherIdInternal = teacher.getIdInternal();
+            Integer teacherExternalId = teacher.getExternalId();
             String teacherName = teacher.getPerson().getName();
 
             DecimalFormat df = new DecimalFormat("#.##");
@@ -206,7 +206,7 @@ public class ReadTeacherServiceDistributionByCourse {
                 teacherBelongsToDepartment = true;
             }
 
-            dto.addTeacherToExecutionCourse(executionCourse.getIdInternal(), teacherIdInternal, teacherName,
+            dto.addTeacherToExecutionCourse(executionCourse.getExternalId(), teacherExternalId, teacherName,
                     teacherRequiredHours, teacherLecturedTime, teacherBelongsToDepartment);
         }
 

@@ -93,7 +93,7 @@ public class InsertCurricularCourseScopeDispatchAction extends FenixDispatchActi
         String label, value;
         while (iter.hasNext()) {
             infoBranch = (InfoBranch) iter.next();
-            value = infoBranch.getIdInternal().toString();
+            value = infoBranch.getExternalId().toString();
             label = infoBranch.getCode() + " - " + infoBranch.getName();
             branchesList.add(new LabelValueBean(label, value));
         }

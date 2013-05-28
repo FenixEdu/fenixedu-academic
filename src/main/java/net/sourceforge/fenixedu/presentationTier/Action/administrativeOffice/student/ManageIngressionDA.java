@@ -70,7 +70,7 @@ public class ManageIngressionDA extends FenixDispatchAction {
         }
 
         addActionMessage(request, "message.registration.ingression.and.agreement.edit.success");
-        request.setAttribute("registrationId", getRegistrationIngressionEditor().getRegistration().getIdInternal());
+        request.setAttribute("registrationId", getRegistrationIngressionEditor().getRegistration().getExternalId());
 
         return prepare(mapping, actionForm, request, response);
     }

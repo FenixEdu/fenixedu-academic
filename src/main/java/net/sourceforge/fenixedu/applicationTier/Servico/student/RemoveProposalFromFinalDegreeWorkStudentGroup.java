@@ -38,7 +38,7 @@ public class RemoveProposalFromFinalDegreeWorkStudentGroup {
 
     private static GroupProposal findGroupProposal(final FinalDegreeWorkGroup group, final Integer groupProposalOID) {
         for (final GroupProposal groupProposal : group.getGroupProposalsSet()) {
-            if (groupProposal.getIdInternal().equals(groupProposalOID)) {
+            if (groupProposal.getExternalId().equals(groupProposalOID)) {
                 return groupProposal;
             }
         }

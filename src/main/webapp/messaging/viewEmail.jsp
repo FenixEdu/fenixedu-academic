@@ -15,7 +15,7 @@
 	<logic:empty name="message" property="messageIds">
 	
 		<p class="mtop15">
-			<html:link page="/emails.do?method=resubmit" paramId="messagesId" paramName="message" paramProperty="idInternal">
+			<html:link page="/emails.do?method=resubmit" paramId="messagesId" paramName="message" paramProperty="externalId">
 				<bean:message bundle="MESSAGING_RESOURCES" key="link.message.email.resubmit"/>
 		</html:link>
 		</p>
@@ -29,7 +29,7 @@
 	</logic:present>
 
 	<logic:notPresent name="message" property="sent">
-		<html:link page="/emails.do?method=deleteMessage" paramId="messagesId" paramName="message" paramProperty="idInternal">
+		<html:link page="/emails.do?method=deleteMessage" paramId="messagesId" paramName="message" paramProperty="externalId">
 			<bean:message bundle="APPLICATION_RESOURCES" key="label.delete"/>
 		</html:link>
 	</logic:notPresent>

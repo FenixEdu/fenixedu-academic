@@ -27,7 +27,7 @@
 
 	<logic:notEmpty name="period">		
 		<p class="mtop15 mbottom05"><bean:message key="label.common.executionYear"/>: <bean:write name="period" property="executionYear.year"/></p>							
-		<bean:define id="executionYearId" name="period" property="executionYear.idInternal"/>
+		<bean:define id="executionYearId" name="period" property="executionYear.externalId"/>
 		<fr:edit id="editInterval" name="period" schema="editTeacherPersonalExpectationsEvaluationPeriod" layout="tabular">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle5 thlight thright mtop05"/>
@@ -40,7 +40,7 @@
 		
 	<logic:empty name="period">		
 		<p class="mtop15 mbottom05"><bean:message key="label.common.executionYear"/>: <bean:write name="executionYear" property="year"/></p>
-		<bean:define id="executionYearId" name="executionYear" property="idInternal"/>
+		<bean:define id="executionYearId" name="executionYear" property="externalId"/>
 		<fr:create id="createInterval" type="net.sourceforge.fenixedu.domain.TeacherPersonalExpectationsEvaluationPeriod" schema="createTeacherPersonalExpectationsEvaluationPeriod">
 		   	<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle5 thlight thright mtop05"/>

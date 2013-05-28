@@ -140,8 +140,8 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
                             paymentsManagementDTO.getPerson(), paymentsManagementDTO.getContributorParty(),
                             paymentsManagementDTO.getContributorName());
 
-            request.setAttribute("personId", paymentsManagementDTO.getPerson().getIdInternal());
-            request.setAttribute("receiptID", receipt.getIdInternal());
+            request.setAttribute("personId", paymentsManagementDTO.getPerson().getExternalId());
+            request.setAttribute("receiptID", receipt.getExternalId());
 
             return mapping.findForward("showReceipt");
 

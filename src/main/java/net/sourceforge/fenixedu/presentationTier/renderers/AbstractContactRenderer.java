@@ -128,7 +128,7 @@ public abstract class AbstractContactRenderer extends OutputRenderer {
             if (isPublicSpace()) {
                 HtmlImage img = new HtmlImage();
                 img.setSource(RenderUtils.getContextRelativePath("") + "/publico/viewHomepage.do?method=emailPng&amp;email="
-                        + email.getIdInternal());
+                        + email.getExternalId());
                 span.addChild(img);
             } else {
                 HtmlLink link = new HtmlLink();

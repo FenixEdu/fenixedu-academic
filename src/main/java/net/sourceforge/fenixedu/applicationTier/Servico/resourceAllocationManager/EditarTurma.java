@@ -12,9 +12,9 @@ public class EditarTurma {
 
     @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
     @Service
-    public static Object run(final Integer idInternal, final String className) throws ExistingServiceException {
+    public static Object run(final Integer externalId, final String className) throws ExistingServiceException {
 
-        final SchoolClass classToEdit = RootDomainObject.getInstance().readSchoolClassByOID(idInternal);
+        final SchoolClass classToEdit = RootDomainObject.getInstance().readSchoolClassByOID(externalId);
         classToEdit.edit(className);
         return InfoClass.newInfoFromDomain(classToEdit);
     }

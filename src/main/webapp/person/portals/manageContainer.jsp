@@ -9,17 +9,17 @@
 
 <h2><bean:message key="label.manage.content" bundle="CONTENT_RESOURCES"/></h2>
 
-<bean:define id="cid" name="content" property="idInternal"/>
+<bean:define id="cid" name="content" property="externalId"/>
 
 <bean:define id="contentClass" name="content" property="class.simpleName"/>
 
 <fr:view name="content">
 	<fr:layout name="manage-content-bread-crumbs">
-		<fr:property name="linkFor(Section)" value="/contentManagement.do?method=viewContainer&contentId=${idInternal}"/>
-		<fr:property name="linkFor(Portal)" value="/contentManagement.do?method=viewContainer&contentId=${idInternal}"/>
-		<fr:property name="linkFor(ContentJump)" value="/contentManagement.do?method=viewContainer&contentId=${idInternal}"/>
-		<fr:property name="linkFor(Functionality)" value="/contentManagement.do?method=viewElement&contentId=${idInternal}"/>
-		<fr:property name="linkFor(FunctionalityCall)" value="/contentManagement.do?method=viewElement&contentId=${idInternal}"/>
+		<fr:property name="linkFor(Section)" value="/contentManagement.do?method=viewContainer&contentId=${externalId}"/>
+		<fr:property name="linkFor(Portal)" value="/contentManagement.do?method=viewContainer&contentId=${externalId}"/>
+		<fr:property name="linkFor(ContentJump)" value="/contentManagement.do?method=viewContainer&contentId=${externalId}"/>
+		<fr:property name="linkFor(Functionality)" value="/contentManagement.do?method=viewElement&contentId=${externalId}"/>
+		<fr:property name="linkFor(FunctionalityCall)" value="/contentManagement.do?method=viewElement&contentId=${externalId}"/>
 	</fr:layout>
 </fr:view>
 
@@ -54,7 +54,7 @@
 </html:link>
 
 <logic:notEmpty name="parentContainer">
-	<bean:define id="parentId" name="parentContainer" property="idInternal"/>
+	<bean:define id="parentId" name="parentContainer" property="externalId"/>
 	,
 	<html:link page="<%= "/contentManagement.do?method=deleteContent&amp;contentId=" + cid + "&amp;contentParentId=" + parentId %>" >
 		<bean:message key="delete.content" bundle="CONTENT_RESOURCES"/>
@@ -107,10 +107,10 @@
    		    <fr:property name="movedClass" value="highlight3"/>
 			<fr:property name="parentParameterName" value="contentParentId"/>
 	</fr:layout>
-	<fr:destination name="section.view" path="/contentManagement.do?method=viewContainer&contentId=${idInternal}"/>
-	<fr:destination name="portal.view" path="/contentManagement.do?method=viewContainer&contentId=${idInternal}"/>
-	<fr:destination name="functionality.view" path="/contentManagement.do?method=viewElement&contentId=${idInternal}"/>
-	<fr:destination name="contentJump.view" path="/contentManagement.do?method=viewContainer&contentId=${idInternal}"/>
+	<fr:destination name="section.view" path="/contentManagement.do?method=viewContainer&contentId=${externalId}"/>
+	<fr:destination name="portal.view" path="/contentManagement.do?method=viewContainer&contentId=${externalId}"/>
+	<fr:destination name="functionality.view" path="/contentManagement.do?method=viewElement&contentId=${externalId}"/>
+	<fr:destination name="contentJump.view" path="/contentManagement.do?method=viewContainer&contentId=${externalId}"/>
 </fr:view>
 
 	<div id="tree-controls" style="display: none;">

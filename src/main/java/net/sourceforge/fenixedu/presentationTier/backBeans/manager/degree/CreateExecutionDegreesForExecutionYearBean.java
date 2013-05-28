@@ -148,7 +148,7 @@ public class CreateExecutionDegreesForExecutionYearBean extends FenixBackingBean
                                 DegreeCurricularPlan.DEGREE_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_EXECUTION_DEGREE_AND_DEGREE_CODE);
 
                 for (final DegreeCurricularPlan degreeCurricularPlan : toShow) {
-                    result.add(new SelectItem(degreeCurricularPlan.getIdInternal(), enumerationBundle.getString(degreeType
+                    result.add(new SelectItem(degreeCurricularPlan.getExternalId(), enumerationBundle.getString(degreeType
                             .getName())
                             + " "
                             + degreeCurricularPlan.getDegree().getName()
@@ -186,7 +186,7 @@ public class CreateExecutionDegreesForExecutionYearBean extends FenixBackingBean
 
             final List<SelectItem> result = new ArrayList<SelectItem>();
             for (final DegreeCurricularPlan degreeCurricularPlan : toShow) {
-                result.add(new SelectItem(degreeCurricularPlan.getIdInternal(), enumerationBundle.getString(bolonhaDegreeType
+                result.add(new SelectItem(degreeCurricularPlan.getExternalId(), enumerationBundle.getString(bolonhaDegreeType
                         .getName()) + " " + degreeCurricularPlan.getDegree().getName() + " - " + degreeCurricularPlan.getName()));
             }
 
@@ -207,10 +207,10 @@ public class CreateExecutionDegreesForExecutionYearBean extends FenixBackingBean
     public List getExecutionYears() {
         final List<SelectItem> result = new ArrayList<SelectItem>();
         for (final ExecutionYear executionYear : ExecutionYear.readNotClosedExecutionYears()) {
-            result.add(new SelectItem(executionYear.getIdInternal(), executionYear.getYear()));
+            result.add(new SelectItem(executionYear.getExternalId(), executionYear.getYear()));
         }
         if (getChoosenExecutionYearID() == null && result.size() > 0) {
-            setChoosenExecutionYearID(ExecutionYear.readCurrentExecutionYear().getIdInternal());
+            setChoosenExecutionYearID(ExecutionYear.readCurrentExecutionYear().getExternalId());
             setYearsAccordingToChosenExecutionYear();
         }
         return result;

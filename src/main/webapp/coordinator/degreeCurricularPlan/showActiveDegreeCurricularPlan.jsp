@@ -30,7 +30,7 @@
 					<td class="acenter"><bean:write name="curricularCourseScopeElem" property="infoCurricularSemester.infoCurricularYear.year"/></td>
 					<td class="acenter"><bean:write name="curricularCourseScopeElem" property="infoCurricularSemester.semester"/></td>
 					<td style="text-align:left">
-					<bean:define id="curricularCourseCode" name="curricularCourseScopeElem" property="infoCurricularCourse.idInternal"/>
+					<bean:define id="curricularCourseCode" name="curricularCourseScopeElem" property="infoCurricularCourse.externalId"/>
 						<html:link page="<%="/degreeCurricularPlanManagement.do?method=viewActiveCurricularCourseInformation&amp;infoCurricularCourseCode=" + curricularCourseCode + "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID") %>">
 							<bean:write name="curricularCourseScopeElem" property="infoCurricularCourse.name"/>
 						</html:link>

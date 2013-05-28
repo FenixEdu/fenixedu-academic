@@ -33,7 +33,7 @@ public class Tutorship extends Tutorship_Base {
                 return 1;
             } else {
                 return (t1.getEndDate().isBefore(t2.getEndDate()) ? -1 : (t1.getEndDate().isAfter(t2.getEndDate()) ? 1 : (t1
-                        .getIdInternal() <= t2.getIdInternal()) ? -1 : 1));
+                        .getExternalId() <= t2.getExternalId()) ? -1 : 1));
             }
         }
     };
@@ -47,7 +47,7 @@ public class Tutorship extends Tutorship_Base {
                 return 1;
             } else {
                 return (t1.getStartDate().isBefore(t2.getStartDate()) ? -1 : (t1.getStartDate().isAfter(t2.getStartDate()) ? 1 : (t1
-                        .getIdInternal() <= t2.getIdInternal()) ? -1 : 1));
+                        .getExternalId() <= t2.getExternalId()) ? -1 : 1));
             }
         }
     };

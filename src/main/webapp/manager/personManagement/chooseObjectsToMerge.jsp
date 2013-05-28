@@ -21,7 +21,7 @@
 				OID 1:
 			</td>
 			<td>
-				<html:text bundle="HTMLALT_RESOURCES" altKey="text.person1Username" property="object1IdInternal" size="25"/>
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.person1Username" property="object1ExternalId" size="25"/>
 			</td>		
 		</tr>
 		<tr>
@@ -29,7 +29,7 @@
 				OID 2:
 			</td>
 			<td>
-				<html:text bundle="HTMLALT_RESOURCES" altKey="text.person2Username" property="object2IdInternal" size="25"/>
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.person2Username" property="object2ExternalId" size="25"/>
 			</td>		
 		</tr>	
 		<tr>

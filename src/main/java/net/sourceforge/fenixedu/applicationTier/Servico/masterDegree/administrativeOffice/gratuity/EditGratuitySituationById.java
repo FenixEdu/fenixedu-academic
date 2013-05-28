@@ -25,10 +25,10 @@ public class EditGratuitySituationById {
 
         StudentCurricularPlan studentCurricularPlan =
                 RootDomainObject.getInstance().readStudentCurricularPlanByOID(infoGratuitySituation.getInfoStudentCurricularPlan()
-                        .getIdInternal());
+                        .getExternalId());
 
         GratuityValues gratuityValues =
-                RootDomainObject.getInstance().readGratuityValuesByOID(infoGratuitySituation.getInfoGratuityValues().getIdInternal());
+                RootDomainObject.getInstance().readGratuityValuesByOID(infoGratuitySituation.getInfoGratuityValues().getExternalId());
 
         final GratuitySituation gratuitySituation = studentCurricularPlan.getGratuitySituationByGratuityValues(gratuityValues);
 

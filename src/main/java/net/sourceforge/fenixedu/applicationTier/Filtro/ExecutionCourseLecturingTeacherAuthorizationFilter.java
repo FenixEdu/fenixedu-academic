@@ -80,7 +80,7 @@ public class ExecutionCourseLecturingTeacherAuthorizationFilter extends Authoriz
 
         } else if (argument instanceof InfoExecutionCourse) {
             final InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) argument;
-            return RootDomainObject.getInstance().readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
+            return RootDomainObject.getInstance().readExecutionCourseByOID(infoExecutionCourse.getExternalId());
 
         } else if (argument instanceof Integer) {
             final Integer executionCourseID = (Integer) argument;

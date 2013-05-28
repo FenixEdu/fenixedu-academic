@@ -65,7 +65,7 @@ public class FindSpacesBean implements Serializable {
         if (space != null) {
             List<Space> spaceFullPath = space.getSpaceFullPath();
             for (Space surroundingSpace : spaceFullPath) {
-                result.add(new LinkObject(surroundingSpace.getIdInternal(), "viewSpace", surroundingSpace.getSpaceInformation()
+                result.add(new LinkObject(surroundingSpace.getExternalId(), "viewSpace", surroundingSpace.getSpaceInformation()
                         .getPresentationName()));
             }
         }

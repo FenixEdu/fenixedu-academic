@@ -106,7 +106,7 @@ public class RoomTimeTableLessonContentRenderer implements LessonSlotContentRend
                 strBuffer.append("<a href=\"");
                 strBuffer.append(context).append("/resourceAllocationManager/");
                 strBuffer.append("roomsPunctualScheduling.do?method=prepareView&genericEventID=")
-                        .append(infoGenericEvent.getIdInternal()).append("\">");
+                        .append(infoGenericEvent.getExternalId()).append("\">");
                 strBuffer.append(infoGenericEvent.getTitle());
                 strBuffer.append("</a>");
             } else {

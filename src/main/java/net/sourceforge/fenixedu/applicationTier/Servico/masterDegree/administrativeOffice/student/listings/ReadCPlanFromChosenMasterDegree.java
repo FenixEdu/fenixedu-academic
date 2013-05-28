@@ -19,8 +19,8 @@ public class ReadCPlanFromChosenMasterDegree {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
-    public static List run(Integer idInternal) throws FenixServiceException {
-        Degree degree = RootDomainObject.getInstance().readDegreeByOID(idInternal);
+    public static List run(Integer externalId) throws FenixServiceException {
+        Degree degree = RootDomainObject.getInstance().readDegreeByOID(externalId);
 
         List<InfoDegreeCurricularPlan> result = new ArrayList<InfoDegreeCurricularPlan>();
         for (DegreeCurricularPlan dcp : degree.getDegreeCurricularPlans()) {

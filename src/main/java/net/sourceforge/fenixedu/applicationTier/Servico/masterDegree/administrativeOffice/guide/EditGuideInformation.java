@@ -114,7 +114,7 @@ public class EditGuideInformation {
                 }
                 // Remove the Guide entries wich have been deleted
                 for (InfoGuideEntry infoGuideEntry : guideEntriesToRemove) {
-                    GuideEntry guideEntry = RootDomainObject.getInstance().readGuideEntryByOID(infoGuideEntry.getIdInternal());
+                    GuideEntry guideEntry = RootDomainObject.getInstance().readGuideEntryByOID(infoGuideEntry.getExternalId());
                     guideEntry.delete();
                 }
 
@@ -244,7 +244,7 @@ public class EditGuideInformation {
         Party contributor = Party.readByContributorNumber(infoGuide.getInfoContributor().getContributorNumber());
 
         ExecutionDegree executionDegree =
-                RootDomainObject.getInstance().readExecutionDegreeByOID(infoGuide.getInfoExecutionDegree().getIdInternal());
+                RootDomainObject.getInstance().readExecutionDegreeByOID(infoGuide.getInfoExecutionDegree().getExternalId());
         Guide guide = new Guide();
 
         // Set the fields

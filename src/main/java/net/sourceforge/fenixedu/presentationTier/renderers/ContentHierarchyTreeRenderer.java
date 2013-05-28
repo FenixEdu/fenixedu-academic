@@ -88,7 +88,7 @@ public class ContentHierarchyTreeRenderer extends TreeRenderer {
 
             });
             if (link != null) {
-                link.addParameter(getParentParameterName(), (stack.peek()).getIdInternal());
+                link.addParameter(getParentParameterName(), (stack.peek()).getExternalId());
             }
         }
         return component;

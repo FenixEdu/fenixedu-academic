@@ -201,7 +201,7 @@ public class EditExecutionCourseManageCurricularCoursesDispatchAction extends Fe
         Integer curricularCoursesListSize = (Integer) executionCourseForm.get("curricularCoursesListSize");
 
         List<Integer> curricularCourseIds =
-                getInformationToDissociate(request, curricularCoursesListSize, "curricularCourse", "idInternal", "chosen");
+                getInformationToDissociate(request, curricularCoursesListSize, "curricularCourse", "externalId", "chosen");
 
         try {
             AssociateCurricularCoursesToExecutionCourse.run(Integer.valueOf(executionCourseId), curricularCourseIds);
@@ -243,8 +243,8 @@ public class EditExecutionCourseManageCurricularCoursesDispatchAction extends Fe
 
             name += duplicateInfoDegree(executionDegreeList, infoExecutionDegree) ? "-" + infoExecutionDegree.getInfoDegreeCurricularPlan().getName() : "";
             */
-            // courses.add(new LabelValueBean(name, name + "~" + infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal().toString()));
-            courses.add(new LabelValueBean(name, infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal().toString()));
+            // courses.add(new LabelValueBean(name, name + "~" + infoExecutionDegree.getInfoDegreeCurricularPlan().getExternalId().toString()));
+            courses.add(new LabelValueBean(name, infoExecutionDegree.getInfoDegreeCurricularPlan().getExternalId()));
         }
     }
 

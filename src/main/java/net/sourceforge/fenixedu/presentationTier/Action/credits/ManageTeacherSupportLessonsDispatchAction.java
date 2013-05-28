@@ -54,8 +54,8 @@ public class ManageTeacherSupportLessonsDispatchAction extends FenixDispatchActi
             }
             supportLessonForm.set("weekDay", getValidWeekDay(supportLesson.getWeekDay().getDiaSemana()));
             supportLessonForm.set("place", supportLesson.getPlace());
-            supportLessonForm.set("supportLessonID", supportLesson.getIdInternal());
-            supportLessonForm.set("professorshipID", supportLesson.getProfessorship().getIdInternal());
+            supportLessonForm.set("supportLessonID", supportLesson.getExternalId());
+            supportLessonForm.set("professorshipID", supportLesson.getProfessorship().getExternalId());
 
             request.setAttribute("supportLesson", supportLesson);
         }
@@ -69,7 +69,7 @@ public class ManageTeacherSupportLessonsDispatchAction extends FenixDispatchActi
         DynaActionForm supportLessonForm = (DynaActionForm) form;
         SupportLessonDTO supportLessonDTO = new SupportLessonDTO();
 
-        supportLessonDTO.setIdInternal((Integer) supportLessonForm.get("supportLessonID"));
+        supportLessonDTO.setExternalId((Integer) supportLessonForm.get("supportLessonID"));
         supportLessonDTO.setProfessorshipID((Integer) supportLessonForm.get("professorshipID"));
         supportLessonDTO.setWeekDay(getCorrectWeekDay((String) supportLessonForm.get("weekDay")));
         Calendar calendar = Calendar.getInstance();

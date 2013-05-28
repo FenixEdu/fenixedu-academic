@@ -263,7 +263,7 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
 
     private StudentCurricularPlan getStudentCurricularPlan(final Registration registration, final Integer scpId) {
         for (final StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
-            if (studentCurricularPlan.getIdInternal().equals(scpId)) {
+            if (studentCurricularPlan.getExternalId().equals(scpId)) {
                 return studentCurricularPlan;
             }
         }
@@ -291,7 +291,7 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
 
             label.append(" - ").append(studentCurricularPlan.getStartDateYearMonthDay());
 
-            result.add(new LabelValueBean(label.toString(), String.valueOf(studentCurricularPlan.getIdInternal())));
+            result.add(new LabelValueBean(label.toString(), String.valueOf(studentCurricularPlan.getExternalId())));
         }
 
         return result;

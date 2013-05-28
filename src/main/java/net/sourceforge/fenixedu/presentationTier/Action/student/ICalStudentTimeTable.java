@@ -77,7 +77,7 @@ public class ICalStudentTimeTable extends FenixDispatchAction {
 
     private ActionForward forwardToShow(Registration registration, ActionMapping mapping, HttpServletRequest request)
             throws Exception {
-        request.setAttribute("registrationId", registration.getIdInternal());
+        request.setAttribute("registrationId", registration.getExternalId());
 
         if (AccessControl.getPerson().getUser().getPrivateKeyValidity() != null
                 && AccessControl.getPerson().getUser().getPrivateKeyValidity().isAfter(new DateTime())) {
@@ -105,7 +105,7 @@ public class ICalStudentTimeTable extends FenixDispatchAction {
 
         byte[] encrypted =
                 cipher.doFinal(("This is for " + to + " calendar ##" + "1.6180339##Sistema Fenix##"
-                        + user.getPrivateKeyCreation().toString() + "##" + reg.getIdInternal() + "##"
+                        + user.getPrivateKeyCreation().toString() + "##" + reg.getExternalId() + "##"
                         + user.getPrivateKeyValidity().toString() + "##" + "## This is for " + to + " calendar").getBytes());
 
         return DigestUtils.shaHex(encrypted);
@@ -120,7 +120,7 @@ public class ICalStudentTimeTable extends FenixDispatchAction {
                         + request.getContextPath();
         url +=
                 "/external/iCalendarSync.do?method=" + to + "&user=" + AccessControl.getPerson().getUser().getUserUId() + ""
-                        + "&registrationID=" + registration.getIdInternal() + "&payload="
+                        + "&registrationID=" + registration.getExternalId() + "&payload="
                         + calculatePayload(to, registration, AccessControl.getPerson().getUser());
         return url;
     }

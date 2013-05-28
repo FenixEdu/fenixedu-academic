@@ -44,7 +44,7 @@ public class ManageClassDA extends FenixClassAndExecutionDegreeAndCurricularYear
             throws Exception {
 
         InfoClass infoClass = (InfoClass) request.getAttribute(PresentationConstants.CLASS_VIEW);
-        final SchoolClass schoolClass = rootDomainObject.readSchoolClassByOID(infoClass.getIdInternal());
+        final SchoolClass schoolClass = rootDomainObject.readSchoolClassByOID(infoClass.getExternalId());
         request.setAttribute("schoolClass", schoolClass);
 
         // Fill out the form with the name of the class
@@ -76,7 +76,7 @@ public class ManageClassDA extends FenixClassAndExecutionDegreeAndCurricularYear
 
         InfoClass infoClassNew = null;
         try {
-            infoClassNew = (InfoClass) EditarTurma.run(infoClassOld.getIdInternal(), className);
+            infoClassNew = (InfoClass) EditarTurma.run(infoClassOld.getExternalId(), className);
         } catch (DomainException e) {
             throw new ExistingActionException("A SchoolClass", e);
         }

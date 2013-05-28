@@ -13,7 +13,7 @@ public class LabelValueBeanUtils {
 
     public static LabelValueBean executionPeriodLabelValueBean(final ExecutionSemester executionSemester) {
         if (executionSemester != null) {
-            return new LabelValueBean(executionSemester.getQualifiedName(), executionSemester.getIdInternal().toString());
+            return new LabelValueBean(executionSemester.getQualifiedName(), executionSemester.getExternalId().toString());
         }
         return null;
     }

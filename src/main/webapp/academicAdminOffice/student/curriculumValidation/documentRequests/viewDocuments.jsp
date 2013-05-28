@@ -34,7 +34,7 @@
 					<fr:property name="classes" value="tstyle4 thlight mtop0" />
 					<fr:property name="columnClasses" value="smalltxt acenter nowrap,smalltxt acenter nowrap,acenter,,acenter,tdhl1 nowrap,,,acenter nowrap,nowrap" />
 	
-					<fr:property name="linkFormat(print)" value="<%= f("/curriculumValidationDocumentRequestsManagement.do?method=preparePrintDocument&amp;documentRequestId=${idInternal}&amp;studentCurricularPlanId=%s", studentCurricularPlanId) %>" />
+					<fr:property name="linkFormat(print)" value="<%= f("/curriculumValidationDocumentRequestsManagement.do?method=preparePrintDocument&amp;documentRequestId=${externalId}&amp;studentCurricularPlanId=%s", studentCurricularPlanId) %>" />
 					<fr:property name="key(print)" value="print"/>
 					<fr:property name="visibleIf(print)" value="toPrint"/>
 					

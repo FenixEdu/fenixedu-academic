@@ -80,7 +80,7 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
 
         final List<Registration> toEnrol = student.getRegistrationsToEnrolInShiftByStudent();
         if (toEnrol.size() == 1) {
-            request.setAttribute("registrationOID", toEnrol.get(0).getIdInternal());
+            request.setAttribute("registrationOID", toEnrol.get(0).getExternalId());
             return prepareStartViewWarning(mapping, form, request, response);
         } else {
             request.setAttribute("toEnrol", toEnrol);
@@ -98,7 +98,7 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
         }
 
         request.setAttribute("registration", registration);
-        request.setAttribute("registrationOID", registration.getIdInternal().toString());
+        request.setAttribute("registrationOID", registration.getExternalId().toString());
         request.setAttribute("ram", Boolean.TRUE);
         return registration;
     }
@@ -169,7 +169,7 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
         }
 
         request.setAttribute("selectedExecutionDegree", selectedExecutionDegree);
-        form.set("degree", selectedExecutionDegree.getIdInternal());
+        form.set("degree", selectedExecutionDegree.getExternalId());
 
         sortExecutionDegreesByDegreeName(executionDegrees);
         request.setAttribute(

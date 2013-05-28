@@ -33,7 +33,7 @@
 			</li>
 			<logic:equal name="currentStateName" value="RESOLVED">
 				<li>
-					<bean:define id="createNewPunctualRoomsScheduling">/roomsReserveManagement.do?method=openRequestAndReturnToSeeRequest&amp;reserveRequestID=<bean:write name="punctualRequest" property="idInternal"/></bean:define>
+					<bean:define id="createNewPunctualRoomsScheduling">/roomsReserveManagement.do?method=openRequestAndReturnToSeeRequest&amp;reserveRequestID=<bean:write name="punctualRequest" property="externalId"/></bean:define>
 					<html:link page="<%= createNewPunctualRoomsScheduling %>">		
 						<bean:message bundle="SOP_RESOURCES" key="label.reopen.rooms.reserve.request"/>
 					</html:link>
@@ -41,7 +41,7 @@
 			</logic:equal>
 			<logic:equal name="currentStateName" value="NEW">
 				<li>
-					<bean:define id="createNewPunctualRoomsScheduling">/roomsReserveManagement.do?method=openRequestAndReturnToSeeRequest&amp;reserveRequestID=<bean:write name="punctualRequest" property="idInternal"/></bean:define>
+					<bean:define id="createNewPunctualRoomsScheduling">/roomsReserveManagement.do?method=openRequestAndReturnToSeeRequest&amp;reserveRequestID=<bean:write name="punctualRequest" property="externalId"/></bean:define>
 					<html:link page="<%= createNewPunctualRoomsScheduling %>">		
 						<bean:message bundle="SOP_RESOURCES" key="label.open.rooms.reserve.request"/>
 					</html:link>
@@ -49,7 +49,7 @@
 			</logic:equal>								
 			<logic:equal name="currentStateName" value="OPEN">
 				<li>
-					<bean:define id="createNewPunctualRoomsScheduling">/roomsReserveManagement.do?method=prepareCreate&amp;reserveRequestID=<bean:write name="punctualRequest" property="idInternal"/></bean:define>
+					<bean:define id="createNewPunctualRoomsScheduling">/roomsReserveManagement.do?method=prepareCreate&amp;reserveRequestID=<bean:write name="punctualRequest" property="externalId"/></bean:define>
 					<html:link page="<%= createNewPunctualRoomsScheduling %>">		
 						<bean:message bundle="SOP_RESOURCES" key="label.create.new.punctual.rooms.scheduling"/>
 					</html:link>
@@ -57,7 +57,7 @@
 			</logic:equal>	
 			<logic:equal name="currentStateName" value="OPEN">
 				<li>
-					<bean:define id="createNewPunctualRoomsScheduling">/roomsReserveManagement.do?method=closeRequestAndReturnToSeeRequest&amp;reserveRequestID=<bean:write name="punctualRequest" property="idInternal"/></bean:define>
+					<bean:define id="createNewPunctualRoomsScheduling">/roomsReserveManagement.do?method=closeRequestAndReturnToSeeRequest&amp;reserveRequestID=<bean:write name="punctualRequest" property="externalId"/></bean:define>
 					<html:link page="<%= createNewPunctualRoomsScheduling %>">		
 						<bean:message bundle="SOP_RESOURCES" key="label.resolve.rooms.reserve.request"/>
 					</html:link>
@@ -119,7 +119,7 @@
 							<logic:iterate id="genericEvent" name="punctualRequest" property="genericEvents">
 								<li>									
 									<logic:equal name="punctualRequest" property="currentState.name" value="OPEN">
-										<bean:define id="viewGenericEventURL">/roomsReserveManagement.do?method=prepareView&amp;genericEventID=<bean:write name="genericEvent" property="idInternal"/>&amp;reserveRequestID=<bean:write name="punctualRequest" property="idInternal"/></bean:define>
+										<bean:define id="viewGenericEventURL">/roomsReserveManagement.do?method=prepareView&amp;genericEventID=<bean:write name="genericEvent" property="externalId"/>&amp;reserveRequestID=<bean:write name="punctualRequest" property="externalId"/></bean:define>
 										<html:link page="<%= viewGenericEventURL %>">
 											<bean:write name="genericEvent" property="ganttDiagramEventPeriod"/>
 											-
@@ -200,7 +200,7 @@
 						</span>
 					</p>
 				</fr:hasMessages>
-				<bean:define id="seeReserveURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserveRequest&reserveRequestID=<bean:write name="punctualRequest" property="idInternal"/></bean:define>
+				<bean:define id="seeReserveURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserveRequest&reserveRequestID=<bean:write name="punctualRequest" property="externalId"/></bean:define>
 	
 				<fr:edit id="roomsReserveNewComment" name="roomsReserveBean" slot="description" 
 					validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator"

@@ -15,7 +15,7 @@ public class LerAulasDeTurma {
 
     @Service
     public static List<InfoLesson> run(InfoClass infoClass) {
-        SchoolClass schoolClass = RootDomainObject.getInstance().readSchoolClassByOID(infoClass.getIdInternal());
+        SchoolClass schoolClass = RootDomainObject.getInstance().readSchoolClassByOID(infoClass.getExternalId());
 
         final List<Shift> shiftList = schoolClass.getAssociatedShifts();
 

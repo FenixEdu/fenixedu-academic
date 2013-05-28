@@ -21,7 +21,7 @@ public class EditBranch {
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
     public static void run(InfoBranch infoBranch) throws FenixServiceException {
-        Branch branch = RootDomainObject.getInstance().readBranchByOID(infoBranch.getIdInternal());
+        Branch branch = RootDomainObject.getInstance().readBranchByOID(infoBranch.getExternalId());
 
         if (branch == null) {
             throw new NonExistingServiceException();

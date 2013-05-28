@@ -54,7 +54,7 @@ public class ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYe
             final Integer executionDegreeId) {
         final ExecutionYear executionYear = executionSemester.getExecutionYear();
         for (final ExecutionDegree executionDegree : executionYear.getExecutionDegreesSet()) {
-            if (executionDegree.getIdInternal().equals(executionDegreeId)) {
+            if (executionDegree.getExternalId().equals(executionDegreeId)) {
                 return executionDegree;
             }
         }

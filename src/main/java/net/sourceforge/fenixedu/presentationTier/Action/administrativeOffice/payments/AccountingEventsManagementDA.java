@@ -115,7 +115,7 @@ public class AccountingEventsManagementDA extends FenixDispatchAction {
 
             addActionMessage("success", request, "label.accountingEvents.management.createEvents.eventCreatedWithSucess");
 
-            request.setAttribute("scpID", accountingEventCreateBean.getStudentCurricularPlan().getIdInternal());
+            request.setAttribute("scpID", accountingEventCreateBean.getStudentCurricularPlan().getExternalId());
             return prepare(mapping, form, request, response);
 
         } catch (DomainExceptionWithInvocationResult e) {
@@ -155,7 +155,7 @@ public class AccountingEventsManagementDA extends FenixDispatchAction {
 
             addActionMessage("success", request, "label.accountingEvents.management.createEvents.eventCreatedWithSucess");
 
-            request.setAttribute("scpID", accountingEventCreateBean.getStudentCurricularPlan().getIdInternal());
+            request.setAttribute("scpID", accountingEventCreateBean.getStudentCurricularPlan().getExternalId());
             return prepare(mapping, form, request, response);
 
         } catch (DomainExceptionWithInvocationResult e) {
@@ -192,7 +192,7 @@ public class AccountingEventsManagementDA extends FenixDispatchAction {
 
             addActionMessage("success", request, "label.accountingEvents.management.createEvents.eventCreatedWithSucess");
 
-            request.setAttribute("scpID", accountingEventCreateBean.getStudentCurricularPlan().getIdInternal());
+            request.setAttribute("scpID", accountingEventCreateBean.getStudentCurricularPlan().getExternalId());
             return prepare(mapping, form, request, response);
 
         } catch (DomainExceptionWithInvocationResult e) {
@@ -242,7 +242,7 @@ public class AccountingEventsManagementDA extends FenixDispatchAction {
 
             addActionMessage("success", request, "label.accountingEvents.management.createEvents.eventCreatedWithSucess");
 
-            request.setAttribute("scpID", accountingEventCreateBean.getStudentCurricularPlan().getIdInternal());
+            request.setAttribute("scpID", accountingEventCreateBean.getStudentCurricularPlan().getExternalId());
             return prepare(mapping, form, request, response);
 
         } catch (DomainExceptionWithInvocationResult e) {
@@ -282,7 +282,7 @@ public class AccountingEventsManagementDA extends FenixDispatchAction {
 
             addActionMessage("success", request, "label.accountingEvents.management.createEvents.eventCreatedWithSucess");
 
-            request.setAttribute("scpID", accountingEventCreateBean.getStudentCurricularPlan().getIdInternal());
+            request.setAttribute("scpID", accountingEventCreateBean.getStudentCurricularPlan().getExternalId());
             return prepare(mapping, form, request, response);
 
         } catch (DomainExceptionWithInvocationResult e) {

@@ -127,7 +127,7 @@
 <ul>
 <logic:iterate id="result" name="bean" property="results" type="net.sourceforge.fenixedu.domain.research.result.ResearchResult">
 	<logic:present name="result">
-	<bean:define id="resultId" name="result" property="idInternal"/>
+	<bean:define id="resultId" name="result" property="externalId"/>
 	<bean:define id="schema" name="result" property="schema" type="java.lang.String"/>
 	
 	<li class="mtop1">

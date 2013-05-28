@@ -51,7 +51,7 @@ public class ManageCaseStudyChoices extends FenixAction {
             Integer id = new Integer(idString);
             for (Iterator innerIterator = cases.iterator(); innerIterator.hasNext();) {
                 InfoCaseStudy infoCaseStudy = (InfoCaseStudy) innerIterator.next();
-                if ((id.equals(infoCaseStudy.getIdInternal()))) {
+                if ((id.equals(infoCaseStudy.getExternalId()))) {
                     extractedCases.add(infoCaseStudy);
                     break;
                 }
@@ -68,7 +68,7 @@ public class ManageCaseStudyChoices extends FenixAction {
             for (Iterator innerIterator = casesIDs.iterator(); innerIterator.hasNext();) {
                 String idString = (String) innerIterator.next();
                 Integer id = new Integer(idString);
-                if ((id.equals(infoCaseStudy.getIdInternal()))) {
+                if ((id.equals(infoCaseStudy.getExternalId()))) {
                     found = true;
                     break;
                 }

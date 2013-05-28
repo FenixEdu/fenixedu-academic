@@ -7,7 +7,7 @@
 
 <em><bean:message bundle="VIGILANCY_RESOURCES" key="label.navheader.person.examCoordinator"/></em>
 <h2><bean:message bundle="VIGILANCY_RESOURCES" key="label.writtenEvaluationReport"/></h2>
-<bean:define id="writtenEvaluationId" name="writtenEvaluation" property="idInternal"/>
+<bean:define id="writtenEvaluationId" name="writtenEvaluation" property="externalId"/>
 <bean:define id="permission" name="permission" type="java.lang.Boolean"/>
 
 <ul>
@@ -84,40 +84,40 @@
 			<td><fr:view name="vigilancy" property="vigilantWrapper.person.name"/></td>
 			
 			<logic:equal name="vigilancy" property="active" value="true">
-			<td class="acenter"><input name="<%= "radioActive-" + vigilancy.getIdInternal() %>" type="radio" checked="checked"/>
+			<td class="acenter"><input name="<%= "radioActive-" + vigilancy.getExternalId() %>" type="radio" checked="checked"/>
 			</td>
 			<td class="acenter">
-			<input name="<%= "radioActive-" + vigilancy.getIdInternal() %>"  type="radio" onclick="<%= String.format("submitForm(this.form, {method: '%s', oid: '%s', bool: '%s', participationType: '%s'});","convokeActiveEditInReport", vigilancy.getIdInternal(), "false", "none")%>" ondblclick="<%= String.format("submitForm(this.form, {method: '%s', oid: '%s', bool: '%s', participationType: '%s'});","convokeActiveEditInReport", vigilancy.getIdInternal(), "false", "none")%>"/>	
+			<input name="<%= "radioActive-" + vigilancy.getExternalId() %>"  type="radio" onclick="<%= String.format("submitForm(this.form, {method: '%s', oid: '%s', bool: '%s', participationType: '%s'});","convokeActiveEditInReport", vigilancy.getExternalId(), "false", "none")%>" ondblclick="<%= String.format("submitForm(this.form, {method: '%s', oid: '%s', bool: '%s', participationType: '%s'});","convokeActiveEditInReport", vigilancy.getExternalId(), "false", "none")%>"/>	
 			</td>
 			</logic:equal>
  
 			<logic:equal name="vigilancy" property="active" value="false">
 			<td class="acenter">
-			<input name="<%= "radioActive-" + vigilancy.getIdInternal() %>"  type="radio" onclick="<%= String.format("submitForm(this.form, {method: '%s', oid: '%s', bool: '%s', participationType: '%s'});","convokeActiveEditInReport", vigilancy.getIdInternal(), "true", "none")%>" ondblclick="<%= String.format("submitForm(this.form, {method: '%s', oid: '%s', bool: '%s', participationType: '%s'});","convokeActiveEditInReport", vigilancy.getIdInternal(), "true", "none")%>"/>	
+			<input name="<%= "radioActive-" + vigilancy.getExternalId() %>"  type="radio" onclick="<%= String.format("submitForm(this.form, {method: '%s', oid: '%s', bool: '%s', participationType: '%s'});","convokeActiveEditInReport", vigilancy.getExternalId(), "true", "none")%>" ondblclick="<%= String.format("submitForm(this.form, {method: '%s', oid: '%s', bool: '%s', participationType: '%s'});","convokeActiveEditInReport", vigilancy.getExternalId(), "true", "none")%>"/>	
 			</td>
-			<td class="acenter"><input name="<%= "radioActive-" + vigilancy.getIdInternal() %>"  type="radio" checked="checked"/></td>
+			<td class="acenter"><input name="<%= "radioActive-" + vigilancy.getExternalId() %>"  type="radio" checked="checked"/></td>
 			</logic:equal>
 
 			<logic:equal name="vigilancy" property="active" value="true">	
 				<logic:equal name="vigilancy" property="attended" value="true">
-					<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getIdInternal() %>" type="radio" checked="checked" ></td>
+					<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getExternalId() %>" type="radio" checked="checked" ></td>
 				</logic:equal>
 				<logic:equal name="vigilancy" property="attended" value="false">
-						<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getIdInternal() %>" type="radio" onclick="<%= String.format("submitForm(this.form, {method: '%s', oid: '%s', bool: '%s', participationType: '%s'});","changeConvokeStatusInReport", vigilancy.getIdInternal(), "", "ATTENDED")%>" ondblclick="<%= String.format("submitForm(this.form, {method: '%s', oid: '%s', bool: '%s', participationType: '%s'});","changeConvokeStatusInReport", vigilancy.getIdInternal(), "", "ATTENDED")%>"/></td>
+						<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getExternalId() %>" type="radio" onclick="<%= String.format("submitForm(this.form, {method: '%s', oid: '%s', bool: '%s', participationType: '%s'});","changeConvokeStatusInReport", vigilancy.getExternalId(), "", "ATTENDED")%>" ondblclick="<%= String.format("submitForm(this.form, {method: '%s', oid: '%s', bool: '%s', participationType: '%s'});","changeConvokeStatusInReport", vigilancy.getExternalId(), "", "ATTENDED")%>"/></td>
 				</logic:equal>
 				
 				<logic:equal name="vigilancy" property="notAttended" value="true">
-						<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getIdInternal() %>" type="radio" checked="checked"/></td>
+						<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getExternalId() %>" type="radio" checked="checked"/></td>
 				</logic:equal>			
 				<logic:equal name="vigilancy" property="notAttended" value="false">
-					<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getIdInternal() %>" type="radio" onclick="<%= String.format("submitForm(this.form, {method: '%s', oid: '%s', bool: '%s', participationType: '%s'});","changeConvokeStatusInReport", vigilancy.getIdInternal(), "", "NOT_ATTENDED")%>" ondblclick="<%= String.format("submitForm(this.form, {method: '%s', oid: '%s', bool: '%s', participationType: '%s'});","changeConvokeStatusInReport", vigilancy.getIdInternal(), "", "NOT_ATTENDED")%>"/></td>
+					<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getExternalId() %>" type="radio" onclick="<%= String.format("submitForm(this.form, {method: '%s', oid: '%s', bool: '%s', participationType: '%s'});","changeConvokeStatusInReport", vigilancy.getExternalId(), "", "NOT_ATTENDED")%>" ondblclick="<%= String.format("submitForm(this.form, {method: '%s', oid: '%s', bool: '%s', participationType: '%s'});","changeConvokeStatusInReport", vigilancy.getExternalId(), "", "NOT_ATTENDED")%>"/></td>
 				</logic:equal>
 							
 				<logic:equal name="vigilancy" property="dismissed" value="true">
-							<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getIdInternal() %>" type="radio" checked="checked"/></td>
+							<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getExternalId() %>" type="radio" checked="checked"/></td>
 				</logic:equal>
 				<logic:equal name="vigilancy" property="dismissed" value="false">
-					<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getIdInternal() %>" type="radio" onclick="<%= String.format("submitForm(this.form, {method: '%s', oid: '%s', bool: '%s', participationType: '%s'});","changeConvokeStatusInReport", vigilancy.getIdInternal(), "", "DISMISSED")%>" ondblclick="<%= String.format("submitForm(this.form, {method: '%s', oid: '%s', bool: '%s', participationType: '%s'});","changeConvokeStatusInReport", vigilancy.getIdInternal(), "", "DISMISSED")%>"/></td>			
+					<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getExternalId() %>" type="radio" onclick="<%= String.format("submitForm(this.form, {method: '%s', oid: '%s', bool: '%s', participationType: '%s'});","changeConvokeStatusInReport", vigilancy.getExternalId(), "", "DISMISSED")%>" ondblclick="<%= String.format("submitForm(this.form, {method: '%s', oid: '%s', bool: '%s', participationType: '%s'});","changeConvokeStatusInReport", vigilancy.getExternalId(), "", "DISMISSED")%>"/></td>			
 				</logic:equal>
 			</logic:equal>
 
@@ -138,40 +138,40 @@
 			<td><fr:view name="vigilancy" property="vigilantWrapper.person.name"/></td>
 			
 			<logic:equal name="vigilancy" property="active" value="true">
-			<td class="acenter"><input name="<%= "radioActive-" + vigilancy.getIdInternal() %>" type="radio" checked="checked" disabled="disabled" />
+			<td class="acenter"><input name="<%= "radioActive-" + vigilancy.getExternalId() %>" type="radio" checked="checked" disabled="disabled" />
 			</td>
 			<td class="acenter">
-			<input name="<%= "radioActive-" + vigilancy.getIdInternal() %>"  type="radio" disabled="disabled"/>	
+			<input name="<%= "radioActive-" + vigilancy.getExternalId() %>"  type="radio" disabled="disabled"/>	
 			</td>
 			</logic:equal>
  
 			<logic:equal name="vigilancy" property="active" value="false">
 			<td class="acenter">
-			<input name="<%= "radioActive-" + vigilancy.getIdInternal() %>"  type="radio" disabled="disabled"/>	
+			<input name="<%= "radioActive-" + vigilancy.getExternalId() %>"  type="radio" disabled="disabled"/>	
 			</td>
-			<td class="acenter"><input name="<%= "radioActive-" + vigilancy.getIdInternal() %>"  type="radio" checked="checked" disabled="disabled"/></td>
+			<td class="acenter"><input name="<%= "radioActive-" + vigilancy.getExternalId() %>"  type="radio" checked="checked" disabled="disabled"/></td>
 			</logic:equal>
 
 			<logic:equal name="vigilancy" property="active" value="true">	
 				<logic:equal name="vigilancy" property="attended" value="true">
-					<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getIdInternal() %>" type="radio" checked="checked" disabled="disabled"></td>
+					<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getExternalId() %>" type="radio" checked="checked" disabled="disabled"></td>
 				</logic:equal>
 				<logic:equal name="vigilancy" property="attended" value="false">
-						<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getIdInternal() %>" type="radio" disabled="disabled"/></td>
+						<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getExternalId() %>" type="radio" disabled="disabled"/></td>
 				</logic:equal>
 				
 				<logic:equal name="vigilancy" property="notAttended" value="true">
-						<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getIdInternal() %>" type="radio" checked="checked" disabled="disabled"/></td>
+						<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getExternalId() %>" type="radio" checked="checked" disabled="disabled"/></td>
 				</logic:equal>			
 				<logic:equal name="vigilancy" property="notAttended" value="false">
-					<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getIdInternal() %>" type="radio" disabled="disabled"/></td>
+					<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getExternalId() %>" type="radio" disabled="disabled"/></td>
 				</logic:equal>
 							
 				<logic:equal name="vigilancy" property="dismissed" value="true">
-					<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getIdInternal() %>" type="radio" checked="checked" disabled="disabled"/></td>
+					<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getExternalId() %>" type="radio" checked="checked" disabled="disabled"/></td>
 				</logic:equal>
 				<logic:equal name="vigilancy" property="dismissed" value="false">
-					<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getIdInternal() %>" type="radio" disabled="disabled"/></td>			
+					<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getExternalId() %>" type="radio" disabled="disabled"/></td>			
 				</logic:equal>
 			</logic:equal>
 
@@ -228,42 +228,42 @@
 			<td><fr:view name="vigilancy" property="vigilantWrapper.person.name"/></td>
 			
 			<logic:equal name="vigilancy" property="active" value="true">
-			<td class="acenter"><input name="<%= "radioActive-" + vigilancy.getIdInternal() %>" type="radio" checked="checked"/>
+			<td class="acenter"><input name="<%= "radioActive-" + vigilancy.getExternalId() %>" type="radio" checked="checked"/>
 			</td>
 			<td class="acenter">
-			<input name="<%= "radioActive-" + vigilancy.getIdInternal() %>"  type="radio" onclick="<%= String.format("submitForm(this.form, {method: '%s', oid: '%s', bool: '%s', participationType: '%s'});","convokeActiveEditInReport", vigilancy.getIdInternal(), "false", "none")%>" ondblclick="<%= String.format("submitForm(this.form, {method: '%s', oid: '%s', bool: '%s', participationType: '%s'});","convokeActiveEditInReport", vigilancy.getIdInternal(), "false", "none")%>"/>	
+			<input name="<%= "radioActive-" + vigilancy.getExternalId() %>"  type="radio" onclick="<%= String.format("submitForm(this.form, {method: '%s', oid: '%s', bool: '%s', participationType: '%s'});","convokeActiveEditInReport", vigilancy.getExternalId(), "false", "none")%>" ondblclick="<%= String.format("submitForm(this.form, {method: '%s', oid: '%s', bool: '%s', participationType: '%s'});","convokeActiveEditInReport", vigilancy.getExternalId(), "false", "none")%>"/>	
 			</td>
 			</logic:equal>
  
 			<logic:equal name="vigilancy" property="active" value="false">
 			<td class="acenter">
-			<input name="<%= "radioActive-" + vigilancy.getIdInternal() %>"  type="radio" onclick="<%= String.format("submitForm(this.form, {method: '%s', oid: '%s', bool: '%s', participationType: '%s'});","convokeActiveEditInReport", vigilancy.getIdInternal(), "true", "none")%>" ondblclick="<%= String.format("submitForm(this.form, {method: '%s', oid: '%s', bool: '%s', participationType: '%s'});","convokeActiveEditInReport", vigilancy.getIdInternal(), "true", "none")%>"/>	
+			<input name="<%= "radioActive-" + vigilancy.getExternalId() %>"  type="radio" onclick="<%= String.format("submitForm(this.form, {method: '%s', oid: '%s', bool: '%s', participationType: '%s'});","convokeActiveEditInReport", vigilancy.getExternalId(), "true", "none")%>" ondblclick="<%= String.format("submitForm(this.form, {method: '%s', oid: '%s', bool: '%s', participationType: '%s'});","convokeActiveEditInReport", vigilancy.getExternalId(), "true", "none")%>"/>	
 			</td>
-			<td class="acenter"><input name="<%= "radioActive-" + vigilancy.getIdInternal() %>"  type="radio" checked="checked"/></td>
+			<td class="acenter"><input name="<%= "radioActive-" + vigilancy.getExternalId() %>"  type="radio" checked="checked"/></td>
 			</logic:equal>
 
 			<td class="acenter"><fr:view name="vigilancy" property="confirmed"/></td>
 
 			<logic:equal name="vigilancy" property="active" value="true">
 				<logic:equal name="vigilancy" property="attended" value="true">
-					<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getIdInternal() %>" type="radio" checked="checked"/></td>
+					<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getExternalId() %>" type="radio" checked="checked"/></td>
 				</logic:equal>
 				<logic:equal name="vigilancy" property="attended" value="false">
-						<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getIdInternal() %>" type="radio" onclick="<%= String.format("submitForm(this.form, {method: '%s', oid: '%s', bool: '%s', participationType: '%s'});","changeConvokeStatusInReport", vigilancy.getIdInternal(), "", "ATTENDED")%>" ondblclick="<%= String.format("submitForm(this.form, {method: '%s', oid: '%s', bool: '%s', participationType: '%s'});","changeConvokeStatusInReport", vigilancy.getIdInternal(), "", "ATTENDED")%>"/></td>
+						<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getExternalId() %>" type="radio" onclick="<%= String.format("submitForm(this.form, {method: '%s', oid: '%s', bool: '%s', participationType: '%s'});","changeConvokeStatusInReport", vigilancy.getExternalId(), "", "ATTENDED")%>" ondblclick="<%= String.format("submitForm(this.form, {method: '%s', oid: '%s', bool: '%s', participationType: '%s'});","changeConvokeStatusInReport", vigilancy.getExternalId(), "", "ATTENDED")%>"/></td>
 				</logic:equal>
 				
 				<logic:equal name="vigilancy" property="notAttended" value="true">
-						<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getIdInternal() %>" type="radio" checked="checked"/></td>
+						<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getExternalId() %>" type="radio" checked="checked"/></td>
 				</logic:equal>			
 				<logic:equal name="vigilancy" property="notAttended" value="false">
-					<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getIdInternal() %>" type="radio" onclick="<%= String.format("submitForm(this.form, {method: '%s', oid: '%s', bool: '%s', participationType: '%s'});","changeConvokeStatusInReport", vigilancy.getIdInternal(), "", "NOT_ATTENDED")%>" ondblclick="<%= String.format("submitForm(this.form, {method: '%s', oid: '%s', bool: '%s', participationType: '%s'});","changeConvokeStatusInReport", vigilancy.getIdInternal(), "", "NOT_ATTENDED")%>"/></td>
+					<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getExternalId() %>" type="radio" onclick="<%= String.format("submitForm(this.form, {method: '%s', oid: '%s', bool: '%s', participationType: '%s'});","changeConvokeStatusInReport", vigilancy.getExternalId(), "", "NOT_ATTENDED")%>" ondblclick="<%= String.format("submitForm(this.form, {method: '%s', oid: '%s', bool: '%s', participationType: '%s'});","changeConvokeStatusInReport", vigilancy.getExternalId(), "", "NOT_ATTENDED")%>"/></td>
 				</logic:equal>
 							
 				<logic:equal name="vigilancy" property="dismissed" value="true">
-							<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getIdInternal() %>" type="radio" checked="checked"/></td>
+							<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getExternalId() %>" type="radio" checked="checked"/></td>
 				</logic:equal>
 				<logic:equal name="vigilancy" property="dismissed" value="false">
-					<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getIdInternal() %>" type="radio" onclick="<%= String.format("submitForm(this.form, {method: '%s', oid: '%s', bool: '%s', participationType: '%s'});","changeConvokeStatusInReport", vigilancy.getIdInternal(), "", "DISMISSED")%>" ondblclick="<%= String.format("submitForm(this.form, {method: '%s', oid: '%s', bool: '%s', participationType: '%s'});","changeConvokeStatusInReport", vigilancy.getIdInternal(), "", "DISMISSED")%>"/></td>			
+					<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getExternalId() %>" type="radio" onclick="<%= String.format("submitForm(this.form, {method: '%s', oid: '%s', bool: '%s', participationType: '%s'});","changeConvokeStatusInReport", vigilancy.getExternalId(), "", "DISMISSED")%>" ondblclick="<%= String.format("submitForm(this.form, {method: '%s', oid: '%s', bool: '%s', participationType: '%s'});","changeConvokeStatusInReport", vigilancy.getExternalId(), "", "DISMISSED")%>"/></td>			
 				</logic:equal>
 			</logic:equal>
 			
@@ -284,42 +284,42 @@
 			<td><fr:view name="vigilancy" property="vigilantWrapper.person.name"/></td>
 			
 			<logic:equal name="vigilancy" property="active" value="true">
-			<td class="acenter"><input name="<%= "radioActive-" + vigilancy.getIdInternal() %>" type="radio" checked="checked" disabled="disabled"/>
+			<td class="acenter"><input name="<%= "radioActive-" + vigilancy.getExternalId() %>" type="radio" checked="checked" disabled="disabled"/>
 			</td>
 			<td class="acenter">
-			<input name="<%= "radioActive-" + vigilancy.getIdInternal() %>"  type="radio" disabled="disabled"/>	
+			<input name="<%= "radioActive-" + vigilancy.getExternalId() %>"  type="radio" disabled="disabled"/>	
 			</td>
 			</logic:equal>
  
 			<logic:equal name="vigilancy" property="active" value="false">
 			<td class="acenter">
-			<input name="<%= "radioActive-" + vigilancy.getIdInternal() %>"  type="radio" disabled="disabled"/>	
+			<input name="<%= "radioActive-" + vigilancy.getExternalId() %>"  type="radio" disabled="disabled"/>	
 			</td>
-			<td class="acenter"><input name="<%= "radioActive-" + vigilancy.getIdInternal() %>"  type="radio" checked="checked" disabled="disabled"/></td>
+			<td class="acenter"><input name="<%= "radioActive-" + vigilancy.getExternalId() %>"  type="radio" checked="checked" disabled="disabled"/></td>
 			</logic:equal>
 
 			<td class="acenter"><fr:view name="vigilancy" property="confirmed"/></td>
 
 			<logic:equal name="vigilancy" property="active" value="true">
 				<logic:equal name="vigilancy" property="attended" value="true">
-					<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getIdInternal() %>" type="radio" checked="checked" disabled="disabled"/></td>
+					<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getExternalId() %>" type="radio" checked="checked" disabled="disabled"/></td>
 				</logic:equal>
 				<logic:equal name="vigilancy" property="attended" value="false">
-						<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getIdInternal() %>" type="radio" disabled="disabled"/></td>
+						<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getExternalId() %>" type="radio" disabled="disabled"/></td>
 				</logic:equal>
 				
 				<logic:equal name="vigilancy" property="notAttended" value="true">
-						<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getIdInternal() %>" type="radio" checked="checked" disabled="disabled"/></td>
+						<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getExternalId() %>" type="radio" checked="checked" disabled="disabled"/></td>
 				</logic:equal>			
 				<logic:equal name="vigilancy" property="notAttended" value="false">
-					<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getIdInternal() %>" type="radio" disabled="disabled"/></td>
+					<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getExternalId() %>" type="radio" disabled="disabled"/></td>
 				</logic:equal>
 							
 				<logic:equal name="vigilancy" property="dismissed" value="true">
-							<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getIdInternal() %>" type="radio" checked="checked" disabled="disabled"/></td>
+							<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getExternalId() %>" type="radio" checked="checked" disabled="disabled"/></td>
 				</logic:equal>
 				<logic:equal name="vigilancy" property="dismissed" value="false">
-					<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getIdInternal() %>" type="radio" disabled="disabled"/></td>			
+					<td class="acenter"><input name="<%= "radioAttend-" + vigilancy.getExternalId() %>" type="radio" disabled="disabled"/></td>			
 				</logic:equal>
 			</logic:equal>
 			

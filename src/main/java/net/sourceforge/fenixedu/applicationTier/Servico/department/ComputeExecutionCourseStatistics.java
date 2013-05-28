@@ -40,7 +40,7 @@ public class ComputeExecutionCourseStatistics extends ComputeCourseStatistics {
 
         for (ExecutionCourse executionCourse : executionCourses) {
             ExecutionCourseStatisticsDTO executionCourseStatistics = new ExecutionCourseStatisticsDTO();
-            executionCourseStatistics.setIdInternal(competenceCourse.getIdInternal());
+            executionCourseStatistics.setExternalId(competenceCourse.getExternalId());
             executionCourseStatistics.setName(competenceCourse.getName());
 
             executionCourseStatistics.setExecutionPeriod(executionCourse.getExecutionPeriod().getName());

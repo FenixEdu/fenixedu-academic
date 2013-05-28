@@ -30,12 +30,12 @@ public class InfoMark extends InfoObject {
     }
 
     @Override
-    public Integer getIdInternal() {
-        return getMarkObject().getIdInternal();
+    public Integer getExternalId() {
+        return getMarkObject().getExternalId();
     }
 
     @Override
-    public void setIdInternal(Integer integer) {
+    public void setExternalId(Integer integer) {
         throw new Error("Method should not be called!");
     }
 

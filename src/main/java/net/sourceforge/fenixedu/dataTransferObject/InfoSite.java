@@ -98,8 +98,8 @@ public class InfoSite extends InfoObject implements ISiteComponent {
     }
 
     @Override
-    public Integer getIdInternal() {
-        return getSite().getIdInternal();
+    public Integer getExternalId() {
+        return getSite().getExternalId();
     }
 
     private ExecutionCourseSite getSite() {

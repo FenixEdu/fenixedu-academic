@@ -65,7 +65,7 @@ public class ShowTeachersCreditsDepartmentListAction extends FenixAction {
             executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
         }
 
-        dynaActionForm.set("executionPeriodId", executionSemester.getIdInternal());
+        dynaActionForm.set("executionPeriodId", executionSemester.getExternalId());
 
         List<TeacherWithCreditsDTO> teachersCredits = new ArrayList<TeacherWithCreditsDTO>();
         for (Department department : userView.getPerson().getManageableDepartmentCredits()) {
@@ -137,7 +137,7 @@ public class ShowTeachersCreditsDepartmentListAction extends FenixAction {
                 LabelValueBean labelValueBean = new LabelValueBean();
                 labelValueBean.setLabel(infoExecutionPeriod.getInfoExecutionYear().getYear() + " - "
                         + infoExecutionPeriod.getSemester() + "º Semestre");
-                labelValueBean.setValue(infoExecutionPeriod.getIdInternal().toString());
+                labelValueBean.setValue(infoExecutionPeriod.getExternalId().toString());
                 executionPeriods.add(labelValueBean);
             }
         }

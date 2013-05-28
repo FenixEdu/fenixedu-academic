@@ -11,7 +11,7 @@
 	</p>
 </html:messages>
 
-<bean:define id="personId" name="person" property="idInternal" />
+<bean:define id="personId" name="person" property="externalId" />
 <h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"
 	key="label.payments.management" /></h2>
 

@@ -6,7 +6,7 @@
 <%@ taglib uri="/WEB-INF/collectionPager.tld" prefix="cp" %>
 
 <bean:define id="executionCourse" name="executionCourse" type="net.sourceforge.fenixedu.domain.ExecutionCourse"/>
-<bean:define id="executionCourseId" name="executionCourse" property="idInternal"/>
+<bean:define id="executionCourseId" name="executionCourse" property="externalId"/>
 <bean:define id="item" name="item" type="net.sourceforge.fenixedu.domain.Item"/>
 <bean:define id="section" name="item" property="section" type="net.sourceforge.fenixedu.domain.Section"/>
 <bean:define id="bean" name="bean" type="net.sourceforge.fenixedu.dataTransferObject.SearchDSpaceBean"/>
@@ -14,7 +14,7 @@
 <html:xhtml/>
 <h2><bean:message key="label.search.scorm"/></h2>
 
- 	<fr:form id="searchForm" action="<%= "/searchScormContent.do?method=searchScormContents&amp;sectionID=" + section.getIdInternal() + "&amp;executionCourseID=" + request.getParameter("executionCourseID") + "&amp;itemID=" + item.getIdInternal() %>">
+ 	<fr:form id="searchForm" action="<%= "/searchScormContent.do?method=searchScormContents&amp;sectionID=" + section.getExternalId() + "&amp;executionCourseID=" + request.getParameter("executionCourseID") + "&amp;itemID=" + item.getExternalId() %>">
 		<fr:hasMessages for="search" type="validation">
 			<p>
 			<span class="error0"><bean:message key="label.requiredFieldsNotPresent"/></span>
@@ -45,7 +45,7 @@
 				<fr:property name="defaultText" value="label.masterDegree.administrativeOffice.allExecutionYears"/>
 				<fr:property name="key" value="true"/>
 			</fr:layout>
-			<fr:destination name="postback" path="<%="/searchScormContent.do?method=changeYear&amp;sectionID=" + section.getIdInternal() + "&amp;executionCourseID=" + request.getParameter("executionCourseID") + "&amp;itemID=" + item.getIdInternal() %>"/>
+			<fr:destination name="postback" path="<%="/searchScormContent.do?method=changeYear&amp;sectionID=" + section.getExternalId() + "&amp;executionCourseID=" + request.getParameter("executionCourseID") + "&amp;itemID=" + item.getExternalId() %>"/>
 		</fr:edit>	
 		</td>
 		<td>
@@ -82,20 +82,20 @@
 			<td> 
 			<logic:equal name="index" value="0">
 				<div class="switchNone">
-				<html:link page="<%="/searchScormContent.do?method=addNewSearchCriteria&amp;sectionID=" + section.getIdInternal() + "&amp;executionCourseID=" + request.getParameter("executionCourseID") + "&amp;itemID=" + item.getIdInternal() + bean.getSearchElementsAsParameters() %>"><bean:message key="label.add" bundle="APPLICATION_RESOURCES"/></html:link>			
+				<html:link page="<%="/searchScormContent.do?method=addNewSearchCriteria&amp;sectionID=" + section.getExternalId() + "&amp;executionCourseID=" + request.getParameter("executionCourseID") + "&amp;itemID=" + item.getExternalId() + bean.getSearchElementsAsParameters() %>"><bean:message key="label.add" bundle="APPLICATION_RESOURCES"/></html:link>			
 				</div>
 				<div class="switchInline">
-				<a href="#" onclick="<%= "javascript:getElementById('searchForm').action='searchScormContent.do?method=addNewSearchCriteria&amp;sectionID=" + section.getIdInternal() + "&amp;executionCourseID=" + request.getParameter("executionCourseID") + "&amp;itemID=" + item.getIdInternal() + bean.getSearchElementsAsParameters() + "'; getElementById('searchForm').submit();" %>">
+				<a href="#" onclick="<%= "javascript:getElementById('searchForm').action='searchScormContent.do?method=addNewSearchCriteria&amp;sectionID=" + section.getExternalId() + "&amp;executionCourseID=" + request.getParameter("executionCourseID") + "&amp;itemID=" + item.getExternalId() + bean.getSearchElementsAsParameters() + "'; getElementById('searchForm').submit();" %>">
 				<bean:message key="label.add" bundle="APPLICATION_RESOURCES"/>
 				</a>
 				</div>
 			</logic:equal>
 			<logic:notEqual name="index" value="0">
 				<div class="switchNone">
-				<html:link page="<%="/searchScormContent.do?method=removeSearchCriteria&amp;sectionID=" + section.getIdInternal() + "&amp;executionCourseID=" + request.getParameter("executionCourseID") + "&amp;itemID=" + item.getIdInternal() + bean.getSearchElementsAsParameters() + "&amp;removeIndex=" + index%>"><bean:message key="link.remove" bundle="APPLICATION_RESOURCES"/></html:link>
+				<html:link page="<%="/searchScormContent.do?method=removeSearchCriteria&amp;sectionID=" + section.getExternalId() + "&amp;executionCourseID=" + request.getParameter("executionCourseID") + "&amp;itemID=" + item.getExternalId() + bean.getSearchElementsAsParameters() + "&amp;removeIndex=" + index%>"><bean:message key="link.remove" bundle="APPLICATION_RESOURCES"/></html:link>
 				</div>
 				<div class="switchInline">
-				<a href="#" onclick="<%= "javascript:getElementById('searchForm').action='searchScormContent.do?method=removeSearchCriteria&amp;sectionID=" + section.getIdInternal() + "&amp;executionCourseID=" + request.getParameter("executionCourseID") + "&amp;itemID=" + item.getIdInternal() + bean.getSearchElementsAsParameters() + "&amp;removeIndex=" + index + "'; getElementById('searchForm').submit();"%>">
+				<a href="#" onclick="<%= "javascript:getElementById('searchForm').action='searchScormContent.do?method=removeSearchCriteria&amp;sectionID=" + section.getExternalId() + "&amp;executionCourseID=" + request.getParameter("executionCourseID") + "&amp;itemID=" + item.getExternalId() + bean.getSearchElementsAsParameters() + "&amp;removeIndex=" + index + "'; getElementById('searchForm').submit();"%>">
 				<bean:message key="link.remove" bundle="APPLICATION_RESOURCES"/>
 				</a>
 				</div>
@@ -121,8 +121,8 @@
 <bean:message key="label.page" bundle="SITE_RESOURCES"/>: 
 <cp:collectionPages url="<%= 
 	"/teacher/searchScormContent.do?method=moveIndex" + bean.getSearchElementsAsParameters() + 
-	"&amp;sectionID=" + section.getIdInternal() + "&amp;executionCourseID=" + request.getParameter("executionCourseID") + 
-	"&amp;itemID=" + item.getIdInternal()%>" 
+	"&amp;sectionID=" + section.getExternalId() + "&amp;executionCourseID=" + request.getParameter("executionCourseID") + 
+	"&amp;itemID=" + item.getExternalId()%>" 
 	pageNumberAttributeName="page" numberOfPagesAttributeName="numberOfPages"/>
 </p>
 </logic:notEqual>
@@ -146,8 +146,8 @@
 <bean:message key="label.page" bundle="SITE_RESOURCES"/>: 
 <cp:collectionPages url="<%= 
 	"/teacher/searchScormContent.do?method=moveIndex" + bean.getSearchElementsAsParameters() + 
-	"&amp;sectionID=" + section.getIdInternal() + "&amp;executionCourseID=" + request.getParameter("executionCourseID") + 
-	"&amp;itemID=" + item.getIdInternal()%>" 
+	"&amp;sectionID=" + section.getExternalId() + "&amp;executionCourseID=" + request.getParameter("executionCourseID") + 
+	"&amp;itemID=" + item.getExternalId()%>" 
 	pageNumberAttributeName="page" numberOfPagesAttributeName="numberOfPages"/>
 </p>
 </logic:notEqual>

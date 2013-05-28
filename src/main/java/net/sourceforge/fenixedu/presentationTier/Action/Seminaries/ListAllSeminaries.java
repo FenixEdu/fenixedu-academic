@@ -56,10 +56,10 @@ public class ListAllSeminaries extends FenixAction {
             seminaries = GetAllSeminaries.runGetAllSeminaries(new Boolean(true));
             for (Iterator iter = currentCandidacies.iterator(); iter.hasNext();) {
                 InfoCandidacy infoCandidacy = (InfoCandidacy) iter.next();
-                Integer seminaryID = infoCandidacy.getInfoSeminary().getIdInternal();
+                Integer seminaryID = infoCandidacy.getInfoSeminary().getExternalId();
                 for (Iterator iterator = seminaries.iterator(); iterator.hasNext();) {
                     InfoSeminaryWithEquivalencies infoSeminary = (InfoSeminaryWithEquivalencies) iterator.next();
-                    if (infoSeminary.getIdInternal().equals(seminaryID)) {
+                    if (infoSeminary.getExternalId().equals(seminaryID)) {
                         candidaciesToDisplay.add(infoCandidacy);
                     }
                 }

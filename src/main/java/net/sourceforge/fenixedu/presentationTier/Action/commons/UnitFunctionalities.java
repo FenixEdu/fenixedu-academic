@@ -248,17 +248,17 @@ public abstract class UnitFunctionalities extends FenixDispatchAction {
     }
 
     protected UnitFile getUnitFile(HttpServletRequest request) {
-        Integer id = getIdInternal(request, "fid");
+        Integer id = getExternalId(request, "fid");
         return (UnitFile) RootDomainObject.getInstance().readFileByOID(id);
     }
 
     protected Unit getUnit(HttpServletRequest request) {
-        Integer id = getIdInternal(request, "unitId");
+        Integer id = getExternalId(request, "unitId");
         return (Unit) RootDomainObject.getInstance().readPartyByOID(id);
     }
 
     protected PersistentGroupMembers getGroup(HttpServletRequest request) {
-        Integer id = getIdInternal(request, "groupId");
+        Integer id = getExternalId(request, "groupId");
         return RootDomainObject.getInstance().readPersistentGroupMembersByOID(id);
     }
 

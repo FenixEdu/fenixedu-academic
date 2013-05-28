@@ -45,7 +45,7 @@ public class ParkingRequestPeriod extends ParkingRequestPeriod_Base {
         }
         Interval thisInterval = new Interval(beginDateTime, endDateTime);
         for (ParkingRequestPeriod parkingRequestPeriod : RootDomainObject.getInstance().getParkingRequestPeriods()) {
-            if ((!parkingRequestPeriod.getIdInternal().equals(getIdInternal()))
+            if ((!parkingRequestPeriod.getExternalId().equals(getExternalId()))
                     && parkingRequestPeriod.getRequestPeriodInterval().overlaps(thisInterval)) {
                 throw new DomainException("error.overlapsAnotherInterval");
             }

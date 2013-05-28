@@ -42,12 +42,12 @@ public class CollectionUtils extends org.apache.commons.collections.CollectionUt
         return result;
     }
 
-    public static InfoObject getByInternalId(Collection<InfoObject> infoObjectList, final Integer idInternal) {
+    public static InfoObject getByInternalId(Collection<InfoObject> infoObjectList, final Integer externalId) {
         InfoObject infoObject = find(infoObjectList, new Predicate<InfoObject>() {
 
             @Override
             public boolean eval(InfoObject infoObj) {
-                return infoObj.getIdInternal().equals(idInternal);
+                return infoObj.getExternalId().equals(externalId);
             }
 
         });

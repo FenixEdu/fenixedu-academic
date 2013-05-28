@@ -8,7 +8,7 @@
 <h2><bean:message key="label.registration.addNewSCP" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 
 <div style="float: right;">
-	<bean:define id="personID" name="registration" property="student.person.idInternal"/>
+	<bean:define id="personID" name="registration" property="student.person.externalId"/>
 	<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
 </div>
 
@@ -43,7 +43,7 @@
 </logic:notPresent>
 
 
-<bean:define id="registrationID" name="registration" property="idInternal" />
+<bean:define id="registrationID" name="registration" property="externalId" />
 <h3 class="mbottom05"><bean:message key="label.registration.addNewSCP" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 <fr:edit name="studentCurricularPlanCreator" schema="studentCurricularPlan.create" action="/addNewStudentCurricularPlan.do?method=createSCP">
 	<fr:layout name="tabular">

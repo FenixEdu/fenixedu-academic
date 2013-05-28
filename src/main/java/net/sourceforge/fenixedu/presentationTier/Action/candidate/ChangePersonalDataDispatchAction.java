@@ -83,7 +83,7 @@ public class ChangePersonalDataDispatchAction extends FenixDispatchAction {
         final Integer candidacyId = getRequestParameterAsInteger(request, "candidacyID");
 
         for (final Candidacy candidacy : getUserView(request).getPerson().getCandidaciesSet()) {
-            if (candidacy.getIdInternal().equals(candidacyId)) {
+            if (candidacy.getExternalId().equals(candidacyId)) {
                 return candidacy;
             }
         }

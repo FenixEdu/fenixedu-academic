@@ -13,7 +13,7 @@
 <bean:define id="scientificAreaUnit" name="unit" type="net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit"/>
 
 
-<bean:define id="departmentId" value="<%= String.valueOf(scientificAreaUnit.getDepartmentUnit().getIdInternal()) %>" type="java.lang.String"/>
+<bean:define id="departmentId" value="<%= String.valueOf(scientificAreaUnit.getDepartmentUnit().getExternalId()) %>" type="java.lang.String"/>
 
 <logic:iterate id="courseGroupUnit" name="courseGroupUnits">
 
@@ -25,7 +25,7 @@
 			<fr:property name="eachLayout" value="values"/>
 			<fr:property name="eachSchema" value="view.competence.courses"/>
 		</fr:layout>
-		<fr:destination name="view.competence.course" path="<%= "/department/showCompetenceCourse.faces?action=ccm&competenceCourseID=${idInternal}&selectedDepartmentUnitID=" + departmentId %>"/>
+		<fr:destination name="view.competence.course" path="<%= "/department/showCompetenceCourse.faces?action=ccm&competenceCourseID=${externalId}&selectedDepartmentUnitID=" + departmentId %>"/>
 	</fr:view>
 	</p>
 </logic:iterate>

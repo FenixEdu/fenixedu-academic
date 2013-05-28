@@ -16,14 +16,14 @@
 
 
 <p>
-	<html:link page="/student.do?method=visualizeRegistration" paramId="registrationID" paramName="ingressionBean" paramProperty="registration.idInternal">
+	<html:link page="/student.do?method=visualizeRegistration" paramId="registrationID" paramName="ingressionBean" paramProperty="registration.externalId">
 		<bean:message key="link.student.back" bundle="ACADEMIC_OFFICE_RESOURCES" />
 	</html:link>
 </p>
 
 
 <div style="float: right;">
-	<bean:define id="personID" name="registration" property="student.person.idInternal"/>
+	<bean:define id="personID" name="registration" property="student.person.externalId"/>
 	<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
 </div>
 
@@ -58,7 +58,7 @@
 </fr:view>
 </logic:notPresent>
 
-<bean:define id="registrationID" name="ingressionBean" property="registration.idInternal" />
+<bean:define id="registrationID" name="ingressionBean" property="registration.externalId" />
 
 <fr:form action='<%= "/manageIngression.do?registrationId=" + registrationID.toString() %>'>
 	<html:hidden property="method" value="editIngression" />

@@ -5,7 +5,7 @@
 
 <bean:define id="siteActionName" value="/managePedagogicalCouncilSite.do" toScope="request"/>
 <bean:define id="siteContextParam" value="oid" toScope="request"/>
-<bean:define id="siteContextParamValue" name="site" property="idInternal" toScope="request"/>
+<bean:define id="siteContextParamValue" name="site" property="externalId" toScope="request"/>
 
-<bean:define id="unitId" name="site" property="unit.idInternal"/>
+<bean:define id="unitId" name="site" property="unit.externalId"/>
 <bean:define id="announcementsActionName" value="/managePedagogicalCouncilAnnouncements.do" toScope="request"/>

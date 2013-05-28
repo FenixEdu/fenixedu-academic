@@ -22,7 +22,7 @@ public class InsertCurricularCourseAtDegreeCurricularPlan {
     @Service
     public static void run(InfoCurricularCourseEditor infoCurricularCourse) throws FenixServiceException {
 
-        Integer degreeCurricularPlanId = infoCurricularCourse.getInfoDegreeCurricularPlan().getIdInternal();
+        Integer degreeCurricularPlanId = infoCurricularCourse.getInfoDegreeCurricularPlan().getExternalId();
         DegreeCurricularPlan degreeCurricularPlan = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanId);
         if (degreeCurricularPlan == null) {
             throw new NonExistingServiceException();

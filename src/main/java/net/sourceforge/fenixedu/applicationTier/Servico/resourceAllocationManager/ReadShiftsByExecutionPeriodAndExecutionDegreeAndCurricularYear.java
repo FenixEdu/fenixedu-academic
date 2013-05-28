@@ -39,9 +39,9 @@ public class ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear {
     public static List<InfoShift> run(AcademicInterval academicInterval, InfoExecutionDegree infoExecutionDegree,
             InfoCurricularYear infoCurricularYear) {
 
-        final ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
+        final ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(infoExecutionDegree.getExternalId());
         final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
-        final CurricularYear curricularYear = RootDomainObject.getInstance().readCurricularYearByOID(infoCurricularYear.getIdInternal());
+        final CurricularYear curricularYear = RootDomainObject.getInstance().readCurricularYearByOID(infoCurricularYear.getExternalId());
         logger.warn(String.format("executionDegree %s degreeCurricularPlan %s curricularYear %s", logExternalId(executionDegree),
                 logExternalId(degreeCurricularPlan), logExternalId(curricularYear)));
         final List<InfoShift> infoShifts = new ArrayList<InfoShift>();

@@ -21,7 +21,7 @@ public class DeleteExternalEnrolments {
 
     private static ExternalEnrolment getExternalEnrolmentByID(final Registration registration, final Integer externalEnrolmentID) {
         for (final ExternalEnrolment externalEnrolment : registration.getExternalEnrolmentsSet()) {
-            if (externalEnrolment.getIdInternal().equals(externalEnrolmentID)) {
+            if (externalEnrolment.getExternalId().equals(externalEnrolmentID)) {
                 return externalEnrolment;
             }
         }

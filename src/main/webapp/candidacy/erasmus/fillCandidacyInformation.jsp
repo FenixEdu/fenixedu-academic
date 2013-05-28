@@ -34,7 +34,7 @@
 </fr:hasMessages>
 
 
-<bean:define id="parentProcessId" name="parentProcess" property="idInternal" />
+<bean:define id="parentProcessId" name="parentProcess" property="externalId" />
 
 <fr:form action='<%= "/caseHandlingMobilityIndividualApplicationProcess.do?userAction=createCandidacy&parentProcessId=" + parentProcessId.toString() %>' id="erasmusCandidacyForm">
 

@@ -18,7 +18,7 @@
 	<ul>
 		<!-- CurricularCourse -->
 		<logic:iterate id="curricularCourseElem" name="curricularCourses">
-		   	<bean:define id="courseID" name="curricularCourseElem" property="idInternal"/>
+		   	<bean:define id="courseID" name="curricularCourseElem" property="externalId"/>
 		   	<bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID" scope="request" />
 		   	<li>
 				<html:link page="<%= path + ".do?method=chooseCurricularCourseByID&amp;courseID=" + courseID + "&amp;degreeCurricularPlanID=" + degreeCurricularPlanID %>">

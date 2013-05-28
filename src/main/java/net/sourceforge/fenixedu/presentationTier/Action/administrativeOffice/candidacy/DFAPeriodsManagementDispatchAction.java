@@ -30,7 +30,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 public class DFAPeriodsManagementDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-        ((DynaActionForm) form).set("executionYear", ExecutionYear.readCurrentExecutionYear().getIdInternal().toString());
+        ((DynaActionForm) form).set("executionYear", ExecutionYear.readCurrentExecutionYear().getExternalId().toString());
         request.setAttribute("executionYears", ExecutionYear.readNotClosedExecutionYears());
 
         return mapping.findForward("chooseExecutionYear");

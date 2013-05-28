@@ -23,8 +23,8 @@ public class ReadTeacherByOID extends ReadDomainObjectService {
     }
 
     @Override
-    protected DomainObject readDomainObject(final Integer idInternal) {
-        return RootDomainObject.getInstance().readTeacherByOID(idInternal);
+    protected DomainObject readDomainObject(final Integer externalId) {
+        return RootDomainObject.getInstance().readTeacherByOID(externalId);
     }
 
     // Service Invokers migrated from Berserk
@@ -32,8 +32,8 @@ public class ReadTeacherByOID extends ReadDomainObjectService {
     private static final ReadTeacherByOID serviceInstance = new ReadTeacherByOID();
 
     @Service
-    public static InfoObject runReadTeacherByOID(Integer idInternal) {
-        return serviceInstance.run(idInternal);
+    public static InfoObject runReadTeacherByOID(Integer externalId) {
+        return serviceInstance.run(externalId);
     }
 
 }

@@ -12,7 +12,7 @@ public class RemoverAula {
     @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
     @Service
     public static Object run(final InfoLesson infoLesson, final InfoShift infoShift) {
-        RootDomainObject.getInstance().readLessonByOID(infoLesson.getIdInternal()).delete();
+        RootDomainObject.getInstance().readLessonByOID(infoLesson.getExternalId()).delete();
         return Boolean.TRUE;
     }
 

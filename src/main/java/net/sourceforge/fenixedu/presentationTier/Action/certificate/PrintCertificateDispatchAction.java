@@ -60,7 +60,7 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
         if ((certificate.equals("Matrícula")) || (certificate.equals("Matrícula e Inscrição"))
                 || (certificate.equals(CertificateList.DURACAO_CURSO_STRING))) {
 
-            List enrolmentList = GetEnrolmentList.run(infoStudentCurricularPlan.getIdInternal());
+            List enrolmentList = GetEnrolmentList.run(infoStudentCurricularPlan.getExternalId());
             if (enrolmentList.size() == 0) {
                 anoLectivo = infoExecutionYear.getYear();
             } else {
@@ -90,7 +90,7 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
             if (certificate.equals("Inscrição")) {
                 // , EnrolmentState.ENROLED
 
-                enrolmentList = GetEnrolmentList.run(infoStudentCurricularPlan.getIdInternal());
+                enrolmentList = GetEnrolmentList.run(infoStudentCurricularPlan.getExternalId());
                 if (enrolmentList.size() == 0) {
                     ActionErrors errors = new ActionErrors();
                     errors.add("AlunoNãoExiste", new ActionError("error.enrolment.notExist"));
@@ -129,7 +129,7 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
                         || (certificate.equals("Aproveitamento de Disciplinas Extra Curricular"))) {
 
                     enrolmentList =
-                            GetEnrolmentList.run(infoStudentCurricularPlan.getIdInternal(), EnrollmentState.APROVED,
+                            GetEnrolmentList.run(infoStudentCurricularPlan.getExternalId(), EnrollmentState.APROVED,
                                     Boolean.TRUE, Boolean.TRUE);
                     if (enrolmentList.size() == 0) {
                         ActionErrors errors = new ActionErrors();
@@ -205,7 +205,7 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
                             }
 
                             enrolmentList =
-                                    GetEnrolmentList.run(infoStudentCurricularPlan.getIdInternal(), EnrollmentState.APROVED);
+                                    GetEnrolmentList.run(infoStudentCurricularPlan.getExternalId(), EnrollmentState.APROVED);
                             // if (enrolmentList.size() == 0) {
                             // ActionErrors errors = new ActionErrors();
                             // errors.add("AlunoNãoExiste", new ActionError(
@@ -216,7 +216,7 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
 
                             String conclusionDate = null;
                             Date endOfScholarshipDate = null;
-                            endOfScholarshipDate = GetEndOfScholarshipDate.run(infoStudentCurricularPlan.getIdInternal());
+                            endOfScholarshipDate = GetEndOfScholarshipDate.run(infoStudentCurricularPlan.getExternalId());
                             conclusionDate = Data.format2DayMonthYear(endOfScholarshipDate, "-");
 
                             List normalEnrolment = new ArrayList();
@@ -239,7 +239,7 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
                                 }
                             }
 
-                            Date date = GetEndOfScholarshipDate.run(infoStudentCurricularPlan.getIdInternal());
+                            Date date = GetEndOfScholarshipDate.run(infoStudentCurricularPlan.getExternalId());
                             conclusionDate = DateFormat.getDateInstance().format(date);
                             request.setAttribute(PresentationConstants.ENROLMENT_LIST, normalEnrolment);
                             request.setAttribute(PresentationConstants.EXTRA_ENROLMENT_LIST, extraEnrolment);

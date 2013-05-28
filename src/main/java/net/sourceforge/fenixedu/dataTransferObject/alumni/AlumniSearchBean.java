@@ -73,8 +73,8 @@ public class AlumniSearchBean extends AlumniMailSendToBean {
 
     public String getSearchElementsAsParameters() {
         String urlParameters = "&amp;beansearch=" + this.getDegreeType() + ":" + this.getName() + ":";
-        urlParameters += (this.getFirstExecutionYear() == null ? "null" : this.getFirstExecutionYear().getIdInternal()) + ":";
-        urlParameters += (this.getFinalExecutionYear() == null ? "null" : this.getFinalExecutionYear().getIdInternal());
+        urlParameters += (this.getFirstExecutionYear() == null ? "null" : this.getFirstExecutionYear().getExternalId()) + ":";
+        urlParameters += (this.getFinalExecutionYear() == null ? "null" : this.getFinalExecutionYear().getExternalId());
         return urlParameters;
     }
 

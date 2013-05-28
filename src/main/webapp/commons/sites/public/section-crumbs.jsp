@@ -13,7 +13,7 @@
 <logic:present name="sectionCrumbs">
     <logic:iterate id="crumbSection" name="sectionCrumbs">
         &nbsp;&gt;&nbsp;
-        <bean:define id="crumbSectionId" name="crumbSection" property="idInternal"/>
+        <bean:define id="crumbSectionId" name="crumbSection" property="externalId"/>
         <html:link page="<%= String.format("%s?method=section&amp;%s&amp;sectionID=%s", actionName, context, crumbSectionId) %>">
             <fr:view name="crumbSection" property="name"/>
         </html:link>

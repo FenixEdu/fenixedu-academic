@@ -60,7 +60,7 @@ public class EvaluationsForDelegatesConsultingBackingBean extends FenixBackingBe
         if (degreeCurricularPlanID == null) {
             degreeCurricularPlanID = getAndHoldIntegerParameter("degreeCurricularPlanID");
             if (degreeCurricularPlanID == null) {
-                degreeCurricularPlanID = getMostRecentDegreeCurricularPlan().getIdInternal();
+                degreeCurricularPlanID = getMostRecentDegreeCurricularPlan().getExternalId();
             }
         }
         return degreeCurricularPlanID;
@@ -75,8 +75,8 @@ public class EvaluationsForDelegatesConsultingBackingBean extends FenixBackingBe
                         getDegreeCurricularPlan().getExecutionDegreeByYear(currentExecutionPeriod.getExecutionYear());
 
                 executionPeriodID =
-                        (currentExecutionDegree != null) ? currentExecutionPeriod.getIdInternal() : getMostRecentExecutionPeriod()
-                                .getIdInternal();
+                        (currentExecutionDegree != null) ? currentExecutionPeriod.getExternalId() : getMostRecentExecutionPeriod()
+                                .getExternalId();
             }
         }
         return executionPeriodID;
@@ -98,7 +98,7 @@ public class EvaluationsForDelegatesConsultingBackingBean extends FenixBackingBe
         final Integer degreeCurricularPlanID = getDegreeCurricularPlanID();
         if (degree != null && degreeCurricularPlanID != null) {
             for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlans()) {
-                if (degreeCurricularPlanID.equals(degreeCurricularPlan.getIdInternal())) {
+                if (degreeCurricularPlanID.equals(degreeCurricularPlan.getExternalId())) {
                     return degreeCurricularPlan;
                 }
             }
@@ -117,7 +117,7 @@ public class EvaluationsForDelegatesConsultingBackingBean extends FenixBackingBe
             for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegrees()) {
                 final ExecutionYear executionYear = executionDegree.getExecutionYear();
                 for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
-                    if (executionSemester.getIdInternal().equals(executionPeriodID)) {
+                    if (executionSemester.getExternalId().equals(executionPeriodID)) {
                         return executionSemester;
                     }
                 }
@@ -186,7 +186,7 @@ public class EvaluationsForDelegatesConsultingBackingBean extends FenixBackingBe
         final Degree degree = getDegree();
         if (degree != null) {
             for (final DegreeCurricularPlan degreeCurricularPlan : degree.getActiveDegreeCurricularPlans()) {
-                degreeCurricularPlanSelectItems.add(new SelectItem(degreeCurricularPlan.getIdInternal(), degreeCurricularPlan
+                degreeCurricularPlanSelectItems.add(new SelectItem(degreeCurricularPlan.getExternalId(), degreeCurricularPlan
                         .getName()));
             }
         }
@@ -202,7 +202,7 @@ public class EvaluationsForDelegatesConsultingBackingBean extends FenixBackingBe
             final ExecutionYear executionYear = executionDegree.getExecutionYear();
             for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
                 if (executionSemester.getState() != PeriodState.CLOSED) {
-                    executionPeriodSelectItems.add(new SelectItem(executionSemester.getIdInternal(), executionSemester.getName()
+                    executionPeriodSelectItems.add(new SelectItem(executionSemester.getExternalId(), executionSemester.getName()
                             + " " + executionYear.getYear()));
                 }
             }
@@ -272,7 +272,7 @@ public class EvaluationsForDelegatesConsultingBackingBean extends FenixBackingBe
     private Map<String, String> constructLinkParameters(final ExecutionCourse executionCourse) {
         final Map<String, String> linkParameters = new HashMap<String, String>();
         linkParameters.put("method", "evaluations");
-        linkParameters.put("executionCourseID", executionCourse.getIdInternal().toString());
+        linkParameters.put("executionCourseID", executionCourse.getExternalId().toString());
         return linkParameters;
     }
 

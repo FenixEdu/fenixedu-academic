@@ -206,8 +206,8 @@ public class RoomsPunctualSchedulingDA extends FenixDispatchAction {
         String[] selectedRooms = request.getParameterValues("selectedRoom");
         if (selectedRooms != null && selectedRooms.length > 0) {
             for (String selectedRoom : selectedRooms) {
-                Integer roomIdInternal = Integer.valueOf(selectedRoom);
-                AllocatableSpace room = (AllocatableSpace) rootDomainObject.readResourceByOID(roomIdInternal);
+                Integer roomExternalId = Integer.valueOf(selectedRoom);
+                AllocatableSpace room = (AllocatableSpace) rootDomainObject.readResourceByOID(roomExternalId);
                 bean.removeRoom(room);
             }
         }

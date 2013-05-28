@@ -46,7 +46,7 @@ public class DisplayCurricularPlan extends FenixBackingBean {
         List<SelectItem> result = new ArrayList<SelectItem>(degreeCurricularPlans.size());
         for (InfoDegreeCurricularPlan degreeCurricularPlan : (List<InfoDegreeCurricularPlan>) degreeCurricularPlans) {
             String label = degreeCurricularPlan.getInfoDegree().getNome() + " - " + degreeCurricularPlan.getName();
-            result.add(new SelectItem(degreeCurricularPlan.getIdInternal(), label));
+            result.add(new SelectItem(degreeCurricularPlan.getExternalId(), label));
         }
 
         return result;
@@ -58,11 +58,11 @@ public class DisplayCurricularPlan extends FenixBackingBean {
 
         List<SelectItem> result = new ArrayList<SelectItem>(executionYears.size());
         for (InfoExecutionYear executionYear : executionYears) {
-            result.add(new SelectItem(executionYear.getIdInternal(), executionYear.getYear()));
+            result.add(new SelectItem(executionYear.getExternalId(), executionYear.getYear()));
         }
 
         if (executionYears.size() > 0) {
-            setChoosenExecutionYearID(executionYears.get(executionYears.size() - 1).getIdInternal());
+            setChoosenExecutionYearID(executionYears.get(executionYears.size() - 1).getExternalId());
         }
 
         return result;

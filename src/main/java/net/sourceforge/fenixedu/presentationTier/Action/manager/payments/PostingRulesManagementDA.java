@@ -210,7 +210,7 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
         try {
 
             executeFactoryMethod((FactoryExecutor) getRenderedObject("postingRuleEditor"));
-            request.setAttribute("degreeCurricularPlanId", getDegreeCurricularPlan(request).getIdInternal());
+            request.setAttribute("degreeCurricularPlanId", getDegreeCurricularPlan(request).getExternalId());
 
             return showPostGraduationDegreeCurricularPlanPostingRules(mapping, form, request, response);
 
@@ -247,7 +247,7 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
         try {
 
             executeFactoryMethod((FactoryExecutor) getRenderedObject("postingRuleEditor"));
-            request.setAttribute("degreeCurricularPlanId", getDegreeCurricularPlan(request).getIdInternal());
+            request.setAttribute("degreeCurricularPlanId", getDegreeCurricularPlan(request).getExternalId());
 
             return showPostGraduationDegreeCurricularPlanPostingRules(mapping, form, request, response);
 
@@ -319,7 +319,7 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
         final PostingRulesManagementForm postingRulesManagementForm = (PostingRulesManagementForm) form;
 
         if (postingRulesManagementForm.getExecutionYearId() == null) {
-            postingRulesManagementForm.setExecutionYearId(ExecutionYear.readCurrentExecutionYear().getIdInternal());
+            postingRulesManagementForm.setExecutionYearId(ExecutionYear.readCurrentExecutionYear().getExternalId());
         }
 
         setRequestAttributesToShowPaymentPlans(request, postingRulesManagementForm);
@@ -599,7 +599,7 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
 
         }
 
-        request.setAttribute("degreeCurricularPlanId", getDegreeCurricularPlan(request).getIdInternal());
+        request.setAttribute("degreeCurricularPlanId", getDegreeCurricularPlan(request).getExternalId());
 
         return showGraduationDegreeCurricularPlanPostingRules(mapping, form, request, response);
     }
@@ -650,7 +650,7 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
         }
 
         request.setAttribute("degreeCurricularPlanId", getCreateDFAGratuityPostingRuleBeanFromRequest().getDegreeCurricularPlan()
-                .getIdInternal());
+                .getExternalId());
 
         return showPostGraduationDegreeCurricularPlanPostingRules(mapping, form, request, response);
     }
@@ -704,7 +704,7 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
         }
 
         request.setAttribute("degreeCurricularPlanId", getCreateSpecializationDegreeGratuityPostingRuleBeanFromRequest()
-                .getDegreeCurricularPlan().getIdInternal());
+                .getDegreeCurricularPlan().getExternalId());
 
         return showPostGraduationDegreeCurricularPlanPostingRules(mapping, form, request, response);
     }

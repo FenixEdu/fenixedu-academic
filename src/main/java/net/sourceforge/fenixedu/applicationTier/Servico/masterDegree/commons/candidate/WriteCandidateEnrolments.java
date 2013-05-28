@@ -43,7 +43,7 @@ public class WriteCandidateEnrolments {
                     @Override
                     public Object transform(Object arg0) {
                         CandidateEnrolment candidateEnrolment = (CandidateEnrolment) arg0;
-                        return candidateEnrolment.getCurricularCourse().getIdInternal();
+                        return candidateEnrolment.getCurricularCourse().getExternalId();
                     }
                 });
 
@@ -58,7 +58,7 @@ public class WriteCandidateEnrolments {
                     @Override
                     public boolean evaluate(Object arg0) {
                         CandidateEnrolment candidateEnrolment = (CandidateEnrolment) arg0;
-                        return (curricularCoursesToDelete.contains(candidateEnrolment.getCurricularCourse().getIdInternal()));
+                        return (curricularCoursesToDelete.contains(candidateEnrolment.getCurricularCourse().getExternalId()));
                     }
                 });
 

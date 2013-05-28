@@ -80,8 +80,8 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
     }
 
     @SuppressWarnings({ "static-access", "unchecked" })
-    protected DomainObject readDomainObject(final HttpServletRequest request, final Class clazz, final Integer idInternal) {
-        return rootDomainObject.readDomainObjectByOID(clazz, idInternal);
+    protected DomainObject readDomainObject(final HttpServletRequest request, final Class clazz, final Integer externalId) {
+        return rootDomainObject.readDomainObjectByOID(clazz, externalId);
     }
 
     @SuppressWarnings({ "static-access", "unchecked" })
@@ -335,7 +335,7 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
         }
     }
 
-    protected Integer getIdInternal(HttpServletRequest request, String param) {
+    protected Integer getExternalId(HttpServletRequest request, String param) {
         String id = request.getParameter(param);
 
         if (id == null) {
@@ -350,7 +350,7 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
         }
     }
 
-    protected List<Integer> getIdInternals(HttpServletRequest request, String param) {
+    protected List<Integer> getExternalIds(HttpServletRequest request, String param) {
         String[] ids = request.getParameterValues(param);
 
         if (ids == null) {

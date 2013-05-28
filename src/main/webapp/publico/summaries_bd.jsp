@@ -8,7 +8,7 @@
 <logic:present name="siteView"> 
 	<bean:define id="component" name="siteView" property="component"/>
 	<bean:define id="executionCourse" name="component" property="executionCourse"/>
-	<bean:define id="objectCode" name="component" property="infoSite.idInternal"/>
+	<bean:define id="objectCode" name="component" property="infoSite.externalId"/>
 	<bean:define id="lessonTypes" name="component" property="lessonTypes" />
 	<bean:define id="shifts" name="component" property="infoShifts" />
 	<bean:define id="professorships" name="component" property="infoProfessorships" />
@@ -38,7 +38,7 @@
 				<td>
 					<html:select bundle="HTMLALT_RESOURCES" altKey="select.byShift" property="byShift" onchange="this.form.method.value='summaries';this.form.page.value=0;this.form.submit();">
 						<html:option  value="0" key="label.showBy.all" />
-						<html:options collection="shifts" property="idInternal" labelProperty="lessons"/>
+						<html:options collection="shifts" property="externalId" labelProperty="lessons"/>
 					</html:select>		
 					<html:submit styleId="javascriptButtonID2" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
 						<bean:message key="button.submit"/>
@@ -50,7 +50,7 @@
 				<td>
 					<html:select bundle="HTMLALT_RESOURCES" altKey="select.byTeacher" property="byTeacher" onchange="this.form.method.value='summaries';this.form.page.value=0;this.form.submit();">
 						<html:option  value="0" key="label.showBy.all" />
-						<html:options collection="professorships" property="idInternal" labelProperty="infoTeacher.infoPerson.nome"/>
+						<html:options collection="professorships" property="externalId" labelProperty="infoTeacher.infoPerson.nome"/>
 						<html:option  value="-1" key="label.others" />
 					</html:select>			
 					<html:submit styleId="javascriptButtonID3" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
@@ -62,8 +62,8 @@
 	</html:form>
 
 	<logic:iterate id="summary" name="component" property="infoSummaries" type="net.sourceforge.fenixedu.dataTransferObject.InfoSummary">
-		<bean:define id="summaryCode" name="summary" property="idInternal" />
-		<div id="s<%= summary.getIdInternal().toString() %>">
+		<bean:define id="summaryCode" name="summary" property="externalId" />
+		<div id="s<%= summary.getExternalId().toString() %>">
 			<logic:present name="summary" property="infoShift">
 			<h3>
 				<bean:write name="summary" property="summaryDateInput"/>

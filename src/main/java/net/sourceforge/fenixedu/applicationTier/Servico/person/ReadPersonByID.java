@@ -9,7 +9,7 @@ import pt.ist.fenixWebFramework.services.Service;
 public class ReadPersonByID {
 
     @Service
-    public static InfoPerson run(Integer idInternal) {
-        return InfoPerson.newInfoFromDomain((Person) RootDomainObject.getInstance().readPartyByOID(idInternal));
+    public static InfoPerson run(Integer externalId) {
+        return InfoPerson.newInfoFromDomain((Person) RootDomainObject.getInstance().readPartyByOID(externalId));
     }
 }

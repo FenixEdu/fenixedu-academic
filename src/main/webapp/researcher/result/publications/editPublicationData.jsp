@@ -7,9 +7,9 @@
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 
 <bean:define id="publicationBean" name="publicationBean" type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean"/>
-<bean:define id="parameters" value="<%= "resultId=" + publicationBean.getIdInternal().toString() %>"/>
+<bean:define id="parameters" value="<%= "resultId=" + publicationBean.getExternalId().toString() %>"/>
 <logic:present name="unit">
-	<bean:define id="unitID" name="unit" property="idInternal"/>
+	<bean:define id="unitID" name="unit" property="externalId"/>
 	<bean:define id="parameters" value="<%=parameters + "&unitId=" + unitID %>"/>
 </logic:present>
 

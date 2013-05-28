@@ -10,17 +10,17 @@
 <h2><bean:message key="message.question.edit" bundle="TESTS_RESOURCES" /> <ft:view schema="tests.question.type" layout="values" /></h2>
 
 <ft:define id="atomicQuestion" type="net.sourceforge.fenixedu.domain.tests.NewMultipleChoiceQuestion" />
-<bean:define id="modelSelectDivId">testModelDiv<bean:write name="atomicQuestion" property="idInternal" /></bean:define>
-<bean:define id="modelSelectId">testModel<bean:write name="atomicQuestion" property="idInternal" /></bean:define>
-<bean:define id="questionId"><bean:write name="atomicQuestion" property="idInternal" /></bean:define>
+<bean:define id="modelSelectDivId">testModelDiv<bean:write name="atomicQuestion" property="externalId" /></bean:define>
+<bean:define id="modelSelectId">testModel<bean:write name="atomicQuestion" property="externalId" /></bean:define>
+<bean:define id="questionId"><bean:write name="atomicQuestion" property="externalId" /></bean:define>
 <bean:define id="modelSelectPath">/tests/questionBank.do?method=selectForModel#<bean:write name="modelSelectDivId" /></bean:define>
 
 <ul>
-<li><html:link page="/tests/questionBank.do?method=prepareDeleteQuestion" paramId="oid" paramName="atomicQuestion" paramProperty="idInternal">Apagar pergunta</html:link></li>
+<li><html:link page="/tests/questionBank.do?method=prepareDeleteQuestion" paramId="oid" paramName="atomicQuestion" paramProperty="externalId">Apagar pergunta</html:link></li>
 <logic:equal name="atomicQuestion" property="belongsToAllGroup" value="false">
-	<li><html:link page="/tests/questionBank.do?method=prepareAssociateParent" paramId="oid" paramName="atomicQuestion" paramProperty="idInternal">Associar a outro grupo</html:link></li>
+	<li><html:link page="/tests/questionBank.do?method=prepareAssociateParent" paramId="oid" paramName="atomicQuestion" paramProperty="externalId">Associar a outro grupo</html:link></li>
 	<logic:notEqual name="atomicQuestion" property="parentQuestionGroupsCount" value="1">
-		<li><html:link page="/tests/questionBank.do?method=prepareDisassociateParent" paramId="oid" paramName="atomicQuestion" paramProperty="idInternal">Disassociar de grupo</html:link></li>
+		<li><html:link page="/tests/questionBank.do?method=prepareDisassociateParent" paramId="oid" paramName="atomicQuestion" paramProperty="externalId">Disassociar de grupo</html:link></li>
 	</logic:notEqual>
 	<li><a href="javascript:switchDisplay('<%= modelSelectDivId %>')">Seleccionar</a></li>
 </logic:equal>
@@ -70,9 +70,9 @@
 <div>
 	<strong><bean:message key="label.testElement.presentationMaterials" bundle="TESTS_RESOURCES" />:</strong>
 	(<f:parameterLink page="/tests/questionBank/presentationMaterial.do?method=prepareEditPresentationMaterials">
-	 	<f:parameter id="oid" name="atomicQuestion" property="idInternal" />
+	 	<f:parameter id="oid" name="atomicQuestion" property="externalId" />
 	 	<f:parameter id="returnPath" value="/tests/questionBank.do?method=editTestElement" />
-	 	<f:parameter id="returnId" name="atomicQuestion" property="idInternal" />
+	 	<f:parameter id="returnId" name="atomicQuestion" property="externalId" />
 	 	<f:parameter id="contextKey" value="message.questionBank.manage" />
 	 	Editar
 	 </f:parameterLink>)
@@ -92,7 +92,7 @@
 
 <div id="editShuffleDiv" class="switchNone">
 	<fr:form action="/tests/questionBank.do?method=editTestElement">
-		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.oid" property="oid" value="<%= atomicQuestion.getIdInternal().toString() %>" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.oid" property="oid" value="<%= atomicQuestion.getExternalId().toString() %>" />
 		<ft:edit schema="tests.multipleChoiceQuestion.edit.shuffle"
 		         nested="true"
 		         id="editShuffle">
@@ -111,7 +111,7 @@
 
 <ul>
 <li>
-	<html:link page="/tests/questionBank.do?method=createChoice" paramId="oid" paramName="atomicQuestion" paramProperty="idInternal">Inserir op��o</html:link>
+	<html:link page="/tests/questionBank.do?method=createChoice" paramId="oid" paramName="atomicQuestion" paramProperty="externalId">Inserir op��o</html:link>
 </li>
 </ul>
 
@@ -130,7 +130,7 @@
 <ul>
 <li>
 	<f:parameterLink page="/tests/questionBank.do?method=deleteGrade">
-		<f:parameter id="oid" name="atomicQuestion" property="idInternal" />
+		<f:parameter id="oid" name="atomicQuestion" property="externalId" />
 		Apagar
 	</f:parameterLink>
 </li>
@@ -159,14 +159,14 @@
 <ul>
 <li>
 	<f:parameterLink page="/tests/questionBank.do?method=deleteValidator">
-		<f:parameter id="oid" name="atomicQuestion" property="idInternal" />
+		<f:parameter id="oid" name="atomicQuestion" property="externalId" />
 		Apagar validador
 	</f:parameterLink>
 </li>
 
 <li>
 	<f:parameterLink page="/tests/questionBank.do?method=prepareEditValidator">
-		<f:parameter id="oid" name="atomicQuestion" property="idInternal" />
+		<f:parameter id="oid" name="atomicQuestion" property="externalId" />
 		Editar validator
 	</f:parameterLink>
 </li>
@@ -180,7 +180,7 @@
 <ul>
 <li>
 	<f:parameterLink page="/tests/questionBank.do?method=prepareEditValidator">
-		<f:parameter id="oid" name="atomicQuestion" property="idInternal" />
+		<f:parameter id="oid" name="atomicQuestion" property="externalId" />
 		Inserir validador
 	</f:parameterLink>
 </li>
@@ -193,7 +193,7 @@
 <ul>
 <li>
 	<f:parameterLink page="/tests/questionBank.do?method=prepareEditCorrector">
-		<f:parameter id="oid" name="atomicQuestion" property="idInternal" />
+		<f:parameter id="oid" name="atomicQuestion" property="externalId" />
 		Gerir correctores
 	</f:parameterLink>
 </li>
@@ -206,18 +206,18 @@
 			<fr:property name="classes" value="tstyle1" />
 			<fr:property name="columnClasses" value=",width10em,width10em,width10em,width10em" />
 			<fr:property name="link(delete)" value="/tests/questionBank.do?method=deleteCorrector" />
-			<fr:property name="param(delete)" value="idInternal/oid" />
+			<fr:property name="param(delete)" value="externalId/oid" />
 			<fr:property name="key(delete)" value="message.delete" />
 			<fr:property name="bundle(delete)" value="TESTS_RESOURCES" />
 			<fr:property name="order(delete)" value="1" />
 			<fr:property name="link(up)" value="/tests/questionBank.do?method=switchCorrector" />
-			<fr:property name="param(up)" value="idInternal/oid,relativePosition=-1" />
+			<fr:property name="param(up)" value="externalId/oid,relativePosition=-1" />
 			<fr:property name="key(up)" value="message.up" />
 			<fr:property name="bundle(up)" value="TESTS_RESOURCES" />
 			<fr:property name="order(up)" value="2" />
 			<fr:property name="visibleIfNot(up)" value="first" />
 			<fr:property name="link(down)" value="/tests/questionBank.do?method=switchCorrector" />
-			<fr:property name="param(down)" value="idInternal/oid,/relativePosition=1" />
+			<fr:property name="param(down)" value="externalId/oid,/relativePosition=1" />
 			<fr:property name="key(down)" value="message.down" />
 			<fr:property name="bundle(down)" value="TESTS_RESOURCES" />
 			<fr:property name="order(down)" value="3" />
@@ -237,14 +237,14 @@
 <ul>
 <li>
 	<f:parameterLink page="/tests/questionBank.do?method=deletePreCondition">
-		<f:parameter id="oid" name="atomicQuestion" property="idInternal" />
+		<f:parameter id="oid" name="atomicQuestion" property="externalId" />
 		Apagar pr�-condi��o
 	</f:parameterLink>
 </li>
 
 <li>
 	<f:parameterLink page="/tests/questionBank.do?method=prepareEditPreCondition">
-		<f:parameter id="oid" name="atomicQuestion" property="idInternal" />
+		<f:parameter id="oid" name="atomicQuestion" property="externalId" />
 		Editar pr�-condi��o
 	</f:parameterLink>
 </li>
@@ -258,7 +258,7 @@
 <ul>
 <li>
 	<f:parameterLink page="/tests/questionBank.do?method=prepareEditPreCondition">
-		<f:parameter id="oid" name="atomicQuestion" property="idInternal" />
+		<f:parameter id="oid" name="atomicQuestion" property="externalId" />
 		Inserir pr�-condi��o
 	</f:parameterLink>
 </li>

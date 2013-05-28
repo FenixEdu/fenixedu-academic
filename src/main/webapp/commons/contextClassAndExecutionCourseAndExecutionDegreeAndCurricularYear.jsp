@@ -15,7 +15,7 @@
 	<bean:define id="classOID"
 				 type="java.lang.Integer"
 				 name="school_class"
-				 property="idInternal"
+				 property="externalId"
 				 toScope="request"
 				 scope="request"/>
 </logic:present>

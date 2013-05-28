@@ -174,8 +174,8 @@ public class InfoDegreeCurricularPlan extends InfoObject implements Comparable {
     }
 
     @Override
-    public Integer getIdInternal() {
-        return getDegreeCurricularPlan().getIdInternal();
+    public Integer getExternalId() {
+        return getDegreeCurricularPlan().getExternalId();
     }
 
     public String getExternalId() {

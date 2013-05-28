@@ -59,7 +59,7 @@
 					</logic:present>
 					<logic:present name="subSection" property="entries">
 						<logic:iterate id="infoFAQEntry" name="subSection" property="entries">
-							<bean:define id="entryId" name="infoFAQEntry" property="idInternal"/>
+							<bean:define id="entryId" name="infoFAQEntry" property="externalId"/>
 							<tr>
 								<td colspan="3" style="background: #fff; padding: 5px 0 0 10px">
 									<bean:message key="property.faq.question"/>: <strong><bean:write name="infoFAQEntry" property="question"/></strong>

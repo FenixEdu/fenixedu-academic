@@ -86,7 +86,7 @@ public class AddStudentToFinalDegreeWorkStudentGroup {
                 final CurricularYear curricularYear = curricularSemester.getCurricularYear();
 
                 if (minimumCompletedCurricularYear != null
-                        && curricularYear.getIdInternal().intValue() <= minimumCompletedCurricularYear.intValue()) {
+                        && curricularYear.getExternalId().intValue() <= minimumCompletedCurricularYear.intValue()) {
                     if (!isCurricularCourseApproved) {
                         notCompletedCurricularCoursesForMinimumCurricularYear.add(curricularCourse);
                     }
@@ -334,7 +334,7 @@ public class AddStudentToFinalDegreeWorkStudentGroup {
         @Override
         public boolean evaluate(Object arg0) {
             GroupStudent groupStudent = (GroupStudent) arg0;
-            return registration.getIdInternal().equals(groupStudent.getRegistration().getIdInternal());
+            return registration.getExternalId().equals(groupStudent.getRegistration().getExternalId());
         }
 
         public PREDICATE_FIND_GROUP_STUDENT_BY_STUDENT(Registration registration) {

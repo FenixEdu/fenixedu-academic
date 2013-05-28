@@ -102,7 +102,7 @@ public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean
             Collections.sort(infoExecutionPeriods, comparatorChain);
             for (final InfoExecutionPeriod infoExecutionPeriod : infoExecutionPeriods) {
                 final SelectItem selectItem = new SelectItem();
-                selectItem.setValue(infoExecutionPeriod.getIdInternal());
+                selectItem.setValue(infoExecutionPeriod.getExternalId());
                 selectItem.setLabel(infoExecutionPeriod.getName() + " - " + infoExecutionPeriod.getInfoExecutionYear().getYear());
                 this.executionPeriodsLabels.add(selectItem);
             }
@@ -157,7 +157,7 @@ public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean
     public List<SelectItem> getExecutionCoursesLabels() {
         final List<SelectItem> result = new ArrayList();
         for (final ExecutionCourse executionCourse : getExecutionCourses()) {
-            result.add(new SelectItem(executionCourse.getIdInternal(), executionCourse.getNome()));
+            result.add(new SelectItem(executionCourse.getExternalId(), executionCourse.getNome()));
         }
         Collections.sort(result, new BeanComparator("label"));
         return result;
@@ -291,7 +291,7 @@ public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean
                 this.executionPeriodID = Integer.valueOf(this.getRequestAttribute("executionPeriodID").toString());
             } else {
                 final InfoExecutionPeriod currentExecutionPeriod = getCurrentExecutionPeriod();
-                this.executionPeriodID = (currentExecutionPeriod != null) ? currentExecutionPeriod.getIdInternal() : null;
+                this.executionPeriodID = (currentExecutionPeriod != null) ? currentExecutionPeriod.getExternalId() : null;
             }
         }
         return executionPeriodID;

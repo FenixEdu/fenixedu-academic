@@ -8,9 +8,9 @@
 
 <logic:present name="<%= PresentationConstants.MASTER_DEGREE %>"  >
 	<bean:define id="infoExecutionDegree" name="<%= PresentationConstants.MASTER_DEGREE %>"/>
-	<bean:define id="infoExecutionDegreeID" name="infoExecutionDegree" property="idInternal"/>
-	<bean:define id="infoDegreeID" name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.idInternal"/>
-	<bean:define id="degreeCurricularPlanID" name="degreeCurricularPlan" property="idInternal" scope="request" />
+	<bean:define id="infoExecutionDegreeID" name="infoExecutionDegree" property="externalId"/>
+	<bean:define id="infoDegreeID" name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.externalId"/>
+	<bean:define id="degreeCurricularPlanID" name="degreeCurricularPlan" property="externalId" scope="request" />
 	<br/>
 	<ul>
 		<li class="navheader">

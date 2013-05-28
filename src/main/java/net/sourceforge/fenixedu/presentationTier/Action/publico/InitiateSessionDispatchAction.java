@@ -75,7 +75,7 @@ public class InitiateSessionDispatchAction extends FenixContextDispatchAction {
 
             // Set selected executionPeriod in request
             request.setAttribute(PresentationConstants.EXECUTION_PERIOD, selectedExecutionPeriod);
-            request.setAttribute(PresentationConstants.EXECUTION_PERIOD_OID, selectedExecutionPeriod.getIdInternal().toString());
+            request.setAttribute(PresentationConstants.EXECUTION_PERIOD_OID, selectedExecutionPeriod.getExternalId().toString());
         }
 
         return mapping.findForward("choose");

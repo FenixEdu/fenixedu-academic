@@ -155,7 +155,7 @@ function check(e,v){
             	<tr>
                     <td class="acenter">
                         <b>
-                        <html:link page="<%= "/viewShiftsAndGroups.do?method=viewShiftsAndGroups&amp;objectCode=" + pageContext.findAttribute("objectCode")%>" paramId="groupPropertiesCode" paramName="infoGroupProperties" paramProperty="idInternal">
+                        <html:link page="<%= "/viewShiftsAndGroups.do?method=viewShiftsAndGroups&amp;objectCode=" + pageContext.findAttribute("objectCode")%>" paramId="groupPropertiesCode" paramName="infoGroupProperties" paramProperty="externalId">
 						<bean:write name="infoGroupProperties" property="name"/></html:link>
 						</b>
                     </td>

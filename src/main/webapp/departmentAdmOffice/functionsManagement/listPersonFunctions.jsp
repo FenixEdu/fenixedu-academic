@@ -77,14 +77,14 @@
 			<h:column> 						
 				<h:commandLink action="prepareEditFunction">
 					<h:outputText value="#{bundle['link.functions.management.edit']}"/>					
-					<f:param name="personFunctionID" id="personFunctionID1" value="#{person_function.idInternal}"/>
-					<f:param name="functionID" id="functionID" value="#{person_function.function.idInternal}"/>
+					<f:param name="personFunctionID" id="personFunctionID1" value="#{person_function.externalId}"/>
+					<f:param name="functionID" id="functionID" value="#{person_function.function.externalId}"/>
 				</h:commandLink>				
 			</h:column>
 			<h:column> 						
 				<h:commandLink action="deletePersonFunction">
 					<h:outputText value="#{bundle['link.delete']}"/>					
-					<f:param name="personFunctionID" id="personFunctionID2" value="#{person_function.idInternal}"/>					
+					<f:param name="personFunctionID" id="personFunctionID2" value="#{person_function.externalId}"/>					
 				</h:commandLink>				
 			</h:column>					
 		</h:dataTable>

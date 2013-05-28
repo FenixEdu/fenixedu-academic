@@ -29,6 +29,6 @@ public class AffiliatedTeacherDTO extends TeacherDTO {
 
     @Override
     public Integer getPersonID() {
-        return person.getIdInternal();
+        return person.getExternalId();
     }
 }

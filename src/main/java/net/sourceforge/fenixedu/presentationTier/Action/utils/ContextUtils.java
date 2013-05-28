@@ -86,7 +86,7 @@ public class ContextUtils {
         if (infoExecutionPeriod != null) {
             // Place it in request
             request.setAttribute(PresentationConstants.EXECUTION_PERIOD, infoExecutionPeriod);
-            request.setAttribute(PresentationConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getIdInternal().toString());
+            request.setAttribute(PresentationConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getExternalId().toString());
             if (infoExecutionPeriod.getInfoExecutionYear() != null) {
                 request.setAttribute("schoolYear", infoExecutionPeriod.getInfoExecutionYear().getYear());
             }
@@ -126,7 +126,7 @@ public class ContextUtils {
             if (infoExecutionDegree != null) {
                 // Place it in request
                 request.setAttribute(PresentationConstants.EXECUTION_DEGREE, infoExecutionDegree);
-                request.setAttribute(PresentationConstants.EXECUTION_DEGREE_OID, infoExecutionDegree.getIdInternal().toString());
+                request.setAttribute(PresentationConstants.EXECUTION_DEGREE_OID, infoExecutionDegree.getExternalId().toString());
             }
         }
     }
@@ -159,7 +159,7 @@ public class ContextUtils {
             if (infoCurricularYear != null) {
                 // Place it in request
                 request.setAttribute(PresentationConstants.CURRICULAR_YEAR, infoCurricularYear);
-                request.setAttribute(PresentationConstants.CURRICULAR_YEAR_OID, infoCurricularYear.getIdInternal().toString());
+                request.setAttribute(PresentationConstants.CURRICULAR_YEAR_OID, infoCurricularYear.getExternalId().toString());
             }
 
         }
@@ -418,7 +418,7 @@ public class ContextUtils {
                 name.append(" - ");
                 name.append(degreeCurricularPlan.getName());
             }
-            final LabelValueBean labelValueBean = new LabelValueBean(name.toString(), executionDegree.getIdInternal().toString());
+            final LabelValueBean labelValueBean = new LabelValueBean(name.toString(), executionDegree.getExternalId().toString());
             labelListOfExecutionDegrees.add(labelValueBean);
         }
         Collections.sort(labelListOfExecutionDegrees);
@@ -434,7 +434,7 @@ public class ContextUtils {
             infoExecutionPeriods.add(InfoExecutionPeriod.newInfoFromDomain(executionSemester));
             final String name =
                     StringAppender.append(executionSemester.getName(), " - ", executionSemester.getExecutionYear().getYear());
-            final LabelValueBean labelValueBean = new LabelValueBean(name, executionSemester.getIdInternal().toString());
+            final LabelValueBean labelValueBean = new LabelValueBean(name, executionSemester.getExternalId().toString());
             executionPeriodLabelValueBeans.add(labelValueBean);
         }
         request.setAttribute(PresentationConstants.LIST_INFOEXECUTIONPERIOD, infoExecutionPeriods);
@@ -538,7 +538,7 @@ public class ContextUtils {
 
             name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getDegreeType().toString() + " de " + name;
 
-            return new LabelValueBean(name, infoExecutionDegree.getIdInternal().toString());
+            return new LabelValueBean(name, infoExecutionDegree.getExternalId().toString());
         }
     }
 
@@ -585,7 +585,7 @@ public class ContextUtils {
                     duplicateInfoDegree(executionDegreeList, infoExecutionDegree) ? "-"
                             + infoExecutionDegree.getInfoDegreeCurricularPlan().getName() : "";
 
-            licenciaturas.add(new LabelValueBean(name, infoExecutionDegree.getIdInternal().toString()));
+            licenciaturas.add(new LabelValueBean(name, infoExecutionDegree.getExternalId().toString()));
         }
 
         return licenciaturas;

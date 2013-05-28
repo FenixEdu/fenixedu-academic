@@ -56,12 +56,12 @@ public class InfoExecutionCourse extends InfoObject {
     }
 
     @Override
-    public Integer getIdInternal() {
-        return getExecutionCourse().getIdInternal();
+    public Integer getExternalId() {
+        return getExecutionCourse().getExternalId();
     }
 
     @Override
-    public void setIdInternal(Integer integer) {
+    public void setExternalId(Integer integer) {
         throw new Error("Method should not be called!");
     }
 

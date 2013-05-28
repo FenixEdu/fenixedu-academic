@@ -95,10 +95,10 @@ public class ConvokeManagement extends FenixDispatchAction {
     private void editAttend(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         String id = request.getParameter("oid");
-        Integer idInternal = Integer.valueOf(id);
+        Integer externalId = Integer.valueOf(id);
         String bool = request.getParameter("bool");
         Boolean value = Boolean.valueOf(bool);
-        Vigilancy convoke = (Vigilancy) RootDomainObject.readDomainObjectByOID(Vigilancy.class, idInternal);
+        Vigilancy convoke = (Vigilancy) RootDomainObject.readDomainObjectByOID(Vigilancy.class, externalId);
 
         try {
 
@@ -119,11 +119,11 @@ public class ConvokeManagement extends FenixDispatchAction {
     public ActionForward changeConvokeStatusInReport(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         String id = request.getParameter("oid");
-        Integer idInternal = Integer.valueOf(id);
+        Integer externalId = Integer.valueOf(id);
         String participationType = request.getParameter("participationType");
         AttendingStatus status = AttendingStatus.valueOf(participationType);
 
-        Vigilancy vigilancy = (Vigilancy) RootDomainObject.readDomainObjectByOID(Vigilancy.class, idInternal);
+        Vigilancy vigilancy = (Vigilancy) RootDomainObject.readDomainObjectByOID(Vigilancy.class, externalId);
         try {
 
             ChangeConvokeStatus.run(vigilancy, status);
@@ -136,11 +136,11 @@ public class ConvokeManagement extends FenixDispatchAction {
     private void editActive(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         String id = request.getParameter("oid");
-        Integer idInternal = Integer.valueOf(id);
+        Integer externalId = Integer.valueOf(id);
         String bool = request.getParameter("bool");
         Boolean value = Boolean.valueOf(bool);
         Person person = getLoggedPerson(request);
-        Vigilancy convoke = (Vigilancy) RootDomainObject.readDomainObjectByOID(Vigilancy.class, idInternal);
+        Vigilancy convoke = (Vigilancy) RootDomainObject.readDomainObjectByOID(Vigilancy.class, externalId);
 
         try {
 

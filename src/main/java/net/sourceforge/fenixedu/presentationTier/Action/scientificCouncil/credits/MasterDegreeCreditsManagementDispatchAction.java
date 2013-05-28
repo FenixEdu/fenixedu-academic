@@ -99,11 +99,11 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
                     break;
                 }
             }
-            dynaForm.set("executionYearID", executionYear.getIdInternal());
+            dynaForm.set("executionYearID", executionYear.getExternalId());
 
         } else {
             for (ExecutionYear tempExecutionYear : notClosedExecutionYears) {
-                if (tempExecutionYear.getIdInternal().equals(executionYearID)) {
+                if (tempExecutionYear.getExternalId().equals(executionYearID)) {
                     executionYear = tempExecutionYear;
                     break;
                 }
@@ -174,7 +174,7 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
                 new MasterDegreeCreditsDTO(curricularCourse, executionDegree.getExecutionYear());
         request.setAttribute("masterDegreeCreditsDTO", masterDegreeCreditsDTO);
 
-        dynaForm.set("executionDegreeID", executionDegree.getIdInternal());
+        dynaForm.set("executionDegreeID", executionDegree.getExternalId());
         dynaForm.set("curricularCourseID", curricularCourseID);
         return mapping.findForward("editMasterDegreeCredits");
     }

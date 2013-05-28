@@ -17,7 +17,7 @@ public class AddSchoolClassesToShift {
     @Service
     public static void run(InfoShift infoShift, List<Integer> schoolClassOIDs) throws FenixServiceException {
 
-        final Shift shift = RootDomainObject.getInstance().readShiftByOID(infoShift.getIdInternal());
+        final Shift shift = RootDomainObject.getInstance().readShiftByOID(infoShift.getExternalId());
         if (shift == null) {
             throw new InvalidArgumentsServiceException();
         }

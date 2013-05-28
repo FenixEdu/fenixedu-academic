@@ -262,7 +262,7 @@
         <property name="format" value="${text}"/>
         <property name="indicatorShown" value="true"/>
         <property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchPresidentForThesis"/>
-        <property name="args" value="thesis=${thesis.idInternal}"/>
+        <property name="args" value="thesis=${thesis.externalId}"/>
         <property name="minChars" value="0"/>
     </slot>
 </schema>

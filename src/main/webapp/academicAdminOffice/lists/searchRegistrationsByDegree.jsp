@@ -139,7 +139,7 @@
 				bundle="ACADEMIC_OFFICE_RESOURCES">
 				<fr:slot name="registration.number" key="label.number" layout="link">
 					<fr:property name="linkFormat"
-						value="/student.do?method=visualizeRegistration&amp;registrationID=${registration.idInternal}" />
+						value="/student.do?method=visualizeRegistration&amp;registrationID=${registration.externalId}" />
 					<fr:property name="contextRelative" value="true" />
 					<fr:property name="moduleRelative" value="true" />
 					<fr:property name="useParent" value="true" />

@@ -197,7 +197,7 @@
         </app:contentLink>
     </li>
     
-    <bean:define id="siteId" name="site" property="idInternal"/>
+    <bean:define id="siteId" name="site" property="externalId"/>
     
     <li>
         <html:link page="<%= "/departmentSite.do?method=chooseManagers&amp;oid=" + siteId %>">
@@ -210,7 +210,7 @@
 	
 	<logic:notEmpty name="userView" property="person.employee.currentDepartmentWorkingPlace">	
 		<bean:define id="unit" name="userView" property="person.employee.currentDepartmentWorkingPlace.departmentUnit"/>
-		<bean:define id="unitID" name="unit" property="idInternal"/>
+		<bean:define id="unitID" name="unit" property="externalId"/>
 		<bean:define id="unitExternalId" name="unit" property="externalId"/>
 		
 		<ul>	
@@ -236,7 +236,7 @@
 				<logic:iterate id="subUnit" name="unit" property="allSubUnits">
 					<logic:equal name="subUnit" property="scientificAreaUnit"  value="true">
 						<logic:equal name="subUnit" property="currentUserMemberOfScientificArea" value="true">
-							<bean:define id="subUnitID" name="subUnit" property="idInternal"/>
+							<bean:define id="subUnitID" name="subUnit" property="externalId"/>
 							<bean:define id="subUnitExternalId" name="subUnit" property="externalId"/>
 							<li class="navheader"><fr:view name="subUnit" property="name"/></li>
 									<ul>

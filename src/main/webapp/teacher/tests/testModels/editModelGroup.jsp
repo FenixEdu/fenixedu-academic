@@ -20,7 +20,7 @@
 <ul>
 	<li>
 		<f:parameterLink page="/tests/testModels.do?method=editTestModel">
-			<f:parameter id="oid" name="modelGroup" property="testModel.idInternal" />
+			<f:parameter id="oid" name="modelGroup" property="testModel.externalId" />
 			<bean:message key="message.back" bundle="TESTS_RESOURCES" />
 		</f:parameterLink>
 	</li>
@@ -28,7 +28,7 @@
 
 <table class="tstyle7 thright mtop0"><tr><td>
 <html:form action="/tests/testModels.do?method=editModelGroup">
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.oid" property="oid" value="<%= modelGroup.getIdInternal().toString() %>" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.oid" property="oid" value="<%= modelGroup.getExternalId().toString() %>" />
 	<fr:edit id="edit-model-group" name="modelGroup" schema="tests.modelGroup.name" layout="flow" nested="true" />
 	<html:submit><bean:message key="message.question.alter" bundle="TESTS_RESOURCES" /></html:submit>
 </html:form>
@@ -37,9 +37,9 @@
 <div class="questionBlockHeader">
 	<strong><bean:message key="label.testElement.presentationMaterials" bundle="TESTS_RESOURCES" />:</strong>
 	(<f:parameterLink page="/tests/questionBank/presentationMaterial.do?method=prepareEditPresentationMaterials">
-	 	<f:parameter id="oid" name="modelGroup" property="idInternal" />
+	 	<f:parameter id="oid" name="modelGroup" property="externalId" />
 	 	<f:parameter id="returnPath" value="/tests/testModels.do?method=editModelGroup" />
-	 	<f:parameter id="returnId" name="modelGroup" property="idInternal" />
+	 	<f:parameter id="returnId" name="modelGroup" property="externalId" />
 	 	<f:parameter id="contextKey" value="message.testModels.manage" />
 	 	<bean:message key="message.question.edit" bundle="TESTS_RESOURCES" />
 	 </f:parameterLink>)

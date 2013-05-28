@@ -32,12 +32,12 @@ public class InfoProfessorship extends InfoObject {
     }
 
     @Override
-    public Integer getIdInternal() {
-        return this.getProfessorship().getIdInternal();
+    public Integer getExternalId() {
+        return this.getProfessorship().getExternalId();
     }
 
     @Override
-    public void setIdInternal(Integer integer) {
+    public void setExternalId(Integer integer) {
         throw new Error("Method should not be called!");
     }
 

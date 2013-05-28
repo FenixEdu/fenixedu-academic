@@ -39,7 +39,7 @@ public class GiveUpQuestion {
                 StudentTestQuestion.findStudentTestQuestions(registration, distributedTest);
         StudentTestQuestion thisStudentTestQuestion = null;
         for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {
-            if (studentTestQuestion.getQuestion().getIdInternal().equals(exerciseCode)) {
+            if (studentTestQuestion.getQuestion().getExternalId().equals(exerciseCode)) {
                 ParseSubQuestion parse = new ParseSubQuestion();
                 try {
                     parse.parseStudentTestQuestion(studentTestQuestion, path.replace('\\', '/'));

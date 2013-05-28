@@ -395,7 +395,7 @@
 
 <schema name="AcademicCalendarInfo" type="net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarRootEntry" bundle="MANAGER_RESOURCES">
 	<slot name="title" layout="link" key="label.academicCalendar.title">
-		<property name="linkFormat" value="/academicCalendarsManagement.do?method=prepareViewAcademicCalendar&amp;entryID=${idInternal}"/>
+		<property name="linkFormat" value="/academicCalendarsManagement.do?method=prepareViewAcademicCalendar&amp;entryID=${externalId}"/>
     	<property name="contextRelative" value="true"/>
     	<property name="moduleRelative" value="true"/>    	    	
         <property name="useParent" value="true"/>

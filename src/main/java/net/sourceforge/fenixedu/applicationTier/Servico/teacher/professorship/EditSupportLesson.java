@@ -33,7 +33,7 @@ public class EditSupportLesson {
 
         final StringBuilder log = new StringBuilder();
 
-        SupportLesson supportLesson = RootDomainObject.getInstance().readSupportLessonByOID(supportLessonDTO.getIdInternal());
+        SupportLesson supportLesson = RootDomainObject.getInstance().readSupportLessonByOID(supportLessonDTO.getExternalId());
         if (supportLesson == null) {
             supportLesson = new SupportLesson(supportLessonDTO, professorship, roleType);
             log.append(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources",

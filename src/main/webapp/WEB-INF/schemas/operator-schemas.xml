@@ -24,7 +24,7 @@
 		<property name="useParent" value="true" />
 		<property name="contextRelative" value="true" />
 		<property name="moduleRelative" value="true" />
-		<property name="linkFormat" value="/alumni.do?method=prepareIdentityValidation&amp;requestId=${idInternal}&amp;personId=${alumni.student.person.idInternal}"/>
+		<property name="linkFormat" value="/alumni.do?method=prepareIdentityValidation&amp;requestId=${externalId}&amp;personId=${alumni.student.person.externalId}"/>
 	</slot>
 	<slot name="documentIdNumber" key="label.documentIdNumber" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
 		<property size="20" />
@@ -46,7 +46,7 @@
 		<property name="useParent" value="true" />
 		<property name="contextRelative" value="true" />
 		<property name="moduleRelative" value="true" />
-		<property name="linkFormat" value="/alumni.do?method=showIdentityValidation&amp;requestId=${idInternal}&amp;personId=${alumni.student.person.idInternal}"/>
+		<property name="linkFormat" value="/alumni.do?method=showIdentityValidation&amp;requestId=${externalId}&amp;personId=${alumni.student.person.externalId}"/>
 	</slot>
 	<slot name="documentIdNumber" key="label.documentIdNumber" >
 		<property size="20" />
@@ -123,15 +123,15 @@
 		<property name="moduleRelative" value="false" />
 		<property name="contextRelative" value="true" />
 		<property name="imageFormat"
-			value="/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode=${person.idInternal}" />
+			value="/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode=${person.externalId}" />
 	</slot>
-	<slot name="idInternal" key="label.operator.photo.pending" layout="view-as-image" read-only="true">
+	<slot name="externalId" key="label.operator.photo.pending" layout="view-as-image" read-only="true">
 		<property name="classes" value="column3" />
 		<property name="useParent" value="true" />
 		<property name="moduleRelative" value="false" />
 		<property name="contextRelative" value="true" />
 		<property name="imageFormat"
-			value="/person/retrievePersonalPhoto.do?method=retrievePendingByID&amp;photoCode=${idInternal}" />
+			value="/person/retrievePersonalPhoto.do?method=retrievePendingByID&amp;photoCode=${externalId}" />
 	</slot>
 	<slot name="state" key="label.operator.photo.state" layout="radio">
         <property name="excludedValues" value="USER_REJECTED" />

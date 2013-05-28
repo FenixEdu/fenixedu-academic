@@ -14,12 +14,12 @@ public class RemoveShifts {
     @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
     @Service
     public static Boolean run(final InfoClass infoClass, final List shiftOIDs) {
-        final SchoolClass schoolClass = RootDomainObject.getInstance().readSchoolClassByOID(infoClass.getIdInternal());
+        final SchoolClass schoolClass = RootDomainObject.getInstance().readSchoolClassByOID(infoClass.getExternalId());
         final List<Shift> shifts = schoolClass.getAssociatedShifts();
 
         for (int i = 0; i < shifts.size(); i++) {
             final Shift shift = shifts.get(i);
-            if (shiftOIDs.contains(shift.getIdInternal())) {
+            if (shiftOIDs.contains(shift.getExternalId())) {
                 shifts.remove(shift);
                 i--;
             }

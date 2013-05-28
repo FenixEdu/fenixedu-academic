@@ -119,11 +119,11 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
             // Read Insurance Situation
             InfoInsuranceTransaction infoInsuranceTransaction = null;
             Integer executionYearID =
-                    infoGratuitySituation.getInfoGratuityValues().getInfoExecutionDegree().getInfoExecutionYear().getIdInternal();
+                    infoGratuitySituation.getInfoGratuityValues().getInfoExecutionDegree().getInfoExecutionYear().getExternalId();
 
             try {
                 infoInsuranceTransaction =
-                        ReadInsuranceTransactionByStudentIDAndExecutionYearID.run(infoStudent.getIdInternal(), executionYearID);
+                        ReadInsuranceTransactionByStudentIDAndExecutionYearID.run(infoStudent.getExternalId(), executionYearID);
             } catch (FenixServiceException e) {
                 throw new FenixActionException(e);
             }
@@ -236,7 +236,7 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
             List studentCurricularPlans = null;
 
             try {
-                studentCurricularPlans = ReadPosGradStudentCurricularPlans.run(infoStudent.getIdInternal());
+                studentCurricularPlans = ReadPosGradStudentCurricularPlans.run(infoStudent.getExternalId());
 
             } catch (FenixServiceException e) {
                 throw new FenixActionException(e);
@@ -262,7 +262,7 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
                 Iterator it = executionDegreesList.iterator();
                 while (it.hasNext()) {
                     infoExecutionDegree = (InfoExecutionDegree) it.next();
-                    if (infoExecutionDegree.getInfoExecutionYear().getIdInternal().equals(insuranceExecutionYearId)) {
+                    if (infoExecutionDegree.getInfoExecutionYear().getExternalId().equals(insuranceExecutionYearId)) {
                         found = true;
                         break;
                     }

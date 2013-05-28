@@ -26,7 +26,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Forwards(value = { @Forward(name = "view", path = "/library/theses/validate.jsp") })
 public class ValidateThesisDA extends ThesisLibraryDA {
     protected Thesis getThesis(HttpServletRequest request) {
-        Integer id = getIdInternal(request, "thesisID");
+        Integer id = getExternalId(request, "thesisID");
         return id != null ? (Thesis) RootDomainObject.getInstance().readThesisByOID(id) : null;
     }
 

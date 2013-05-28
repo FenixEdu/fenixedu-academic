@@ -26,7 +26,7 @@ public class ChangePreferenceOrderOfFinalDegreeWorkStudentGroupCandidacy {
         if (group != null && groupProposal != null) {
             for (int i = 0; i < group.getGroupProposals().size(); i++) {
                 GroupProposal otherGroupProposal = group.getGroupProposals().get(i);
-                if (otherGroupProposal != null && !groupProposal.getIdInternal().equals(otherGroupProposal.getIdInternal())) {
+                if (otherGroupProposal != null && !groupProposal.getExternalId().equals(otherGroupProposal.getExternalId())) {
                     int otherOrderOfPreference = otherGroupProposal.getOrderOfPreference().intValue();
                     if (orderOfPreference.intValue() <= otherOrderOfPreference
                             && groupProposal.getOrderOfPreference().intValue() > otherOrderOfPreference) {

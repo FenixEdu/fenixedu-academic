@@ -60,13 +60,13 @@ public class DefineCommentAction extends
 
         InfoExecutionDegree infoExecutionDegree =
                 (InfoExecutionDegree) request.getAttribute(PresentationConstants.EXECUTION_DEGREE);
-        request.setAttribute(PresentationConstants.EXECUTION_DEGREE_OID, infoExecutionDegree.getIdInternal().toString());
+        request.setAttribute(PresentationConstants.EXECUTION_DEGREE_OID, infoExecutionDegree.getExternalId().toString());
 
         request.setAttribute(PresentationConstants.EXECUTION_PERIOD_OID, infoExecutionCourse.getInfoExecutionPeriod()
-                .getIdInternal().toString());
+                .getExternalId().toString());
 
         request.setAttribute(PresentationConstants.EXECUTION_COURSE, infoExecutionCourse);
-        request.setAttribute(PresentationConstants.EXECUTION_COURSE_OID, infoExecutionCourse.getIdInternal().toString());
+        request.setAttribute(PresentationConstants.EXECUTION_COURSE_OID, infoExecutionCourse.getExternalId().toString());
 
         request.setAttribute(PresentationConstants.CURRICULAR_YEAR_OID, curricularYear.toString());
         ContextUtils.setCurricularYearContext(request);
@@ -87,7 +87,7 @@ public class DefineCommentAction extends
                 (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
 
         try {
-            DefineExamComment.run(executionCourseCode, infoExecutionPeriod.getIdInternal(), comment);
+            DefineExamComment.run(executionCourseCode, infoExecutionPeriod.getExternalId(), comment);
         } catch (FenixServiceException e) {
             ActionErrors actionErrors = new ActionErrors();
             actionErrors.add(e.getMessage(), new ActionError(e.getMessage()));

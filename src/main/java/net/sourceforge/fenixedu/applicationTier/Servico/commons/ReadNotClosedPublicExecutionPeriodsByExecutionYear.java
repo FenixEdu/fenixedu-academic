@@ -20,7 +20,7 @@ public class ReadNotClosedPublicExecutionPeriodsByExecutionYear {
         if (infoExecutionYear == null) {
             executionYear = ExecutionYear.readCurrentExecutionYear();
         } else {
-            executionYear = RootDomainObject.getInstance().readExecutionYearByOID(infoExecutionYear.getIdInternal());
+            executionYear = RootDomainObject.getInstance().readExecutionYearByOID(infoExecutionYear.getExternalId());
         }
 
         final List<InfoExecutionPeriod> result = new ArrayList<InfoExecutionPeriod>();

@@ -37,7 +37,7 @@
                 <tr>   
                              	
                     <td class="acenter">                                                              
-                        <html:link page="<%="/viewShiftsAndGroups.do?method=execute&amp;executionCourseCode=" + request.getParameter("executionCourseCode") %>" paramId="groupPropertiesCode" paramName="infoGroupProperties" paramProperty="idInternal">
+                        <html:link page="<%="/viewShiftsAndGroups.do?method=execute&amp;executionCourseCode=" + request.getParameter("executionCourseCode") %>" paramId="groupPropertiesCode" paramName="infoGroupProperties" paramProperty="externalId">
 							<b><bean:write name="infoGroupProperties" property="name"/></b>
 						</html:link>						
                     </td>

@@ -23,7 +23,7 @@ public class InfoPersonAccount extends InfoObject {
     public static InfoPersonAccount copyFromDomain(PersonAccount personAccount) {
         InfoPersonAccount infoPersonAccount = new InfoPersonAccount();
 
-        infoPersonAccount.setIdInternal(personAccount.getIdInternal());
+        infoPersonAccount.setExternalId(personAccount.getExternalId());
         infoPersonAccount.setBalance(personAccount.getBalance());
 
         return infoPersonAccount;

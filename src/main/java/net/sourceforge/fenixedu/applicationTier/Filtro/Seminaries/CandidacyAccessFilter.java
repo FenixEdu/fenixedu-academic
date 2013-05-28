@@ -59,7 +59,7 @@ public class CandidacyAccessFilter {
             SeminaryCandidacy candidacy = RootDomainObject.getInstance().readSeminaryCandidacyByOID(candidacyID);
             //
             if ((candidacy != null)
-                    && (candidacy.getStudent().getIdInternal().intValue() != registration.getIdInternal().intValue())) {
+                    && (candidacy.getStudent().getExternalId().intValue() != registration.getExternalId().intValue())) {
                 result = false;
             }
         } else {

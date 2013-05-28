@@ -52,7 +52,7 @@ public class TransferCurricularCourse {
 
         CurricularCourse curricularCourse = null;
         for (final CurricularCourse curricularCourseOther : sourceExecutionCourse.getAssociatedCurricularCoursesSet()) {
-            if (curricularCourseOther.getIdInternal().equals(curricularCourseId)) {
+            if (curricularCourseOther.getExternalId().equals(curricularCourseId)) {
                 curricularCourse = curricularCourseOther;
                 break;
             }
@@ -119,7 +119,7 @@ public class TransferCurricularCourse {
                         attend.setDisciplinaExecucao(destinationExecutionCourse);
                     }
 
-                    transferedStudents.add(registration.getIdInternal());
+                    transferedStudents.add(registration.getExternalId());
                 }
             }
         }

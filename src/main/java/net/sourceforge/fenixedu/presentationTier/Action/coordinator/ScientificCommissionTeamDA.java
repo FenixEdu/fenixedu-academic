@@ -47,7 +47,7 @@ public class ScientificCommissionTeamDA extends FenixDispatchAction {
         ExecutionDegree executionDegree = getExecutionDegree(request);
         if (executionDegree != null) {
             request.setAttribute("executionDegree", executionDegree);
-            request.setAttribute("executionDegreeId", executionDegree.getIdInternal());
+            request.setAttribute("executionDegreeId", executionDegree.getExternalId());
         } else {
             request.setAttribute("executionDegreeId", "");
         }
@@ -166,7 +166,7 @@ public class ScientificCommissionTeamDA extends FenixDispatchAction {
                 ExecutionDegree executionDegree = getExecutionDegree(request);
 
                 try {
-                    AddScientificCommission.runAddScientificCommission( executionDegree.getIdInternal(), employee.getPerson() );
+                    AddScientificCommission.runAddScientificCommission( executionDegree.getExternalId(), employee.getPerson() );
                     RenderUtils.invalidateViewState("usernameChoice");
                 } catch (DomainException e) {
                     addActionMessage("addError", request, e.getKey(), e.getArgs());
@@ -185,9 +185,9 @@ public class ScientificCommissionTeamDA extends FenixDispatchAction {
             ExecutionDegree executionDegree = getExecutionDegree(request);
 
             for (ScientificCommission commission : executionDegree.getScientificCommissionMembers()) {
-                if (commission.getIdInternal().equals(memberId)) {
+                if (commission.getExternalId().equals(memberId)) {
                     try {
-                        DeleteScientificCommission.runDeleteScientificCommission( executionDegree.getIdInternal(), commission );
+                        DeleteScientificCommission.runDeleteScientificCommission( executionDegree.getExternalId(), commission );
                     } catch (DomainException e) {
                         addActionMessage("addError", request, e.getKey(), e.getArgs());
                     }

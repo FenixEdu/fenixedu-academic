@@ -171,15 +171,15 @@ return (aVal - bVal);
 		<tbody>
 		
 		<logic:iterate id="writtenEvaluation" name="writtenEvaluations">
-			<bean:define id="evaluationID" name="writtenEvaluation" property="idInternal"/>
+			<bean:define id="evaluationID" name="writtenEvaluation" property="externalId"/>
 			<bean:define id="evaluationTypeClassname" name="writtenEvaluation" property="class.name"/>
 			<tr>
 				<td>
 					<logic:iterate id="executionCourse" name="writtenEvaluation" property="associatedExecutionCourses">
 						<bean:write name="executionCourse" property="nome"/><br />
-						<bean:define id="executionCourseID" name="executionCourse" property="idInternal"/>
+						<bean:define id="executionCourseID" name="executionCourse" property="externalId"/>
 						<bean:define id="academicInterval" name="academicInterval"/>
-						<bean:define id="executionYearID" name="executionCourse" property="executionPeriod.executionYear.idInternal" type="java.lang.Integer"/>
+						<bean:define id="executionYearID" name="executionCourse" property="executionPeriod.executionYear.externalId" type="java.lang.Integer"/>
 					</logic:iterate>
 				</td>
 				<td>
@@ -188,7 +188,7 @@ return (aVal - bVal);
 						<bean:write name="degreeModuleScope" property="curricularCourse.degreeCurricularPlan.degree.sigla"/><br />
 					</logic:iterate>
 				
-                    <bean:define id="executionDegreeID" name="writtenEvaluation" property="executionDegree.idInternal" />
+                    <bean:define id="executionDegreeID" name="writtenEvaluation" property="executionDegree.externalId" />
     
 					<logic:iterate id="executionCourse" name="writtenEvaluation" property="associatedExecutionCourses">
 						<logic:iterate id="curricularCourse" name="executionCourse" property="associatedCurricularCourses">

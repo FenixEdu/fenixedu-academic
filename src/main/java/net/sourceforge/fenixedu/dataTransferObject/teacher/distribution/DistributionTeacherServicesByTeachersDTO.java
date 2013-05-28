@@ -22,7 +22,7 @@ import org.joda.time.format.PeriodFormatterBuilder;
 public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject {
 
     public class ExecutionCourseTeacherServiceDTO {
-        private Integer executionCourseIdInternal;
+        private Integer executionCourseExternalId;
 
         private String executionCourseName;
 
@@ -36,11 +36,11 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
 
         private Map<Integer, Set<String>> executionYearsSet;
 
-        public ExecutionCourseTeacherServiceDTO(Integer idInternal, String name, Integer hours, Duration timeSpentByTeacher,
+        public ExecutionCourseTeacherServiceDTO(Integer externalId, String name, Integer hours, Duration timeSpentByTeacher,
                 Map<Integer, String> executionCourseDegreesNameMap, Map<Integer, Set<String>> executionYearsMap, String periodName) {
             super();
 
-            this.executionCourseIdInternal = idInternal;
+            this.executionCourseExternalId = externalId;
             this.hoursSpentByTeacher = hours;
             this.timeSpentByTeacher = timeSpentByTeacher;
             this.executionCourseName = name;
@@ -49,8 +49,8 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
             this.courseDegreesList = executionCourseDegreesNameMap;
         }
 
-        public Integer getExecutionCourseIdInternal() {
-            return executionCourseIdInternal;
+        public Integer getExecutionCourseExternalId() {
+            return executionCourseExternalId;
         }
 
         public String getExecutionCourseName() {
@@ -83,12 +83,12 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
             Iterator<Integer> iteratorDegreeIdSet = degreeIdSet.iterator();
 
             if (iteratorDegreeIdSet.hasNext()) {
-                Integer firstDegreeIdInternal = iteratorDegreeIdSet.next();
+                Integer firstDegreeExternalId = iteratorDegreeIdSet.next();
 
-                finalString.append(courseDegreesList.get(firstDegreeIdInternal));
+                finalString.append(courseDegreesList.get(firstDegreeExternalId));
                 finalString.append(" (");
 
-                Set<String> firstCurricularYearsSet = executionYearsSet.get(firstDegreeIdInternal);
+                Set<String> firstCurricularYearsSet = executionYearsSet.get(firstDegreeExternalId);
 
                 Iterator<String> iteratorFirstCurricularYearsSet = firstCurricularYearsSet.iterator();
 
@@ -108,12 +108,12 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
                 while (iteratorDegreeIdSet.hasNext()) {
                     finalString.append(", ");
 
-                    Integer degreeIdInternal = iteratorDegreeIdSet.next();
+                    Integer degreeExternalId = iteratorDegreeIdSet.next();
 
-                    finalString.append(courseDegreesList.get(degreeIdInternal));
+                    finalString.append(courseDegreesList.get(degreeExternalId));
                     finalString.append(" (");
 
-                    Set<String> curricularYearsSet = executionYearsSet.get(degreeIdInternal);
+                    Set<String> curricularYearsSet = executionYearsSet.get(degreeExternalId);
 
                     Iterator<String> iteratorCurricularYearsSet = curricularYearsSet.iterator();
 
@@ -179,7 +179,7 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
     }
 
     public class TeacherDistributionServiceEntryDTO implements Comparable {
-        private Integer teacherIdInternal;
+        private Integer teacherExternalId;
 
         private String teacherId;
 
@@ -201,7 +201,7 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
                 Double accumulatedCredits) {
             this.teacherId = teacherId;
             teacherCategory = category;
-            teacherIdInternal = internal;
+            teacherExternalId = internal;
             teacherName = name;
             teacherRequiredHours = hours;
             teacherAccumulatedCredits = accumulatedCredits;
@@ -221,8 +221,8 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
             return teacherCategory;
         }
 
-        public Integer getTeacherIdInternal() {
-            return teacherIdInternal;
+        public Integer getTeacherExternalId() {
+            return teacherExternalId;
         }
 
         public String getTeacherName() {
@@ -346,11 +346,11 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
         }
     }
 
-    public void addExecutionCourseToTeacher(Integer keyTeacher, Integer executionCourseIdInternal, String executionCourseName,
+    public void addExecutionCourseToTeacher(Integer keyTeacher, Integer executionCourseExternalId, String executionCourseName,
             Integer hours, Duration timeSpentByTeacher, Map<Integer, String> executionCourseDegreesNameSet,
             Map<Integer, Set<String>> curricularYearsSet, String periodName) {
         ExecutionCourseTeacherServiceDTO executionCourse =
-                new ExecutionCourseTeacherServiceDTO(executionCourseIdInternal, executionCourseName, hours, timeSpentByTeacher,
+                new ExecutionCourseTeacherServiceDTO(executionCourseExternalId, executionCourseName, hours, timeSpentByTeacher,
                         executionCourseDegreesNameSet, curricularYearsSet, periodName);
 
         teachersMap.get(keyTeacher).addExecutionCourse(executionCourse);

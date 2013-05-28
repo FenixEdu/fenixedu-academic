@@ -29,7 +29,7 @@ public abstract class PostingRule extends PostingRule_Base {
         @Override
         public int compare(PostingRule leftPostingRule, PostingRule rightPostingRule) {
             int comparationResult = leftPostingRule.getEventType().compareTo(rightPostingRule.getEventType());
-            return (comparationResult == 0) ? leftPostingRule.getIdInternal().compareTo(rightPostingRule.getIdInternal()) : comparationResult;
+            return (comparationResult == 0) ? leftPostingRule.getExternalId().compareTo(rightPostingRule.getExternalId()) : comparationResult;
         }
     };
 
@@ -37,7 +37,7 @@ public abstract class PostingRule extends PostingRule_Base {
         @Override
         public int compare(PostingRule leftPostingRule, PostingRule rightPostingRule) {
             int comparationResult = leftPostingRule.getStartDate().compareTo(rightPostingRule.getStartDate());
-            return (comparationResult == 0) ? leftPostingRule.getIdInternal().compareTo(rightPostingRule.getIdInternal()) : comparationResult;
+            return (comparationResult == 0) ? leftPostingRule.getExternalId().compareTo(rightPostingRule.getExternalId()) : comparationResult;
         }
     };
 
@@ -55,7 +55,7 @@ public abstract class PostingRule extends PostingRule_Base {
                 comparationResult = left.getEndDate().compareTo(right.getEndDate());
             }
 
-            return comparationResult == 0 ? left.getIdInternal().compareTo(right.getIdInternal()) : comparationResult;
+            return comparationResult == 0 ? left.getExternalId().compareTo(right.getExternalId()) : comparationResult;
         }
     };
 

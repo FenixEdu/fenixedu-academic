@@ -24,8 +24,8 @@
 	</tr>
 	
 	<logic:iterate id="changeRequest" name="changeRequests" type="net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformationChangeRequest">
-		<bean:define id="changeRequestID" name="changeRequest" property="idInternal"/>
-		<bean:define id="competenceCourseID" name="changeRequest" property="competenceCourse.idInternal"/>
+		<bean:define id="changeRequestID" name="changeRequest" property="externalId"/>
+		<bean:define id="competenceCourseID" name="changeRequest" property="competenceCourse.externalId"/>
 		<tr>
 			<td><fr:view name="changeRequest" property="executionPeriod.executionYear.year"/></td>			
 			<td class="nowrap"><fr:view name="changeRequest" property="executionPeriod.name"/></td>

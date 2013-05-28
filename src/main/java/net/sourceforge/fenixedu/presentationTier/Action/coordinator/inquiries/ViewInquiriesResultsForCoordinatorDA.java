@@ -316,9 +316,9 @@ public class ViewInquiriesResultsForCoordinatorDA extends ViewInquiriesResultsDA
         ((ViewInquiriesResultPageDTO) actionForm).setExecutionSemester(coordinatorResultsBean.getExecutionCourse()
                 .getExecutionPeriod());
         ((ViewInquiriesResultPageDTO) actionForm).setDegreeCurricularPlanID(coordinatorResultsBean.getExecutionDegree()
-                .getDegreeCurricularPlan().getIdInternal());
+                .getDegreeCurricularPlan().getExternalId());
         request.setAttribute("degreeCurricularPlanID", coordinatorResultsBean.getExecutionDegree().getDegreeCurricularPlan()
-                .getIdInternal().toString());
+                .getExternalId().toString());
 
         CoordinatedDegreeInfo.setCoordinatorContext(request);
         return selectexecutionSemester(actionMapping, actionForm, request, response);
@@ -346,9 +346,9 @@ public class ViewInquiriesResultsForCoordinatorDA extends ViewInquiriesResultsDA
 
         ((ViewInquiriesResultPageDTO) actionForm).setExecutionSemester(coordinatorInquiryBean.getExecutionSemester());
         ((ViewInquiriesResultPageDTO) actionForm).setDegreeCurricularPlanID(coordinatorInquiryBean.getCoordinator()
-                .getExecutionDegree().getDegreeCurricularPlan().getIdInternal());
+                .getExecutionDegree().getDegreeCurricularPlan().getExternalId());
         request.setAttribute("degreeCurricularPlanID", coordinatorInquiryBean.getCoordinator().getExecutionDegree()
-                .getDegreeCurricularPlan().getIdInternal().toString());
+                .getDegreeCurricularPlan().getExternalId().toString());
 
         CoordinatedDegreeInfo.setCoordinatorContext(request);
         return selectexecutionSemester(actionMapping, actionForm, request, response);

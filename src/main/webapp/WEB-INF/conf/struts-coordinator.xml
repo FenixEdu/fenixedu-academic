@@ -170,7 +170,7 @@
                   <form-property type="java.lang.Integer" name="page"></form-property>
                   <form-property type="java.lang.String" name="executionDegreeOID"></form-property>
                   <form-property type="java.lang.String" name="degree"></form-property>
-                  <form-property type="java.lang.String" name="idInternal"></form-property>
+                  <form-property type="java.lang.String" name="externalId"></form-property>
                   <form-property type="java.lang.String" name="title"></form-property>
                   <form-property type="java.lang.String" name="orientatorOID"></form-property>
                   <form-property type="java.lang.String" name="coorientatorOID"></form-property>

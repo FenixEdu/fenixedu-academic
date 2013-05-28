@@ -20,7 +20,7 @@
 
 <bean:define id="studentCurricularPlan" name="exemptionGratuity" property="infoStudentCurricularPlan" />
 <logic:present name="studentCurricularPlan">
-<bean:define id="studentCurricularPlanID" name="studentCurricularPlan" property="idInternal" />
+<bean:define id="studentCurricularPlanID" name="studentCurricularPlan" property="externalId" />
 <table width="98%" border="0" cellpadding="0" cellspacing="0">
 	<tr>
 		<td align="center" class="infoselected">

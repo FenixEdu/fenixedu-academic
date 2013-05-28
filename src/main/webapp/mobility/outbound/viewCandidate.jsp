@@ -176,7 +176,7 @@
 								<bean:write name="registration" property="activeStateType.description"/>
 							</td>
 							<td>
-								<html:link href="<%= request.getContextPath() + "/academicAdministration/viewStudentCurriculum.do?method=prepare&registrationOID=" + registration.getIdInternal() %>">
+								<html:link href="<%= request.getContextPath() + "/academicAdministration/viewStudentCurriculum.do?method=prepare&registrationOID=" + registration.getExternalId() %>">
 									<bean:message key="label.view"/>
 								</html:link>
 							</td>

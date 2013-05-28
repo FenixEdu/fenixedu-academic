@@ -25,7 +25,7 @@ public class EditCourseInformation {
             courseReport = RootDomainObject.getInstance().readCourseReportByOID(courseReportID);
         } else {
             final ExecutionCourse executionCourse =
-                    RootDomainObject.getInstance().readExecutionCourseByOID(infoCourseReport.getInfoExecutionCourse().getIdInternal());
+                    RootDomainObject.getInstance().readExecutionCourseByOID(infoCourseReport.getInfoExecutionCourse().getExternalId());
 
             courseReport = executionCourse.createCourseReport(newReport);
         }

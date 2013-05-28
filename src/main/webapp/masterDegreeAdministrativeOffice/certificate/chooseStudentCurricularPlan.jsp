@@ -27,7 +27,7 @@
 	</table>
 	<p/>
 	<logic:iterate id="studentCurricularPlan" name="studentCurricularPlans">
-		<bean:define id="studentCurricularPlanID" name="studentCurricularPlan" property="idInternal" />
+		<bean:define id="studentCurricularPlanID" name="studentCurricularPlan" property="externalId" />
 		<bean:define id="path" name="path" />
 	
 		<html:link page="<%= "/choose" + pageContext.getAttribute("path") + "InfoAction.do?method=chooseFinal&amp;studentCurricularPlanID=" + pageContext.getAttribute("studentCurricularPlanID")%>"><bean:write name="studentCurricularPlan" property="infoDegreeCurricularPlan.name" /></html:link>

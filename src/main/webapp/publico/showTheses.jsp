@@ -65,7 +65,7 @@
 		
 		<ul>
 			<logic:iterate id="thesis" name="theses" property="<%= executionYear.getYear() %>" scope="request">
-				<bean:define id="thesisId" name="thesis" property="idInternal"/>
+				<bean:define id="thesisId" name="thesis" property="externalId"/>
 				
 				<li>
 					<p class="mtop0 mbottom0">

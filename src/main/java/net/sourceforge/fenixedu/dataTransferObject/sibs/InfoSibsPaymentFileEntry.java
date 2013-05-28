@@ -34,10 +34,10 @@ public class InfoSibsPaymentFileEntry extends InfoObject {
     }
 
     /**
-     * @param idInternal
+     * @param externalId
      */
-    public InfoSibsPaymentFileEntry(Integer idInternal) {
-        super(idInternal);
+    public InfoSibsPaymentFileEntry(Integer externalId) {
+        super(externalId);
     }
 
     public Double getPayedValue() {
@@ -98,7 +98,7 @@ public class InfoSibsPaymentFileEntry extends InfoObject {
             this.setTransactionDate(new Timestamp(sibsPaymentFileEntry.getTransactionDate().getTime()));
         }
         setYear(sibsPaymentFileEntry.getYear());
-        setIdInternal(sibsPaymentFileEntry.getIdInternal());
+        setExternalId(sibsPaymentFileEntry.getExternalId());
 
     }
 

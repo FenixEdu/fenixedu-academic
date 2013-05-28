@@ -9,7 +9,7 @@
 	<table class="tstyle5">	
 		<logic:notEmpty name="summariesManagementBean" property="professorship">
 			<bean:define id="professorship" name="summariesManagementBean" property="professorship" />
-		 	<bean:define id="professorshipId" name="summariesManagementBean" property="professorship.idInternal" />
+		 	<bean:define id="professorshipId" name="summariesManagementBean" property="professorship.externalId" />
 			<tr>
 		 		<td><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.teacher" name="summariesManagementForm" property="teacher" value="<%= professorshipId.toString()%>"/></td>				
 		 		<td><bean:write name="professorship" property="person.name"/></td>
@@ -17,7 +17,7 @@
 		</logic:notEmpty>
 		<logic:empty name="summariesManagementBean" property="professorship">
 			<bean:define id="professorship" name="summariesManagementBean" property="professorshipLogged" />
-		 	<bean:define id="professorshipId" name="summariesManagementBean" property="professorshipLogged.idInternal" />
+		 	<bean:define id="professorshipId" name="summariesManagementBean" property="professorshipLogged.externalId" />
 			<tr>
 		 		<td><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.teacher" name="summariesManagementForm" property="teacher" value="<%= professorshipId.toString()%>"/></td>				
 		 		<td><bean:write name="professorship" property="person.name"/></td>

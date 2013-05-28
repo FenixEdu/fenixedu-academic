@@ -92,7 +92,7 @@ function getIndex(input){
 			<logic:iterate id="projectAccess" name="personAccessesList">
 				<bean:define id="person" name="projectAccess" property="infoPerson" />
 				<bean:define id="username" name="person" property="username" />
-				<bean:define id="personCode" name="person" property="idInternal" />
+				<bean:define id="personCode" name="person" property="externalId" />
 				<bean:define id="projectCode" name="projectAccess" property="keyProject" />
 				<bean:define id="infoProject" name="projectAccess" property="infoProject" />
 				<tr>

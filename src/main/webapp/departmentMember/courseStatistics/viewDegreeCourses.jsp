@@ -72,7 +72,7 @@
 				<fc:commandLink value="#{degreeCourse.name}"	
 					action="viewExecutionCourses"
 					actionListener="#{courseStatistics.onDegreeCourseSelect}">
-					<f:param id="degreeId" name="degreeId" value="#{degreeCourse.idInternal}" />
+					<f:param id="degreeId" name="degreeId" value="#{degreeCourse.externalId}" />
 				</fc:commandLink>
 
 				<h:outputText value="</td>" escape="false" />
@@ -100,7 +100,7 @@
 					<fc:commandLink value="#{bundle['label.teacherService.exportToExcel']}" 
 									action="#{courseStatistics.exportStudentsToExcel}"
 									actionListener="#{courseStatistics.onDegreeCourseSelect}">
-						<f:param id="degreeToExportId" name="degreeId" value="#{degreeCourse.idInternal}" />
+						<f:param id="degreeToExportId" name="degreeId" value="#{degreeCourse.externalId}" />
 					</fc:commandLink>
 					
 				<h:outputText value="</td></tr>" escape="false"/>

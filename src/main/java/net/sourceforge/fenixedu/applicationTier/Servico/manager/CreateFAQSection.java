@@ -20,8 +20,8 @@ public class CreateFAQSection {
     @Service
     public static void run(InfoFAQSection infoFAQSection) {
         FAQSection parentFAQSection = null;
-        if (infoFAQSection.getParentSection() != null && infoFAQSection.getParentSection().getIdInternal() != null) {
-            parentFAQSection = RootDomainObject.getInstance().readFAQSectionByOID(infoFAQSection.getParentSection().getIdInternal());
+        if (infoFAQSection.getParentSection() != null && infoFAQSection.getParentSection().getExternalId() != null) {
+            parentFAQSection = RootDomainObject.getInstance().readFAQSectionByOID(infoFAQSection.getParentSection().getExternalId());
         }
 
         FAQSection faqSection = new FAQSection();

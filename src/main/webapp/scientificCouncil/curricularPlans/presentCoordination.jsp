@@ -14,7 +14,7 @@
 <fr:view name="executionDegreesSet">
 	<fr:layout name="tabular">
 		<fr:property name="linkFormat(edit)"
-			value="/curricularPlans/editExecutionDegreeCoordination.do?method=editCoordination&executionDegreeId=${idInternal}" />
+			value="/curricularPlans/editExecutionDegreeCoordination.do?method=editCoordination&executionDegreeId=${externalId}" />
 		<fr:property name="order(edit)" value="1" />
 		<fr:property name="key(edit)"
 			value="label.edit.coordinationTeam" />

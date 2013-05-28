@@ -106,7 +106,7 @@ public class ShowExamsManagement extends FenixContextDispatchAction {
         ContextUtils.setCurricularYearContext(request);
 
         request.setAttribute(PresentationConstants.EXECUTION_COURSE_KEY, infoExecutionCourse);
-        request.setAttribute(PresentationConstants.EXECUTION_COURSE_OID, infoExecutionCourse.getIdInternal().toString());
+        request.setAttribute(PresentationConstants.EXECUTION_COURSE_OID, infoExecutionCourse.getExternalId().toString());
 
         ContextUtils.setExecutionDegreeContext(request);
 
@@ -144,7 +144,7 @@ public class ShowExamsManagement extends FenixContextDispatchAction {
 
         InfoExam infoExam = ReadExamByOID.run(examID);
         request.setAttribute(PresentationConstants.EXAM, infoExam);
-        request.setAttribute(PresentationConstants.EXAM_OID, infoExam.getIdInternal());
+        request.setAttribute(PresentationConstants.EXAM_OID, infoExam.getExternalId());
         return mapping.findForward("editExam");
     }
 

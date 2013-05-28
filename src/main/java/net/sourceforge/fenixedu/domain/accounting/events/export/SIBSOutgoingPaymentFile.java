@@ -61,7 +61,7 @@ public class SIBSOutgoingPaymentFile extends SIBSOutgoingPaymentFile_Base {
                 @Override
                 public int compare(SIBSOutgoingPaymentFile o1, SIBSOutgoingPaymentFile o2) {
                     if (o1.getUploadTime() == null && o2.getUploadTime() == null) {
-                        return o1.getIdInternal().compareTo(o2.getIdInternal());
+                        return o1.getExternalId().compareTo(o2.getExternalId());
                     } else if (o1.getUploadTime() == null) {
                         return -1;
                     } else if (o2.getUploadTime() == null) {

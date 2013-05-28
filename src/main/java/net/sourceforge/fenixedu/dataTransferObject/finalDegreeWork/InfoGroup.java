@@ -44,12 +44,12 @@ public class InfoGroup extends InfoObject {
     }
 
     @Override
-    public Integer getIdInternal() {
-        return getGroup().getIdInternal();
+    public Integer getExternalId() {
+        return getGroup().getExternalId();
     }
 
     @Override
-    public void setIdInternal(Integer integer) {
+    public void setExternalId(Integer integer) {
         throw new Error("Method should not be called!");
     }
 

@@ -33,7 +33,7 @@ public class RemoveStudentFromFinalDegreeWorkStudentGroup {
         Registration registration = Registration.readByUsername(username);
 
         if (group == null || registration == null || group.getGroupStudents() == null
-                || registration.getIdInternal().equals(studentToRemoveID)) {
+                || registration.getExternalId().equals(studentToRemoveID)) {
             return false;
         }
 
@@ -57,7 +57,7 @@ public class RemoveStudentFromFinalDegreeWorkStudentGroup {
         public boolean evaluate(Object arg0) {
             GroupStudent groupStudent = (GroupStudent) arg0;
             if (groupStudent != null && groupStudent.getRegistration() != null && studentID != null
-                    && !studentID.equals(groupStudent.getRegistration().getIdInternal())) {
+                    && !studentID.equals(groupStudent.getRegistration().getExternalId())) {
                 return true;
             }
             return false;

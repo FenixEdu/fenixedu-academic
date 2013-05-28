@@ -34,7 +34,7 @@ public class CourseLoad implements Serializable {
 
     public CourseLoad(String action, CompetenceCourseLoad competenceCourseLoad) {
         setAction(action);
-        setIdentification(competenceCourseLoad.getIdInternal());
+        setIdentification(competenceCourseLoad.getExternalId());
         setTheoreticalHours(competenceCourseLoad.getTheoreticalHours());
         setProblemsHours(competenceCourseLoad.getProblemsHours());
         setLaboratorialHours(competenceCourseLoad.getLaboratorialHours());

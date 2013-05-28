@@ -25,7 +25,7 @@ public class LerTurnosDeDisciplinaExecucao {
 
         List<InfoShift> infoShifts = new ArrayList<InfoShift>();
 
-        ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
+        ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(infoExecutionCourse.getExternalId());
         Iterator<Shift> itShiftList = executionCourse.getAssociatedShifts().iterator();
 
         while (itShiftList.hasNext()) {

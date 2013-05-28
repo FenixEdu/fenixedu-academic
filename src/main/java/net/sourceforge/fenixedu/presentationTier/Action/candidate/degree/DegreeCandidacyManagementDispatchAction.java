@@ -125,7 +125,7 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
                 if (candidacy.getRegistration().hasInquiryStudentCycleAnswer()) {
 
                     request.setAttribute("schemaSuffix", getSchemaSuffixForPerson(request));
-                    request.setAttribute("candidacyID", candidacy.getIdInternal());
+                    request.setAttribute("candidacyID", candidacy.getExternalId());
 
                     addActionMessage(request, "warning.candidacy.process.is.already.concluded");
 
@@ -294,7 +294,7 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
         }
 
         request.setAttribute("schemaSuffix", getSchemaSuffixForPerson(request));
-        request.setAttribute("candidacyID", candidacyOperation.getCandidacy().getIdInternal());
+        request.setAttribute("candidacyID", candidacyOperation.getCandidacy().getExternalId());
 
         return showCandidacyDetails(mapping, form, request, response);
 
@@ -411,7 +411,7 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
     private String buildSummaryPdfGeneratorURL(HttpServletRequest request, final StudentCandidacy candidacy) {
         String url =
                 "/candidate/degreeCandidacyManagement.do?method=doOperation&operationType=PRINT_ALL_DOCUMENTS&candidacyID="
-                        + candidacy.getIdInternal()
+                        + candidacy.getExternalId()
                         + "&"
                         + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME
                         + "=/portal-do-candidato/portal-do-candidato";

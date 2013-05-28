@@ -280,7 +280,7 @@ public class StudentTestsAction extends FenixDispatchAction {
         String img = null;
         try {
             img =
-                    ReadStudentTestQuestionImage.run(registration.getIdInternal(), distributedTest.getIdInternal(), exerciseId,
+                    ReadStudentTestQuestionImage.run(registration.getExternalId(), distributedTest.getExternalId(), exerciseId,
                             imgCode, feedbackId, itemIndex, path);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);

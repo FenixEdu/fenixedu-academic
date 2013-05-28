@@ -82,16 +82,16 @@ public class ManageEvaluationsForStudent extends DisplayEvaluationsForStudentToE
                         } else {
                             this.evaluationsWithEnrolmentPeriodClosed.add(writtenEvaluation);
                             final AllocatableSpace room = registration.getRoomFor(writtenEvaluation);
-                            getStudentRooms().put(writtenEvaluation.getIdInternal(), room != null ? room.getNome() : "-");
+                            getStudentRooms().put(writtenEvaluation.getExternalId(), room != null ? room.getNome() : "-");
                         }
                     } catch (final DomainException e) {
                         getEvaluationsWithoutEnrolmentPeriod().add(writtenEvaluation);
                         final AllocatableSpace room = registration.getRoomFor(writtenEvaluation);
-                        getStudentRooms().put(writtenEvaluation.getIdInternal(), room != null ? room.getNome() : "-");
+                        getStudentRooms().put(writtenEvaluation.getExternalId(), room != null ? room.getNome() : "-");
                     } finally {
-                        getEnroledEvaluationsForStudent().put(writtenEvaluation.getIdInternal(),
+                        getEnroledEvaluationsForStudent().put(writtenEvaluation.getExternalId(),
                                 Boolean.valueOf(registration.isEnroledIn(writtenEvaluation)));
-                        getExecutionCourses().put(writtenEvaluation.getIdInternal(),
+                        getExecutionCourses().put(writtenEvaluation.getExternalId(),
                                 writtenEvaluation.getAttendingExecutionCoursesFor(registration));
                     }
                 }

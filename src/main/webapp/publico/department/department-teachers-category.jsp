@@ -28,7 +28,7 @@
         <bean:message key="academic.units" bundle="PUBLIC_DEPARTMENT_RESOURCES"/> 
     </html:link>
     &nbsp;&gt;&nbsp;
-    <bean:define id="unitId" name="unit" property="idInternal"/>
+    <bean:define id="unitId" name="unit" property="externalId"/>
     <html:link page="<%= "/department/departmentSite.do?method=presentation&amp;selectedDepartmentUnitID=" + unitId %>">
         <fr:view name="department" property="nameI18n"/>
     </html:link>

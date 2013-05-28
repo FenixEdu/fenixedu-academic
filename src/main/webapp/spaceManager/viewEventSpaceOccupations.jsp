@@ -16,7 +16,7 @@
 		<h2><bean:message key="label.space.event.space.occupations" bundle="SPACE_RESOURCES"/></h2>		
 	
 		<p class="mtop15 mbottom05">
-			<html:link page="/manageSpaces.do?method=manageSpace" paramId="spaceInformationID" paramName="eventSpaceOccupationsBean" paramProperty="allocatableSpace.spaceInformation.idInternal"> &laquo; <bean:message key="link.back" bundle="SPACE_RESOURCES"/></html:link>		
+			<html:link page="/manageSpaces.do?method=manageSpace" paramId="spaceInformationID" paramName="eventSpaceOccupationsBean" paramProperty="allocatableSpace.spaceInformation.externalId"> &laquo; <bean:message key="link.back" bundle="SPACE_RESOURCES"/></html:link>		
 		</p>
 		
 		<fr:view name="eventSpaceOccupationsBean" property="allocatableSpace" schema="ViewEventSpaceOccupationsSpaceInfoSchema">	

@@ -15,7 +15,7 @@
 </html:messages>
 
 <div style="float: right;">
-	<bean:define id="personID" name="documentRequestCreateBean" property="registration.student.person.idInternal"/>
+	<bean:define id="personID" name="documentRequestCreateBean" property="registration.student.person.externalId"/>
 	<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
 </div>
 

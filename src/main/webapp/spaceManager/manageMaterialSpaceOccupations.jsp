@@ -11,7 +11,7 @@
 <logic:present name="selectedSpaceInformation">	
 
 	<bean:define id="space" name="selectedSpaceInformation" property="space" toScope="request"/>
-	<bean:define id="selectedSpaceInformationId" name="selectedSpaceInformation" property="idInternal" />
+	<bean:define id="selectedSpaceInformationId" name="selectedSpaceInformation" property="externalId" />
 	<jsp:include page="spaceCrumbs.jsp"/>	
 	
 	<bean:define id="space" name="selectedSpaceInformation" property="space"/>	
@@ -24,7 +24,7 @@
 			</html:link>
 		</li>
 		<li>
-			<html:link page="/manageMaterialSpaceOccupations.do?method=prepareChooseMaterialType&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
+			<html:link page="/manageMaterialSpaceOccupations.do?method=prepareChooseMaterialType&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="externalId">
 				<bean:message bundle="SPACE_RESOURCES" key="link.insert.material.occupations"/>
 			</html:link>
 		</li>
@@ -52,13 +52,13 @@
    			<fr:property name="classes" value="tstyle4 thlight tdcenter mtop05"/>			
 
    			<fr:property name="link(edit)" value="<%="/manageMaterialSpaceOccupations.do?method=prepareEditMaterialSpaceOccupation&spaceInformationID=" + selectedSpaceInformationId %>"/>
-            <fr:property name="param(edit)" value="idInternal/materialOccupationID"/>
+            <fr:property name="param(edit)" value="externalId/materialOccupationID"/>
 	        <fr:property name="key(edit)" value="link.edit"/>
             <fr:property name="bundle(edit)" value="SPACE_RESOURCES"/>
             <fr:property name="order(edit)" value="0"/>
             
             <fr:property name="link(delete)" value="<%="/manageMaterialSpaceOccupations.do?method=deleteMaterialSpaceOccupation&page=0&spaceInformationID=" + selectedSpaceInformationId %>"/>
-            <fr:property name="param(delete)" value="idInternal/materialOccupationID"/>
+            <fr:property name="param(delete)" value="externalId/materialOccupationID"/>
 	        <fr:property name="key(delete)" value="link.delete"/>
             <fr:property name="bundle(delete)" value="SPACE_RESOURCES"/>
             <fr:property name="order(delete)" value="0"/>             
@@ -81,13 +81,13 @@
    			<fr:property name="classes" value="tstyle4 thlight tdcenter mtop05"/>
    			   			
    			<fr:property name="link(edit)" value="<%="/manageMaterialSpaceOccupations.do?method=prepareEditMaterialSpaceOccupation&spaceInformationID=" + selectedSpaceInformationId %>"/>
-            <fr:property name="param(edit)" value="idInternal/materialOccupationID"/>
+            <fr:property name="param(edit)" value="externalId/materialOccupationID"/>
 	        <fr:property name="key(edit)" value="link.edit"/>
             <fr:property name="bundle(edit)" value="SPACE_RESOURCES"/>
             <fr:property name="order(edit)" value="0"/>
             
             <fr:property name="link(delete)" value="<%="/manageMaterialSpaceOccupations.do?method=deleteMaterialSpaceOccupation&page=0&spaceInformationID=" + selectedSpaceInformationId %>"/>
-            <fr:property name="param(delete)" value="idInternal/materialOccupationID"/>
+            <fr:property name="param(delete)" value="externalId/materialOccupationID"/>
 	        <fr:property name="key(delete)" value="link.delete"/>
             <fr:property name="bundle(delete)" value="SPACE_RESOURCES"/>
             <fr:property name="order(delete)" value="0"/>    

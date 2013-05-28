@@ -16,7 +16,7 @@ public class ReadExecutionCourse {
     @Service
     public static Object run(InfoExecutionPeriod infoExecutionPeriod, String code) {
         final ExecutionSemester executionSemester =
-                RootDomainObject.getInstance().readExecutionSemesterByOID(infoExecutionPeriod.getIdInternal());
+                RootDomainObject.getInstance().readExecutionSemesterByOID(infoExecutionPeriod.getExternalId());
         ExecutionCourse iExecCourse = executionSemester.getExecutionCourseByInitials(code);
 
         if (iExecCourse != null) {

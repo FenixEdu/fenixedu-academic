@@ -17,7 +17,7 @@ public class DeleteShift {
     @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
     @Service
     public static void run(InfoShift infoShift) throws FenixServiceException {
-        RootDomainObject.getInstance().readShiftByOID(infoShift.getIdInternal()).delete();
+        RootDomainObject.getInstance().readShiftByOID(infoShift.getExternalId()).delete();
     }
 
 }

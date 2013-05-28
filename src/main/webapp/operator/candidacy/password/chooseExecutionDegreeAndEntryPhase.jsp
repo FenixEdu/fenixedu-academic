@@ -24,7 +24,7 @@
 	    <td>	
 	    	<html:select property="executionDegreeId">
 				<html:option value="0">&nbsp;</html:option>
-				<html:options collection="executionDegrees" property="idInternal" labelProperty="degree.presentationName"/>
+				<html:options collection="executionDegrees" property="externalId" labelProperty="degree.presentationName"/>
 			</html:select>
 		</td>
 	  </tr>

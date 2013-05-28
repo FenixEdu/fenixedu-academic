@@ -9,14 +9,14 @@
 
 
 <p>
-	<html:link page="/registration.do?method=viewAttends" paramId="registrationId" paramName="registration" paramProperty="idInternal">
+	<html:link page="/registration.do?method=viewAttends" paramId="registrationId" paramName="registration" paramProperty="externalId">
 		<bean:message key="link.student.back" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 	</html:link>
 </p>
 
 
 <div style="float: right;">
-	<bean:define id="personID" name="registration" property="student.person.idInternal"/>
+	<bean:define id="personID" name="registration" property="student.person.externalId"/>
 	<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
 </div>
 
@@ -53,7 +53,7 @@
 
 <h3 class="mbottom05"><bean:message key="label.add.attends" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 
-<bean:define id="registrationId" name="registration" property="idInternal"/>
+<bean:define id="registrationId" name="registration" property="externalId"/>
 <fr:edit id="addAttendsBean" name="addAttendsBean" schema="AddAttendsBean" action="<%="/registration.do?method=addAttends&registrationId=" + registrationId %>">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle4 thright thlight mtop05"/>

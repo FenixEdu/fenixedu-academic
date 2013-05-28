@@ -165,7 +165,7 @@ public class SubmitMarksAction extends FenixDispatchAction {
 
             enrolmentCode = Integer.valueOf(request.getParameter("enrolmentEvaluation[" + index + "].enrolmentCode"));
 
-            evaluationId = Integer.valueOf(request.getParameter("enrolmentEvaluation[" + index + "].idInternal"));
+            evaluationId = Integer.valueOf(request.getParameter("enrolmentEvaluation[" + index + "].externalId"));
 
         }
 
@@ -176,7 +176,7 @@ public class SubmitMarksAction extends FenixDispatchAction {
             infoEnrolmentEvaluation.setInfoEnrolment(InfoEnrolment.newInfoFromDomain(enrolment));
 
             infoEnrolmentEvaluation.setGradeValue(evaluation);
-            infoEnrolmentEvaluation.setIdInternal(evaluationId);
+            infoEnrolmentEvaluation.setExternalId(evaluationId);
             return infoEnrolmentEvaluation;
         }
 

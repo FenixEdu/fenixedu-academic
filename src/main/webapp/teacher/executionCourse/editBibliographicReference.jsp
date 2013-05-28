@@ -16,9 +16,9 @@
 		<html:form action="/editBibliographicReference">
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="editBibliographicReference"/>
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
-			<bean:define id="bibliographicReferenceID" type="java.lang.Integer" name="bibliographicReference" property="idInternal"/>
+			<bean:define id="bibliographicReferenceID" type="java.lang.Integer" name="bibliographicReference" property="externalId"/>
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.bibliographicReferenceID" property="bibliographicReferenceID" value="<%= bibliographicReferenceID.toString() %>"/>
-			<bean:define id="executionCourseID" type="java.lang.Integer" name="executionCourse" property="idInternal"/>
+			<bean:define id="executionCourseID" type="java.lang.Integer" name="executionCourse" property="externalId"/>
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseID" property="executionCourseID" value="<%= executionCourseID.toString() %>"/>
 			
 			<table class="tstyle5">

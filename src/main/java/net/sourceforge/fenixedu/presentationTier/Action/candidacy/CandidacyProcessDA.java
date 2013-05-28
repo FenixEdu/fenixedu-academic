@@ -129,7 +129,7 @@ abstract public class CandidacyProcessDA extends CaseHandlingDispatchAction {
             request.setAttribute("childProcesses", getChildProcesses(process, request));
             request.setAttribute("canCreateChildProcess", canCreateProcess(getChildProcessType().getName()));
             request.setAttribute("childProcessName", getChildProcessType().getSimpleName());
-            request.setAttribute("executionIntervalId", process.getCandidacyExecutionInterval().getIdInternal());
+            request.setAttribute("executionIntervalId", process.getCandidacyExecutionInterval().getExternalId());
             request.setAttribute("individualCandidaciesHashCodesNotBounded", getIndividualCandidacyHashCodesNotBounded());
             request.setAttribute("hideCancelledCandidacies", getHideCancelledCandidaciesValue(request));
         }

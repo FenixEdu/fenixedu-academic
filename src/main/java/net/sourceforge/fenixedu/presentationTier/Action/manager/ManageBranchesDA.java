@@ -283,7 +283,7 @@ public class ManageBranchesDA extends FenixDispatchAction {
         infoBranch.setCode(code);
         infoBranch.setName(name);
         infoBranch.setNameEn(nameEn);
-        infoBranch.setIdInternal(branchId);
+        infoBranch.setExternalId(branchId);
 
         try {
             EditBranch.run(infoBranch);

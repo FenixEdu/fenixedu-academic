@@ -102,8 +102,8 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
         // dynaForm.set("coordinatorNumber",
         // oldInfoExecutionDegree.getInfoCoordinator().getTeacherNumber()
         // .toString());
-        dynaForm.set("executionYearId", oldInfoExecutionDegree.getInfoExecutionYear().getIdInternal().toString());
-        dynaForm.set("campusId", oldInfoExecutionDegree.getInfoCampus().getIdInternal().toString());
+        dynaForm.set("executionYearId", oldInfoExecutionDegree.getInfoExecutionYear().getExternalId().toString());
+        dynaForm.set("campusId", oldInfoExecutionDegree.getInfoCampus().getExternalId().toString());
 
         InfoPeriod infoPeriodLessonsFirstSemester = oldInfoExecutionDegree.getInfoPeriodLessonsFirstSemester();
         InfoPeriod infoPeriodLessonsSecondSemester = oldInfoExecutionDegree.getInfoPeriodLessonsSecondSemester();
@@ -189,7 +189,7 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
 
         InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan(degreeCurricularPlan);
         infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
-        infoExecutionDegree.setIdInternal(executionDegreeId);
+        infoExecutionDegree.setExternalId(executionDegreeId);
 
         InfoCampus infoCampus = new InfoCampus(Integer.valueOf(campusIdString));
         infoExecutionDegree.setInfoCampus(infoCampus);
@@ -388,7 +388,7 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
         }
         InfoExecutionDegreeEditor infoExecutionDegree = new InfoExecutionDegreeEditor();
         Integer executionDegreeId = new Integer(request.getParameter("executionDegreeId"));
-        infoExecutionDegree.setIdInternal(executionDegreeId);
+        infoExecutionDegree.setExternalId(executionDegreeId);
 
         infoExecutionDegree.setInfoPeriodLessonsFirstSemester(periodLessonFirstSemester[0]);
         infoExecutionDegree.setInfoPeriodLessonsSecondSemester(periodLessonSecondSemester[0]);

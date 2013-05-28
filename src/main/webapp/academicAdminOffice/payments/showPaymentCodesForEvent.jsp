@@ -14,7 +14,7 @@
 	</fr:layout>
 </fr:view>
 
-<bean:define id="personId" name="event" property="person.idInternal" />
+<bean:define id="personId" name="event" property="person.externalId" />
 
 <logic:notEmpty name="accountingEventPaymentCodes">
 	<p class="mtop1 mbottom025"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.sibsPayments" /></strong></p>

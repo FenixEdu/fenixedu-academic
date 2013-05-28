@@ -8,11 +8,11 @@
 <%@ taglib uri="/WEB-INF/app.tld" prefix="f" %>
 
 <ft:define id="presentationMaterial" type="net.sourceforge.fenixedu.domain.tests.NewPresentationMaterial" />
-<bean:define id="editPresentationMaterialDivId">edit-presentationMaterial-div<bean:write name="presentationMaterial" property="idInternal" /></bean:define>
-<bean:define id="viewPresentationMaterialDivId">view-presentationMaterial-div<bean:write name="presentationMaterial" property="idInternal" /></bean:define>
-<bean:define id="editPresentationMaterialId"><bean:write name="presentationMaterial" property="idInternal" /></bean:define>
-<bean:define id="viewPresentationMaterialId"><bean:write name="presentationMaterial" property="idInternal" /></bean:define>
-<bean:define id="testElementId"><bean:write name="bean" property="testElement.idInternal" /></bean:define>
+<bean:define id="editPresentationMaterialDivId">edit-presentationMaterial-div<bean:write name="presentationMaterial" property="externalId" /></bean:define>
+<bean:define id="viewPresentationMaterialDivId">view-presentationMaterial-div<bean:write name="presentationMaterial" property="externalId" /></bean:define>
+<bean:define id="editPresentationMaterialId"><bean:write name="presentationMaterial" property="externalId" /></bean:define>
+<bean:define id="viewPresentationMaterialId"><bean:write name="presentationMaterial" property="externalId" /></bean:define>
+<bean:define id="testElementId"><bean:write name="bean" property="testElement.externalId" /></bean:define>
 <bean:define id="schema">tests.presentationMaterial.edit-details-for.<bean:write name="presentationMaterial" property="presentationMaterialType.name" /></bean:define>
 
 <div class="questionBlock">
@@ -23,7 +23,7 @@ Material <ft:view property="position" />
 (<span class="switchInline"><a href="javascript:switchDisplay('<%= editPresentationMaterialDivId %>');switchDisplay('<%= viewPresentationMaterialDivId %>')">editar</a>
 ,</span>
 <f:parameterLink page="/tests/questionBank/presentationMaterial.do?method=prepareDeletePresentationMaterial">apagar
-	<f:parameter id="oid" name="presentationMaterial" property="idInternal" />
+	<f:parameter id="oid" name="presentationMaterial" property="externalId" />
 	<f:parameter id="returnPath" name="bean" property="returnPath" />
 	<f:parameter id="returnId" name="bean" property="returnId" />
 	<f:parameter id="contextKey" name="bean" property="contextKey" />
@@ -33,7 +33,7 @@ Material <ft:view property="position" />
 <logic:equal name="presentationMaterial" property="first" value="false">
 <f:parameterLink page="/tests/questionBank/presentationMaterial.do?method=switchPresentationMaterial">
 	<f:parameter id="relativePosition" value="-1" />
-	<f:parameter id="oid" name="presentationMaterial" property="idInternal" />
+	<f:parameter id="oid" name="presentationMaterial" property="externalId" />
 	<f:parameter id="returnPath" name="bean" property="returnPath" />
 	<f:parameter id="returnId" name="bean" property="returnId" />
 	<f:parameter id="contextKey" name="bean" property="contextKey" />
@@ -45,7 +45,7 @@ Material <ft:view property="position" />
 <logic:equal name="presentationMaterial" property="last" value="false">
 <f:parameterLink page="/tests/questionBank/presentationMaterial.do?method=switchPresentationMaterial">
 	<f:parameter id="relativePosition" value="1" />
-	<f:parameter id="oid" name="presentationMaterial" property="idInternal" />
+	<f:parameter id="oid" name="presentationMaterial" property="externalId" />
 	<f:parameter id="returnPath" name="bean" property="returnPath" />
 	<f:parameter id="returnId" name="bean" property="returnId" />
 	<f:parameter id="contextKey" name="bean" property="contextKey" />

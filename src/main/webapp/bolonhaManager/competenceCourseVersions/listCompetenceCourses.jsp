@@ -52,7 +52,7 @@
 			<fr:property name="link(manageVersions)" value="/competenceCourses/manageVersions.do?method=showVersions"/>
 			<fr:property name="key(manageVersions)" value="label.view.versions"/>
 			<fr:property name="bundle(manageVersions)" value="BOLONHA_MANAGER_RESOURCES" />
-			<fr:property name="param(manageVersions)" value="idInternal/competenceCourseID" />
+			<fr:property name="param(manageVersions)" value="externalId/competenceCourseID" />
 			<fr:property name="order(manageVersions)" value="1"/>
 			<fr:property name="filterBy" value="APPROVED"/>
 		</fr:layout>

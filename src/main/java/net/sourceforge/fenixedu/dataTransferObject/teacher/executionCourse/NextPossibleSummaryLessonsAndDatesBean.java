@@ -23,7 +23,7 @@ public class NextPossibleSummaryLessonsAndDatesBean implements Serializable, Com
     static {
         ((ComparatorChain) COMPARATOR_BY_DATE_AND_HOUR).addComparator(new BeanComparator("date"), true);
         ((ComparatorChain) COMPARATOR_BY_DATE_AND_HOUR).addComparator(new BeanComparator("time"), true);
-        ((ComparatorChain) COMPARATOR_BY_DATE_AND_HOUR).addComparator(new BeanComparator("shift.idInternal"));
+        ((ComparatorChain) COMPARATOR_BY_DATE_AND_HOUR).addComparator(new BeanComparator("shift.externalId"));
     }
 
     private ShiftType lessonType;
@@ -117,7 +117,7 @@ public class NextPossibleSummaryLessonsAndDatesBean implements Serializable, Com
     public String getCheckBoxValue() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(getDate().toString("yyyyMMdd"));
-        stringBuilder.append(getLesson().getIdInternal());
+        stringBuilder.append(getLesson().getExternalId());
         return stringBuilder.toString();
     }
 
@@ -131,8 +131,8 @@ public class NextPossibleSummaryLessonsAndDatesBean implements Serializable, Com
         }
 
         YearMonthDay date = new YearMonthDay(year, month, day);
-        Integer lessonIdInternal = Integer.parseInt(value.substring(8));
-        Lesson lesson = RootDomainObject.getInstance().readLessonByOID(lessonIdInternal);
+        Integer lessonExternalId = Integer.parseInt(value.substring(8));
+        Lesson lesson = RootDomainObject.getInstance().readLessonByOID(lessonExternalId);
         NextPossibleSummaryLessonsAndDatesBean bean = new NextPossibleSummaryLessonsAndDatesBean(lesson, date);
 
         return bean;

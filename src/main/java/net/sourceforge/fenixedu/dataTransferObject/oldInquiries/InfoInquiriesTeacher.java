@@ -298,7 +298,7 @@ public class InfoInquiriesTeacher extends InfoObject implements Comparable {
             super.copyFromDomain(inquiriesTeacher);
 
             setGlobalAppreciation(inquiriesTeacher.getGlobalAppreciation());
-            setIdInternal(inquiriesTeacher.getIdInternal());
+            setExternalId(inquiriesTeacher.getExternalId());
             setStudentAssiduity(inquiriesTeacher.getStudentAssiduity());
             setTeacherAssiduity(inquiriesTeacher.getTeacherAssiduity());
             setTeacherAssurance(inquiriesTeacher.getTeacherAssurance());
@@ -325,7 +325,7 @@ public class InfoInquiriesTeacher extends InfoObject implements Comparable {
     @Override
     public String toString() {
         String result = "[INFOINQUIRIESTEACHER";
-        result += ", id=" + getIdInternal();
+        result += ", id=" + getExternalId();
         if (teacherOrNonAffiliatedTeacher != null) {
             result += ", teacherOrNonAffiliatedTeacher=" + teacherOrNonAffiliatedTeacher.toString();
         }

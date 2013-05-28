@@ -64,7 +64,7 @@ public class WrittenEvaluationsSearchByDegreeAndYear extends FenixContextDispatc
                     messages.getMessage(getLocale(request), "public.degree.information.label.in"), " ",
                     degree.getNameFor(academicInterval).getContent(),
                     addAnotherInfoToLabel(executionDegree, academicInterval) ? " - "
-                            + executionDegree.getDegreeCurricularPlan().getName() : ""), executionDegree.getIdInternal()
+                            + executionDegree.getDegreeCurricularPlan().getName() : ""), executionDegree.getExternalId()
                     .toString()));
         }
         Collections.sort(executionDegreeLabelValueBeans, new BeanComparator("label"));
@@ -120,7 +120,7 @@ public class WrittenEvaluationsSearchByDegreeAndYear extends FenixContextDispatc
                 });
         for (final ExecutionDegree executionDegree : ExecutionDegree.filterByAcademicInterval(academicInterval)) {
             if (executionDegreeID == null || executionDegreeID.length() == 0
-                    || executionDegreeID.equals(executionDegree.getIdInternal().toString())) {
+                    || executionDegreeID.equals(executionDegree.getExternalId().toString())) {
                 final Map<Integer, Set<ExecutionCourse>> executionCoursesByCurricularYear =
                         new TreeMap<Integer, Set<ExecutionCourse>>(new Comparator<Integer>() {
                             @Override

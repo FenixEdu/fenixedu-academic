@@ -83,7 +83,7 @@ public class ReadStudentTest {
     @Service
     public static List<StudentTestQuestion> runReadStudentTestForCorrection(Registration registration,
             DistributedTest distributedTest, Boolean log, String path) throws FenixServiceException, NotAuthorizedException {
-        ReadStudentTestForCorrectionFilter.instance.execute(distributedTest.getIdInternal());
+        ReadStudentTestForCorrectionFilter.instance.execute(distributedTest.getExternalId());
         return run(registration, distributedTest, log, path);
     }
 
@@ -99,7 +99,7 @@ public class ReadStudentTest {
     @Service
     public static List<StudentTestQuestion> runReadStudentTestToDo(Registration registration, DistributedTest distributedTest,
             Boolean log, String path) throws FenixServiceException, NotAuthorizedException {
-        ReadStudentTestToDoFilter.instance.execute(distributedTest.getIdInternal());
+        ReadStudentTestToDoFilter.instance.execute(distributedTest.getExternalId());
         return run(registration, distributedTest, log, path);
     }
 

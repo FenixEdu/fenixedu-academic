@@ -10,7 +10,7 @@
 <h2><strong><bean:message key="label.documents.anualIRS" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></h2>
 
 <p>
-	<html:link page="/payments.do?method=showOperations" paramId="personId" paramName="person" paramProperty="idInternal">
+	<html:link page="/payments.do?method=showOperations" paramId="personId" paramName="person" paramProperty="externalId">
 		<bean:message key="label.back" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 	</html:link>
 </p>
@@ -45,7 +45,7 @@
 	<p class="mtop15 mbottom05"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.documents" /></strong></p>
 	<ul>
 		<li>
-			<html:link action="/generatedDocuments.do?method=prepareGenerateNewIRSDeclaration" paramId="personId" paramName="person" paramProperty="idInternal">
+			<html:link action="/generatedDocuments.do?method=prepareGenerateNewIRSDeclaration" paramId="personId" paramName="person" paramProperty="externalId">
 				<bean:message key="label.new.irs.annual.document.create" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 			</html:link>
 		</li>
@@ -72,7 +72,7 @@
 
 <logic:notEmpty name="declarationDTO">
 
-	<bean:define id="personId" name="person" property="idInternal" />
+	<bean:define id="personId" name="person" property="externalId" />
 
 	<fr:edit id="declarationDTO" name="declarationDTO"
 		action="<%= "/generatedDocuments.do?method=generateNewIRSDeclaration&personId=" + personId %>">

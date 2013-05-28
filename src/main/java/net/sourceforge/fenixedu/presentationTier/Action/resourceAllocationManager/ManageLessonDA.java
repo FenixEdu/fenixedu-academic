@@ -162,7 +162,7 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
         DynaActionForm manageLessonForm = (DynaActionForm) form;
 
         InfoShift infoShift = (InfoShift) request.getAttribute(PresentationConstants.SHIFT);
-        Shift shift = rootDomainObject.readShiftByOID(infoShift.getIdInternal());
+        Shift shift = rootDomainObject.readShiftByOID(infoShift.getExternalId());
         GenericPair<YearMonthDay, YearMonthDay> maxLessonsPeriod = shift.getExecutionCourse().getMaxLessonsPeriod();
 
         if (maxLessonsPeriod != null) {
@@ -213,7 +213,7 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
 
         manageLessonForm.set("createLessonInstances", Boolean.TRUE);
 
-        Lesson lesson = rootDomainObject.readLessonByOID(infoLesson.getIdInternal());
+        Lesson lesson = rootDomainObject.readLessonByOID(infoLesson.getExternalId());
         GenericPair<YearMonthDay, YearMonthDay> maxLessonsPeriod = lesson.getShift().getExecutionCourse().getMaxLessonsPeriod();
         if (maxLessonsPeriod != null) {
             request.setAttribute("executionDegreeLessonsStartDate", maxLessonsPeriod.getLeft().toString("dd/MM/yyyy"));
@@ -295,10 +295,10 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
 
             final Shift shift;
             if (action != null && action.equals("edit")) {
-                final Lesson lesson = rootDomainObject.readLessonByOID(infoLesson.getIdInternal());
+                final Lesson lesson = rootDomainObject.readLessonByOID(infoLesson.getExternalId());
                 shift = lesson.getShift();
             } else {
-                shift = rootDomainObject.readShiftByOID(infoShift.getIdInternal());
+                shift = rootDomainObject.readShiftByOID(infoShift.getExternalId());
             }
             final GenericPair<YearMonthDay, YearMonthDay> maxLessonsPeriod = shift.getExecutionCourse().getMaxLessonsPeriod();
 

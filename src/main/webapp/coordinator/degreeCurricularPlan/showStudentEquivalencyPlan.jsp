@@ -52,8 +52,8 @@
 
 				<p class="mvert15">
 					<html:link page="<%= "/degreeCurricularPlan/studentEquivalencyPlan.do?method=showTable&amp;degreeCurricularPlanID="
-							+ degreeCurricularPlan.getIdInternal() + "&amp;equivalencePlanID="
-							+ equivalencePlan.getIdInternal() + "&amp;studentNumber="
+							+ degreeCurricularPlan.getExternalId() + "&amp;equivalencePlanID="
+							+ equivalencePlan.getExternalId() + "&amp;studentNumber="
 							+ student.getNumber() 
 							%>">
 						<bean:message key="link.equivalency.view.table" bundle="APPLICATION_RESOURCES"/>
@@ -69,8 +69,8 @@
 
 				<p class="mvert15">
 					<html:link page="<%= "/degreeCurricularPlan/studentEquivalencyPlan.do?method=showPlan&amp;degreeCurricularPlanID="
-							+ degreeCurricularPlan.getIdInternal() + "&amp;equivalencePlanID="
-							+ equivalencePlan.getIdInternal() + "&amp;studentNumber="
+							+ degreeCurricularPlan.getExternalId() + "&amp;equivalencePlanID="
+							+ equivalencePlan.getExternalId() + "&amp;studentNumber="
 							+ student.getNumber() 
 							%>">
 						<bean:message key="link.equivalency.view.plan" bundle="APPLICATION_RESOURCES"/>

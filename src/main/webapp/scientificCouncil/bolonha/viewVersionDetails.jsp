@@ -6,8 +6,8 @@
 <em><bean:message key="title.teaching" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></em>
 <h2><bean:message key="label.version.information" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></h2>
 
-<bean:define id="competenceCourseID" name="changeRequest" property="competenceCourse.idInternal"/>
-<bean:define id="changeRequestID" name="changeRequest" property="idInternal"/>
+<bean:define id="competenceCourseID" name="changeRequest" property="competenceCourse.externalId"/>
+<bean:define id="changeRequestID" name="changeRequest" property="externalId"/>
 
 <ul>
 	<li>

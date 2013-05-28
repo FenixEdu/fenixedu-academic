@@ -98,7 +98,7 @@ public abstract class PublicShowThesesDA extends FenixDispatchAction {
     }
 
     private Degree getCustomDegree(HttpServletRequest request) {
-        Integer id = getIdInternal(request, "degreeID");
+        Integer id = getExternalId(request, "degreeID");
 
         if (id == null) {
             return null;
@@ -108,7 +108,7 @@ public abstract class PublicShowThesesDA extends FenixDispatchAction {
     }
 
     private ExecutionYear getCustomExecutionYear(HttpServletRequest request) {
-        Integer id = getIdInternal(request, "executionYearID");
+        Integer id = getExternalId(request, "executionYearID");
 
         if (id == null) {
             return null;
@@ -188,7 +188,7 @@ public abstract class PublicShowThesesDA extends FenixDispatchAction {
             if (c != 0) {
                 return c;
             } else {
-                return o1.getIdInternal().compareTo(o2.getIdInternal());
+                return o1.getExternalId().compareTo(o2.getExternalId());
             }
         }
 

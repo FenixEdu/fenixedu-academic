@@ -25,7 +25,7 @@
 <logic:equal name="modelRestriction" property="first" value="false">
 <f:parameterLink page="/tests/testModels.do?method=switchModelRestriction">
 	<f:parameter id="relativePosition" value="-1" />
-	<f:parameter id="oid" name="modelRestriction" property="idInternal" />
+	<f:parameter id="oid" name="modelRestriction" property="externalId" />
 	Cima
 </f:parameterLink>
 </logic:equal>
@@ -34,7 +34,7 @@
 <logic:equal name="modelRestriction" property="last" value="false">
 <f:parameterLink page="/tests/testModels.do?method=switchModelRestriction">
 	<f:parameter id="relativePosition" value="1" />
-	<f:parameter id="oid" name="modelRestriction" property="idInternal" />
+	<f:parameter id="oid" name="modelRestriction" property="externalId" />
 	Baixo
 </f:parameterLink>)
 </logic:equal>

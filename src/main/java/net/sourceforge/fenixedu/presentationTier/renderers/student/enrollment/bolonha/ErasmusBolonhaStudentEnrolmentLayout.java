@@ -130,8 +130,8 @@ public class ErasmusBolonhaStudentEnrolmentLayout extends BolonhaStudentEnrolmen
                 actionLink.setController(new OptionalCurricularCourseLinkController(degreeModuleToEvaluate));
                 actionLink
                         .setOnClick("$(\\\"form[name='net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm']\\\").method.value='prepareChooseOptionalCurricularCourseToEnrol';");
-                actionLink.setName("optionalCurricularCourseLink" + degreeModuleToEvaluate.getCurriculumGroup().getIdInternal()
-                        + "_" + degreeModuleToEvaluate.getContext().getIdInternal());
+                actionLink.setName("optionalCurricularCourseLink" + degreeModuleToEvaluate.getCurriculumGroup().getExternalId()
+                        + "_" + degreeModuleToEvaluate.getContext().getExternalId());
                 linkTableCell.setBody(actionLink);
             }
 

@@ -179,7 +179,7 @@ public class EditInsuranceValueDispatchAction extends FenixDispatchAction {
                 InfoExecutionYear infoExecutionYear = (InfoExecutionYear) arg0;
 
                 LabelValueBean executionYear =
-                        new LabelValueBean(infoExecutionYear.getYear(), infoExecutionYear.getIdInternal().toString());
+                        new LabelValueBean(infoExecutionYear.getYear(), infoExecutionYear.getExternalId().toString());
                 return executionYear;
             }
         }, executionYearLabels);

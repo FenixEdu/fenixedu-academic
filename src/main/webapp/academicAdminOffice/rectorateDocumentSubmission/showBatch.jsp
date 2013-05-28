@@ -89,12 +89,12 @@
 			<fr:property name="visibleIf(view)" value="programmeLinkVisible" />
 
 			<fr:property name="link(print)" value="/documentRequestsManagement.do?method=printDocument" />
-			<fr:property name="param(print)" value="idInternal/documentRequestId" />
+			<fr:property name="param(print)" value="externalId/documentRequestId" />
 			<fr:property name="key(print)" value="link.rectorateSubmission.reprint" />
 			<fr:property name="bundle(print)" value="ACADEMIC_OFFICE_RESOURCES" />
 
 			<fr:property name="linkFormat(receive)" value="${receivedActionLink}" />
-			<fr:property name="param(receive)" value="idInternal/academicServiceRequestId" />
+			<fr:property name="param(receive)" value="externalId/academicServiceRequestId" />
 			<fr:property name="key(receive)" value="link.rectorateSubmission.receive" />
 			<fr:property name="bundle(receive)" value="ACADEMIC_OFFICE_RESOURCES" />
 			<fr:property name="visibleIf(receive)" value="activeSituation.sentToExternalEntity" />

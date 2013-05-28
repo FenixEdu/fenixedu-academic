@@ -15,12 +15,12 @@ public class InsertDegreeCurricularPlan {
     @Service
     public static void run(InfoDegreeCurricularPlanEditor infoDcp) throws FenixServiceException {
 
-        if (infoDcp.getInfoDegree().getIdInternal() == null || infoDcp.getName() == null || infoDcp.getInitialDate() == null
+        if (infoDcp.getInfoDegree().getExternalId() == null || infoDcp.getName() == null || infoDcp.getInitialDate() == null
                 || infoDcp.getDegreeDuration() == null || infoDcp.getMinimalYearForOptionalCourses() == null) {
             throw new InvalidArgumentsServiceException();
         }
 
-        final Degree degree = RootDomainObject.getInstance().readDegreeByOID(infoDcp.getInfoDegree().getIdInternal());
+        final Degree degree = RootDomainObject.getInstance().readDegreeByOID(infoDcp.getInfoDegree().getExternalId());
         if (degree == null) {
             throw new FenixServiceException("error.degreeCurricularPlan.non.existing.degree");
         }

@@ -25,9 +25,9 @@ public class EditQualification {
     protected void run(Integer qualificationId, InfoQualification infoQualification) throws FenixServiceException {
         Qualification qualification = RootDomainObject.getInstance().readQualificationByOID(qualificationId);
         // If it doesn't exist in the database, a new one has to be created
-        Country country = RootDomainObject.getInstance().readCountryByOID(infoQualification.getInfoCountry().getIdInternal());
+        Country country = RootDomainObject.getInstance().readCountryByOID(infoQualification.getInfoCountry().getExternalId());
         if (qualification == null) {
-            Person person = (Person) RootDomainObject.getInstance().readPartyByOID(infoQualification.getInfoPerson().getIdInternal());
+            Person person = (Person) RootDomainObject.getInstance().readPartyByOID(infoQualification.getInfoPerson().getExternalId());
             qualification = new Qualification(person, country, infoQualification);
 
         } else {

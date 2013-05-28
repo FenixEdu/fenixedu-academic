@@ -15,7 +15,7 @@
 			<bean:message key="link.teacherServiceDistribution"/>
 		</html:link>
 		>
-		<html:link page='<%= "/tsdProcess.do?method=showTSDProcessServices&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getIdInternal() %>'>
+		<html:link page='<%= "/tsdProcess.do?method=showTSDProcessServices&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getExternalId() %>'>
 			<bean:write name="tsdProcess" property="name"/>&nbsp;
 			<bean:write name="tsdProcess" property="executionYear.year"/>
 		</html:link>
@@ -30,7 +30,7 @@
 		&nbsp;<bean:message key="label.teacherService.successfulValuation"/>
 	</p>
 	<p>
-		<html:link page='<%= "/tsdProcessValuation.do?method=prepareForTSDProcessValuation&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getIdInternal().toString() %>'>
+		<html:link page='<%= "/tsdProcessValuation.do?method=prepareForTSDProcessValuation&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getExternalId().toString() %>'>
 			<bean:message key="link.teacherServiceDistribution.goTotsdProcessVisualization"/>
 		</html:link>
 	</p>
@@ -76,7 +76,7 @@
 			<logic:iterate name="tsdProcessPhaseList" id="tsdProcessPhase"> 
 				<tr>
 					<td>
-						<bean:define id="tsdProcessPhaseId" name="tsdProcessPhase" property="idInternal" />
+						<bean:define id="tsdProcessPhaseId" name="tsdProcessPhase" property="externalId" />
 						<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.selectedTSDProcess" property="tsdProcessPhase" value="<%= ((Integer)tsdProcessPhaseId).toString() %>" />
 					</td>
 					<td width="250">
@@ -103,7 +103,7 @@
 
 <br/>
 <br/>
-<html:link page='<%= "/tsdProcess.do?method=showTSDProcessServices&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getIdInternal().toString() %>'>
+<html:link page='<%= "/tsdProcess.do?method=showTSDProcessServices&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getExternalId().toString() %>'>
 	<bean:message key="link.back"/>
 </html:link>
 

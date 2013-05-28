@@ -18,13 +18,13 @@ public class EditDegree {
 
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
-    public static void run(final Integer idInternal, final String code, final String name, final String nameEn,
+    public static void run(final Integer externalId, final String code, final String name, final String nameEn,
             final DegreeType degreeType, final GradeScale gradeScale, ExecutionYear executionYear) throws FenixServiceException {
-        if (idInternal == null || name == null || nameEn == null || code == null || degreeType == null) {
+        if (externalId == null || name == null || nameEn == null || code == null || degreeType == null) {
             throw new InvalidArgumentsServiceException();
         }
 
-        final Degree degreeToEdit = RootDomainObject.getInstance().readDegreeByOID(idInternal);
+        final Degree degreeToEdit = RootDomainObject.getInstance().readDegreeByOID(externalId);
 
         if (degreeToEdit == null) {
             throw new NonExistingServiceException();

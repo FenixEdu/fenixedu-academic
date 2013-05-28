@@ -318,7 +318,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 
         Professorship loggedProfessorship = (Professorship) request.getAttribute("loggedTeacherProfessorship");
         ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
-        dynaActionForm.set("teacher", loggedProfessorship.getIdInternal().toString());
+        dynaActionForm.set("teacher", loggedProfessorship.getExternalId().toString());
 
         SummariesManagementBean newBean =
                 new SummariesManagementBean(SummariesManagementBean.SummaryType.NORMAL_SUMMARY, executionCourse,
@@ -465,7 +465,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
         }
 
         request.setAttribute("summariesManagementBean", bean);
-        dynaActionForm.set("teacher", loggedProfessorship.getIdInternal().toString());
+        dynaActionForm.set("teacher", loggedProfessorship.getExternalId().toString());
         return mapping.findForward("prepareInsertComplexSummary");
     }
 
@@ -543,7 +543,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
             }
 
             request.setAttribute("summariesManagementBean", bean);
-            dynaActionForm.set("teacher", loggedProfessorship.getIdInternal().toString());
+            dynaActionForm.set("teacher", loggedProfessorship.getExternalId().toString());
             return mapping.findForward("prepareInsertComplexSummary");
         }
 
@@ -734,7 +734,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
         DynaActionForm dynaActionForm = (DynaActionForm) form;
         Professorship loggedProfessorship = (Professorship) request.getAttribute("loggedTeacherProfessorship");
         ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
-        dynaActionForm.set("teacher", loggedProfessorship.getIdInternal().toString());
+        dynaActionForm.set("teacher", loggedProfessorship.getExternalId().toString());
         request.setAttribute("summariesManagementBean", new SummariesManagementBean(summaryType, executionCourse,
                 loggedProfessorship, null));
     }

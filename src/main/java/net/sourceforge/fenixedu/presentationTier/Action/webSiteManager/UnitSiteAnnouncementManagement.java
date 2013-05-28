@@ -75,7 +75,7 @@ public abstract class UnitSiteAnnouncementManagement extends AnnouncementManagem
 
                 ActionForward forward = new ActionForward(mapping.findForward("viewAnnouncementsRedirect"));
                 forward.setPath(forward.getPath()
-                        + String.format("&announcementBoardId=%s&oid=", board.getIdInternal(), site.getIdInternal()));
+                        + String.format("&announcementBoardId=%s&oid=", board.getExternalId(), site.getExternalId()));
                 forward.setRedirect(true);
 
                 return forward;

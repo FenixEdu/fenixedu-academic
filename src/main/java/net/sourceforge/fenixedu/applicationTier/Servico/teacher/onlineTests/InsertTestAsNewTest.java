@@ -36,7 +36,7 @@ public class InsertTestAsNewTest {
             newTestQuestion.setCorrectionFormula(testQuestion.getCorrectionFormula());
             newTestQuestion.setTest(test);
         }
-        return test.getIdInternal();
+        return test.getExternalId();
     }
 
     // Service Invokers migrated from Berserk

@@ -133,7 +133,7 @@
 				
 				<td class="listClasses"> 
 					<bean:define id="editURL">
-						/manageExecutionPeriods.do?method=edit&amp;executionPeriodID=<bean:write name="infoExecutionPeriod" property="idInternal"/>
+						/manageExecutionPeriods.do?method=edit&amp;executionPeriodID=<bean:write name="infoExecutionPeriod" property="externalId"/>
 					</bean:define>
 					<html:link page="<%= editURL %>">								
 						<bean:message bundle="MANAGER_RESOURCES" key="link.edit.execution.period" />

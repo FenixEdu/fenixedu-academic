@@ -307,11 +307,11 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
         degreeCurricularPlanLink.setParameter("organizeBy", "groups");
         degreeCurricularPlanLink.setParameter("showRules", "false");
         degreeCurricularPlanLink.setParameter("hideCourses", "false");
-        degreeCurricularPlanLink.setParameter("degreeID", studentCurricularPlan.getDegree().getIdInternal());
+        degreeCurricularPlanLink.setParameter("degreeID", studentCurricularPlan.getDegree().getExternalId());
         degreeCurricularPlanLink.setParameter("degreeCurricularPlanID", studentCurricularPlan.getDegreeCurricularPlan()
-                .getIdInternal());
+                .getExternalId());
         degreeCurricularPlanLink.setParameter("executionPeriodOID", getBolonhaStudentEnrollmentBean().getExecutionPeriod()
-                .getIdInternal());
+                .getExternalId());
         return degreeCurricularPlanLink;
     }
 
@@ -385,8 +385,8 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
                 actionLink
                         .setOnClick("$(this).closest('form').find('input[name=\\'method\\']').attr('value', 'prepareChooseOptionalCurricularCourseToEnrol');");
                 //actionLink.setOnClick("document.forms[2].method.value='prepareChooseOptionalCurricularCourseToEnrol';");
-                actionLink.setName("optionalCurricularCourseLink" + degreeModuleToEvaluate.getCurriculumGroup().getIdInternal()
-                        + "_" + degreeModuleToEvaluate.getContext().getIdInternal());
+                actionLink.setName("optionalCurricularCourseLink" + degreeModuleToEvaluate.getCurriculumGroup().getExternalId()
+                        + "_" + degreeModuleToEvaluate.getContext().getExternalId());
                 linkTableCell.setBody(actionLink);
             }
 

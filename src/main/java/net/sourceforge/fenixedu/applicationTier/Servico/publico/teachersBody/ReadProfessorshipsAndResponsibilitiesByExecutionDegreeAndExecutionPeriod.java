@@ -61,8 +61,8 @@ public class ReadProfessorshipsAndResponsibilitiesByExecutionDegreeAndExecutionP
                 DetailedProfessorship detailedProfessorship1 = (DetailedProfessorship) o1;
                 DetailedProfessorship detailedProfessorship2 = (DetailedProfessorship) o2;
                 int result =
-                        detailedProfessorship1.getInfoProfessorship().getInfoExecutionCourse().getIdInternal().intValue()
-                                - detailedProfessorship2.getInfoProfessorship().getInfoExecutionCourse().getIdInternal()
+                        detailedProfessorship1.getInfoProfessorship().getInfoExecutionCourse().getExternalId().intValue()
+                                - detailedProfessorship2.getInfoProfessorship().getInfoExecutionCourse().getExternalId()
                                         .intValue();
                 if (result == 0
                         && (detailedProfessorship1.getResponsibleFor().booleanValue() || detailedProfessorship2

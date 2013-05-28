@@ -378,7 +378,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
                     && ((this.getPersonFunction() != null && function.equals(this.getPersonFunction().getFunction())) || (this
                             .getPersonFunction() == null && function.isActive(new YearMonthDay())))) {
                 selectItem = new SelectItem();
-                selectItem.setValue(function.getIdInternal());
+                selectItem.setValue(function.getExternalId());
                 selectItem.setLabel(function.getName());
                 list.add(selectItem);
             }
@@ -421,7 +421,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
     private void newSelectItem(ExecutionYear executionYear, List<SelectItem> list) {
         for (ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
             SelectItem selectItem = new SelectItem();
-            selectItem.setValue(executionSemester.getIdInternal());
+            selectItem.setValue(executionSemester.getExternalId());
             selectItem.setLabel(executionYear.getYear() + " - " + executionSemester.getSemester() + "º Semestre");
             list.add(selectItem);
         }
@@ -467,7 +467,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 
         buffer.append("<a href=\"").append(getContextPath())
                 .append("/departmentAdmOffice/functionsManagement/chooseFunction.faces?personID=").append(personID)
-                .append("&unitID=").append(parentUnit.getIdInternal()).append("\">").append(parentUnit.getPresentationName())
+                .append("&unitID=").append(parentUnit.getExternalId()).append("\">").append(parentUnit.getPresentationName())
                 .append("</a>").append("</li>");
 
         if (!subUnits.isEmpty()) {
@@ -866,7 +866,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         List<ExecutionSemester> allExecutionPeriods = rootDomainObject.getExecutionPeriods();
         for (ExecutionSemester period : allExecutionPeriods) {
             if (period.getState().equals(PeriodState.CURRENT)) {
-                return period.getIdInternal();
+                return period.getExternalId();
             }
         }
         return null;
@@ -969,18 +969,18 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
     }
 
     protected void openULTag(Unit parentUnit, StringBuilder buffer, Unit parentUnitParent) {
-        buffer.append("<ul class='mvert0 nobullet' id=\"").append("aa").append(parentUnit.getIdInternal())
-                .append((parentUnitParent != null) ? parentUnitParent.getIdInternal() : "").append("\" ")
+        buffer.append("<ul class='mvert0 nobullet' id=\"").append("aa").append(parentUnit.getExternalId())
+                .append((parentUnitParent != null) ? parentUnitParent.getExternalId() : "").append("\" ")
                 .append("style='display:none'>\r\n");
     }
 
     protected void putImage(Unit parentUnit, StringBuilder buffer, Unit parentUnitParent) {
         buffer.append("<img ").append("src='").append(getContextPath()).append("/images/toggle_plus10.gif' id=\"")
-                .append(parentUnit.getIdInternal()).append((parentUnitParent != null) ? parentUnitParent.getIdInternal() : "")
+                .append(parentUnit.getExternalId()).append((parentUnitParent != null) ? parentUnitParent.getExternalId() : "")
                 .append("\" ").append("indexed='true' onClick=\"").append("check(document.getElementById('").append("aa")
-                .append(parentUnit.getIdInternal()).append((parentUnitParent != null) ? parentUnitParent.getIdInternal() : "")
-                .append("'),document.getElementById('").append(parentUnit.getIdInternal())
-                .append((parentUnitParent != null) ? parentUnitParent.getIdInternal() : "").append("'));return false;")
+                .append(parentUnit.getExternalId()).append((parentUnitParent != null) ? parentUnitParent.getExternalId() : "")
+                .append("'),document.getElementById('").append(parentUnit.getExternalId())
+                .append((parentUnitParent != null) ? parentUnitParent.getExternalId() : "").append("'));return false;")
                 .append("\"> ");
     }
 

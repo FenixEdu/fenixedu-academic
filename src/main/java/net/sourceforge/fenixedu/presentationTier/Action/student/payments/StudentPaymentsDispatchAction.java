@@ -58,7 +58,7 @@ public class StudentPaymentsDispatchAction extends FenixDispatchAction {
         final Integer eventId = getIntegerFromRequest(request, "eventId");
 
         for (final Event event : person.getEventsSet()) {
-            if (event.getIdInternal().equals(eventId)) {
+            if (event.getExternalId().equals(eventId)) {
                 return event;
             }
         }

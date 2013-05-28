@@ -39,7 +39,7 @@ public class ComputeCompetenceCourseStatistics extends ComputeCourseStatistics {
             final List<Enrolment> enrollments = competenceCourse.getActiveEnrollments(executionSemester);
             if (enrollments.size() > 0) {
                 CompetenceCourseStatisticsDTO competenceCourseStatistics = new CompetenceCourseStatisticsDTO();
-                competenceCourseStatistics.setIdInternal(competenceCourse.getIdInternal());
+                competenceCourseStatistics.setExternalId(competenceCourse.getExternalId());
                 competenceCourseStatistics.setName(competenceCourse.getName());
                 createCourseStatistics(competenceCourseStatistics, enrollments);
                 results.add(competenceCourseStatistics);

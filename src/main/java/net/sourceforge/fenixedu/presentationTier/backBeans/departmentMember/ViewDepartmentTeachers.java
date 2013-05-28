@@ -97,7 +97,7 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
             InfoExecutionYear infoExecutionYear = ReadCurrentExecutionYear.run();
 
             if (infoExecutionYear != null) {
-                this.selectedExecutionYearID = infoExecutionYear.getIdInternal();
+                this.selectedExecutionYearID = infoExecutionYear.getExternalId();
             } else {
                 this.selectedExecutionYearID = 0;
             }
@@ -120,7 +120,7 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
         List<Teacher> result =
                 new ArrayList<Teacher>(
                         ReadDepartmentTeachersByDepartmentIDAndExecutionYearID
-                                .runReadDepartmentTeachersByDepartmentIDAndExecutionYearID(getDepartment().getIdInternal(),
+                                .runReadDepartmentTeachersByDepartmentIDAndExecutionYearID(getDepartment().getExternalId(),
                                         executionYearID));
 
         ComparatorChain comparatorChain = new ComparatorChain();
@@ -160,7 +160,7 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
 
             List<SelectItem> result = new ArrayList<SelectItem>(executionYears.size());
             for (InfoExecutionYear executionYear : executionYears) {
-                result.add(new SelectItem(executionYear.getIdInternal(), executionYear.getYear()));
+                result.add(new SelectItem(executionYear.getExternalId(), executionYear.getYear()));
             }
 
             result.add(0, new SelectItem(0, getBundle().getString(ALL_EXECUTION_YEARS_KEY)));
@@ -239,7 +239,7 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
 
         for (ExecutionCourse executionCourse : executionCourses) {
             String degreeAcronyns = computeDegreeAcronyms(executionCourse);
-            result.put(executionCourse.getIdInternal(), degreeAcronyns);
+            result.put(executionCourse.getExternalId(), degreeAcronyns);
         }
 
         return result;
@@ -326,7 +326,7 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
 
             List<PersonFunction> result =
                     new ArrayList<PersonFunction>(ReadPersonFunctionsByPersonIDAndExecutionYearID.run(teacher.getPerson()
-                            .getIdInternal(), executionYearID));
+                            .getExternalId(), executionYearID));
 
             ComparatorChain comparatorChain = new ComparatorChain();
             BeanComparator beginDateComparator = new BeanComparator("beginDate");

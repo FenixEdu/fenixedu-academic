@@ -50,7 +50,7 @@
 	<tr>
 		<td><strong><bean:message key="message.teachingReport.courseURL"/></strong></td>
 		<td>
-			<bean:define id="objectCode" name="infoSiteCourseInformation" property="infoExecutionCourse.idInternal"/>
+			<bean:define id="objectCode" name="infoSiteCourseInformation" property="infoExecutionCourse.externalId"/>
 			<bean:message key="fenix.url" bundle="GLOBAL_RESOURCES"/>publico/executionCourse.do?method=firstPage&amp;executionCourseID=<%= objectCode %>
 		</td>
 	</tr>
@@ -125,8 +125,8 @@
 			<bean:define id="curricularCourse" name="siteEvaluationInformation" property="infoCurricularCourse"/>
 			<logic:iterate id="siteCourseHistoric" name="infoCoursesHistoric">
 				<logic:iterate id="courseHistoric" name="siteCourseHistoric" property="infoCourseHistorics">
-					<bean:define id="curricularCourseId" name="courseHistoric" property="infoCurricularCourse.idInternal"/>
-					<logic:equal name="curricularCourse" property="idInternal" value="<%= curricularCourseId.toString() %>">
+					<bean:define id="curricularCourseId" name="courseHistoric" property="infoCurricularCourse.externalId"/>
+					<logic:equal name="curricularCourse" property="externalId" value="<%= curricularCourseId.toString() %>">
 						<bean:define id="evaluated" name="courseHistoric" property="evaluated" type="java.lang.Integer"/>
 						<bean:define id="enrolled" name="courseHistoric" property="enrolled" type="java.lang.Integer"/>
 						<bean:define id="approved" name="courseHistoric" property="approved" type="java.lang.Integer"/>

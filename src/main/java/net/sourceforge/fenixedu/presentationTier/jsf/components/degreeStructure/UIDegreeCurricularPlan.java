@@ -345,7 +345,7 @@ public class UIDegreeCurricularPlan extends UIInput {
         }
         href.append("degreeCurricularPlanID=").append(dcpId);
         if (this.executionYear != null) {
-            href.append("&executionYearID=").append(this.executionYear.getIdInternal());
+            href.append("&executionYearID=").append(this.executionYear.getExternalId());
         }
         if (aditionalParameters != null) {
             href.append(aditionalParameters);

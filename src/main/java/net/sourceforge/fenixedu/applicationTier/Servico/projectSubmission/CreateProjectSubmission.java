@@ -127,16 +127,16 @@ public class CreateProjectSubmission {
             final StudentGroup studentGroup) {
         final VirtualPath filePath = new VirtualPath();
 
-        filePath.addNode(new VirtualPathNode("GRP" + studentGroup.getIdInternal(), studentGroup.getGroupNumber().toString()));
+        filePath.addNode(new VirtualPathNode("GRP" + studentGroup.getExternalId(), studentGroup.getGroupNumber().toString()));
 
-        filePath.addNode(0, new VirtualPathNode("PRJ" + project.getIdInternal(), project.getName()));
-        filePath.addNode(0, new VirtualPathNode("EC" + executionCourse.getIdInternal(), executionCourse.getNome()));
+        filePath.addNode(0, new VirtualPathNode("PRJ" + project.getExternalId(), project.getName()));
+        filePath.addNode(0, new VirtualPathNode("EC" + executionCourse.getExternalId(), executionCourse.getNome()));
 
         final ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
-        filePath.addNode(0, new VirtualPathNode("EP" + executionSemester.getIdInternal(), executionSemester.getName()));
+        filePath.addNode(0, new VirtualPathNode("EP" + executionSemester.getExternalId(), executionSemester.getName()));
 
         final ExecutionYear executionYear = executionSemester.getExecutionYear();
-        filePath.addNode(0, new VirtualPathNode("EY" + executionYear.getIdInternal(), executionYear.getYear()));
+        filePath.addNode(0, new VirtualPathNode("EY" + executionYear.getExternalId(), executionYear.getYear()));
 
         filePath.addNode(0, new VirtualPathNode("Courses", "Courses"));
         return filePath;

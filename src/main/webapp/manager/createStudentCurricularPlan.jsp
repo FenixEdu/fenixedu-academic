@@ -25,7 +25,7 @@
 		<tr>
 			<td>
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.degreeCurricularPlanId" property="degreeCurricularPlanId" size="1">
-					<html:options collection="degreeCurricularPlans" property="idInternal" labelProperty="label"/>
+					<html:options collection="degreeCurricularPlans" property="externalId" labelProperty="label"/>
 				</html:select>
 			</td>
 		</tr>

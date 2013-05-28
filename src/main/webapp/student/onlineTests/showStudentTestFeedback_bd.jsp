@@ -24,7 +24,7 @@
 		<tr>
 			<td><b><bean:message key="label.distributedTest"/></b></td>
 			<td><bean:write name="infoSiteStudentTestFeedback" property="studentTestLog.distributedTest.title"/>
-			(<bean:write name="infoSiteStudentTestFeedback" property="studentTestLog.distributedTest.idInternal"/>)</td>
+			(<bean:write name="infoSiteStudentTestFeedback" property="studentTestLog.distributedTest.externalId"/>)</td>
 		</tr>
 		<tr>
 			<td><b><bean:message key="label.thesis.file.name.uploadTime"/></b></td>
@@ -44,7 +44,7 @@
 		</tr>
 		<tr>
 			<td colspan="2">
-				<bean:define id="logId" name="infoSiteStudentTestFeedback" property="studentTestLog.idInternal"/>
+				<bean:define id="logId" name="infoSiteStudentTestFeedback" property="studentTestLog.externalId"/>
 				<html:link page="<%="/studentTests.do?method=exportChecksum&logId="+logId.toString()%>">
 					<bean:message key="message.studentTestLog.checksumReport" />
 				</html:link>

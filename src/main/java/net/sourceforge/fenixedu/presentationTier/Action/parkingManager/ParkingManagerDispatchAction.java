@@ -121,7 +121,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         // verificar autorização
 
-        Integer code = getIntegerFromRequest(request, "idInternal");
+        Integer code = getIntegerFromRequest(request, "externalId");
 
         final ParkingRequest parkingRequest = rootDomainObject.readParkingRequestByOID(code);
         if (parkingRequest.getParkingRequestState() == ParkingRequestState.PENDING) {
@@ -131,7 +131,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
             ((DynaActionForm) actionForm).set("cardNumber", parkingRequest.getParkingParty().getCardNumber());
         }
         if (parkingRequest.getParkingParty().getParkingGroup() != null) {
-            ((DynaActionForm) actionForm).set("groupID", parkingRequest.getParkingParty().getParkingGroup().getIdInternal());
+            ((DynaActionForm) actionForm).set("groupID", parkingRequest.getParkingParty().getParkingGroup().getExternalId());
         }
         request.setAttribute("parkingRequest", parkingRequest);
         request.setAttribute("parkingPartyBean", new ParkingPartyBean(parkingRequest.getParkingParty()));
@@ -236,39 +236,39 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
                 cardNumber = new Long(request.getParameter("cardNumber"));
                 if (cardNumber < 0) {
                     saveErrorMessage(request, "cardNumber", "error.number.below.minimum");
-                    request.setAttribute("idInternal", parkingRequestID);
+                    request.setAttribute("externalId", parkingRequestID);
                     return showRequest(mapping, actionForm, request, response);
                 }
             } catch (NullPointerException e) {
                 saveErrorMessage(request, "cardNumber", "error.requiredCardNumber");
-                request.setAttribute("idInternal", parkingRequestID);
+                request.setAttribute("externalId", parkingRequestID);
                 return showRequest(mapping, actionForm, request, response);
             } catch (NumberFormatException e) {
                 saveErrorMessage(request, "cardNumber", "error.invalidCardNumber");
-                request.setAttribute("idInternal", parkingRequestID);
+                request.setAttribute("externalId", parkingRequestID);
                 return showRequest(mapping, actionForm, request, response);
             }
             try {
                 group = new Integer(request.getParameter("groupID"));
             } catch (NullPointerException e) {
                 saveErrorMessage(request, "group", "error.requiredGroup");
-                request.setAttribute("idInternal", parkingRequestID);
+                request.setAttribute("externalId", parkingRequestID);
                 return showRequest(mapping, actionForm, request, response);
             } catch (NumberFormatException e) {
                 saveErrorMessage(request, "group", "error.invalidGroup");
-                request.setAttribute("idInternal", parkingRequestID);
+                request.setAttribute("externalId", parkingRequestID);
                 return showRequest(mapping, actionForm, request, response);
             }
 
             ParkingPartyBean parkingPartyBean = (ParkingPartyBean) getFactoryObject();
             if (!isRepeatedCardNumber(cardNumber, parkingPartyBean.getParkingParty())) {
                 saveErrorMessage(request, "cardNumber", "error.alreadyExistsCardNumber");
-                request.setAttribute("idInternal", parkingRequestID);
+                request.setAttribute("externalId", parkingRequestID);
                 return showRequest(mapping, actionForm, request, response);
             }
             if (!isValidGroup(group)) {
                 saveErrorMessage(request, "group", "error.invalidGroup");
-                request.setAttribute("idInternal", parkingRequestID);
+                request.setAttribute("externalId", parkingRequestID);
                 return showRequest(mapping, actionForm, request, response);
             }
 
@@ -276,7 +276,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
             if (cardAlwaysValid.equalsIgnoreCase("no")
                     && (parkingPartyBean.getCardStartDate() == null || parkingPartyBean.getCardEndDate() == null)) {
                 saveErrorMessage(request, "mustFillInDates", "error.card.mustFillInDates");
-                request.setAttribute("idInternal", parkingRequestID);
+                request.setAttribute("externalId", parkingRequestID);
                 return showRequest(mapping, actionForm, request, response);
             } else if (cardAlwaysValid.equalsIgnoreCase("yes")) {
                 parkingPartyBean.setCardStartDate(null);
@@ -287,14 +287,14 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
                 ActionMessages actionMessages = getMessages(request);
                 actionMessages.add("note", new ActionMessage("error.maxLengthExceeded", MAX_NOTE_LENGTH));
                 saveMessages(request, actionMessages);
-                request.setAttribute("idInternal", parkingRequestID);
+                request.setAttribute("externalId", parkingRequestID);
                 return showRequest(mapping, actionForm, request, response);
             }
 
             if (parkingPartyBean.getCardStartDate() != null
                     && parkingPartyBean.getCardStartDate().isAfter(parkingPartyBean.getCardEndDate())) {
                 saveErrorMessage(request, "invalidPeriod", "error.parkingParty.invalidPeriod");
-                request.setAttribute("idInternal", parkingRequestID);
+                request.setAttribute("externalId", parkingRequestID);
                 return showRequest(mapping, actionForm, request, response);
             }
             Integer mostSignificantNumber =
@@ -325,13 +325,13 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
             Integer parkingRequestID = new Integer(request.getParameter("code"));
             if (request.getParameter("groupID") == null) {
                 saveErrorMessage(request, "group", "error.invalidGroup");
-                request.setAttribute("idInternal", parkingRequestID);
+                request.setAttribute("externalId", parkingRequestID);
                 return showRequest(mapping, actionForm, request, response);
             }
 
             if (!isValidGroup(parkingGroupID)) {
                 saveErrorMessage(request, "group", "error.invalidGroup");
-                request.setAttribute("idInternal", parkingRequestID);
+                request.setAttribute("externalId", parkingRequestID);
                 return showRequest(mapping, actionForm, request, response);
             }
         }
@@ -423,7 +423,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 
     private boolean isValidGroup(Integer groupId) {
         for (ParkingGroup group : rootDomainObject.getParkingGroups()) {
-            if (group.getIdInternal().equals(groupId)) {
+            if (group.getExternalId().equals(groupId)) {
                 return true;
             }
         }
@@ -471,14 +471,14 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
             request.setAttribute("partyList", partyList);
 
         } else if (request.getParameter("partyID") != null || request.getAttribute("partyID") != null) {
-            final Integer idInternal = getPopertyID(request, "partyID");
+            final Integer externalId = getPopertyID(request, "partyID");
             final String carPlateNumber = request.getParameter("plateNumber");
             final String parkingCardNumberString = request.getParameter("parkingCardNumber");
             Long parkingCardNumber = null;
             if (!net.sourceforge.fenixedu.util.StringUtils.isEmpty(parkingCardNumberString)) {
                 parkingCardNumber = new Long(parkingCardNumberString);
             }
-            Party party = rootDomainObject.readPartyByOID(idInternal);
+            Party party = rootDomainObject.readPartyByOID(externalId);
             setupParkingRequests(request, party, carPlateNumber, parkingCardNumber);
         }
 
@@ -511,14 +511,14 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
             parkingPartyBean.addVehicle();
             parkingParty = parkingPartyBean.getParkingParty();
             request.setAttribute("parkingPartyBean", parkingPartyBean);
-            request.setAttribute("parkingPartyID", parkingParty.getIdInternal());
+            request.setAttribute("parkingPartyID", parkingParty.getExternalId());
             ((DynaActionForm) actionForm).set("addVehicle", "no");
             RenderUtils.invalidateViewState();
         } else {
             Integer parkingPartyID = getPopertyID(request, "parkingPartyID");
             parkingParty = rootDomainObject.readParkingPartyByOID(parkingPartyID);
             request.setAttribute("parkingPartyBean", new ParkingPartyBean(parkingParty));
-            request.setAttribute("parkingPartyID", parkingParty.getIdInternal());
+            request.setAttribute("parkingPartyID", parkingParty.getExternalId());
         }
 
         DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
@@ -554,7 +554,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         ParkingPartyBean parkingPartyBean = (ParkingPartyBean) getFactoryObject();
-        request.setAttribute("parkingPartyID", parkingPartyBean.getParkingParty().getIdInternal());
+        request.setAttribute("parkingPartyID", parkingPartyBean.getParkingParty().getExternalId());
         if (!isRepeatedCardNumber(parkingPartyBean.getCardNumber(), parkingPartyBean.getParkingParty())) {
             saveErrorMessage(request, "cardNumber", "error.alreadyExistsCardNumber");
             return prepareEditParkingParty(mapping, actionForm, request, response);
@@ -600,7 +600,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
             return prepareEditParkingParty(mapping, actionForm, request, response);
         }
         ExecuteFactoryMethod.run(parkingPartyBean);
-        request.setAttribute("partyID", parkingPartyBean.getParkingParty().getParty().getIdInternal());
+        request.setAttribute("partyID", parkingPartyBean.getParkingParty().getParty().getExternalId());
 
         return showParkingPartyRequests(mapping, actionForm, request, response);
     }
@@ -659,10 +659,10 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 
     public ActionForward showHistory(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        final String codeString = request.getParameter("idInternal");
+        final String codeString = request.getParameter("externalId");
         Integer code = null;
         if (codeString == null) {
-            code = (Integer) request.getAttribute("idInternal");
+            code = (Integer) request.getAttribute("externalId");
         } else {
             code = new Integer(codeString);
         }
@@ -678,10 +678,10 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 
     public ActionForward showParkingPartyHistory(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        final String codeString = request.getParameter("idInternal");
+        final String codeString = request.getParameter("externalId");
         Integer code = null;
         if (codeString == null) {
-            code = (Integer) request.getAttribute("idInternal");
+            code = (Integer) request.getAttribute("externalId");
         } else {
             code = new Integer(codeString);
         }

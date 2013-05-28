@@ -75,7 +75,7 @@ public class InsertExecutionCourseDispatchAction extends FenixDispatchAction {
 
                     LabelValueBean executionPeriod =
                             new LabelValueBean(infoExecutionPeriod.getName() + " - "
-                                    + infoExecutionPeriod.getInfoExecutionYear().getYear(), infoExecutionPeriod.getIdInternal()
+                                    + infoExecutionPeriod.getInfoExecutionYear().getYear(), infoExecutionPeriod.getExternalId()
                                     .toString());
                     return executionPeriod;
                 }

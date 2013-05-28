@@ -8,8 +8,8 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="validateTestChecksum"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>"/>
-	<bean:define id="studentCode" name="registration" property="idInternal"/>
-	<bean:define id="distributedTestCode" name="distributedTest" property="idInternal"/>
+	<bean:define id="studentCode" name="registration" property="externalId"/>
+	<bean:define id="distributedTestCode" name="distributedTest" property="externalId"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentCode" property="studentCode" value="<%=studentCode.toString()%>"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.distributedTestCode" property="distributedTestCode" value="<%=distributedTestCode.toString()%>"/>
 
@@ -25,7 +25,7 @@
 		<tr>
 			<td><b><bean:message key="lable.test"/></b></td>
 			<td><bean:write name="distributedTest" property="title"/>
-			(<bean:write name="distributedTest" property="idInternal"/>)</td>
+			(<bean:write name="distributedTest" property="externalId"/>)</td>
 		</tr>
 		<tr>
 			<td><b><bean:message key="label.date"/><b><bean:message key="message.dateTimeFormat"/></td>

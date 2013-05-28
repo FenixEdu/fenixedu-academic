@@ -308,7 +308,7 @@ public class DistributedTest extends DistributedTest_Base {
 
     public Question findQuestionByOID(Integer questionId) {
         for (StudentTestQuestion studentTestQuestion : this.getDistributedTestQuestions()) {
-            if (studentTestQuestion.getQuestion().getIdInternal().equals(questionId)) {
+            if (studentTestQuestion.getQuestion().getExternalId().equals(questionId)) {
                 return studentTestQuestion.getQuestion();
             }
         }

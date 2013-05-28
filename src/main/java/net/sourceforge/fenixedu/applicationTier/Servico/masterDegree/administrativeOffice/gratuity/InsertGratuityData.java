@@ -38,8 +38,8 @@ public class InsertGratuityData {
             throw new FenixServiceException("impossible.insertGratuityValues");
         }
         if (infoGratuityValues.getInfoExecutionDegree() == null
-                || infoGratuityValues.getInfoExecutionDegree().getIdInternal() == null
-                || infoGratuityValues.getInfoExecutionDegree().getIdInternal().intValue() <= 0) {
+                || infoGratuityValues.getInfoExecutionDegree().getExternalId() == null
+                || infoGratuityValues.getInfoExecutionDegree().getExternalId().intValue() <= 0) {
             throw new FenixServiceException("impossible.insertGratuityValues");
         }
 
@@ -54,7 +54,7 @@ public class InsertGratuityData {
         validateGratuity(infoGratuityValues);
 
         ExecutionDegree executionDegree =
-                RootDomainObject.getInstance().readExecutionDegreeByOID(infoGratuityValues.getInfoExecutionDegree().getIdInternal());
+                RootDomainObject.getInstance().readExecutionDegreeByOID(infoGratuityValues.getInfoExecutionDegree().getExternalId());
         GratuityValues gratuityValues = executionDegree.getGratuityValues();
 
         if (gratuityValues == null) // it doesn't exist in database, then

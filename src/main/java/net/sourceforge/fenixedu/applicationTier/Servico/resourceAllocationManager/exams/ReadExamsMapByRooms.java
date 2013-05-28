@@ -49,7 +49,7 @@ public class ReadExamsMapByRooms {
         }
 
         final ExecutionSemester executionSemester =
-                RootDomainObject.getInstance().readExecutionSemesterByOID(infoExecutionPeriod.getIdInternal());
+                RootDomainObject.getInstance().readExecutionSemesterByOID(infoExecutionPeriod.getExternalId());
 
         for (final InfoRoom infoRoom : infoRooms) {
             final InfoRoomExamsMap infoRoomExamsMap = new InfoRoomExamsMap();
@@ -76,7 +76,7 @@ public class ReadExamsMapByRooms {
 
     private static List<InfoExam> getInfoExams(final InfoRoom infoRoom, final ExecutionSemester executionSemester) {
         final List<InfoExam> result = new ArrayList<InfoExam>();
-        final AllocatableSpace oldRoom = (AllocatableSpace) RootDomainObject.getInstance().readResourceByOID(infoRoom.getIdInternal());
+        final AllocatableSpace oldRoom = (AllocatableSpace) RootDomainObject.getInstance().readResourceByOID(infoRoom.getExternalId());
         for (final ResourceAllocation roomOccupation : oldRoom.getResourceAllocations()) {
             if (roomOccupation.isWrittenEvaluationSpaceOccupation()) {
                 List<WrittenEvaluation> writtenEvaluations =

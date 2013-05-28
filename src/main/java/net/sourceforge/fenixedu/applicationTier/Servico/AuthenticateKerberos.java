@@ -21,7 +21,7 @@ public class AuthenticateKerberos extends Authenticate {
         private final Integer personID;
 
         public WorkerThread(final Person person) {
-            personID = person.getIdInternal();
+            personID = person.getExternalId();
         }
 
         @Override

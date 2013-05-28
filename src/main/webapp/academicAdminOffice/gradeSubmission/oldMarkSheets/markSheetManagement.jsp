@@ -45,10 +45,10 @@
 	<p>
 		<strong><bean:write name="edit" property="curricularCourseName"/></strong>
 		
-		<bean:define id="executionPeriodID" name="edit" property="executionPeriod.idInternal" />
-		<bean:define id="degreeID" name="edit" property="degree.idInternal" />
-		<bean:define id="degreeCurricularPlanID" name="edit" property="degreeCurricularPlan.idInternal" />
-		<bean:define id="curricularCourseID" name="edit" property="curricularCourse.idInternal" />
+		<bean:define id="executionPeriodID" name="edit" property="executionPeriod.externalId" />
+		<bean:define id="degreeID" name="edit" property="degree.externalId" />
+		<bean:define id="degreeCurricularPlanID" name="edit" property="degreeCurricularPlan.externalId" />
+		<bean:define id="curricularCourseID" name="edit" property="curricularCourse.externalId" />
 	
 		<bean:define id="url" name="url"/>
 		<logic:equal name="edit" property="curricularCourse.canCreateMarkSheet" value="true">
@@ -78,24 +78,24 @@
 							<fr:property name="classes" value="tstyle4" />
 							<fr:property name="link(view)" value='<%= "/oldMarkSheetManagement.do?method=viewMarkSheet" + url %>' />
 							<fr:property name="key(view)" value="label.markSheet.view" />
-							<fr:property name="param(view)" value="idInternal/msID" />
+							<fr:property name="param(view)" value="externalId/msID" />
 							<fr:property name="bundle(view)" value="ACADEMIC_OFFICE_RESOURCES" />
 							<fr:property name="order(view)" value="1" />
 							<fr:property name="link(edit)" value='<%= "/editOldMarkSheet.do?method=prepareEditMarkSheet" + url %>' />
 							<fr:property name="key(edit)" value="label.markSheet.edit" />
-							<fr:property name="param(edit)" value="idInternal/msID" />
+							<fr:property name="param(edit)" value="externalId/msID" />
 							<fr:property name="bundle(edit)" value="ACADEMIC_OFFICE_RESOURCES" />
 							<fr:property name="visibleIf(edit)" value="canEdit" />
 							<fr:property name="order(edit)" value="2" />														
 							<fr:property name="link(delete)" value='<%= "/oldMarkSheetManagement.do?method=prepareDeleteMarkSheet" + url %>' />
 							<fr:property name="key(delete)" value="label.markSheet.remove" />
-							<fr:property name="param(delete)" value="idInternal/msID" />
+							<fr:property name="param(delete)" value="externalId/msID" />
 							<fr:property name="bundle(delete)" value="ACADEMIC_OFFICE_RESOURCES" />
 							<fr:property name="visibleIf(delete)" value="canEdit" />
 							<fr:property name="order(delete)" value="3" />														
 							<fr:property name="link(confirm)" value='<%= "/oldMarkSheetManagement.do?method=prepareConfirmMarkSheet" + url %>' />
 							<fr:property name="key(confirm)" value="label.markSheet.confirm" />
-							<fr:property name="param(confirm)" value="idInternal/msID" />
+							<fr:property name="param(confirm)" value="externalId/msID" />
 							<fr:property name="bundle(confirm)" value="ACADEMIC_OFFICE_RESOURCES" />
 							<fr:property name="visibleIf(confirm)" value="canConfirm" />
 							<fr:property name="order(confirm)" value="4" />																																			

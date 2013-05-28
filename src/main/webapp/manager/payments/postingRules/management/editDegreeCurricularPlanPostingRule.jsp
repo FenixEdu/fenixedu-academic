@@ -12,9 +12,9 @@
 <bean:define id="className" name="postingRule"
 	property="class.simpleName" />
 <bean:define id="degreeCurricularPlanId" name="degreeCurricularPlan"
-	property="idInternal" />
+	property="externalId" />
 <bean:define id="postingRuleId" name="postingRule"
-	property="idInternal" />
+	property="externalId" />
 
 <fr:edit id="postingRule" name="postingRule" schema="<%=className + ".edit"%>">
 	<fr:layout name="tabular">

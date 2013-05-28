@@ -72,7 +72,7 @@ public class ReadAllStudentsAndGroups {
 
                 infoSiteStudentInformation.setEmail(attend.getRegistration().getPerson().getEmail());
 
-                infoSiteStudentInformation.setPersonID(attend.getRegistration().getPerson().getIdInternal());
+                infoSiteStudentInformation.setPersonID(attend.getRegistration().getPerson().getExternalId());
 
                 infoSiteStudentAndGroup.setInfoSiteStudentInformation(infoSiteStudentInformation);
 

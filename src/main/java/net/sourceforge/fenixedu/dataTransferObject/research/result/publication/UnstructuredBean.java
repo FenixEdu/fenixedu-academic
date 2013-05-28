@@ -15,7 +15,7 @@ public class UnstructuredBean extends ResultPublicationBean implements Serializa
 
     public UnstructuredBean(Unstructured unstructured) {
         this();
-        this.setIdInternal(unstructured.getIdInternal());
+        this.setExternalId(unstructured.getExternalId());
         this.setNote(unstructured.getTitle());
         this.setYear(unstructured.getYear());
     }

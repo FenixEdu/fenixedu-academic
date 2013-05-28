@@ -6,10 +6,10 @@
 
 <fr:view name="content">
 	<fr:layout name="manage-content-bread-crumbs">
-		<fr:property name="linkFor(Section)" value="/contentManagement.do?method=viewContainer&contentId=${idInternal}"/>
-		<fr:property name="linkFor(Portal)" value="/contentManagement.do?method=viewContainer&contentId=${idInternal}"/>
-		<fr:property name="linkFor(MetaDomainObjectPortal)" value="/contentManagement.do?method=viewContainer&contentId=${idInternal}"/>
-		<fr:property name="linkFor(Functionality)" value="/contentManagement.do?method=viewElement&contentId=${idInternal}"/>
+		<fr:property name="linkFor(Section)" value="/contentManagement.do?method=viewContainer&contentId=${externalId}"/>
+		<fr:property name="linkFor(Portal)" value="/contentManagement.do?method=viewContainer&contentId=${externalId}"/>
+		<fr:property name="linkFor(MetaDomainObjectPortal)" value="/contentManagement.do?method=viewContainer&contentId=${externalId}"/>
+		<fr:property name="linkFor(Functionality)" value="/contentManagement.do?method=viewElement&contentId=${externalId}"/>
 	</fr:layout>
 </fr:view>
 
@@ -19,7 +19,7 @@
 	<bean:define id="method" value="viewElement"/>
 </logic:equal>
 
-<bean:define id="contentId" name="content" property="idInternal"/>
+<bean:define id="contentId" name="content" property="externalId"/>
 
 <bean:define id="type" name="content" property="class.simpleName" />
 

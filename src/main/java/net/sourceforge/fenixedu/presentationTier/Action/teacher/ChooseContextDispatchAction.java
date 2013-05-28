@@ -236,7 +236,7 @@ public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction 
             request.setAttribute(PresentationConstants.CURRICULAR_YEAR_OID, anoCurricular.toString());
             request.setAttribute(PresentationConstants.INFO_EXECUTION_DEGREE_KEY, infoExecutionDegree);
             request.setAttribute(PresentationConstants.EXECUTION_DEGREE, infoExecutionDegree);
-            request.setAttribute(PresentationConstants.EXECUTION_DEGREE_OID, infoExecutionDegree.getIdInternal().toString());
+            request.setAttribute(PresentationConstants.EXECUTION_DEGREE_OID, infoExecutionDegree.getExternalId().toString());
         } else {
             return mapping.findForward("Licenciatura execucao inexistente");
         }
@@ -282,10 +282,10 @@ public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction 
          * (iterator.hasNext()) { infoExecutionDegree= (InfoExecutionDegree)
          * iterator.next(); if
          * (infoExecutionDegree.getInfoDegreeCurricularPlan()
-         * .getIdInternal().equals(degreeCurricularPlanId)) {
+         * .getExternalId().equals(degreeCurricularPlanId)) {
          * infoExecutionDegree);
          * request.setAttribute("executionDegreeID",infoExecutionDegree
-         * .getIdInternal().toString());
+         * .getExternalId().toString());
          * request.setAttribute("infoDegreeCurricularPlan",
          * infoExecutionDegree); break; } }
          */
@@ -359,7 +359,7 @@ public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction 
                             infoExecutionCourseCode, commonComponent, firstPageComponent, objectCode, obj1, obj2);
             request.setAttribute("siteView", siteView);
             request.setAttribute("objectCode", ((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse()
-                    .getIdInternal());
+                    .getExternalId());
             if (siteView.getComponent() instanceof InfoSiteSection) {
                 request.setAttribute("infoSection", ((InfoSiteSection) siteView.getComponent()).getSection());
             }

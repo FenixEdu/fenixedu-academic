@@ -24,7 +24,7 @@
 	<bean:message key="message.curriculum.validation.not.allowed" bundle="ACADEMIC_OFFICE_RESOURCES" />
 </logic:equal>
 
-<bean:define id="documentRequestId" name="documentRequest" property="idInternal" />
+<bean:define id="documentRequestId" name="documentRequest" property="externalId" />
 
 <logic:equal name="studentCurriculumValidationAllowed" value="true">
 	<p><bean:message key="message.curriculum.validation.not.documentCustomization" bundle="ACADEMIC_OFFICE_RESOURCES" /></p>

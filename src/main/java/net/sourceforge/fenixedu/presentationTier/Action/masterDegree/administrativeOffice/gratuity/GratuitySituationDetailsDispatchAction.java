@@ -94,7 +94,7 @@ public class GratuitySituationDetailsDispatchAction extends FenixDispatchAction 
         List infoTransactions = null;
 
         try {
-            infoTransactions = ReadAllTransactionsByGratuitySituationID.run(infoGratuitySituation.getIdInternal());
+            infoTransactions = ReadAllTransactionsByGratuitySituationID.run(infoGratuitySituation.getExternalId());
 
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
@@ -109,7 +109,7 @@ public class GratuitySituationDetailsDispatchAction extends FenixDispatchAction 
             if (infoTransaction instanceof InfoPaymentTransaction) {
                 InfoPaymentTransaction infoPaymentTransaction = (InfoPaymentTransaction) infoTransaction;
                 if (infoPaymentTransaction.getInfoGuideEntry() == null) {
-                    transactionsWithoutGuideList.add(infoPaymentTransaction.getIdInternal());
+                    transactionsWithoutGuideList.add(infoPaymentTransaction.getExternalId());
                 } else {
                     transactionsWithoutGuideList.add(null);
                 }

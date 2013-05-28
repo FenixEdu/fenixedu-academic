@@ -58,7 +58,7 @@ public class InfoGuideEntry extends InfoObject {
     public String toString() {
         String result = "[GUIDE ENTRY";
         result += ", description=" + description;
-        result += ", infoGuide=" + infoGuide.getIdInternal();
+        result += ", infoGuide=" + infoGuide.getExternalId();
         result += ", documentType=" + documentType;
         result += ", graduationType=" + graduationType;
         result += ", price=" + price;

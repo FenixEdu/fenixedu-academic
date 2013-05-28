@@ -14,7 +14,7 @@
 
 <bean:define id="showMethod" value="&method=showPublications" toScope="request" />
 <bean:define id="searchMethod" value="&method=prepareSearchPublication" toScope="request" />
-<bean:define id="siteID" name="<%= FilterFunctionalityContext.CONTEXT_KEY%>" property="selectedContainer.idInternal"/>
+<bean:define id="siteID" name="<%= FilterFunctionalityContext.CONTEXT_KEY%>" property="selectedContainer.externalId"/>
 <bean:define id="showArguments" value="<%= "siteID=" + siteID %>" toScope="request" />
 <bean:define id="searchArguments" value="<%=  "siteID=" + siteID %>" toScope="request" />
 

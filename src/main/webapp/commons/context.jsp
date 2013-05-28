@@ -13,7 +13,7 @@
 	<bean:define id="executionPeriodOID"
 				 type="java.lang.Integer"
 				 name="executionPeriod"
-				 property="idInternal"
+				 property="externalId"
 				 toScope="request"
 				 scope="request"/>
 </logic:present>

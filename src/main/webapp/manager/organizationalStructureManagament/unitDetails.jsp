@@ -103,7 +103,7 @@
 					<h:outputText value="#{bundle['message.action']}" />
 				</f:facet>								
 				<fc:commandLink action="prepareEditUnit" value="#{bundle['link.edit']}">
-					<f:param id="chooseUnitID1" name="chooseUnitID" value="#{unit.idInternal}"/>
+					<f:param id="chooseUnitID1" name="chooseUnitID" value="#{unit.externalId}"/>
 				</fc:commandLink>				
 			</h:column>	
 			<h:column>	
@@ -111,7 +111,7 @@
 					<h:outputText value="#{bundle['message.action']}" />
 				</f:facet>								
 				<fc:commandLink action="#{organizationalStructureBackingBean.deleteUnit}" value="#{bundle['message.manager.delete']}">
-					<f:param id="chooseUnitID3" name="chooseUnitID" value="#{unit.idInternal}"/>
+					<f:param id="chooseUnitID3" name="chooseUnitID" value="#{unit.externalId}"/>
 				</fc:commandLink>				
 			</h:column>
 			<h:column>	
@@ -146,7 +146,7 @@
 				<f:facet name="header">
 					<h:outputText value="#{bundle['message.unitName']}" />
 				</f:facet>				
-				<h:outputLink value="#{organizationalStructureBackingBean.contextPath}/manager/organizationalStructureManagament/unitDetails.faces?unitID=#{unit.idInternal}">
+				<h:outputLink value="#{organizationalStructureBackingBean.contextPath}/manager/organizationalStructureManagament/unitDetails.faces?unitID=#{unit.externalId}">
 					<h:outputText value="#{unit.name}" escape="false"/>
 				</h:outputLink>	
 			</h:column>
@@ -206,14 +206,14 @@
 				<f:facet name="header">
 					<h:outputText value="#{bundle['title.relation.type']}" />
 				</f:facet>								
-				<h:outputText value="#{organizationalStructureBackingBean.unitRelationsAccountabilityTypes[unit.idInternal]}" escape="false"/>									
+				<h:outputText value="#{organizationalStructureBackingBean.unitRelationsAccountabilityTypes[unit.externalId]}" escape="false"/>									
 			</h:column>	
 			<h:column>	
 				<f:facet name="header">
 					<h:outputText value="#{bundle['message.action']}" />
 				</f:facet>								
 				<fc:commandLink action="prepareEditUnit" value="#{bundle['link.edit']}">
-					<f:param id="chooseUnitID2" name="chooseUnitID" value="#{unit.idInternal}"/>
+					<f:param id="chooseUnitID2" name="chooseUnitID" value="#{unit.externalId}"/>
 				</fc:commandLink>				
 			</h:column>	
 			<h:column>	
@@ -221,7 +221,7 @@
 					<h:outputText value="#{bundle['message.action']}" />
 				</f:facet>								
 				<fc:commandLink action="#{organizationalStructureBackingBean.deleteSubUnit}" value="#{bundle['message.manager.delete']}">
-					<f:param id="chooseUnitID3" name="chooseUnitID" value="#{unit.idInternal}"/>
+					<f:param id="chooseUnitID3" name="chooseUnitID" value="#{unit.externalId}"/>
 				</fc:commandLink>				
 			</h:column>				
 		</h:dataTable>
@@ -273,7 +273,7 @@
 					<h:outputText value="#{bundle['message.action']}" />
 				</f:facet>
 				<fc:commandLink action="prepareEditFunction" value="#{bundle['link.edit']}">
-					<f:param id="functionID" name="functionID" value="#{function.idInternal}"/>
+					<f:param id="functionID" name="functionID" value="#{function.externalId}"/>
 					<f:param id="listingTypeToFunctions" name="listingTypeToFunctions" value="#{organizationalStructureBackingBean.listingTypeValueToFunctions}"/>										
 				</fc:commandLink>				
 			</h:column>	
@@ -282,7 +282,7 @@
 					<h:outputText value="#{bundle['message.action']}" />
 				</f:facet>								
 				<fc:commandLink action="#{organizationalStructureBackingBean.deleteFunction}" value="#{bundle['message.manager.delete']}">
-					<f:param id="functionID2" name="functionID" value="#{function.idInternal}"/>
+					<f:param id="functionID2" name="functionID" value="#{function.externalId}"/>
 				</fc:commandLink>				
 			</h:column>
 			<h:column>	
@@ -290,7 +290,7 @@
 					<h:outputText value="#{bundle['message.action']}" />
 				</f:facet>								
 				<fc:commandLink action="#{organizationalStructureBackingBean.prepareAssociateInherentParentFunction}" value="#{bundle['message.inherentTo2']}">
-					<f:param id="functionID3" name="functionID" value="#{function.idInternal}"/>					
+					<f:param id="functionID3" name="functionID" value="#{function.externalId}"/>					
 				</fc:commandLink>				
 			</h:column>
 		</h:dataTable>					
@@ -346,7 +346,7 @@
 					<h:outputText value="#{bundle['message.action']}" />
 				</f:facet>								
 				<fc:commandLink action="prepareEditFunction" value="#{bundle['link.edit']}">
-					<f:param id="functionID" name="functionID" value="#{function.idInternal}"/>
+					<f:param id="functionID" name="functionID" value="#{function.externalId}"/>
 				</fc:commandLink>				
 			</h:column>	
 			<h:column>	
@@ -354,7 +354,7 @@
 					<h:outputText value="#{bundle['message.action']}" />
 				</f:facet>								
 				<fc:commandLink action="#{organizationalStructureBackingBean.deleteFunction}" value="#{bundle['message.manager.delete']}">
-					<f:param id="functionID2" name="functionID" value="#{function.idInternal}"/>
+					<f:param id="functionID2" name="functionID" value="#{function.externalId}"/>
 				</fc:commandLink>				
 			</h:column>
 			<h:column>	
@@ -362,7 +362,7 @@
 					<h:outputText value="#{bundle['message.action']}" />
 				</f:facet>								
 				<fc:commandLink action="#{organizationalStructureBackingBean.disassociateInherentFunction}" value="#{bundle['message.inherentTo3']}">
-					<f:param id="functionID3" name="functionID" value="#{function.idInternal}"/>
+					<f:param id="functionID3" name="functionID" value="#{function.externalId}"/>
 				</fc:commandLink>				
 			</h:column>
 		</h:dataTable>			

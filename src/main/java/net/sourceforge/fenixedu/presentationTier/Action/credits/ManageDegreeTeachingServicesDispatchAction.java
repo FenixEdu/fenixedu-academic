@@ -61,7 +61,7 @@ public class ManageDegreeTeachingServicesDispatchAction extends FenixDispatchAct
             teachingServicePercentages.add(new TeachingServicePercentage(shift, availablePercentage));
             for (DegreeTeachingService degreeTeachingService : shift.getDegreeTeachingServices()) {
                 if (professorship == degreeTeachingService.getProfessorship()) {
-                    teacherPercentageMap.put(shift.getIdInternal().toString(), round(degreeTeachingService.getPercentage()));
+                    teacherPercentageMap.put(shift.getExternalId().toString(), round(degreeTeachingService.getPercentage()));
                     break;
                 }
             }

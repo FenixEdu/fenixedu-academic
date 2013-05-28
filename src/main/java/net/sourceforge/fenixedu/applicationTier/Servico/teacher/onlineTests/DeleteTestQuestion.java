@@ -26,7 +26,7 @@ public class DeleteTestQuestion {
             @Override
             public boolean evaluate(Object arg0) {
                 final TestQuestion testQuestion = (TestQuestion) arg0;
-                return testQuestion.getQuestion().getIdInternal().equals(questionId);
+                return testQuestion.getQuestion().getExternalId().equals(questionId);
             }
         });
         if (testQuestion == null) {

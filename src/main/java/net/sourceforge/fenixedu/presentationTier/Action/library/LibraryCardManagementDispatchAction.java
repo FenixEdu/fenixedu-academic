@@ -526,7 +526,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
             return mapping.findForward("create-unit-person");
         }
 
-        request.setAttribute("personID", externalPersonBean.getPerson().getIdInternal());
+        request.setAttribute("personID", externalPersonBean.getPerson().getExternalId());
         return prepareGenerateCard(mapping, actionForm, request, response);
     }
 
@@ -575,11 +575,11 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
         if (externalPersonBean.getUnit() != null) {
 
             externalContract =
-                    InsertExternalPerson.run(externalPersonBean.getName(), externalPersonBean.getUnit().getIdInternal(),
+                    InsertExternalPerson.run(externalPersonBean.getName(), externalPersonBean.getUnit().getExternalId(),
                             externalPersonBean.getPhone(), externalPersonBean.getMobile(), externalPersonBean.getEmail());
         }
 
-        request.setAttribute("personID", externalContract.getPerson().getIdInternal());
+        request.setAttribute("personID", externalContract.getPerson().getExternalId());
 
         return prepareGenerateCard(mapping, actionForm, request, response);
     }

@@ -144,7 +144,7 @@ public class UIDegreeModule extends UIInput {
         href.append("degreeCurricularPlanID=").append(dcpId);
 
         if (this.executionYear != null) {
-            href.append("&executionYearID=").append(this.executionYear.getIdInternal());
+            href.append("&executionYearID=").append(this.executionYear.getExternalId());
         } else if (requestParameterMap.get("executionPeriodOID") != null) {
             href.append("&executionPeriodOID=").append(requestParameterMap.get("executionPeriodOID"));
         }
@@ -214,11 +214,11 @@ public class UIDegreeModule extends UIInput {
         if (loggedPersonCanManageDegreeCurricularPlans()) {
             if (this.executionYear != null) {
                 encodeLink(module + "/curricularRules/editCurricularRule.faces",
-                        "&curricularRuleID=" + curricularRule.getIdInternal(), false, "edit");
+                        "&curricularRuleID=" + curricularRule.getExternalId(), false, "edit");
                 writer.append(", ");
             }
             encodeLink(module + "/curricularRules/deleteCurricularRule.faces",
-                    "&curricularRuleID=" + curricularRule.getIdInternal(), false, "delete");
+                    "&curricularRuleID=" + curricularRule.getExternalId(), false, "delete");
         }
         writer.endElement("td");
     }

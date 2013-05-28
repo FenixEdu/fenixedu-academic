@@ -129,7 +129,7 @@ public class InsertExecutionDegreeDispatchAction extends FenixDispatchAction {
         infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
 
         InfoCampus infoCampus = new InfoCampus();
-        infoCampus.setIdInternal(Integer.valueOf((String) dynaForm.get("campusId")));
+        infoCampus.setExternalId(Integer.valueOf((String) dynaForm.get("campusId")));
 
         infoExecutionDegree.setInfoCampus(infoCampus);
         infoExecutionDegree.setTemporaryExamMap(new Boolean((String) dynaForm.get("tempExamMap")));

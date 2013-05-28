@@ -426,7 +426,7 @@ public class ErasmusIndividualCandidacyProcessDA extends IndividualCandidacyProc
             HttpServletResponse response) {
         return redirect(
                 "/caseHandlingMobilityIndividualApplicationProcess.do?method=enrolStudent&processId="
-                        + getProcess(request).getIdInternal().toString(), request);
+                        + getProcess(request).getExternalId().toString(), request);
     }
 
 }

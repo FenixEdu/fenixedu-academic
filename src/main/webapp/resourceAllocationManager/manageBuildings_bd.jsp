@@ -14,7 +14,7 @@
 
 	<html:text bundle="HTMLALT_RESOURCES" altKey="text.name" property="name" size="35"/>
 	<html:select bundle="HTMLALT_RESOURCES" property="campusID" size="1">
-		<html:options collection="campuss" property="idInternal" labelProperty="name"/>
+		<html:options collection="campuss" property="externalId" labelProperty="name"/>
 	</html:select>
 
 	<html:submit>
@@ -26,7 +26,7 @@
 <logic:present name="buildings">
 	<table class="tstyle4">
 		<logic:iterate id="building" name="buildings" type="net.sourceforge.fenixedu.domain.space.OldBuilding">
-			<bean:define id="buildingId" name="building" property="idInternal"/>
+			<bean:define id="buildingId" name="building" property="externalId"/>
 			<tr>
 				<td>
 					<bean:write name="building" property="name"/>
@@ -37,9 +37,9 @@
 						<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 						<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.buildingID" property="buildingID" value="<%= buildingId.toString() %>"/>
 					
-						<bean:define id="campusID" name="building" property="campus.idInternal" type="java.lang.Integer"/>
+						<bean:define id="campusID" name="building" property="campus.externalId" type="java.lang.Integer"/>
 						<html:select bundle="HTMLALT_RESOURCES" property="campusID" size="1" value="<%= campusID.toString() %>" onchange="this.form.submit();">
-							<html:options collection="campuss" property="idInternal" labelProperty="name"/>
+							<html:options collection="campuss" property="externalId" labelProperty="name"/>
 						</html:select>				
 						
 						<div class="switchNone">

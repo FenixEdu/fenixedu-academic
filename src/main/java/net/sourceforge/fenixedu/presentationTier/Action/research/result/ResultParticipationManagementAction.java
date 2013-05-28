@@ -155,7 +155,7 @@ public class ResultParticipationManagementAction extends ResultsManagementAction
 
         if (participation.getPerson().equals(loggedPerson) && getFromRequest(request, "confirm") == null
                 && getFromRequest(request, "cancel") == null) {
-            request.setAttribute("deleteConfirmation", participation.getIdInternal());
+            request.setAttribute("deleteConfirmation", participation.getExternalId());
         }
 
         if (getFromRequest(request, "confirm") != null || !participation.getPerson().equals(loggedPerson)) {

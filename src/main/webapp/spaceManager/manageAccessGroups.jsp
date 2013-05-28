@@ -14,7 +14,7 @@
 	<logic:notEmpty name="selectedSpaceInformation">
 		
 		<bean:define id="space" name="selectedSpaceInformation" property="space" toScope="request"/>
-		<bean:define id="selectedSpaceInformationId" name="selectedSpaceInformation" property="idInternal" toScope="request"/>
+		<bean:define id="selectedSpaceInformationId" name="selectedSpaceInformation" property="externalId" toScope="request"/>
 		<jsp:include page="spaceCrumbs.jsp"/>
 		
 		<bean:define id="space" name="selectedSpaceInformation" property="space"/>

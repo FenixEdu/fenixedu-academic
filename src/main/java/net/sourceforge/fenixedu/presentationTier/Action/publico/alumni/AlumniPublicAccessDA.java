@@ -145,7 +145,7 @@ public class AlumniPublicAccessDA extends FenixDispatchAction {
             // MessageFormat.format(RESOURCES.getString("alumni.public.registration.url"),
             // alumni.getStudent()
             // .getPerson().getFirstAndLastName(),
-            // alumni.getIdInternal().toString(), alumni.getUrlRequestToken(),
+            // alumni.getExternalId().toString(), alumni.getUrlRequestToken(),
             // ResourceBundle.getBundle("resources.GlobalResources").getString("fenix.url"));
             String url = AlumniNotificationService.getRegisterConclusionURL(alumni);
             request.setAttribute("alumniEmailSuccessMessage", "http" + url.split("http")[1]);

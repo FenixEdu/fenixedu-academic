@@ -105,16 +105,16 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         request.setAttribute("importContentBean", bean);
 
         final ExecutionCourse executionCourseFrom = bean.getExecutionCourse();
-        final Object args[] = { executionCourseTo.getIdInternal(), executionCourseTo, executionCourseFrom, null };
+        final Object args[] = { executionCourseTo.getExternalId(), executionCourseTo, executionCourseFrom, null };
         try {
             if (importContentService.equals("ImportBibliographicReferences")) {
-                ImportBibliographicReferences.runImportBibliographicReferences(executionCourseTo.getIdInternal(),
+                ImportBibliographicReferences.runImportBibliographicReferences(executionCourseTo.getExternalId(),
                         executionCourseTo, executionCourseFrom, null);
             } else if (importContentService.equals("ImportEvaluationMethod")) {
-                ImportEvaluationMethod.runImportEvaluationMethod(executionCourseTo.getIdInternal(), executionCourseTo,
+                ImportEvaluationMethod.runImportEvaluationMethod(executionCourseTo.getExternalId(), executionCourseTo,
                         executionCourseFrom, null);
             } else if (importContentService.equals("ImportSections")) {
-                ImportSections.runImportSections(executionCourseTo.getIdInternal(), executionCourseTo, executionCourseFrom, null);
+                ImportSections.runImportSections(executionCourseTo.getExternalId(), executionCourseTo, executionCourseFrom, null);
             } else {
                 throw new UnsupportedOperationException("Sorry, cannot import using " + importContentService);
             }
@@ -338,7 +338,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
         final IUserView userView = getUserView(request);
 
-        CreateBibliographicReference.runCreateBibliographicReference(executionCourse.getIdInternal(), title, authors, reference,
+        CreateBibliographicReference.runCreateBibliographicReference(executionCourse.getExternalId(), title, authors, reference,
                 year, Boolean.valueOf(optional));
 
         return mapping.findForward("bibliographicReference");
@@ -379,7 +379,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
                 findBibliographicReference(executionCourse, Integer.valueOf(bibliographicReferenceIDString));
         final IUserView userView = getUserView(request);
 
-        EditBibliographicReference.runEditBibliographicReference(bibliographicReference.getIdInternal(), title, authors,
+        EditBibliographicReference.runEditBibliographicReference(bibliographicReference.getExternalId(), title, authors,
                 reference, year, Boolean.valueOf(optional));
 
         return mapping.findForward("bibliographicReference");
@@ -476,7 +476,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 
         if (importType != null && importType.equals(ImportLessonPlanningsBean.ImportType.PLANNING)) {
             try {
-                ImportLessonPlannings.runImportLessonPlannings(executionCourseTo.getIdInternal(), executionCourseTo,
+                ImportLessonPlannings.runImportLessonPlannings(executionCourseTo.getExternalId(), executionCourseTo,
                         executionCourseFrom, null);
             } catch (DomainException e) {
                 addActionMessage(request, e.getKey(), e.getArgs());
@@ -499,7 +499,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         Shift shiftFrom = bean.getShift();
 
         try {
-            ImportLessonPlannings.runImportLessonPlannings(executionCourseTo.getIdInternal(), executionCourseTo,
+            ImportLessonPlannings.runImportLessonPlannings(executionCourseTo.getExternalId(), executionCourseTo,
                     shiftFrom.getExecutionCourse(), shiftFrom);
         } catch (DomainException e) {
             addActionMessage(request, e.getKey(), e.getArgs());
@@ -530,7 +530,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         Integer lessonPlanningID = Integer.valueOf(request.getParameter("lessonPlanningID"));
         LessonPlanning lessonPlanning = rootDomainObject.readLessonPlanningByOID(lessonPlanningID);
         try {
-            MoveLessonPlanning.runMoveLessonPlanning(lessonPlanning.getExecutionCourse().getIdInternal(), lessonPlanning,
+            MoveLessonPlanning.runMoveLessonPlanning(lessonPlanning.getExecutionCourse().getExternalId(), lessonPlanning,
                     (lessonPlanning.getOrderOfPlanning() - 1));
         } catch (DomainException e) {
             addActionMessage(request, e.getKey(), e.getArgs());
@@ -545,7 +545,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         Integer lessonPlanningID = Integer.valueOf(request.getParameter("lessonPlanningID"));
         LessonPlanning lessonPlanning = rootDomainObject.readLessonPlanningByOID(lessonPlanningID);
         try {
-            MoveLessonPlanning.runMoveLessonPlanning(lessonPlanning.getExecutionCourse().getIdInternal(), lessonPlanning,
+            MoveLessonPlanning.runMoveLessonPlanning(lessonPlanning.getExecutionCourse().getExternalId(), lessonPlanning,
                     (lessonPlanning.getOrderOfPlanning() + 1));
         } catch (DomainException e) {
             addActionMessage(request, e.getKey(), e.getArgs());
@@ -578,7 +578,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         final CreateLessonPlanningBean lessonPlanningBean = (CreateLessonPlanningBean) viewState.getMetaObject().getObject();
 
         try {
-            CreateLessonPlanning.runCreateLessonPlanning(lessonPlanningBean.getExecutionCourse().getIdInternal(),
+            CreateLessonPlanning.runCreateLessonPlanning(lessonPlanningBean.getExecutionCourse().getExternalId(),
                     lessonPlanningBean.getTitle(), lessonPlanningBean.getPlanning(), lessonPlanningBean.getLessonType(),
                     lessonPlanningBean.getExecutionCourse());
         } catch (DomainException e) {
@@ -596,7 +596,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         LessonPlanning lessonPlanning = rootDomainObject.readLessonPlanningByOID(lessonPlanningID);
         if (lessonPlanning != null) {
             try {
-                DeleteLessonPlanning.runDeleteLessonPlanning(lessonPlanning.getExecutionCourse().getIdInternal(), lessonPlanning,
+                DeleteLessonPlanning.runDeleteLessonPlanning(lessonPlanning.getExecutionCourse().getExternalId(), lessonPlanning,
                         null, null);
             } catch (DomainException e) {
                 addActionMessage(request, e.getKey(), e.getArgs());
@@ -613,7 +613,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 
         if (lessonType != null && executionCourse != null) {
             try {
-                DeleteLessonPlanning.runDeleteLessonPlanning(executionCourse.getIdInternal(), null, executionCourse, lessonType);
+                DeleteLessonPlanning.runDeleteLessonPlanning(executionCourse.getExternalId(), null, executionCourse, lessonType);
             } catch (DomainException e) {
                 addActionMessage(request, e.getKey(), e.getArgs());
             }
@@ -642,7 +642,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
             if (person != null) {
                 for (final Professorship professorship : person.getProfessorshipsSet()) {
                     final ExecutionCourse executionCourse = professorship.getExecutionCourse();
-                    if (executionCourse.getIdInternal().equals(executionCourseID)) {
+                    if (executionCourse.getExternalId().equals(executionCourseID)) {
                         return executionCourse;
                     }
                 }
@@ -654,7 +654,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 
     private BibliographicReference findBibliographicReference(ExecutionCourse executionCourse, Integer bibliographicReferenceID) {
         for (final BibliographicReference bibliographicReference : executionCourse.getAssociatedBibliographicReferencesSet()) {
-            if (bibliographicReference.getIdInternal().equals(bibliographicReferenceID)) {
+            if (bibliographicReference.getExternalId().equals(bibliographicReferenceID)) {
                 return bibliographicReference;
             }
         }
@@ -664,7 +664,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
     private Curriculum findCurriculum(final ExecutionCourse executionCourse, final Integer curriculumID) {
         for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
             for (final Curriculum curriculum : curricularCourse.getAssociatedCurriculumsSet()) {
-                if (curriculum.getIdInternal().equals(curriculumID)) {
+                if (curriculum.getExternalId().equals(curriculumID)) {
                     return curriculum;
                 }
             }
@@ -674,7 +674,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 
     private CurricularCourse findCurricularCourse(final ExecutionCourse executionCourse, final Integer curricularCourseID) {
         for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
-            if (curricularCourse.getIdInternal().equals(curricularCourseID)) {
+            if (curricularCourse.getExternalId().equals(curricularCourseID)) {
                 return curricularCourse;
             }
         }

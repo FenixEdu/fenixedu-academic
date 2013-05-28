@@ -63,7 +63,7 @@ public class ExecutionCourseInfoDispatchAction extends FenixDispatchAction {
         InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute(PresentationConstants.MASTER_DEGREE);
 
         List executionPeriods =
-                ReadExecutionPeriodsByExecutionYear.run(infoExecutionDegree.getInfoExecutionYear().getIdInternal());
+                ReadExecutionPeriodsByExecutionYear.run(infoExecutionDegree.getInfoExecutionYear().getExternalId());
 
         ComparatorChain chainComparator = new ComparatorChain();
         chainComparator.addComparator(new BeanComparator("infoExecutionYear.year"));
@@ -74,7 +74,7 @@ public class ExecutionCourseInfoDispatchAction extends FenixDispatchAction {
         for (int i = 0; i < executionPeriods.size(); i++) {
             InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) executionPeriods.get(i);
             executionPeriodsLabelValueList.add(new LabelValueBean(infoExecutionPeriod.getName() + " - "
-                    + infoExecutionPeriod.getInfoExecutionYear().getYear(), infoExecutionPeriod.getIdInternal().toString()));
+                    + infoExecutionPeriod.getInfoExecutionYear().getYear(), infoExecutionPeriod.getExternalId().toString()));
         }
 
         request.setAttribute(PresentationConstants.LABELLIST_EXECUTIONPERIOD, executionPeriodsLabelValueList);
@@ -107,7 +107,7 @@ public class ExecutionCourseInfoDispatchAction extends FenixDispatchAction {
         for (int i = 0; i < executionPeriods.size(); i++) {
             InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) executionPeriods.get(i);
             executionPeriodsLabelValueList.add(new LabelValueBean(infoExecutionPeriod.getName() + " - "
-                    + infoExecutionPeriod.getInfoExecutionYear().getYear(), infoExecutionPeriod.getIdInternal().toString()));
+                    + infoExecutionPeriod.getInfoExecutionYear().getYear(), infoExecutionPeriod.getExternalId().toString()));
         }
 
         request.setAttribute(PresentationConstants.LABELLIST_EXECUTIONPERIOD, executionPeriodsLabelValueList);

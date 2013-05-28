@@ -45,28 +45,28 @@
 <ul>
 <logic:equal name="permissionsGrantPermission" value="true">		
 	<li>
-		<html:link page='<%= "/tsdSupport.do?method=prepareForPermissionServices&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getIdInternal().toString() %>'>
+		<html:link page='<%= "/tsdSupport.do?method=prepareForPermissionServices&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getExternalId().toString() %>'>
 			<bean:message key="link.teacherServiceDistribution.permissionSupportService"/>
 		</html:link>
 	</li>
 </logic:equal>
 <logic:equal name="phaseManagementPermission" value="true">	
 	<li>
-	  	<html:link page='<%= "/tsdProcessPhasesManagement.do?method=prepareForTSDProcessPhasesManagement&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getIdInternal().toString() %>'>
+	  	<html:link page='<%= "/tsdProcessPhasesManagement.do?method=prepareForTSDProcessPhasesManagement&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getExternalId().toString() %>'>
 	  		<bean:message key="link.teacherServiceDistribution.tsdProcessPhasesManagement"/>
 	  	</html:link>
 	</li>
 </logic:equal>
 <logic:equal name="omissionConfigurationPermission" value="true">		
 	<li>
-	  	<html:link page='<%= "/tsdProcessPhasesManagement.do?method=prepareForOmissionValuesValuation&amp;edit=no&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getIdInternal().toString() %>'>
+	  	<html:link page='<%= "/tsdProcessPhasesManagement.do?method=prepareForOmissionValuesValuation&amp;edit=no&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getExternalId().toString() %>'>
 	 		<bean:message key="link.teacherServiceDistribution.omissionValuesValuation"/>
 	  	</html:link>
 	</li>
 </logic:equal>
 <logic:equal name="tsdCoursesAndTeachersManagementPermission" value="true">
 	<li>
-	  	<html:link page='<%= "/tsdTeachersGroup.do?method=prepareForTSDTeachersGroupServices&amp;tsdID=" + ((TSDProcess) request.getAttribute("tsdProcess")).getCurrentTSDProcessPhase().getRootTSD().getIdInternal().toString() %>'>
+	  	<html:link page='<%= "/tsdTeachersGroup.do?method=prepareForTSDTeachersGroupServices&amp;tsdID=" + ((TSDProcess) request.getAttribute("tsdProcess")).getCurrentTSDProcessPhase().getRootTSD().getExternalId().toString() %>'>
 	  		<bean:message key="link.teacherServiceDistribution.manageRootGrouping"/>
 	  	</html:link>
 	</li>
@@ -74,35 +74,35 @@
 
 <logic:equal name="teachersManagementPermission" value="true">			
 	<li>
-		<html:link page='<%= "/tsdSupport.do?method=prepareForTeacherServiceDistributionSupportServices&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getIdInternal().toString() %>'>
+		<html:link page='<%= "/tsdSupport.do?method=prepareForTeacherServiceDistributionSupportServices&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getExternalId().toString() %>'>
 			<bean:message key="link.teacherServiceDistribution.groupingAreaSupportService"/>
 		</html:link>
 	</li>
 </logic:equal>	
 <logic:equal name="coursesValuationPermission" value="true">	
 	<li>
-		<html:link page='<%= "/tsdCourse.do?method=prepareForTSDCourse&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getIdInternal().toString() %>'>
+		<html:link page='<%= "/tsdCourse.do?method=prepareForTSDCourse&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getExternalId().toString() %>'>
 			<bean:message key="link.teacherServiceDistribution.tsdCourseService"/>
 		</html:link>
 	</li>
 </logic:equal>
 <logic:equal name="teachersValuationPermission" value="true">
 	<li>
-		<html:link page='<%= "/tsdProfessorship.do?method=prepareForTSDProfessorship&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getIdInternal().toString() %>'>
+		<html:link page='<%= "/tsdProfessorship.do?method=prepareForTSDProfessorship&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getExternalId().toString() %>'>
 			<bean:message key="link.teacherServiceDistribution.tsdProfessorshipService"/>
 		</html:link>
 	</li>
 </logic:equal>
 <logic:equal name="automaticValuationPermission" value="true">		
 	<li>
-		<html:link page='<%= "/tsdProcessPhasesManagement.do?method=prepareForCurrentTSDProcessPhaseDataManagement&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getIdInternal().toString() %>'>
+		<html:link page='<%= "/tsdProcessPhasesManagement.do?method=prepareForCurrentTSDProcessPhaseDataManagement&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getExternalId().toString() %>'>
 			<bean:message key="link.teacherServiceDistribution.createAutomaticTSDCourses"/>
 		</html:link>
 	</li>
 </logic:equal>
 <logic:equal name="viewTSDProcessValuationPermission" value="true">
 	<li>
-		<html:link page='<%= "/tsdProcessValuation.do?method=prepareForTSDProcessValuation&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getIdInternal().toString() %>'>
+		<html:link page='<%= "/tsdProcessValuation.do?method=prepareForTSDProcessValuation&amp;tsdProcess=" + ((TSDProcess) request.getAttribute("tsdProcess")).getExternalId().toString() %>'>
 			<bean:message key="link.teacherServiceDistribution.tsdProcessValuation"/>
 		</html:link>
 	</li>	

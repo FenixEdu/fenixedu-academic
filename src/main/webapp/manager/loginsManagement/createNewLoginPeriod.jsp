@@ -24,7 +24,7 @@
 		<b><bean:message key="label.person.username" bundle="MANAGER_RESOURCES"/></b> <bean:write name="login" property="user.person.username"/>
 	</p>
 	
-	<bean:define id="managePeriodsURL" type="java.lang.String">/loginsManagement.do?method=prepareManageLoginTimeIntervals&personID=<bean:write name="login" property="user.person.idInternal"/></bean:define>								
+	<bean:define id="managePeriodsURL" type="java.lang.String">/loginsManagement.do?method=prepareManageLoginTimeIntervals&personID=<bean:write name="login" property="user.person.externalId"/></bean:define>								
 	<fr:create id="createNewLoginPeriodID" type="net.sourceforge.fenixedu.domain.LoginPeriod" schema="CreateLoginPeriod" action="<%= managePeriodsURL %>">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle1"/>

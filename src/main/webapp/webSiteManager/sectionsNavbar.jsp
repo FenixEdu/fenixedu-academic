@@ -17,7 +17,7 @@
         </li>
         	<logic:iterate id="announcementBoard" name="announcementBoards" type="net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard">
         		<li>
-        			<html:link action="<%= contextPrefix + "method=viewAnnouncementBoard&announcementBoardId="+announcementBoard.getIdInternal() +"&" +extraParameters%>">
+        			<html:link action="<%= contextPrefix + "method=viewAnnouncementBoard&announcementBoardId="+announcementBoard.getExternalId() +"&" +extraParameters%>">
         				<bean:write name="announcementBoard" property="name"/>
         			</html:link>
         		</li>

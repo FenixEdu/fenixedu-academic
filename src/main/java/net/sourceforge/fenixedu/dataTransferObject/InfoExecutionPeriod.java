@@ -132,12 +132,12 @@ public class InfoExecutionPeriod extends InfoObject implements Comparable {
     }
 
     @Override
-    public Integer getIdInternal() {
-        return getExecutionPeriod().getIdInternal();
+    public Integer getExternalId() {
+        return getExecutionPeriod().getExternalId();
     }
 
     @Override
-    public void setIdInternal(Integer integer) {
+    public void setExternalId(Integer integer) {
         throw new Error("Method should not be called!");
     }
 

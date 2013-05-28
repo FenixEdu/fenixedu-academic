@@ -32,7 +32,7 @@
 
 		<br/>
 		<logic:iterate id="infoStudentCurricularPlan" name="infoStudentCurricularPlans">
-			<bean:define id="studentCurricularPlanId" name="infoStudentCurricularPlan" property="idInternal" type="java.lang.Integer"/>
+			<bean:define id="studentCurricularPlanId" name="infoStudentCurricularPlan" property="externalId" type="java.lang.Integer"/>
 
 			<logic:equal name="studentCurricularPlanForm" property="selectedStudentCurricularPlanId" value="<%= studentCurricularPlanId.toString() %>">
 
@@ -104,7 +104,7 @@
 					</tr>
 
 				<logic:iterate id="enrolment" name="infoStudentCurricularPlan" property="studentCurricularPlan.enrolments">
-					<bean:define id="enrollmentId" name="enrolment" property="idInternal"/>
+					<bean:define id="enrollmentId" name="enrolment" property="externalId"/>
 					<bean:define id="enrollmentIdString" type="java.lang.String"><bean:write name="enrollmentId"/></bean:define>
 
 					<%
@@ -152,7 +152,7 @@
 
 		<br />
 		<logic:iterate id="infoStudentCurricularPlan" name="infoStudentCurricularPlans">
-			<bean:define id="studentCurricularPlanId" name="infoStudentCurricularPlan" property="idInternal" type="java.lang.Integer"/>
+			<bean:define id="studentCurricularPlanId" name="infoStudentCurricularPlan" property="externalId" type="java.lang.Integer"/>
 
 			<table>
 				<tr>
@@ -208,7 +208,7 @@
 			<logic:equal name="infoStudentCurricularPlan" property="studentCurricularPlan.boxStructure" value="true">
 				<logic:iterate id="curriculumGroup" name="infoStudentCurricularPlan" property="studentCurricularPlan.root.allCurriculumGroups" type="net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup">
 					<bean:write name="curriculumGroup" property="fullPath" />
-					<html:radio property="selectedCurriculumGroupID" value="<%= curriculumGroup.getIdInternal().toString() %>" />
+					<html:radio property="selectedCurriculumGroupID" value="<%= curriculumGroup.getExternalId().toString() %>" />
 					<br/>
 				</logic:iterate>
 			</logic:equal>

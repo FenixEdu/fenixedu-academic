@@ -21,7 +21,7 @@ public class InsertBranch {
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
     public static void run(InfoBranch infoBranch) throws NonExistingServiceException {
-        final Integer degreeCurricularPlanId = infoBranch.getInfoDegreeCurricularPlan().getIdInternal();
+        final Integer degreeCurricularPlanId = infoBranch.getInfoDegreeCurricularPlan().getExternalId();
         final DegreeCurricularPlan degreeCurricularPlan = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanId);
 
         if (degreeCurricularPlan == null) {

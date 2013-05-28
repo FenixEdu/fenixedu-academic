@@ -553,8 +553,8 @@ public class TeacherAdministrationSiteComponentBuilder {
         } else {
             while (iterator.hasNext()) {
                 Section section = (Section) iterator.next();
-                if ((section.getSuperiorSection() != null && section.getSuperiorSection().getIdInternal()
-                        .equals(iSection.getSuperiorSection().getIdInternal()))
+                if ((section.getSuperiorSection() != null && section.getSuperiorSection().getExternalId()
+                        .equals(iSection.getSuperiorSection().getExternalId()))
                         && !section.getName().equals(iSection.getName())) {
                     infoSectionsList.add(InfoSection.newInfoFromDomain(section));
                 }
@@ -614,7 +614,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 
     private ISiteComponent getInfoSiteProjects(InfoSiteProjects component, ExecutionCourseSite site) throws FenixServiceException {
 
-        List infoGroupPropertiesList = readExecutionCourseProjects(site.getExecutionCourse().getIdInternal());
+        List infoGroupPropertiesList = readExecutionCourseProjects(site.getExecutionCourse().getExternalId());
         component.setInfoGroupPropertiesList(infoGroupPropertiesList);
         return component;
     }
@@ -662,7 +662,7 @@ public class TeacherAdministrationSiteComponentBuilder {
     private ISiteComponent getInfoSiteNewProjectProposals(InfoSiteNewProjectProposals component, ExecutionCourseSite site)
             throws FenixServiceException {
 
-        List infoGroupPropertiesList = readExecutionCourseNewProjectProposals(site.getExecutionCourse().getIdInternal());
+        List infoGroupPropertiesList = readExecutionCourseNewProjectProposals(site.getExecutionCourse().getExternalId());
         component.setInfoGroupPropertiesList(infoGroupPropertiesList);
         return component;
     }
@@ -711,7 +711,7 @@ public class TeacherAdministrationSiteComponentBuilder {
             ExecutionCourseSite site) throws FenixServiceException {
 
         List infoGroupPropertiesList =
-                readExecutionCourseSentedProjectProposalsWaiting(site.getExecutionCourse().getIdInternal());
+                readExecutionCourseSentedProjectProposalsWaiting(site.getExecutionCourse().getExternalId());
         component.setInfoGroupPropertiesList(infoGroupPropertiesList);
         return component;
     }

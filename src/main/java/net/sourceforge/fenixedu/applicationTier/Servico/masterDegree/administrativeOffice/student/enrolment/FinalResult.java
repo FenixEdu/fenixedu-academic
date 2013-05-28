@@ -23,7 +23,7 @@ public class FinalResult {
         boolean result = false;
 
         StudentCurricularPlan studentCurricularPlan =
-                RootDomainObject.getInstance().readStudentCurricularPlanByOID(infoStudentCurricularPlan.getIdInternal());
+                RootDomainObject.getInstance().readStudentCurricularPlanByOID(infoStudentCurricularPlan.getExternalId());
 
         IDegreeCurricularPlanStrategyFactory degreeCurricularPlanStrategyFactory =
                 DegreeCurricularPlanStrategyFactory.getInstance();

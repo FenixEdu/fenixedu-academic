@@ -26,7 +26,7 @@ public class EditCurriculum {
     public static void run(InfoCurriculum infoCurriculum, String language, String username) throws FenixServiceException {
         CurricularCourse curricularCourse =
                 (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(infoCurriculum.getInfoCurricularCourse()
-                        .getIdInternal());
+                        .getExternalId());
 
         if (curricularCourse == null) {
             throw new NonExistingServiceException();

@@ -25,7 +25,7 @@
 			</fr:view>
 		</td>
 		<td style="vertical-align: top; padding-left: 10px;">
-			<bean:define id="personID" name="student" property="person.idInternal"/>
+			<bean:define id="personID" name="student" property="person.externalId"/>
 			<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES"/>
 		</td>
 	</tr>
@@ -42,7 +42,7 @@
 	<fr:view name="student" property="allStatutes" schema="student.statutes" >
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4 thlight"/>
-			<fr:property name="linkFormat(delete)" value="/studentStatutes.do?method=deleteStatute&statuteId=${studentStatute.idInternal}" />
+			<fr:property name="linkFormat(delete)" value="/studentStatutes.do?method=deleteStatute&statuteId=${studentStatute.externalId}" />
 			<fr:property name="key(delete)" value="link.student.statute.delete"/>
 			<fr:property name="bundle(delete)" value="ACADEMIC_OFFICE_RESOURCES"/>
 			<fr:property name="visibleIf(delete)" value="statuteType.explicitCreation"/>
@@ -52,7 +52,7 @@
 </logic:notEmpty>
 
 
-<bean:define id="studentID" name="student" property="idInternal" />
+<bean:define id="studentID" name="student" property="externalId" />
 <bean:define id="studentOID" name="student" property="externalId" />
 <bean:define id="schemaID" name="schemaName" />
 <h3 class="mtop15 mbottom025"><bean:message key="label.addNewStatute" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>

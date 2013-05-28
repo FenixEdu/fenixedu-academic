@@ -12,7 +12,7 @@
 <%@ page import="java.util.Date" %>
 
 <bean:define id="student" name="<%= PresentationConstants.STUDENT %>" scope="request"/>
-<bean:define id="scpID" name="studentCurricularPlan" property="idInternal" scope="request" />
+<bean:define id="scpID" name="studentCurricularPlan" property="externalId" scope="request" />
 <bean:define id="dissertationTitle" name="<%= PresentationConstants.DISSERTATION_TITLE %>" scope="request"/>
 <bean:define id="responsibleEmployee" name="<%= PresentationConstants.RESPONSIBLE_EMPLOYEE %>" scope="request"/>
 <bean:define id="lastModification" name="<%= PresentationConstants.LAST_MODIFICATION %>" scope="request"/>
@@ -221,7 +221,7 @@
 				paramsHistory = new java.util.Hashtable();
 				paramsHistory.put("degreeType", infoStudent.getDegreeType().toString());
 				paramsHistory.put("scpID", scpID);
-				paramsHistory.put("masterDegreeThesisDataVersionID", masterDegreeThesisDataVersion.getIdInternal());
+				paramsHistory.put("masterDegreeThesisDataVersionID", masterDegreeThesisDataVersion.getExternalId());
 				paramsHistory.put("method", "getStudentAndMasterDegreeThesisDataVersion");
 				pageContext.setAttribute("parametersHistory", paramsHistory, PageContext.PAGE_SCOPE);
 	

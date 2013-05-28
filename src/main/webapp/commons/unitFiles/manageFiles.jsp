@@ -7,7 +7,7 @@
 
 <h2><bean:message key="label.manageFiles" bundle="RESEARCHER_RESOURCES"/></h2>
 
-<bean:define id="unitID" name="unit" property="idInternal"/>
+<bean:define id="unitID" name="unit" property="externalId"/>
 <bean:define id="actionName" name="functionalityAction"/>
 <bean:define id="module" name="module"/>
 
@@ -40,7 +40,7 @@
 <fr:view name="unit" property="unitFileTags">
 	<fr:layout name="tag-search">
 		<fr:property name="classes" value="tcloud"/>
-		<fr:property name="linkFormat" value="<%= "/" + actionName + ".do?method=viewFilesByTag&unitId=${unit.idInternal}" + sortUrlParameter %>"/>
+		<fr:property name="linkFormat" value="<%= "/" + actionName + ".do?method=viewFilesByTag&unitId=${unit.externalId}" + sortUrlParameter %>"/>
 		<fr:property name="popularCount" value="10"/>
 		<fr:property name="minimumLevel" value="0.4"/>
 		<fr:property name="sortBy" value="name"/>
@@ -80,12 +80,12 @@
 				<fr:property name="key(delete)" value="label.delete" />
 				<fr:property name="bundle(delete)" value="APPLICATION_RESOURCES" />
 				<fr:property name="link(delete)" value="<%= "/" + actionName + ".do?method=deleteFile&unitId=" + unitID %>"/>
-				<fr:property name="param(delete)" value="idInternal/fid" />
+				<fr:property name="param(delete)" value="externalId/fid" />
 				<fr:property name="order(edit)" value="1"/>
 				<fr:property name="key(edit)" value="label.edit" />
 				<fr:property name="bundle(edit)" value="APPLICATION_RESOURCES" />
 				<fr:property name="link(edit)" value="<%= "/" + actionName + ".do?method=prepareEditFile&unitId=" + unitID %>"/>
-				<fr:property name="param(edit)" value="idInternal/fid" />
+				<fr:property name="param(edit)" value="externalId/fid" />
 				<fr:property name="visibleIf(edit)" value="editableByCurrentUser"/>		
 				<fr:property name="sortParameter" value="sort"/>
 				<fr:property name="sortIgnored" value="true"/>
@@ -102,7 +102,7 @@ pageNumberAttributeName="filePage" numberOfPagesAttributeName="numberOfPages"/>
 	<bean:message key="label.unitFileTags" bundle="RESEARCHER_RESOURCES"/>: 
 	<fr:view name="unit" property="unitFileTags">
 		<fr:layout name="tag-count">
-			<fr:property name="linkFormat" value="<%= "/" + actionName + ".do?method=viewFilesByTag&selectedTags=${name}&unitId=${unit.idInternal}" %>"/>
+			<fr:property name="linkFormat" value="<%= "/" + actionName + ".do?method=viewFilesByTag&selectedTags=${name}&unitId=${unit.externalId}" %>"/>
 			<fr:property name="showAllUrl" value="<%= "/" + actionName + ".do?method=manageFiles&unitId=" + unitID%>"/>
 			<fr:property name="sortBy" value="name"/>
 		</fr:layout>

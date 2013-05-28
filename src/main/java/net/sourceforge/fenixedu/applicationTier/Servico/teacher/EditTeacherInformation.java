@@ -21,7 +21,7 @@ public class EditTeacherInformation {
     protected Boolean run(InfoServiceProviderRegime infoServiceProviderRegime, InfoWeeklyOcupation infoWeeklyOcupation,
             List<InfoOrientation> infoOrientations, List<InfoPublicationsNumber> infoPublicationsNumbers) {
 
-        Teacher teacher = RootDomainObject.getInstance().readTeacherByOID(infoServiceProviderRegime.getInfoTeacher().getIdInternal());
+        Teacher teacher = RootDomainObject.getInstance().readTeacherByOID(infoServiceProviderRegime.getInfoTeacher().getExternalId());
 
         editServiceProviderRegime(infoServiceProviderRegime, teacher);
         editWeeklyOcupation(infoWeeklyOcupation, teacher);
@@ -36,7 +36,7 @@ public class EditTeacherInformation {
     private void editServiceProviderRegime(InfoServiceProviderRegime infoServiceProviderRegime, Teacher teacher) {
 
         ServiceProviderRegime serviceProviderRegime =
-                RootDomainObject.getInstance().readServiceProviderRegimeByOID(infoServiceProviderRegime.getIdInternal());
+                RootDomainObject.getInstance().readServiceProviderRegimeByOID(infoServiceProviderRegime.getExternalId());
 
         if (serviceProviderRegime == null) {
             serviceProviderRegime = new ServiceProviderRegime(teacher, infoServiceProviderRegime);
@@ -61,7 +61,7 @@ public class EditTeacherInformation {
     private void editOrientations(List<InfoOrientation> infoOrientations, Teacher teacher) {
         // Orientations
         for (InfoOrientation infoOrientation : infoOrientations) {
-            Orientation orientation = RootDomainObject.getInstance().readOrientationByOID(infoOrientation.getIdInternal());
+            Orientation orientation = RootDomainObject.getInstance().readOrientationByOID(infoOrientation.getExternalId());
 
             if (orientation == null) {
                 orientation = new Orientation(teacher, infoOrientation);
@@ -78,7 +78,7 @@ public class EditTeacherInformation {
         // Publications Number
         for (InfoPublicationsNumber infoPublicationsNumber : infoPublicationsNumbers) {
             PublicationsNumber publicationsNumber =
-                    RootDomainObject.getInstance().readPublicationsNumberByOID(infoPublicationsNumber.getIdInternal());
+                    RootDomainObject.getInstance().readPublicationsNumberByOID(infoPublicationsNumber.getExternalId());
 
             if (publicationsNumber == null) {
                 publicationsNumber = new PublicationsNumber(teacher, infoPublicationsNumber);

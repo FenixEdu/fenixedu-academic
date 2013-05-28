@@ -513,7 +513,7 @@ public class ParkingRequest extends ParkingRequest_Base {
 
             filePath.addNode(new VirtualPathNode("ParkingFiles", "Parking Files"));
 
-            filePath.addNode(new VirtualPathNode("Party" + party.getIdInternal(), party.getName()));
+            filePath.addNode(new VirtualPathNode("Party" + party.getExternalId(), party.getName()));
             filePath.addNode(new VirtualPathNode("PR" + requestID, "Parking Request ID"));
 
             return filePath;
@@ -728,7 +728,7 @@ public class ParkingRequest extends ParkingRequest_Base {
             if (!getParkingParty().hasFirstTimeRequest()) {
                 try {
                     ParkingRequest parkingRequest = new ParkingRequest(this);
-                    VirtualPath filePath = getFilePath(parkingRequest.getIdInternal());
+                    VirtualPath filePath = getFilePath(parkingRequest.getExternalId());
 
                     writeDriverLicenseFile(parkingRequest, filePath);
 
@@ -782,7 +782,7 @@ public class ParkingRequest extends ParkingRequest_Base {
 
             if (!parkingRequest.getVehicles().isEmpty()) {
                 Vehicle firstVehicle = parkingRequest.getVehicles().get(0);
-                setFirstVechicleID(firstVehicle.getIdInternal());
+                setFirstVechicleID(firstVehicle.getExternalId());
                 setFirstCarMake(firstVehicle.getVehicleMake());
                 setFirstCarPlateNumber(firstVehicle.getPlateNumber());
                 setFirstCarPropertyRegistryFileName(firstVehicle.getPropertyRegistryFileName());
@@ -797,7 +797,7 @@ public class ParkingRequest extends ParkingRequest_Base {
 
             if (parkingRequest.getVehicles().size() > 1) {
                 Vehicle secondVehicle = parkingRequest.getVehicles().get(1);
-                setSecondVechicleID(secondVehicle.getIdInternal());
+                setSecondVechicleID(secondVehicle.getExternalId());
                 setSecondCarMake(secondVehicle.getVehicleMake());
                 setSecondCarPlateNumber(secondVehicle.getPlateNumber());
                 setSecondCarPropertyRegistryFileName(secondVehicle.getPropertyRegistryFileName());
@@ -829,7 +829,7 @@ public class ParkingRequest extends ParkingRequest_Base {
             try {
                 ParkingRequest parkingRequest = getParkingRequest();
                 parkingRequest.edit(this);
-                VirtualPath filePath = getFilePath(parkingRequest.getIdInternal());
+                VirtualPath filePath = getFilePath(parkingRequest.getExternalId());
                 writeDriverLicenseFile(parkingRequest, filePath);
                 Vehicle firstVehicle = (Vehicle) RootDomainObject.readDomainObjectByOID(Vehicle.class, getFirstVechicleID());
                 if (firstVehicle != null) {

@@ -12,13 +12,13 @@
 <p>
 	<html:link page="/student.do?method=visualizeRegistration"
 		paramId="registrationID" paramName="enrolmentModelBean"
-		paramProperty="registration.idInternal">
+		paramProperty="registration.externalId">
 		<bean:message key="link.student.back"
 			bundle="ACADEMIC_OFFICE_RESOURCES" />
 	</html:link>
 </p>
 
-<bean:define id="registrationId" name="enrolmentModelBean" property="registration.idInternal" />
+<bean:define id="registrationId" name="enrolmentModelBean" property="registration.externalId" />
 <fr:form action="<%= "/manageEnrolmentModel.do?method=setEnrolmentModel" %>">
 	<fr:edit id="enrolmentModelBean" name="enrolmentModelBean" schema="student.manageEnrolmentModel">
 		<fr:layout name="tabular">

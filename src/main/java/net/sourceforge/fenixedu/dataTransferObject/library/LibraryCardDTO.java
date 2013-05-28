@@ -152,7 +152,7 @@ public class LibraryCardDTO implements Serializable {
     }
 
     public Integer getLibraryCardID() {
-        return getLibraryCard() != null ? getLibraryCard().getIdInternal() : 0;
+        return getLibraryCard() != null ? getLibraryCard().getExternalId() : 0;
     }
 
     public boolean getIsToGenerate() {

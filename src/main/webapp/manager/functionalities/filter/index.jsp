@@ -35,7 +35,7 @@
         <fr:layout>
             <fr:property name="sortBy" value="functionality.publicPath"/>
         </fr:layout>
-        <fr:destination name="viewModule" path="/functionality/view.do?functionality=${functionality.idInternal}"/>
+        <fr:destination name="viewModule" path="/functionality/view.do?functionality=${functionality.externalId}"/>
         <fr:destination name="testFilter" path="/test${publicPath}"/>
     </fr:view>
 </logic:present>

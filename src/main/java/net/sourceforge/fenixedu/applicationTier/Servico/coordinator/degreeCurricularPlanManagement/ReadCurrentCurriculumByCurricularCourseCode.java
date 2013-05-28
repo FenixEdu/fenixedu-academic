@@ -72,7 +72,7 @@ public class ReadCurrentCurriculumByCurricularCourseCode {
             infoCurriculum = InfoCurriculumWithInfoCurricularCourse.newInfoFromDomain(curriculum);
         } else {
             infoCurriculum = new InfoCurriculumWithInfoCurricularCourse();
-            infoCurriculum.setIdInternal(Integer.valueOf(0));
+            infoCurriculum.setExternalId(Integer.valueOf(0));
             infoCurriculum.setInfoCurricularCourse(InfoCurricularCourse.newInfoFromDomain(curricularCourse));
         }
 

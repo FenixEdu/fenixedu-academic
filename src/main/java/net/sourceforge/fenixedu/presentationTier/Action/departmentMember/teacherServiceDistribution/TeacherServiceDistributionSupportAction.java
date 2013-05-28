@@ -105,14 +105,14 @@ public class TeacherServiceDistributionSupportAction extends FenixDispatchAction
         request.setAttribute("tsdCourseList", tsdCourseList);
         request.setAttribute("tsdProcess", tsdProcess);
 
-        dynaForm.set("tsd", selectedTeacherServiceDistribution.getIdInternal());
+        dynaForm.set("tsd", selectedTeacherServiceDistribution.getExternalId());
         if (!selectedTeacherServiceDistribution.getIsRoot()) {
             request.setAttribute("parentGroupingName", selectedTeacherServiceDistribution.getParent().getName());
 
             List<TeacherServiceDistributionDTOEntry> mergeGroupingOptionEntryList =
                     new ArrayList<TeacherServiceDistributionDTOEntry>(tsdOptionEntryList);
-            if (mergeGroupingOptionEntryList.get(0).getIdInternal()
-                    .equals(selectedTeacherServiceDistribution.getRootTSD().getIdInternal())) {
+            if (mergeGroupingOptionEntryList.get(0).getExternalId()
+                    .equals(selectedTeacherServiceDistribution.getRootTSD().getExternalId())) {
                 mergeGroupingOptionEntryList.remove(0);
             }
             request.setAttribute("mergeGroupingOptionEntryList", mergeGroupingOptionEntryList);
@@ -129,7 +129,7 @@ public class TeacherServiceDistributionSupportAction extends FenixDispatchAction
         TSDProcess tsdProcess = getTSDProcess(dynaForm);
         TeacherServiceDistribution tsd = createTeacherServiceDistribution(userView, tsdProcess, dynaForm);
 
-        dynaForm.set("tsd", tsd.getIdInternal());
+        dynaForm.set("tsd", tsd.getExternalId());
         return loadTeacherServiceDistributions(mapping, form, request, response);
     }
 
@@ -138,7 +138,7 @@ public class TeacherServiceDistributionSupportAction extends FenixDispatchAction
         IUserView userView = UserView.getUser();
 
         TeacherServiceDistribution tsd = getSelectedTeacherServiceDistribution((DynaActionForm) form, null);
-        DeleteTeacherServiceDistribution.runDeleteTeacherServiceDistribution(tsd.getIdInternal());
+        DeleteTeacherServiceDistribution.runDeleteTeacherServiceDistribution(tsd.getExternalId());
 
         return loadTeacherServiceDistributions(mapping, form, request, response);
     }
@@ -153,7 +153,7 @@ public class TeacherServiceDistributionSupportAction extends FenixDispatchAction
         TSDTeacher selectedTSDTeacher = getSelectedTSDTeacher(dynaForm);
 
         AssociateTSDTeacherWithTeacherServiceDistribution.runAssociateTSDTeacherWithTeacherServiceDistribution(
-                selectedTeacherServiceDistribution.getIdInternal(), selectedTSDTeacher.getIdInternal());
+                selectedTeacherServiceDistribution.getExternalId(), selectedTSDTeacher.getExternalId());
 
         return loadTeacherServiceDistributions(mapping, form, request, response);
     }
@@ -168,7 +168,7 @@ public class TeacherServiceDistributionSupportAction extends FenixDispatchAction
         TSDTeacher selectedTSDTeacher = rootDomainObject.readTSDTeacherByOID((Integer) dynaForm.get("tsdTeacherDissociation"));
 
         DissociateTSDTeacherWithTeacherServiceDistribution.runDissociateTSDTeacherWithTeacherServiceDistribution(
-                selectedTeacherServiceDistribution.getIdInternal(), selectedTSDTeacher.getIdInternal());
+                selectedTeacherServiceDistribution.getExternalId(), selectedTSDTeacher.getExternalId());
 
         return loadTeacherServiceDistributions(mapping, form, request, response);
     }
@@ -183,7 +183,7 @@ public class TeacherServiceDistributionSupportAction extends FenixDispatchAction
         TSDCourse selectedTSDCourse = getSelectedTSDCourse(dynaForm);
 
         AssociateTSDCourseWithTeacherServiceDistribution.runAssociateTSDCourseWithTeacherServiceDistribution(
-                selectedTeacherServiceDistribution.getIdInternal(), selectedTSDCourse.getIdInternal());
+                selectedTeacherServiceDistribution.getExternalId(), selectedTSDCourse.getExternalId());
 
         return loadTeacherServiceDistributions(mapping, form, request, response);
     }
@@ -198,7 +198,7 @@ public class TeacherServiceDistributionSupportAction extends FenixDispatchAction
         Integer tsdCourseId = (Integer) dynaForm.get("tsdCourseDissociation");
 
         DissociateTSDCourseWithTeacherServiceDistribution.runDissociateTSDCourseWithTeacherServiceDistribution(
-                selectedTeacherServiceDistribution.getIdInternal(), tsdCourseId);
+                selectedTeacherServiceDistribution.getExternalId(), tsdCourseId);
 
         return loadTeacherServiceDistributions(mapping, form, request, response);
     }
@@ -358,8 +358,8 @@ public class TeacherServiceDistributionSupportAction extends FenixDispatchAction
         TeacherServiceDistribution rootTeacherServiceDistribution = tsdProcess.getCurrentTSDProcessPhase().getRootTSD();
 
         SetCoursesAndTeachersValuationPermission.runSetCoursesAndTeachersValuationPermission(
-                getSelectedTeacherServiceDistribution(dynaForm, rootTeacherServiceDistribution).getIdInternal(),
-                getSelectedPerson(dynaForm, null).getIdInternal(), getSelectedCourseValuationManagers(dynaForm),
+                getSelectedTeacherServiceDistribution(dynaForm, rootTeacherServiceDistribution).getExternalId(),
+                getSelectedPerson(dynaForm, null).getExternalId(), getSelectedCourseValuationManagers(dynaForm),
                 getSelectedTeachersValuationManagers(dynaForm), getSelectedCourseManagementPermission(dynaForm),
                 getSelectedTeachersManagementPersmission(dynaForm));
 
@@ -396,8 +396,8 @@ public class TeacherServiceDistributionSupportAction extends FenixDispatchAction
                 getTSDProcess(dynaForm).getCurrentTSDProcessPhase().getRootTSD();
 
         SetCoursesAndTeachersValuationPermission.runSetCoursesAndTeachersValuationPermission(
-                getSelectedTeacherServiceDistribution(dynaForm, rootTeacherServiceDistribution).getIdInternal(),
-                getSelectedPerson(dynaForm, null).getIdInternal(), false, false, false, false);
+                getSelectedTeacherServiceDistribution(dynaForm, rootTeacherServiceDistribution).getExternalId(),
+                getSelectedPerson(dynaForm, null).getExternalId(), false, false, false, false);
 
         return loadTeacherServiceDistributionsForPermissionServices(mapping, form, request, response);
     }
@@ -410,8 +410,8 @@ public class TeacherServiceDistributionSupportAction extends FenixDispatchAction
         TSDProcess tsdProcess = getTSDProcess(dynaForm);
         Person selectedPerson = getSelectedPerson(dynaForm, null);
 
-        SetPersonPermissionsOnTSDProcess.runSetPersonPermissionsOnTSDProcess(tsdProcess.getIdInternal(),
-                selectedPerson.getIdInternal(), getSelectedPhaseManagementPermission(dynaForm),
+        SetPersonPermissionsOnTSDProcess.runSetPersonPermissionsOnTSDProcess(tsdProcess.getExternalId(),
+                selectedPerson.getExternalId(), getSelectedPhaseManagementPermission(dynaForm),
                 getSelectedAutomaticValuationPermission(dynaForm), getSelectedOmissionConfigurationPermission(dynaForm),
                 getSelectedCompetenceCoursesAndTeachersManagementPermission(dynaForm));
 
@@ -461,7 +461,7 @@ public class TeacherServiceDistributionSupportAction extends FenixDispatchAction
         dynaForm.set("teachersValuationManagers", (tsd.getTeachersValuationManagers() == null) ? false : tsd
                 .getTeachersValuationManagers().isMember(selectedPerson));
 
-        dynaForm.set("person", selectedPerson.getIdInternal());
+        dynaForm.set("person", selectedPerson.getExternalId());
     }
 
     private Person getSelectedPerson(DynaActionForm dynaForm, IUserView userView) {
@@ -501,8 +501,8 @@ public class TeacherServiceDistributionSupportAction extends FenixDispatchAction
         TSDProcessPhase currentValuation = tsdProcess.getCurrentTSDProcessPhase();
         TeacherServiceDistribution selectedTeacherServiceDistribution = getSelectedTeacherServiceDistribution(dynaForm, null);
 
-        return CreateTeacherServiceDistribution.runCreateTeacherServiceDistribution(currentValuation.getIdInternal(),
-                selectedTeacherServiceDistribution.getIdInternal(), (String) dynaForm.get("name"));
+        return CreateTeacherServiceDistribution.runCreateTeacherServiceDistribution(currentValuation.getExternalId(),
+                selectedTeacherServiceDistribution.getExternalId(), (String) dynaForm.get("name"));
     }
 
     private TSDProcess getTSDProcess(DynaActionForm dynaForm) throws FenixServiceException {
@@ -557,7 +557,7 @@ public class TeacherServiceDistributionSupportAction extends FenixDispatchAction
         TeacherServiceDistribution selectedTeacherServiceDistribution = getSelectedTeacherServiceDistribution(dynaForm, null);
 
         AssociateTSDTeacherWithTeacherServiceDistribution.runAssociateTSDTeacherWithTeacherServiceDistribution(
-                selectedTeacherServiceDistribution.getIdInternal(), null);
+                selectedTeacherServiceDistribution.getExternalId(), null);
 
         return loadTeacherServiceDistributions(mapping, form, request, response);
     }
@@ -571,7 +571,7 @@ public class TeacherServiceDistributionSupportAction extends FenixDispatchAction
         TeacherServiceDistribution selectedTeacherServiceDistribution = getSelectedTeacherServiceDistribution(dynaForm, null);
 
         AssociateTSDCourseWithTeacherServiceDistribution.runAssociateTSDCourseWithTeacherServiceDistribution(
-                selectedTeacherServiceDistribution.getIdInternal(), null);
+                selectedTeacherServiceDistribution.getExternalId(), null);
 
         return loadTeacherServiceDistributions(mapping, form, request, response);
     }

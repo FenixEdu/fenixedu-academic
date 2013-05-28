@@ -19,13 +19,13 @@
 	</li>
 	<li>
 		<f:parameterLink page="/tests/testModels.do?method=editTestModel">
-			<f:parameter id="oid" name="testModel" property="idInternal" />
+			<f:parameter id="oid" name="testModel" property="externalId" />
 			<bean:message key="message.toModel" bundle="TESTS_RESOURCES" />
 		</f:parameterLink>
 	</li>
 	<li>
 		<f:parameterLink page="/tests/testModels.do?method=selectQuestions">
-			<f:parameter id="oid" name="testModel" property="idInternal" />
+			<f:parameter id="oid" name="testModel" property="externalId" />
 			<bean:message key="message.toSelect" bundle="TESTS_RESOURCES" />
 		</f:parameterLink>
 	</li>

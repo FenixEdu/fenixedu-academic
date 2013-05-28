@@ -87,8 +87,8 @@ public class InsertCurricularCourseScopeFromAnotherDA extends FenixDispatchActio
             dynaForm.set("beginDate", Data.format2DayMonthYear(oldInfoCurricularCourseScope.getBeginDate().getTime(), "/"));
         }
 
-        dynaForm.set("branchId", oldInfoCurricularCourseScope.getInfoBranch().getIdInternal().toString());
-        dynaForm.set("curricularSemesterId", oldInfoCurricularCourseScope.getInfoCurricularSemester().getIdInternal().toString());
+        dynaForm.set("branchId", oldInfoCurricularCourseScope.getInfoBranch().getExternalId().toString());
+        dynaForm.set("curricularSemesterId", oldInfoCurricularCourseScope.getInfoCurricularSemester().getExternalId().toString());
         dynaForm.set("anotation", oldInfoCurricularCourseScope.getAnotation());
 
         // obtain branches to show in jsp
@@ -114,7 +114,7 @@ public class InsertCurricularCourseScopeFromAnotherDA extends FenixDispatchActio
         String label, value;
         while (iter.hasNext()) {
             infoBranch = (InfoBranch) iter.next();
-            value = infoBranch.getIdInternal().toString();
+            value = infoBranch.getExternalId().toString();
             label = infoBranch.getCode() + " - " + infoBranch.getName();
             branchesList.add(new LabelValueBean(label, value));
         }

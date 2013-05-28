@@ -54,7 +54,7 @@
 			</td>							
 			<td>
 				<bean:define id="deleteLink">/teachingStaff.do?method=removeNonAffiliatedTeacher&executionCourseID=<bean:write name="teachingStaffForm" property="executionCourseID"/></bean:define>
-				<html:link action="<%= deleteLink %>" paramId="nonAffiliatedTeacherID" paramName="nonAffiliatedTeacher" paramProperty="idInternal">
+				<html:link action="<%= deleteLink %>" paramId="nonAffiliatedTeacherID" paramName="nonAffiliatedTeacher" paramProperty="externalId">
 					<bean:message bundle="APPLICATION_RESOURCES" key="label.remove"/>
 				</html:link>				
 			</td>							
@@ -92,7 +92,7 @@
 			<td>
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.nonAffiliatedTeacherInstitutionID" property="nonAffiliatedTeacherInstitutionID">
 					<html:option value="0" >[<bean:message key="label.inquiries.choose" bundle="INQUIRIES_RESOURCES" />]</html:option>
-					<html:options collection="institutions" property="idInternal" labelProperty="name" />
+					<html:options collection="institutions" property="externalId" labelProperty="name" />
 				</html:select>
 			</td>
 		</tr>		

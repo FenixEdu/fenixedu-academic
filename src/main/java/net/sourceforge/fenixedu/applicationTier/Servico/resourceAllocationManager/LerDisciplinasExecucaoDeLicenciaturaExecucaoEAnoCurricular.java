@@ -26,9 +26,9 @@ public class LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular {
         List listInfoDE = new ArrayList();
 
         CurricularYear curricularYear = RootDomainObject.getInstance().readCurricularYearByOID(curricularYearID);
-        ExecutionSemester executionSemester = RootDomainObject.getInstance().readExecutionSemesterByOID(infoExecutionPeriod.getIdInternal());
+        ExecutionSemester executionSemester = RootDomainObject.getInstance().readExecutionSemesterByOID(infoExecutionPeriod.getExternalId());
         DegreeCurricularPlan degreeCurricularPlan =
-                RootDomainObject.getInstance().readDegreeCurricularPlanByOID(infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal());
+                RootDomainObject.getInstance().readDegreeCurricularPlanByOID(infoExecutionDegree.getInfoDegreeCurricularPlan().getExternalId());
 
         if (executionSemester != null) {
             List<ExecutionCourse> listDCDE =
@@ -55,7 +55,7 @@ public class LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular {
 
         CurricularYear curricularYear = RootDomainObject.getInstance().readCurricularYearByOID(curricularYearID);
         DegreeCurricularPlan degreeCurricularPlan =
-                RootDomainObject.getInstance().readDegreeCurricularPlanByOID(infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal());
+                RootDomainObject.getInstance().readDegreeCurricularPlanByOID(infoExecutionDegree.getInfoDegreeCurricularPlan().getExternalId());
 
         if (academicInterval != null) {
             List<ExecutionCourse> listDCDE =

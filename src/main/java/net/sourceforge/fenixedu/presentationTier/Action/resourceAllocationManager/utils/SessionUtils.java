@@ -90,7 +90,7 @@ public final class SessionUtils {
             InfoExecutionCourse element = (InfoExecutionCourse) iter.next();
             for (String element2 : executionCourseIDArray) {
                 Integer idExecutionCourse = new Integer(element2);
-                if (idExecutionCourse.equals(element.getIdInternal())) {
+                if (idExecutionCourse.equals(element.getExternalId())) {
                     ignore = true;
                     break;
                 }

@@ -43,7 +43,7 @@
 		<logic:iterate id="curricularCourse" name="curricularCoursesList">
 			<tr>
 				<td><bean:write name="curricularCourse" property="name" /> - <strong><bean:write name="curricularCourse" property="code"/></strong></td>
-				<td><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.curricularCourseToAddPrecedenceID" property="curricularCourseToAddPrecedenceID" idName="curricularCourse" value="idInternal"/></td>				
+				<td><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.curricularCourseToAddPrecedenceID" property="curricularCourseToAddPrecedenceID" idName="curricularCourse" value="externalId"/></td>				
 			</tr>
 		</logic:iterate>
 	</table>	

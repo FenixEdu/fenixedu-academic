@@ -5,6 +5,6 @@
 
 <bean:define id="siteActionName" value="/departmentSite.do" toScope="request"/>
 <bean:define id="siteContextParam" value="oid" toScope="request"/>
-<bean:define id="siteContextParamValue" name="site" property="idInternal" toScope="request"/>
+<bean:define id="siteContextParamValue" name="site" property="externalId" toScope="request"/>
 
 <em><bean:message key="label.site.title"/></em>

@@ -53,7 +53,7 @@ public class CycleCourseGroupInformationManagementBackingBean extends Curricular
         CycleCourseGroupInformation information = getInformation();
         setEditGraduatedTitle(information.getGraduatedTitlePt());
         setEditGraduatedTitleEn(information.getGraduatedTitleEn());
-        setEditInformationExecutionYearId(information.getExecutionYear().getIdInternal());
+        setEditInformationExecutionYearId(information.getExecutionYear().getExternalId());
 
         return "";
     }

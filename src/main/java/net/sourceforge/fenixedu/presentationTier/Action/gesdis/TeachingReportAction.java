@@ -49,7 +49,7 @@ public class TeachingReportAction extends FenixDispatchAction {
     public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         InfoCourseReport infoCourseReport = getInfoCourseReportFromForm(form);
-        EditCourseInformation.runEditCourseInformation(infoCourseReport.getIdInternal(), infoCourseReport,
+        EditCourseInformation.runEditCourseInformation(infoCourseReport.getExternalId(), infoCourseReport,
                 infoCourseReport.getReport());
         return read(mapping, form, request, response);
     }
@@ -82,9 +82,9 @@ public class TeachingReportAction extends FenixDispatchAction {
             BeanUtils.copyProperties(form, infoCourseReport);
 
             InfoExecutionCourse infoExecutionCourse = infoCourseReport.getInfoExecutionCourse();
-            dynaForm.set("executionCourseId", infoExecutionCourse.getIdInternal());
-            dynaForm.set("executionPeriodId", infoExecutionCourse.getInfoExecutionPeriod().getIdInternal());
-            dynaForm.set("executionYearId", infoExecutionCourse.getInfoExecutionPeriod().getInfoExecutionYear().getIdInternal());
+            dynaForm.set("executionCourseId", infoExecutionCourse.getExternalId());
+            dynaForm.set("executionPeriodId", infoExecutionCourse.getInfoExecutionPeriod().getExternalId());
+            dynaForm.set("executionYearId", infoExecutionCourse.getInfoExecutionPeriod().getInfoExecutionYear().getExternalId());
         } catch (Exception e) {
             e.printStackTrace();
         }

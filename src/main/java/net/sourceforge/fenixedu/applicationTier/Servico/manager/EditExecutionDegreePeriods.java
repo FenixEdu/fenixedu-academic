@@ -18,7 +18,7 @@ public class EditExecutionDegreePeriods {
     @Service
     public static void run(InfoExecutionDegreeEditor infoExecutionDegree) {
 
-        final ExecutionDegree oldExecutionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
+        final ExecutionDegree oldExecutionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(infoExecutionDegree.getExternalId());
 
         OccupationPeriod periodLessonsFirstSemester = setCompositePeriod(infoExecutionDegree.getInfoPeriodLessonsFirstSemester());
         oldExecutionDegree.setPeriodLessonsFirstSemester(periodLessonsFirstSemester);

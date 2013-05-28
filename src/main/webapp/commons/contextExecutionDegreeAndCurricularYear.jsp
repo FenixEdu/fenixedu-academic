@@ -15,7 +15,7 @@
 	<bean:define id="curricularYearOID"
 				 type="java.lang.Integer"
 				 name="curricularYear"
-				 property="idInternal"
+				 property="externalId"
 				 toScope="request"
 				 scope="request"/>
 </logic:present>

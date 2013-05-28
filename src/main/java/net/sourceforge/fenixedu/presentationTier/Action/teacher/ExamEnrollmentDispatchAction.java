@@ -64,7 +64,7 @@ public class ExamEnrollmentDispatchAction extends FenixDispatchAction {
         }
 
         request.setAttribute("siteView", siteView);
-        request.setAttribute("objectCode", ((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse().getIdInternal());
+        request.setAttribute("objectCode", ((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse().getExternalId());
 
         return mapping.findForward("viewEvaluationEnrolmentManagementMenu");
     }
@@ -119,7 +119,7 @@ public class ExamEnrollmentDispatchAction extends FenixDispatchAction {
         }
 
         request.setAttribute("siteView", siteView);
-        request.setAttribute("objectCode", ((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse().getIdInternal());
+        request.setAttribute("objectCode", ((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse().getExternalId());
         request.setAttribute("evaluationCode", evaluationCode);
 
         return mapping.findForward("editEvaluationEnrolmentPeriod");
@@ -131,8 +131,8 @@ public class ExamEnrollmentDispatchAction extends FenixDispatchAction {
 
         IUserView userView = UserView.getUser();
 
-        Integer examIdInternal = new Integer(request.getParameter("evaluationCode"));
-        Integer disciplinaExecucaoIdInternal = new Integer(request.getParameter("objectCode"));
+        Integer examExternalId = new Integer(request.getParameter("evaluationCode"));
+        Integer disciplinaExecucaoExternalId = new Integer(request.getParameter("objectCode"));
 
         String enrollmentBeginDay = (String) examEnrollmentForm.get("enrollmentBeginDayFormatted");
         String enrollmentBeginHour = (String) examEnrollmentForm.get("enrollmentBeginTimeFormatted");
@@ -168,8 +168,8 @@ public class ExamEnrollmentDispatchAction extends FenixDispatchAction {
         endTime.set(Calendar.MINUTE, new Integer(enrollmentEndHourArray[1]).intValue());
 
         try {
-            EditWrittenEvaluationEnrolmentPeriod.runEditWrittenEvaluationEnrolmentPeriod(disciplinaExecucaoIdInternal,
-                    examIdInternal, beginDate.getTime(), endDate.getTime(), beginTime.getTime(), endTime.getTime());
+            EditWrittenEvaluationEnrolmentPeriod.runEditWrittenEvaluationEnrolmentPeriod(disciplinaExecucaoExternalId,
+                    examExternalId, beginDate.getTime(), endDate.getTime(), beginTime.getTime(), endTime.getTime());
         } catch (DomainException e) {
             setErrorMessage(request, e.getKey());
             return mapping.getInputForward();
@@ -178,8 +178,8 @@ public class ExamEnrollmentDispatchAction extends FenixDispatchAction {
             return mapping.getInputForward();
         }
 
-        request.setAttribute("evaluationCode", examIdInternal);
-        request.setAttribute("objectCode", disciplinaExecucaoIdInternal);
+        request.setAttribute("evaluationCode", examExternalId);
+        request.setAttribute("objectCode", disciplinaExecucaoExternalId);
 
         return prepareEnrolmentManagement(mapping, form, request, response);
     }

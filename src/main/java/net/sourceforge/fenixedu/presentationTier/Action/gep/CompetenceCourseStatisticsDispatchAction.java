@@ -92,7 +92,7 @@ public class CompetenceCourseStatisticsDispatchAction extends FenixDispatchActio
             toProcessDegreeCurricularPlans.remove(degreeCurricularPlan.getName());
             processingDegreeCurricularPlans.add(degreeCurricularPlan.getName());
 
-            result.append(ComputeCurricularCourseStatistics.run(degreeCurricularPlan.getIdInternal(), executionYearID, agreement));
+            result.append(ComputeCurricularCourseStatistics.run(degreeCurricularPlan.getExternalId(), executionYearID, agreement));
 
             processingDegreeCurricularPlans.clear();
             processedDegreeCurricularPlans.add(degreeCurricularPlan.getName());

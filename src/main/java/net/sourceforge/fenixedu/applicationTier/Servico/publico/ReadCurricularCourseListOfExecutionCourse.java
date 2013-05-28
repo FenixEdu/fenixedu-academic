@@ -21,7 +21,7 @@ public class ReadCurricularCourseListOfExecutionCourse {
     @Service
     public static Object run(InfoExecutionCourse infoExecCourse) {
         final ExecutionSemester executionSemester =
-                RootDomainObject.getInstance().readExecutionSemesterByOID(infoExecCourse.getInfoExecutionPeriod().getIdInternal());
+                RootDomainObject.getInstance().readExecutionSemesterByOID(infoExecCourse.getInfoExecutionPeriod().getExternalId());
         ExecutionCourse executionCourse = executionSemester.getExecutionCourseByInitials(infoExecCourse.getSigla());
 
         List<InfoCurricularCourse> infoCurricularCourseList = new ArrayList<InfoCurricularCourse>();

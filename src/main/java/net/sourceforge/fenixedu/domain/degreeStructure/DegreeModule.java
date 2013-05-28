@@ -71,7 +71,7 @@ abstract public class DegreeModule extends DegreeModule_Base {
             int comparationResult =
                     leftDegreeModule.getMinEctsCredits(this.executionSemester).compareTo(
                             rightDegreeModule.getMinEctsCredits(this.executionSemester));
-            return (comparationResult == 0) ? leftDegreeModule.getIdInternal().compareTo(rightDegreeModule.getIdInternal()) : comparationResult;
+            return (comparationResult == 0) ? leftDegreeModule.getExternalId().compareTo(rightDegreeModule.getExternalId()) : comparationResult;
         }
 
     }

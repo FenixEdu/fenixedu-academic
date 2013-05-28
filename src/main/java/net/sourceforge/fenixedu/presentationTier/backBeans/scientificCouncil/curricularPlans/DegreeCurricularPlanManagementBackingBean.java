@@ -188,11 +188,11 @@ public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean 
         for (final InfoExecutionYear notClosedInfoExecutionYear : notClosedInfoExecutionYears) {
             Person loggedPerson = AccessControl.getPerson();
             if (loggedPerson.hasRole(RoleType.MANAGER) || notClosedInfoExecutionYear.after(currentInfoExecutionYear)) {
-                result.add(new SelectItem(notClosedInfoExecutionYear.getIdInternal(), notClosedInfoExecutionYear.getYear()));
+                result.add(new SelectItem(notClosedInfoExecutionYear.getExternalId(), notClosedInfoExecutionYear.getYear()));
             }
         }
 
-        result.add(0, new SelectItem(currentInfoExecutionYear.getIdInternal(), currentInfoExecutionYear.getYear()));
+        result.add(0, new SelectItem(currentInfoExecutionYear.getExternalId(), currentInfoExecutionYear.getYear()));
 
         setDefaultExecutionYearIDIfExisting();
 
@@ -206,7 +206,7 @@ public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean 
                     new ArrayList<ExecutionYear>(dcp.getRoot().getBeginContextExecutionYears());
             Collections.sort(executionYears, ExecutionYear.COMPARATOR_BY_YEAR);
             if (!executionYears.isEmpty()) {
-                setExecutionYearID(executionYears.get(0).getIdInternal());
+                setExecutionYearID(executionYears.get(0).getExternalId());
             }
         }
     }

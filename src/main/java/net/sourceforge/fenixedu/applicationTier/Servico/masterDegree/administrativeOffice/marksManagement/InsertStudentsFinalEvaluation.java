@@ -20,7 +20,7 @@ public class InsertStudentsFinalEvaluation {
         }
 
         final EnrolmentEvaluation enrolmentEvaluation =
-                RootDomainObject.getInstance().readEnrolmentEvaluationByOID(infoEnrolmentEvaluation.getIdInternal());
+                RootDomainObject.getInstance().readEnrolmentEvaluationByOID(infoEnrolmentEvaluation.getExternalId());
         enrolmentEvaluation.insertStudentFinalEvaluationForMasterDegree(infoEnrolmentEvaluation.getGradeValue(),
                 teacher.getPerson(), evaluationDate);
     }

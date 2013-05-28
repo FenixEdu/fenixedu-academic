@@ -22,7 +22,7 @@ import pt.ist.fenixWebFramework.services.Service;
 public class EditGrouping {
 
     protected List run(Integer executionCourseID, InfoGrouping infoGroupProperties) throws FenixServiceException {
-        final Grouping grouping = RootDomainObject.getInstance().readGroupingByOID(infoGroupProperties.getIdInternal());
+        final Grouping grouping = RootDomainObject.getInstance().readGroupingByOID(infoGroupProperties.getExternalId());
         if (grouping == null) {
             throw new InvalidArgumentsServiceException();
         }

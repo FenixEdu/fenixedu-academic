@@ -349,7 +349,7 @@ public class Person extends Person_Base {
     public Person(final InfoPersonEditor personToCreate, final Country country) {
 
         super();
-        if (personToCreate.getIdInternal() != null) {
+        if (personToCreate.getExternalId() != null) {
             throw new DomainException("error.person.existentPerson");
         }
 
@@ -1114,11 +1114,11 @@ public class Person extends Person_Base {
      **************************************************************************/
 
     public String getSlideName() {
-        return "/photos/person/P" + getIdInternal();
+        return "/photos/person/P" + getExternalId();
     }
 
     public String getSlideNameForCandidateDocuments() {
-        return "/candidateDocuments/person/P" + getIdInternal();
+        return "/candidateDocuments/person/P" + getExternalId();
     }
 
     @Service
@@ -3647,8 +3647,8 @@ public class Person extends Person_Base {
         boolean responsible;
         for (final Professorship professorship : this.getProfessorships()) {
             final ExecutionCourse executionCourse = professorship.getExecutionCourse();
-            if (executionCourse.getExecutionPeriod().getExecutionYear().getIdInternal().equals(executionYearId)) {
-                responsible = executionCourses.contains(executionCourse.getIdInternal());
+            if (executionCourse.getExecutionPeriod().getExecutionYear().getExternalId().equals(executionYearId)) {
+                responsible = executionCourses.contains(executionCourse.getExternalId());
                 if (!professorship.getResponsibleFor().equals(Boolean.valueOf(responsible)) && this.getTeacher() != null) {
                     ResponsibleForValidator.getInstance().validateResponsibleForList(this.getTeacher(), executionCourse,
                             professorship);

@@ -5,7 +5,7 @@
 
 <html:xhtml/>
 
-<bean:define id="degreeCurricularPlanId" name="degreeCurricularPlan" property="idInternal"/>
+<bean:define id="degreeCurricularPlanId" name="degreeCurricularPlan" property="externalId"/>
 <bean:define id="executionDegreeId" name="executionDegreeId"/>
 
 <h2>
@@ -53,7 +53,7 @@
                             <fr:property name="columnClasses" value=",acenter,"/>
                                 
                                 <fr:property name="link(delete)" value="<%= String.format("/scientificCommissionTeamDA.do?method=removeMember&amp;degreeCurricularPlanID=%s&amp;executionDegreeID=%s", degreeCurricularPlanId, executionDegreeId) %>"/>
-                                <fr:property name="param(delete)" value="idInternal/memberID"/>
+                                <fr:property name="param(delete)" value="externalId/memberID"/>
                                 <fr:property name="key(delete)" value="label.coordinator.scientificCommision.remove"/>
                         </fr:layout>
                     </fr:edit>

@@ -40,13 +40,13 @@
 			<fr:property name="subSchema" value="researchInterest.summary"/>
 
 			<fr:property name="link(edit)" value="/interests/interestsManagement.do?method=prepareEditInterest"/>
-			<fr:property name="param(edit)" value="idInternal/oid"/>
+			<fr:property name="param(edit)" value="externalId/oid"/>
 			<fr:property name="key(edit)" value="researcher.interestsManagement.edit"/>
 			<fr:property name="bundle(edit)" value="RESEARCHER_RESOURCES"/>
 			<fr:property name="order(edit)" value="2"/>
 
 			<fr:property name="link(delete)" value="/interests/interestsManagement.do?method=delete"/>
-			<fr:property name="param(delete)" value="idInternal/oid"/>
+			<fr:property name="param(delete)" value="externalId/oid"/>
 			<fr:property name="key(delete)" value="researcher.interestsManagement.delete"/>
 			<fr:property name="bundle(delete)" value="RESEARCHER_RESOURCES"/>
 			<fr:property name="order(delete)" value="3"/>
@@ -80,10 +80,10 @@
 	        <fr:property name="includeImage" value="false"/>
 	        <fr:property name="classes" value="mtop0 mbottom1"/>
 		     <fr:property name="hiddenLinks">
-	            <html:link page="/interests/interestsManagement.do?method=up&oid=${idInternal}">
+	            <html:link page="/interests/interestsManagement.do?method=up&oid=${externalId}">
 	                <bean:message key="link.moveUp" bundle="RESEARCHER_RESOURCES"/>
 	            </html:link>
-	            <html:link page="/interests/interestsManagement.do?method=down&oid=${idInternal}">
+	            <html:link page="/interests/interestsManagement.do?method=down&oid=${externalId}">
 	                <bean:message key="link.moveDown" bundle="RESEARCHER_RESOURCES"/>
 	            </html:link>
             </fr:property>

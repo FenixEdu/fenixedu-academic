@@ -25,7 +25,7 @@
 					<fr:property name="rowClasses" value=",,,tdbold,tdbold,tdbold"/>
 				</fr:layout>
 			</fr:view>
-			<bean:define id="postingRuleId" name="postingRule" property="idInternal"/>
+			<bean:define id="postingRuleId" name="postingRule" property="externalId"/>
 			<p class="indent1">
 				<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
 				<html:link page="<%= "/pricesManagement.do?method=prepareEditPrice&amp;postingRuleId=" + postingRuleId %>"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="link.pricesManagement.edit"/></html:link>

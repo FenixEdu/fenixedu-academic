@@ -56,10 +56,10 @@
 		<logic:iterate id="degreeCurricularPlan" name="curricularPlansList">			
 		<td class="listClasses">
 		<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.internalIds" property="internalIds">
-			<bean:write name="degreeCurricularPlan" property="idInternal"/>
+			<bean:write name="degreeCurricularPlan" property="externalId"/>
 		</html:multibox>
 		</td>				
-		<td class="listClasses"><html:link module="/manager" page="<%= "/readDegreeCurricularPlan.do?degreeId=" + request.getParameter("degreeId")%>" paramId="degreeCurricularPlanId" paramName="degreeCurricularPlan" paramProperty="idInternal"><bean:write name="degreeCurricularPlan" property="name"/></html:link>
+		<td class="listClasses"><html:link module="/manager" page="<%= "/readDegreeCurricularPlan.do?degreeId=" + request.getParameter("degreeId")%>" paramId="degreeCurricularPlanId" paramName="degreeCurricularPlan" paramProperty="externalId"><bean:write name="degreeCurricularPlan" property="name"/></html:link>
 		</td>
 		<td class="listClasses"><bean:write name="degreeCurricularPlan" property="degreeDuration"/>
 		</td>

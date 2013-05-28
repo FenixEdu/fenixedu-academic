@@ -99,7 +99,7 @@ public class InsertExternalPersonDispatchAction extends FenixDispatchAction {
                 institutionsValueBeanList.add(new LabelValueBean("", ""));
                 while (it.hasNext()) {
                     infoInstitutions = (Unit) it.next();
-                    institutionsValueBeanList.add(new LabelValueBean(infoInstitutions.getName(), infoInstitutions.getIdInternal()
+                    institutionsValueBeanList.add(new LabelValueBean(infoInstitutions.getName(), infoInstitutions.getExternalId()
                             .toString()));
                 }
 

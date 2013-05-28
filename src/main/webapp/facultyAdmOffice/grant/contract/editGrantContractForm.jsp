@@ -23,7 +23,7 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.grantCostCenterId" property="grantCostCenterId"/>
 
 	<%-- grant owner --%>
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" property="idInternal"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.externalId" property="externalId"/>
 
 	<%-- contract regime --%>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.grantContractRegimeId" property="grantContractRegimeId"/>
@@ -167,7 +167,7 @@
 				<html:form action="/manageGrantContract" style="display:inline">
 				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareManageGrantContractForm"/>
 				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
-				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" property="idInternal" value='<%= request.getAttribute("idInternal").toString() %>'/>
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.externalId" property="externalId" value='<%= request.getAttribute("externalId").toString() %>'/>
 					<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" style="display:inline">
 						<bean:message key="button.cancel"/>
 					</html:submit>

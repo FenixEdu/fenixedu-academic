@@ -51,13 +51,13 @@ public class EditTeacherInformationAuthorizationFilter extends AuthorizationByRo
             InfoWeeklyOcupation infoWeeklyOcupation) {
         final Person person = id.getPerson();
         final Teacher teacher = person != null ? person.getTeacher() : null;
-        Integer teacherId = teacher.getIdInternal();
+        Integer teacherId = teacher.getExternalId();
 
-        if (!infoServiceProviderRegime.getInfoTeacher().getIdInternal().equals(teacherId)) {
+        if (!infoServiceProviderRegime.getInfoTeacher().getExternalId().equals(teacherId)) {
             return false;
         }
 
-        if (!infoWeeklyOcupation.getInfoTeacher().getIdInternal().equals(teacherId)) {
+        if (!infoWeeklyOcupation.getInfoTeacher().getExternalId().equals(teacherId)) {
             return false;
         }
         return true;

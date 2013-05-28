@@ -8,10 +8,10 @@ import pt.ist.fenixWebFramework.services.Service;
 public class DeleteUnavailablePeriodByOID {
 
     @Service
-    public static void run(Integer idInternal) {
+    public static void run(Integer externalId) {
 
         UnavailablePeriod unavailablePeriod =
-                (UnavailablePeriod) RootDomainObject.readDomainObjectByOID(UnavailablePeriod.class, idInternal);
+                (UnavailablePeriod) RootDomainObject.readDomainObjectByOID(UnavailablePeriod.class, externalId);
 
         unavailablePeriod.delete();
 

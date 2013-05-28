@@ -16,12 +16,12 @@ public class EditDegreeCurricularPlan {
     @Service
     public static void run(InfoDegreeCurricularPlanEditor infoDcp) throws FenixServiceException {
 
-        if (infoDcp.getIdInternal() == null || infoDcp.getName() == null || infoDcp.getInitialDate() == null
+        if (infoDcp.getExternalId() == null || infoDcp.getName() == null || infoDcp.getInitialDate() == null
                 || infoDcp.getDegreeDuration() == null || infoDcp.getMinimalYearForOptionalCourses() == null) {
             throw new InvalidArgumentsServiceException();
         }
 
-        final DegreeCurricularPlan dcpToEdit = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(infoDcp.getIdInternal());
+        final DegreeCurricularPlan dcpToEdit = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(infoDcp.getExternalId());
         if (dcpToEdit == null) {
             throw new FenixServiceException("message.nonExistingDegreeCurricularPlan");
         }

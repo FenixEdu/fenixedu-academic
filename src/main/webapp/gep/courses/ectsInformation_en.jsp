@@ -69,7 +69,7 @@
 					<td><strong><bean:message key="label.ects.webPage"
 											  bundle="GEP_RESOURCES" locale="en"/></strong>
 					<td colspan="3">
-						<bean:define id="objectCode" name="infoSiteCourseInformation" property="infoExecutionCourse.idInternal"/>
+						<bean:define id="objectCode" name="infoSiteCourseInformation" property="infoExecutionCourse.externalId"/>
 						<bean:define id="courseURL" type="java.lang.String">
 							<bean:message key="fenix.url" bundle="GLOBAL_RESOURCES"/><bean:write name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.sigla"/>/<bean:message key="courseSite.url.subpattern" bundle="GLOBAL_RESOURCES"/>/<bean:write name="curricularCourse" property="acronym"/>
 						</bean:define>

@@ -61,16 +61,16 @@ public class SearchExecutionCourses {
         List<InfoExecutionCourse> result = null;
 
         final ExecutionSemester executionSemester =
-                RootDomainObject.getInstance().readExecutionSemesterByOID(infoExecutionPeriod.getIdInternal());
+                RootDomainObject.getInstance().readExecutionSemesterByOID(infoExecutionPeriod.getExternalId());
 
         ExecutionDegree executionDegree = null;
         if (infoExecutionDegree != null) {
-            executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
+            executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(infoExecutionDegree.getExternalId());
         }
 
         CurricularYear curricularYear = null;
         if (infoCurricularYear != null) {
-            curricularYear = RootDomainObject.getInstance().readCurricularYearByOID(infoCurricularYear.getIdInternal());
+            curricularYear = RootDomainObject.getInstance().readCurricularYearByOID(infoCurricularYear.getExternalId());
         }
 
         List<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
@@ -247,7 +247,7 @@ public class SearchExecutionCourses {
     @Service
     public static List<InfoExecutionCourse> runSearchExecutionCourses(AcademicInterval academicInterval,
             ExecutionDegree executionDegree, String courseName) throws NotAuthorizedException {
-        CoordinatorExecutionDegreeAuthorizationFilter.instance.execute(executionDegree.getIdInternal());
+        CoordinatorExecutionDegreeAuthorizationFilter.instance.execute(executionDegree.getExternalId());
         return serviceInstance.run(academicInterval, executionDegree, courseName);
     }
 
@@ -255,14 +255,14 @@ public class SearchExecutionCourses {
     public static List<InfoExecutionCourse> runSearchExecutionCourses(InfoExecutionPeriod infoExecutionPeriod,
             InfoExecutionDegree infoExecutionDegree, InfoCurricularYear infoCurricularYear, String executionCourseName)
             throws NotAuthorizedException {
-        CoordinatorExecutionDegreeAuthorizationFilter.instance.execute(infoExecutionDegree.getIdInternal());
+        CoordinatorExecutionDegreeAuthorizationFilter.instance.execute(infoExecutionDegree.getExternalId());
         return serviceInstance.run(infoExecutionPeriod, infoExecutionDegree, infoCurricularYear, executionCourseName);
     }
 
     @Service
     public static List<InfoExecutionCourse> runSearchExecutionCourses(AcademicInterval academicInterval,
             ExecutionDegree executionDegree, CurricularYear curricularYear, String courseName) throws NotAuthorizedException {
-        CoordinatorExecutionDegreeAuthorizationFilter.instance.execute(executionDegree.getIdInternal());
+        CoordinatorExecutionDegreeAuthorizationFilter.instance.execute(executionDegree.getExternalId());
         return serviceInstance.run(academicInterval, executionDegree, curricularYear, courseName);
     }
 }

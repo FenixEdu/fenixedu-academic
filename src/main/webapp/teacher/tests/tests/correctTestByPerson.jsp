@@ -19,7 +19,7 @@
 <ul>
 	<li>
 		<f:parameterLink page="/tests/tests.do?method=correctTestGroup">
-			<f:parameter id="oid" name="test" property="testGroup.idInternal" />
+			<f:parameter id="oid" name="test" property="testGroup.externalId" />
 			<bean:message key="message.back" bundle="TESTS_RESOURCES" />
 		</f:parameterLink>
 	</li>

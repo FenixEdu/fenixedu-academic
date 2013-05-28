@@ -20,7 +20,7 @@ public class ReadExecutionDegreeByCandidateID {
         MasterDegreeCandidate masterDegreeCandidate = RootDomainObject.getInstance().readMasterDegreeCandidateByOID(candidateID);
 
         ExecutionDegree executionDegree =
-                RootDomainObject.getInstance().readExecutionDegreeByOID(masterDegreeCandidate.getExecutionDegree().getIdInternal());
+                RootDomainObject.getInstance().readExecutionDegreeByOID(masterDegreeCandidate.getExecutionDegree().getExternalId());
 
         if (executionDegree == null) {
             throw new NonExistingServiceException();

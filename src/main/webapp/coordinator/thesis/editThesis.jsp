@@ -410,7 +410,7 @@
             </fr:layout>
         </fr:view>
     
-        <bean:define id="vowelId" name="vowel" property="idInternal"/>
+        <bean:define id="vowelId" name="vowel" property="externalId"/>
         
         <html:link page="<%= String.format("/manageThesis.do?method=changeParticipationInfo&amp;target=vowel&amp;vowelID=%s&amp;degreeCurricularPlanID=%s&amp;thesisID=%s", vowelId, dcpId, thesisId) %>">
             <bean:message key="link.coordinator.thesis.edit.changePerson" bundle="APPLICATION_RESOURCES"/>

@@ -11,7 +11,7 @@
 	<h2><bean:message key="label.student.enrollment.enrolIn" bundle="ACADEMIC_OFFICE_RESOURCES" /> <bean:message  key="<%=cycleTypeToEnrolQualifiedName.toString()%>" bundle="ENUMERATION_RESOURCES"/></h2>
 	
 	
-	<bean:define id="studentCurricularPlanId" name="cycleEnrolmentBean" property="studentCurricularPlan.idInternal" />
+	<bean:define id="studentCurricularPlanId" name="cycleEnrolmentBean" property="studentCurricularPlan.externalId" />
 	
 	<logic:empty name="cycleEnrolmentBean" property="cycleDestinationAffinities">
 		<span class="error0">

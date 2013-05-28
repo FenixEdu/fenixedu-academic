@@ -103,7 +103,7 @@ public class ShowExecutionCourseSitesDispatchAction extends FenixDispatchAction 
             int curricularYear = executionCourseView.getCurricularYear();
             boolean previousExecPeriod =
                     previousExecutionPeriod != null
-                            && executionCourseView.getExecutionPeriodOID().equals(previousExecutionPeriod.getIdInternal());
+                            && executionCourseView.getExecutionPeriodOID().equals(previousExecutionPeriod.getExternalId());
 
             switch (curricularYear) {
             case 1:

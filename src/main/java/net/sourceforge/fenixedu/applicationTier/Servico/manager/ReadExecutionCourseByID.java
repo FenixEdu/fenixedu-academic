@@ -13,8 +13,8 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadExecutionCourseByID {
 
-    protected InfoExecutionCourse run(Integer idInternal) throws FenixServiceException {
-        ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(idInternal);
+    protected InfoExecutionCourse run(Integer externalId) throws FenixServiceException {
+        ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(externalId);
         if (executionCourse == null) {
             throw new NonExistingServiceException();
         }
@@ -27,15 +27,15 @@ public class ReadExecutionCourseByID {
     private static final ReadExecutionCourseByID serviceInstance = new ReadExecutionCourseByID();
 
     @Service
-    public static InfoExecutionCourse runReadExecutionCourseManagerByID(Integer idInternal) throws FenixServiceException,
+    public static InfoExecutionCourse runReadExecutionCourseManagerByID(Integer externalId) throws FenixServiceException,
             NotAuthorizedException {
         try {
             ManagerAuthorizationFilter.instance.execute();
-            return serviceInstance.run(idInternal);
+            return serviceInstance.run(externalId);
         } catch (NotAuthorizedException ex1) {
             try {
                 ScientificCouncilAuthorizationFilter.instance.execute();
-                return serviceInstance.run(idInternal);
+                return serviceInstance.run(externalId);
             } catch (NotAuthorizedException ex2) {
                 throw ex2;
             }

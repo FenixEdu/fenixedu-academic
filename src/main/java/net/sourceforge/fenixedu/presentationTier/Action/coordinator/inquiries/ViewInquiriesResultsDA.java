@@ -202,7 +202,7 @@ abstract public class ViewInquiriesResultsDA extends FenixDispatchAction {
             ((ViewInquiriesResultPageDTO) actionForm).setExecutionCourseID(executionCourse.getOid());
             ((ViewInquiriesResultPageDTO) actionForm).setExecutionDegreeID(executionDegree.getOid());
             // ((ViewInquiriesResultPageDTO)
-            // actionForm).setDegreeCurricularPlanID(executionDegree.getDegreeCurricularPlan().getIdInternal());
+            // actionForm).setDegreeCurricularPlanID(executionDegree.getDegreeCurricularPlan().getExternalId());
 
             final StudentInquiriesCourseResultBean courseResultBean =
                     populateStudentInquiriesCourseResults(executionCourse, executionDegree);

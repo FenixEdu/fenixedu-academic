@@ -4,7 +4,7 @@
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
-<bean:define id="thisModule" name="module" property="idInternal"/>
+<bean:define id="thisModule" name="module" property="externalId"/>
 
 <h2><bean:message key="title.module" bundle="FUNCTIONALITY_RESOURCES"/>: <fr:view name="module" property="name"/></h2>
 
@@ -14,7 +14,7 @@
 
 <div>
     <logic:iterate id="crumb" name="crumbs">
-        <html:link page="/module/view.do" paramId="module" paramName="crumb" paramProperty="idInternal">
+        <html:link page="/module/view.do" paramId="module" paramName="crumb" paramProperty="externalId">
             <fr:view name="crumb" property="name"/>
         </html:link> &gt;
     </logic:iterate>
@@ -48,10 +48,10 @@
            links
      ======================  -->
 <p class="mtop025">
-	<html:link page="/module/edit.do" paramId="module" paramName="module" paramProperty="idInternal">
+	<html:link page="/module/edit.do" paramId="module" paramName="module" paramProperty="externalId">
 	    <bean:message key="link.module.edit" bundle="FUNCTIONALITY_RESOURCES"/>
 	</html:link>, 
-	<html:link page="/functionality/confirm.do" paramId="functionality" paramName="module" paramProperty="idInternal">
+	<html:link page="/functionality/confirm.do" paramId="functionality" paramName="module" paramProperty="externalId">
 	    <bean:message key="link.module.delete" bundle="FUNCTIONALITY_RESOURCES"/>
 	</html:link>
 </p>
@@ -66,7 +66,7 @@
 	</fr:layout>
 </fr:view>
 <p class="mtop025">
-	<html:link page="/functionality/manage.do" paramId="functionality" paramName="module" paramProperty="idInternal">
+	<html:link page="/functionality/manage.do" paramId="functionality" paramName="module" paramProperty="externalId">
 	    <bean:message key="link.module.manage" bundle="FUNCTIONALITY_RESOURCES"/>
 	</html:link>
 </p>
@@ -81,7 +81,7 @@
 	<html:link page="<%= "/functionality/create.do?module=" + thisModule %>">
 	    <bean:message key="link.functionality.create" bundle="FUNCTIONALITY_RESOURCES"/>
 	</html:link>,
-	<html:link page="/module/uploadStructure.do" paramId="module" paramName="module" paramProperty="idInternal">
+	<html:link page="/module/uploadStructure.do" paramId="module" paramName="module" paramProperty="externalId">
 	    <bean:message key="link.module.import" bundle="FUNCTIONALITY_RESOURCES"/>
 	</html:link>
 </p><br>
@@ -93,7 +93,7 @@
 
 <logic:notEmpty name="functionalities">
 	<p>
-		<html:link page="/functionality/exportStructure.do" paramId="functionality" paramName="module" paramProperty="idInternal">
+		<html:link page="/functionality/exportStructure.do" paramId="functionality" paramName="module" paramProperty="externalId">
 		    <bean:message key="link.functionality.export" bundle="FUNCTIONALITY_RESOURCES"/>
 		</html:link>
 	</p>
@@ -119,8 +119,8 @@
 	        <fr:property name="movedClass" value="highlight3"/>
 	   </fr:layout>
 	
-	   <fr:destination name="module.view" path="/module/view.do?module=${idInternal}"/>
-	   <fr:destination name="functionality.view" path="/functionality/view.do?functionality=${idInternal}"/>
+	   <fr:destination name="module.view" path="/module/view.do?module=${externalId}"/>
+	   <fr:destination name="functionality.view" path="/functionality/view.do?functionality=${externalId}"/>
 	</fr:view>
 	
 	<!-- ======================

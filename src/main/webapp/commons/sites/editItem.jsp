@@ -28,8 +28,8 @@
 </logic:messagesPresent>
 
 
-<bean:define id="siteId" name="site" property="idInternal"/>
-<bean:define id="sectionId" name="item" property="section.idInternal"/>
+<bean:define id="siteId" name="site" property="externalId"/>
+<bean:define id="sectionId" name="item" property="section.externalId"/>
 
 <fr:form action="<%= String.format("%s?method=section&amp;%s&amp;sectionID=%s", actionName, context, sectionId) %>">
     <fr:edit id="edit-item" name="item" type="net.sourceforge.fenixedu.domain.Item" schema="net.sourceforge.fenixedu.domain.ItemEditor">

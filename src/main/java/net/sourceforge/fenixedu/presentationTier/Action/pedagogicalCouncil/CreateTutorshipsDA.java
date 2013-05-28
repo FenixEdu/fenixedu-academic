@@ -116,7 +116,7 @@ public class CreateTutorshipsDA extends TutorManagementDispatchAction {
         List<TutorshipErrorBean> tutorshipsNotInserted = new ArrayList<TutorshipErrorBean>();
         try {
             tutorshipsNotInserted =
-                    InsertTutorship.runInsertTutorship(contextBean.getExecutionDegree().getIdInternal(),
+                    InsertTutorship.runInsertTutorship(contextBean.getExecutionDegree().getExternalId(),
                             selectedStudentsAndTutorBean);
         } catch (FenixServiceException e) {
             addActionMessage(request, e.getMessage(), e.getArgs());

@@ -31,7 +31,7 @@
 		
 		<h:messages infoClass="success0" errorClass="error0" layout="table"/>
 		
-		<h:outputText escape="false" value="<input alt='input.competenceCourseID' id='competenceCourseID' name='competenceCourseID' type='hidden' value='#{CompetenceCourseManagement.competenceCourse.idInternal}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.competenceCourseID' id='competenceCourseID' name='competenceCourseID' type='hidden' value='#{CompetenceCourseManagement.competenceCourse.externalId}'/>"/>
 
 		<h:outputText value="<p class='mtop15'>" escape="false"/>
 			<h:outputText value="#{bolonhaBundle['confirmDeleteMessage']}" styleClass="warning0" escape="false"/>
