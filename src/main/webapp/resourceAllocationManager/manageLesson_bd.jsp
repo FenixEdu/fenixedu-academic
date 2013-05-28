@@ -1,11 +1,16 @@
 <%@ page language="java" %>
+<%@page import="net.sourceforge.fenixedu.domain.RootDomainObject"%>
+<%@page import="org.joda.time.Weeks"%>
+<%@page import="org.joda.time.YearMonthDay"%>
+<%@page import="net.sourceforge.fenixedu.domain.ExecutionCourse"%>
+<%@page import="pt.ist.fenixframework.pstm.AbstractDomainObject"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
-<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
+<html:xhtml/>
 
 <em><bean:message key="title.resourceAllocationManager.management"/></em>
 <h2><bean:message key="link.manage.turnos"/></h2>
@@ -21,6 +26,28 @@
 
 
 <bean:message key="message.weekdays"/>
+
+<%
+	final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(new Integer(pageContext.findAttribute("executionCourseOID").toString()));
+	final YearMonthDay firstPossibleLessonDay = executionCourse.getMaxLessonsPeriod().getLeft();
+	final YearMonthDay lastPossibleLessonDay = executionCourse.getMaxLessonsPeriod().getRight();
+%>
+
+<script src="https://rawgithub.com/timrwood/moment/2.0.0/moment.js"></script>
+<script type="text/javascript">
+	function changeStartWeek(lessonPeriodStartDate) {
+		var startWeekValue = $('input[name="newBeginDateWeek"]').attr("value") - 1;
+		var lessonPeriodStartMoment = moment(lessonPeriodStartDate, "YYYY-MM-DD HH:mm:ss");
+		var newDate = lessonPeriodStartMoment.add('weeks', startWeekValue).format("DD/MM/YYYY");
+		$('input[name="newBeginDate"]').val(newDate);
+	};
+	function changeEndWeek(lessonPeriodStartDate) {
+		var startWeekValue = $('input[name="newEndDateWeek"]').attr("value") - 1;
+		var lessonPeriodStartMoment = moment(lessonPeriodStartDate, "YYYY-MM-DD HH:mm:ss");
+		var newDate = lessonPeriodStartMoment.add('weeks', startWeekValue).format("DD/MM/YYYY");
+		$('input[name="newEndDate"]').val(newDate);
+	};
+</script>
 
 <html:form action="/manageLesson" focus="diaSemana">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="chooseRoom"/>
@@ -78,6 +105,16 @@
         	 	<b><bean:message key="label.until"/></b>        	 	
         	 	<html:text bundle="HTMLALT_RESOURCES" altKey="text.week" property="newEndDate" size="8" maxlength="10"/>
         	 	<bean:message key="property.lesson.new.begin.date.format"/>        	 	        	 
+    	    </td> 
+	 	</tr>
+	 	<tr>
+	        <th><bean:message key="property.lesson.new.begin.date.week"/>:</th>
+    	    <td>
+        	 	<html:text bundle="HTMLALT_RESOURCES" altKey="text.week" property="newBeginDateWeek" size="3" maxlength="2" value="1"
+        	 			onchange="<%= "changeStartWeek('" + firstPossibleLessonDay.toString("yyyy-MM-dd") + " 00:00:00');" %>"/>        	 	
+        	 	<b><bean:message key="label.until"/></b>        	 	
+        	 	<html:text bundle="HTMLALT_RESOURCES" altKey="text.week" property="newEndDateWeek" size="3" maxlength="2" value="<%= "" + (Weeks.weeksBetween(firstPossibleLessonDay, lastPossibleLessonDay).getWeeks() + 1) %>"
+        	 			onchange="<%= "changeEndWeek('" + firstPossibleLessonDay.toString("yyyy-MM-dd") + " 00:00:00');" %>"/>
     	    </td> 
 	 	</tr>
 	 	<logic:present name="action">

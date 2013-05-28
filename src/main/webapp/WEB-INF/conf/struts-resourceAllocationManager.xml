@@ -88,6 +88,8 @@
                   <form-property name="quinzenal" type="java.lang.Boolean"></form-property>
                   <form-property name="newBeginDate" type="java.lang.String"></form-property>
                   <form-property name="newEndDate" type="java.lang.String"></form-property>
+                  <form-property name="newBeginDateWeek" type="java.lang.String"></form-property>
+                  <form-property name="newEndDateWeek" type="java.lang.String"></form-property>
                   <form-property name="createLessonInstances" type="java.lang.Boolean" initial="false"></form-property>
             </form-bean>
             <!-- Dynamic-FormBean for adding shifts to class -->
