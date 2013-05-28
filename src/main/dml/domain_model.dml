@@ -15,7 +15,6 @@ package net.sourceforge.fenixedu.domain;
 
 
 
-
 /*
  * ValueTypes declarations
  * 
@@ -968,6 +967,10 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
         String realNameEn;
         Boolean active;
     }
+    
+    class DepartmentCreditsPool {
+    	BigDecimal creditsPool;
+    }
 
     class District  {
         String code (REQUIRED);
@@ -1141,6 +1144,7 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
         EntryPhase entryPhase;
         Boolean projectTutorialCourse;
         BigDecimal unitCreditValue;      
+        BigDecimal effortRate;
     }
     
     
@@ -11109,6 +11113,27 @@ relation DeleteFileRequestRootDomainObject {
     }
 }
 
+relation DepartmentCreditsPoolRootDomainObject {
+    DepartmentCreditsPool playsRole departmentCreditsPools {
+        multiplicity *;
+    }
+   	RootDomainObject playsRole rootDomainObject;
+}
+
+relation DepartmentCreditsPoolDepartment {
+    DepartmentCreditsPool playsRole departmentCreditsPools {
+        multiplicity *;
+    }
+   	Department playsRole department;
+}
+
+relation DepartmentCreditsPoolExecutionYear {
+    DepartmentCreditsPool playsRole departmentCreditsPools {
+        multiplicity *;
+    }
+   	ExecutionYear playsRole executionYear;
+}
+
 relation DepartmentDegree {
     Department playsRole departments {
         multiplicity *;
@@ -20620,6 +20645,8 @@ class credits.AnnualCreditsState  {
 	LocalDate closeCreditsDate;
     DateTime creationDate;
     DateTime lastModifiedDate;
+    Interval sharedUnitCreditsInterval;
+    Interval unitCreditsInterval;
 }
 
 relation AnnualCreditsStateAnnualTeachingCredits {

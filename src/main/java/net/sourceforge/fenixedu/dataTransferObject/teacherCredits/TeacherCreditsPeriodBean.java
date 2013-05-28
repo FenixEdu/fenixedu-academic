@@ -8,6 +8,9 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFill
 import net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingForTeacherCE;
 
 import org.joda.time.DateTime;
+import org.joda.time.Interval;
+
+import pt.ist.fenixWebFramework.services.Service;
 
 public class TeacherCreditsPeriodBean implements Serializable {
 
@@ -18,6 +21,12 @@ public class TeacherCreditsPeriodBean implements Serializable {
     private DateTime endForDepartmentAdmOffice;
 
     private ExecutionSemester executionPeriodReference;
+
+    private AnnualCreditsState annualCreditsState;
+    private DateTime sharedUnitCreditsBeginDate;
+    private DateTime sharedUnitCreditsEndDate;
+    private DateTime unitCreditsBeginDate;
+    private DateTime unitCreditsEndDate;
 
     private boolean teacher;
 
@@ -84,6 +93,7 @@ public class TeacherCreditsPeriodBean implements Serializable {
         TeacherCreditsFillingForTeacherCE teacherCE = executionSemester.getTeacherCreditsFillingForTeacherPeriod();
         setBeginForTeacher(teacherCE != null ? teacherCE.getBegin() : null);
         setEndForTeacher(teacherCE != null ? teacherCE.getEnd() : null);
+        setAnnualCreditsState();
     }
 
     public boolean isTeacher() {
@@ -95,6 +105,64 @@ public class TeacherCreditsPeriodBean implements Serializable {
     }
 
     public AnnualCreditsState getAnnualCreditsState() {
-        return AnnualCreditsState.getAnnualCreditsState(getExecutionPeriod().getExecutionYear());
+        return annualCreditsState;
+    }
+
+    public void setAnnualCreditsState() {
+        annualCreditsState = AnnualCreditsState.getAnnualCreditsState(getExecutionPeriod().getExecutionYear());
+        setSharedUnitCreditsBeginDate(annualCreditsState.getSharedUnitCreditsInterval() != null ? annualCreditsState
+                .getSharedUnitCreditsInterval().getStart() : null);
+        setSharedUnitCreditsEndDate(annualCreditsState.getSharedUnitCreditsInterval() != null ? annualCreditsState
+                .getSharedUnitCreditsInterval().getEnd() : null);
+        setUnitCreditsBeginDate(annualCreditsState.getUnitCreditsInterval() != null ? annualCreditsState.getUnitCreditsInterval()
+                .getStart() : null);
+        setUnitCreditsEndDate(annualCreditsState.getUnitCreditsInterval() != null ? annualCreditsState.getUnitCreditsInterval()
+                .getEnd() : null);
+    }
+
+    public DateTime getSharedUnitCreditsBeginDate() {
+        return sharedUnitCreditsBeginDate;
+    }
+
+    public void setSharedUnitCreditsBeginDate(DateTime sharedUnitCreditsBeginDate) {
+        this.sharedUnitCreditsBeginDate = sharedUnitCreditsBeginDate;
+    }
+
+    public DateTime getSharedUnitCreditsEndDate() {
+        return sharedUnitCreditsEndDate;
+    }
+
+    public void setSharedUnitCreditsEndDate(DateTime sharedUnitCreditsEndDate) {
+        this.sharedUnitCreditsEndDate = sharedUnitCreditsEndDate;
+    }
+
+    public DateTime getUnitCreditsBeginDate() {
+        return unitCreditsBeginDate;
+    }
+
+    public void setUnitCreditsBeginDate(DateTime unitCreditsBeginDate) {
+        this.unitCreditsBeginDate = unitCreditsBeginDate;
+    }
+
+    public DateTime getUnitCreditsEndDate() {
+        return unitCreditsEndDate;
+    }
+
+    public void setUnitCreditsEndDate(DateTime unitCreditsEndDate) {
+        this.unitCreditsEndDate = unitCreditsEndDate;
+    }
+
+    private Interval getSharedUnitCreditsInterval() {
+        return new Interval(getSharedUnitCreditsBeginDate(), getSharedUnitCreditsEndDate());
+    }
+
+    private Interval getUnitCreditsInterval() {
+        return new Interval(getUnitCreditsBeginDate(), getUnitCreditsEndDate());
+    }
+
+    @Service
+    public void editIntervals() {
+        annualCreditsState.setSharedUnitCreditsInterval(getSharedUnitCreditsInterval());
+        annualCreditsState.setUnitCreditsInterval(getUnitCreditsInterval());
     }
 }

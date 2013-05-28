@@ -584,10 +584,11 @@ public class Teacher extends Teacher_Base {
                 if (conclusionYear != null && conclusionYear.equals(previousExecutionYear)) {
                     if (internalPhdParticipant.getProcessForGuiding() != null) {
                         guidedThesesNumber++;
-                    } else if (internalPhdParticipant.getProcessForGuiding() != null) {
+                    } else if (internalPhdParticipant.getProcessForAssistantGuiding() != null) {
                         assistantGuidedTheses =
                                 assistantGuidedTheses
-                                        + (0.5 / internalPhdParticipant.getProcessForGuiding().getAssistantGuidingsCount());
+                                        + (0.5 / internalPhdParticipant.getProcessForAssistantGuiding()
+                                                .getAssistantGuidingsCount());
                     }
 
                 }
@@ -614,7 +615,8 @@ public class Teacher extends Teacher_Base {
         double totalCredits = 0.0;
         for (PersonFunction personFunction : this.getPerson().getPersonFunctions()) {
             if (personFunction.belongsToPeriod(executionSemester.getBeginDateYearMonthDay(),
-                    executionSemester.getEndDateYearMonthDay())) {
+                    executionSemester.getEndDateYearMonthDay())
+                    && !personFunction.getFunction().isVirtual()) {
                 totalCredits = (personFunction.getCredits() != null) ? totalCredits + personFunction.getCredits() : totalCredits;
             }
         }

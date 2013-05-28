@@ -61,6 +61,69 @@
 			<bean:message key="link.change"/>
 		</html:link>			
 		
+		<logic:present name="editInterval">
+			<bean:define id="editInterval" name="editInterval" />
+		</logic:present>
+		<logic:notPresent name="editInterval">
+			<bean:define id="editInterval" value="" />
+		</logic:notPresent>
+		
+		<h3 class="mtop15 mbottom05">Período para definir créditos unitários (ck) para as UC's partilhadas</h3>
+		<bean:define id="readOnly" value="true"/>
+		<bean:define id="action" value="/defineCreditsPeriods.do?method=prepareEditAnnualCreditsDates&editInterval=sharedUnitCredits"/>
+		<logic:equal name="editInterval" value="sharedUnitCredits">
+			<bean:define id="readOnly" value="false"/>
+			<bean:define id="action" value="/defineCreditsPeriods.do?method=editAnnualCreditsDates&editInterval=sharedUnitCredits"/>
+		</logic:equal>
+		<fr:form id="sharedUnitCreditsForm" action="<%=action %>">
+			<fr:edit name="teacherCreditsBean">
+				<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.teacherCredits.TeacherCreditsPeriodBean">
+					<fr:slot name="sharedUnitCreditsBeginDate" key="label.beginDate" layout="null-as-label" readOnly="<%=Boolean.valueOf(readOnly.toString())%>"/>
+					<fr:slot name="sharedUnitCreditsEndDate" key="label.endDate" layout="null-as-label"  readOnly="<%=Boolean.valueOf(readOnly.toString()) %>"/>
+				</fr:schema>
+				<fr:layout name="tabular">
+					<fr:property name="classes" value="tstyle2 thleft thlight mtop05"/>
+					<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
+				</fr:layout>
+				<fr:destination name="invalid" path="/defineCreditsPeriods.do?method=showPeriods"/>
+				<fr:destination name="cancel" path="/defineCreditsPeriods.do?method=showPeriods"/>
+			</fr:edit>
+			<logic:equal name="editInterval" value="sharedUnitCredits">
+				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="link.change"/></html:submit>
+			</logic:equal>
+			<logic:notEqual name="editInterval" value="sharedUnitCredits">
+				<a href="#" onclick="javascript:document.getElementById('sharedUnitCreditsForm').submit();"><bean:message key="link.change"/></a>
+			</logic:notEqual>
+		</fr:form>
+
+		<h3 class="mtop15 mbottom05">Período para definir créditos unitários (ck) para as restantes UC's</h3>		
+		<bean:define id="readOnly" value="true"/>
+		<bean:define id="action" value="/defineCreditsPeriods.do?method=prepareEditAnnualCreditsDates&editInterval=unitCredits"/>
+		<logic:equal name="editInterval" value="unitCredits">
+			<bean:define id="readOnly" value="false"/>
+			<bean:define id="action" value="/defineCreditsPeriods.do?method=editAnnualCreditsDates&editInterval=unitCredits"/>
+		</logic:equal>
+		<fr:form id="unitCreditsForm" action="<%=action %>">
+			<fr:edit name="teacherCreditsBean">
+				<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.teacherCredits.TeacherCreditsPeriodBean">
+					<fr:slot name="unitCreditsBeginDate" key="label.beginDate" layout="null-as-label" readOnly="<%=Boolean.valueOf(readOnly.toString()) %>"/>
+					<fr:slot name="unitCreditsEndDate" key="label.endDate" layout="null-as-label" readOnly="<%=Boolean.valueOf(readOnly.toString()) %>"/>
+				</fr:schema>
+				<fr:layout name="tabular">
+					<fr:property name="classes" value="tstyle2 thleft thlight mtop05"/>
+					<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
+				</fr:layout>
+				<fr:destination name="invalid" path="/defineCreditsPeriods.do?method=showPeriods"/>
+				<fr:destination name="cancel" path="/defineCreditsPeriods.do?method=showPeriods"/>
+			</fr:edit>
+			<logic:equal name="editInterval" value="unitCredits">
+				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="link.change"/></html:submit>
+			</logic:equal>
+			<logic:notEqual name="editInterval" value="unitCredits">
+				<a href="#" onclick="javascript:document.getElementById('unitCreditsForm').submit();"><bean:message key="link.change"/></a>
+			</logic:notEqual>
+		</fr:form>
+			
 		<h3 class="mtop15 mbottom05">Outras datas</h3>
 		<fr:edit name="teacherCreditsBean" property="annualCreditsState">
 			<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.credits.AnnualCreditsState">

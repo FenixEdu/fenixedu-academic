@@ -85,9 +85,14 @@ public class AnnualTeachingCreditsByPeriodBean implements Serializable {
     }
 
     public List<PersonFunction> getPersonFunctions() {
-        List<PersonFunction> personFunctions =
-                new ArrayList<PersonFunction>(teacher.getPerson().getPersonFuntions(executionPeriod.getBeginDateYearMonthDay(),
-                        executionPeriod.getEndDateYearMonthDay()));
+        List<PersonFunction> personFunctions = new ArrayList<PersonFunction>();
+        for (PersonFunction personFunction : teacher.getPerson().getPersonFunctions()) {
+            if (personFunction.belongsToPeriod(executionPeriod.getBeginDateYearMonthDay(),
+                    executionPeriod.getEndDateYearMonthDay())
+                    && !personFunction.getFunction().isVirtual()) {
+                personFunctions.add(personFunction);
+            }
+        }
         return personFunctions;
     }
 

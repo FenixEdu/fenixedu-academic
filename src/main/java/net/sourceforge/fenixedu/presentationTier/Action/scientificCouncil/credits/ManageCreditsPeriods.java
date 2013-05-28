@@ -109,4 +109,24 @@ public class ManageCreditsPeriods extends FenixDispatchAction {
         return rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
     }
 
+    public ActionForward prepareEditAnnualCreditsDates(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        request.setAttribute("editInterval", request.getParameter("editInterval"));
+        request.setAttribute("teacherCreditsBean", getRenderedObject());
+        return mapping.findForward("show-credits-periods");
+    }
+
+    public ActionForward editAnnualCreditsDates(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        TeacherCreditsPeriodBean bean = getRenderedObject();
+        try {
+            bean.editIntervals();
+        } catch (Exception e) {
+            addActionMessage(request, e.getMessage());
+            request.setAttribute("editInterval", request.getParameter("editInterval"));
+        }
+        RenderUtils.invalidateViewState();
+        request.setAttribute("teacherCreditsBean", bean);
+        return mapping.findForward("show-credits-periods");
+    }
 }

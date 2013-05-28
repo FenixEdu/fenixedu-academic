@@ -27,6 +27,7 @@ public class PersonFunctionBean implements Serializable {
     private Function function;
     private BigDecimal percentage;
     private BigDecimal credits;
+    private PersonFunction personFunction;
 
     public PersonFunctionBean(Teacher teacher, ExecutionSemester executionSemester) {
         super();
@@ -39,6 +40,7 @@ public class PersonFunctionBean implements Serializable {
         setTeacher(((Person) personFunction.getChildParty()).getTeacher());
         setUnit((Unit) personFunction.getParentParty());
         setFunction(personFunction);
+        setPersonFunction(personFunction);
     }
 
     public PersonFunctionBean(PersonFunction personFunction, ExecutionSemester executionSemester) {
@@ -46,6 +48,7 @@ public class PersonFunctionBean implements Serializable {
         setTeacher(((Person) personFunction.getChildParty()).getTeacher());
         setUnit((Unit) personFunction.getParentParty());
         setFunction(personFunction);
+        setPersonFunction(personFunction);
     }
 
     public ExecutionSemester getExecutionSemester() {
@@ -86,7 +89,7 @@ public class PersonFunctionBean implements Serializable {
 
     public void setFunction(PersonFunction personFunction) {
         this.function = personFunction.getFunction();
-        if (function instanceof SharedFunction) {
+        if (personFunction instanceof PersonFunctionShared) {
             setPercentage(((PersonFunctionShared) personFunction).getPercentage());
         } else {
             setCredits(new BigDecimal(personFunction.getCredits()));
@@ -97,7 +100,7 @@ public class PersonFunctionBean implements Serializable {
         this.function = function;
         PersonFunction personFunction = getPersonFunction();
         if (personFunction != null) {
-            if (function instanceof SharedFunction) {
+            if (personFunction instanceof PersonFunctionShared) {
                 setPercentage(((PersonFunctionShared) personFunction).getPercentage());
             } else {
                 setCredits(new BigDecimal(personFunction.getCredits()));
@@ -212,6 +215,9 @@ public class PersonFunctionBean implements Serializable {
     }
 
     public PersonFunction getPersonFunction() {
+        if (personFunction != null) {
+            return personFunction;
+        }
         if (getFunction() != null) {
             for (PersonFunction personFunction : getTeacher().getPerson().getPersonFunctions(getFunction())) {
                 if (intersectsSemester(personFunction)) {
@@ -252,6 +258,10 @@ public class PersonFunctionBean implements Serializable {
             }
         }
         return result;
+    }
+
+    public void setPersonFunction(PersonFunction personFunction) {
+        this.personFunction = personFunction;
     }
 
 }
