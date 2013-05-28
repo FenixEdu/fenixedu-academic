@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.TeacherCredits;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
@@ -34,6 +33,7 @@ import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCa
 import org.joda.time.Duration;
 
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * 
@@ -45,7 +45,7 @@ public class ReadTeacherServiceDistributionByTeachers {
 
         final List<ExecutionSemester> executionPeriodList = new ArrayList<ExecutionSemester>();
         for (Integer executionPeriodID : executionPeriodsIDs) {
-            executionPeriodList.add(RootDomainObject.getInstance().readExecutionSemesterByOID(executionPeriodID));
+            executionPeriodList.add(AbstractDomainObject.fromExternalId(executionPeriodID));
         }
 
         final ExecutionSemester startPeriod = ExecutionSemester.readStartExecutionSemesterForCredits();
@@ -54,7 +54,7 @@ public class ReadTeacherServiceDistributionByTeachers {
 
         DistributionTeacherServicesByTeachersDTO returnDTO = new DistributionTeacherServicesByTeachersDTO();
 
-        Department department = RootDomainObject.getInstance().readDepartmentByOID(departmentId);
+        Department department = AbstractDomainObject.fromExternalId(departmentId);
 
         for (ExecutionSemester executionPeriodEntry : executionPeriodList) {
 

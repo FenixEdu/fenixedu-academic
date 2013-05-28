@@ -33,6 +33,7 @@ import org.joda.time.Interval;
 import org.joda.time.Period;
 
 import pt.ist.fenixframework.DomainObject;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class WeeklyWorkLoadDA extends FenixDispatchAction {
 
@@ -183,7 +184,7 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
         final String domainObjectIDString = (String) dynaActionForm.get(formAttributeName);
         final Integer domainObjectID =
                 domainObjectIDString == null || domainObjectIDString.length() == 0 ? null : Integer.valueOf(domainObjectIDString);
-        final DomainObject domainObject = rootDomainObject.readDomainObjectByOID(clazz, domainObjectID);
+        final DomainObject domainObject = AbstractDomainObject.fromExternalId(clazz, domainObjectID);
         request.setAttribute(requestAttributeName, domainObject);
         return domainObject;
     }

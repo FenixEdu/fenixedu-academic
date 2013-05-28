@@ -12,10 +12,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * Base class for authorization issues on credits information edition done by
@@ -36,7 +36,7 @@ public abstract class AbstractTeacherDepartmentAuthorization<T> extends Filtro {
 
             final Person requesterPerson = requester.getPerson();
 
-            Teacher teacher = RootDomainObject.getInstance().readTeacherByOID(teacherId);
+            Teacher teacher = AbstractDomainObject.fromExternalId(teacherId);
 
             Department teacherDepartment = teacher.getCurrentWorkingDepartment();
 

@@ -24,6 +24,8 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
 
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
+
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
@@ -62,12 +64,12 @@ public class CurricularPlansMembersManagementBackingBean extends FenixBackingBea
     }
 
     public DegreeCurricularPlan getDegreeCurricularPlan() {
-        return rootDomainObject.readDegreeCurricularPlanByOID(getSelectedCurricularPlanID());
+        return AbstractDomainObject.fromExternalId(getSelectedCurricularPlanID());
     }
 
     private Department getDepartment() {
         if (getSelectedDepartmentID() != null) {
-            return rootDomainObject.readDepartmentByOID(getSelectedDepartmentID());
+            return AbstractDomainObject.fromExternalId(getSelectedDepartmentID());
         }
         return null;
     }

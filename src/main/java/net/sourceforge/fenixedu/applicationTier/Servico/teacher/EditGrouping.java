@@ -12,9 +12,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGrouping;
 import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author asnr and scpo
@@ -22,7 +22,7 @@ import pt.ist.fenixWebFramework.services.Service;
 public class EditGrouping {
 
     protected List run(Integer executionCourseID, InfoGrouping infoGroupProperties) throws FenixServiceException {
-        final Grouping grouping = RootDomainObject.getInstance().readGroupingByOID(infoGroupProperties.getExternalId());
+        final Grouping grouping = AbstractDomainObject.fromExternalId(infoGroupProperties.getExternalId());
         if (grouping == null) {
             throw new InvalidArgumentsServiceException();
         }

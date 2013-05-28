@@ -7,9 +7,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.CoordinationTeamLog;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class RemoveCoordinators {
 
@@ -17,7 +17,7 @@ public class RemoveCoordinators {
     public static void run(Integer executionDegreeID, List<Integer> coordinatorsToRemoveIDs) {
 
         for (final Integer coordinatorToRemoveID : coordinatorsToRemoveIDs) {
-            final Coordinator coordinator = RootDomainObject.getInstance().readCoordinatorByOID(coordinatorToRemoveID);
+            final Coordinator coordinator = AbstractDomainObject.fromExternalId(coordinatorToRemoveID);
             if (coordinator != null) {
                 final Person person = coordinator.getPerson();
 

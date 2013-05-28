@@ -10,8 +10,8 @@ import net.sourceforge.fenixedu.domain.Curriculum;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Fernanda Quitério
@@ -24,8 +24,8 @@ public class EditProgram {
             String username) throws FenixServiceException {
 
         final Person person = Person.readPersonByUsername(username);
-        final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseOID);
-        final CurricularCourse curricularCourse = (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(curricularCourseOID);
+        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseOID);
+        final CurricularCourse curricularCourse = (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseOID);
         final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
 
         Curriculum curriculum =

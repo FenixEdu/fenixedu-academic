@@ -15,6 +15,7 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/thesisProcess", module = "coordinator")
 @Forwards({ @Forward(name = "showInformation", path = "/coordinator/thesis/showInformation.jsp") })
@@ -42,7 +43,7 @@ public class ThesisProcessDA extends FenixDispatchAction {
 
     private ExecutionDegree guessExecutionDegree(final HttpServletRequest request) {
         final Integer id = getExternalId(request, "degreeCurricularPlanID");
-        final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(id);
+        final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(id);
         ExecutionDegree last = null;
         if (degreeCurricularPlan != null) {
             for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {

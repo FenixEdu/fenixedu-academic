@@ -20,10 +20,10 @@ import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.util.Season;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod {
 
@@ -33,7 +33,7 @@ public class ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod {
             InfoExecutionPeriod infoExecutionPeriod) {
         InfoViewExamByDayAndShift infoViewExamByDayAndShift = new InfoViewExamByDayAndShift();
 
-        ExecutionSemester executionSemester = RootDomainObject.getInstance().readExecutionSemesterByOID(infoExecutionPeriod.getExternalId());
+        ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(infoExecutionPeriod.getExternalId());
         ExecutionCourse executionCourse = executionSemester.getExecutionCourseByInitials(executionCourseInitials);
 
         List<Exam> associatedExams = new ArrayList();

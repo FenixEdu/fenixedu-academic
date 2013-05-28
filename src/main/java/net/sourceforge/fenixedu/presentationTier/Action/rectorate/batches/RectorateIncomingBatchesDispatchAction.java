@@ -24,6 +24,7 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/rectorateIncomingBatches", module = "rectorate")
 @Forwards({ @Forward(name = "index", path = "/rectorate/incomingBatches.jsp"),
@@ -101,7 +102,7 @@ public class RectorateIncomingBatchesDispatchAction extends FenixDispatchAction 
     }
 
     protected IDocumentRequest getDocumentRequest(HttpServletRequest request) {
-        return (IDocumentRequest) rootDomainObject.readAcademicServiceRequestByOID(getRequestParameterAsInteger(request,
+        return (IDocumentRequest) AbstractDomainObject.fromExternalId(getRequestParameterAsInteger(request,
                 "documentRequestId"));
     }
 

@@ -24,6 +24,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -36,7 +37,7 @@ public class ManageEnrolmentModelDA extends FenixDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws  FenixServiceException {
         Registration registration =
-                rootDomainObject.readRegistrationByOID(getRequestParameterAsInteger(request, "registrationID"));
+                AbstractDomainObject.fromExternalId(getRequestParameterAsInteger(request, "registrationID"));
         EnrolmentModelFactoryEditor enrolmentModelFactoryEditor = new EnrolmentModelFactoryEditor(registration);
 
         request.setAttribute("enrolmentModelBean", enrolmentModelFactoryEditor);

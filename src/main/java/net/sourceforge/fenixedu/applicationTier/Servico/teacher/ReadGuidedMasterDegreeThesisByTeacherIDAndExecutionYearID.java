@@ -8,9 +8,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author naat
@@ -18,13 +18,13 @@ import pt.ist.fenixWebFramework.services.Service;
 public class ReadGuidedMasterDegreeThesisByTeacherIDAndExecutionYearID {
 
     public List<MasterDegreeThesisDataVersion> run(Integer teacherID, Integer executionYearID) throws FenixServiceException {
-        Teacher teacher = RootDomainObject.getInstance().readTeacherByOID(teacherID);
+        Teacher teacher = AbstractDomainObject.fromExternalId(teacherID);
         List<MasterDegreeThesisDataVersion> masterDegreeThesisDataVersions;
 
         if (executionYearID == null) {
             masterDegreeThesisDataVersions = teacher.getAllGuidedMasterDegreeThesis();
         } else {
-            ExecutionYear executionYear = RootDomainObject.getInstance().readExecutionYearByOID(executionYearID);
+            ExecutionYear executionYear = AbstractDomainObject.fromExternalId(executionYearID);
 
             masterDegreeThesisDataVersions = teacher.getGuidedMasterDegreeThesisByExecutionYear(executionYear);
         }

@@ -15,11 +15,11 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Jo�o Mota
@@ -33,7 +33,7 @@ public class ReadAvailableClassesForShift {
     @Service
     public static List run(Integer shiftOID) {
 
-        final Shift shift = RootDomainObject.getInstance().readShiftByOID(shiftOID);
+        final Shift shift = AbstractDomainObject.fromExternalId(shiftOID);
         final ExecutionCourse executionCourse = shift.getDisciplinaExecucao();
         final ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
         final ExecutionYear executionYear = executionSemester.getExecutionYear();

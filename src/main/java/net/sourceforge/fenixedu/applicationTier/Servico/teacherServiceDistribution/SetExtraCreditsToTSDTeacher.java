@@ -5,14 +5,14 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthoriza
 import net.sourceforge.fenixedu.applicationTier.Filtro.EmployeeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDTeacher;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class SetExtraCreditsToTSDTeacher {
     protected void run(Integer tsdTeacherId, String extraCreditsName, Double extraCreditsValue, Boolean usingExtraCredits) {
 
-        TSDTeacher tsdTeacher = RootDomainObject.getInstance().readTSDTeacherByOID(tsdTeacherId);
+        TSDTeacher tsdTeacher = AbstractDomainObject.fromExternalId(tsdTeacherId);
 
         tsdTeacher.setExtraCreditsName(extraCreditsName);
         tsdTeacher.setExtraCreditsValue(extraCreditsValue);

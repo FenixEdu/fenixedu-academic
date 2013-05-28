@@ -12,9 +12,9 @@ import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.CurricularSemester;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.ist.fenixframework.pstm.IllegalWriteException;
 
 /**
@@ -29,20 +29,20 @@ public class InsertCurricularCourseScopeAtCurricularCourse {
         CurricularSemester curricularSemester = null;
         try {
             curricularSemester =
-                    RootDomainObject.getInstance().readCurricularSemesterByOID(infoCurricularCourseScope.getInfoCurricularSemester()
+                    AbstractDomainObject.fromExternalId(infoCurricularCourseScope.getInfoCurricularSemester()
                             .getExternalId());
             if (curricularSemester == null) {
                 throw new NonExistingServiceException("message.non.existing.curricular.semester", null);
             }
 
             CurricularCourse curricularCourse =
-                    (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(infoCurricularCourseScope.getInfoCurricularCourse()
+                    (CurricularCourse) AbstractDomainObject.fromExternalId(infoCurricularCourseScope.getInfoCurricularCourse()
                             .getExternalId());
             if (curricularCourse == null) {
                 throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
             }
 
-            branch = RootDomainObject.getInstance().readBranchByOID(infoCurricularCourseScope.getInfoBranch().getExternalId());
+            branch = AbstractDomainObject.fromExternalId(infoCurricularCourseScope.getInfoBranch().getExternalId());
             if (branch == null) {
                 throw new NonExistingServiceException("message.non.existing.branch", null);
             }

@@ -15,12 +15,12 @@ import net.sourceforge.fenixedu.dataTransferObject.externalServices.InfoExternal
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a>
@@ -31,7 +31,7 @@ public class ReadStudentGroupsExternalInformationByExecutionCourseIDAndStudentUs
     @Service
     public static Collection run(Integer executionCourseID, String username) {
         Collection result = new ArrayList();
-        ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseID);
+        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseID);
 
         List groupProperties = executionCourse.getGroupings();
 

@@ -11,9 +11,9 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Curriculum;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author lmac1
@@ -25,7 +25,7 @@ public class EditCurriculum {
     @Service
     public static void run(InfoCurriculum infoCurriculum, String language, String username) throws FenixServiceException {
         CurricularCourse curricularCourse =
-                (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(infoCurriculum.getInfoCurricularCourse()
+                (CurricularCourse) AbstractDomainObject.fromExternalId(infoCurriculum.getInfoCurricularCourse()
                         .getExternalId());
 
         if (curricularCourse == null) {

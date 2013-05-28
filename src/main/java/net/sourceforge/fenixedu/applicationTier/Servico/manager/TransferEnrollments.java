@@ -3,11 +3,11 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class TransferEnrollments {
 
@@ -19,11 +19,11 @@ public class TransferEnrollments {
         if (destinationCurriculumGroupID != null) {
 
             CurriculumGroup curriculumGroup =
-                    (CurriculumGroup) RootDomainObject.getInstance().readCurriculumModuleByOID(destinationCurriculumGroupID);
+                    (CurriculumGroup) AbstractDomainObject.fromExternalId(destinationCurriculumGroupID);
             StudentCurricularPlan studentCurricularPlan = curriculumGroup.getStudentCurricularPlan();
 
             for (final Integer enrollmentIDToTransfer : enrollmentIDsToTransfer) {
-                Enrolment enrolment = (Enrolment) RootDomainObject.getInstance().readCurriculumModuleByOID(enrollmentIDToTransfer);
+                Enrolment enrolment = (Enrolment) AbstractDomainObject.fromExternalId(enrollmentIDToTransfer);
 
                 fixEnrolmentCurricularCourse(studentCurricularPlan, enrolment);
 
@@ -34,9 +34,9 @@ public class TransferEnrollments {
         } else {
 
             final StudentCurricularPlan studentCurricularPlan =
-                    RootDomainObject.getInstance().readStudentCurricularPlanByOID(destinationStudentCurricularPlanId);
+                    AbstractDomainObject.fromExternalId(destinationStudentCurricularPlanId);
             for (final Integer enrollmentIDToTransfer : enrollmentIDsToTransfer) {
-                final Enrolment enrollment = (Enrolment) RootDomainObject.getInstance().readCurriculumModuleByOID(enrollmentIDToTransfer);
+                final Enrolment enrollment = (Enrolment) AbstractDomainObject.fromExternalId(enrollmentIDToTransfer);
 
                 fixEnrolmentCurricularCourse(studentCurricularPlan, enrollment);
 

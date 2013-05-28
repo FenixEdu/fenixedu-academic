@@ -7,11 +7,12 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class DeleteDistributedTest {
 
     protected void run(Integer executionCourseId, final Integer distributedTestId) {
-        final DistributedTest distributedTest = RootDomainObject.getInstance().readDistributedTestByOID(distributedTestId);
+        final DistributedTest distributedTest = AbstractDomainObject.fromExternalId(distributedTestId);
 
         for (Metadata metadata : RootDomainObject.getInstance().getMetadatasSet()) {
             if (metadata.getVisibility() != null && !metadata.getVisibility().booleanValue()

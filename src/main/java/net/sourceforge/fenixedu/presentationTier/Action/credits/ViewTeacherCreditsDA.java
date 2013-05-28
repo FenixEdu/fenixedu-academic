@@ -42,7 +42,7 @@ public abstract class ViewTeacherCreditsDA extends FenixDispatchAction {
         ExecutionYear executionYear = AbstractDomainObject.fromExternalId((String) getFromRequest(request, "executionYearOid"));
         if (teacher == null) {
             Professorship professorship =
-                    rootDomainObject.readProfessorshipByOID(getIntegerFromRequest(request, "professorshipID"));
+                    AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "professorshipID"));
             if (professorship != null) {
                 teacher = professorship.getTeacher();
                 executionYear = professorship.getExecutionCourse().getExecutionYear();

@@ -12,9 +12,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author jpvl
@@ -27,10 +27,10 @@ public class ReadDetailedTeacherProfessorshipsByExecutionPeriod extends ReadDeta
         if (executionPeriodOID == null) {
             executionSemester = ExecutionSemester.readActualExecutionSemester();
         } else {
-            executionSemester = RootDomainObject.getInstance().readExecutionSemesterByOID(executionPeriodOID);
+            executionSemester = AbstractDomainObject.fromExternalId(executionPeriodOID);
         }
 
-        final Teacher teacher = RootDomainObject.getInstance().readTeacherByOID(teacherOID);
+        final Teacher teacher = AbstractDomainObject.fromExternalId(teacherOID);
         final List<Professorship> responsibleFors = new ArrayList<Professorship>();
         for (Professorship professorship : teacher.responsibleFors()) {
             if (professorship.getExecutionCourse().getExecutionPeriod() == executionSemester) {

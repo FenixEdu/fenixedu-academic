@@ -8,8 +8,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseEquivalence;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class CreateCurricularCourseEquivalency {
 
@@ -22,10 +22,10 @@ public class CreateCurricularCourseEquivalency {
     @Service
     public static void run(final Integer degreeCurricularPlanID, final Integer curricularCourseID,
             final Integer oldCurricularCourseID) {
-        final DegreeCurricularPlan degreeCurricularPlan = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanID);
-        final CurricularCourse curricularCourse = (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(curricularCourseID);
+        final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
+        final CurricularCourse curricularCourse = (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseID);
         final CurricularCourse oldCurricularCourse =
-                (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(oldCurricularCourseID);
+                (CurricularCourse) AbstractDomainObject.fromExternalId(oldCurricularCourseID);
 
         new CurricularCourseEquivalence(degreeCurricularPlan, curricularCourse, Collections.singleton(oldCurricularCourse));
     }

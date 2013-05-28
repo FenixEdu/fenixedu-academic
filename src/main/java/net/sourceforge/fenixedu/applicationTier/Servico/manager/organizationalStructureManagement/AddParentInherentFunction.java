@@ -2,11 +2,11 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalS
 
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class AddParentInherentFunction {
 
@@ -14,13 +14,13 @@ public class AddParentInherentFunction {
     @Service
     public static void run(Integer functionID, Integer parentInherentFunctionID) throws FenixServiceException, DomainException {
 
-        Function parentInherentFunction = (Function) RootDomainObject.getInstance().readAccountabilityTypeByOID(parentInherentFunctionID);
+        Function parentInherentFunction = (Function) AbstractDomainObject.fromExternalId(parentInherentFunctionID);
 
         if (parentInherentFunction == null) {
             throw new FenixServiceException("error.no.parentInherentFunction");
         }
 
-        Function function = (Function) RootDomainObject.getInstance().readAccountabilityTypeByOID(functionID);
+        Function function = (Function) AbstractDomainObject.fromExternalId(functionID);
         if (function == null) {
             throw new FenixServiceException("error.noFunction");
         }

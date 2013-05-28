@@ -47,6 +47,7 @@ import org.apache.struts.action.DynaActionForm;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "publico", path = "/showDegreeSite", input = "/showDegrees.do?method=nonMaster",
         attribute = "viewDegreeEvaluationForm", formBean = "viewDegreeEvaluationForm", scope = "request", parameter = "method")
@@ -123,7 +124,7 @@ public class ShowDegreeSiteAction extends FenixDispatchAction {
             // coordinator call
             request.setAttribute("executionDegreeID", executionDegreeId);
 
-            ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);
+            ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeId);
             if (executionDegree == null || !executionDegree.getDegreeCurricularPlan().getDegree().equals(degree)) {
                 throw new FenixActionException();
             }
@@ -405,7 +406,7 @@ public class ShowDegreeSiteAction extends FenixDispatchAction {
             degree = site.getDegree();
         } else {
             Integer degreeId = FenixContextDispatchAction.getFromRequest("degreeID", request);
-            degree = rootDomainObject.readDegreeByOID(degreeId);
+            degree = AbstractDomainObject.fromExternalId(degreeId);
         }
         if (degree != null) {
             request.setAttribute("degreeID", degree.getExternalId());

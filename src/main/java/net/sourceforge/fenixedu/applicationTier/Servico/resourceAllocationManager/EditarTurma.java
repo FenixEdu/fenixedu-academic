@@ -3,10 +3,10 @@ package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManag
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class EditarTurma {
 
@@ -14,7 +14,7 @@ public class EditarTurma {
     @Service
     public static Object run(final Integer externalId, final String className) throws ExistingServiceException {
 
-        final SchoolClass classToEdit = RootDomainObject.getInstance().readSchoolClassByOID(externalId);
+        final SchoolClass classToEdit = AbstractDomainObject.fromExternalId(externalId);
         classToEdit.edit(className);
         return InfoClass.newInfoFromDomain(classToEdit);
     }

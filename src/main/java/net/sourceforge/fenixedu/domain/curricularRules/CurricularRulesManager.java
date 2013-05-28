@@ -7,12 +7,12 @@ import net.sourceforge.fenixedu.dataTransferObject.bolonhaManager.CurricularRule
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.util.LogicOperator;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class CurricularRulesManager {
 
@@ -71,7 +71,7 @@ public class CurricularRulesManager {
             ExecutionSemester end, CurricularRuleParametersDTO parametersDTO) {
 
         final CourseGroup contextCourseGroup =
-                (CourseGroup) RootDomainObject.getInstance().readDegreeModuleByOID(parametersDTO.getContextCourseGroupID());
+                (CourseGroup) AbstractDomainObject.fromExternalId(parametersDTO.getContextCourseGroupID());
 
         return new MinimumNumberOfCreditsToEnrol(toApplyRule, contextCourseGroup, begin, end, parametersDTO.getMinimumCredits());
     }
@@ -80,7 +80,7 @@ public class CurricularRulesManager {
             CurricularRuleParametersDTO parametersDTO) {
 
         final CourseGroup contextCourseGroup =
-                (CourseGroup) RootDomainObject.getInstance().readDegreeModuleByOID(parametersDTO.getContextCourseGroupID());
+                (CourseGroup) AbstractDomainObject.fromExternalId(parametersDTO.getContextCourseGroupID());
 
         return new EvenOddRule(toApplyRule, contextCourseGroup, parametersDTO.getCurricularPeriodInfoDTO().getOrder(),
                 parametersDTO.getCurricularPeriodInfoDTO().getPeriodType(), parametersDTO.getEven(), begin, end);
@@ -91,10 +91,10 @@ public class CurricularRulesManager {
             ExecutionSemester end, CurricularRuleParametersDTO parametersDTO) {
 
         final CourseGroup contextCourseGroup =
-                (CourseGroup) RootDomainObject.getInstance().readDegreeModuleByOID(parametersDTO.getContextCourseGroupID());
-        final Degree degree = RootDomainObject.getInstance().readDegreeByOID(parametersDTO.getSelectedDegreeID());
+                (CourseGroup) AbstractDomainObject.fromExternalId(parametersDTO.getContextCourseGroupID());
+        final Degree degree = AbstractDomainObject.fromExternalId(parametersDTO.getSelectedDegreeID());
         final DepartmentUnit departmentUnit =
-                (DepartmentUnit) RootDomainObject.getInstance().readPartyByOID(parametersDTO.getSelectedDepartmentUnitID());
+                (DepartmentUnit) AbstractDomainObject.fromExternalId(parametersDTO.getSelectedDepartmentUnitID());
 
         return new AnyCurricularCourse((OptionalCurricularCourse) toApplyRule, contextCourseGroup, begin, end,
                 parametersDTO.getMinimumCredits(), parametersDTO.getMaximumCredits(), parametersDTO.getCurricularPeriodInfoDTO()
@@ -106,9 +106,9 @@ public class CurricularRulesManager {
             ExecutionSemester end, CurricularRuleParametersDTO parametersDTO) {
 
         final DegreeModule secondExclusiveDegreeModule =
-                RootDomainObject.getInstance().readDegreeModuleByOID(parametersDTO.getSelectedDegreeModuleID());
+                AbstractDomainObject.fromExternalId(parametersDTO.getSelectedDegreeModuleID());
         final CourseGroup contextCourseGroup =
-                (CourseGroup) RootDomainObject.getInstance().readDegreeModuleByOID(parametersDTO.getContextCourseGroupID());
+                (CourseGroup) AbstractDomainObject.fromExternalId(parametersDTO.getContextCourseGroupID());
 
         final Exclusiveness firstRule =
                 new Exclusiveness(firstExclusiveDegreeModule, secondExclusiveDegreeModule, contextCourseGroup, begin, end);
@@ -122,9 +122,9 @@ public class CurricularRulesManager {
             ExecutionSemester end, CurricularRuleParametersDTO parametersDTO) {
 
         final DegreeModule precedenceDegreeModule =
-                RootDomainObject.getInstance().readDegreeModuleByOID(parametersDTO.getSelectedDegreeModuleID());
+                AbstractDomainObject.fromExternalId(parametersDTO.getSelectedDegreeModuleID());
         final CourseGroup contextCourseGroup =
-                (CourseGroup) RootDomainObject.getInstance().readDegreeModuleByOID(parametersDTO.getContextCourseGroupID());
+                (CourseGroup) AbstractDomainObject.fromExternalId(parametersDTO.getContextCourseGroupID());
 
         return new RestrictionBetweenDegreeModules(toApplyRule, precedenceDegreeModule, parametersDTO.getMinimumCredits(),
                 contextCourseGroup, begin, end);
@@ -134,7 +134,7 @@ public class CurricularRulesManager {
             ExecutionSemester end, CurricularRuleParametersDTO parametersDTO) {
 
         final CourseGroup contextCourseGroup =
-                (CourseGroup) RootDomainObject.getInstance().readDegreeModuleByOID(parametersDTO.getContextCourseGroupID());
+                (CourseGroup) AbstractDomainObject.fromExternalId(parametersDTO.getContextCourseGroupID());
 
         return new EnrolmentToBeApprovedByCoordinator((CurricularCourse) toApplyRule, contextCourseGroup, begin, end);
     }
@@ -143,7 +143,7 @@ public class CurricularRulesManager {
             CurricularRuleParametersDTO parametersDTO) {
 
         final CourseGroup contextCourseGroup =
-                (CourseGroup) RootDomainObject.getInstance().readDegreeModuleByOID(parametersDTO.getContextCourseGroupID());
+                (CourseGroup) AbstractDomainObject.fromExternalId(parametersDTO.getContextCourseGroupID());
 
         return new CreditsLimit(toApplyRule, contextCourseGroup, begin, end, parametersDTO.getMinimumCredits(),
                 parametersDTO.getMaximumCredits());
@@ -153,7 +153,7 @@ public class CurricularRulesManager {
             ExecutionSemester end, CurricularRuleParametersDTO parametersDTO) {
 
         final CourseGroup contextCourseGroup =
-                (CourseGroup) RootDomainObject.getInstance().readDegreeModuleByOID(parametersDTO.getContextCourseGroupID());
+                (CourseGroup) AbstractDomainObject.fromExternalId(parametersDTO.getContextCourseGroupID());
 
         return new DegreeModulesSelectionLimit((CourseGroup) toApplyRule, contextCourseGroup, begin, end,
                 parametersDTO.getMinimumLimit(), parametersDTO.getMaximumLimit());
@@ -163,9 +163,9 @@ public class CurricularRulesManager {
             ExecutionSemester end, CurricularRuleParametersDTO parametersDTO) {
 
         final DegreeModule enroledDegreeModule =
-                RootDomainObject.getInstance().readDegreeModuleByOID(parametersDTO.getSelectedDegreeModuleID());
+                AbstractDomainObject.fromExternalId(parametersDTO.getSelectedDegreeModuleID());
         final CourseGroup contextCourseGroup =
-                (CourseGroup) RootDomainObject.getInstance().readDegreeModuleByOID(parametersDTO.getContextCourseGroupID());
+                (CourseGroup) AbstractDomainObject.fromExternalId(parametersDTO.getContextCourseGroupID());
 
         return new RestrictionEnroledDegreeModule((CurricularCourse) toApplyRule, (CurricularCourse) enroledDegreeModule,
                 contextCourseGroup, parametersDTO.getCurricularPeriodInfoDTO(), begin, end);
@@ -174,9 +174,9 @@ public class CurricularRulesManager {
     private static CurricularRule createRestrictionDoneDegreeModule(DegreeModule toApplyRule, ExecutionSemester begin,
             ExecutionSemester end, CurricularRuleParametersDTO parametersDTO) {
 
-        final DegreeModule done = RootDomainObject.getInstance().readDegreeModuleByOID(parametersDTO.getSelectedDegreeModuleID());
+        final DegreeModule done = AbstractDomainObject.fromExternalId(parametersDTO.getSelectedDegreeModuleID());
         final CourseGroup contextCourseGroup =
-                (CourseGroup) RootDomainObject.getInstance().readDegreeModuleByOID(parametersDTO.getContextCourseGroupID());
+                (CourseGroup) AbstractDomainObject.fromExternalId(parametersDTO.getContextCourseGroupID());
 
         return new RestrictionDoneDegreeModule((CurricularCourse) toApplyRule, (CurricularCourse) done, contextCourseGroup,
                 parametersDTO.getCurricularPeriodInfoDTO(), begin, end);

@@ -28,6 +28,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/tutorTeachers", module = "coordinator")
 @Forwards({ @Forward(name = "manage", path = "/coordinator/tutors/tutorTeachers.jsp", tileProperties = @Tile(
@@ -218,7 +219,7 @@ public class TutorTeachersManagementDispatchAction extends FenixDispatchAction {
     }
 
     private DegreeCurricularPlan getDegreeCurricularPlan(HttpServletRequest request) {
-        return rootDomainObject.readDegreeCurricularPlanByOID(Integer.valueOf(request.getParameter("degreeCurricularPlanID")));
+        return AbstractDomainObject.fromExternalId(Integer.valueOf(request.getParameter("degreeCurricularPlanID")));
     }
 
     @Service

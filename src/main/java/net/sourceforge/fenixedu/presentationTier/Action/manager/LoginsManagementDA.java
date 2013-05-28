@@ -26,6 +26,7 @@ import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 public class LoginsManagementDA extends FenixDispatchAction {
@@ -193,25 +194,25 @@ public class LoginsManagementDA extends FenixDispatchAction {
 
     private Person getPersonFromParameter(HttpServletRequest request) {
         String personIDString = request.getParameter("personID");
-        return (Person) ((StringUtils.isEmpty(personIDString)) ? null : rootDomainObject.readPartyByOID(Integer
+        return (Person) ((StringUtils.isEmpty(personIDString)) ? null : AbstractDomainObject.fromExternalId(Integer
                 .valueOf(personIDString)));
     }
 
     private Login getLoginFromParameter(HttpServletRequest request) {
         String loginIDString = request.getParameter("loginID");
-        return (Login) ((StringUtils.isEmpty(loginIDString)) ? null : rootDomainObject.readIdentificationByOID(Integer
+        return (Login) ((StringUtils.isEmpty(loginIDString)) ? null : AbstractDomainObject.fromExternalId(Integer
                 .valueOf(loginIDString)));
     }
 
     private LoginAlias getLoginAliasFromParameter(HttpServletRequest request) {
         String loginAliasIDString = request.getParameter("loginAliasID");
-        return (StringUtils.isEmpty(loginAliasIDString)) ? null : rootDomainObject.readLoginAliasByOID(Integer
+        return (StringUtils.isEmpty(loginAliasIDString)) ? null : AbstractDomainObject.fromExternalId(Integer
                 .valueOf(loginAliasIDString));
     }
 
     private LoginPeriod getLoginPeriodFromParameter(HttpServletRequest request) {
         String loginPeriodIDString = request.getParameter("loginPeriodID");
-        return (StringUtils.isEmpty(loginPeriodIDString)) ? null : rootDomainObject.readLoginPeriodByOID(Integer
+        return (StringUtils.isEmpty(loginPeriodIDString)) ? null : AbstractDomainObject.fromExternalId(Integer
                 .valueOf(loginPeriodIDString));
     }
 }

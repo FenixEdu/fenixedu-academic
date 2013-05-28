@@ -22,10 +22,10 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ReadFilteredExamsMap {
 
@@ -41,7 +41,7 @@ public class ReadFilteredExamsMap {
         result.setInfoExecutionPeriod(infoExecutionPeriod);
         result.setCurricularYears(curricularYears);
 
-        ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(infoExecutionDegree.getExternalId());
+        ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(infoExecutionDegree.getExternalId());
 
         obtainExamSeasonInfo(result, infoExecutionPeriod.getSemester(), executionDegree);
 
@@ -88,7 +88,7 @@ public class ReadFilteredExamsMap {
     private List<InfoExecutionCourse> obtainInfoExecutionCourses(List<Integer> curricularYears,
             InfoExecutionPeriod infoExecutionPeriod, ExecutionDegree executionDegree) {
         List<InfoExecutionCourse> result = new ArrayList<InfoExecutionCourse>();
-        ExecutionSemester executionSemester = RootDomainObject.getInstance().readExecutionSemesterByOID(infoExecutionPeriod.getExternalId());
+        ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(infoExecutionPeriod.getExternalId());
         for (Integer curricularYear : curricularYears) {
             // Obtain list of execution courses
             List<ExecutionCourse> executionCourses =
@@ -122,7 +122,7 @@ public class ReadFilteredExamsMap {
                 CurricularCourse curricularCourse = degreeModuleScope.getCurricularCourse();
                 if (!checkedCurricularCourses.contains(curricularCourse)) {
                     checkedCurricularCourses.add(curricularCourse);
-                    ExecutionSemester executionSemester = RootDomainObject.getInstance().readExecutionSemesterByOID(executionPeriodId);
+                    ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodId);
                     int numberEnroledStudentsInCurricularCourse =
                             curricularCourse.countEnrolmentsByExecutionPeriod(executionSemester);
                     numberOfStudentsForExam += numberEnroledStudentsInCurricularCourse;

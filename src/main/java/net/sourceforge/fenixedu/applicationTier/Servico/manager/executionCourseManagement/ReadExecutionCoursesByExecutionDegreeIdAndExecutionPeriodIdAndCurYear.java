@@ -11,8 +11,8 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /*
  * 
@@ -28,7 +28,7 @@ public class ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYe
             throw new FenixServiceException("nullExecutionPeriodId");
         }
 
-        final ExecutionSemester executionSemester = RootDomainObject.getInstance().readExecutionSemesterByOID(executionPeriodId);
+        final ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodId);
 
         final List<ExecutionCourse> executionCourseList;
         if (executionDegreeId == null && curricularYearInt == null) {

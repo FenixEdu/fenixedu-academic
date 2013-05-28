@@ -54,6 +54,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * 
@@ -106,7 +107,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
         if (questionBankId == null) {
             questionBank = this.getOwnedQuestionBank(request);
         } else {
-            questionBank = (NewQuestionBank) rootDomainObject.readNewTestElementByOID(questionBankId);
+            questionBank = (NewQuestionBank) AbstractDomainObject.fromExternalId(questionBankId);
         }
 
         request.setAttribute("questionBank", questionBank);
@@ -142,7 +143,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
             HttpServletResponse response) throws  FenixServiceException {
         Integer testElementId = getCodeFromRequest(request, "oid");
 
-        NewTestElement testElement = rootDomainObject.readNewTestElementByOID(testElementId);
+        NewTestElement testElement = AbstractDomainObject.fromExternalId(testElementId);
 
         if (testElement instanceof NewQuestionBank) {
             return this.manageQuestionBank(mapping, form, request, response);
@@ -162,7 +163,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
             HttpServletResponse response) {
         Integer questionId = getCodeFromRequest(request, "oid");
 
-        NewQuestion question = (NewQuestion) rootDomainObject.readNewTestElementByOID(questionId);
+        NewQuestion question = (NewQuestion) AbstractDomainObject.fromExternalId(questionId);
 
         GroupElementBean groupElementBean = new GroupElementBean(question);
 
@@ -175,7 +176,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
             HttpServletResponse response) {
         Integer questionId = getCodeFromRequest(request, "oid");
 
-        NewQuestion question = (NewQuestion) rootDomainObject.readNewTestElementByOID(questionId);
+        NewQuestion question = (NewQuestion) AbstractDomainObject.fromExternalId(questionId);
 
         GroupElementBean groupElementBean = new GroupElementBean(question);
 
@@ -211,7 +212,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
 
         Integer atomicQuestionId = getCodeFromRequest(request, "oid");
 
-        NewAtomicQuestion atomicQuestion = (NewAtomicQuestion) rootDomainObject.readNewTestElementByOID(atomicQuestionId);
+        NewAtomicQuestion atomicQuestion = (NewAtomicQuestion) AbstractDomainObject.fromExternalId(atomicQuestionId);
 
         PredicateBean bean = new PredicateBean(atomicQuestion);
 
@@ -229,7 +230,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
 
         Integer atomicQuestionId = getCodeFromRequest(request, "oid");
 
-        NewAtomicQuestion atomicQuestion = (NewAtomicQuestion) rootDomainObject.readNewTestElementByOID(atomicQuestionId);
+        NewAtomicQuestion atomicQuestion = (NewAtomicQuestion) AbstractDomainObject.fromExternalId(atomicQuestionId);
 
         PredicateBean bean = new PredicateBean(atomicQuestion);
 
@@ -247,7 +248,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
 
         Integer questionId = getCodeFromRequest(request, "oid");
 
-        NewQuestion question = (NewQuestion) rootDomainObject.readNewTestElementByOID(questionId);
+        NewQuestion question = (NewQuestion) AbstractDomainObject.fromExternalId(questionId);
 
         PredicateBean bean = new PredicateBean(question);
 
@@ -410,7 +411,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
             HttpServletResponse response) {
         Integer questionId = getCodeFromRequest(request, "oid");
 
-        NewQuestion question = (NewQuestion) rootDomainObject.readNewTestElementByOID(questionId);
+        NewQuestion question = (NewQuestion) AbstractDomainObject.fromExternalId(questionId);
 
         request.setAttribute("question", question);
 
@@ -421,7 +422,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
             HttpServletResponse response) {
         Integer questionGroupId = getCodeFromRequest(request, "oid");
 
-        NewQuestionGroup questionGroup = (NewQuestionGroup) rootDomainObject.readNewTestElementByOID(questionGroupId);
+        NewQuestionGroup questionGroup = (NewQuestionGroup) AbstractDomainObject.fromExternalId(questionGroupId);
 
         request.setAttribute("questionGroup", questionGroup);
 
@@ -441,7 +442,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
             HttpServletResponse response) throws  FenixServiceException {
         Integer questionGroupId = getCodeFromRequest(request, "oid");
 
-        NewQuestionGroup questionGroup = (NewQuestionGroup) rootDomainObject.readNewTestElementByOID(questionGroupId);
+        NewQuestionGroup questionGroup = (NewQuestionGroup) AbstractDomainObject.fromExternalId(questionGroupId);
 
         request.setAttribute("questionGroup", questionGroup);
         request.setAttribute("atomicQuestionTypeBean", new AtomicQuestionBean(questionGroup));
@@ -477,7 +478,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
         Integer multipleChoiceQuestionId = getCodeFromRequest(request, "oid");
 
         NewMultipleChoiceQuestion multipleChoiceQuestion =
-                (NewMultipleChoiceQuestion) rootDomainObject.readNewTestElementByOID(multipleChoiceQuestionId);
+                (NewMultipleChoiceQuestion) AbstractDomainObject.fromExternalId(multipleChoiceQuestionId);
 
         NewChoice choice = CreateChoice.run(multipleChoiceQuestion);
 
@@ -490,7 +491,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
             HttpServletResponse response) throws  FenixServiceException {
         Integer correctorId = getCodeFromRequest(request, "oid");
 
-        NewCorrector corrector = rootDomainObject.readNewCorrectorByOID(correctorId);
+        NewCorrector corrector = AbstractDomainObject.fromExternalId(correctorId);
 
         NewAtomicQuestion atomicQuestion = corrector.getAtomicQuestion();
 
@@ -527,7 +528,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
             HttpServletResponse response) throws  FenixServiceException {
         Integer atomicQuestionId = getCodeFromRequest(request, "oid");
 
-        NewAtomicQuestion atomicQuestion = (NewAtomicQuestion) rootDomainObject.readNewTestElementByOID(atomicQuestionId);
+        NewAtomicQuestion atomicQuestion = (NewAtomicQuestion) AbstractDomainObject.fromExternalId(atomicQuestionId);
 
         DeleteValidator.run(atomicQuestion);
 
@@ -540,7 +541,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
             HttpServletResponse response) throws  FenixServiceException {
         Integer questionId = getCodeFromRequest(request, "oid");
 
-        NewQuestion question = (NewQuestion) rootDomainObject.readNewTestElementByOID(questionId);
+        NewQuestion question = (NewQuestion) AbstractDomainObject.fromExternalId(questionId);
 
         DeletePreCondition.run(question);
 
@@ -553,7 +554,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
             HttpServletResponse response) throws  FenixServiceException {
         Integer permissionUnitId = getCodeFromRequest(request, "oid");
 
-        NewPermissionUnit permissionUnit = rootDomainObject.readNewPermissionUnitByOID(permissionUnitId);
+        NewPermissionUnit permissionUnit = AbstractDomainObject.fromExternalId(permissionUnitId);
 
         request.setAttribute("question", permissionUnit.getQuestion());
 
@@ -566,7 +567,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
             HttpServletResponse response) throws  FenixServiceException {
         Integer choiceId = getCodeFromRequest(request, "oid");
 
-        NewChoice choice = (NewChoice) rootDomainObject.readNewTestElementByOID(choiceId);
+        NewChoice choice = (NewChoice) AbstractDomainObject.fromExternalId(choiceId);
 
         request.setAttribute("oid", choice.getMultipleChoiceQuestion().getExternalId());
 
@@ -579,7 +580,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
             HttpServletResponse response) throws  FenixServiceException {
         Integer atomicQuestionId = getCodeFromRequest(request, "oid");
 
-        NewQuestion question = (NewQuestion) rootDomainObject.readNewTestElementByOID(atomicQuestionId);
+        NewQuestion question = (NewQuestion) AbstractDomainObject.fromExternalId(atomicQuestionId);
 
         DeleteGrade.run(question);
 
@@ -594,7 +595,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
         request.setAttribute("questionGroupId", questionId);
         request.setAttribute("parentQuestionGroupId", getCodeFromRequest(request, "parentQuestionGroupOid"));
 
-        NewQuestion question = (NewQuestion) rootDomainObject.readNewTestElementByOID(questionId);
+        NewQuestion question = (NewQuestion) AbstractDomainObject.fromExternalId(questionId);
         request.setAttribute("question", question);
 
         return mapping.findForward("deleteQuestion");
@@ -604,7 +605,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
             HttpServletResponse response) throws  FenixServiceException {
         Integer questionId = getCodeFromRequest(request, "oid");
 
-        NewQuestion question = (NewQuestion) rootDomainObject.readNewTestElementByOID(questionId);
+        NewQuestion question = (NewQuestion) AbstractDomainObject.fromExternalId(questionId);
 
         NewQuestionBank questionBank = question.getQuestionBank();
 
@@ -629,7 +630,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
     public ActionForward switchChoice(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws  FenixServiceException {
         Integer choiceId = getCodeFromRequest(request, "oid");
-        NewChoice choice = (NewChoice) rootDomainObject.readNewTestElementByOID(choiceId);
+        NewChoice choice = (NewChoice) AbstractDomainObject.fromExternalId(choiceId);
 
         Integer relativePosition = getCodeFromRequest(request, "relativePosition");
 
@@ -642,7 +643,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
     public ActionForward switchCorrector(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws  FenixServiceException {
         Integer correctorId = getCodeFromRequest(request, "oid");
-        NewCorrector corrector = rootDomainObject.readNewCorrectorByOID(correctorId);
+        NewCorrector corrector = AbstractDomainObject.fromExternalId(correctorId);
 
         Integer relativePosition = getCodeFromRequest(request, "relativePosition");
 

@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.DeleteU
 import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.EditUnavailablePeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import net.sourceforge.fenixedu.domain.vigilancy.UnavailablePeriod;
@@ -81,7 +80,7 @@ public class UnavailablePeriodManagement extends FenixDispatchAction {
         String id = request.getParameter("oid");
         Integer externalId = Integer.valueOf(id);
         UnavailablePeriod unavailablePeriod =
-                (UnavailablePeriod) RootDomainObject.readDomainObjectByOID(UnavailablePeriod.class, externalId);
+                (UnavailablePeriod) AbstractDomainObject.fromExternalId(UnavailablePeriod.class, externalId);
 
         VigilantWrapper vigilant = unavailablePeriod.getPerson().getVigilantWrappers().get(0);
         deletePeriod(request);
@@ -121,7 +120,7 @@ public class UnavailablePeriodManagement extends FenixDispatchAction {
             return mapping.findForward("editPeriodOfVigilant");
         }
         String gid = request.getParameter("gid");
-        VigilantGroup group = (VigilantGroup) RootDomainObject.readDomainObjectByOID(VigilantGroup.class, Integer.valueOf(gid));
+        VigilantGroup group = (VigilantGroup) AbstractDomainObject.fromExternalId(VigilantGroup.class, Integer.valueOf(gid));
         VigilantGroupBean bean = new VigilantGroupBean();
         ExamCoordinator coordinator = getLoggedPerson(request).getCurrentExamCoordinator();
         bean.setExamCoordinator(coordinator);
@@ -171,7 +170,7 @@ public class UnavailablePeriodManagement extends FenixDispatchAction {
         ExamCoordinator coordinator = getLoggedPerson(request).getCurrentExamCoordinator();
         bean.setExamCoordinator(coordinator);
         String gid = request.getParameter("gid");
-        VigilantGroup group = (VigilantGroup) RootDomainObject.readDomainObjectByOID(VigilantGroup.class, Integer.valueOf(gid));
+        VigilantGroup group = (VigilantGroup) AbstractDomainObject.fromExternalId(VigilantGroup.class, Integer.valueOf(gid));
         bean.setSelectedVigilantGroup(group);
         putUnavailablePeriodsOnRequest(request, group);
         request.setAttribute("bean", bean);
@@ -183,7 +182,7 @@ public class UnavailablePeriodManagement extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         String gid = request.getParameter("gid");
-        VigilantGroup group = (VigilantGroup) RootDomainObject.readDomainObjectByOID(VigilantGroup.class, Integer.valueOf(gid));
+        VigilantGroup group = (VigilantGroup) AbstractDomainObject.fromExternalId(VigilantGroup.class, Integer.valueOf(gid));
 
         UnavailablePeriodBean bean = new UnavailablePeriodBean();
         Person person = getLoggedPerson(request);
@@ -219,7 +218,7 @@ public class UnavailablePeriodManagement extends FenixDispatchAction {
         VigilantGroupBean beanToPutOnRequest = new VigilantGroupBean();
         String gid = request.getParameter("gid");
 
-        VigilantGroup group = (VigilantGroup) RootDomainObject.readDomainObjectByOID(VigilantGroup.class, Integer.valueOf(gid));
+        VigilantGroup group = (VigilantGroup) AbstractDomainObject.fromExternalId(VigilantGroup.class, Integer.valueOf(gid));
         ExamCoordinator coordinator = getLoggedPerson(request).getCurrentExamCoordinator();
         beanToPutOnRequest.setExamCoordinator(coordinator);
         beanToPutOnRequest.setSelectedVigilantGroup(group);
@@ -234,7 +233,7 @@ public class UnavailablePeriodManagement extends FenixDispatchAction {
         int externalId = Integer.valueOf(id);
 
         UnavailablePeriod unavailablePeriod =
-                (UnavailablePeriod) RootDomainObject.readDomainObjectByOID(UnavailablePeriod.class, externalId);
+                (UnavailablePeriod) AbstractDomainObject.fromExternalId(UnavailablePeriod.class, externalId);
         UnavailablePeriodBean bean = new UnavailablePeriodBean();
         bean.setUnavailablePeriod(unavailablePeriod);
         bean.setBeginDate(unavailablePeriod.getBeginDate());
@@ -286,7 +285,7 @@ public class UnavailablePeriodManagement extends FenixDispatchAction {
 
     private VigilantGroup getGroupInRequestOrFirstGroupFromVigilant(HttpServletRequest request, VigilantWrapper vigilant) {
         String groupId = request.getParameter("gid");
-        return (groupId == null) ? vigilant.getVigilantGroup() : (VigilantGroup) RootDomainObject.readDomainObjectByOID(
+        return (groupId == null) ? vigilant.getVigilantGroup() : (VigilantGroup) AbstractDomainObject.fromExternalId(
                 VigilantGroup.class, Integer.valueOf(groupId));
     }
 

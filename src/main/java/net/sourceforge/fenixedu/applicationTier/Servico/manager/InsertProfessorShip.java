@@ -9,16 +9,16 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class InsertProfessorShip {
 
     protected void run(final Integer executionCourseId, final String teacherId, final Boolean responsibleFor, final Double hours)
             throws FenixServiceException {
 
-        final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseId);
+        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
         if (executionCourse == null) {
             throw new NonExistingServiceException("message.nonExisting.executionCourse", null);
         }

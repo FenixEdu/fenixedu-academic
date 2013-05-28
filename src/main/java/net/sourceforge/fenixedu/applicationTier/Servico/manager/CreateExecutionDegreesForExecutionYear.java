@@ -11,13 +11,13 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.space.Campus;
 
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class CreateExecutionDegreesForExecutionYear {
 
@@ -33,7 +33,7 @@ public class CreateExecutionDegreesForExecutionYear {
             final Calendar examsSpecialSeasonEndDate, final Calendar gradeSubmissionNormalSeason1EndDate,
             final Calendar gradeSubmissionNormalSeason2EndDate, final Calendar gradeSubmissionSpecialSeasonEndDate) {
 
-        final ExecutionYear executionYear = RootDomainObject.getInstance().readExecutionYearByOID(executionYearID);
+        final ExecutionYear executionYear = AbstractDomainObject.fromExternalId(executionYearID);
         final Campus campus = readCampusByName(campusName);
 
         final OccupationPeriod lessonSeason1 = getOccupationPeriod(lessonSeason1BeginDate, lessonSeason1EndDate);
@@ -61,7 +61,7 @@ public class CreateExecutionDegreesForExecutionYear {
         final List<DegreeCurricularPlan> created = new ArrayList<DegreeCurricularPlan>();
         for (final Integer degreeCurricularPlanID : allDegreeCurricularPlanIDs) {
             final DegreeCurricularPlan degreeCurricularPlan =
-                    RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+                    AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
             if (degreeCurricularPlan == null) {
                 continue;
             }

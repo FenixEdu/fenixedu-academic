@@ -26,6 +26,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/optionalCurricularCoursesLocation", module = "academicAdministration",
         formBeanClass = OptionalCurricularCoursesLocationForm.class)
@@ -100,7 +101,7 @@ public class OptionalCurricularCoursesLocationManagementDA extends FenixDispatch
     }
 
     protected StudentCurricularPlan getStudentCurricularPlan(HttpServletRequest request) {
-        return rootDomainObject.readStudentCurricularPlanByOID(getRequestParameterAsInteger(request, "scpID"));
+        return AbstractDomainObject.fromExternalId(getRequestParameterAsInteger(request, "scpID"));
     }
 
     private OptionalCurricularCoursesLocationBean getBean() {

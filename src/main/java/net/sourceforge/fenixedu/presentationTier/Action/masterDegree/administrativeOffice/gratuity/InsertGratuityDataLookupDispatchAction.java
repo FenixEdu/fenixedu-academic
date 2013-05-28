@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoEmployee;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuityValues;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPaymentPhase;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixLookupDispatchAction;
 import net.sourceforge.fenixedu.util.Data;
 
@@ -36,6 +35,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Fernanda Quitério 6/Jan/2003
@@ -195,7 +195,7 @@ public class InsertGratuityDataLookupDispatchAction extends FenixLookupDispatchA
         Integer degreeId = Integer.valueOf(StringUtils.substringAfter(degree, "#"));
 
         InfoExecutionDegree infoExecutionDegree =
-                new InfoExecutionDegree(RootDomainObject.getInstance().readExecutionDegreeByOID(degreeId));
+                new InfoExecutionDegree(AbstractDomainObject.fromExternalId(degreeId));
 
         InfoGratuityValues infoGratuityValues = new InfoGratuityValues();
 

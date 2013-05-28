@@ -10,9 +10,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoCourseReport;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author jdnf and mrsp
@@ -22,10 +22,10 @@ public class EditCourseInformation {
     protected void run(Integer courseReportID, InfoCourseReport infoCourseReport, String newReport) throws FenixServiceException {
         final CourseReport courseReport;
         if (courseReportID != 0) {
-            courseReport = RootDomainObject.getInstance().readCourseReportByOID(courseReportID);
+            courseReport = AbstractDomainObject.fromExternalId(courseReportID);
         } else {
             final ExecutionCourse executionCourse =
-                    RootDomainObject.getInstance().readExecutionCourseByOID(infoCourseReport.getInfoExecutionCourse().getExternalId());
+                    AbstractDomainObject.fromExternalId(infoCourseReport.getInfoExecutionCourse().getExternalId());
 
             courseReport = executionCourse.createCourseReport(newReport);
         }

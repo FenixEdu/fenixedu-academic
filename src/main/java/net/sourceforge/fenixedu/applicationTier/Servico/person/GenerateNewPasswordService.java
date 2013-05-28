@@ -6,14 +6,14 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.applicationTier.utils.GeneratePassword;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class GenerateNewPasswordService {
 
     @Service
     public static String run(final Integer personId) throws FenixServiceException {
-        final Person person = (Person) RootDomainObject.getInstance().readPartyByOID(personId);
+        final Person person = (Person) AbstractDomainObject.fromExternalId(personId);
         if (person == null) {
             throw new ExcepcaoInexistente("error.generateNewPassword.noPerson");
         }

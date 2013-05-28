@@ -20,6 +20,7 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author nmgo
@@ -37,7 +38,7 @@ public class ShowCurriculumHistoricAction extends FenixDispatchAction {
         final AcademicInterval academicInterval =
                 AcademicInterval.getAcademicIntervalFromResumedString(request.getParameter("academicInterval"));
 
-        final CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseOID);
+        final CurricularCourse curricularCourse = (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseOID);
 
         final AcademicInterval interval =
                 curricularCourse.isAnual() ? academicInterval : academicInterval.getChildAcademicInterval(

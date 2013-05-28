@@ -32,6 +32,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 @Mapping(path = "/markSheetManagement", module = "academicAdministration", formBean = "markSheetManagementForm",
@@ -144,7 +145,7 @@ public class MarkSheetSearchDispatchAction extends MarkSheetDispatchAction {
 
         DynaActionForm form = (DynaActionForm) actionForm;
         Integer evaluationID = (Integer) form.get("evaluationID");
-        EnrolmentEvaluation enrolmentEvaluation = rootDomainObject.readEnrolmentEvaluationByOID(evaluationID);
+        EnrolmentEvaluation enrolmentEvaluation = AbstractDomainObject.fromExternalId(evaluationID);
         MarkSheet markSheet = enrolmentEvaluation.getRectificationMarkSheet();
 
         request.setAttribute("markSheet", markSheet);
@@ -184,7 +185,7 @@ public class MarkSheetSearchDispatchAction extends MarkSheetDispatchAction {
         DynaActionForm form = (DynaActionForm) actionForm;
         Integer markSheetID = (Integer) form.get("msID");
 
-        MarkSheet markSheet = rootDomainObject.readMarkSheetByOID(markSheetID);
+        MarkSheet markSheet = AbstractDomainObject.fromExternalId(markSheetID);
 
         request.setAttribute("markSheet", markSheet);
         request.setAttribute("url", buildUrl(form));
@@ -216,7 +217,7 @@ public class MarkSheetSearchDispatchAction extends MarkSheetDispatchAction {
         DynaActionForm form = (DynaActionForm) actionForm;
         Integer markSheetID = (Integer) form.get("msID");
 
-        MarkSheet markSheet = rootDomainObject.readMarkSheetByOID(markSheetID);
+        MarkSheet markSheet = AbstractDomainObject.fromExternalId(markSheetID);
         List<EnrolmentEvaluation> evaluations = getEvaluationsToRemove(form);
         try {
             RemoveGradesFromConfirmedMarkSheet.run(markSheet, evaluations);
@@ -232,7 +233,7 @@ public class MarkSheetSearchDispatchAction extends MarkSheetDispatchAction {
         List<EnrolmentEvaluation> res = new ArrayList<EnrolmentEvaluation>();
         Integer[] evaluationsToRemove = (Integer[]) actionForm.get("evaluationsToRemove");
         for (Integer eeID : evaluationsToRemove) {
-            EnrolmentEvaluation enrolmentEvaluation = rootDomainObject.readEnrolmentEvaluationByOID(eeID);
+            EnrolmentEvaluation enrolmentEvaluation = AbstractDomainObject.fromExternalId(eeID);
             if (enrolmentEvaluation != null) {
                 res.add(enrolmentEvaluation);
             }

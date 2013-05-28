@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ReadExecutionYearsService {
 
@@ -21,6 +22,6 @@ public class ReadExecutionYearsService {
 
     @Service
     public static ExecutionYear run(Integer executionYearID) {
-        return RootDomainObject.getInstance().readExecutionYearByOID(executionYearID);
+        return AbstractDomainObject.fromExternalId(executionYearID);
     }
 }

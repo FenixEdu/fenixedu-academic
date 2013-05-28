@@ -13,10 +13,10 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.Pair;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -41,7 +41,7 @@ public class CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod {
             int numberExecutionCourses = 0;
             StringBuilder curricularCodes = new StringBuilder();
             final DegreeCurricularPlan degreeCurricularPlan =
-                    RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+                    AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
             final List<CurricularCourse> curricularCourses = degreeCurricularPlan.getCurricularCourses();
             for (final CurricularCourse curricularCourse : curricularCourses) {
 

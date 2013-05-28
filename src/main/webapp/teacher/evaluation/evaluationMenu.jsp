@@ -12,7 +12,7 @@
 	<logic:notPresent name="executionCourse">
 		<bean:define id="executionCourseID" name="executionCourseID"/>
 		<%
-			final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(Integer.valueOf(executionCourseID.toString()));
+			final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(Integer.valueOf(executionCourseID.toString()));
 			request.setAttribute("executionCourse", executionCourse);
 		%>
 	</logic:notPresent>

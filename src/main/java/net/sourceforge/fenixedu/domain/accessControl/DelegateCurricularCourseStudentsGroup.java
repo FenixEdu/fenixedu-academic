@@ -7,12 +7,12 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupDynamicExpressionException;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.OidOperator;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class DelegateCurricularCourseStudentsGroup extends LeafGroup {
 
@@ -101,11 +101,11 @@ public class DelegateCurricularCourseStudentsGroup extends LeafGroup {
     }
 
     public ExecutionYear getExecutionYear() {
-        return executionYearId != null ? RootDomainObject.getInstance().readExecutionYearByOID(executionYearId) : null;
+        return executionYearId != null ? AbstractDomainObject.fromExternalId(executionYearId) : null;
     }
 
     public CurricularCourse getCurricularCourse() {
-        return (CurricularCourse) (curricularCourseId != null ? RootDomainObject.getInstance().readDegreeModuleByOID(
+        return (CurricularCourse) (curricularCourseId != null ? AbstractDomainObject.fromExternalId(
                 curricularCourseId) : null);
     }
 

@@ -44,6 +44,7 @@ import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.components.state.LifeCycleConstants;
 import pt.ist.fenixWebFramework.renderers.plugin.RenderersRequestProcessorImpl;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * INFO: when extending this class pay attention to the following aspects
@@ -85,7 +86,7 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
     protected void setParentProcess(HttpServletRequest request) {
         final Integer parentProcessId = getIntegerFromRequest(request, "parentProcessId");
         if (parentProcessId != null) {
-            request.setAttribute("parentProcess", rootDomainObject.readProcessByOID(parentProcessId));
+            request.setAttribute("parentProcess", AbstractDomainObject.fromExternalId(parentProcessId));
         } else {
             setProcess(request);
             if (hasProcess(request)) {

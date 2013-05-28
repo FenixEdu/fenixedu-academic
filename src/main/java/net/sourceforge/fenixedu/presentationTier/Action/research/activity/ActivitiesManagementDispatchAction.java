@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.research.activity.RemoveResearchActivityParticipation;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.research.activity.Cooperation;
 import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
 import net.sourceforge.fenixedu.domain.research.activity.JournalIssue;
@@ -26,6 +25,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "researcher", path = "/activities/activitiesManagement", scope = "session", parameter = "method")
 @Forwards(value = {
@@ -159,27 +159,27 @@ public class ActivitiesManagementDispatchAction extends FenixDispatchAction {
     }
 
     protected Cooperation getCooperationFromRequest(HttpServletRequest request) {
-        return (Cooperation) RootDomainObject.readDomainObjectByOID(Cooperation.class,
+        return (Cooperation) AbstractDomainObject.fromExternalId(Cooperation.class,
                 Integer.valueOf(request.getParameter("activityId")));
     }
 
     protected JournalIssue getIssueFromRequest(HttpServletRequest request) {
-        return (JournalIssue) RootDomainObject.readDomainObjectByOID(JournalIssue.class,
+        return (JournalIssue) AbstractDomainObject.fromExternalId(JournalIssue.class,
                 Integer.valueOf(request.getParameter("activityId")));
     }
 
     protected ScientificJournal getScientificJournalFromRequest(HttpServletRequest request) {
-        return (ScientificJournal) RootDomainObject.readDomainObjectByOID(ScientificJournal.class,
+        return (ScientificJournal) AbstractDomainObject.fromExternalId(ScientificJournal.class,
                 Integer.valueOf(request.getParameter("activityId")));
     }
 
     protected ResearchEvent getEventFromRequest(HttpServletRequest request) {
-        return (ResearchEvent) RootDomainObject.readDomainObjectByOID(ResearchEvent.class,
+        return (ResearchEvent) AbstractDomainObject.fromExternalId(ResearchEvent.class,
                 Integer.valueOf(request.getParameter("activityId")));
     }
 
     protected EventEdition getEventEditionFromRequest(HttpServletRequest request) {
-        return (EventEdition) RootDomainObject.readDomainObjectByOID(EventEdition.class,
+        return (EventEdition) AbstractDomainObject.fromExternalId(EventEdition.class,
                 Integer.valueOf(request.getParameter("activityId")));
     }
 

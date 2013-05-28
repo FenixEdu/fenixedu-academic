@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -27,6 +26,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Fernanda Quitério 01/07/2003
@@ -43,7 +43,7 @@ public class ReadStudentMarksByCurricularCourse {
         List<InfoSiteEnrolmentEvaluation> infoSiteEnrolmentEvaluations = new ArrayList<InfoSiteEnrolmentEvaluation>();
 
         Enrolment enrolment =
-                enrolmentId != null ? (Enrolment) RootDomainObject.getInstance().readCurriculumModuleByOID(enrolmentId) : getEnrolment(
+                enrolmentId != null ? (Enrolment) AbstractDomainObject.fromExternalId(enrolmentId) : getEnrolment(
                         curricularCourseID, studentNumber, executionYear);
 
         if (enrolment != null) {
@@ -89,7 +89,7 @@ public class ReadStudentMarksByCurricularCourse {
 
     private static Enrolment getEnrolment(Integer curricularCourseID, Integer studentNumber, String executionYear)
             throws ExistingServiceException {
-        CurricularCourse curricularCourse = (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(curricularCourseID);
+        CurricularCourse curricularCourse = (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseID);
 
         final CurricularCourse curricularCourseTemp = curricularCourse;
 

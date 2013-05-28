@@ -5,14 +5,14 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingT
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class VerifyIfGroupPropertiesHasProjectProposal {
 
     protected Boolean run(Integer executionCourseId, Integer groupPropertiesId) {
-        final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseId);
-        final Grouping grouping = RootDomainObject.getInstance().readGroupingByOID(groupPropertiesId);
+        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
+        final Grouping grouping = AbstractDomainObject.fromExternalId(groupPropertiesId);
         return executionCourse.hasExportGrouping(grouping);
     }
 

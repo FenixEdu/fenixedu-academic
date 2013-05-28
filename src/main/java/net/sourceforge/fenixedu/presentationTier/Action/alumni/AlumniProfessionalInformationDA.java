@@ -19,6 +19,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "alumni", path = "/professionalInformation", scope = "request", parameter = "method")
 @Forwards(value = {
@@ -128,7 +129,7 @@ public class AlumniProfessionalInformationDA extends AlumniEntityManagementDA {
     }
 
     protected Job getJob(HttpServletRequest request) {
-        return rootDomainObject.readJobByOID(getIntegerFromRequest(request, "jobId"));
+        return AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "jobId"));
     }
 
 }

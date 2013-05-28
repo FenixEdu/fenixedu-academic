@@ -28,6 +28,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "departmentAdmOffice", path = "/supportLessonsManagement",
         input = "/supportLessonsManagement.do?method=prepareEdit&page=0", attribute = "supportLessonForm",
@@ -56,7 +57,7 @@ public class DepartmentAdmOfficeManageTeacherSupportLessonsDispatchAction extend
         Integer supportLesssonID = (Integer) supportLessonForm.get("supportLessonID");
         Integer professorshipID = (Integer) supportLessonForm.get("professorshipID");
 
-        Professorship professorship = rootDomainObject.readProfessorshipByOID(professorshipID);
+        Professorship professorship = AbstractDomainObject.fromExternalId(professorshipID);
 
         if (professorship == null
                 || professorship.getTeacher() == null
@@ -68,7 +69,7 @@ public class DepartmentAdmOfficeManageTeacherSupportLessonsDispatchAction extend
 
         SupportLesson supportLesson = null;
         if (supportLesssonID != null && supportLesssonID != 0) {
-            supportLesson = rootDomainObject.readSupportLessonByOID(supportLesssonID);
+            supportLesson = AbstractDomainObject.fromExternalId(supportLesssonID);
             if (!professorship.getSupportLessons().contains(supportLesson)) {
                 return mapping.findForward("teacher-not-found");
             }

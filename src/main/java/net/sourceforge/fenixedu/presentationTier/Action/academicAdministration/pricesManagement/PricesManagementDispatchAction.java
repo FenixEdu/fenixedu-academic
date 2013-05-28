@@ -23,6 +23,7 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/pricesManagement", module = "academicAdministration")
 @Forwards({ @Forward(name = "viewPrices", path = "/academicAdminOffice/pricesManagement/viewPrices.jsp"),
@@ -51,7 +52,7 @@ public class PricesManagementDispatchAction extends FenixDispatchAction {
 
         request.setAttribute("executionYearBean", new ExecutionYearBean(ExecutionYear.readCurrentExecutionYear()));
         request.setAttribute("postingRule",
-                rootDomainObject.readPostingRuleByOID(getRequestParameterAsInteger(request, "postingRuleId")));
+                AbstractDomainObject.fromExternalId(getRequestParameterAsInteger(request, "postingRuleId")));
         return mapping.findForward("editPrice");
     }
 

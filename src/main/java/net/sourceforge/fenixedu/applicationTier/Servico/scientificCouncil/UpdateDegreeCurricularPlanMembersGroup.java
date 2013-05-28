@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class UpdateDegreeCurricularPlanMembersGroup {
 
@@ -57,7 +58,7 @@ public class UpdateDegreeCurricularPlanMembersGroup {
             List<Person> result = new ArrayList<Person>();
 
             for (Integer personID : personsIDs) {
-                result.add((Person) RootDomainObject.getInstance().readPartyByOID(personID));
+                result.add((Person) AbstractDomainObject.fromExternalId(personID));
             }
 
             return result;

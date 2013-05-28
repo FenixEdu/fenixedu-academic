@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWorkProposalHeader;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
@@ -19,6 +18,7 @@ import org.apache.commons.collections.Predicate;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Luis Cruz
@@ -31,7 +31,7 @@ public class ReadAvailableFinalDegreeWorkProposalHeadersForGroup {
     public static List run(Integer groupOID) {
         final List<FinalDegreeWorkProposalHeader> result = new ArrayList<FinalDegreeWorkProposalHeader>();
 
-        final FinalDegreeWorkGroup group = RootDomainObject.getInstance().readFinalDegreeWorkGroupByOID(groupOID);
+        final FinalDegreeWorkGroup group = AbstractDomainObject.fromExternalId(groupOID);
 
         if (group != null && group.getExecutionDegree() != null) {
             final Set<Proposal> finalDegreeWorkProposals = group.getExecutionDegree().getScheduling().findPublishedProposals();

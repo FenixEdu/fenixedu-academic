@@ -24,6 +24,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "departmentMember", path = "/evaluateExpectations", scope = "request", parameter = "method")
 @Forwards(
@@ -101,13 +102,13 @@ public class ExpectationsEvaluationDA extends FenixDispatchAction {
     private TeacherPersonalExpectation getTeacherPersonalExpectationFromParameter(final HttpServletRequest request) {
         final String teacherPersonalExpectationIDString = request.getParameter("teacherPersonalExpectationID");
         final Integer teacherPersonalExpectationID = Integer.valueOf(teacherPersonalExpectationIDString);
-        return rootDomainObject.readTeacherPersonalExpectationByOID(teacherPersonalExpectationID);
+        return AbstractDomainObject.fromExternalId(teacherPersonalExpectationID);
     }
 
     private ExecutionYear getExecutionYearFromParameter(final HttpServletRequest request) {
         final String executionYearIDString = request.getParameter("executionYearID");
         final Integer executionYearID = Integer.valueOf(executionYearIDString);
-        return rootDomainObject.readExecutionYearByOID(executionYearID);
+        return AbstractDomainObject.fromExternalId(executionYearID);
     }
 
     private void readAndSetEvaluatedTeachersWithExpectations(HttpServletRequest request, Teacher teacher,

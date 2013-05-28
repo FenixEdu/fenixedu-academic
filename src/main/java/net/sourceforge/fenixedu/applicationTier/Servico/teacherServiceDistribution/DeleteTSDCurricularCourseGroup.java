@@ -5,15 +5,15 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthoriza
 import net.sourceforge.fenixedu.applicationTier.Filtro.EmployeeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCurricularCourse;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCurricularCourseGroup;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class DeleteTSDCurricularCourseGroup {
     protected void run(Integer tsdCurricularCourseGroupId) {
         TSDCurricularCourseGroup tsdCurricularCourseGroup =
-                (TSDCurricularCourseGroup) RootDomainObject.getInstance().readTSDCourseByOID(tsdCurricularCourseGroupId);
+                (TSDCurricularCourseGroup) AbstractDomainObject.fromExternalId(tsdCurricularCourseGroupId);
 
         for (TSDCurricularCourse tsdCurricularCourse : tsdCurricularCourseGroup.getTSDCurricularCourses()) {
             tsdCurricularCourse.setTSDCurricularCourseGroup(null);

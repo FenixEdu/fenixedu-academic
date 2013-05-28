@@ -6,9 +6,9 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /*
  * 
@@ -23,7 +23,7 @@ public class AssociateCurricularCoursesToExecutionCourse {
         }
 
         if (curricularCourseIds != null && !curricularCourseIds.isEmpty()) {
-            ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseId);
+            ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
 
             if (executionCourse == null) {
                 throw new DomainException("message.nonExisting.executionCourse");
@@ -33,8 +33,7 @@ public class AssociateCurricularCoursesToExecutionCourse {
             while (iter.hasNext()) {
                 Integer curricularCourseId = iter.next();
 
-                CurricularCourse curricularCourse =
-                        (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(curricularCourseId);
+                CurricularCourse curricularCourse = AbstractDomainObject.fromExternalId(curricularCourseId);
                 if (curricularCourse == null) {
                     throw new DomainException("message.nonExistingDegreeCurricularPlan");
                 }

@@ -7,7 +7,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.messaging.PartyAnnouncementBoard;
@@ -17,6 +16,8 @@ import net.sourceforge.fenixedu.presentationTier.Action.messaging.AnnouncementMa
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public abstract class UnitSiteAnnouncementManagement extends AnnouncementManagement {
 
@@ -47,7 +48,7 @@ public abstract class UnitSiteAnnouncementManagement extends AnnouncementManagem
             return null;
         }
 
-        return (UnitSite) RootDomainObject.getInstance().readContentByOID(oid);
+        return (UnitSite) AbstractDomainObject.fromExternalId(oid);
     }
 
     protected Unit getUnit(HttpServletRequest request) {

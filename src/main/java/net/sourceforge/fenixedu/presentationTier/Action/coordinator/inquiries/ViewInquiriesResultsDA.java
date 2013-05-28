@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.oldInquiries.StudentInquiriesCourseResult;
 import net.sourceforge.fenixedu.domain.oldInquiries.StudentInquiriesTeachingResult;
@@ -55,7 +54,7 @@ abstract public class ViewInquiriesResultsDA extends FenixDispatchAction {
             degreeCurricularPlanID = ((ViewInquiriesResultPageDTO) actionForm).getDegreeCurricularPlanID();
         }
         final DegreeCurricularPlan degreeCurricularPlan =
-                rootDomainObject.readDegreeCurricularPlanByOID(getIntegerFromRequest(request, "degreeCurricularPlanID"));
+                AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "degreeCurricularPlanID"));
         final List<ExecutionSemester> executionSemesters = new ArrayList<ExecutionSemester>();
         for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
             final ExecutionYear executionYear = executionDegree.getExecutionYear();
@@ -250,15 +249,14 @@ abstract public class ViewInquiriesResultsDA extends FenixDispatchAction {
     public ActionForward showInquiryCourseResult(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         request.setAttribute("inquiryResult",
-                RootDomainObject.getInstance().readStudentInquiriesCourseResultByOID(getIntegerFromRequest(request, "resultId")));
+                AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "resultId")));
         return actionMapping.findForward("showCourseInquiryResult");
     }
 
     public ActionForward showInquiryTeachingResult(ActionMapping actionMapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         request.setAttribute("inquiryResult",
-                RootDomainObject.getInstance()
-                        .readStudentInquiriesTeachingResultByOID(getIntegerFromRequest(request, "resultId")));
+                AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "resultId")));
         return actionMapping.findForward("showTeachingInquiryResult");
     }
 
@@ -266,8 +264,7 @@ abstract public class ViewInquiriesResultsDA extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         final TeachingInquiry teachingInquiry =
-                RootDomainObject.getInstance()
-                        .readTeachingInquiryByOID(getIntegerFromRequest(request, "filledTeachingInquiryId"));
+                AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "filledTeachingInquiryId"));
         request.setAttribute("teachingInquiry", teachingInquiry);
 
         final ExecutionSemester executionPeriod = teachingInquiry.getProfessorship().getExecutionCourse().getExecutionPeriod();
@@ -284,7 +281,7 @@ abstract public class ViewInquiriesResultsDA extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         final YearDelegateCourseInquiry delegateCourseInquiry =
-                RootDomainObject.getInstance().readYearDelegateCourseInquiryByOID(
+                AbstractDomainObject.fromExternalId(
                         getIntegerFromRequest(request, "filledYearDelegateInquiryId"));
 
         request.setAttribute("delegateInquiryDTO", new YearDelegateCourseInquiryDTO(delegateCourseInquiry));

@@ -13,10 +13,10 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 //modified by gedl AT rnl dot IST dot uTl dot pT , September the 16th, 2003
 //added the auth to a lecturing teacher
@@ -67,7 +67,7 @@ public class ReadShiftsByExecutionCourseIDAuthorizationFilter extends Filtro {
 
             final Person person = id.getPerson();
 
-            ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseID);
+            ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseID);
 
             // For all Associated Curricular Courses
             Iterator curricularCourseIterator = executionCourse.getAssociatedCurricularCourses().iterator();
@@ -105,7 +105,7 @@ public class ReadShiftsByExecutionCourseIDAuthorizationFilter extends Filtro {
             Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
             Professorship professorship = null;
             if (teacher != null) {
-                ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseID);
+                ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseID);
                 teacher.getProfessorshipByExecutionCourse(executionCourse);
             }
             return professorship != null;

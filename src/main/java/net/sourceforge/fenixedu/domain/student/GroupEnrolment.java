@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author asnr and scpo
@@ -43,7 +44,7 @@ public class GroupEnrolment {
     public static Boolean enrole(Integer groupingID, Integer shiftID, Integer groupNumber, List<String> studentUsernames,
             String studentUsername) throws FenixServiceException {
         final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
-        final Grouping grouping = rootDomainObject.readGroupingByOID(groupingID);
+        final Grouping grouping = AbstractDomainObject.fromExternalId(groupingID);
         if (grouping == null) {
             throw new NonExistingServiceException();
         }
@@ -58,7 +59,7 @@ public class GroupEnrolment {
         }
         Shift shift = null;
         if (shiftID != null) {
-            shift = rootDomainObject.readShiftByOID(shiftID);
+            shift = AbstractDomainObject.fromExternalId(shiftID);
         }
         Set<String> allStudentsUsernames = new HashSet<String>(studentUsernames);
         allStudentsUsernames.add(studentUsername);

@@ -17,6 +17,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -39,7 +40,7 @@ public class PenaltyExemptionDA extends FenixDispatchAction {
         }
 
         request.setAttribute("gratuitySituation",
-                rootDomainObject.readGratuitySituationByOID(getIntegerFromRequest(request, "gratuitySituationID")));
+                AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "gratuitySituationID")));
         return mapping.findForward("edit");
     }
 

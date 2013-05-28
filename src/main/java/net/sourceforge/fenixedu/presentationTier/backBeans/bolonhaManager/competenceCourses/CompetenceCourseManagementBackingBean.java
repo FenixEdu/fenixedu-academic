@@ -56,6 +56,7 @@ import org.apache.commons.collections.comparators.ReverseComparator;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     private final ResourceBundle bolonhaResources = getResourceBundle("resources/BolonhaManagerResources");
@@ -138,7 +139,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
 
     public DepartmentUnit getSelectedDepartmentUnit() {
         if (this.getSelectedDepartmentUnitID() != null) {
-            return (DepartmentUnit) rootDomainObject.readPartyByOID(this.getSelectedDepartmentUnitID());
+            return (DepartmentUnit) AbstractDomainObject.fromExternalId(this.getSelectedDepartmentUnitID());
         } else {
             return null;
         }
@@ -204,7 +205,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
 
     public Unit getCompetenceCourseGroupUnit() {
         if (competenceCourseGroupUnit == null && getCompetenceCourseGroupUnitID() != null) {
-            competenceCourseGroupUnit = (Unit) rootDomainObject.readPartyByOID(getCompetenceCourseGroupUnitID());
+            competenceCourseGroupUnit = (Unit) AbstractDomainObject.fromExternalId(getCompetenceCourseGroupUnitID());
         }
         return competenceCourseGroupUnit;
     }
@@ -441,7 +442,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
 
     public CompetenceCourse getCompetenceCourse() {
         if (competenceCourse == null && getCompetenceCourseID() != null) {
-            competenceCourse = rootDomainObject.readCompetenceCourseByOID(getCompetenceCourseID());
+            competenceCourse = AbstractDomainObject.fromExternalId(getCompetenceCourseID());
         }
         return competenceCourse;
     }
@@ -976,7 +977,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     }
 
     private DepartmentUnit readDepartmentUnitToTransferTo(Integer transferToDepartmentUnitID) {
-        return (DepartmentUnit) rootDomainObject.readPartyByOID(transferToDepartmentUnitID);
+        return (DepartmentUnit) AbstractDomainObject.fromExternalId(transferToDepartmentUnitID);
     }
 
     public UISelectItems getCompetenceCourseGroupUnitItems() {
@@ -1016,7 +1017,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     }
 
     private ScientificAreaUnit readScientificAreaUnitToTransferTo(Integer transferToScientificAreaUnitID) {
-        return (ScientificAreaUnit) rootDomainObject.readPartyByOID(transferToScientificAreaUnitID);
+        return (ScientificAreaUnit) AbstractDomainObject.fromExternalId(transferToScientificAreaUnitID);
     }
 
     @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
@@ -1043,7 +1044,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
 
     private Unit readCompetenceCourseGroupUnitToTransferTo() {
         if (getTransferToCompetenceCourseGroupUnitID() != null) {
-            return (Unit) rootDomainObject.readPartyByOID(getTransferToCompetenceCourseGroupUnitID());
+            return (Unit) AbstractDomainObject.fromExternalId(getTransferToCompetenceCourseGroupUnitID());
         }
         return null;
     }
@@ -1060,7 +1061,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     }
 
     private ExecutionSemester getExecutionSemester() {
-        return rootDomainObject.readExecutionSemesterByOID(getExecutionSemesterID());
+        return AbstractDomainObject.fromExternalId(getExecutionSemesterID());
     }
 
     public Integer getExecutionSemesterID() {
@@ -1087,7 +1088,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     }
 
     public ExecutionYear getExecutionYear() {
-        return rootDomainObject.readExecutionYearByOID(getExecutionYearID());
+        return AbstractDomainObject.fromExternalId(getExecutionYearID());
     }
 
     public Integer getExecutionYearID() {

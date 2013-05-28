@@ -26,6 +26,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/viewStudentsPerformanceGrid", module = "teacher")
 @Forwards(tileProperties = @Tile(navLocal = "/teacher/commons/navigationBarIndex.jsp"), value = { @Forward(
@@ -71,8 +72,8 @@ public class ViewStudentsPerformanceGridDispatchAction extends StudentsPerforman
 
     protected StudentsPerformanceInfoBean generateStudentsPerformanceBeanFromRequest(HttpServletRequest request, Person person) {
         StudentsPerformanceInfoBean bean = StudentsPerformanceInfoBean.create(person.getTeacher());
-        bean.setDegree(rootDomainObject.readDegreeByOID(getIntegerFromRequest(request, "degreeOID")));
-        bean.setStudentsEntryYear(rootDomainObject.readExecutionYearByOID(getIntegerFromRequest(request, "entryYearOID")));
+        bean.setDegree(AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "degreeOID")));
+        bean.setStudentsEntryYear(AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "entryYearOID")));
         bean.setCurrentMonitoringYear(rootDomainObject
                 .readExecutionYearByOID(getIntegerFromRequest(request, "monitoringYearOID")));
         request.setAttribute("performanceGridFiltersBean", bean);

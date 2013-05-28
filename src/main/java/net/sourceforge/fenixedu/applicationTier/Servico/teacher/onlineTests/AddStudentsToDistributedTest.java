@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingT
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
@@ -21,6 +20,7 @@ import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.utilTests.ParseQuestionException;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Susana Fernandes
@@ -32,7 +32,7 @@ public class AddStudentsToDistributedTest {
         if (infoStudentList == null || infoStudentList.size() == 0) {
             return;
         }
-        DistributedTest distributedTest = RootDomainObject.getInstance().readDistributedTestByOID(distributedTestId);
+        DistributedTest distributedTest = AbstractDomainObject.fromExternalId(distributedTestId);
         if (distributedTest == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -57,7 +57,7 @@ public class AddStudentsToDistributedTest {
                 questionList.addAll(studentTestQuestionExample.getQuestion().getMetadata().getVisibleQuestions());
 
                 for (InfoStudent infoStudent : infoStudentList) {
-                    Registration registration = RootDomainObject.getInstance().readRegistrationByOID(infoStudent.getExternalId());
+                    Registration registration = AbstractDomainObject.fromExternalId(infoStudent.getExternalId());
                     StudentTestQuestion studentTestQuestion = new StudentTestQuestion();
                     studentTestQuestion.setStudent(registration);
                     studentTestQuestion.setDistributedTest(distributedTest);

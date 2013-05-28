@@ -6,10 +6,10 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.gep.GEPAuthorizationFilte
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class InsertProfessorShipNonAffiliatedTeacher {
 
@@ -17,12 +17,12 @@ public class InsertProfessorShipNonAffiliatedTeacher {
     @Service
     public static void run(Integer nonAffiliatedTeacherID, Integer executionCourseID) {
 
-        final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseID);
+        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseID);
         if (executionCourse == null) {
             throw new DomainException("message.nonExisting.executionCourse");
         }
 
-        final NonAffiliatedTeacher nonAffiliatedTeacher = RootDomainObject.getInstance().readNonAffiliatedTeacherByOID(nonAffiliatedTeacherID);
+        final NonAffiliatedTeacher nonAffiliatedTeacher = AbstractDomainObject.fromExternalId(nonAffiliatedTeacherID);
         if (nonAffiliatedTeacher == null) {
             throw new DomainException("message.non.existing.nonAffiliatedTeacher");
         }

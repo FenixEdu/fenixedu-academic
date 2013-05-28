@@ -6,9 +6,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScopeEditor;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Fernanda Quitério 28/10/2003
@@ -25,7 +25,7 @@ public class EndCurricularCourseScope {
         }
 
         CurricularCourseScope oldCurricularCourseScope =
-                RootDomainObject.getInstance().readCurricularCourseScopeByOID(newInfoCurricularCourseScope.getExternalId());
+                AbstractDomainObject.fromExternalId(newInfoCurricularCourseScope.getExternalId());
         if (oldCurricularCourseScope == null) {
             throw new NonExistingServiceException("message.non.existing.curricular.course.scope", null);
         }

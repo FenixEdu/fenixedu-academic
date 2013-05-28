@@ -40,6 +40,7 @@ import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 public class ExecutionDegreesManagementDispatchAction extends FenixDispatchAction {
@@ -63,7 +64,7 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
         final Integer degreeCurricularPlanID = (Integer) form.get("degreeCurricularPlanID");
         if (degreeCurricularPlanID != null) {
             final DegreeCurricularPlan degreeCurricularPlan =
-                    rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+                    AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
             if (degreeCurricularPlan != null) {
                 request.setAttribute("executionDegrees", degreeCurricularPlan.getExecutionDegreesSet());
             }
@@ -77,7 +78,7 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
         final DynaActionForm form = (DynaActionForm) actionForm;
         final Integer executionDegreeID = (Integer) form.get("executionDegreeID");
         if (executionDegreeID != null) {
-            final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
+            final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeID);
 
             request.setAttribute("executionDegree", executionDegree);
             setResponsibleCoordinatorsIDs(executionDegree, form);
@@ -155,7 +156,7 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
         final DynaActionForm form = (DynaActionForm) actionForm;
         final Integer executionDegreeID = (Integer) form.get("executionDegreeID");
         if (executionDegreeID != null) {
-            final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
+            final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeID);
 
             request.setAttribute("executionDegree", executionDegree);
             request.setAttribute("executionYears", ExecutionYear.readNotClosedExecutionYears());
@@ -307,7 +308,7 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
         final DynaActionForm form = (DynaActionForm) actionForm;
         final Integer executionDegreeID = (Integer) form.get("executionDegreeID");
         if (executionDegreeID != null) {
-            final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
+            final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeID);
             request.setAttribute("executionDegree", executionDegree);
             return mapping.findForward(findForward);
         } else {

@@ -9,8 +9,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.person.qualification;
 import net.sourceforge.fenixedu.applicationTier.Filtro.person.ReadQualificationAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Qualification;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author João Fialho & Rita Ferreira
@@ -20,7 +20,7 @@ public class DeleteQualification {
 
     @Service
     public static void run(Integer qualificationId) {
-        Qualification qualification = RootDomainObject.getInstance().readQualificationByOID(qualificationId);
+        Qualification qualification = AbstractDomainObject.fromExternalId(qualificationId);
         qualification.delete();
     }
 

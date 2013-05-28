@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.servlet.ServletRequest;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementCategory;
@@ -20,6 +19,7 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 import com.sun.faces.util.Base64;
@@ -67,9 +67,9 @@ public class AnnouncementManagement implements IAnnouncementManagement {
 
             AnnouncementBoard board = null;
             if (announcementBoard.equals(EVENT_ANNOUNCEMENT_BOARD)) {
-                board = (AnnouncementBoard) RootDomainObject.readDomainObjectByOID(AnnouncementBoard.class, EVENT_BOARD_ID);
+                board = (AnnouncementBoard) AbstractDomainObject.fromExternalId(AnnouncementBoard.class, EVENT_BOARD_ID);
             } else if (announcementBoard.equals(NEWS_ANNOUNCEMENT_BOARD)) {
-                board = (AnnouncementBoard) RootDomainObject.readDomainObjectByOID(AnnouncementBoard.class, NEWS_BOARD_ID);
+                board = (AnnouncementBoard) AbstractDomainObject.fromExternalId(AnnouncementBoard.class, NEWS_BOARD_ID);
             } else {
                 return FAILURE + " - " + "announcementBoard value must be EVENT_BOARD or NEWS_BOARD";
             }

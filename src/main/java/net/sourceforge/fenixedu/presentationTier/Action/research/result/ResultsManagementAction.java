@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.research.prizes.DeletePrize;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit;
 import net.sourceforge.fenixedu.domain.research.Prize;
@@ -23,6 +22,7 @@ import org.apache.struts.action.ActionMessages;
 
 import pt.ist.fenixWebFramework.renderers.components.state.ViewDestination;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.file.FileManagerException;
 
 public class ResultsManagementAction extends FenixDispatchAction {
@@ -33,7 +33,7 @@ public class ResultsManagementAction extends FenixDispatchAction {
         String unitId = request.getParameter("unitId");
         if (unitId != null) {
             ResearchUnit unit =
-                    (ResearchUnit) RootDomainObject.readDomainObjectByOID(ResearchUnit.class, Integer.valueOf(unitId));
+                    (ResearchUnit) AbstractDomainObject.fromExternalId(ResearchUnit.class, Integer.valueOf(unitId));
             request.setAttribute("unit", unit);
         }
         return super.execute(mapping, form, request, response);
@@ -82,7 +82,7 @@ public class ResultsManagementAction extends FenixDispatchAction {
             HttpServletResponse response) throws  FenixServiceException {
 
         String prizeID = request.getParameter("oid");
-        Prize prize = (Prize) RootDomainObject.readDomainObjectByOID(Prize.class, Integer.valueOf(prizeID));
+        Prize prize = (Prize) AbstractDomainObject.fromExternalId(Prize.class, Integer.valueOf(prizeID));
         if (prize.isDeletableByUser((getLoggedPerson(request)))) {
             try {
                 DeletePrize.runDeletePrize(prize);
@@ -97,7 +97,7 @@ public class ResultsManagementAction extends FenixDispatchAction {
             HttpServletResponse response) throws  FenixServiceException {
 
         String prizeID = request.getParameter("oid");
-        Prize prize = (Prize) RootDomainObject.readDomainObjectByOID(Prize.class, Integer.valueOf(prizeID));
+        Prize prize = (Prize) AbstractDomainObject.fromExternalId(Prize.class, Integer.valueOf(prizeID));
         if (prize != null && prize.isEditableByUser(getLoggedPerson(request))) {
             request.setAttribute("prize", prize);
         }

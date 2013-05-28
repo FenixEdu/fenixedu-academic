@@ -36,6 +36,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/studentDismissals", module = "academicAdministration", formBean = "studentDismissalForm")
 @Forwards({ @Forward(name = "manage", path = "/academicAdminOffice/dismissal/managementDismissals.jsp"),
@@ -49,7 +50,7 @@ public class StudentDismissalsDA extends FenixDispatchAction {
 
     private StudentCurricularPlan getSCP(final HttpServletRequest request) {
         final Integer scpID = getIntegerFromRequest(request, "scpID");
-        return rootDomainObject.readStudentCurricularPlanByOID(scpID);
+        return AbstractDomainObject.fromExternalId(scpID);
     }
 
     public ActionForward manage(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {

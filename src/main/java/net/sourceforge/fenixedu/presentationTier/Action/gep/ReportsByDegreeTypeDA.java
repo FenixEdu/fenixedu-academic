@@ -52,6 +52,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "gep", path = "/reportsByDegreeType", scope = "session", parameter = "method")
 @Forwards(value = {
@@ -226,7 +227,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 
     private ExecutionYear getExecutionYear(final HttpServletRequest httpServletRequest) {
         final String OIDString = httpServletRequest.getParameter("executionYearID");
-        return StringUtils.isEmpty(OIDString) ? null : rootDomainObject.readExecutionYearByOID(Integer.valueOf(OIDString));
+        return StringUtils.isEmpty(OIDString) ? null : AbstractDomainObject.fromExternalId(Integer.valueOf(OIDString));
     }
 
     private String getFormat(final HttpServletRequest httpServletRequest) {

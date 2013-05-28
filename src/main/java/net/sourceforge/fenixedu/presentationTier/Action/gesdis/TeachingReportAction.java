@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoCourseReport;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoSiteCourseInformation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
@@ -32,6 +31,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Leonor Almeida
@@ -61,7 +61,7 @@ public class TeachingReportAction extends FenixDispatchAction {
             BeanUtils.copyProperties(infoCourseReport, dynaForm);
 
             Integer executionCourseId = (Integer) dynaForm.get("executionCourseId");
-            final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseId);
+            final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
             infoCourseReport.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(executionCourse));
 
             return infoCourseReport;

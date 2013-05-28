@@ -6,18 +6,18 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthoriza
 import net.sourceforge.fenixedu.applicationTier.Filtro.EmployeeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCourse;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcessPhase;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDTeacher;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class CreateTeacherServiceDistribution {
     protected TeacherServiceDistribution run(Integer tsdProcessPhaseId, Integer fatherTeacherServiceDistributionId, String name) {
-        TSDProcessPhase tsdProcessPhase = RootDomainObject.getInstance().readTSDProcessPhaseByOID(tsdProcessPhaseId);
+        TSDProcessPhase tsdProcessPhase = AbstractDomainObject.fromExternalId(tsdProcessPhaseId);
         TeacherServiceDistribution fatherTeacherServiceDistribution =
-                RootDomainObject.getInstance().readTeacherServiceDistributionByOID(fatherTeacherServiceDistributionId);
+                AbstractDomainObject.fromExternalId(fatherTeacherServiceDistributionId);
 
         TeacherServiceDistribution tsd =
                 new TeacherServiceDistribution(tsdProcessPhase, name, fatherTeacherServiceDistribution,

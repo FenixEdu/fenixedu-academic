@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.ListPayedInsurancesByDates;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -34,6 +33,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
@@ -75,7 +75,7 @@ public class ListPayedInsurancesDispatchAction extends FenixDispatchAction {
         DynaActionForm actionForm = (DynaActionForm) form;
 
         ExecutionYear executionYear =
-                RootDomainObject.getInstance().readExecutionYearByOID((Integer) actionForm.get("executionYearID"));
+                AbstractDomainObject.fromExternalId((Integer) actionForm.get("executionYearID"));
 
         Integer endDateDay = (Integer) actionForm.get("endDateDay");
         Integer endDateMonth = (Integer) actionForm.get("endDateMonth");

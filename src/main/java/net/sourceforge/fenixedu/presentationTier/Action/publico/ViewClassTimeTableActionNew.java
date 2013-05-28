@@ -31,6 +31,7 @@ import org.apache.struts.action.DynaActionForm;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Jo�o Mota
@@ -85,7 +86,7 @@ public class ViewClassTimeTableActionNew extends FenixAction {
             return mapping.getInputForward();
 
         }
-        final SchoolClass schoolClass = rootDomainObject.readSchoolClassByOID(classId);
+        final SchoolClass schoolClass = AbstractDomainObject.fromExternalId(classId);
         InfoExecutionDegree infoExecutionDegree =
                 ReadExecutionDegreesByExecutionYearAndDegreeInitials.getInfoExecutionDegree(schoolClass.getExecutionDegree());
         // try {

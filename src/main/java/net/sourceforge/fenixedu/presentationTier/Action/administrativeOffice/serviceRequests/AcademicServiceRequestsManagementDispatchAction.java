@@ -48,6 +48,7 @@ import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 @Mapping(path = "/academicServiceRequestsManagement", module = "academicAdministration",
@@ -140,14 +141,14 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
             academicServiceRequestId = (Integer) request.getAttribute("academicServiceRequestId");
         }
         final AcademicServiceRequest academicServiceRequest =
-                rootDomainObject.readAcademicServiceRequestByOID(academicServiceRequestId);
+                AbstractDomainObject.fromExternalId(academicServiceRequestId);
         request.setAttribute("academicServiceRequest", academicServiceRequest);
         return (RegistrationAcademicServiceRequest) academicServiceRequest;
     }
 
     private Registration getAndSetRegistration(final HttpServletRequest request) {
         final Registration registration =
-                rootDomainObject.readRegistrationByOID(getRequestParameterAsInteger(request, "registrationID"));
+                AbstractDomainObject.fromExternalId(getRequestParameterAsInteger(request, "registrationID"));
         request.setAttribute("registration", registration);
         return registration;
     }

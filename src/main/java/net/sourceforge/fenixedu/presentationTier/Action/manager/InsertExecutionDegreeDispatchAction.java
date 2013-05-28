@@ -42,6 +42,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author lmac1
@@ -114,12 +115,12 @@ public class InsertExecutionDegreeDispatchAction extends FenixDispatchAction {
             throws Exception {
 
         Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
-        final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
+        final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanId);
 
         DynaActionForm dynaForm = (DynaValidatorForm) form;
 
         InfoExecutionYear infoExecutionYear =
-                new InfoExecutionYear(rootDomainObject.readExecutionYearByOID(new Integer((String) dynaForm
+                new InfoExecutionYear(AbstractDomainObject.fromExternalId(new Integer((String) dynaForm
                         .get("executionYearId"))));
         InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan(degreeCurricularPlan);
 

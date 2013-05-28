@@ -22,6 +22,7 @@ import org.apache.struts.action.ActionServlet;
 
 import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
@@ -52,14 +53,14 @@ public class RetrievePersonalPhotoAction extends FenixDispatchAction {
     public ActionForward retrieveByID(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws  FenixServiceException {
         final Integer personID = new Integer(request.getParameter("personCode"));
-        final Person person = (Person) rootDomainObject.readPartyByOID(personID);
+        final Person person = (Person) AbstractDomainObject.fromExternalId(personID);
         return retrievePhotograph(request, response, person);
     }
 
     public ActionForward retrievePendingByID(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws  FenixServiceException {
         final Integer photoID = new Integer(request.getParameter("photoCode"));
-        Photograph photo = rootDomainObject.readPhotographByOID(photoID);
+        Photograph photo = AbstractDomainObject.fromExternalId(photoID);
         if (photo != null) {
             writePhoto(response, photo);
             return null;

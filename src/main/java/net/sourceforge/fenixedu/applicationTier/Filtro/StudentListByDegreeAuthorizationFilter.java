@@ -10,10 +10,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
@@ -54,7 +54,7 @@ public class StudentListByDegreeAuthorizationFilter extends Filtro {
     private boolean hasPrivilege(IUserView id, Integer degreeCurricularPlanID, DegreeType degreeType) {
 
         DegreeCurricularPlan degreeCurricularPlan =
-                RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+                AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
 
         if ((degreeCurricularPlan == null) || (!degreeCurricularPlan.getDegree().getDegreeType().equals(degreeType))) {
             return false;

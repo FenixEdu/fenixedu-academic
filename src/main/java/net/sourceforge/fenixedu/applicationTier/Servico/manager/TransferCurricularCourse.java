@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -20,6 +19,7 @@ import org.apache.commons.collections.Predicate;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class TransferCurricularCourse {
 
@@ -42,9 +42,9 @@ public class TransferCurricularCourse {
         }
 
         final ExecutionCourse sourceExecutionCourse =
-                RootDomainObject.getInstance().readExecutionCourseByOID(sourceExecutionCourseId);
+                AbstractDomainObject.fromExternalId(sourceExecutionCourseId);
         final ExecutionCourse destinationExecutionCourse =
-                RootDomainObject.getInstance().readExecutionCourseByOID(destinationExecutionCourseId);
+                AbstractDomainObject.fromExternalId(destinationExecutionCourseId);
 
         if (destinationExecutionCourse == null) {
             throw new DomainException("error.selection.noDestinationExecutionCourse");

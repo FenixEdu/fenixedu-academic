@@ -21,6 +21,7 @@ import org.apache.struts.action.DynaActionForm;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * 
@@ -74,6 +75,6 @@ public class ViewStudentTimeTable extends FenixDispatchAction {
         if (registrationId == null && !StringUtils.isEmpty(request.getParameter("registrationId"))) {
             registrationId = Integer.valueOf(request.getParameter("registrationId"));
         }
-        return rootDomainObject.readRegistrationByOID(registrationId);
+        return AbstractDomainObject.fromExternalId(registrationId);
     }
 }

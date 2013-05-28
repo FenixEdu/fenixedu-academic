@@ -9,10 +9,10 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Branch;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author lmac1
@@ -32,7 +32,7 @@ public class DeleteBranches {
 
         while (iter.hasNext()) {
             internalId = (Integer) iter.next();
-            branch = RootDomainObject.getInstance().readBranchByOID(internalId);
+            branch = AbstractDomainObject.fromExternalId(internalId);
             if (branch != null) {
                 try {
                     if (branch.getStudentCurricularPlans().isEmpty()) {

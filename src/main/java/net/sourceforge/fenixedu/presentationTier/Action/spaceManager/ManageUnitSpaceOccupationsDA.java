@@ -25,6 +25,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "SpaceManager", path = "/manageUnitSpaceOccupations", scope = "session", parameter = "method")
 @Forwards(value = {
@@ -97,7 +98,7 @@ public class ManageUnitSpaceOccupationsDA extends FenixDispatchAction {
                 request.getParameterMap().containsKey("spaceInformationID") ? request.getParameter("spaceInformationID") : (String) request
                         .getAttribute("spaceInformationID");
         final Integer spaceInformationID = spaceInformationIDString != null ? Integer.valueOf(spaceInformationIDString) : null;
-        return rootDomainObject.readSpaceInformationByOID(spaceInformationID);
+        return AbstractDomainObject.fromExternalId(spaceInformationID);
     }
 
     private void readAndSetAllAttributes(HttpServletRequest request) throws  FenixServiceException {
@@ -114,7 +115,7 @@ public class ManageUnitSpaceOccupationsDA extends FenixDispatchAction {
                 request.getParameterMap().containsKey("unitID") ? request.getParameter("unitID") : (String) request
                         .getAttribute("unitID");
         final Integer unitID = unitIDString != null ? Integer.valueOf(unitIDString) : null;
-        return (Unit) rootDomainObject.readPartyByOID(unitID);
+        return (Unit) AbstractDomainObject.fromExternalId(unitID);
     }
 
     private UnitSpaceOccupation getUnitSpaceOccupation(final HttpServletRequest request) {
@@ -123,7 +124,7 @@ public class ManageUnitSpaceOccupationsDA extends FenixDispatchAction {
                         .getAttribute("unitSpaceOccupationID");
         final Integer unitSpaceOccupationID =
                 unitSpaceOccupationIDString != null ? Integer.valueOf(unitSpaceOccupationIDString) : null;
-        return (UnitSpaceOccupation) rootDomainObject.readResourceAllocationByOID(unitSpaceOccupationID);
+        return (UnitSpaceOccupation) AbstractDomainObject.fromExternalId(unitSpaceOccupationID);
     }
 
     private void setSpaceInformation(HttpServletRequest request, final SpaceInformation spaceInformation) {

@@ -22,9 +22,9 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteSCDegrees;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Jo�o Mota
@@ -72,7 +72,7 @@ public class ScientificCouncilComponentBuilder {
             Integer degreeCurricularPlanId) throws FenixServiceException {
 
         DegreeCurricularPlan degreeCurricularPlan =
-                RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanId);
+                AbstractDomainObject.fromExternalId(degreeCurricularPlanId);
         if (degreeCurricularPlan == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -113,7 +113,7 @@ public class ScientificCouncilComponentBuilder {
             throws FenixServiceException {
 
         DegreeCurricularPlan degreeCurricularPlan =
-                RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanId);
+                AbstractDomainObject.fromExternalId(degreeCurricularPlanId);
         if (degreeCurricularPlan == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -142,7 +142,7 @@ public class ScientificCouncilComponentBuilder {
     private ISiteComponent getInfoSiteDegreeCurricularPlans(InfoSiteDegreeCurricularPlans component, Integer degreeId)
             throws FenixServiceException {
 
-        Degree degree = RootDomainObject.getInstance().readDegreeByOID(degreeId);
+        Degree degree = AbstractDomainObject.fromExternalId(degreeId);
         if (degree == null) {
             throw new InvalidArgumentsServiceException();
         }

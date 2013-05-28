@@ -7,8 +7,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -17,10 +17,10 @@ public class ReadExecutionDegreeByCandidateID {
 
     protected InfoExecutionDegree run(Integer candidateID) throws NonExistingServiceException {
 
-        MasterDegreeCandidate masterDegreeCandidate = RootDomainObject.getInstance().readMasterDegreeCandidateByOID(candidateID);
+        MasterDegreeCandidate masterDegreeCandidate = AbstractDomainObject.fromExternalId(candidateID);
 
         ExecutionDegree executionDegree =
-                RootDomainObject.getInstance().readExecutionDegreeByOID(masterDegreeCandidate.getExecutionDegree().getExternalId());
+                AbstractDomainObject.fromExternalId(masterDegreeCandidate.getExecutionDegree().getExternalId());
 
         if (executionDegree == null) {
             throw new NonExistingServiceException();

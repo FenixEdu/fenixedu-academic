@@ -4,13 +4,13 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ReadExercise {
     protected Metadata run(Integer executionCourseId, Integer metadataId) throws FenixServiceException {
-        return RootDomainObject.getInstance().readMetadataByOID(metadataId);
+        return AbstractDomainObject.fromExternalId(metadataId);
     }
 
     // Service Invokers migrated from Berserk

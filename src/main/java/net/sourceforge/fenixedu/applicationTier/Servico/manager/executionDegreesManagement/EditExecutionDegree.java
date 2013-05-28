@@ -6,13 +6,13 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.space.Campus;
 
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class EditExecutionDegree {
 
@@ -25,17 +25,17 @@ public class EditExecutionDegree {
             Date periodExamsSpecialSeasonEnd, Date gradeSubmissionNormalSeason1EndDate, Date gradeSubmissionNormalSeason2EndDate,
             Date gradeSubmissionSpecialSeasonEndDate) throws FenixServiceException {
 
-        final ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeID);
+        final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeID);
         if (executionDegree == null) {
             throw new FenixServiceException("error.noExecutionDegree");
         }
 
-        final ExecutionYear executionYear = RootDomainObject.getInstance().readExecutionYearByOID(executionYearID);
+        final ExecutionYear executionYear = AbstractDomainObject.fromExternalId(executionYearID);
         if (executionYear == null) {
             throw new FenixServiceException("error.noExecutionDegree");
         }
 
-        final Campus campus = (Campus) RootDomainObject.getInstance().readResourceByOID(campusID);
+        final Campus campus = (Campus) AbstractDomainObject.fromExternalId(campusID);
         if (campus == null) {
             throw new FenixServiceException("error.noCampus");
         }

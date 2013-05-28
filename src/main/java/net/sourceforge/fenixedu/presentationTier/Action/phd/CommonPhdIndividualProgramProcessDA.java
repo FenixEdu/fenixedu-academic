@@ -34,6 +34,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.predicates.PredicateContainer;
 
 abstract public class CommonPhdIndividualProgramProcessDA extends PhdProcessDA {
@@ -167,7 +168,7 @@ abstract public class CommonPhdIndividualProgramProcessDA extends PhdProcessDA {
     }
 
     protected DegreeCurricularPlan getDegreeCurricularPlan(HttpServletRequest request) {
-        return rootDomainObject.readDegreeCurricularPlanByOID(getIntegerFromRequest(request, "degreeCurricularPlanID"));
+        return AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "degreeCurricularPlanID"));
     }
 
     // Alerts Management

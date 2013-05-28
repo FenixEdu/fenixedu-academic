@@ -46,6 +46,7 @@ import org.apache.struts.action.DynaActionForm;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.smtp.EmailSender;
 
 /**
@@ -100,7 +101,7 @@ public class SendEmailReminderAction extends FenixDispatchAction {
         for (Integer degreeCurricularPlanId : degreeCurricularPlanIds) {
 
             final DegreeCurricularPlan degreeCurricularPlan =
-                    rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
+                    AbstractDomainObject.fromExternalId(degreeCurricularPlanId);
 
             Set<Student> studentsList =
                     ReadStudentsWithAttendsByDegreeCurricularPlanAndExecutionPeriod

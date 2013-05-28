@@ -36,6 +36,7 @@ import org.apache.struts.action.ActionMessages;
 import org.apache.struts.util.MessageResources;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
@@ -184,11 +185,11 @@ public abstract class ForunsManagement extends FenixDispatchAction {
     }
 
     protected ConversationThread getRequestedThread(HttpServletRequest request) {
-        return (ConversationThread) rootDomainObject.readContentByOID(Integer.valueOf(request.getParameter("threadId")));
+        return (ConversationThread) AbstractDomainObject.fromExternalId(Integer.valueOf(request.getParameter("threadId")));
     }
 
     protected Forum getRequestedForum(HttpServletRequest request) {
-        return (Forum) rootDomainObject.readContentByOID(Integer.valueOf(request.getParameter("forumId")));
+        return (Forum) AbstractDomainObject.fromExternalId(Integer.valueOf(request.getParameter("forumId")));
     }
 
     private List<Content> getContentToDisplay(List<Node> nodes, Integer pageNumber, Integer pageSize) {
@@ -213,7 +214,7 @@ public abstract class ForunsManagement extends FenixDispatchAction {
         String quotationText = null;
         if (quotedMessageId != null) {
             MessageResources resources = this.getResources(request, "MESSAGING_RESOURCES");
-            ConversationMessage message = (ConversationMessage) rootDomainObject.readContentByOID(quotedMessageId);
+            ConversationMessage message = (ConversationMessage) AbstractDomainObject.fromExternalId(quotedMessageId);
 
             String author = message.getCreator().getName() + " (" + message.getCreator().getIstUsername() + ")";
 

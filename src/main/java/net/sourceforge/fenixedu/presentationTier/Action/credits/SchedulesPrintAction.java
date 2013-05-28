@@ -25,7 +25,7 @@ public class SchedulesPrintAction extends ShowTeacherCreditsDispatchAction {
             HttpServletResponse response) throws Exception {
 
         Integer executionPeriodId = Integer.valueOf(request.getParameter("executionPeriodId"));
-        ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
+        ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodId);
         Teacher teacher = AbstractDomainObject.fromExternalId(request.getParameter("teacherId"));
 
         getAllTeacherCredits(request, executionSemester, teacher);

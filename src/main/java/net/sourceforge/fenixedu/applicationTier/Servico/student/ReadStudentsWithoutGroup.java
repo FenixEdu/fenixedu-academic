@@ -19,12 +19,12 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author asnr and scpo
@@ -40,7 +40,7 @@ public class ReadStudentsWithoutGroup {
     public static ISiteComponent run(final Integer groupPropertiesCode, final String username) throws FenixServiceException {
 
         final InfoSiteStudentsWithoutGroup infoSiteStudentsWithoutGroup = new InfoSiteStudentsWithoutGroup();
-        final Grouping grouping = RootDomainObject.getInstance().readGroupingByOID(groupPropertiesCode);
+        final Grouping grouping = AbstractDomainObject.fromExternalId(groupPropertiesCode);
         if (grouping == null) {
             throw new ExistingServiceException();
         }

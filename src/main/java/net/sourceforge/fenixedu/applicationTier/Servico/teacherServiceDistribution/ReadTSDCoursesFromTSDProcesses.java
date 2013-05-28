@@ -10,10 +10,10 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilte
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.teacherServiceDistribution.TSDCourseDTOEntry;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCourse;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.Pair;
 
 public class ReadTSDCoursesFromTSDProcesses {
@@ -23,7 +23,7 @@ public class ReadTSDCoursesFromTSDProcesses {
         for (Integer tsdProcessPhaseId : tsdProcessIdMap.keySet()) {
             TeacherServiceDistribution tsd = null;
 
-            tsd = RootDomainObject.getInstance().readTeacherServiceDistributionByOID(tsdProcessIdMap.get(tsdProcessPhaseId).getKey());
+            tsd = AbstractDomainObject.fromExternalId(tsdProcessIdMap.get(tsdProcessPhaseId).getKey());
 
             List<ExecutionSemester> executionPeriodList =
                     getExecutionPeriodList(tsd, tsdProcessIdMap.get(tsdProcessPhaseId).getValue());
@@ -42,7 +42,7 @@ public class ReadTSDCoursesFromTSDProcesses {
     private List<ExecutionSemester> getExecutionPeriodList(TeacherServiceDistribution tsd, Integer executionPeriodId) {
         List<ExecutionSemester> executionPeriodList = new ArrayList<ExecutionSemester>();
 
-        ExecutionSemester executionSemester = RootDomainObject.getInstance().readExecutionSemesterByOID(executionPeriodId);
+        ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodId);
 
         if (executionSemester != null) {
             executionPeriodList.add(executionSemester);

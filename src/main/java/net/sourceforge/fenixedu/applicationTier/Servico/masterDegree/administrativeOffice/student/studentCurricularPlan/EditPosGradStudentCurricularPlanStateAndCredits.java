@@ -10,11 +10,11 @@ import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class EditPosGradStudentCurricularPlanStateAndCredits {
 
@@ -23,7 +23,7 @@ public class EditPosGradStudentCurricularPlanStateAndCredits {
     public static void run(IUserView userView, Integer studentCurricularPlanId, String currentState, Double credits,
             String startDate, List<Integer> extraCurricularOIDs, String observations, Integer branchId, String specialization)
             throws FenixServiceException {
-        final StudentCurricularPlan scp = RootDomainObject.getInstance().readStudentCurricularPlanByOID(studentCurricularPlanId);
+        final StudentCurricularPlan scp = AbstractDomainObject.fromExternalId(studentCurricularPlanId);
         if (scp == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -38,7 +38,7 @@ public class EditPosGradStudentCurricularPlanStateAndCredits {
             throw new InvalidArgumentsServiceException();
         }
 
-        final Branch branch = RootDomainObject.getInstance().readBranchByOID(branchId);
+        final Branch branch = AbstractDomainObject.fromExternalId(branchId);
         if (branch == null) {
             throw new InvalidArgumentsServiceException();
         }

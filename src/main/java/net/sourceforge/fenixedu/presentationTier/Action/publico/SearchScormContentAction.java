@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
 import net.sourceforge.fenixedu.presentationTier.Action.SearchDSpaceGeneralAction;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.FileContentCreationBean.EducationalResourceType;
@@ -27,6 +26,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.file.FileSearchCriteria.SearchField;
 import pt.utl.ist.fenix.tools.file.FilesetMetadataQuery.ConjunctionType;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
@@ -44,7 +44,7 @@ public class SearchScormContentAction extends SearchDSpaceGeneralAction {
         ExecutionCourse course = null;
         if (executionCourseId != null) {
             course =
-                    (ExecutionCourse) RootDomainObject.readDomainObjectByOID(ExecutionCourse.class,
+                    (ExecutionCourse) AbstractDomainObject.fromExternalId(ExecutionCourse.class,
                             Integer.valueOf(executionCourseId));
         } else {
             ExecutionCourseSite site =
@@ -66,7 +66,7 @@ public class SearchScormContentAction extends SearchDSpaceGeneralAction {
         }
 
         ExecutionCourse course =
-                (ExecutionCourse) RootDomainObject.readDomainObjectByOID(ExecutionCourse.class,
+                (ExecutionCourse) AbstractDomainObject.fromExternalId(ExecutionCourse.class,
                         Integer.valueOf(executionCourseId));
         SearchDSpaceCoursesBean bean = (SearchDSpaceCoursesBean) createNewBean();
         bean.addSearchElement(new SearchElement(SearchField.COURSE, course.getNome(), ConjunctionType.AND));
@@ -157,11 +157,11 @@ public class SearchScormContentAction extends SearchDSpaceGeneralAction {
         bean.setEducationalResourceTypes(typesList);
 
         if (executionYearId != null && executionYearId.length() > 0) {
-            bean.setExecutionYear((ExecutionYear) RootDomainObject.readDomainObjectByOID(ExecutionYear.class,
+            bean.setExecutionYear((ExecutionYear) AbstractDomainObject.fromExternalId(ExecutionYear.class,
                     Integer.valueOf(executionYearId)));
         }
         if (executionPeriodId != null && executionPeriodId.length() > 0) {
-            bean.setExecutionPeriod((ExecutionSemester) RootDomainObject.readDomainObjectByOID(ExecutionSemester.class,
+            bean.setExecutionPeriod((ExecutionSemester) AbstractDomainObject.fromExternalId(ExecutionSemester.class,
                     Integer.valueOf(executionPeriodId)));
         }
 

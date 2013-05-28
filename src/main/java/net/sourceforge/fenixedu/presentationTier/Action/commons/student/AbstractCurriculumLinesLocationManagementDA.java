@@ -125,7 +125,7 @@ abstract public class AbstractCurriculumLinesLocationManagementDA extends FenixD
     }
 
     protected StudentCurricularPlan getStudentCurricularPlan(HttpServletRequest request) {
-        return rootDomainObject.readStudentCurricularPlanByOID(getRequestParameterAsInteger(request, "scpID"));
+        return AbstractDomainObject.fromExternalId(getRequestParameterAsInteger(request, "scpID"));
     }
 
 }

@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.ChangeConvokeActive;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.ChangeConvokeStatus;
 import net.sourceforge.fenixedu.dataTransferObject.VariantBean;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.vigilancy.AttendingStatus;
@@ -30,6 +29,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "teacher", path = "/evaluation/vigilancy/vigilantsForEvaluation", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "listVigilantsForEvaluation", path = "list-vigilants-for-evaluation"),
@@ -41,7 +41,7 @@ public class ListVigilanciesForEvaluationDispatchAction extends FenixDispatchAct
         request.setAttribute("executionCourseID", executionCourseID);
         String writtenEvaluationID = request.getParameter("evaluationOID");
         WrittenEvaluation evaluation =
-                (WrittenEvaluation) RootDomainObject.readDomainObjectByOID(WrittenEvaluation.class,
+                (WrittenEvaluation) AbstractDomainObject.fromExternalId(WrittenEvaluation.class,
                         Integer.valueOf(writtenEvaluationID));
 
         ComparatorChain comparator = new ComparatorChain();
@@ -76,7 +76,7 @@ public class ListVigilanciesForEvaluationDispatchAction extends FenixDispatchAct
             HttpServletResponse response) throws  FenixServiceException {
 
         String vigilancyID = request.getParameter("oid");
-        Vigilancy vigilancy = (Vigilancy) RootDomainObject.readDomainObjectByOID(Vigilancy.class, Integer.valueOf(vigilancyID));
+        Vigilancy vigilancy = (Vigilancy) AbstractDomainObject.fromExternalId(Vigilancy.class, Integer.valueOf(vigilancyID));
         String participationType = request.getParameter("participationType");
         AttendingStatus status = AttendingStatus.valueOf(participationType);
         try {
@@ -93,7 +93,7 @@ public class ListVigilanciesForEvaluationDispatchAction extends FenixDispatchAct
             HttpServletResponse response) throws  FenixServiceException {
 
         String vigilancyID = request.getParameter("oid");
-        Vigilancy vigilancy = (Vigilancy) RootDomainObject.readDomainObjectByOID(Vigilancy.class, Integer.valueOf(vigilancyID));
+        Vigilancy vigilancy = (Vigilancy) AbstractDomainObject.fromExternalId(Vigilancy.class, Integer.valueOf(vigilancyID));
         if (vigilancy instanceof OwnCourseVigilancy) {
             String bool = request.getParameter("bool");
             Boolean active = Boolean.valueOf(bool);
@@ -112,7 +112,7 @@ public class ListVigilanciesForEvaluationDispatchAction extends FenixDispatchAct
 
         IViewState viewState = RenderUtils.getViewState("variantBean");
         WrittenEvaluation evaluation =
-                (WrittenEvaluation) RootDomainObject.readDomainObjectByOID(WrittenEvaluation.class,
+                (WrittenEvaluation) AbstractDomainObject.fromExternalId(WrittenEvaluation.class,
                         Integer.valueOf(request.getParameter("evaluationOID")));
         if (viewState != null) {
             List<Vigilancy> vigilancies = evaluation.getActiveOtherVigilancies();

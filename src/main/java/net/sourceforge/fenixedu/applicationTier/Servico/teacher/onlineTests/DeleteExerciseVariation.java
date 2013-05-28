@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarDateComparator;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarHourComparator;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
@@ -22,6 +21,7 @@ import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
 import org.apache.struts.util.LabelValueBean;
 
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Susana Fernandes
@@ -31,7 +31,7 @@ public class DeleteExerciseVariation {
     public List<LabelValueBean> run(Integer executionCourseId, Integer questionCode) throws InvalidArgumentsServiceException {
         List<LabelValueBean> result = new ArrayList<LabelValueBean>();
 
-        Question question = RootDomainObject.getInstance().readQuestionByOID(questionCode);
+        Question question = AbstractDomainObject.fromExternalId(questionCode);
 
         if (question == null) {
             throw new InvalidArgumentsServiceException();

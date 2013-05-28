@@ -5,7 +5,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddressData;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -15,6 +14,7 @@ import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class InsertExternalPerson {
 
@@ -47,7 +47,7 @@ public class InsertExternalPerson {
             throw new ExistingServiceException("error.exception.commons.ExternalContract.existingExternalContract");
         }
 
-        final Unit institutionLocation = (Unit) RootDomainObject.getInstance().readPartyByOID(institutionID);
+        final Unit institutionLocation = (Unit) AbstractDomainObject.fromExternalId(institutionID);
         Person externalPerson =
                 Person.createExternalPerson(name, Gender.valueOf(sex), new PhysicalAddressData().setAddress(address), phone,
                         mobile, homepage, email, String.valueOf(System.currentTimeMillis()), IDDocumentType.EXTERNAL);
@@ -109,7 +109,7 @@ public class InsertExternalPerson {
     public static ExternalContract run(String name, Integer institutionID, String phone, String mobile, String email)
             throws FenixServiceException {
 
-        final Unit institutionLocation = (Unit) RootDomainObject.getInstance().readPartyByOID(institutionID);
+        final Unit institutionLocation = (Unit) AbstractDomainObject.fromExternalId(institutionID);
         Person externalPerson =
                 Person.createExternalPerson(name, Gender.MALE, null, phone, mobile, null, email,
                         String.valueOf(System.currentTimeMillis()), IDDocumentType.EXTERNAL);

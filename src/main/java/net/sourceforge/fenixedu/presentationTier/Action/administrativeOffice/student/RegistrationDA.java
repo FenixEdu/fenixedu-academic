@@ -41,6 +41,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/registration", module = "academicAdministration")
 @Forwards({
@@ -217,7 +218,7 @@ public class RegistrationDA extends StudentRegistrationDA {
 
         final Integer cycleCurriculumGroupId = getIntegerFromRequest(request, "cycleCurriculumGroupId");
         final CycleCurriculumGroup cycleCurriculumGroup =
-                (CycleCurriculumGroup) rootDomainObject.readCurriculumModuleByOID(cycleCurriculumGroupId);
+                (CycleCurriculumGroup) AbstractDomainObject.fromExternalId(cycleCurriculumGroupId);
         final RegistrationConclusionBean registrationConclusionBean;
         if (cycleCurriculumGroupId == null) {
             registrationConclusionBean = new RegistrationConclusionBean(registration);
@@ -310,7 +311,7 @@ public class RegistrationDA extends StudentRegistrationDA {
         final String attendsIdString = request.getParameter("attendsId");
         final Integer attendsId =
                 attendsIdString != null && attendsIdString.length() > 0 ? Integer.valueOf(attendsIdString) : null;
-        final Attends attends = attendsId == null ? null : rootDomainObject.readAttendsByOID(attendsId);
+        final Attends attends = attendsId == null ? null : AbstractDomainObject.fromExternalId(attendsId);
 
         try {
             registration.removeAttendFor(attends.getExecutionCourse());
@@ -329,7 +330,7 @@ public class RegistrationDA extends StudentRegistrationDA {
         final String attendsIdString = request.getParameter("attendsId");
         final Integer attendsId =
                 attendsIdString != null && attendsIdString.length() > 0 ? Integer.valueOf(attendsIdString) : null;
-        final Attends attends = attendsId == null ? null : rootDomainObject.readAttendsByOID(attendsId);
+        final Attends attends = attendsId == null ? null : AbstractDomainObject.fromExternalId(attendsId);
 
         if (attends != null) {
             attends.deleteShiftEnrolments();
@@ -368,6 +369,6 @@ public class RegistrationDA extends StudentRegistrationDA {
     }
 
     private RegistrationRegime getRegistrationRegime(HttpServletRequest request) {
-        return rootDomainObject.readRegistrationRegimeByOID(getIntegerFromRequest(request, "registrationRegimeId"));
+        return AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "registrationRegimeId"));
     }
 }

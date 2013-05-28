@@ -13,9 +13,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExportGrouping;
 import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.util.ProposalState;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author joaosa & rmalo
@@ -24,7 +24,7 @@ import pt.ist.fenixWebFramework.services.Service;
 public class ExecutionCourseWaitingAnswer {
 
     protected Boolean run(Integer executionCourseID) throws FenixServiceException {
-        final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseID);
+        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseID);
         if (executionCourse == null) {
             throw new InvalidArgumentsServiceException();
         }

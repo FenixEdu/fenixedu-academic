@@ -14,6 +14,7 @@ import org.apache.commons.collections.Transformer;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ReadAvailableExecutionPeriods {
 
@@ -24,7 +25,7 @@ public class ReadAvailableExecutionPeriods {
         final Collection<ExecutionSemester> filteredExecutionPeriods =
                 new ArrayList<ExecutionSemester>(RootDomainObject.getInstance().getExecutionPeriodsSet());
         for (final Integer executionPeriodID : unavailableExecutionPeriodsIDs) {
-            final ExecutionSemester executionSemester = RootDomainObject.getInstance().readExecutionSemesterByOID(executionPeriodID);
+            final ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodID);
             filteredExecutionPeriods.remove(executionSemester);
         }
         return (List) CollectionUtils.collect(filteredExecutionPeriods, TRANSFORM_EXECUTIONPERIOD_TO_INFOEXECUTIONPERIOD);

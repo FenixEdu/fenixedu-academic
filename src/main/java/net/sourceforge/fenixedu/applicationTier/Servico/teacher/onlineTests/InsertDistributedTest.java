@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.EvaluationManagementLog;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
@@ -38,6 +37,7 @@ import org.apache.commons.beanutils.BeanComparator;
 
 import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.ist.fenixframework.pstm.Transaction;
 
 public class InsertDistributedTest {
@@ -46,12 +46,12 @@ public class InsertDistributedTest {
             Calendar beginDate, Calendar beginHour, Calendar endDate, Calendar endHour, TestType testType,
             CorrectionAvailability correctionAvaiability, Boolean imsFeedback, List<InfoStudent> infoStudentList,
             String contextPath) throws FenixServiceException {
-        ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseId);
+        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
         if (executionCourse == null) {
             throw new InvalidArgumentsServiceException();
         }
 
-        Test test = RootDomainObject.getInstance().readTestByOID(testId);
+        Test test = AbstractDomainObject.fromExternalId(testId);
         if (test == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -139,8 +139,8 @@ public class InsertDistributedTest {
 
         @Override
         public void doIt() {
-            final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseId);
-            final Test test = RootDomainObject.getInstance().readTestByOID(testId);
+            final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
+            final Test test = AbstractDomainObject.fromExternalId(testId);
 
             DistributedTest distributedTest = new DistributedTest();
             distributedTest.setTitle(test.getTitle());
@@ -199,11 +199,11 @@ public class InsertDistributedTest {
         }
 
         public TestQuestion getTestQuestion() {
-            return RootDomainObject.getInstance().readTestQuestionByOID(testQuestionId);
+            return AbstractDomainObject.fromExternalId(testQuestionId);
         }
 
         public Question getQuestion() {
-            return RootDomainObject.getInstance().readQuestionByOID(questionId);
+            return AbstractDomainObject.fromExternalId(questionId);
         }
     }
 
@@ -275,7 +275,7 @@ public class InsertDistributedTest {
 
         @Override
         public void doIt() {
-            Test test = RootDomainObject.getInstance().readTestByOID(testId);
+            Test test = AbstractDomainObject.fromExternalId(testId);
 
             List<TestQuestion> testQuestionList = new ArrayList<TestQuestion>(test.getTestQuestions());
             Collections.sort(testQuestionList, new BeanComparator("testQuestionOrder"));
@@ -330,8 +330,8 @@ public class InsertDistributedTest {
 
         @Override
         public void doIt() {
-            final DistributedTest distributedTest = RootDomainObject.getInstance().readDistributedTestByOID(distributedTestId);
-            final Registration registration = RootDomainObject.getInstance().readRegistrationByOID(infoStudent.getExternalId());
+            final DistributedTest distributedTest = AbstractDomainObject.fromExternalId(distributedTestId);
+            final Registration registration = AbstractDomainObject.fromExternalId(infoStudent.getExternalId());
 
             for (final QuestionPair questionPair : questionList) {
                 final TestQuestion testQuestion = questionPair.getTestQuestion();

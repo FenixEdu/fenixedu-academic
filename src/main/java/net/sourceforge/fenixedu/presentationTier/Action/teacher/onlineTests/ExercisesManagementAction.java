@@ -61,6 +61,7 @@ import org.apache.struts.util.LabelValueBean;
 
 import pt.ist.fenixWebFramework.servlets.commons.UploadedFile;
 import pt.ist.fenixWebFramework.servlets.filters.RequestWrapperFilter;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Susana Fernandes
@@ -557,7 +558,7 @@ public class ExercisesManagementAction extends FenixDispatchAction {
             HttpServletResponse response) throws FenixActionException {
         final Integer executionCourseId = getCodeFromRequest(request, "objectCode");
 
-        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
+        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
         List<Metadata> metadataList = new ArrayList<Metadata>();
         for (Metadata metadata : executionCourse.getMetadatas()) {
             if (metadata.getVisibility()) {
@@ -585,7 +586,7 @@ public class ExercisesManagementAction extends FenixDispatchAction {
         final Integer executionCourseId = getCodeFromRequest(request, "objectCode");
         final IUserView userView = getUserView(request);
 
-        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
+        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
         Set<Metadata> metadataList = executionCourse.findVisibleMetadata();
 
         final String order = request.getParameter("order");
@@ -871,7 +872,7 @@ public class ExercisesManagementAction extends FenixDispatchAction {
     public ActionForward exportExerciseVariation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
         final Integer variationCode = getCodeFromRequest(request, "variationCode");
-        Question question = rootDomainObject.readQuestionByOID(variationCode);
+        Question question = AbstractDomainObject.fromExternalId(variationCode);
         response.setContentType("text/plain; charset=utf-8");
         response.setHeader("Content-disposition", "attachment; filename=" + question.getXmlFileName());
         try {

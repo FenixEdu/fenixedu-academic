@@ -5,10 +5,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlanEditor;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class EditDegreeCurricularPlan {
 
@@ -21,7 +21,7 @@ public class EditDegreeCurricularPlan {
             throw new InvalidArgumentsServiceException();
         }
 
-        final DegreeCurricularPlan dcpToEdit = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(infoDcp.getExternalId());
+        final DegreeCurricularPlan dcpToEdit = AbstractDomainObject.fromExternalId(infoDcp.getExternalId());
         if (dcpToEdit == null) {
             throw new FenixServiceException("message.nonExistingDegreeCurricularPlan");
         }

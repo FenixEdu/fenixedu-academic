@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoRoomOccupationEditor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.domain.Lesson;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.util.DiaSemana;
 
@@ -16,6 +15,7 @@ import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class EditLesson {
 
@@ -25,7 +25,7 @@ public class EditLesson {
             InfoRoomOccupationEditor infoRoomOccupation, InfoShift infoShift, YearMonthDay newBeginDate, YearMonthDay newEndDate,
             Boolean createLessonInstances) throws FenixServiceException {
 
-        Lesson aula = RootDomainObject.getInstance().readLessonByOID(aulaAntiga.getExternalId());
+        Lesson aula = AbstractDomainObject.fromExternalId(aulaAntiga.getExternalId());
 
         if (aula != null) {
 

@@ -7,7 +7,6 @@ import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -27,8 +26,8 @@ public class AnnouncementSwap extends FenixDispatchAction {
         Integer executionCourseId = Integer.valueOf(request.getParameter("executionCourseId"));
         Integer executionPeriodId = Integer.valueOf(request.getParameter("executionPeriodId"));
 
-        ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseId);
-        ExecutionSemester executionPeriod = RootDomainObject.getInstance().readExecutionSemesterByOID(executionPeriodId);
+        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
+        ExecutionSemester executionPeriod = AbstractDomainObject.fromExternalId(executionPeriodId);
 
         ExecutionCourseBean sessionBean = new ExecutionCourseBean();
 
@@ -40,8 +39,8 @@ public class AnnouncementSwap extends FenixDispatchAction {
             Integer executionDegreeId = Integer.valueOf(request.getParameter("executionDegreeId"));
             Integer curricularYearId = Integer.valueOf(request.getParameter("curYearId"));
 
-            ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeId);
-            CurricularYear curYear = RootDomainObject.getInstance().readCurricularYearByOID(curricularYearId);
+            ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeId);
+            CurricularYear curYear = AbstractDomainObject.fromExternalId(curricularYearId);
 
             sessionBean.setExecutionDegree(executionDegree);
             sessionBean.setCurricularYear(curYear);

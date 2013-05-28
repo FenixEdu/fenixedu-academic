@@ -43,7 +43,6 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.space.RoomClassification;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
@@ -56,6 +55,7 @@ import org.apache.struts.util.LabelValueBean;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.StringAppender;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -486,7 +486,7 @@ public class ContextUtils {
     private static RoomClassification readTypeRoomRequestValue(HttpServletRequest request, String name) {
         Integer obj = readIntegerRequestValue(request, name);
         if (obj != null) {
-            return RootDomainObject.getInstance().readRoomClassificationByOID(obj);
+            return AbstractDomainObject.fromExternalId(obj);
         }
 
         return null;
@@ -637,22 +637,22 @@ public class ContextUtils {
             }
             if (request.getAttribute(PresentationConstants.EXECUTION_DEGREE_OID) != null) {
                 executionDegree =
-                        RootDomainObject.getInstance().readExecutionDegreeByOID(
+                        AbstractDomainObject.fromExternalId(
                                 Integer.parseInt((String) request.getAttribute(PresentationConstants.EXECUTION_DEGREE_OID)));
             } else if (request.getParameter(PresentationConstants.EXECUTION_DEGREE_OID) != null) {
                 executionDegree =
-                        RootDomainObject.getInstance().readExecutionDegreeByOID(
+                        AbstractDomainObject.fromExternalId(
                                 Integer.parseInt(request.getParameter(PresentationConstants.EXECUTION_DEGREE_OID)));
             }
             if (request.getAttribute(PresentationConstants.CURRICULAR_YEAR_OID) != null
                     && !request.getParameter(PresentationConstants.CURRICULAR_YEAR_OID).equals("null")) {
                 curricularYear =
-                        RootDomainObject.getInstance().readCurricularYearByOID(
+                        AbstractDomainObject.fromExternalId(
                                 Integer.parseInt((String) request.getAttribute(PresentationConstants.CURRICULAR_YEAR_OID)));
             } else if (request.getParameter(PresentationConstants.CURRICULAR_YEAR_OID) != null
                     && !request.getParameter(PresentationConstants.CURRICULAR_YEAR_OID).equals("null")) {
                 curricularYear =
-                        RootDomainObject.getInstance().readCurricularYearByOID(
+                        AbstractDomainObject.fromExternalId(
                                 Integer.parseInt(request.getParameter(PresentationConstants.CURRICULAR_YEAR_OID)));
             }
             if (request.getAttribute("execution_course_name") != null) {

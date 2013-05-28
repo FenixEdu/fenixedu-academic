@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/caseHandlingDegreeCandidacyForGraduatedPersonProcess", module = "nape",
         formBeanClass = CandidacyProcessDA.CandidacyProcessForm.class)
@@ -20,7 +21,7 @@ public class DegreeCandidacyForGraduatedPersonProcessDA extends
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanOID);
 
         if (degreeCurricularPlanOID != null) {
-            return rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanOID);
+            return AbstractDomainObject.fromExternalId(degreeCurricularPlanOID);
         }
 
         return null;

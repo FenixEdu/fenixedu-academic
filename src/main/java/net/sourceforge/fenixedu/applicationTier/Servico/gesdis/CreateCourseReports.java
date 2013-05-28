@@ -8,9 +8,9 @@ import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.FinalEvaluation;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * 
@@ -23,7 +23,7 @@ public class CreateCourseReports {
     public static void run(Integer executionPeriodID) {
         Set<Integer> courseReportsExecutionCoursesIDs = new HashSet<Integer>();
 
-        final ExecutionSemester executionSemester = RootDomainObject.getInstance().readExecutionSemesterByOID(executionPeriodID);
+        final ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodID);
         List<ExecutionCourse> executionCourses = executionSemester.getAssociatedExecutionCourses();
 
         for (ExecutionCourse executionCourse : executionCourses) {

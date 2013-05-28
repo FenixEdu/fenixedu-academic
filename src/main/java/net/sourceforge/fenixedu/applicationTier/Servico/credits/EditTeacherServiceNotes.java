@@ -7,7 +7,6 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilte
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
@@ -16,6 +15,7 @@ import net.sourceforge.fenixedu.domain.teacher.TeacherServiceNotes;
 import org.apache.commons.lang.StringUtils;
 
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class EditTeacherServiceNotes {
 
@@ -23,7 +23,7 @@ public class EditTeacherServiceNotes {
             String otherNote, String masterDegreeTeachingNote, String functionsAccumulation, String thesisNote, RoleType roleType)
             throws FenixServiceException {
 
-        ExecutionSemester executionSemester = RootDomainObject.getInstance().readExecutionSemesterByOID(executionPeriodId);
+        ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodId);
         TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
 
         if (teacherService == null) {

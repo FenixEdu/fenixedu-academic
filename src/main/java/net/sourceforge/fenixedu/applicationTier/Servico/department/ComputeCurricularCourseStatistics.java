@@ -17,10 +17,10 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -31,8 +31,8 @@ public class ComputeCurricularCourseStatistics {
     @Service
     public static String run(Integer degreeCurricularPlanID, Integer executionYearID, RegistrationAgreement agreement) {
 
-        ExecutionYear executionYear = RootDomainObject.getInstance().readExecutionYearByOID(executionYearID);
-        DegreeCurricularPlan degreeCurricularPlan = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+        ExecutionYear executionYear = AbstractDomainObject.fromExternalId(executionYearID);
+        DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
         List<CurricularCourse> curricularCourses = degreeCurricularPlan.getCurricularCourses();
 
         Formatter result = new Formatter();

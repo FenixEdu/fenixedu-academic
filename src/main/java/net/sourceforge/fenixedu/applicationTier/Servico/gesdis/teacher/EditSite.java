@@ -10,8 +10,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.dataTransferObject.InfoSite;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author PTRLV
@@ -21,7 +21,7 @@ public class EditSite {
     protected Boolean run(InfoSite infoSiteOld, final String alternativeSite, final String mail, final String initialStatement,
             final String introduction) throws FenixServiceException {
         final ExecutionCourse executionCourse =
-                RootDomainObject.getInstance().readExecutionCourseByOID(infoSiteOld.getInfoExecutionCourse().getExternalId());
+                AbstractDomainObject.fromExternalId(infoSiteOld.getInfoExecutionCourse().getExternalId());
         final ExecutionCourseSite site = executionCourse.getSite();
 
         site.edit(initialStatement, introduction, mail, alternativeSite);

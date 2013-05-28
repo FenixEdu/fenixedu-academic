@@ -7,18 +7,18 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilte
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCourse;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDVirtualCourseGroup;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class RemoveCourseFromTeacherServiceDistribution {
 
     protected void run(Integer tsdId, Integer courseId) throws FenixServiceException {
 
-        TeacherServiceDistribution tsd = RootDomainObject.getInstance().readTeacherServiceDistributionByOID(tsdId);
-        TSDCourse course = RootDomainObject.getInstance().readTSDCourseByOID(courseId);
+        TeacherServiceDistribution tsd = AbstractDomainObject.fromExternalId(tsdId);
+        TSDCourse course = AbstractDomainObject.fromExternalId(courseId);
         CompetenceCourse competenceCourse = course.getCompetenceCourse();
 
         if (course instanceof TSDVirtualCourseGroup) {

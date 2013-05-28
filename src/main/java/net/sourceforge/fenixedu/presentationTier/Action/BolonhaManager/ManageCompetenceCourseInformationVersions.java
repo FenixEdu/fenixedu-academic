@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformationChangeRequest;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
@@ -42,6 +41,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
@@ -159,7 +159,7 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
         ExecutionSemester period = null;
         if (executionPeriodID != null) {
             period =
-                    (ExecutionSemester) RootDomainObject.readDomainObjectByOID(ExecutionSemester.class,
+                    (ExecutionSemester) AbstractDomainObject.fromExternalId(ExecutionSemester.class,
                             Integer.valueOf(executionPeriodID));
         }
         return period;
@@ -303,7 +303,7 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
     private CompetenceCourse getCompetenceCourse(HttpServletRequest request) {
         String competenceCourseID = request.getParameter("competenceCourseID");
         CompetenceCourse course =
-                (CompetenceCourse) RootDomainObject.readDomainObjectByOID(CompetenceCourse.class,
+                (CompetenceCourse) AbstractDomainObject.fromExternalId(CompetenceCourse.class,
                         Integer.valueOf(competenceCourseID));
         return course;
     }
@@ -323,7 +323,7 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
     private CompetenceCourseInformationChangeRequest getCompetenceCourseInformationRequest(HttpServletRequest request) {
         String competenceCourseInformationChangeRequestId = request.getParameter("changeRequestID");
         CompetenceCourseInformationChangeRequest changeRequest =
-                (CompetenceCourseInformationChangeRequest) RootDomainObject.readDomainObjectByOID(
+                (CompetenceCourseInformationChangeRequest) AbstractDomainObject.fromExternalId(
                         CompetenceCourseInformationChangeRequest.class,
                         Integer.valueOf(competenceCourseInformationChangeRequestId));
         return changeRequest;
@@ -349,7 +349,7 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
         CompetenceCourseInformationChangeRequest changeRequest = null;
         if (competenceCourseInformationChangeRequestId != null) {
             changeRequest =
-                    (CompetenceCourseInformationChangeRequest) RootDomainObject.readDomainObjectByOID(
+                    (CompetenceCourseInformationChangeRequest) AbstractDomainObject.fromExternalId(
                             CompetenceCourseInformationChangeRequest.class,
                             Integer.valueOf(competenceCourseInformationChangeRequestId));
         }

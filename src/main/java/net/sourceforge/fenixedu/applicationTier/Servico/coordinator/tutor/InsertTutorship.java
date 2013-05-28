@@ -13,12 +13,12 @@ import net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.TutorshipEr
 import net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.TutorshipManagementBean;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class InsertTutorship extends TutorshipManagement {
 
@@ -26,7 +26,7 @@ public class InsertTutorship extends TutorshipManagement {
 
         final Integer studentNumber = bean.getStudentNumber();
         final Teacher teacher = bean.getTeacher();
-        final ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeID);
+        final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeID);
         final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
 
         validateTeacher(teacher, executionDegree);
@@ -46,7 +46,7 @@ public class InsertTutorship extends TutorshipManagement {
     public List<TutorshipErrorBean> run(Integer executionDegreeID, StudentsByEntryYearBean bean) throws FenixServiceException {
 
         final List<StudentCurricularPlan> students = bean.getStudentsToCreateTutorshipList();
-        final ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeID);
+        final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeID);
         final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
         final Teacher teacher = bean.getTeacher();
 

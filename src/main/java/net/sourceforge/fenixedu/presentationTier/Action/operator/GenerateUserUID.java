@@ -25,6 +25,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 @Mapping(module = "operator", path = "/generateUserUID", scope = "request", parameter = "method")
@@ -94,7 +95,7 @@ public class GenerateUserUID extends FenixDispatchAction {
 
     private Person getPersonFromParameter(HttpServletRequest request) {
         String personIDString = request.getParameter("personID");
-        return (Person) ((StringUtils.isEmpty(personIDString)) ? null : rootDomainObject.readPartyByOID(Integer
+        return (Person) ((StringUtils.isEmpty(personIDString)) ? null : AbstractDomainObject.fromExternalId(Integer
                 .valueOf(personIDString)));
     }
 }

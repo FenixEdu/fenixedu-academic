@@ -48,6 +48,7 @@ import org.apache.struts.action.ActionMapping;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction {
@@ -387,7 +388,7 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
     }
 
     private StudentCandidacy getCandidacy(HttpServletRequest request) {
-        return (StudentCandidacy) rootDomainObject.readCandidacyByOID(Integer.valueOf(getFromRequest(request, "candidacyID")
+        return (StudentCandidacy) AbstractDomainObject.fromExternalId(Integer.valueOf(getFromRequest(request, "candidacyID")
                 .toString()));
     }
 

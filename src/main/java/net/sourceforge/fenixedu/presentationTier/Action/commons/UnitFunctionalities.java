@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.research.DeletePersisten
 import net.sourceforge.fenixedu.applicationTier.Servico.research.DeleteUnitFile;
 import net.sourceforge.fenixedu.applicationTier.Servico.research.EditPersistentGroup;
 import net.sourceforge.fenixedu.applicationTier.Servico.research.EditUnitFile;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.UnitFile;
 import net.sourceforge.fenixedu.domain.UnitFileTag;
 import net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers;
@@ -33,6 +32,7 @@ import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 
 public abstract class UnitFunctionalities extends FenixDispatchAction {
@@ -249,17 +249,17 @@ public abstract class UnitFunctionalities extends FenixDispatchAction {
 
     protected UnitFile getUnitFile(HttpServletRequest request) {
         Integer id = getExternalId(request, "fid");
-        return (UnitFile) RootDomainObject.getInstance().readFileByOID(id);
+        return (UnitFile) AbstractDomainObject.fromExternalId(id);
     }
 
     protected Unit getUnit(HttpServletRequest request) {
         Integer id = getExternalId(request, "unitId");
-        return (Unit) RootDomainObject.getInstance().readPartyByOID(id);
+        return (Unit) AbstractDomainObject.fromExternalId(id);
     }
 
     protected PersistentGroupMembers getGroup(HttpServletRequest request) {
         Integer id = getExternalId(request, "groupId");
-        return RootDomainObject.getInstance().readPersistentGroupMembersByOID(id);
+        return AbstractDomainObject.fromExternalId(id);
     }
 
     protected PersistentGroupMembersBean getNewPersistentGroupBean(HttpServletRequest request) {

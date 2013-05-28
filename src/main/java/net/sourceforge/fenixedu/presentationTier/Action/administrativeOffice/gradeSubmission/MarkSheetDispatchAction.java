@@ -33,6 +33,7 @@ import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 abstract public class MarkSheetDispatchAction extends FenixDispatchAction {
 
@@ -53,12 +54,12 @@ abstract public class MarkSheetDispatchAction extends FenixDispatchAction {
         Integer degreeCurricularPlanID = (Integer) form.get("dcpID");
         Integer curricularCourseID = (Integer) form.get("ccID");
 
-        final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
-        final CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseID);
+        final ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodID);
+        final CurricularCourse curricularCourse = (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseID);
 
         markSheetBean.setExecutionPeriod(executionSemester);
-        markSheetBean.setDegree(rootDomainObject.readDegreeByOID(degreeID));
-        markSheetBean.setDegreeCurricularPlan(rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID));
+        markSheetBean.setDegree(AbstractDomainObject.fromExternalId(degreeID));
+        markSheetBean.setDegreeCurricularPlan(AbstractDomainObject.fromExternalId(degreeCurricularPlanID));
         markSheetBean.setCurricularCourseBean(new CurricularCourseMarksheetManagementBean(curricularCourse, executionSemester));
 
         request.setAttribute("edit", markSheetBean);
@@ -86,7 +87,7 @@ abstract public class MarkSheetDispatchAction extends FenixDispatchAction {
 
         DynaActionForm form = (DynaActionForm) actionForm;
         Integer markSheetID = (Integer) form.get("msID");
-        MarkSheet markSheet = rootDomainObject.readMarkSheetByOID(markSheetID);
+        MarkSheet markSheet = AbstractDomainObject.fromExternalId(markSheetID);
 
         request.setAttribute("markSheet", markSheet);
         request.setAttribute("url", buildUrl(form));
@@ -99,7 +100,7 @@ abstract public class MarkSheetDispatchAction extends FenixDispatchAction {
 
         DynaActionForm form = (DynaActionForm) actionForm;
         Integer markSheetID = (Integer) form.get("msID");
-        request.setAttribute("markSheet", rootDomainObject.readMarkSheetByOID(markSheetID));
+        request.setAttribute("markSheet", AbstractDomainObject.fromExternalId(markSheetID));
 
         return mapping.findForward("removeMarkSheet");
     }
@@ -124,7 +125,7 @@ abstract public class MarkSheetDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) {
         DynaActionForm form = (DynaActionForm) actionForm;
         Integer markSheetID = (Integer) form.get("msID");
-        request.setAttribute("markSheet", rootDomainObject.readMarkSheetByOID(markSheetID));
+        request.setAttribute("markSheet", AbstractDomainObject.fromExternalId(markSheetID));
 
         return mapping.findForward("confirmMarkSheet");
     }
@@ -134,7 +135,7 @@ abstract public class MarkSheetDispatchAction extends FenixDispatchAction {
 
         DynaActionForm form = (DynaActionForm) actionForm;
         Integer markSheetID = (Integer) form.get("msID");
-        MarkSheet markSheet = rootDomainObject.readMarkSheetByOID(markSheetID);
+        MarkSheet markSheet = AbstractDomainObject.fromExternalId(markSheetID);
         IUserView userView = getUserView(request);
         ActionMessages actionMessages = new ActionMessages();
         try {

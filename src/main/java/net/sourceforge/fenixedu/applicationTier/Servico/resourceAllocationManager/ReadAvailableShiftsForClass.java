@@ -10,7 +10,6 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
 
@@ -19,6 +18,7 @@ import org.apache.commons.collections.Transformer;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ReadAvailableShiftsForClass {
 
@@ -28,7 +28,7 @@ public class ReadAvailableShiftsForClass {
 
         List infoShifts = null;
 
-        SchoolClass schoolClass = RootDomainObject.getInstance().readSchoolClassByOID(infoClass.getExternalId());
+        SchoolClass schoolClass = AbstractDomainObject.fromExternalId(infoClass.getExternalId());
         Set<Shift> shifts = schoolClass.findAvailableShifts();
 
         infoShifts = (List) CollectionUtils.collect(shifts, new Transformer() {

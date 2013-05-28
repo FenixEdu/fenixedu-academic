@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.domain.GuideEntry;
 import net.sourceforge.fenixedu.domain.GuideState;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry;
@@ -26,6 +25,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.State;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author <a href="mailto:joao.mota@ist.utl.pt">Jo�o Mota </a> <br/>
@@ -58,7 +58,7 @@ public class CreateReimbursementGuide {
     public static Integer run(Integer guideId, String remarks, List infoReimbursementGuideEntries, IUserView userView)
             throws FenixServiceException {
 
-        Guide guide = RootDomainObject.getInstance().readGuideByOID(guideId);
+        Guide guide = AbstractDomainObject.fromExternalId(guideId);
         if (!guide.getActiveSituation().getSituation().equals(GuideState.PAYED)) {
             throw new InvalidGuideSituationServiceException("error.exception.masterDegree.invalidGuideSituation");
         }
@@ -74,7 +74,7 @@ public class CreateReimbursementGuide {
             }
 
             GuideEntry guideEntry =
-                    RootDomainObject.getInstance().readGuideEntryByOID(infoReimbursementGuideEntry.getInfoGuideEntry().getExternalId());
+                    AbstractDomainObject.fromExternalId(infoReimbursementGuideEntry.getInfoGuideEntry().getExternalId());
             if (checkReimbursementGuideEntriesSum(infoReimbursementGuideEntry, guideEntry) == false) {
                 throw new InvalidReimbursementValueServiceException("error.exception.masterDegree.invalidReimbursementValue");
             }

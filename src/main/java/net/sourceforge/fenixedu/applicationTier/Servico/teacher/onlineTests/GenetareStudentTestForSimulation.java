@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoQuestion;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestion;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoTestScope;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.Test;
 import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
@@ -26,6 +25,7 @@ import net.sourceforge.fenixedu.util.tests.TestType;
 import org.apache.commons.beanutils.BeanComparator;
 
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class GenetareStudentTestForSimulation {
     protected List run(Integer executionCourseId, Integer testId, String path, TestType testType,
@@ -33,14 +33,14 @@ public class GenetareStudentTestForSimulation {
             throws FenixServiceException {
         List<InfoStudentTestQuestion> infoStudentTestQuestionList = new ArrayList<InfoStudentTestQuestion>();
         path = path.replace('\\', '/');
-        final Test test = RootDomainObject.getInstance().readTestByOID(testId);
+        final Test test = AbstractDomainObject.fromExternalId(testId);
         if (test == null) {
             throw new InvalidArgumentsServiceException();
         }
 
         TestScope testScope = TestScope.readByDomainObject(ExecutionCourse.class, executionCourseId);
         if (testScope == null) {
-            final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseId);
+            final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
             if (executionCourse == null) {
                 throw new InvalidArgumentsServiceException();
             }

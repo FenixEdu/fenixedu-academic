@@ -21,6 +21,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class DocumentRequestDispatchAction extends FenixDispatchAction {
 
@@ -40,7 +41,7 @@ public class DocumentRequestDispatchAction extends FenixDispatchAction {
     }
 
     private Registration getRegistration(final HttpServletRequest request, final ActionForm actionForm) {
-        return rootDomainObject.readRegistrationByOID(getIntegerFromRequestOrForm(request, (DynaActionForm) actionForm,
+        return AbstractDomainObject.fromExternalId(getIntegerFromRequestOrForm(request, (DynaActionForm) actionForm,
                 "registrationId"));
     }
 
@@ -64,7 +65,7 @@ public class DocumentRequestDispatchAction extends FenixDispatchAction {
     public ActionForward viewDocumentRequest(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         request.setAttribute("documentRequest",
-                rootDomainObject.readAcademicServiceRequestByOID(getRequestParameterAsInteger(request, "documentRequestId")));
+                AbstractDomainObject.fromExternalId(getRequestParameterAsInteger(request, "documentRequestId")));
 
         return mapping.findForward("viewDocumentRequest");
     }

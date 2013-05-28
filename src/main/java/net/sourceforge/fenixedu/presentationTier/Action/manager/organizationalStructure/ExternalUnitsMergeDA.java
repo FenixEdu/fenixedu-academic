@@ -22,6 +22,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "manager", path = "/unitsMerge", attribute = "unitsMergeForm", formBean = "unitsMergeForm", scope = "request",
         parameter = "method")
@@ -83,8 +84,8 @@ public class ExternalUnitsMergeDA extends FenixDispatchAction {
             DynaActionForm dynaActionForm = (DynaActionForm) form;
             Integer fromUnitID = (Integer) dynaActionForm.get("fromUnitID");
             Integer destinationUnitID = (Integer) dynaActionForm.get("destinationUnitID");
-            fromUnit = (Unit) rootDomainObject.readPartyByOID(fromUnitID);
-            destinationUnit = (Unit) rootDomainObject.readPartyByOID(destinationUnitID);
+            fromUnit = (Unit) AbstractDomainObject.fromExternalId(fromUnitID);
+            destinationUnit = (Unit) AbstractDomainObject.fromExternalId(destinationUnitID);
         }
 
         try {
@@ -121,13 +122,13 @@ public class ExternalUnitsMergeDA extends FenixDispatchAction {
     private Unit getFromUnitFromParameter(final HttpServletRequest request) {
         final String unitIDString = request.getParameter("fromUnitID");
         final Integer uniID = Integer.valueOf(unitIDString);
-        return (Unit) rootDomainObject.readPartyByOID(uniID);
+        return (Unit) AbstractDomainObject.fromExternalId(uniID);
     }
 
     private Unit getDestinationUnitFromParameter(final HttpServletRequest request) {
         final String unitIDString = request.getParameter("unitID");
         final Integer uniID = Integer.valueOf(unitIDString);
-        return (Unit) rootDomainObject.readPartyByOID(uniID);
+        return (Unit) AbstractDomainObject.fromExternalId(uniID);
     }
 
     private void saveMessages(HttpServletRequest request, DomainException e) {

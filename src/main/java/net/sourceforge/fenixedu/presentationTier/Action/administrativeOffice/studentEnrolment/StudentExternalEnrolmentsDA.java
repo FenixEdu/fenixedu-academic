@@ -36,6 +36,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/studentExternalEnrolments", module = "academicAdministration", formBean = "studentExternalEnrolmentsForm")
 @Forwards({
@@ -221,21 +222,21 @@ public class StudentExternalEnrolmentsDA extends FenixDispatchAction {
     }
 
     protected Registration getRegistration(final HttpServletRequest request, ActionForm form) {
-        return rootDomainObject.readRegistrationByOID(getIntegerFromRequestOrForm(request, (DynaActionForm) form,
+        return AbstractDomainObject.fromExternalId(getIntegerFromRequestOrForm(request, (DynaActionForm) form,
                 "registrationId"));
     }
 
     protected Unit getExternalUnit(final HttpServletRequest request, ActionForm actionForm) {
-        return (Unit) rootDomainObject.readPartyByOID(getIntegerFromRequestOrForm(request, (DynaActionForm) actionForm,
+        return (Unit) AbstractDomainObject.fromExternalId(getIntegerFromRequestOrForm(request, (DynaActionForm) actionForm,
                 "externalUnitId"));
     }
 
     protected ExternalCurricularCourse getExternalCurricularCourseByID(final String externalCurricularCourseID) {
-        return rootDomainObject.readExternalCurricularCourseByOID(Integer.valueOf(externalCurricularCourseID));
+        return AbstractDomainObject.fromExternalId(Integer.valueOf(externalCurricularCourseID));
     }
 
     protected ExternalEnrolment getExternalEnrolment(final HttpServletRequest request, ActionForm actionForm) {
-        return rootDomainObject.readExternalEnrolmentByOID(getIntegerFromRequestOrForm(request, (DynaActionForm) actionForm,
+        return AbstractDomainObject.fromExternalId(getIntegerFromRequestOrForm(request, (DynaActionForm) actionForm,
                 "externalEnrolmentId"));
     }
 }

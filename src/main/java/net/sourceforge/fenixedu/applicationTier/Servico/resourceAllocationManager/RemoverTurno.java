@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManag
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
 
@@ -12,13 +11,14 @@ import org.apache.commons.collections.Predicate;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class RemoverTurno {
 
     @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
     @Service
     public static Object run(final InfoShift infoShift, final InfoClass infoClass) {
-        final Shift shift = RootDomainObject.getInstance().readShiftByOID(infoShift.getExternalId());
+        final Shift shift = AbstractDomainObject.fromExternalId(infoShift.getExternalId());
         if (shift == null) {
             return Boolean.FALSE;
         }

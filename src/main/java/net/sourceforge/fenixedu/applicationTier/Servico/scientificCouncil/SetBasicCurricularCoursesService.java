@@ -11,9 +11,9 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Jo�o Mota
@@ -27,7 +27,7 @@ public class SetBasicCurricularCoursesService {
     @Service
     public static Boolean run(List curricularCoursesIds, Integer degreeCurricularPlanId) throws FenixServiceException {
 
-        DegreeCurricularPlan degreeCurricularPlan = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanId);
+        DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanId);
 
         List<CurricularCourse> basicCurricularCourses = degreeCurricularPlan.getCurricularCoursesByBasicAttribute(Boolean.TRUE);
 
@@ -45,7 +45,7 @@ public class SetBasicCurricularCoursesService {
         while (itId.hasNext()) {
 
             CurricularCourse curricularCourseBasic =
-                    (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID((Integer) itId.next());
+                    (CurricularCourse) AbstractDomainObject.fromExternalId((Integer) itId.next());
             curricularCourseBasic.setBasic(new Boolean(true));
 
         }

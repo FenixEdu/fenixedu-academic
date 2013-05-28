@@ -10,9 +10,9 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWorkProposalHeader;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Luis Cruz
@@ -24,7 +24,7 @@ public class ReadPublishedFinalDegreeWorkProposalHeaders {
     public static List<FinalDegreeWorkProposalHeader> run(Integer executionDegreeOID) {
         final List<FinalDegreeWorkProposalHeader> result = new ArrayList<FinalDegreeWorkProposalHeader>();
 
-        final ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeOID);
+        final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeOID);
         if (executionDegree != null && executionDegree.hasScheduling()) {
             final Set<Proposal> finalDegreeWorkProposals = executionDegree.getScheduling().findPublishedProposals();
 

@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.Grade;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Seminaries.CaseStudy;
 import net.sourceforge.fenixedu.domain.Seminaries.CaseStudyChoice;
@@ -35,6 +34,7 @@ import net.sourceforge.fenixedu.domain.Seminaries.Theme;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -53,22 +53,20 @@ public class ReadCandidacies {
         //
         // case[1-5]Id => case study ids in the desired order
 
-        Modality modality = modalityID.intValue() == -1 ? null : RootDomainObject.getInstance().readModalityByOID(modalityID);
-        Seminary seminary = seminaryID.intValue() == -1 ? null : RootDomainObject.getInstance().readSeminaryByOID(seminaryID);
-        Theme theme = themeID.intValue() == -1 ? null : RootDomainObject.getInstance().readThemeByOID(themeID);
+        Modality modality = modalityID.intValue() == -1 ? null : AbstractDomainObject.fromExternalId(modalityID);
+        Seminary seminary = seminaryID.intValue() == -1 ? null : AbstractDomainObject.fromExternalId(seminaryID);
+        Theme theme = themeID.intValue() == -1 ? null : AbstractDomainObject.fromExternalId(themeID);
 
         DegreeCurricularPlan degreeCurricularPlan =
-                degreeCurricularPlanID.intValue() == -1 ? null : RootDomainObject.getInstance()
-                        .readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+                degreeCurricularPlanID.intValue() == -1 ? null : AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
         CurricularCourse curricularCourse =
-                curricularCourseID.intValue() == -1 ? null : (CurricularCourse) RootDomainObject.getInstance()
-                        .readDegreeModuleByOID(curricularCourseID);
+                curricularCourseID.intValue() == -1 ? null : (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseID);
 
-        CaseStudy caseStudy1 = case1Id.intValue() == -1 ? null : RootDomainObject.getInstance().readCaseStudyByOID(case1Id);
-        CaseStudy caseStudy2 = case2Id.intValue() == -1 ? null : RootDomainObject.getInstance().readCaseStudyByOID(case2Id);
-        CaseStudy caseStudy3 = case3Id.intValue() == -1 ? null : RootDomainObject.getInstance().readCaseStudyByOID(case3Id);
-        CaseStudy caseStudy4 = case4Id.intValue() == -1 ? null : RootDomainObject.getInstance().readCaseStudyByOID(case4Id);
-        CaseStudy caseStudy5 = case5Id.intValue() == -1 ? null : RootDomainObject.getInstance().readCaseStudyByOID(case5Id);
+        CaseStudy caseStudy1 = case1Id.intValue() == -1 ? null : AbstractDomainObject.fromExternalId(case1Id);
+        CaseStudy caseStudy2 = case2Id.intValue() == -1 ? null : AbstractDomainObject.fromExternalId(case2Id);
+        CaseStudy caseStudy3 = case3Id.intValue() == -1 ? null : AbstractDomainObject.fromExternalId(case3Id);
+        CaseStudy caseStudy4 = case4Id.intValue() == -1 ? null : AbstractDomainObject.fromExternalId(case4Id);
+        CaseStudy caseStudy5 = case5Id.intValue() == -1 ? null : AbstractDomainObject.fromExternalId(case5Id);
 
         List<SeminaryCandidacy> filteredCandidacies = new ArrayList<SeminaryCandidacy>();
 

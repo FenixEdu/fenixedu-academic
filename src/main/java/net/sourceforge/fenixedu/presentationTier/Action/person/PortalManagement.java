@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.person.CreatePortal;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.DeleteTemplatedContent;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.EditPortal;
 import net.sourceforge.fenixedu.domain.MetaDomainObject;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.contents.Element;
 import net.sourceforge.fenixedu.domain.contents.MetaDomainObjectPortal;
 import net.sourceforge.fenixedu.domain.contents.Portal;
@@ -24,6 +23,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "person", path = "/portalManagement", scope = "request", parameter = "method")
 @Forwards(value = {
@@ -94,7 +94,7 @@ public class PortalManagement extends FenixDispatchAction {
 
         String elementId = request.getParameter("elementId");
         Element element =
-                elementId != null ? (Element) RootDomainObject.getInstance().readContentByOID(Integer.valueOf(elementId)) : null;
+                elementId != null ? (Element) AbstractDomainObject.fromExternalId(Integer.valueOf(elementId)) : null;
         Portal portal = getPortal(request);
 
         try {
@@ -122,7 +122,7 @@ public class PortalManagement extends FenixDispatchAction {
         Portal portal = getPortal(request);
         String elementId = request.getParameter("elementId");
         Element element =
-                (elementId != null) ? (Element) RootDomainObject.getInstance().readContentByOID(Integer.valueOf(elementId)) : null;
+                (elementId != null) ? (Element) AbstractDomainObject.fromExternalId(Integer.valueOf(elementId)) : null;
         try {
             AddContentToPool.run((MetaDomainObjectPortal) portal, element);
         } catch (Exception e) {
@@ -134,11 +134,11 @@ public class PortalManagement extends FenixDispatchAction {
 
     private Portal getPortal(HttpServletRequest request) {
         String portalID = request.getParameter("pid");
-        return (Portal) rootDomainObject.readContentByOID(Integer.valueOf(portalID));
+        return (Portal) AbstractDomainObject.fromExternalId(Integer.valueOf(portalID));
     }
 
     private MetaDomainObject getMetaDomainObject(HttpServletRequest request) {
         String metaObjectID = request.getParameter("oid");
-        return rootDomainObject.readMetaDomainObjectByOID(Integer.valueOf(metaObjectID));
+        return AbstractDomainObject.fromExternalId(Integer.valueOf(metaObjectID));
     }
 }

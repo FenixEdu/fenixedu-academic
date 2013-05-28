@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -21,6 +20,7 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "publico", path = "/department/theses", scope = "session", parameter = "method")
 @Forwards(value = { @Forward(name = "showThesisDetails", path = "department-showDegreeThesisDetails"),
@@ -33,7 +33,7 @@ public class DepartmentShowThesesDA extends PublicShowThesesDA {
 
         if (unit == null) {
             Integer id = getIntegerFromRequest(request, "selectedDepartmentUnitID");
-            unit = (Unit) RootDomainObject.getInstance().readPartyByOID(id);
+            unit = (Unit) AbstractDomainObject.fromExternalId(id);
         }
 
         return unit;

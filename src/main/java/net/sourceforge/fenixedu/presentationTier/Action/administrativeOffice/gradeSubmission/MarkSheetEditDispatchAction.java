@@ -27,6 +27,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/editMarkSheet", module = "academicAdministration", formBean = "markSheetManagementForm",
         input = "/markSheetManagement.do?method=prepareSearchMarkSheet")
@@ -46,7 +47,7 @@ public class MarkSheetEditDispatchAction extends MarkSheetDispatchAction {
         DynaActionForm form = (DynaActionForm) actionForm;
         Integer markSheetID = (Integer) form.get("msID");
 
-        MarkSheet markSheet = rootDomainObject.readMarkSheetByOID(markSheetID);
+        MarkSheet markSheet = AbstractDomainObject.fromExternalId(markSheetID);
 
         editBean.setTeacherId(markSheet.getResponsibleTeacher().getPerson().getIstUsername());
         editBean.setEvaluationDate(markSheet.getEvaluationDateDateTime().toDate());

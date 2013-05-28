@@ -7,17 +7,17 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilte
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCourseType;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class SetTSDCourseType {
     protected void run(Integer competenceCourseId, Integer tsdId, Integer executionPeriodId,
             String courseTSDProcessPhaseTypeString) {
-        CompetenceCourse competenceCourse = RootDomainObject.getInstance().readCompetenceCourseByOID(competenceCourseId);
-        TeacherServiceDistribution tsd = RootDomainObject.getInstance().readTeacherServiceDistributionByOID(tsdId);
-        ExecutionSemester executionSemester = RootDomainObject.getInstance().readExecutionSemesterByOID(executionPeriodId);
+        CompetenceCourse competenceCourse = AbstractDomainObject.fromExternalId(competenceCourseId);
+        TeacherServiceDistribution tsd = AbstractDomainObject.fromExternalId(tsdId);
+        ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodId);
 
         TSDCourseType tsdCourseType = TSDCourseType.valueOf(courseTSDProcessPhaseTypeString);
 

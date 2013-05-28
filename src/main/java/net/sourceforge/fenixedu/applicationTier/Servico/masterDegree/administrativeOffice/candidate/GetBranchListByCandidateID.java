@@ -8,9 +8,9 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoBranch;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBranchEditor;
 import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class GetBranchListByCandidateID {
 
@@ -19,7 +19,7 @@ public class GetBranchListByCandidateID {
     public static List<InfoBranch> run(Integer candidateID) throws FenixServiceException {
         List<InfoBranch> result = new ArrayList<InfoBranch>();
 
-        MasterDegreeCandidate masterDegreeCandidate = RootDomainObject.getInstance().readMasterDegreeCandidateByOID(candidateID);
+        MasterDegreeCandidate masterDegreeCandidate = AbstractDomainObject.fromExternalId(candidateID);
         List<Branch> branches = masterDegreeCandidate.getExecutionDegree().getDegreeCurricularPlan().getAreas();
         if (branches == null) {
             InfoBranchEditor infoBranch = new InfoBranchEditor();

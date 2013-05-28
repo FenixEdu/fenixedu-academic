@@ -5,15 +5,15 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingT
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.onlineTests.Test;
 import net.sourceforge.fenixedu.domain.onlineTests.TestScope;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class InsertTest {
 
     protected Integer run(Integer executionCourseId, String title, String information) throws InvalidArgumentsServiceException {
-        ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseId);
+        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
         if (executionCourse == null) {
             throw new InvalidArgumentsServiceException();
         }

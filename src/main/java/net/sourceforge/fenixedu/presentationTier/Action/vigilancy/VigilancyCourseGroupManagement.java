@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.AddExec
 import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.RemoveExecutionCoursesFromGroup;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -26,6 +25,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "examCoordination", path = "/vigilancy/vigilancyCourseGroupManagement", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "editCourseGroup", path = "edit-course-group") })
@@ -38,7 +38,7 @@ public class VigilancyCourseGroupManagement extends FenixDispatchAction {
         String oid = request.getParameter("gid");
         Integer externalId = Integer.valueOf(oid);
 
-        VigilantGroup group = (VigilantGroup) RootDomainObject.readDomainObjectByOID(VigilantGroup.class, externalId);
+        VigilantGroup group = (VigilantGroup) AbstractDomainObject.fromExternalId(VigilantGroup.class, externalId);
         bean.setSelectedVigilantGroup(group);
         bean.setSelectedDepartment(getDepartment(group));
         request.setAttribute("bean", bean);

@@ -9,10 +9,10 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCompetenceCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCompetenceCourseWithCurricularCourses;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class CreateEditCompetenceCourse {
 
@@ -22,7 +22,7 @@ public class CreateEditCompetenceCourse {
             throws NonExistingServiceException, InvalidArgumentsServiceException {
         List<Department> departments = new ArrayList<Department>();
         for (Integer departmentID : departmentIDs) {
-            Department department = RootDomainObject.getInstance().readDepartmentByOID(departmentID);
+            Department department = AbstractDomainObject.fromExternalId(departmentID);
             if (department == null) {
                 throw new NonExistingServiceException("error.manager.noDepartment");
             }
@@ -34,7 +34,7 @@ public class CreateEditCompetenceCourse {
             if (competenceCourseID == null) {
                 competenceCourse = new CompetenceCourse(code, name, departments);
             } else {
-                competenceCourse = RootDomainObject.getInstance().readCompetenceCourseByOID(competenceCourseID);
+                competenceCourse = AbstractDomainObject.fromExternalId(competenceCourseID);
                 if (competenceCourse == null) {
                     throw new NonExistingServiceException("error.manager.noCompetenceCourse");
                 }

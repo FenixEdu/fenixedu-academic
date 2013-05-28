@@ -21,6 +21,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "SpaceManager", path = "/manageMaterialSpaceOccupations", scope = "session", parameter = "method")
 @Forwards(value = {
@@ -109,7 +110,7 @@ public class ManageMaterialSpaceOccupationsDA extends FenixDispatchAction {
                 request.getParameterMap().containsKey("spaceInformationID") ? request.getParameter("spaceInformationID") : (String) request
                         .getAttribute("spaceInformationID");
         final Integer spaceInformationID = spaceInformationIDString != null ? Integer.valueOf(spaceInformationIDString) : null;
-        return rootDomainObject.readSpaceInformationByOID(spaceInformationID);
+        return AbstractDomainObject.fromExternalId(spaceInformationID);
     }
 
     private MaterialSpaceOccupation getMaterialOccupationFromParameter(final HttpServletRequest request) {
@@ -118,6 +119,6 @@ public class ManageMaterialSpaceOccupationsDA extends FenixDispatchAction {
                         .getAttribute("materialOccupationID");
         final Integer materialOccupationID =
                 materialOccupationIDString != null ? Integer.valueOf(materialOccupationIDString) : null;
-        return (MaterialSpaceOccupation) rootDomainObject.readResourceAllocationByOID(materialOccupationID);
+        return (MaterialSpaceOccupation) AbstractDomainObject.fromExternalId(materialOccupationID);
     }
 }

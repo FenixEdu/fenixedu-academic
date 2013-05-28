@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ExecutionYearBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -19,6 +18,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "departmentMember", path = "/teacherExpectationAutoAvaliation", scope = "request", parameter = "method")
 @Forwards(value = {
@@ -34,7 +34,7 @@ public class AutoEvaluationTeacherExpectationAction extends FenixDispatchAction 
         String executionYearID = request.getParameter("executionYearId");
         if (executionYearID != null) {
             ExecutionYear executionYear =
-                    (ExecutionYear) RootDomainObject.readDomainObjectByOID(ExecutionYear.class, Integer.valueOf(executionYearID));
+                    (ExecutionYear) AbstractDomainObject.fromExternalId(ExecutionYear.class, Integer.valueOf(executionYearID));
             request.setAttribute("expectation", getTeacherExpectationForGivenYearInRequest(request, executionYear));
         }
         return mapping.findForward("editAutoEvaluation");
@@ -63,7 +63,7 @@ public class AutoEvaluationTeacherExpectationAction extends FenixDispatchAction 
         } else {
             String id = request.getParameter("executionYearId");
             year =
-                    id != null ? (ExecutionYear) RootDomainObject.readDomainObjectByOID(ExecutionYear.class, Integer.valueOf(id)) : ExecutionYear
+                    id != null ? (ExecutionYear) AbstractDomainObject.fromExternalId(ExecutionYear.class, Integer.valueOf(id)) : ExecutionYear
                             .readCurrentExecutionYear();
         }
         return year;

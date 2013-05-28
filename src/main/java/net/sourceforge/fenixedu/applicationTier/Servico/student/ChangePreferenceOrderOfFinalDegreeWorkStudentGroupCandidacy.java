@@ -4,11 +4,11 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Luis Cruz
@@ -22,7 +22,7 @@ public class ChangePreferenceOrderOfFinalDegreeWorkStudentGroupCandidacy {
     @Checked("RolePredicates.STUDENT_PREDICATE")
     @Service
     public static Boolean run(FinalDegreeWorkGroup group, Integer groupProposalOID, Integer orderOfPreference) {
-        GroupProposal groupProposal = RootDomainObject.getInstance().readGroupProposalByOID(groupProposalOID);
+        GroupProposal groupProposal = AbstractDomainObject.fromExternalId(groupProposalOID);
         if (group != null && groupProposal != null) {
             for (int i = 0; i < group.getGroupProposals().size(); i++) {
                 GroupProposal otherGroupProposal = group.getGroupProposals().get(i);

@@ -87,6 +87,7 @@ import org.json.simple.JSONObject;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.ist.fenixframework.pstm.Transaction;
 
 public class Student extends Student_Base {
@@ -164,7 +165,7 @@ public class Student extends Student_Base {
             stmt.setInt(1, number);
             final ResultSet resultSet = stmt.executeQuery();
             if (resultSet.next()) {
-                return RootDomainObject.getInstance().readStudentByOID(resultSet.getInt(1));
+                return AbstractDomainObject.fromExternalId(resultSet.getInt(1));
             }
 
             return null;

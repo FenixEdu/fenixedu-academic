@@ -24,6 +24,7 @@ import org.apache.struts.util.MessageResources;
 import org.apache.struts.util.ModuleUtils;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 import com.sun.syndication.feed.synd.SyndContent;
 import com.sun.syndication.feed.synd.SyndContentImpl;
@@ -170,7 +171,7 @@ public class AnnouncementRSS extends RSSAction {
 
     protected final AnnouncementBoard getSelectedBoard(HttpServletRequest request) {
         final String id = request.getParameter("announcementBoardId");
-        Content content = rootDomainObject.readContentByOID(Integer.valueOf(id));
+        Content content = AbstractDomainObject.fromExternalId(Integer.valueOf(id));
         return content instanceof AnnouncementBoard ? (AnnouncementBoard) content : null;
     }
 

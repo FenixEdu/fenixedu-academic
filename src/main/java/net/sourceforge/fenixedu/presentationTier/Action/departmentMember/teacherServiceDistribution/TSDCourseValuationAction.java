@@ -30,6 +30,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class TSDCourseValuationAction extends FenixDispatchAction {
 
@@ -75,11 +76,11 @@ public class TSDCourseValuationAction extends FenixDispatchAction {
     }
 
     private TSDCourse getSelectedTSDCourse(DynaActionForm dynaForm) throws FenixServiceException {
-        return rootDomainObject.readTSDCourseByOID((Integer) dynaForm.get("tsdCourse"));
+        return AbstractDomainObject.fromExternalId((Integer) dynaForm.get("tsdCourse"));
     }
 
     private TeacherServiceDistribution getSelectedTSD(DynaActionForm dynaForm) throws FenixServiceException {
-        return rootDomainObject.readTeacherServiceDistributionByOID((Integer) dynaForm.get("tsd"));
+        return AbstractDomainObject.fromExternalId((Integer) dynaForm.get("tsd"));
     }
 
     public ActionForward loadTSDCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -308,9 +309,9 @@ public class TSDCourseValuationAction extends FenixDispatchAction {
             HttpServletResponse response) throws  FenixServiceException {
 
         TeacherServiceDistribution tsd =
-                rootDomainObject.readTeacherServiceDistributionByOID(Integer.valueOf(request.getParameter("tsd")));
-        TSDCourse tsdCourse = rootDomainObject.readTSDCourseByOID(Integer.valueOf(request.getParameter("tsdCourse")));
-        TSDProcess process = rootDomainObject.readTSDProcessByOID(Integer.valueOf(request.getParameter("tsdProcessId")));
+                AbstractDomainObject.fromExternalId(Integer.valueOf(request.getParameter("tsd")));
+        TSDCourse tsdCourse = AbstractDomainObject.fromExternalId(Integer.valueOf(request.getParameter("tsdCourse")));
+        TSDProcess process = AbstractDomainObject.fromExternalId(Integer.valueOf(request.getParameter("tsdProcessId")));
         ShiftType type = ShiftType.valueOf(request.getParameter("shiftType"));
 
         request.setAttribute("curricularLoad", tsdCourse.getTSDCurricularLoadByShiftType(type));

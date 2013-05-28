@@ -9,16 +9,16 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ReadStudentsByPerson {
 
     protected List run(InfoPerson infoPerson) {
         final List<InfoStudent> result = new ArrayList<InfoStudent>();
 
-        Person person = (Person) RootDomainObject.getInstance().readPartyByOID(infoPerson.getExternalId());
+        Person person = (Person) AbstractDomainObject.fromExternalId(infoPerson.getExternalId());
         for (final Registration registration : person.getStudents()) {
             result.add(InfoStudent.newInfoFromDomain(registration));
         }

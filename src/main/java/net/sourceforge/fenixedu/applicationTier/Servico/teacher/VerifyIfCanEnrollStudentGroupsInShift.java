@@ -12,10 +12,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author joaosa & rmalo
@@ -25,13 +25,13 @@ public class VerifyIfCanEnrollStudentGroupsInShift {
 
     protected Boolean run(Integer executionCourseCode, Integer groupPropertiesCode, Integer shiftCode)
             throws FenixServiceException {
-        final Grouping grouping = RootDomainObject.getInstance().readGroupingByOID(groupPropertiesCode);
+        final Grouping grouping = AbstractDomainObject.fromExternalId(groupPropertiesCode);
 
         if (grouping == null) {
             throw new ExistingServiceException();
         }
 
-        final Shift shift = RootDomainObject.getInstance().readShiftByOID(shiftCode);
+        final Shift shift = AbstractDomainObject.fromExternalId(shiftCode);
 
         if (!shift.containsType(grouping.getShiftType())) {
             return false;

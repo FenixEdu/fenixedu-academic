@@ -10,14 +10,14 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class UpdateNonAffiliatedTeachersProfessorship {
 
     protected void run(List<Integer> nonAffiliatedTeachersIds, Integer executionCourseId) throws FenixServiceException {
 
-        final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseId);
+        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
         if (executionCourse == null) {
             throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
         }

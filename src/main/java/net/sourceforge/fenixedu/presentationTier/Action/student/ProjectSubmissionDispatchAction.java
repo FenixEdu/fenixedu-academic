@@ -35,6 +35,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.file.FileManagerException;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 
@@ -190,7 +191,7 @@ public class ProjectSubmissionDispatchAction extends FenixDispatchAction {
         Integer projectSubmissionId = getRequestParameterAsInteger(request, "projectSubmissionId");
 
         if (projectSubmissionId != null) {
-            return rootDomainObject.readProjectSubmissionByOID(projectSubmissionId);
+            return AbstractDomainObject.fromExternalId(projectSubmissionId);
         } else {
             return null;
         }
@@ -201,7 +202,7 @@ public class ProjectSubmissionDispatchAction extends FenixDispatchAction {
         Integer projectId = getRequestParameterAsInteger(request, "projectId");
 
         if (projectId != null) {
-            return (Project) rootDomainObject.readEvaluationByOID(projectId);
+            return (Project) AbstractDomainObject.fromExternalId(projectId);
         } else {
             return null;
         }
@@ -211,7 +212,7 @@ public class ProjectSubmissionDispatchAction extends FenixDispatchAction {
         Integer attendsId = getRequestParameterAsInteger(request, "attendsId");
 
         if (attendsId != null) {
-            return rootDomainObject.readAttendsByOID(attendsId);
+            return AbstractDomainObject.fromExternalId(attendsId);
         } else {
             return null;
         }

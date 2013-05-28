@@ -44,6 +44,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 /**
@@ -388,7 +389,7 @@ public class PersonManagementAction extends FenixDispatchAction {
     }
 
     protected PartyContact getPartyContact(final HttpServletRequest request) {
-        return rootDomainObject.readPartyContactByOID(getIntegerFromRequest(request, "addressID"));
+        return AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "addressID"));
     }
 
     private ActionForward goToPrepareCreateNewPersonInvitationPage(ActionMapping mapping, HttpServletRequest request,
@@ -453,7 +454,7 @@ public class PersonManagementAction extends FenixDispatchAction {
 
     private Invitation getInvitationFromParameter(HttpServletRequest request) {
         String invitationIDString = request.getParameter("invitationID");
-        return (Invitation) ((StringUtils.isEmpty(invitationIDString)) ? null : rootDomainObject.readAccountabilityByOID(Integer
+        return (Invitation) ((StringUtils.isEmpty(invitationIDString)) ? null : AbstractDomainObject.fromExternalId(Integer
                 .valueOf(invitationIDString)));
     }
 

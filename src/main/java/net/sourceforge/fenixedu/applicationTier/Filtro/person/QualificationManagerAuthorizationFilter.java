@@ -8,9 +8,9 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.person.InfoQualification;
 import net.sourceforge.fenixedu.domain.Qualification;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class QualificationManagerAuthorizationFilter {
 
@@ -59,7 +59,7 @@ public class QualificationManagerAuthorizationFilter {
             return true;
         }
         final Qualification qualification =
-                RootDomainObject.getInstance().readQualificationByOID(infoQualification.getExternalId());
+                AbstractDomainObject.fromExternalId(infoQualification.getExternalId());
         return qualification.getPerson() == userView.getPerson();
     }
 }

@@ -10,10 +10,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author João Mota
@@ -59,7 +59,7 @@ public class ExecutionCourseResponsibleForTeacherAuthorizationFilter extends Aut
         }
         try {
             ExecutionCourse executionCourse =
-                    executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseOID);
+                    executionCourse = AbstractDomainObject.fromExternalId(executionCourseOID);
 
             Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
             responsibleFor = teacher.isResponsibleFor(executionCourse);

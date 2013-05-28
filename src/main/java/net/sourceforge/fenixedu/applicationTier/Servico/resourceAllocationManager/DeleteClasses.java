@@ -7,9 +7,9 @@ package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManag
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class DeleteClasses {
 
@@ -17,7 +17,7 @@ public class DeleteClasses {
     @Service
     public static Boolean run(final List<Integer> classOIDs) {
         for (final Integer classId : classOIDs) {
-            RootDomainObject.getInstance().readSchoolClassByOID(classId).delete();
+            AbstractDomainObject.fromExternalId(classId).delete();
         }
         return Boolean.TRUE;
     }

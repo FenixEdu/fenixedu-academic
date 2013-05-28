@@ -6,7 +6,6 @@ import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.LessonInstance;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
@@ -15,6 +14,8 @@ import net.sourceforge.fenixedu.util.HourMinuteSecond;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.YearMonthDay;
+
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class NextPossibleSummaryLessonsAndDatesBean implements Serializable, Comparable<NextPossibleSummaryLessonsAndDatesBean> {
 
@@ -132,7 +133,7 @@ public class NextPossibleSummaryLessonsAndDatesBean implements Serializable, Com
 
         YearMonthDay date = new YearMonthDay(year, month, day);
         Integer lessonExternalId = Integer.parseInt(value.substring(8));
-        Lesson lesson = RootDomainObject.getInstance().readLessonByOID(lessonExternalId);
+        Lesson lesson = AbstractDomainObject.fromExternalId(lessonExternalId);
         NextPossibleSummaryLessonsAndDatesBean bean = new NextPossibleSummaryLessonsAndDatesBean(lesson, date);
 
         return bean;

@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrat
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
@@ -27,6 +26,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.util.LabelValueBean;
+
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -127,7 +128,7 @@ public class ChooseExecutionYearDispatchAction extends FenixDispatchAction {
 
         if (executionDegreeID != null) {
             ExecutionDegree executionDegree =
-                    (ExecutionDegree) RootDomainObject.readDomainObjectByOID(ExecutionDegree.class, executionDegreeID);
+                    (ExecutionDegree) AbstractDomainObject.fromExternalId(ExecutionDegree.class, executionDegreeID);
             ExecutionYear executionYear = executionDegree.getExecutionYear();
             request.setAttribute(PresentationConstants.EXECUTION_YEAR, executionYear.getName());
         }

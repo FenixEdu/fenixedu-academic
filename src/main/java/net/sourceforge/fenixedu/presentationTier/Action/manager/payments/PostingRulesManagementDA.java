@@ -56,6 +56,7 @@ import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/postingRules", module = "manager", formBeanClass = PostingRulesManagementDA.PostingRulesManagementForm.class)
 @Forwards({
@@ -144,11 +145,11 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
     }
 
     protected PostingRule getPostingRule(HttpServletRequest request) {
-        return rootDomainObject.readPostingRuleByOID(getIntegerFromRequest(request, "postingRuleId"));
+        return AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "postingRuleId"));
     }
 
     private DegreeCurricularPlan getDegreeCurricularPlan(final HttpServletRequest request) {
-        return rootDomainObject.readDegreeCurricularPlanByOID(getIntegerFromRequest(request, "degreeCurricularPlanId"));
+        return AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "degreeCurricularPlanId"));
     }
 
     public ActionForward prepareEditDegreeCurricularPlanPostingRule(ActionMapping mapping, ActionForm form,
@@ -337,7 +338,7 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
 
     private void setRequestAttributesToShowPaymentPlans(HttpServletRequest request, final PostingRulesManagementForm form) {
 
-        final ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(form.getExecutionYearId());
+        final ExecutionYear executionYear = AbstractDomainObject.fromExternalId(form.getExecutionYearId());
 
         request.setAttribute("executionYears", new ArrayList<ExecutionYear>(rootDomainObject.getExecutionYears()));
         request.setAttribute("paymentPlans", getDegreeCurricularPlan(request).getServiceAgreementTemplate()
@@ -448,7 +449,7 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
     }
 
     private PaymentPlan getPaymentPlan(final HttpServletRequest request) {
-        return rootDomainObject.readPaymentPlanByOID(getIntegerFromRequest(request, "paymentPlanId"));
+        return AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "paymentPlanId"));
     }
 
     public ActionForward deletePaymentPlan(ActionMapping mapping, ActionForm form, HttpServletRequest request,

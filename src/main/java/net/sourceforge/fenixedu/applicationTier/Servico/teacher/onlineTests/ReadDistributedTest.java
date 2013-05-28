@@ -9,9 +9,9 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingT
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoDistributedTest;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Susana Fernandes
@@ -20,7 +20,7 @@ public class ReadDistributedTest {
 
     protected InfoDistributedTest run(Integer executionCourseId, Integer distributedTestId)
             throws InvalidArgumentsServiceException {
-        DistributedTest distributedTest = RootDomainObject.getInstance().readDistributedTestByOID(distributedTestId);
+        DistributedTest distributedTest = AbstractDomainObject.fromExternalId(distributedTestId);
         if (distributedTest == null) {
             throw new InvalidArgumentsServiceException();
         }

@@ -22,6 +22,7 @@ import org.apache.struts.action.DynaActionForm;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author tfc130
@@ -49,7 +50,7 @@ public class ViewRoomFormAction extends FenixSelectedRoomsAndSelectedRoomIndexCo
         request.setAttribute(PresentationConstants.ROOM, infoRoom);
         request.setAttribute(PresentationConstants.ROOM_OID, infoRoom.getExternalId());
 
-        final AllocatableSpace room = (AllocatableSpace) rootDomainObject.readResourceByOID(infoRoom.getExternalId());
+        final AllocatableSpace room = (AllocatableSpace) AbstractDomainObject.fromExternalId(infoRoom.getExternalId());
         Calendar calendar = Calendar.getInstance();
         if (roomOccupationWeekBean.getWeekBean() == null) {
             calendar.setTime(roomOccupationWeekBean.getAcademicInterval().getStart().toDate());

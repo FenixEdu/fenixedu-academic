@@ -9,9 +9,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
@@ -60,7 +60,7 @@ public class ReadCandidateEnrolmentsByCandidateIDAuthorizationFilter extends Fil
             // Read The ExecutionDegree
 
             MasterDegreeCandidate masterDegreeCandidate =
-                    RootDomainObject.getInstance().readMasterDegreeCandidateByOID(candidateID);
+                    AbstractDomainObject.fromExternalId(candidateID);
 
             if (masterDegreeCandidate == null) {
                 return false;

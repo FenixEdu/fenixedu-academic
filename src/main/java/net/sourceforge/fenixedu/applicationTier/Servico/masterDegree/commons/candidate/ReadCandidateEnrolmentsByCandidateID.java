@@ -12,8 +12,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateEnrolmentWithCurricularCourseAndMasterDegreeCandidateAndExecutionDegreeAndDegreeCurricularPlanAndDegree;
 import net.sourceforge.fenixedu.domain.CandidateEnrolment;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * 
@@ -25,7 +25,7 @@ public class ReadCandidateEnrolmentsByCandidateID {
     protected List run(Integer candidateID) throws FenixServiceException {
         List result = new ArrayList();
 
-        MasterDegreeCandidate masterDegreeCandidate = RootDomainObject.getInstance().readMasterDegreeCandidateByOID(candidateID);
+        MasterDegreeCandidate masterDegreeCandidate = AbstractDomainObject.fromExternalId(candidateID);
 
         if (masterDegreeCandidate == null) {
             throw new NonExistingServiceException();

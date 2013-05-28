@@ -39,6 +39,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "resourceAllocationManager", path = "/studentShiftEnrollmentManagerLoockup",
         input = "/studentShiftEnrollmentManager.do?method=prepare", attribute = "studentShiftEnrollmentForm",
@@ -81,7 +82,7 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
 
     private Registration getAndSetRegistration(final HttpServletRequest request) {
         final Registration registration =
-                rootDomainObject.readRegistrationByOID(getIntegerFromRequest(request, "registrationOID"));
+                AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "registrationOID"));
         if (!registration.getPerson().getStudent().getRegistrationsToEnrolInShiftByStudent().contains(registration)) {
             return null;
         }
@@ -241,7 +242,7 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
 
     private ExecutionCourse getExecutionCourse(HttpServletRequest request) {
         if (!StringUtils.isEmpty(request.getParameter("executionCourseID"))) {
-            return rootDomainObject.readExecutionCourseByOID(Integer.valueOf(request.getParameter("executionCourseID")));
+            return AbstractDomainObject.fromExternalId(Integer.valueOf(request.getParameter("executionCourseID")));
         } else {
             return null;
         }

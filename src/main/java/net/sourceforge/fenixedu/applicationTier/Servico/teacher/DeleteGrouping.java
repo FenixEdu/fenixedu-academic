@@ -10,8 +10,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Tânia Pousão
@@ -25,7 +25,7 @@ public class DeleteGrouping {
             return Boolean.FALSE;
         }
 
-        Grouping groupProperties = RootDomainObject.getInstance().readGroupingByOID(groupPropertiesId);
+        Grouping groupProperties = AbstractDomainObject.fromExternalId(groupPropertiesId);
 
         if (groupProperties == null) {
             throw new ExistingServiceException();

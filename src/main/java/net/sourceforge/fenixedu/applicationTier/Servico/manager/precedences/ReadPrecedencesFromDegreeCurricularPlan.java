@@ -11,10 +11,10 @@ import net.sourceforge.fenixedu.dataTransferObject.precedences.InfoPrecedence;
 import net.sourceforge.fenixedu.dataTransferObject.precedences.InfoPrecedenceWithRestrictions;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.precedences.Precedence;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ReadPrecedencesFromDegreeCurricularPlan {
 
@@ -24,7 +24,7 @@ public class ReadPrecedencesFromDegreeCurricularPlan {
 
         Map finalListOfInfoPrecedences = new HashMap();
 
-        DegreeCurricularPlan degreeCurricularPlan = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+        DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
 
         List curricularCourses = degreeCurricularPlan.getCurricularCourses();
 

@@ -29,6 +29,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 
 @Mapping(module = "teacher", path = "/tests/questionBank/presentationMaterial", attribute = "testForm", formBean = "testForm",
@@ -74,7 +75,7 @@ public class PresentationMaterialManagementAction extends FenixDispatchAction {
             HttpServletResponse response) {
         Integer testElementId = getCodeFromRequest(request, "oid");
 
-        NewTestElement testElement = rootDomainObject.readNewTestElementByOID(testElementId);
+        NewTestElement testElement = AbstractDomainObject.fromExternalId(testElementId);
 
         request.setAttribute("bean", new PresentationMaterialBean(testElement, request.getParameter("returnPath"),
                 getCodeFromRequest(request, "returnId"), request.getParameter("contextKey")));
@@ -86,7 +87,7 @@ public class PresentationMaterialManagementAction extends FenixDispatchAction {
             HttpServletResponse response) {
         Integer testElementId = getCodeFromRequest(request, "oid");
 
-        NewTestElement testElement = rootDomainObject.readNewTestElementByOID(testElementId);
+        NewTestElement testElement = AbstractDomainObject.fromExternalId(testElementId);
 
         request.setAttribute("bean", new PresentationMaterialBean(testElement, request.getParameter("returnPath"),
                 getCodeFromRequest(request, "returnId"), request.getParameter("contextKey")));
@@ -98,7 +99,7 @@ public class PresentationMaterialManagementAction extends FenixDispatchAction {
             HttpServletResponse response) throws  FenixServiceException {
         Integer presentationMaterialId = getCodeFromRequest(request, "oid");
 
-        NewPresentationMaterial presentationMaterial = rootDomainObject.readNewPresentationMaterialByOID(presentationMaterialId);
+        NewPresentationMaterial presentationMaterial = AbstractDomainObject.fromExternalId(presentationMaterialId);
 
         request.setAttribute("presentationMaterial", presentationMaterial);
         request.setAttribute("bean",
@@ -112,7 +113,7 @@ public class PresentationMaterialManagementAction extends FenixDispatchAction {
             HttpServletResponse response) throws  FenixServiceException {
         Integer presentationMaterialId = getCodeFromRequest(request, "oid");
 
-        NewPresentationMaterial presentationMaterial = rootDomainObject.readNewPresentationMaterialByOID(presentationMaterialId);
+        NewPresentationMaterial presentationMaterial = AbstractDomainObject.fromExternalId(presentationMaterialId);
 
         request.setAttribute("oid", presentationMaterial.getTestElement().getExternalId());
 
@@ -134,7 +135,7 @@ public class PresentationMaterialManagementAction extends FenixDispatchAction {
             HttpServletResponse response) throws  FenixServiceException {
         Integer presentationMaterialId = getCodeFromRequest(request, "oid");
 
-        NewPresentationMaterial presentationMaterial = rootDomainObject.readNewPresentationMaterialByOID(presentationMaterialId);
+        NewPresentationMaterial presentationMaterial = AbstractDomainObject.fromExternalId(presentationMaterialId);
 
         Integer relativePosition = getCodeFromRequest(request, "relativePosition");
 

@@ -3,12 +3,12 @@ package net.sourceforge.fenixedu.domain.research.result;
 import java.util.Collection;
 
 import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 import pt.utl.ist.fenix.tools.file.FileSetMetaData;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
@@ -74,7 +74,7 @@ public class ResearchResultDocumentFile extends ResearchResultDocumentFile_Base 
 
     public final static ResearchResultDocumentFile readByOID(Integer oid) {
         final ResearchResultDocumentFile documentFile =
-                (ResearchResultDocumentFile) RootDomainObject.getInstance().readFileByOID(oid);
+                (ResearchResultDocumentFile) AbstractDomainObject.fromExternalId(oid);
 
         if (documentFile == null) {
             throw new DomainException("error.researcher.ResultDocumentFile.null");

@@ -14,9 +14,9 @@ import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.GroupsAndShiftsManagementLog;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author joaosa & rmalo
@@ -32,7 +32,7 @@ public class InsertStudentsInGrouping {
             return Boolean.TRUE;
         }
 
-        final Grouping groupProperties = RootDomainObject.getInstance().readGroupingByOID(groupPropertiesCode);
+        final Grouping groupProperties = AbstractDomainObject.fromExternalId(groupPropertiesCode);
         if (groupProperties == null) {
             throw new ExistingServiceException();
         }
@@ -46,7 +46,7 @@ public class InsertStudentsInGrouping {
         for (final String number : selected) {
             if (number.equals("Todos os Alunos")) {
             } else {
-                Registration registration = RootDomainObject.getInstance().readRegistrationByOID(new Integer(number));
+                Registration registration = AbstractDomainObject.fromExternalId(new Integer(number));
                 if (!studentHasSomeAttendsInGrouping(registration, groupProperties)) {
                     final Attends attends = findAttends(registration, executionCourses);
                     if (attends != null) {

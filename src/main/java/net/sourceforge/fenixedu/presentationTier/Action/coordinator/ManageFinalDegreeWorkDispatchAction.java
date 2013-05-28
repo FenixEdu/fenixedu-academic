@@ -863,14 +863,14 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
         final DegreeType dt = (degreeType != null && degreeType.length() > 0) ? DegreeType.valueOf(degreeType) : null;
         infoFinalWorkProposal.setDegreeType(dt);
 
-        infoFinalWorkProposal.setOrientator(new InfoPerson((Person) rootDomainObject.readPartyByOID(Integer
+        infoFinalWorkProposal.setOrientator(new InfoPerson((Person) AbstractDomainObject.fromExternalId(Integer
                 .valueOf(orientatorOID))));
         if (coorientatorOID != null && !coorientatorOID.equals("")) {
-            infoFinalWorkProposal.setCoorientator(new InfoPerson((Person) rootDomainObject.readPartyByOID(Integer
+            infoFinalWorkProposal.setCoorientator(new InfoPerson((Person) AbstractDomainObject.fromExternalId(Integer
                     .valueOf(coorientatorOID))));
         }
         // final ExecutionDegree executionDegree =
-        // rootDomainObject.readExecutionDegreeByOID(Integer.valueOf(degree));
+        // AbstractDomainObject.fromExternalId(Integer.valueOf(degree));
         final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeOID);
         if (!(coorientatorOID != null && !coorientatorOID.equals(""))
                 || executionDegree.getScheduling().getAllowSimultaneousCoorientationAndCompanion().booleanValue()) {
@@ -888,7 +888,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
             infoFinalWorkProposal.setBranches(new ArrayList());
             for (String brachOIDString : branchList) {
                 if (brachOIDString != null && StringUtils.isNumeric(brachOIDString)) {
-                    InfoBranch infoBranch = new InfoBranch(rootDomainObject.readBranchByOID(Integer.valueOf(brachOIDString)));
+                    InfoBranch infoBranch = new InfoBranch(AbstractDomainObject.fromExternalId(Integer.valueOf(brachOIDString)));
                     infoFinalWorkProposal.getBranches().add(infoBranch);
                 }
             }

@@ -10,10 +10,10 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceMultipleException;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class DeleteShifts {
 
@@ -24,7 +24,7 @@ public class DeleteShifts {
 
         for (final Integer shiftID : shiftOIDs) {
             try {
-                RootDomainObject.getInstance().readShiftByOID(shiftID).delete();
+                AbstractDomainObject.fromExternalId(shiftID).delete();
             } catch (DomainException e) {
                 exceptionList.add(e);
             }

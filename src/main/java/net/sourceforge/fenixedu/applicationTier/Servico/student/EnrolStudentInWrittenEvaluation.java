@@ -10,11 +10,11 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class EnrolStudentInWrittenEvaluation {
 
@@ -23,7 +23,7 @@ public class EnrolStudentInWrittenEvaluation {
         ServiceMonitoring.logService(this.getClass(), username, writtenEvaluationOID);
 
         final WrittenEvaluation writtenEvaluation =
-                (WrittenEvaluation) RootDomainObject.getInstance().readEvaluationByOID(writtenEvaluationOID);
+                (WrittenEvaluation) AbstractDomainObject.fromExternalId(writtenEvaluationOID);
         final Person person = Person.readPersonByUsername(username);
         final Student student = person.getStudent();
         final Registration registration = findCorrectRegistration(student, writtenEvaluation.getAssociatedExecutionCoursesSet());

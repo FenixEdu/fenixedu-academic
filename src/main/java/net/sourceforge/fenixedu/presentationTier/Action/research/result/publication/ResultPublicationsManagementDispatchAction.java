@@ -29,7 +29,6 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseGroupUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
@@ -329,12 +328,12 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
         String resultId = request.getParameter("resultId");
         if (resultId != null) {
             result =
-                    (ResearchResultPublication) RootDomainObject.readDomainObjectByOID(ResearchResult.class,
+                    (ResearchResultPublication) AbstractDomainObject.fromExternalId(ResearchResult.class,
                             Integer.valueOf(resultId));
             request.setAttribute("resultId", result.getExternalId());
         } else {
             result =
-                    (ResearchResultPublication) RootDomainObject.readDomainObjectByOID(ResearchResult.class,
+                    (ResearchResultPublication) AbstractDomainObject.fromExternalId(ResearchResult.class,
                             (Integer) request.getAttribute("resultId"));
         }
         return result;
@@ -653,7 +652,7 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
     public ActionForward addUnitToAll(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         Person person = getLoggedPerson(request);
-        Unit unit = (Unit) rootDomainObject.readPartyByOID(Integer.parseInt(request.getParameter("unitID")));
+        Unit unit = (Unit) AbstractDomainObject.fromExternalId(Integer.parseInt(request.getParameter("unitID")));
         for (ResearchResultPublication publication : getLoggedPerson(request).getResearchResultPublications()) {
             if (publication.getClass().getSimpleName().equalsIgnoreCase("unstructured") == false) {
                 ResultUnitAssociationCreationBean bean = new ResultUnitAssociationCreationBean(publication);

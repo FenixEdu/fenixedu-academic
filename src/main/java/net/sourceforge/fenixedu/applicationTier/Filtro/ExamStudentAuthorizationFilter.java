@@ -9,9 +9,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Luis Egidio, lmre@mega.ist.utl.pt Nuno Ochoa, nmgo@mega.ist.utl.pt
@@ -47,7 +47,7 @@ public class ExamStudentAuthorizationFilter extends AuthorizationByRoleFilter {
             return false;
         }
         try {
-            final Evaluation evaluation = RootDomainObject.getInstance().readEvaluationByOID(writtenEvaluationOID);
+            final Evaluation evaluation = AbstractDomainObject.fromExternalId(writtenEvaluationOID);
 
             for (final ExecutionCourse executionCourse : evaluation.getAssociatedExecutionCourses()) {
                 for (final Attends attend : executionCourse.getAttends()) {

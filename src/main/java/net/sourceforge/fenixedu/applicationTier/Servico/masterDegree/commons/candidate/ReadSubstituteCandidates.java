@@ -7,9 +7,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.util.SituationName;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -32,7 +32,7 @@ public class ReadSubstituteCandidates {
 
                 Integer externalId = new Integer(ids[i]);
 
-                MasterDegreeCandidate masterDegreeCandidateToWrite = RootDomainObject.getInstance().readMasterDegreeCandidateByOID(externalId);
+                MasterDegreeCandidate masterDegreeCandidateToWrite = AbstractDomainObject.fromExternalId(externalId);
                 result.add(InfoMasterDegreeCandidateWithInfoPerson.newInfoFromDomain(masterDegreeCandidateToWrite));
             }
         }

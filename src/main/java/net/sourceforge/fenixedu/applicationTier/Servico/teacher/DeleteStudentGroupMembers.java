@@ -17,9 +17,9 @@ import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.GroupsAndShiftsManagementLog;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author asnr and scpo
@@ -31,7 +31,7 @@ public class DeleteStudentGroupMembers {
     protected Boolean run(Integer executionCourseID, Integer studentGroupID, Integer groupPropertiesID, List studentUsernames)
             throws FenixServiceException {
 
-        final StudentGroup studentGroup = RootDomainObject.getInstance().readStudentGroupByOID(studentGroupID);
+        final StudentGroup studentGroup = AbstractDomainObject.fromExternalId(studentGroupID);
         if (studentGroup == null) {
             throw new InvalidArgumentsServiceException();
         }

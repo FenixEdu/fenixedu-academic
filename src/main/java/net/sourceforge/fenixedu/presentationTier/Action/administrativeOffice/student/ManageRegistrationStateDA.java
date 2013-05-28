@@ -20,6 +20,7 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -76,7 +77,7 @@ public class ManageRegistrationStateDA extends FenixDispatchAction {
 
     private Registration getAndTransportRegistration(final HttpServletRequest request) {
         final Registration registration =
-                rootDomainObject.readRegistrationByOID(getIntegerFromRequest(request, "registrationId"));
+                AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "registrationId"));
         request.setAttribute("registration", registration);
         return registration;
     }

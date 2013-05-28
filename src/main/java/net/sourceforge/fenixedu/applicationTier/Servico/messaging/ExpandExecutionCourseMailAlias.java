@@ -11,8 +11,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.messaging.ExpandExecutionCourseMailAlias.ForwardMailsReport.AliasExpandingStatus;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt"> Goncalo Luiz</a><br/>
@@ -46,7 +46,7 @@ public class ExpandExecutionCourseMailAlias {
 
         Integer id = extractExecutionCourseId(address, prefix, host, report);
         if (id != null) {
-            ExecutionCourse course = RootDomainObject.getInstance().readExecutionCourseByOID(id);
+            ExecutionCourse course = AbstractDomainObject.fromExternalId(id);
             if (course != null) {
                 List<String> addresses = new ArrayList<String>();
                 if (course.getSite() != null) {

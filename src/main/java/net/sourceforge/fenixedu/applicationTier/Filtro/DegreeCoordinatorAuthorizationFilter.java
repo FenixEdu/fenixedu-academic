@@ -10,9 +10,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author João Mota
@@ -49,7 +49,7 @@ public class DegreeCoordinatorAuthorizationFilter extends AuthorizationByRoleFil
         }
         try {
             final Person person = id.getPerson();
-            ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeId);
+            ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeId);
             if (executionDegree == null) {
                 return false;
             }

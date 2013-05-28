@@ -10,12 +10,12 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Curriculum;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author João Mota
@@ -31,7 +31,7 @@ public class InsertCurriculum {
             String operacionalObjectivesEn, String generalObjectives, String generalObjectivesEn, DateTime lastModification,
             Boolean basic) throws FenixServiceException {
 
-        CurricularCourse curricularCourse = (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(curricularCourseId);
+        CurricularCourse curricularCourse = (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseId);
 
         if (curricularCourse == null) {
             throw new InvalidArgumentsServiceException();

@@ -16,11 +16,11 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseSiteView;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteStudentsTestMarksStatistics;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.util.tests.CorrectionFormula;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Susana Fernandes
@@ -32,7 +32,7 @@ public class ReadDistributedTestMarksStatistics {
 
         InfoSiteStudentsTestMarksStatistics infoSiteStudentsTestMarksStatistics = new InfoSiteStudentsTestMarksStatistics();
 
-        DistributedTest distributedTest = RootDomainObject.getInstance().readDistributedTestByOID(distributedTestId);
+        DistributedTest distributedTest = AbstractDomainObject.fromExternalId(distributedTestId);
         if (distributedTest == null) {
             throw new InvalidArgumentsServiceException();
         }

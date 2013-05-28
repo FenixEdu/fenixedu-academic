@@ -42,6 +42,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author lmac1
@@ -127,17 +128,17 @@ public class InsertCurricularCourseScopeDispatchAction extends FenixDispatchActi
 
         InfoCurricularCourseScopeEditor infoCurricularCourseScope = new InfoCurricularCourseScopeEditor();
 
-        InfoBranch infoBranch = new InfoBranch(rootDomainObject.readBranchByOID(new Integer((String) dynaForm.get("branchId"))));
+        InfoBranch infoBranch = new InfoBranch(AbstractDomainObject.fromExternalId(new Integer((String) dynaForm.get("branchId"))));
         infoCurricularCourseScope.setInfoBranch(infoBranch);
 
         final CurricularCourse curricularCourse =
-                (CurricularCourse) rootDomainObject.readDegreeModuleByOID(Integer.valueOf(request
+                (CurricularCourse) AbstractDomainObject.fromExternalId(Integer.valueOf(request
                         .getParameter("curricularCourseId")));
         InfoCurricularCourse infoCurricularCourse = new InfoCurricularCourse(curricularCourse);
         infoCurricularCourseScope.setInfoCurricularCourse(infoCurricularCourse);
 
         InfoCurricularSemester infoCurricularSemester =
-                new InfoCurricularSemester(rootDomainObject.readCurricularSemesterByOID(new Integer((String) dynaForm
+                new InfoCurricularSemester(AbstractDomainObject.fromExternalId(new Integer((String) dynaForm
                         .get("curricularSemesterId"))));
         infoCurricularCourseScope.setInfoCurricularSemester(infoCurricularSemester);
 

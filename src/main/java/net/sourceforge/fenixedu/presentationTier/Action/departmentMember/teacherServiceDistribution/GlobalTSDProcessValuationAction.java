@@ -34,6 +34,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.Pair;
 
 public class GlobalTSDProcessValuationAction extends FenixDispatchAction {
@@ -228,19 +229,19 @@ public class GlobalTSDProcessValuationAction extends FenixDispatchAction {
     private TeacherServiceDistribution getSelectedTeacherServiceDistribution(DynaActionForm dynaForm)
             throws FenixServiceException {
         Integer selectedTeacherServiceDistributionId = (Integer) dynaForm.get("tsd");
-        return rootDomainObject.readTeacherServiceDistributionByOID(selectedTeacherServiceDistributionId);
+        return AbstractDomainObject.fromExternalId(selectedTeacherServiceDistributionId);
     }
 
     private TSDProcessPhase getSelectedTSDProcessPhase(DynaActionForm dynaForm) throws FenixServiceException {
         Integer selectedTSDProcessPhaseId = (Integer) dynaForm.get("tsdProcessPhase");
-        TSDProcessPhase selectedTSDProcessPhase = rootDomainObject.readTSDProcessPhaseByOID(selectedTSDProcessPhaseId);
+        TSDProcessPhase selectedTSDProcessPhase = AbstractDomainObject.fromExternalId(selectedTSDProcessPhaseId);
 
         return selectedTSDProcessPhase;
     }
 
     private TSDProcess getTSDProcess(DynaActionForm dynaForm) throws FenixServiceException {
         Integer tsdProcessId = (Integer) dynaForm.get("tsdProcess");
-        TSDProcess tsdProcess = rootDomainObject.readTSDProcessByOID(tsdProcessId);
+        TSDProcess tsdProcess = AbstractDomainObject.fromExternalId(tsdProcessId);
 
         return tsdProcess;
     }
@@ -264,12 +265,12 @@ public class GlobalTSDProcessValuationAction extends FenixDispatchAction {
     private ExecutionYear getSelectedExecutionYear(IUserView userView, DynaActionForm globalForm) {
         Integer selectedExecutionYearId = (Integer) globalForm.get("executionYear");
 
-        return rootDomainObject.readExecutionYearByOID(selectedExecutionYearId);
+        return AbstractDomainObject.fromExternalId(selectedExecutionYearId);
     }
 
     private ExecutionSemester getSelectedExecutionPeriod(DynaActionForm dynaForm) {
         Integer selectedExecutionPeriodId = (Integer) dynaForm.get("executionPeriod");
-        return rootDomainObject.readExecutionSemesterByOID(selectedExecutionPeriodId);
+        return AbstractDomainObject.fromExternalId(selectedExecutionPeriodId);
     }
 
 }

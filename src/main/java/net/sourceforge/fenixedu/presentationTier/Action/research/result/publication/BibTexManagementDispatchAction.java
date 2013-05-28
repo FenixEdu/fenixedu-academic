@@ -37,7 +37,6 @@ import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.b
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.bibtex.ImportBibtexBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.bibtex.ParticipatorBean;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
 import net.sourceforge.fenixedu.domain.research.activity.JournalIssue;
@@ -53,6 +52,7 @@ import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import bibtex.dom.BibtexEntry;
 import bibtex.dom.BibtexFile;
 import bibtex.dom.BibtexPerson;
@@ -70,7 +70,7 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
 
         Integer publicationId = Integer.valueOf(request.getParameter("publicationId"));
         ResearchResultPublication publication =
-                (ResearchResultPublication) rootDomainObject.readResearchResultByOID(publicationId);
+                (ResearchResultPublication) AbstractDomainObject.fromExternalId(publicationId);
 
         if (publication != null) {
             BibtexEntry bibtexEntry = publication.exportToBibtexEntry();
@@ -85,7 +85,7 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) {
 
         String personId = request.getParameter("personOID");
-        Person person = (Person) RootDomainObject.readDomainObjectByOID(Person.class, Integer.valueOf(personId));
+        Person person = (Person) AbstractDomainObject.fromExternalId(Person.class, Integer.valueOf(personId));
 
         List<ResearchResultPublication> publications = person.getResearchResultPublications();
         List<String> entries = new ArrayList<String>();
@@ -495,7 +495,7 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
         request.setAttribute("importBibtexBean", importBibtexBean);
         String resultId = request.getParameter("resultId");
         ResearchResultPublication result =
-                (ResearchResultPublication) RootDomainObject.readDomainObjectByOID(ResearchResultPublication.class,
+                (ResearchResultPublication) AbstractDomainObject.fromExternalId(ResearchResultPublication.class,
                         Integer.valueOf(resultId));
         request.setAttribute("fileBean", getResultDocumentFileBean(request, result));
         request.setAttribute("unitBean", getResultUnitBean(request, result));

@@ -18,6 +18,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "scientificCouncil", path = "/degreeTeachingServiceManagement",
         input = "/degreeTeachingServiceManagement.do?method=showTeachingServiceDetails",
@@ -38,7 +39,7 @@ public class ScientificCouncilManageDegreeTeachingServicesDispatchAction extends
 
         DynaActionForm dynaForm = (DynaActionForm) form;
         Integer professorshipID = (Integer) dynaForm.get("professorshipID");
-        Professorship professorship = rootDomainObject.readProfessorshipByOID(professorshipID);
+        Professorship professorship = AbstractDomainObject.fromExternalId(professorshipID);
 
         if (professorship == null) {
             return mapping.findForward("teacher-not-found");

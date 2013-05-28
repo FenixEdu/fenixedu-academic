@@ -6,15 +6,15 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.EmployeeAuthorizationFilt
 import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class SetCoursesAndTeachersValuationPermission {
     protected void run(Integer tsdId, Integer personId, Boolean coursesValuationPermission, Boolean teachersValuationPermission,
             Boolean coursesManagementPermission, Boolean teachersManagementPermission) {
-        TeacherServiceDistribution tsd = RootDomainObject.getInstance().readTeacherServiceDistributionByOID(tsdId);
-        Person person = (Person) RootDomainObject.getInstance().readPartyByOID(personId);
+        TeacherServiceDistribution tsd = AbstractDomainObject.fromExternalId(tsdId);
+        Person person = (Person) AbstractDomainObject.fromExternalId(personId);
 
         if (coursesValuationPermission) {
             tsd.addCourseValuationPermission(person);

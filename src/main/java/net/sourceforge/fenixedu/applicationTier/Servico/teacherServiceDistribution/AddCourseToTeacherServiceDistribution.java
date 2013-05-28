@@ -8,17 +8,17 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCompetenceCourse;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class AddCourseToTeacherServiceDistribution {
 
     protected void run(Integer tsdId, final Integer courseId) throws FenixServiceException {
 
-        TeacherServiceDistribution rootTSD = RootDomainObject.getInstance().readTeacherServiceDistributionByOID(tsdId).getRootTSD();
-        CompetenceCourse course = RootDomainObject.getInstance().readCompetenceCourseByOID(courseId);
+        TeacherServiceDistribution rootTSD = AbstractDomainObject.fromExternalId(tsdId).getRootTSD();
+        CompetenceCourse course = AbstractDomainObject.fromExternalId(courseId);
 
         if (!rootTSD.getCompetenceCourses().contains(course)) {
             for (ExecutionSemester period : rootTSD.getTSDProcessPhase().getTSDProcess().getExecutionPeriods()) {

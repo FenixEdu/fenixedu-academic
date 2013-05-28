@@ -21,13 +21,13 @@ import net.sourceforge.fenixedu.domain.GuideEntry;
 import net.sourceforge.fenixedu.domain.GuideSituation;
 import net.sourceforge.fenixedu.domain.GuideState;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.transactions.PaymentType;
 import net.sourceforge.fenixedu.util.CalculateGuideTotal;
 import net.sourceforge.fenixedu.util.State;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -76,11 +76,11 @@ public class CreateGuide {
         infoGuideSituation.setDate(calendar.getTime());
         infoGuideSituation.setSituation(situationOfGuide);
 
-        Person person = (Person) RootDomainObject.getInstance().readPartyByOID(infoGuide.getInfoPerson().getExternalId());
+        Person person = (Person) AbstractDomainObject.fromExternalId(infoGuide.getInfoPerson().getExternalId());
         ExecutionDegree executionDegree =
-                RootDomainObject.getInstance().readExecutionDegreeByOID(infoGuide.getInfoExecutionDegree().getExternalId());
+                AbstractDomainObject.fromExternalId(infoGuide.getInfoExecutionDegree().getExternalId());
         final Party contributor =
-                infoGuide.getInfoContributor() != null ? RootDomainObject.getInstance().readPartyByOID(infoGuide.getInfoContributor()
+                infoGuide.getInfoContributor() != null ? AbstractDomainObject.fromExternalId(infoGuide.getInfoContributor()
                         .getExternalId()) : person;
 
         Guide guide = new Guide();

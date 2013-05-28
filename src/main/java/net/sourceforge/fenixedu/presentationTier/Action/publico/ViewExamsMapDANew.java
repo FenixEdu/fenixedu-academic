@@ -38,6 +38,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -74,7 +75,7 @@ public class ViewExamsMapDANew extends FenixContextDispatchAction {
         // curricularYearList
         List<Integer> curricularYears = (List<Integer>) request.getAttribute("curricularYearList");
         if (curricularYears == null) {
-            curricularYears = rootDomainObject.readDegreeByOID(degreeId).buildFullCurricularYearList();
+            curricularYears = AbstractDomainObject.fromExternalId(degreeId).buildFullCurricularYearList();
         }
         request.setAttribute("curricularYearList", curricularYears);
 
@@ -84,7 +85,7 @@ public class ViewExamsMapDANew extends FenixContextDispatchAction {
 
         InfoExecutionDegree infoExecutionDegree =
                 (InfoExecutionDegree) request.getAttribute(PresentationConstants.EXECUTION_DEGREE);
-        final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
+        final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanId);
         infoExecutionDegree =
                 infoExecutionDegree == null || infoExecutionDegree.getExecutionDegree() == null ? findLatestInfoExecutionDegree(degreeCurricularPlan) : infoExecutionDegree;
         if (infoExecutionDegree == null || infoExecutionDegree.getExecutionDegree() == null) {

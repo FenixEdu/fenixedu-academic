@@ -61,6 +61,7 @@ import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 import net.sourceforge.fenixedu.util.BundleUtil;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**

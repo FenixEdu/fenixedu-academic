@@ -12,9 +12,9 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Luis Cruz
@@ -24,7 +24,7 @@ public class ReadExecutionDegreesByExecutionYearAndType {
 
     @Service
     public static List run(Integer executionYearOID, Set<DegreeType> degreeTypes) {
-        final ExecutionYear executionYear = RootDomainObject.getInstance().readExecutionYearByOID(executionYearOID);
+        final ExecutionYear executionYear = AbstractDomainObject.fromExternalId(executionYearOID);
 
         final List<ExecutionDegree> executionDegrees = new ArrayList<ExecutionDegree>();
         for (final DegreeType degreeType : degreeTypes) {

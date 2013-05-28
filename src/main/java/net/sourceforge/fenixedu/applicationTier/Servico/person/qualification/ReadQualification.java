@@ -12,9 +12,9 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.person.InfoQualification;
 import net.sourceforge.fenixedu.dataTransferObject.person.InfoQualificationWithPersonAndCountry;
 import net.sourceforge.fenixedu.domain.Qualification;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixframework.DomainObject;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Barbosa
@@ -34,7 +34,7 @@ public class ReadQualification extends ReadDomainObjectService {
 
     @Override
     protected DomainObject readDomainObject(final Integer externalId) {
-        return RootDomainObject.getInstance().readQualificationByOID(externalId);
+        return AbstractDomainObject.fromExternalId(externalId);
     }
 
     // Service Invokers migrated from Berserk

@@ -10,14 +10,14 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.OperatorAuthorizationFilt
 import net.sourceforge.fenixedu.applicationTier.Filtro.ScientificCouncilAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class DeletePersonFunction {
 
     protected void run(Integer personFunctionID) throws FenixServiceException {
-        PersonFunction personFunction = (PersonFunction) RootDomainObject.getInstance().readAccountabilityByOID(personFunctionID);
+        PersonFunction personFunction = (PersonFunction) AbstractDomainObject.fromExternalId(personFunctionID);
         if (personFunction == null) {
             throw new FenixServiceException("error.delete.personFunction.no.personFunction");
         }

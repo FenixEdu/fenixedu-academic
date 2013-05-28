@@ -1,12 +1,12 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.research.teacher;
 
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.util.PublicationArea;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class AddResultToTeacherInformationSheet {
 
@@ -14,7 +14,7 @@ public class AddResultToTeacherInformationSheet {
     @Service
     public static void run(Teacher teacher, Integer resultId, String publicationArea) throws Exception {
 
-        ResearchResult result = RootDomainObject.getInstance().readResearchResultByOID(resultId);
+        ResearchResult result = AbstractDomainObject.fromExternalId(resultId);
         teacher.addToTeacherInformationSheet(result, PublicationArea.getEnum(publicationArea));
     }
 

@@ -21,6 +21,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
+
 public abstract class CaseHandlingDispatchAction extends FenixDispatchAction {
 
     abstract protected Class getProcessType();
@@ -39,7 +41,7 @@ public abstract class CaseHandlingDispatchAction extends FenixDispatchAction {
 
     protected Process readProcess(final HttpServletRequest request) {
         final Integer processId = getIntegerFromRequest(request, "processId");
-        return processId == null ? null : rootDomainObject.readProcessByOID(processId);
+        return processId == null ? null : AbstractDomainObject.fromExternalId(processId);
     }
 
     protected void setProcess(final HttpServletRequest request) {

@@ -61,6 +61,7 @@ import org.apache.struts.action.DynaActionForm;
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -528,7 +529,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
             HttpServletResponse response) throws  FenixServiceException {
 
         Integer lessonPlanningID = Integer.valueOf(request.getParameter("lessonPlanningID"));
-        LessonPlanning lessonPlanning = rootDomainObject.readLessonPlanningByOID(lessonPlanningID);
+        LessonPlanning lessonPlanning = AbstractDomainObject.fromExternalId(lessonPlanningID);
         try {
             MoveLessonPlanning.runMoveLessonPlanning(lessonPlanning.getExecutionCourse().getExternalId(), lessonPlanning,
                     (lessonPlanning.getOrderOfPlanning() - 1));
@@ -543,7 +544,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
             HttpServletResponse response) throws  FenixServiceException {
 
         Integer lessonPlanningID = Integer.valueOf(request.getParameter("lessonPlanningID"));
-        LessonPlanning lessonPlanning = rootDomainObject.readLessonPlanningByOID(lessonPlanningID);
+        LessonPlanning lessonPlanning = AbstractDomainObject.fromExternalId(lessonPlanningID);
         try {
             MoveLessonPlanning.runMoveLessonPlanning(lessonPlanning.getExecutionCourse().getExternalId(), lessonPlanning,
                     (lessonPlanning.getOrderOfPlanning() + 1));
@@ -566,7 +567,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
             HttpServletResponse response) {
 
         Integer lessonPlanningID = Integer.valueOf(request.getParameter("lessonPlanningID"));
-        LessonPlanning lessonPlanning = rootDomainObject.readLessonPlanningByOID(lessonPlanningID);
+        LessonPlanning lessonPlanning = AbstractDomainObject.fromExternalId(lessonPlanningID);
         request.setAttribute("lessonPlanning", lessonPlanning);
         return mapping.findForward("create-lessonPlanning");
     }
@@ -593,7 +594,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
             HttpServletResponse response) throws  FenixServiceException {
 
         Integer lessonPlanningID = Integer.valueOf(request.getParameter("lessonPlanningID"));
-        LessonPlanning lessonPlanning = rootDomainObject.readLessonPlanningByOID(lessonPlanningID);
+        LessonPlanning lessonPlanning = AbstractDomainObject.fromExternalId(lessonPlanningID);
         if (lessonPlanning != null) {
             try {
                 DeleteLessonPlanning.runDeleteLessonPlanning(lessonPlanning.getExecutionCourse().getExternalId(), lessonPlanning,
@@ -817,7 +818,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 
         String executionCourseID = request.getParameter("executionCourseID");
 
-        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(Integer.valueOf(executionCourseID));
+        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(Integer.valueOf(executionCourseID));
         SortedSet<Shift> shifts = executionCourse.getShiftsOrderedByLessons();
 
         request.setAttribute("shifts", shifts);
@@ -837,11 +838,11 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
             request.setAttribute("showPhotos", "false");
         }
 
-        Shift shift = rootDomainObject.readShiftByOID(Integer.valueOf(shiftID));
-        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(Integer.valueOf(executionCourseID));
+        Shift shift = AbstractDomainObject.fromExternalId(Integer.valueOf(shiftID));
+        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(Integer.valueOf(executionCourseID));
 
         if (registrationID != null) {
-            Registration registration = rootDomainObject.readRegistrationByOID(Integer.valueOf(registrationID));
+            Registration registration = AbstractDomainObject.fromExternalId(Integer.valueOf(registrationID));
             shift.removeAttendFromShift(registration, executionCourse);
             request.setAttribute("registration", registration);
         }
@@ -866,7 +867,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         String id = bean.getUsername();
         Student student = Student.readStudentByNumber(Integer.valueOf(id));
         ExecutionCourse executionCourse =
-                rootDomainObject.readExecutionCourseByOID(Integer.parseInt(request.getParameter("executionCourseID")));
+                AbstractDomainObject.fromExternalId(Integer.parseInt(request.getParameter("executionCourseID")));
 
         if (student != null) {
             try {
@@ -893,12 +894,12 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         String executionCourseID = request.getParameter("executionCourseID");
         String removeAll = request.getParameter("removeAll");
 
-        Shift shift = rootDomainObject.readShiftByOID(Integer.valueOf(shiftID));
+        Shift shift = AbstractDomainObject.fromExternalId(Integer.valueOf(shiftID));
 
         if (removeAll != null) {
             request.setAttribute("removeAll", removeAll);
         } else {
-            Registration registration = rootDomainObject.readRegistrationByOID(Integer.valueOf(registrationID));
+            Registration registration = AbstractDomainObject.fromExternalId(Integer.valueOf(registrationID));
             request.setAttribute("registration", registration);
         }
 
@@ -914,8 +915,8 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         String executionCourseID = request.getParameter("executionCourseID");
         String shiftID = request.getParameter("shiftID");
 
-        Shift shift = rootDomainObject.readShiftByOID(Integer.valueOf(shiftID));
-        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(Integer.valueOf(executionCourseID));
+        Shift shift = AbstractDomainObject.fromExternalId(Integer.valueOf(shiftID));
+        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(Integer.valueOf(executionCourseID));
 
         for (Registration registration : shift.getStudents()) {
             shift.removeAttendFromShift(registration, executionCourse);

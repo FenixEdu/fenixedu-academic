@@ -20,7 +20,7 @@
 	<bean:define id="executionDegreeID" name="infoExecutionDegree" property="externalId" />
 
     <%
-        Degree degree = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanID).getDegree();
+        Degree degree = AbstractDomainObject.fromExternalId(degreeCurricularPlanID).getDegree();
         if (degree.isCoordinatorInSomeExecutionYear(person)) {
             request.setAttribute("isCoordinator", true);
         }

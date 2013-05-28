@@ -33,6 +33,7 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.validator.DynaValidatorForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -44,7 +45,7 @@ public class ManageClassDA extends FenixClassAndExecutionDegreeAndCurricularYear
             throws Exception {
 
         InfoClass infoClass = (InfoClass) request.getAttribute(PresentationConstants.CLASS_VIEW);
-        final SchoolClass schoolClass = rootDomainObject.readSchoolClassByOID(infoClass.getExternalId());
+        final SchoolClass schoolClass = AbstractDomainObject.fromExternalId(infoClass.getExternalId());
         request.setAttribute("schoolClass", schoolClass);
 
         // Fill out the form with the name of the class

@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteEnrolmentEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -42,6 +41,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Angela 30/06/2003 Modified by Fernanda Quitério
@@ -326,7 +326,7 @@ public class ChangeMarkDispatchAction extends FenixDispatchAction {
 
         final InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(Teacher.readByIstId(teacherId));
         final EnrolmentEvaluation enrolmentEvaluation =
-                RootDomainObject.getInstance().readEnrolmentEvaluationByOID(enrolmentEvaluationCode);
+                AbstractDomainObject.fromExternalId(enrolmentEvaluationCode);
         infoEnrolmentEvaluation.setEnrolmentEvaluationType(enrolmentEvaluationType);
 
         infoEnrolmentEvaluation.setGradeValue(grade);

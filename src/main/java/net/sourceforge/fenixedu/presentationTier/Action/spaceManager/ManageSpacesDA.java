@@ -71,6 +71,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
@@ -628,7 +629,7 @@ public class ManageSpacesDA extends FenixDispatchAction {
                 request.getParameterMap().containsKey("spaceInformationID") ? request.getParameter("spaceInformationID") : (String) request
                         .getAttribute("spaceInformationID");
         final Integer spaceInformationID = spaceInformationIDString != null ? Integer.valueOf(spaceInformationIDString) : null;
-        return rootDomainObject.readSpaceInformationByOID(spaceInformationID);
+        return AbstractDomainObject.fromExternalId(spaceInformationID);
     }
 
     private String getGroupExpressionFromParameter(final HttpServletRequest request) {
@@ -676,18 +677,18 @@ public class ManageSpacesDA extends FenixDispatchAction {
     private Space getSpaceFromParameter(final HttpServletRequest request) {
         final String spaceIDString = request.getParameter("spaceID");
         final Integer spaceID = Integer.valueOf(spaceIDString);
-        return (Space) rootDomainObject.readResourceByOID(spaceID);
+        return (Space) AbstractDomainObject.fromExternalId(spaceID);
     }
 
     private AllocatableSpace getDestinationRoomFromParameter(final HttpServletRequest request) {
         final String spaceIDString = request.getParameter("destinationRoomID");
         final Integer spaceID = Integer.valueOf(spaceIDString);
-        return (AllocatableSpace) rootDomainObject.readResourceByOID(spaceID);
+        return (AllocatableSpace) AbstractDomainObject.fromExternalId(spaceID);
     }
 
     private AllocatableSpace getFromRoomFromParameter(final HttpServletRequest request) {
         final String spaceIDString = request.getParameter("fromRoomID");
         final Integer spaceID = Integer.valueOf(spaceIDString);
-        return (AllocatableSpace) rootDomainObject.readResourceByOID(spaceID);
+        return (AllocatableSpace) AbstractDomainObject.fromExternalId(spaceID);
     }
 }

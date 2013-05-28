@@ -27,7 +27,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.util.PeriodState;
@@ -50,6 +49,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "departmentAdmOffice", path = "/showTeacherProfessorshipsForManagement",
         input = "show-teacher-professorships-for-management", attribute = "teacherExecutionCourseResponsabilities",
@@ -146,10 +146,10 @@ public class ReadPersonProfessorshipsByExecutionYearAction extends Action {
             throws FenixServiceException {
 
         List<Professorship> professorshipList =
-                ((Person) RootDomainObject.getInstance().readPartyByOID(personId)).getProfessorships();
+                ((Person) AbstractDomainObject.fromExternalId(personId)).getProfessorships();
 
         ExecutionYear executionYear =
-                RootDomainObject.getInstance().readExecutionYearByOID(((Integer) actionForm.get("executionYearId")));
+                AbstractDomainObject.fromExternalId(((Integer) actionForm.get("executionYearId")));
         if (executionYear == null) {
             executionYear = ExecutionYear.readCurrentExecutionYear();
         }
@@ -222,7 +222,7 @@ public class ReadPersonProfessorshipsByExecutionYearAction extends Action {
                 return false;
             }
         });
-        Person person = (Person) RootDomainObject.getInstance().readPartyByOID(infoPerson.getExternalId());
+        Person person = (Person) AbstractDomainObject.fromExternalId(infoPerson.getExternalId());
         InfoDepartment teacherDepartment = null;
         if (person.getTeacher() != null) {
             Department department = person.getTeacher().getCurrentWorkingDepartment();

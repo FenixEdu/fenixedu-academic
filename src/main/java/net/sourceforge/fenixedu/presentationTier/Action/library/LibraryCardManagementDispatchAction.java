@@ -46,6 +46,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
@@ -155,7 +156,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) {
 
         Integer personID = getIntegerFromRequest(request, "personID");
-        Person person = (Person) rootDomainObject.readPartyByOID(personID);
+        Person person = (Person) AbstractDomainObject.fromExternalId(personID);
         PartyClassification partyClassification = person.getPartyClassification();
         LibraryCardDTO libraryCardDTO = new LibraryCardDTO(person, partyClassification);
 
@@ -379,7 +380,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 
         Integer libraryCardID = new Integer(request.getParameter("libraryCardID"));
 
-        LibraryCard libraryCard = rootDomainObject.readLibraryCardByOID(libraryCardID);
+        LibraryCard libraryCard = AbstractDomainObject.fromExternalId(libraryCardID);
 
         List<LibraryCardDTO> cardList = new ArrayList<LibraryCardDTO>();
         cardList.add(new LibraryCardDTO(libraryCard));
@@ -588,7 +589,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) throws JRException, IOException {
 
         Integer libraryCardID = new Integer(request.getParameter("libraryCardID"));
-        LibraryCard libraryCard = rootDomainObject.readLibraryCardByOID(libraryCardID);
+        LibraryCard libraryCard = AbstractDomainObject.fromExternalId(libraryCardID);
         PartyClassification partyClassification = PartyClassification.valueOf(request.getParameter("classification"));
         // TODO remove this condition, when user names that already exist are no
         // longer bigger than the max length

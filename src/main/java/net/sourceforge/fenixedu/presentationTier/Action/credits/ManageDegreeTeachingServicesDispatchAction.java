@@ -32,6 +32,7 @@ import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Ricardo Rodrigues
@@ -104,7 +105,7 @@ public class ManageDegreeTeachingServicesDispatchAction extends FenixDispatchAct
             ActionMessages actionMessages = new ActionMessages();
             actionMessages.add("error", new ActionMessage(domainException.getMessage(), domainException.getArgs()));
             saveMessages(request, actionMessages);
-            Professorship professorship = rootDomainObject.readProfessorshipByOID(professorshipID);
+            Professorship professorship = AbstractDomainObject.fromExternalId(professorshipID);
             teachingServiceDetailsProcess(professorship, request, teachingServiceForm);
             return mapping.findForward("show-teaching-service-percentages");
         }

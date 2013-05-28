@@ -5,9 +5,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class DeleteDegreeCurricularPlan {
 
@@ -18,7 +18,7 @@ public class DeleteDegreeCurricularPlan {
             throw new InvalidArgumentsServiceException();
         }
 
-        final DegreeCurricularPlan dcpToDelete = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(externalId);
+        final DegreeCurricularPlan dcpToDelete = AbstractDomainObject.fromExternalId(externalId);
 
         if (dcpToDelete == null) {
             throw new NonExistingServiceException();

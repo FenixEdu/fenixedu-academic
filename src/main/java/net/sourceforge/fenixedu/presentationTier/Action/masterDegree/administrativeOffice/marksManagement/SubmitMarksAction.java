@@ -20,7 +20,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteEnrolmentEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -36,6 +35,7 @@ import org.apache.struts.validator.DynaValidatorForm;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Fernanda Quitério 01/07/2003
@@ -171,7 +171,7 @@ public class SubmitMarksAction extends FenixDispatchAction {
 
         if (studentCode != null) {
 
-            final Enrolment enrolment = (Enrolment) RootDomainObject.getInstance().readCurriculumModuleByOID(enrolmentCode);
+            final Enrolment enrolment = (Enrolment) AbstractDomainObject.fromExternalId(enrolmentCode);
             final InfoEnrolmentEvaluation infoEnrolmentEvaluation = new InfoEnrolmentEvaluation();
             infoEnrolmentEvaluation.setInfoEnrolment(InfoEnrolment.newInfoFromDomain(enrolment));
 

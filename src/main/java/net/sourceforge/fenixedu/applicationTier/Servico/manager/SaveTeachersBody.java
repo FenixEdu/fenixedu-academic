@@ -9,16 +9,16 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class SaveTeachersBody {
 
     protected Boolean run(final List responsibleTeachersIds, final List<Integer> professorShipTeachersIds,
             final Integer executionCourseId) throws FenixServiceException {
 
-        final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseId);
+        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
 
         final List<Integer> auxProfessorshipTeacherIDs = new ArrayList<Integer>(professorShipTeachersIds);
 
@@ -41,7 +41,7 @@ public class SaveTeachersBody {
         }
 
         for (final Integer teacherID : auxProfessorshipTeacherIDs) {
-            final Teacher teacher = RootDomainObject.getInstance().readTeacherByOID(teacherID);
+            final Teacher teacher = AbstractDomainObject.fromExternalId(teacherID);
             final Boolean isResponsible = Boolean.valueOf(responsibleTeachersIds.contains(teacherID));
             Professorship.create(isResponsible, executionCourse, teacher, null);
         }

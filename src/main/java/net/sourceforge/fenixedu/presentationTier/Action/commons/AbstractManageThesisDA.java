@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -21,6 +20,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public abstract class AbstractManageThesisDA extends FenixDispatchAction {
 
@@ -48,7 +48,7 @@ public abstract class AbstractManageThesisDA extends FenixDispatchAction {
         if (id == null) {
             return null;
         } else {
-            return RootDomainObject.getInstance().readThesisByOID(id);
+            return AbstractDomainObject.fromExternalId(id);
         }
     }
 

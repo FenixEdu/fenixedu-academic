@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.tests.InvalidXMLFilesException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
@@ -35,6 +34,7 @@ import org.apache.struts.util.LabelValueBean;
 
 import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.servlets.commons.UploadedFile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 import com.sun.faces.el.impl.parser.ParseException;
 
@@ -50,7 +50,7 @@ public class InsertExercise {
         List<String> badXmls = new ArrayList<String>();
         String replacedPath = path.replace('\\', '/');
         boolean createAny = false;
-        ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseId);
+        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
         if (executionCourse == null) {
             throw new InvalidArgumentsServiceException();
         }

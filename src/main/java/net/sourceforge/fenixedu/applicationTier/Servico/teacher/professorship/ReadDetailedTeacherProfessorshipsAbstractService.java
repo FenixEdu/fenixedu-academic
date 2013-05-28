@@ -13,12 +13,13 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.Detaile
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
+
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author jpvl
@@ -80,7 +81,7 @@ public class ReadDetailedTeacherProfessorshipsAbstractService {
     }
 
     protected Teacher readTeacher(Integer teacherId) throws NotFoundTeacher {
-        final Teacher teacher = RootDomainObject.getInstance().readTeacherByOID(teacherId);
+        final Teacher teacher = AbstractDomainObject.fromExternalId(teacherId);
         if (teacher == null) {
             throw new NotFoundTeacher();
         }

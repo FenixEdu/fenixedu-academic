@@ -38,6 +38,7 @@ import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Ricardo Rodrigues
@@ -62,7 +63,7 @@ public class ShowTeachersCreditsDepartmentListAction extends FenixAction {
         if (executionPeriodID == null) {
             executionSemester = ExecutionSemester.readLastExecutionSemesterForCredits();
         } else {
-            executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
+            executionSemester = AbstractDomainObject.fromExternalId(executionPeriodID);
         }
 
         dynaActionForm.set("executionPeriodId", executionSemester.getExternalId());

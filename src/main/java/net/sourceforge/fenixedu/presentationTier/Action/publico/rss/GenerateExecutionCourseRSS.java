@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 import pt.ist.fenixframework.DomainObject;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.StringAppender;
 import de.nava.informa.core.ChannelIF;
 import de.nava.informa.core.ItemIF;
@@ -21,7 +22,7 @@ public abstract class GenerateExecutionCourseRSS extends InformaRSSAction {
     @Override
     protected ChannelIF getRSSChannel(final HttpServletRequest request) throws Exception {
         final String id = request.getParameter("id");
-        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(Integer.valueOf(id));
+        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(Integer.valueOf(id));
 
         if (executionCourse != null) {
             final String executionCourseName = executionCourse.getNome();

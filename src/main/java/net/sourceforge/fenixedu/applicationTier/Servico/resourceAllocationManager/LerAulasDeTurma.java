@@ -6,16 +6,16 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.domain.Lesson;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class LerAulasDeTurma {
 
     @Service
     public static List<InfoLesson> run(InfoClass infoClass) {
-        SchoolClass schoolClass = RootDomainObject.getInstance().readSchoolClassByOID(infoClass.getExternalId());
+        SchoolClass schoolClass = AbstractDomainObject.fromExternalId(infoClass.getExternalId());
 
         final List<Shift> shiftList = schoolClass.getAssociatedShifts();
 

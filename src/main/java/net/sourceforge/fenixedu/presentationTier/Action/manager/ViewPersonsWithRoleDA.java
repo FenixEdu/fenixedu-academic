@@ -17,6 +17,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 public class ViewPersonsWithRoleDA extends FenixDispatchAction {
@@ -29,7 +30,7 @@ public class ViewPersonsWithRoleDA extends FenixDispatchAction {
 
     public ActionForward searchWithRole(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        Role role = rootDomainObject.readRoleByOID(Integer.valueOf(request.getParameter("roleID")));
+        Role role = AbstractDomainObject.fromExternalId(Integer.valueOf(request.getParameter("roleID")));
         request.setAttribute("persons", role.getAssociatedPersons());
         request.setAttribute("roleID", request.getParameter("roleID"));
         return mapping.findForward("ShowPersons");
@@ -37,7 +38,7 @@ public class ViewPersonsWithRoleDA extends FenixDispatchAction {
 
     public ActionForward removePersonFromRole(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        Role role = rootDomainObject.readRoleByOID(Integer.valueOf(request.getParameter("roleID")));
+        Role role = AbstractDomainObject.fromExternalId(Integer.valueOf(request.getParameter("roleID")));
         Person person = Person.readPersonByUsername(request.getParameter("personUsername"));
         removePersonFromRole(person, role);
         return searchWithRole(mapping, form, request, response);
@@ -56,7 +57,7 @@ public class ViewPersonsWithRoleDA extends FenixDispatchAction {
         final Integer pageNumber =
                 !StringUtils.isEmpty(pageNumberString) ? Integer.valueOf(pageNumberString) : Integer.valueOf(1);
 
-        final Role role = rootDomainObject.readRoleByOID(roleID);
+        final Role role = AbstractDomainObject.fromExternalId(roleID);
 
         ArrayList<RoleOperationLog> listOfRoleOperationLog = role.getRoleOperationLogArrayListOrderedByDate();
         CollectionPager<RoleOperationLog> collectionPager =

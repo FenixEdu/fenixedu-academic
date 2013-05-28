@@ -7,14 +7,14 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ReadCurricularCourseScopes {
 
     @Service
     public static List<InfoCurricularCourseScope> run(Integer curricularCourseId) throws FenixServiceException {
-        CurricularCourse curricularCourse = (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(curricularCourseId);
+        CurricularCourse curricularCourse = (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseId);
 
         List<CurricularCourseScope> curricularCourseScopes = curricularCourse.getScopes();
         if (curricularCourseScopes == null || curricularCourseScopes.isEmpty()) {

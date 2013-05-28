@@ -2,8 +2,8 @@ package net.sourceforge.fenixedu.presentationTier.renderers.taglib;
 
 import javax.servlet.jsp.JspException;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.renderers.taglib.ViewObjectTag;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class FenixViewObjectTag extends ViewObjectTag {
     private String oid;
@@ -48,7 +48,7 @@ public class FenixViewObjectTag extends ViewObjectTag {
             try {
                 Class type = Class.forName(getType());
                 Object[] args = { type, Integer.valueOf(getOid()) };
-                return RootDomainObject.readDomainObjectByOID(type, Integer.valueOf(getOid()));
+                return AbstractDomainObject.fromExternalId(type, Integer.valueOf(getOid()));
             } catch (Exception e) {
                 throw new JspException(e);
             }

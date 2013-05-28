@@ -20,7 +20,6 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Lesson;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
@@ -28,6 +27,8 @@ import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -45,7 +46,7 @@ public class ShowStudentGroupInfo extends Action {
         }
 
         try {
-            ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseID);
+            ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseID);
             Collection<Grouping> groupings = executionCourse.getGroupings();
 
             if (executionCourse == null || groupings == null) {

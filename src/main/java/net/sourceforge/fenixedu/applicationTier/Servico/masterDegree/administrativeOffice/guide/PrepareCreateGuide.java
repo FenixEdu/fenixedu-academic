@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.GraduationType;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.Price;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.masterDegree.GuideRequester;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
@@ -34,6 +33,7 @@ import org.apache.commons.collections.Predicate;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -54,7 +54,7 @@ public class PrepareCreateGuide {
 
         ExecutionDegree executionDegree = null;
 
-        executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(infoExecutionDegree.getExternalId());
+        executionDegree = AbstractDomainObject.fromExternalId(infoExecutionDegree.getExternalId());
 
         // Check if the Requester is a Candidate
         if (requesterType.equals(GuideRequester.CANDIDATE.name())) {

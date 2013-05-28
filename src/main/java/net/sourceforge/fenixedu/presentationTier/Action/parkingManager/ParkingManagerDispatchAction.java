@@ -61,6 +61,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -123,7 +124,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 
         Integer code = getIntegerFromRequest(request, "externalId");
 
-        final ParkingRequest parkingRequest = rootDomainObject.readParkingRequestByOID(code);
+        final ParkingRequest parkingRequest = AbstractDomainObject.fromExternalId(code);
         if (parkingRequest.getParkingRequestState() == ParkingRequestState.PENDING) {
             request.setAttribute("groups", ParkingGroup.getAll());
         }
@@ -182,7 +183,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         Integer personID = new Integer(request.getParameter("personID"));
-        Party party = rootDomainObject.readPartyByOID(personID);
+        Party party = AbstractDomainObject.fromExternalId(personID);
         if (party.isPerson()) {
             Person person = (Person) party;
             Photograph personalPhoto = person.getPersonalPhoto();
@@ -203,7 +204,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
     public ActionForward editFirstTimeParkingParty(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         Integer parkingRequestID = new Integer(request.getParameter("code"));
-        final ParkingRequest parkingRequest = rootDomainObject.readParkingRequestByOID(parkingRequestID);
+        final ParkingRequest parkingRequest = AbstractDomainObject.fromExternalId(parkingRequestID);
 
         String note = request.getParameter("note");
 
@@ -299,9 +300,9 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
             }
             Integer mostSignificantNumber =
                     getMostSignificantNumber((Person) parkingRequest.getParkingParty().getParty(),
-                            rootDomainObject.readParkingGroupByOID(group));
+                            AbstractDomainObject.fromExternalId(group));
             UpdateParkingParty.run(parkingRequest, ParkingRequestState.ACCEPTED, cardNumber,
-                    rootDomainObject.readParkingGroupByOID(group), note, parkingPartyBean.getCardStartDate(),
+                    AbstractDomainObject.fromExternalId(group), note, parkingPartyBean.getCardStartDate(),
                     parkingPartyBean.getCardEndDate(), mostSignificantNumber);
         } else if (request.getParameter("reject") != null) {
             UpdateParkingParty.run(parkingRequest, ParkingRequestState.REJECTED, null, null, note, null, null, null);
@@ -316,7 +317,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 
         String parkingPartyID = request.getParameter("parkingPartyID");
 
-        final ParkingParty parkingParty = rootDomainObject.readParkingPartyByOID(new Integer(parkingPartyID));
+        final ParkingParty parkingParty = AbstractDomainObject.fromExternalId(new Integer(parkingPartyID));
         Integer parkingGroupID = null;
 
         parkingGroupID = request.getParameter("groupID") != null ? Integer.valueOf(request.getParameter("groupID")) : null;
@@ -338,7 +339,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 
         ParkingGroup parkingGroup = null;
         if (parkingGroupID != null) {
-            parkingGroup = rootDomainObject.readParkingGroupByOID(parkingGroupID);
+            parkingGroup = AbstractDomainObject.fromExternalId(parkingGroupID);
         } else {
             parkingGroup = parkingParty.getParkingGroup();
         }
@@ -478,7 +479,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
             if (!net.sourceforge.fenixedu.util.StringUtils.isEmpty(parkingCardNumberString)) {
                 parkingCardNumber = new Long(parkingCardNumberString);
             }
-            Party party = rootDomainObject.readPartyByOID(externalId);
+            Party party = AbstractDomainObject.fromExternalId(externalId);
             setupParkingRequests(request, party, carPlateNumber, parkingCardNumber);
         }
 
@@ -516,7 +517,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
             RenderUtils.invalidateViewState();
         } else {
             Integer parkingPartyID = getPopertyID(request, "parkingPartyID");
-            parkingParty = rootDomainObject.readParkingPartyByOID(parkingPartyID);
+            parkingParty = AbstractDomainObject.fromExternalId(parkingPartyID);
             request.setAttribute("parkingPartyBean", new ParkingPartyBean(parkingParty));
             request.setAttribute("parkingPartyID", parkingParty.getExternalId());
         }
@@ -666,7 +667,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
         } else {
             code = new Integer(codeString);
         }
-        final ParkingRequest parkingRequest = rootDomainObject.readParkingRequestByOID(code);
+        final ParkingRequest parkingRequest = AbstractDomainObject.fromExternalId(code);
         List<ParkingPartyHistory> parkingPartyHistories =
                 new ArrayList<ParkingPartyHistory>(parkingRequest.getParkingParty().getParty().getParkingPartyHistories());
 
@@ -685,7 +686,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
         } else {
             code = new Integer(codeString);
         }
-        final ParkingParty parkingParty = rootDomainObject.readParkingPartyByOID(code);
+        final ParkingParty parkingParty = AbstractDomainObject.fromExternalId(code);
         List<ParkingPartyHistory> parkingPartyHistories =
                 new ArrayList<ParkingPartyHistory>(parkingParty.getParty().getParkingPartyHistories());
 

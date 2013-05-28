@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.EvaluationManagementLog;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Mark;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.InvalidMarkDomainException;
 import net.sourceforge.fenixedu.domain.student.Student;
@@ -19,6 +18,7 @@ import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationSt
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class WriteMarks {
 
@@ -27,8 +27,8 @@ public class WriteMarks {
     public static void writeByStudent(final Integer executioCourseOID, final Integer evaluationOID, final List<StudentMark> marks)
             throws FenixServiceException {
 
-        final Evaluation evaluation = RootDomainObject.getInstance().readEvaluationByOID(evaluationOID);
-        final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executioCourseOID);
+        final Evaluation evaluation = AbstractDomainObject.fromExternalId(evaluationOID);
+        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executioCourseOID);
 
         writeMarks(convertMarks(executionCourse, marks), executionCourse, evaluation);
     }
@@ -38,8 +38,8 @@ public class WriteMarks {
     public static void writeByAttend(final Integer executioCourseOID, final Integer evaluationOID, final List<AttendsMark> marks)
             throws FenixServiceException {
 
-        final Evaluation evaluation = RootDomainObject.getInstance().readEvaluationByOID(evaluationOID);
-        final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executioCourseOID);
+        final Evaluation evaluation = AbstractDomainObject.fromExternalId(evaluationOID);
+        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executioCourseOID);
 
         writeMarks(marks, executionCourse, evaluation);
     }

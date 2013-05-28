@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.GratuitySituation;
 import net.sourceforge.fenixedu.domain.GratuityValues;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.gratuity.GratuitySituationType;
@@ -27,6 +26,7 @@ import org.apache.commons.collections.Predicate;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * 
@@ -68,7 +68,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization {
 
             if (executionDegreeId != null) {
 
-                ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeId);
+                ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeId);
                 executionDegreeList.add(executionDegree);
 
             } else {

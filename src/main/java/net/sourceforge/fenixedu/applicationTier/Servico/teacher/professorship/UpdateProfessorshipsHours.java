@@ -12,10 +12,10 @@ import java.util.Map.Entry;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author jpvl
@@ -36,8 +36,8 @@ public class UpdateProfessorshipsHours {
             if (value != null) {
                 try {
                     Double ecHours = Double.valueOf(value);
-                    Teacher teacher = RootDomainObject.getInstance().readTeacherByOID(teacherId);
-                    ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseId);
+                    Teacher teacher = AbstractDomainObject.fromExternalId(teacherId);
+                    ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
                     Professorship professorship = teacher.getProfessorshipByExecutionCourse(executionCourse);
                     professorship.setHours(ecHours);
                 } catch (NumberFormatException e1) {

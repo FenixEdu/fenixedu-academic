@@ -30,7 +30,7 @@ public class DepartmentMemberShowTeacherCreditsDispatchAction extends ShowTeache
 
         DynaActionForm teacherCreditsForm = (DynaActionForm) form;
         ExecutionSemester executionSemester =
-                rootDomainObject.readExecutionSemesterByOID((Integer) teacherCreditsForm.get("executionPeriodId"));
+                AbstractDomainObject.fromExternalId((Integer) teacherCreditsForm.get("executionPeriodId"));
 
         Teacher requestedTeacher = AbstractDomainObject.fromExternalId((String) teacherCreditsForm.get("teacherId"));
 

@@ -16,12 +16,12 @@ import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategy
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
 import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author asnr and scpo
@@ -33,7 +33,7 @@ public class VerifyStudentGroupAtributes {
     private static boolean checkGroupStudentEnrolment(Integer studentGroupCode, String username) throws FenixServiceException {
         boolean result = false;
 
-        StudentGroup studentGroup = RootDomainObject.getInstance().readStudentGroupByOID(studentGroupCode);
+        StudentGroup studentGroup = AbstractDomainObject.fromExternalId(studentGroupCode);
         if (studentGroup == null) {
             throw new FenixServiceException();
         }
@@ -63,7 +63,7 @@ public class VerifyStudentGroupAtributes {
     private static boolean checkGroupEnrolment(Integer groupPropertiesCode, Integer shiftCode, String username)
             throws FenixServiceException {
         boolean result = false;
-        final Grouping groupProperties = RootDomainObject.getInstance().readGroupingByOID(groupPropertiesCode);
+        final Grouping groupProperties = AbstractDomainObject.fromExternalId(groupPropertiesCode);
         if (groupProperties == null) {
             throw new InvalidChangeServiceException();
         }
@@ -75,7 +75,7 @@ public class VerifyStudentGroupAtributes {
             throw new NotAuthorizedException();
         }
 
-        Shift shift = RootDomainObject.getInstance().readShiftByOID(shiftCode);
+        Shift shift = AbstractDomainObject.fromExternalId(shiftCode);
         result = strategy.checkNumberOfGroups(groupProperties, shift);
 
         if (!result) {
@@ -95,7 +95,7 @@ public class VerifyStudentGroupAtributes {
 
         boolean result = false;
 
-        StudentGroup studentGroup = RootDomainObject.getInstance().readStudentGroupByOID(studentGroupCode);
+        StudentGroup studentGroup = AbstractDomainObject.fromExternalId(studentGroupCode);
         if (studentGroup == null) {
             throw new FenixServiceException();
         }
@@ -125,12 +125,12 @@ public class VerifyStudentGroupAtributes {
             throws FenixServiceException {
         boolean result = false;
 
-        Grouping groupProperties = RootDomainObject.getInstance().readGroupingByOID(groupPropertiesCode);
+        Grouping groupProperties = AbstractDomainObject.fromExternalId(groupPropertiesCode);
         if (groupProperties == null) {
             throw new ExistingServiceException();
         }
 
-        StudentGroup studentGroup = RootDomainObject.getInstance().readStudentGroupByOID(studentGroupCode);
+        StudentGroup studentGroup = AbstractDomainObject.fromExternalId(studentGroupCode);
         if (studentGroup == null) {
             throw new FenixServiceException();
         }
@@ -157,12 +157,12 @@ public class VerifyStudentGroupAtributes {
     private static boolean checkEnrollStudentGroupShift(Integer studentGroupCode, Integer groupPropertiesCode, String username)
             throws FenixServiceException {
         boolean result = false;
-        Grouping groupProperties = RootDomainObject.getInstance().readGroupingByOID(groupPropertiesCode);
+        Grouping groupProperties = AbstractDomainObject.fromExternalId(groupPropertiesCode);
         if (groupProperties == null) {
             throw new ExistingServiceException();
         }
 
-        StudentGroup studentGroup = RootDomainObject.getInstance().readStudentGroupByOID(studentGroupCode);
+        StudentGroup studentGroup = AbstractDomainObject.fromExternalId(studentGroupCode);
         if (studentGroup == null) {
             throw new FenixServiceException();
         }

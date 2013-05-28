@@ -8,8 +8,8 @@ import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Fernanda Quitério
@@ -21,7 +21,7 @@ public class TeacherAdministrationSiteComponentService {
     protected TeacherAdministrationSiteView run(Integer infoExecutionCourseCode, ISiteComponent commonComponent,
             ISiteComponent bodyComponent, Integer infoSiteCode, Object obj1, Object obj2) throws FenixServiceException {
 
-        final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(infoExecutionCourseCode);
+        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(infoExecutionCourseCode);
         final ExecutionCourseSite site = executionCourse.getSite();
 
         final TeacherAdministrationSiteComponentBuilder componentBuilder =

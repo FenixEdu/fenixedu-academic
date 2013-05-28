@@ -41,6 +41,7 @@ import org.apache.struts.action.ActionMessages;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.file.FileManagerException;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 
@@ -94,12 +95,12 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
 
     protected AnnouncementBoard getRequestedAnnouncementBoard(HttpServletRequest request) {
         Integer id = this.getAnnouncementBoardId(request);
-        return id != null ? (AnnouncementBoard) rootDomainObject.readContentByOID(id) : null;
+        return id != null ? (AnnouncementBoard) AbstractDomainObject.fromExternalId(id) : null;
     }
 
     protected Announcement getRequestedAnnouncement(HttpServletRequest request) {
         Integer id = this.getAnnouncementId(request);
-        return id != null ? (Announcement) rootDomainObject.readContentByOID(id) : null;
+        return id != null ? (Announcement) AbstractDomainObject.fromExternalId(id) : null;
     }
 
     public ActionForward addBookmark(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -403,7 +404,7 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
 
     private FileContent getFileContent(HttpServletRequest request) {
         Integer fileContentId = Integer.valueOf(request.getParameter("fileId"));
-        FileContent fileContent = (FileContent) rootDomainObject.readFileByOID(fileContentId);
+        FileContent fileContent = (FileContent) AbstractDomainObject.fromExternalId(fileContentId);
         return fileContent;
     }
 

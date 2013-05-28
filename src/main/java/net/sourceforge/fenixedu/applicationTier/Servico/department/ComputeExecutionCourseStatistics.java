@@ -14,16 +14,16 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ComputeExecutionCourseStatistics extends ComputeCourseStatistics {
 
     public List<ExecutionCourseStatisticsDTO> run(Integer competenceCourseId, Integer degreeId, Integer executionPeriodId)
             throws FenixServiceException {
-        CompetenceCourse competenceCourse = RootDomainObject.getInstance().readCompetenceCourseByOID(competenceCourseId);
-        Degree degree = RootDomainObject.getInstance().readDegreeByOID(degreeId);
-        ExecutionSemester executionSemester = RootDomainObject.getInstance().readExecutionSemesterByOID(executionPeriodId);
+        CompetenceCourse competenceCourse = AbstractDomainObject.fromExternalId(competenceCourseId);
+        Degree degree = AbstractDomainObject.fromExternalId(degreeId);
+        ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodId);
 
         List<CurricularCourse> curricularCourses = competenceCourse.getAssociatedCurricularCoursesGroupedByDegree().get(degree);
 

@@ -35,6 +35,7 @@ import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean
 
 import org.joda.time.DateTime;
 
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
@@ -126,7 +127,7 @@ public class CourseStatistics extends FenixBackingBean {
             List<SelectItem> result = new ArrayList<SelectItem>();
             for (InfoExecutionYear executionYear : executionYearsList) {
                 List<ExecutionSemester> executionSemesters =
-                        rootDomainObject.readExecutionYearByOID(executionYear.getExternalId()).getExecutionPeriods();
+                        AbstractDomainObject.fromExternalId(executionYear.getExternalId()).getExecutionPeriods();
                 for (ExecutionSemester executionSemester : executionSemesters) {
                     result.add(new SelectItem(executionSemester.getExternalId(), executionSemester.getExecutionYear().getYear()
                             + " - " + executionSemester.getName()));
@@ -190,7 +191,7 @@ public class CourseStatistics extends FenixBackingBean {
     }
 
     public CompetenceCourse getCompetenceCourse() {
-        return competenceCourse == null ? rootDomainObject.readCompetenceCourseByOID(getCompetenceCourseId()) : competenceCourse;
+        return competenceCourse == null ? AbstractDomainObject.fromExternalId(getCompetenceCourseId()) : competenceCourse;
     }
 
     private ResourceBundle getApplicationResources() {
@@ -203,7 +204,7 @@ public class CourseStatistics extends FenixBackingBean {
     private CurricularCourse getCurricularCourseToExport() {
 
         final CompetenceCourse cc = getCompetenceCourse();
-        final Degree degree = rootDomainObject.readDegreeByOID(getDegreeId());
+        final Degree degree = AbstractDomainObject.fromExternalId(getDegreeId());
 
         for (final CurricularCourse curricularCourse : cc.getAssociatedCurricularCourses()) {
             if (curricularCourse.getDegree().equals(degree)) {
@@ -295,7 +296,7 @@ public class CourseStatistics extends FenixBackingBean {
     }
 
     private ExecutionYear getExecutionYear() {
-        return rootDomainObject.readExecutionSemesterByOID(getExecutionPeriodId()).getExecutionYear();
+        return AbstractDomainObject.fromExternalId(getExecutionPeriodId()).getExecutionYear();
     }
 
     /*

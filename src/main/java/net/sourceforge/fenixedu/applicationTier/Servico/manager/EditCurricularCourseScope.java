@@ -7,9 +7,9 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScopeEdit
 import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.CurricularSemester;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class EditCurricularCourseScope {
 
@@ -22,20 +22,20 @@ public class EditCurricularCourseScope {
         Branch newBranch = null;
 
         Integer branchId = newInfoCurricularCourseScope.getInfoBranch().getExternalId();
-        newBranch = RootDomainObject.getInstance().readBranchByOID(branchId);
+        newBranch = AbstractDomainObject.fromExternalId(branchId);
 
         if (newBranch == null) {
             throw new NonExistingServiceException("message.non.existing.branch", null);
         }
 
         Integer curricularSemesterId = newInfoCurricularCourseScope.getInfoCurricularSemester().getExternalId();
-        newCurricularSemester = RootDomainObject.getInstance().readCurricularSemesterByOID(curricularSemesterId);
+        newCurricularSemester = AbstractDomainObject.fromExternalId(curricularSemesterId);
 
         if (newCurricularSemester == null) {
             throw new NonExistingServiceException("message.non.existing.curricular.semester", null);
         }
 
-        oldCurricularCourseScope = RootDomainObject.getInstance().readCurricularCourseScopeByOID(newInfoCurricularCourseScope.getExternalId());
+        oldCurricularCourseScope = AbstractDomainObject.fromExternalId(newInfoCurricularCourseScope.getExternalId());
 
         if (oldCurricularCourseScope == null) {
             throw new NonExistingServiceException("message.non.existing.curricular.course.scope", null);

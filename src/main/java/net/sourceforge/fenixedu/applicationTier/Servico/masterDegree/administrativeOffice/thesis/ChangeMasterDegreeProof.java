@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.MasterDegreeProofVersion;
 import net.sourceforge.fenixedu.domain.MasterDegreeThesis;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeClassification;
@@ -24,6 +23,7 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.util.State;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
@@ -37,7 +37,7 @@ public class ChangeMasterDegreeProof {
             MasterDegreeClassification finalResult, Integer attachedCopiesNumber, List<String> teacherJuriesNumbers,
             List<Integer> externalJuriesIDs) throws FenixServiceException {
 
-        StudentCurricularPlan studentCurricularPlan = RootDomainObject.getInstance().readStudentCurricularPlanByOID(studentCurricularPlanID);
+        StudentCurricularPlan studentCurricularPlan = AbstractDomainObject.fromExternalId(studentCurricularPlanID);
         MasterDegreeThesis storedMasterDegreeThesis = studentCurricularPlan.getMasterDegreeThesis();
         if (storedMasterDegreeThesis == null) {
             throw new NonExistingServiceException("error.exception.masterDegree.nonExistentMasterDegreeThesis");

@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.ConfirmConvoke;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.vigilancy.OtherCourseVigilancy;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
@@ -24,6 +23,7 @@ import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class VigilantManagement extends FenixDispatchAction {
 
@@ -59,7 +59,7 @@ public class VigilantManagement extends FenixDispatchAction {
         String id = request.getParameter("oid");
         Integer externalId = Integer.valueOf(id);
         OtherCourseVigilancy vigilancy =
-                (OtherCourseVigilancy) RootDomainObject.readDomainObjectByOID(OtherCourseVigilancy.class, externalId);
+                (OtherCourseVigilancy) AbstractDomainObject.fromExternalId(OtherCourseVigilancy.class, externalId);
 
         ConfirmConvoke.run(vigilancy);
 
@@ -89,7 +89,7 @@ public class VigilantManagement extends FenixDispatchAction {
 
         String writtenEvaluationId = request.getParameter("writtenEvaluationId");
         WrittenEvaluation writtenEvaluation =
-                (WrittenEvaluation) RootDomainObject.readDomainObjectByOID(WrittenEvaluation.class,
+                (WrittenEvaluation) AbstractDomainObject.fromExternalId(WrittenEvaluation.class,
                         Integer.valueOf(writtenEvaluationId));
 
         request.setAttribute("writtenEvaluation", writtenEvaluation);
@@ -147,7 +147,7 @@ public class VigilantManagement extends FenixDispatchAction {
 
     private VigilantGroup getGroupFromRequestOrVigilant(HttpServletRequest request, VigilantWrapper vigilant) {
         String groupId = request.getParameter("gid");
-        return (groupId == null) ? vigilant.getVigilantGroup() : (VigilantGroup) RootDomainObject.readDomainObjectByOID(
+        return (groupId == null) ? vigilant.getVigilantGroup() : (VigilantGroup) AbstractDomainObject.fromExternalId(
                 VigilantGroup.class, Integer.valueOf(groupId));
     }
 

@@ -5,13 +5,13 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthoriza
 import net.sourceforge.fenixedu.applicationTier.Filtro.EmployeeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcess;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class DeleteTSDProcess {
     protected void run(Integer tsdProcessId) {
-        TSDProcess tsdProcess = RootDomainObject.getInstance().readTSDProcessByOID(tsdProcessId);
+        TSDProcess tsdProcess = AbstractDomainObject.fromExternalId(tsdProcessId);
 
         tsdProcess.delete();
     }

@@ -13,8 +13,8 @@ import net.sourceforge.fenixedu.dataTransferObject.person.InfoQualification;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Qualification;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author João Fialho & Rita Ferreira
@@ -23,11 +23,11 @@ import pt.ist.fenixWebFramework.services.Service;
 public class EditQualification {
 
     protected void run(Integer qualificationId, InfoQualification infoQualification) throws FenixServiceException {
-        Qualification qualification = RootDomainObject.getInstance().readQualificationByOID(qualificationId);
+        Qualification qualification = AbstractDomainObject.fromExternalId(qualificationId);
         // If it doesn't exist in the database, a new one has to be created
-        Country country = RootDomainObject.getInstance().readCountryByOID(infoQualification.getInfoCountry().getExternalId());
+        Country country = AbstractDomainObject.fromExternalId(infoQualification.getInfoCountry().getExternalId());
         if (qualification == null) {
-            Person person = (Person) RootDomainObject.getInstance().readPartyByOID(infoQualification.getInfoPerson().getExternalId());
+            Person person = (Person) AbstractDomainObject.fromExternalId(infoQualification.getInfoPerson().getExternalId());
             qualification = new Qualification(person, country, infoQualification);
 
         } else {

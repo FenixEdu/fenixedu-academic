@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.CandidateEnrolment;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -20,13 +19,14 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class WriteCandidateEnrolments {
 
     protected void run(Set<Integer> selectedCurricularCoursesIDs, Integer candidateID, Double credits, String givenCreditsRemarks)
             throws FenixServiceException {
 
-        MasterDegreeCandidate masterDegreeCandidate = RootDomainObject.getInstance().readMasterDegreeCandidateByOID(candidateID);
+        MasterDegreeCandidate masterDegreeCandidate = AbstractDomainObject.fromExternalId(candidateID);
         if (masterDegreeCandidate == null) {
             throw new NonExistingServiceException();
         }
@@ -82,7 +82,7 @@ public class WriteCandidateEnrolments {
         while (iterCurricularCourseIds.hasNext()) {
 
             CurricularCourse curricularCourse =
-                    (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID((Integer) iterCurricularCourseIds.next());
+                    (CurricularCourse) AbstractDomainObject.fromExternalId((Integer) iterCurricularCourseIds.next());
 
             if (curricularCourse == null) {
                 throw new NonExistingServiceException();

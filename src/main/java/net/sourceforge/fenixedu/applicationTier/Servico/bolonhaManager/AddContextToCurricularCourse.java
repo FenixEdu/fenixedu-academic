@@ -7,11 +7,11 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.CurricularPeriodInfoDTO;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class AddContextToCurricularCourse {
 
@@ -59,13 +59,13 @@ public class AddContextToCurricularCourse {
         if (beginExecutionPeriodID == null) {
             return ExecutionSemester.readActualExecutionSemester();
         } else {
-            return RootDomainObject.getInstance().readExecutionSemesterByOID(beginExecutionPeriodID);
+            return AbstractDomainObject.fromExternalId(beginExecutionPeriodID);
         }
     }
 
     private static ExecutionSemester getEndExecutionPeriod(Integer endExecutionPeriodID) {
         final ExecutionSemester endExecutionPeriod =
-                (endExecutionPeriodID == null) ? null : RootDomainObject.getInstance().readExecutionSemesterByOID(
+                (endExecutionPeriodID == null) ? null : AbstractDomainObject.fromExternalId(
                         endExecutionPeriodID);
         return endExecutionPeriod;
     }

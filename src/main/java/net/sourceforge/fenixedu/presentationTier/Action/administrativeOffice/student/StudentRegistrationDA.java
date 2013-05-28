@@ -12,6 +12,7 @@ import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Forwards({ @Forward(name = "viewRegistrationDetails",
         path = "/academicAdminOffice/student/registration/viewRegistrationDetails.jsp") })
@@ -21,7 +22,7 @@ public abstract class StudentRegistrationDA extends FenixDispatchAction {
         final Integer registrationID =
                 getIntegerFromRequest(request, "registrationID") != null ? getIntegerFromRequest(request, "registrationID") : getIntegerFromRequest(
                         request, "registrationId");
-        final Registration registration = rootDomainObject.readRegistrationByOID(Integer.valueOf(registrationID));
+        final Registration registration = AbstractDomainObject.fromExternalId(Integer.valueOf(registrationID));
         request.setAttribute("registration", registration);
         return registration;
     }

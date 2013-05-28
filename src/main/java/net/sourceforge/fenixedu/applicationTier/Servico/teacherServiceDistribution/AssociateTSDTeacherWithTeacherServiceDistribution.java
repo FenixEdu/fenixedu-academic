@@ -5,18 +5,18 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthoriza
 import net.sourceforge.fenixedu.applicationTier.Filtro.EmployeeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class AssociateTSDTeacherWithTeacherServiceDistribution {
     protected void run(Integer tsdId, Integer tsdTeacherId) {
-        TeacherServiceDistribution tsd = RootDomainObject.getInstance().readTeacherServiceDistributionByOID(tsdId);
+        TeacherServiceDistribution tsd = AbstractDomainObject.fromExternalId(tsdId);
 
         if (tsdTeacherId == null) {
             tsd.getTSDTeachersSet().addAll(tsd.getParent().getTSDTeachers());
         } else {
-            tsd.addTSDTeachers(RootDomainObject.getInstance().readTSDTeacherByOID(tsdTeacherId));
+            tsd.addTSDTeachers(AbstractDomainObject.fromExternalId(tsdTeacherId));
         }
     }
 

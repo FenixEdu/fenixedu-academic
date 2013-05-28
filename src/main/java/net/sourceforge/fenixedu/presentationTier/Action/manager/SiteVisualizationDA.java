@@ -26,6 +26,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
+
 /**
  * Generic action to coordinate the visualization of a website.
  * 
@@ -201,7 +203,7 @@ public abstract class SiteVisualizationDA extends FenixDispatchAction {
         }
 
         Integer itemID = Integer.valueOf(parameter);
-        return (Item) rootDomainObject.readContentByOID(itemID);
+        return (Item) AbstractDomainObject.fromExternalId(itemID);
     }
 
     protected Section getSection(final HttpServletRequest request) {
@@ -211,7 +213,7 @@ public abstract class SiteVisualizationDA extends FenixDispatchAction {
             return null;
         }
 
-        final Content content = rootDomainObject.readContentByOID(Integer.valueOf(parameter));
+        final Content content = AbstractDomainObject.fromExternalId(Integer.valueOf(parameter));
         return content instanceof Section ? (Section) content : null;
     }
 

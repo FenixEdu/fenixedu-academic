@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.SeminaryCoordinatorOrStud
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoEquivalency;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoTheme;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency;
 import net.sourceforge.fenixedu.domain.Seminaries.Theme;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
@@ -20,6 +19,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -33,7 +33,7 @@ public class GetEquivalency {
     protected InfoEquivalency run(Integer equivalencyID) throws BDException {
         InfoEquivalency infoEquivalency = null;
 
-        CourseEquivalency equivalency = RootDomainObject.getInstance().readCourseEquivalencyByOID(equivalencyID);
+        CourseEquivalency equivalency = AbstractDomainObject.fromExternalId(equivalencyID);
         if (equivalency != null) {
             infoEquivalency = InfoEquivalency.newInfoFromDomain(equivalency);
             infoEquivalency.setThemes((List) CollectionUtils.collect(equivalency.getThemes(), new Transformer() {

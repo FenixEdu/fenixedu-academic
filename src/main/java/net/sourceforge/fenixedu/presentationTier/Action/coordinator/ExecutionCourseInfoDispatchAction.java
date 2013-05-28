@@ -23,7 +23,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShiftGroupStatistics;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
@@ -38,6 +37,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
+
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
@@ -145,13 +146,13 @@ public class ExecutionCourseInfoDispatchAction extends FenixDispatchAction {
                 && !searchExecutionCourse.get("curricularYearOID").equals("null")) {
             curricularYearOID = new Integer((String) searchExecutionCourse.get("curricularYearOID"));
             infoCurricularYear =
-                    new InfoCurricularYear(RootDomainObject.getInstance().readCurricularYearByOID(curricularYearOID));
+                    new InfoCurricularYear(AbstractDomainObject.fromExternalId(curricularYearOID));
             request.setAttribute("curricularYearOID", curricularYearOID);
         } else {
             if ((request.getParameter("curricularYearOID") != null) && (request.getParameter("curricularYearOID").length() != 0)
                     && (!searchExecutionCourse.get("curricularYearOID").equals("null"))) {
                 infoCurricularYear =
-                        new InfoCurricularYear(RootDomainObject.getInstance().readCurricularYearByOID(
+                        new InfoCurricularYear(AbstractDomainObject.fromExternalId(
                                 new Integer(request.getParameter("curricularYearOID"))));
             }
         }
@@ -164,7 +165,7 @@ public class ExecutionCourseInfoDispatchAction extends FenixDispatchAction {
         request.setAttribute("executionCourseName", executionCourseName);
 
         InfoExecutionPeriod infoExecutionPeriod =
-                InfoExecutionPeriod.newInfoFromDomain(RootDomainObject.getInstance().readExecutionSemesterByOID(
+                InfoExecutionPeriod.newInfoFromDomain(AbstractDomainObject.fromExternalId(
                         executionPeriodOID));
 
         if ((executionCourseName != null) && (executionCourseName.length() == 0)) {

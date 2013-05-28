@@ -13,13 +13,13 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideWithPersonAndExecutionDegreeAndContributor;
 import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -31,7 +31,7 @@ public class ChooseGuideByPersonID {
     public static List run(Integer personID) throws Exception {
 
         // Check if person exists
-        Person person = (Person) RootDomainObject.getInstance().readPartyByOID(personID);
+        Person person = (Person) AbstractDomainObject.fromExternalId(personID);
 
         if (person == null) {
             throw new NonExistingServiceException();

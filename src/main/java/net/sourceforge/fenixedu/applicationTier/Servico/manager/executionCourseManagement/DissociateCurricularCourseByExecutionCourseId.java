@@ -5,6 +5,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * 
@@ -16,7 +17,7 @@ public class DissociateCurricularCourseByExecutionCourseId {
 
     @Service
     public static void run(Integer executionCourseId, Integer curricularCourseId) throws FenixServiceException {
-        ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseId);
+        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
 
         CurricularCourse curricularCourse =
                 (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(curricularCourseId);

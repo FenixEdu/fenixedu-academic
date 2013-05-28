@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.messaging.ExecutionCourseForum;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 import net.sourceforge.fenixedu.util.BundleUtil;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -93,7 +94,7 @@ public class ExecutionCourseSite extends ExecutionCourseSite_Base {
     }
 
     public static ExecutionCourseSite readExecutionCourseSiteByOID(Integer oid) {
-        Site site = (Site) RootDomainObject.readDomainObjectByOID(ExecutionCourseSite.class, oid);
+        Site site = (Site) AbstractDomainObject.fromExternalId(ExecutionCourseSite.class, oid);
         if (site == null) {
             return null;
         }

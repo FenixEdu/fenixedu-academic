@@ -38,6 +38,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
+
 /**
  * 
  * @author Luis Cruz

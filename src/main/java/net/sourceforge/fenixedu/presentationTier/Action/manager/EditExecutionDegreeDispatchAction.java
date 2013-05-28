@@ -44,6 +44,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author lmac1
@@ -165,7 +166,7 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
             throws FenixActionException {
 
         Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
-        final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
+        final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanId);
         Integer executionDegreeId = new Integer(request.getParameter("executionDegreeId"));
 
         DynaActionForm dynaForm = (DynaValidatorForm) form;
@@ -178,7 +179,7 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
         InfoExecutionDegreeEditor infoExecutionDegree = new InfoExecutionDegreeEditor();
 
         InfoExecutionYear infoExecutionYear =
-                new InfoExecutionYear(rootDomainObject.readExecutionYearByOID(Integer.valueOf(executionYearString)));
+                new InfoExecutionYear(AbstractDomainObject.fromExternalId(Integer.valueOf(executionYearString)));
         infoExecutionDegree.setInfoExecutionYear(infoExecutionYear);
 
         // InfoTeacher infoTeacher = new InfoTeacher();

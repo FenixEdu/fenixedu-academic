@@ -7,7 +7,6 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.EmployeeAuthorizationFilt
 import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDTeacher;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDVirtualTeacher;
@@ -16,12 +15,13 @@ import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherService
 import org.apache.commons.collections.Predicate;
 
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class CreateTSDTeacher {
     protected Boolean run(String teacherName, Integer categoryId, Double requiredHours, Integer tsdId) {
 
-        ProfessionalCategory category = RootDomainObject.getInstance().readProfessionalCategoryByOID(categoryId);
-        TeacherServiceDistribution tsd = RootDomainObject.getInstance().readTeacherServiceDistributionByOID(tsdId);
+        ProfessionalCategory category = AbstractDomainObject.fromExternalId(categoryId);
+        TeacherServiceDistribution tsd = AbstractDomainObject.fromExternalId(tsdId);
 
         if (existsVirtualTeacherWithSameName(tsd.getTSDTeachers(), teacherName)) {
             return false;

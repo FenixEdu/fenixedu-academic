@@ -38,6 +38,7 @@ import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.SpreadsheetXLSExporter;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -79,7 +80,7 @@ abstract public class CandidacyProcessDA extends CaseHandlingDispatchAction {
     protected void setExecutionInterval(final HttpServletRequest request) {
         final Integer executionIntervalId = getIntegerFromRequest(request, "executionIntervalId");
         if (executionIntervalId != null) {
-            request.setAttribute("executionInterval", rootDomainObject.readExecutionIntervalByOID(executionIntervalId));
+            request.setAttribute("executionInterval", AbstractDomainObject.fromExternalId(executionIntervalId));
         }
     }
 

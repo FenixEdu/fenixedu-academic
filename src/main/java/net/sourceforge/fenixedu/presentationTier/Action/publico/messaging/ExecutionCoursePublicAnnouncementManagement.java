@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
@@ -28,6 +27,7 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a><br>
@@ -55,7 +55,7 @@ public class ExecutionCoursePublicAnnouncementManagement extends PublicAnnouncem
 
     protected ExecutionCourse getRequestedExecutionCourse(HttpServletRequest request) {
         Integer id = this.getRequestedExecutionCourseId(request);
-        return RootDomainObject.getInstance().readExecutionCourseByOID(id);
+        return AbstractDomainObject.fromExternalId(id);
     }
 
     @Override

@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.student.tests.ReadStudent
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
@@ -20,6 +19,7 @@ import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Susana Fernandes
@@ -30,7 +30,7 @@ public class ReadStudentTest {
     @Service
     public static List<StudentTestQuestion> run(Registration registration, Integer distributedTestId, Boolean log, String path)
             throws FenixServiceException {
-        final DistributedTest distributedTest = RootDomainObject.getInstance().readDistributedTestByOID(distributedTestId);
+        final DistributedTest distributedTest = AbstractDomainObject.fromExternalId(distributedTestId);
         return run(registration, distributedTest, log, path);
     }
 

@@ -5,8 +5,8 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.DegreeAdministrativeOffic
 import net.sourceforge.fenixedu.applicationTier.Filtro.ManagerAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.CurricularCourseEquivalence;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class DeleteCurricularCourseEquivalency {
 
@@ -19,7 +19,7 @@ public class DeleteCurricularCourseEquivalency {
     @Service
     public static void run(final Integer curricularCourseEquivalencyID) {
         final CurricularCourseEquivalence curricularCourseEquivalence =
-                RootDomainObject.getInstance().readCurricularCourseEquivalenceByOID(curricularCourseEquivalencyID);
+                AbstractDomainObject.fromExternalId(curricularCourseEquivalencyID);
         curricularCourseEquivalence.delete();
     }
 

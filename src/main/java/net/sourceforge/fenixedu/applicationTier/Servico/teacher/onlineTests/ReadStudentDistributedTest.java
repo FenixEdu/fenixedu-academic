@@ -10,12 +10,12 @@ import java.util.Set;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Susana Fernandes
@@ -25,12 +25,12 @@ public class ReadStudentDistributedTest {
             throws FenixServiceException {
 
         List<StudentTestQuestion> studentTestQuestionList = new ArrayList<StudentTestQuestion>();
-        Registration registration = RootDomainObject.getInstance().readRegistrationByOID(studentId);
+        Registration registration = AbstractDomainObject.fromExternalId(studentId);
         if (registration == null) {
             throw new FenixServiceException();
         }
 
-        final DistributedTest distributedTest = RootDomainObject.getInstance().readDistributedTestByOID(distributedTestId);
+        final DistributedTest distributedTest = AbstractDomainObject.fromExternalId(distributedTestId);
         if (distributedTest == null) {
             throw new FenixServiceException();
         }

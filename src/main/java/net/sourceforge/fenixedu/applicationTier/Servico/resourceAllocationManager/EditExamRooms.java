@@ -7,10 +7,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.domain.Exam;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -23,10 +23,10 @@ public class EditExamRooms {
 
         final List<AllocatableSpace> finalRoomList = new ArrayList<AllocatableSpace>();
         for (final Integer id : roomsForExam) {
-            finalRoomList.add((AllocatableSpace) RootDomainObject.getInstance().readResourceByOID(id));
+            finalRoomList.add((AllocatableSpace) AbstractDomainObject.fromExternalId(id));
         }
 
-        final Exam exam = (Exam) RootDomainObject.getInstance().readEvaluationByOID(infoExam.getExternalId());
+        final Exam exam = (Exam) AbstractDomainObject.fromExternalId(infoExam.getExternalId());
         if (exam == null) {
             throw new NonExistingServiceException();
         }

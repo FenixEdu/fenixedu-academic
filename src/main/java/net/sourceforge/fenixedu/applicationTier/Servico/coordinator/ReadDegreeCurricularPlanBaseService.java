@@ -10,10 +10,11 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
+
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Fernanda Quitério 5/Dez/2003
@@ -30,7 +31,7 @@ abstract public class ReadDegreeCurricularPlanBaseService {
 
         if (degreeCurricularPlanId != null) {
 
-            DegreeCurricularPlan degreeCurricularPlan = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanId);
+            DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanId);
             List<CurricularCourseScope> allActiveScopes = degreeCurricularPlan.getActiveCurricularCourseScopes();
 
             if (allActiveScopes != null && allActiveScopes.size() > 0) {

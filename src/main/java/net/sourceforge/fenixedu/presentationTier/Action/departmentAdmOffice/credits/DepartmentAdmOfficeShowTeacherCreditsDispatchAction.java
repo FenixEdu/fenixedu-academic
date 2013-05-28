@@ -39,7 +39,7 @@ public class DepartmentAdmOfficeShowTeacherCreditsDispatchAction extends ShowTea
 
         DynaActionForm teacherCreditsForm = (DynaActionForm) form;
         ExecutionSemester executionSemester =
-                rootDomainObject.readExecutionSemesterByOID((Integer) teacherCreditsForm.get("executionPeriodId"));
+                AbstractDomainObject.fromExternalId((Integer) teacherCreditsForm.get("executionPeriodId"));
         Teacher teacher = AbstractDomainObject.fromExternalId((String) teacherCreditsForm.get("teacherId"));
 
         if (teacher == null || !isTeacherOfManageableDepartments(teacher, executionSemester, request)) {

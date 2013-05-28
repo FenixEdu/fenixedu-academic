@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategy
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
@@ -26,6 +25,7 @@ import org.apache.struts.util.MessageResources;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author asnr and scpo
@@ -41,7 +41,7 @@ public class GroupStudentEnrolment {
 
         ServiceMonitoring.logService(GroupStudentEnrolment.class, studentGroupCode, username);
 
-        final StudentGroup studentGroup = RootDomainObject.getInstance().readStudentGroupByOID(studentGroupCode);
+        final StudentGroup studentGroup = AbstractDomainObject.fromExternalId(studentGroupCode);
         if (studentGroup == null) {
             throw new InvalidArgumentsServiceException();
         }

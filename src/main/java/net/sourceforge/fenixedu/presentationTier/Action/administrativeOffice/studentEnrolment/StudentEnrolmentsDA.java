@@ -17,6 +17,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/studentEnrolments", module = "academicAdministration")
 @Forwards({
@@ -28,7 +29,7 @@ public class StudentEnrolmentsDA extends FenixDispatchAction {
             HttpServletResponse response) throws FenixActionException {
 
         final Integer scpID = Integer.valueOf(getIntegerFromRequest(request, "scpID"));
-        final StudentCurricularPlan plan = rootDomainObject.readStudentCurricularPlanByOID(scpID);
+        final StudentCurricularPlan plan = AbstractDomainObject.fromExternalId(scpID);
         StudentEnrolmentBean studentEnrolmentBean = new StudentEnrolmentBean();
         if (plan != null) {
             studentEnrolmentBean.setStudentCurricularPlan(plan);

@@ -37,6 +37,7 @@ import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class DFACandidacyDispatchAction extends FenixDispatchAction {
 
@@ -332,7 +333,7 @@ public class DFACandidacyDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) throws FenixActionException {
         String candidacyID = (String) getFromRequest(request, "candidacyID");
 
-        Candidacy candidacy = rootDomainObject.readCandidacyByOID(Integer.valueOf(candidacyID));
+        Candidacy candidacy = AbstractDomainObject.fromExternalId(Integer.valueOf(candidacyID));
         if (candidacy == null) {
             throw new FenixActionException("error.invalid.candidacy.number");
         }

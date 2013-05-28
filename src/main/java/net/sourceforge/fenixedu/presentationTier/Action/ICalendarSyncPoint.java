@@ -31,6 +31,7 @@ import org.apache.struts.action.ActionMapping;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/iCalendarSync", module = "external")
 public class ICalendarSyncPoint extends FenixDispatchAction {
@@ -131,7 +132,7 @@ public class ICalendarSyncPoint extends FenixDispatchAction {
         }
 
         User user = User.readUserByUserUId(userId);
-        Registration registration = rootDomainObject.readRegistrationByOID(Integer.valueOf(regId));
+        Registration registration = AbstractDomainObject.fromExternalId(Integer.valueOf(regId));
 
         if (user.getPrivateKeyValidity() != null) {
             if (payload.equals(ICalStudentTimeTable.calculatePayload(method, registration, user))) {

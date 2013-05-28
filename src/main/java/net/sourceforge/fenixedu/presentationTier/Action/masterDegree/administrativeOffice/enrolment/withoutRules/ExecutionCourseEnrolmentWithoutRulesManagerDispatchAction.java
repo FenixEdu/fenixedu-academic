@@ -51,6 +51,7 @@ import org.apache.struts.util.LabelValueBean;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(
         module = "masterDegreeAdministrativeOffice",
@@ -192,7 +193,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
     }
 
     private ExecutionSemester getExecutionPeriod(final DynaActionForm form) {
-        return rootDomainObject.readExecutionSemesterByOID(Integer.valueOf(form.getString("executionPeriod")));
+        return AbstractDomainObject.fromExternalId(Integer.valueOf(form.getString("executionPeriod")));
     }
 
     private DegreeType getDegreeType(final DynaActionForm form) {
@@ -481,7 +482,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
         // actionForm.set("executionPeriod",
         // request.getParameter("executionPeriod"));
         Registration registration =
-                rootDomainObject.readRegistrationByOID(Integer.valueOf(request.getParameter("registrationID")));
+                AbstractDomainObject.fromExternalId(Integer.valueOf(request.getParameter("registrationID")));
         if (registration == null) {
             throw new FenixActionException("invalid registration id");
         }
@@ -503,7 +504,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
 
         final ExecutionSemester executionSemester = getExecutionPeriod(actionForm);
         StudentCurricularPlan studentCurricularPlan =
-                rootDomainObject.readStudentCurricularPlanByOID(Integer.valueOf(request.getParameter("studentCurricularPlan")));
+                AbstractDomainObject.fromExternalId(Integer.valueOf(request.getParameter("studentCurricularPlan")));
 
         if (studentCurricularPlan == null || executionSemester == null) {
             throw new FenixActionException("invalid arguments");
@@ -534,7 +535,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
         final DynaActionForm form = (DynaActionForm) actionForm;
 
         final StudentCurricularPlan studentCurricularPlan =
-                rootDomainObject.readStudentCurricularPlanByOID(Integer.valueOf((String) form.get("studentCurricularPlan")));
+                AbstractDomainObject.fromExternalId(Integer.valueOf((String) form.get("studentCurricularPlan")));
         final List<Integer> unenrollmentsList = Arrays.asList((Integer[]) form.get("unenrollments"));
 
         try {
@@ -566,7 +567,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
         final ExecutionSemester executionSemester = getExecutionPeriod(form);
 
         final StudentCurricularPlan studentCurricularPlan =
-                rootDomainObject.readStudentCurricularPlanByOID(Integer.valueOf((String) form.get("studentCurricularPlan")));
+                AbstractDomainObject.fromExternalId(Integer.valueOf((String) form.get("studentCurricularPlan")));
         List<ExecutionDegree> result = null;
         try {
 
@@ -606,7 +607,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
         final List<Integer> curricularSemesters = Arrays.asList((Integer[]) form.get("curricularSemesters"));
 
         final StudentCurricularPlan studentCurricularPlan =
-                rootDomainObject.readStudentCurricularPlanByOID(Integer.valueOf((String) form.get("studentCurricularPlan")));
+                AbstractDomainObject.fromExternalId(Integer.valueOf((String) form.get("studentCurricularPlan")));
         List<CurricularCourse2Enroll> curricularCourses2Enroll = null;
         try {
 
@@ -663,7 +664,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
         final List<String> curricularCourses = Arrays.asList((String[]) form.get("curricularCourses"));
         final Map optionalEnrollments = (HashMap) form.get("enrollmentTypes");
         final StudentCurricularPlan studentCurricularPlan =
-                rootDomainObject.readStudentCurricularPlanByOID(Integer.valueOf((String) form.get("studentCurricularPlan")));
+                AbstractDomainObject.fromExternalId(Integer.valueOf((String) form.get("studentCurricularPlan")));
 
         try {
             if (studentCurricularPlan.getRegistration().getDegreeType().isBolonhaType()) {

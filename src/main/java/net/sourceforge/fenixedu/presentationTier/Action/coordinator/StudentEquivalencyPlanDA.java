@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.DeleteEquiva
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.EquivalencePlanEntry;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlanEquivalencePlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Student;
@@ -28,6 +27,7 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/degreeCurricularPlan/studentEquivalencyPlan", module = "manager")
 @Forwards({ @Forward(name = "showPlan", path = "/academicAdminOffice/degreeCurricularPlan/showStudentEquivalencyPlan.jsp"),
@@ -154,8 +154,7 @@ public class StudentEquivalencyPlanDA extends FenixDispatchAction {
     private EquivalencePlanEntry getEquivalencePlanEntry(HttpServletRequest request) {
         final String equivalencePlanEntryIDString = request.getParameter("equivalencePlanEntryID");
         final Integer equivalencePlanEntryID = getInteger(equivalencePlanEntryIDString);
-        return equivalencePlanEntryID == null ? null : (EquivalencePlanEntry) RootDomainObject.getInstance()
-                .readEquivalencePlanEntryByOID(equivalencePlanEntryID);
+        return equivalencePlanEntryID == null ? null : (EquivalencePlanEntry) AbstractDomainObject.fromExternalId(equivalencePlanEntryID);
     }
 
     private StudentCurricularPlanEquivalencePlan getStudentCurricularPlanEquivalencePlan(final HttpServletRequest request,
@@ -199,7 +198,7 @@ public class StudentEquivalencyPlanDA extends FenixDispatchAction {
     private CurriculumModule getCurriculumModule(final HttpServletRequest request) {
         final String curriculumModuleIDString = request.getParameter("curriculumModuleID");
         final Integer curriculumModuleID = getInteger(curriculumModuleIDString);
-        return curriculumModuleID == null ? null : rootDomainObject.readCurriculumModuleByOID(curriculumModuleID);
+        return curriculumModuleID == null ? null : AbstractDomainObject.fromExternalId(curriculumModuleID);
     }
 
     private DegreeCurricularPlan getDegreeCurricularPlan(final HttpServletRequest request) {
@@ -216,7 +215,7 @@ public class StudentEquivalencyPlanDA extends FenixDispatchAction {
     private DegreeCurricularPlan getDegreeCurricularPlan(final HttpServletRequest request, final String attrName) {
         final String degreeCurricularPlanIDString = request.getParameter(attrName);
         final Integer degreeCurricularPlanID = getInteger(degreeCurricularPlanIDString);
-        return degreeCurricularPlanID == null ? null : rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+        return degreeCurricularPlanID == null ? null : AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
     }
 
     private Integer getInteger(final String string) {

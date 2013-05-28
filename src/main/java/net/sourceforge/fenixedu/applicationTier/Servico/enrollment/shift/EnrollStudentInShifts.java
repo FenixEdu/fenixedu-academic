@@ -6,10 +6,10 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.ClassEnrollmen
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.enrollment.shift.ShiftEnrollmentErrorReport;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class EnrollStudentInShifts {
 
@@ -22,7 +22,7 @@ public class EnrollStudentInShifts {
 
         final ShiftEnrollmentErrorReport errorReport = new ShiftEnrollmentErrorReport();
 
-        final Shift selectedShift = RootDomainObject.getInstance().readShiftByOID(shiftId);
+        final Shift selectedShift = AbstractDomainObject.fromExternalId(shiftId);
 
         if (selectedShift == null) {
             errorReport.getUnExistingShifts().add(shiftId);

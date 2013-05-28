@@ -4,7 +4,6 @@ import net.sourceforge.fenixedu.applicationTier.ServiceMonitoring;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -15,6 +14,7 @@ import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class EditUnit {
@@ -29,18 +29,18 @@ public class EditUnit {
         ServiceMonitoring.logService(EditUnit.class, unitID, unitName, unitNameCard, unitCostCenter, acronym, begin, end,
                 departmentID, degreeID, administrativeOfficeID, webAddress, classification, canBeResponsibleOfSpaces, campusID);
 
-        Unit unit = (Unit) RootDomainObject.getInstance().readPartyByOID(unitID);
+        Unit unit = (Unit) AbstractDomainObject.fromExternalId(unitID);
         if (unit == null) {
             throw new FenixServiceException("error.noUnit");
         }
 
         Integer costCenterCode = getCostCenterCode(unitCostCenter);
 
-        Degree degree = RootDomainObject.getInstance().readDegreeByOID(degreeID);
-        Department department = RootDomainObject.getInstance().readDepartmentByOID(departmentID);
+        Degree degree = AbstractDomainObject.fromExternalId(degreeID);
+        Department department = AbstractDomainObject.fromExternalId(departmentID);
         AdministrativeOffice administrativeOffice =
-                RootDomainObject.getInstance().readAdministrativeOfficeByOID(administrativeOfficeID);
-        Campus campus = (Campus) RootDomainObject.getInstance().readResourceByOID(campusID);
+                AbstractDomainObject.fromExternalId(administrativeOfficeID);
+        Campus campus = (Campus) AbstractDomainObject.fromExternalId(campusID);
 
         unit.edit(unitName, unitNameCard, costCenterCode, acronym, begin, end, webAddress, classification, department, degree,
                 administrativeOffice, canBeResponsibleOfSpaces, campus);

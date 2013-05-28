@@ -52,6 +52,8 @@ import net.sourceforge.fenixedu.util.CurricularRuleLabelFormatter;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
 
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
+
 public class CurricularCourseManagementBackingBean extends FenixBackingBean {
 
     protected final ResourceBundle bolonhaBundle = getResourceBundle("resources/BolonhaManagerResources");
@@ -235,34 +237,34 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
 
     public DegreeCurricularPlan getDegreeCurricularPlan() {
         return (degreeCurricularPlan == null) ? (degreeCurricularPlan =
-                rootDomainObject.readDegreeCurricularPlanByOID(getDegreeCurricularPlanID())) : degreeCurricularPlan;
+                AbstractDomainObject.fromExternalId(getDegreeCurricularPlanID())) : degreeCurricularPlan;
     }
 
     public CourseGroup getCourseGroup() {
-        return (CourseGroup) rootDomainObject.readDegreeModuleByOID(getCourseGroupID());
+        return (CourseGroup) AbstractDomainObject.fromExternalId(getCourseGroupID());
     }
 
     public DepartmentUnit getDepartmentUnit() {
         if (getDepartmentUnitID() != null && !getDepartmentUnitID().equals(0)) {
-            return (DepartmentUnit) rootDomainObject.readPartyByOID(getDepartmentUnitID());
+            return (DepartmentUnit) AbstractDomainObject.fromExternalId(getDepartmentUnitID());
         }
         return null;
     }
 
     public CompetenceCourse getCompetenceCourse() {
         if (competenceCourse == null && getCompetenceCourseID() != null && !getCompetenceCourseID().equals(0)) {
-            competenceCourse = rootDomainObject.readCompetenceCourseByOID(getCompetenceCourseID());
+            competenceCourse = AbstractDomainObject.fromExternalId(getCompetenceCourseID());
         }
         return competenceCourse;
     }
 
     public CurricularCourse getCurricularCourse() {
         return (curricularCourse == null && getCurricularCourseID() != null) ? (curricularCourse =
-                (CurricularCourse) rootDomainObject.readDegreeModuleByOID(getCurricularCourseID())) : curricularCourse;
+                (CurricularCourse) AbstractDomainObject.fromExternalId(getCurricularCourseID())) : curricularCourse;
     }
 
     protected Context getContext(Integer contextID) {
-        return (context == null && contextID != null) ? (context = rootDomainObject.readContextByOID(contextID)) : context;
+        return (context == null && contextID != null) ? (context = AbstractDomainObject.fromExternalId(contextID)) : context;
     }
 
     public void resetCompetenceCourse(ValueChangeEvent event) {
@@ -407,7 +409,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         ExecutionYear oldestContextExecutionYear = getDegreeCurricularPlan().getOldestContextExecutionYear();
 
         if (executionYearId != null) {
-            return rootDomainObject.readExecutionYearByOID(executionYearId);
+            return AbstractDomainObject.fromExternalId(executionYearId);
         }
 
         ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
@@ -782,10 +784,10 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     }
 
     public ExecutionSemester getBeginExecutionPeriod() {
-        return rootDomainObject.readExecutionSemesterByOID(getBeginExecutionPeriodID());
+        return AbstractDomainObject.fromExternalId(getBeginExecutionPeriodID());
     }
 
     public ExecutionSemester getEndExecutionPeriod() {
-        return getEndExecutionPeriodID() == null ? null : rootDomainObject.readExecutionSemesterByOID(getEndExecutionPeriodID());
+        return getEndExecutionPeriodID() == null ? null : AbstractDomainObject.fromExternalId(getEndExecutionPeriodID());
     }
 }

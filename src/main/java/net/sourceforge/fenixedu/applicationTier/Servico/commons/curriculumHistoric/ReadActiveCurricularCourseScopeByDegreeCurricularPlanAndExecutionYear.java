@@ -19,13 +19,13 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author nmgo
@@ -35,7 +35,7 @@ public class ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYe
 
     public SortedSet<DegreeModuleScope> run(Integer degreeCurricularPlanID, AcademicInterval academicInterval)
             throws FenixServiceException {
-        final DegreeCurricularPlan degreeCurricularPlan = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+        final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
 
         final ComparatorChain comparator = new ComparatorChain();
         comparator.addComparator(new BeanComparator("curricularYear"));
@@ -56,8 +56,8 @@ public class ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYe
 
     @Deprecated
     public SortedSet<DegreeModuleScope> run(Integer degreeCurricularPlanID, Integer executioYearID) throws FenixServiceException {
-        final DegreeCurricularPlan degreeCurricularPlan = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanID);
-        final ExecutionYear executionYear = RootDomainObject.getInstance().readExecutionYearByOID(executioYearID);
+        final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
+        final ExecutionYear executionYear = AbstractDomainObject.fromExternalId(executioYearID);
 
         final ComparatorChain comparator = new ComparatorChain();
         comparator.addComparator(new BeanComparator("curricularYear"));

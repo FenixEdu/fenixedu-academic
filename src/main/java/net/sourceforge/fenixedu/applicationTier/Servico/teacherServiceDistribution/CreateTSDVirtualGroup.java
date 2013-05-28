@@ -9,23 +9,23 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilte
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCourse;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDVirtualCourseGroup;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class CreateTSDVirtualGroup {
     protected TSDCourse run(String courseName, Integer tsdId, Integer periodId, String[] shiftTypesArray,
             String[] degreeCurricularPlansIdArray) {
 
-        TeacherServiceDistribution tsd = RootDomainObject.getInstance().readTeacherServiceDistributionByOID(tsdId);
-        ExecutionSemester executionSemester = RootDomainObject.getInstance().readExecutionSemesterByOID(periodId);
+        TeacherServiceDistribution tsd = AbstractDomainObject.fromExternalId(tsdId);
+        ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(periodId);
 
         List<DegreeCurricularPlan> degreeCurricularPlansList = new ArrayList<DegreeCurricularPlan>();
         for (String planId : degreeCurricularPlansIdArray) {
-            degreeCurricularPlansList.add(RootDomainObject.getInstance().readDegreeCurricularPlanByOID(Integer.parseInt(planId)));
+            degreeCurricularPlansList.add(AbstractDomainObject.fromExternalId(Integer.parseInt(planId)));
         }
 
         List<ShiftType> lecturedShiftTypes = new ArrayList<ShiftType>();

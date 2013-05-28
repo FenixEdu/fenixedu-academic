@@ -12,18 +12,18 @@ import net.sourceforge.fenixedu.domain.CandidateSituation;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.util.State;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ReadDegreeCandidates {
 
     public static List run(InfoExecutionDegree infoExecutionDegree) {
-        final ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(infoExecutionDegree.getExternalId());
+        final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(infoExecutionDegree.getExternalId());
         return createInfoMasterDegreeCandidates(executionDegree.getMasterDegreeCandidatesSet());
     }
 
     public static List run(Integer degreeCurricularPlanId) {
-        final DegreeCurricularPlan degreeCurricularPlan = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanId);
+        final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanId);
         return createInfoMasterDegreeCandidates(degreeCurricularPlan.readMasterDegreeCandidates());
     }
 

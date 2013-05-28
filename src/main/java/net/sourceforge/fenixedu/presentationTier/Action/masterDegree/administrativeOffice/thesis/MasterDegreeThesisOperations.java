@@ -18,6 +18,8 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.DynaActionForm;
 
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
+
 /**
  * 
  * @author : - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
@@ -33,7 +35,7 @@ public class MasterDegreeThesisOperations extends FenixDispatchAction {
         DynaActionForm getStudentByNumberAndDegreeTypeForm = (DynaActionForm) form;
 
         Integer scpID = getIntegerFromRequestOrForm(request, getStudentByNumberAndDegreeTypeForm, "scpID");
-        StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(scpID);
+        StudentCurricularPlan studentCurricularPlan = AbstractDomainObject.fromExternalId(scpID);
 
         return transportStudentCurricularPlan(form, request, actionErrors, studentCurricularPlan);
     }

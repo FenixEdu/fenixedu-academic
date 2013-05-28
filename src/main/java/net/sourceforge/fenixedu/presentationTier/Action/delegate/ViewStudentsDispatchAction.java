@@ -33,6 +33,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "delegate", path = "/viewStudents", scope = "request", parameter = "method")
 @Forwards(value = {
@@ -133,10 +134,10 @@ public class ViewStudentsDispatchAction extends FenixDispatchAction {
         if (delegateFunction != null) {
             final Integer curricularCourseID = Integer.parseInt(request.getParameter("curricularCourseID"));
             final CurricularCourse curricularCourse =
-                    (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseID);
+                    (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseID);
             final Integer curricularYear = Integer.parseInt(request.getParameter("curricularYear"));
             final Integer executionPeriodOID = Integer.parseInt(request.getParameter("executionPeriodOID"));
-            final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodOID);
+            final ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodOID);
 
             DelegateCurricularCourseBean bean =
                     new DelegateCurricularCourseBean(curricularCourse, executionYear, curricularYear, executionSemester);

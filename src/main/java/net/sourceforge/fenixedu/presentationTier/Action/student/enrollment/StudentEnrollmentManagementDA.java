@@ -31,6 +31,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "student", path = "/studentEnrollmentManagement", attribute = "studentEnrollmentManagmentForm",
         formBean = "studentEnrollmentManagmentForm", scope = "request", parameter = "method")
@@ -264,7 +265,7 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
     }
 
     private Registration getRegistrationFrom(final HttpServletRequest request, final String parameterName) {
-        return rootDomainObject.readRegistrationByOID(getRequestParameterAsInteger(request, parameterName));
+        return AbstractDomainObject.fromExternalId(getRequestParameterAsInteger(request, parameterName));
     }
 
     public ActionForward choosePersonalDataAuthorizationChoice(ActionMapping mapping, ActionForm form,

@@ -35,6 +35,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
@@ -88,7 +89,7 @@ public class ListExecutionCoursesDA extends FenixDispatchAction {
                 executionPeriodIDString != null && executionPeriodIDString.length() > 0 ? Integer
                         .valueOf(executionPeriodIDString) : null;
 
-        return rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
+        return AbstractDomainObject.fromExternalId(executionPeriodID);
     }
 
     private void exportToXls(final ServletOutputStream servletOutputStream, final AcademicInterval academicInterval)

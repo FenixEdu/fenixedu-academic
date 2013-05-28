@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.dataTransferObject.alumni.formation.AlumniFormat
 import net.sourceforge.fenixedu.dataTransferObject.alumni.formation.AlumniFormationBean;
 import net.sourceforge.fenixedu.domain.Formation;
 import net.sourceforge.fenixedu.domain.Qualification;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.apache.struts.action.ActionForm;
@@ -22,6 +21,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "alumni", path = "/formation", scope = "request", parameter = "method")
 @Forwards(value = {
@@ -115,7 +115,7 @@ public class AlumniFormationManagementDA extends AlumniEntityManagementDA {
 
     private ActionForward getFormation(ActionMapping mapping, HttpServletRequest request) {
         final Integer formationId = getIntegerFromRequest(request, "formationId");
-        final Qualification qualification = RootDomainObject.getInstance().readQualificationByOID(formationId);
+        final Qualification qualification = AbstractDomainObject.fromExternalId(formationId);
         final AlumniFormation formation = AlumniFormation.buildFrom((Formation) qualification);
         request.setAttribute("formationEducationArea", formation.getEducationArea().getExternalId());
         request.setAttribute("alumniFormation", formation);

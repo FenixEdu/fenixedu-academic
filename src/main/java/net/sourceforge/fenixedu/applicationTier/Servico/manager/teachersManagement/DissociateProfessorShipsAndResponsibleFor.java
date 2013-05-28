@@ -10,12 +10,12 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ShiftProfessorship;
 import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.SupportLesson;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class DissociateProfessorShipsAndResponsibleFor {
 
@@ -38,7 +38,7 @@ public class DissociateProfessorShipsAndResponsibleFor {
         if (professorships != null && responsibleFors != null) {
             List<Professorship> newProfessorships = new ArrayList<Professorship>();
             for (Integer professorshipId : professorships) {
-                Professorship professorship = RootDomainObject.getInstance().readProfessorshipByOID(professorshipId);
+                Professorship professorship = AbstractDomainObject.fromExternalId(professorshipId);
                 if (professorship == null) {
                     throw new FenixServiceException("nullPSNorRF");
                 }
@@ -51,7 +51,7 @@ public class DissociateProfessorShipsAndResponsibleFor {
 
             List<Professorship> newResponsibleFor = new ArrayList<Professorship>();
             for (Integer responsibleForId : responsibleFors) {
-                Professorship responsibleFor = RootDomainObject.getInstance().readProfessorshipByOID(responsibleForId);
+                Professorship responsibleFor = AbstractDomainObject.fromExternalId(responsibleForId);
                 if (responsibleFor == null) {
                     throw new FenixServiceException("nullPSNorRF");
                 }

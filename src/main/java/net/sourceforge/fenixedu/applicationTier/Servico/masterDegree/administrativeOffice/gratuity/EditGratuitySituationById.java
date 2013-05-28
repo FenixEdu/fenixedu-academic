@@ -9,10 +9,10 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituationWithAll;
 import net.sourceforge.fenixedu.domain.GratuitySituation;
 import net.sourceforge.fenixedu.domain.GratuityValues;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class EditGratuitySituationById {
 
@@ -24,11 +24,11 @@ public class EditGratuitySituationById {
         }
 
         StudentCurricularPlan studentCurricularPlan =
-                RootDomainObject.getInstance().readStudentCurricularPlanByOID(infoGratuitySituation.getInfoStudentCurricularPlan()
+                AbstractDomainObject.fromExternalId(infoGratuitySituation.getInfoStudentCurricularPlan()
                         .getExternalId());
 
         GratuityValues gratuityValues =
-                RootDomainObject.getInstance().readGratuityValuesByOID(infoGratuitySituation.getInfoGratuityValues().getExternalId());
+                AbstractDomainObject.fromExternalId(infoGratuitySituation.getInfoGratuityValues().getExternalId());
 
         final GratuitySituation gratuitySituation = studentCurricularPlan.getGratuitySituationByGratuityValues(gratuityValues);
 

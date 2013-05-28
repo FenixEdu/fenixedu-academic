@@ -83,6 +83,7 @@ import org.apache.struts.config.FormBeanConfig;
 import org.apache.struts.config.ModuleConfig;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Nuno Correia
@@ -166,13 +167,13 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
         DegreeType tipoCurso = degreeType != null && degreeType.length() > 0 ? DegreeType.valueOf(degreeType) : null;
         infoFinalWorkProposal.setDegreeType(tipoCurso);
 
-        infoFinalWorkProposal.setOrientator(new InfoPerson((Person) rootDomainObject.readPartyByOID(Integer
+        infoFinalWorkProposal.setOrientator(new InfoPerson((Person) AbstractDomainObject.fromExternalId(Integer
                 .valueOf(orientatorOID))));
         if (coorientatorOID != null && !coorientatorOID.equals("")) {
-            infoFinalWorkProposal.setCoorientator(new InfoPerson((Person) rootDomainObject.readPartyByOID(Integer
+            infoFinalWorkProposal.setCoorientator(new InfoPerson((Person) AbstractDomainObject.fromExternalId(Integer
                     .valueOf(coorientatorOID))));
         }
-        final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(Integer.valueOf(degree));
+        final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(Integer.valueOf(degree));
         if (!(coorientatorOID != null && !coorientatorOID.equals(""))
                 || executionDegree.getScheduling().getAllowSimultaneousCoorientationAndCompanion().booleanValue()) {
             infoFinalWorkProposal.setCompanionName(companionName);
@@ -189,7 +190,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
             infoFinalWorkProposal.setBranches(new ArrayList());
             for (String brachOIDString : branchList) {
                 if (brachOIDString != null && StringUtils.isNumeric(brachOIDString)) {
-                    InfoBranch infoBranch = new InfoBranch(rootDomainObject.readBranchByOID(Integer.valueOf(brachOIDString)));
+                    InfoBranch infoBranch = new InfoBranch(AbstractDomainObject.fromExternalId(Integer.valueOf(brachOIDString)));
                     infoFinalWorkProposal.getBranches().add(infoBranch);
                 }
             }
@@ -251,7 +252,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
             }
         } else {
             infoExecutionYear =
-                    InfoExecutionYear.newInfoFromDomain(rootDomainObject.readExecutionYearByOID(Integer.valueOf(executionYear)));
+                    InfoExecutionYear.newInfoFromDomain(AbstractDomainObject.fromExternalId(Integer.valueOf(executionYear)));
         }
 
         final List executionDegreeList = ReadExecutionDegreesByExecutionYearAndDegreeType.run(infoExecutionYear.getYear(), null);
@@ -471,7 +472,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
         }
 
         final Integer executionDegreeOIDString = Integer.valueOf(finalWorkForm.getString("degree"));
-        final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeOIDString);
+        final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeOIDString);
         final Scheduleing scheduleing = executionDegree.getScheduling();
 
         if (alteredField.equals("orientator")) {
@@ -514,7 +515,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
         String companyName = (String) finalWorkForm.get("companyName");
 
         final Integer executionDegreeOIDString = Integer.valueOf(finalWorkForm.getString("degree"));
-        final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeOIDString);
+        final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeOIDString);
         final Scheduleing scheduleing = executionDegree.getScheduling();
 
         if (alteredField.equals("companion") && companionName.equals("") && companionMail.equals("") && companionPhone.equals("")
@@ -567,7 +568,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
         final IUserView userView = getUserView(request);
         if (finalDegreeWorkProposalOIDString != null && userView != null) {
             final Integer finalDegreeWorkProposalOID = Integer.valueOf(finalDegreeWorkProposalOIDString);
-            final Proposal finalDegreeWorkProposal = rootDomainObject.readProposalByOID(finalDegreeWorkProposalOID);
+            final Proposal finalDegreeWorkProposal = AbstractDomainObject.fromExternalId(finalDegreeWorkProposalOID);
             final Person person = userView.getPerson();
             if (finalDegreeWorkProposal.getOrientator() == person || finalDegreeWorkProposal.getCoorientator() == person) {
                 request.setAttribute("finalDegreeWorkProposal", finalDegreeWorkProposal);

@@ -35,6 +35,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.DomainObject;
 import pt.ist.fenixframework.FenixFramework;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import dml.DomainClass;
 import dml.Role;
 import dml.Slot;
@@ -70,8 +71,8 @@ public class MergeObjectsDispatchAction extends FenixDispatchAction {
             object2ExternalId = Integer.valueOf(request.getParameter("object2ExternalId"));
         }
 
-        DomainObject domainObject1 = rootDomainObject.readDomainObjectByOID(Class.forName(classToMerge), object1ExternalId);
-        DomainObject domainObject2 = rootDomainObject.readDomainObjectByOID(Class.forName(classToMerge), object2ExternalId);
+        DomainObject domainObject1 = AbstractDomainObject.fromExternalId(Class.forName(classToMerge), object1ExternalId);
+        DomainObject domainObject2 = AbstractDomainObject.fromExternalId(Class.forName(classToMerge), object2ExternalId);
 
         if (domainObject1 == null || domainObject2 == null) {
             request.setAttribute("domainClasses", getClasses());
@@ -201,8 +202,8 @@ public class MergeObjectsDispatchAction extends FenixDispatchAction {
         Integer object1ExternalId = Integer.valueOf(request.getParameter("object1ExternalId"));
         Integer object2ExternalId = Integer.valueOf(request.getParameter("object2ExternalId"));
 
-        DomainObject domainObject1 = rootDomainObject.readDomainObjectByOID(Class.forName(classToMerge), object1ExternalId);
-        DomainObject domainObject2 = rootDomainObject.readDomainObjectByOID(Class.forName(classToMerge), object2ExternalId);
+        DomainObject domainObject1 = AbstractDomainObject.fromExternalId(Class.forName(classToMerge), object1ExternalId);
+        DomainObject domainObject2 = AbstractDomainObject.fromExternalId(Class.forName(classToMerge), object2ExternalId);
 
         Integer sourceOrder = Integer.valueOf(request.getParameter("source"));
         String slotName = request.getParameter("slotName");

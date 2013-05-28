@@ -26,6 +26,7 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 /**
@@ -123,7 +124,7 @@ public class GeneratedDocumentsDA extends FenixDispatchAction {
 
     private Person getPersonFromParameter(HttpServletRequest request) {
         String personIDString = request.getParameter("personID");
-        return (Person) ((StringUtils.isEmpty(personIDString)) ? null : rootDomainObject.readPartyByOID(Integer
+        return (Person) ((StringUtils.isEmpty(personIDString)) ? null : AbstractDomainObject.fromExternalId(Integer
                 .valueOf(personIDString)));
     }
 }

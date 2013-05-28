@@ -7,9 +7,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseEditor;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author lmac1 modified by Fernanda Quitério
@@ -20,7 +20,7 @@ public class InsertExecutionCourseAtExecutionPeriod {
     public static void run(InfoExecutionCourseEditor infoExecutionCourse) throws FenixServiceException {
 
         final ExecutionSemester executionSemester =
-                RootDomainObject.getInstance().readExecutionSemesterByOID(
+                AbstractDomainObject.fromExternalId(
                         infoExecutionCourse.getInfoExecutionPeriod().getExternalId());
         if (executionSemester == null) {
             throw new DomainException("message.nonExistingExecutionPeriod");

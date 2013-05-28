@@ -34,6 +34,7 @@ import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "publico", path = "/showClasses", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "show-classes-list", path = "df.page.showClassesList") })
@@ -63,7 +64,7 @@ public class ShowClassesDispatchAction extends FenixDispatchAction {
 
         final Integer executionPeriodID =
                 ((InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD)).getExternalId();
-        final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
+        final ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodID);
 
         if (executionSemester != null) {
             final ExecutionSemester nextExecutionPeriod = executionSemester.getNextExecutionPeriod();

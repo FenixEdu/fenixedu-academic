@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.StaticArgument;
@@ -124,7 +123,7 @@ public class FixedSetGroup extends LeafGroup {
                 Person person;
                 if (object instanceof Integer) {
                     try {
-                        person = (Person) RootDomainObject.getInstance().readPartyByOID((Integer) object);
+                        person = (Person) AbstractDomainObject.fromExternalId((Integer) object);
                     } catch (ClassCastException e) {
                         throw new GroupDynamicExpressionException("accessControl.group.builder.fixed.id.notPerson",
                                 object.toString());

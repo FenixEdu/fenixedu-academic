@@ -29,6 +29,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/oldCreateMarkSheet", module = "academicAdministration", formBean = "markSheetManagementForm",
         input = "/academicAdminOffice/gradeSubmission/oldMarkSheets/createMarkSheetStep1.jsp")
@@ -98,7 +99,7 @@ public class OldMarkSheetCreateDispatchAction extends MarkSheetCreateDispatchAct
             HttpServletResponse response) {
 
         DynaActionForm form = (DynaActionForm) actionForm;
-        MarkSheet markSheet = rootDomainObject.readMarkSheetByOID((Integer) form.get("msID"));
+        MarkSheet markSheet = AbstractDomainObject.fromExternalId((Integer) form.get("msID"));
 
         MarkSheetRectifyBean rectifyBean = new MarkSheetRectifyBean();
         fillMarkSheetBean(actionForm, request, rectifyBean);

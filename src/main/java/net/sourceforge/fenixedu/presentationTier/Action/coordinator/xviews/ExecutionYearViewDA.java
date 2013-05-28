@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.GradeScale;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degreeStructure.BranchCourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.BranchType;
 import net.sourceforge.fenixedu.domain.oldInquiries.StudentInquiriesCourseResult;
@@ -36,6 +35,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/xYear", module = "coordinator")
 @Forwards({
@@ -75,7 +75,7 @@ public class ExecutionYearViewDA extends FenixDispatchAction {
             if (request.getParameter("degreeCurricularPlanID") != null) {
                 degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
                 request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
-                degreeCurricularPlan = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+                degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
             }
 
             searchFormBean = new YearViewBean(degreeCurricularPlan);

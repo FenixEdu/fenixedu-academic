@@ -4,8 +4,6 @@ import java.util.Collection;
 
 import javax.servlet.jsp.JspException;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
-
 import org.apache.struts.taglib.TagUtils;
 
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyArrayConverter;
@@ -15,6 +13,7 @@ import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
 import pt.ist.fenixWebFramework.renderers.model.MetaObjectFactory;
 import pt.ist.fenixWebFramework.renderers.taglib.HiddenSlotTag;
 import pt.ist.fenixframework.DomainObject;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class FenixHiddenSlotTag extends HiddenSlotTag {
 
@@ -118,7 +117,7 @@ public class FenixHiddenSlotTag extends HiddenSlotTag {
     protected Object getPersistentObject() throws JspException {
         try {
             Class type = Class.forName(getType());
-            return RootDomainObject.readDomainObjectByOID(type, Integer.valueOf(getOid()));
+            return AbstractDomainObject.fromExternalId(type, Integer.valueOf(getOid()));
         } catch (Exception e) {
             throw new JspException(e);
         }

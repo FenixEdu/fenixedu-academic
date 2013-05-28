@@ -40,6 +40,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -117,7 +118,7 @@ public class TeachingStaffDispatchAction extends FenixDispatchAction {
 
         Integer executionCourseID = Integer.valueOf(request.getParameter("executionCourseID"));
 
-        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
+        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseID);
 
         List institutions = (List) ReadAllInstitutions.run();
         Collections.sort(institutions, new BeanComparator("name"));
@@ -156,7 +157,7 @@ public class TeachingStaffDispatchAction extends FenixDispatchAction {
                         .readPartyByOID(nonAffiliatedTeacherInstitutionID);
 
         NonAffiliatedTeacher.associateToInstitutionAndExecutionCourse(nonAffiliatedTeacherName, institution,
-                rootDomainObject.readExecutionCourseByOID((Integer) dynaActionForm.get("executionCourseID")));
+                AbstractDomainObject.fromExternalId((Integer) dynaActionForm.get("executionCourseID")));
 
         return viewTeachingStaff(mapping, actionForm, request, response);
 
@@ -166,9 +167,9 @@ public class TeachingStaffDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) throws  FenixServiceException {
 
         final ExecutionCourse executionCourse =
-                rootDomainObject.readExecutionCourseByOID(getIntegerFromRequest(request, "executionCourseID"));
+                AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "executionCourseID"));
         final NonAffiliatedTeacher nonAffiliatedTeacher =
-                rootDomainObject.readNonAffiliatedTeacherByOID(getIntegerFromRequest(request, "nonAffiliatedTeacherID"));
+                AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "nonAffiliatedTeacherID"));
 
         nonAffiliatedTeacher.removeExecutionCourse(executionCourse);
 

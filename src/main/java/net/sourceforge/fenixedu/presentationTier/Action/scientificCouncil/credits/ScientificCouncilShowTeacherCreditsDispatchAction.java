@@ -73,11 +73,11 @@ public class ScientificCouncilShowTeacherCreditsDispatchAction extends ShowTeach
 
     private ExecutionSemester getExecutionSemesterFromRequestOrForm(HttpServletRequest request, DynaActionForm teacherCreditsForm) {
         ExecutionSemester executionSemester =
-                rootDomainObject.readExecutionSemesterByOID((Integer) teacherCreditsForm.get("executionPeriodId"));
+                AbstractDomainObject.fromExternalId((Integer) teacherCreditsForm.get("executionPeriodId"));
         if (executionSemester != null) {
             return executionSemester;
         }
-        return rootDomainObject.readExecutionSemesterByOID(getIntegerFromRequest(request, "executionPeriodId"));
+        return AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "executionPeriodId"));
     }
 
     private class InfoTeacherCredits {

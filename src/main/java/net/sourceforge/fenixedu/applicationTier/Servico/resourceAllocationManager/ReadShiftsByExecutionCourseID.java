@@ -9,9 +9,9 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseOccupancy;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ReadShiftsByExecutionCourseID {
 
@@ -20,7 +20,7 @@ public class ReadShiftsByExecutionCourseID {
         final InfoExecutionCourseOccupancy infoExecutionCourseOccupancy = new InfoExecutionCourseOccupancy();
         infoExecutionCourseOccupancy.setInfoShifts(new ArrayList());
 
-        final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseID);
+        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseID);
         final Set<Shift> shifts = executionCourse.getAssociatedShifts();
 
         infoExecutionCourseOccupancy.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(executionCourse));

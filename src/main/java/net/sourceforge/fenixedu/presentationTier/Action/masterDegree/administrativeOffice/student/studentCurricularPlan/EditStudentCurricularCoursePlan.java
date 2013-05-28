@@ -27,6 +27,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
+
 /**
  * @author Angela Created on 8/Out/2003
  */
@@ -122,7 +124,7 @@ public class EditStudentCurricularCoursePlan extends FenixDispatchAction {
             throws Exception {
 
         Enrolment enrolment =
-                (Enrolment) rootDomainObject.readCurriculumModuleByOID(getIntegerFromRequest(request, "enrolmentID"));
+                (Enrolment) AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "enrolmentID"));
         SetEnrolmentState.run(enrolment, EnrollmentState.ENROLLED);
 
         request.setAttribute("studentCurricularPlanId", enrolment.getStudentCurricularPlan().getExternalId());

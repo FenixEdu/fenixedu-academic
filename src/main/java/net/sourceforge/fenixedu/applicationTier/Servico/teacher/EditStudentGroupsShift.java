@@ -12,22 +12,22 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituat
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonValidChangeServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class EditStudentGroupsShift {
 
     protected Boolean run(Integer executionCourseCode, Integer groupPropertiesCode, Integer shiftCode,
             List<Integer> studentGroupsCodes) throws FenixServiceException {
 
-        Grouping grouping = RootDomainObject.getInstance().readGroupingByOID(groupPropertiesCode);
+        Grouping grouping = AbstractDomainObject.fromExternalId(groupPropertiesCode);
         if (grouping == null) {
             throw new ExistingServiceException();
         }
 
-        Shift shift = RootDomainObject.getInstance().readShiftByOID(shiftCode);
+        Shift shift = AbstractDomainObject.fromExternalId(shiftCode);
         if (shift == null) {
             throw new InvalidChangeServiceException();
         }
@@ -56,7 +56,7 @@ public class EditStudentGroupsShift {
         List<StudentGroup> studentGroups = new ArrayList<StudentGroup>();
 
         for (Integer studentGroupCode : studentGroupsCodes) {
-            StudentGroup studentGroup = RootDomainObject.getInstance().readStudentGroupByOID(studentGroupCode);
+            StudentGroup studentGroup = AbstractDomainObject.fromExternalId(studentGroupCode);
 
             if (studentGroup == null) {
                 throw new InvalidSituationServiceException("error.studentGroupNotInList");

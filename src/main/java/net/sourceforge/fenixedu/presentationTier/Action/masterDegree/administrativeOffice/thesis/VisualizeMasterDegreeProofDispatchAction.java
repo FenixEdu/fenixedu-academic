@@ -19,6 +19,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
+
 /**
  * 
  * @author : - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
@@ -32,7 +34,7 @@ public class VisualizeMasterDegreeProofDispatchAction extends FenixDispatchActio
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         final Integer scpID = Integer.valueOf(request.getParameter("scpID"));
-        StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(scpID);
+        StudentCurricularPlan studentCurricularPlan = AbstractDomainObject.fromExternalId(scpID);
 
         new MasterDegreeThesisOperations().transportStudentCurricularPlan(form, request, new ActionErrors(),
                 studentCurricularPlan);

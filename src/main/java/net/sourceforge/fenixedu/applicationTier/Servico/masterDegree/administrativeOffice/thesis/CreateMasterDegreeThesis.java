@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.GuiderAlready
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.MasterDegreeThesis;
 import net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
@@ -21,6 +20,7 @@ import org.apache.commons.collections.CollectionUtils;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * 
@@ -46,7 +46,7 @@ public class CreateMasterDegreeThesis {
             throw new GuiderAlreadyChosenServiceException("error.exception.masterDegree.externalGuiderAlreadyChosen");
         }
 
-        StudentCurricularPlan studentCurricularPlan = RootDomainObject.getInstance().readStudentCurricularPlanByOID(studentCurricularPlanID);
+        StudentCurricularPlan studentCurricularPlan = AbstractDomainObject.fromExternalId(studentCurricularPlanID);
         MasterDegreeThesis storedMasterDegreeThesis = studentCurricularPlan.getMasterDegreeThesis();
         if (storedMasterDegreeThesis != null) {
             throw new ExistingServiceException("error.exception.masterDegree.existingMasterDegreeThesis");

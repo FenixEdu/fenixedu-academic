@@ -3,9 +3,9 @@ package net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class CreateCourseGroup {
 
@@ -15,12 +15,12 @@ public class CreateCourseGroup {
             throws FenixServiceException {
 
         final DegreeCurricularPlan degreeCurricularPlan =
-                RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+                AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
         if (degreeCurricularPlan == null) {
             throw new FenixServiceException("error.noDegreeCurricularPlan");
         }
         final CourseGroup parentCourseGroup =
-                (CourseGroup) RootDomainObject.getInstance().readDegreeModuleByOID(parentCourseGroupID);
+                (CourseGroup) AbstractDomainObject.fromExternalId(parentCourseGroupID);
         if (parentCourseGroup == null) {
             throw new FenixServiceException("error.noCourseGroup");
         }
@@ -29,11 +29,11 @@ public class CreateCourseGroup {
         if (beginExecutionPeriodID == null) {
             beginExecutionPeriod = ExecutionSemester.readActualExecutionSemester();
         } else {
-            beginExecutionPeriod = RootDomainObject.getInstance().readExecutionSemesterByOID(beginExecutionPeriodID);
+            beginExecutionPeriod = AbstractDomainObject.fromExternalId(beginExecutionPeriodID);
         }
 
         final ExecutionSemester endExecutionPeriod =
-                (endExecutionPeriodID == null) ? null : RootDomainObject.getInstance().readExecutionSemesterByOID(
+                (endExecutionPeriodID == null) ? null : AbstractDomainObject.fromExternalId(
                         endExecutionPeriodID);
 
         degreeCurricularPlan.createCourseGroup(parentCourseGroup, name, nameEn, beginExecutionPeriod, endExecutionPeriod);

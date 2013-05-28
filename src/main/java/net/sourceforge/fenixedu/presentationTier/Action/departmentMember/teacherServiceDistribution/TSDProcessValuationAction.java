@@ -38,6 +38,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.Pair;
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -378,10 +379,10 @@ public class TSDProcessValuationAction extends FenixDispatchAction {
             HttpServletResponse response, TeacherServiceDistributionChart tsdProcessChart) throws FenixServiceException {
 
         Integer tsdId = new Integer(request.getParameter("tsd"));
-        TeacherServiceDistribution tsd = rootDomainObject.readTeacherServiceDistributionByOID(tsdId);
+        TeacherServiceDistribution tsd = AbstractDomainObject.fromExternalId(tsdId);
 
         Integer executionPeriodId = new Integer(request.getParameter("executionPeriod"));
-        ExecutionSemester selectedExecutionPeriod = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
+        ExecutionSemester selectedExecutionPeriod = AbstractDomainObject.fromExternalId(executionPeriodId);
 
         List<ExecutionSemester> executionPeriodList = new ArrayList<ExecutionSemester>();
         if (selectedExecutionPeriod != null) {
@@ -446,7 +447,7 @@ public class TSDProcessValuationAction extends FenixDispatchAction {
             TeacherServiceDistribution rootTeacherServiceDistribution) throws FenixServiceException {
         Integer selectedTeacherServiceDistributionId = (Integer) dynaForm.get("tsd");
         TeacherServiceDistribution selectedTeacherServiceDistribution =
-                rootDomainObject.readTeacherServiceDistributionByOID(selectedTeacherServiceDistributionId);
+                AbstractDomainObject.fromExternalId(selectedTeacherServiceDistributionId);
 
         if (selectedTeacherServiceDistribution == null) {
             return rootTeacherServiceDistribution;
@@ -457,14 +458,14 @@ public class TSDProcessValuationAction extends FenixDispatchAction {
 
     private TSDProcessPhase getSelectedTSDProcessPhase(IUserView userView, DynaActionForm dynaForm) throws FenixServiceException {
         Integer selectedTSDProcessPhaseId = (Integer) dynaForm.get("tsdProcessPhase");
-        TSDProcessPhase selectedTSDProcessPhase = rootDomainObject.readTSDProcessPhaseByOID(selectedTSDProcessPhaseId);
+        TSDProcessPhase selectedTSDProcessPhase = AbstractDomainObject.fromExternalId(selectedTSDProcessPhaseId);
 
         return selectedTSDProcessPhase;
     }
 
     private TSDProcess getTSDProcess(IUserView userView, DynaActionForm dynaForm) {
         Integer tsdProcessId = (Integer) dynaForm.get("tsdProcess");
-        TSDProcess tsdProcess = rootDomainObject.readTSDProcessByOID(tsdProcessId);
+        TSDProcess tsdProcess = AbstractDomainObject.fromExternalId(tsdProcessId);
 
         return tsdProcess;
     }
@@ -540,7 +541,7 @@ public class TSDProcessValuationAction extends FenixDispatchAction {
     private ExecutionSemester getSelectedExecutionPeriod(IUserView userView, DynaActionForm dynaForm,
             List<ExecutionSemester> executionPeriodList) throws FenixServiceException {
         Integer selectedExecutionPeriodId = (Integer) dynaForm.get("executionPeriod");
-        ExecutionSemester selectedExecutionPeriod = rootDomainObject.readExecutionSemesterByOID(selectedExecutionPeriodId);
+        ExecutionSemester selectedExecutionPeriod = AbstractDomainObject.fromExternalId(selectedExecutionPeriodId);
 
         if (selectedExecutionPeriod == null) {
             if (executionPeriodList != null && executionPeriodList.size() > 0) {

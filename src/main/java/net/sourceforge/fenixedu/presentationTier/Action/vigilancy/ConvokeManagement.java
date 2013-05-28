@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.Convoke
 import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.CreateConvokes;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -37,6 +36,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "examCoordination", path = "/vigilancy/convokeManagement",
         input = "/vigilancy/convokeManagement?method=prepareEditConvoke", scope = "request", parameter = "method")
@@ -54,7 +54,7 @@ public class ConvokeManagement extends FenixDispatchAction {
         RenderUtils.invalidateViewState();
         String writtenEvaluationId = request.getParameter("writtenEvaluationId");
         WrittenEvaluation writtenEvaluation =
-                (WrittenEvaluation) RootDomainObject.readDomainObjectByOID(WrittenEvaluation.class,
+                (WrittenEvaluation) AbstractDomainObject.fromExternalId(WrittenEvaluation.class,
                         Integer.valueOf(writtenEvaluationId));
 
         request.setAttribute("permission", true);
@@ -98,7 +98,7 @@ public class ConvokeManagement extends FenixDispatchAction {
         Integer externalId = Integer.valueOf(id);
         String bool = request.getParameter("bool");
         Boolean value = Boolean.valueOf(bool);
-        Vigilancy convoke = (Vigilancy) RootDomainObject.readDomainObjectByOID(Vigilancy.class, externalId);
+        Vigilancy convoke = (Vigilancy) AbstractDomainObject.fromExternalId(Vigilancy.class, externalId);
 
         try {
 
@@ -123,7 +123,7 @@ public class ConvokeManagement extends FenixDispatchAction {
         String participationType = request.getParameter("participationType");
         AttendingStatus status = AttendingStatus.valueOf(participationType);
 
-        Vigilancy vigilancy = (Vigilancy) RootDomainObject.readDomainObjectByOID(Vigilancy.class, externalId);
+        Vigilancy vigilancy = (Vigilancy) AbstractDomainObject.fromExternalId(Vigilancy.class, externalId);
         try {
 
             ChangeConvokeStatus.run(vigilancy, status);
@@ -140,7 +140,7 @@ public class ConvokeManagement extends FenixDispatchAction {
         String bool = request.getParameter("bool");
         Boolean value = Boolean.valueOf(bool);
         Person person = getLoggedPerson(request);
-        Vigilancy convoke = (Vigilancy) RootDomainObject.readDomainObjectByOID(Vigilancy.class, externalId);
+        Vigilancy convoke = (Vigilancy) AbstractDomainObject.fromExternalId(Vigilancy.class, externalId);
 
         try {
 
@@ -297,7 +297,7 @@ public class ConvokeManagement extends FenixDispatchAction {
 
         String writtenEvalatuionId = request.getParameter("writtenEvaluationId");
         WrittenEvaluation writtenEvaluation =
-                (WrittenEvaluation) RootDomainObject.readDomainObjectByOID(WrittenEvaluation.class,
+                (WrittenEvaluation) AbstractDomainObject.fromExternalId(WrittenEvaluation.class,
                         Integer.valueOf(writtenEvalatuionId));
 
         Person person = getLoggedPerson(request);
@@ -410,11 +410,11 @@ public class ConvokeManagement extends FenixDispatchAction {
         bean.setVigilantGroups(coordinator.getVigilantGroups());
         String executionYear = request.getParameter("executionYear");
         ExecutionYear executionYearObj =
-                executionYear != null ? (ExecutionYear) RootDomainObject.readDomainObjectByOID(ExecutionYear.class,
+                executionYear != null ? (ExecutionYear) AbstractDomainObject.fromExternalId(ExecutionYear.class,
                         Integer.valueOf(executionYear)) : null;
         VigilantGroup group = null;
         if (vigilantGroup != null) {
-            group = (VigilantGroup) RootDomainObject.readDomainObjectByOID(VigilantGroup.class, Integer.valueOf(vigilantGroup));
+            group = (VigilantGroup) AbstractDomainObject.fromExternalId(VigilantGroup.class, Integer.valueOf(vigilantGroup));
             bean.setSelectedVigilantGroup(group);
         }
         bean.setExecutionYear(executionYearObj);

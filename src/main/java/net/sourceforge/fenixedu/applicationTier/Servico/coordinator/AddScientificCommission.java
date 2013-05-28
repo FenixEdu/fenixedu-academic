@@ -5,14 +5,14 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.ResponsibleDegreeCoordina
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ScientificCommission;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class AddScientificCommission {
 
     protected void run(Integer executionDegreeId, Person person) {
-        ExecutionDegree execution = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeId);
+        ExecutionDegree execution = AbstractDomainObject.fromExternalId(executionDegreeId);
 
         new ScientificCommission(execution, person);
     }

@@ -26,6 +26,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class TSDProcessPhasesManagementAction extends FenixDispatchAction {
     private static final Integer COPY_LAST_YEAR_REAL_DATA = 0;
@@ -244,14 +245,14 @@ public class TSDProcessPhasesManagementAction extends FenixDispatchAction {
 
     private TSDProcess getTSDProcess(IUserView userView, DynaActionForm dynaForm) {
         Integer tsdProcessId = (Integer) dynaForm.get("tsdProcess");
-        TSDProcess tsdProcess = rootDomainObject.readTSDProcessByOID(tsdProcessId);
+        TSDProcess tsdProcess = AbstractDomainObject.fromExternalId(tsdProcessId);
 
         return tsdProcess;
     }
 
     private TSDProcessPhase getSelectedTSDProcessPhase(IUserView userView, DynaActionForm dynaForm) throws FenixServiceException {
         Integer selectedTSDProcessPhaseId = (Integer) dynaForm.get("tsdProcessPhase");
-        TSDProcessPhase selectedTSDProcessPhase = rootDomainObject.readTSDProcessPhaseByOID(selectedTSDProcessPhaseId);
+        TSDProcessPhase selectedTSDProcessPhase = AbstractDomainObject.fromExternalId(selectedTSDProcessPhaseId);
 
         return selectedTSDProcessPhase;
     }

@@ -10,10 +10,10 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.gep.GEPAuthorizationFilte
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExistingServiceException;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Ricardo Rodrigues
@@ -26,7 +26,7 @@ public class InsertNonAffiliatedTeacher {
     @Service
     public static NonAffiliatedTeacher run(String nonAffiliatedTeacherName, Integer institutionID)
             throws NotExistingServiceException {
-        final Unit institution = (Unit) RootDomainObject.getInstance().readPartyByOID(institutionID);
+        final Unit institution = (Unit) AbstractDomainObject.fromExternalId(institutionID);
         if (institution == null) {
             throw new NotExistingServiceException("no.institution");
         }

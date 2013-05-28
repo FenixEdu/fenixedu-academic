@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.person.GenerateNewPasswo
 import net.sourceforge.fenixedu.applicationTier.Servico.person.ReadPersonByUsername;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
@@ -20,6 +19,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * 
@@ -66,7 +67,7 @@ public class GenerateNewPasswordDispatchAction extends FenixDispatchAction {
 
         String password = null;
 
-        final Person person = (Person) RootDomainObject.getInstance().readPartyByOID(personID);
+        final Person person = (Person) AbstractDomainObject.fromExternalId(personID);
         if (person != null) {
             SetUserUID.run(person);
         }

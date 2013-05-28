@@ -11,9 +11,9 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons.student;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ReadStudentCurricularPlan {
 
@@ -24,7 +24,7 @@ public class ReadStudentCurricularPlan {
         }
 
         final StudentCurricularPlan studentCurricularPlan =
-                RootDomainObject.getInstance().readStudentCurricularPlanByOID(studentCurricularPlanID);
+                AbstractDomainObject.fromExternalId(studentCurricularPlanID);
         if (studentCurricularPlan == null) {
             throw new NonExistingServiceException();
         }

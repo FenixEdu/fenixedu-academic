@@ -6,10 +6,10 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.EmployeeAuthorizationFilt
 import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDTeacher;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * 
@@ -19,8 +19,8 @@ public class RemoveTeacherFromTeacherServiceDistributions {
 
     protected void run(Integer tsdId, Integer tsdTeacherId) throws FenixServiceException {
 
-        TeacherServiceDistribution tsd = RootDomainObject.getInstance().readTeacherServiceDistributionByOID(tsdId);
-        TSDTeacher tsdTeacher = RootDomainObject.getInstance().readTSDTeacherByOID(tsdTeacherId);
+        TeacherServiceDistribution tsd = AbstractDomainObject.fromExternalId(tsdId);
+        TSDTeacher tsdTeacher = AbstractDomainObject.fromExternalId(tsdTeacherId);
 
         tsd.removeTSDTeacherFromAllChilds(tsdTeacher);
         if (tsd.getIsRoot()) {

@@ -15,6 +15,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
+
 /**
  * 
  * @author : - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
@@ -31,7 +33,7 @@ public class VisualizeMasterDegreeProofHistoryDispatchAction extends FenixDispat
 
         Integer masterDegreeProofVersionID = Integer.valueOf(request.getParameter("masterDegreeProofVersionID"));
         MasterDegreeProofVersion masterDegreeProofVersion =
-                rootDomainObject.readMasterDegreeProofVersionByOID(masterDegreeProofVersionID);
+                AbstractDomainObject.fromExternalId(masterDegreeProofVersionID);
 
         if (masterDegreeProofVersion.getJuries().isEmpty() == false) {
             request.setAttribute(PresentationConstants.JURIES_LIST, masterDegreeProofVersion.getJuries());

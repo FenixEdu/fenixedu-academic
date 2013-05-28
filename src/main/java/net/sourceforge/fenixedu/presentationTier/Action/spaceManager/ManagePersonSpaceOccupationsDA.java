@@ -22,6 +22,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "SpaceManager", path = "/managePersonSpaceOccupations", attribute = "managePersonSpaceOccupationsForm",
         formBean = "managePersonSpaceOccupationsForm", scope = "request", parameter = "method")
@@ -93,7 +94,7 @@ public class ManagePersonSpaceOccupationsDA extends FenixDispatchAction {
                 request.getParameterMap().containsKey("spaceInformationID") ? request.getParameter("spaceInformationID") : (String) request
                         .getAttribute("spaceInformationID");
         final Integer spaceInformationID = spaceInformationIDString != null ? Integer.valueOf(spaceInformationIDString) : null;
-        return rootDomainObject.readSpaceInformationByOID(spaceInformationID);
+        return AbstractDomainObject.fromExternalId(spaceInformationID);
     }
 
     private PersonSpaceOccupation getPersonSpaceOccupationFromParameter(final HttpServletRequest request) {
@@ -102,6 +103,6 @@ public class ManagePersonSpaceOccupationsDA extends FenixDispatchAction {
                         .getAttribute("spaceOccupationID");
         final Integer personSpaceOccupationID =
                 personSpaceOccupationIDString != null ? Integer.valueOf(personSpaceOccupationIDString) : null;
-        return (PersonSpaceOccupation) rootDomainObject.readResourceAllocationByOID(personSpaceOccupationID);
+        return (PersonSpaceOccupation) AbstractDomainObject.fromExternalId(personSpaceOccupationID);
     }
 }

@@ -11,10 +11,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Luis Egidio, lmre@mega.ist.utl.pt Nuno Ochoa, nmgo@mega.ist.utl.pt
@@ -57,7 +57,7 @@ public class ExecutionCourseAndExamLecturingTeacherAuthorizationFilter extends A
             Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
             Professorship professorship = null;
             if (teacher != null) {
-                ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseID);
+                ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseID);
                 professorship = teacher.getProfessorshipByExecutionCourse(executionCourse);
             }
             return professorship != null;
@@ -72,7 +72,7 @@ public class ExecutionCourseAndExamLecturingTeacherAuthorizationFilter extends A
             return false;
         }
         try {
-            ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseID);
+            ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseID);
 
             if (executionCourse != null && evaluationID != null) {
                 for (Evaluation associatedEvaluation : executionCourse.getAssociatedEvaluations()) {

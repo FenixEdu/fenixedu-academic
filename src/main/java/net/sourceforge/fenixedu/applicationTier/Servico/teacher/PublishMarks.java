@@ -12,9 +12,9 @@ import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.Mark;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
@@ -33,9 +33,9 @@ public class PublishMarks {
     protected Object run(Integer executionCourseCode, Integer evaluationCode, String publishmentMessage, Boolean sendSMS,
             String announcementTitle) throws ExcepcaoInexistente, FenixServiceException {
 
-        final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseCode);
+        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseCode);
         final ExecutionCourseSite site = executionCourse.getSite();
-        final Evaluation evaluation = RootDomainObject.getInstance().readEvaluationByOID(evaluationCode);
+        final Evaluation evaluation = AbstractDomainObject.fromExternalId(evaluationCode);
 
         if (publishmentMessage == null || publishmentMessage.length() == 0) {
             evaluation.setPublishmentMessage(" ");

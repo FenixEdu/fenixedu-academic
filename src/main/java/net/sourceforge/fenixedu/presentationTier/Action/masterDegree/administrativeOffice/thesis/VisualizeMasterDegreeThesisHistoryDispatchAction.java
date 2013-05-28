@@ -15,6 +15,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
+
 /**
  * 
  * @author : - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
@@ -32,7 +34,7 @@ public class VisualizeMasterDegreeThesisHistoryDispatchAction extends FenixDispa
         new MasterDegreeThesisOperations().getStudentByNumberAndDegreeType(form, request, new ActionErrors());
 
         MasterDegreeThesisDataVersion masterDegreeThesisDataVersion =
-                rootDomainObject.readMasterDegreeThesisDataVersionByOID(masterDegreeThesisDataVersionID);
+                AbstractDomainObject.fromExternalId(masterDegreeThesisDataVersionID);
 
         if (!masterDegreeThesisDataVersion.getGuiders().isEmpty()) {
             request.setAttribute(PresentationConstants.GUIDERS_LIST, masterDegreeThesisDataVersion.getGuiders());

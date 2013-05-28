@@ -15,10 +15,10 @@ import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseSiteView;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Jo�o Mota
@@ -34,7 +34,7 @@ public class ExecutionCourseSiteComponentService {
         if (infoSiteCode != null) {
             site = ExecutionCourseSite.readExecutionCourseSiteByOID(infoSiteCode);
         } else {
-            final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(infoExecutionCourseCode);
+            final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(infoExecutionCourseCode);
             site = executionCourse.getSite();
         }
 

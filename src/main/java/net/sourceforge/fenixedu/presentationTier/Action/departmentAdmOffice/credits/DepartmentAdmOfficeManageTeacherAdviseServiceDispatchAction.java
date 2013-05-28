@@ -60,7 +60,7 @@ public class DepartmentAdmOfficeManageTeacherAdviseServiceDispatchAction extends
         IUserView userView = UserView.getUser();
 
         final Integer executionPeriodID = (Integer) dynaForm.get("executionPeriodId");
-        final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
+        final ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodID);
 
         Teacher teacher = AbstractDomainObject.fromExternalId(dynaForm.getString("teacherId"));
         List<Department> manageableDepartments = userView.getPerson().getManageableDepartmentCredits();

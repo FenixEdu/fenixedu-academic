@@ -12,9 +12,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author joaosa & rmalo
@@ -24,13 +24,13 @@ public class VerifyStudentGroupWithoutShift {
 
     protected Integer run(Integer executionCourseCode, Integer studentGroupCode, Integer groupPropertiesCode,
             String shiftCodeString) throws FenixServiceException {
-        Grouping groupProperties = RootDomainObject.getInstance().readGroupingByOID(groupPropertiesCode);
+        Grouping groupProperties = AbstractDomainObject.fromExternalId(groupPropertiesCode);
 
         if (groupProperties == null) {
             throw new ExistingServiceException();
         }
 
-        StudentGroup studentGroup = RootDomainObject.getInstance().readStudentGroupByOID(studentGroupCode);
+        StudentGroup studentGroup = AbstractDomainObject.fromExternalId(studentGroupCode);
 
         if (studentGroup == null) {
             throw new InvalidSituationServiceException();

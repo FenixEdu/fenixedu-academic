@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.messaging.PartyAnnouncementBoard;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -19,6 +18,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
+
 public class AnnouncementsManagementDA extends AnnouncementManagement {
 
     @Override
@@ -26,7 +27,7 @@ public class AnnouncementsManagementDA extends AnnouncementManagement {
             HttpServletResponse response) throws Exception {
         CoordinatedDegreeInfo.setCoordinatorContext(request);
         final Integer degreeCurricularPlanOID = (Integer) request.getAttribute("degreeCurricularPlanID");
-        final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanOID);
+        final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanOID);
         if (degreeCurricularPlan != null) {
             request.setAttribute("degreeCurricularPlan", degreeCurricularPlan);
         }
@@ -43,7 +44,7 @@ public class AnnouncementsManagementDA extends AnnouncementManagement {
 
         try {
             Integer oid = new Integer(parameter);
-            return RootDomainObject.getInstance().readDegreeCurricularPlanByOID(oid);
+            return AbstractDomainObject.fromExternalId(oid);
         } catch (NumberFormatException e) {
             return null;
         }

@@ -12,6 +12,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/managePersonFunctions", module = "scientificCouncil")
 public class ManagePersonFunctions extends FenixDispatchAction {
@@ -20,7 +21,7 @@ public class ManagePersonFunctions extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         final Integer personFunctionId = new Integer(request.getParameter("personFunctionID"));
 
-        final PersonFunction personFunction = (PersonFunction) rootDomainObject.readAccountabilityByOID(personFunctionId);
+        final PersonFunction personFunction = (PersonFunction) AbstractDomainObject.fromExternalId(personFunctionId);
         final Person person = personFunction.getPerson();
 
         personFunction.delete();

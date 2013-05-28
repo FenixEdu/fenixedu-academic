@@ -30,6 +30,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.EMail;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -225,7 +226,7 @@ public class AlumniPublicAccessDA extends FenixDispatchAction {
 
         String alumniId = RESOURCES.getString("alumni.public.registration.first.argument");
         String urlToken = RESOURCES.getString("alumni.public.registration.second.argument");
-        final Alumni alumni = rootDomainObject.readAlumniByOID(getIntegerFromRequest(request, alumniId));
+        final Alumni alumni = AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, alumniId));
 
         if (StringUtils.isEmpty(alumniId) || StringUtils.isEmpty(urlToken) || alumni == null) {
             request.setAttribute("alumniPublicAccessTitle", "registration.error.old.request.link.title");

@@ -23,6 +23,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/accountingEventsManagement", module = "academicAdministration")
 @Forwards({
@@ -257,7 +258,7 @@ public class AccountingEventsManagementDA extends FenixDispatchAction {
     }
 
     private StudentCurricularPlan getStudentCurricularPlan(HttpServletRequest request) {
-        return rootDomainObject.readStudentCurricularPlanByOID(getIntegerFromRequest(request, "scpID"));
+        return AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "scpID"));
     }
 
     private ActionForward prepareCreateInsuranceEvent(ActionMapping mapping, HttpServletRequest request) {

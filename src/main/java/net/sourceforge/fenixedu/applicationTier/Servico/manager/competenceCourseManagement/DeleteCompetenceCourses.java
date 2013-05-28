@@ -2,16 +2,16 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager.competenceCours
 
 
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class DeleteCompetenceCourses {
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
     public static void run(Integer[] competenceCourseIDs) {
         for (Integer competenceCourseID : competenceCourseIDs) {
-            CompetenceCourse competenceCourse = RootDomainObject.getInstance().readCompetenceCourseByOID(competenceCourseID);
+            CompetenceCourse competenceCourse = AbstractDomainObject.fromExternalId(competenceCourseID);
             if (competenceCourse != null) {
                 competenceCourse.delete();
             }

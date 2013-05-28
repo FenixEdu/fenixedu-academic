@@ -9,8 +9,8 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingT
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author joaosa & rmalo
@@ -20,7 +20,7 @@ public class ExecutionCourseHasProposals {
 
     protected Boolean run(Integer executionCourseCode) throws FenixServiceException {
         boolean result = false;
-        ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseCode);
+        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseCode);
 
         result = executionCourse.hasProposals();
 

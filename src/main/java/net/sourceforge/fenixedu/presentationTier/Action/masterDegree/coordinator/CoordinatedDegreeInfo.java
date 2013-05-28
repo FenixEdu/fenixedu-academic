@@ -43,7 +43,7 @@ public class CoordinatedDegreeInfo extends FenixAction {
 
         if (degreeCurricularPlanOID != null) {
             final DegreeCurricularPlan degreeCurricularPlan =
-                    rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanOID);
+                    AbstractDomainObject.fromExternalId(degreeCurricularPlanOID);
             if (degreeCurricularPlan != null) {
                 final ExecutionDegree executionDegree = degreeCurricularPlan.getMostRecentExecutionDegree();
 

@@ -5,11 +5,11 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.SituationName;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -39,7 +39,7 @@ public class ReadAdmitedCandidates {
                     || candidateList[i].equals(SituationName.ADMITED_CONDICIONAL_OTHER_STRING)) {
 
                 MasterDegreeCandidate masterDegreeCandidate =
-                        RootDomainObject.getInstance().readMasterDegreeCandidateByOID(new Integer(ids[i]));
+                        AbstractDomainObject.fromExternalId(new Integer(ids[i]));
                 if (!masterDegreeCandidate.getSpecialization().equals(Specialization.STUDENT_CURRICULAR_PLAN_SPECIALIZATION)) {
                     result.add(candidateList[i]);
                 }

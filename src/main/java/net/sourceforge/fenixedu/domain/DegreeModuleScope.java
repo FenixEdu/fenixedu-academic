@@ -8,6 +8,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import pt.ist.fenixframework.DomainObject;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public abstract class DegreeModuleScope {
@@ -160,7 +161,7 @@ public abstract class DegreeModuleScope {
             try {
                 Class clazz = Class.forName(className);
                 DomainObject domainObject =
-                        RootDomainObject.getInstance().readDomainObjectByOID(clazz, Integer.valueOf(externalId));
+                        AbstractDomainObject.fromExternalId(clazz, Integer.valueOf(externalId));
                 if (domainObject != null && domainObject instanceof CurricularCourseScope) {
                     return ((CurricularCourseScope) domainObject).getDegreeModuleScopeCurricularCourseScope();
                 }

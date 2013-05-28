@@ -21,13 +21,13 @@ import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.Mark;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Tânia Pousão
@@ -40,13 +40,13 @@ public class ReadStudentsAndMarksByEvaluation {
         InfoEvaluation infoEvaluation = new InfoEvaluation();
 
         // Execution Course
-        final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseCode);
+        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseCode);
 
         // Site
         final ExecutionCourseSite site = executionCourse.getSite();
 
         // Evaluation
-        Evaluation evaluation = RootDomainObject.getInstance().readEvaluationByOID(evaluationCode);
+        Evaluation evaluation = AbstractDomainObject.fromExternalId(evaluationCode);
 
         infoEvaluation = InfoEvaluation.newInfoFromDomain(evaluation);
 

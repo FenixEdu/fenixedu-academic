@@ -36,6 +36,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "student", path = "/studentShiftEnrollmentManager", input = "/studentShiftEnrollmentManager.do?method=prepare",
         attribute = "studentShiftEnrollmentForm", formBean = "studentShiftEnrollmentForm", scope = "request", validate = false,
@@ -93,7 +94,7 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
 
     private Registration getAndSetRegistration(final HttpServletRequest request) {
         final Registration registration =
-                rootDomainObject.readRegistrationByOID(getIntegerFromRequest(request, "registrationOID"));
+                AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "registrationOID"));
         if (!getUserView(request).getPerson().getStudent().getRegistrationsToEnrolInShiftByStudent().contains(registration)) {
             return null;
         }
@@ -233,7 +234,7 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
             final ExecutionSemester executionSemester, final List<ExecutionDegree> executionDegrees) {
 
         final Integer executionDegreeIdChosen = (Integer) form.get("degree");
-        final ExecutionDegree executionDegreeChosen = rootDomainObject.readExecutionDegreeByOID(executionDegreeIdChosen);
+        final ExecutionDegree executionDegreeChosen = AbstractDomainObject.fromExternalId(executionDegreeIdChosen);
         if (executionDegreeChosen != null && executionDegreeChosen.getExecutionYear() == executionSemester.getExecutionYear()) {
             return executionDegreeChosen;
         } else {

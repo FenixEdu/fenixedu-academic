@@ -33,6 +33,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * 
@@ -77,7 +78,7 @@ public class TestsStudentAction extends FenixDispatchAction {
             throws FenixServiceException, ExcepcaoPersistencia {
         Integer testGroupId = getCodeFromRequest(request, "oid");
 
-        NewTestGroup testGroup = rootDomainObject.readNewTestGroupByOID(testGroupId);
+        NewTestGroup testGroup = AbstractDomainObject.fromExternalId(testGroupId);
 
         NewTest test = GetStudentTest.run(getPerson(request), testGroup);
 
@@ -91,7 +92,7 @@ public class TestsStudentAction extends FenixDispatchAction {
             HttpServletResponse response) throws FenixServiceException, ExcepcaoPersistencia {
         Integer atomicQuestionId = getCodeFromRequest(request, "oid");
 
-        NewAtomicQuestion atomicQuestion = (NewAtomicQuestion) rootDomainObject.readNewTestElementByOID(atomicQuestionId);
+        NewAtomicQuestion atomicQuestion = (NewAtomicQuestion) AbstractDomainObject.fromExternalId(atomicQuestionId);
 
         NewTestGroup testGroup = atomicQuestion.getTest().getTestGroup();
 
@@ -106,7 +107,7 @@ public class TestsStudentAction extends FenixDispatchAction {
             HttpServletResponse response) throws FenixServiceException, ExcepcaoPersistencia {
         Integer atomicQuestionId = getCodeFromRequest(request, "oid");
 
-        NewAtomicQuestion atomicQuestion = (NewAtomicQuestion) rootDomainObject.readNewTestElementByOID(atomicQuestionId);
+        NewAtomicQuestion atomicQuestion = (NewAtomicQuestion) AbstractDomainObject.fromExternalId(atomicQuestionId);
 
         NewTestGroup testGroup = atomicQuestion.getTest().getTestGroup();
 

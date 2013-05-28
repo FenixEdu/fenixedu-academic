@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.LoginAlias;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
@@ -27,6 +26,7 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
 
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
@@ -96,7 +96,7 @@ public class SearchPerson implements Serializable {
             }
 
             if (degreeId != null) {
-                degree = RootDomainObject.getInstance().readDegreeByOID(degreeId);
+                degree = AbstractDomainObject.fromExternalId(degreeId);
             }
 
             if (degreeTypeString != null && degreeTypeString.length() > 0) {
@@ -104,7 +104,7 @@ public class SearchPerson implements Serializable {
             }
 
             if (departmentId != null) {
-                department = RootDomainObject.getInstance().readDepartmentByOID(departmentId);
+                department = AbstractDomainObject.fromExternalId(departmentId);
             }
         }
 

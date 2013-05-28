@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExecuteException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.tests.InvalidXMLFilesException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
@@ -26,6 +25,7 @@ import org.apache.struts.util.LabelValueBean;
 
 import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.servlets.commons.UploadedFile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Susana Fernandes
@@ -38,12 +38,12 @@ public class InsertExerciseVariation {
             throws FenixServiceException, NotExecuteException {
         List<String> badXmls = new ArrayList<String>();
         String replacedPath = path.replace('\\', '/');
-        ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseId);
+        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
         if (executionCourse == null) {
             throw new InvalidArgumentsServiceException();
         }
 
-        Metadata metadata = RootDomainObject.getInstance().readMetadataByOID(metadataId);
+        Metadata metadata = AbstractDomainObject.fromExternalId(metadataId);
         if (metadata == null) {
             throw new InvalidArgumentsServiceException();
         }

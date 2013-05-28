@@ -1,10 +1,11 @@
 package net.sourceforge.fenixedu.domain.contents.pathProcessors;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.contents.Content;
 
 import org.apache.commons.lang.StringUtils;
+
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class DefaultPathProcessor extends AbstractPathProcessor {
 
@@ -20,7 +21,7 @@ public class DefaultPathProcessor extends AbstractPathProcessor {
 
     protected Container getTemplatedContent(final String path) {
         final Integer id = getTemplatedId(path);
-        return id == null ? null : (Container) RootDomainObject.getInstance().readContentByOID(id);
+        return id == null ? null : (Container) AbstractDomainObject.fromExternalId(id);
     }
 
     @Override

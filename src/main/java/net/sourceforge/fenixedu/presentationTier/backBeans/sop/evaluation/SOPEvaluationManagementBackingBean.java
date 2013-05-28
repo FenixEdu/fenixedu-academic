@@ -66,6 +66,7 @@ import org.apache.struts.util.MessageResources;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -234,7 +235,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     }
 
     public ExecutionDegree getExecutionDegree() {
-        return rootDomainObject.readExecutionDegreeByOID(this.getExecutionDegreeID());
+        return AbstractDomainObject.fromExternalId(this.getExecutionDegreeID());
     }
 
     public String getExecutionDegreeLabel() {
@@ -771,7 +772,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
             for (final Integer curricularYearID : curricularYears) {
                 executionCourses.addAll(ExecutionCourse.filterByAcademicIntervalAndDegreeCurricularPlanAndCurricularYearAndName(
                         getAcademicIntervalFromParameter(getAcademicInterval()), getExecutionDegree().getDegreeCurricularPlan(),
-                        rootDomainObject.readCurricularYearByOID(curricularYearID), "%"));
+                        AbstractDomainObject.fromExternalId(curricularYearID), "%"));
             }
         }
         // Integer[] curricularYears = getCurricularYearIDs();
@@ -810,7 +811,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
                 final List<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
                 executionCourses.addAll(ExecutionCourse.filterByAcademicIntervalAndDegreeCurricularPlanAndCurricularYearAndName(
                         getAcademicIntervalFromParameter(getAcademicInterval()), getExecutionDegree().getDegreeCurricularPlan(),
-                        rootDomainObject.readCurricularYearByOID(curricularYearID), "%"));
+                        AbstractDomainObject.fromExternalId(curricularYearID), "%"));
 
                 for (final ExecutionCourse executionCourse : executionCourses) {
                     final Set<WrittenEvaluation> writtenEvaluations =
@@ -1102,7 +1103,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         if (this.getChosenRoomsIDs() != null && this.getChosenRoomsIDs().length != 0) {
             for (String chosenRoomString : this.getChosenRoomsIDs()) {
                 Integer chosenRoomID = getRoomID(chosenRoomString);
-                AllocatableSpace room = (AllocatableSpace) rootDomainObject.readResourceByOID(chosenRoomID);
+                AllocatableSpace room = (AllocatableSpace) AbstractDomainObject.fromExternalId(chosenRoomID);
                 result.append(room.getIdentification());
                 result.append("; ");
             }
@@ -1311,7 +1312,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 
         for (Integer executionCourseID : this.associatedExecutionCourses) {
 
-            ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
+            ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseID);
             this.associatedExecutionCoursesNames.put(executionCourseID, executionCourse.getNome());
 
             List<SelectItem> items = new ArrayList<SelectItem>();
@@ -1416,7 +1417,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
                 list.add(integer);
             }
 
-            ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(integer);
+            ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(integer);
             List<Integer> auxiliarArray = new ArrayList<Integer>();
             for (CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
                 for (DegreeModuleScope degreeModuleScope : curricularCourse.getDegreeModuleScopes()) {
@@ -1560,11 +1561,11 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     }
 
     private List<ExecutionCourse> readExecutionCourses() throws FenixServiceException {
-        ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(this.getSelectedExecutionDegreeID());
+        ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(this.getSelectedExecutionDegreeID());
         final List<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
         executionCourses.addAll(ExecutionCourse.filterByAcademicIntervalAndDegreeCurricularPlanAndCurricularYearAndName(
                 getAcademicIntervalFromParameter(getAcademicInterval()), executionDegree.getDegreeCurricularPlan(),
-                rootDomainObject.readCurricularYearByOID(curricularYearID), "%"));
+                AbstractDomainObject.fromExternalId(curricularYearID), "%"));
         Collections.sort(executionCourses, new BeanComparator("sigla"));
         return executionCourses;
     }

@@ -38,6 +38,8 @@ import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
+
 /**
  * 
  * @author naat
@@ -322,7 +324,7 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
                 executionYearID = null;
             }
 
-            Teacher teacher = rootDomainObject.readTeacherByOID(getSelectedTeacherID());
+            Teacher teacher = AbstractDomainObject.fromExternalId(getSelectedTeacherID());
 
             List<PersonFunction> result =
                     new ArrayList<PersonFunction>(ReadPersonFunctionsByPersonIDAndExecutionYearID.run(teacher.getPerson()

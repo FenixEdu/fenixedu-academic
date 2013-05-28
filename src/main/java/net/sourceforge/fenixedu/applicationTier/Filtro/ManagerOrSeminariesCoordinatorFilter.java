@@ -4,11 +4,11 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ManagerOrSeminariesCoordinatorFilter {
 
@@ -29,7 +29,7 @@ public class ManagerOrSeminariesCoordinatorFilter {
     }
 
     public boolean doesThisSCPBelongToASeminaryCandidate(Integer SCPIDInternal) {
-        StudentCurricularPlan scp = RootDomainObject.getInstance().readStudentCurricularPlanByOID(SCPIDInternal);
+        StudentCurricularPlan scp = AbstractDomainObject.fromExternalId(SCPIDInternal);
         if (scp != null) {
             List<SeminaryCandidacy> candidacies = scp.getRegistration().getAssociatedCandidancies();
             return !candidacies.isEmpty();

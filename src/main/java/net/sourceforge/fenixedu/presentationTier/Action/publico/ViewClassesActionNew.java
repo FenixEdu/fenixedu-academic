@@ -31,6 +31,7 @@ import org.apache.struts.util.LabelValueBean;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author João Mota
@@ -68,7 +69,7 @@ public class ViewClassesActionNew extends FenixContextAction {
         // degreeCurricularPlanID
         Integer degreeCurricularPlanId = (Integer) request.getAttribute("degreeCurricularPlanID");
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
-        final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
+        final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanId);
         if (!degreeCurricularPlan.getDegree().getExternalId().equals(degreeId)) {
             throw new FenixActionException();
         } else {
@@ -95,7 +96,7 @@ public class ViewClassesActionNew extends FenixContextAction {
         request.setAttribute(PresentationConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getExternalId().toString());
 
         final ExecutionSemester executionSemester =
-                rootDomainObject.readExecutionSemesterByOID(infoExecutionPeriod.getExternalId());
+                AbstractDomainObject.fromExternalId(infoExecutionPeriod.getExternalId());
         ExecutionDegree executionDegree = degreeCurricularPlan.getExecutionDegreeByYear(executionSemester.getExecutionYear());
         if (executionDegree != null) {
             // infoExecutionDegree

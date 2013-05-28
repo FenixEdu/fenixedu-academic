@@ -13,13 +13,13 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentInOptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class WriteEnrollmentsList {
 
@@ -46,7 +46,7 @@ public class WriteEnrollmentsList {
     }
 
     private CurricularCourse readCurricularCourse(final Integer curricularCourseId) {
-        return (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(curricularCourseId);
+        return (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseId);
     }
 
     protected void createEnrollment(final StudentCurricularPlan studentCurricularPlan, final CurricularCourse curricularCourse,

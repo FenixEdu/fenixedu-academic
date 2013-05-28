@@ -16,13 +16,13 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ReadProfessorshipsAndResponsibilitiesByDepartmentAndExecutionPeriod {
 
@@ -32,7 +32,7 @@ public class ReadProfessorshipsAndResponsibilitiesByDepartmentAndExecutionPeriod
 
         ExecutionYear executionYear = null;
         if (executionYearID != null) {
-            executionYear = RootDomainObject.getInstance().readExecutionYearByOID(executionYearID);
+            executionYear = AbstractDomainObject.fromExternalId(executionYearID);
         }
 
         final ExecutionSemester executionSemester = executionYear.getExecutionSemesterFor(semester);
@@ -40,7 +40,7 @@ public class ReadProfessorshipsAndResponsibilitiesByDepartmentAndExecutionPeriod
             throw new FenixServiceException("error.noExecutionPeriod");
         }
 
-        final Department department = RootDomainObject.getInstance().readDepartmentByOID(departmentId);
+        final Department department = AbstractDomainObject.fromExternalId(departmentId);
         if (department == null) {
             throw new FenixServiceException("error.noDepartment");
         }

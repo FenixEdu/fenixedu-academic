@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -29,6 +28,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Susana Fernandes
@@ -37,7 +37,7 @@ import pt.ist.fenixWebFramework.services.Service;
 public class ReadDistributedTestMarksToString {
 
     protected String run(Integer executionCourseId, Integer distributedTestId) throws FenixServiceException {
-        DistributedTest distributedTest = RootDomainObject.getInstance().readDistributedTestByOID(distributedTestId);
+        DistributedTest distributedTest = AbstractDomainObject.fromExternalId(distributedTestId);
         if (distributedTest == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -89,7 +89,7 @@ public class ReadDistributedTestMarksToString {
         StringBuilder result = new StringBuilder();
         result.append("Número\tNome\t");
 
-        ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseId);
+        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
         List<Registration> studentsFromAttendsList =
                 (List) CollectionUtils.collect(executionCourse.getAttends(), new Transformer() {
 
@@ -102,7 +102,7 @@ public class ReadDistributedTestMarksToString {
         final Set<Registration> students = new HashSet<Registration>();
         for (final String distributedTestCode : distributedTestCodes) {
             final Integer distributedTestID = Integer.valueOf(distributedTestCode);
-            final DistributedTest distributedTest = RootDomainObject.getInstance().readDistributedTestByOID(distributedTestID);
+            final DistributedTest distributedTest = AbstractDomainObject.fromExternalId(distributedTestID);
             students.addAll(distributedTest.findStudents());
         }
 
@@ -110,7 +110,7 @@ public class ReadDistributedTestMarksToString {
         Double[] maxValues = new Double[distributedTestCodes.length];
 
         for (int i = 0; i < distributedTestCodes.length; i++) {
-            DistributedTest distributedTest = RootDomainObject.getInstance().readDistributedTestByOID(Integer.valueOf(distributedTestCodes[i]));
+            DistributedTest distributedTest = AbstractDomainObject.fromExternalId(Integer.valueOf(distributedTestCodes[i]));
             if (distributedTest == null) {
                 throw new InvalidArgumentsServiceException();
             }
@@ -136,7 +136,7 @@ public class ReadDistributedTestMarksToString {
                 DecimalFormat percentageFormat = new DecimalFormat("#%");
 
                 final DistributedTest distributedTest =
-                        RootDomainObject.getInstance().readDistributedTestByOID(Integer.valueOf(distributedTestCodes[i]));
+                        AbstractDomainObject.fromExternalId(Integer.valueOf(distributedTestCodes[i]));
                 finalMark = distributedTest.calculateTestFinalMarkForStudent(registration);
 
                 if (finalMark == null) {

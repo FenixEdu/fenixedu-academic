@@ -18,10 +18,10 @@ import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.GroupsAndShiftsManagementLog;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.util.ProposalState;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author joaosa & rmalo
@@ -36,12 +36,12 @@ public class RejectNewProjectProposal {
             return Boolean.FALSE;
         }
 
-        final Grouping groupProperties = RootDomainObject.getInstance().readGroupingByOID(groupPropertiesId);
+        final Grouping groupProperties = AbstractDomainObject.fromExternalId(groupPropertiesId);
         if (groupProperties == null) {
             throw new NotAuthorizedException();
         }
 
-        final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseId);
+        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
         final ExportGrouping groupPropertiesExecutionCourse = executionCourse.getExportGrouping(groupProperties);
         if (groupPropertiesExecutionCourse == null) {
             throw new ExistingServiceException();

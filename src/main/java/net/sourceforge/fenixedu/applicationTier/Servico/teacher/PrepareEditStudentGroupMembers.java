@@ -13,9 +13,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.Attends;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author asnr and scpo
@@ -25,7 +25,7 @@ import pt.ist.fenixWebFramework.services.Service;
 public class PrepareEditStudentGroupMembers {
 
     protected List run(Integer executionCourseID, Integer studentGroupID) throws FenixServiceException {
-        final StudentGroup studentGroup = RootDomainObject.getInstance().readStudentGroupByOID(studentGroupID);
+        final StudentGroup studentGroup = AbstractDomainObject.fromExternalId(studentGroupID);
         if (studentGroup == null) {
             throw new InvalidArgumentsServiceException();
         }

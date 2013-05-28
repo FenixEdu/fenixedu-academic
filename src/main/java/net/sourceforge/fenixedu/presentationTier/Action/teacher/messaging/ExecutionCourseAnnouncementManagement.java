@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Servico.gesdis.ReadCourseInformation;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.presentationTier.Action.messaging.AnnouncementManagement;
 
@@ -20,6 +19,7 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "teacher", path = "/announcementManagement", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "viewAnnouncement", path = "teacher-view-announcement"),
@@ -35,7 +35,7 @@ public class ExecutionCourseAnnouncementManagement extends AnnouncementManagemen
     }
 
     protected ExecutionCourse getRequestedExecutionCourse(HttpServletRequest request) {
-        return RootDomainObject.getInstance().readExecutionCourseByOID(this.getRequestedExecutionCourseId(request));
+        return AbstractDomainObject.fromExternalId(this.getRequestedExecutionCourseId(request));
     }
 
     @Override
@@ -50,7 +50,7 @@ public class ExecutionCourseAnnouncementManagement extends AnnouncementManagemen
 
     @Override
     protected AnnouncementBoard getRequestedAnnouncementBoard(HttpServletRequest request) {
-        return rootDomainObject.readExecutionCourseByOID(this.getRequestedExecutionCourseId(request)).getBoard();
+        return AbstractDomainObject.fromExternalId(this.getRequestedExecutionCourseId(request)).getBoard();
     }
 
     @Override

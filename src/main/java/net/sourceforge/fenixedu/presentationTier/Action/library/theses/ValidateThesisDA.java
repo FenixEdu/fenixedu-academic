@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.thesis.ThesisSearchBean;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisLibraryOperation;
 
@@ -20,6 +19,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "library", path = "/theses/validate", attribute = "none", formBean = "none", scope = "session",
         parameter = "method")
@@ -27,7 +27,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 public class ValidateThesisDA extends ThesisLibraryDA {
     protected Thesis getThesis(HttpServletRequest request) {
         Integer id = getExternalId(request, "thesisID");
-        return id != null ? (Thesis) RootDomainObject.getInstance().readThesisByOID(id) : null;
+        return id != null ? (Thesis) AbstractDomainObject.fromExternalId(id) : null;
     }
 
     @Override

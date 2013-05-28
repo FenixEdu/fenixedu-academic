@@ -21,7 +21,6 @@ import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteStudentTe
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Mark;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog;
@@ -40,6 +39,7 @@ import org.apache.log4j.Logger;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.StringAppender;
 
 public class InsertStudentTestResponses {
@@ -66,7 +66,7 @@ public class InsertStudentTestResponses {
             throw new NotAuthorizedStudentToDoTestException();
         }
 
-        final DistributedTest distributedTest = RootDomainObject.getInstance().readDistributedTestByOID(distributedTestId);
+        final DistributedTest distributedTest = AbstractDomainObject.fromExternalId(distributedTestId);
         if (distributedTest == null) {
             throw new FenixServiceException();
         }

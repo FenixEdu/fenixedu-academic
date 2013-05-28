@@ -5,7 +5,6 @@ import net.sourceforge.fenixedu.applicationTier.ServiceMonitoring;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AggregateUnit;
@@ -28,6 +27,7 @@ import net.sourceforge.fenixedu.domain.space.Campus;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class CreateUnit {
@@ -43,20 +43,20 @@ public class CreateUnit {
                 canBeResponsibleOfSpaces, campusID);
 
         Integer costCenterCode = getCostCenterCode(unitCostCenter);
-        Campus campus = (Campus) RootDomainObject.getInstance().readResourceByOID(campusID);
+        Campus campus = (Campus) AbstractDomainObject.fromExternalId(campusID);
 
         if (type != null) {
 
             switch (type) {
 
             case DEPARTMENT:
-                Department department = RootDomainObject.getInstance().readDepartmentByOID(departmentID);
+                Department department = AbstractDomainObject.fromExternalId(departmentID);
                 return DepartmentUnit.createNewInternalDepartmentUnit(unitName, unitNameCard, costCenterCode, acronym, begin,
                         end, parentUnit, accountabilityType, webAddress, department, classification, canBeResponsibleOfSpaces,
                         campus);
 
             case DEGREE_UNIT:
-                Degree degree = RootDomainObject.getInstance().readDegreeByOID(degreeID);
+                Degree degree = AbstractDomainObject.fromExternalId(degreeID);
                 return DegreeUnit.createNewInternalDegreeUnit(unitName, unitNameCard, costCenterCode, acronym, begin, end,
                         parentUnit, accountabilityType, webAddress, degree, classification, canBeResponsibleOfSpaces, campus);
 
@@ -81,7 +81,7 @@ public class CreateUnit {
                 if (administrativeOfficeID == null) {
                     office = new AdministrativeOffice();
                 } else {
-                    office = RootDomainObject.getInstance().readAdministrativeOfficeByOID(administrativeOfficeID);
+                    office = AbstractDomainObject.fromExternalId(administrativeOfficeID);
                 }
                 Unit unit =
                         Unit.createNewUnit(unitName, unitNameCard, costCenterCode, acronym, begin, end, parentUnit,

@@ -19,6 +19,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "coordinator", path = "/viewStudentCurriculumSearch", attribute = "viewStudentCurriculumForm",
         formBean = "viewStudentCurriculumForm", scope = "request", parameter = "method")
@@ -98,7 +99,7 @@ public class ViewStudentCurriculumDA extends FenixDispatchAction {
     }
 
     private DegreeCurricularPlan getDegreeCurricularPlan(final ActionForm form) {
-        return rootDomainObject.readDegreeCurricularPlanByOID(getDegreeCurricularPlanId(form));
+        return AbstractDomainObject.fromExternalId(getDegreeCurricularPlanId(form));
     }
 
     private Integer getDegreeCurricularPlanId(final HttpServletRequest request) {

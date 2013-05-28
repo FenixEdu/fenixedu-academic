@@ -10,10 +10,10 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.SeminaryCoordinatorOrStud
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoSeminaryWithEquivalencies;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoSeminaryWithEquivalenciesWithAll;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Seminaries.Seminary;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -27,7 +27,7 @@ public class GetSeminary {
     protected InfoSeminaryWithEquivalencies run(Integer seminaryID) throws BDException {
         InfoSeminaryWithEquivalencies infoSeminary = null;
 
-        Seminary seminary = RootDomainObject.getInstance().readSeminaryByOID(seminaryID);
+        Seminary seminary = AbstractDomainObject.fromExternalId(seminaryID);
         if (seminary != null) {
 
             infoSeminary = InfoSeminaryWithEquivalenciesWithAll.newInfoFromDomain(seminary);

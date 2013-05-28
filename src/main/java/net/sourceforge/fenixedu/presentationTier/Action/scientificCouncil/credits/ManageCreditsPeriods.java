@@ -20,6 +20,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "scientificCouncil", path = "/defineCreditsPeriods", attribute = "creditsPeriodForm",
         formBean = "creditsPeriodForm", scope = "request", parameter = "method")
@@ -106,7 +107,7 @@ public class ManageCreditsPeriods extends FenixDispatchAction {
     private ExecutionSemester getExecutionPeriodToEditPeriod(HttpServletRequest request) {
         String parameter = request.getParameter("executionPeriodId");
         Integer executionPeriodId = parameter != null ? Integer.valueOf(parameter) : null;
-        return rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
+        return AbstractDomainObject.fromExternalId(executionPeriodId);
     }
 
     public ActionForward prepareEditAnnualCreditsDates(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

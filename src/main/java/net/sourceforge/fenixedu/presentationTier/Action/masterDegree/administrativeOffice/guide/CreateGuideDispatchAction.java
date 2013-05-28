@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.dataTransferObject.accounting.CreateReceiptBean;
 import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.domain.GraduationType;
 import net.sourceforge.fenixedu.domain.GuideState;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.masterDegree.GuideRequester;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -39,6 +38,7 @@ import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
@@ -97,7 +97,7 @@ public class CreateGuideDispatchAction extends FenixDispatchAction {
                         DocumentType.RANK_RECOGNITION_AND_EQUIVALENCE_PROCESS);
 
         final InfoExecutionDegree infoExecutionDegree =
-                InfoExecutionDegree.newInfoFromDomain(RootDomainObject.getInstance().readExecutionDegreeByOID(
+                InfoExecutionDegree.newInfoFromDomain(AbstractDomainObject.fromExternalId(
                         (Integer) createGuideForm.get("executionDegreeID")));
 
         try {

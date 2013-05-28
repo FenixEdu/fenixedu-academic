@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExportGrouping;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftGroupingProperties;
 import net.sourceforge.fenixedu.domain.StudentGroup;
@@ -33,13 +32,14 @@ import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import org.apache.commons.beanutils.BeanComparator;
 
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ReadShiftsAndGroups {
 
     @Service
     public static ISiteComponent run(Integer groupingCode, String username) throws FenixServiceException {
 
-        final Grouping grouping = RootDomainObject.getInstance().readGroupingByOID(groupingCode);
+        final Grouping grouping = AbstractDomainObject.fromExternalId(groupingCode);
         if (grouping == null) {
             throw new InvalidSituationServiceException();
         }

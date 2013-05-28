@@ -35,6 +35,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * 
@@ -148,7 +149,7 @@ public class TestModelsManagementAction extends FenixDispatchAction {
             for (String atomicRestrictionIdParameter : modelRestrictionIds) {
                 Integer atomicRestrictionId = Integer.parseInt(atomicRestrictionIdParameter);
                 NewModelRestriction atomicRestriction =
-                        (NewModelRestriction) rootDomainObject.readNewTestElementByOID(atomicRestrictionId);
+                        (NewModelRestriction) AbstractDomainObject.fromExternalId(atomicRestrictionId);
                 modelRestrictions.add(atomicRestriction);
             }
         }
@@ -207,14 +208,14 @@ public class TestModelsManagementAction extends FenixDispatchAction {
             return null;
         }
 
-        return (NewModelRestriction) rootDomainObject.readNewTestElementByOID(modelRestrictionId);
+        return (NewModelRestriction) AbstractDomainObject.fromExternalId(modelRestrictionId);
     }
 
     public ActionForward unselectRestriction(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws  FenixServiceException {
         Integer modelRestrictionId = getCodeFromRequest(request, "oid");
 
-        NewModelRestriction modelRestriction = (NewModelRestriction) rootDomainObject.readNewTestElementByOID(modelRestrictionId);
+        NewModelRestriction modelRestriction = (NewModelRestriction) AbstractDomainObject.fromExternalId(modelRestrictionId);
 
         UnselectRestriction.run(modelRestriction);
 
@@ -230,7 +231,7 @@ public class TestModelsManagementAction extends FenixDispatchAction {
             HttpServletResponse response) throws  FenixServiceException {
         Integer testModelId = getCodeFromRequest(request, "oid");
 
-        NewTestModel testModel = (NewTestModel) rootDomainObject.readNewTestElementByOID(testModelId);
+        NewTestModel testModel = (NewTestModel) AbstractDomainObject.fromExternalId(testModelId);
 
         request.setAttribute("testModel", testModel);
 
@@ -241,7 +242,7 @@ public class TestModelsManagementAction extends FenixDispatchAction {
             HttpServletResponse response) throws  FenixServiceException {
         Integer testModelId = getCodeFromRequest(request, "oid");
 
-        NewTestModel testModel = (NewTestModel) rootDomainObject.readNewTestElementByOID(testModelId);
+        NewTestModel testModel = (NewTestModel) AbstractDomainObject.fromExternalId(testModelId);
 
         request.setAttribute("testModel", testModel);
         request.setAttribute("bean", new TestModelBean(testModel));
@@ -253,7 +254,7 @@ public class TestModelsManagementAction extends FenixDispatchAction {
             HttpServletResponse response) throws  FenixServiceException {
         Integer testModelId = getCodeFromRequest(request, "oid");
 
-        NewTestModel testModel = (NewTestModel) rootDomainObject.readNewTestElementByOID(testModelId);
+        NewTestModel testModel = (NewTestModel) AbstractDomainObject.fromExternalId(testModelId);
 
         request.setAttribute("testModel", testModel);
         request.setAttribute("bean", new TestModelBean(testModel));
@@ -265,7 +266,7 @@ public class TestModelsManagementAction extends FenixDispatchAction {
             HttpServletResponse response) throws  FenixServiceException {
         Integer testModelId = getCodeFromRequest(request, "oid");
 
-        NewTestModel testModel = (NewTestModel) rootDomainObject.readNewTestElementByOID(testModelId);
+        NewTestModel testModel = (NewTestModel) AbstractDomainObject.fromExternalId(testModelId);
 
         request.setAttribute("testModel", testModel);
 
@@ -277,7 +278,7 @@ public class TestModelsManagementAction extends FenixDispatchAction {
         Integer modelRestrictionId = getCodeFromRequest(request, "oid");
         Integer relativePosition = getCodeFromRequest(request, "relativePosition");
 
-        NewModelRestriction modelRestriction = (NewModelRestriction) rootDomainObject.readNewTestElementByOID(modelRestrictionId);
+        NewModelRestriction modelRestriction = (NewModelRestriction) AbstractDomainObject.fromExternalId(modelRestrictionId);
 
         SwitchPosition.run(modelRestriction, relativePosition);
 
@@ -290,7 +291,7 @@ public class TestModelsManagementAction extends FenixDispatchAction {
             HttpServletResponse response) throws  FenixServiceException {
         Integer modelGroupId = getCodeFromRequest(request, "oid");
 
-        NewModelGroup modelGroup = (NewModelGroup) rootDomainObject.readNewTestElementByOID(modelGroupId);
+        NewModelGroup modelGroup = (NewModelGroup) AbstractDomainObject.fromExternalId(modelGroupId);
 
         request.setAttribute("modelGroup", modelGroup);
 
@@ -301,7 +302,7 @@ public class TestModelsManagementAction extends FenixDispatchAction {
             HttpServletResponse response) throws  FenixServiceException {
         Integer modelRestrictionId = getCodeFromRequest(request, "oid");
 
-        NewModelRestriction modelRestriction = (NewModelRestriction) rootDomainObject.readNewTestElementByOID(modelRestrictionId);
+        NewModelRestriction modelRestriction = (NewModelRestriction) AbstractDomainObject.fromExternalId(modelRestrictionId);
 
         NewTestModel testModel = modelRestriction.getTestModel();
 
@@ -315,7 +316,7 @@ public class TestModelsManagementAction extends FenixDispatchAction {
             HttpServletResponse response) throws  FenixServiceException {
         Integer testModelId = getCodeFromRequest(request, "oid");
 
-        NewTestModel testModel = (NewTestModel) rootDomainObject.readNewTestElementByOID(testModelId);
+        NewTestModel testModel = (NewTestModel) AbstractDomainObject.fromExternalId(testModelId);
 
         DeleteModelRestriction.run(testModel);
 
@@ -326,7 +327,7 @@ public class TestModelsManagementAction extends FenixDispatchAction {
             HttpServletResponse response) throws  FenixServiceException {
         Integer modelRestrictionId = getCodeFromRequest(request, "oid");
 
-        NewModelRestriction modelRestriction = (NewModelRestriction) rootDomainObject.readNewTestElementByOID(modelRestrictionId);
+        NewModelRestriction modelRestriction = (NewModelRestriction) AbstractDomainObject.fromExternalId(modelRestrictionId);
 
         NewTestModel testModel = modelRestriction.getTestModel();
 
@@ -339,7 +340,7 @@ public class TestModelsManagementAction extends FenixDispatchAction {
             HttpServletResponse response) throws  FenixServiceException {
         Integer testModelId = getCodeFromRequest(request, "oid");
 
-        NewTestModel testModel = (NewTestModel) rootDomainObject.readNewTestElementByOID(testModelId);
+        NewTestModel testModel = (NewTestModel) AbstractDomainObject.fromExternalId(testModelId);
 
         request.setAttribute("firstStep", true);
         request.setAttribute("bean", new TestModelBean(testModel, testModel.getName()));

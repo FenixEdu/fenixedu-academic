@@ -11,12 +11,12 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CompetenceCourseType;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLevel;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.util.StringFormatter;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class EditCompetenceCourse {
 
@@ -69,7 +69,7 @@ public class EditCompetenceCourse {
     }
 
     private CompetenceCourse readCompetenceCourse(Integer competenceCourseID) throws FenixServiceException {
-        final CompetenceCourse competenceCourse = RootDomainObject.getInstance().readCompetenceCourseByOID(competenceCourseID);
+        final CompetenceCourse competenceCourse = AbstractDomainObject.fromExternalId(competenceCourseID);
         if (competenceCourse == null) {
             throw new FenixServiceException("error.noCompetenceCourse");
         }

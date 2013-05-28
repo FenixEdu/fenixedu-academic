@@ -81,7 +81,7 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 
     @SuppressWarnings({ "static-access", "unchecked" })
     protected DomainObject readDomainObject(final HttpServletRequest request, final Class clazz, final Integer externalId) {
-        return rootDomainObject.readDomainObjectByOID(clazz, externalId);
+        return AbstractDomainObject.fromExternalId(clazz, externalId);
     }
 
     @SuppressWarnings({ "static-access", "unchecked" })

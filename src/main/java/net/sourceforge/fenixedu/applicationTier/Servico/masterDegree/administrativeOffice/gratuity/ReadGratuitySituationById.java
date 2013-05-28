@@ -6,9 +6,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituationWithInfoPersonAndInfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.GratuitySituation;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * 
@@ -23,7 +23,7 @@ public class ReadGratuitySituationById {
     public static InfoGratuitySituation run(Integer gratuitySituationID) throws FenixServiceException {
         InfoGratuitySituation infoGratuitySituation = null;
 
-        GratuitySituation gratuitySituation = RootDomainObject.getInstance().readGratuitySituationByOID(gratuitySituationID);
+        GratuitySituation gratuitySituation = AbstractDomainObject.fromExternalId(gratuitySituationID);
         if (gratuitySituation == null) {
             throw new NonExistingServiceException("error.exception.masterDegree.gratuity.notExistingGratuitySituation");
         }

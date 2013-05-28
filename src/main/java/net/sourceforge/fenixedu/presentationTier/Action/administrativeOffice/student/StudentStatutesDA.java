@@ -33,7 +33,7 @@ public class StudentStatutesDA extends FenixDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
 
-        final Student student = rootDomainObject.readStudentByOID(getIntegerFromRequest(request, "studentId"));
+        final Student student = AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "studentId"));
         request.setAttribute("student", student);
         request.setAttribute("manageStatuteBean", new CreateStudentStatuteFactory(student));
         request.setAttribute("schemaName", "student.createStatutes");
@@ -97,7 +97,7 @@ public class StudentStatutesDA extends FenixDispatchAction {
             HttpServletResponse response) throws  FenixServiceException {
 
         final StudentStatute studentStatute =
-                rootDomainObject.readStudentStatuteByOID(getIntegerFromRequest(request, "statuteId"));
+                AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "statuteId"));
         final Student student = studentStatute.getStudent();
 
         try {

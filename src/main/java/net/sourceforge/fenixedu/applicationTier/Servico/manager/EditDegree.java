@@ -8,10 +8,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.GradeScale;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class EditDegree {
@@ -24,7 +24,7 @@ public class EditDegree {
             throw new InvalidArgumentsServiceException();
         }
 
-        final Degree degreeToEdit = RootDomainObject.getInstance().readDegreeByOID(externalId);
+        final Degree degreeToEdit = AbstractDomainObject.fromExternalId(externalId);
 
         if (degreeToEdit == null) {
             throw new NonExistingServiceException();

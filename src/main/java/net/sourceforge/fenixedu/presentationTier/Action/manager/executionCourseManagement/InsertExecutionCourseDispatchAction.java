@@ -140,6 +140,7 @@ public class InsertExecutionCourseDispatchAction extends FenixDispatchAction {
             infoExecutionPeriod =
                     new InfoExecutionPeriod(rootDomainObject.readExecutionSemesterByOID(Integer.valueOf(executionPeriodId)));
         }
+
         infoExecutionCourse.setInfoExecutionPeriod(infoExecutionPeriod);
 
         String comment = "";

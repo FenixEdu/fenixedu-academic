@@ -21,6 +21,8 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 
 import org.apache.commons.lang.StringUtils;
 
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
+
 public class AlumniFormation implements Serializable, IFormation {
 
     private final int FIRST_YEAR = 1933;
@@ -275,7 +277,7 @@ public class AlumniFormation implements Serializable, IFormation {
 
     public void setEducationArea(Integer educationAreaId) {
         this.educationArea =
-                (educationAreaId != null) ? RootDomainObject.getInstance().readEducationAreaByOID(educationAreaId) : null;
+                (educationAreaId != null) ? AbstractDomainObject.fromExternalId(educationAreaId) : null;
     }
 
     public AcademicalInstitutionUnit getInstitution() {

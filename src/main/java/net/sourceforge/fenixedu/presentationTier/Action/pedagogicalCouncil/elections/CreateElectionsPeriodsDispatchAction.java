@@ -22,6 +22,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "pedagogicalCouncil", path = "/createElectionsPeriods", scope = "request", parameter = "method")
 @Forwards(value = {
@@ -63,7 +64,7 @@ public class CreateElectionsPeriodsDispatchAction extends ElectionsPeriodsManage
 
         if (getFromRequest(request, "selectedPeriod") != null) {
             final Integer electionOID = Integer.parseInt(request.getParameter("selectedPeriod"));
-            final DelegateElection election = rootDomainObject.readDelegateElectionByOID(electionOID);
+            final DelegateElection election = AbstractDomainObject.fromExternalId(electionOID);
 
             Degree degree = election.getDegree();
             CurricularYear curricularYear = ((YearDelegateElection) election).getCurricularYear();
@@ -73,7 +74,7 @@ public class CreateElectionsPeriodsDispatchAction extends ElectionsPeriodsManage
             final Integer year = Integer.parseInt(request.getParameter("selectedYear"));
             final CurricularYear curricularYear = CurricularYear.readByYear(year);
             final Integer degreeOID = Integer.parseInt(request.getParameter("selectedDegree"));
-            final Degree degree = rootDomainObject.readDegreeByOID(degreeOID);
+            final Degree degree = AbstractDomainObject.fromExternalId(degreeOID);
 
             return prepareCreateYearDelegateElectionPeriod(mapping, actionForm, request, response, degree, curricularYear, null);
         }
@@ -88,7 +89,7 @@ public class CreateElectionsPeriodsDispatchAction extends ElectionsPeriodsManage
         final String forwardTo = (String) getFromRequest(request, "forwardTo");
 
         Integer electionOID = Integer.parseInt(request.getParameter("selectedPeriod"));
-        final DelegateElection election = rootDomainObject.readDelegateElectionByOID(electionOID);
+        final DelegateElection election = AbstractDomainObject.fromExternalId(electionOID);
 
         Degree degree = election.getDegree();
         CurricularYear curricularYear = ((YearDelegateElection) election).getCurricularYear();

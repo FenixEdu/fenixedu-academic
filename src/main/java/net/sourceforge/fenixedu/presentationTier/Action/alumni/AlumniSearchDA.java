@@ -22,6 +22,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "alumni", path = "/searchAlumni", scope = "request", parameter = "method")
 @Forwards(value = {
@@ -80,7 +81,7 @@ public class AlumniSearchDA extends FenixDispatchAction {
     public ActionForward visualizeAlumni(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        request.setAttribute("alumniData", rootDomainObject.readStudentByOID(getIntegerFromRequest(request, "studentId")));
+        request.setAttribute("alumniData", AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "studentId")));
         return mapping.findForward("viewAlumniDetails");
     }
 

@@ -4,9 +4,9 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.GradeScale;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class EditOldCurricularCourse {
 
@@ -18,7 +18,7 @@ public class EditOldCurricularCourse {
             final Double credits, final Double ectsCredits, final Double theoreticalHours, final Double labHours,
             final Double praticalHours, final Double theoPratHours, final GradeScale gradeScale) throws FenixServiceException {
 
-        final CurricularCourse curricularCourse = (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(curricularCourseId);
+        final CurricularCourse curricularCourse = (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseId);
         if (curricularCourse == null) {
             throw new FenixServiceException("error.createOldCurricularCourse.no.courseGroup");
         }

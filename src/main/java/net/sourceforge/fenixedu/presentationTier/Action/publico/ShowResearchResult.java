@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.publico;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -12,6 +11,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
+
 public abstract class ShowResearchResult extends FenixDispatchAction {
 
     public ActionForward showPatent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -19,7 +20,7 @@ public abstract class ShowResearchResult extends FenixDispatchAction {
 
         String resultOID = request.getParameter("resultId");
         ResearchResult result =
-                (ResearchResult) RootDomainObject.readDomainObjectByOID(ResearchResult.class, Integer.valueOf(resultOID));
+                (ResearchResult) AbstractDomainObject.fromExternalId(ResearchResult.class, Integer.valueOf(resultOID));
         request.setAttribute("result", result);
         putSiteOnRequest(request);
         return mapping.findForward("showResult");
@@ -30,7 +31,7 @@ public abstract class ShowResearchResult extends FenixDispatchAction {
 
         String resultOID = request.getParameter("resultId");
         ResearchResultPublication result =
-                (ResearchResultPublication) RootDomainObject.readDomainObjectByOID(ResearchResult.class,
+                (ResearchResultPublication) AbstractDomainObject.fromExternalId(ResearchResult.class,
                         Integer.valueOf(resultOID));
         if (result != null) {
             request.setAttribute("result", result);

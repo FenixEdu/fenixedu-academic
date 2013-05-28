@@ -25,6 +25,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "SpaceManager", path = "/manageSpaceResponsibility", scope = "session", parameter = "method")
 @Forwards(value = {
@@ -122,7 +123,7 @@ public class ManageSpaceResponsibilityDA extends FenixDispatchAction {
                 request.getParameterMap().containsKey("spaceInformationID") ? request.getParameter("spaceInformationID") : (String) request
                         .getAttribute("spaceInformationID");
         final Integer spaceInformationID = spaceInformationIDString != null ? Integer.valueOf(spaceInformationIDString) : null;
-        return rootDomainObject.readSpaceInformationByOID(spaceInformationID);
+        return AbstractDomainObject.fromExternalId(spaceInformationID);
     }
 
     private SpaceResponsibility getSpaceResponsibility(final HttpServletRequest request) {
@@ -131,7 +132,7 @@ public class ManageSpaceResponsibilityDA extends FenixDispatchAction {
                         .getAttribute("spaceResponsibilityID");
         final Integer spaceResponsibilityID =
                 spaceResponsibilityIDString != null ? Integer.valueOf(spaceResponsibilityIDString) : null;
-        return (SpaceResponsibility) rootDomainObject.readResourceResponsibilityByOID(spaceResponsibilityID);
+        return (SpaceResponsibility) AbstractDomainObject.fromExternalId(spaceResponsibilityID);
     }
 
     private Unit getResponsibleUnit(final HttpServletRequest request) {
@@ -139,6 +140,6 @@ public class ManageSpaceResponsibilityDA extends FenixDispatchAction {
                 request.getParameterMap().containsKey("unitID") ? request.getParameter("unitID") : (String) request
                         .getAttribute("unitID");
         final Integer unitID = unitIDString != null ? Integer.valueOf(unitIDString) : null;
-        return (Unit) rootDomainObject.readPartyByOID(unitID);
+        return (Unit) AbstractDomainObject.fromExternalId(unitID);
     }
 }

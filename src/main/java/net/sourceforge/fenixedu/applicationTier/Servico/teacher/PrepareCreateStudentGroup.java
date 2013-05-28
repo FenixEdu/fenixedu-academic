@@ -17,13 +17,13 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentInformation;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.apache.commons.beanutils.BeanComparator;
 
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author ansr and scpo
@@ -33,7 +33,7 @@ public class PrepareCreateStudentGroup {
 
     protected ISiteComponent run(Integer executionCourseCode, Integer groupPropertiesCode) throws ExistingServiceException {
 
-        final Grouping grouping = RootDomainObject.getInstance().readGroupingByOID(groupPropertiesCode);
+        final Grouping grouping = AbstractDomainObject.fromExternalId(groupPropertiesCode);
 
         if (grouping == null) {
             throw new ExistingServiceException();

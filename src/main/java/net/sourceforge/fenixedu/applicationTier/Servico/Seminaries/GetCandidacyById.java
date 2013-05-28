@@ -10,10 +10,10 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.Seminaries.CandidacyAcces
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCandidacy;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCandidacyWithCaseStudyChoices;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -27,7 +27,7 @@ public class GetCandidacyById {
     protected InfoCandidacy run(Integer id) throws BDException {
         InfoCandidacy infoCandidacy = null;
 
-        SeminaryCandidacy candidacy = RootDomainObject.getInstance().readSeminaryCandidacyByOID(id);
+        SeminaryCandidacy candidacy = AbstractDomainObject.fromExternalId(id);
         infoCandidacy = InfoCandidacyWithCaseStudyChoices.newInfoFromDomain(candidacy);
 
         return infoCandidacy;

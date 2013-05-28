@@ -35,6 +35,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
+
 /**
  * @author Luis Cruz & Sara Ribeiro
  */
@@ -45,7 +47,7 @@ public class ChooseExamsMapContextDANew extends FenixContextDispatchAction {
 
         Integer degreeId = getFromRequest("degreeID", request);
         request.setAttribute("degreeID", degreeId);
-        request.setAttribute("degree", rootDomainObject.readDegreeByOID(degreeId));
+        request.setAttribute("degree", AbstractDomainObject.fromExternalId(degreeId));
 
         Integer executionDegreeId = getFromRequest("executionDegreeID", request);
         request.setAttribute("executionDegreeID", executionDegreeId);
@@ -89,7 +91,7 @@ public class ChooseExamsMapContextDANew extends FenixContextDispatchAction {
         // degreeID
         Integer degreeId = (Integer) chooseExamContextoForm.get("degreeID");
         request.setAttribute("degreeID", degreeId);
-        final Degree degree = rootDomainObject.readDegreeByOID(degreeId);
+        final Degree degree = AbstractDomainObject.fromExternalId(degreeId);
         request.setAttribute("degree", degree);
 
         // curricularYearList
@@ -103,7 +105,7 @@ public class ChooseExamsMapContextDANew extends FenixContextDispatchAction {
         if (degreeCurricularPlanId == null) {
             degreeCurricularPlan = degree.getMostRecentDegreeCurricularPlan();
         } else {
-            degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
+            degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanId);
         }
 
         if (degreeCurricularPlan != null) {
@@ -140,7 +142,7 @@ public class ChooseExamsMapContextDANew extends FenixContextDispatchAction {
         request.setAttribute(PresentationConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getExternalId().toString());
 
         final ExecutionSemester executionSemester =
-                rootDomainObject.readExecutionSemesterByOID(infoExecutionPeriod.getExternalId());
+                AbstractDomainObject.fromExternalId(infoExecutionPeriod.getExternalId());
         ExecutionDegree executionDegree = null;
 
         if (degreeCurricularPlan != null) {

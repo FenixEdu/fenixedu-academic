@@ -27,6 +27,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/creditNotes", module = "academicAdministration",
         formBeanClass = CreditNotesManagementDA.CreditNotesActionForm.class)
@@ -77,7 +78,7 @@ public class CreditNotesManagementDA extends PaymentsManagementDispatchAction {
     }
 
     private CreditNote getCreditNote(HttpServletRequest request) {
-        return rootDomainObject.readCreditNoteByOID(getIntegerFromRequest(request, "creditNoteId"));
+        return AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "creditNoteId"));
     }
 
     public ActionForward prepareCreateCreditNote(ActionMapping mapping, ActionForm form, HttpServletRequest request,

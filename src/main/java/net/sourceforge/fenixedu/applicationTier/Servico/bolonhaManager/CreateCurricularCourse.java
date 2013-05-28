@@ -7,11 +7,11 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class CreateCurricularCourse {
 
@@ -25,7 +25,7 @@ public class CreateCurricularCourse {
         ExecutionSemester endExecutionPeriod = readEndExecutionPeriod(curricularCourseArgs);
 
         final CompetenceCourse competenceCourse =
-                RootDomainObject.getInstance().readCompetenceCourseByOID(curricularCourseArgs.getCompetenceCourseID());
+                AbstractDomainObject.fromExternalId(curricularCourseArgs.getCompetenceCourseID());
         if (competenceCourse == null) {
             throw new FenixServiceException("error.noCompetenceCourse");
         }
@@ -65,7 +65,7 @@ public class CreateCurricularCourse {
     private static DegreeCurricularPlan readDegreeCurricularPlan(CurricularCourseArgs curricularCourseArgs)
             throws FenixServiceException {
         DegreeCurricularPlan degreeCurricularPlan =
-                RootDomainObject.getInstance().readDegreeCurricularPlanByOID(curricularCourseArgs.getDegreeCurricularPlanID());
+                AbstractDomainObject.fromExternalId(curricularCourseArgs.getDegreeCurricularPlanID());
         if (degreeCurricularPlan == null) {
             throw new FenixServiceException("error.noDegreeCurricularPlan");
         }
@@ -74,7 +74,7 @@ public class CreateCurricularCourse {
 
     private static CourseGroup readParentCourseGroup(CurricularCourseArgs curricularCourseArgs) throws FenixServiceException {
         CourseGroup parentCourseGroup =
-                (CourseGroup) RootDomainObject.getInstance().readDegreeModuleByOID(curricularCourseArgs.getParentCourseGroupID());
+                (CourseGroup) AbstractDomainObject.fromExternalId(curricularCourseArgs.getParentCourseGroupID());
         if (parentCourseGroup == null) {
             throw new FenixServiceException("error.noCourseGroup");
         }
@@ -101,7 +101,7 @@ public class CreateCurricularCourse {
             beginExecutionPeriod = ExecutionSemester.readActualExecutionSemester();
         } else {
             beginExecutionPeriod =
-                    RootDomainObject.getInstance().readExecutionSemesterByOID(curricularCourseArgs.getBeginExecutionPeriodID());
+                    AbstractDomainObject.fromExternalId(curricularCourseArgs.getBeginExecutionPeriodID());
         }
         return beginExecutionPeriod;
     }
@@ -112,7 +112,7 @@ public class CreateCurricularCourse {
             endExecutionPeriod = null;
         } else {
             endExecutionPeriod =
-                    RootDomainObject.getInstance().readExecutionSemesterByOID(curricularCourseArgs.getEndExecutionPeriodID());
+                    AbstractDomainObject.fromExternalId(curricularCourseArgs.getEndExecutionPeriodID());
         }
         return endExecutionPeriod;
     }

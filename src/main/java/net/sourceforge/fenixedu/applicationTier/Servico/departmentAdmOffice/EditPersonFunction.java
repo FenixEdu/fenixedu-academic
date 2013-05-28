@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.OperatorAuthorizationFilt
 import net.sourceforge.fenixedu.applicationTier.Filtro.ScientificCouncilAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
@@ -18,19 +17,20 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class EditPersonFunction {
 
     protected void run(Integer personFunctionID, Integer functionID, YearMonthDay beginDate, YearMonthDay endDate, Double credits)
             throws FenixServiceException, DomainException {
 
-        PersonFunction person_Function = (PersonFunction) RootDomainObject.getInstance().readAccountabilityByOID(personFunctionID);
+        PersonFunction person_Function = (PersonFunction) AbstractDomainObject.fromExternalId(personFunctionID);
 
         if (person_Function == null) {
             throw new FenixServiceException("error.no.personFunction");
         }
 
-        Function function = (Function) RootDomainObject.getInstance().readAccountabilityTypeByOID(functionID);
+        Function function = (Function) AbstractDomainObject.fromExternalId(functionID);
 
         if (function == null) {
             throw new FenixServiceException("erro.noFunction");

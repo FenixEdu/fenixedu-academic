@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoQuestion;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.SubQuestion;
@@ -22,6 +21,7 @@ import net.sourceforge.fenixedu.util.tests.CorrectionFormula;
 import org.apache.commons.beanutils.BeanComparator;
 
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class InsertTestQuestion {
 
@@ -32,7 +32,7 @@ public class InsertTestQuestion {
         this.path = path.replace('\\', '/');
 
         for (String element : metadataId) {
-            Metadata metadata = RootDomainObject.getInstance().readMetadataByOID(new Integer(element));
+            Metadata metadata = AbstractDomainObject.fromExternalId(new Integer(element));
             if (metadata == null) {
                 throw new InvalidArgumentsServiceException();
             }
@@ -45,7 +45,7 @@ public class InsertTestQuestion {
             if (question == null) {
                 throw new InvalidArgumentsServiceException();
             }
-            Test test = RootDomainObject.getInstance().readTestByOID(testId);
+            Test test = AbstractDomainObject.fromExternalId(testId);
             if (test == null) {
                 throw new InvalidArgumentsServiceException();
             }

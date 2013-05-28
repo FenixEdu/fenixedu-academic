@@ -44,6 +44,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author lmac1
@@ -155,14 +156,14 @@ public class InsertCurricularCourseScopeFromAnotherDA extends FenixDispatchActio
 
         Integer curricularSemesterId = new Integer(curricularSemesterIdString);
         InfoCurricularSemester infoCurricularSemester =
-                new InfoCurricularSemester(rootDomainObject.readCurricularSemesterByOID(curricularSemesterId));
+                new InfoCurricularSemester(AbstractDomainObject.fromExternalId(curricularSemesterId));
         newInfoCurricularCourseScope.setInfoCurricularSemester(infoCurricularSemester);
 
         Integer branchId = new Integer(branchIdString);
-        InfoBranch infoBranch = new InfoBranch(rootDomainObject.readBranchByOID(branchId));
+        InfoBranch infoBranch = new InfoBranch(AbstractDomainObject.fromExternalId(branchId));
         newInfoCurricularCourseScope.setInfoBranch(infoBranch);
         final CurricularCourse curricularCourse =
-                (CurricularCourse) rootDomainObject.readDegreeModuleByOID(Integer.valueOf(request
+                (CurricularCourse) AbstractDomainObject.fromExternalId(Integer.valueOf(request
                         .getParameter("curricularCourseId")));
         InfoCurricularCourse infoCurricularCourse = new InfoCurricularCourse(curricularCourse);
         newInfoCurricularCourseScope.setInfoCurricularCourse(infoCurricularCourse);

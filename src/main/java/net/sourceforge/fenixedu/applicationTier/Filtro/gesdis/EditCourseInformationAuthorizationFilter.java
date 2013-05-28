@@ -14,9 +14,9 @@ import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoCourseReport;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Leonor Almeida
@@ -51,7 +51,7 @@ public class EditCourseInformationAuthorizationFilter extends AuthorizationByRol
 
         InfoExecutionCourse infoExecutionCourse = infoCourseReport.getInfoExecutionCourse();
         ExecutionCourse executionCourse =
-                RootDomainObject.getInstance().readExecutionCourseByOID(infoExecutionCourse.getExternalId());
+                AbstractDomainObject.fromExternalId(infoExecutionCourse.getExternalId());
 
         List<Professorship> responsiblesFor = executionCourse.responsibleFors();
 

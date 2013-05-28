@@ -39,6 +39,7 @@ import org.apache.struts.util.MessageResources;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author asnr and scpo
@@ -56,17 +57,17 @@ public class EditGroupShift {
 
         ServiceMonitoring.logService(EditGroupShift.class, studentGroupID, groupingID, newShiftID, username);
 
-        final Grouping grouping = RootDomainObject.getInstance().readGroupingByOID(groupingID);
+        final Grouping grouping = AbstractDomainObject.fromExternalId(groupingID);
         if (grouping == null) {
             throw new ExistingServiceException();
         }
 
-        final StudentGroup studentGroup = RootDomainObject.getInstance().readStudentGroupByOID(studentGroupID);
+        final StudentGroup studentGroup = AbstractDomainObject.fromExternalId(studentGroupID);
         if (studentGroup == null) {
             throw new InvalidArgumentsServiceException();
         }
 
-        final Shift shift = RootDomainObject.getInstance().readShiftByOID(newShiftID);
+        final Shift shift = AbstractDomainObject.fromExternalId(newShiftID);
         if (grouping.getShiftType() == null || !shift.containsType(grouping.getShiftType())) {
             throw new InvalidStudentNumberServiceException();
         }

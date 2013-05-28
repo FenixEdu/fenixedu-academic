@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoEmployee;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuityValues;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.gratuity.ExemptionGratuityType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixLookupDispatchAction;
 
@@ -28,6 +27,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Fernanda Quitério Created on 31/Aug/2004
@@ -114,7 +114,7 @@ public class ExemptionGratuityLAAction extends FenixLookupDispatchAction {
 
         // Registration Curricular Plan
         InfoStudentCurricularPlan infoStudentCurricularPlan =
-                new InfoStudentCurricularPlan(RootDomainObject.getInstance().readStudentCurricularPlanByOID(
+                new InfoStudentCurricularPlan(AbstractDomainObject.fromExternalId(
                         Integer.valueOf(studentCurricularPlanID)));
         infoGratuitySituation.setInfoStudentCurricularPlan(infoStudentCurricularPlan);
 

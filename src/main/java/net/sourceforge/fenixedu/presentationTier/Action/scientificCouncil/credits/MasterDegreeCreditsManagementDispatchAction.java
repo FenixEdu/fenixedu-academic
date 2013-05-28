@@ -49,6 +49,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.Pair;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
@@ -129,7 +130,7 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
         Integer executionDegreeID = (Integer) dynaForm.get("executionDegreeID");
 
         if (executionDegreeID != null) {
-            ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
+            ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeID);
             request.setAttribute("executionDegree", executionDegree);
 
             List<MasterDegreeCreditsDTO> masterDegreeCoursesDTOs = getListing(executionDegree);
@@ -153,16 +154,16 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
         DynaActionForm dynaForm = (DynaActionForm) form;
 
         Integer curricularCourseID = (Integer) dynaForm.get("curricularCourseID");
-        CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseID);
+        CurricularCourse curricularCourse = (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseID);
 
         Integer executionDegreeID = (Integer) dynaForm.get("executionDegreeID");
         ExecutionDegree executionDegree = null;
 
         if (executionDegreeID != null) {
-            executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
+            executionDegree = AbstractDomainObject.fromExternalId(executionDegreeID);
         } else {
             Integer executionCourseID = Integer.parseInt(request.getParameter("executionCourseId"));
-            ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
+            ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseID);
             executionDegree =
                     curricularCourse.getDegreeCurricularPlan().getExecutionDegreeByYear(
                             executionCourse.getExecutionPeriod().getExecutionYear());
@@ -484,6 +485,6 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
     private ExecutionDegree getExecutionDegreeFromParameter(final HttpServletRequest request) {
         final String executionDegreeIDString = request.getParameter("executionDegreeID");
         final Integer executionDegreeID = Integer.valueOf(executionDegreeIDString);
-        return rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
+        return AbstractDomainObject.fromExternalId(executionDegreeID);
     }
 }

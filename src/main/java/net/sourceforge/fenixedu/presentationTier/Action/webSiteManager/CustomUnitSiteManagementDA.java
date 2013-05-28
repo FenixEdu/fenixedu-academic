@@ -32,7 +32,6 @@ import net.sourceforge.fenixedu.dataTransferObject.VariantBean;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.UnitSiteBanner;
@@ -55,6 +54,7 @@ import org.joda.time.YearMonthDay;
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.model.MetaSlot;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 
 public class CustomUnitSiteManagementDA extends SiteManagementDA {
@@ -86,7 +86,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
             return null;
         }
 
-        return (UnitSite) RootDomainObject.getInstance().readContentByOID(oid);
+        return (UnitSite) AbstractDomainObject.fromExternalId(oid);
     }
 
     protected Unit getUnit(HttpServletRequest request) {
@@ -495,7 +495,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
     private Person getSelectedPerson(HttpServletRequest request) {
         Integer id = getExternalId(request, "personID");
         if (id != null) {
-            return (Person) RootDomainObject.getInstance().readPartyByOID(id);
+            return (Person) AbstractDomainObject.fromExternalId(id);
         }
 
         VariantBean bean = getRenderedObject("addUserBean");
@@ -581,7 +581,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 
     private Unit getTargetUnit(HttpServletRequest request) {
         Integer id = getExternalId(request, "unitID");
-        return (Unit) RootDomainObject.getInstance().readPartyByOID(id);
+        return (Unit) AbstractDomainObject.fromExternalId(id);
     }
 
     public ActionForward prepareEditFunction(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -628,7 +628,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 
     private Function getTargetFunction(HttpServletRequest request) {
         Integer id = getExternalId(request, "functionID");
-        return (Function) RootDomainObject.getInstance().readAccountabilityTypeByOID(id);
+        return (Function) AbstractDomainObject.fromExternalId(id);
     }
 
     public ActionForward organizeFunctions(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -686,7 +686,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 
     private PersonFunction getPersonFunction(HttpServletRequest request) {
         Integer id = getExternalId(request, "personFunctionID");
-        return (PersonFunction) RootDomainObject.getInstance().readAccountabilityByOID(id);
+        return (PersonFunction) AbstractDomainObject.fromExternalId(id);
     }
 
     public ActionForward removePersonFunction(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

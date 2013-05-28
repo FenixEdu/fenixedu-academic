@@ -2,11 +2,11 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalS
 
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class AssociateParentUnit {
 
@@ -16,7 +16,7 @@ public class AssociateParentUnit {
             throws FenixServiceException {
 
         Unit parentUnit = getParentUnit(parentUnitID);
-        Unit unit = (Unit) RootDomainObject.getInstance().readPartyByOID(unitID);
+        Unit unit = (Unit) AbstractDomainObject.fromExternalId(unitID);
 
         if (unit == null) {
             throw new FenixServiceException("error.inexistent.unit");
@@ -27,7 +27,7 @@ public class AssociateParentUnit {
     private static Unit getParentUnit(Integer parentUnitID) {
         Unit parentUnit = null;
         if (parentUnitID != null) {
-            parentUnit = (Unit) RootDomainObject.getInstance().readPartyByOID(parentUnitID);
+            parentUnit = (Unit) AbstractDomainObject.fromExternalId(parentUnitID);
         }
         return parentUnit;
     }

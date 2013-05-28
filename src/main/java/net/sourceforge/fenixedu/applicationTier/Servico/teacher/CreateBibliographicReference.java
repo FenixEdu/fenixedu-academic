@@ -6,8 +6,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Fernanda Quitério
@@ -18,7 +18,7 @@ public class CreateBibliographicReference {
             String newBibliographyReference, String newBibliographyYear, Boolean newBibliographyOptional)
             throws FenixServiceException {
 
-        final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(infoExecutionCourseID);
+        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(infoExecutionCourseID);
         if (executionCourse == null) {
             throw new InvalidArgumentsServiceException();
         }

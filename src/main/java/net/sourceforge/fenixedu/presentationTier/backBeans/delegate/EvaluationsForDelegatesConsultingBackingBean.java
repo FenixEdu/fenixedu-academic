@@ -32,6 +32,7 @@ import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.struts.util.MessageResources;
 
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class EvaluationsForDelegatesConsultingBackingBean extends FenixBackingBean {
@@ -88,7 +89,7 @@ public class EvaluationsForDelegatesConsultingBackingBean extends FenixBackingBe
 
     public Degree getDegree() {
         if (degree == null) {
-            degree = rootDomainObject.readDegreeByOID(getDegreeID());
+            degree = AbstractDomainObject.fromExternalId(getDegreeID());
         }
         return degree;
     }
@@ -138,7 +139,7 @@ public class EvaluationsForDelegatesConsultingBackingBean extends FenixBackingBe
     public CurricularYear getCurricularYear() {
         final Integer curricularYearID = getCurricularYearID();
         if (curricularYearID != null) {
-            return rootDomainObject.readCurricularYearByOID(curricularYearID);
+            return AbstractDomainObject.fromExternalId(curricularYearID);
         } else {
             return null;
         }

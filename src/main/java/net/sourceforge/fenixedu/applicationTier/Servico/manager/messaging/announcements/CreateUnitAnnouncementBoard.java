@@ -6,7 +6,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager.messaging.annou
 
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.UnitBoardPermittedGroupType;
 import net.sourceforge.fenixedu.domain.accessControl.AllDegreesStudentsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.AllMasterDegreesStudents;
@@ -24,6 +23,7 @@ import net.sourceforge.fenixedu.domain.messaging.UnitAnnouncementBoard;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
@@ -66,7 +66,7 @@ public class CreateUnitAnnouncementBoard {
 
     @Service
     public static void run(UnitAnnouncementBoardParameters parameters) throws FenixServiceException {
-        Unit unit = (Unit) RootDomainObject.getInstance().readPartyByOID(parameters.unitId);
+        Unit unit = (Unit) AbstractDomainObject.fromExternalId(parameters.unitId);
         UnitAnnouncementBoard board = new UnitAnnouncementBoard(unit);
 
         board.setUnitPermittedReadGroupType(parameters.readersGroupType);

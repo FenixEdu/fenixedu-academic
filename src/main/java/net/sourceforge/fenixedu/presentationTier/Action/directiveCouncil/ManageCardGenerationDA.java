@@ -48,6 +48,7 @@ import org.joda.time.LocalDate;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
@@ -361,7 +362,7 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
     protected Degree getDegree(final HttpServletRequest request) {
         final String degreeIdParam = request.getParameter("degreeID");
         final Integer degreeID = degreeIdParam == null || degreeIdParam.length() == 0 ? null : Integer.valueOf(degreeIdParam);
-        return degreeIdParam == null ? null : rootDomainObject.readDegreeByOID(degreeID);
+        return degreeIdParam == null ? null : AbstractDomainObject.fromExternalId(degreeID);
     }
 
     protected Set<Degree> getDegrees(final DegreeType degreeType) {
@@ -448,7 +449,7 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
         final String executionYearParam = request.getParameter("executionYearID");
         final Integer executionYearID =
                 executionYearParam == null || executionYearParam.length() == 0 ? null : Integer.valueOf(executionYearParam);
-        return executionYearID == null ? null : rootDomainObject.readExecutionYearByOID(executionYearID);
+        return executionYearID == null ? null : AbstractDomainObject.fromExternalId(executionYearID);
     }
 
     protected CardGenerationBatch getCardGenerationBatch(final HttpServletRequest request) {
@@ -456,7 +457,7 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
         final Integer cardGenerationBatchID =
                 cardGenerationBatchParam == null || cardGenerationBatchParam.length() == 0 ? null : Integer
                         .valueOf(cardGenerationBatchParam);
-        return cardGenerationBatchID == null ? null : rootDomainObject.readCardGenerationBatchByOID(cardGenerationBatchID);
+        return cardGenerationBatchID == null ? null : AbstractDomainObject.fromExternalId(cardGenerationBatchID);
     }
 
     private CardGenerationEntry getCardGenerationEntry(HttpServletRequest request) {
@@ -464,7 +465,7 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
         final Integer cardGenerationEntryID =
                 cardGenerationEntryParam == null || cardGenerationEntryParam.length() == 0 ? null : Integer
                         .valueOf(cardGenerationEntryParam);
-        return cardGenerationEntryID == null ? null : rootDomainObject.readCardGenerationEntryByOID(cardGenerationEntryID);
+        return cardGenerationEntryID == null ? null : AbstractDomainObject.fromExternalId(cardGenerationEntryID);
     }
 
     protected CardGenerationProblem getCardGenerationProblem(final HttpServletRequest request) {
@@ -472,7 +473,7 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
         final Integer cardGenerationProblemID =
                 cardGenerationProblemParam == null || cardGenerationProblemParam.length() == 0 ? null : Integer
                         .valueOf(cardGenerationProblemParam);
-        return cardGenerationProblemID == null ? null : rootDomainObject.readCardGenerationProblemByOID(cardGenerationProblemID);
+        return cardGenerationProblemID == null ? null : AbstractDomainObject.fromExternalId(cardGenerationProblemID);
     }
 
     public ActionForward createNewEntry(final ActionMapping mapping, final ActionForm actionForm,
@@ -515,9 +516,9 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
 
     @Service
     private void switchPerson(final int personId, final int cardGenerationEntryId) {
-        final Person person = (Person) rootDomainObject.readPartyByOID(new Integer(personId));
+        final Person person = (Person) AbstractDomainObject.fromExternalId(new Integer(personId));
         final CardGenerationEntry cardGenerationEntry =
-                rootDomainObject.readCardGenerationEntryByOID(new Integer(cardGenerationEntryId));
+                AbstractDomainObject.fromExternalId(new Integer(cardGenerationEntryId));
         cardGenerationEntry.setPerson(person);
     }
 

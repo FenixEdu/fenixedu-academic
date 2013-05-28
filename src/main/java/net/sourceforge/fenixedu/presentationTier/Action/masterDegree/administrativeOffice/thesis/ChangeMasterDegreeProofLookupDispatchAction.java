@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ScholarshipNotFinishedServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.thesis.ChangeMasterDegreeProof;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeClassification;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
@@ -34,6 +33,7 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.LookupDispatchAction;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * 
@@ -235,7 +235,7 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
 
         Date thesisDeliveryDate = buildThesisDeliveryDate(thesisDeliveryDateDay, thesisDeliveryDateMonth, thesisDeliveryDateYear);
 
-        StudentCurricularPlan studentCurricularPlan = RootDomainObject.getInstance().readStudentCurricularPlanByOID(scpID);
+        StudentCurricularPlan studentCurricularPlan = AbstractDomainObject.fromExternalId(scpID);
 
         MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
         ActionErrors actionErrors = new ActionErrors();

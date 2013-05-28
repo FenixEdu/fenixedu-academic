@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.MetaDomainObject;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -26,6 +25,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "teacher", path = "/generateArchive", scope = "session", parameter = "method")
 @Forwards(value = {
@@ -42,7 +42,7 @@ public class GenerateSiteArchive extends FenixDispatchAction {
 
         try {
             Integer oid = new Integer(parameter);
-            return RootDomainObject.getInstance().readExecutionCourseByOID(oid);
+            return AbstractDomainObject.fromExternalId(oid);
         } catch (NumberFormatException e) {
             return null;
         }

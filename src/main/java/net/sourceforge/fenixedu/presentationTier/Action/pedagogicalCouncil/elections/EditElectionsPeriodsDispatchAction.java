@@ -22,6 +22,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "pedagogicalCouncil", path = "/editElectionsPeriods", scope = "request", parameter = "method")
 @Forwards(value = {
@@ -58,7 +59,7 @@ public class EditElectionsPeriodsDispatchAction extends ElectionsPeriodsManageme
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         Integer electionOID = Integer.parseInt((String) getFromRequest(request, "selectedPeriod"));
-        final DelegateElection election = rootDomainObject.readDelegateElectionByOID(electionOID);
+        final DelegateElection election = AbstractDomainObject.fromExternalId(electionOID);
 
         YearMonthDay startDate = election.getCandidacyStartDate();
         YearMonthDay endDate = election.getCandidacyEndDate();
@@ -70,7 +71,7 @@ public class EditElectionsPeriodsDispatchAction extends ElectionsPeriodsManageme
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         Integer electionOID = Integer.parseInt((String) getFromRequest(request, "selectedPeriod"));
-        final DelegateElection election = rootDomainObject.readDelegateElectionByOID(electionOID);
+        final DelegateElection election = AbstractDomainObject.fromExternalId(electionOID);
 
         YearMonthDay startDate = election.getLastVotingStartDate();
         YearMonthDay endDate = election.getLastVotingEndDate();

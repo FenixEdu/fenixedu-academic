@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.Sear
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchPersonPredicate;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDepartment;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -30,6 +29,7 @@ import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 /**
@@ -209,13 +209,13 @@ public class FindPersonAction extends FenixDispatchAction {
                 bean.setRoleType(RoleType.valueOf(roleType));
             }
             if (degreeId != null) {
-                bean.setDegree(RootDomainObject.getInstance().readDegreeByOID(degreeId));
+                bean.setDegree(AbstractDomainObject.fromExternalId(degreeId));
             }
             if (!StringUtils.isEmpty(degreeType)) {
                 bean.setDegreeType(DegreeType.valueOf(degreeType));
             }
             if (departmentId != null) {
-                bean.setDepartment(RootDomainObject.getInstance().readDepartmentByOID(departmentId));
+                bean.setDepartment(AbstractDomainObject.fromExternalId(departmentId));
             }
             System.out.printf("%s %s %s %s %s %s\n", bean.getRoleType(), bean.getName(), bean.getViewPhoto(), bean.getDegree(),
                     bean.getDegreeType(), bean.getDepartment());

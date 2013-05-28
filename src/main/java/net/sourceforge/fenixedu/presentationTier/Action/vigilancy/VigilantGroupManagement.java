@@ -28,7 +28,6 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -48,6 +47,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "examCoordination", path = "/vigilancy/vigilantGroupManagement", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "incompatibilities", path = "manage-incompatibilities"),
@@ -71,7 +71,7 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 
         String vigilantGroupId = request.getParameter("oid");
         VigilantGroup group =
-                (VigilantGroup) RootDomainObject.readDomainObjectByOID(VigilantGroup.class, Integer.valueOf(vigilantGroupId));
+                (VigilantGroup) AbstractDomainObject.fromExternalId(VigilantGroup.class, Integer.valueOf(vigilantGroupId));
 
         List<WrittenEvaluationVigilancyView> beans = getStatsViewForVigilantGroup(group);
 
@@ -85,7 +85,7 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 
         String vigilantGroupId = request.getParameter("oid");
         VigilantGroup group =
-                (VigilantGroup) RootDomainObject.readDomainObjectByOID(VigilantGroup.class, Integer.valueOf(vigilantGroupId));
+                (VigilantGroup) AbstractDomainObject.fromExternalId(VigilantGroup.class, Integer.valueOf(vigilantGroupId));
 
         List<VigilantWrapper> vigilantWrappers = group.getVigilantWrappersThatCanBeConvoked();
         ComparatorChain chain = new ComparatorChain();
@@ -136,7 +136,7 @@ public class VigilantGroupManagement extends FenixDispatchAction {
         String groupId = request.getParameter("gid");
         if (groupId != null) {
             VigilantGroup group =
-                    (VigilantGroup) RootDomainObject.readDomainObjectByOID(VigilantGroup.class, Integer.valueOf(groupId));
+                    (VigilantGroup) AbstractDomainObject.fromExternalId(VigilantGroup.class, Integer.valueOf(groupId));
             bean.setSelectedVigilantGroup(group);
             putIncompatibilitiesInRequest(request, group);
         }
@@ -166,12 +166,12 @@ public class VigilantGroupManagement extends FenixDispatchAction {
         Integer externalId = Integer.valueOf(oid);
 
         VigilantWrapper vigilantWrapper =
-                (VigilantWrapper) RootDomainObject.readDomainObjectByOID(VigilantWrapper.class, externalId);
+                (VigilantWrapper) AbstractDomainObject.fromExternalId(VigilantWrapper.class, externalId);
 
         RemoveIncompatiblePerson.run(vigilantWrapper);
 
         String gid = request.getParameter("gid");
-        VigilantGroup group = (VigilantGroup) RootDomainObject.readDomainObjectByOID(VigilantGroup.class, Integer.valueOf(gid));
+        VigilantGroup group = (VigilantGroup) AbstractDomainObject.fromExternalId(VigilantGroup.class, Integer.valueOf(gid));
 
         VigilantGroupBean bean = new VigilantGroupBean();
         ExamCoordinator coordinator = getLoggedPerson(request).getCurrentExamCoordinator();
@@ -295,7 +295,7 @@ public class VigilantGroupManagement extends FenixDispatchAction {
         Integer externalId = Integer.valueOf(oid);
         String forwardTo = request.getParameter("forwardTo");
 
-        VigilantGroup group = (VigilantGroup) RootDomainObject.readDomainObjectByOID(VigilantGroup.class, externalId);
+        VigilantGroup group = (VigilantGroup) AbstractDomainObject.fromExternalId(VigilantGroup.class, externalId);
         prepareBeanForVigilantGroupEdition(request, group);
         return mapping.findForward(forwardTo);
     }
@@ -419,7 +419,7 @@ public class VigilantGroupManagement extends FenixDispatchAction {
         bean.setExamCoordinator(coordinator);
 
         String gid = request.getParameter("gid");
-        VigilantGroup group = (VigilantGroup) RootDomainObject.readDomainObjectByOID(VigilantGroup.class, Integer.valueOf(gid));
+        VigilantGroup group = (VigilantGroup) AbstractDomainObject.fromExternalId(VigilantGroup.class, Integer.valueOf(gid));
         bean.setSelectedVigilantGroup(group);
 
         request.setAttribute("bean", bean);
@@ -466,10 +466,10 @@ public class VigilantGroupManagement extends FenixDispatchAction {
         String groupId = request.getParameter("gid");
 
         VigilantWrapper vigilantWrapper =
-                (VigilantWrapper) RootDomainObject.readDomainObjectByOID(VigilantWrapper.class, Integer.valueOf(vigilantId));
-        Person person = (Person) RootDomainObject.readDomainObjectByOID(Person.class, Integer.valueOf(personId));
+                (VigilantWrapper) AbstractDomainObject.fromExternalId(VigilantWrapper.class, Integer.valueOf(vigilantId));
+        Person person = (Person) AbstractDomainObject.fromExternalId(Person.class, Integer.valueOf(personId));
         VigilantGroup group =
-                (VigilantGroup) RootDomainObject.readDomainObjectByOID(VigilantGroup.class, Integer.valueOf(groupId));
+                (VigilantGroup) AbstractDomainObject.fromExternalId(VigilantGroup.class, Integer.valueOf(groupId));
 
         AddIncompatiblePerson.run(vigilantWrapper, person);
 
@@ -500,7 +500,7 @@ public class VigilantGroupManagement extends FenixDispatchAction {
         String groupId = request.getParameter("oid");
 
         VigilantGroup group =
-                (VigilantGroup) RootDomainObject.readDomainObjectByOID(VigilantGroup.class, Integer.valueOf(groupId));
+                (VigilantGroup) AbstractDomainObject.fromExternalId(VigilantGroup.class, Integer.valueOf(groupId));
 
         List<VigilantWrapper> vigilantWrappers = new ArrayList<VigilantWrapper>(group.getVigilantWrappers());
         ComparatorChain chain = new ComparatorChain();
@@ -518,7 +518,7 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 
         String groupId = request.getParameter("oid");
         VigilantGroup group =
-                (VigilantGroup) RootDomainObject.readDomainObjectByOID(VigilantGroup.class, Integer.valueOf(groupId));
+                (VigilantGroup) AbstractDomainObject.fromExternalId(VigilantGroup.class, Integer.valueOf(groupId));
         request.setAttribute("group", group);
         return mapping.findForward("editVigilantGroupPoints");
     }
@@ -550,10 +550,10 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 
         String previousGroupID = request.getParameter("selectedGroupID");
         VigilantGroup previousGroup =
-                (VigilantGroup) RootDomainObject.readDomainObjectByOID(VigilantGroup.class, Integer.valueOf(previousGroupID));
+                (VigilantGroup) AbstractDomainObject.fromExternalId(VigilantGroup.class, Integer.valueOf(previousGroupID));
         String groupId = request.getParameter("oid");
         VigilantGroup group =
-                (VigilantGroup) RootDomainObject.readDomainObjectByOID(VigilantGroup.class, Integer.valueOf(groupId));
+                (VigilantGroup) AbstractDomainObject.fromExternalId(VigilantGroup.class, Integer.valueOf(groupId));
 
         group.copyPointsFromVigilantGroup(previousGroup);
 
@@ -572,7 +572,7 @@ public class VigilantGroupManagement extends FenixDispatchAction {
         String groupId = request.getParameter("oid");
 
         VigilantGroup group =
-                (VigilantGroup) RootDomainObject.readDomainObjectByOID(VigilantGroup.class, Integer.valueOf(groupId));
+                (VigilantGroup) AbstractDomainObject.fromExternalId(VigilantGroup.class, Integer.valueOf(groupId));
 
         List<VigilantWrapper> vigilantWrappers = group.getVigilantWrappersThatCanBeConvoked();
         ComparatorChain chain = new ComparatorChain();

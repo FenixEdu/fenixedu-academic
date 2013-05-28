@@ -39,6 +39,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class TeacherServiceDistributionSupportAction extends FenixDispatchAction {
     private static final Integer VIEW_PERMISSIONS_BY_PERSON = 1;
@@ -165,7 +166,7 @@ public class TeacherServiceDistributionSupportAction extends FenixDispatchAction
         DynaActionForm dynaForm = (DynaActionForm) form;
 
         TeacherServiceDistribution selectedTeacherServiceDistribution = getSelectedTeacherServiceDistribution(dynaForm, null);
-        TSDTeacher selectedTSDTeacher = rootDomainObject.readTSDTeacherByOID((Integer) dynaForm.get("tsdTeacherDissociation"));
+        TSDTeacher selectedTSDTeacher = AbstractDomainObject.fromExternalId((Integer) dynaForm.get("tsdTeacherDissociation"));
 
         DissociateTSDTeacherWithTeacherServiceDistribution.runDissociateTSDTeacherWithTeacherServiceDistribution(
                 selectedTeacherServiceDistribution.getExternalId(), selectedTSDTeacher.getExternalId());
@@ -465,7 +466,7 @@ public class TeacherServiceDistributionSupportAction extends FenixDispatchAction
     }
 
     private Person getSelectedPerson(DynaActionForm dynaForm, IUserView userView) {
-        Person person = (Person) rootDomainObject.readPartyByOID((Integer) dynaForm.get("person"));
+        Person person = (Person) AbstractDomainObject.fromExternalId((Integer) dynaForm.get("person"));
         return person != null ? person : userView.getPerson();
 
     }
@@ -482,17 +483,17 @@ public class TeacherServiceDistributionSupportAction extends FenixDispatchAction
     }
 
     private TSDCourse getSelectedTSDCourse(DynaActionForm dynaForm) throws  FenixServiceException {
-        return rootDomainObject.readTSDCourseByOID((Integer) dynaForm.get("tsdCourse"));
+        return AbstractDomainObject.fromExternalId((Integer) dynaForm.get("tsdCourse"));
     }
 
     private TSDTeacher getSelectedTSDTeacher(DynaActionForm dynaForm) throws  FenixServiceException {
-        return rootDomainObject.readTSDTeacherByOID((Integer) dynaForm.get("tsdTeacher"));
+        return AbstractDomainObject.fromExternalId((Integer) dynaForm.get("tsdTeacher"));
     }
 
     private TeacherServiceDistribution getSelectedTeacherServiceDistribution(DynaActionForm dynaForm,
             TeacherServiceDistribution rootTeacherServiceDistribution) throws  FenixServiceException {
         TeacherServiceDistribution selectedTeacherServiceDistribution =
-                rootDomainObject.readTeacherServiceDistributionByOID((Integer) dynaForm.get("tsd"));
+                AbstractDomainObject.fromExternalId((Integer) dynaForm.get("tsd"));
         return (selectedTeacherServiceDistribution == null) ? rootTeacherServiceDistribution : selectedTeacherServiceDistribution;
     }
 
@@ -506,7 +507,7 @@ public class TeacherServiceDistributionSupportAction extends FenixDispatchAction
     }
 
     private TSDProcess getTSDProcess(DynaActionForm dynaForm) throws FenixServiceException {
-        return rootDomainObject.readTSDProcessByOID((Integer) dynaForm.get("tsdProcess"));
+        return AbstractDomainObject.fromExternalId((Integer) dynaForm.get("tsdProcess"));
     }
 
     private Integer getFromRequestAndSetOnFormTSDProcessId(HttpServletRequest request, DynaActionForm dynaForm) {

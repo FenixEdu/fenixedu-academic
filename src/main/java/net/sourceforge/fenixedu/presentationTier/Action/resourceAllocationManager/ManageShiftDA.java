@@ -44,6 +44,7 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
@@ -285,7 +286,7 @@ public class ManageShiftDA extends FenixShiftAndExecutionCourseAndExecutionDegre
         if (studentIDs != null) {
             for (final String studentID : studentIDs) {
                 final Integer id = Integer.valueOf(studentID);
-                final Registration registration = rootDomainObject.readRegistrationByOID(id);
+                final Registration registration = AbstractDomainObject.fromExternalId(id);
                 registrations.add(registration);
             }
         }

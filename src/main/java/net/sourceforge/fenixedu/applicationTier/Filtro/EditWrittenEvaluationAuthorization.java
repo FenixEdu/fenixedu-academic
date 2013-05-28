@@ -2,10 +2,10 @@ package net.sourceforge.fenixedu.applicationTier.Filtro;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class EditWrittenEvaluationAuthorization extends Filtro {
 
@@ -25,7 +25,7 @@ public class EditWrittenEvaluationAuthorization extends Filtro {
     }
 
     private WrittenEvaluation readWrittenEvaluation(Integer writtenEvaluationId) {
-        return (WrittenEvaluation) RootDomainObject.getInstance().readEvaluationByOID(writtenEvaluationId);
+        return (WrittenEvaluation) AbstractDomainObject.fromExternalId(writtenEvaluationId);
     }
 
 }

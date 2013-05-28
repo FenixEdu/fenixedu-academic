@@ -9,9 +9,9 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingT
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author asnr and scpo
@@ -20,7 +20,7 @@ import pt.ist.fenixWebFramework.services.Service;
 public class DeleteStudentGroup {
 
     protected Boolean run(Integer executionCourseCode, Integer studentGroupCode) throws FenixServiceException {
-        StudentGroup deletedStudentGroup = RootDomainObject.getInstance().readStudentGroupByOID(studentGroupCode);
+        StudentGroup deletedStudentGroup = AbstractDomainObject.fromExternalId(studentGroupCode);
 
         if (deletedStudentGroup == null) {
             throw new ExistingServiceException();

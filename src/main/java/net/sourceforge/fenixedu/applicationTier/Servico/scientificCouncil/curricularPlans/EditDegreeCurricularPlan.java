@@ -6,11 +6,11 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.GradeScale;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class EditDegreeCurricularPlan {
 
@@ -24,13 +24,13 @@ public class EditDegreeCurricularPlan {
             throw new InvalidArgumentsServiceException();
         }
 
-        final DegreeCurricularPlan dcpToEdit = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(dcpId);
+        final DegreeCurricularPlan dcpToEdit = AbstractDomainObject.fromExternalId(dcpId);
         if (dcpToEdit == null) {
             throw new FenixServiceException("error.degreeCurricularPlan.no.existing.degreeCurricularPlan");
         }
 
         final ExecutionYear executionYear =
-                (executionYearID == null) ? null : RootDomainObject.getInstance().readExecutionYearByOID(executionYearID);
+                (executionYearID == null) ? null : AbstractDomainObject.fromExternalId(executionYearID);
 
         dcpToEdit.edit(name, curricularStage, degreeCurricularPlanState, gradeScale, executionYear);
     }

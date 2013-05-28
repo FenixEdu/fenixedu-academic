@@ -5,10 +5,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class DeleteProfessorshipAuthorizationFilter extends AuthorizationByRoleFilter {
 
@@ -25,8 +25,8 @@ public class DeleteProfessorshipAuthorizationFilter extends AuthorizationByRoleF
         try {
             final Person loggedPerson = id.getPerson();
 
-            Teacher teacher = RootDomainObject.getInstance().readTeacherByOID(selectedTeacherID);
-            ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseID);
+            Teacher teacher = AbstractDomainObject.fromExternalId(selectedTeacherID);
+            ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseID);
 
             Professorship selectedProfessorship = null;
             if (teacher != null) {

@@ -26,13 +26,13 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.Teacher;
 
 import org.joda.time.Duration;
 
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * 
@@ -42,7 +42,7 @@ public class ReadTeacherServiceDistributionByCourse {
 
     protected List run(Integer departmentId, List<Integer> executionPeriodsIDs) throws FenixServiceException {
 
-        Department department = RootDomainObject.getInstance().readDepartmentByOID(departmentId);
+        Department department = AbstractDomainObject.fromExternalId(departmentId);
 
         // List<CompetenceCourse> competenceCourseList =
         // department.getCompetenceCourses();
@@ -50,7 +50,7 @@ public class ReadTeacherServiceDistributionByCourse {
 
         List<ExecutionSemester> executionPeriodList = new ArrayList<ExecutionSemester>();
         for (Integer executionPeriodID : executionPeriodsIDs) {
-            executionPeriodList.add(RootDomainObject.getInstance().readExecutionSemesterByOID(executionPeriodID));
+            executionPeriodList.add(AbstractDomainObject.fromExternalId(executionPeriodID));
         }
 
         DistributionTeacherServicesByCourseDTO returnDTO = new DistributionTeacherServicesByCourseDTO();

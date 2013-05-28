@@ -37,6 +37,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 @Mapping(module = "resourceAllocationManager", path = "/roomsReserveManagement", attribute = "searchSpecificRequestForm",
@@ -278,7 +279,7 @@ public class RoomsReservesManagementDA extends RoomsPunctualSchedulingDA {
     private PunctualRoomsOccupationRequest getRoomsReserveRequest(final HttpServletRequest request) {
         final String punctualReserveIDString = request.getParameter("reserveRequestID");
         final Integer punctualReserveID = Integer.valueOf(punctualReserveIDString);
-        return rootDomainObject.readPunctualRoomsOccupationRequestByOID(punctualReserveID);
+        return AbstractDomainObject.fromExternalId(punctualReserveID);
     }
 
     private void saveMessages(HttpServletRequest request, DomainException e) {

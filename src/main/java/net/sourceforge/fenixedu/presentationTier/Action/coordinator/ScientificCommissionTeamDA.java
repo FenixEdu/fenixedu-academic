@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ScientificCommission;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -30,6 +29,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "coordinator", path = "/scientificCommissionTeamDA", scope = "session", parameter = "method")
 @Forwards(value = { @Forward(name = "viewScientificCommission",
@@ -60,7 +60,7 @@ public class ScientificCommissionTeamDA extends FenixDispatchAction {
         if (id == null) {
             return null;
         } else {
-            return RootDomainObject.getInstance().readDegreeCurricularPlanByOID(id);
+            return AbstractDomainObject.fromExternalId(id);
         }
     }
 
@@ -73,7 +73,7 @@ public class ScientificCommissionTeamDA extends FenixDispatchAction {
             if (id == null) {
                 return getDefaultExecutionDegree(request);
             } else {
-                return RootDomainObject.getInstance().readExecutionDegreeByOID(id);
+                return AbstractDomainObject.fromExternalId(id);
             }
         }
     }

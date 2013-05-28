@@ -9,11 +9,11 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.SituationName;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
@@ -61,7 +61,7 @@ public class ReadCandidatesForSelectionAuthorizationFilter extends Filtro {
         // Read The DegreeCurricularPlan
         try {
 
-            executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeID);
+            executionDegree = AbstractDomainObject.fromExternalId(executionDegreeID);
 
         } catch (Exception e) {
             return false;

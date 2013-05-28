@@ -9,16 +9,16 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilte
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.CopyTSDProcessPhaseService;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcess;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class CopyTSDProcess {
     protected TSDProcess run(List<Integer> executionPeriodIdList, Integer tsdProcessId, Integer personId, String name) {
-        Person creator = (Person) RootDomainObject.getInstance().readPartyByOID(personId);
+        Person creator = (Person) AbstractDomainObject.fromExternalId(personId);
         List<ExecutionSemester> executionPeriodList = getExecutionPeriods(executionPeriodIdList);
-        TSDProcess tsdProcessCopied = RootDomainObject.getInstance().readTSDProcessByOID(tsdProcessId);
+        TSDProcess tsdProcessCopied = AbstractDomainObject.fromExternalId(tsdProcessId);
 
         CopyTSDProcessPhaseService service = CopyTSDProcessPhaseService.getInstance();
 
@@ -30,7 +30,7 @@ public class CopyTSDProcess {
         List<ExecutionSemester> executionPeriodList = new ArrayList<ExecutionSemester>();
 
         for (Integer executionPeriodId : executionPeriodIdList) {
-            executionPeriodList.add(RootDomainObject.getInstance().readExecutionSemesterByOID(executionPeriodId));
+            executionPeriodList.add(AbstractDomainObject.fromExternalId(executionPeriodId));
         }
         return executionPeriodList;
     }

@@ -27,7 +27,6 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacySummaryFile;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationEntry;
@@ -51,6 +50,7 @@ import org.xml.sax.SAXException;
 import pt.ist.fenixWebFramework.FenixWebFramework;
 import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.ResponseWrapper;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.pdf.AcroFields;
@@ -362,7 +362,7 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
 
     private StudentCandidacy getCandidacy(HttpServletRequest request) {
         final Integer candidacyID = Integer.valueOf(request.getParameter("candidacyID"));
-        return (StudentCandidacy) RootDomainObject.getInstance().readCandidacyByOID(candidacyID);
+        return (StudentCandidacy) AbstractDomainObject.fromExternalId(candidacyID);
     }
 
     private String buildRedirectURL(HttpServletRequest request, final StudentCandidacy candidacy) {

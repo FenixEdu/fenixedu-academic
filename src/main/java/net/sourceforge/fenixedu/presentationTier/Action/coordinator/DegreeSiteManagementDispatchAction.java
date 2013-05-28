@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeInfo;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Item;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -29,6 +28,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Tânia Pousão Created on 31/Out/2003
@@ -88,7 +88,7 @@ public class DegreeSiteManagementDispatchAction extends SiteManagementDA {
 
         try {
             Integer oid = new Integer(parameter);
-            return RootDomainObject.getInstance().readDegreeCurricularPlanByOID(oid);
+            return AbstractDomainObject.fromExternalId(oid);
         } catch (NumberFormatException e) {
             return null;
         }
@@ -115,7 +115,7 @@ public class DegreeSiteManagementDispatchAction extends SiteManagementDA {
 
         Integer degreeCurricularPlanID =
                 Integer.valueOf(RequestUtils.getAndSetStringToRequest(request, "degreeCurricularPlanID"));
-        DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+        DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
 
         ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
         DegreeInfo currentDegreeInfo = currentExecutionYear.getDegreeInfo(degreeCurricularPlan.getDegree());
@@ -155,7 +155,7 @@ public class DegreeSiteManagementDispatchAction extends SiteManagementDA {
             HttpServletResponse response) {
         Integer degreeCurricularPlanID =
                 Integer.valueOf(RequestUtils.getAndSetStringToRequest(request, "degreeCurricularPlanID"));
-        DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+        DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
         if (degreeCurricularPlan == null) {
             final ActionErrors errors = new ActionErrors();
             errors.add("noDegreeCurricularPlan", new ActionError("error.coordinator.chosenDegree"));
@@ -178,7 +178,7 @@ public class DegreeSiteManagementDispatchAction extends SiteManagementDA {
         // read execution degree
         Integer degreeCurricularPlanID =
                 Integer.valueOf(RequestUtils.getAndSetStringToRequest(request, "degreeCurricularPlanID"));
-        DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+        DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
 
         if (degreeCurricularPlan.hasAnyExecutionDegrees()) {
             final IUserView userView = UserView.getUser();

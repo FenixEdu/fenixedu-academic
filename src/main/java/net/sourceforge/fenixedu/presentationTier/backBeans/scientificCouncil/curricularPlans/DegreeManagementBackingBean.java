@@ -128,7 +128,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
     }
 
     public Degree getDegree() {
-        return (degree == null) ? (degree = rootDomainObject.readDegreeByOID(getDegreeId())) : degree;
+        return (degree == null) ? (degree = AbstractDomainObject.fromExternalId(getDegreeId())) : degree;
     }
 
     public String getName() {
@@ -355,7 +355,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
     }
 
     public ExecutionYear getSelectedExecutionYear() {
-        return rootDomainObject.readExecutionYearByOID(getSelectedExecutionYearId());
+        return AbstractDomainObject.fromExternalId(getSelectedExecutionYearId());
     }
 
     public List<SelectItem> getOpenExecutionYears() {

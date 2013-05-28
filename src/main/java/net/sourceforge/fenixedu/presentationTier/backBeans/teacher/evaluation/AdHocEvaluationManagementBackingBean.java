@@ -15,6 +15,8 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.apache.commons.beanutils.BeanComparator;
 
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
+
 public class AdHocEvaluationManagementBackingBean extends EvaluationManagementBackingBean {
     protected final ResourceBundle enumerationBundle = getResourceBundle("resources/EnumerationResources");
 
@@ -57,7 +59,7 @@ public class AdHocEvaluationManagementBackingBean extends EvaluationManagementBa
 
     private AdHocEvaluation getAdHocEvaluation() {
         if (this.adHocEvaluation == null && this.getAdHocEvaluationID() != null) {
-            this.adHocEvaluation = (AdHocEvaluation) rootDomainObject.readEvaluationByOID(getAdHocEvaluationID());
+            this.adHocEvaluation = (AdHocEvaluation) AbstractDomainObject.fromExternalId(getAdHocEvaluationID());
         }
         return this.adHocEvaluation;
     }

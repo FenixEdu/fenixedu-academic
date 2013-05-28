@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Servico.operator.ValidateAlumniIdentity;
 import net.sourceforge.fenixedu.domain.AlumniIdentityCheckRequest;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -17,6 +16,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "operator", path = "/alumni", scope = "request", parameter = "method")
 @Forwards(value = {
@@ -38,8 +38,8 @@ public class AlumniOperations extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         return innerPrepareValidation(mapping, request,
-                RootDomainObject.getInstance().readAlumniIdentityCheckRequestByOID(getIntegerFromRequest(request, "requestId")),
-                (Person) RootDomainObject.getInstance().readPartyByOID(getIntegerFromRequest(request, "personId")));
+                AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "requestId")),
+                (Person) AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "personId")));
     }
 
     private ActionForward innerPrepareValidation(ActionMapping mapping, HttpServletRequest request,
@@ -54,9 +54,9 @@ public class AlumniOperations extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         request.setAttribute("requestBody",
-                RootDomainObject.getInstance().readAlumniIdentityCheckRequestByOID(getIntegerFromRequest(request, "requestId")));
+                AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "requestId")));
         request.setAttribute("personBody",
-                RootDomainObject.getInstance().readPartyByOID(getIntegerFromRequest(request, "personId")));
+                AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "personId")));
         return mapping.findForward("alumni.validate.request");
     }
 
@@ -91,8 +91,8 @@ public class AlumniOperations extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         AlumniIdentityCheckRequest checkRequest =
-                RootDomainObject.getInstance().readAlumniIdentityCheckRequestByOID(getIntegerFromRequest(request, "requestId"));
-        Person alumniPerson = (Person) RootDomainObject.getInstance().readPartyByOID(getIntegerFromRequest(request, "personId"));
+                AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "requestId"));
+        Person alumniPerson = (Person) AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "personId"));
         ValidateAlumniIdentity.runValidateAlumniIdentity(checkRequest, alumniPerson);
         return innerPrepareValidation(mapping, request, checkRequest, alumniPerson);
     }

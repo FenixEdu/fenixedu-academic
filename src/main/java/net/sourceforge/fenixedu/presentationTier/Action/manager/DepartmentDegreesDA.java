@@ -15,6 +15,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
+
 public class DepartmentDegreesDA extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
@@ -36,8 +38,8 @@ public class DepartmentDegreesDA extends FenixDispatchAction {
             throws FenixActionException,  FenixServiceException {
         final String departmentString = request.getParameter("departmentID");
         final String degreeString = request.getParameter("degreeID");
-        final Department department = rootDomainObject.readDepartmentByOID(Integer.valueOf(departmentString));
-        final Degree degree = rootDomainObject.readDegreeByOID(Integer.valueOf(degreeString));
+        final Department department = AbstractDomainObject.fromExternalId(Integer.valueOf(departmentString));
+        final Degree degree = AbstractDomainObject.fromExternalId(Integer.valueOf(degreeString));
         RemoveDegreeFromDepartment.run(department, degree);
         final DepartmentDegreeBean departmentDegreeBean = new DepartmentDegreeBean();
         departmentDegreeBean.setDepartment(department);

@@ -18,6 +18,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "teacher", path = "/weeklyWorkLoad", input = "/weeklyWorkLoad.do?method=prepare", scope = "session",
         parameter = "method")
@@ -33,7 +34,7 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
                 (executionCourseIDString == null || executionCourseIDString.length() == 0) ? null : Integer
                         .valueOf(executionCourseIDString);
 
-        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
+        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseID);
         request.setAttribute("executionCourse", executionCourse);
         request.setAttribute("weeklyWorkLoadView", executionCourse.getWeeklyWorkLoadView());
 

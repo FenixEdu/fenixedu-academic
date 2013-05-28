@@ -14,10 +14,10 @@ import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoProposalE
 import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Nuno Correia
@@ -27,7 +27,7 @@ public class SubmitFinalWorkProposal {
 
     protected void run(InfoProposalEditor infoProposal) throws FenixServiceException {
         Integer executionDegreeId = infoProposal.getExecutionDegree().getExternalId();
-        ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeId);
+        ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeId);
 
         Scheduleing scheduleing = executionDegree.getScheduling();
         if (scheduleing == null) {
@@ -36,7 +36,7 @@ public class SubmitFinalWorkProposal {
 
         Proposal proposal = null;
         if (infoProposal.getExternalId() != null) {
-            proposal = RootDomainObject.getInstance().readProposalByOID(infoProposal.getExternalId());
+            proposal = AbstractDomainObject.fromExternalId(infoProposal.getExternalId());
         }
         if (proposal == null) {
             proposal = new Proposal();
@@ -87,7 +87,7 @@ public class SubmitFinalWorkProposal {
             for (int i = 0; i < infoProposal.getBranches().size(); i++) {
                 InfoBranch infoBranch = (InfoBranch) infoProposal.getBranches().get(i);
                 if (infoBranch != null && infoBranch.getExternalId() != null) {
-                    Branch branch = RootDomainObject.getInstance().readBranchByOID(infoBranch.getExternalId());
+                    Branch branch = AbstractDomainObject.fromExternalId(infoBranch.getExternalId());
                     if (branch != null) {
                         proposal.getBranches().add(branch);
                     }

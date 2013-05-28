@@ -25,6 +25,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "researcher", path = "/interests/interestsManagement", scope = "session", parameter = "method")
 @Forwards(value = {
@@ -103,7 +104,7 @@ public class InterestsManagementDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) {
 
         Integer interestOid = Integer.parseInt(request.getParameter("oid"));
-        ResearchInterest researchInterest = rootDomainObject.readResearchInterestByOID(interestOid);
+        ResearchInterest researchInterest = AbstractDomainObject.fromExternalId(interestOid);
 
         request.setAttribute("interest", researchInterest);
 
@@ -116,7 +117,7 @@ public class InterestsManagementDispatchAction extends FenixDispatchAction {
         IUserView userView = getUserView(request);
         Person person = userView.getPerson();
 
-        ResearchInterest interest = rootDomainObject.readResearchInterestByOID(oid);
+        ResearchInterest interest = AbstractDomainObject.fromExternalId(oid);
         List<ResearchInterest> orderedInterests = getOrderedInterests(request);
 
         int index = orderedInterests.indexOf(interest);

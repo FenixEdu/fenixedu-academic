@@ -74,7 +74,7 @@ public class ManageExternalSupervisionDA extends FenixDispatchAction {
     public ActionForward deleteSupervisor(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
         final Integer personId = Integer.valueOf(request.getParameter("supervisorId"));
-        Person person = (Person) rootDomainObject.readPartyByOID(personId);
+        Person person = (Person) AbstractDomainObject.fromExternalId(personId);
         final String registrationProtocolId = request.getParameter("registrationProtocolId");
         RegistrationProtocol registrationProtocol = AbstractDomainObject.fromExternalId(registrationProtocolId);
 

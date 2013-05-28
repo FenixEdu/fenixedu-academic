@@ -11,8 +11,8 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoCategory;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Jo�o Mota
@@ -90,7 +90,7 @@ public class InfoTeacher extends InfoObject {
     public void setExternalId(Integer integer) {
         // This attribution is needed because of CRUDActionByOID. Do not delete
         // it.
-        this.person = RootDomainObject.getInstance().readTeacherByOID(integer).getPerson();
+        this.person = AbstractDomainObject.fromExternalId(integer).getPerson();
     }
 
     public Teacher getTeacher() {

@@ -8,8 +8,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
@@ -19,7 +19,7 @@ public class ReadPublicExecutionDegreeByDCPID {
 
     @Service
     public static List<InfoExecutionDegree> run(Integer degreeCurricularPlanID) throws FenixServiceException {
-        DegreeCurricularPlan degreeCurricularPlan = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+        DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
 
         List<InfoExecutionDegree> result = new ArrayList<InfoExecutionDegree>();
         for (ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegrees()) {
@@ -31,8 +31,8 @@ public class ReadPublicExecutionDegreeByDCPID {
 
     @Service
     public static InfoExecutionDegree run(Integer degreeCurricularPlanID, Integer executionYearID) {
-        DegreeCurricularPlan degreeCurricularPlan = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanID);
-        ExecutionYear executionYear = RootDomainObject.getInstance().readExecutionYearByOID(executionYearID);
+        DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
+        ExecutionYear executionYear = AbstractDomainObject.fromExternalId(executionYearID);
 
         ExecutionDegree executionDegree =
                 ExecutionDegree.getByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear.getYear());

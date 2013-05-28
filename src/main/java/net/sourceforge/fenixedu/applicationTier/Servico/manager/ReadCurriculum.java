@@ -10,9 +10,9 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculumWithInfoCurricularCourseAndInfoDegree;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Curriculum;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author lmac1
@@ -27,7 +27,7 @@ public class ReadCurriculum {
         CurricularCourse curricularCourse;
         Curriculum curriculum;
 
-        curricularCourse = (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(curricularCourseId);
+        curricularCourse = (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseId);
         if (curricularCourse == null) {
             throw new NonExistingServiceException();
         }

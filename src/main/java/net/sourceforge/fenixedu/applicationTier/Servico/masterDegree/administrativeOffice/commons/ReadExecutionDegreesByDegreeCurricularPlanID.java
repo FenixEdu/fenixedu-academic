@@ -15,8 +15,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Shezad Anavarali (sana@mega.ist.utl.pt)
@@ -30,7 +30,7 @@ public class ReadExecutionDegreesByDegreeCurricularPlanID {
 
     @Service
     public static List<InfoExecutionDegree> run(Integer degreeCurricularPlanID) {
-        DegreeCurricularPlan degreeCurricularPlan = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+        DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
 
         List<InfoExecutionDegree> result = new ArrayList<InfoExecutionDegree>();
 

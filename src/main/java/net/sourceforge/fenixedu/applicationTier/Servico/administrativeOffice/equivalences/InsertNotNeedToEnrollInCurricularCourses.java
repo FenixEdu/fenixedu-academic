@@ -9,10 +9,10 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.ManagerAuthorizationFilte
 import net.sourceforge.fenixedu.applicationTier.Filtro.OperatorAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Ricardo Rodrigues
@@ -22,10 +22,10 @@ import pt.ist.fenixWebFramework.services.Service;
 public class InsertNotNeedToEnrollInCurricularCourses {
 
     protected void run(Integer studentCurricularPlanID, Integer[] curricularCoursesID) {
-        StudentCurricularPlan scp = RootDomainObject.getInstance().readStudentCurricularPlanByOID(studentCurricularPlanID);
+        StudentCurricularPlan scp = AbstractDomainObject.fromExternalId(studentCurricularPlanID);
 
         for (Integer curricularCourseID : curricularCoursesID) {
-            CurricularCourse curricularCourse = (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(curricularCourseID);
+            CurricularCourse curricularCourse = (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseID);
             NotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse = new NotNeedToEnrollInCurricularCourse();
             notNeedToEnrollInCurricularCourse.setCurricularCourse(curricularCourse);
             notNeedToEnrollInCurricularCourse.setStudentCurricularPlan(scp);

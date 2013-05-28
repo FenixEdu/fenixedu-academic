@@ -11,10 +11,10 @@ import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular {
 
@@ -25,10 +25,10 @@ public class LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular {
 
         List listInfoDE = new ArrayList();
 
-        CurricularYear curricularYear = RootDomainObject.getInstance().readCurricularYearByOID(curricularYearID);
-        ExecutionSemester executionSemester = RootDomainObject.getInstance().readExecutionSemesterByOID(infoExecutionPeriod.getExternalId());
+        CurricularYear curricularYear = AbstractDomainObject.fromExternalId(curricularYearID);
+        ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(infoExecutionPeriod.getExternalId());
         DegreeCurricularPlan degreeCurricularPlan =
-                RootDomainObject.getInstance().readDegreeCurricularPlanByOID(infoExecutionDegree.getInfoDegreeCurricularPlan().getExternalId());
+                AbstractDomainObject.fromExternalId(infoExecutionDegree.getInfoDegreeCurricularPlan().getExternalId());
 
         if (executionSemester != null) {
             List<ExecutionCourse> listDCDE =
@@ -53,9 +53,9 @@ public class LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular {
 
         List listInfoDE = new ArrayList();
 
-        CurricularYear curricularYear = RootDomainObject.getInstance().readCurricularYearByOID(curricularYearID);
+        CurricularYear curricularYear = AbstractDomainObject.fromExternalId(curricularYearID);
         DegreeCurricularPlan degreeCurricularPlan =
-                RootDomainObject.getInstance().readDegreeCurricularPlanByOID(infoExecutionDegree.getInfoDegreeCurricularPlan().getExternalId());
+                AbstractDomainObject.fromExternalId(infoExecutionDegree.getInfoDegreeCurricularPlan().getExternalId());
 
         if (academicInterval != null) {
             List<ExecutionCourse> listDCDE =

@@ -16,6 +16,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/caseHandlingDegreeChangeIndividualCandidacyProcess", module = "coordinator",
         formBeanClass = FenixActionForm.class)
@@ -40,7 +41,7 @@ public class DegreeChangeIndividualCandidacyProcessDA extends
     public ActionForward listProcessAllowedActivities(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
         final Integer degreeCurricularPlanOID = CoordinatedDegreeInfo.findDegreeCurricularPlanID(request);
-        final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanOID);
+        final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanOID);
         request.setAttribute("seriesGrade", getProcess(request).getCandidacy()
                 .getDegreeChangeIndividualCandidacySeriesGradeForDegree(degreeCurricularPlan.getDegree()));
         return super.listProcessAllowedActivities(mapping, form, request, response);
@@ -50,7 +51,7 @@ public class DegreeChangeIndividualCandidacyProcessDA extends
     public ActionForward prepareExecuteIntroduceCandidacyResult(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) {
         final Integer degreeCurricularPlanOID = CoordinatedDegreeInfo.findDegreeCurricularPlanID(request);
-        final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanOID);
+        final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanOID);
         request.setAttribute("individualCandidacyResultBean", new DegreeChangeIndividualCandidacyResultBean(getProcess(request),
                 degreeCurricularPlan.getDegree()));
         return mapping.findForward("introduce-candidacy-result");

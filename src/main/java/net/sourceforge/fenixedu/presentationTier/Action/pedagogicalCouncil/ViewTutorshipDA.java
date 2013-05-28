@@ -87,7 +87,7 @@ public class ViewTutorshipDA extends FenixDispatchAction {
         // If atribute "tutorshipId" is present
         if (request.getParameter("tutorshipId") != null) {
             Integer tutorshipId = getExternalId(request, "tutorshipId");
-            Tutorship tutorship = RootDomainObject.getInstance().readTutorshipByOID(tutorshipId);
+            Tutorship tutorship = AbstractDomainObject.fromExternalId(tutorshipId);
             return tutorship;
         }
 
@@ -102,7 +102,7 @@ public class ViewTutorshipDA extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         Integer tutorshipId = new Integer(request.getParameter("tutorshipID"));
-        Tutorship tutorship = rootDomainObject.readTutorshipByOID(tutorshipId);
+        Tutorship tutorship = AbstractDomainObject.fromExternalId(tutorshipId);
 
         ExecutionDegree executionDegree = getExecutionDegree(tutorship);
         deleteTutor(tutorship, executionDegree, request, mapping);

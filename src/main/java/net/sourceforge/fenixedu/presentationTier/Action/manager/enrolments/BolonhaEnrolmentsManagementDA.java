@@ -35,6 +35,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 @Mapping(path = "/bolonhaStudentEnrolment", module = "manager", formBean = "bolonhaStudentEnrolmentForm")
@@ -85,7 +86,7 @@ public class BolonhaEnrolmentsManagementDA extends AbstractBolonhaStudentEnrollm
     }
 
     private Student getStudent(final HttpServletRequest request) {
-        return rootDomainObject.readStudentByOID(getIntegerFromRequest(request, "studentId"));
+        return AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "studentId"));
     }
 
     private List<Registration> getAllRegistrations(final Student student) {
@@ -101,7 +102,7 @@ public class BolonhaEnrolmentsManagementDA extends AbstractBolonhaStudentEnrollm
     }
 
     private StudentCurricularPlan getStudentCurricularPlan(final HttpServletRequest request) {
-        return rootDomainObject.readStudentCurricularPlanByOID(getIntegerFromRequest(request, "scpId"));
+        return AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "scpId"));
     }
 
     public ActionForward prepareChooseExecutionPeriod(ActionMapping mapping, ActionForm form, HttpServletRequest request,

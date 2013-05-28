@@ -6,10 +6,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class CreateDegreeCurricularPlan {
 
@@ -26,7 +26,7 @@ public class CreateDegreeCurricularPlan {
             throw new FenixServiceException("error.degreeCurricularPlan.non.existing.creator");
         }
 
-        final Degree degree = RootDomainObject.getInstance().readDegreeByOID(degreeId);
+        final Degree degree = AbstractDomainObject.fromExternalId(degreeId);
         if (degree == null) {
             throw new FenixServiceException("error.degreeCurricularPlan.non.existing.degree");
         }

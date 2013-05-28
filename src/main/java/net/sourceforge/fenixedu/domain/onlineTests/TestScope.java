@@ -10,6 +10,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixframework.DomainObject;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * 
@@ -44,7 +45,7 @@ public class TestScope extends TestScope_Base {
 
     public DomainObject getDomainObject() {
         if (domainObject == null && getClassName().equals(ExecutionCourse.class.getName())) {
-            ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(getKeyClass());
+            ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(getKeyClass());
             setDomainObject(executionCourse);
         }
         return domainObject;

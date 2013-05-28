@@ -21,7 +21,6 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.GratuitySituation;
 import net.sourceforge.fenixedu.domain.GratuityValues;
 import net.sourceforge.fenixedu.domain.InsuranceValue;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentType;
@@ -30,6 +29,7 @@ import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.util.gratuity.fileParsers.sibs.SibsOutgoingPaymentFileConstants;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class GenerateOutgoingSibsPaymentFileByExecutionYearID {
 
@@ -39,7 +39,7 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID {
 
         StringBuilder outgoingSibsPaymentFile = new StringBuilder();
 
-        ExecutionYear executionYear = RootDomainObject.getInstance().readExecutionYearByOID(executionYearID);
+        ExecutionYear executionYear = AbstractDomainObject.fromExternalId(executionYearID);
 
         InsuranceValue insuranceValue = executionYear.getInsuranceValue();
         if (insuranceValue == null) {

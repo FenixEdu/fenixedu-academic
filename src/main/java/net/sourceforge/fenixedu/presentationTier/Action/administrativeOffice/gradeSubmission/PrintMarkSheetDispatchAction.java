@@ -37,6 +37,7 @@ import org.apache.struts.util.LabelValueBean;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/printMarkSheet", module = "academicAdministration", formBean = "printMarkSheetForm",
         input = "/printMarkSheet.do?method=choosePrinterMarkSheet&amp;page=0")
@@ -70,12 +71,12 @@ public class PrintMarkSheetDispatchAction extends MarkSheetDispatchAction {
     }
 
     private ExecutionSemester getExecutionSemester(DynaActionForm form) {
-        return rootDomainObject.readExecutionSemesterByOID(Integer.valueOf(form.getString("ecID")));
+        return AbstractDomainObject.fromExternalId(Integer.valueOf(form.getString("ecID")));
     }
 
     private DegreeCurricularPlan getDegreeCurricularPlan(DynaActionForm form) {
         final Integer dcpID = (!StringUtils.isEmpty(form.getString("dcpID")) ? Integer.valueOf(form.getString("dcpID")) : null);
-        return dcpID != null ? rootDomainObject.readDegreeCurricularPlanByOID(dcpID) : null;
+        return dcpID != null ? AbstractDomainObject.fromExternalId(dcpID) : null;
     }
 
     private ActionForward choosePrinterMarkSheetsWeb(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -186,7 +187,7 @@ public class PrintMarkSheetDispatchAction extends MarkSheetDispatchAction {
         DynaActionForm form = (DynaActionForm) actionForm;
         String printerName = form.getString("printerName");
         String markSheetString = form.getString("markSheet");
-        MarkSheet markSheet = rootDomainObject.readMarkSheetByOID(Integer.valueOf(markSheetString));
+        MarkSheet markSheet = AbstractDomainObject.fromExternalId(Integer.valueOf(markSheetString));
         ActionMessages actionMessages = new ActionMessages();
 
         try {

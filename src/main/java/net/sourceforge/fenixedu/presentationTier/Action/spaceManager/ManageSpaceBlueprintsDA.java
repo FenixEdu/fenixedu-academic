@@ -35,6 +35,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.file.FileManagerException;
 
 @Mapping(module = "SpaceManager", path = "/manageBlueprints", scope = "session", parameter = "method")
@@ -171,7 +172,7 @@ public class ManageSpaceBlueprintsDA extends FenixDispatchAction {
 
         final String blueprintIdString = request.getParameter("blueprintId");
         final Integer blueprintId = Integer.valueOf(blueprintIdString);
-        final Blueprint blueprint = rootDomainObject.readBlueprintByOID(blueprintId);
+        final Blueprint blueprint = AbstractDomainObject.fromExternalId(blueprintId);
         final BlueprintFile blueprintFile = blueprint.getBlueprintFile();
 
         // If dspace worked properly we could do this...
@@ -230,7 +231,7 @@ public class ManageSpaceBlueprintsDA extends FenixDispatchAction {
                         .getAttribute("spaceInformationID");
         final Integer spaceInformationID =
                 (!StringUtils.isEmpty(spaceInformationIDString)) ? Integer.valueOf(spaceInformationIDString) : null;
-        return rootDomainObject.readSpaceInformationByOID(spaceInformationID);
+        return AbstractDomainObject.fromExternalId(spaceInformationID);
     }
 
     private Blueprint getSpaceBlueprintFromParameter(HttpServletRequest request) {
@@ -239,7 +240,7 @@ public class ManageSpaceBlueprintsDA extends FenixDispatchAction {
                         .getAttribute("spaceBlueprintID");
         final Integer spaceBlueprintID =
                 (!StringUtils.isEmpty(spaceBlueprintIDString)) ? Integer.valueOf(spaceBlueprintIDString) : null;
-        return rootDomainObject.readBlueprintByOID(spaceBlueprintID);
+        return AbstractDomainObject.fromExternalId(spaceBlueprintID);
     }
 
     private Boolean isToViewBlueprintNumbers(HttpServletRequest request) {

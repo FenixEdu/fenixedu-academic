@@ -17,13 +17,13 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentInformation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentGroupWithAttendsAndGroupingAndShift;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 
 import org.apache.commons.beanutils.BeanComparator;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author asnr and scpo
@@ -40,7 +40,7 @@ public class ReadStudentGroupInformation {
         Grouping grouping = null;
         List groupAttendsList = null;
 
-        studentGroup = RootDomainObject.getInstance().readStudentGroupByOID(studentGroupCode);
+        studentGroup = AbstractDomainObject.fromExternalId(studentGroupCode);
 
         if (studentGroup == null) {
             return null;

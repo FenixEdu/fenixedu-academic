@@ -41,6 +41,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 public class PaymentsManagementDA extends FenixDispatchAction {
@@ -190,11 +191,11 @@ public class PaymentsManagementDA extends FenixDispatchAction {
     }
 
     protected Person getPerson(HttpServletRequest request) {
-        return (Person) rootDomainObject.readPartyByOID(getIntegerFromRequest(request, "personId"));
+        return (Person) AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "personId"));
     }
 
     private Event getEvent(HttpServletRequest request) {
-        return rootDomainObject.readEventByOID(getIntegerFromRequest(request, "eventId"));
+        return AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "eventId"));
     }
 
     public ActionForward prepareTransferPaymentsToOtherEventAndCancel(ActionMapping mapping, ActionForm form,
@@ -283,7 +284,7 @@ public class PaymentsManagementDA extends FenixDispatchAction {
     }
 
     private AccountingTransaction getTransaction(HttpServletRequest request) {
-        return rootDomainObject.readAccountingTransactionByOID(getIntegerFromRequest(request, "transactionId"));
+        return AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "transactionId"));
     }
 
     public ActionForward showOperations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -326,7 +327,7 @@ public class PaymentsManagementDA extends FenixDispatchAction {
     }
 
     private Receipt getReceipt(HttpServletRequest request) {
-        return rootDomainObject.readReceiptByOID(getIntegerFromRequest(request, "receiptId"));
+        return AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "receiptId"));
     }
 
     @Override

@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
@@ -45,6 +44,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ManageThesisDA extends AbstractManageThesisDA {
 
@@ -113,7 +113,7 @@ public class ManageThesisDA extends AbstractManageThesisDA {
                 return executionYears.first();
             }
         } else {
-            return RootDomainObject.getInstance().readExecutionYearByOID(id);
+            return AbstractDomainObject.fromExternalId(id);
         }
     }
 

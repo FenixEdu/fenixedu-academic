@@ -32,6 +32,7 @@ import org.joda.time.LocalDate;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -99,7 +100,7 @@ public class GeneratedDocumentsDA extends FenixDispatchAction {
     }
 
     private Person getPerson(HttpServletRequest request) {
-        return (Person) rootDomainObject.readPartyByOID(getIntegerFromRequest(request, "personId"));
+        return (Person) AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "personId"));
     }
 
     public ActionForward showAnnualIRSDocumentsInPayments(ActionMapping mapping, ActionForm actionForm,

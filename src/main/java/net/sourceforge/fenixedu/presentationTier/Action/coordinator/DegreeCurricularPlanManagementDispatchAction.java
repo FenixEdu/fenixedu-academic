@@ -46,6 +46,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Fernanda Quit�rio 06/Nov/2003
@@ -189,7 +190,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
 
     private List<InfoCurricularCourseScope> getInfoCurricularCourseScopes(InfoCurricularCourse infoCurricularCourse) {
         CurricularCourse curricularCourse =
-                (CurricularCourse) rootDomainObject.readDegreeModuleByOID(infoCurricularCourse.getExternalId());
+                (CurricularCourse) AbstractDomainObject.fromExternalId(infoCurricularCourse.getExternalId());
         List<InfoCurricularCourseScope> infoScopes =
                 (List) CollectionUtils.collect(curricularCourse.getScopes(), new Transformer() {
 

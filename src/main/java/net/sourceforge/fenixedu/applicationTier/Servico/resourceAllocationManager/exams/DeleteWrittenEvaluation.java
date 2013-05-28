@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.util.BundleUtil;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class DeleteWrittenEvaluation {
 
@@ -34,7 +35,7 @@ public class DeleteWrittenEvaluation {
      */
     protected void run(Integer executionCourseOID, Integer writtenEvaluationOID) throws FenixServiceException {
         final WrittenEvaluation writtenEvaluationToDelete =
-                (WrittenEvaluation) RootDomainObject.getInstance().readEvaluationByOID(writtenEvaluationOID);
+                (WrittenEvaluation) AbstractDomainObject.fromExternalId(writtenEvaluationOID);
         if (writtenEvaluationToDelete == null) {
             throw new FenixServiceException("error.noWrittenEvaluation");
         }

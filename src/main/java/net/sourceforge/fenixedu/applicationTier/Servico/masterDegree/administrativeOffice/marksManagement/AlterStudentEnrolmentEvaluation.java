@@ -7,9 +7,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Angela 04/07/2003
@@ -31,7 +31,7 @@ public class AlterStudentEnrolmentEvaluation {
             throw new NonExistingServiceException();
         }
 
-        EnrolmentEvaluation enrolmentEvaluationCopy = RootDomainObject.getInstance().readEnrolmentEvaluationByOID(enrolmentEvaluationCode);
+        EnrolmentEvaluation enrolmentEvaluationCopy = AbstractDomainObject.fromExternalId(enrolmentEvaluationCode);
         if (enrolmentEvaluationCopy == null) {
             throw new NonExistingServiceException();
         }

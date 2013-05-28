@@ -9,10 +9,10 @@ import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.ID
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.strategys.IMasterDegreeCurricularPlanStrategy;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeProofVersion;
 import net.sourceforge.fenixedu.domain.MasterDegreeProofVersion;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * 
@@ -26,7 +26,7 @@ public class ReadActiveMasterDegreeProofVersionByStudentCurricularPlan {
     @Service
     public static InfoMasterDegreeProofVersion run(Integer studentCurricularPlanID) throws FenixServiceException {
 
-        StudentCurricularPlan studentCurricularPlan = RootDomainObject.getInstance().readStudentCurricularPlanByOID(studentCurricularPlanID);
+        StudentCurricularPlan studentCurricularPlan = AbstractDomainObject.fromExternalId(studentCurricularPlanID);
 
         IDegreeCurricularPlanStrategyFactory degreeCurricularPlanStrategyFactory =
                 DegreeCurricularPlanStrategyFactory.getInstance();

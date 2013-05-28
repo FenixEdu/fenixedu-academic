@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Project;
 import net.sourceforge.fenixedu.domain.ProjectSubmission;
 import net.sourceforge.fenixedu.domain.ProjectSubmissionLog;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -37,6 +36,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "teacher", path = "/projectSubmissionsManagement", scope = "request", parameter = "method")
 @Forwards(
@@ -175,7 +175,7 @@ public class ProjectSubmissionsManagementDispatchAction extends FenixDispatchAct
         final Project project = getProject(request);
 
         ExecutionCourse course =
-                (ExecutionCourse) RootDomainObject.readDomainObjectByOID(ExecutionCourse.class, getExecutionCourseID(request));
+                (ExecutionCourse) AbstractDomainObject.fromExternalId(ExecutionCourse.class, getExecutionCourseID(request));
 
         NotifyStudentGroup.run(project.getLastProjectSubmissionForStudentGroup(getStudentGroup(request)), course,
                 getLoggedPerson(request));
@@ -193,7 +193,7 @@ public class ProjectSubmissionsManagementDispatchAction extends FenixDispatchAct
     }
 
     private StudentGroup getStudentGroup(HttpServletRequest request) {
-        return rootDomainObject.readStudentGroupByOID(getRequestParameterAsInteger(request, "studentGroupID"));
+        return AbstractDomainObject.fromExternalId(getRequestParameterAsInteger(request, "studentGroupID"));
     }
 
     private Project getProject(HttpServletRequest request) {

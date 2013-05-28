@@ -5,9 +5,9 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class DeleteExecutionDegreesOfDegreeCurricularPlan {
 
@@ -17,7 +17,7 @@ public class DeleteExecutionDegreesOfDegreeCurricularPlan {
         List<String> undeletedExecutionDegreesYears = new ArrayList<String>();
 
         for (final Integer executionDegreeId : executionDegreesIds) {
-            final ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeId);
+            final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeId);
 
             if (executionDegree != null) {
                 if (executionDegree.canBeDeleted()) {

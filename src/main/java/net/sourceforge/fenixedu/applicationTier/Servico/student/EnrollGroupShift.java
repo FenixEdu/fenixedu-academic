@@ -17,12 +17,12 @@ import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategy
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author joaosa and rmalo
@@ -36,17 +36,17 @@ public class EnrollGroupShift {
     public static Boolean run(Integer studentGroupCode, Integer groupPropertiesCode, Integer newShiftCode, String username)
             throws FenixServiceException {
 
-        Grouping groupProperties = RootDomainObject.getInstance().readGroupingByOID(groupPropertiesCode);
+        Grouping groupProperties = AbstractDomainObject.fromExternalId(groupPropertiesCode);
         if (groupProperties == null) {
             throw new ExistingServiceException();
         }
 
-        StudentGroup studentGroup = RootDomainObject.getInstance().readStudentGroupByOID(studentGroupCode);
+        StudentGroup studentGroup = AbstractDomainObject.fromExternalId(studentGroupCode);
         if (studentGroup == null) {
             throw new InvalidArgumentsServiceException();
         }
 
-        Shift shift = RootDomainObject.getInstance().readShiftByOID(newShiftCode);
+        Shift shift = AbstractDomainObject.fromExternalId(newShiftCode);
         if (groupProperties.getShiftType() == null || studentGroup.getShift() != null
                 || (!shift.containsType(groupProperties.getShiftType()))) {
             throw new InvalidStudentNumberServiceException();

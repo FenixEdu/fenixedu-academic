@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoDistributedTe
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoQuestion;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteStudentTestFeedback;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestion;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.Test;
 import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
@@ -24,6 +23,7 @@ import net.sourceforge.fenixedu.util.tests.TestType;
 import org.apache.commons.beanutils.BeanComparator;
 
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class SimulateTest {
 
@@ -36,7 +36,7 @@ public class SimulateTest {
         // InfoSiteStudentTestFeedback infoSiteStudentTestFeedback = new
         // InfoSiteStudentTestFeedback();
         // this.path = path.replace('\\', '/');
-        // Test test = rootDomainObject.readTestByOID(testId);
+        // Test test = AbstractDomainObject.fromExternalId(testId);
         // if (test == null)
         // throw new FenixServiceException();
         //
@@ -51,7 +51,7 @@ public class SimulateTest {
         //
         // if (testScope == null) {
         // ExecutionCourse executionCourse =
-        // rootDomainObject.readExecutionCourseByOID(executionCourseId);
+        // AbstractDomainObject.fromExternalId(executionCourseId);
         // if (executionCourse == null)
         // throw new InvalidArgumentsServiceException();
         // testScope = DomainFactory.makeTestScope(executionCourse);
@@ -157,7 +157,7 @@ public class SimulateTest {
             throws InvalidArgumentsServiceException, FenixServiceException {
         List<InfoStudentTestQuestion> infoStudentTestQuestionList = new ArrayList<InfoStudentTestQuestion>();
 
-        Test test = RootDomainObject.getInstance().readTestByOID(testId);
+        Test test = AbstractDomainObject.fromExternalId(testId);
         List<TestQuestion> testQuestionList = new ArrayList<TestQuestion>(test.getTestQuestions());
         Collections.sort(testQuestionList, new BeanComparator("testQuestionOrder"));
         for (int i = 0; i < testQuestionList.size(); i++) {
@@ -170,7 +170,7 @@ public class SimulateTest {
             infoStudentTestQuestion.setCorrectionFormula(testQuestionExample.getCorrectionFormula());
             infoStudentTestQuestion.setTestQuestionMark(Double.valueOf(0));
             infoStudentTestQuestion.setResponse(null);
-            Question question = RootDomainObject.getInstance().readQuestionByOID(Integer.valueOf(questionCodes[i]));
+            Question question = AbstractDomainObject.fromExternalId(Integer.valueOf(questionCodes[i]));
             if (question == null) {
                 throw new InvalidArgumentsServiceException();
             }

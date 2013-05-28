@@ -28,6 +28,7 @@ import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import dml.runtime.RelationAdapter;
 
 /**
@@ -280,7 +281,7 @@ public abstract class RegistrationState extends RegistrationState_Base implement
 
         @Override
         public Object execute() {
-            RootDomainObject.getInstance().readRegistrationStateByOID(getInteger()).delete();
+            AbstractDomainObject.fromExternalId(getInteger()).delete();
             return null;
         }
     }

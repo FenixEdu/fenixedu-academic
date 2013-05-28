@@ -5,9 +5,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlanEditor;
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class InsertDegreeCurricularPlan {
 
@@ -20,7 +20,7 @@ public class InsertDegreeCurricularPlan {
             throw new InvalidArgumentsServiceException();
         }
 
-        final Degree degree = RootDomainObject.getInstance().readDegreeByOID(infoDcp.getInfoDegree().getExternalId());
+        final Degree degree = AbstractDomainObject.fromExternalId(infoDcp.getInfoDegree().getExternalId());
         if (degree == null) {
             throw new FenixServiceException("error.degreeCurricularPlan.non.existing.degree");
         }

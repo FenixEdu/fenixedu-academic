@@ -12,16 +12,16 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ReadStudentCurriculum {
 
     protected List run(Integer executionDegreeCode, Integer studentCurricularPlanID) throws FenixServiceException {
 
         final StudentCurricularPlan studentCurricularPlan =
-                RootDomainObject.getInstance().readStudentCurricularPlanByOID(studentCurricularPlanID);
+                AbstractDomainObject.fromExternalId(studentCurricularPlanID);
         if (studentCurricularPlan == null) {
             throw new NonExistingServiceException("error.readStudentCurriculum.noStudentCurricularPlan");
         }

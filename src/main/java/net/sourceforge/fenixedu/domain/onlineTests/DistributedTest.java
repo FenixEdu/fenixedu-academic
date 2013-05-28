@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.tests.Response;
 import net.sourceforge.fenixedu.util.tests.TestType;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Susana Fernandes
@@ -142,7 +143,7 @@ public class DistributedTest extends DistributedTest_Base {
     }
 
     public StudentTestLog getLastSubmissionStudentTestLog(final Integer registrationId) {
-        Registration registration = RootDomainObject.getInstance().readRegistrationByOID(registrationId);
+        Registration registration = AbstractDomainObject.fromExternalId(registrationId);
         for (final StudentTestLog studentTestLog : this.getStudentsLogs()) {
             if (studentTestLog.getEvent().startsWith("Submeter Teste;") && registration.equals(studentTestLog.getStudent())) {
                 return studentTestLog;

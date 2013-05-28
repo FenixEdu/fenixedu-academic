@@ -27,6 +27,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/caseHandlingDegreeTransferCandidacyProcess", module = "coordinator",
         formBeanClass = CandidacyProcessDA.CandidacyProcessForm.class)
@@ -103,7 +104,7 @@ public class DegreeTransferCandidacyProcessDA extends
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanOID);
 
         if (degreeCurricularPlanOID != null) {
-            return rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanOID);
+            return AbstractDomainObject.fromExternalId(degreeCurricularPlanOID);
         }
 
         return null;

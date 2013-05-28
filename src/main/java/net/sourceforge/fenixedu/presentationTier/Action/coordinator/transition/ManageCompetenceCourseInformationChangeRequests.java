@@ -26,6 +26,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "scientificCouncil", path = "/competenceCourses/manageVersions", scope = "session", parameter = "method")
 @Forwards(value = {
@@ -51,7 +52,7 @@ public class ManageCompetenceCourseInformationChangeRequests extends FenixDispat
 
         String departmentID = request.getParameter("departmentID");
         Department department =
-                (Department) RootDomainObject.readDomainObjectByOID(Department.class, Integer.valueOf(departmentID));
+                (Department) AbstractDomainObject.fromExternalId(Department.class, Integer.valueOf(departmentID));
         putChangeRequestInRequest(request, department);
 
         return mapping.findForward("listRequests");
@@ -101,7 +102,7 @@ public class ManageCompetenceCourseInformationChangeRequests extends FenixDispat
     private CompetenceCourseInformationChangeRequest getChangeRequest(HttpServletRequest request) {
         String competenceCourseInformationChangeRequestId = request.getParameter("changeRequestID");
         CompetenceCourseInformationChangeRequest changeRequest =
-                (CompetenceCourseInformationChangeRequest) RootDomainObject.readDomainObjectByOID(
+                (CompetenceCourseInformationChangeRequest) AbstractDomainObject.fromExternalId(
                         CompetenceCourseInformationChangeRequest.class,
                         Integer.valueOf(competenceCourseInformationChangeRequestId));
         return changeRequest;
@@ -110,7 +111,7 @@ public class ManageCompetenceCourseInformationChangeRequests extends FenixDispat
     private CompetenceCourse getCompetenceCourse(HttpServletRequest request) {
         String competenceCourseID = request.getParameter("competenceCourseID");
         CompetenceCourse course =
-                (CompetenceCourse) RootDomainObject.readDomainObjectByOID(CompetenceCourse.class,
+                (CompetenceCourse) AbstractDomainObject.fromExternalId(CompetenceCourse.class,
                         Integer.valueOf(competenceCourseID));
         return course;
     }

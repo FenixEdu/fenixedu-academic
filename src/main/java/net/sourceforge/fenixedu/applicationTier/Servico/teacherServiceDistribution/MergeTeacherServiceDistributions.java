@@ -5,15 +5,15 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthoriza
 import net.sourceforge.fenixedu.applicationTier.Filtro.EmployeeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class MergeTeacherServiceDistributions {
     protected void run(Integer tsdId, Integer otherGroupingId) {
 
-        TeacherServiceDistribution tsd = RootDomainObject.getInstance().readTeacherServiceDistributionByOID(tsdId);
-        TeacherServiceDistribution otherGrouping = RootDomainObject.getInstance().readTeacherServiceDistributionByOID(otherGroupingId);
+        TeacherServiceDistribution tsd = AbstractDomainObject.fromExternalId(tsdId);
+        TeacherServiceDistribution otherGrouping = AbstractDomainObject.fromExternalId(otherGroupingId);
 
         tsd.mergeWithGrouping(otherGrouping);
     }

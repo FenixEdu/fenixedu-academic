@@ -16,8 +16,8 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Project;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class CreateProject {
 
@@ -25,12 +25,12 @@ public class CreateProject {
             Boolean onlineSubmissionsAllowed, Integer maxSubmissionsToKeep, Integer groupingID, GradeScale gradeScale,
             List<Department> departments) throws FenixServiceException {
 
-        final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseID);
+        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseID);
         if (executionCourse == null) {
             throw new FenixServiceException("error.noExecutionCourse");
         }
 
-        final Grouping grouping = (groupingID != null) ? RootDomainObject.getInstance().readGroupingByOID(groupingID) : null;
+        final Grouping grouping = (groupingID != null) ? AbstractDomainObject.fromExternalId(groupingID) : null;
 
         final Project project =
                 new Project(name, begin, end, description, onlineSubmissionsAllowed, maxSubmissionsToKeep, grouping,

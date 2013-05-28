@@ -10,8 +10,8 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingT
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Evaluation;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class DeleteEvaluation {
 
@@ -21,7 +21,7 @@ public class DeleteEvaluation {
      *            (ExecutionCourseLecturingTeacherAuthorizationFilter)
      */
     protected void run(Integer executionCourseID, Integer evaluationID) throws FenixServiceException {
-        final Evaluation evaluation = RootDomainObject.getInstance().readEvaluationByOID(evaluationID);
+        final Evaluation evaluation = AbstractDomainObject.fromExternalId(evaluationID);
         if (evaluation == null) {
             throw new FenixServiceException("error.noEvaluation");
         }

@@ -11,12 +11,12 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Filtro.SeminaryCoordinatorOrStudentFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCandidacy;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Seminaries.Seminary;
 import net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -30,8 +30,8 @@ public class GetCandidaciesByStudentIDAndSeminaryID {
     protected List run(Integer studentID, Integer seminaryID) throws BDException {
         List candidaciesInfo = new LinkedList();
 
-        Registration registration = RootDomainObject.getInstance().readRegistrationByOID(studentID);
-        Seminary seminary = RootDomainObject.getInstance().readSeminaryByOID(seminaryID);
+        Registration registration = AbstractDomainObject.fromExternalId(studentID);
+        Seminary seminary = AbstractDomainObject.fromExternalId(seminaryID);
 
         List<SeminaryCandidacy> candidacies = SeminaryCandidacy.getByStudentAndSeminary(registration, seminary);
 

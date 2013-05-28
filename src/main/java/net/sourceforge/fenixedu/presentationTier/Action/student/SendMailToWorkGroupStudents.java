@@ -24,6 +24,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "teacher", path = "/sendMailToWorkGroupStudents")
 public class SendMailToWorkGroupStudents extends FenixDispatchAction {
@@ -32,8 +33,8 @@ public class SendMailToWorkGroupStudents extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         Integer executionCourseCode = Integer.parseInt(request.getParameter("objectCode"));
         Integer studentGroupCode = Integer.parseInt(request.getParameter("studentGroupCode"));
-        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseCode);
-        StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupCode);
+        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseCode);
+        StudentGroup studentGroup = AbstractDomainObject.fromExternalId(studentGroupCode);
         Group groupToSend = new StudentGroupStudentsGroup(studentGroup);
         Sender sender = ExecutionCourseSender.newInstance(executionCourse);
         final String label =
@@ -47,8 +48,8 @@ public class SendMailToWorkGroupStudents extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         Integer executionCourseCode = Integer.parseInt(request.getParameter("objectCode"));
         Integer groupingCode = Integer.parseInt(request.getParameter("groupingCode"));
-        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseCode);
-        Grouping grouping = rootDomainObject.readGroupingByOID(groupingCode);
+        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseCode);
+        Grouping grouping = AbstractDomainObject.fromExternalId(groupingCode);
         Group groupToSend = new GroupingGroup(grouping);
         Sender sender = ExecutionCourseSender.newInstance(executionCourse);
         final String label =

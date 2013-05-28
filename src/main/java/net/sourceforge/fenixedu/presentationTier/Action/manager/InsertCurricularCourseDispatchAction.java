@@ -34,6 +34,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author lmac1
@@ -77,7 +78,7 @@ public class InsertCurricularCourseDispatchAction extends FenixDispatchAction {
         IUserView userView = UserView.getUser();
 
         Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
-        final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
+        final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanId);
 
         DynaActionForm dynaForm = (DynaValidatorForm) form;
         String type = (String) dynaForm.get("type");

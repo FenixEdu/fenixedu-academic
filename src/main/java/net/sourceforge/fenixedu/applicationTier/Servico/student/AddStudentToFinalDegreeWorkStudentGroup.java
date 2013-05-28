@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
@@ -31,6 +30,7 @@ import org.apache.commons.collections.Predicate;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Luis Cruz
@@ -40,7 +40,7 @@ public class AddStudentToFinalDegreeWorkStudentGroup {
     @Checked("RolePredicates.STUDENT_PREDICATE")
     @Service
     public static Boolean run(Integer groupOID, String username) throws FenixServiceException {
-        FinalDegreeWorkGroup group = RootDomainObject.getInstance().readFinalDegreeWorkGroupByOID(groupOID);
+        FinalDegreeWorkGroup group = AbstractDomainObject.fromExternalId(groupOID);
         Registration registration = findSomeRegistration(username);
         if (group == null
                 || registration == null

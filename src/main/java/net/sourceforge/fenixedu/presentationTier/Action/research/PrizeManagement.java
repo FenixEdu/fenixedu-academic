@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.research.prizes.DeletePr
 import net.sourceforge.fenixedu.applicationTier.Servico.research.prizes.RemovePartyFromPrize;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonNameBean;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.Prize;
@@ -22,6 +21,7 @@ import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class PrizeManagement extends FenixDispatchAction {
 
@@ -144,7 +144,7 @@ public class PrizeManagement extends FenixDispatchAction {
 
         Prize prize = getPrize(request);
         String personID = request.getParameter("pid");
-        Person person = (Person) RootDomainObject.readDomainObjectByOID(Person.class, Integer.valueOf(personID));
+        Person person = (Person) AbstractDomainObject.fromExternalId(Person.class, Integer.valueOf(personID));
 
         if (person != null && prize != null && !prize.isLastParticipation()) {
             try {
@@ -206,7 +206,7 @@ public class PrizeManagement extends FenixDispatchAction {
 
         Prize prize = getPrize(request);
         String unitID = request.getParameter("uid");
-        Unit unit = (Unit) RootDomainObject.readDomainObjectByOID(Unit.class, Integer.valueOf(unitID));
+        Unit unit = (Unit) AbstractDomainObject.fromExternalId(Unit.class, Integer.valueOf(unitID));
 
         if (unit != null && prize != null) {
             try {
@@ -221,7 +221,7 @@ public class PrizeManagement extends FenixDispatchAction {
 
     private Prize getPrize(HttpServletRequest request) {
         String prizeID = request.getParameter("oid");
-        Prize prize = (Prize) RootDomainObject.readDomainObjectByOID(Prize.class, Integer.valueOf(prizeID));
+        Prize prize = (Prize) AbstractDomainObject.fromExternalId(Prize.class, Integer.valueOf(prizeID));
         return prize;
     }
 

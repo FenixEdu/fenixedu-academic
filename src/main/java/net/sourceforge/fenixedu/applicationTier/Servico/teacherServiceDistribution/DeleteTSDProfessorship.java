@@ -5,15 +5,15 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthoriza
 import net.sourceforge.fenixedu.applicationTier.Filtro.EmployeeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCourse;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProfessorship;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDTeacher;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class DeleteTSDProfessorship {
     protected void run(Integer tsdProfessorshipId) {
-        TSDProfessorship tsdProfessorship = RootDomainObject.getInstance().readTSDProfessorshipByOID(tsdProfessorshipId);
+        TSDProfessorship tsdProfessorship = AbstractDomainObject.fromExternalId(tsdProfessorshipId);
         TSDTeacher tsdTeacher = tsdProfessorship.getTSDTeacher();
         TSDCourse tsdCourse = tsdProfessorship.getTSDCourse();
 

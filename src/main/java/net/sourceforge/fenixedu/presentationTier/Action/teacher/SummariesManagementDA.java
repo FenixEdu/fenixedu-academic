@@ -47,6 +47,7 @@ import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
@@ -838,7 +839,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
                 request.getParameterMap().containsKey("executionCourseID") ? request.getParameter("executionCourseID") : (String) request
                         .getAttribute("executionCourseID");
         final Integer executionCourseID = executionCourseIDString != null ? Integer.valueOf(executionCourseIDString) : null;
-        return rootDomainObject.readExecutionCourseByOID(executionCourseID);
+        return AbstractDomainObject.fromExternalId(executionCourseID);
     }
 
     private Summary getSummaryFromParameter(final HttpServletRequest request) {
@@ -846,7 +847,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
                 request.getParameterMap().containsKey("summaryID") ? request.getParameter("summaryID") : (String) request
                         .getAttribute("summaryID");
         final Integer summaryID = summaryIDString != null ? Integer.valueOf(summaryIDString) : null;
-        return rootDomainObject.readSummaryByOID(summaryID);
+        return AbstractDomainObject.fromExternalId(summaryID);
     }
 
     private NextPossibleSummaryLessonsAndDatesBean getNextSummaryDateBeanFromParameter(final HttpServletRequest request) {
@@ -864,7 +865,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
         if (!StringUtils.isEmpty(professorshipIDString)
                 && !(professorshipIDString.equals("0") || professorshipIDString.equals("-1"))) {
             final Integer professorshipID = professorshipIDString != null ? Integer.valueOf(professorshipIDString) : null;
-            return rootDomainObject.readProfessorshipByOID(professorshipID);
+            return AbstractDomainObject.fromExternalId(professorshipID);
         }
         return null;
     }

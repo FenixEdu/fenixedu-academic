@@ -14,13 +14,13 @@ import javax.faces.convert.IntegerConverter;
 import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.CharEncoding;
 
 import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixframework.DomainObject;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class UIAutoComplete extends UIInput {
 
@@ -83,7 +83,7 @@ public class UIAutoComplete extends UIInput {
         Class clazz;
         try {
             clazz = Class.forName(className);
-            DomainObject domainObject = RootDomainObject.getInstance().readDomainObjectByOID(clazz, externalId);
+            DomainObject domainObject = AbstractDomainObject.fromExternalId(clazz, externalId);
 
             return BeanUtils.getProperty(domainObject, labelField);
 
@@ -221,7 +221,7 @@ public class UIAutoComplete extends UIInput {
 
             try {
                 Class clazz = Class.forName(className);
-                DomainObject domainObject = RootDomainObject.getInstance().readDomainObjectByOID(clazz, (Integer) newValue);
+                DomainObject domainObject = AbstractDomainObject.fromExternalId(clazz, (Integer) newValue);
 
                 String correctLabelForExternalId = BeanUtils.getProperty(domainObject, labelField);
 

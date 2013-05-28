@@ -7,11 +7,11 @@ package net.sourceforge.fenixedu.applicationTier.Filtro.Seminaries;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -56,7 +56,7 @@ public class CandidacyAccessFilter {
 
         Registration registration = Registration.readByUsername(id.getUtilizador());
         if (registration != null) {
-            SeminaryCandidacy candidacy = RootDomainObject.getInstance().readSeminaryCandidacyByOID(candidacyID);
+            SeminaryCandidacy candidacy = AbstractDomainObject.fromExternalId(candidacyID);
             //
             if ((candidacy != null)
                     && (candidacy.getStudent().getExternalId().intValue() != registration.getExternalId().intValue())) {

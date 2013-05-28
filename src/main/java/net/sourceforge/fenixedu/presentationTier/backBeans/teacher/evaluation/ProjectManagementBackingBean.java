@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.apache.commons.beanutils.BeanComparator;
 
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 public class ProjectManagementBackingBean extends EvaluationManagementBackingBean {
@@ -133,14 +134,14 @@ public class ProjectManagementBackingBean extends EvaluationManagementBackingBea
 
     private Project getProject() {
         if (this.project == null && this.getProjectID() != null) {
-            this.project = (Project) rootDomainObject.readEvaluationByOID(getProjectID());
+            this.project = (Project) AbstractDomainObject.fromExternalId(getProjectID());
         }
         return this.project;
     }
 
     public List<Project> getAssociatedProjects() throws  FenixServiceException {
         if (this.associatedProjects == null) {
-            final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(getExecutionCourseID());
+            final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(getExecutionCourseID());
             this.associatedProjects = executionCourse.getAssociatedProjects();
             Collections.sort(this.associatedProjects, new BeanComparator("begin"));
         }

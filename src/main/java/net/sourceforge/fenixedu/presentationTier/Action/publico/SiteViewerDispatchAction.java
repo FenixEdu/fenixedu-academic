@@ -10,12 +10,14 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
+
 public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(getExecutionCourseID(request));
+        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(getExecutionCourseID(request));
         request.setAttribute("executionCourse", executionCourse);
         response.setStatus(301);
         response.addIntHeader("Moved Permanently", 301);

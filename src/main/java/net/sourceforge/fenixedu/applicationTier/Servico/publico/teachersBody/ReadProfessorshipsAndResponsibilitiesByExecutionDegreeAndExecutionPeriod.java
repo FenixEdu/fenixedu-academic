@@ -15,19 +15,19 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ReadProfessorshipsAndResponsibilitiesByExecutionDegreeAndExecutionPeriod {
 
     @Service
     public static List run(Integer executionDegreeId, Integer semester, Integer teacherType) throws FenixServiceException {
 
-        final ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeId);
+        final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeId);
 
         List professorships;
         if (semester.intValue() == 0) {

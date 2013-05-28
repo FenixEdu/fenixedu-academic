@@ -17,12 +17,12 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentsAndGroups;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentGroup;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 
 import org.apache.commons.beanutils.BeanComparator;
 
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author joaosa & rmalo
@@ -34,7 +34,7 @@ public class ReadStudentsAndGroupsWithoutShift {
     public static InfoSiteStudentsAndGroups run(Integer groupPropertiesId) throws FenixServiceException {
         InfoSiteStudentsAndGroups infoSiteStudentsAndGroups = new InfoSiteStudentsAndGroups();
 
-        Grouping groupProperties = RootDomainObject.getInstance().readGroupingByOID(groupPropertiesId);
+        Grouping groupProperties = AbstractDomainObject.fromExternalId(groupPropertiesId);
 
         if (groupProperties == null) {
             throw new ExistingServiceException();

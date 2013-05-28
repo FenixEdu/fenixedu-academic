@@ -33,6 +33,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author lmac1
@@ -105,7 +106,7 @@ public class EditCurriculumDA extends FenixDispatchAction {
 
         InfoCurriculum infoCurriculum = new InfoCurriculum();
         final CurricularCourse curricularCourse =
-                (CurricularCourse) rootDomainObject.readDegreeModuleByOID(Integer.valueOf(request
+                (CurricularCourse) AbstractDomainObject.fromExternalId(Integer.valueOf(request
                         .getParameter("curricularCourseId")));
         InfoCurricularCourse infoCurricularCourse = new InfoCurricularCourse(curricularCourse);
         Curriculum curriculum = curricularCourse.findLatestCurriculum();

@@ -19,6 +19,7 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -36,7 +37,7 @@ public class StudentCurricularPlanDA extends FenixDispatchAction {
             HttpServletResponse response) {
 
         final Registration registration =
-                rootDomainObject.readRegistrationByOID(getIntegerFromRequest(request, "registrationId"));
+                AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "registrationId"));
 
         request.setAttribute("studentCurricularPlanCreator",
                 new StudentCurricularPlanFactoryExecutor.StudentCurricularPlanCreator(registration));

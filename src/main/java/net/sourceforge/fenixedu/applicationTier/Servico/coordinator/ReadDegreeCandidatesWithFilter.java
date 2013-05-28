@@ -11,12 +11,12 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWith
 import net.sourceforge.fenixedu.domain.CandidateSituation;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.util.PrintAllCandidatesFilter;
 import net.sourceforge.fenixedu.util.SituationName;
 import net.sourceforge.fenixedu.util.State;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ReadDegreeCandidatesWithFilter {
 
@@ -24,7 +24,7 @@ public class ReadDegreeCandidatesWithFilter {
     public static List run(Integer degreeCurricularPlanId, PrintAllCandidatesFilter filterBy, String filterValue)
             throws FenixServiceException {
 
-        final DegreeCurricularPlan degreeCurricularPlan = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanId);
+        final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanId);
         return createInfoMasterDegreeCandidateFromDomain(getMasterDegreeCandidates(degreeCurricularPlan, filterBy, filterValue));
     }
 

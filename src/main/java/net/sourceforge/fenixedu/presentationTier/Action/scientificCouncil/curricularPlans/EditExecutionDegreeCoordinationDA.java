@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.OperationType;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -27,6 +26,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/curricularPlans/editExecutionDegreeCoordination", module = "scientificCouncil")
 @Forwards({
@@ -41,7 +41,7 @@ public class EditExecutionDegreeCoordinationDA extends FenixDispatchAction {
             HttpServletResponse response) {
 
         final Integer degreeCurricularPlanId = Integer.valueOf(request.getParameter("degreeCurricularPlanId"));
-        DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
+        DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanId);
 
         final Set<ExecutionDegree> executionDegrees = degreeCurricularPlan.getExecutionDegreesSet();
 
@@ -57,7 +57,7 @@ public class EditExecutionDegreeCoordinationDA extends FenixDispatchAction {
 
         Integer executionDegreeId = Integer.valueOf(request.getParameter("executionDegreeId"));
 
-        ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeId);
+        ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeId);
 
         String backTo = String.valueOf(request.getParameter("from"));
         String backPath;
@@ -104,10 +104,10 @@ public class EditExecutionDegreeCoordinationDA extends FenixDispatchAction {
             HttpServletResponse response) {
 
         final Integer coordinatorId = Integer.valueOf(request.getParameter("coordinatorId"));
-        Coordinator coordinator = rootDomainObject.readCoordinatorByOID(coordinatorId);
+        Coordinator coordinator = AbstractDomainObject.fromExternalId(coordinatorId);
 
         final Integer executionDegreeId = Integer.valueOf(request.getParameter("executionDegreeId"));
-        ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);
+        ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeId);
 
         final String personId = request.getParameter("personId");
         final Person personSwitching = rootDomainObject.fromExternalId(personId);
@@ -134,10 +134,10 @@ public class EditExecutionDegreeCoordinationDA extends FenixDispatchAction {
             HttpServletResponse response) {
 
         final Integer coordinatorId = Integer.valueOf(request.getParameter("coordinatorId"));
-        Coordinator coordinator = rootDomainObject.readCoordinatorByOID(coordinatorId);
+        Coordinator coordinator = AbstractDomainObject.fromExternalId(coordinatorId);
 
         final Integer executionDegreeId = Integer.valueOf(request.getParameter("executionDegreeId"));
-        ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);
+        ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeId);
 
         final String personId = request.getParameter("personId");
         final Person personDeleting = rootDomainObject.fromExternalId(personId);
@@ -174,7 +174,7 @@ public class EditExecutionDegreeCoordinationDA extends FenixDispatchAction {
             sessionBean = new ExecutionDegreeCoordinatorsBean();
             final String executionYearId = String.valueOf(request.getParameter("executionYearId"));
             if (!executionYearId.equals("null")) {
-                ExecutionYear executionYear = RootDomainObject.getInstance().readExecutionYearByOID(new Integer(executionYearId));
+                ExecutionYear executionYear = AbstractDomainObject.fromExternalId(new Integer(executionYearId));
                 sessionBean.setExecutionYear(executionYear);
             } else {
                 request.setAttribute("sessionBean", sessionBean);
@@ -220,7 +220,7 @@ public class EditExecutionDegreeCoordinationDA extends FenixDispatchAction {
             HttpServletResponse response) {
 
         Integer execDegId = Integer.valueOf(request.getParameter("executionYearId"));
-        ExecutionDegree executionDegree = rootDomainObject.getInstance().readExecutionDegreeByOID(execDegId);
+        ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(execDegId);
         List<CoordinatorLog> coordinatorLogs = getCoordinatorLogsByExecDegree(executionDegree);
         request.setAttribute("coordinatorLogs", coordinatorLogs);
 

@@ -30,6 +30,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.predicates.Predicate;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
@@ -97,7 +98,7 @@ public class SearchDegreeLogAction extends FenixDispatchAction {
         Integer degreeIDInteger = (degreeID == null) ? null : Integer.parseInt(degreeID);
         if (degreeIDInteger != null) {
             @SuppressWarnings("deprecation")
-            SearchDegreeLogBean sdlb = new SearchDegreeLogBean(rootDomainObject.readDegreeByOID(degreeIDInteger));
+            SearchDegreeLogBean sdlb = new SearchDegreeLogBean(AbstractDomainObject.fromExternalId(degreeIDInteger));
 
             String viewPhoto = request.getParameter("viewPhoto");
             if (viewPhoto != null && viewPhoto.equalsIgnoreCase("true")) {

@@ -53,6 +53,7 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -971,7 +972,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         if (this.unit == null && this.getUnitIDHidden() != null && this.getUnitIDHidden().getValue() != null
                 && !this.getUnitIDHidden().getValue().equals("")) {
 
-            this.unit = (Unit) rootDomainObject.readPartyByOID(Integer.valueOf(this.getUnitIDHidden().getValue().toString()));
+            this.unit = (Unit) AbstractDomainObject.fromExternalId(Integer.valueOf(this.getUnitIDHidden().getValue().toString()));
         }
         if (toRemoveParentUnit) {
             getParentUnitsRelationTypes();
@@ -1053,7 +1054,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
                 && !this.getFunctionIDHidden().getValue().equals("")) {
 
             this.function =
-                    (Function) rootDomainObject.readAccountabilityTypeByOID(Integer.valueOf(this.getFunctionIDHidden().getValue()
+                    (Function) AbstractDomainObject.fromExternalId(Integer.valueOf(this.getFunctionIDHidden().getValue()
                             .toString()));
         }
         return function;
@@ -1112,7 +1113,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
                 && !this.getChooseUnitIDHidden().getValue().equals("")) {
 
             this.chooseUnit =
-                    (Unit) rootDomainObject.readPartyByOID(Integer.valueOf(this.getChooseUnitIDHidden().getValue().toString()));
+                    (Unit) AbstractDomainObject.fromExternalId(Integer.valueOf(this.getChooseUnitIDHidden().getValue().toString()));
         }
 
         return chooseUnit;

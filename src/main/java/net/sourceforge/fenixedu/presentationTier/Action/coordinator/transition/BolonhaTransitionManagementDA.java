@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.commons.transition.Abstr
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "coordinator", path = "/bolonhaTransitionManagement", attribute = "bolonhaTransitionManagementForm",
         formBean = "bolonhaTransitionManagementForm", scope = "request", parameter = "method")
@@ -27,7 +28,7 @@ public class BolonhaTransitionManagementDA extends AbstractBolonhaTransitionMana
     }
 
     private Student getStudent(final HttpServletRequest request) {
-        return rootDomainObject.readStudentByOID(getRequestParameterAsInteger(request, "studentId"));
+        return AbstractDomainObject.fromExternalId(getRequestParameterAsInteger(request, "studentId"));
     }
 
 }

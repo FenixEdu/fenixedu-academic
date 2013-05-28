@@ -34,6 +34,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
+
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a><br>
  * <br>
@@ -298,7 +300,7 @@ public class UnitAnnouncementBoardsManagement extends AnnouncementManagement {
     }
 
     private Unit getRequestedUnit(HttpServletRequest request) {
-        return getRequestedUnitOID(request) == null ? null : (Unit) rootDomainObject.readPartyByOID(this
+        return getRequestedUnitOID(request) == null ? null : (Unit) AbstractDomainObject.fromExternalId(this
                 .getRequestedUnitOID(request));
     }
 

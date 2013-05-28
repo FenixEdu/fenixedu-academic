@@ -10,6 +10,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
+
 public class ResearchEventManagement extends FenixDispatchAction {
 
     public ActionForward showEvent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -17,7 +19,7 @@ public class ResearchEventManagement extends FenixDispatchAction {
 
         String eventId = request.getParameter("eventId");
         if (eventId != null) {
-            ResearchEvent event = rootDomainObject.readResearchEventByOID(Integer.valueOf(eventId));
+            ResearchEvent event = AbstractDomainObject.fromExternalId(Integer.valueOf(eventId));
             request.setAttribute("event", event);
         }
 

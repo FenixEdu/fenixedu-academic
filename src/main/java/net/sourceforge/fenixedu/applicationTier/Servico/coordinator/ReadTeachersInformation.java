@@ -16,9 +16,9 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ReadTeachersInformation {
 
@@ -49,7 +49,7 @@ public class ReadTeachersInformation {
                                 executionDegressExecutionYear, basic);
             }
         } else {
-            ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeId);
+            ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeId);
 
             if (basic == null) {
                 professorships =

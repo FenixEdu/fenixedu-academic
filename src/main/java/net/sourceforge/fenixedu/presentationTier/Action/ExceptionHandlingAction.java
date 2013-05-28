@@ -14,7 +14,6 @@ import javax.servlet.http.HttpSession;
 import net.sourceforge.fenixedu.applicationTier.Servico.CreateSupportRequest;
 import net.sourceforge.fenixedu.dataTransferObject.support.SupportRequestBean;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -30,6 +29,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.RequestUtils;
 
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.EMail;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -118,7 +118,7 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
         requestBean.setResponseEmail(getLoggedPerson(request).getInstitutionalOrDefaultEmailAddressValue());
         final String parameter = request.getParameter("contextId");
         if (parameter != null && !parameter.isEmpty()) {
-            requestBean.setRequestContext(RootDomainObject.getInstance().readContentByOID(Integer.valueOf(parameter)));
+            requestBean.setRequestContext(AbstractDomainObject.fromExternalId(Integer.valueOf(parameter)));
         }
 
         request.setAttribute("requestBean", requestBean);

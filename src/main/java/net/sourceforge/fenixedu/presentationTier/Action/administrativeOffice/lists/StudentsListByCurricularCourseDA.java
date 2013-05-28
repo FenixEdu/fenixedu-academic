@@ -48,6 +48,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
@@ -113,10 +114,10 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
             HttpServletResponse response)  {
 
         final CurricularCourse curricularCourse =
-                (CurricularCourse) rootDomainObject.readDegreeModuleByOID(getIntegerFromRequest(request, "curricularCourseCode"));
+                (CurricularCourse) AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "curricularCourseCode"));
         final Integer semester = getIntegerFromRequest(request, "semester");
         final ExecutionYear executionYear =
-                rootDomainObject.readExecutionYearByOID(getIntegerFromRequest(request, "executionYearID"));
+                AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "executionYearID"));
 
         request.setAttribute("semester", semester);
         request.setAttribute("year", getIntegerFromRequest(request, "year"));
@@ -158,7 +159,7 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
             HttpServletResponse response, Boolean detailed) throws FenixServiceException {
 
         final CurricularCourse curricularCourse =
-                (CurricularCourse) rootDomainObject.readDegreeModuleByOID(getIntegerFromRequest(request, "curricularCourseCode"));
+                (CurricularCourse) AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "curricularCourseCode"));
         final Integer semester = getIntegerFromRequest(request, "semester");
         final ExecutionYear executionYear =
                 ExecutionYear.readExecutionYearByName((String) getFromRequest(request, "curricularYear"));

@@ -5,12 +5,12 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class GetEnrolmentList {
 
@@ -73,7 +73,7 @@ public class GetEnrolmentList {
     }
 
     private static StudentCurricularPlan getStudentCurricularPlan(Integer studentCurricularPlanID) {
-        return RootDomainObject.getInstance().readStudentCurricularPlanByOID(studentCurricularPlanID);
+        return AbstractDomainObject.fromExternalId(studentCurricularPlanID);
     }
 
 }

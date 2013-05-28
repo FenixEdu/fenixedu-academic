@@ -12,10 +12,10 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class LerTurnosDeDisciplinaExecucao {
 
@@ -25,7 +25,7 @@ public class LerTurnosDeDisciplinaExecucao {
 
         List<InfoShift> infoShifts = new ArrayList<InfoShift>();
 
-        ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(infoExecutionCourse.getExternalId());
+        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(infoExecutionCourse.getExternalId());
         Iterator<Shift> itShiftList = executionCourse.getAssociatedShifts().iterator();
 
         while (itShiftList.hasNext()) {

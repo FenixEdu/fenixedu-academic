@@ -36,6 +36,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "resourceAllocationManager", path = "/studentShiftEnrollmentManager",
         input = "/studentShiftEnrollmentManager.do?method=prepare", attribute = "studentShiftEnrollmentForm",
@@ -70,7 +71,7 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
             throws Exception {
 
         final Registration registration =
-                rootDomainObject.readRegistrationByOID(getIntegerFromRequest(request, "registrationOID"));
+                AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "registrationOID"));
         final Student student = registration.getPerson().getStudent();
 
         if (student.hasInquiriesToRespond()) {
@@ -90,7 +91,7 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
 
     private Registration getAndSetRegistration(final HttpServletRequest request) {
         final Registration registration =
-                rootDomainObject.readRegistrationByOID(getIntegerFromRequest(request, "registrationOID"));
+                AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "registrationOID"));
         final Student student = registration.getPerson().getStudent();
 
         if (!student.getRegistrationsToEnrolInShiftByStudent().contains(registration)) {
@@ -234,7 +235,7 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
             final ExecutionSemester executionSemester, final List<ExecutionDegree> executionDegrees) {
 
         final Integer executionDegreeIdChosen = (Integer) form.get("degree");
-        final ExecutionDegree executionDegreeChosen = rootDomainObject.readExecutionDegreeByOID(executionDegreeIdChosen);
+        final ExecutionDegree executionDegreeChosen = AbstractDomainObject.fromExternalId(executionDegreeIdChosen);
         if (executionDegreeChosen != null && executionDegreeChosen.getExecutionYear() == executionSemester.getExecutionYear()) {
             return executionDegreeChosen;
         } else {

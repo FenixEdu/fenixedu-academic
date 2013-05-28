@@ -36,6 +36,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class CurricularCourseEquivalenciesDA extends FenixDispatchAction {
 
@@ -53,7 +54,7 @@ public class CurricularCourseEquivalenciesDA extends FenixDispatchAction {
             final String degreeCurricularPlanIDString = (String) actionForm.get("degreeCurricularPlanID");
             if (isValidObjectID(degreeCurricularPlanIDString)) {
                 DegreeCurricularPlan degreeCurricularPlan =
-                        rootDomainObject.readDegreeCurricularPlanByOID(Integer.valueOf(degreeCurricularPlanIDString));
+                        AbstractDomainObject.fromExternalId(Integer.valueOf(degreeCurricularPlanIDString));
                 List<CurricularCourseEquivalence> equivalences =
                         new ArrayList<CurricularCourseEquivalence>(degreeCurricularPlan.getCurricularCourseEquivalencesSet());
                 sortInfoCurricularCourseEquivalences(equivalences);

@@ -36,6 +36,7 @@ import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 /**
@@ -151,7 +152,7 @@ public class ManageRolesDA extends FenixDispatchAction {
 
         final Set<Role> roles = new HashSet<Role>();
         for (final String roleId : roleOIDsAsStrings) {
-            roles.add(rootDomainObject.readRoleByOID(Integer.valueOf(roleId)));
+            roles.add(AbstractDomainObject.fromExternalId(Integer.valueOf(roleId)));
         }
 
         IUserView userView = UserView.getUser();

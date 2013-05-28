@@ -78,6 +78,7 @@ import org.apache.myfaces.component.html.util.MultipartRequestWrapper;
 import org.apache.struts.util.MessageResources;
 
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
@@ -506,7 +507,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     }
 
     public List<Exam> getExamList() throws FenixServiceException {
-        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(getExecutionCourseID());
+        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(getExecutionCourseID());
 
         List<Exam> examsList = new ArrayList(executionCourse.getAssociatedExams());
         Collections.sort(examsList, new BeanComparator("dayDate"));
@@ -514,7 +515,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     }
 
     public List<OnlineTest> getOnlineTestList() throws FenixServiceException {
-        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(getExecutionCourseID());
+        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(getExecutionCourseID());
 
         List<OnlineTest> onlineTestList = new ArrayList(executionCourse.getAssociatedOnlineTests());
         Collections.sort(onlineTestList, new BeanComparator("distributedTest.beginDateDate"));
@@ -538,7 +539,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     public Evaluation getEvaluation() {
         if (this.evaluation == null) {
             if (this.getEvaluationID() != null) {
-                evaluation = rootDomainObject.readEvaluationByOID(getEvaluationID());
+                evaluation = AbstractDomainObject.fromExternalId(getEvaluationID());
             } else { // Should not happen
                 return null;
             }
@@ -646,7 +647,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         List<String> executionCourseIDs = new ArrayList<String>();
         executionCourseIDs.add(this.getExecutionCourseID().toString());
 
-        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(getExecutionCourseID());
+        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(getExecutionCourseID());
 
         final List<String> degreeModuleScopesIDs = getDegreeModuleScopeIDs(executionCourse);
 
@@ -672,7 +673,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     }
 
     public ExecutionCourse getExecutionCourse() {
-        return rootDomainObject.readExecutionCourseByOID(getExecutionCourseID());
+        return AbstractDomainObject.fromExternalId(getExecutionCourseID());
     }
 
     public Map<Integer, String> getMarks() throws FenixServiceException {
@@ -783,7 +784,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         final List<String> executionCourseIDs = new ArrayList<String>();
         executionCourseIDs.add(this.getExecutionCourseID().toString());
 
-        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(getExecutionCourseID());
+        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(getExecutionCourseID());
 
         final List<String> degreeModuleScopesIDs = getDegreeModuleScopeIDs(executionCourse);
 
@@ -1240,7 +1241,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     private List<AllocatableSpace> getRooms(Integer[] roomsToAssociate) {
         List<AllocatableSpace> rooms = new ArrayList<AllocatableSpace>();
         for (Integer roomId : roomsToAssociate) {
-            AllocatableSpace space = (AllocatableSpace) rootDomainObject.readResourceByOID(roomId);
+            AllocatableSpace space = (AllocatableSpace) AbstractDomainObject.fromExternalId(roomId);
             if (space == null) {
                 throw new IllegalArgumentException();
             }

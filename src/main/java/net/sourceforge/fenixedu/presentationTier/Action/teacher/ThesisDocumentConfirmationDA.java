@@ -22,6 +22,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
+
 public class ThesisDocumentConfirmationDA extends AbstractManageThesisDA {
 
     public static class ThesisPresentationWrapper {
@@ -130,7 +132,7 @@ public class ThesisDocumentConfirmationDA extends AbstractManageThesisDA {
         final String thesisIdString = request.getParameter("thesisID");
         final Integer thesisId = thesisIdString == null ? null : Integer.valueOf(thesisIdString);
 
-        final Thesis thesis = thesisId == null ? null : rootDomainObject.readThesisByOID(thesisId);
+        final Thesis thesis = thesisId == null ? null : AbstractDomainObject.fromExternalId(thesisId);
         request.setAttribute("thesis", thesis);
 
         final ThesisPresentationState thesisPresentationState = ThesisPresentationState.getThesisPresentationState(thesis);;
@@ -150,7 +152,7 @@ public class ThesisDocumentConfirmationDA extends AbstractManageThesisDA {
         final String thesisIdString = request.getParameter("thesisID");
         final Integer thesisId = thesisIdString == null ? null : Integer.valueOf(thesisIdString);
 
-        final Thesis thesis = thesisId == null ? null : rootDomainObject.readThesisByOID(thesisId);
+        final Thesis thesis = thesisId == null ? null : AbstractDomainObject.fromExternalId(thesisId);
         ConfirmThesisDocumentSubmission.run(thesis);
 
         request.setAttribute("documentsConfirmed", Boolean.TRUE);
