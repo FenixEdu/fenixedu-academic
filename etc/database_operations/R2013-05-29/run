@@ -44,3 +44,5 @@ function executeWithTempFile() {
 }
 
 
+execute "Cleanup grant owner manager stuff." cleanupGrantStuff.sql
+execute "Alter table AnnualCreditsState" alterTableAnnualCreditsState.sql
