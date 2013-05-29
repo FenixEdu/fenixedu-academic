@@ -102,6 +102,11 @@
 				<bean:message key="label.executionCourses.types" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
 			</html:link>
 		</li>
+		<li>
+			<html:link page="/creditsPool.do?method=prepareManageUnitCredits">
+				<bean:message key="label.departmentCreditsPool" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+			</html:link>
+		</li>
 		<%--
 		<li>
 		  	<html:link page="/showAllTeacherCreditsResume.do?method=prepareTeacherSearch">

@@ -47,24 +47,26 @@ public class DepartmentCreditsPoolBean implements Serializable {
         departmentExecutionCourses = new TreeSet<DepartmentExecutionCourse>();
         availableCredits = BigDecimal.ZERO;
         assignedCredits = BigDecimal.ZERO;
-        for (ExecutionSemester executionSemester : getAnnualCreditsState().getExecutionYear().getExecutionPeriods()) {
-            for (ExecutionCourse executionCourse : executionSemester.getAssociatedExecutionCourses()) {
-                if (!(executionCourse.isDissertation() || executionCourse.getProjectTutorialCourse())) {
-                    if (executionCourse.getDepartments().contains(getDepartment())) {
-                        DepartmentExecutionCourse departmentExecutionCourse = new DepartmentExecutionCourse(executionCourse);
-                        if (isSharedExecutionCourse(executionCourse)) {
-                            departmentSharedExecutionCourses.add(departmentExecutionCourse);
-                        } else {
-                            departmentExecutionCourses.add(departmentExecutionCourse);
+        if (departmentCreditsPool != null) {
+            for (ExecutionSemester executionSemester : getAnnualCreditsState().getExecutionYear().getExecutionPeriods()) {
+                for (ExecutionCourse executionCourse : executionSemester.getAssociatedExecutionCourses()) {
+                    if (!(executionCourse.isDissertation() || executionCourse.getProjectTutorialCourse())) {
+                        if (executionCourse.getDepartments().contains(getDepartment())) {
+                            DepartmentExecutionCourse departmentExecutionCourse = new DepartmentExecutionCourse(executionCourse);
+                            if (isSharedExecutionCourse(executionCourse)) {
+                                departmentSharedExecutionCourses.add(departmentExecutionCourse);
+                            } else {
+                                departmentExecutionCourses.add(departmentExecutionCourse);
+                            }
+                            assignedCredits =
+                                    assignedCredits.add(departmentExecutionCourse.getDepartmentEffectiveLoad().multiply(
+                                            executionCourse.getUnitCreditValue()));
                         }
-                        assignedCredits =
-                                assignedCredits.add(departmentExecutionCourse.getDepartmentEffectiveLoad().multiply(
-                                        executionCourse.getUnitCreditValue()));
                     }
                 }
             }
+            availableCredits = departmentCreditsPool.getCreditsPool().subtract(assignedCredits);
         }
-        availableCredits = departmentCreditsPool.getCreditsPool().subtract(assignedCredits);
     }
 
     private boolean isSharedExecutionCourse(ExecutionCourse executionCourse) {
