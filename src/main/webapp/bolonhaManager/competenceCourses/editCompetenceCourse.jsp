@@ -32,8 +32,6 @@
 		</h:selectOneMenu>
 		<h:outputText value="</p>" escape="false"/>
 
-		<h:outputText value="<p><label class='lempty'>.</label>" escape="false"/>
-
 		<h:outputText value="<p><label>#{bolonhaBundle['name']} (pt): </label>" escape="false"/>
 		<h:inputText alt="#{htmlAltBundle['inputText.name']}" id="name" required="true" maxlength="150" size="80" value="#{CompetenceCourseManagement.name}"/>
 		<h:message styleClass="error0" for="name"/>

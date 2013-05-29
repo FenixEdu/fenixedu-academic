@@ -49,6 +49,7 @@ import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ReverseComparator;
@@ -255,9 +256,12 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     }
 
     public String getCompetenceCourseLevel() {
-        if (getCompetenceCourse() != null) {
-            if (getCompetenceCourse().getCompetenceCourseLevel(getAssociatedExecutionPeriod()) != null) {
-                setCompetenceCourseLevel(getCompetenceCourse().getCompetenceCourseLevel(getAssociatedExecutionPeriod()).getName());
+        if (StringUtils.isEmpty((String) getViewState().getAttribute("competenceCourseLevel"))) {
+            if (getCompetenceCourse() != null) {
+                if (getCompetenceCourse().getCompetenceCourseLevel(getAssociatedExecutionPeriod()) != null) {
+                    setCompetenceCourseLevel(getCompetenceCourse().getCompetenceCourseLevel(getAssociatedExecutionPeriod())
+                            .getName());
+                }
             }
         }
         return (String) getViewState().getAttribute("competenceCourseLevel");
