@@ -18,10 +18,9 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ReadStudentCurriculum {
 
-    protected List run(Integer executionDegreeCode, Integer studentCurricularPlanID) throws FenixServiceException {
+    protected List run(String executionDegreeCode, String studentCurricularPlanID) throws FenixServiceException {
 
-        final StudentCurricularPlan studentCurricularPlan =
-                AbstractDomainObject.fromExternalId(studentCurricularPlanID);
+        final StudentCurricularPlan studentCurricularPlan = AbstractDomainObject.fromExternalId(studentCurricularPlanID);
         if (studentCurricularPlan == null) {
             throw new NonExistingServiceException("error.readStudentCurriculum.noStudentCurricularPlan");
         }
@@ -38,14 +37,14 @@ public class ReadStudentCurriculum {
     private static final ReadStudentCurriculum serviceInstance = new ReadStudentCurriculum();
 
     @Service
-    public static List runReadStudentCurriculum(Integer executionDegreeCode, Integer studentCurricularPlanID)
+    public static List runReadStudentCurriculum(String executionDegreeCode, String studentCurricularPlanID)
             throws FenixServiceException, NotAuthorizedException {
         try {
             SeminariesCoordinatorFilter.instance.execute(executionDegreeCode, studentCurricularPlanID);
             return serviceInstance.run(executionDegreeCode, studentCurricularPlanID);
         } catch (NotAuthorizedException ex1) {
             try {
-                StudentCurriculumViewAuthorizationFilter.instance.execute(executionDegreeCode, studentCurricularPlanID);
+                StudentCurriculumViewAuthorizationFilter.instance.execute();
                 return serviceInstance.run(executionDegreeCode, studentCurricularPlanID);
             } catch (NotAuthorizedException ex2) {
                 try {

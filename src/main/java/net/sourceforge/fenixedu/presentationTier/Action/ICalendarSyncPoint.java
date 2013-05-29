@@ -132,7 +132,7 @@ public class ICalendarSyncPoint extends FenixDispatchAction {
         }
 
         User user = User.readUserByUserUId(userId);
-        Registration registration = AbstractDomainObject.fromExternalId(Integer.valueOf(regId));
+        Registration registration = AbstractDomainObject.fromExternalId(regId);
 
         if (user.getPrivateKeyValidity() != null) {
             if (payload.equals(ICalStudentTimeTable.calculatePayload(method, registration, user))) {

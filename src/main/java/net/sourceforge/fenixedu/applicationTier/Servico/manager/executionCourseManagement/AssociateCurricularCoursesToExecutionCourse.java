@@ -17,7 +17,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class AssociateCurricularCoursesToExecutionCourse {
 
     @Service
-    public static void run(Integer executionCourseId, List<Integer> curricularCourseIds) throws FenixServiceException {
+    public static void run(String executionCourseId, List<String> curricularCourseIds) throws FenixServiceException {
         if (executionCourseId == null) {
             throw new FenixServiceException("nullExecutionCourseId");
         }
@@ -29,9 +29,9 @@ public class AssociateCurricularCoursesToExecutionCourse {
                 throw new DomainException("message.nonExisting.executionCourse");
             }
 
-            Iterator<Integer> iter = curricularCourseIds.iterator();
+            Iterator<String> iter = curricularCourseIds.iterator();
             while (iter.hasNext()) {
-                Integer curricularCourseId = iter.next();
+                String curricularCourseId = iter.next();
 
                 CurricularCourse curricularCourse = AbstractDomainObject.fromExternalId(curricularCourseId);
                 if (curricularCourse == null) {

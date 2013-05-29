@@ -23,7 +23,7 @@ public class ReadTeacherByOID extends ReadDomainObjectService {
     }
 
     @Override
-    protected DomainObject readDomainObject(final Integer externalId) {
+    protected DomainObject readDomainObject(final String externalId) {
         return AbstractDomainObject.fromExternalId(externalId);
     }
 
@@ -32,7 +32,7 @@ public class ReadTeacherByOID extends ReadDomainObjectService {
     private static final ReadTeacherByOID serviceInstance = new ReadTeacherByOID();
 
     @Service
-    public static InfoObject runReadTeacherByOID(Integer externalId) {
+    public static InfoObject runReadTeacherByOID(String externalId) {
         return serviceInstance.run(externalId);
     }
 

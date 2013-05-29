@@ -18,7 +18,6 @@ import org.apache.struts.action.DynaActionForm;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/bolonhaStudentEnrollment", module = "academicAdministration", formBean = "bolonhaStudentEnrollmentForm")
 @Forwards({ @Forward(name = "showStudentEnrollmentMenu",
@@ -49,11 +48,11 @@ public class AcademicAdminOfficeBolonhaStudentEnrollmentDA extends AbstractBolon
     }
 
     protected StudentCurricularPlan getStudentCurricularPlan(final HttpServletRequest request) {
-        return AbstractDomainObject.fromExternalId(getRequestParameterAsInteger(request, "scpID"));
+        return getDomainObject(request, "scpID");
     }
 
     protected ExecutionSemester getExecutionPeriod(final HttpServletRequest request) {
-        return AbstractDomainObject.fromExternalId(getRequestParameterAsInteger(request, "executionPeriodID"));
+        return getDomainObject(request, "executionPeriodID");
     }
 
     private Boolean getWithRules(final ActionForm form) {

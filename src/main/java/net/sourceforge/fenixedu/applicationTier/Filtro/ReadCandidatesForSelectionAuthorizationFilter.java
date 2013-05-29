@@ -28,7 +28,7 @@ public class ReadCandidatesForSelectionAuthorizationFilter extends Filtro {
 
     }
 
-    public void execute(Integer executionDegreeID, List<SituationName> situationNames) throws NotAuthorizedException {
+    public void execute(String executionDegreeID, List<SituationName> situationNames) throws NotAuthorizedException {
 
         IUserView id = AccessControl.getUserView();
         if ((id != null && id.getRoleTypes() != null && !containsRoleType(id.getRoleTypes()))
@@ -54,7 +54,7 @@ public class ReadCandidatesForSelectionAuthorizationFilter extends Filtro {
      * @param argumentos
      * @return
      */
-    private boolean hasPrivilege(IUserView id, Integer executionDegreeID) {
+    private boolean hasPrivilege(IUserView id, String executionDegreeID) {
 
         ExecutionDegree executionDegree = null;
 

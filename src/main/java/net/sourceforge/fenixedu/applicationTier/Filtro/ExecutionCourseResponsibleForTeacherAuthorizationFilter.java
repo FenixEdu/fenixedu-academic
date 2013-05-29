@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.applicationTier.Filtro;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -33,8 +32,7 @@ public class ExecutionCourseResponsibleForTeacherAuthorizationFilter extends Aut
         return RoleType.TEACHER;
     }
 
-    public void execute(Integer executionCourseOID, Integer curricularCourseOID, InfoCurriculum infoCurriculumNew, String username)
-            throws NotAuthorizedException {
+    public void execute(String executionCourseOID) throws NotAuthorizedException {
         IUserView id = AccessControl.getUserView();
 
         try {
@@ -52,14 +50,13 @@ public class ExecutionCourseResponsibleForTeacherAuthorizationFilter extends Aut
      * @param argumentos
      * @return
      */
-    private boolean isResponsibleForExecutionCourse(IUserView id, Integer executionCourseOID) {
+    private boolean isResponsibleForExecutionCourse(IUserView id, String executionCourseOID) {
         Professorship responsibleFor = null;
         if (executionCourseOID == null) {
             return false;
         }
         try {
-            ExecutionCourse executionCourse =
-                    executionCourse = AbstractDomainObject.fromExternalId(executionCourseOID);
+            ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseOID);
 
             Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
             responsibleFor = teacher.isResponsibleFor(executionCourse);

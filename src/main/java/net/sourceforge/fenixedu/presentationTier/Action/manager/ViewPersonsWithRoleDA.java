@@ -30,7 +30,7 @@ public class ViewPersonsWithRoleDA extends FenixDispatchAction {
 
     public ActionForward searchWithRole(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        Role role = AbstractDomainObject.fromExternalId(Integer.valueOf(request.getParameter("roleID")));
+        Role role = AbstractDomainObject.fromExternalId(request.getParameter("roleID"));
         request.setAttribute("persons", role.getAssociatedPersons());
         request.setAttribute("roleID", request.getParameter("roleID"));
         return mapping.findForward("ShowPersons");
@@ -38,7 +38,7 @@ public class ViewPersonsWithRoleDA extends FenixDispatchAction {
 
     public ActionForward removePersonFromRole(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        Role role = AbstractDomainObject.fromExternalId(Integer.valueOf(request.getParameter("roleID")));
+        Role role = AbstractDomainObject.fromExternalId(request.getParameter("roleID"));
         Person person = Person.readPersonByUsername(request.getParameter("personUsername"));
         removePersonFromRole(person, role);
         return searchWithRole(mapping, form, request, response);
@@ -51,7 +51,7 @@ public class ViewPersonsWithRoleDA extends FenixDispatchAction {
 
     public ActionForward showRoleOperationLogs(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        final Integer roleID = Integer.valueOf((String) getFromRequest(request, "roleID"));
+        final String roleID = (String) getFromRequest(request, "roleID");
 
         final String pageNumberString = (String) getFromRequest(request, "pageNumber");
         final Integer pageNumber =

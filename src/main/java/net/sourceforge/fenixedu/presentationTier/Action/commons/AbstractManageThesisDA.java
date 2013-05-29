@@ -20,7 +20,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public abstract class AbstractManageThesisDA extends FenixDispatchAction {
 
@@ -44,12 +43,7 @@ public abstract class AbstractManageThesisDA extends FenixDispatchAction {
     }
 
     protected Thesis getThesis(HttpServletRequest request) {
-        Integer id = getId(request.getParameter("thesisID"));
-        if (id == null) {
-            return null;
-        } else {
-            return AbstractDomainObject.fromExternalId(id);
-        }
+        return getDomainObject(request, "thesisID");
     }
 
     public ActionForward changePersonType(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

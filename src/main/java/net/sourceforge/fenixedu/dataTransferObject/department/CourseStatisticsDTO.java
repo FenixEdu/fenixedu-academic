@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.domain.curriculum.IGrade;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public abstract class CourseStatisticsDTO {
-    private int externalId;
+    private String externalId;
 
     private String name;
 
@@ -42,7 +42,7 @@ public abstract class CourseStatisticsDTO {
     public CourseStatisticsDTO() {
     }
 
-    public CourseStatisticsDTO(int externalId, String name, int firstEnrolledCount, int firstApprovedCount,
+    public CourseStatisticsDTO(String externalId, String name, int firstEnrolledCount, int firstApprovedCount,
             IGrade firstApprovedAverage, int restEnrolledCount, int restApprovedCount, IGrade restApprovedAverage,
             int totalEnrolledCount, int totalApprovedCount, IGrade totalApprovedAverage) {
         super();
@@ -87,11 +87,11 @@ public abstract class CourseStatisticsDTO {
         this.firstEnrolledCount = firstEnrolledCount;
     }
 
-    public int getExternalId() {
+    public String getExternalId() {
         return externalId;
     }
 
-    public void setExternalId(int externalId) {
+    public void setExternalId(String externalId) {
         this.externalId = externalId;
     }
 

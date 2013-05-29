@@ -29,7 +29,7 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class SelectCandidaciesService {
 
-    protected SelectCandidaciesDTO run(Boolean inEnrollmentPeriod, Integer seminaryID) throws FenixServiceException {
+    protected SelectCandidaciesDTO run(Boolean inEnrollmentPeriod, String seminaryID) throws FenixServiceException {
         SelectCandidaciesDTO result = new SelectCandidaciesDTO();
 
         List<Seminary> seminaries = RootDomainObject.getInstance().getSeminarys();
@@ -92,7 +92,7 @@ public class SelectCandidaciesService {
         return selectedSCP;
     }
 
-    private List<SeminaryCandidacy> getCandidacies(final Integer seminaryID, List seminaries) {
+    private List<SeminaryCandidacy> getCandidacies(final String seminaryID, List seminaries) {
         Seminary seminary = (Seminary) CollectionUtils.find(seminaries, new Predicate() {
 
             @Override
@@ -131,7 +131,7 @@ public class SelectCandidaciesService {
     private static final SelectCandidaciesService serviceInstance = new SelectCandidaciesService();
 
     @Service
-    public static SelectCandidaciesDTO runSelectCandidaciesService(Boolean inEnrollmentPeriod, Integer seminaryID)
+    public static SelectCandidaciesDTO runSelectCandidaciesService(Boolean inEnrollmentPeriod, String seminaryID)
             throws FenixServiceException, NotAuthorizedException {
         SeminaryCoordinatorOrStudentFilter.instance.execute();
         return serviceInstance.run(inEnrollmentPeriod, seminaryID);

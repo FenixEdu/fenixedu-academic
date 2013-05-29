@@ -64,7 +64,7 @@ public class AssociateExecutionCourseToCurricularCourseDA extends FenixDispatchA
 
         IUserView userView = UserView.getUser();
 
-        Integer executionPeriodId = new Integer(request.getParameter("executionPeriodId"));
+        String executionPeriodId = request.getParameter("executionPeriodId");
 
         List infoExecutionCoursesList = null;
         try {
@@ -97,13 +97,13 @@ public class AssociateExecutionCourseToCurricularCourseDA extends FenixDispatchA
 
         DynaActionForm associateForm = (DynaActionForm) form;
 
-        Integer curricularCourseId = new Integer(request.getParameter("curricularCourseId"));
-        Integer executionPeriodId = new Integer(request.getParameter("executionPeriodId"));
+        String curricularCourseId = request.getParameter("curricularCourseId");
+        String executionPeriodId = request.getParameter("executionPeriodId");
         if (associateForm.get("executionCourseId") == null) {
             return mapping.findForward("viewExecutionCoursesToAssociate");
         }
 
-        Integer executionCourseId = new Integer((String) associateForm.get("executionCourseId"));
+        String executionCourseId = (String) associateForm.get("executionCourseId");
 
         try {
             AssociateExecutionCourseToCurricularCourse.run(executionCourseId, curricularCourseId, executionPeriodId);

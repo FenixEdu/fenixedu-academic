@@ -27,7 +27,7 @@ public class ReadInsuranceTransactionByStudentIDAndExecutionYearID {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
-    public static InfoInsuranceTransaction run(Integer studentId, Integer executionYearId) throws FenixServiceException {
+    public static InfoInsuranceTransaction run(String studentId, String executionYearId) throws FenixServiceException {
 
         InfoInsuranceTransaction infoInsuranceTransaction = null;
 

@@ -29,7 +29,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class RoomSiteComponentServiceByExecutionPeriodID {
 
     @Service
-    public static Object run(ISiteComponent bodyComponent, RoomKey roomKey, Calendar someDay, Integer executionPeriodID)
+    public static Object run(ISiteComponent bodyComponent, RoomKey roomKey, Calendar someDay, String executionPeriodID)
             throws Exception {
         final Calendar day = findMonday(someDay);
         final ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodID);

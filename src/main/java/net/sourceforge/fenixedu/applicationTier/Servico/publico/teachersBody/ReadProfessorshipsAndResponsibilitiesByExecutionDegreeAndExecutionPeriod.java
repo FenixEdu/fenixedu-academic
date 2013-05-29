@@ -25,7 +25,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ReadProfessorshipsAndResponsibilitiesByExecutionDegreeAndExecutionPeriod {
 
     @Service
-    public static List run(Integer executionDegreeId, Integer semester, Integer teacherType) throws FenixServiceException {
+    public static List run(String executionDegreeId, Integer semester, Integer teacherType) throws FenixServiceException {
 
         final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeId);
 

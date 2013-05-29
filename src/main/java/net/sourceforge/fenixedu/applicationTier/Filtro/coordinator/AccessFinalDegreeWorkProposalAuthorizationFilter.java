@@ -20,7 +20,8 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class AccessFinalDegreeWorkProposalAuthorizationFilter extends DomainObjectAuthorizationFilter {
 
-    public static final AccessFinalDegreeWorkProposalAuthorizationFilter instance = new AccessFinalDegreeWorkProposalAuthorizationFilter();
+    public static final AccessFinalDegreeWorkProposalAuthorizationFilter instance =
+            new AccessFinalDegreeWorkProposalAuthorizationFilter();
 
     @Override
     protected RoleType getRoleType() {
@@ -28,7 +29,7 @@ public class AccessFinalDegreeWorkProposalAuthorizationFilter extends DomainObje
     }
 
     @Override
-    protected boolean verifyCondition(IUserView id, Integer objectId) {
+    protected boolean verifyCondition(IUserView id, String objectId) {
         if (objectId == null) {
             return false;
         }

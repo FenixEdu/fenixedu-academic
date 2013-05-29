@@ -11,17 +11,15 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class CreateBranchCourseGroup {
 
     @Service
-    public static void run(final Integer degreeCurricularPlanID, final Integer parentCourseGroupID, final String name,
-            final String nameEn, final BranchType branchType, final Integer beginExecutionPeriodID,
-            final Integer endExecutionPeriodID) throws FenixServiceException {
+    public static void run(final String degreeCurricularPlanID, final String parentCourseGroupID, final String name,
+            final String nameEn, final BranchType branchType, final String beginExecutionPeriodID,
+            final String endExecutionPeriodID) throws FenixServiceException {
 
-        final DegreeCurricularPlan degreeCurricularPlan =
-                AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
+        final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
         if (degreeCurricularPlan == null) {
             throw new FenixServiceException("error.noDegreeCurricularPlan");
         }
-        final CourseGroup parentCourseGroup =
-                (CourseGroup) AbstractDomainObject.fromExternalId(parentCourseGroupID);
+        final CourseGroup parentCourseGroup = (CourseGroup) AbstractDomainObject.fromExternalId(parentCourseGroupID);
         if (parentCourseGroup == null) {
             throw new FenixServiceException("error.noCourseGroup");
         }
@@ -34,8 +32,8 @@ public class CreateBranchCourseGroup {
         }
 
         final ExecutionSemester endExecutionPeriod =
-                (endExecutionPeriodID == null) ? null : AbstractDomainObject.fromExternalId(
-                        endExecutionPeriodID);
+                (endExecutionPeriodID == null) ? null : AbstractDomainObject
+                        .<ExecutionSemester> fromExternalId(endExecutionPeriodID);
 
         degreeCurricularPlan.createBranchCourseGroup(parentCourseGroup, name, nameEn, branchType, beginExecutionPeriod,
                 endExecutionPeriod);

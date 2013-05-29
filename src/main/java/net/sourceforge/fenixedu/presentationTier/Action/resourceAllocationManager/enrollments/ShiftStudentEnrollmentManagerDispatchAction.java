@@ -70,8 +70,7 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
-        final Registration registration =
-                AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "registrationOID"));
+        final Registration registration = getDomainObject(request, "registrationOID");
         final Student student = registration.getPerson().getStudent();
 
         if (student.hasInquiriesToRespond()) {
@@ -90,8 +89,7 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
     }
 
     private Registration getAndSetRegistration(final HttpServletRequest request) {
-        final Registration registration =
-                AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "registrationOID"));
+        final Registration registration = getDomainObject(request, "registrationOID");
         final Student student = registration.getPerson().getStudent();
 
         if (!student.getRegistrationsToEnrolInShiftByStudent().contains(registration)) {
@@ -290,7 +288,7 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
             return mapping.getInputForward();
         }
 
-        final Integer shiftId = Integer.valueOf(request.getParameter("shiftId"));
+        final String shiftId = request.getParameter("shiftId");
         final String executionCourseID = request.getParameter("executionCourseID");
         if (!StringUtils.isEmpty(executionCourseID)) {
             request.setAttribute("executionCourseID", executionCourseID);

@@ -32,7 +32,7 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 @Mapping(module = "person", path = "/retrievePersonalPhoto", scope = "session", parameter = "method")
 public class RetrievePersonalPhotoAction extends FenixDispatchAction {
     public ActionForward retrieveByUUID(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         final String uuid = request.getParameter("uuid");
         final User user = User.readUserByUserUId(uuid);
         return user == null ? null : retrievePhotograph(request, response, user.getPerson());
@@ -51,15 +51,15 @@ public class RetrievePersonalPhotoAction extends FenixDispatchAction {
     }
 
     public ActionForward retrieveByID(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
-        final Integer personID = new Integer(request.getParameter("personCode"));
+            HttpServletResponse response) {
+        final String personID = request.getParameter("personCode");
         final Person person = (Person) AbstractDomainObject.fromExternalId(personID);
         return retrievePhotograph(request, response, person);
     }
 
     public ActionForward retrievePendingByID(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
-        final Integer photoID = new Integer(request.getParameter("photoCode"));
+            HttpServletResponse response) throws FenixServiceException {
+        final String photoID = request.getParameter("photoCode");
         Photograph photo = AbstractDomainObject.fromExternalId(photoID);
         if (photo != null) {
             writePhoto(response, photo);

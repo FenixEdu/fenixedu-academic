@@ -21,7 +21,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  * @author Susana Fernandes
  */
 public class ReadStudentDistributedTest {
-    public List<StudentTestQuestion> run(Integer executionCourseId, Integer distributedTestId, Integer studentId, String path)
+    public List<StudentTestQuestion> run(String executionCourseId, String distributedTestId, String studentId, String path)
             throws FenixServiceException {
 
         List<StudentTestQuestion> studentTestQuestionList = new ArrayList<StudentTestQuestion>();
@@ -58,8 +58,8 @@ public class ReadStudentDistributedTest {
     private static final ReadStudentDistributedTest serviceInstance = new ReadStudentDistributedTest();
 
     @Service
-    public static List<StudentTestQuestion> runReadStudentDistributedTest(Integer executionCourseId, Integer distributedTestId,
-            Integer studentId, String path) throws FenixServiceException, NotAuthorizedException {
+    public static List<StudentTestQuestion> runReadStudentDistributedTest(String executionCourseId, String distributedTestId,
+            String studentId, String path) throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
         return serviceInstance.run(executionCourseId, distributedTestId, studentId, path);
     }

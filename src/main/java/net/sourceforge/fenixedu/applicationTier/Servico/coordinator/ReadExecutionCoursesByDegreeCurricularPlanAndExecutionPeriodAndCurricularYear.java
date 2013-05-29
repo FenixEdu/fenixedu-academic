@@ -21,7 +21,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ReadExecutionCoursesByDegreeCurricularPlanAndExecutionPeriodAndCurricularYear {
 
-    public List<ExecutionCourse> run(Integer degreeCurricularPlanID, Integer executionPeriodID, Integer curricularYearID)
+    public List<ExecutionCourse> run(String degreeCurricularPlanID, String executionPeriodID, String curricularYearID)
             throws FenixServiceException {
 
         final ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodID);
@@ -35,7 +35,7 @@ public class ReadExecutionCoursesByDegreeCurricularPlanAndExecutionPeriodAndCurr
         }
 
         CurricularYear curricularYear = null;
-        if (curricularYearID != 0) {
+        if (curricularYearID != null) {
             curricularYear = AbstractDomainObject.fromExternalId(curricularYearID);
             if (curricularYear == null) {
                 throw new FenixServiceException("error.no.curYear");
@@ -70,7 +70,7 @@ public class ReadExecutionCoursesByDegreeCurricularPlanAndExecutionPeriodAndCurr
 
     @Service
     public static List<ExecutionCourse> runReadExecutionCoursesByDegreeCurricularPlanAndExecutionPeriodAndCurricularYear(
-            Integer degreeCurricularPlanID, Integer executionPeriodID, Integer curricularYearID) throws FenixServiceException,
+            String degreeCurricularPlanID, String executionPeriodID, String curricularYearID) throws FenixServiceException,
             NotAuthorizedException {
         try {
             DegreeCurricularPlanAuthorizationFilter.instance.execute(degreeCurricularPlanID);

@@ -58,7 +58,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
             throws Exception {
         ContextUtils.setCurricularYearsContext(request);
 
-        Integer executionCourseOID =
+        String executionCourseOID =
                 ((InfoExecutionCourse) request.getAttribute(PresentationConstants.EXECUTION_COURSE)).getExternalId();
 
         InfoExecutionCourse executionCourse;
@@ -200,7 +200,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 
             InfoExecutionCourse executionCourse;
             try {
-                executionCourse = ReadExecutionCourseWithAssociatedCurricularCourses.run(new Integer(element));
+                executionCourse = ReadExecutionCourseWithAssociatedCurricularCourses.run(element);
             } catch (Exception ex) {
                 throw new Exception(ex);
             }
@@ -235,7 +235,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 
             for (String room : rooms) {
 
-                InfoRoom infoRoom = ReadRoomByOID.run(new Integer(room));
+                InfoRoom infoRoom = ReadRoomByOID.run(room);
 
                 roomNames.add(infoRoom);
             }
@@ -267,7 +267,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 
             InfoExecutionCourse executionCourse;
             try {
-                executionCourse = ReadExecutionCourseWithAssociatedCurricularCourses.run(new Integer(element));
+                executionCourse = ReadExecutionCourseWithAssociatedCurricularCourses.run(element);
             } catch (Exception ex) {
                 throw new Exception(ex);
             }
@@ -293,7 +293,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 
             for (String room : rooms) {
 
-                InfoRoom infoRoom = ReadRoomByOID.run(new Integer(room));
+                InfoRoom infoRoom = ReadRoomByOID.run(room);
 
                 roomNames.add(infoRoom);
             }
@@ -386,7 +386,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 
             InfoExecutionCourse executionCourse;
             try {
-                executionCourse = ReadExecutionCourseWithAssociatedCurricularCourses.run(new Integer(element));
+                executionCourse = ReadExecutionCourseWithAssociatedCurricularCourses.run(element);
             } catch (Exception ex) {
                 throw new Exception(ex);
             }
@@ -411,7 +411,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 
             for (String room : rooms) {
 
-                InfoRoom infoRoom = ReadRoomByOID.run(new Integer(room));
+                InfoRoom infoRoom = ReadRoomByOID.run(room);
 
                 roomNames.add(infoRoom);
             }
@@ -607,7 +607,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 
             InfoExecutionCourse executionCourse;
             try {
-                executionCourse = ReadExecutionCourseWithAssociatedCurricularCourses.run(new Integer(element));
+                executionCourse = ReadExecutionCourseWithAssociatedCurricularCourses.run(element);
             } catch (Exception ex) {
                 throw new Exception(ex);
             }
@@ -681,7 +681,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 
             for (String room : rooms) {
 
-                InfoRoom infoRoom = ReadRoomByOID.run(Integer.valueOf(room));
+                InfoRoom infoRoom = ReadRoomByOID.run(room);
 
                 selectedRooms.add(infoRoom);
             }

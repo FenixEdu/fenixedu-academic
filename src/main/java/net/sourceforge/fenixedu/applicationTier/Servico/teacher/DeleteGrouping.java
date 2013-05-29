@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -19,7 +18,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class DeleteGrouping {
 
-    protected Boolean run(Integer executionCourseId, Integer groupPropertiesId) throws FenixServiceException {
+    protected Boolean run(String executionCourseId, String groupPropertiesId) throws FenixServiceException {
 
         if (groupPropertiesId == null) {
             return Boolean.FALSE;
@@ -41,7 +40,7 @@ public class DeleteGrouping {
     private static final DeleteGrouping serviceInstance = new DeleteGrouping();
 
     @Service
-    public static Boolean runDeleteGrouping(Integer executionCourseId, Integer groupPropertiesId) throws FenixServiceException,
+    public static Boolean runDeleteGrouping(String executionCourseId, String groupPropertiesId) throws FenixServiceException,
             NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
         return serviceInstance.run(executionCourseId, groupPropertiesId);

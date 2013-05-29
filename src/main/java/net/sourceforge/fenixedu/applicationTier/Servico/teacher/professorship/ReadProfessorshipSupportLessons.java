@@ -25,7 +25,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class ReadProfessorshipSupportLessons {
 
-    protected ProfessorshipSupportLessonsDTO run(Integer teacherId, Integer executionCourseId) throws FenixServiceException {
+    protected ProfessorshipSupportLessonsDTO run(String teacherId, String executionCourseId) throws FenixServiceException {
 
         final ProfessorshipSupportLessonsDTO professorshipSupportLessonsDTO = new ProfessorshipSupportLessonsDTO();
 
@@ -50,7 +50,7 @@ public class ReadProfessorshipSupportLessons {
     private static final ReadProfessorshipSupportLessons serviceInstance = new ReadProfessorshipSupportLessons();
 
     @Service
-    public static ProfessorshipSupportLessonsDTO runReadProfessorshipSupportLessons(Integer teacherId, Integer executionCourseId)
+    public static ProfessorshipSupportLessonsDTO runReadProfessorshipSupportLessons(String teacherId, String executionCourseId)
             throws FenixServiceException, NotAuthorizedException {
         CreditsServiceWithTeacherIdArgumentAuthorization.instance.execute(teacherId);
         return serviceInstance.run(teacherId, executionCourseId);

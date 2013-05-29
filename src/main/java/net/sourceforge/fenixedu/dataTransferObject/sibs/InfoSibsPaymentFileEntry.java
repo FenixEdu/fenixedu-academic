@@ -36,7 +36,7 @@ public class InfoSibsPaymentFileEntry extends InfoObject {
     /**
      * @param externalId
      */
-    public InfoSibsPaymentFileEntry(Integer externalId) {
+    public InfoSibsPaymentFileEntry(String externalId) {
         super(externalId);
     }
 

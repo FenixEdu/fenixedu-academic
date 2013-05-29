@@ -57,7 +57,7 @@ public class RoomClassificationDA extends FenixDispatchAction {
     }
 
     public ActionForward deleteRoomClassification(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         final RoomClassification roomClassification = retrieveRoomClassification(request);
 
@@ -71,8 +71,7 @@ public class RoomClassificationDA extends FenixDispatchAction {
 
     private RoomClassification retrieveRoomClassification(HttpServletRequest request) {
         final String roomClassificationIDString = request.getParameter("roomClassificationID");
-        final Integer roomClassificationID = Integer.valueOf(roomClassificationIDString);
-        return AbstractDomainObject.fromExternalId(roomClassificationID);
+        return AbstractDomainObject.fromExternalId(roomClassificationIDString);
     }
 
 }

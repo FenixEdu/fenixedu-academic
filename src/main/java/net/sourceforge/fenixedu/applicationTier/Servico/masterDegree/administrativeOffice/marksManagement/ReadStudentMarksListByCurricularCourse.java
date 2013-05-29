@@ -21,7 +21,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ReadStudentMarksListByCurricularCourse {
 
-    protected List run(IUserView userView, Integer curricularCourseID, String executionYear) throws ExcepcaoInexistente,
+    protected List run(IUserView userView, String curricularCourseID, String executionYear) throws ExcepcaoInexistente,
             FenixServiceException {
 
         final CurricularCourse curricularCourse = (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseID);
@@ -48,14 +48,15 @@ public class ReadStudentMarksListByCurricularCourse {
         Collections.sort(result, new BeanComparator("infoStudentCurricularPlan.infoStudent.number"));
         return result;
     }
+
     // Service Invokers migrated from Berserk
 
     private static final ReadStudentMarksListByCurricularCourse serviceInstance = new ReadStudentMarksListByCurricularCourse();
 
     @Service
-    public static List runReadStudentMarksListByCurricularCourse(IUserView userView, Integer curricularCourseID, String executionYear) throws ExcepcaoInexistente,
-            FenixServiceException  , NotAuthorizedException {
-        StudentListByCurricularCourseAuthorizationFilter.instance.execute(userView, curricularCourseID, executionYear);
+    public static List runReadStudentMarksListByCurricularCourse(IUserView userView, String curricularCourseID,
+            String executionYear) throws ExcepcaoInexistente, FenixServiceException, NotAuthorizedException {
+        StudentListByCurricularCourseAuthorizationFilter.instance.execute(curricularCourseID);
         return serviceInstance.run(userView, curricularCourseID, executionYear);
     }
 

@@ -159,28 +159,23 @@ public class ActivitiesManagementDispatchAction extends FenixDispatchAction {
     }
 
     protected Cooperation getCooperationFromRequest(HttpServletRequest request) {
-        return (Cooperation) AbstractDomainObject.fromExternalId(Cooperation.class,
-                Integer.valueOf(request.getParameter("activityId")));
+        return (Cooperation) AbstractDomainObject.fromExternalId(request.getParameter("activityId"));
     }
 
     protected JournalIssue getIssueFromRequest(HttpServletRequest request) {
-        return (JournalIssue) AbstractDomainObject.fromExternalId(JournalIssue.class,
-                Integer.valueOf(request.getParameter("activityId")));
+        return (JournalIssue) AbstractDomainObject.fromExternalId(request.getParameter("activityId"));
     }
 
     protected ScientificJournal getScientificJournalFromRequest(HttpServletRequest request) {
-        return (ScientificJournal) AbstractDomainObject.fromExternalId(ScientificJournal.class,
-                Integer.valueOf(request.getParameter("activityId")));
+        return (ScientificJournal) AbstractDomainObject.fromExternalId(request.getParameter("activityId"));
     }
 
     protected ResearchEvent getEventFromRequest(HttpServletRequest request) {
-        return (ResearchEvent) AbstractDomainObject.fromExternalId(ResearchEvent.class,
-                Integer.valueOf(request.getParameter("activityId")));
+        return (ResearchEvent) AbstractDomainObject.fromExternalId(request.getParameter("activityId"));
     }
 
     protected EventEdition getEventEditionFromRequest(HttpServletRequest request) {
-        return (EventEdition) AbstractDomainObject.fromExternalId(EventEdition.class,
-                Integer.valueOf(request.getParameter("activityId")));
+        return (EventEdition) AbstractDomainObject.fromExternalId(request.getParameter("activityId"));
     }
 
 }

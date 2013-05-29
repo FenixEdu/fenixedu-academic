@@ -5,7 +5,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil;
 
-
 import net.sourceforge.fenixedu.applicationTier.Factory.ScientificCouncilComponentBuilder;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
@@ -23,8 +22,8 @@ public class ScientificCouncilComponentService {
 
     @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
     @Service
-    public static SiteView run(ISiteComponent bodyComponent, Integer degreeId, Integer curricularYear,
-            Integer degreeCurricularPlanId) throws FenixServiceException {
+    public static SiteView run(ISiteComponent bodyComponent, String degreeId, Integer curricularYear,
+            String degreeCurricularPlanId) throws FenixServiceException {
 
         ScientificCouncilComponentBuilder componentBuilder = ScientificCouncilComponentBuilder.getInstance();
         bodyComponent = componentBuilder.getComponent(bodyComponent, degreeId, curricularYear, degreeCurricularPlanId);

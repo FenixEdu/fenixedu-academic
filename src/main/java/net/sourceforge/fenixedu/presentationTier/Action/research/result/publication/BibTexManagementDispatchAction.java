@@ -68,9 +68,7 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
     public ActionForward exportPublicationToBibtex(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 
-        Integer publicationId = Integer.valueOf(request.getParameter("publicationId"));
-        ResearchResultPublication publication =
-                (ResearchResultPublication) AbstractDomainObject.fromExternalId(publicationId);
+        ResearchResultPublication publication = AbstractDomainObject.fromExternalId(request.getParameter("publicationId"));
 
         if (publication != null) {
             BibtexEntry bibtexEntry = publication.exportToBibtexEntry();
@@ -85,7 +83,7 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) {
 
         String personId = request.getParameter("personOID");
-        Person person = (Person) AbstractDomainObject.fromExternalId(Person.class, Integer.valueOf(personId));
+        Person person = (Person) AbstractDomainObject.fromExternalId(personId);
 
         List<ResearchResultPublication> publications = person.getResearchResultPublications();
         List<String> entries = new ArrayList<String>();
@@ -203,7 +201,7 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
     }
 
     private List<BibtexParticipatorBean> getParticipators(HttpServletRequest request, BibtexPersonList bibtexPersons,
-            ResultParticipationRole role) throws  FenixServiceException {
+            ResultParticipationRole role) throws FenixServiceException {
         List<BibtexParticipatorBean> participators = new ArrayList<BibtexParticipatorBean>();
         List<BibtexPerson> persons = bibtexPersons.getList();
         for (BibtexPerson person : persons) {
@@ -344,7 +342,7 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward createPublicationWrapper(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         ImportBibtexBean importBibtexBean =
                 (ImportBibtexBean) RenderUtils.getViewState("importBibtexBean").getMetaObject().getObject();
@@ -362,7 +360,7 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward createEventWorkFlow(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         ImportBibtexBean importBean = (ImportBibtexBean) RenderUtils.getViewState("importBibtexBean").getMetaObject().getObject();
         ConferenceArticlesBean bean = (ConferenceArticlesBean) importBean.getCurrentPublicationBean();
@@ -401,7 +399,7 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward createJournalWorkFlow(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         ImportBibtexBean importBean = (ImportBibtexBean) RenderUtils.getViewState("importBibtexBean").getMetaObject().getObject();
         ArticleBean bean = (ArticleBean) importBean.getCurrentPublicationBean();
@@ -447,7 +445,7 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward changeSpecialIssueInImport(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         final ImportBibtexBean bean = getRenderedObject("importBibtexBean");
         CreateIssueBean issueBean = getRenderedObject("createMagazine");
@@ -494,9 +492,7 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
 
         request.setAttribute("importBibtexBean", importBibtexBean);
         String resultId = request.getParameter("resultId");
-        ResearchResultPublication result =
-                (ResearchResultPublication) AbstractDomainObject.fromExternalId(ResearchResultPublication.class,
-                        Integer.valueOf(resultId));
+        ResearchResultPublication result = AbstractDomainObject.fromExternalId(resultId);
         request.setAttribute("fileBean", getResultDocumentFileBean(request, result));
         request.setAttribute("unitBean", getResultUnitBean(request, result));
         return mapping.findForward("dealWithAssociations");

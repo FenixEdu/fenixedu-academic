@@ -23,7 +23,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class ExecutionCourseWaitingAnswer {
 
-    protected Boolean run(Integer executionCourseID) throws FenixServiceException {
+    protected Boolean run(String executionCourseID) throws FenixServiceException {
         final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseID);
         if (executionCourse == null) {
             throw new InvalidArgumentsServiceException();
@@ -40,12 +40,14 @@ public class ExecutionCourseWaitingAnswer {
         }
         return false;
     }
+
     // Service Invokers migrated from Berserk
 
     private static final ExecutionCourseWaitingAnswer serviceInstance = new ExecutionCourseWaitingAnswer();
 
     @Service
-    public static Boolean runExecutionCourseWaitingAnswer(Integer executionCourseID) throws FenixServiceException  , NotAuthorizedException {
+    public static Boolean runExecutionCourseWaitingAnswer(String executionCourseID) throws FenixServiceException,
+            NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseID);
         return serviceInstance.run(executionCourseID);
     }

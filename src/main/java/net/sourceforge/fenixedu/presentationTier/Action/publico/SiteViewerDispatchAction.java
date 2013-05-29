@@ -24,11 +24,11 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
         return mapping.findForward("moved-permanently");
     }
 
-    private Integer getExecutionCourseID(final HttpServletRequest request) {
+    private String getExecutionCourseID(final HttpServletRequest request) {
         final String parameter = request.getParameter("objectCode");
         final String attribute = (String) request.getAttribute("objectCode");
         final String iString = parameter == null ? attribute : parameter;
-        return Integer.valueOf(iString);
+        return iString;
     }
 
 }

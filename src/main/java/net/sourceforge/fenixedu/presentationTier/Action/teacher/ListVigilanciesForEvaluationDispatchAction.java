@@ -40,9 +40,7 @@ public class ListVigilanciesForEvaluationDispatchAction extends FenixDispatchAct
         String executionCourseID = request.getParameter("executionCourseID");
         request.setAttribute("executionCourseID", executionCourseID);
         String writtenEvaluationID = request.getParameter("evaluationOID");
-        WrittenEvaluation evaluation =
-                (WrittenEvaluation) AbstractDomainObject.fromExternalId(WrittenEvaluation.class,
-                        Integer.valueOf(writtenEvaluationID));
+        WrittenEvaluation evaluation = (WrittenEvaluation) AbstractDomainObject.fromExternalId(writtenEvaluationID);
 
         ComparatorChain comparator = new ComparatorChain();
         comparator.addComparator(Vigilancy.COMPARATOR_BY_VIGILANT_CATEGORY);
@@ -73,10 +71,10 @@ public class ListVigilanciesForEvaluationDispatchAction extends FenixDispatchAct
     }
 
     public ActionForward changeConvokeStatus(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         String vigilancyID = request.getParameter("oid");
-        Vigilancy vigilancy = (Vigilancy) AbstractDomainObject.fromExternalId(Vigilancy.class, Integer.valueOf(vigilancyID));
+        Vigilancy vigilancy = (Vigilancy) AbstractDomainObject.fromExternalId(vigilancyID);
         String participationType = request.getParameter("participationType");
         AttendingStatus status = AttendingStatus.valueOf(participationType);
         try {
@@ -90,10 +88,10 @@ public class ListVigilanciesForEvaluationDispatchAction extends FenixDispatchAct
     }
 
     public ActionForward changeActiveConvoke(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         String vigilancyID = request.getParameter("oid");
-        Vigilancy vigilancy = (Vigilancy) AbstractDomainObject.fromExternalId(Vigilancy.class, Integer.valueOf(vigilancyID));
+        Vigilancy vigilancy = (Vigilancy) AbstractDomainObject.fromExternalId(vigilancyID);
         if (vigilancy instanceof OwnCourseVigilancy) {
             String bool = request.getParameter("bool");
             Boolean active = Boolean.valueOf(bool);
@@ -108,12 +106,11 @@ public class ListVigilanciesForEvaluationDispatchAction extends FenixDispatchAct
     }
 
     public ActionForward requestUnconvokes(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         IViewState viewState = RenderUtils.getViewState("variantBean");
         WrittenEvaluation evaluation =
-                (WrittenEvaluation) AbstractDomainObject.fromExternalId(WrittenEvaluation.class,
-                        Integer.valueOf(request.getParameter("evaluationOID")));
+                (WrittenEvaluation) AbstractDomainObject.fromExternalId(request.getParameter("evaluationOID"));
         if (viewState != null) {
             List<Vigilancy> vigilancies = evaluation.getActiveOtherVigilancies();
             VariantBean bean = (VariantBean) viewState.getMetaObject().getObject();

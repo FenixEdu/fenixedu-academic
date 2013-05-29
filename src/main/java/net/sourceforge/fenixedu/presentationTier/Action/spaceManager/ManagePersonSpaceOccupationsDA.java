@@ -51,7 +51,7 @@ public class ManagePersonSpaceOccupationsDA extends FenixDispatchAction {
     }
 
     public ActionForward showSpaceOccupations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         final SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
         setSpaceAndSpaceInfo(request, spaceInformation);
@@ -59,7 +59,7 @@ public class ManagePersonSpaceOccupationsDA extends FenixDispatchAction {
     }
 
     public ActionForward prepareEditSpacePersonOccupation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         final SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
         final PersonSpaceOccupation personSpaceOccupation = getPersonSpaceOccupationFromParameter(request);
@@ -69,7 +69,7 @@ public class ManagePersonSpaceOccupationsDA extends FenixDispatchAction {
     }
 
     public ActionForward deleteSpacePersonOccupation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         final SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
         final PersonSpaceOccupation personSpaceOccupation = getPersonSpaceOccupationFromParameter(request);
@@ -93,16 +93,13 @@ public class ManagePersonSpaceOccupationsDA extends FenixDispatchAction {
         final String spaceInformationIDString =
                 request.getParameterMap().containsKey("spaceInformationID") ? request.getParameter("spaceInformationID") : (String) request
                         .getAttribute("spaceInformationID");
-        final Integer spaceInformationID = spaceInformationIDString != null ? Integer.valueOf(spaceInformationIDString) : null;
-        return AbstractDomainObject.fromExternalId(spaceInformationID);
+        return AbstractDomainObject.fromExternalId(spaceInformationIDString);
     }
 
     private PersonSpaceOccupation getPersonSpaceOccupationFromParameter(final HttpServletRequest request) {
         final String personSpaceOccupationIDString =
                 request.getParameterMap().containsKey("spaceOccupationID") ? request.getParameter("spaceOccupationID") : (String) request
                         .getAttribute("spaceOccupationID");
-        final Integer personSpaceOccupationID =
-                personSpaceOccupationIDString != null ? Integer.valueOf(personSpaceOccupationIDString) : null;
-        return (PersonSpaceOccupation) AbstractDomainObject.fromExternalId(personSpaceOccupationID);
+        return (PersonSpaceOccupation) AbstractDomainObject.fromExternalId(personSpaceOccupationIDString);
     }
 }

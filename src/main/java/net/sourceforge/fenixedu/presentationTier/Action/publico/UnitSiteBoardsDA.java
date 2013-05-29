@@ -72,8 +72,7 @@ public abstract class UnitSiteBoardsDA extends AnnouncementManagement {
         }
 
         try {
-            Integer oid = new Integer(parameter);
-            return (Unit) AbstractDomainObject.fromExternalId(oid);
+            return (Unit) AbstractDomainObject.fromExternalId(parameter);
         } catch (NumberFormatException e) {
             return null;
         }

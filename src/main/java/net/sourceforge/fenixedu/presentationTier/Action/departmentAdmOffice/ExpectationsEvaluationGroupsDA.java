@@ -88,7 +88,7 @@ public class ExpectationsEvaluationGroupsDA extends FenixDispatchAction {
     }
 
     public ActionForward createGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         IViewState viewState = RenderUtils.getViewState("expectationEvaluationGroupBeanWithEvaluatedTeacher");
         ExpectationEvaluationGroupBean bean = (ExpectationEvaluationGroupBean) viewState.getMetaObject().getObject();
@@ -109,7 +109,7 @@ public class ExpectationsEvaluationGroupsDA extends FenixDispatchAction {
     }
 
     public ActionForward deleteGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         ExpectationEvaluationGroup group = getExpectationEvaluationGroupFromParameter(request);
         Teacher appraiser = group.getAppraiser();
@@ -153,20 +153,17 @@ public class ExpectationsEvaluationGroupsDA extends FenixDispatchAction {
 
     private ExpectationEvaluationGroup getExpectationEvaluationGroupFromParameter(final HttpServletRequest request) {
         final String goupIDString = request.getParameter("groupID");
-        final Integer goupID = Integer.valueOf(goupIDString);
-        return AbstractDomainObject.fromExternalId(goupID);
+        return AbstractDomainObject.fromExternalId(goupIDString);
     }
 
     private ExecutionYear getExecutionYearFromParameter(final HttpServletRequest request) {
         final String executionYearIDString = request.getParameter("executionYearID");
-        final Integer executionYearID = Integer.valueOf(executionYearIDString);
-        return AbstractDomainObject.fromExternalId(executionYearID);
+        return AbstractDomainObject.fromExternalId(executionYearIDString);
     }
 
     private Teacher getTeacherFromParameter(final HttpServletRequest request) {
         final String teacherIDString = request.getParameter("teacherID");
-        final Integer teacherID = Integer.valueOf(teacherIDString);
-        return AbstractDomainObject.fromExternalId(teacherID);
+        return AbstractDomainObject.fromExternalId(teacherIDString);
     }
 
     private Department getDepartment(HttpServletRequest request) {

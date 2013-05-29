@@ -115,7 +115,7 @@ public class SearchResearchersAction extends FenixDispatchAction {
 
         String departmentId = request.getParameter("departmentId");
         if (departmentId != null) {
-            Department department = AbstractDomainObject.fromExternalId(Integer.valueOf(departmentId));
+            Department department = AbstractDomainObject.fromExternalId(departmentId);
             List<Researcher> results = new ArrayList<Researcher>();
             for (Employee employee : department.getDepartmentUnit().getAllCurrentActiveWorkingEmployees()) {
                 Person person = employee.getPerson();

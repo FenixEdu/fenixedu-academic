@@ -28,13 +28,13 @@ public class DeleteCurricularCoursesOfDegreeCurricularPlan {
     // delete a set of curricularCourses
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
-    public static List run(List curricularCoursesIds) throws FenixServiceException {
+    public static List run(List<String> curricularCoursesIds) throws FenixServiceException {
 
-        Iterator iter = curricularCoursesIds.iterator();
+        Iterator<String> iter = curricularCoursesIds.iterator();
         List undeletedCurricularCourses = new ArrayList();
 
         while (iter.hasNext()) {
-            Integer curricularCourseId = (Integer) iter.next();
+            String curricularCourseId = iter.next();
             CurricularCourse curricularCourse = (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseId);
             if (curricularCourse != null) {
                 // delete curriculum

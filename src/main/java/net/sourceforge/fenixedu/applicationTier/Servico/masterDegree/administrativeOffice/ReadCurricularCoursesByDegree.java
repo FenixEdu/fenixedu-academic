@@ -43,7 +43,7 @@ public class ReadCurricularCoursesByDegree {
     }
 
     @Service
-    public static List run(Integer degreeCurricularPlanID) {
+    public static List run(String degreeCurricularPlanID) {
         DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
 
         List<InfoCurricularCourse> infoCurricularCourses = new ArrayList<InfoCurricularCourse>();

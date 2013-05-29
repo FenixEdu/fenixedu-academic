@@ -50,9 +50,9 @@ public class DFAPeriodsManagementDispatchAction extends FenixDispatchAction {
 
     private ExecutionYear getExecutionYear(final HttpServletRequest request, final DynaActionForm dynaActionForm) {
         if (!StringUtils.isEmpty(dynaActionForm.getString("executionYear"))) {
-            return AbstractDomainObject.fromExternalId(Integer.valueOf(dynaActionForm.getString("executionYear")));
+            return AbstractDomainObject.fromExternalId(dynaActionForm.getString("executionYear"));
         } else if (request.getParameter("executionYearId") != null) {
-            return AbstractDomainObject.fromExternalId(getRequestParameterAsInteger(request, "executionYearId"));
+            return getDomainObject(request, "executionYearId");
         } else {
             return ExecutionYear.readCurrentExecutionYear();
         }
@@ -85,7 +85,7 @@ public class DFAPeriodsManagementDispatchAction extends FenixDispatchAction {
     }
 
     private ExecutionDegree getExecutionDegree(HttpServletRequest request) {
-        return AbstractDomainObject.fromExternalId(getRequestParameterAsInteger(request, "executionDegreeId"));
+        return getDomainObject(request, "executionDegreeId");
     }
 
 }

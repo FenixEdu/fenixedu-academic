@@ -75,8 +75,7 @@ public class InsertDegreeCurricularPlanDispatchAction extends FenixDispatchActio
 
         IUserView userView = UserView.getUser();
 
-        Integer degreeId = new Integer(request.getParameter("degreeId"));
-        final Degree degree = AbstractDomainObject.fromExternalId(degreeId);
+        final Degree degree = AbstractDomainObject.fromExternalId(request.getParameter("degreeId"));
 
         DynaActionForm dynaForm = (DynaValidatorForm) form;
 

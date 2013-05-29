@@ -24,13 +24,13 @@ public class ExecutionCourseCoordinatorAuthorizationFilter extends CoordinatorAu
     public static final ExecutionCourseCoordinatorAuthorizationFilter instance =
             new ExecutionCourseCoordinatorAuthorizationFilter();
 
-    protected ExecutionYear getSpecificExecutionYear(Integer executionCourseID) {
+    protected ExecutionYear getSpecificExecutionYear(String executionCourseID) {
         ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseID);
 
         return (executionCourse == null) ? null : executionCourse.getExecutionYear();
     }
 
-    public void execute(Integer executionCourseID) throws NotAuthorizedException {
+    public void execute(String executionCourseID) throws NotAuthorizedException {
         Person person = AccessControl.getUserView().getPerson();
 
         if (!person.hasRole(RoleType.COORDINATOR)) {

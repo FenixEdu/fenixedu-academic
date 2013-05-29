@@ -145,7 +145,7 @@ public class StudentTutorshipDA extends StudentsPerformanceGridDispatchAction {
     private ActionForward showOrChoose(final ActionMapping mapping, final HttpServletRequest request) {
         Registration registration = null;
 
-        final Integer registrationOID = getIntegerFromRequest(request, "registrationOID");
+        final String registrationOID = (String) getFromRequest(request, "registrationOID");
         NumberBean bean = (NumberBean) getObjectFromViewState("tutorateBean");
         if (bean == null) {
             bean = (NumberBean) request.getAttribute("tutorateBean");

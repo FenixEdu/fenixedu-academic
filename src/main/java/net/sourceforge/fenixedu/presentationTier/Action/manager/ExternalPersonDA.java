@@ -93,10 +93,9 @@ public class ExternalPersonDA extends FenixDispatchAction {
     public ActionForward createParkingParty(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         final String personIDString = request.getParameter("personID");
-        final Integer personID = personIDString == null ? null : Integer.valueOf(personIDString);
         final Person person;
-        if (personID != null) {
-            person = (Person) AbstractDomainObject.fromExternalId(personID);
+        if (personIDString != null) {
+            person = (Person) AbstractDomainObject.fromExternalId(personIDString);
         } else {
             person = (Person) request.getAttribute("person");
         }

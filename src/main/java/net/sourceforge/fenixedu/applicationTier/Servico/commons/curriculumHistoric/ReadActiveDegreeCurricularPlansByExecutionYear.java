@@ -32,7 +32,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class ReadActiveDegreeCurricularPlansByExecutionYear {
 
-    protected List run(Integer executionYearID) throws FenixServiceException {
+    protected List run(String executionYearID) throws FenixServiceException {
         ExecutionYear executionYear = AbstractDomainObject.fromExternalId(executionYearID);
 
         List executionDegrees = null;
@@ -62,7 +62,7 @@ public class ReadActiveDegreeCurricularPlansByExecutionYear {
             new ReadActiveDegreeCurricularPlansByExecutionYear();
 
     @Service
-    public static List runReadActiveDegreeCurricularPlansByExecutionYear(Integer executionYearID) throws FenixServiceException,
+    public static List runReadActiveDegreeCurricularPlansByExecutionYear(String executionYearID) throws FenixServiceException,
             NotAuthorizedException {
         try {
             ManagerAuthorizationFilter.instance.execute();

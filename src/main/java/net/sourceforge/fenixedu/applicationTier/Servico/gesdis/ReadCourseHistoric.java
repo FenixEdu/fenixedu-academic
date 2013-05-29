@@ -23,7 +23,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ReadCourseHistoric {
 
-    protected List run(Integer executionCourseId) throws FenixServiceException {
+    protected List run(String executionCourseId) throws FenixServiceException {
         ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
         Integer semester = executionCourse.getExecutionPeriod().getSemester();
         List<CurricularCourse> curricularCourses = executionCourse.getAssociatedCurricularCourses();
@@ -80,7 +80,7 @@ public class ReadCourseHistoric {
     private static final ReadCourseHistoric serviceInstance = new ReadCourseHistoric();
 
     @Service
-    public static List runReadCourseHistoric(Integer executionCourseId) throws FenixServiceException, NotAuthorizedException {
+    public static List runReadCourseHistoric(String executionCourseId) throws FenixServiceException, NotAuthorizedException {
         try {
             ReadCourseInformationAuthorizationFilter.instance.execute(executionCourseId);
             return serviceInstance.run(executionCourseId);

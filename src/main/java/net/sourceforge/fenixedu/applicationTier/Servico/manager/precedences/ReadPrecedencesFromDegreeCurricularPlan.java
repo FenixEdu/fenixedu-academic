@@ -20,7 +20,7 @@ public class ReadPrecedencesFromDegreeCurricularPlan {
 
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
-    public static Map run(Integer degreeCurricularPlanID) throws FenixServiceException {
+    public static Map run(String degreeCurricularPlanID) throws FenixServiceException {
 
         Map finalListOfInfoPrecedences = new HashMap();
 

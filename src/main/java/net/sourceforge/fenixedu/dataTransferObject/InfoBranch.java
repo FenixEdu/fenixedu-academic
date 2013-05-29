@@ -21,7 +21,7 @@ public class InfoBranch extends InfoObject {
         return branch;
     }
 
-    private boolean showEnVersion = (Language.getUserLanguage() == Language.en);
+    private final boolean showEnVersion = (Language.getUserLanguage() == Language.en);
 
     public InfoBranch(final Branch branch) {
         this.branch = branch;
@@ -94,12 +94,12 @@ public class InfoBranch extends InfoObject {
     }
 
     @Override
-    public Integer getExternalId() {
+    public String getExternalId() {
         return getBranch().getExternalId();
     }
 
     @Override
-    public void setExternalId(Integer integer) {
+    public void setExternalId(String integer) {
         throw new Error("Method should not be called!");
     }
 

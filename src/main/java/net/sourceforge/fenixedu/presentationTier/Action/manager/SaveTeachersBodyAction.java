@@ -44,7 +44,7 @@ public class SaveTeachersBodyAction extends FenixAction {
         Integer[] professorShipTeachersIds = (Integer[]) actionForm.get("professorShipTeachersIds");
         Integer[] nonAffiliatedTeachersIds = (Integer[]) actionForm.get("nonAffiliatedTeachersIds");
 
-        List respTeachersIds = Arrays.asList(responsibleTeachersIds);
+        List<Integer> respTeachersIds = Arrays.asList(responsibleTeachersIds);
         List<Integer> profTeachersIds = Arrays.asList(professorShipTeachersIds);
         List<Integer> nonAffilTeachersIds = Arrays.asList(nonAffiliatedTeachersIds);
 

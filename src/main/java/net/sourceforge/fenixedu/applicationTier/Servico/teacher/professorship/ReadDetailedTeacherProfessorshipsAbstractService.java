@@ -80,7 +80,7 @@ public class ReadDetailedTeacherProfessorshipsAbstractService {
         return detailedProfessorshipList;
     }
 
-    protected Teacher readTeacher(Integer teacherId) throws NotFoundTeacher {
+    protected Teacher readTeacher(String teacherId) throws NotFoundTeacher {
         final Teacher teacher = AbstractDomainObject.fromExternalId(teacherId);
         if (teacher == null) {
             throw new NotFoundTeacher();

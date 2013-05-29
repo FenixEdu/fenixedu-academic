@@ -44,7 +44,7 @@ public class ResultUnitAssociation extends ResultUnitAssociation_Base {
         }
     }
 
-    public final static ResultUnitAssociation readByOid(Integer oid) {
+    public final static ResultUnitAssociation readByOid(String oid) {
         final ResultUnitAssociation association = AbstractDomainObject.fromExternalId(oid);
 
         if (association == null) {

@@ -21,7 +21,7 @@ public class ReadExecutionYearsService {
     }
 
     @Service
-    public static ExecutionYear run(Integer executionYearID) {
+    public static ExecutionYear run(String executionYearID) {
         return AbstractDomainObject.fromExternalId(executionYearID);
     }
 }

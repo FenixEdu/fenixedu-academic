@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExamsMap;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
@@ -61,21 +62,21 @@ public class ViewExamsMapDANew extends FenixContextDispatchAction {
         request.setAttribute("inEnglish", inEnglish);
 
         // index
-        Integer index = getFromRequest("index", request);
+        String index = getFromRequest("index", request);
         request.setAttribute("index", index);
 
         // degreeID
-        Integer degreeId = getFromRequest("degreeID", request);
+        String degreeId = getFromRequest("degreeID", request);
         request.setAttribute("degreeID", degreeId);
 
         // degreeCurricularPlanID
-        Integer degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
+        String degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
 
         // curricularYearList
         List<Integer> curricularYears = (List<Integer>) request.getAttribute("curricularYearList");
         if (curricularYears == null) {
-            curricularYears = AbstractDomainObject.fromExternalId(degreeId).buildFullCurricularYearList();
+            curricularYears = AbstractDomainObject.<Degree> fromExternalId(degreeId).buildFullCurricularYearList();
         }
         request.setAttribute("curricularYearList", curricularYears);
 
@@ -96,7 +97,7 @@ public class ViewExamsMapDANew extends FenixContextDispatchAction {
         request.setAttribute(PresentationConstants.EXECUTION_DEGREE, infoExecutionDegree);
 
         // indice
-        Integer indice = getFromRequest("indice", request);
+        String indice = getFromRequest("indice", request);
         request.setAttribute("indice", indice);
 
         InfoExecutionPeriod infoExecutionPeriod =
@@ -105,7 +106,7 @@ public class ViewExamsMapDANew extends FenixContextDispatchAction {
         request.setAttribute(PresentationConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getExternalId().toString());
 
         // executionDegreeID
-        Integer executionDegreeId = getFromRequest("executionDegreeID", request);
+        String executionDegreeId = getFromRequest("executionDegreeID", request);
         request.setAttribute("executionDegreeID", executionDegreeId);
 
         request.removeAttribute(PresentationConstants.INFO_EXAMS_MAP);

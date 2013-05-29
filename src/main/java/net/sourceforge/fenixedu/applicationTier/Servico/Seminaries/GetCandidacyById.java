@@ -5,13 +5,11 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.Seminaries;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.Seminaries.CandidacyAccessFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCandidacy;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCandidacyWithCaseStudyChoices;
 import net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy;
-import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
 import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
@@ -24,7 +22,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class GetCandidacyById {
 
-    protected InfoCandidacy run(Integer id) throws BDException {
+    protected InfoCandidacy run(String id) {
         InfoCandidacy infoCandidacy = null;
 
         SeminaryCandidacy candidacy = AbstractDomainObject.fromExternalId(id);
@@ -38,7 +36,7 @@ public class GetCandidacyById {
     private static final GetCandidacyById serviceInstance = new GetCandidacyById();
 
     @Service
-    public static InfoCandidacy runGetCandidacyById(Integer id) throws BDException  , NotAuthorizedException {
+    public static InfoCandidacy runGetCandidacyById(String id) throws NotAuthorizedException {
         CandidacyAccessFilter.instance.execute(id);
         return serviceInstance.run(id);
     }

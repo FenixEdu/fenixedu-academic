@@ -23,7 +23,7 @@ public class DelegateStudentsGroup extends LeafGroup {
 
     private final FunctionType functionType;
 
-    private final Integer personFunctionId;
+    private final String personFunctionId;
 
     public DelegateStudentsGroup(final PersonFunction delegateFunction, final FunctionType functionType) {
         personFunctionId = delegateFunction.getExternalId();
@@ -121,8 +121,7 @@ public class DelegateStudentsGroup extends LeafGroup {
     }
 
     public PersonFunction getPersonFunction() {
-        return personFunctionId != null ? (PersonFunction) AbstractDomainObject.fromExternalId(
-                personFunctionId) : null;
+        return personFunctionId != null ? (PersonFunction) AbstractDomainObject.fromExternalId(personFunctionId) : null;
     }
 
     public Student getStudent() {

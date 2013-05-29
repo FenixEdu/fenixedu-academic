@@ -15,14 +15,14 @@ public class AddSchoolClassesToShift {
 
     @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
     @Service
-    public static void run(InfoShift infoShift, List<Integer> schoolClassOIDs) throws FenixServiceException {
+    public static void run(InfoShift infoShift, List<String> schoolClassOIDs) throws FenixServiceException {
 
         final Shift shift = AbstractDomainObject.fromExternalId(infoShift.getExternalId());
         if (shift == null) {
             throw new InvalidArgumentsServiceException();
         }
 
-        for (final Integer schoolClassOID : schoolClassOIDs) {
+        for (final String schoolClassOID : schoolClassOIDs) {
             final SchoolClass schoolClass = AbstractDomainObject.fromExternalId(schoolClassOID);
             if (schoolClass == null) {
                 throw new InvalidArgumentsServiceException();

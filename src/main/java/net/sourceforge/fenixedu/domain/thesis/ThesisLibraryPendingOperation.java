@@ -20,9 +20,9 @@ public class ThesisLibraryPendingOperation extends ThesisLibraryPendingOperation
         setPendingComment(comment);
     }
 
-    public ThesisLibraryPendingOperation(Integer thesisId, Integer performerId, String comment) {
-        this(AbstractDomainObject.fromExternalId(thesisId), (Person) AbstractDomainObject.fromExternalId(
-                performerId), comment);
+    public ThesisLibraryPendingOperation(String thesisId, String performerId, String comment) {
+        this(AbstractDomainObject.<Thesis> fromExternalId(thesisId), AbstractDomainObject.<Person> fromExternalId(performerId),
+                comment);
     }
 
     @Override

@@ -23,7 +23,7 @@ public class WriteCandidateEnrolmentsAuhorizationFilter extends Filtro {
 
     public static final WriteCandidateEnrolmentsAuhorizationFilter instance = new WriteCandidateEnrolmentsAuhorizationFilter();
 
-    public void execute(Set<Integer> selectedCurricularCoursesIDs, Integer candidateID, Double credits, String givenCreditsRemarks)
+    public void execute(Set<String> selectedCurricularCoursesIDs, String candidateID, Double credits, String givenCreditsRemarks)
             throws NotAuthorizedException {
         IUserView id = AccessControl.getUserView();
 
@@ -42,7 +42,7 @@ public class WriteCandidateEnrolmentsAuhorizationFilter extends Filtro {
         return roles;
     }
 
-    private boolean hasPrivilege(IUserView id, Set<Integer> selectedCurricularCoursesIDs, Integer candidateID) {
+    private boolean hasPrivilege(IUserView id, Set<String> selectedCurricularCoursesIDs, String candidateID) {
         if (id.hasRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE)) {
             return true;
         }
@@ -50,8 +50,7 @@ public class WriteCandidateEnrolmentsAuhorizationFilter extends Filtro {
         if (id.hasRoleType(RoleType.COORDINATOR)) {
             final Person person = id.getPerson();
 
-            MasterDegreeCandidate masterDegreeCandidate =
-                    AbstractDomainObject.fromExternalId(candidateID);
+            MasterDegreeCandidate masterDegreeCandidate = AbstractDomainObject.fromExternalId(candidateID);
 
             if (masterDegreeCandidate == null) {
                 return false;
@@ -64,7 +63,7 @@ public class WriteCandidateEnrolmentsAuhorizationFilter extends Filtro {
                 return false;
             }
 
-            for (Integer selectedCurricularCourse : selectedCurricularCoursesIDs) {
+            for (String selectedCurricularCourse : selectedCurricularCoursesIDs) {
 
                 // Modified by Fernanda Quitério
 

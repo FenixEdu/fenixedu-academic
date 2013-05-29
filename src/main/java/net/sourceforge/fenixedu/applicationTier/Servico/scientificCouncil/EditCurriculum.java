@@ -5,7 +5,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil;
 
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Curriculum;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
@@ -22,7 +21,7 @@ public class EditCurriculum {
 
     @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
     @Service
-    public static Boolean run(Integer curriculumId, String program, String programEn, String operacionalObjectives,
+    public static Boolean run(String curriculumId, String program, String programEn, String operacionalObjectives,
             String operacionalObjectivesEn, String generalObjectives, String generalObjectivesEn, Boolean basic)
             throws FenixServiceException {
 

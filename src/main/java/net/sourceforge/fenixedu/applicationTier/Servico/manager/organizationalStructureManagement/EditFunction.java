@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement;
 
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
@@ -17,7 +16,7 @@ public class EditFunction {
 
     @Checked("RolePredicates.MANAGER_PREDICATE")
     @Service
-    public static void run(Integer functionID, MultiLanguageString functionName, YearMonthDay begin, YearMonthDay end,
+    public static void run(String functionID, MultiLanguageString functionName, YearMonthDay begin, YearMonthDay end,
             FunctionType type) throws FenixServiceException, DomainException {
 
         Function function = (Function) AbstractDomainObject.fromExternalId(functionID);

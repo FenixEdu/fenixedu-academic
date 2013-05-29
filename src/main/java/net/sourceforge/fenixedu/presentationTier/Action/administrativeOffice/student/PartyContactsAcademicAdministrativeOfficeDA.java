@@ -36,7 +36,7 @@ public class PartyContactsAcademicAdministrativeOfficeDA extends PartyContactsMa
 
     private Student getStudent(final HttpServletRequest request) {
         final String studentID = request.getParameter("studentID");
-        final Student student = AbstractDomainObject.fromExternalId(Integer.valueOf(studentID));
+        final Student student = AbstractDomainObject.fromExternalId(studentID);
         request.setAttribute("student", student);
         return student;
     }

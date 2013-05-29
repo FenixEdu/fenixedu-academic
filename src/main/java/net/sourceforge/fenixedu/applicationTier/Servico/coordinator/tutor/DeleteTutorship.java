@@ -18,7 +18,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class DeleteTutorship extends TutorshipManagement {
 
-    public List<TutorshipErrorBean> run(Integer executionDegreeID, List<Tutorship> tutorsToDelete) {
+    public List<TutorshipErrorBean> run(String executionDegreeID, List<Tutorship> tutorsToDelete) {
 
         final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeID);
         final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
@@ -47,7 +47,7 @@ public class DeleteTutorship extends TutorshipManagement {
     private static final DeleteTutorship serviceInstance = new DeleteTutorship();
 
     @Service
-    public static List<TutorshipErrorBean> runDeleteTutorship(Integer executionDegreeID, List<Tutorship> tutorsToDelete)
+    public static List<TutorshipErrorBean> runDeleteTutorship(String executionDegreeID, List<Tutorship> tutorsToDelete)
             throws NotAuthorizedException {
         try {
             TutorshipAuthorizationFilter.instance.execute();

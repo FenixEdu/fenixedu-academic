@@ -102,24 +102,21 @@ public class ManageRolesDA extends FenixDispatchAction {
         return prepareAddRoleToPerson(mapping, form, request, response);
     }
 
-    private Person getPerson(final String username) throws  FenixServiceException {
+    private Person getPerson(final String username) throws FenixServiceException {
         return getPerson(username, "");
     }
 
-    private Person getPerson(final DynaActionForm dynaActionForm) throws  FenixServiceException {
+    private Person getPerson(final DynaActionForm dynaActionForm) throws FenixServiceException {
         return getPerson(dynaActionForm.getString("username"), dynaActionForm.getString("documentIdNumber"));
     }
 
-    private Person getPerson(final String username, final String documentIdNumber) throws 
-            FenixServiceException {
+    private Person getPerson(final String username, final String documentIdNumber) throws FenixServiceException {
         final SearchPerson.SearchParameters parameters =
                 new SearchParameters(null, null, username, documentIdNumber, null, null, null, null, null, null, null, null,
                         (String) null);
         final SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(parameters);
 
-        final Collection<Person> persons =
-                ((CollectionPager<Person>) SearchPerson.runSearchPerson( parameters, predicate ))
-                        .getCollection();
+        final Collection<Person> persons = SearchPerson.runSearchPerson(parameters, predicate).getCollection();
 
         return persons.isEmpty() ? null : persons.iterator().next();
     }
@@ -141,10 +138,10 @@ public class ManageRolesDA extends FenixDispatchAction {
      * Prepare information to show existing execution periods and working areas.
      * 
      * @throws FenixServiceException
-     * @
+     *             @
      */
     public ActionForward setPersonRoles(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         DynaActionForm rolesForm = (DynaActionForm) form;
         String[] roleOIDsAsStrings = (String[]) rolesForm.get("roleOIDs");
@@ -152,7 +149,7 @@ public class ManageRolesDA extends FenixDispatchAction {
 
         final Set<Role> roles = new HashSet<Role>();
         for (final String roleId : roleOIDsAsStrings) {
-            roles.add(AbstractDomainObject.fromExternalId(Integer.valueOf(roleId)));
+            roles.add(AbstractDomainObject.<Role> fromExternalId(roleId));
         }
 
         IUserView userView = UserView.getUser();

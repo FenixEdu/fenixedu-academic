@@ -42,13 +42,13 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction {
@@ -58,7 +58,7 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
     }
 
     public ActionForward showCandidacyDetails(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException,  FenixServiceException {
+            HttpServletResponse response) throws FenixActionException, FenixServiceException {
 
         final StudentCandidacy candidacy = getCandidacy(request);
         request.setAttribute("candidacy", candidacy);
@@ -79,7 +79,7 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
     }
 
     public ActionForward doOperation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException,  FenixServiceException {
+            HttpServletResponse response) throws FenixActionException, FenixServiceException {
 
         final CandidacyOperation operation =
                 (CandidacyOperation) getCandidacy(request).getActiveCandidacySituation().getOperationByTypeAndPerson(
@@ -104,7 +104,7 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
     }
 
     public ActionForward processForm(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException,  FenixServiceException {
+            HttpServletResponse response) throws FenixActionException, FenixServiceException {
         request.setAttribute("candidacy", getCandidacy(request));
 
         final CandidacyOperation operation =
@@ -210,7 +210,7 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
 
     private ActionForward executeOperation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response, CandidacyOperation candidacyOperation) throws FenixServiceException,
-             FenixActionException {
+            FenixActionException {
 
         final IUserView userView = getUserView(request);
 
@@ -364,7 +364,7 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
     }
 
     public ActionForward showCurrentForm(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException,  FenixServiceException {
+            HttpServletResponse response) throws FenixActionException, FenixServiceException {
 
         request.setAttribute("candidacy", getCandidacy(request));
         request.setAttribute("operation", RenderUtils.getViewState("operation-view-state").getMetaObject().getObject());
@@ -388,12 +388,17 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
     }
 
     private StudentCandidacy getCandidacy(HttpServletRequest request) {
-        return (StudentCandidacy) AbstractDomainObject.fromExternalId(Integer.valueOf(getFromRequest(request, "candidacyID")
-                .toString()));
+        return getDomainObject(request, "candidacyID");
     }
 
     private Integer getCurrentFormPosition(HttpServletRequest request) {
-        return getRequestParameterAsInteger(request, "currentFormPosition");
+        final String requestParameter = request.getParameter("currentFormPosition");
+
+        if (!StringUtils.isEmpty(requestParameter)) {
+            return Integer.valueOf(requestParameter);
+        } else {
+            return null;
+        }
     }
 
     private CandidacyOperationType getOperationType(HttpServletRequest request) {

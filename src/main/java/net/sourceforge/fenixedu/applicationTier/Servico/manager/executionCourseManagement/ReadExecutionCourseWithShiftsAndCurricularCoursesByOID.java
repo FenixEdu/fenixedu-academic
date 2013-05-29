@@ -19,7 +19,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ReadExecutionCourseWithShiftsAndCurricularCoursesByOID {
 
     @Service
-    public static InfoExecutionCourse run(final Integer oid) {
+    public static InfoExecutionCourse run(final String oid) {
         InfoExecutionCourse infoExecutionCourse = null;
 
         final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(oid);

@@ -140,7 +140,7 @@ public class ShowExamsManagement extends FenixContextDispatchAction {
         ContextUtils.setExecutionDegreeContext(request);
         ContextUtils.setExecutionPeriodContext(request);
 
-        Integer examID = new Integer(request.getParameter(PresentationConstants.EXAM_OID));
+        String examID = request.getParameter(PresentationConstants.EXAM_OID);
 
         InfoExam infoExam = ReadExamByOID.run(examID);
         request.setAttribute(PresentationConstants.EXAM, infoExam);
@@ -160,7 +160,7 @@ public class ShowExamsManagement extends FenixContextDispatchAction {
         ContextUtils.setExecutionDegreeContext(request);
         ContextUtils.setExecutionPeriodContext(request);
 
-        Integer examID = new Integer(request.getParameter(PresentationConstants.EXAM_OID));
+        String examID = request.getParameter(PresentationConstants.EXAM_OID);
 
         try {
             DeleteWrittenEvaluation.runDeleteWrittenEvaluation(null, examID);

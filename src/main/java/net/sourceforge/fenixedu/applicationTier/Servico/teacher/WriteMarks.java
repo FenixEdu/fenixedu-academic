@@ -24,7 +24,7 @@ public class WriteMarks {
 
     @Service
     @Checked("RolePredicates.TEACHER_PREDICATE")
-    public static void writeByStudent(final Integer executioCourseOID, final Integer evaluationOID, final List<StudentMark> marks)
+    public static void writeByStudent(final String executioCourseOID, final String evaluationOID, final List<StudentMark> marks)
             throws FenixServiceException {
 
         final Evaluation evaluation = AbstractDomainObject.fromExternalId(evaluationOID);
@@ -35,7 +35,7 @@ public class WriteMarks {
 
     @Service
     @Checked("RolePredicates.TEACHER_PREDICATE")
-    public static void writeByAttend(final Integer executioCourseOID, final Integer evaluationOID, final List<AttendsMark> marks)
+    public static void writeByAttend(final String executioCourseOID, final String evaluationOID, final List<AttendsMark> marks)
             throws FenixServiceException {
 
         final Evaluation evaluation = AbstractDomainObject.fromExternalId(evaluationOID);
@@ -152,7 +152,7 @@ public class WriteMarks {
                 executionCourse.getName(), executionCourse.getDegreePresentationString());
     }
 
-    private static Attends findAttend(final ExecutionCourse executionCourse, final Integer attendId) {
+    private static Attends findAttend(final ExecutionCourse executionCourse, final String attendId) {
         for (final Attends attend : executionCourse.getAttends()) {
             if (attend.getExternalId().equals(attendId)) {
                 return attend;
@@ -166,8 +166,8 @@ public class WriteMarks {
     }
 
     public static class StudentMark implements Serializable {
-        private Integer studentNumber;
-        private String mark;
+        private final Integer studentNumber;
+        private final String mark;
 
         public StudentMark(final Integer studentNumber, final String mark) {
             this.studentNumber = studentNumber;
@@ -176,10 +176,10 @@ public class WriteMarks {
     }
 
     public static class AttendsMark implements Serializable {
-        private Integer attendId;
-        private String mark;
+        private final String attendId;
+        private final String mark;
 
-        public AttendsMark(final Integer attendId, final String mark) {
+        public AttendsMark(final String attendId, final String mark) {
             this.attendId = attendId;
             this.mark = mark;
         }

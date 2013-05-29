@@ -17,6 +17,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.Sear
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchPersonPredicate;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDepartment;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -126,8 +128,8 @@ public class FindPersonAction extends FenixDispatchAction {
         boolean fromRequest = true;
         String name = request.getParameter("name");
         String roleType = null;
-        Integer departmentId = null;
-        Integer degreeId = null;
+        String departmentId = null;
+        String degreeId = null;
         String degreeType = null;
 
         if (bean != null && name == null) {
@@ -140,11 +142,9 @@ public class FindPersonAction extends FenixDispatchAction {
         } else {
             roleType = request.getParameter("roleType");
 
-            String parameter = request.getParameter("departmentId");
-            departmentId = parameter != null && !parameter.isEmpty() ? Integer.parseInt(parameter) : null;
+            departmentId = request.getParameter("departmentId");
 
-            parameter = request.getParameter("degreeId");
-            degreeId = parameter != null && !parameter.isEmpty() ? Integer.parseInt(parameter) : null;
+            degreeId = request.getParameter("degreeId");
             degreeType = request.getParameter("degreeType");
         }
 
@@ -209,13 +209,13 @@ public class FindPersonAction extends FenixDispatchAction {
                 bean.setRoleType(RoleType.valueOf(roleType));
             }
             if (degreeId != null) {
-                bean.setDegree(AbstractDomainObject.fromExternalId(degreeId));
+                bean.setDegree(AbstractDomainObject.<Degree> fromExternalId(degreeId));
             }
             if (!StringUtils.isEmpty(degreeType)) {
                 bean.setDegreeType(DegreeType.valueOf(degreeType));
             }
             if (departmentId != null) {
-                bean.setDepartment(AbstractDomainObject.fromExternalId(departmentId));
+                bean.setDepartment(AbstractDomainObject.<Department> fromExternalId(departmentId));
             }
             System.out.printf("%s %s %s %s %s %s\n", bean.getRoleType(), bean.getName(), bean.getViewPhoto(), bean.getDegree(),
                     bean.getDegreeType(), bean.getDepartment());

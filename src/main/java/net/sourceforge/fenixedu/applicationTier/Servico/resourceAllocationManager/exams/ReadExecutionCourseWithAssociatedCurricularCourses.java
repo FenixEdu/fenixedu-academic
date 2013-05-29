@@ -25,7 +25,7 @@ public class ReadExecutionCourseWithAssociatedCurricularCourses {
 
     @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
     @Service
-    public static InfoExecutionCourse run(Integer executionCourseID) throws FenixServiceException {
+    public static InfoExecutionCourse run(String executionCourseID) throws FenixServiceException {
         final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseID);
         if (executionCourse == null) {
             throw new FenixServiceException("error.noExecutionCourse");

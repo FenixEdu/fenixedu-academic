@@ -35,7 +35,7 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID {
 
     @Checked("RolePredicates.MANAGER_PREDICATE")
     @Service
-    public static byte[] run(Integer executionYearID, Date paymentEndDate) throws FenixServiceException {
+    public static byte[] run(String executionYearID, Date paymentEndDate) throws FenixServiceException {
 
         StringBuilder outgoingSibsPaymentFile = new StringBuilder();
 
@@ -58,7 +58,7 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID {
 
         int totalLines = 0;
 
-        Set<Integer> studentsWithInsuranceChecked = new HashSet<Integer>();
+        Set<String> studentsWithInsuranceChecked = new HashSet<String>();
 
         // add file header
         addHeader(outgoingSibsPaymentFile);

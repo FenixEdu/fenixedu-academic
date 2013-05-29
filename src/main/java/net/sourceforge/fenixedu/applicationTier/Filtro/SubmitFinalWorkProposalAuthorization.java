@@ -29,7 +29,7 @@ public class SubmitFinalWorkProposalAuthorization {
                 throw new NotAuthorizedException();
             }
         } else {
-            final Integer executionDegreeId = infoProposalEditor.getExecutionDegree().getExternalId();
+            final String executionDegreeId = infoProposalEditor.getExecutionDegree().getExternalId();
             final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeId);
             final Scheduleing scheduleing = executionDegree.getScheduling();
             if (!authorized(userView.getPerson(), scheduleing)) {

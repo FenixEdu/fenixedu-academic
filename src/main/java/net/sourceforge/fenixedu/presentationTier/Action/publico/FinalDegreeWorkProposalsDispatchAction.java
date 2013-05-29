@@ -79,7 +79,7 @@ public class FinalDegreeWorkProposalsDispatchAction extends FenixContextDispatch
         degreeTypes.add(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
         degreeTypes.add(DegreeType.BOLONHA_MASTER_DEGREE);
 
-        List infoExecutionDegrees = ReadExecutionDegreesByExecutionYearAndType.run(new Integer(executionYearOID), degreeTypes);
+        List infoExecutionDegrees = ReadExecutionDegreesByExecutionYearAndType.run(executionYearOID, degreeTypes);
         Collections.sort(infoExecutionDegrees, new BeanComparator("infoDegreeCurricularPlan.infoDegree.nome"));
         request.setAttribute("infoExecutionDegrees", infoExecutionDegrees);
         return mapping.findForward("show-final-degree-work-list");
@@ -146,14 +146,14 @@ public class FinalDegreeWorkProposalsDispatchAction extends FenixContextDispatch
         if (finalDegreeWorkProposalOIDString != null && !finalDegreeWorkProposalOIDString.equals("")
                 && StringUtils.isNumeric(finalDegreeWorkProposalOIDString)) {
 
-            final Integer finalDegreeWorkProposalOID = Integer.valueOf(finalDegreeWorkProposalOIDString);
-            final Proposal proposal = AbstractDomainObject.fromExternalId(finalDegreeWorkProposalOID);
+            final Proposal proposal = AbstractDomainObject.fromExternalId(finalDegreeWorkProposalOIDString);
 
             if (!proposal.canBeReadBy(getUserView(request))) {
                 return mapping.findForward("show-final-degree-work-proposal-not-published-page");
             }
 
-            InfoProposal infoProposal = ReadFinalDegreeWorkProposal.runReadFinalDegreeWorkProposal(finalDegreeWorkProposalOID);
+            InfoProposal infoProposal =
+                    ReadFinalDegreeWorkProposal.runReadFinalDegreeWorkProposal(finalDegreeWorkProposalOIDString);
             infoProposal.getExecutionDegree().setGetNextExecutionYear(true);
             request.setAttribute("finalDegreeWorkProposal", infoProposal);
         }
@@ -209,8 +209,7 @@ public class FinalDegreeWorkProposalsDispatchAction extends FenixContextDispatch
             String executionDegreeOID, String sortBy) throws Exception {
         if (executionDegreeOID != null && !executionDegreeOID.equals("")) {
 
-            List publishedFinalDegreeWorkProposalHeaders =
-                    ReadPublishedFinalDegreeWorkProposalHeaders.run(new Integer(executionDegreeOID));
+            List publishedFinalDegreeWorkProposalHeaders = ReadPublishedFinalDegreeWorkProposalHeaders.run(executionDegreeOID);
             Collections.sort(publishedFinalDegreeWorkProposalHeaders, new BeanComparator(sortBy));
             request.setAttribute("publishedFinalDegreeWorkProposalHeaders", publishedFinalDegreeWorkProposalHeaders);
         }

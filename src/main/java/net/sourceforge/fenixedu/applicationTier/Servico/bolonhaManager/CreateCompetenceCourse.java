@@ -3,7 +3,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager;
 
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingCompetenceCourseInformationException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
@@ -23,8 +22,8 @@ public class CreateCompetenceCourse {
     @Checked("RolePredicates.BOLONHA_MANAGER_PREDICATE")
     @Service
     public static CompetenceCourse run(String name, String nameEn, String acronym, Boolean basic, RegimeType regimeType,
-            CompetenceCourseLevel competenceCourseLevel, CompetenceCourseType type, Integer unitID,
-            ExecutionSemester startSemester) throws FenixServiceException {
+            CompetenceCourseLevel competenceCourseLevel, CompetenceCourseType type, String unitID, ExecutionSemester startSemester)
+            throws FenixServiceException {
 
         final CompetenceCourseGroupUnit unit = (CompetenceCourseGroupUnit) AbstractDomainObject.fromExternalId(unitID);
         if (unit == null) {

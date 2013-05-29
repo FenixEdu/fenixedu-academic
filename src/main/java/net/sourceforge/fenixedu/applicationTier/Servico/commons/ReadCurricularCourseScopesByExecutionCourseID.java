@@ -21,7 +21,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ReadCurricularCourseScopesByExecutionCourseID {
 
     @Service
-    public static List<InfoCurricularCourse> run(Integer executionCourseID) throws FenixServiceException {
+    public static List<InfoCurricularCourse> run(String executionCourseID) throws FenixServiceException {
 
         final List<InfoCurricularCourse> infoCurricularCourses = new ArrayList<InfoCurricularCourse>();
 

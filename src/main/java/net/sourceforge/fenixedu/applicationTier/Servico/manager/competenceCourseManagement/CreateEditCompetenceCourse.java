@@ -18,10 +18,10 @@ public class CreateEditCompetenceCourse {
 
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
-    public static InfoCompetenceCourse run(Integer competenceCourseID, String code, String name, Integer[] departmentIDs)
+    public static InfoCompetenceCourse run(String competenceCourseID, String code, String name, String[] departmentIDs)
             throws NonExistingServiceException, InvalidArgumentsServiceException {
         List<Department> departments = new ArrayList<Department>();
-        for (Integer departmentID : departmentIDs) {
+        for (String departmentID : departmentIDs) {
             Department department = AbstractDomainObject.fromExternalId(departmentID);
             if (department == null) {
                 throw new NonExistingServiceException("error.manager.noDepartment");

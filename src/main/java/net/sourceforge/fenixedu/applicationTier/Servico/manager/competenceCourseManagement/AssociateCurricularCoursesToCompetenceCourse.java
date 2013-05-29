@@ -13,14 +13,14 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class AssociateCurricularCoursesToCompetenceCourse {
     @Checked("RolePredicates.MANAGER_PREDICATE")
     @Service
-    public static void run(Integer competenceCourseID, Integer[] curricularCoursesIDs) throws NotExistingServiceException {
+    public static void run(String competenceCourseID, String[] curricularCoursesIDs) throws NotExistingServiceException {
         CompetenceCourse competenceCourse = AbstractDomainObject.fromExternalId(competenceCourseID);
         if (competenceCourse == null) {
             throw new NotExistingServiceException("error.manager.noCompetenceCourse");
         }
 
         List<CurricularCourse> curricularCourses = new ArrayList<CurricularCourse>();
-        for (Integer curricularCourseID : curricularCoursesIDs) {
+        for (String curricularCourseID : curricularCoursesIDs) {
             CurricularCourse curricularCourse = (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseID);
             if (curricularCourse != null) {
                 curricularCourses.add(curricularCourse);

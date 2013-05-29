@@ -57,11 +57,11 @@ public class RootDomainObject extends RootDomainObject_Base {
             new java.util.HashMap<String, DomainObjectReader>();
 
     @Deprecated
-    public static <T> java.util.Set<T> readAllDomainObjects(final Class<T> domainClass) {
-        final java.util.Set<T> domainObjects = readAllDomainObjectsAux(domainClass);
-        final java.util.Set<T> resultSet = new java.util.HashSet<T>();
+    public static java.util.Set readAllDomainObjects(final Class domainClass) {
+        final java.util.Set domainObjects = readAllDomainObjectsAux(domainClass);
+        final java.util.Set resultSet = new java.util.HashSet();
         if (domainObjects != null) {
-            for (final T object : domainObjects) {
+            for (final Object object : domainObjects) {
                 if (domainClass.isInstance(object)) {
                     resultSet.add(object);
                 }

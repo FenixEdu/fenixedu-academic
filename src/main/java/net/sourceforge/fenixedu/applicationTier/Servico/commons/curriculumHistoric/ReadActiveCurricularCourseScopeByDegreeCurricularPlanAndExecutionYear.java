@@ -33,7 +33,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear {
 
-    public SortedSet<DegreeModuleScope> run(Integer degreeCurricularPlanID, AcademicInterval academicInterval)
+    public SortedSet<DegreeModuleScope> run(String degreeCurricularPlanID, AcademicInterval academicInterval)
             throws FenixServiceException {
         final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
 
@@ -55,7 +55,7 @@ public class ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYe
     }
 
     @Deprecated
-    public SortedSet<DegreeModuleScope> run(Integer degreeCurricularPlanID, Integer executioYearID) throws FenixServiceException {
+    public SortedSet<DegreeModuleScope> run(String degreeCurricularPlanID, String executioYearID) throws FenixServiceException {
         final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
         final ExecutionYear executionYear = AbstractDomainObject.fromExternalId(executioYearID);
 
@@ -83,7 +83,7 @@ public class ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYe
 
     @Service
     public static SortedSet<DegreeModuleScope> runReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear(
-            Integer degreeCurricularPlanID, AcademicInterval academicInterval) throws FenixServiceException,
+            String degreeCurricularPlanID, AcademicInterval academicInterval) throws FenixServiceException,
             NotAuthorizedException {
         try {
             ManagerAuthorizationFilter.instance.execute();
@@ -126,7 +126,7 @@ public class ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYe
 
     @Service
     public static SortedSet<DegreeModuleScope> runReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear(
-            Integer degreeCurricularPlanID, Integer executioYearID) throws FenixServiceException, NotAuthorizedException {
+            String degreeCurricularPlanID, String executioYearID) throws FenixServiceException, NotAuthorizedException {
         try {
             ManagerAuthorizationFilter.instance.execute();
             return serviceInstance.run(degreeCurricularPlanID, executioYearID);

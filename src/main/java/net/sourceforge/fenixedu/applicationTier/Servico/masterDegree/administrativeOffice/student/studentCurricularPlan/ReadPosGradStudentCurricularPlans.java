@@ -19,7 +19,7 @@ public class ReadPosGradStudentCurricularPlans {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
-    public static List<InfoStudentCurricularPlan> run(Integer studentId) throws FenixServiceException {
+    public static List<InfoStudentCurricularPlan> run(String studentId) throws FenixServiceException {
         List<InfoStudentCurricularPlan> result = new ArrayList<InfoStudentCurricularPlan>();
 
         Registration registration = AbstractDomainObject.fromExternalId(studentId);

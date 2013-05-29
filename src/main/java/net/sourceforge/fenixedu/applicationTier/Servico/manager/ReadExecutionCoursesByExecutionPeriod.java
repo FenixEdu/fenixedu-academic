@@ -17,7 +17,7 @@ public class ReadExecutionCoursesByExecutionPeriod {
 
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
-    public static List run(Integer executionPeriodId) throws FenixServiceException {
+    public static List run(String executionPeriodId) throws FenixServiceException {
         List allExecutionCoursesFromExecutionPeriod = null;
         List<InfoExecutionCourse> allExecutionCourses = null;
 

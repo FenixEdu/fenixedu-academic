@@ -23,8 +23,8 @@ public class CreateExecutionDegreesForExecutionYear {
 
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
-    public static List<DegreeCurricularPlan> run(final Integer[] degreeCurricularPlansIDs,
-            final Integer[] bolonhaDegreeCurricularPlansIDs, final Integer executionYearID, final String campusName,
+    public static List<DegreeCurricularPlan> run(final String[] degreeCurricularPlansIDs,
+            final String[] bolonhaDegreeCurricularPlansIDs, final String executionYearID, final String campusName,
             final Boolean publishedExamMap, final Calendar lessonSeason1BeginDate, final Calendar lessonSeason1EndDate,
             final Calendar lessonSeason2BeginDate, final Calendar lessonSeason2EndDate,
             final Calendar lessonSeason2BeginDatePart2, final Calendar lessonSeason2EndDatePart2,
@@ -50,7 +50,7 @@ public class CreateExecutionDegreesForExecutionYear {
         final OccupationPeriod gradeSubmissionSpecialSeason =
                 getOccupationPeriod(examsSpecialSeasonBeginDate, gradeSubmissionSpecialSeasonEndDate);
 
-        final Set<Integer> allDegreeCurricularPlanIDs = new HashSet<Integer>();
+        final Set<String> allDegreeCurricularPlanIDs = new HashSet<String>();
         if (degreeCurricularPlansIDs != null && degreeCurricularPlansIDs.length > 0) {
             allDegreeCurricularPlanIDs.addAll(Arrays.asList(degreeCurricularPlansIDs));
         }
@@ -59,9 +59,8 @@ public class CreateExecutionDegreesForExecutionYear {
         }
 
         final List<DegreeCurricularPlan> created = new ArrayList<DegreeCurricularPlan>();
-        for (final Integer degreeCurricularPlanID : allDegreeCurricularPlanIDs) {
-            final DegreeCurricularPlan degreeCurricularPlan =
-                    AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
+        for (final String degreeCurricularPlanID : allDegreeCurricularPlanIDs) {
+            final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
             if (degreeCurricularPlan == null) {
                 continue;
             }

@@ -109,7 +109,7 @@ public class StudentTestsAction extends FenixDispatchAction {
     public ActionForward testsFirstPage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
         final IUserView userView = getUserView(request);
-        final Integer objectCode = new Integer(request.getParameter("objectCode"));
+        final String objectCode = request.getParameter("objectCode");
         final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(objectCode);
 
         final Student student = userView.getPerson().getStudent();

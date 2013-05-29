@@ -16,7 +16,7 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class InsertTestAsNewTest {
 
-    protected Integer run(Integer executionCourseId, Integer oldTestId) throws FenixServiceException {
+    protected String run(String executionCourseId, String oldTestId) throws FenixServiceException {
         Test oldTest = AbstractDomainObject.fromExternalId(oldTestId);
         if (oldTest == null) {
             throw new InvalidArgumentsServiceException();
@@ -44,7 +44,7 @@ public class InsertTestAsNewTest {
     private static final InsertTestAsNewTest serviceInstance = new InsertTestAsNewTest();
 
     @Service
-    public static Integer runInsertTestAsNewTest(Integer executionCourseId, Integer oldTestId) throws FenixServiceException,
+    public static String runInsertTestAsNewTest(String executionCourseId, String oldTestId) throws FenixServiceException,
             NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
         return serviceInstance.run(executionCourseId, oldTestId);

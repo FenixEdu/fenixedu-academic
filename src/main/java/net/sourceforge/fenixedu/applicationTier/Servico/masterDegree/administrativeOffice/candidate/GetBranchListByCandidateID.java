@@ -16,7 +16,7 @@ public class GetBranchListByCandidateID {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
-    public static List<InfoBranch> run(Integer candidateID) throws FenixServiceException {
+    public static List<InfoBranch> run(String candidateID) throws FenixServiceException {
         List<InfoBranch> result = new ArrayList<InfoBranch>();
 
         MasterDegreeCandidate masterDegreeCandidate = AbstractDomainObject.fromExternalId(candidateID);

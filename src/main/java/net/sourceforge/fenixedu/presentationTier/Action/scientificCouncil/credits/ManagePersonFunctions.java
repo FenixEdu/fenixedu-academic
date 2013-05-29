@@ -19,9 +19,9 @@ public class ManagePersonFunctions extends FenixDispatchAction {
 
     public ActionForward deletePersonFunction(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        final Integer personFunctionId = new Integer(request.getParameter("personFunctionID"));
+        final String personFunctionId = request.getParameter("personFunctionID");
 
-        final PersonFunction personFunction = (PersonFunction) AbstractDomainObject.fromExternalId(personFunctionId);
+        final PersonFunction personFunction = AbstractDomainObject.fromExternalId(personFunctionId);
         final Person person = personFunction.getPerson();
 
         personFunction.delete();

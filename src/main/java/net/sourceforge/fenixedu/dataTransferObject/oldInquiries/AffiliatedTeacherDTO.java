@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.Person;
  */
 public class AffiliatedTeacherDTO extends TeacherDTO {
 
-    private Person person;
+    private final Person person;
 
     public AffiliatedTeacherDTO(Person person) {
         this.person = person;
@@ -28,7 +28,7 @@ public class AffiliatedTeacherDTO extends TeacherDTO {
     }
 
     @Override
-    public Integer getPersonID() {
+    public String getPersonID() {
         return person.getExternalId();
     }
 }

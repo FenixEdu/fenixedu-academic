@@ -31,7 +31,7 @@ public class InfoFAQSection extends InfoObject implements Serializable {
     @Override
     public int hashCode() {
         if (this.getExternalId() != null) {
-            return this.getExternalId().intValue();
+            return this.getExternalId().hashCode();
         }
 
         return 0;

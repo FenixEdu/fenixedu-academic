@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.SeminaryCoordinatorOrStud
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCaseStudy;
 import net.sourceforge.fenixedu.domain.Seminaries.CaseStudy;
-import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
+import net.sourceforge.fenixedu.domain.Seminaries.Theme;
 import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
@@ -26,8 +26,8 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class GetCaseStudiesByThemeID {
 
-    protected List run(Integer themeID) throws BDException {
-        List cases = AbstractDomainObject.fromExternalId(themeID).getCaseStudies();
+    protected List run(String themeID) {
+        List cases = AbstractDomainObject.<Theme> fromExternalId(themeID).getCaseStudies();
 
         List infoCases = new LinkedList();
         for (Iterator iterator = cases.iterator(); iterator.hasNext();) {
@@ -43,7 +43,7 @@ public class GetCaseStudiesByThemeID {
     private static final GetCaseStudiesByThemeID serviceInstance = new GetCaseStudiesByThemeID();
 
     @Service
-    public static List runGetCaseStudiesByThemeID(Integer themeID) throws BDException, NotAuthorizedException {
+    public static List runGetCaseStudiesByThemeID(String themeID) throws NotAuthorizedException {
         SeminaryCoordinatorOrStudentFilter.instance.execute();
         return serviceInstance.run(themeID);
     }

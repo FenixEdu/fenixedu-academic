@@ -64,17 +64,11 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class DocumentRequestsManagementDispatchAction extends FenixDispatchAction {
 
     protected IDocumentRequest getDocumentRequest(HttpServletRequest request) {
-        return (IDocumentRequest) AbstractDomainObject.fromExternalId(getRequestParameterAsInteger(request,
-                "documentRequestId"));
+        return (IDocumentRequest) getDomainObject(request, "documentRequestId");
     }
 
     private AcademicServiceRequest getAndSetAcademicServiceRequest(final HttpServletRequest request) {
-        Integer academicServiceRequestId = getRequestParameterAsInteger(request, "academicServiceRequestId");
-        if (academicServiceRequestId == null) {
-            academicServiceRequestId = (Integer) request.getAttribute("academicServiceRequestId");
-        }
-        final AcademicServiceRequest academicServiceRequest =
-                AbstractDomainObject.fromExternalId(academicServiceRequestId);
+        final AcademicServiceRequest academicServiceRequest = getDomainObject(request, "academicServiceRequestId");
         request.setAttribute("academicServiceRequest", academicServiceRequest);
         return academicServiceRequest;
     }
@@ -99,7 +93,7 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
     }
 
     public ActionForward printDocument(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws JRException, IOException,  FenixServiceException {
+            HttpServletResponse response) throws JRException, IOException, FenixServiceException {
         final IDocumentRequest documentRequest = getDocumentRequest(request);
         try {
             byte[] data = documentRequest.generateDocument();
@@ -158,8 +152,7 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
     }
 
     private Registration getRegistration(final HttpServletRequest request) {
-        String registrationID = (String) getFromRequest(request, "registrationId");
-        final Registration registration = AbstractDomainObject.fromExternalId(Integer.valueOf(registrationID));
+        final Registration registration = getDomainObject(request, "registrationId");
         request.setAttribute("registration", registration);
         return registration;
     }
@@ -320,7 +313,7 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 
         final List<Exam> result = new ArrayList<Exam>();
         for (final String examId : examIds) {
-            result.add((Exam) AbstractDomainObject.fromExternalId(Integer.valueOf(examId)));
+            result.add((Exam) AbstractDomainObject.fromExternalId(examId));
         }
 
         return result;
@@ -328,7 +321,7 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
     }
 
     public ActionForward create(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         final DocumentRequestCreateBean documentRequestCreateBean = getRenderedObject();
         final Registration registration = documentRequestCreateBean.getRegistration();

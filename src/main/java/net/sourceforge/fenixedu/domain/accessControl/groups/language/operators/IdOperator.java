@@ -48,10 +48,7 @@ public class IdOperator extends OperatorArgument {
 
     @Override
     protected DomainObject execute() {
-        Integer number = getNumber();
-        Class type = getClassType();
-
-        return AbstractDomainObject.fromExternalId(type, number);
+        throw new UnsupportedOperationException("Arguments by IdInternal are no longer supported!");
     }
 
     protected Integer getNumber() {

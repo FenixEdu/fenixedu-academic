@@ -17,7 +17,7 @@ public class GetEndOfScholarshipDate {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
-    public static Date run(Integer studentCurricularPlanID) {
+    public static Date run(String studentCurricularPlanID) {
         StudentCurricularPlan studentCurricularPlan = AbstractDomainObject.fromExternalId(studentCurricularPlanID);
 
         IDegreeCurricularPlanStrategyFactory degreeCurricularPlanStrategyFactory =

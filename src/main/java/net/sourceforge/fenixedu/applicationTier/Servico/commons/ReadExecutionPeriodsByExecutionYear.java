@@ -12,9 +12,9 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ReadExecutionPeriodsByExecutionYear {
 
     @Service
-    public static List run(Integer executionYearId) {
+    public static List run(String executionYearId) {
         final ExecutionYear executionYear =
-                executionYearId != null ? AbstractDomainObject.fromExternalId(executionYearId) : ExecutionYear
+                executionYearId != null ? AbstractDomainObject.<ExecutionYear> fromExternalId(executionYearId) : ExecutionYear
                         .readCurrentExecutionYear();
 
         final List<InfoExecutionPeriod> infoExecutionPeriods = new ArrayList<InfoExecutionPeriod>();

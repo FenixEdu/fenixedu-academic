@@ -15,7 +15,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ReadShiftsByExecutionCourseID {
 
-    protected InfoExecutionCourseOccupancy run(Integer executionCourseID) {
+    protected InfoExecutionCourseOccupancy run(String executionCourseID) {
 
         final InfoExecutionCourseOccupancy infoExecutionCourseOccupancy = new InfoExecutionCourseOccupancy();
         infoExecutionCourseOccupancy.setInfoShifts(new ArrayList());
@@ -44,7 +44,8 @@ public class ReadShiftsByExecutionCourseID {
     private static final ReadShiftsByExecutionCourseID serviceInstance = new ReadShiftsByExecutionCourseID();
 
     @Service
-    public static InfoExecutionCourseOccupancy runReadShiftsByExecutionCourseID(Integer executionCourseID) throws NotAuthorizedException {
+    public static InfoExecutionCourseOccupancy runReadShiftsByExecutionCourseID(String executionCourseID)
+            throws NotAuthorizedException {
         ReadShiftsByExecutionCourseIDAuthorizationFilter.instance.execute(executionCourseID);
         return serviceInstance.run(executionCourseID);
     }

@@ -22,9 +22,9 @@ import org.apache.commons.collections.Transformer;
  */
 public class CreateCourseReportsForExecutionPeriod extends FenixBackingBean {
 
-    private Integer executionPeriodID;
+    private String executionPeriodID;
 
-    public List getExecutionPeriods() throws  FenixServiceException {
+    public List getExecutionPeriods() throws FenixServiceException {
 
         List executionPeriods = ReadNotClosedExecutionPeriods.run();
 
@@ -48,11 +48,11 @@ public class CreateCourseReportsForExecutionPeriod extends FenixBackingBean {
                 "message.manager.createCourseReports.success"));
     }
 
-    public Integer getExecutionPeriodID() {
+    public String getExecutionPeriodID() {
         return executionPeriodID;
     }
 
-    public void setExecutionPeriodID(Integer executionPeriodID) {
+    public void setExecutionPeriodID(String executionPeriodID) {
         this.executionPeriodID = executionPeriodID;
     }
 

@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.competenceCourseManagement;
 
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCompetenceCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCompetenceCourseWithCurricularCourses;
@@ -13,7 +12,7 @@ public class ReadCompetenceCourse {
 
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
-    public static InfoCompetenceCourse run(Integer competenceCourseID) throws NotExistingServiceException {
+    public static InfoCompetenceCourse run(String competenceCourseID) throws NotExistingServiceException {
         CompetenceCourse competenceCourse = AbstractDomainObject.fromExternalId(competenceCourseID);
         if (competenceCourse == null) {
             throw new NotExistingServiceException("Invalid CompetenceCourse ID");

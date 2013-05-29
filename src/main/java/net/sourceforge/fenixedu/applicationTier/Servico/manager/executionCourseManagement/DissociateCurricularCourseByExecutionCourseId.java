@@ -16,7 +16,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class DissociateCurricularCourseByExecutionCourseId {
 
     @Service
-    public static void run(Integer executionCourseId, Integer curricularCourseId) throws FenixServiceException {
+    public static void run(String executionCourseId, String curricularCourseId) throws FenixServiceException {
         ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
 
         CurricularCourse curricularCourse =

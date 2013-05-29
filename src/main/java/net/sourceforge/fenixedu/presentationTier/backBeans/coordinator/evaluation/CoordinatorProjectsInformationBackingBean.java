@@ -24,7 +24,7 @@ public class CoordinatorProjectsInformationBackingBean extends CoordinatorEvalua
     private final ResourceBundle messages = getResourceBundle("resources/ApplicationResources");
     private List<ExecutionCourse> executionCoursesWithProjects;
     private List<ExecutionCourse> executionCoursesWithoutProjects;
-    private Map<Integer, List<Project>> projects = new HashMap();
+    private final Map<String, List<Project>> projects = new HashMap();
     private List<CalendarLink> projectsCalendarLink;
 
     private void filterExecutionCourses() {
@@ -96,7 +96,7 @@ public class CoordinatorProjectsInformationBackingBean extends CoordinatorEvalua
         return this.executionCoursesWithoutProjects;
     }
 
-    public Map<Integer, List<Project>> getProjects() {
+    public Map<String, List<Project>> getProjects() {
         return this.projects;
     }
 

@@ -39,7 +39,6 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/receipts", module = "academicAdministration", formBeanClass = FenixActionForm.class)
 @Forwards({
@@ -313,7 +312,7 @@ public class ReceiptsManagementDA extends PaymentsManagementDispatchAction {
     }
 
     protected Receipt getReceipt(final HttpServletRequest request) {
-        return AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "receiptID"));
+        return getDomainObject(request, "receiptID");
     }
 
     protected Receipt getReceiptFromViewState(String viewStateName) {

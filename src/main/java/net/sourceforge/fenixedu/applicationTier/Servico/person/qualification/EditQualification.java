@@ -5,7 +5,6 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.person.qualification;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.person.QualificationManagerAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -22,7 +21,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class EditQualification {
 
-    protected void run(Integer qualificationId, InfoQualification infoQualification) throws FenixServiceException {
+    protected void run(String qualificationId, InfoQualification infoQualification) throws FenixServiceException {
         Qualification qualification = AbstractDomainObject.fromExternalId(qualificationId);
         // If it doesn't exist in the database, a new one has to be created
         Country country = AbstractDomainObject.fromExternalId(infoQualification.getInfoCountry().getExternalId());
@@ -41,8 +40,9 @@ public class EditQualification {
     private static final EditQualification serviceInstance = new EditQualification();
 
     @Service
-    public static void runEditQualification(Integer qualificationId, InfoQualification infoQualification) throws FenixServiceException  , NotAuthorizedException {
-        QualificationManagerAuthorizationFilter.instance.execute(qualificationId, infoQualification);
+    public static void runEditQualification(String qualificationId, InfoQualification infoQualification)
+            throws FenixServiceException, NotAuthorizedException {
+        QualificationManagerAuthorizationFilter.instance.execute(infoQualification);
         serviceInstance.run(qualificationId, infoQualification);
     }
 

@@ -51,10 +51,10 @@ public class CurriculumDispatchActionForMasterDegreeAdministrativeOffice extends
             studentCurricularPlanID = (String) request.getAttribute("studentCPID");
         }
 
-        Integer executionDegreeId = getExecutionDegree(request);
+        String executionDegreeId = getExecutionDegree(request);
         List result = null;
         try {
-            result = ReadStudentCurriculum.runReadStudentCurriculum(executionDegreeId, Integer.valueOf(studentCurricularPlanID));
+            result = ReadStudentCurriculum.runReadStudentCurriculum(executionDegreeId, studentCurricularPlanID);
         } catch (NotAuthorizedException e) {
             return mapping.findForward("NotAuthorized");
         }
@@ -70,7 +70,7 @@ public class CurriculumDispatchActionForMasterDegreeAdministrativeOffice extends
         InfoStudentCurricularPlan infoStudentCurricularPlan = null;
         try {
 
-            infoStudentCurricularPlan = ReadStudentCurricularPlan.run(Integer.valueOf(studentCurricularPlanID));
+            infoStudentCurricularPlan = ReadStudentCurricularPlan.run(studentCurricularPlanID);
         } catch (ExistingServiceException e) {
             throw new ExistingActionException(e);
         }
@@ -138,19 +138,13 @@ public class CurriculumDispatchActionForMasterDegreeAdministrativeOffice extends
         return studentNumber;
     }
 
-    private Integer getExecutionDegree(HttpServletRequest request) {
-        Integer executionDegreeId = null;
-
+    private String getExecutionDegree(HttpServletRequest request) {
         String executionDegreeIdString = request.getParameter("executionDegreeId");
         if (executionDegreeIdString == null) {
             executionDegreeIdString = (String) request.getAttribute("executionDegreeId");
         }
-        if (executionDegreeIdString != null) {
-            executionDegreeId = Integer.valueOf(executionDegreeIdString);
-        }
-        request.setAttribute("executionDegreeId", executionDegreeId);
-
-        return executionDegreeId;
+        request.setAttribute("executionDegreeId", executionDegreeIdString);
+        return executionDegreeIdString;
     }
 
 }

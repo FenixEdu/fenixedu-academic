@@ -37,20 +37,20 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
 
     private String name = null;
     private String nameEn = null;
-    private Integer courseGroupID;
+    private String courseGroupID;
     private List<SelectItem> courseGroups = null;
 
-    public Integer getParentCourseGroupID() {
-        return getAndHoldIntegerParameter("parentCourseGroupID");
+    public String getParentCourseGroupID() {
+        return getAndHoldStringParameter("parentCourseGroupID");
     }
 
     @Override
-    public Integer getCourseGroupID() {
-        return (this.courseGroupID != null) ? this.courseGroupID : getAndHoldIntegerParameter("courseGroupID");
+    public String getCourseGroupID() {
+        return (this.courseGroupID != null) ? this.courseGroupID : getAndHoldStringParameter("courseGroupID");
     }
 
     @Override
-    public void setCourseGroupID(Integer courseGroupID) {
+    public void setCourseGroupID(String courseGroupID) {
         this.courseGroupID = courseGroupID;
     }
 
@@ -78,7 +78,7 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
         this.nameEn = nameEn;
     }
 
-    public CourseGroup getCourseGroup(Integer courseGroupID) {
+    public CourseGroup getCourseGroup(String courseGroupID) {
         return (CourseGroup) AbstractDomainObject.fromExternalId(courseGroupID);
     }
 
@@ -206,7 +206,7 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
             }
         }
         Collections.sort(result, new BeanComparator("label"));
-        result.add(0, new SelectItem(this.NO_SELECTION, bolonhaBundle.getString("choose")));
+        result.add(0, new SelectItem(this.NO_SELECTION_STRING, bolonhaBundle.getString("choose")));
         return result;
     }
 

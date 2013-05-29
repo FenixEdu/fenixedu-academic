@@ -74,8 +74,7 @@ public class ManageExecutionPeriodsDA extends FenixDispatchAction {
 
         final String externalId = request.getParameter("executionPeriodID");
         try {
-            ExecutionSemester executionSemester =
-                    (ExecutionSemester) AbstractDomainObject.fromExternalId(Integer.valueOf(externalId));
+            ExecutionSemester executionSemester = (ExecutionSemester) AbstractDomainObject.fromExternalId(externalId);
             request.setAttribute("executionPeriod", executionSemester);
         } catch (DomainException e) {
             addActionMessage("error", request, e.getMessage());

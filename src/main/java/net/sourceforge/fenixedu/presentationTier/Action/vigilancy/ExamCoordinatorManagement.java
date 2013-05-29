@@ -77,17 +77,15 @@ public class ExamCoordinatorManagement extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         String oid = request.getParameter("oid");
-        Integer externalId = Integer.valueOf(oid);
         String departmentId = request.getParameter("deparmentId");
         String unitId = request.getParameter("unitId");
 
-        ExamCoordinator coordinator = (ExamCoordinator) AbstractDomainObject.fromExternalId(ExamCoordinator.class, externalId);
+        ExamCoordinator coordinator = (ExamCoordinator) AbstractDomainObject.fromExternalId(oid);
 
         DeleteExamCoordinator.run(coordinator);
 
-        Department deparment =
-                (Department) AbstractDomainObject.fromExternalId(Department.class, Integer.valueOf(departmentId));
-        Unit unit = (Unit) AbstractDomainObject.fromExternalId(Unit.class, Integer.valueOf(unitId));
+        Department deparment = (Department) AbstractDomainObject.fromExternalId(departmentId);
+        Unit unit = (Unit) AbstractDomainObject.fromExternalId(unitId);
 
         VigilantGroupBean bean = new VigilantGroupBean();
         bean.setSelectedDepartment(deparment);
@@ -104,9 +102,8 @@ public class ExamCoordinatorManagement extends FenixDispatchAction {
         String departmentId = request.getParameter("deparmentId");
         String unitId = request.getParameter("unitId");
 
-        Department deparment =
-                (Department) AbstractDomainObject.fromExternalId(Department.class, Integer.valueOf(departmentId));
-        Unit unit = (Unit) AbstractDomainObject.fromExternalId(Unit.class, Integer.valueOf(unitId));
+        Department deparment = AbstractDomainObject.fromExternalId(departmentId);
+        Unit unit = AbstractDomainObject.fromExternalId(unitId);
 
         VigilantGroupBean bean = new VigilantGroupBean();
         bean.setSelectedDepartment(deparment);
@@ -123,9 +120,8 @@ public class ExamCoordinatorManagement extends FenixDispatchAction {
         String departmentId = request.getParameter("deparmentId");
         String unitId = request.getParameter("unitId");
 
-        Department deparment =
-                (Department) AbstractDomainObject.fromExternalId(Department.class, Integer.valueOf(departmentId));
-        Unit unit = (Unit) AbstractDomainObject.fromExternalId(Unit.class, Integer.valueOf(unitId));
+        Department deparment = (Department) AbstractDomainObject.fromExternalId(departmentId);
+        Unit unit = (Unit) AbstractDomainObject.fromExternalId(unitId);
 
         VigilantGroupBean bean = new VigilantGroupBean();
         bean.setSelectedDepartment(deparment);
@@ -146,7 +142,7 @@ public class ExamCoordinatorManagement extends FenixDispatchAction {
         return mapping.findForward("prepareExamCoordinator");
     }
 
-    private void prepareManagementBean(HttpServletRequest request) throws  FenixServiceException {
+    private void prepareManagementBean(HttpServletRequest request) throws FenixServiceException {
 
         VigilantGroupBean bean = new VigilantGroupBean();
         ExecutionYear currentYear = ExecutionYear.readCurrentExecutionYear();

@@ -3,7 +3,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.services;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentAdministrativeOfficeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ScientificCouncilAuthorizationFilter;
@@ -20,7 +19,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class DeleteTeacherAdviseServiceByOID {
 
-    protected void run(Integer teacherAdviseServiceID, RoleType roleType) {
+    protected void run(String teacherAdviseServiceID, RoleType roleType) {
         TeacherAdviseService teacherAdviseService =
                 (TeacherAdviseService) AbstractDomainObject.fromExternalId(teacherAdviseServiceID);
         teacherAdviseService.delete(roleType);
@@ -31,7 +30,7 @@ public class DeleteTeacherAdviseServiceByOID {
     private static final DeleteTeacherAdviseServiceByOID serviceInstance = new DeleteTeacherAdviseServiceByOID();
 
     @Service
-    public static void runDeleteTeacherAdviseServiceByOID(Integer teacherAdviseServiceID, RoleType roleType)
+    public static void runDeleteTeacherAdviseServiceByOID(String teacherAdviseServiceID, RoleType roleType)
             throws NotAuthorizedException {
         try {
             ScientificCouncilAuthorizationFilter.instance.execute();

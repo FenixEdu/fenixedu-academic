@@ -19,8 +19,8 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class EditStudentGroupsShift {
 
-    protected Boolean run(Integer executionCourseCode, Integer groupPropertiesCode, Integer shiftCode,
-            List<Integer> studentGroupsCodes) throws FenixServiceException {
+    protected Boolean run(String executionCourseCode, String groupPropertiesCode, String shiftCode,
+            List<String> studentGroupsCodes) throws FenixServiceException {
 
         Grouping grouping = AbstractDomainObject.fromExternalId(groupPropertiesCode);
         if (grouping == null) {
@@ -51,11 +51,11 @@ public class EditStudentGroupsShift {
         return Boolean.TRUE;
     }
 
-    private List<StudentGroup> buildStudentGroupsList(List<Integer> studentGroupsCodes) throws InvalidSituationServiceException {
+    private List<StudentGroup> buildStudentGroupsList(List<String> studentGroupsCodes) throws InvalidSituationServiceException {
 
         List<StudentGroup> studentGroups = new ArrayList<StudentGroup>();
 
-        for (Integer studentGroupCode : studentGroupsCodes) {
+        for (String studentGroupCode : studentGroupsCodes) {
             StudentGroup studentGroup = AbstractDomainObject.fromExternalId(studentGroupCode);
 
             if (studentGroup == null) {
@@ -73,8 +73,8 @@ public class EditStudentGroupsShift {
     private static final EditStudentGroupsShift serviceInstance = new EditStudentGroupsShift();
 
     @Service
-    public static Boolean runEditStudentGroupsShift(Integer executionCourseCode, Integer groupPropertiesCode, Integer shiftCode,
-            List<Integer> studentGroupsCodes) throws FenixServiceException, NotAuthorizedException {
+    public static Boolean runEditStudentGroupsShift(String executionCourseCode, String groupPropertiesCode, String shiftCode,
+            List<String> studentGroupsCodes) throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseCode);
         return serviceInstance.run(executionCourseCode, groupPropertiesCode, shiftCode, studentGroupsCodes);
     }

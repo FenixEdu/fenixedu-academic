@@ -310,7 +310,7 @@ public class InfoCurricularCourse extends InfoObject implements Comparable, ISit
     }
 
     @Override
-    public Integer getExternalId() {
+    public String getExternalId() {
         return getCurricularCourse().getExternalId();
     }
 

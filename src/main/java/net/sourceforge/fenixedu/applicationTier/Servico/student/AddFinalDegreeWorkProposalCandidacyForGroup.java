@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
@@ -22,7 +21,7 @@ public class AddFinalDegreeWorkProposalCandidacyForGroup {
 
     @Checked("RolePredicates.STUDENT_PREDICATE")
     @Service
-    public static Boolean run(final FinalDegreeWorkGroup group, Integer proposalOID) throws FenixServiceException {
+    public static Boolean run(final FinalDegreeWorkGroup group, String proposalOID) throws FenixServiceException {
         Proposal proposal = AbstractDomainObject.fromExternalId(proposalOID);
         if (group != null && group.getGroupProposals() != null
         /* && !CollectionUtils.exists(group.getStudents(), ) */) {

@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.ManagerAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.OperatorAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ScientificCouncilAuthorizationFilter;
@@ -21,7 +20,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class AssociateNewFunctionToPerson {
 
-    protected void run(Integer functionID, Integer personID, Double credits, YearMonthDay begin, YearMonthDay end)
+    protected void run(String functionID, String personID, Double credits, YearMonthDay begin, YearMonthDay end)
             throws FenixServiceException, DomainException {
 
         Person person = (Person) AbstractDomainObject.fromExternalId(personID);
@@ -42,7 +41,7 @@ public class AssociateNewFunctionToPerson {
     private static final AssociateNewFunctionToPerson serviceInstance = new AssociateNewFunctionToPerson();
 
     @Service
-    public static void runAssociateNewFunctionToPerson(Integer functionID, Integer personID, Double credits, YearMonthDay begin,
+    public static void runAssociateNewFunctionToPerson(String functionID, String personID, Double credits, YearMonthDay begin,
             YearMonthDay end) throws FenixServiceException, DomainException, NotAuthorizedException {
         try {
             ManagerAuthorizationFilter.instance.execute();

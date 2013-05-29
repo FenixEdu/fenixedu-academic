@@ -63,11 +63,11 @@ public class ViewClassesActionNew extends FenixContextAction {
         request.setAttribute("index", index);
 
         // degreeID
-        Integer degreeId = (Integer) request.getAttribute("degreeID");
+        String degreeId = (String) request.getAttribute("degreeID");
         request.setAttribute("degreeID", degreeId);
 
         // degreeCurricularPlanID
-        Integer degreeCurricularPlanId = (Integer) request.getAttribute("degreeCurricularPlanID");
+        String degreeCurricularPlanId = (String) request.getAttribute("degreeCurricularPlanID");
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
         final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanId);
         if (!degreeCurricularPlan.getDegree().getExternalId().equals(degreeId)) {
@@ -95,8 +95,7 @@ public class ViewClassesActionNew extends FenixContextAction {
         request.setAttribute(PresentationConstants.EXECUTION_PERIOD, infoExecutionPeriod);
         request.setAttribute(PresentationConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getExternalId().toString());
 
-        final ExecutionSemester executionSemester =
-                AbstractDomainObject.fromExternalId(infoExecutionPeriod.getExternalId());
+        final ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(infoExecutionPeriod.getExternalId());
         ExecutionDegree executionDegree = degreeCurricularPlan.getExecutionDegreeByYear(executionSemester.getExecutionYear());
         if (executionDegree != null) {
             // infoExecutionDegree

@@ -22,7 +22,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class ReadStudentsWithDistributedTest {
 
-    protected List run(Integer executionCourseId, Integer distributedTestId) throws FenixServiceException {
+    protected List run(String executionCourseId, String distributedTestId) throws FenixServiceException {
         final List<InfoStudent> result = new ArrayList<InfoStudent>();
 
         final DistributedTest distributedTest = AbstractDomainObject.fromExternalId(distributedTestId);
@@ -43,7 +43,7 @@ public class ReadStudentsWithDistributedTest {
     private static final ReadStudentsWithDistributedTest serviceInstance = new ReadStudentsWithDistributedTest();
 
     @Service
-    public static List runReadStudentsWithDistributedTest(Integer executionCourseId, Integer distributedTestId)
+    public static List runReadStudentsWithDistributedTest(String executionCourseId, String distributedTestId)
             throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
         return serviceInstance.run(executionCourseId, distributedTestId);

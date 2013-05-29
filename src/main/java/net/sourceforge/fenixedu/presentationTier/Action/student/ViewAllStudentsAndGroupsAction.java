@@ -40,17 +40,16 @@ public class ViewAllStudentsAndGroupsAction extends FenixContextAction {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixActionException,  FenixServiceException {
+            throws FenixActionException, FenixServiceException {
 
         IUserView userView = getUserView(request);
 
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
-        Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
 
         InfoSiteStudentsAndGroups infoSiteStudentsAndGroups = new InfoSiteStudentsAndGroups();
 
         try {
-            infoSiteStudentsAndGroups = ReadAllStudentsAndGroups.run(groupPropertiesCode);
+            infoSiteStudentsAndGroups = ReadAllStudentsAndGroups.run(groupPropertiesCodeString);
 
         } catch (InvalidSituationServiceException e) {
             ActionErrors actionErrors2 = new ActionErrors();
@@ -64,7 +63,7 @@ public class ViewAllStudentsAndGroupsAction extends FenixContextAction {
         }
 
         request.setAttribute("infoSiteStudentsAndGroups", infoSiteStudentsAndGroups);
-        List<InfoExportGrouping> infoExportGroupings = ReadExportGroupingsByGrouping.run(groupPropertiesCode);
+        List<InfoExportGrouping> infoExportGroupings = ReadExportGroupingsByGrouping.run(groupPropertiesCodeString);
         request.setAttribute("infoExportGroupings", infoExportGroupings);
 
         return mapping.findForward("sucess");

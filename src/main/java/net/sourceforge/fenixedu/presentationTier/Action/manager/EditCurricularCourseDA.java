@@ -72,12 +72,10 @@ public class EditCurricularCourseDA extends FenixDispatchAction {
         IUserView userView = UserView.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
 
-        Integer curricularCourseId = new Integer(request.getParameter("curricularCourseId"));
-
         InfoCurricularCourse oldInfoCurricularCourse = null;
 
         try {
-            oldInfoCurricularCourse = ReadCurricularCourse.runReadCurricularCourse(curricularCourseId);
+            oldInfoCurricularCourse = ReadCurricularCourse.runReadCurricularCourse(request.getParameter("curricularCourseId"));
         } catch (NonExistingServiceException ex) {
             throw new NonExistingActionException("message.nonExistingCurricularCourse", mapping.findForward("readDegreeCP"));
         } catch (FenixServiceException fenixServiceException) {
@@ -134,7 +132,7 @@ public class EditCurricularCourseDA extends FenixDispatchAction {
 
         DynaActionForm dynaForm = (DynaValidatorForm) form;
 
-        Integer oldCurricularCourseId = new Integer(request.getParameter("curricularCourseId"));
+        String oldCurricularCourseId = request.getParameter("curricularCourseId");
 
         InfoCurricularCourseEditor newInfoCurricularCourse = new InfoCurricularCourseEditor();
 

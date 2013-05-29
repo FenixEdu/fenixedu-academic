@@ -22,7 +22,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ReadCandidateEnrolmentsByCandidateID {
 
-    protected List run(Integer candidateID) throws FenixServiceException {
+    protected List run(String candidateID) throws FenixServiceException {
         List result = new ArrayList();
 
         MasterDegreeCandidate masterDegreeCandidate = AbstractDomainObject.fromExternalId(candidateID);
@@ -53,7 +53,7 @@ public class ReadCandidateEnrolmentsByCandidateID {
     private static final ReadCandidateEnrolmentsByCandidateID serviceInstance = new ReadCandidateEnrolmentsByCandidateID();
 
     @Service
-    public static List runReadCandidateEnrolmentsByCandidateID(Integer candidateID) throws FenixServiceException,
+    public static List runReadCandidateEnrolmentsByCandidateID(String candidateID) throws FenixServiceException,
             NotAuthorizedException {
         ReadCandidateEnrolmentsByCandidateIDAuthorizationFilter.instance.execute(candidateID);
         return serviceInstance.run(candidateID);

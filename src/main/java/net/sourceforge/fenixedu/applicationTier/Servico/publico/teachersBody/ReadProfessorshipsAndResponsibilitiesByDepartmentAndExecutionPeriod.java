@@ -27,7 +27,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ReadProfessorshipsAndResponsibilitiesByDepartmentAndExecutionPeriod {
 
     @Service
-    public static List run(Integer departmentId, Integer executionYearID, Integer semester, Integer teacherType)
+    public static List run(String departmentId, String executionYearID, Integer semester, Integer teacherType)
             throws FenixServiceException {
 
         ExecutionYear executionYear = null;

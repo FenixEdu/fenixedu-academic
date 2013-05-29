@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.EmployeeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilter;
@@ -10,7 +9,7 @@ import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class MergeTeacherServiceDistributions {
-    protected void run(Integer tsdId, Integer otherGroupingId) {
+    protected void run(String tsdId, String otherGroupingId) {
 
         TeacherServiceDistribution tsd = AbstractDomainObject.fromExternalId(tsdId);
         TeacherServiceDistribution otherGrouping = AbstractDomainObject.fromExternalId(otherGroupingId);
@@ -23,7 +22,7 @@ public class MergeTeacherServiceDistributions {
     private static final MergeTeacherServiceDistributions serviceInstance = new MergeTeacherServiceDistributions();
 
     @Service
-    public static void runMergeTeacherServiceDistributions(Integer tsdId, Integer otherGroupingId) throws NotAuthorizedException {
+    public static void runMergeTeacherServiceDistributions(String tsdId, String otherGroupingId) throws NotAuthorizedException {
         try {
             DepartmentMemberAuthorizationFilter.instance.execute();
             serviceInstance.run(tsdId, otherGroupingId);

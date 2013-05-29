@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.domain.Coordinator;
@@ -14,7 +13,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class LoggedCoordinatorCanEdit {
 
     @Service
-    public static Boolean run(Integer executionDegreeCode, Integer curricularCourseCode, String username)
+    public static Boolean run(String executionDegreeCode, String curricularCourseCode, String username)
             throws FenixServiceException {
         Boolean result = new Boolean(false);
 

@@ -101,7 +101,7 @@ public class EmailsDA extends FenixDispatchAction {
             HttpServletResponse response) {
         final String senderParam = request.getParameter("senderId");
         if (senderParam != null && !senderParam.isEmpty()) {
-            return viewSentEmails(mapping, request, new Integer(senderParam));
+            return viewSentEmails(mapping, request, senderParam);
         }
 
         final IUserView userView = UserView.getUser();
@@ -140,7 +140,7 @@ public class EmailsDA extends FenixDispatchAction {
         return mapping.findForward("view.sent.emails");
     }
 
-    public ActionForward viewSentEmails(final ActionMapping mapping, final HttpServletRequest request, final Integer senderId) {
+    public ActionForward viewSentEmails(final ActionMapping mapping, final HttpServletRequest request, final String senderId) {
         final Sender sender = AbstractDomainObject.fromExternalId(senderId);
         final int numberOfMessagesByPage = 40;
         final CollectionPager<Message> pager = new CollectionPager<Message>(sender.getMessagesSet(), numberOfMessagesByPage);
@@ -169,7 +169,7 @@ public class EmailsDA extends FenixDispatchAction {
             final HttpServletResponse response) {
         final String messageParam = request.getParameter("messagesId");
         final Message message =
-                messageParam != null && !messageParam.isEmpty() ? AbstractDomainObject.fromExternalId(new Integer(messageParam)) : null;
+                messageParam != null && !messageParam.isEmpty() ? AbstractDomainObject.<Message> fromExternalId(messageParam) : null;
         return viewEmail(mapping, request, message);
     }
 
@@ -177,7 +177,7 @@ public class EmailsDA extends FenixDispatchAction {
             final HttpServletRequest request, final HttpServletResponse response) {
         final String messageParam = request.getParameter("messagesId");
         final Message message =
-                messageParam != null && !messageParam.isEmpty() ? AbstractDomainObject.fromExternalId(new Integer(messageParam)) : null;
+                messageParam != null && !messageParam.isEmpty() ? AbstractDomainObject.<Message> fromExternalId(messageParam) : null;
         if (message == null) {
             return viewSentEmails(mapping, actionForm, request, response);
         } else {
@@ -212,7 +212,7 @@ public class EmailsDA extends FenixDispatchAction {
 
     private Message getMessageFromRequest(HttpServletRequest request) {
         final String messageParam = request.getParameter("messagesId");
-        return AbstractDomainObject.fromExternalId(new Integer(messageParam));
+        return AbstractDomainObject.fromExternalId(messageParam);
     }
 
     private int getNumberOfPages(CollectionPager pager) {

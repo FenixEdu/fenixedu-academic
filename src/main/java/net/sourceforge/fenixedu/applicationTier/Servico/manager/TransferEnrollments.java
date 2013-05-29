@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -13,16 +12,15 @@ public class TransferEnrollments {
 
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
-    public static void run(final Integer destinationStudentCurricularPlanId, final Integer[] enrollmentIDsToTransfer,
-            final Integer destinationCurriculumGroupID) {
+    public static void run(final String destinationStudentCurricularPlanId, final String[] enrollmentIDsToTransfer,
+            final String destinationCurriculumGroupID) {
 
         if (destinationCurriculumGroupID != null) {
 
-            CurriculumGroup curriculumGroup =
-                    (CurriculumGroup) AbstractDomainObject.fromExternalId(destinationCurriculumGroupID);
+            CurriculumGroup curriculumGroup = (CurriculumGroup) AbstractDomainObject.fromExternalId(destinationCurriculumGroupID);
             StudentCurricularPlan studentCurricularPlan = curriculumGroup.getStudentCurricularPlan();
 
-            for (final Integer enrollmentIDToTransfer : enrollmentIDsToTransfer) {
+            for (final String enrollmentIDToTransfer : enrollmentIDsToTransfer) {
                 Enrolment enrolment = (Enrolment) AbstractDomainObject.fromExternalId(enrollmentIDToTransfer);
 
                 fixEnrolmentCurricularCourse(studentCurricularPlan, enrolment);
@@ -35,7 +33,7 @@ public class TransferEnrollments {
 
             final StudentCurricularPlan studentCurricularPlan =
                     AbstractDomainObject.fromExternalId(destinationStudentCurricularPlanId);
-            for (final Integer enrollmentIDToTransfer : enrollmentIDsToTransfer) {
+            for (final String enrollmentIDToTransfer : enrollmentIDsToTransfer) {
                 final Enrolment enrollment = (Enrolment) AbstractDomainObject.fromExternalId(enrollmentIDToTransfer);
 
                 fixEnrolmentCurricularCourse(studentCurricularPlan, enrollment);

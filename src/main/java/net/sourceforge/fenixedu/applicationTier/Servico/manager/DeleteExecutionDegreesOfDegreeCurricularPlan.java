@@ -13,10 +13,10 @@ public class DeleteExecutionDegreesOfDegreeCurricularPlan {
 
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
-    public static List run(List<Integer> executionDegreesIds) throws FenixServiceException {
+    public static List run(List<String> executionDegreesIds) throws FenixServiceException {
         List<String> undeletedExecutionDegreesYears = new ArrayList<String>();
 
-        for (final Integer executionDegreeId : executionDegreesIds) {
+        for (final String executionDegreeId : executionDegreesIds) {
             final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeId);
 
             if (executionDegree != null) {

@@ -18,7 +18,7 @@ public class EditDegree {
 
     @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
     @Service
-    public static void run(Integer externalId, String name, String nameEn, String acronym, DegreeType degreeType,
+    public static void run(String externalId, String name, String nameEn, String acronym, DegreeType degreeType,
             Double ectsCredits, GradeScale gradeScale, String prevailingScientificArea, ExecutionYear executionYear)
             throws FenixServiceException {
         if (externalId == null || name == null || nameEn == null || acronym == null || degreeType == null || ectsCredits == null) {

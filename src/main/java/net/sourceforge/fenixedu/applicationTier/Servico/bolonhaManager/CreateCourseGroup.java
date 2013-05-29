@@ -10,17 +10,15 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class CreateCourseGroup {
 
     @Service
-    public static void run(final Integer degreeCurricularPlanID, final Integer parentCourseGroupID, final String name,
-            final String nameEn, final Integer beginExecutionPeriodID, final Integer endExecutionPeriodID)
+    public static void run(final String degreeCurricularPlanID, final String parentCourseGroupID, final String name,
+            final String nameEn, final String beginExecutionPeriodID, final String endExecutionPeriodID)
             throws FenixServiceException {
 
-        final DegreeCurricularPlan degreeCurricularPlan =
-                AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
+        final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
         if (degreeCurricularPlan == null) {
             throw new FenixServiceException("error.noDegreeCurricularPlan");
         }
-        final CourseGroup parentCourseGroup =
-                (CourseGroup) AbstractDomainObject.fromExternalId(parentCourseGroupID);
+        final CourseGroup parentCourseGroup = (CourseGroup) AbstractDomainObject.fromExternalId(parentCourseGroupID);
         if (parentCourseGroup == null) {
             throw new FenixServiceException("error.noCourseGroup");
         }
@@ -33,8 +31,8 @@ public class CreateCourseGroup {
         }
 
         final ExecutionSemester endExecutionPeriod =
-                (endExecutionPeriodID == null) ? null : AbstractDomainObject.fromExternalId(
-                        endExecutionPeriodID);
+                (endExecutionPeriodID == null) ? null : AbstractDomainObject
+                        .<ExecutionSemester> fromExternalId(endExecutionPeriodID);
 
         degreeCurricularPlan.createCourseGroup(parentCourseGroup, name, nameEn, beginExecutionPeriod, endExecutionPeriod);
     }

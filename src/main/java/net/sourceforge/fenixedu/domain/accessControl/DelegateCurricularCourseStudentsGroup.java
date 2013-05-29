@@ -18,9 +18,9 @@ public class DelegateCurricularCourseStudentsGroup extends LeafGroup {
 
     private static final long serialVersionUID = 1L;
 
-    private final Integer curricularCourseId;
+    private final String curricularCourseId;
 
-    private final Integer executionYearId;
+    private final String executionYearId;
 
     public DelegateCurricularCourseStudentsGroup(CurricularCourse curricularCourse, ExecutionYear executionYear) {
         curricularCourseId = curricularCourse.getExternalId();
@@ -101,12 +101,11 @@ public class DelegateCurricularCourseStudentsGroup extends LeafGroup {
     }
 
     public ExecutionYear getExecutionYear() {
-        return executionYearId != null ? AbstractDomainObject.fromExternalId(executionYearId) : null;
+        return AbstractDomainObject.fromExternalId(executionYearId);
     }
 
     public CurricularCourse getCurricularCourse() {
-        return (CurricularCourse) (curricularCourseId != null ? AbstractDomainObject.fromExternalId(
-                curricularCourseId) : null);
+        return (CurricularCourse) (curricularCourseId != null ? AbstractDomainObject.fromExternalId(curricularCourseId) : null);
     }
 
     private int getNumberOfEnrolledStudents() {

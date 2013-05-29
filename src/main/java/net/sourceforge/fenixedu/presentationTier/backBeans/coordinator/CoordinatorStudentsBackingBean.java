@@ -31,9 +31,9 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
 
     private static final int RESULTS_PER_PAGE = 100;
 
-    private Integer degreeCurricularPlanID = null;
+    private String degreeCurricularPlanID = null;
 
-    private Integer executionDegreeId = null;
+    private String executionDegreeId = null;
 
     private String sortBy = null;
 
@@ -67,19 +67,19 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
 
     private final String label = "";
 
-    public Integer getDegreeCurricularPlanID() {
-        return (degreeCurricularPlanID == null) ? degreeCurricularPlanID = getAndHoldIntegerParameter("degreeCurricularPlanID") : degreeCurricularPlanID;
+    public String getDegreeCurricularPlanID() {
+        return (degreeCurricularPlanID == null) ? degreeCurricularPlanID = getAndHoldStringParameter("degreeCurricularPlanID") : degreeCurricularPlanID;
     }
 
-    public void setDegreeCurricularPlanID(Integer degreeCurricularPlanID) {
+    public void setDegreeCurricularPlanID(String degreeCurricularPlanID) {
         this.degreeCurricularPlanID = degreeCurricularPlanID;
     }
 
-    public Integer getExecutionDegreeId() {
-        return (this.executionDegreeId == null) ? this.executionDegreeId = getAndHoldIntegerParameter("executionDegreeId") : executionDegreeId;
+    public String getExecutionDegreeId() {
+        return (this.executionDegreeId == null) ? this.executionDegreeId = getAndHoldStringParameter("executionDegreeId") : executionDegreeId;
     }
 
-    public void setExecutionDegreeId(Integer executionDegreeId) {
+    public void setExecutionDegreeId(String executionDegreeId) {
         this.executionDegreeId = executionDegreeId;
     }
 
@@ -92,7 +92,7 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
     }
 
     public DegreeCurricularPlan getDegreeCurricularPlan() {
-        final Integer degreeCurricularPlanID = getDegreeCurricularPlanID();
+        final String degreeCurricularPlanID = getDegreeCurricularPlanID();
         return AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
     }
 
@@ -250,8 +250,7 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
         this.maximumYearString = maximumYearString;
     }
 
-    public List<Entry<StudentCurricularPlan, RegistrationStateType>> getStudentCurricularPlans() throws 
-            FenixServiceException {
+    public List<Entry<StudentCurricularPlan, RegistrationStateType>> getStudentCurricularPlans() throws FenixServiceException {
         Map<StudentCurricularPlan, RegistrationStateType> studentCurricularPlans = filterPageStudentCurricularPlans();
 
         RegistrationStateType registrationState;
@@ -345,7 +344,7 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
         this.minIndex = minIndex;
     }
 
-    public List<Integer> getIndexes() throws  FenixServiceException {
+    public List<Integer> getIndexes() throws FenixServiceException {
         final List<Integer> indexes = new ArrayList<Integer>();
         final double numberIndexes = Math.ceil(0.5 + getNumberResults() / RESULTS_PER_PAGE);
         for (int i = 1; i <= numberIndexes; i++) {

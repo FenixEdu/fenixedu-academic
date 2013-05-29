@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide;
 
-
 import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.domain.GraduationType;
 import net.sourceforge.fenixedu.domain.Guide;
@@ -18,7 +17,7 @@ public class CreateGuideEntry {
 
     @Checked("RolePredicates.MANAGER_PREDICATE")
     @Service
-    public static void run(Integer guideID, GraduationType graduationType, DocumentType documentType, String description,
+    public static void run(String guideID, GraduationType graduationType, DocumentType documentType, String description,
             Double price, Integer quantity) {
 
         Guide guide = AbstractDomainObject.fromExternalId(guideID);

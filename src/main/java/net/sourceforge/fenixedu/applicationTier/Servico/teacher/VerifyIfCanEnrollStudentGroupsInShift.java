@@ -23,8 +23,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class VerifyIfCanEnrollStudentGroupsInShift {
 
-    protected Boolean run(Integer executionCourseCode, Integer groupPropertiesCode, Integer shiftCode)
-            throws FenixServiceException {
+    protected Boolean run(String executionCourseCode, String groupPropertiesCode, String shiftCode) throws FenixServiceException {
         final Grouping grouping = AbstractDomainObject.fromExternalId(groupPropertiesCode);
 
         if (grouping == null) {
@@ -63,8 +62,8 @@ public class VerifyIfCanEnrollStudentGroupsInShift {
     private static final VerifyIfCanEnrollStudentGroupsInShift serviceInstance = new VerifyIfCanEnrollStudentGroupsInShift();
 
     @Service
-    public static Boolean runVerifyIfCanEnrollStudentGroupsInShift(Integer executionCourseCode, Integer groupPropertiesCode,
-            Integer shiftCode) throws FenixServiceException, NotAuthorizedException {
+    public static Boolean runVerifyIfCanEnrollStudentGroupsInShift(String executionCourseCode, String groupPropertiesCode,
+            String shiftCode) throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseCode);
         return serviceInstance.run(executionCourseCode, groupPropertiesCode, shiftCode);
     }

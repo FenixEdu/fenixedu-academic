@@ -44,7 +44,7 @@ public class ViewClassTimeTableWithClassNameAndDegreeInitialsAction extends Feni
             return mapping.getInputForward();
         }
 
-        final SchoolClass schoolClass = AbstractDomainObject.fromExternalId(Integer.valueOf(classIdString));
+        final SchoolClass schoolClass = AbstractDomainObject.fromExternalId(classIdString);
         final InfoExecutionDegree infoExecutionDegree =
                 ReadExecutionDegreesByExecutionYearAndDegreeInitials.getInfoExecutionDegree(schoolClass.getExecutionDegree());
         request.setAttribute("exeDegree", infoExecutionDegree);

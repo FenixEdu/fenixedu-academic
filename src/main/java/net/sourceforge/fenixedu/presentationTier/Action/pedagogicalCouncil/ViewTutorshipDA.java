@@ -86,8 +86,7 @@ public class ViewTutorshipDA extends FenixDispatchAction {
     private Tutorship provideTutorship(HttpServletRequest request) {
         // If atribute "tutorshipId" is present
         if (request.getParameter("tutorshipId") != null) {
-            Integer tutorshipId = getExternalId(request, "tutorshipId");
-            Tutorship tutorship = AbstractDomainObject.fromExternalId(tutorshipId);
+            Tutorship tutorship = getDomainObject(request, "tutorshipId");
             return tutorship;
         }
 
@@ -100,9 +99,7 @@ public class ViewTutorshipDA extends FenixDispatchAction {
 
     public ActionForward deleteTutorship(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-
-        Integer tutorshipId = new Integer(request.getParameter("tutorshipID"));
-        Tutorship tutorship = AbstractDomainObject.fromExternalId(tutorshipId);
+        Tutorship tutorship = AbstractDomainObject.fromExternalId(request.getParameter("tutorshipID"));
 
         ExecutionDegree executionDegree = getExecutionDegree(tutorship);
         deleteTutor(tutorship, executionDegree, request, mapping);
@@ -251,11 +248,10 @@ public class ViewTutorshipDA extends FenixDispatchAction {
      * @param teacher
      * @return
      * @throws FenixServiceException
-     * @
-     * @throws Exception
+     *             @ * @throws Exception
      */
     private List<TutorshipErrorBean> createTutorship(ExecutionYear executionYear, ExecutionDegree executionDegree,
-            Person student, Partial endDate, Teacher teacher) throws  FenixServiceException {
+            Person student, Partial endDate, Teacher teacher) throws FenixServiceException {
         StudentsByEntryYearBean selectedStudentsAndTutorBean = new StudentsByEntryYearBean(executionYear);
         // Initialize Tutorship creation bean to use in InsertTutorship Service
         BeanInitializer.initializeBean(selectedStudentsAndTutorBean, teacher, executionDegree, student, endDate);

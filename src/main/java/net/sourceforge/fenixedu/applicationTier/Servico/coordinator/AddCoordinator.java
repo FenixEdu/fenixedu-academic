@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.ResponsibleDegreeCoordinatorAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -14,7 +13,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class AddCoordinator {
 
     @Service
-    public static Boolean run(final Integer executionDegreeId, final String istUsername) throws FenixServiceException {
+    public static Boolean run(final String executionDegreeId, final String istUsername) throws FenixServiceException {
 
         final Person person = Person.readPersonByIstUsername(istUsername);
         if (person == null) {
@@ -41,13 +40,11 @@ public class AddCoordinator {
 
     // Service Invokers migrated from Berserk
 
-    private static final AddCoordinator serviceInstance = new AddCoordinator();
-
     @Service
-    public static Boolean runAddCoordinator(Integer executionDegreeId, String istUsername) throws FenixServiceException,
+    public static Boolean runAddCoordinator(String executionDegreeId, String istUsername) throws FenixServiceException,
             NotAuthorizedException {
         ResponsibleDegreeCoordinatorAuthorizationFilter.instance.execute(executionDegreeId);
-        return serviceInstance.run(executionDegreeId, istUsername);
+        return run(executionDegreeId, istUsername);
     }
 
 }

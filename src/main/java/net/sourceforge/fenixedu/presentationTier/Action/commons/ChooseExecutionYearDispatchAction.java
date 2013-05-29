@@ -56,9 +56,9 @@ public class ChooseExecutionYearDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         // Get the Chosen Master Degree
-        Integer masterDegreeID = new Integer(request.getParameter("degreeID"));
+        String masterDegreeID = request.getParameter("degreeID");
         if (masterDegreeID == null) {
-            masterDegreeID = (Integer) request.getAttribute("degreeID");
+            masterDegreeID = (String) request.getAttribute("degreeID");
         }
 
         List result = null;
@@ -80,9 +80,9 @@ public class ChooseExecutionYearDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         // Get the Chosen Master Degree
-        Integer curricularPlanID = new Integer(request.getParameter("curricularPlanID"));
+        String curricularPlanID = request.getParameter("curricularPlanID");
         if (curricularPlanID == null) {
-            curricularPlanID = (Integer) request.getAttribute("curricularPlanID");
+            curricularPlanID = (String) request.getAttribute("curricularPlanID");
         }
         List<InfoExecutionDegree> executionYearList =
                 ReadExecutionDegreesByDegreeCurricularPlanID.runReadExecutionDegreesByDegreeCurricularPlanID(curricularPlanID);
@@ -115,11 +115,11 @@ public class ChooseExecutionYearDispatchAction extends FenixDispatchAction {
     public ActionForward chooseExecutionYear(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        Integer curricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
-        Integer executionDegreeID = new Integer(request.getParameter("executionDegreeID"));
+        String curricularPlanID = request.getParameter("degreeCurricularPlanID");
+        String executionDegreeID = request.getParameter("executionDegreeID");
 
         if (curricularPlanID == null) {
-            curricularPlanID = (Integer) request.getAttribute("degreeCurricularPlanID");
+            curricularPlanID = (String) request.getAttribute("degreeCurricularPlanID");
 
         }
 
@@ -127,8 +127,7 @@ public class ChooseExecutionYearDispatchAction extends FenixDispatchAction {
         request.setAttribute("degreeCurricularPlanID", curricularPlanID);
 
         if (executionDegreeID != null) {
-            ExecutionDegree executionDegree =
-                    (ExecutionDegree) AbstractDomainObject.fromExternalId(ExecutionDegree.class, executionDegreeID);
+            ExecutionDegree executionDegree = (ExecutionDegree) AbstractDomainObject.fromExternalId(executionDegreeID);
             ExecutionYear executionYear = executionDegree.getExecutionYear();
             request.setAttribute(PresentationConstants.EXECUTION_YEAR, executionYear.getName());
         }

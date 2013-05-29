@@ -257,8 +257,7 @@ public abstract class DelegatesManagementDispatchAction extends FenixDispatchAct
 
     public ActionForward prepareAddDelegate(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        Integer degreeOID = Integer.parseInt(request.getParameter("selectedDegree"));
-        final Degree degree = AbstractDomainObject.fromExternalId(degreeOID);
+        final Degree degree = AbstractDomainObject.fromExternalId(request.getParameter("selectedDegree"));
 
         final String delegateType = request.getParameter("delegateType");
         final FunctionType delegateFunctionType = FunctionType.valueOf(delegateType);
@@ -299,10 +298,9 @@ public abstract class DelegatesManagementDispatchAction extends FenixDispatchAct
                 addActionMessage(request, ex.getMessage(), ex.getArgs());
             }
         } else { /* From selected delegate election voting results */
-            final Integer electionOID = Integer.parseInt(request.getParameter("selectedElection"));
-            final YearDelegateElection election = (YearDelegateElection) AbstractDomainObject.fromExternalId(electionOID);
-            final Integer studentOID = Integer.parseInt(request.getParameter("selectedStudent"));
-            final Student student = AbstractDomainObject.fromExternalId(studentOID);
+            final YearDelegateElection election =
+                    (YearDelegateElection) AbstractDomainObject.fromExternalId(request.getParameter("selectedElection"));
+            final Student student = AbstractDomainObject.fromExternalId(request.getParameter("selectedStudent"));
 
             bean = getInitializedBean(election.getDegree());
             try {
@@ -356,8 +354,7 @@ public abstract class DelegatesManagementDispatchAction extends FenixDispatchAct
             }
 
         } else {
-            final Integer delegateOID = Integer.parseInt(request.getParameter("selectedDelegate"));
-            final Student student = AbstractDomainObject.fromExternalId(delegateOID);
+            final Student student = AbstractDomainObject.fromExternalId(request.getParameter("selectedDelegate"));
 
             try {
                 if (request.getParameter("delegateType") != null) {
@@ -383,8 +380,7 @@ public abstract class DelegatesManagementDispatchAction extends FenixDispatchAct
             HttpServletResponse response) throws Exception {
         final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
 
-        Integer degreeOID = Integer.parseInt(request.getParameter("selectedDegree"));
-        final Degree degree = AbstractDomainObject.fromExternalId(degreeOID);
+        final Degree degree = AbstractDomainObject.fromExternalId(request.getParameter("selectedDegree"));
 
         Integer year = Integer.parseInt(request.getParameter("selectedYear"));
         final CurricularYear curricularYear = CurricularYear.readByYear(year);
@@ -404,8 +400,7 @@ public abstract class DelegatesManagementDispatchAction extends FenixDispatchAct
 
     public ActionForward prepareChangeDelegate(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        final Integer delegateOID = Integer.parseInt(request.getParameter("selectedDelegate"));
-        final Student delegate = AbstractDomainObject.fromExternalId(delegateOID);
+        final Student delegate = AbstractDomainObject.fromExternalId(request.getParameter("selectedDelegate"));
 
         DelegateElection election = delegate.getLastElectedDelegateElection();
 
@@ -415,8 +410,7 @@ public abstract class DelegatesManagementDispatchAction extends FenixDispatchAct
 
     public ActionForward goBackToViewDelegates(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        final Integer electionOID = Integer.parseInt(request.getParameter("selectedElection"));
-        final DelegateElection election = AbstractDomainObject.fromExternalId(electionOID);
+        final DelegateElection election = AbstractDomainObject.fromExternalId(request.getParameter("selectedElection"));
 
         DelegateBean delegateBean = getInitializedBean(election.getDegree());
         request.setAttribute("delegateBean", delegateBean);
@@ -446,8 +440,8 @@ public abstract class DelegatesManagementDispatchAction extends FenixDispatchAct
 
         DelegateBean bean = (DelegateBean) getFromRequest(request, "delegateBean");
         if (bean == null) {
-            final Integer functionId = Integer.parseInt(request.getParameter("selectedGgaeFunction"));
-            final Function function = (Function) AbstractDomainObject.fromExternalId(functionId);
+            final Function function =
+                    (Function) AbstractDomainObject.fromExternalId(request.getParameter("selectedGgaeFunction"));
 
             bean = new DelegateBean();
             bean.setGgaeDelegateFunction(function);
@@ -490,11 +484,9 @@ public abstract class DelegatesManagementDispatchAction extends FenixDispatchAct
 
     public ActionForward removeGGAEDelegate(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        final Integer delegateOID = Integer.parseInt(request.getParameter("selectedDelegate"));
-        final Person person = (Person) AbstractDomainObject.fromExternalId(delegateOID);
+        final Person person = (Person) AbstractDomainObject.fromExternalId(request.getParameter("selectedDelegate"));
 
-        final Integer functionId = Integer.parseInt(request.getParameter("selectedGgaeFunction"));
-        final Function function = (Function) AbstractDomainObject.fromExternalId(functionId);
+        final Function function = (Function) AbstractDomainObject.fromExternalId(request.getParameter("selectedGgaeFunction"));
 
         try {
             RemoveDelegate.run(person, function);

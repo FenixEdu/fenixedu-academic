@@ -21,7 +21,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ReadCurriculumByCurricularCourseCode {
 
     @Service
-    public static InfoCurriculum run(final Integer curricularCourseCode) throws FenixServiceException {
+    public static InfoCurriculum run(final String curricularCourseCode) throws FenixServiceException {
 
         if (curricularCourseCode == null) {
             throw new FenixServiceException("nullCurricularCourse");

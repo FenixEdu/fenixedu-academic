@@ -55,7 +55,7 @@ public class CreateReimbursementGuide {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
-    public static Integer run(Integer guideId, String remarks, List infoReimbursementGuideEntries, IUserView userView)
+    public static String run(String guideId, String remarks, List infoReimbursementGuideEntries, IUserView userView)
             throws FenixServiceException {
 
         Guide guide = AbstractDomainObject.fromExternalId(guideId);

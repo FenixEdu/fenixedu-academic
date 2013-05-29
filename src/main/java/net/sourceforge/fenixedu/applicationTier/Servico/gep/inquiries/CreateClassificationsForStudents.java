@@ -91,7 +91,7 @@ public class CreateClassificationsForStudents {
     };
 
     protected ByteArrayOutputStream run(Integer[] entryGradeLimits, Integer[] approvationRatioLimits,
-            Integer[] arithmeticMeanLimits, Integer degreeCurricularPlanID) throws FileNotFoundException {
+            Integer[] arithmeticMeanLimits, String degreeCurricularPlanID) {
 
         ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
 
@@ -270,7 +270,7 @@ public class CreateClassificationsForStudents {
 
     @Service
     public static ByteArrayOutputStream runCreateClassificationsForStudents(Integer[] entryGradeLimits,
-            Integer[] approvationRatioLimits, Integer[] arithmeticMeanLimits, Integer degreeCurricularPlanID)
+            Integer[] approvationRatioLimits, Integer[] arithmeticMeanLimits, String degreeCurricularPlanID)
             throws FileNotFoundException, NotAuthorizedException {
         try {
             ManagerAuthorizationFilter.instance.execute();

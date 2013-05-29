@@ -27,14 +27,11 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class WeeklyWorkLoadDA extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws  FenixServiceException {
+            throws FenixServiceException {
 
         final String executionCourseIDString = request.getParameter("executionCourseID");
-        final Integer executionCourseID =
-                (executionCourseIDString == null || executionCourseIDString.length() == 0) ? null : Integer
-                        .valueOf(executionCourseIDString);
 
-        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseID);
+        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseIDString);
         request.setAttribute("executionCourse", executionCourse);
         request.setAttribute("weeklyWorkLoadView", executionCourse.getWeeklyWorkLoadView());
 

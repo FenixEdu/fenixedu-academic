@@ -32,8 +32,7 @@ public class ResultsManagementAction extends FenixDispatchAction {
             throws Exception {
         String unitId = request.getParameter("unitId");
         if (unitId != null) {
-            ResearchUnit unit =
-                    (ResearchUnit) AbstractDomainObject.fromExternalId(ResearchUnit.class, Integer.valueOf(unitId));
+            ResearchUnit unit = (ResearchUnit) AbstractDomainObject.fromExternalId(unitId);
             request.setAttribute("unit", unit);
         }
         return super.execute(mapping, form, request, response);
@@ -79,10 +78,10 @@ public class ResultsManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward deletePrize(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         String prizeID = request.getParameter("oid");
-        Prize prize = (Prize) AbstractDomainObject.fromExternalId(Prize.class, Integer.valueOf(prizeID));
+        Prize prize = (Prize) AbstractDomainObject.fromExternalId(prizeID);
         if (prize.isDeletableByUser((getLoggedPerson(request)))) {
             try {
                 DeletePrize.runDeletePrize(prize);
@@ -94,10 +93,10 @@ public class ResultsManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward editPrize(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         String prizeID = request.getParameter("oid");
-        Prize prize = (Prize) AbstractDomainObject.fromExternalId(Prize.class, Integer.valueOf(prizeID));
+        Prize prize = (Prize) AbstractDomainObject.fromExternalId(prizeID);
         if (prize != null && prize.isEditableByUser(getLoggedPerson(request))) {
             request.setAttribute("prize", prize);
         }
@@ -106,7 +105,7 @@ public class ResultsManagementAction extends FenixDispatchAction {
     }
 
     protected ResearchResult getResultByIdFromRequest(HttpServletRequest request) {
-        final Integer resultId = Integer.valueOf(getFromRequest(request, "resultId").toString());
+        final String resultId = getFromRequest(request, "resultId").toString();
 
         if (resultId != null) {
             try {

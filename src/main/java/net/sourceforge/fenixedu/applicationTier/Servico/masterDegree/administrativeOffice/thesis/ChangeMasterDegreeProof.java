@@ -33,9 +33,9 @@ public class ChangeMasterDegreeProof {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
-    public static void run(IUserView userView, Integer studentCurricularPlanID, Date proofDate, Date thesisDeliveryDate,
+    public static void run(IUserView userView, String studentCurricularPlanID, Date proofDate, Date thesisDeliveryDate,
             MasterDegreeClassification finalResult, Integer attachedCopiesNumber, List<String> teacherJuriesNumbers,
-            List<Integer> externalJuriesIDs) throws FenixServiceException {
+            List<String> externalJuriesIDs) throws FenixServiceException {
 
         StudentCurricularPlan studentCurricularPlan = AbstractDomainObject.fromExternalId(studentCurricularPlanID);
         MasterDegreeThesis storedMasterDegreeThesis = studentCurricularPlan.getMasterDegreeThesis();

@@ -27,7 +27,7 @@ public class InfoTheme extends InfoObject {
 
     }
 
-    public InfoTheme(Integer externalId) {
+    public InfoTheme(String externalId) {
         super(externalId);
     }
 

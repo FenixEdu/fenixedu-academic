@@ -36,14 +36,14 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ManageUnitSpaceOccupationsDA extends FenixDispatchAction {
 
     public ActionForward prepareManageUnitSpaceOccupations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         readAndSetAllAttributes(request);
         return mapping.findForward("prepareManageUnitSpaceOccupations");
     }
 
     public ActionForward prepareManageUnitOccupationInterval(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
         setSpaceInformation(request, spaceInformation);
@@ -53,7 +53,7 @@ public class ManageUnitSpaceOccupationsDA extends FenixDispatchAction {
     }
 
     public ActionForward prepareAddExternalUnit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
         setSpaceInformation(request, spaceInformation);
@@ -69,7 +69,7 @@ public class ManageUnitSpaceOccupationsDA extends FenixDispatchAction {
     }
 
     public ActionForward deleteUnitSpaceOccupation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         UnitSpaceOccupation unitSpaceOccupation = getUnitSpaceOccupation(request);
 
@@ -83,7 +83,7 @@ public class ManageUnitSpaceOccupationsDA extends FenixDispatchAction {
     }
 
     public ActionForward prepareEditUnitSpaceOccupation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
         setSpaceInformation(request, spaceInformation);
@@ -97,11 +97,10 @@ public class ManageUnitSpaceOccupationsDA extends FenixDispatchAction {
         final String spaceInformationIDString =
                 request.getParameterMap().containsKey("spaceInformationID") ? request.getParameter("spaceInformationID") : (String) request
                         .getAttribute("spaceInformationID");
-        final Integer spaceInformationID = spaceInformationIDString != null ? Integer.valueOf(spaceInformationIDString) : null;
-        return AbstractDomainObject.fromExternalId(spaceInformationID);
+        return AbstractDomainObject.fromExternalId(spaceInformationIDString);
     }
 
-    private void readAndSetAllAttributes(HttpServletRequest request) throws  FenixServiceException {
+    private void readAndSetAllAttributes(HttpServletRequest request) throws FenixServiceException {
 
         SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
         request.setAttribute("selectedSpaceInformation", spaceInformation);
@@ -114,17 +113,14 @@ public class ManageUnitSpaceOccupationsDA extends FenixDispatchAction {
         final String unitIDString =
                 request.getParameterMap().containsKey("unitID") ? request.getParameter("unitID") : (String) request
                         .getAttribute("unitID");
-        final Integer unitID = unitIDString != null ? Integer.valueOf(unitIDString) : null;
-        return (Unit) AbstractDomainObject.fromExternalId(unitID);
+        return (Unit) AbstractDomainObject.fromExternalId(unitIDString);
     }
 
     private UnitSpaceOccupation getUnitSpaceOccupation(final HttpServletRequest request) {
         final String unitSpaceOccupationIDString =
                 request.getParameterMap().containsKey("unitSpaceOccupationID") ? request.getParameter("unitSpaceOccupationID") : (String) request
                         .getAttribute("unitSpaceOccupationID");
-        final Integer unitSpaceOccupationID =
-                unitSpaceOccupationIDString != null ? Integer.valueOf(unitSpaceOccupationIDString) : null;
-        return (UnitSpaceOccupation) AbstractDomainObject.fromExternalId(unitSpaceOccupationID);
+        return (UnitSpaceOccupation) AbstractDomainObject.fromExternalId(unitSpaceOccupationIDString);
     }
 
     private void setSpaceInformation(HttpServletRequest request, final SpaceInformation spaceInformation) {

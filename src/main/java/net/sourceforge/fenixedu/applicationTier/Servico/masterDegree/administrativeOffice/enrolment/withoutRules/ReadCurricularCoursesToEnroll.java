@@ -41,7 +41,7 @@ public class ReadCurricularCoursesToEnroll {
     }
 
     public List<CurricularCourse2Enroll> run(final StudentCurricularPlan studentCurricularPlan, final DegreeType degreeType,
-            final ExecutionSemester executionSemester, final Integer executionDegreeID, final List<Integer> curricularYearsList,
+            final ExecutionSemester executionSemester, final String executionDegreeID, final List<Integer> curricularYearsList,
             final List<Integer> curricularSemestersList) throws FenixServiceException {
 
         if (studentCurricularPlan == null) {
@@ -193,7 +193,7 @@ public class ReadCurricularCoursesToEnroll {
 
     @Service
     public static List<CurricularCourse2Enroll> runReadCurricularCoursesToEnroll(StudentCurricularPlan studentCurricularPlan,
-            DegreeType degreeType, ExecutionSemester executionSemester, Integer executionDegreeID,
+            DegreeType degreeType, ExecutionSemester executionSemester, String executionDegreeID,
             List<Integer> curricularYearsList, List<Integer> curricularSemestersList) throws FenixServiceException,
             NotAuthorizedException {
         try {

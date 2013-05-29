@@ -66,7 +66,7 @@ public class SearchPerson implements Serializable {
         }
 
         public SearchParameters(String name, String email, String username, String documentIdNumber, String idDocumentType,
-                String roleType, String degreeTypeString, Integer degreeId, Integer departmentId, Boolean activePersons,
+                String roleType, String degreeTypeString, String degreeId, String departmentId, Boolean activePersons,
                 Integer studentNumber, Boolean externalPersons, Boolean showOnlySearchableResearchers) {
 
             this(name, email, username, documentIdNumber, idDocumentType, roleType, degreeTypeString, degreeId, departmentId,
@@ -75,7 +75,7 @@ public class SearchPerson implements Serializable {
         }
 
         public SearchParameters(String name, String email, String username, String documentIdNumber, String idDocumentType,
-                String roleType, String degreeTypeString, Integer degreeId, Integer departmentId, Boolean activePersons,
+                String roleType, String degreeTypeString, String degreeId, String departmentId, Boolean activePersons,
                 Integer studentNumber, Boolean externalPersons, String paymentCode) {
             this();
 
@@ -454,6 +454,7 @@ public class SearchPerson implements Serializable {
             return searchParameters;
         }
     }
+
     // Service Invokers migrated from Berserk
 
     private static final SearchPerson serviceInstance = new SearchPerson();

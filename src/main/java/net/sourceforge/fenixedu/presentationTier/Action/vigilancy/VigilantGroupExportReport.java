@@ -29,8 +29,7 @@ public class VigilantGroupExportReport extends VigilantGroupManagement {
             HttpServletResponse response) throws Exception {
 
         String vigilantGroupId = request.getParameter("oid");
-        VigilantGroup group =
-                (VigilantGroup) AbstractDomainObject.fromExternalId(VigilantGroup.class, Integer.valueOf(vigilantGroupId));
+        VigilantGroup group = (VigilantGroup) AbstractDomainObject.fromExternalId(vigilantGroupId);
 
         response.setContentType("text/plain");
         response.setHeader("Content-disposition", "attachment; filename=\"" + group.getName() + ".xls\"");

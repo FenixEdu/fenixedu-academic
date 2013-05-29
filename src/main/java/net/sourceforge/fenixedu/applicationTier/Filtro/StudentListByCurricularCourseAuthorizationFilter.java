@@ -31,7 +31,7 @@ public class StudentListByCurricularCourseAuthorizationFilter extends Filtro {
         super();
     }
 
-    public void execute(IUserView userView, Integer curricularCourseID, String executionYear) throws NotAuthorizedException {
+    public void execute(String curricularCourseID) throws NotAuthorizedException {
         IUserView id = AccessControl.getUserView();
         if ((id != null && id.getRoleTypes() != null && !containsRoleType(id.getRoleTypes()))
                 || (id != null && id.getRoleTypes() != null && !hasPrivilege(id, curricularCourseID)) || (id == null)
@@ -56,7 +56,7 @@ public class StudentListByCurricularCourseAuthorizationFilter extends Filtro {
      * @param argumentos
      * @return
      */
-    private boolean hasPrivilege(IUserView id, Integer curricularCourseID) {
+    private boolean hasPrivilege(IUserView id, String curricularCourseID) {
 
         CurricularCourse curricularCourse = null;
 

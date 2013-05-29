@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.precedences;
 
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.precedences.Restriction;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
@@ -11,7 +10,7 @@ public class DeleteRestrictionFromDegreeCurricularPlan {
 
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
-    public static void run(Integer restrictionID) throws FenixServiceException {
+    public static void run(String restrictionID) throws FenixServiceException {
         Restriction restriction = AbstractDomainObject.fromExternalId(restrictionID);
 
         restriction.delete();

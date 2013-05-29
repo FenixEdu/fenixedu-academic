@@ -3,7 +3,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.equivalences;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.DegreeAdministrativeOfficeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ManagerAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.OperatorAuthorizationFilter;
@@ -21,10 +20,10 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class InsertNotNeedToEnrollInCurricularCourses {
 
-    protected void run(Integer studentCurricularPlanID, Integer[] curricularCoursesID) {
+    protected void run(String studentCurricularPlanID, String[] curricularCoursesID) {
         StudentCurricularPlan scp = AbstractDomainObject.fromExternalId(studentCurricularPlanID);
 
-        for (Integer curricularCourseID : curricularCoursesID) {
+        for (String curricularCourseID : curricularCoursesID) {
             CurricularCourse curricularCourse = (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseID);
             NotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse = new NotNeedToEnrollInCurricularCourse();
             notNeedToEnrollInCurricularCourse.setCurricularCourse(curricularCourse);
@@ -38,7 +37,7 @@ public class InsertNotNeedToEnrollInCurricularCourses {
             new InsertNotNeedToEnrollInCurricularCourses();
 
     @Service
-    public static void runInsertNotNeedToEnrollInCurricularCourses(Integer studentCurricularPlanID, Integer[] curricularCoursesID)
+    public static void runInsertNotNeedToEnrollInCurricularCourses(String studentCurricularPlanID, String[] curricularCoursesID)
             throws NotAuthorizedException {
         try {
             DegreeAdministrativeOfficeAuthorizationFilter.instance.execute();

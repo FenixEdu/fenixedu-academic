@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.finalDegreeWork;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.SubmitFinalWorkProposalAuthorization;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -26,7 +25,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class SubmitFinalWorkProposal {
 
     protected void run(InfoProposalEditor infoProposal) throws FenixServiceException {
-        Integer executionDegreeId = infoProposal.getExecutionDegree().getExternalId();
+        String executionDegreeId = infoProposal.getExecutionDegree().getExternalId();
         ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeId);
 
         Scheduleing scheduleing = executionDegree.getScheduling();

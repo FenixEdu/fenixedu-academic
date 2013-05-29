@@ -22,10 +22,10 @@ public class ReadQualificationAuthorizationFilter {
         return RoleType.ALUMNI;
     }
 
-    public void execute(Integer objectId) throws NotAuthorizedException {
+    public void execute(String objectId) throws NotAuthorizedException {
         IUserView id = AccessControl.getUserView();
         try {
-            boolean isNew = (objectId == null) || objectId.equals(Integer.valueOf(0));
+            boolean isNew = objectId == null;
 
             // Verify if needed fields are null
             if ((id == null) || (id.getRoleTypes() == null)) {
@@ -56,7 +56,7 @@ public class ReadQualificationAuthorizationFilter {
         }
     }
 
-    private boolean isOwnQualification(IUserView userView, Integer objectId) {
+    private boolean isOwnQualification(IUserView userView, String objectId) {
         final Qualification qualification = AbstractDomainObject.fromExternalId(objectId);
         return qualification.getPerson() == userView.getPerson();
     }

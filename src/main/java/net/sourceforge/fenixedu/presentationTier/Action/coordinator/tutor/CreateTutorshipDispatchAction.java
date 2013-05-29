@@ -51,11 +51,10 @@ public class CreateTutorshipDispatchAction extends TutorManagementDispatchAction
     public ActionForward prepareCreateTutorships(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         final Person person = getLoggedPerson(request);
-        final Integer executionDegreeId = new Integer(getFromRequest(request, "executionDegreeId"));
-        final Integer degreeCurricularPlanID = new Integer(getFromRequest(request, "degreeCurricularPlanID"));
+        final String executionDegreeId = getFromRequest(request, "executionDegreeId");
+        final String degreeCurricularPlanID = getFromRequest(request, "degreeCurricularPlanID");
 
-        final ExecutionDegree executionDegree =
-                (ExecutionDegree) AbstractDomainObject.fromExternalId(ExecutionDegree.class, executionDegreeId);
+        final ExecutionDegree executionDegree = (ExecutionDegree) AbstractDomainObject.fromExternalId(executionDegreeId);
 
         if (!validateDegreeTypeAccessRestrictions(executionDegree)) {
             addActionMessage(request, "error.tutor.notAuthorized.notBolonhaOrLEEC");
@@ -152,8 +151,7 @@ public class CreateTutorshipDispatchAction extends TutorManagementDispatchAction
         StudentsByEntryYearBean selectedStudentsBean = (StudentsByEntryYearBean) getViewState("selectedStudentsBean");
         RenderUtils.invalidateViewState();
 
-        final ExecutionDegree executiondegree =
-                AbstractDomainObject.fromExternalId(selectedStudentsBean.getExecutionDegreeID());
+        final ExecutionDegree executiondegree = AbstractDomainObject.fromExternalId(selectedStudentsBean.getExecutionDegreeID());
         List<Teacher> possibleTutorsForExecutionDegree = executiondegree.getPossibleTutorsFromExecutionDegreeDepartments();
 
         final Teacher teacher = User.readUserByUserUId(selectedStudentsBean.getTeacherId()).getPerson().getTeacher();
@@ -218,10 +216,10 @@ public class CreateTutorshipDispatchAction extends TutorManagementDispatchAction
      * Returns a list of beans containing a list of students without tutor for
      * the last 5 entry years
      */
-    private List<StudentsByEntryYearBean> getStudentsWithoutTutorByEntryYearBeans(Integer degreeCurricularPlanID,
-            Integer executionDegreeID, String showAll) {
+    private List<StudentsByEntryYearBean> getStudentsWithoutTutorByEntryYearBeans(String degreeCurricularPlanID,
+            String executionDegreeID, String showAll) {
         final DegreeCurricularPlan degreeCurricularPlan =
-                (DegreeCurricularPlan) AbstractDomainObject.fromExternalId(DegreeCurricularPlan.class, degreeCurricularPlanID);
+                (DegreeCurricularPlan) AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
 
         Map<ExecutionYear, StudentsByEntryYearBean> studentsWithoutTutorByEntryYear =
                 new HashMap<ExecutionYear, StudentsByEntryYearBean>();
@@ -249,10 +247,10 @@ public class CreateTutorshipDispatchAction extends TutorManagementDispatchAction
         return beans;
     }
 
-    private List<StudentsByEntryYearBean> getAllStudentsWithoutTutorByEntryYearBeans(Integer degreeCurricularPlanID,
-            Integer executionDegreeID, String showAll) {
+    private List<StudentsByEntryYearBean> getAllStudentsWithoutTutorByEntryYearBeans(String degreeCurricularPlanID,
+            String executionDegreeID, String showAll) {
         final DegreeCurricularPlan degreeCurricularPlan =
-                (DegreeCurricularPlan) AbstractDomainObject.fromExternalId(DegreeCurricularPlan.class, degreeCurricularPlanID);
+                (DegreeCurricularPlan) AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
 
         Map<ExecutionYear, StudentsByEntryYearBean> studentsWithoutTutorByEntryYear =
                 new HashMap<ExecutionYear, StudentsByEntryYearBean>();

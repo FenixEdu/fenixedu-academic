@@ -17,7 +17,7 @@ import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class CreateTSDVirtualGroup {
-    protected TSDCourse run(String courseName, Integer tsdId, Integer periodId, String[] shiftTypesArray,
+    protected TSDCourse run(String courseName, String tsdId, String periodId, String[] shiftTypesArray,
             String[] degreeCurricularPlansIdArray) {
 
         TeacherServiceDistribution tsd = AbstractDomainObject.fromExternalId(tsdId);
@@ -25,7 +25,7 @@ public class CreateTSDVirtualGroup {
 
         List<DegreeCurricularPlan> degreeCurricularPlansList = new ArrayList<DegreeCurricularPlan>();
         for (String planId : degreeCurricularPlansIdArray) {
-            degreeCurricularPlansList.add(AbstractDomainObject.fromExternalId(Integer.parseInt(planId)));
+            degreeCurricularPlansList.add(AbstractDomainObject.<DegreeCurricularPlan> fromExternalId(planId));
         }
 
         List<ShiftType> lecturedShiftTypes = new ArrayList<ShiftType>();
@@ -41,8 +41,8 @@ public class CreateTSDVirtualGroup {
     private static final CreateTSDVirtualGroup serviceInstance = new CreateTSDVirtualGroup();
 
     @Service
-    public static TSDCourse runCreateTSDVirtualGroup(String courseName, Integer tsdId, Integer periodId,
-            String[] shiftTypesArray, String[] degreeCurricularPlansIdArray) throws NotAuthorizedException {
+    public static TSDCourse runCreateTSDVirtualGroup(String courseName, String tsdId, String periodId, String[] shiftTypesArray,
+            String[] degreeCurricularPlansIdArray) throws NotAuthorizedException {
         try {
             DepartmentMemberAuthorizationFilter.instance.execute();
             return serviceInstance.run(courseName, tsdId, periodId, shiftTypesArray, degreeCurricularPlansIdArray);

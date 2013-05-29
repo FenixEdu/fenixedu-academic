@@ -10,6 +10,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceMultipleException;
+import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
@@ -19,12 +20,12 @@ public class DeleteShifts {
 
     @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
     @Service
-    public static void run(final List<Integer> shiftOIDs) throws FenixServiceException {
+    public static void run(final List<String> shiftOIDs) throws FenixServiceException {
         final List<DomainException> exceptionList = new ArrayList<DomainException>();
 
-        for (final Integer shiftID : shiftOIDs) {
+        for (final String shiftID : shiftOIDs) {
             try {
-                AbstractDomainObject.fromExternalId(shiftID).delete();
+                AbstractDomainObject.<Shift> fromExternalId(shiftID).delete();
             } catch (DomainException e) {
                 exceptionList.add(e);
             }

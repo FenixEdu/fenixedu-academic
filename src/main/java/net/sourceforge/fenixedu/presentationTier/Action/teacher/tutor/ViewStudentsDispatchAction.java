@@ -53,10 +53,9 @@ public class ViewStudentsDispatchAction extends ViewStudentsByTutorDispatchActio
 
     public ActionForward editStudent(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        Student student = AbstractDomainObject.fromExternalId(Integer.valueOf(request.getParameter("studentID")));
+        Student student = AbstractDomainObject.fromExternalId(request.getParameter("studentID"));
 
-        Registration registration =
-                AbstractDomainObject.fromExternalId(Integer.valueOf(request.getParameter("registrationID")));
+        Registration registration = AbstractDomainObject.fromExternalId(request.getParameter("registrationID"));
         TutorshipLog tutorshipLog = registration.getActiveTutorship().getTutorshipLog();
 
         request.setAttribute("tutor", getLoggedPerson(request));

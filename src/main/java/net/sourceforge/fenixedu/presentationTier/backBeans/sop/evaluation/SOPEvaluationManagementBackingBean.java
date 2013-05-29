@@ -80,7 +80,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     private String academicInterval;
     protected HtmlInputHidden academicIntervalHidden;
     protected boolean disableDropDown;
-    protected Integer executionDegreeID;
+    protected String executionDegreeID;
     protected HtmlInputHidden executionDegreeIdHidden;
     protected Integer curricularYearID;
     protected HtmlInputHidden curricularYearIdHidden;
@@ -98,15 +98,15 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     private HtmlInputHidden endMinuteHidden;
     private Integer orderCriteria;
     private final String labelVacancies = messages.getMessage(Language.getLocale(), "label.vacancies");
-    private List<Integer> associatedExecutionCourses;
+    private List<String> associatedExecutionCourses;
 
-    private Map<Integer, String> associatedExecutionCoursesNames = new HashMap<Integer, String>();
-    private Map<Integer, List<SelectItem>> curricularCourseScopesSelectItems = new HashMap<Integer, List<SelectItem>>();
-    private Map<Integer, List<SelectItem>> curricularCourseContextSelectItems = new HashMap<Integer, List<SelectItem>>();
-    private final Map<Integer, List<WrittenEvaluation>> writtenEvaluations = new HashMap<Integer, List<WrittenEvaluation>>();;
-    private final Map<Integer, Integer> writtenEvaluationsMissingPlaces = new HashMap<Integer, Integer>();
-    private final Map<Integer, String> writtenEvaluationsRooms = new HashMap<Integer, String>();
-    private final Map<Integer, Integer> executionCoursesEnroledStudents = new HashMap<Integer, Integer>();
+    private Map<String, String> associatedExecutionCoursesNames = new HashMap<String, String>();
+    private Map<String, List<SelectItem>> curricularCourseScopesSelectItems = new HashMap<String, List<SelectItem>>();
+    private Map<String, List<SelectItem>> curricularCourseContextSelectItems = new HashMap<String, List<SelectItem>>();
+    private final Map<String, List<WrittenEvaluation>> writtenEvaluations = new HashMap<String, List<WrittenEvaluation>>();;
+    private final Map<String, Integer> writtenEvaluationsMissingPlaces = new HashMap<String, Integer>();
+    private final Map<String, String> writtenEvaluationsRooms = new HashMap<String, String>();
+    private final Map<String, Integer> executionCoursesEnroledStudents = new HashMap<String, Integer>();
 
     private String comment;
 
@@ -196,21 +196,21 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     // END disableDropDown
 
     // BEGIN executionDegree
-    public Integer getExecutionDegreeID() {
+    public String getExecutionDegreeID() {
         if (this.executionDegreeID == null && this.executionDegreeIdHidden.getValue() != null
                 && !this.executionDegreeIdHidden.getValue().equals("")) {
-            this.executionDegreeID = Integer.valueOf(this.executionDegreeIdHidden.getValue().toString());
+            this.executionDegreeID = this.executionDegreeIdHidden.getValue().toString();
         } else if (this.getRequestAttribute("executionDegreeID") != null
                 && !this.getRequestAttribute("executionDegreeID").equals("")) {
-            this.executionDegreeID = Integer.valueOf(this.getRequestAttribute("executionDegreeID").toString());
+            this.executionDegreeID = this.getRequestAttribute("executionDegreeID").toString();
         } else if (this.getRequestParameter("executionDegreeID") != null
                 && !this.getRequestParameter("executionDegreeID").equals("")) {
-            this.executionDegreeID = Integer.valueOf(this.getRequestParameter("executionDegreeID"));
+            this.executionDegreeID = this.getRequestParameter("executionDegreeID");
         }
         return executionDegreeID;
     }
 
-    public void setExecutionDegreeID(Integer executionDegreeID) {
+    public void setExecutionDegreeID(String executionDegreeID) {
         if (executionDegreeID != null) {
             this.executionDegreeIdHidden = new HtmlInputHidden();
             this.executionDegreeIdHidden.setValue(executionDegreeID);
@@ -229,7 +229,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     public void setExecutionDegreeIdHidden(HtmlInputHidden executionDegreeIdHidden) {
         if (executionDegreeIdHidden != null && executionDegreeIdHidden.getValue() != null
                 && !executionDegreeIdHidden.getValue().equals("")) {
-            this.executionDegreeID = Integer.valueOf(executionDegreeIdHidden.getValue().toString());
+            this.executionDegreeID = executionDegreeIdHidden.getValue().toString();
         }
         this.executionDegreeIdHidden = executionDegreeIdHidden;
     }
@@ -472,7 +472,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
             this.setDisableDropDown(false);
         }
 
-        this.setExecutionDegreeID(0);
+        this.setExecutionDegreeID(null);
         this.setCurricularYearID(0);
 
         return;
@@ -560,7 +560,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     }
 
     public void setNewValueExecutionDegreeID(ValueChangeEvent valueChangeEvent) {
-        this.setExecutionDegreeID((Integer) valueChangeEvent.getNewValue());
+        this.setExecutionDegreeID((String) valueChangeEvent.getNewValue());
     }
 
     public void setNewValueCurricularYearID(ValueChangeEvent valueChangeEvent) {
@@ -628,12 +628,12 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     }
 
     public void setNewValueExecutionCourseID(ValueChangeEvent valueChangeEvent) {
-        this.setExecutionCourseID((Integer) valueChangeEvent.getNewValue());
+        this.setExecutionCourseID((String) valueChangeEvent.getNewValue());
     }
 
     public boolean getRenderContextSelection() {
         if (this.getAcademicInterval() == null || this.getExecutionDegreeID() == null || this.getCurricularYearIDs() == null
-                || this.getCurricularYearIDs().length <= 0 || this.getExecutionDegreeID() == 0) {
+                || this.getCurricularYearIDs().length <= 0) {
             return false;
         }
         return true;
@@ -936,7 +936,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     // BEGIN Select Execution Course and Evaluation Type page logic
     public String continueToCreateWrittenEvaluation() throws FenixServiceException {
         if (this.getEvaluationTypeClassname() == null || this.getExecutionCourseID() == null
-                || this.getEvaluationTypeClassname().equals("noSelection") || this.getExecutionCourseID() == 0) {
+                || this.getEvaluationTypeClassname().equals("noSelection")) {
             this.setErrorMessage("label.choose.request");
             return "";
         } else {
@@ -1085,8 +1085,8 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         return items;
     }
 
-    private Integer getRoomID(String roomString) {
-        return Integer.parseInt(roomString.split("-")[0]);
+    private String getRoomID(String roomString) {
+        return roomString.split("-")[0];
     }
 
     private String getRoomWithExamCapacityString(InfoRoom infoRoom) {
@@ -1102,7 +1102,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 
         if (this.getChosenRoomsIDs() != null && this.getChosenRoomsIDs().length != 0) {
             for (String chosenRoomString : this.getChosenRoomsIDs()) {
-                Integer chosenRoomID = getRoomID(chosenRoomString);
+                String chosenRoomID = getRoomID(chosenRoomString);
                 AllocatableSpace room = (AllocatableSpace) AbstractDomainObject.fromExternalId(chosenRoomID);
                 result.append(room.getIdentification());
                 result.append("; ");
@@ -1160,7 +1160,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     public boolean prepareArguments(List<String> executionCourseIDs, List<String> degreeModuleScopeIDs, List<String> roomsIDs)
             throws FenixServiceException {
 
-        for (Integer executionCourseID : this.associatedExecutionCourses) {
+        for (String executionCourseID : this.associatedExecutionCourses) {
 
             executionCourseIDs.add(executionCourseID.toString());
 
@@ -1170,18 +1170,18 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
                 return false;
             }
 
-            for (Integer curricularCourseScopeId : this.getCurricularCourseScopesToAssociate().get(executionCourseID)) {
+            for (String curricularCourseScopeId : this.getCurricularCourseScopesToAssociate().get(executionCourseID)) {
                 degreeModuleScopeIDs
                         .add(DegreeModuleScope.getKey(curricularCourseScopeId, CurricularCourseScope.class.getName()));
             }
-            for (Integer curricularCourseContextId : this.getCurricularCourseContextToAssociate().get(executionCourseID)) {
+            for (String curricularCourseContextId : this.getCurricularCourseContextToAssociate().get(executionCourseID)) {
                 degreeModuleScopeIDs.add(DegreeModuleScope.getKey(curricularCourseContextId, Context.class.getName()));
             }
         }
 
         if (this.getChosenRoomsIDs() != null) {
             for (String roomIDString : this.getChosenRoomsIDs()) {
-                Integer roomID = getRoomID(roomIDString);
+                String roomID = getRoomID(roomIDString);
                 roomsIDs.add(roomID.toString());
             }
         }
@@ -1262,21 +1262,21 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     // END Create and Edit logic
 
     // BEGIN Associate Execution Course and Scopes logic
-    public void setAssociatedExecutionCourses(List<Integer> associatedExecutionCourses) {
+    public void setAssociatedExecutionCourses(List<String> associatedExecutionCourses) {
         this.associatedExecutionCourses = associatedExecutionCourses;
         this.getViewState().setAttribute("associatedExecutionCourses", associatedExecutionCourses);
     }
 
-    public List<Integer> getAssociatedExecutionCourses() throws FenixServiceException {
+    public List<String> getAssociatedExecutionCourses() throws FenixServiceException {
 
         if (this.getViewState().getAttribute("associatedExecutionCourses") != null) {
-            this.associatedExecutionCourses = (List<Integer>) this.getViewState().getAttribute("associatedExecutionCourses");
+            this.associatedExecutionCourses = (List<String>) this.getViewState().getAttribute("associatedExecutionCourses");
         } else if (this.getEvaluationID() != null) {
-            List<Integer> result = new ArrayList<Integer>();
+            List<String> result = new ArrayList<String>();
             for (ExecutionCourse executionCourse : this.getEvaluation().getAssociatedExecutionCourses()) {
                 result.add(executionCourse.getExternalId());
-                List<Integer> selectedScopes = new ArrayList<Integer>();
-                List<Integer> selectedContexts = new ArrayList<Integer>();
+                List<String> selectedScopes = new ArrayList<String>();
+                List<String> selectedContexts = new ArrayList<String>();
                 for (CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
                     for (DegreeModuleScope degreeModuleScope : curricularCourse.getDegreeModuleScopes()) {
                         if (degreeModuleScope.isActiveForExecutionPeriod(executionCourse.getExecutionPeriod())) {
@@ -1291,7 +1291,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
                     }
                 }
 
-                Integer[] selected = {};
+                String[] selected = {};
                 this.getCurricularCourseScopesToAssociate()
                         .put(executionCourse.getExternalId(), selectedScopes.toArray(selected));
                 this.getCurricularCourseContextToAssociate().put(executionCourse.getExternalId(),
@@ -1299,7 +1299,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
             }
             this.setAssociatedExecutionCourses(result);
         } else {
-            List<Integer> result = new ArrayList<Integer>();
+            List<String> result = new ArrayList<String>();
             result.add(this.getExecutionCourse().getExternalId());
             this.setAssociatedExecutionCourses(result);
         }
@@ -1310,7 +1310,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 
     private void fillInAuxiliarMaps() throws FenixServiceException {
 
-        for (Integer executionCourseID : this.associatedExecutionCourses) {
+        for (String executionCourseID : this.associatedExecutionCourses) {
 
             ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseID);
             this.associatedExecutionCoursesNames.put(executionCourseID, executionCourse.getNome());
@@ -1318,20 +1318,20 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
             List<SelectItem> items = new ArrayList<SelectItem>();
             List<SelectItem> items2 = new ArrayList<SelectItem>();
 
-            Integer[] curricularCourseScopesToAssociate =
+            String[] curricularCourseScopesToAssociate =
                     this.getCurricularCourseScopesToAssociate().get(executionCourse.getExternalId());
-            Integer[] curricularCourseContextsToAssociate =
+            String[] curricularCourseContextsToAssociate =
                     this.getCurricularCourseContextToAssociate().get(executionCourse.getExternalId());
 
-            List<Integer> auxiliarArray = new ArrayList<Integer>();
-            List<Integer> auxiliarArray2 = new ArrayList<Integer>();
+            List<String> auxiliarArray = new ArrayList<String>();
+            List<String> auxiliarArray2 = new ArrayList<String>();
             if (curricularCourseScopesToAssociate != null) {
-                for (Integer curricularCourseScopeToAssociate : curricularCourseScopesToAssociate) {
+                for (String curricularCourseScopeToAssociate : curricularCourseScopesToAssociate) {
                     auxiliarArray.add(curricularCourseScopeToAssociate);
                 }
             }
             if (curricularCourseContextsToAssociate != null) {
-                for (Integer curricularCourseContextToAssociate : curricularCourseContextsToAssociate) {
+                for (String curricularCourseContextToAssociate : curricularCourseContextsToAssociate) {
                     auxiliarArray2.add(curricularCourseContextToAssociate);
                 }
             }
@@ -1359,73 +1359,72 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
             this.curricularCourseScopesSelectItems.put(executionCourse.getExternalId(), items);
             this.curricularCourseContextSelectItems.put(executionCourse.getExternalId(), items2);
 
-            Integer[] selected = {};
+            String[] selected = {};
             this.getCurricularCourseScopesToAssociate().put(executionCourse.getExternalId(), auxiliarArray.toArray(selected));
             this.getCurricularCourseContextToAssociate().put(executionCourse.getExternalId(), auxiliarArray2.toArray(selected));
         }
     }
 
-    public Map<Integer, List<SelectItem>> getCurricularCourseContextSelectItems() {
+    public Map<String, List<SelectItem>> getCurricularCourseContextSelectItems() {
         return curricularCourseContextSelectItems;
     }
 
-    public void setCurricularCourseContextSelectItems(Map<Integer, List<SelectItem>> curricularCourseContextSelectItems) {
+    public void setCurricularCourseContextSelectItems(Map<String, List<SelectItem>> curricularCourseContextSelectItems) {
         this.curricularCourseContextSelectItems = curricularCourseContextSelectItems;
     }
 
-    public Map<Integer, List<SelectItem>> getCurricularCourseScopesSelectItems() {
+    public Map<String, List<SelectItem>> getCurricularCourseScopesSelectItems() {
         return curricularCourseScopesSelectItems;
     }
 
-    public void setCurricularCourseScopesSelectItems(Map<Integer, List<SelectItem>> curricularCourseScopesSelectItems) {
+    public void setCurricularCourseScopesSelectItems(Map<String, List<SelectItem>> curricularCourseScopesSelectItems) {
         this.curricularCourseScopesSelectItems = curricularCourseScopesSelectItems;
     }
 
-    public Map<Integer, Integer[]> getCurricularCourseScopesToAssociate() {
+    public Map<String, String[]> getCurricularCourseScopesToAssociate() {
         if (this.getViewState().getAttribute("curricularCourseScopesToAssociate") == null) {
-            this.getViewState().setAttribute("curricularCourseScopesToAssociate", new HashMap<Integer, Integer[]>());
+            this.getViewState().setAttribute("curricularCourseScopesToAssociate", new HashMap<String, String[]>());
         }
-        return (Map<Integer, Integer[]>) this.getViewState().getAttribute("curricularCourseScopesToAssociate");
+        return (Map<String, String[]>) this.getViewState().getAttribute("curricularCourseScopesToAssociate");
     }
 
-    public void setCurricularCourseScopesToAssociate(Map<Integer, Integer[]> curricularCourseScopesToAssociate) {
+    public void setCurricularCourseScopesToAssociate(Map<String, String[]> curricularCourseScopesToAssociate) {
         this.getViewState().setAttribute("curricularCourseScopesToAssociate", curricularCourseScopesToAssociate);
     }
 
-    public Map<Integer, Integer[]> getCurricularCourseContextToAssociate() {
+    public Map<String, String[]> getCurricularCourseContextToAssociate() {
         if (this.getViewState().getAttribute("curricularCourseContextToAssociate") == null) {
-            this.getViewState().setAttribute("curricularCourseContextToAssociate", new HashMap<Integer, Integer[]>());
+            this.getViewState().setAttribute("curricularCourseContextToAssociate", new HashMap<String, String[]>());
         }
-        return (Map<Integer, Integer[]>) this.getViewState().getAttribute("curricularCourseContextToAssociate");
+        return (Map<String, String[]>) this.getViewState().getAttribute("curricularCourseContextToAssociate");
     }
 
-    public void setCurricularCourseContextToAssociate(Map<Integer, Integer[]> curricularCourseContextToAssociate) {
+    public void setCurricularCourseContextToAssociate(Map<String, String[]> curricularCourseContextToAssociate) {
         this.getViewState().setAttribute("curricularCourseContextToAssociate", curricularCourseContextToAssociate);
     }
 
     public String associateExecutionCourse() throws FenixServiceException {
         if (this.getSelectedExecutionDegreeID() == null || this.getSelectedCurricularYearID() == null
-                || this.getSelectedExecutionCourseID() == null || this.getSelectedExecutionDegreeID() == 0
-                || this.getSelectedCurricularYearID() == 0 || this.getSelectedExecutionCourseID() == 0) {
+                || this.getSelectedExecutionCourseID() == null || this.getSelectedCurricularYearID() == 0) {
             this.setErrorMessage("label.choose.request");
             return "";
         } else {
-            List<Integer> list = this.getAssociatedExecutionCourses();
-            Integer integer = this.getSelectedExecutionCourseID();
+            List<String> list = this.getAssociatedExecutionCourses();
+            String integer = this.getSelectedExecutionCourseID();
 
             if (!list.contains(integer)) {
                 list.add(integer);
             }
 
             ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(integer);
-            List<Integer> auxiliarArray = new ArrayList<Integer>();
+            List<String> auxiliarArray = new ArrayList<String>();
             for (CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
                 for (DegreeModuleScope degreeModuleScope : curricularCourse.getDegreeModuleScopes()) {
                     auxiliarArray.add(degreeModuleScope.getExternalId());
                 }
             }
 
-            Integer[] selected = {};
+            String[] selected = {};
             this.getCurricularCourseScopesToAssociate().put(executionCourse.getExternalId(), auxiliarArray.toArray(selected));
 
             return returnToCreateOrEdit();
@@ -1433,8 +1432,8 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     }
 
     public void disassociateExecutionCourse() throws FenixServiceException {
-        List<Integer> associatedExecutionCourses = this.getAssociatedExecutionCourses();
-        Integer executionCourseToDisassociate = Integer.valueOf(this.getRequestParameter("executionCourseToDisassociate"));
+        List<String> associatedExecutionCourses = this.getAssociatedExecutionCourses();
+        String executionCourseToDisassociate = this.getRequestParameter("executionCourseToDisassociate");
 
         associatedExecutionCourses.remove(executionCourseToDisassociate);
         this.setAssociatedExecutionCourses(associatedExecutionCourses);
@@ -1450,23 +1449,23 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         }
     }
 
-    public Map<Integer, String> getAssociatedExecutionCoursesNames() {
+    public Map<String, String> getAssociatedExecutionCoursesNames() {
         return associatedExecutionCoursesNames;
     }
 
-    public void setAssociatedExecutionCoursesNames(Map<Integer, String> associatedExecutionCoursesNames) {
+    public void setAssociatedExecutionCoursesNames(Map<String, String> associatedExecutionCoursesNames) {
         this.associatedExecutionCoursesNames = associatedExecutionCoursesNames;
     }
 
-    public Map<Integer, List<WrittenEvaluation>> getWrittenEvaluations() {
+    public Map<String, List<WrittenEvaluation>> getWrittenEvaluations() {
         return writtenEvaluations;
     }
 
-    public Map<Integer, Integer> getWrittenEvaluationsFreeSpace() {
+    public Map<String, Integer> getWrittenEvaluationsFreeSpace() {
         return writtenEvaluationsMissingPlaces;
     }
 
-    public Map<Integer, String> getWrittenEvaluationsRooms() {
+    public Map<String, String> getWrittenEvaluationsRooms() {
         return writtenEvaluationsRooms;
     }
 
@@ -1500,18 +1499,18 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 
     // BEGIN Code to avoid bug in associating execution courses to written
     // evaluation....
-    public Integer getSelectedExecutionDegreeID() {
-        Integer selectedExecutionDegreeID = (Integer) this.getViewState().getAttribute("selectedExecutionDegreeID");
+    public String getSelectedExecutionDegreeID() {
+        String selectedExecutionDegreeID = (String) this.getViewState().getAttribute("selectedExecutionDegreeID");
 
         if (selectedExecutionDegreeID == null) {
-            selectedExecutionDegreeID = Integer.valueOf((String) this.getExecutionDegreeIdHidden().getValue());
+            selectedExecutionDegreeID = this.getExecutionDegreeIdHidden().getValue().toString();
             setSelectedExecutionDegreeID(selectedExecutionDegreeID);
         }
 
         return selectedExecutionDegreeID;
     }
 
-    public void setSelectedExecutionDegreeID(Integer selectedExecutionDegreeID) {
+    public void setSelectedExecutionDegreeID(String selectedExecutionDegreeID) {
         this.getViewState().setAttribute("selectedExecutionDegreeID", selectedExecutionDegreeID);
     }
 
@@ -1533,23 +1532,23 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         this.getViewState().setAttribute("selectedCurricularYearID", selectedCurricularYearID);
     }
 
-    public Integer getSelectedExecutionCourseID() {
-        Integer selectedExecutionCourseID = (Integer) this.getViewState().getAttribute("selectedExecutionCourseID");
+    public String getSelectedExecutionCourseID() {
+        String selectedExecutionCourseID = (String) this.getViewState().getAttribute("selectedExecutionCourseID");
 
         if (selectedExecutionCourseID == null) {
-            selectedExecutionCourseID = Integer.valueOf((String) this.getExecutionCourseIdHidden().getValue());
+            selectedExecutionCourseID = (String) this.getExecutionCourseIdHidden().getValue();
             setSelectedExecutionCourseID(selectedExecutionCourseID);
         }
 
         return selectedExecutionCourseID;
     }
 
-    public void setSelectedExecutionCourseID(Integer selectedExecutionCourseID) {
+    public void setSelectedExecutionCourseID(String selectedExecutionCourseID) {
         this.getViewState().setAttribute("selectedExecutionCourseID", selectedExecutionCourseID);
     }
 
     public void onExecutionDegreeChanged(ValueChangeEvent valueChangeEvent) {
-        setSelectedExecutionDegreeID((Integer) valueChangeEvent.getNewValue());
+        setSelectedExecutionDegreeID((String) valueChangeEvent.getNewValue());
     }
 
     public void onCurricularYearChanged(ValueChangeEvent valueChangeEvent) {
@@ -1557,7 +1556,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     }
 
     public void onExecutionCourseChanged(ValueChangeEvent valueChangeEvent) {
-        setSelectedExecutionCourseID((Integer) valueChangeEvent.getNewValue());
+        setSelectedExecutionCourseID((String) valueChangeEvent.getNewValue());
     }
 
     private List<ExecutionCourse> readExecutionCourses() throws FenixServiceException {
@@ -1589,7 +1588,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     // : academicIntervalOID;
     // }
 
-    public Map<Integer, Integer> getExecutionCoursesEnroledStudents() {
+    public Map<String, Integer> getExecutionCoursesEnroledStudents() {
         return executionCoursesEnroledStudents;
     }
 

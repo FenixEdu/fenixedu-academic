@@ -24,7 +24,6 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 
-import pt.ist.fenixframework.DomainObject;
 import pt.utl.ist.fenix.tools.util.Pair;
 
 public class FunctionalitiesDispatchAction extends FenixDispatchAction {
@@ -140,38 +139,11 @@ public class FunctionalitiesDispatchAction extends FenixDispatchAction {
     }
 
     protected Module getModule(HttpServletRequest request) {
-        return (Module) getObject(request, Module.class, "module");
+        return getDomainObject(request, "module");
     }
 
     protected Content getFunctionality(HttpServletRequest request) {
-        return (Content) getObject(request, Content.class, "functionality");
-    }
-
-    protected DomainObject getObject(HttpServletRequest request, Class type, String parameter) {
-        Integer objectId = getObjectId(request, parameter);
-
-        if (objectId == null) {
-            return null;
-        }
-
-        return readDomainObject(request, type, objectId);
-    }
-
-    protected Integer getObjectId(HttpServletRequest request, String name) {
-        return getId(request.getParameter(name));
-    }
-
-    protected Integer getId(String id) {
-        if (id == null) {
-            return null;
-        }
-
-        try {
-            return new Integer(id);
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-            return null;
-        }
+        return getDomainObject(request, "functionality");
     }
 
     //

@@ -77,12 +77,11 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction 
         IUserView userView = UserView.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
 
-        Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
-
         InfoDegreeCurricularPlan oldInfoDegreeCP = null;
 
         try {
-            oldInfoDegreeCP = ReadDegreeCurricularPlan.runReadDegreeCurricularPlan(degreeCurricularPlanId);
+            oldInfoDegreeCP =
+                    ReadDegreeCurricularPlan.runReadDegreeCurricularPlan(request.getParameter("degreeCurricularPlanId"));
 
         } catch (NonExistingServiceException e) {
             throw new NonExistingActionException("message.nonExistingDegreeCurricularPlan", mapping.findForward("readDegree"));
@@ -140,9 +139,8 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction 
         IUserView userView = UserView.getUser();
         DynaActionForm dynaForm = (DynaValidatorForm) form;
 
-        Integer oldDegreeCPId = new Integer(request.getParameter("degreeCurricularPlanId"));
-        Integer degreeId = new Integer(request.getParameter("degreeId"));
-        final Degree degree = AbstractDomainObject.fromExternalId(degreeId);
+        String oldDegreeCPId = request.getParameter("degreeCurricularPlanId");
+        final Degree degree = AbstractDomainObject.fromExternalId(request.getParameter("degreeId"));
 
         InfoDegreeCurricularPlanEditor newInfoDegreeCP = new InfoDegreeCurricularPlanEditor();
         newInfoDegreeCP.setExternalId(oldDegreeCPId);

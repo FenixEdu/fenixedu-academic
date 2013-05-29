@@ -32,9 +32,9 @@ public class ChangeMasterDegreeThesisData {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
-    public static void run(IUserView userView, Integer studentCurricularPlanID, String dissertationTitle,
-            List<String> guidersNumbers, List<String> assistentGuidersNumbers, List<Integer> externalGuidersIDs,
-            List<Integer> externalAssistentGuidersIDs) throws FenixServiceException {
+    public static void run(IUserView userView, String studentCurricularPlanID, String dissertationTitle,
+            List<String> guidersNumbers, List<String> assistentGuidersNumbers, List<String> externalGuidersIDs,
+            List<String> externalAssistentGuidersIDs) throws FenixServiceException {
 
         // check duplicate guiders and assistent guiders
         if (CollectionUtils.intersection(guidersNumbers, assistentGuidersNumbers).size() > 0) {

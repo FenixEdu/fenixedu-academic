@@ -28,7 +28,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class ReadDistributedTestMarksStatistics {
 
-    protected SiteView run(Integer executionCourseId, Integer distributedTestId) throws FenixServiceException {
+    protected SiteView run(String executionCourseId, String distributedTestId) throws FenixServiceException {
 
         InfoSiteStudentsTestMarksStatistics infoSiteStudentsTestMarksStatistics = new InfoSiteStudentsTestMarksStatistics();
 
@@ -88,7 +88,7 @@ public class ReadDistributedTestMarksStatistics {
     private static final ReadDistributedTestMarksStatistics serviceInstance = new ReadDistributedTestMarksStatistics();
 
     @Service
-    public static SiteView runReadDistributedTestMarksStatistics(Integer executionCourseId, Integer distributedTestId)
+    public static SiteView runReadDistributedTestMarksStatistics(String executionCourseId, String distributedTestId)
             throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
         return serviceInstance.run(executionCourseId, distributedTestId);

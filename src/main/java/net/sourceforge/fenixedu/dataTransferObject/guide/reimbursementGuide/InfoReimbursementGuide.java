@@ -49,7 +49,7 @@ public class InfoReimbursementGuide extends InfoObject {
     /**
      * @param reimbursementGuideId
      */
-    public InfoReimbursementGuide(Integer reimbursementGuideId) {
+    public InfoReimbursementGuide(String reimbursementGuideId) {
         setExternalId(reimbursementGuideId);
     }
 

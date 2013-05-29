@@ -45,7 +45,7 @@ public class InsertExercise {
 
     private static final double FILE_SIZE_LIMIT = Math.pow(2, 20);
 
-    public List<String> run(Integer executionCourseId, UploadedFile xmlZipFile, String path) throws FenixServiceException {
+    public List<String> run(String executionCourseId, UploadedFile xmlZipFile, String path) throws FenixServiceException {
 
         List<String> badXmls = new ArrayList<String>();
         String replacedPath = path.replace('\\', '/');
@@ -229,7 +229,7 @@ public class InsertExercise {
     private static final InsertExercise serviceInstance = new InsertExercise();
 
     @Service
-    public static List<String> runInsertExercise(Integer executionCourseId, UploadedFile xmlZipFile, String path)
+    public static List<String> runInsertExercise(String executionCourseId, UploadedFile xmlZipFile, String path)
             throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
         return serviceInstance.run(executionCourseId, xmlZipFile, path);

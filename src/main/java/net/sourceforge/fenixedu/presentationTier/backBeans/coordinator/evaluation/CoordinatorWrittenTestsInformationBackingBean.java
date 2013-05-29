@@ -21,9 +21,9 @@ import org.apache.commons.beanutils.BeanComparator;
 
 public class CoordinatorWrittenTestsInformationBackingBean extends CoordinatorEvaluationManagementBackingBean {
 
-    private Map<Integer, List<WrittenTest>> writtenTests = new HashMap();
-    private Map<Integer, Integer> writtenTestsFreeSpace = new HashMap();
-    private Map<Integer, String> writtenTestsRooms = new HashMap();
+    private final Map<String, List<WrittenTest>> writtenTests = new HashMap();
+    private final Map<String, Integer> writtenTestsFreeSpace = new HashMap();
+    private final Map<String, String> writtenTestsRooms = new HashMap();
     private List<ExecutionCourse> executionCoursesWithWrittenTests;
     private List<ExecutionCourse> executionCoursesWithoutWrittenTests;
     private List<CalendarLink> writtenTestCalendarLinks;
@@ -118,15 +118,15 @@ public class CoordinatorWrittenTestsInformationBackingBean extends CoordinatorEv
         this.writtenTestCalendarLinks = null;
     }
 
-    public Map<Integer, List<WrittenTest>> getWrittenTests() {
+    public Map<String, List<WrittenTest>> getWrittenTests() {
         return writtenTests;
     }
 
-    public Map<Integer, Integer> getWrittenTestsFreeSpace() {
+    public Map<String, Integer> getWrittenTestsFreeSpace() {
         return writtenTestsFreeSpace;
     }
 
-    public Map<Integer, String> getWrittenTestsRooms() {
+    public Map<String, String> getWrittenTestsRooms() {
         return writtenTestsRooms;
     }
 }

@@ -59,8 +59,8 @@ public class EditStudentGroupShiftDispatchAction extends FenixDispatchAction {
 
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
         String studentGroupCodeString = request.getParameter("studentGroupCode");
-        Integer studentGroupCode = new Integer(studentGroupCodeString);
-        Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
+        String studentGroupCode = studentGroupCodeString;
+        String groupPropertiesCode = groupPropertiesCodeString;
 
         try {
             VerifyStudentGroupAtributes
@@ -180,8 +180,8 @@ public class EditStudentGroupShiftDispatchAction extends FenixDispatchAction {
 
         String studentGroupCodeString = request.getParameter("studentGroupCode");
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
-        Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
-        Integer studentGroupCode = new Integer(studentGroupCodeString);
+        String groupPropertiesCode = groupPropertiesCodeString;
+        String studentGroupCode = studentGroupCodeString;
         String newShiftString = (String) editStudentGroupForm.get("shift");
 
         if (newShiftString.equals("")) {
@@ -193,7 +193,7 @@ public class EditStudentGroupShiftDispatchAction extends FenixDispatchAction {
             return prepareEdit(mapping, form, request, response);
 
         }
-        Integer newShiftCode = new Integer(newShiftString);
+        String newShiftCode = newShiftString;
 
         try {
             EditGroupShift.run(studentGroupCode, groupPropertiesCode, newShiftCode, userView.getUtilizador());

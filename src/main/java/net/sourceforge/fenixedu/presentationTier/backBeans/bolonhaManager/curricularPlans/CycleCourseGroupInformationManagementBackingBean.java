@@ -10,19 +10,19 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class CycleCourseGroupInformationManagementBackingBean extends CurricularCourseManagementBackingBean {
 
-    private Integer courseGroupID;
-    private Integer informationExecutionYearId;
+    private String courseGroupID;
+    private String informationExecutionYearId;
 
     private String graduatedTitle;
     private String graduatedTitleEn;
 
-    private Integer informationId;
+    private String informationId;
     private String editGraduatedTitle;
     private String editGraduatedTitleEn;
 
-    private Integer editInformationExecutionYearId;
+    private String editInformationExecutionYearId;
 
-    public CycleCourseGroup getCourseGroup(Integer courseGroupID) {
+    public CycleCourseGroup getCourseGroup(String courseGroupID) {
         return (CycleCourseGroup) AbstractDomainObject.fromExternalId(courseGroupID);
     }
 
@@ -96,20 +96,20 @@ public class CycleCourseGroupInformationManagementBackingBean extends Curricular
     }
 
     @Override
-    public Integer getCourseGroupID() {
-        return (this.courseGroupID != null) ? this.courseGroupID : getAndHoldIntegerParameter("courseGroupID");
+    public String getCourseGroupID() {
+        return (this.courseGroupID != null) ? this.courseGroupID : getAndHoldStringParameter("courseGroupID");
     }
 
     @Override
-    public void setCourseGroupID(Integer courseGroupID) {
+    public void setCourseGroupID(String courseGroupID) {
         this.courseGroupID = courseGroupID;
     }
 
-    public Integer getInformationExecutionYearId() {
-        return informationExecutionYearId != null ? informationExecutionYearId : Integer.valueOf(NO_SELECTION);
+    public String getInformationExecutionYearId() {
+        return informationExecutionYearId != null ? informationExecutionYearId : NO_SELECTION_STRING;
     }
 
-    public void setInformationExecutionYearId(Integer informationExecutionYearId) {
+    public void setInformationExecutionYearId(String informationExecutionYearId) {
         this.informationExecutionYearId = informationExecutionYearId;
     }
 
@@ -117,15 +117,15 @@ public class CycleCourseGroupInformationManagementBackingBean extends Curricular
         return AbstractDomainObject.fromExternalId(getInformationExecutionYearId());
     }
 
-    public Integer getInformationId() {
-        return informationId != null ? informationId : (informationId = getAndHoldIntegerParameter("informationId"));
+    public String getInformationId() {
+        return informationId != null ? informationId : (informationId = getAndHoldStringParameter("informationId"));
     }
 
     public CycleCourseGroupInformation getInformation() {
-        return getInformationId() != null ? AbstractDomainObject.fromExternalId(getInformationId()) : null;
+        return getInformationId() != null ? AbstractDomainObject.<CycleCourseGroupInformation> fromExternalId(getInformationId()) : null;
     }
 
-    public void setInformationId(Integer informationId) {
+    public void setInformationId(String informationId) {
         this.informationId = informationId;
     }
 
@@ -145,11 +145,11 @@ public class CycleCourseGroupInformationManagementBackingBean extends Curricular
         this.editGraduatedTitleEn = editGraduatedTitleEn;
     }
 
-    public Integer getEditInformationExecutionYearId() {
+    public String getEditInformationExecutionYearId() {
         return editInformationExecutionYearId;
     }
 
-    public void setEditInformationExecutionYearId(Integer editExecutionYearId) {
+    public void setEditInformationExecutionYearId(String editExecutionYearId) {
         this.editInformationExecutionYearId = editExecutionYearId;
     }
 

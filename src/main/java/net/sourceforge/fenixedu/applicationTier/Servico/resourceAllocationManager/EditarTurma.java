@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.domain.SchoolClass;
@@ -12,7 +11,7 @@ public class EditarTurma {
 
     @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
     @Service
-    public static Object run(final Integer externalId, final String className) throws ExistingServiceException {
+    public static Object run(final String externalId, final String className) throws ExistingServiceException {
 
         final SchoolClass classToEdit = AbstractDomainObject.fromExternalId(externalId);
         classToEdit.edit(className);

@@ -11,7 +11,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class EditWrittenEvaluationEnrolmentPeriod {
 
-    protected void run(Integer executionCourseID, Integer writtenEvaluationID, Date beginDate, Date endDate, Date beginTime,
+    protected void run(String executionCourseID, String writtenEvaluationID, Date beginDate, Date endDate, Date beginTime,
             Date endTime) throws FenixServiceException {
         final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) AbstractDomainObject.fromExternalId(writtenEvaluationID);
         if (writtenEvaluation == null) {
@@ -25,7 +25,7 @@ public class EditWrittenEvaluationEnrolmentPeriod {
     private static final EditWrittenEvaluationEnrolmentPeriod serviceInstance = new EditWrittenEvaluationEnrolmentPeriod();
 
     @Service
-    public static void runEditWrittenEvaluationEnrolmentPeriod(Integer executionCourseID, Integer writtenEvaluationID,
+    public static void runEditWrittenEvaluationEnrolmentPeriod(String executionCourseID, String writtenEvaluationID,
             Date beginDate, Date endDate, Date beginTime, Date endTime) throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseID);
         serviceInstance.run(executionCourseID, writtenEvaluationID, beginDate, endDate, beginTime, endTime);

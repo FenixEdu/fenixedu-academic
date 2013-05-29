@@ -33,7 +33,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class ReadCurricularCourseListByExecutionCourseCode {
 
-    protected TeacherAdministrationSiteView run(Integer executionCourseCode) throws ExcepcaoInexistente, FenixServiceException {
+    protected TeacherAdministrationSiteView run(String executionCourseCode) throws ExcepcaoInexistente, FenixServiceException {
 
         List infoCurricularCourseList = new ArrayList();
         ExecutionCourseSite site = null;
@@ -87,7 +87,7 @@ public class ReadCurricularCourseListByExecutionCourseCode {
             new ReadCurricularCourseListByExecutionCourseCode();
 
     @Service
-    public static TeacherAdministrationSiteView runReadCurricularCourseListByExecutionCourseCode(Integer executionCourseCode)
+    public static TeacherAdministrationSiteView runReadCurricularCourseListByExecutionCourseCode(String executionCourseCode)
             throws ExcepcaoInexistente, FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseCode);
         return serviceInstance.run(executionCourseCode);

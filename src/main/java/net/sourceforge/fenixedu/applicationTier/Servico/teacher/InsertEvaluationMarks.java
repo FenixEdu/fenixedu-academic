@@ -38,7 +38,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class InsertEvaluationMarks {
 
-    protected TeacherAdministrationSiteView run(Integer executionCourseCode, Integer evaluationCode, HashMap hashMarks)
+    protected TeacherAdministrationSiteView run(String executionCourseCode, String evaluationCode, HashMap hashMarks)
             throws ExcepcaoInexistente, FenixServiceException {
 
         ExecutionCourseSite site = null;
@@ -153,7 +153,7 @@ public class InsertEvaluationMarks {
     private static final InsertEvaluationMarks serviceInstance = new InsertEvaluationMarks();
 
     @Service
-    public static TeacherAdministrationSiteView runInsertEvaluationMarks(Integer executionCourseCode, Integer evaluationCode,
+    public static TeacherAdministrationSiteView runInsertEvaluationMarks(String executionCourseCode, String evaluationCode,
             HashMap hashMarks) throws ExcepcaoInexistente, FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseCode);
         return serviceInstance.run(executionCourseCode, evaluationCode, hashMarks);

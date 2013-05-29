@@ -29,7 +29,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ReadExecutionDegreesByDegreeCurricularPlanID {
 
     @Service
-    public static List<InfoExecutionDegree> run(Integer degreeCurricularPlanID) {
+    public static List<InfoExecutionDegree> run(String degreeCurricularPlanID) {
         DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
 
         List<InfoExecutionDegree> result = new ArrayList<InfoExecutionDegree>();
@@ -44,7 +44,7 @@ public class ReadExecutionDegreesByDegreeCurricularPlanID {
     // Service Invokers migrated from Berserk
 
     @Service
-    public static List<InfoExecutionDegree> runReadExecutionDegreesByDegreeCurricularPlanID(Integer degreeCurricularPlanID)
+    public static List<InfoExecutionDegree> runReadExecutionDegreesByDegreeCurricularPlanID(String degreeCurricularPlanID)
             throws NotAuthorizedException {
         try {
             ManagerAuthorizationFilter.instance.execute();

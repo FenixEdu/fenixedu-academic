@@ -10,7 +10,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class EditTest {
 
-    protected void run(Integer executionCourseId, Integer testId, String title, String information) {
+    protected void run(String executionCourseId, String testId, String title, String information) {
         Test test = AbstractDomainObject.fromExternalId(testId);
         test.setTitle(title);
         test.setInformation(information);
@@ -22,7 +22,7 @@ public class EditTest {
     private static final EditTest serviceInstance = new EditTest();
 
     @Service
-    public static void runEditTest(Integer executionCourseId, Integer testId, String title, String information)
+    public static void runEditTest(String executionCourseId, String testId, String title, String information)
             throws NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
         serviceInstance.run(executionCourseId, testId, title, information);

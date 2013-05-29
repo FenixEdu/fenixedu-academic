@@ -41,8 +41,7 @@ public class GenerateSiteArchive extends FenixDispatchAction {
         }
 
         try {
-            Integer oid = new Integer(parameter);
-            return AbstractDomainObject.fromExternalId(oid);
+            return AbstractDomainObject.fromExternalId(parameter);
         } catch (NumberFormatException e) {
             return null;
         }

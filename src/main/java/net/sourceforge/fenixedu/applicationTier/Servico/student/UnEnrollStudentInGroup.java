@@ -46,7 +46,7 @@ public class UnEnrollStudentInGroup {
 
     @Checked("RolePredicates.STUDENT_PREDICATE")
     @Service
-    public static Boolean run(String userName, Integer studentGroupCode) throws FenixServiceException {
+    public static Boolean run(String userName, String studentGroupCode) throws FenixServiceException {
 
         ServiceMonitoring.logService(UnEnrollStudentInGroup.class, userName, studentGroupCode);
 

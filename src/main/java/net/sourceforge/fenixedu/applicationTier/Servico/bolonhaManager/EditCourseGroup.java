@@ -13,8 +13,8 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class EditCourseGroup {
 
     @Service
-    public static void run(final Integer courseGroupID, final Integer contextID, final String name, final String nameEn,
-            final Integer beginExecutionPeriodID, final Integer endExecutionPeriodID) throws FenixServiceException {
+    public static void run(final String courseGroupID, final String contextID, final String name, final String nameEn,
+            final String beginExecutionPeriodID, final String endExecutionPeriodID) throws FenixServiceException {
 
         final CourseGroup courseGroup = (CourseGroup) AbstractDomainObject.fromExternalId(courseGroupID);
         if (courseGroup == null) {
@@ -29,7 +29,7 @@ public class EditCourseGroup {
                 getEndExecutionPeriod(endExecutionPeriodID));
     }
 
-    private static ExecutionSemester getBeginExecutionPeriod(final Integer beginExecutionPeriodID) {
+    private static ExecutionSemester getBeginExecutionPeriod(final String beginExecutionPeriodID) {
         if (beginExecutionPeriodID == null) {
             return ExecutionSemester.readActualExecutionSemester();
         } else {
@@ -37,8 +37,8 @@ public class EditCourseGroup {
         }
     }
 
-    private static ExecutionSemester getEndExecutionPeriod(Integer endExecutionPeriodID) {
-        return (endExecutionPeriodID == null) ? null : AbstractDomainObject.fromExternalId(
-                endExecutionPeriodID);
+    private static ExecutionSemester getEndExecutionPeriod(String endExecutionPeriodID) {
+        return (endExecutionPeriodID == null) ? null : AbstractDomainObject
+                .<ExecutionSemester> fromExternalId(endExecutionPeriodID);
     }
 }

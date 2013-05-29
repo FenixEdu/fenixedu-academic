@@ -21,10 +21,10 @@ public class EditUnit {
 
     @Checked("RolePredicates.MANAGER_PREDICATE")
     @Service
-    public static void run(Integer unitID, MultiLanguageString unitName, String unitNameCard, String unitCostCenter,
-            String acronym, YearMonthDay begin, YearMonthDay end, Integer departmentID, Integer degreeID,
-            Integer administrativeOfficeID, String webAddress, UnitClassification classification,
-            Boolean canBeResponsibleOfSpaces, Integer campusID) throws FenixServiceException, DomainException {
+    public static void run(String unitID, MultiLanguageString unitName, String unitNameCard, String unitCostCenter,
+            String acronym, YearMonthDay begin, YearMonthDay end, String departmentID, String degreeID,
+            String administrativeOfficeID, String webAddress, UnitClassification classification,
+            Boolean canBeResponsibleOfSpaces, String campusID) throws FenixServiceException, DomainException {
 
         ServiceMonitoring.logService(EditUnit.class, unitID, unitName, unitNameCard, unitCostCenter, acronym, begin, end,
                 departmentID, degreeID, administrativeOfficeID, webAddress, classification, canBeResponsibleOfSpaces, campusID);
@@ -38,8 +38,7 @@ public class EditUnit {
 
         Degree degree = AbstractDomainObject.fromExternalId(degreeID);
         Department department = AbstractDomainObject.fromExternalId(departmentID);
-        AdministrativeOffice administrativeOffice =
-                AbstractDomainObject.fromExternalId(administrativeOfficeID);
+        AdministrativeOffice administrativeOffice = AbstractDomainObject.fromExternalId(administrativeOfficeID);
         Campus campus = (Campus) AbstractDomainObject.fromExternalId(campusID);
 
         unit.edit(unitName, unitNameCard, costCenterCode, acronym, begin, end, webAddress, classification, department, degree,

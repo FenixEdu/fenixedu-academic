@@ -18,12 +18,11 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class EnrolStudentInWrittenEvaluation {
 
-    protected void run(String username, Integer writtenEvaluationOID) throws FenixServiceException {
+    protected void run(String username, String writtenEvaluationOID) throws FenixServiceException {
 
         ServiceMonitoring.logService(this.getClass(), username, writtenEvaluationOID);
 
-        final WrittenEvaluation writtenEvaluation =
-                (WrittenEvaluation) AbstractDomainObject.fromExternalId(writtenEvaluationOID);
+        final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) AbstractDomainObject.fromExternalId(writtenEvaluationOID);
         final Person person = Person.readPersonByUsername(username);
         final Student student = person.getStudent();
         final Registration registration = findCorrectRegistration(student, writtenEvaluation.getAssociatedExecutionCoursesSet());
@@ -57,7 +56,7 @@ public class EnrolStudentInWrittenEvaluation {
     private static final EnrolStudentInWrittenEvaluation serviceInstance = new EnrolStudentInWrittenEvaluation();
 
     @Service
-    public static void runEnrolStudentInWrittenEvaluation(String username, Integer writtenEvaluationOID)
+    public static void runEnrolStudentInWrittenEvaluation(String username, String writtenEvaluationOID)
             throws FenixServiceException, NotAuthorizedException {
         ExamStudentAuthorizationFilter.instance.execute(username, writtenEvaluationOID);
         serviceInstance.run(username, writtenEvaluationOID);

@@ -105,7 +105,7 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
     }
 
     public ExecutionSemester getExecutionPeriod() {
-        final Integer executionPeriodID = getExecutionPeriodID();
+        final String executionPeriodID = getExecutionPeriodID();
         if (executionSemester == null || !executionPeriodID.equals(executionSemester.getExternalId())) {
             final Collection<ExecutionSemester> executionSemesters = getExecutionPeriods();
             if (executionSemesters != null) {
@@ -134,11 +134,11 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
         return result;
     }
 
-    public Integer getRegistrationID() {
-        return (Integer) getViewState().getAttribute("registrationID");
+    public String getRegistrationID() {
+        return (String) getViewState().getAttribute("registrationID");
     }
 
-    public void setRegistrationID(Integer registrationID) {
+    public void setRegistrationID(String registrationID) {
         getViewState().setAttribute("registrationID", registrationID);
     }
 
@@ -369,7 +369,7 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
         return (appContext != null && appContext.length() > 0) ? "/" + appContext : "";
     }
 
-    public Integer getExecutionPeriodID() {
+    public String getExecutionPeriodID() {
         if (getViewState().getAttribute("executionPeriodID") == null) {
             final Collection<ExecutionSemester> executionSemesters = getExecutionPeriods();
             if (executionSemesters != null) {
@@ -381,18 +381,18 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
                 }
             }
         }
-        return (Integer) getViewState().getAttribute("executionPeriodID");
+        return (String) getViewState().getAttribute("executionPeriodID");
     }
 
-    public void setExecutionPeriodID(Integer executionPeriodID) {
+    public void setExecutionPeriodID(String executionPeriodID) {
         getViewState().setAttribute("executionPeriodID", executionPeriodID);
     }
 
-    public Integer getExecutionCourseID() {
-        return (Integer) getViewState().getAttribute("executionCourseID");
+    public String getExecutionCourseID() {
+        return (String) getViewState().getAttribute("executionCourseID");
     }
 
-    public void setExecutionCourseID(Integer executionCourseID) {
+    public void setExecutionCourseID(String executionCourseID) {
         if (setExecutionCourse) {
             getViewState().setAttribute("executionCourseID", executionCourseID);
         }

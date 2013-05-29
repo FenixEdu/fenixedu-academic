@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.commons.degree;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.ReadExecutionDegreeByCandidateIDAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -15,7 +14,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class ReadExecutionDegreeByCandidateID {
 
-    protected InfoExecutionDegree run(Integer candidateID) throws NonExistingServiceException {
+    protected InfoExecutionDegree run(String candidateID) throws NonExistingServiceException {
 
         MasterDegreeCandidate masterDegreeCandidate = AbstractDomainObject.fromExternalId(candidateID);
 
@@ -34,7 +33,8 @@ public class ReadExecutionDegreeByCandidateID {
     private static final ReadExecutionDegreeByCandidateID serviceInstance = new ReadExecutionDegreeByCandidateID();
 
     @Service
-    public static InfoExecutionDegree runReadExecutionDegreeByCandidateID(Integer candidateID) throws NonExistingServiceException  , NotAuthorizedException {
+    public static InfoExecutionDegree runReadExecutionDegreeByCandidateID(String candidateID) throws NonExistingServiceException,
+            NotAuthorizedException {
         ReadExecutionDegreeByCandidateIDAuthorizationFilter.instance.execute(candidateID);
         return serviceInstance.run(candidateID);
     }

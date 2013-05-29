@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.marksManagement;
 
-
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
@@ -18,7 +17,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class AlterStudentEnrolmentEvaluation {
 
     @Service
-    public static void run(Integer curricularCourseCode, Integer enrolmentEvaluationCode,
+    public static void run(Integer curricularCourseCode, String enrolmentEvaluationCode,
             InfoEnrolmentEvaluation infoEnrolmentEvaluation, String teacherId, IUserView userView) throws FenixServiceException {
 
         Person person = userView.getPerson();

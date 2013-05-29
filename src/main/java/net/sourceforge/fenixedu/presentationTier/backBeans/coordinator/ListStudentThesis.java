@@ -16,16 +16,16 @@ import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
  */
 public class ListStudentThesis {
 
-    private Integer degreeCurricularPlanID;
+    private String degreeCurricularPlanID;
 
     public ListStudentThesis() {
     }
 
-    public Integer getDegreeCurricularPlanID() {
+    public String getDegreeCurricularPlanID() {
         return degreeCurricularPlanID;
     }
 
-    public void setDegreeCurricularPlanID(Integer degreeCurricularPlanID) {
+    public void setDegreeCurricularPlanID(String degreeCurricularPlanID) {
         this.degreeCurricularPlanID = degreeCurricularPlanID;
 
         ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).setAttribute(

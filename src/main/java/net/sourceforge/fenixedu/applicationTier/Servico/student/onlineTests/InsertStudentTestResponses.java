@@ -50,7 +50,7 @@ public class InsertStudentTestResponses {
     @Checked("RolePredicates.STUDENT_PREDICATE")
     @Service
     public static InfoSiteStudentTestFeedback run(Registration registration, Integer studentNumber,
-            final Integer distributedTestId, Response[] response, String path) throws FenixServiceException {
+            final String distributedTestId, Response[] response, String path) throws FenixServiceException {
 
         ServiceMonitoring.logService(InsertStudentTestResponses.class, registration, studentNumber, distributedTestId, response,
                 path);

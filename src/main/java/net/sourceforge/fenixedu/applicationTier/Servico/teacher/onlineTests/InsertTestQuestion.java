@@ -27,12 +27,12 @@ public class InsertTestQuestion {
 
     private String path = new String();
 
-    protected void run(Integer executionCourseId, Integer testId, String[] metadataId, Integer questionOrder,
-            Double questionValue, CorrectionFormula formula, String path) throws FenixServiceException {
+    protected void run(String executionCourseId, String testId, String[] metadataId, Integer questionOrder, Double questionValue,
+            CorrectionFormula formula, String path) throws FenixServiceException {
         this.path = path.replace('\\', '/');
 
         for (String element : metadataId) {
-            Metadata metadata = AbstractDomainObject.fromExternalId(new Integer(element));
+            Metadata metadata = AbstractDomainObject.fromExternalId(element);
             if (metadata == null) {
                 throw new InvalidArgumentsServiceException();
             }
@@ -104,9 +104,8 @@ public class InsertTestQuestion {
     private static final InsertTestQuestion serviceInstance = new InsertTestQuestion();
 
     @Service
-    public static void runInsertTestQuestion(Integer executionCourseId, Integer testId, String[] metadataId,
-            Integer questionOrder, Double questionValue, CorrectionFormula formula, String path) throws FenixServiceException,
-            NotAuthorizedException {
+    public static void runInsertTestQuestion(String executionCourseId, String testId, String[] metadataId, Integer questionOrder,
+            Double questionValue, CorrectionFormula formula, String path) throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
         serviceInstance.run(executionCourseId, testId, metadataId, questionOrder, questionValue, formula, path);
     }

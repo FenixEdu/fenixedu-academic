@@ -62,12 +62,10 @@ public class EnrollStudentGroupShiftDispatchAction extends FenixDispatchAction {
 
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
         String studentGroupCodeString = request.getParameter("studentGroupCode");
-        Integer studentGroupCode = new Integer(studentGroupCodeString);
-        Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
 
         try {
-            VerifyStudentGroupAtributes
-                    .run(groupPropertiesCode, null, studentGroupCode, userView.getUtilizador(), new Integer(5));
+            VerifyStudentGroupAtributes.run(groupPropertiesCodeString, null, studentGroupCodeString, userView.getUtilizador(),
+                    new Integer(5));
 
         } catch (NotAuthorizedException e) {
             ActionErrors actionErrors2 = new ActionErrors();
@@ -110,7 +108,7 @@ public class EnrollStudentGroupShiftDispatchAction extends FenixDispatchAction {
         InfoSiteShifts infoSiteShifts = null;
 
         try {
-            infoSiteShifts = ReadGroupingShifts.run(groupPropertiesCode, studentGroupCode);
+            infoSiteShifts = ReadGroupingShifts.run(groupPropertiesCodeString, studentGroupCodeString);
 
         } catch (ExistingServiceException e) {
             ActionErrors actionErrors = new ActionErrors();
@@ -139,7 +137,7 @@ public class EnrollStudentGroupShiftDispatchAction extends FenixDispatchAction {
             error3 = new ActionError("errors.enrollStudentGroupShift.allShiftsFull");
             actionErrors3.add("errors.enrollStudentGroupShift.allShiftsFull", error3);
             saveErrors(request, actionErrors3);
-            request.setAttribute("groupPropertiesCode", groupPropertiesCode);
+            request.setAttribute("groupPropertiesCode", groupPropertiesCodeString);
             return mapping.findForward("viewStudentGroupInformation");
         }
 
@@ -183,8 +181,6 @@ public class EnrollStudentGroupShiftDispatchAction extends FenixDispatchAction {
 
         String studentGroupCodeString = request.getParameter("studentGroupCode");
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
-        Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
-        Integer studentGroupCode = new Integer(studentGroupCodeString);
         String newShiftString = (String) enrollStudentGroupForm.get("shift");
 
         if (newShiftString.equals("")) {
@@ -196,10 +192,9 @@ public class EnrollStudentGroupShiftDispatchAction extends FenixDispatchAction {
             return prepareEnrollStudentGroupShift(mapping, form, request, response);
 
         }
-        Integer newShiftCode = new Integer(newShiftString);
 
         try {
-            EnrollGroupShift.run(studentGroupCode, groupPropertiesCode, newShiftCode, userView.getUtilizador());
+            EnrollGroupShift.run(studentGroupCodeString, groupPropertiesCodeString, newShiftString, userView.getUtilizador());
         } catch (NotAuthorizedException e) {
             ActionErrors actionErrors2 = new ActionErrors();
             ActionError error2 = null;

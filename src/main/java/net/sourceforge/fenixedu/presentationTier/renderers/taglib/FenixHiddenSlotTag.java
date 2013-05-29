@@ -116,8 +116,7 @@ public class FenixHiddenSlotTag extends HiddenSlotTag {
 
     protected Object getPersistentObject() throws JspException {
         try {
-            Class type = Class.forName(getType());
-            return AbstractDomainObject.fromExternalId(type, Integer.valueOf(getOid()));
+            return AbstractDomainObject.fromExternalId(getOid());
         } catch (Exception e) {
             throw new JspException(e);
         }

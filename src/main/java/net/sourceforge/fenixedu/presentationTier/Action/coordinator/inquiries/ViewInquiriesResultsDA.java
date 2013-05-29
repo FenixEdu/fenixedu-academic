@@ -42,19 +42,19 @@ abstract public class ViewInquiriesResultsDA extends FenixDispatchAction {
         request.setAttribute("otherExecutionCourses", Collections.EMPTY_LIST);
         request.setAttribute("excelentExecutionCourses", Collections.EMPTY_LIST);
         request.setAttribute("executionCoursesToImproove", Collections.EMPTY_LIST);
-        ((ViewInquiriesResultPageDTO) actionForm).setDegreeCurricularPlanID(getIntegerFromRequest(request,
+        ((ViewInquiriesResultPageDTO) actionForm).setDegreeCurricularPlanID(getStringFromRequest(request,
                 "degreeCurricularPlanID"));
 
         return actionMapping.findForward("curricularUnitSelection");
     }
 
     public List<ExecutionSemester> getExecutionSemesters(HttpServletRequest request, ActionForm actionForm) {
-        Integer degreeCurricularPlanID = getIntegerFromRequest(request, "degreeCurricularPlanID");
-        if (degreeCurricularPlanID == null || degreeCurricularPlanID == 0) {
+        String degreeCurricularPlanID = getStringFromRequest(request, "degreeCurricularPlanID");
+        if (degreeCurricularPlanID == null || degreeCurricularPlanID.equals("")) {
             degreeCurricularPlanID = ((ViewInquiriesResultPageDTO) actionForm).getDegreeCurricularPlanID();
         }
         final DegreeCurricularPlan degreeCurricularPlan =
-                AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "degreeCurricularPlanID"));
+                AbstractDomainObject.fromExternalId(getStringFromRequest(request, "degreeCurricularPlanID"));
         final List<ExecutionSemester> executionSemesters = new ArrayList<ExecutionSemester>();
         for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
             final ExecutionYear executionYear = executionDegree.getExecutionYear();
@@ -248,23 +248,20 @@ abstract public class ViewInquiriesResultsDA extends FenixDispatchAction {
 
     public ActionForward showInquiryCourseResult(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        request.setAttribute("inquiryResult",
-                AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "resultId")));
+        request.setAttribute("inquiryResult", getDomainObject(request, "resultId"));
         return actionMapping.findForward("showCourseInquiryResult");
     }
 
     public ActionForward showInquiryTeachingResult(ActionMapping actionMapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        request.setAttribute("inquiryResult",
-                AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "resultId")));
+        request.setAttribute("inquiryResult", getDomainObject(request, "resultId"));
         return actionMapping.findForward("showTeachingInquiryResult");
     }
 
     public ActionForward showFilledTeachingInquiry(ActionMapping actionMapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        final TeachingInquiry teachingInquiry =
-                AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "filledTeachingInquiryId"));
+        final TeachingInquiry teachingInquiry = getDomainObject(request, "filledTeachingInquiryId");
         request.setAttribute("teachingInquiry", teachingInquiry);
 
         final ExecutionSemester executionPeriod = teachingInquiry.getProfessorship().getExecutionCourse().getExecutionPeriod();
@@ -280,9 +277,7 @@ abstract public class ViewInquiriesResultsDA extends FenixDispatchAction {
     public ActionForward showFilledYearDelegateInquiry(ActionMapping actionMapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        final YearDelegateCourseInquiry delegateCourseInquiry =
-                AbstractDomainObject.fromExternalId(
-                        getIntegerFromRequest(request, "filledYearDelegateInquiryId"));
+        final YearDelegateCourseInquiry delegateCourseInquiry = getDomainObject(request, "filledYearDelegateInquiryId");
 
         request.setAttribute("delegateInquiryDTO", new YearDelegateCourseInquiryDTO(delegateCourseInquiry));
         return actionMapping.findForward("showFilledDelegateInquiry");

@@ -13,7 +13,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Input;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -28,8 +27,7 @@ public class ManageRegistrationStartDatesDA extends FenixDispatchAction {
     @Input
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
-        final Integer registrationId = getIntegerFromRequest(request, "registrationId");
-        request.setAttribute("registration", AbstractDomainObject.fromExternalId(registrationId));
+        request.setAttribute("registration", getDomainObject(request, "registrationId"));
         return mapping.findForward("showEditStartDates");
     }
 

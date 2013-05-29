@@ -61,13 +61,12 @@ public class EditCurriculumDA extends FenixDispatchAction {
 
         DynaActionForm curriculumForm = (DynaActionForm) form;
 
-        Integer curricularCourseId = new Integer(request.getParameter("curricularCourseId"));
         String language = request.getParameter("language");
 
         InfoCurriculum infoCurriculum = null;
 
         try {
-            infoCurriculum = ReadCurriculum.run(curricularCourseId);
+            infoCurriculum = ReadCurriculum.run(request.getParameter("curricularCourseId"));
 
         } catch (NonExistingServiceException e) {
             throw new NonExistingActionException("message.nonExistingCurricularCourse",
@@ -106,8 +105,7 @@ public class EditCurriculumDA extends FenixDispatchAction {
 
         InfoCurriculum infoCurriculum = new InfoCurriculum();
         final CurricularCourse curricularCourse =
-                (CurricularCourse) AbstractDomainObject.fromExternalId(Integer.valueOf(request
-                        .getParameter("curricularCourseId")));
+                (CurricularCourse) AbstractDomainObject.fromExternalId(request.getParameter("curricularCourseId"));
         InfoCurricularCourse infoCurricularCourse = new InfoCurricularCourse(curricularCourse);
         Curriculum curriculum = curricularCourse.findLatestCurriculum();
 

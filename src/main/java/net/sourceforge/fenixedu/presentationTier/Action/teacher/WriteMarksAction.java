@@ -121,7 +121,6 @@ public class WriteMarksAction extends FenixDispatchAction {
 
         IUserView userView = UserView.getUser();
 
-        Object[] args = { objectCode, evaluationCode, hashMarks };
         TeacherAdministrationSiteView siteView = null;
 
         try {
@@ -169,7 +168,6 @@ public class WriteMarksAction extends FenixDispatchAction {
             throws FenixActionException {
         IUserView userView = getUserView(request);
         ISiteComponent commonComponent = new InfoSiteCommon();
-        Object[] args = { objectCode, commonComponent, new InfoEvaluation(), null, evaluationCode, null };
 
         try {
             TeacherAdministrationSiteView siteView =

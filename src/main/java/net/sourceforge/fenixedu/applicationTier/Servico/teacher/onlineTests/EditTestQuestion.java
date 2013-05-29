@@ -3,7 +3,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -18,7 +17,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class EditTestQuestion {
 
-    protected void run(Integer executionCourseId, Integer testQuestionId, Integer testQuestionOrder, Double testQuestionValue,
+    protected void run(String executionCourseId, String testQuestionId, Integer testQuestionOrder, Double testQuestionValue,
             CorrectionFormula formula) throws FenixServiceException {
         TestQuestion testQuestion = AbstractDomainObject.fromExternalId(testQuestionId);
         if (testQuestion == null) {
@@ -41,7 +40,7 @@ public class EditTestQuestion {
     private static final EditTestQuestion serviceInstance = new EditTestQuestion();
 
     @Service
-    public static void runEditTestQuestion(Integer executionCourseId, Integer testQuestionId, Integer testQuestionOrder,
+    public static void runEditTestQuestion(String executionCourseId, String testQuestionId, Integer testQuestionOrder,
             Double testQuestionValue, CorrectionFormula formula) throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
         serviceInstance.run(executionCourseId, testQuestionId, testQuestionOrder, testQuestionValue, formula);

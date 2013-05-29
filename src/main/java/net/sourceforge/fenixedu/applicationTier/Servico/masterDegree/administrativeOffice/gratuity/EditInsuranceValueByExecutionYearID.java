@@ -12,7 +12,7 @@ public class EditInsuranceValueByExecutionYearID {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
-    public static void run(Integer executionYearID, Double annualValue, Date endDate) {
+    public static void run(String executionYearID, Double annualValue, Date endDate) {
 
         final ExecutionYear executionYear = AbstractDomainObject.fromExternalId(executionYearID);
 

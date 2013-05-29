@@ -44,13 +44,13 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
 
     static public class SecondCycleCandidacyProcessForm extends CandidacyProcessForm {
-        private Integer selectedProcessId;
+        private String selectedProcessId;
 
-        public Integer getSelectedProcessId() {
+        public String getSelectedProcessId() {
             return selectedProcessId;
         }
 
-        public void setSelectedProcessId(Integer selectedProcessId) {
+        public void setSelectedProcessId(String selectedProcessId) {
             this.selectedProcessId = selectedProcessId;
         }
     }
@@ -299,7 +299,7 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
     }
 
     public DegreeCurricularPlan getDegreeCurricularPlan(HttpServletRequest request) {
-        final Integer degreeCurricularPlanOID = CoordinatedDegreeInfo.findDegreeCurricularPlanID(request);
+        final String degreeCurricularPlanOID = CoordinatedDegreeInfo.findDegreeCurricularPlanID(request);
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanOID);
 
         if (degreeCurricularPlanOID != null) {

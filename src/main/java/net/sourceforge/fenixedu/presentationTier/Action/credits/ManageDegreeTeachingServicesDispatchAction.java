@@ -52,7 +52,7 @@ public class ManageDegreeTeachingServicesDispatchAction extends FenixDispatchAct
             };
 
     protected void teachingServiceDetailsProcess(Professorship professorship, HttpServletRequest request, DynaActionForm dynaForm)
-            throws NumberFormatException,  FenixServiceException {
+            throws NumberFormatException, FenixServiceException {
 
         List<TeachingServicePercentage> teachingServicePercentages = new ArrayList<TeachingServicePercentage>();
         HashMap<String, Double> teacherPercentageMap = new HashMap<String, Double>();
@@ -78,7 +78,7 @@ public class ManageDegreeTeachingServicesDispatchAction extends FenixDispatchAct
     }
 
     protected ActionForward updateTeachingServices(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            RoleType roleType) throws NumberFormatException,  FenixServiceException {
+            RoleType roleType) throws NumberFormatException, FenixServiceException {
 
         DynaActionForm teachingServiceForm = (DynaActionForm) form;
         IUserView userView = UserView.getUser();
@@ -114,18 +114,18 @@ public class ManageDegreeTeachingServicesDispatchAction extends FenixDispatchAct
     }
 
     public ActionForward cancel(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws NumberFormatException,  FenixServiceException {
+            throws NumberFormatException, FenixServiceException {
 
         return mapping.findForward("sucessfull-edit");
     }
 
     public class ShiftIDTeachingPercentage {
 
-        Integer shiftID;
+        String shiftID;
 
         Double percentage;
 
-        public ShiftIDTeachingPercentage(Integer shiftID, Double percentage) {
+        public ShiftIDTeachingPercentage(String shiftID, Double percentage) {
             setShiftID(shiftID);
             setPercentage(percentage);
         }
@@ -138,11 +138,11 @@ public class ManageDegreeTeachingServicesDispatchAction extends FenixDispatchAct
             this.percentage = percentage;
         }
 
-        public Integer getShiftID() {
+        public String getShiftID() {
             return shiftID;
         }
 
-        public void setShiftID(Integer shiftID) {
+        public void setShiftID(String shiftID) {
             this.shiftID = shiftID;
         }
 

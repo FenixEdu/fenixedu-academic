@@ -29,7 +29,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ComputeCurricularCourseStatistics {
 
     @Service
-    public static String run(Integer degreeCurricularPlanID, Integer executionYearID, RegistrationAgreement agreement) {
+    public static String run(String degreeCurricularPlanID, String executionYearID, RegistrationAgreement agreement) {
 
         ExecutionYear executionYear = AbstractDomainObject.fromExternalId(executionYearID);
         DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);

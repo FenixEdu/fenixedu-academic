@@ -37,7 +37,7 @@ public class GroupStudentEnrolment {
 
     @Checked("RolePredicates.STUDENT_PREDICATE")
     @Service
-    public static Boolean run(Integer studentGroupCode, String username) throws FenixServiceException {
+    public static Boolean run(String studentGroupCode, String username) throws FenixServiceException {
 
         ServiceMonitoring.logService(GroupStudentEnrolment.class, studentGroupCode, username);
 

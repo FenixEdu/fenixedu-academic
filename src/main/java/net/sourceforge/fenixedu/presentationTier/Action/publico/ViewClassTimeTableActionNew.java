@@ -74,19 +74,16 @@ public class ViewClassTimeTableActionNew extends FenixAction {
         request.setAttribute("degreeInitials", degreeInitials);
         String nameDegreeCurricularPlan = request.getParameter("nameDegreeCurricularPlan");
         request.setAttribute("nameDegreeCurricularPlan", nameDegreeCurricularPlan);
-        Integer degreeCurricularPlanId = Integer.valueOf(request.getParameter("degreeCurricularPlanID"));
+        String degreeCurricularPlanId = request.getParameter("degreeCurricularPlanID");
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
-        Integer degreeId = Integer.valueOf(request.getParameter("degreeID"));
+        String degreeId = request.getParameter("degreeID");
         request.setAttribute("degreeID", degreeId);
-        Integer classId = null;
 
-        if (classIdString != null) {
-            classId = new Integer(classIdString);
-        } else {
+        if (classIdString == null) {
             return mapping.getInputForward();
-
         }
-        final SchoolClass schoolClass = AbstractDomainObject.fromExternalId(classId);
+
+        final SchoolClass schoolClass = AbstractDomainObject.fromExternalId(classIdString);
         InfoExecutionDegree infoExecutionDegree =
                 ReadExecutionDegreesByExecutionYearAndDegreeInitials.getInfoExecutionDegree(schoolClass.getExecutionDegree());
         // try {
@@ -107,7 +104,7 @@ public class ViewClassTimeTableActionNew extends FenixAction {
         try {
             siteView =
                     (SiteView) ClassSiteComponentService.run(component, infoExecutionPeriod.getInfoExecutionYear().getYear(),
-                            infoExecutionPeriod.getName(), null, null, className, null, classId);
+                            infoExecutionPeriod.getName(), null, null, className, null, classIdString);
         } catch (FenixServiceException e1) {
             throw new FenixActionException(e1);
         }

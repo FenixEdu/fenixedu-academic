@@ -28,7 +28,7 @@ public class ReadAvailableFinalDegreeWorkProposalHeadersForGroup {
 
     @Checked("RolePredicates.STUDENT_PREDICATE")
     @Service
-    public static List run(Integer groupOID) {
+    public static List run(String groupOID) {
         final List<FinalDegreeWorkProposalHeader> result = new ArrayList<FinalDegreeWorkProposalHeader>();
 
         final FinalDegreeWorkGroup group = AbstractDomainObject.fromExternalId(groupOID);

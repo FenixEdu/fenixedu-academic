@@ -82,15 +82,15 @@ public class InfoTeacher extends InfoObject {
     }
 
     @Override
-    public Integer getExternalId() {
+    public String getExternalId() {
         return getTeacher().getExternalId();
     }
 
     @Override
-    public void setExternalId(Integer integer) {
+    public void setExternalId(String integer) {
         // This attribution is needed because of CRUDActionByOID. Do not delete
         // it.
-        this.person = AbstractDomainObject.fromExternalId(integer).getPerson();
+        this.person = AbstractDomainObject.<Teacher> fromExternalId(integer).getPerson();
     }
 
     public Teacher getTeacher() {

@@ -46,7 +46,7 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
-    public Integer choosenExecutionYearID;
+    public String choosenExecutionYearID;
 
     public Unit parentUnit;
 
@@ -65,7 +65,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         this.bundle = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
     }
 
-    public List<SelectItem> getExecutionYears() throws  FenixServiceException {
+    public List<SelectItem> getExecutionYears() throws FenixServiceException {
         final Set<ExecutionYear> executionYears = rootDomainObject.getExecutionYearsSet();
 
         List<SelectItem> result = new ArrayList<SelectItem>(executionYears.size());
@@ -80,7 +80,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         if (getChoosenExecutionYearID() == null) {
             for (SelectItem selectExecutionYear : result) {
                 if (selectExecutionYear.getDescription().equals(PeriodState.CURRENT_CODE)) {
-                    setChoosenExecutionYearID((Integer) selectExecutionYear.getValue());
+                    setChoosenExecutionYearID((String) selectExecutionYear.getValue());
                 }
             }
         }
@@ -88,7 +88,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         return result;
     }
 
-    public String getUnits() throws  FenixServiceException {
+    public String getUnits() throws FenixServiceException {
         StringBuilder buffer = new StringBuilder();
         YearMonthDay currentDate = new YearMonthDay();
         String partyTypeOrClassificationName = null;
@@ -190,7 +190,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         }
     }
 
-    public Map<String, Set<Unit>> getAllInstitutionSubUnits() throws  FenixServiceException {
+    public Map<String, Set<Unit>> getAllInstitutionSubUnits() throws FenixServiceException {
 
         YearMonthDay currentDate = new YearMonthDay();
 
@@ -259,7 +259,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         return null;
     }
 
-    public String getTitle() throws  FenixServiceException {
+    public String getTitle() throws FenixServiceException {
         StringBuilder buffer = new StringBuilder();
         buffer.append("<p><em>");
         buffer.append(this.getUnit().getParentUnitsPresentationName());
@@ -268,7 +268,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         return buffer.toString();
     }
 
-    public String getFunctions() throws  FenixServiceException {
+    public String getFunctions() throws FenixServiceException {
 
         StringBuilder buffer = new StringBuilder();
         YearMonthDay currentDate = new YearMonthDay();
@@ -461,7 +461,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         return functions;
     }
 
-    public ExecutionYear getExecutionYear(Integer executionYear) throws  FenixServiceException {
+    public ExecutionYear getExecutionYear(String executionYear) throws FenixServiceException {
 
         ExecutionYear iExecutionYear = ReadExecutionYearsService.run(executionYear);
         return iExecutionYear;
@@ -505,9 +505,9 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         list.add(0, firstItem);
     }
 
-    public Unit getUnit() throws  FenixServiceException {
+    public Unit getUnit() throws FenixServiceException {
         if (parentUnit == null) {
-            this.parentUnit = (Unit) AbstractDomainObject.fromExternalId(Integer.valueOf((String) getUnitIDHidden().getValue()));
+            this.parentUnit = (Unit) AbstractDomainObject.fromExternalId((String) getUnitIDHidden().getValue());
         }
         return parentUnit;
     }
@@ -556,11 +556,11 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         this.unitIDHidden = unitIDHidden;
     }
 
-    public Integer getChoosenExecutionYearID() {
+    public String getChoosenExecutionYearID() {
         return choosenExecutionYearID;
     }
 
-    public void setChoosenExecutionYearID(Integer choosenExecutionYearID) {
+    public void setChoosenExecutionYearID(String choosenExecutionYearID) {
         this.choosenExecutionYearID = choosenExecutionYearID;
     }
 

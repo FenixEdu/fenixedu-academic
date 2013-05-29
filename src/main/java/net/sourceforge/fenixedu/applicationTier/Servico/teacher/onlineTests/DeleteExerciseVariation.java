@@ -28,7 +28,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class DeleteExerciseVariation {
 
-    public List<LabelValueBean> run(Integer executionCourseId, Integer questionCode) throws InvalidArgumentsServiceException {
+    public List<LabelValueBean> run(String executionCourseId, String questionCode) throws InvalidArgumentsServiceException {
         List<LabelValueBean> result = new ArrayList<LabelValueBean>();
 
         Question question = AbstractDomainObject.fromExternalId(questionCode);
@@ -107,7 +107,7 @@ public class DeleteExerciseVariation {
     private static final DeleteExerciseVariation serviceInstance = new DeleteExerciseVariation();
 
     @Service
-    public static List<LabelValueBean> runDeleteExerciseVariation(Integer executionCourseId, Integer questionCode)
+    public static List<LabelValueBean> runDeleteExerciseVariation(String executionCourseId, String questionCode)
             throws InvalidArgumentsServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
         return serviceInstance.run(executionCourseId, questionCode);

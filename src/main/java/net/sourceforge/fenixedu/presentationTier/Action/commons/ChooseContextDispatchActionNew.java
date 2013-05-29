@@ -62,10 +62,10 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
 
         setExecutionContext(request);
 
-        Integer degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
+        String degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
 
-        Integer degreeId = getFromRequest("degreeID", request);
+        String degreeId = getFromRequest("degreeID", request);
         request.setAttribute("degreeID", degreeId);
 
         // lista
@@ -225,11 +225,11 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
         final DynaActionForm escolherContextoForm = (DynaActionForm) form;
 
         // degreeID
-        final Integer degreeId = getFromRequest("degreeID", request);
+        final String degreeId = getFromRequest("degreeID", request);
         request.setAttribute("degreeID", degreeId);
 
         // degreeCurricularPlanID
-        final Integer degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
+        final String degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
 
         // lista
@@ -246,8 +246,7 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
 
         // infoDegreeCurricularPlan
         if (degreeCurricularPlanId != null) {
-            final DegreeCurricularPlan degreeCurricularPlan =
-                    AbstractDomainObject.fromExternalId(degreeCurricularPlanId);
+            final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanId);
 
             InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan);
             request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlan);
@@ -269,8 +268,7 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
         request.setAttribute(PresentationConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getExternalId().toString());
         request.setAttribute("semester", infoExecutionPeriod.getSemester());
 
-        final ExecutionSemester executionSemester =
-                AbstractDomainObject.fromExternalId(infoExecutionPeriod.getExternalId());
+        final ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(infoExecutionPeriod.getExternalId());
         final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanId);
         ExecutionDegree executionDegree = degreeCurricularPlan.getExecutionDegreeByYear(executionSemester.getExecutionYear());
         if (executionDegree == null) {

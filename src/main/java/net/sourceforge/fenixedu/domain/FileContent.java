@@ -45,8 +45,8 @@ public class FileContent extends FileContent_Base {
         super.delete();
     }
 
-    public static FileContent readByOID(Integer externalId) {
-        return (FileContent) AbstractDomainObject.fromExternalId(externalId);
+    public static FileContent readByOID(String externalId) {
+        return AbstractDomainObject.fromExternalId(externalId);
     }
 
     public static List<FileContent> readAllFileItems() {

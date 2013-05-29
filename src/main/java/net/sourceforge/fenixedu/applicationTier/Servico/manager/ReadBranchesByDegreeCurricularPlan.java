@@ -12,7 +12,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ReadBranchesByDegreeCurricularPlan {
 
-    public static List<InfoBranch> run(Integer idDegreeCurricularPlan) throws FenixServiceException {
+    public static List<InfoBranch> run(String idDegreeCurricularPlan) throws FenixServiceException {
         DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(idDegreeCurricularPlan);
         if (degreeCurricularPlan == null) {
             throw new NonExistingServiceException();

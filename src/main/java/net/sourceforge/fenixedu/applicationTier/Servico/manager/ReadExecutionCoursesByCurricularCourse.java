@@ -14,7 +14,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ReadExecutionCoursesByCurricularCourse {
 
     @Service
-    public static List run(Integer curricularCourseId) throws FenixServiceException {
+    public static List run(String curricularCourseId) throws FenixServiceException {
         CurricularCourse curricularCourse = (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseId);
         if (curricularCourse == null) {
             throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);

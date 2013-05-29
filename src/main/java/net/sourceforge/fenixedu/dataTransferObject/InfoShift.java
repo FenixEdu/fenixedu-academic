@@ -168,12 +168,12 @@ public class InfoShift extends InfoObject {
     }
 
     @Override
-    public Integer getExternalId() {
+    public String getExternalId() {
         return getShift().getExternalId();
     }
 
     @Override
-    public void setExternalId(Integer integer) {
+    public void setExternalId(String integer) {
         throw new Error("Method should not be called!");
     }
 
@@ -201,7 +201,7 @@ public class InfoShift extends InfoObject {
     @Override
     public int hashCode() {
         if (this.getExternalId() != null) {
-            return this.getExternalId().intValue();
+            return this.getExternalId().hashCode();
         }
 
         return 0;

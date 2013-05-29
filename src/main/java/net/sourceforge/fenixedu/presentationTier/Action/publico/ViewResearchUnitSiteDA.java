@@ -75,7 +75,7 @@ public class ViewResearchUnitSiteDA extends UnitSiteVisualizationDA {
         Container container = AbstractFunctionalityContext.getCurrentContext(request).getSelectedContainer();
         if (container == null) {
             String siteID = request.getParameter(getContextParamName(request));
-            return (ResearchUnitSite) AbstractDomainObject.fromExternalId(Integer.valueOf(siteID));
+            return (ResearchUnitSite) AbstractDomainObject.fromExternalId(siteID);
         } else {
             return (ResearchUnitSite) container;
         }

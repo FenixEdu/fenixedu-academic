@@ -23,7 +23,7 @@ public class QualificationManagerAuthorizationFilter {
         return RoleType.TEACHER;
     }
 
-    public void execute(Integer qualificationId, InfoQualification infoQualification) throws NotAuthorizedException {
+    public void execute(InfoQualification infoQualification) throws NotAuthorizedException {
         IUserView id = AccessControl.getUserView();
 
         try {
@@ -58,8 +58,7 @@ public class QualificationManagerAuthorizationFilter {
         if (isNew) {
             return true;
         }
-        final Qualification qualification =
-                AbstractDomainObject.fromExternalId(infoQualification.getExternalId());
+        final Qualification qualification = AbstractDomainObject.fromExternalId(infoQualification.getExternalId());
         return qualification.getPerson() == userView.getPerson();
     }
 }

@@ -5,20 +5,19 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ViewInquiriesResultPageDTO extends SearchInquiriesResultPageDTO {
 
-    private Integer degreeCurricularPlanID;
+    private String degreeCurricularPlanID;
 
-    public Integer getDegreeCurricularPlanID() {
+    public String getDegreeCurricularPlanID() {
         return degreeCurricularPlanID;
     }
 
-    public void setDegreeCurricularPlanID(Integer degreeCurricularPlanID) {
+    public void setDegreeCurricularPlanID(String degreeCurricularPlanID) {
         this.degreeCurricularPlanID = degreeCurricularPlanID;
     }
 
     public DegreeCurricularPlan getDegreeCurricularPlan() {
-        final Integer degreeCurricularPlanID = getDegreeCurricularPlanID();
-        return degreeCurricularPlanID == null ? null : AbstractDomainObject.fromExternalId(
-                degreeCurricularPlanID);
+        final String degreeCurricularPlanID = getDegreeCurricularPlanID();
+        return AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
     }
 
 }

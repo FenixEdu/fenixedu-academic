@@ -124,9 +124,7 @@ public class ListCourseResponsibles extends FenixDispatchAction {
 
     private ExecutionYear getExecutionYearParameter(final HttpServletRequest request) {
         final String executionYearIdString = request.getParameter("executionYearId");
-        final Integer executionYearId =
-                executionYearIdString != null && executionYearIdString.length() > 0 ? Integer.valueOf(executionYearIdString) : null;
-        return executionYearId == null ? null : AbstractDomainObject.fromExternalId(executionYearId);
+        return AbstractDomainObject.fromExternalId(executionYearIdString);
     }
 
     public ActionForward downloadStatistics(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

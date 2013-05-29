@@ -5,7 +5,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
-
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.domain.Shift;
 import pt.ist.fenixWebFramework.services.Service;
@@ -19,7 +18,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ReadShiftByOID {
 
     @Service
-    public static InfoShift run(final Integer oid) {
+    public static InfoShift run(final String oid) {
         final Shift shift = AbstractDomainObject.fromExternalId(oid);
         return shift == null ? null : InfoShift.newInfoFromDomain(shift);
     }

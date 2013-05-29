@@ -22,14 +22,14 @@ public class DeleteDegreeCurricularPlans {
 
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
-    public static List run(List degreeCurricularPlansIds) throws FenixServiceException {
-        Iterator<Integer> iter = degreeCurricularPlansIds.iterator();
+    public static List run(List<String> degreeCurricularPlansIds) throws FenixServiceException {
+        Iterator<String> iter = degreeCurricularPlansIds.iterator();
 
         List<String> undeletedDegreeCurricularPlansNames = new ArrayList<String>();
 
         while (iter.hasNext()) {
 
-            Integer degreeCurricularPlanId = iter.next();
+            String degreeCurricularPlanId = iter.next();
             DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanId);
 
             try {

@@ -34,7 +34,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class ReadDistributedTestMarks {
 
-    protected InfoSiteStudentsTestMarks run(Integer executionCourseId, Integer distributedTestId, String path)
+    protected InfoSiteStudentsTestMarks run(String executionCourseId, String distributedTestId, String path)
             throws FenixServiceException {
 
         InfoSiteStudentsTestMarks infoSiteStudentsTestMarks = new InfoSiteStudentsTestMarks();
@@ -47,8 +47,8 @@ public class ReadDistributedTestMarks {
         List<StudentTestQuestion> studentTestQuestionList =
                 distributedTest.getStudentTestQuestionsSortedByStudentNumberAndTestQuestionOrder();
 
-        HashMap<Integer, InfoStudentTestQuestionMark> infoStudentTestQuestionMarkList =
-                new HashMap<Integer, InfoStudentTestQuestionMark>();
+        HashMap<String, InfoStudentTestQuestionMark> infoStudentTestQuestionMarkList =
+                new HashMap<String, InfoStudentTestQuestionMark>();
         for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {
             if (infoStudentTestQuestionMarkList.containsKey(studentTestQuestion.getStudent().getExternalId())) {
                 InfoStudentTestQuestionMark infoStudentTestQuestionMark =
@@ -91,7 +91,7 @@ public class ReadDistributedTestMarks {
     private static final ReadDistributedTestMarks serviceInstance = new ReadDistributedTestMarks();
 
     @Service
-    public static InfoSiteStudentsTestMarks runReadDistributedTestMarks(Integer executionCourseId, Integer distributedTestId,
+    public static InfoSiteStudentsTestMarks runReadDistributedTestMarks(String executionCourseId, String distributedTestId,
             String path) throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
         return serviceInstance.run(executionCourseId, distributedTestId, path);

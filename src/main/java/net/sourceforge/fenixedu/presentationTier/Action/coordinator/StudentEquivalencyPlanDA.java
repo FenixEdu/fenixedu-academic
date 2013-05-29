@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.util.search.StudentSearchBean;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -153,12 +152,11 @@ public class StudentEquivalencyPlanDA extends FenixDispatchAction {
 
     private EquivalencePlanEntry getEquivalencePlanEntry(HttpServletRequest request) {
         final String equivalencePlanEntryIDString = request.getParameter("equivalencePlanEntryID");
-        final Integer equivalencePlanEntryID = getInteger(equivalencePlanEntryIDString);
-        return equivalencePlanEntryID == null ? null : (EquivalencePlanEntry) AbstractDomainObject.fromExternalId(equivalencePlanEntryID);
+        return (EquivalencePlanEntry) AbstractDomainObject.fromExternalId(equivalencePlanEntryIDString);
     }
 
     private StudentCurricularPlanEquivalencePlan getStudentCurricularPlanEquivalencePlan(final HttpServletRequest request,
-            final Student student) throws  FenixServiceException {
+            final Student student) throws FenixServiceException {
         return CreateStudentCurricularPlanEquivalencePlan.run(student);
     }
 
@@ -197,8 +195,7 @@ public class StudentEquivalencyPlanDA extends FenixDispatchAction {
 
     private CurriculumModule getCurriculumModule(final HttpServletRequest request) {
         final String curriculumModuleIDString = request.getParameter("curriculumModuleID");
-        final Integer curriculumModuleID = getInteger(curriculumModuleIDString);
-        return curriculumModuleID == null ? null : AbstractDomainObject.fromExternalId(curriculumModuleID);
+        return AbstractDomainObject.fromExternalId(curriculumModuleIDString);
     }
 
     private DegreeCurricularPlan getDegreeCurricularPlan(final HttpServletRequest request) {
@@ -214,16 +211,7 @@ public class StudentEquivalencyPlanDA extends FenixDispatchAction {
 
     private DegreeCurricularPlan getDegreeCurricularPlan(final HttpServletRequest request, final String attrName) {
         final String degreeCurricularPlanIDString = request.getParameter(attrName);
-        final Integer degreeCurricularPlanID = getInteger(degreeCurricularPlanIDString);
-        return degreeCurricularPlanID == null ? null : AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
-    }
-
-    private Integer getInteger(final String string) {
-        return isValidNumber(string) ? Integer.valueOf(string) : null;
-    }
-
-    private boolean isValidNumber(final String string) {
-        return string != null && string.length() > 0 && StringUtils.isNumeric(string);
+        return AbstractDomainObject.fromExternalId(degreeCurricularPlanIDString);
     }
 
 }

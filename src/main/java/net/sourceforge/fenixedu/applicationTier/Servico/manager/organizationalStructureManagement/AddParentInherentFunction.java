@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement;
 
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
@@ -12,7 +11,7 @@ public class AddParentInherentFunction {
 
     @Checked("RolePredicates.MANAGER_PREDICATE")
     @Service
-    public static void run(Integer functionID, Integer parentInherentFunctionID) throws FenixServiceException, DomainException {
+    public static void run(String functionID, String parentInherentFunctionID) throws FenixServiceException, DomainException {
 
         Function parentInherentFunction = (Function) AbstractDomainObject.fromExternalId(parentInherentFunctionID);
 

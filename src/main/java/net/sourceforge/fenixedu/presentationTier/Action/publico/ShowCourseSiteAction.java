@@ -50,19 +50,19 @@ public class ShowCourseSiteAction extends FenixContextDispatchAction {
         // request);
 
         DynaActionForm indexForm = (DynaActionForm) actionForm;
-        Integer degreeId = getFromRequest("degreeID", request);
+        String degreeId = getFromRequest("degreeID", request);
         request.setAttribute("degreeID", degreeId);
 
-        Integer index = getFromRequest("index", request);
+        String index = getFromRequest("index", request);
         request.setAttribute("index", index);
 
-        Integer executionDegreeId = getFromRequest("executionDegreeID", request);
+        String executionDegreeId = getFromRequest("executionDegreeID", request);
         request.setAttribute("executionDegreeID", executionDegreeId);
 
-        Integer degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
+        String degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
 
-        Integer curricularCourseId = getFromRequest("curricularCourseID", request);
+        String curricularCourseId = getFromRequest("curricularCourseID", request);
         request.setAttribute("curricularCourseID", curricularCourseId);
 
         Boolean inEnglish = getFromRequestBoolean("inEnglish", request);
@@ -122,10 +122,10 @@ public class ShowCourseSiteAction extends FenixContextDispatchAction {
     public ActionForward showExecutionCourseSite(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        Integer degreeId = getFromRequest("degreeID", request);
+        String degreeId = getFromRequest("degreeID", request);
         request.setAttribute("degreeID", degreeId);
 
-        Integer executionCourseId = getFromRequest("executionCourseID", request);
+        String executionCourseId = getFromRequest("executionCourseID", request);
         request.setAttribute("executionCourseID", executionCourseId);
 
         ISiteComponent firstPageComponent = new InfoSiteFirstPage();

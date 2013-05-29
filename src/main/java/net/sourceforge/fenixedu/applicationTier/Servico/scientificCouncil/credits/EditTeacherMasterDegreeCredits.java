@@ -22,13 +22,12 @@ public class EditTeacherMasterDegreeCredits {
         professorshipIDs.addAll(creditsMap.keySet());
 
         for (String stringID : professorshipIDs) {
-            Integer professorshipID = Integer.parseInt(stringID);
             String creditsString = creditsMap.get(stringID);
             String hoursString = hoursMap.get(stringID);
             if (hoursString.equals("") && creditsString.equals("")) {
                 continue;
             }
-            Professorship professorship = AbstractDomainObject.fromExternalId(professorshipID);
+            Professorship professorship = AbstractDomainObject.fromExternalId(stringID);
             Teacher teacher = professorship.getTeacher();
             ExecutionSemester executionSemester = professorship.getExecutionCourse().getExecutionPeriod();
 

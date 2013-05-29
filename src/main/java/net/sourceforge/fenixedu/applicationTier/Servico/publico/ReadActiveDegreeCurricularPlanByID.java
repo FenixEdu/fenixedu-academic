@@ -27,7 +27,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class ReadActiveDegreeCurricularPlanByID extends ReadDegreeCurricularPlanBaseService {
 
-    protected List run(Integer degreeCurricularPlanId, Integer executionPeriodId, Locale locale, String arg)
+    protected List run(String degreeCurricularPlanId, String executionPeriodId, Locale locale, String arg)
             throws FenixServiceException {
         if (degreeCurricularPlanId == null) {
             throw new FenixServiceException("null degreeCurricularPlanId");
@@ -114,7 +114,7 @@ public class ReadActiveDegreeCurricularPlanByID extends ReadDegreeCurricularPlan
         return result;
     }
 
-    protected InfoDegreeCurricularPlan run(Integer degreeCurricularPlanId, Integer executionYear, String arg)
+    protected InfoDegreeCurricularPlan run(String degreeCurricularPlanId, Integer executionYear, String arg)
             throws FenixServiceException {
         final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanId);
         if (degreeCurricularPlan == null) {
@@ -129,7 +129,7 @@ public class ReadActiveDegreeCurricularPlanByID extends ReadDegreeCurricularPlan
     private static final ReadActiveDegreeCurricularPlanByID serviceInstance = new ReadActiveDegreeCurricularPlanByID();
 
     @Service
-    public static List runReadActiveDegreeCurricularPlanByID(Integer degreeCurricularPlanId, Integer executionPeriodId,
+    public static List runReadActiveDegreeCurricularPlanByID(String degreeCurricularPlanId, String executionPeriodId,
             Locale locale, String arg) throws FenixServiceException {
         return serviceInstance.run(degreeCurricularPlanId, executionPeriodId, locale, arg);
     }

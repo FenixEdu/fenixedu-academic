@@ -44,11 +44,9 @@ public class FenixViewObjectTag extends ViewObjectTag {
     }
 
     protected Object getPersistentObject() throws JspException {
-        if (getOid() != null && getType() != null) {
+        if (getOid() != null) {
             try {
-                Class type = Class.forName(getType());
-                Object[] args = { type, Integer.valueOf(getOid()) };
-                return AbstractDomainObject.fromExternalId(type, Integer.valueOf(getOid()));
+                return AbstractDomainObject.fromExternalId(getOid());
             } catch (Exception e) {
                 throw new JspException(e);
             }

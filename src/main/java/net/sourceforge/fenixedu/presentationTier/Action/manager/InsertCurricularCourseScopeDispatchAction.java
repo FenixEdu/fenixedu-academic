@@ -22,7 +22,9 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScopeEditor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularSemester;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularSemester;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -69,7 +71,7 @@ public class InsertCurricularCourseScopeDispatchAction extends FenixDispatchActi
     public ActionForward prepareInsert(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
 
-        Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
+        String degreeCurricularPlanId = request.getParameter("degreeCurricularPlanId");
 
         List result = null;
         try {
@@ -128,18 +130,17 @@ public class InsertCurricularCourseScopeDispatchAction extends FenixDispatchActi
 
         InfoCurricularCourseScopeEditor infoCurricularCourseScope = new InfoCurricularCourseScopeEditor();
 
-        InfoBranch infoBranch = new InfoBranch(AbstractDomainObject.fromExternalId(new Integer((String) dynaForm.get("branchId"))));
+        InfoBranch infoBranch = new InfoBranch(AbstractDomainObject.<Branch> fromExternalId((String) dynaForm.get("branchId")));
         infoCurricularCourseScope.setInfoBranch(infoBranch);
 
         final CurricularCourse curricularCourse =
-                (CurricularCourse) AbstractDomainObject.fromExternalId(Integer.valueOf(request
-                        .getParameter("curricularCourseId")));
+                (CurricularCourse) AbstractDomainObject.fromExternalId(request.getParameter("curricularCourseId"));
         InfoCurricularCourse infoCurricularCourse = new InfoCurricularCourse(curricularCourse);
         infoCurricularCourseScope.setInfoCurricularCourse(infoCurricularCourse);
 
         InfoCurricularSemester infoCurricularSemester =
-                new InfoCurricularSemester(AbstractDomainObject.fromExternalId(new Integer((String) dynaForm
-                        .get("curricularSemesterId"))));
+                new InfoCurricularSemester(AbstractDomainObject.<CurricularSemester> fromExternalId((String) dynaForm
+                        .get("curricularSemesterId")));
         infoCurricularCourseScope.setInfoCurricularSemester(infoCurricularSemester);
 
         String beginDateString = (String) dynaForm.get("beginDate");

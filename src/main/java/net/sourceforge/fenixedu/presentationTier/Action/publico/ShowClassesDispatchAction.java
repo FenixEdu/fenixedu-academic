@@ -62,7 +62,7 @@ public class ShowClassesDispatchAction extends FenixDispatchAction {
 
         getInfoDegreeCurricularPlan(request, degree);
 
-        final Integer executionPeriodID =
+        final String executionPeriodID =
                 ((InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD)).getExternalId();
         final ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodID);
 

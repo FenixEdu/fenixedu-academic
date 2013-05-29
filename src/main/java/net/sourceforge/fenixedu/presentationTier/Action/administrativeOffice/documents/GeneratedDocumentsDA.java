@@ -32,7 +32,6 @@ import org.joda.time.LocalDate;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -64,7 +63,7 @@ public class GeneratedDocumentsDA extends FenixDispatchAction {
     }
 
     public ActionForward searchPerson(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         final SimpleSearchPersonWithStudentBean searchPersonBean =
                 (SimpleSearchPersonWithStudentBean) getObjectFromViewState("searchPersonBean");
         request.setAttribute("searchPersonBean", searchPersonBean);
@@ -76,7 +75,7 @@ public class GeneratedDocumentsDA extends FenixDispatchAction {
 
     @SuppressWarnings("unchecked")
     private Collection<Person> searchPerson(HttpServletRequest request, SimpleSearchPersonWithStudentBean searchPersonBean)
-            throws  FenixServiceException {
+            throws FenixServiceException {
         final SearchParameters searchParameters =
                 new SearchPerson.SearchParameters(searchPersonBean.getName(), null, searchPersonBean.getUsername(),
                         searchPersonBean.getDocumentIdNumber(), searchPersonBean.getIdDocumentType() != null ? searchPersonBean
@@ -100,7 +99,7 @@ public class GeneratedDocumentsDA extends FenixDispatchAction {
     }
 
     private Person getPerson(HttpServletRequest request) {
-        return (Person) AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "personId"));
+        return getDomainObject(request, "personId");
     }
 
     public ActionForward showAnnualIRSDocumentsInPayments(ActionMapping mapping, ActionForm actionForm,

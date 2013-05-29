@@ -141,8 +141,7 @@ public class FindSpacesDA extends FenixDispatchAction {
 
     private Space getSpaceFromParameter(final HttpServletRequest request) {
         final String spaceIDString = request.getParameter("spaceID");
-        final Integer spaceID = Integer.valueOf(spaceIDString);
-        return (Space) AbstractDomainObject.fromExternalId(spaceID);
+        return (Space) AbstractDomainObject.fromExternalId(spaceIDString);
     }
 
     private void setBlueprintTextRectangles(HttpServletRequest request, Space space) throws IOException {

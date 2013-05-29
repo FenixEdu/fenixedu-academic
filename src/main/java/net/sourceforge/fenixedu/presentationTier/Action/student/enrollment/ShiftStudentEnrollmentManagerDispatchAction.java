@@ -93,8 +93,7 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
     }
 
     private Registration getAndSetRegistration(final HttpServletRequest request) {
-        final Registration registration =
-                AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "registrationOID"));
+        final Registration registration = getDomainObject(request, "registrationOID");
         if (!getUserView(request).getPerson().getStudent().getRegistrationsToEnrolInShiftByStudent().contains(registration)) {
             return null;
         }
@@ -190,12 +189,11 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
     }
 
     private ActionForward prepareShiftEnrolmentInformation(ActionMapping mapping, HttpServletRequest request,
-            final Registration registration, final ExecutionSemester executionSemester)  {
+            final Registration registration, final ExecutionSemester executionSemester) {
 
         try {
 
-            final List<ShiftToEnrol> shiftsToEnrol =
-                    (List<ShiftToEnrol>) ReadShiftsToEnroll.runReadShiftsToEnroll( registration );
+            final List<ShiftToEnrol> shiftsToEnrol = ReadShiftsToEnroll.runReadShiftsToEnroll(registration);
 
             request.setAttribute("numberOfExecutionCoursesHavingNotEnroledShifts",
                     registration.getNumberOfExecutionCoursesHavingNotEnroledShiftsFor(executionSemester));
@@ -289,14 +287,14 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
             return mapping.getInputForward();
         }
 
-        final Integer shiftId = Integer.valueOf(request.getParameter("shiftId"));
+        final String shiftId = request.getParameter("shiftId");
         final String executionCourseID = request.getParameter("executionCourseID");
         if (!StringUtils.isEmpty(executionCourseID)) {
             request.setAttribute("executionCourseID", executionCourseID);
         }
 
         try {
-            UnEnrollStudentFromShift.runUnEnrollStudentFromShift( registration, shiftId );
+            UnEnrollStudentFromShift.runUnEnrollStudentFromShift(registration, shiftId);
 
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);

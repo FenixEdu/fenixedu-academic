@@ -19,7 +19,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Input;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -31,7 +30,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ManageIngressionDA extends FenixDispatchAction {
 
     private Registration getRegistration(final HttpServletRequest request) {
-        return AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "registrationId"));
+        return getDomainObject(request, "registrationId");
     }
 
     private RegistrationIngressionEditor getRegistrationIngressionEditor() {
@@ -60,7 +59,7 @@ public class ManageIngressionDA extends FenixDispatchAction {
     }
 
     public ActionForward editIngression(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         try {
             executeFactoryMethod();
         } catch (final DomainException e) {

@@ -216,9 +216,8 @@ public class RegistrationDA extends StudentRegistrationDA {
         final Registration registration = getAndSetRegistration(request);
         request.setAttribute("registration", registration);
 
-        final Integer cycleCurriculumGroupId = getIntegerFromRequest(request, "cycleCurriculumGroupId");
-        final CycleCurriculumGroup cycleCurriculumGroup =
-                (CycleCurriculumGroup) AbstractDomainObject.fromExternalId(cycleCurriculumGroupId);
+        final Object cycleCurriculumGroupId = getFromRequest(request, "cycleCurriculumGroupId");
+        final CycleCurriculumGroup cycleCurriculumGroup = getDomainObject(request, "cycleCurriculumGroupId");
         final RegistrationConclusionBean registrationConclusionBean;
         if (cycleCurriculumGroupId == null) {
             registrationConclusionBean = new RegistrationConclusionBean(registration);
@@ -298,7 +297,7 @@ public class RegistrationDA extends StudentRegistrationDA {
         final AddAttendsBean addAttendsBean = (AddAttendsBean) getObjectFromViewState("addAttendsBean");
         final ExecutionCourse executionCourse = addAttendsBean.getExecutionCourse();
 
-        WriteStudentAttendingCourse.runWriteStudentAttendingCourse( registration, executionCourse.getExternalId() );
+        WriteStudentAttendingCourse.runWriteStudentAttendingCourse(registration, executionCourse.getExternalId());
 
         return viewAttends(mapping, actionForm, request, response);
     }
@@ -309,9 +308,7 @@ public class RegistrationDA extends StudentRegistrationDA {
         request.setAttribute("registration", registration);
 
         final String attendsIdString = request.getParameter("attendsId");
-        final Integer attendsId =
-                attendsIdString != null && attendsIdString.length() > 0 ? Integer.valueOf(attendsIdString) : null;
-        final Attends attends = attendsId == null ? null : AbstractDomainObject.fromExternalId(attendsId);
+        final Attends attends = AbstractDomainObject.fromExternalId(attendsIdString);
 
         try {
             registration.removeAttendFor(attends.getExecutionCourse());
@@ -328,9 +325,7 @@ public class RegistrationDA extends StudentRegistrationDA {
         request.setAttribute("registration", registration);
 
         final String attendsIdString = request.getParameter("attendsId");
-        final Integer attendsId =
-                attendsIdString != null && attendsIdString.length() > 0 ? Integer.valueOf(attendsIdString) : null;
-        final Attends attends = attendsId == null ? null : AbstractDomainObject.fromExternalId(attendsId);
+        final Attends attends = AbstractDomainObject.fromExternalId(attendsIdString);
 
         if (attends != null) {
             attends.deleteShiftEnrolments();
@@ -369,6 +364,6 @@ public class RegistrationDA extends StudentRegistrationDA {
     }
 
     private RegistrationRegime getRegistrationRegime(HttpServletRequest request) {
-        return AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "registrationRegimeId"));
+        return getDomainObject(request, "registrationRegimeId");
     }
 }

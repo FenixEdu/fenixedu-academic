@@ -28,7 +28,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ReadQuestionImage {
 
     @Service
-    public static String run(Integer exerciseId, Integer metadataCode, Integer imageId, Integer feedbackId, Integer itemIndex,
+    public static String run(String exerciseId, Integer metadataCode, Integer imageId, Integer feedbackId, Integer itemIndex,
             String path) throws FenixServiceException {
         Question question = AbstractDomainObject.fromExternalId(exerciseId);
         if (question != null) {
@@ -49,7 +49,7 @@ public class ReadQuestionImage {
     }
 
     @Service
-    public static String run(Integer distributedTestId, Integer questionId, String optionShuffle, Integer imageId,
+    public static String run(String distributedTestId, Integer questionId, String optionShuffle, Integer imageId,
             Integer feedbackId, String path) throws FenixServiceException {
 
         Question question = null;

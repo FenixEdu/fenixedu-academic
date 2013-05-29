@@ -32,7 +32,7 @@ public class ReadCurrentCurriculumByCurricularCourseCode {
 
     @Checked("RolePredicates.COORDINATOR_PREDICATE")
     @Service
-    public static InfoCurriculum run(Integer executionDegreeCode, Integer curricularCourseCode) throws FenixServiceException {
+    public static InfoCurriculum run(String executionDegreeCode, String curricularCourseCode) throws FenixServiceException {
 
         if (curricularCourseCode == null) {
             throw new FenixServiceException("nullCurricularCourse");
@@ -72,7 +72,7 @@ public class ReadCurrentCurriculumByCurricularCourseCode {
             infoCurriculum = InfoCurriculumWithInfoCurricularCourse.newInfoFromDomain(curriculum);
         } else {
             infoCurriculum = new InfoCurriculumWithInfoCurricularCourse();
-            infoCurriculum.setExternalId(Integer.valueOf(0));
+            infoCurriculum.setExternalId(null);
             infoCurriculum.setInfoCurricularCourse(InfoCurricularCourse.newInfoFromDomain(curricularCourse));
         }
 

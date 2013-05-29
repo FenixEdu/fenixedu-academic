@@ -34,7 +34,7 @@ public class ExecutionCourseLecturingTeacherAuthorizationFilter extends Authoriz
         return RoleType.TEACHER;
     }
 
-    public void execute(Integer executionCourseCode) throws NotAuthorizedException {
+    public void execute(String executionCourseCode) throws NotAuthorizedException {
         execute(getExecutionCourse(executionCourseCode));
     }
 
@@ -82,8 +82,8 @@ public class ExecutionCourseLecturingTeacherAuthorizationFilter extends Authoriz
             final InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) argument;
             return AbstractDomainObject.fromExternalId(infoExecutionCourse.getExternalId());
 
-        } else if (argument instanceof Integer) {
-            final Integer executionCourseID = (Integer) argument;
+        } else if (argument instanceof String) {
+            final String executionCourseID = (String) argument;
             return AbstractDomainObject.fromExternalId(executionCourseID);
 
         } else if (argument instanceof SummariesManagementBean) {

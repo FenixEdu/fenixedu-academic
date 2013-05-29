@@ -100,8 +100,7 @@ public class CreateCurricularCourse {
         if (curricularCourseArgs.getBeginExecutionPeriodID() == null) {
             beginExecutionPeriod = ExecutionSemester.readActualExecutionSemester();
         } else {
-            beginExecutionPeriod =
-                    AbstractDomainObject.fromExternalId(curricularCourseArgs.getBeginExecutionPeriodID());
+            beginExecutionPeriod = AbstractDomainObject.fromExternalId(curricularCourseArgs.getBeginExecutionPeriodID());
         }
         return beginExecutionPeriod;
     }
@@ -111,46 +110,47 @@ public class CreateCurricularCourse {
         if (curricularCourseArgs.getEndExecutionPeriodID() == null) {
             endExecutionPeriod = null;
         } else {
-            endExecutionPeriod =
-                    AbstractDomainObject.fromExternalId(curricularCourseArgs.getEndExecutionPeriodID());
+            endExecutionPeriod = AbstractDomainObject.fromExternalId(curricularCourseArgs.getEndExecutionPeriodID());
         }
         return endExecutionPeriod;
     }
 
     private abstract static class CurricularCourseArgs {
-        private Integer degreeCurricularPlanID, parentCourseGroupID, year, semester;
+        private String degreeCurricularPlanID, parentCourseGroupID;
 
-        private Integer beginExecutionPeriodID, endExecutionPeriodID;
+        private Integer year, semester;
 
-        public Integer getBeginExecutionPeriodID() {
+        private String beginExecutionPeriodID, endExecutionPeriodID;
+
+        public String getBeginExecutionPeriodID() {
             return beginExecutionPeriodID;
         }
 
-        public void setBeginExecutionPeriodID(Integer beginExecutionPeriodID) {
+        public void setBeginExecutionPeriodID(String beginExecutionPeriodID) {
             this.beginExecutionPeriodID = beginExecutionPeriodID;
         }
 
-        public Integer getDegreeCurricularPlanID() {
+        public String getDegreeCurricularPlanID() {
             return degreeCurricularPlanID;
         }
 
-        public void setDegreeCurricularPlanID(Integer degreeCurricularPlanID) {
+        public void setDegreeCurricularPlanID(String degreeCurricularPlanID) {
             this.degreeCurricularPlanID = degreeCurricularPlanID;
         }
 
-        public Integer getEndExecutionPeriodID() {
+        public String getEndExecutionPeriodID() {
             return endExecutionPeriodID;
         }
 
-        public void setEndExecutionPeriodID(Integer endExecutionPeriodID) {
+        public void setEndExecutionPeriodID(String endExecutionPeriodID) {
             this.endExecutionPeriodID = endExecutionPeriodID;
         }
 
-        public Integer getParentCourseGroupID() {
+        public String getParentCourseGroupID() {
             return parentCourseGroupID;
         }
 
-        public void setParentCourseGroupID(Integer parentCourseGroupID) {
+        public void setParentCourseGroupID(String parentCourseGroupID) {
             this.parentCourseGroupID = parentCourseGroupID;
         }
 
@@ -176,11 +176,11 @@ public class CreateCurricularCourse {
 
         private String prerequisites, prerequisitesEn;
 
-        private Integer competenceCourseID;
+        private String competenceCourseID;
 
-        public CreateCurricularCourseArgs(Double weight, String prerequisites, String prerequisitesEn,
-                Integer competenceCourseID, Integer parentCourseGroupID, Integer year, Integer semester,
-                Integer degreeCurricularPlanID, Integer beginExecutionPeriodID, Integer endExecutionPeriodID) {
+        public CreateCurricularCourseArgs(Double weight, String prerequisites, String prerequisitesEn, String competenceCourseID,
+                String parentCourseGroupID, Integer year, Integer semester, String degreeCurricularPlanID,
+                String beginExecutionPeriodID, String endExecutionPeriodID) {
 
             setWeight(weight);
             setPrerequisites(prerequisites);
@@ -194,11 +194,11 @@ public class CreateCurricularCourse {
             setEndExecutionPeriodID(endExecutionPeriodID);
         }
 
-        public Integer getCompetenceCourseID() {
+        public String getCompetenceCourseID() {
             return competenceCourseID;
         }
 
-        public void setCompetenceCourseID(Integer competenceCourseID) {
+        public void setCompetenceCourseID(String competenceCourseID) {
             this.competenceCourseID = competenceCourseID;
         }
 
@@ -230,8 +230,8 @@ public class CreateCurricularCourse {
     public static class CreateOptionalCurricularCourseArgs extends CurricularCourseArgs {
         private String name, nameEn;
 
-        public CreateOptionalCurricularCourseArgs(Integer degreeCurricularPlanID, Integer parentCourseGroupID, String name,
-                String nameEn, Integer year, Integer semester, Integer beginExecutionPeriodID, Integer endExecutionPeriodID) {
+        public CreateOptionalCurricularCourseArgs(String degreeCurricularPlanID, String parentCourseGroupID, String name,
+                String nameEn, Integer year, Integer semester, String beginExecutionPeriodID, String endExecutionPeriodID) {
 
             setDegreeCurricularPlanID(degreeCurricularPlanID);
             setParentCourseGroupID(parentCourseGroupID);

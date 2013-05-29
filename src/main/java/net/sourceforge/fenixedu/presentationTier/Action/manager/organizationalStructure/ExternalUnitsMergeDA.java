@@ -72,7 +72,7 @@ public class ExternalUnitsMergeDA extends FenixDispatchAction {
     }
 
     public ActionForward mergeUnits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         Unit fromUnit = null, destinationUnit = null;
         IViewState viewState = RenderUtils.getViewState("noOfficialMerge");
@@ -121,14 +121,12 @@ public class ExternalUnitsMergeDA extends FenixDispatchAction {
 
     private Unit getFromUnitFromParameter(final HttpServletRequest request) {
         final String unitIDString = request.getParameter("fromUnitID");
-        final Integer uniID = Integer.valueOf(unitIDString);
-        return (Unit) AbstractDomainObject.fromExternalId(uniID);
+        return (Unit) AbstractDomainObject.fromExternalId(unitIDString);
     }
 
     private Unit getDestinationUnitFromParameter(final HttpServletRequest request) {
         final String unitIDString = request.getParameter("unitID");
-        final Integer uniID = Integer.valueOf(unitIDString);
-        return (Unit) AbstractDomainObject.fromExternalId(uniID);
+        return (Unit) AbstractDomainObject.fromExternalId(unitIDString);
     }
 
     private void saveMessages(HttpServletRequest request, DomainException e) {

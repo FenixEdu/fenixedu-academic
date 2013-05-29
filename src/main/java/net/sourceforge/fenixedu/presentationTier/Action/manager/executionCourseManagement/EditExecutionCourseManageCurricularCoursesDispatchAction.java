@@ -253,7 +253,7 @@ public class EditExecutionCourseManageCurricularCoursesDispatchAction extends Fe
 
         List<Integer> informationToDeleteList = new ArrayList<Integer>();
         for (int i = 0; i < curricularCoursesListSize.intValue(); i++) {
-            Integer informationToDelete = dataToDelete(request, i, what, property, formProperty);
+            String informationToDelete = dataToDelete(request, i, what, property, formProperty);
             if (informationToDelete != null) {
                 informationToDeleteList.add(informationToDelete);
             }
@@ -261,16 +261,16 @@ public class EditExecutionCourseManageCurricularCoursesDispatchAction extends Fe
         return informationToDeleteList;
     }
 
-    private Integer dataToDelete(HttpServletRequest request, int index, String what, String property, String formProperty) {
+    private String dataToDelete(HttpServletRequest request, int index, String what, String property, String formProperty) {
 
-        Integer itemToDelete = null;
+        String itemToDelete = null;
         String checkbox = request.getParameter(what + "[" + index + "]." + formProperty);
         String toDelete = null;
         if (checkbox != null && (checkbox.equals("on") || checkbox.equals("yes") || checkbox.equals("true"))) {
             toDelete = request.getParameter(what + "[" + index + "]." + property);
         }
         if (toDelete != null) {
-            itemToDelete = new Integer(toDelete);
+            itemToDelete = toDelete;
         }
         return itemToDelete;
     }

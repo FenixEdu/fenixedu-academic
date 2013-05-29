@@ -13,14 +13,12 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.ContextSelectionBean;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -32,10 +30,8 @@ import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManage
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
@@ -79,17 +75,6 @@ public class ListExecutionCoursesDA extends FenixDispatchAction {
         response.flushBuffer();
 
         return null;
-    }
-
-    private ExecutionSemester retrieveDomainObject(ActionForm form, HttpServletRequest request) throws 
-            FenixServiceException {
-        final DynaActionForm dynaActionForm = (DynaActionForm) form;
-        final String executionPeriodIDString = (String) dynaActionForm.get("executionPeriodID");
-        final Integer executionPeriodID =
-                executionPeriodIDString != null && executionPeriodIDString.length() > 0 ? Integer
-                        .valueOf(executionPeriodIDString) : null;
-
-        return AbstractDomainObject.fromExternalId(executionPeriodID);
     }
 
     private void exportToXls(final ServletOutputStream servletOutputStream, final AcademicInterval academicInterval)

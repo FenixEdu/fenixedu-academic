@@ -46,12 +46,12 @@ public class MakePrecedenceConjunctionForDegreeCurricularPlanDA extends FenixDis
 
         IUserView userView = UserView.getUser();
 
-        Integer degreeID = new Integer(request.getParameter("degreeId"));
-        Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanId"));
+        String degreeID = request.getParameter("degreeId");
+        String degreeCurricularPlanID = request.getParameter("degreeCurricularPlanId");
 
         if (degreeID == null && degreeCurricularPlanID == null) {
-            degreeID = (Integer) request.getAttribute("degreeId");
-            degreeCurricularPlanID = (Integer) request.getAttribute("degreeCurricularPlanId");
+            degreeID = (String) request.getAttribute("degreeId");
+            degreeCurricularPlanID = (String) request.getAttribute("degreeCurricularPlanId");
         }
 
         try {

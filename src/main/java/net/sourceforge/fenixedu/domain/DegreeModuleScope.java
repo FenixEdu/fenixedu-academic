@@ -82,7 +82,7 @@ public abstract class DegreeModuleScope {
 
     public abstract String getClassName();
 
-    public abstract Integer getExternalId();
+    public abstract String getExternalId();
 
     public abstract Integer getCurricularSemester();
 
@@ -160,8 +160,7 @@ public abstract class DegreeModuleScope {
             String className = split[1];
             try {
                 Class clazz = Class.forName(className);
-                DomainObject domainObject =
-                        AbstractDomainObject.fromExternalId(clazz, Integer.valueOf(externalId));
+                DomainObject domainObject = AbstractDomainObject.fromExternalId(externalId);
                 if (domainObject != null && domainObject instanceof CurricularCourseScope) {
                     return ((CurricularCourseScope) domainObject).getDegreeModuleScopeCurricularCourseScope();
                 }
@@ -169,8 +168,6 @@ public abstract class DegreeModuleScope {
                     return ((Context) domainObject).getDegreeModuleScopeContext();
                 }
             } catch (ClassNotFoundException e) {
-                return null;
-            } catch (NumberFormatException exception) {
                 return null;
             }
         }

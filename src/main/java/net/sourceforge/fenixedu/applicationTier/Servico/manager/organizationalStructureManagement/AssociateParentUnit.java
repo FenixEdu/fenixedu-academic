@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement;
 
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -12,7 +11,7 @@ public class AssociateParentUnit {
 
     @Checked("RolePredicates.MANAGER_PREDICATE")
     @Service
-    public static void run(Integer unitID, Integer parentUnitID, AccountabilityType accountabilityType)
+    public static void run(String unitID, String parentUnitID, AccountabilityType accountabilityType)
             throws FenixServiceException {
 
         Unit parentUnit = getParentUnit(parentUnitID);
@@ -24,7 +23,7 @@ public class AssociateParentUnit {
         unit.addParentUnit(parentUnit, accountabilityType);
     }
 
-    private static Unit getParentUnit(Integer parentUnitID) {
+    private static Unit getParentUnit(String parentUnitID) {
         Unit parentUnit = null;
         if (parentUnitID != null) {
             parentUnit = (Unit) AbstractDomainObject.fromExternalId(parentUnitID);

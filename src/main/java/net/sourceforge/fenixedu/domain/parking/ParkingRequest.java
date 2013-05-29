@@ -101,9 +101,9 @@ public class ParkingRequest extends ParkingRequest_Base {
     public static abstract class ParkingRequestFactory implements Serializable, FactoryExecutor {
         private ParkingParty parkingParty;
 
-        private Integer firstVechicleID;
+        private String firstVechicleID;
 
-        private Integer secondVechicleID;
+        private String secondVechicleID;
 
         private String firstCarPlateNumber;
 
@@ -508,7 +508,7 @@ public class ParkingRequest extends ParkingRequest_Base {
             return new GroupUnion(personGroup, roleGroup);
         }
 
-        protected VirtualPath getFilePath(final Integer requestID) {
+        protected VirtualPath getFilePath(final String requestID) {
             Party party = getParkingParty().getParty();
             final VirtualPath filePath = new VirtualPath();
 
@@ -608,19 +608,19 @@ public class ParkingRequest extends ParkingRequest_Base {
             this.limitlessAccessCard = limitlessAccessCard;
         }
 
-        public Integer getFirstVechicleID() {
+        public String getFirstVechicleID() {
             return firstVechicleID;
         }
 
-        public void setFirstVechicleID(Integer firstVechicleID) {
+        public void setFirstVechicleID(String firstVechicleID) {
             this.firstVechicleID = firstVechicleID;
         }
 
-        public Integer getSecondVechicleID() {
+        public String getSecondVechicleID() {
             return secondVechicleID;
         }
 
-        public void setSecondVechicleID(Integer secondVechicleID) {
+        public void setSecondVechicleID(String secondVechicleID) {
             this.secondVechicleID = secondVechicleID;
         }
 
@@ -832,7 +832,7 @@ public class ParkingRequest extends ParkingRequest_Base {
                 parkingRequest.edit(this);
                 VirtualPath filePath = getFilePath(parkingRequest.getExternalId());
                 writeDriverLicenseFile(parkingRequest, filePath);
-                Vehicle firstVehicle = (Vehicle) AbstractDomainObject.fromExternalId(Vehicle.class, getFirstVechicleID());
+                Vehicle firstVehicle = AbstractDomainObject.fromExternalId(getFirstVechicleID());
                 if (firstVehicle != null) {
                     firstVehicle.setPlateNumber(getFirstCarPlateNumber());
                     firstVehicle.setVehicleMake(getFirstCarMake());
@@ -843,8 +843,7 @@ public class ParkingRequest extends ParkingRequest_Base {
                     writeFirstVehicleDocuments(firstVehicle, filePath);
                 }
                 if (getSecondVechicleID() != null) {
-                    Vehicle secondVehicle =
-                            (Vehicle) AbstractDomainObject.fromExternalId(Vehicle.class, getSecondVechicleID());
+                    Vehicle secondVehicle = AbstractDomainObject.fromExternalId(getSecondVechicleID());
 
                     if (getSecondCarMake() == null) {
                         secondVehicle.delete();

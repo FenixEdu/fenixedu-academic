@@ -3,7 +3,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.CantDeleteServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
@@ -19,7 +18,7 @@ public class DeleteCurricularCourseScope {
 
     @Checked("RolePredicates.MANAGER_PREDICATE")
     @Service
-    public static void run(Integer scopeId) throws FenixServiceException {
+    public static void run(String scopeId) throws FenixServiceException {
         CurricularCourseScope scope = AbstractDomainObject.fromExternalId(scopeId);
         if (scope != null) {
 

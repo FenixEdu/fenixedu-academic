@@ -48,8 +48,7 @@ public class CandidateApprovalAuthorizationFilter extends Filtro {
 
             for (String id2 : ids) {
 
-                MasterDegreeCandidate masterDegreeCandidate =
-                        AbstractDomainObject.fromExternalId(new Integer(id2));
+                MasterDegreeCandidate masterDegreeCandidate = AbstractDomainObject.fromExternalId(id2);
 
                 // modified by Tânia Pousão
                 Coordinator coordinator = masterDegreeCandidate.getExecutionDegree().getCoordinatorByTeacher(person);

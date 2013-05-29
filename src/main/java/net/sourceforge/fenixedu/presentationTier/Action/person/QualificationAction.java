@@ -101,7 +101,7 @@ public class QualificationAction extends CRUDActionByOID {
     }
 
     @Override
-    protected InfoObject readIt(Integer externalId) throws NotAuthorizedException {
+    protected InfoObject readIt(String externalId) throws NotAuthorizedException {
         return ReadQualification.runReadQualification(externalId);
     }
 
@@ -111,12 +111,12 @@ public class QualificationAction extends CRUDActionByOID {
     }
 
     @Override
-    protected void deleteIt(Integer externalId) throws NotAuthorizedException {
+    protected void deleteIt(String externalId) throws NotAuthorizedException {
         DeleteQualification.runDeleteQualification(externalId);
     }
 
     @Override
-    protected void editIt(Integer externalId, InfoObject object) throws NotAuthorizedException, FenixServiceException {
+    protected void editIt(String externalId, InfoObject object) throws NotAuthorizedException, FenixServiceException {
         EditQualification.runEditQualification(externalId, (InfoQualification) object);
     }
 

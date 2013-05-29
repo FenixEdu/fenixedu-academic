@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-
 import net.sourceforge.fenixedu.applicationTier.Factory.TeacherAdministrationSiteComponentBuilder;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -18,8 +17,8 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class TeacherAdministrationSiteComponentService {
 
-    protected TeacherAdministrationSiteView run(Integer infoExecutionCourseCode, ISiteComponent commonComponent,
-            ISiteComponent bodyComponent, Integer infoSiteCode, Object obj1, Object obj2) throws FenixServiceException {
+    protected TeacherAdministrationSiteView run(String infoExecutionCourseCode, ISiteComponent commonComponent,
+            ISiteComponent bodyComponent, Object obj1, Object obj2) throws FenixServiceException {
 
         final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(infoExecutionCourseCode);
         final ExecutionCourseSite site = executionCourse.getSite();
@@ -38,11 +37,10 @@ public class TeacherAdministrationSiteComponentService {
             new TeacherAdministrationSiteComponentService();
 
     @Service
-    public static TeacherAdministrationSiteView runTeacherAdministrationSiteComponentService(Integer infoExecutionCourseCode,
-            ISiteComponent commonComponent, ISiteComponent bodyComponent, Integer infoSiteCode, Object obj1, Object obj2)
-            throws FenixServiceException {
+    public static TeacherAdministrationSiteView runTeacherAdministrationSiteComponentService(String infoExecutionCourseCode,
+            ISiteComponent commonComponent, ISiteComponent bodyComponent, Object obj1, Object obj2) throws FenixServiceException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute();
-        return serviceInstance.run(infoExecutionCourseCode, commonComponent, bodyComponent, infoSiteCode, obj1, obj2);
+        return serviceInstance.run(infoExecutionCourseCode, commonComponent, bodyComponent, obj1, obj2);
     }
 
 }

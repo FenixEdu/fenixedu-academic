@@ -110,7 +110,7 @@ public class ResultParticipation extends ResultParticipation_Base {
         return !(getIsLastParticipation() || this.getPerson().equals(this.getResult().getCreator()));
     }
 
-    public final static ResultParticipation readByOid(Integer oid) {
+    public final static ResultParticipation readByOid(String oid) {
         final ResultParticipation participation = AbstractDomainObject.fromExternalId(oid);
 
         if (participation == null) {

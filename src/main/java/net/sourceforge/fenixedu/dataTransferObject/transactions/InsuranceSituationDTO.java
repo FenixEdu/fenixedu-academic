@@ -30,7 +30,7 @@ public class InsuranceSituationDTO extends InfoObject {
     /**
      * @param externalId
      */
-    public InsuranceSituationDTO(Integer externalId) {
+    public InsuranceSituationDTO(String externalId) {
         super(externalId);
 
     }

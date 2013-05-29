@@ -139,7 +139,7 @@ public interface ICurriculumEntry {
         }
     };
 
-    Integer getExternalId();
+    String getExternalId();
 
     String getCode();
 

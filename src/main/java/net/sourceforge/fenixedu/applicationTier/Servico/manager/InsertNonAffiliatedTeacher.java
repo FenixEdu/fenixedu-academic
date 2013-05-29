@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.ManagerAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.gep.GEPAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -24,7 +23,7 @@ public class InsertNonAffiliatedTeacher {
 
     @Checked("RolePredicates.GEP_PREDICATE")
     @Service
-    public static NonAffiliatedTeacher run(String nonAffiliatedTeacherName, Integer institutionID)
+    public static NonAffiliatedTeacher run(String nonAffiliatedTeacherName, String institutionID)
             throws NotExistingServiceException {
         final Unit institution = (Unit) AbstractDomainObject.fromExternalId(institutionID);
         if (institution == null) {
@@ -45,7 +44,7 @@ public class InsertNonAffiliatedTeacher {
     // Service Invokers migrated from Berserk
 
     @Service
-    public static NonAffiliatedTeacher runInsertNonAffiliatedTeacher(String nonAffiliatedTeacherName, Integer institutionID)
+    public static NonAffiliatedTeacher runInsertNonAffiliatedTeacher(String nonAffiliatedTeacherName, String institutionID)
             throws NotExistingServiceException, NotAuthorizedException {
         try {
             ManagerAuthorizationFilter.instance.execute();

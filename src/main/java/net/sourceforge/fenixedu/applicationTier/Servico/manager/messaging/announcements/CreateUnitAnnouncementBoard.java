@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.messaging.announcements;
 
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.UnitBoardPermittedGroupType;
 import net.sourceforge.fenixedu.domain.accessControl.AllDegreesStudentsGroup;
@@ -35,7 +34,7 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 public class CreateUnitAnnouncementBoard {
 
     public static class UnitAnnouncementBoardParameters {
-        public Integer unitId;
+        public String unitId;
 
         public String name;
 
@@ -51,7 +50,7 @@ public class CreateUnitAnnouncementBoard {
             super();
         }
 
-        public UnitAnnouncementBoardParameters(Integer unitId, String name, Boolean mandatory,
+        public UnitAnnouncementBoardParameters(String unitId, String name, Boolean mandatory,
                 UnitBoardPermittedGroupType readers, UnitBoardPermittedGroupType writers, UnitBoardPermittedGroupType management) {
 
             this();

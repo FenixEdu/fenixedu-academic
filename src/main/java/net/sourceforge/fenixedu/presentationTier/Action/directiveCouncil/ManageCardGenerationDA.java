@@ -361,8 +361,7 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
 
     protected Degree getDegree(final HttpServletRequest request) {
         final String degreeIdParam = request.getParameter("degreeID");
-        final Integer degreeID = degreeIdParam == null || degreeIdParam.length() == 0 ? null : Integer.valueOf(degreeIdParam);
-        return degreeIdParam == null ? null : AbstractDomainObject.fromExternalId(degreeID);
+        return AbstractDomainObject.fromExternalId(degreeIdParam);
     }
 
     protected Set<Degree> getDegrees(final DegreeType degreeType) {
@@ -446,34 +445,19 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
     }
 
     private ExecutionYear getExecutionYear(final HttpServletRequest request) {
-        final String executionYearParam = request.getParameter("executionYearID");
-        final Integer executionYearID =
-                executionYearParam == null || executionYearParam.length() == 0 ? null : Integer.valueOf(executionYearParam);
-        return executionYearID == null ? null : AbstractDomainObject.fromExternalId(executionYearID);
+        return getDomainObject(request, "executionYearID");
     }
 
     protected CardGenerationBatch getCardGenerationBatch(final HttpServletRequest request) {
-        final String cardGenerationBatchParam = request.getParameter("cardGenerationBatchID");
-        final Integer cardGenerationBatchID =
-                cardGenerationBatchParam == null || cardGenerationBatchParam.length() == 0 ? null : Integer
-                        .valueOf(cardGenerationBatchParam);
-        return cardGenerationBatchID == null ? null : AbstractDomainObject.fromExternalId(cardGenerationBatchID);
+        return getDomainObject(request, "cardGenerationBatchID");
     }
 
     private CardGenerationEntry getCardGenerationEntry(HttpServletRequest request) {
-        final String cardGenerationEntryParam = request.getParameter("cardGenerationEntryID");
-        final Integer cardGenerationEntryID =
-                cardGenerationEntryParam == null || cardGenerationEntryParam.length() == 0 ? null : Integer
-                        .valueOf(cardGenerationEntryParam);
-        return cardGenerationEntryID == null ? null : AbstractDomainObject.fromExternalId(cardGenerationEntryID);
+        return getDomainObject(request, "cardGenerationEntryID");
     }
 
     protected CardGenerationProblem getCardGenerationProblem(final HttpServletRequest request) {
-        final String cardGenerationProblemParam = request.getParameter("cardGenerationProblemID");
-        final Integer cardGenerationProblemID =
-                cardGenerationProblemParam == null || cardGenerationProblemParam.length() == 0 ? null : Integer
-                        .valueOf(cardGenerationProblemParam);
-        return cardGenerationProblemID == null ? null : AbstractDomainObject.fromExternalId(cardGenerationProblemID);
+        return getDomainObject(request, "cardGenerationProblemID");
     }
 
     public ActionForward createNewEntry(final ActionMapping mapping, final ActionForm actionForm,
@@ -515,10 +499,9 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
     }
 
     @Service
-    private void switchPerson(final int personId, final int cardGenerationEntryId) {
-        final Person person = (Person) AbstractDomainObject.fromExternalId(new Integer(personId));
-        final CardGenerationEntry cardGenerationEntry =
-                AbstractDomainObject.fromExternalId(new Integer(cardGenerationEntryId));
+    private void switchPerson(final String personId, final String cardGenerationEntryId) {
+        final Person person = (Person) AbstractDomainObject.fromExternalId(personId);
+        final CardGenerationEntry cardGenerationEntry = AbstractDomainObject.fromExternalId(cardGenerationEntryId);
         cardGenerationEntry.setPerson(person);
     }
 

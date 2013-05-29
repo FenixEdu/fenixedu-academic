@@ -44,7 +44,7 @@ public class ViewCurriculumGraphDispatchAction extends FenixDispatchAction {
     public ActionForward createAreaXYChart(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
 
-        Registration registration = AbstractDomainObject.fromExternalId(new Integer(request.getParameter("registrationOID")));
+        Registration registration = AbstractDomainObject.fromExternalId(request.getParameter("registrationOID"));
 
         List<ExecutionPeriodStatisticsBean> studentStatistics = getStudentStatistics(registration);
         Collections.sort(studentStatistics, new BeanComparator("executionPeriod"));

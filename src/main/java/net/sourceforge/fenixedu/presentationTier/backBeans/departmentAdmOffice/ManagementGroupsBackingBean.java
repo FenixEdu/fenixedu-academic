@@ -20,10 +20,10 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 
 public class ManagementGroupsBackingBean extends FenixBackingBean {
 
-    private List<Employee> employees = getEmployees();
+    private final List<Employee> employees = getEmployees();
 
-    private Integer[] selectedPersonsIDsToAdd;
-    private Integer[] selectedPersonsIDsToRemove;
+    private String[] selectedPersonsIDsToAdd;
+    private String[] selectedPersonsIDsToRemove;
 
     public Department getDepartment() {
         return (getUserView().getPerson().getEmployee() != null) ? getUserView().getPerson().getEmployee()
@@ -62,7 +62,7 @@ public class ManagementGroupsBackingBean extends FenixBackingBean {
         return employees.size();
     }
 
-    public List<SelectItem> getSelectedDepartmentEmployeesSelectItems() throws  FenixServiceException {
+    public List<SelectItem> getSelectedDepartmentEmployeesSelectItems() throws FenixServiceException {
 
         List<SelectItem> result = new ArrayList<SelectItem>();
 
@@ -76,23 +76,23 @@ public class ManagementGroupsBackingBean extends FenixBackingBean {
         return result;
     }
 
-    public void setSelectedPersonsIDsToAdd(Integer[] selectedPersonsIDs) {
+    public void setSelectedPersonsIDsToAdd(String[] selectedPersonsIDs) {
         this.selectedPersonsIDsToAdd = selectedPersonsIDs;
     }
 
-    public Integer[] getSelectedPersonsIDsToAdd() {
+    public String[] getSelectedPersonsIDsToAdd() {
         return selectedPersonsIDsToAdd;
     }
 
-    public void setSelectedPersonsIDsToRemove(Integer[] selectedPersonsIDsToRemove) {
+    public void setSelectedPersonsIDsToRemove(String[] selectedPersonsIDsToRemove) {
         this.selectedPersonsIDsToRemove = selectedPersonsIDsToRemove;
     }
 
-    public Integer[] getSelectedPersonsIDsToRemove() {
+    public String[] getSelectedPersonsIDsToRemove() {
         return selectedPersonsIDsToRemove;
     }
 
-    public void addMembers(ActionEvent event) throws  FenixServiceException {
+    public void addMembers(ActionEvent event) throws FenixServiceException {
         if (selectedPersonsIDsToAdd != null) {
 
             UpdateDepartmentsCompetenceCourseManagementGroup.run(getDepartment(), selectedPersonsIDsToAdd, null);
@@ -102,7 +102,7 @@ public class ManagementGroupsBackingBean extends FenixBackingBean {
         selectedPersonsIDsToRemove = null;
     }
 
-    public void removeMembers(ActionEvent event) throws  FenixServiceException {
+    public void removeMembers(ActionEvent event) throws FenixServiceException {
         if (selectedPersonsIDsToRemove != null) {
 
             UpdateDepartmentsCompetenceCourseManagementGroup.run(getDepartment(), null, selectedPersonsIDsToRemove);

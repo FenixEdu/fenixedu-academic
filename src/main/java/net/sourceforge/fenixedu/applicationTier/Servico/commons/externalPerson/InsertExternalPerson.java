@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.commons.externalPerson;
 
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Country;
@@ -19,8 +18,8 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class InsertExternalPerson {
 
     public static class ServiceArguments {
-        private Unit unit;
-        private String personName;
+        private final Unit unit;
+        private final String personName;
 
         public ServiceArguments(String personName, Unit unit) {
             this.unit = unit;
@@ -38,7 +37,7 @@ public class InsertExternalPerson {
     }
 
     @Service
-    public static ExternalContract run(String name, String sex, String address, Integer institutionID, String phone,
+    public static ExternalContract run(String name, String sex, String address, String institutionID, String phone,
             String mobile, String homepage, String email) throws FenixServiceException {
 
         final ExternalContract storedExternalContract =
@@ -94,7 +93,7 @@ public class InsertExternalPerson {
     }
 
     @Service
-    public static ExternalContract run(String name, String organizationName, String phone, String mobile, String email)
+    public static ExternalContract run(String name, Boolean organizationName, String phone, String mobile, String email)
             throws FenixServiceException {
 
         final Unit organization = Unit.createNewNoOfficialExternalInstitution(organizationName);

@@ -98,7 +98,7 @@ public class InfoSite extends InfoObject implements ISiteComponent {
     }
 
     @Override
-    public Integer getExternalId() {
+    public String getExternalId() {
         return getSite().getExternalId();
     }
 

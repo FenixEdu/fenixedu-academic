@@ -81,9 +81,9 @@ public class MergeExecutionCourseDispatchionAction extends FenixDispatchAction {
         ExecutionCourse sourceExecutionCourse = degreeBean.getSourceExecutionCourse();
         ExecutionCourse destinationExecutionCourse = degreeBean.getDestinationExecutionCourse();
 
-        Integer sourceExecutionCourseId = sourceExecutionCourse.getExternalId();
+        String sourceExecutionCourseId = sourceExecutionCourse.getExternalId();
 
-        Integer destinationExecutionCourseId = destinationExecutionCourse.getExternalId();
+        String destinationExecutionCourseId = destinationExecutionCourse.getExternalId();
 
         Boolean error = false;
 

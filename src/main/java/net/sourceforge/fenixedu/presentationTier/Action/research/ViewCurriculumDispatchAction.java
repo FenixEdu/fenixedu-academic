@@ -61,8 +61,7 @@ public class ViewCurriculumDispatchAction extends FenixAction {
         String personId = request.getParameter("personOID");
 
         final Person person =
-                ((personId != null && personId.length() > 0) ? (Person) AbstractDomainObject.fromExternalId(Person.class,
-                        Integer.valueOf(personId)) : getLoggedPerson(request));
+                ((personId != null && personId.length() > 0) ? (Person) AbstractDomainObject.fromExternalId(personId) : getLoggedPerson(request));
 
         request.setAttribute("person", person);
 

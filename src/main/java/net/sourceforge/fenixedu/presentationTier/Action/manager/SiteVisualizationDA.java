@@ -202,8 +202,7 @@ public abstract class SiteVisualizationDA extends FenixDispatchAction {
             return null;
         }
 
-        Integer itemID = Integer.valueOf(parameter);
-        return (Item) AbstractDomainObject.fromExternalId(itemID);
+        return (Item) AbstractDomainObject.fromExternalId(parameter);
     }
 
     protected Section getSection(final HttpServletRequest request) {
@@ -213,7 +212,7 @@ public abstract class SiteVisualizationDA extends FenixDispatchAction {
             return null;
         }
 
-        final Content content = AbstractDomainObject.fromExternalId(Integer.valueOf(parameter));
+        final Content content = AbstractDomainObject.fromExternalId(parameter);
         return content instanceof Section ? (Section) content : null;
     }
 

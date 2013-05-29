@@ -556,7 +556,7 @@ public class ExercisesManagementAction extends FenixDispatchAction {
 
     public ActionForward exercisesFirstPage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
-        final Integer executionCourseId = getCodeFromRequest(request, "objectCode");
+        final String executionCourseId = getCodeFromRequest(request, "objectCode");
 
         final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
         List<Metadata> metadataList = new ArrayList<Metadata>();
@@ -583,7 +583,7 @@ public class ExercisesManagementAction extends FenixDispatchAction {
 
     public ActionForward chooseNewExercise(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
-        final Integer executionCourseId = getCodeFromRequest(request, "objectCode");
+        final String executionCourseId = getCodeFromRequest(request, "objectCode");
         final IUserView userView = getUserView(request);
 
         final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
@@ -616,9 +616,9 @@ public class ExercisesManagementAction extends FenixDispatchAction {
     public ActionForward loadExerciseVariationsFile(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         final IUserView userView = getUserView(request);
-        final Integer executionCourseId = getCodeFromRequest(request, "objectCode");
+        final String executionCourseId = getCodeFromRequest(request, "objectCode");
         request.setAttribute("objectCode", executionCourseId);
-        final Integer metadataId = getCodeFromRequest(request, "exerciseCode");
+        final String metadataId = getCodeFromRequest(request, "exerciseCode");
         request.setAttribute("order", request.getParameter("order"));
         request.setAttribute("asc", request.getParameter("asc"));
 
@@ -672,7 +672,7 @@ public class ExercisesManagementAction extends FenixDispatchAction {
         // final FormFile xmlZipFile = (FormFile) ((DynaActionForm)
         // form).get("xmlZipFile");
         final String xmlZipFileName = (String) ((DynaActionForm) form).get("xmlZipFile");
-        final Integer executionCourseId = getCodeFromRequest(request, "objectCode");
+        final String executionCourseId = getCodeFromRequest(request, "objectCode");
         request.setAttribute("objectCode", getCodeFromRequest(request, "objectCode"));
 
         if (xmlZipFileName == null) {
@@ -733,8 +733,8 @@ public class ExercisesManagementAction extends FenixDispatchAction {
     public ActionForward removeExercise(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
         final IUserView userView = getUserView(request);
-        final Integer executionCourseId = getCodeFromRequest(request, "objectCode");
-        final Integer metadataId = getCodeFromRequest(request, "exerciseCode");
+        final String executionCourseId = getCodeFromRequest(request, "objectCode");
+        final String metadataId = getCodeFromRequest(request, "exerciseCode");
         try {
             DeleteExercise.runDeleteExercise(executionCourseId, metadataId);
         } catch (FenixServiceException e) {
@@ -751,9 +751,9 @@ public class ExercisesManagementAction extends FenixDispatchAction {
     public ActionForward prepareEditExercise(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
         final IUserView userView = getUserView(request);
-        final Integer executionCourseId = getCodeFromRequest(request, "objectCode");
-        final Integer exerciseId = getCodeFromRequest(request, "exerciseCode");
-        Integer variationCode = getCodeFromRequest(request, "variationCode");
+        final String executionCourseId = getCodeFromRequest(request, "objectCode");
+        final String exerciseId = getCodeFromRequest(request, "exerciseCode");
+        String variationCode = getCodeFromRequest(request, "variationCode");
         Metadata metadata = null;
         try {
             metadata = ReadExercise.runReadExercise(executionCourseId, exerciseId);
@@ -794,8 +794,8 @@ public class ExercisesManagementAction extends FenixDispatchAction {
     public ActionForward editExercise(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
         final IUserView userView = getUserView(request);
-        final Integer executionCourseId = getCodeFromRequest(request, "objectCode");
-        final Integer exerciseId = getCodeFromRequest(request, "exerciseCode");
+        final String executionCourseId = getCodeFromRequest(request, "objectCode");
+        final String exerciseId = getCodeFromRequest(request, "exerciseCode");
         final String author = request.getParameter("author");
         final String description = request.getParameter("description");
         String difficulty = request.getParameter("difficulty");
@@ -824,12 +824,12 @@ public class ExercisesManagementAction extends FenixDispatchAction {
     public ActionForward prepareRemoveExerciseVariation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
         final IUserView userView = getUserView(request);
-        final Integer executionCourseId = getCodeFromRequest(request, "objectCode");
-        Integer variationCode = getCodeFromRequest(request, "variationCode");
+        final String executionCourseId = getCodeFromRequest(request, "objectCode");
+        String variationCode = getCodeFromRequest(request, "variationCode");
         request.setAttribute("objectCode", executionCourseId);
         request.setAttribute("order", request.getParameter("order"));
         request.setAttribute("asc", request.getParameter("asc"));
-        Integer metadataCode = getCodeFromRequest(request, "metadataCode");
+        String metadataCode = getCodeFromRequest(request, "metadataCode");
         try {
             List<LabelValueBean> result = DeleteExerciseVariation.runDeleteExerciseVariation(executionCourseId, variationCode);
             if (result == null || result.size() == 0) {
@@ -850,9 +850,9 @@ public class ExercisesManagementAction extends FenixDispatchAction {
     public ActionForward removeExerciseVariation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
         final IUserView userView = getUserView(request);
-        final Integer executionCourseId = getCodeFromRequest(request, "objectCode");
-        final Integer exerciseId = getCodeFromRequest(request, "exerciseCode");
-        final Integer variationCode = getCodeFromRequest(request, "variationCode");
+        final String executionCourseId = getCodeFromRequest(request, "objectCode");
+        final String exerciseId = getCodeFromRequest(request, "exerciseCode");
+        final String variationCode = getCodeFromRequest(request, "variationCode");
         request.setAttribute("objectCode", executionCourseId);
         request.setAttribute("order", request.getParameter("order"));
         request.setAttribute("asc", request.getParameter("asc"));
@@ -871,7 +871,7 @@ public class ExercisesManagementAction extends FenixDispatchAction {
 
     public ActionForward exportExerciseVariation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
-        final Integer variationCode = getCodeFromRequest(request, "variationCode");
+        final String variationCode = getCodeFromRequest(request, "variationCode");
         Question question = AbstractDomainObject.fromExternalId(variationCode);
         response.setContentType("text/plain; charset=utf-8");
         response.setHeader("Content-disposition", "attachment; filename=" + question.getXmlFileName());
@@ -886,19 +886,17 @@ public class ExercisesManagementAction extends FenixDispatchAction {
         return null;
     }
 
-    private Integer getCodeFromRequest(HttpServletRequest request, String codeString) {
-        Integer code = null;
+    private String getCodeFromRequest(HttpServletRequest request, String codeString) {
+        String code = null;
         Object objectCode = request.getAttribute(codeString);
         if (objectCode != null) {
             if (objectCode instanceof String) {
-                code = new Integer((String) objectCode);
-            } else if (objectCode instanceof Integer) {
-                code = (Integer) objectCode;
+                code = (String) objectCode;
             }
         } else {
             String thisCodeString = request.getParameter(codeString);
             if (thisCodeString != null) {
-                code = new Integer(thisCodeString);
+                code = thisCodeString;
             }
         }
         return code;

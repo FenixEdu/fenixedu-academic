@@ -19,8 +19,7 @@ public abstract class ShowResearchResult extends FenixDispatchAction {
             HttpServletResponse response) {
 
         String resultOID = request.getParameter("resultId");
-        ResearchResult result =
-                (ResearchResult) AbstractDomainObject.fromExternalId(ResearchResult.class, Integer.valueOf(resultOID));
+        ResearchResult result = (ResearchResult) AbstractDomainObject.fromExternalId(resultOID);
         request.setAttribute("result", result);
         putSiteOnRequest(request);
         return mapping.findForward("showResult");
@@ -30,9 +29,7 @@ public abstract class ShowResearchResult extends FenixDispatchAction {
             HttpServletResponse response) {
 
         String resultOID = request.getParameter("resultId");
-        ResearchResultPublication result =
-                (ResearchResultPublication) AbstractDomainObject.fromExternalId(ResearchResult.class,
-                        Integer.valueOf(resultOID));
+        ResearchResultPublication result = (ResearchResultPublication) AbstractDomainObject.fromExternalId(resultOID);
         if (result != null) {
             request.setAttribute("result", result);
             request.setAttribute("resultPublicationType", result.getClass().getSimpleName());

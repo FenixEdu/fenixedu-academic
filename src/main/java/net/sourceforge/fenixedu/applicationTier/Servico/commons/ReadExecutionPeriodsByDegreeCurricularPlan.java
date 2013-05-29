@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import pt.ist.fenixWebFramework.services.Service;
@@ -19,10 +20,11 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ReadExecutionPeriodsByDegreeCurricularPlan {
 
     @Service
-    public static List run(Integer degreeCurricularPlanID) {
+    public static List run(String degreeCurricularPlanID) {
 
         // Start date of the DegreeCurricularPlan
-        final Date startDate = AbstractDomainObject.fromExternalId(degreeCurricularPlanID).getInitialDate();
+        final Date startDate =
+                AbstractDomainObject.<DegreeCurricularPlan> fromExternalId(degreeCurricularPlanID).getInitialDate();
 
         // End date of the current year
         final Date endDate = ExecutionYear.readCurrentExecutionYear().getEndDate();

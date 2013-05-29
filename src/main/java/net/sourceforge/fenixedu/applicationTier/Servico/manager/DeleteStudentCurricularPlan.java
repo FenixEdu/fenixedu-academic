@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
@@ -23,9 +22,8 @@ public class DeleteStudentCurricularPlan {
 
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
-    public static void run(final Integer studentCurricularPlanId) throws DomainException, NonExistingServiceException {
-        final StudentCurricularPlan studentCurricularPlan =
-                AbstractDomainObject.fromExternalId(studentCurricularPlanId);
+    public static void run(final String studentCurricularPlanId) throws DomainException, NonExistingServiceException {
+        final StudentCurricularPlan studentCurricularPlan = AbstractDomainObject.fromExternalId(studentCurricularPlanId);
 
         if (studentCurricularPlan != null) {
 

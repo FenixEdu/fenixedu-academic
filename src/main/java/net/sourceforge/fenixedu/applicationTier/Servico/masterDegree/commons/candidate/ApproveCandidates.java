@@ -20,7 +20,7 @@ public class ApproveCandidates {
 
         for (int i = 0; i < situations.length; i++) {
 
-            MasterDegreeCandidate masterDegreeCandidate = AbstractDomainObject.fromExternalId(new Integer(ids[i]));
+            MasterDegreeCandidate masterDegreeCandidate = AbstractDomainObject.fromExternalId(ids[i]);
             CandidateSituation candidateSituationOldFromBD = masterDegreeCandidate.getActiveCandidateSituation();
 
             candidateSituationOldFromBD.setValidation(new State(State.INACTIVE));
@@ -43,12 +43,14 @@ public class ApproveCandidates {
         }
 
     }
+
     // Service Invokers migrated from Berserk
 
     private static final ApproveCandidates serviceInstance = new ApproveCandidates();
 
     @Service
-    public static void runApproveCandidates(String[] situations, String[] ids, String[] remarks, String[] substitutes) throws NotAuthorizedException {
+    public static void runApproveCandidates(String[] situations, String[] ids, String[] remarks, String[] substitutes)
+            throws NotAuthorizedException {
         CandidateApprovalAuthorizationFilter.instance.execute(situations, ids, remarks, substitutes);
         serviceInstance.run(situations, ids, remarks, substitutes);
     }

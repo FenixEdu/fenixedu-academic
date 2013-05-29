@@ -53,9 +53,7 @@ public class ConvokeManagement extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         RenderUtils.invalidateViewState();
         String writtenEvaluationId = request.getParameter("writtenEvaluationId");
-        WrittenEvaluation writtenEvaluation =
-                (WrittenEvaluation) AbstractDomainObject.fromExternalId(WrittenEvaluation.class,
-                        Integer.valueOf(writtenEvaluationId));
+        WrittenEvaluation writtenEvaluation = AbstractDomainObject.fromExternalId(writtenEvaluationId);
 
         request.setAttribute("permission", true);
         request.setAttribute("writtenEvaluation", writtenEvaluation);
@@ -95,10 +93,9 @@ public class ConvokeManagement extends FenixDispatchAction {
     private void editAttend(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         String id = request.getParameter("oid");
-        Integer externalId = Integer.valueOf(id);
         String bool = request.getParameter("bool");
         Boolean value = Boolean.valueOf(bool);
-        Vigilancy convoke = (Vigilancy) AbstractDomainObject.fromExternalId(Vigilancy.class, externalId);
+        Vigilancy convoke = AbstractDomainObject.fromExternalId(id);
 
         try {
 
@@ -119,11 +116,10 @@ public class ConvokeManagement extends FenixDispatchAction {
     public ActionForward changeConvokeStatusInReport(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         String id = request.getParameter("oid");
-        Integer externalId = Integer.valueOf(id);
         String participationType = request.getParameter("participationType");
         AttendingStatus status = AttendingStatus.valueOf(participationType);
 
-        Vigilancy vigilancy = (Vigilancy) AbstractDomainObject.fromExternalId(Vigilancy.class, externalId);
+        Vigilancy vigilancy = AbstractDomainObject.fromExternalId(id);
         try {
 
             ChangeConvokeStatus.run(vigilancy, status);
@@ -136,11 +132,10 @@ public class ConvokeManagement extends FenixDispatchAction {
     private void editActive(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         String id = request.getParameter("oid");
-        Integer externalId = Integer.valueOf(id);
         String bool = request.getParameter("bool");
         Boolean value = Boolean.valueOf(bool);
         Person person = getLoggedPerson(request);
-        Vigilancy convoke = (Vigilancy) AbstractDomainObject.fromExternalId(Vigilancy.class, externalId);
+        Vigilancy convoke = AbstractDomainObject.fromExternalId(id);
 
         try {
 
@@ -296,9 +291,7 @@ public class ConvokeManagement extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         String writtenEvalatuionId = request.getParameter("writtenEvaluationId");
-        WrittenEvaluation writtenEvaluation =
-                (WrittenEvaluation) AbstractDomainObject.fromExternalId(WrittenEvaluation.class,
-                        Integer.valueOf(writtenEvalatuionId));
+        WrittenEvaluation writtenEvaluation = AbstractDomainObject.fromExternalId(writtenEvalatuionId);
 
         Person person = getLoggedPerson(request);
         ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
@@ -370,8 +363,7 @@ public class ConvokeManagement extends FenixDispatchAction {
         return mapping.findForward("prepareGenerateConvokes");
     }
 
-    private ExamCoordinator getCoordinatorForCurrentYear(HttpServletRequest request) throws 
-            FenixServiceException {
+    private ExamCoordinator getCoordinatorForCurrentYear(HttpServletRequest request) throws FenixServiceException {
         ExecutionYear currentYear = ExecutionYear.readCurrentExecutionYear();
         Person person = getLoggedPerson(request);
         ExamCoordinator coordinator = person.getExamCoordinatorForGivenExecutionYear(currentYear);
@@ -386,7 +378,7 @@ public class ConvokeManagement extends FenixDispatchAction {
         return mapping.findForward(forwardTo);
     }
 
-    private void recoverBeanFromRequest(HttpServletRequest request) throws  FenixServiceException {
+    private void recoverBeanFromRequest(HttpServletRequest request) throws FenixServiceException {
         ConvokeBean bean = new ConvokeBean();
         String vigilantGroup = request.getParameter("gid");
         String incompatiblities = request.getParameter("showIncompatibilities");
@@ -410,11 +402,10 @@ public class ConvokeManagement extends FenixDispatchAction {
         bean.setVigilantGroups(coordinator.getVigilantGroups());
         String executionYear = request.getParameter("executionYear");
         ExecutionYear executionYearObj =
-                executionYear != null ? (ExecutionYear) AbstractDomainObject.fromExternalId(ExecutionYear.class,
-                        Integer.valueOf(executionYear)) : null;
+                executionYear != null ? (ExecutionYear) AbstractDomainObject.fromExternalId(executionYear) : null;
         VigilantGroup group = null;
         if (vigilantGroup != null) {
-            group = (VigilantGroup) AbstractDomainObject.fromExternalId(VigilantGroup.class, Integer.valueOf(vigilantGroup));
+            group = (VigilantGroup) AbstractDomainObject.fromExternalId(vigilantGroup);
             bean.setSelectedVigilantGroup(group);
         }
         bean.setExecutionYear(executionYearObj);
@@ -423,7 +414,7 @@ public class ConvokeManagement extends FenixDispatchAction {
     }
 
     private void putInformationOnRequest(HttpServletRequest request, VigilantGroup group, boolean showVigilants,
-            ExecutionYear executionYear) throws  FenixServiceException {
+            ExecutionYear executionYear) throws FenixServiceException {
 
         if (showVigilants) {
             request.setAttribute("group", group);

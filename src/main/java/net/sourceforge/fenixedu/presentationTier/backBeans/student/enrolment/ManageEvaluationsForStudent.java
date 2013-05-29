@@ -31,8 +31,8 @@ public class ManageEvaluationsForStudent extends DisplayEvaluationsForStudentToE
     private List<Evaluation> evaluationsWithEnrolmentPeriodOpened;
     private List<Evaluation> evaluationsWithEnrolmentPeriodClosed;
     private HtmlInputHidden evaluationTypeHidden;
-    private Map<Integer, Boolean> enroledEvaluationsForStudent;
-    private Map<Integer, String> studentRooms;
+    private Map<String, Boolean> enroledEvaluationsForStudent;
+    private Map<String, String> studentRooms;
 
     public List<Evaluation> getEvaluationsWithEnrolmentPeriodClosed() {
         if (this.evaluationsWithEnrolmentPeriodClosed == null) {
@@ -131,8 +131,8 @@ public class ManageEvaluationsForStudent extends DisplayEvaluationsForStudentToE
         return "";
     }
 
-    public Integer getEvaluationID() {
-        return Integer.valueOf(getRequestParameter("evaluationID"));
+    public String getEvaluationID() {
+        return getRequestParameter("evaluationID");
     }
 
     @Override
@@ -170,25 +170,25 @@ public class ManageEvaluationsForStudent extends DisplayEvaluationsForStudentToE
         this.evaluationTypeHidden = evaluationTypeHidden;
     }
 
-    public Map<Integer, Boolean> getEnroledEvaluationsForStudent() {
+    public Map<String, Boolean> getEnroledEvaluationsForStudent() {
         if (this.enroledEvaluationsForStudent == null) {
-            this.enroledEvaluationsForStudent = new HashMap<Integer, Boolean>();
+            this.enroledEvaluationsForStudent = new HashMap<String, Boolean>();
         }
         return this.enroledEvaluationsForStudent;
     }
 
-    public void setEnroledEvaluationsForStudent(Map<Integer, Boolean> enroledEvaluationsForStudent) {
+    public void setEnroledEvaluationsForStudent(Map<String, Boolean> enroledEvaluationsForStudent) {
         this.enroledEvaluationsForStudent = enroledEvaluationsForStudent;
     }
 
-    public Map<Integer, String> getStudentRooms() {
+    public Map<String, String> getStudentRooms() {
         if (this.studentRooms == null) {
-            this.studentRooms = new HashMap<Integer, String>();
+            this.studentRooms = new HashMap<String, String>();
         }
         return this.studentRooms;
     }
 
-    public void setStudentRooms(Map<Integer, String> studentRooms) {
+    public void setStudentRooms(Map<String, String> studentRooms) {
         this.studentRooms = studentRooms;
     }
 }

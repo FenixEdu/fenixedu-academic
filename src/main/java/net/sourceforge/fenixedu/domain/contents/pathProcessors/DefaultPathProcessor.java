@@ -14,13 +14,13 @@ public class DefaultPathProcessor extends AbstractPathProcessor {
         return indexOfSlash >= 0 ? path.substring(0, indexOfSlash) : path;
     }
 
-    protected Integer getTemplatedId(final String path) {
+    protected String getTemplatedId(final String path) {
         final String templatedIdString = getTemplatedIdString(path);
-        return StringUtils.isEmpty(templatedIdString) ? null : Integer.valueOf(templatedIdString);
+        return StringUtils.isEmpty(templatedIdString) ? null : templatedIdString;
     }
 
     protected Container getTemplatedContent(final String path) {
-        final Integer id = getTemplatedId(path);
+        final String id = getTemplatedId(path);
         return id == null ? null : (Container) AbstractDomainObject.fromExternalId(id);
     }
 

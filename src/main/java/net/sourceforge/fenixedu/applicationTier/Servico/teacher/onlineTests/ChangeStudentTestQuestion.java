@@ -40,8 +40,8 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class ChangeStudentTestQuestion {
 
-    protected Boolean run(Integer executionCourseId, Integer distributedTestId, Integer oldQuestionId, Integer newMetadataId,
-            Integer studentId, TestQuestionChangesType changesType, Boolean delete, TestQuestionStudentsChangesType studentsType,
+    protected Boolean run(String executionCourseId, String distributedTestId, String oldQuestionId, String newMetadataId,
+            String studentId, TestQuestionChangesType changesType, Boolean delete, TestQuestionStudentsChangesType studentsType,
             String path) throws FenixServiceException {
 
         DistributedTest distributedTest = AbstractDomainObject.fromExternalId(distributedTestId);
@@ -254,8 +254,8 @@ public class ChangeStudentTestQuestion {
     private static final ChangeStudentTestQuestion serviceInstance = new ChangeStudentTestQuestion();
 
     @Service
-    public static Boolean runChangeStudentTestQuestion(Integer executionCourseId, Integer distributedTestId,
-            Integer oldQuestionId, Integer newMetadataId, Integer studentId, TestQuestionChangesType changesType, Boolean delete,
+    public static Boolean runChangeStudentTestQuestion(String executionCourseId, String distributedTestId, String oldQuestionId,
+            String newMetadataId, String studentId, TestQuestionChangesType changesType, Boolean delete,
             TestQuestionStudentsChangesType studentsType, String path) throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
         return serviceInstance.run(executionCourseId, distributedTestId, oldQuestionId, newMetadataId, studentId, changesType,

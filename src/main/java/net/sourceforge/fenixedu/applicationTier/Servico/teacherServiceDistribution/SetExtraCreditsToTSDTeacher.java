@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.EmployeeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilter;
@@ -10,7 +9,7 @@ import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class SetExtraCreditsToTSDTeacher {
-    protected void run(Integer tsdTeacherId, String extraCreditsName, Double extraCreditsValue, Boolean usingExtraCredits) {
+    protected void run(String tsdTeacherId, String extraCreditsName, Double extraCreditsValue, Boolean usingExtraCredits) {
 
         TSDTeacher tsdTeacher = AbstractDomainObject.fromExternalId(tsdTeacherId);
 
@@ -24,7 +23,7 @@ public class SetExtraCreditsToTSDTeacher {
     private static final SetExtraCreditsToTSDTeacher serviceInstance = new SetExtraCreditsToTSDTeacher();
 
     @Service
-    public static void runSetExtraCreditsToTSDTeacher(Integer tsdTeacherId, String extraCreditsName, Double extraCreditsValue,
+    public static void runSetExtraCreditsToTSDTeacher(String tsdTeacherId, String extraCreditsName, Double extraCreditsValue,
             Boolean usingExtraCredits) throws NotAuthorizedException {
         try {
             DepartmentMemberAuthorizationFilter.instance.execute();

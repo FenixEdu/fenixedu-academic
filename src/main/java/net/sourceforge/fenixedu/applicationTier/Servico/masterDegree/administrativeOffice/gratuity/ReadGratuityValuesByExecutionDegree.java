@@ -22,7 +22,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ReadGratuityValuesByExecutionDegree {
 
     @Service
-    public static Object run(Integer executionDegreeID) throws FenixServiceException {
+    public static Object run(String executionDegreeID) throws FenixServiceException {
         if (executionDegreeID == null) {
             throw new FenixServiceException("error.impossible.noGratuityValues");
         }

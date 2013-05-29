@@ -106,7 +106,7 @@ public class RoomsPunctualSchedulingDA extends FenixDispatchAction {
     }
 
     public ActionForward deleteRoomsPunctualScheduling(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws InvalidArgumentException,  FenixServiceException {
+            HttpServletResponse response) throws InvalidArgumentException, FenixServiceException {
 
         GenericEvent genericEventFromParameter = getGenericEventFromParameter(request);
         try {
@@ -119,7 +119,7 @@ public class RoomsPunctualSchedulingDA extends FenixDispatchAction {
     }
 
     public ActionForward prepareCreate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException, InvalidArgumentException {
+            HttpServletResponse response) throws FenixServiceException, InvalidArgumentException {
 
         RoomsPunctualSchedulingBean bean = null;
         IViewState viewState = RenderUtils.getViewState("roomsPunctualSchedulingWithPeriodType");
@@ -142,7 +142,7 @@ public class RoomsPunctualSchedulingDA extends FenixDispatchAction {
     }
 
     public ActionForward prepareFinalizeCreation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         IViewState viewState = RenderUtils.getViewState("roomsPunctualSchedulingWithInfo");
         RoomsPunctualSchedulingBean bean = (RoomsPunctualSchedulingBean) viewState.getMetaObject().getObject();
@@ -207,8 +207,7 @@ public class RoomsPunctualSchedulingDA extends FenixDispatchAction {
         String[] selectedRooms = request.getParameterValues("selectedRoom");
         if (selectedRooms != null && selectedRooms.length > 0) {
             for (String selectedRoom : selectedRooms) {
-                Integer roomExternalId = Integer.valueOf(selectedRoom);
-                AllocatableSpace room = (AllocatableSpace) AbstractDomainObject.fromExternalId(roomExternalId);
+                AllocatableSpace room = (AllocatableSpace) AbstractDomainObject.fromExternalId(selectedRoom);
                 bean.removeRoom(room);
             }
         }
@@ -230,7 +229,7 @@ public class RoomsPunctualSchedulingDA extends FenixDispatchAction {
     }
 
     public ActionForward createRoomsPunctualScheduling(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException,  InvalidArgumentException {
+            HttpServletResponse response) throws FenixServiceException, InvalidArgumentException {
 
         IViewState viewState = RenderUtils.getViewState("roomsPunctualSchedulingWithDescriptions");
         RoomsPunctualSchedulingBean bean = (RoomsPunctualSchedulingBean) viewState.getMetaObject().getObject();
@@ -248,7 +247,7 @@ public class RoomsPunctualSchedulingDA extends FenixDispatchAction {
     }
 
     public ActionForward editRoomsPunctualScheduling(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException,  InvalidArgumentException {
+            HttpServletResponse response) throws FenixServiceException, InvalidArgumentException {
 
         IViewState viewState = RenderUtils.getViewState("roomsPunctualSchedulingWithDescriptions");
         RoomsPunctualSchedulingBean bean = (RoomsPunctualSchedulingBean) viewState.getMetaObject().getObject();
@@ -266,7 +265,7 @@ public class RoomsPunctualSchedulingDA extends FenixDispatchAction {
     }
 
     public ActionForward seeRoomsPunctualSchedulingHistory(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException,  InvalidArgumentException {
+            HttpServletResponse response) throws FenixServiceException, InvalidArgumentException {
 
         RoomsPunctualSchedulingHistoryBean bean = null;
         IViewState viewState = RenderUtils.getViewState("roomsPunctualSchedulingHistoryWithYearAndMonth");
@@ -329,7 +328,6 @@ public class RoomsPunctualSchedulingDA extends FenixDispatchAction {
 
     protected GenericEvent getGenericEventFromParameter(final HttpServletRequest request) {
         final String genericEventIDString = request.getParameter("genericEventID");
-        final Integer genericEventID = Integer.valueOf(genericEventIDString);
-        return AbstractDomainObject.fromExternalId(genericEventID);
+        return AbstractDomainObject.fromExternalId(genericEventIDString);
     }
 }

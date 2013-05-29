@@ -132,8 +132,7 @@ public class NextPossibleSummaryLessonsAndDatesBean implements Serializable, Com
         }
 
         YearMonthDay date = new YearMonthDay(year, month, day);
-        Integer lessonExternalId = Integer.parseInt(value.substring(8));
-        Lesson lesson = AbstractDomainObject.fromExternalId(lessonExternalId);
+        Lesson lesson = AbstractDomainObject.fromExternalId(value.substring(8));
         NextPossibleSummaryLessonsAndDatesBean bean = new NextPossibleSummaryLessonsAndDatesBean(lesson, date);
 
         return bean;

@@ -77,8 +77,8 @@ public class InsertCurricularCourseDispatchAction extends FenixDispatchAction {
 
         IUserView userView = UserView.getUser();
 
-        Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
-        final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanId);
+        final DegreeCurricularPlan degreeCurricularPlan =
+                AbstractDomainObject.fromExternalId(request.getParameter("degreeCurricularPlanId"));
 
         DynaActionForm dynaForm = (DynaValidatorForm) form;
         String type = (String) dynaForm.get("type");

@@ -159,14 +159,12 @@ public class ListTeachersPersonalExpectationsDA extends FenixDispatchAction {
 
     protected TeacherPersonalExpectation getTeacherPersonalExpectationFromParameter(final HttpServletRequest request) {
         final String teacherPersonalExpectationIDString = request.getParameter("teacherPersonalExpectationID");
-        final Integer teacherPersonalExpectationID = Integer.valueOf(teacherPersonalExpectationIDString);
-        return AbstractDomainObject.fromExternalId(teacherPersonalExpectationID);
+        return AbstractDomainObject.fromExternalId(teacherPersonalExpectationIDString);
     }
 
     protected ExecutionYear getExecutionYearFromParameter(final HttpServletRequest request) {
         final String executionYearIDString = request.getParameter("executionYearId");
-        final Integer executionYearID = Integer.valueOf(executionYearIDString);
-        return AbstractDomainObject.fromExternalId(executionYearID);
+        return AbstractDomainObject.fromExternalId(executionYearIDString);
     }
 
     private Department getDepartment(HttpServletRequest request) {

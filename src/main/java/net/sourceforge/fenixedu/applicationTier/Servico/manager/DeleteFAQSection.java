@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.support.FAQSection;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
@@ -11,7 +10,7 @@ public class DeleteFAQSection {
 
     @Checked("RolePredicates.MANAGER_PREDICATE")
     @Service
-    public static void run(Integer faqSectionId) throws FenixServiceException {
+    public static void run(String faqSectionId) throws FenixServiceException {
         FAQSection faqSection = AbstractDomainObject.fromExternalId(faqSectionId);
         if (faqSection != null) {
             faqSection.delete();

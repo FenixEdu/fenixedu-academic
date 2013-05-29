@@ -77,11 +77,10 @@ public class CreateGuide {
         infoGuideSituation.setSituation(situationOfGuide);
 
         Person person = (Person) AbstractDomainObject.fromExternalId(infoGuide.getInfoPerson().getExternalId());
-        ExecutionDegree executionDegree =
-                AbstractDomainObject.fromExternalId(infoGuide.getInfoExecutionDegree().getExternalId());
+        ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(infoGuide.getInfoExecutionDegree().getExternalId());
         final Party contributor =
-                infoGuide.getInfoContributor() != null ? AbstractDomainObject.fromExternalId(infoGuide.getInfoContributor()
-                        .getExternalId()) : person;
+                infoGuide.getInfoContributor() != null ? AbstractDomainObject.<Party> fromExternalId(infoGuide
+                        .getInfoContributor().getExternalId()) : person;
 
         Guide guide = new Guide();
         guide.setExecutionDegree(executionDegree);

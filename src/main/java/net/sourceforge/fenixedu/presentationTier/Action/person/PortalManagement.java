@@ -93,8 +93,7 @@ public class PortalManagement extends FenixDispatchAction {
             HttpServletResponse response) {
 
         String elementId = request.getParameter("elementId");
-        Element element =
-                elementId != null ? (Element) AbstractDomainObject.fromExternalId(Integer.valueOf(elementId)) : null;
+        Element element = elementId != null ? (Element) AbstractDomainObject.fromExternalId(elementId) : null;
         Portal portal = getPortal(request);
 
         try {
@@ -121,8 +120,7 @@ public class PortalManagement extends FenixDispatchAction {
 
         Portal portal = getPortal(request);
         String elementId = request.getParameter("elementId");
-        Element element =
-                (elementId != null) ? (Element) AbstractDomainObject.fromExternalId(Integer.valueOf(elementId)) : null;
+        Element element = (elementId != null) ? (Element) AbstractDomainObject.fromExternalId(elementId) : null;
         try {
             AddContentToPool.run((MetaDomainObjectPortal) portal, element);
         } catch (Exception e) {
@@ -134,11 +132,11 @@ public class PortalManagement extends FenixDispatchAction {
 
     private Portal getPortal(HttpServletRequest request) {
         String portalID = request.getParameter("pid");
-        return (Portal) AbstractDomainObject.fromExternalId(Integer.valueOf(portalID));
+        return (Portal) AbstractDomainObject.fromExternalId(portalID);
     }
 
     private MetaDomainObject getMetaDomainObject(HttpServletRequest request) {
         String metaObjectID = request.getParameter("oid");
-        return AbstractDomainObject.fromExternalId(Integer.valueOf(metaObjectID));
+        return AbstractDomainObject.fromExternalId(metaObjectID);
     }
 }

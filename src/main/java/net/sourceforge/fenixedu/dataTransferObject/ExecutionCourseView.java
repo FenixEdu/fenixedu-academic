@@ -70,7 +70,7 @@ public class ExecutionCourseView {
         return getExecutionCourse().getNome();
     }
 
-    public Integer getExecutionCourseOID() {
+    public String getExecutionCourseOID() {
         return getExecutionCourse().getExternalId();
     }
 
@@ -78,7 +78,7 @@ public class ExecutionCourseView {
         return getExecutionCourse().getExecutionPeriod().getSemester();
     }
 
-    public Integer getExecutionPeriodOID() {
+    public String getExecutionPeriodOID() {
         return getExecutionCourse().getExecutionPeriod().getExternalId();
     }
 

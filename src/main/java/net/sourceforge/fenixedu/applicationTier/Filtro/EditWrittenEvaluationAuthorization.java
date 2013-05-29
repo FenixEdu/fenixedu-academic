@@ -11,7 +11,7 @@ public class EditWrittenEvaluationAuthorization extends Filtro {
 
     public static final EditWrittenEvaluationAuthorization instance = new EditWrittenEvaluationAuthorization();
 
-    public void execute(Integer writtenEvaluationId) throws NotAuthorizedException {
+    public void execute(String writtenEvaluationId) throws NotAuthorizedException {
         final IUserView userView = AccessControl.getUserView();
 
         if (!userView.hasRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER)) {
@@ -24,7 +24,7 @@ public class EditWrittenEvaluationAuthorization extends Filtro {
         }
     }
 
-    private WrittenEvaluation readWrittenEvaluation(Integer writtenEvaluationId) {
+    private WrittenEvaluation readWrittenEvaluation(String writtenEvaluationId) {
         return (WrittenEvaluation) AbstractDomainObject.fromExternalId(writtenEvaluationId);
     }
 

@@ -35,13 +35,13 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction {
     public ActionForward showCurricularPlan(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        Integer degreeId = getFromRequest("degreeID", request);
+        String degreeId = getFromRequest("degreeID", request);
         request.setAttribute("degreeID", degreeId);
 
-        Integer executionDegreeId = getFromRequest("executionDegreeID", request);
+        String executionDegreeId = getFromRequest("executionDegreeID", request);
         request.setAttribute("executionDegreeID", executionDegreeId);
 
-        Integer degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
+        String degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
 
         DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanId);
@@ -49,7 +49,7 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction {
     }
 
     private ActionForward showOldDegreeCurricularPlan(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            Integer degreeCurricularPlanId) throws  FenixActionException {
+            String degreeCurricularPlanId) throws FenixActionException {
         final ActionErrors errors = new ActionErrors();
 
         InfoExecutionDegree infoExecutionDegreeForPeriod = null;

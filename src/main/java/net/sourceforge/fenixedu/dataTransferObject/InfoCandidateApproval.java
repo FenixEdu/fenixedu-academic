@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
  */
 public class InfoCandidateApproval extends InfoObject {
 
-    protected Integer externalId;
+    protected String externalId;
 
     protected Integer orderPosition;
 
@@ -30,7 +30,7 @@ public class InfoCandidateApproval extends InfoObject {
      * @return
      */
     @Override
-    public Integer getExternalId() {
+    public String getExternalId() {
         return externalId;
     }
 
@@ -66,7 +66,7 @@ public class InfoCandidateApproval extends InfoObject {
      * @param integer
      */
     @Override
-    public void setExternalId(Integer integer) {
+    public void setExternalId(String integer) {
         externalId = integer;
     }
 

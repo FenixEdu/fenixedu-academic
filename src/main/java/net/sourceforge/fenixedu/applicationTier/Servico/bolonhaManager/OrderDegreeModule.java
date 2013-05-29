@@ -8,7 +8,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class OrderDegreeModule {
 
     @Service
-    public static void run(final Integer contextID, final Integer position) throws FenixServiceException {
+    public static void run(final String contextID, final Integer position) throws FenixServiceException {
         if (contextID == null) {
             throw new FenixServiceException();
         }

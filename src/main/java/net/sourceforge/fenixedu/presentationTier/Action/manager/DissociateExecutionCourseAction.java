@@ -43,8 +43,8 @@ public class DissociateExecutionCourseAction extends FenixAction {
             throws FenixActionException {
 
         IUserView userView = UserView.getUser();
-        Integer executionCourseId = new Integer(request.getParameter("executionCourseId"));
-        Integer curricularCourseId = new Integer(request.getParameter("curricularCourseId"));
+        String executionCourseId = request.getParameter("executionCourseId");
+        String curricularCourseId = request.getParameter("curricularCourseId");
 
         try {
             DissociateExecutionCourse.run(executionCourseId, curricularCourseId);

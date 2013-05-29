@@ -11,7 +11,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class DeleteMarkSheet {
 
     @Service
-    public static void run(Integer markSheetID) {
+    public static void run(String markSheetID) {
         MarkSheet markSheet = AbstractDomainObject.fromExternalId(markSheetID);
         if (markSheet == null) {
             throw new DomainException("error.noMarkSheet");

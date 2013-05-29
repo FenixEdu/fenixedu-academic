@@ -21,7 +21,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class ReadDetailedTeacherProfessorshipsByExecutionPeriod extends ReadDetailedTeacherProfessorshipsAbstractService {
 
-    protected List run(Integer teacherOID, Integer executionPeriodOID) throws FenixServiceException {
+    protected List run(String teacherOID, String executionPeriodOID) throws FenixServiceException {
 
         final ExecutionSemester executionSemester;
         if (executionPeriodOID == null) {
@@ -46,7 +46,7 @@ public class ReadDetailedTeacherProfessorshipsByExecutionPeriod extends ReadDeta
             new ReadDetailedTeacherProfessorshipsByExecutionPeriod();
 
     @Service
-    public static List runReadDetailedTeacherProfessorshipsByExecutionPeriod(Integer teacherOID, Integer executionPeriodOID)
+    public static List runReadDetailedTeacherProfessorshipsByExecutionPeriod(String teacherOID, String executionPeriodOID)
             throws FenixServiceException, NotAuthorizedException {
         CreditsServiceWithTeacherIdArgumentAuthorization.instance.execute(teacherOID);
         return serviceInstance.run(teacherOID, executionPeriodOID);

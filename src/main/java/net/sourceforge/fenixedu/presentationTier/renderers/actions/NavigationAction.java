@@ -19,16 +19,6 @@ public abstract class NavigationAction extends Action {
 
     }
 
-    protected Class getGivenType(HttpServletRequest request) throws ClassNotFoundException {
-        String name = getCompleteTypeName(request.getParameter("type"));
-
-        return Class.forName(name);
-    }
-
-    protected int getGivenOid(HttpServletRequest request) {
-        return new Integer(request.getParameter("oid"));
-    }
-
     protected String getGivenSchema(HttpServletRequest request) {
         return request.getParameter("schema");
     }
@@ -37,11 +27,8 @@ public abstract class NavigationAction extends Action {
         return request.getParameter("layout");
     }
 
-    protected DomainObject getTargetObject(HttpServletRequest request) throws  FenixServiceException,
-            ClassNotFoundException {
-        Integer oid = getGivenOid(request);
-        Class type = getGivenType(request);
-        return AbstractDomainObject.fromExternalId(type, oid);
+    protected DomainObject getTargetObject(HttpServletRequest request) throws FenixServiceException, ClassNotFoundException {
+        return AbstractDomainObject.fromExternalId(request.getParameter("oid"));
     }
 
     protected String getCompleteTypeName(String typeName) {

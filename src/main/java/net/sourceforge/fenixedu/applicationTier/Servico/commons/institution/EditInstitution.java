@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.commons.institution;
 
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
@@ -12,7 +11,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class EditInstitution {
 
     @Service
-    public static void run(Integer oldInstitutionOID, String newInstitutionName) throws FenixServiceException {
+    public static void run(String oldInstitutionOID, String newInstitutionName) throws FenixServiceException {
 
         Unit storedInstitution = UnitUtils.readExternalInstitutionUnitByName(newInstitutionName);
 

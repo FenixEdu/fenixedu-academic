@@ -20,7 +20,7 @@ public class ReadCompetenceCoursesByDepartment {
 
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
-    public static List<InfoCompetenceCourse> run(Integer departmentID) throws NotExistingServiceException {
+    public static List<InfoCompetenceCourse> run(String departmentID) throws NotExistingServiceException {
 
         final List<InfoCompetenceCourse> result = new ArrayList<InfoCompetenceCourse>();
         if (departmentID != null) {

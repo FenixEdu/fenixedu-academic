@@ -25,7 +25,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.DomainObject;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 @Mapping(path = "/editCandidacyInformation", module = "academicAdministration")
@@ -60,10 +59,6 @@ public class EditCandidacyInformationDA extends FenixDispatchAction {
             return chooseRegistrationOrPhd.getPhdRegistrationWrapper().getPhdIndividualProgramProcess()
                     .getPersonalInformationBean(currentExecutionYear);
         }
-    }
-
-    private Registration getRegistration(final HttpServletRequest request) {
-        return AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "registrationId"));
     }
 
     public ActionForward prepareEditInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,

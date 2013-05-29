@@ -41,7 +41,7 @@ public class DepartmentMemberManageCreditsNotes extends ManageCreditsNotes {
             return mapping.findForward("teacher-not-found");
         }
 
-        ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(Integer.valueOf(executionPeriodId));
+        ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodId);
         getNote(actionForm, teacher, executionSemester, noteType);
 
         return mapping.findForward("show-note");

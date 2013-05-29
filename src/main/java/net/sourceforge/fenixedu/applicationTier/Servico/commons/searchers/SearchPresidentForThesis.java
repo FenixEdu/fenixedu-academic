@@ -25,8 +25,7 @@ public class SearchPresidentForThesis implements AutoCompleteProvider<PersonName
             return null;
         }
 
-        final Integer thesisId = new Integer(thesisIdString);
-        final Thesis thesis = AbstractDomainObject.fromExternalId(thesisId);
+        final Thesis thesis = AbstractDomainObject.fromExternalId(thesisIdString);
         if (thesis == null) {
             return null;
         }

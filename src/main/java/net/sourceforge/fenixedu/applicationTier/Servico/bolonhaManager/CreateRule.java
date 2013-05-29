@@ -15,12 +15,11 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class CreateRule {
 
     @Service
-    public static void run(Integer degreeModuleToApplyRuleID, CurricularRuleType selectedCurricularRuleType,
-            CurricularRuleParametersDTO parametersDTO, Integer beginExecutionPeriodID, Integer endExecutionPeriodID)
+    public static void run(String degreeModuleToApplyRuleID, CurricularRuleType selectedCurricularRuleType,
+            CurricularRuleParametersDTO parametersDTO, String beginExecutionPeriodID, String endExecutionPeriodID)
             throws FenixServiceException {
 
-        final DegreeModule degreeModuleToApplyRule =
-                AbstractDomainObject.fromExternalId(degreeModuleToApplyRuleID);
+        final DegreeModule degreeModuleToApplyRule = AbstractDomainObject.fromExternalId(degreeModuleToApplyRuleID);
         if (degreeModuleToApplyRule == null) {
             throw new FenixServiceException("error.noDegreeModule");
         }
@@ -33,8 +32,8 @@ public class CreateRule {
         }
 
         final ExecutionSemester endExecutionPeriod =
-                (endExecutionPeriodID == null) ? null : AbstractDomainObject.fromExternalId(
-                        endExecutionPeriodID);
+                (endExecutionPeriodID == null) ? null : AbstractDomainObject
+                        .<ExecutionSemester> fromExternalId(endExecutionPeriodID);
 
         CurricularRulesManager.createCurricularRule(degreeModuleToApplyRule, beginExecutionPeriod, endExecutionPeriod,
                 selectedCurricularRuleType, parametersDTO);

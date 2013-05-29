@@ -87,7 +87,7 @@ public class SendEmailReminderAction extends FenixDispatchAction {
 
         DynaActionForm form = (DynaActionForm) actionForm;
 
-        Integer[] degreeCurricularPlanIds = (Integer[]) form.get("degreeCurricularPlanIds");
+        String[] degreeCurricularPlanIds = (Integer[]) form.get("degreeCurricularPlanIds");
 
         InquiryResponsePeriod openPeriod = InquiryResponsePeriod.readOpenPeriod(InquiryResponsePeriodType.STUDENT);
         if (openPeriod == null) {
@@ -98,10 +98,9 @@ public class SendEmailReminderAction extends FenixDispatchAction {
         List<InfoInquiriesEmailReminderReport> reportList =
                 new ArrayList<InfoInquiriesEmailReminderReport>(degreeCurricularPlanIds.length);
 
-        for (Integer degreeCurricularPlanId : degreeCurricularPlanIds) {
+        for (String degreeCurricularPlanId : degreeCurricularPlanIds) {
 
-            final DegreeCurricularPlan degreeCurricularPlan =
-                    AbstractDomainObject.fromExternalId(degreeCurricularPlanId);
+            final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanId);
 
             Set<Student> studentsList =
                     ReadStudentsWithAttendsByDegreeCurricularPlanAndExecutionPeriod
@@ -128,7 +127,7 @@ public class SendEmailReminderAction extends FenixDispatchAction {
     }
 
     private boolean sendEmailReminder(HttpServletRequest request, Student student, ExecutionSemester executionSemester,
-            InfoInquiriesEmailReminderReport report, DynaActionForm form) throws  FenixServiceException {
+            InfoInquiriesEmailReminderReport report, DynaActionForm form) throws FenixServiceException {
 
         if (student == null || student.getPerson() == null || student.getPerson().getDefaultEmailAddress() == null) {
             return false;

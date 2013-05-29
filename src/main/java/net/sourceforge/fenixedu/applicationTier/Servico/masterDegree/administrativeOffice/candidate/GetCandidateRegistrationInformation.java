@@ -19,7 +19,7 @@ public class GetCandidateRegistrationInformation {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
-    public static InfoCandidateRegistration run(Integer candidateID) {
+    public static InfoCandidateRegistration run(String candidateID) {
 
         MasterDegreeCandidate masterDegreeCandidate = AbstractDomainObject.fromExternalId(candidateID);
 

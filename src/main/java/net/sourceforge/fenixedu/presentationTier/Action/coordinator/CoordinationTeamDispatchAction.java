@@ -51,9 +51,9 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
 
         IUserView userView = UserView.getUser();
 
-        Integer degreeCurricularPlanID = null;
+        String degreeCurricularPlanID = null;
         if (request.getParameter("degreeCurricularPlanID") != null) {
-            degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+            degreeCurricularPlanID = request.getParameter("degreeCurricularPlanID");
             request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
         }
 
@@ -71,13 +71,13 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
 
         IUserView userView = getUserView(request);
 
-        Integer degreeCurricularPlanID = null;
+        String degreeCurricularPlanID = null;
         if (request.getParameter("degreeCurricularPlanID") != null) {
-            degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+            degreeCurricularPlanID = request.getParameter("degreeCurricularPlanID");
             request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
         }
 
-        Integer executionDegreeID = new Integer(request.getParameter("infoExecutionDegreeId"));
+        String executionDegreeID = request.getParameter("infoExecutionDegreeId");
         request.setAttribute("infoExecutionDegreeId", executionDegreeID);
 
         ActionErrors actionErrors = new ActionErrors();
@@ -112,15 +112,14 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) throws FenixActionException {
         IUserView userView = getUserView(request);
 
-        Integer degreeCurricularPlanID = new Integer(Integer.parseInt(request.getParameter("degreeCurricularPlanID")));
+        String degreeCurricularPlanID = request.getParameter("degreeCurricularPlanID");
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
 
         String infoExecutionDegreeIdString = request.getParameter("infoExecutionDegreeId");
-        Integer infoExecutionDegreeId = new Integer(infoExecutionDegreeIdString);
-        request.setAttribute("infoExecutionDegreeId", infoExecutionDegreeId);
+        request.setAttribute("infoExecutionDegreeId", infoExecutionDegreeIdString);
         Boolean result = new Boolean(false);
         try {
-            result = ReadCoordinationResponsibility.runReadCoordinationResponsibility(infoExecutionDegreeId, userView);
+            result = ReadCoordinationResponsibility.runReadCoordinationResponsibility(infoExecutionDegreeIdString, userView);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
@@ -137,10 +136,9 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
         DynaActionForm teacherForm = (DynaActionForm) form;
         String istUsername = new String((String) teacherForm.get("newCoordinatorIstUsername"));
         String infoExecutionDegreeIdString = request.getParameter("infoExecutionDegreeId");
-        Integer infoExecutionDegreeId = new Integer(infoExecutionDegreeIdString);
-        request.setAttribute("infoExecutionDegreeId", infoExecutionDegreeId);
+        request.setAttribute("infoExecutionDegreeId", infoExecutionDegreeIdString);
         try {
-            AddCoordinator.runAddCoordinator(infoExecutionDegreeId, istUsername);
+            AddCoordinator.runAddCoordinator(infoExecutionDegreeIdString, istUsername);
         } catch (NonExistingServiceException e) {
             ActionErrors actionErrors = new ActionErrors();
             actionErrors.add("unknownTeacher", new ActionError("error.nonExistingTeacher"));
@@ -175,10 +173,9 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
         List<Integer> coordinators = Arrays.asList(coordinatorsIds);
 
         String infoExecutionDegreeIdString = request.getParameter("infoExecutionDegreeId");
-        Integer infoExecutionDegreeId = new Integer(infoExecutionDegreeIdString);
-        request.setAttribute("infoExecutionDegreeId", infoExecutionDegreeId);
+        request.setAttribute("infoExecutionDegreeId", infoExecutionDegreeIdString);
         try {
-            RemoveCoordinators.runRemoveCoordinators(infoExecutionDegreeId, coordinators);
+            RemoveCoordinators.runRemoveCoordinators(infoExecutionDegreeIdString, coordinators);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }

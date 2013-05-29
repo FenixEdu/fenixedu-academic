@@ -205,7 +205,7 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
         }
 
         @Override
-        public Integer getExternalId() {
+        public String getExternalId() {
             return curricularCourseScope.getExternalId();
         }
 

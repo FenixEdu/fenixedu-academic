@@ -20,7 +20,7 @@ public class GetCandidatesByPerson {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
-    public static List<InfoMasterDegreeCandidate> run(Integer personID) throws FenixServiceException {
+    public static List<InfoMasterDegreeCandidate> run(String personID) throws FenixServiceException {
 
         final Person person = (Person) AbstractDomainObject.fromExternalId(personID);
         final State activeCandidateSituationState = new State(State.ACTIVE);

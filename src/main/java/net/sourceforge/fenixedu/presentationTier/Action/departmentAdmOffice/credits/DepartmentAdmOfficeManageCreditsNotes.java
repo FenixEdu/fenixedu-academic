@@ -36,7 +36,7 @@ public class DepartmentAdmOfficeManageCreditsNotes extends ManageCreditsNotes {
         Teacher teacher = AbstractDomainObject.fromExternalId(request.getParameter("teacherId"));
         String executionPeriodId = request.getParameter("executionPeriodId");
         String noteType = request.getParameter("noteType");
-        ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(Integer.valueOf(executionPeriodId));
+        ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodId);
 
         if (getTeacherOfManageableDepartments(teacher, executionSemester, request) == null) {
             request.setAttribute("teacherNotFound", "teacherNotFound");

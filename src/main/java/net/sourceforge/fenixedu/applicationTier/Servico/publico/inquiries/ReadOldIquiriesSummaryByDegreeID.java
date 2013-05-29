@@ -24,7 +24,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ReadOldIquiriesSummaryByDegreeID {
 
     @Service
-    public static List run(Integer degreeID) throws FenixServiceException {
+    public static List run(String degreeID) throws FenixServiceException {
         Degree degree = AbstractDomainObject.fromExternalId(degreeID);
 
         if (degree == null) {

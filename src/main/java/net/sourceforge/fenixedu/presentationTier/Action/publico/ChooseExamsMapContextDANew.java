@@ -45,14 +45,14 @@ public class ChooseExamsMapContextDANew extends FenixContextDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
-        Integer degreeId = getFromRequest("degreeID", request);
+        String degreeId = getFromRequest("degreeID", request);
         request.setAttribute("degreeID", degreeId);
         request.setAttribute("degree", AbstractDomainObject.fromExternalId(degreeId));
 
-        Integer executionDegreeId = getFromRequest("executionDegreeID", request);
+        String executionDegreeId = getFromRequest("executionDegreeID", request);
         request.setAttribute("executionDegreeID", executionDegreeId);
 
-        Integer degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
+        String degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
 
         List<LabelValueBean> executionPeriodsLabelValueList = buildExecutionPeriodsLabelValueList(degreeCurricularPlanId);
@@ -85,7 +85,7 @@ public class ChooseExamsMapContextDANew extends FenixContextDispatchAction {
         request.setAttribute("inEnglish", inEnglish);
 
         // index
-        Integer indexValue = getFromRequest("index", request);
+        String indexValue = getFromRequest("index", request);
         request.setAttribute("index", indexValue);
 
         // degreeID
@@ -100,7 +100,7 @@ public class ChooseExamsMapContextDANew extends FenixContextDispatchAction {
         request.setAttribute("curricularYearList", curricularYears);
 
         // degreeCurricularPlanID
-        Integer degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
+        String degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
         final DegreeCurricularPlan degreeCurricularPlan;
         if (degreeCurricularPlanId == null) {
             degreeCurricularPlan = degree.getMostRecentDegreeCurricularPlan();
@@ -141,8 +141,7 @@ public class ChooseExamsMapContextDANew extends FenixContextDispatchAction {
         request.setAttribute(PresentationConstants.EXECUTION_PERIOD, infoExecutionPeriod);
         request.setAttribute(PresentationConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getExternalId().toString());
 
-        final ExecutionSemester executionSemester =
-                AbstractDomainObject.fromExternalId(infoExecutionPeriod.getExternalId());
+        final ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(infoExecutionPeriod.getExternalId());
         ExecutionDegree executionDegree = null;
 
         if (degreeCurricularPlan != null) {

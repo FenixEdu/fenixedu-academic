@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import net.sourceforge.fenixedu.applicationTier.Servico.CreateSupportRequest;
 import net.sourceforge.fenixedu.dataTransferObject.support.SupportRequestBean;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -118,7 +119,7 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
         requestBean.setResponseEmail(getLoggedPerson(request).getInstitutionalOrDefaultEmailAddressValue());
         final String parameter = request.getParameter("contextId");
         if (parameter != null && !parameter.isEmpty()) {
-            requestBean.setRequestContext(AbstractDomainObject.fromExternalId(Integer.valueOf(parameter)));
+            requestBean.setRequestContext(AbstractDomainObject.<Content> fromExternalId(parameter));
         }
 
         request.setAttribute("requestBean", requestBean);

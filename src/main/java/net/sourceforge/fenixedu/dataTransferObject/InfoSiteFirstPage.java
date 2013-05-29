@@ -26,7 +26,7 @@ public class InfoSiteFirstPage extends DataTranferObject implements ISiteCompone
 
     private List lecturingTeachers;
 
-    private Integer siteExternalId;
+    private String siteExternalId;
 
     /**
      * @return
@@ -101,14 +101,14 @@ public class InfoSiteFirstPage extends DataTranferObject implements ISiteCompone
     /**
      * @return
      */
-    public Integer getSiteExternalId() {
+    public String getSiteExternalId() {
         return siteExternalId;
     }
 
     /**
      * @param integer
      */
-    public void setSiteExternalId(Integer integer) {
+    public void setSiteExternalId(String integer) {
         siteExternalId = integer;
     }
 

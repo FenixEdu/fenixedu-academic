@@ -48,7 +48,6 @@ import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 @Mapping(path = "/academicServiceRequestsManagement", module = "academicAdministration",
@@ -136,19 +135,13 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
     }
 
     private RegistrationAcademicServiceRequest getAndSetAcademicServiceRequest(final HttpServletRequest request) {
-        Integer academicServiceRequestId = getRequestParameterAsInteger(request, "academicServiceRequestId");
-        if (academicServiceRequestId == null) {
-            academicServiceRequestId = (Integer) request.getAttribute("academicServiceRequestId");
-        }
-        final AcademicServiceRequest academicServiceRequest =
-                AbstractDomainObject.fromExternalId(academicServiceRequestId);
+        final AcademicServiceRequest academicServiceRequest = getDomainObject(request, "academicServiceRequestId");
         request.setAttribute("academicServiceRequest", academicServiceRequest);
         return (RegistrationAcademicServiceRequest) academicServiceRequest;
     }
 
     private Registration getAndSetRegistration(final HttpServletRequest request) {
-        final Registration registration =
-                AbstractDomainObject.fromExternalId(getRequestParameterAsInteger(request, "registrationID"));
+        final Registration registration = getDomainObject(request, "registrationID");
         request.setAttribute("registration", registration);
         return registration;
     }
@@ -216,7 +209,7 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
     }
 
     public ActionForward processNewAcademicServiceRequest(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException {
 
         final RegistrationAcademicServiceRequest academicServiceRequest = getAndSetAcademicServiceRequest(request);
 
@@ -248,7 +241,7 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
     }
 
     public ActionForward sendAcademicServiceRequest(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         final RegistrationAcademicServiceRequest serviceRequest = getAndSetAcademicServiceRequest(request);
         final AcademicServiceRequestBean requestBean = (AcademicServiceRequestBean) getObjectFromViewState("serviceRequestBean");
@@ -279,7 +272,7 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
     }
 
     public ActionForward receiveAcademicServiceRequest(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         final RegistrationAcademicServiceRequest serviceRequest = getAndSetAcademicServiceRequest(request);
         final AcademicServiceRequestBean requestBean = (AcademicServiceRequestBean) getObjectFromViewState("serviceRequestBean");
@@ -302,14 +295,14 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
     }
 
     public ActionForward prepareRejectAcademicServiceRequest(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException {
 
         getAndSetAcademicServiceRequest(request);
         return mapping.findForward("prepareRejectAcademicServiceRequest");
     }
 
     public ActionForward rejectAcademicServiceRequest(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         final RegistrationAcademicServiceRequest academicServiceRequest = getAndSetAcademicServiceRequest(request);
         final String justification = ((AcademicServiceRequestsManagementForm) actionForm).getJustification();
@@ -329,14 +322,14 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
     }
 
     public ActionForward prepareCancelAcademicServiceRequest(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException {
 
         getAndSetAcademicServiceRequest(request);
         return mapping.findForward("prepareCancelAcademicServiceRequest");
     }
 
     public ActionForward cancelAcademicServiceRequest(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         final RegistrationAcademicServiceRequest academicServiceRequest = getAndSetAcademicServiceRequest(request);
         final String justification = ((AcademicServiceRequestsManagementForm) actionForm).getJustification();
@@ -356,7 +349,7 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
     }
 
     public ActionForward prepareConcludeAcademicServiceRequest(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException {
 
         final RegistrationAcademicServiceRequest academicServiceRequest = getAndSetAcademicServiceRequest(request);
         AcademicServiceRequestsManagementForm form = (AcademicServiceRequestsManagementForm) actionForm;
@@ -372,7 +365,7 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
     }
 
     public ActionForward concludeAcademicServiceRequest(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         Boolean sendEmail = true;
         RegistrationAcademicServiceRequest academicServiceRequest = getAndSetAcademicServiceRequest(request);
 
@@ -425,7 +418,7 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
     }
 
     public ActionForward deliveredAcademicServiceRequest(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException {
 
         final RegistrationAcademicServiceRequest academicServiceRequest = getAndSetAcademicServiceRequest(request);
 
@@ -577,7 +570,7 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
     }
 
     public ActionForward createServiceRequest(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         try {
             executeFactoryMethod();

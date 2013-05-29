@@ -33,8 +33,8 @@ public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean 
     private final ResourceBundle domainExceptionBundle = getResourceBundle("resources/DomainExceptionResources");
     private final String NO_SELECTION = "noSelection";
 
-    private Integer degreeId;
-    private Integer dcpId;
+    private String degreeId;
+    private String dcpId;
     private DegreeCurricularPlan dcp;
     private String name;
     private String gradeScale;
@@ -43,22 +43,22 @@ public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean 
         return getAndHoldStringParameter("action");
     }
 
-    public Integer getDegreeId() {
-        return (degreeId == null) ? (degreeId = getAndHoldIntegerParameter("degreeId")) : degreeId;
+    public String getDegreeId() {
+        return (degreeId == null) ? (degreeId = getAndHoldStringParameter("degreeId")) : degreeId;
     }
 
-    public Integer getDcpId() {
+    public String getDcpId() {
         if (dcp == null) {
-            if (getAndHoldIntegerParameter("dcpId") != null) {
-                dcpId = getAndHoldIntegerParameter("dcpId");
+            if (getAndHoldStringParameter("dcpId") != null) {
+                dcpId = getAndHoldStringParameter("dcpId");
             } else {
-                dcpId = getAndHoldIntegerParameter("degreeCurricularPlanID");
+                dcpId = getAndHoldStringParameter("degreeCurricularPlanID");
             }
         }
         return dcpId;
     }
 
-    public void setDcpId(Integer dcpId) {
+    public void setDcpId(String dcpId) {
         this.dcpId = dcpId;
     }
 
@@ -172,15 +172,15 @@ public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean 
         return result;
     }
 
-    public Integer getExecutionYearID() {
-        return (Integer) getViewState().getAttribute("executionYearID");
+    public String getExecutionYearID() {
+        return (String) getViewState().getAttribute("executionYearID");
     }
 
-    public void setExecutionYearID(Integer executionYearID) {
+    public void setExecutionYearID(String executionYearID) {
         getViewState().setAttribute("executionYearID", executionYearID);
     }
 
-    public List<SelectItem> getExecutionYearItems() throws  FenixServiceException {
+    public List<SelectItem> getExecutionYearItems() throws FenixServiceException {
         final List<SelectItem> result = new ArrayList<SelectItem>();
 
         final InfoExecutionYear currentInfoExecutionYear = ReadCurrentExecutionYear.run();

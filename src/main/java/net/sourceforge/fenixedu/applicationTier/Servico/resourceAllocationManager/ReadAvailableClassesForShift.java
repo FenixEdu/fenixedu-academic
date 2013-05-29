@@ -31,7 +31,7 @@ public class ReadAvailableClassesForShift {
 
     @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
     @Service
-    public static List run(Integer shiftOID) {
+    public static List run(String shiftOID) {
 
         final Shift shift = AbstractDomainObject.fromExternalId(shiftOID);
         final ExecutionCourse executionCourse = shift.getDisciplinaExecucao();

@@ -14,7 +14,7 @@ import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class CreateTeacherServiceDistribution {
-    protected TeacherServiceDistribution run(Integer tsdProcessPhaseId, Integer fatherTeacherServiceDistributionId, String name) {
+    protected TeacherServiceDistribution run(String tsdProcessPhaseId, String fatherTeacherServiceDistributionId, String name) {
         TSDProcessPhase tsdProcessPhase = AbstractDomainObject.fromExternalId(tsdProcessPhaseId);
         TeacherServiceDistribution fatherTeacherServiceDistribution =
                 AbstractDomainObject.fromExternalId(fatherTeacherServiceDistributionId);
@@ -31,8 +31,8 @@ public class CreateTeacherServiceDistribution {
     private static final CreateTeacherServiceDistribution serviceInstance = new CreateTeacherServiceDistribution();
 
     @Service
-    public static TeacherServiceDistribution runCreateTeacherServiceDistribution(Integer tsdProcessPhaseId,
-            Integer fatherTeacherServiceDistributionId, String name) throws NotAuthorizedException {
+    public static TeacherServiceDistribution runCreateTeacherServiceDistribution(String tsdProcessPhaseId,
+            String fatherTeacherServiceDistributionId, String name) throws NotAuthorizedException {
         try {
             DepartmentMemberAuthorizationFilter.instance.execute();
             return serviceInstance.run(tsdProcessPhaseId, fatherTeacherServiceDistributionId, name);

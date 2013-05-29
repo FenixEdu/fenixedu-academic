@@ -20,7 +20,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ReadExternalPersonsByInstitution {
 
     @Service
-    public static List run(Integer institutionID) throws FenixServiceException {
+    public static List run(String institutionID) throws FenixServiceException {
         List infoExternalPersons = new ArrayList();
 
         Unit institution = (Unit) AbstractDomainObject.fromExternalId(institutionID);

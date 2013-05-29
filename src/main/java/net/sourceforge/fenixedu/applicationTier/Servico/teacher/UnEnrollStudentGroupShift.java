@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -24,7 +23,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class UnEnrollStudentGroupShift {
 
-    protected Boolean run(Integer executionCourseCode, Integer studentGroupCode, Integer groupPropertiesCode)
+    protected Boolean run(String executionCourseCode, String studentGroupCode, String groupPropertiesCode)
             throws FenixServiceException {
 
         Grouping groupProperties = AbstractDomainObject.fromExternalId(groupPropertiesCode);
@@ -48,12 +47,14 @@ public class UnEnrollStudentGroupShift {
 
         return new Boolean(true);
     }
+
     // Service Invokers migrated from Berserk
 
     private static final UnEnrollStudentGroupShift serviceInstance = new UnEnrollStudentGroupShift();
 
     @Service
-    public static Boolean runUnEnrollStudentGroupShift(Integer executionCourseCode, Integer studentGroupCode, Integer groupPropertiesCode) throws FenixServiceException  , NotAuthorizedException {
+    public static Boolean runUnEnrollStudentGroupShift(String executionCourseCode, String studentGroupCode,
+            String groupPropertiesCode) throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseCode);
         return serviceInstance.run(executionCourseCode, studentGroupCode, groupPropertiesCode);
     }

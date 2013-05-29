@@ -17,7 +17,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class CreateTSDProcess {
-    protected TSDProcess run(List<Integer> executionPeriodIdList, Integer departmentId, Integer creatorId, String name) {
+    protected TSDProcess run(List<String> executionPeriodIdList, String departmentId, String creatorId, String name) {
         Department department = AbstractDomainObject.fromExternalId(departmentId);
 
         List<ExecutionSemester> executionPeriodList = getExecutionPeriods(executionPeriodIdList);
@@ -33,11 +33,11 @@ public class CreateTSDProcess {
         return tsdProcess;
     }
 
-    private List<ExecutionSemester> getExecutionPeriods(List<Integer> executionPeriodIdList) {
+    private List<ExecutionSemester> getExecutionPeriods(List<String> executionPeriodIdList) {
         List<ExecutionSemester> executionPeriodList = new ArrayList<ExecutionSemester>();
 
-        for (Integer executionPeriodId : executionPeriodIdList) {
-            executionPeriodList.add(AbstractDomainObject.fromExternalId(executionPeriodId));
+        for (String executionPeriodId : executionPeriodIdList) {
+            executionPeriodList.add(AbstractDomainObject.<ExecutionSemester> fromExternalId(executionPeriodId));
         }
         return executionPeriodList;
     }
@@ -47,7 +47,7 @@ public class CreateTSDProcess {
     private static final CreateTSDProcess serviceInstance = new CreateTSDProcess();
 
     @Service
-    public static TSDProcess runCreateTSDProcess(List<Integer> executionPeriodIdList, Integer departmentId, Integer creatorId,
+    public static TSDProcess runCreateTSDProcess(List<String> executionPeriodIdList, String departmentId, String creatorId,
             String name) throws NotAuthorizedException {
         try {
             DepartmentMemberAuthorizationFilter.instance.execute();

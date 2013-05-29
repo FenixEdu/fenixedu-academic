@@ -127,7 +127,7 @@ public class TeachingReportAction extends FenixDispatchAction {
         IUserView userView = UserView.getUser();
         String executionCourseId = request.getParameter("executionCourseId");
 
-        return ReadCourseHistoric.runReadCourseHistoric(new Integer(executionCourseId));
+        return ReadCourseHistoric.runReadCourseHistoric(executionCourseId);
     }
 
     private SiteView readSiteView(ActionMapping mapping, ActionForm form, HttpServletRequest request)
@@ -135,7 +135,7 @@ public class TeachingReportAction extends FenixDispatchAction {
         IUserView userView = UserView.getUser();
         String executionCourseId = request.getParameter("executionCourseId");
 
-        return ReadCourseInformation.runReadCourseInformation(new Integer(executionCourseId));
+        return ReadCourseInformation.runReadCourseInformation(executionCourseId);
     }
 
     private void setSiteViewToRequest(HttpServletRequest request, SiteView siteView, ActionMapping mapping) {

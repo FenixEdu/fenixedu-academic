@@ -28,7 +28,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ReadExecutionYearsByDegreeCurricularPlanID {
 
     @Service
-    public static List run(Integer degreeCurricularPlanID) {
+    public static List run(String degreeCurricularPlanID) {
         DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
 
         List<ExecutionYear> executionYears =

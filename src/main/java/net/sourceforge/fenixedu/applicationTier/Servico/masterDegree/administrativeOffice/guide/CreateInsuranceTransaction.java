@@ -30,7 +30,7 @@ public class CreateInsuranceTransaction {
 
     @Checked("RolePredicates.MANAGER_PREDICATE")
     @Service
-    public static void run(Integer guideEntryID, IUserView userView) throws ExistingServiceException {
+    public static void run(String guideEntryID, IUserView userView) throws ExistingServiceException {
 
         GuideEntry guideEntry = AbstractDomainObject.fromExternalId(guideEntryID);
         Guide guide = guideEntry.getGuide();

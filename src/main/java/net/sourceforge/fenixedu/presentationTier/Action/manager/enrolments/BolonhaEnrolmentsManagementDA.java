@@ -35,7 +35,6 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 @Mapping(path = "/bolonhaStudentEnrolment", module = "manager", formBean = "bolonhaStudentEnrolmentForm")
@@ -86,7 +85,7 @@ public class BolonhaEnrolmentsManagementDA extends AbstractBolonhaStudentEnrollm
     }
 
     private Student getStudent(final HttpServletRequest request) {
-        return AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "studentId"));
+        return getDomainObject(request, "studentId");
     }
 
     private List<Registration> getAllRegistrations(final Student student) {
@@ -102,7 +101,7 @@ public class BolonhaEnrolmentsManagementDA extends AbstractBolonhaStudentEnrollm
     }
 
     private StudentCurricularPlan getStudentCurricularPlan(final HttpServletRequest request) {
-        return AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "scpId"));
+        return getDomainObject(request, "scpId");
     }
 
     public ActionForward prepareChooseExecutionPeriod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -180,7 +179,7 @@ public class BolonhaEnrolmentsManagementDA extends AbstractBolonhaStudentEnrollm
     }
 
     public ActionForward transitToBolonha(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         final DynaActionForm form = (DynaActionForm) actionForm;
         final DateTime date;

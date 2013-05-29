@@ -58,8 +58,7 @@ public class StudentReportsDA extends FenixDispatchAction {
 
     public StudentReportPredicate setBean(HttpServletRequest request) {
         final String executionYearIDString = request.getParameter("executionYearID");
-        final Integer executionYearID = Integer.valueOf(executionYearIDString);
-        final ExecutionYear executionYear = AbstractDomainObject.fromExternalId(executionYearID);
+        final ExecutionYear executionYear = AbstractDomainObject.fromExternalId(executionYearIDString);
 
         final String degreeTypeString = request.getParameter("degreeType");
         final DegreeType degreeType = degreeTypeString == null ? null : DegreeType.valueOf(degreeTypeString);

@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
  */
 public class InfoGroupProposal extends InfoObject {
 
-    private GroupProposal groupProposalDomainReference;
+    private final GroupProposal groupProposalDomainReference;
 
     public InfoGroupProposal(final GroupProposal groupProposal) {
         groupProposalDomainReference = groupProposal;
@@ -28,12 +28,12 @@ public class InfoGroupProposal extends InfoObject {
     }
 
     @Override
-    public Integer getExternalId() {
+    public String getExternalId() {
         return getGroupProposal().getExternalId();
     }
 
     @Override
-    public void setExternalId(Integer integer) {
+    public void setExternalId(String integer) {
         throw new Error("Method should not be called!");
     }
 

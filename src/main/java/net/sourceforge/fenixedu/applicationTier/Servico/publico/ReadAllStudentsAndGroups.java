@@ -32,7 +32,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ReadAllStudentsAndGroups {
 
     @Service
-    public static InfoSiteStudentsAndGroups run(Integer groupingId) throws FenixServiceException {
+    public static InfoSiteStudentsAndGroups run(String groupingId) throws FenixServiceException {
         InfoSiteStudentsAndGroups infoSiteStudentsAndGroups = new InfoSiteStudentsAndGroups();
 
         Grouping grouping = AbstractDomainObject.fromExternalId(groupingId);

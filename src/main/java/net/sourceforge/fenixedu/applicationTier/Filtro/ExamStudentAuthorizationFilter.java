@@ -30,7 +30,7 @@ public class ExamStudentAuthorizationFilter extends AuthorizationByRoleFilter {
         return RoleType.STUDENT;
     }
 
-    public void execute(String username, Integer writtenEvaluationOID) throws NotAuthorizedException {
+    public void execute(String username, String writtenEvaluationOID) throws NotAuthorizedException {
         IUserView id = AccessControl.getUserView();
         try {
             if ((id == null) || (id.getRoleTypes() == null) || !id.hasRoleType(getRoleType())
@@ -42,7 +42,7 @@ public class ExamStudentAuthorizationFilter extends AuthorizationByRoleFilter {
         }
     }
 
-    private boolean attendsEvaluationExecutionCourse(IUserView id, String studentUsername, Integer writtenEvaluationOID) {
+    private boolean attendsEvaluationExecutionCourse(IUserView id, String studentUsername, String writtenEvaluationOID) {
         if (writtenEvaluationOID == null) {
             return false;
         }

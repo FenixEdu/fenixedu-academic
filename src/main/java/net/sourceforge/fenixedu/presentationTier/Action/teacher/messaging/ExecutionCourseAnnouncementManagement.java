@@ -30,8 +30,8 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
         @Forward(name = "editFile", path = "teacher-announcement-editFile") })
 public class ExecutionCourseAnnouncementManagement extends AnnouncementManagement {
 
-    protected Integer getRequestedExecutionCourseId(HttpServletRequest request) {
-        return Integer.valueOf(request.getParameter("objectCode"));
+    protected String getRequestedExecutionCourseId(HttpServletRequest request) {
+        return request.getParameter("objectCode");
     }
 
     protected ExecutionCourse getRequestedExecutionCourse(HttpServletRequest request) {
@@ -50,7 +50,7 @@ public class ExecutionCourseAnnouncementManagement extends AnnouncementManagemen
 
     @Override
     protected AnnouncementBoard getRequestedAnnouncementBoard(HttpServletRequest request) {
-        return AbstractDomainObject.fromExternalId(this.getRequestedExecutionCourseId(request)).getBoard();
+        return AbstractDomainObject.<ExecutionCourse> fromExternalId(this.getRequestedExecutionCourseId(request)).getBoard();
     }
 
     @Override

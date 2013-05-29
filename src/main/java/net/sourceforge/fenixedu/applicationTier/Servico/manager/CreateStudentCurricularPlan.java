@@ -21,8 +21,8 @@ public class CreateStudentCurricularPlan {
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
     public static void run(final Integer studentNumber, final DegreeType degreeType,
-            final StudentCurricularPlanState studentCurricularPlanState, final Integer degreeCurricularPlanId,
-            final Date startDate) throws FenixServiceException {
+            final StudentCurricularPlanState studentCurricularPlanState, final String degreeCurricularPlanId, final Date startDate)
+            throws FenixServiceException {
 
         final Registration registration = Registration.readStudentByNumberAndDegreeType(studentNumber, degreeType);
         if (registration == null) {

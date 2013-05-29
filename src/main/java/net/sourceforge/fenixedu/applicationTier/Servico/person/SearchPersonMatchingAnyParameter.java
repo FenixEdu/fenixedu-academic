@@ -18,7 +18,7 @@ import pt.utl.ist.fenix.tools.util.CollectionPager;
 public class SearchPersonMatchingAnyParameter extends SearchPerson {
 
     public static CollectionPager<Person> run(String name, String email, String username, String documentIdNumber,
-            IDDocumentType idDocumentType, String roleType, String degreeTypeString, Integer degreeId, Integer departmentId,
+            IDDocumentType idDocumentType, String roleType, String degreeTypeString, String degreeId, String departmentId,
             Boolean activePersons, Integer studentNumber, Boolean externalPersons) {
 
         SearchParameters searchParameters =

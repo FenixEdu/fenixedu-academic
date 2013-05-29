@@ -160,8 +160,8 @@ public class ManageNotNeedToEnrollDispathAction extends FenixDispatchAction {
     public ActionForward deleteNotNeedToEnroll(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        DeleteNotNeedToEnrollInCurricularCourse.runDeleteNotNeedToEnrollInCurricularCourse(Integer.valueOf(request
-                .getParameter("notNeedToEnrollID")));
+        DeleteNotNeedToEnrollInCurricularCourse.runDeleteNotNeedToEnrollInCurricularCourse(request
+                .getParameter("notNeedToEnrollID"));
 
         return prepareNotNeedToEnroll(mapping, form, request, response);
     }

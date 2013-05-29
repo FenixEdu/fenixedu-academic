@@ -110,7 +110,7 @@ public class ReadFilteredExamsMap {
         return result;
     }
 
-    private List<InfoExam> obtainInfoExams(ExecutionDegree executionDegree, Integer executionPeriodId,
+    private List<InfoExam> obtainInfoExams(ExecutionDegree executionDegree, String executionPeriodId,
             Integer wantedCurricularYear, ExecutionCourse executionCourse) {
         List<InfoExam> result = new ArrayList<InfoExam>();
         for (Exam exam : executionCourse.getAssociatedExams()) {
@@ -143,12 +143,14 @@ public class ReadFilteredExamsMap {
         }
         return result;
     }
+
     // Service Invokers migrated from Berserk
 
     private static final ReadFilteredExamsMap serviceInstance = new ReadFilteredExamsMap();
 
     @Service
-    public static InfoExamsMap runReadFilteredExamsMap(InfoExecutionDegree infoExecutionDegree, List<Integer> curricularYears, InfoExecutionPeriod infoExecutionPeriod) throws FenixServiceException  {
+    public static InfoExamsMap runReadFilteredExamsMap(InfoExecutionDegree infoExecutionDegree, List<Integer> curricularYears,
+            InfoExecutionPeriod infoExecutionPeriod) throws FenixServiceException {
         return serviceInstance.run(infoExecutionDegree, curricularYears, infoExecutionPeriod);
     }
 

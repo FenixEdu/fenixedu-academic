@@ -71,8 +71,7 @@ public class ShowThesisStatus extends ScientificCouncilManageThesisDA {
 
     public ActionForward viewThesisForSupervisor(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        final Integer thesisId = Integer.valueOf(request.getParameter("thesisID"));
-        final Thesis thesis = AbstractDomainObject.fromExternalId(thesisId);
+        final Thesis thesis = getDomainObject(request, "thesisID");
         final Student student = thesis.getStudent();
 
         request.setAttribute("student", student);

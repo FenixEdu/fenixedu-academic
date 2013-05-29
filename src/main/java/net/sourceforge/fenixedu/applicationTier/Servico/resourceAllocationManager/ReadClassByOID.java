@@ -5,7 +5,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.domain.SchoolClass;
@@ -20,7 +19,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ReadClassByOID {
 
     @Service
-    public static InfoClass run(Integer oid) throws FenixServiceException {
+    public static InfoClass run(String oid) throws FenixServiceException {
         InfoClass result = null;
         SchoolClass turma = AbstractDomainObject.fromExternalId(oid);
         if (turma != null) {

@@ -18,7 +18,7 @@ public class InfoStudentTestQuestionMark extends InfoObject {
 
     private Integer studentNumber;
 
-    private Integer studentExternalId;
+    private String studentExternalId;
 
     private String studentDegree;
 
@@ -40,11 +40,11 @@ public class InfoStudentTestQuestionMark extends InfoObject {
         this.maximumMark = maximumMark;
     }
 
-    public Integer getStudentExternalId() {
+    public String getStudentExternalId() {
         return studentExternalId;
     }
 
-    public void setStudentExternalId(Integer studentExternalId) {
+    public void setStudentExternalId(String studentExternalId) {
         this.studentExternalId = studentExternalId;
     }
 

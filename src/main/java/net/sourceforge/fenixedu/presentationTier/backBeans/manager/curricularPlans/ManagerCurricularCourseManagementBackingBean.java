@@ -224,13 +224,13 @@ public class ManagerCurricularCourseManagementBackingBean extends CurricularCour
         return "buildCurricularPlan";
     }
 
-    public String editOldCurricularCourse()  {
+    public String editOldCurricularCourse() {
         try {
             EditOldCurricularCourse.run(getCurricularCourseID(), getName(), getNameEn(), getCode(), getAcronym(),
                     getMinimumValueForAcumulatedEnrollments(), getMaximumValueForAcumulatedEnrollments(), getWeight(),
                     getEnrollmentWeigth(), getCredits(), getEctsCredits(), getTheoreticalHours(), getLabHours(),
                     getPraticalHours(), getTheoPratHours(), getGradeScale());
-            setContextID(0); // resetContextID
+            setContextID(null); // resetContextID
         } catch (FenixServiceException e) {
             addErrorMessage(bolonhaBundle.getString(e.getMessage()));
         }

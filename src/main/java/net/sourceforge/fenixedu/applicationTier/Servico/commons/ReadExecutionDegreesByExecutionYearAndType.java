@@ -23,7 +23,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ReadExecutionDegreesByExecutionYearAndType {
 
     @Service
-    public static List run(Integer executionYearOID, Set<DegreeType> degreeTypes) {
+    public static List run(String executionYearOID, Set<DegreeType> degreeTypes) {
         final ExecutionYear executionYear = AbstractDomainObject.fromExternalId(executionYearOID);
 
         final List<ExecutionDegree> executionDegrees = new ArrayList<ExecutionDegree>();

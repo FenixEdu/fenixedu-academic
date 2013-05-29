@@ -69,7 +69,7 @@ public class TutorStudentsPerformanceGridDA extends ViewStudentsPerformanceGridD
     public ActionForward exportXls(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         String tutorId = request.getParameter("tutorOID");
-        Person person = (Person) AbstractDomainObject.fromExternalId(Integer.parseInt(tutorId));
+        Person person = (Person) AbstractDomainObject.fromExternalId(tutorId);
         NumberBean numberBean = new NumberBean();
         numberBean.setId(person.getIstUsername());
         request.setAttribute("tutorateBean", numberBean);
@@ -155,7 +155,7 @@ public class TutorStudentsPerformanceGridDA extends ViewStudentsPerformanceGridD
     public ActionForward prepareAllStudentsStatistics(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         String tutorId = request.getParameter("tutorOID");
-        Person person = (Person) AbstractDomainObject.fromExternalId(Integer.parseInt(tutorId));
+        Person person = (Person) AbstractDomainObject.fromExternalId(tutorId);
         NumberBean numberBean = new NumberBean();
         numberBean.setId(person.getIstUsername());
         request.setAttribute("tutorateBean", numberBean);

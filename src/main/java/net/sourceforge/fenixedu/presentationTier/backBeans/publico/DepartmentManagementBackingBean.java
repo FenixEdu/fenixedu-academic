@@ -34,7 +34,7 @@ public class DepartmentManagementBackingBean extends FenixBackingBean {
 
     };
 
-    private Collection<ProfessionalCategory> sortedDepartmentCategories = new TreeSet<ProfessionalCategory>();
+    private final Collection<ProfessionalCategory> sortedDepartmentCategories = new TreeSet<ProfessionalCategory>();
 
     private Map<ProfessionalCategory, List<Teacher>> teachersByCategory;
 
@@ -55,7 +55,7 @@ public class DepartmentManagementBackingBean extends FenixBackingBean {
     }
 
     public Department getDepartment() {
-        Integer selectedDepartmentUnitID = getAndHoldIntegerParameter("selectedDepartmentUnitID");
+        String selectedDepartmentUnitID = getAndHoldStringParameter("selectedDepartmentUnitID");
         if (selectedDepartmentUnitID != null) {
             Unit departmentUnit = (Unit) AbstractDomainObject.fromExternalId(selectedDepartmentUnitID);
             return departmentUnit.getDepartment();

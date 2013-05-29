@@ -24,7 +24,7 @@ public class ReadExecutionCoursesByExecutionDegreeService {
     }
 
     @Service
-    public static List run(Integer executionDegreeId, Integer executionPeriodId) throws FenixServiceException {
+    public static List run(String executionDegreeId, String executionPeriodId) throws FenixServiceException {
 
         final ExecutionSemester executionSemester;
         if (executionPeriodId == null) {

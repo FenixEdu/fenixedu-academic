@@ -110,7 +110,7 @@ public class ViewStudentCurriculumDA extends FenixDispatchAction {
         ((DynaActionForm) actionForm).set("degreeCurricularPlanId", id);
     }
 
-    private Integer getDegreeCurricularPlanId(final ActionForm actionForm) {
+    private String getDegreeCurricularPlanId(final ActionForm actionForm) {
         return (Integer) ((DynaActionForm) actionForm).get("degreeCurricularPlanId");
     }
 

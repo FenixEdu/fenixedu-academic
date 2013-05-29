@@ -20,7 +20,7 @@ public class UpdateDegreeCurricularPlanMembersGroup {
 
     @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
     @Service
-    public static void run(DegreeCurricularPlan degreeCurricularPlan, Integer[] add, Integer[] remove) {
+    public static void run(DegreeCurricularPlan degreeCurricularPlan, String[] add, String[] remove) {
         List<Person> toAdd = materializePersons(add);
         List<Person> toRemove = materializePersons(remove);
         List<Person> finalList = new ArrayList<Person>();
@@ -53,11 +53,11 @@ public class UpdateDegreeCurricularPlanMembersGroup {
         degreeCurricularPlan.setCurricularPlanMembersGroup(new FixedSetGroup(finalList));
     }
 
-    private static List<Person> materializePersons(Integer[] personsIDs) {
+    private static List<Person> materializePersons(String[] personsIDs) {
         if (personsIDs != null) {
             List<Person> result = new ArrayList<Person>();
 
-            for (Integer personID : personsIDs) {
+            for (String personID : personsIDs) {
                 result.add((Person) AbstractDomainObject.fromExternalId(personID));
             }
 

@@ -49,7 +49,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 public class ReadTeacherProfessorshipsByExecutionYearAction extends AbstractReadProfessorshipsAction {
 
     @Override
-    List getDetailedProfessorships(IUserView userView, Integer teacherId, DynaActionForm actionForm, HttpServletRequest request)
+    List getDetailedProfessorships(IUserView userView, String teacherId, DynaActionForm actionForm, HttpServletRequest request)
             throws FenixServiceException {
 
         List detailedInfoProfessorshipList =
@@ -83,7 +83,7 @@ public class ReadTeacherProfessorshipsByExecutionYearAction extends AbstractRead
         for (int i = 0; i < detailedProfessorshipList.size(); i++) {
             DetailedProfessorship dps = (DetailedProfessorship) detailedProfessorshipList.get(i);
 
-            Integer executionCourseId = dps.getInfoProfessorship().getInfoExecutionCourse().getExternalId();
+            String executionCourseId = dps.getInfoProfessorship().getInfoExecutionCourse().getExternalId();
             if (dps.getResponsibleFor().booleanValue()) {
                 executionCourseIds.add(executionCourseId);
             }
@@ -94,7 +94,7 @@ public class ReadTeacherProfessorshipsByExecutionYearAction extends AbstractRead
             }
         }
 
-        dynaForm.set("executionCourseResponsability", executionCourseIds.toArray(new Integer[] {}));
+        dynaForm.set("executionCourseResponsability", executionCourseIds.toArray(new String[] {}));
         dynaForm.set("hours", hours);
 
     }

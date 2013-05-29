@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.EmployeeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilter;
@@ -11,7 +10,7 @@ import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class SetCoursesAndTeachersValuationPermission {
-    protected void run(Integer tsdId, Integer personId, Boolean coursesValuationPermission, Boolean teachersValuationPermission,
+    protected void run(String tsdId, String personId, Boolean coursesValuationPermission, Boolean teachersValuationPermission,
             Boolean coursesManagementPermission, Boolean teachersManagementPermission) {
         TeacherServiceDistribution tsd = AbstractDomainObject.fromExternalId(tsdId);
         Person person = (Person) AbstractDomainObject.fromExternalId(personId);
@@ -47,7 +46,7 @@ public class SetCoursesAndTeachersValuationPermission {
             new SetCoursesAndTeachersValuationPermission();
 
     @Service
-    public static void runSetCoursesAndTeachersValuationPermission(Integer tsdId, Integer personId,
+    public static void runSetCoursesAndTeachersValuationPermission(String tsdId, String personId,
             Boolean coursesValuationPermission, Boolean teachersValuationPermission, Boolean coursesManagementPermission,
             Boolean teachersManagementPermission) throws NotAuthorizedException {
         try {

@@ -19,15 +19,14 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "library", path = "/theses/validate", attribute = "none", formBean = "none", scope = "session",
         parameter = "method")
 @Forwards(value = { @Forward(name = "view", path = "/library/theses/validate.jsp") })
 public class ValidateThesisDA extends ThesisLibraryDA {
+
     protected Thesis getThesis(HttpServletRequest request) {
-        Integer id = getExternalId(request, "thesisID");
-        return id != null ? (Thesis) AbstractDomainObject.fromExternalId(id) : null;
+        return getDomainObject(request, "thesisID");
     }
 
     @Override

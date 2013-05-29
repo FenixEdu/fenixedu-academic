@@ -41,7 +41,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 public class PaymentsManagementDA extends FenixDispatchAction {
@@ -63,7 +62,7 @@ public class PaymentsManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward searchPerson(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         final SimpleSearchPersonWithStudentBean searchPersonBean =
                 (SimpleSearchPersonWithStudentBean) getObjectFromViewState("searchPersonBean");
         request.setAttribute("searchPersonBean", searchPersonBean);
@@ -81,7 +80,7 @@ public class PaymentsManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward showEvents(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         request.setAttribute("person", getPerson(request));
 
@@ -109,7 +108,7 @@ public class PaymentsManagementDA extends FenixDispatchAction {
     }
 
     protected Collection<Person> searchPerson(HttpServletRequest request, final SimpleSearchPersonWithStudentBean searchPersonBean)
-            throws  FenixServiceException {
+            throws FenixServiceException {
         final SearchParameters searchParameters =
                 new SearchPerson.SearchParameters(searchPersonBean.getName(), null, searchPersonBean.getUsername(),
                         searchPersonBean.getDocumentIdNumber(), searchPersonBean.getIdDocumentType() != null ? searchPersonBean
@@ -118,8 +117,7 @@ public class PaymentsManagementDA extends FenixDispatchAction {
 
         final SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(searchParameters);
 
-        final CollectionPager<Person> result =
-                (CollectionPager<Person>) SearchPerson.runSearchPerson( searchParameters, predicate );
+        final CollectionPager<Person> result = SearchPerson.runSearchPerson(searchParameters, predicate);
 
         return result.getCollection();
 
@@ -134,7 +132,7 @@ public class PaymentsManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward cancelEvent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         final CancelEventBean cancelEventBean = getCancelEventBean();
 
@@ -161,7 +159,7 @@ public class PaymentsManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward openEvent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         try {
             OpenEvent.run(getEvent(request));
         } catch (DomainExceptionWithLabelFormatter ex) {
@@ -191,11 +189,11 @@ public class PaymentsManagementDA extends FenixDispatchAction {
     }
 
     protected Person getPerson(HttpServletRequest request) {
-        return (Person) AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "personId"));
+        return getDomainObject(request, "personId");
     }
 
     private Event getEvent(HttpServletRequest request) {
-        return AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "eventId"));
+        return getDomainObject(request, "eventId");
     }
 
     public ActionForward prepareTransferPaymentsToOtherEventAndCancel(ActionMapping mapping, ActionForm form,
@@ -213,7 +211,7 @@ public class PaymentsManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward transferPaymentsToOtherEventAndCancel(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException {
 
         final TransferPaymentsToOtherEventAndCancelBean transferPaymentsBean =
                 (TransferPaymentsToOtherEventAndCancelBean) getObjectFromViewState("transferPaymentsBean");
@@ -260,7 +258,7 @@ public class PaymentsManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward annulTransaction(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         final AnnulAccountingTransactionBean annulAccountingTransactionBean =
                 (AnnulAccountingTransactionBean) getObjectFromViewState("annulAccountingTransactionBean");
         try {
@@ -284,7 +282,7 @@ public class PaymentsManagementDA extends FenixDispatchAction {
     }
 
     private AccountingTransaction getTransaction(HttpServletRequest request) {
-        return AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "transactionId"));
+        return getDomainObject(request, "transactionId");
     }
 
     public ActionForward showOperations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -313,7 +311,7 @@ public class PaymentsManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward annulReceipt(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         try {
             AnnulReceipt.run(getLoggedPerson(request), getReceipt(request));
@@ -327,7 +325,7 @@ public class PaymentsManagementDA extends FenixDispatchAction {
     }
 
     private Receipt getReceipt(HttpServletRequest request) {
-        return AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "receiptId"));
+        return getDomainObject(request, "receiptId");
     }
 
     @Override
@@ -355,7 +353,7 @@ public class PaymentsManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward depositAmount(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         final DepositAmountBean renderedObject = getRenderedObject("depositAmountBean");
         try {

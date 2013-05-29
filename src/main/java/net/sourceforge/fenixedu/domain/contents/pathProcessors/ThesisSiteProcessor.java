@@ -9,7 +9,7 @@ public class ThesisSiteProcessor extends AbstractPathProcessor {
     @Override
     public Content processPath(String path) {
         String[] parts = path.split("/");
-        Thesis thesis = AbstractDomainObject.fromExternalId(Integer.parseInt(parts[0]));
+        Thesis thesis = AbstractDomainObject.fromExternalId(parts[0]);
         return thesis != null ? thesis.getSite() : null;
     }
 

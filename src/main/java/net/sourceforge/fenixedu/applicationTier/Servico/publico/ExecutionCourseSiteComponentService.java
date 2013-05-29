@@ -5,7 +5,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.publico;
 
-
 import net.sourceforge.fenixedu.applicationTier.Factory.ExecutionCourseSiteComponentBuilder;
 import net.sourceforge.fenixedu.applicationTier.Filtro.PublishedExamsMapAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -27,8 +26,8 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class ExecutionCourseSiteComponentService {
 
-    protected ExecutionCourseSiteView run(ISiteComponent commonComponent, ISiteComponent bodyComponent, Integer infoSiteCode,
-            Integer infoExecutionCourseCode, Integer sectionIndex, Integer curricularCourseId) throws FenixServiceException,
+    protected ExecutionCourseSiteView run(ISiteComponent commonComponent, ISiteComponent bodyComponent, String infoSiteCode,
+            String infoExecutionCourseCode, Integer sectionIndex, Integer curricularCourseId) throws FenixServiceException,
             NonExistingAssociatedCurricularCoursesServiceException {
         final ExecutionCourseSite site;
         if (infoSiteCode != null) {
@@ -61,7 +60,7 @@ public class ExecutionCourseSiteComponentService {
 
     @Service
     public static ExecutionCourseSiteView runExecutionCourseSiteComponentService(ISiteComponent commonComponent,
-            ISiteComponent bodyComponent, Integer infoSiteCode, Integer infoExecutionCourseCode, Integer sectionIndex,
+            ISiteComponent bodyComponent, String infoSiteCode, String infoExecutionCourseCode, Integer sectionIndex,
             Integer curricularCourseId) throws FenixServiceException, NonExistingAssociatedCurricularCoursesServiceException {
         return serviceInstance.run(commonComponent, bodyComponent, infoSiteCode, infoExecutionCourseCode, sectionIndex,
                 curricularCourseId);

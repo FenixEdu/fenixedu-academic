@@ -78,7 +78,7 @@ abstract public class CandidacyProcessDA extends CaseHandlingDispatchAction {
     }
 
     protected void setExecutionInterval(final HttpServletRequest request) {
-        final Integer executionIntervalId = getIntegerFromRequest(request, "executionIntervalId");
+        final String executionIntervalId = (String) getFromRequest(request, "executionIntervalId");
         if (executionIntervalId != null) {
             request.setAttribute("executionInterval", AbstractDomainObject.fromExternalId(executionIntervalId));
         }
@@ -239,13 +239,13 @@ abstract public class CandidacyProcessDA extends CaseHandlingDispatchAction {
     abstract protected CandidacyProcess getCandidacyProcess(HttpServletRequest request, final ExecutionInterval executionInterval);
 
     static public class CandidacyProcessForm extends FenixActionForm {
-        private Integer executionIntervalId;
+        private String executionIntervalId;
 
-        public Integer getExecutionIntervalId() {
+        public String getExecutionIntervalId() {
             return executionIntervalId;
         }
 
-        public void setExecutionIntervalId(Integer executionIntervalId) {
+        public void setExecutionIntervalId(String executionIntervalId) {
             this.executionIntervalId = executionIntervalId;
         }
     }
@@ -344,7 +344,7 @@ abstract public class CandidacyProcessDA extends CaseHandlingDispatchAction {
 
     @Override
     public ActionForward createNewProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         try {
             return super.createNewProcess(mapping, form, request, response);
         } catch (final DomainException e) {
@@ -368,7 +368,7 @@ abstract public class CandidacyProcessDA extends CaseHandlingDispatchAction {
     }
 
     public ActionForward executeEditCandidacyPeriod(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         try {
             executeActivity(getProcess(request), "EditCandidacyPeriod", getRenderedObject("candidacyProcessBean"));
@@ -501,7 +501,7 @@ abstract public class CandidacyProcessDA extends CaseHandlingDispatchAction {
     }
 
     public ActionForward executeSelectAvailableDegrees(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         try {
             executeActivity(getProcess(request), "SelectAvailableDegrees", getRenderedObject("candidacyProcessBean"));
         } catch (final DomainException e) {

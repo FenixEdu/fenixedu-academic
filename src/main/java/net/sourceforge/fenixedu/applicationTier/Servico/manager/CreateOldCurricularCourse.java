@@ -15,11 +15,11 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class CreateOldCurricularCourse {
 
     @Service
-    public static void run(final Integer dcpId, final Integer cgId, final String name, final String nameEn, final String code,
+    public static void run(final String dcpId, final String cgId, final String name, final String nameEn, final String code,
             final String acronym, final Integer minimumValueForAcumulatedEnrollments,
             final Integer maximumValueForAcumulatedEnrollments, final Double weigth, final Integer enrolmentWeigth,
             final Double credits, final Double ectsCredits, final Integer year, final Integer semester,
-            final Integer beginExecutionPeriodId, final Integer endExecutionPeriodId, final GradeScale gradeScale)
+            final String beginExecutionPeriodId, final String endExecutionPeriodId, final GradeScale gradeScale)
             throws FenixServiceException {
 
         final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(dcpId);
@@ -48,10 +48,8 @@ public class CreateOldCurricularCourse {
         curricularCourse.setGradeScale(gradeScale);
 
         final CurricularPeriod curricularPeriod = getCurricularPeriod(degreeCurricularPlan, year, semester);
-        final ExecutionSemester beginExecutionPeriod =
-                AbstractDomainObject.fromExternalId(beginExecutionPeriodId);
-        final ExecutionSemester endExecutionPeriod =
-                AbstractDomainObject.fromExternalId(endExecutionPeriodId);
+        final ExecutionSemester beginExecutionPeriod = AbstractDomainObject.fromExternalId(beginExecutionPeriodId);
+        final ExecutionSemester endExecutionPeriod = AbstractDomainObject.fromExternalId(endExecutionPeriodId);
 
         courseGroup.addContext(curricularCourse, curricularPeriod, beginExecutionPeriod, endExecutionPeriod);
     }

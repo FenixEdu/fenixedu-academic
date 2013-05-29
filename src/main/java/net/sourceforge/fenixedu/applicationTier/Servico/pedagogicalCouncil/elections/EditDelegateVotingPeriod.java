@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.pedagogicalCouncil.elections;
 
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.elections.ElectionPeriodBean;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -30,7 +29,7 @@ public class EditDelegateVotingPeriod {
     @Service
     public static void run(ElectionPeriodBean bean, String degreeOID) throws FenixServiceException {
         final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
-        final Degree degree = AbstractDomainObject.fromExternalId(Integer.parseInt(degreeOID));
+        final Degree degree = AbstractDomainObject.fromExternalId(degreeOID);
 
         DelegateElection electionToEdit =
                 degree.getYearDelegateElectionWithLastVotingPeriod(executionYear, bean.getCurricularYear());

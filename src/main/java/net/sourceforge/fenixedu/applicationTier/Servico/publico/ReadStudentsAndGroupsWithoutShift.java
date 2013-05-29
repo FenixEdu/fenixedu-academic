@@ -31,7 +31,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ReadStudentsAndGroupsWithoutShift {
 
     @Service
-    public static InfoSiteStudentsAndGroups run(Integer groupPropertiesId) throws FenixServiceException {
+    public static InfoSiteStudentsAndGroups run(String groupPropertiesId) throws FenixServiceException {
         InfoSiteStudentsAndGroups infoSiteStudentsAndGroups = new InfoSiteStudentsAndGroups();
 
         Grouping groupProperties = AbstractDomainObject.fromExternalId(groupPropertiesId);

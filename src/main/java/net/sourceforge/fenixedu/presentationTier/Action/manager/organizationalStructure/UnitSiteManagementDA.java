@@ -23,7 +23,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 @Mapping(module = "manager", path = "/unitSiteManagement", scope = "request", parameter = "method")
@@ -42,8 +41,7 @@ public class UnitSiteManagementDA extends CustomUnitSiteManagementDA {
             return unit;
         }
 
-        Integer unitId = getExternalId(request, "unitID");
-        return (Unit) AbstractDomainObject.fromExternalId(unitId);
+        return getDomainObject(request, "unitID");
     }
 
     @Override
@@ -54,7 +52,7 @@ public class UnitSiteManagementDA extends CustomUnitSiteManagementDA {
     }
 
     public ActionForward createSite(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         Unit unit = getUnit(request);
 
         try {

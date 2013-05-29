@@ -361,8 +361,7 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
     }
 
     private StudentCandidacy getCandidacy(HttpServletRequest request) {
-        final Integer candidacyID = Integer.valueOf(request.getParameter("candidacyID"));
-        return (StudentCandidacy) AbstractDomainObject.fromExternalId(candidacyID);
+        return AbstractDomainObject.fromExternalId(request.getParameter("candidacyID"));
     }
 
     private String buildRedirectURL(HttpServletRequest request, final StudentCandidacy candidacy) {

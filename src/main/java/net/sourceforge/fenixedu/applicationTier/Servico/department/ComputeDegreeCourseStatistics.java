@@ -16,8 +16,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ComputeDegreeCourseStatistics extends ComputeCourseStatistics {
 
-    public List<DegreeCourseStatisticsDTO> run(Integer competenceCourseId, Integer executionPeriodId)
-            throws FenixServiceException {
+    public List<DegreeCourseStatisticsDTO> run(String competenceCourseId, String executionPeriodId) throws FenixServiceException {
         CompetenceCourse competenceCourse = AbstractDomainObject.fromExternalId(competenceCourseId);
         ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodId);
         Map<Degree, List<CurricularCourse>> groupedCourses = competenceCourse.getAssociatedCurricularCoursesGroupedByDegree();
@@ -48,7 +47,8 @@ public class ComputeDegreeCourseStatistics extends ComputeCourseStatistics {
     private static final ComputeDegreeCourseStatistics serviceInstance = new ComputeDegreeCourseStatistics();
 
     @Service
-    public static List<DegreeCourseStatisticsDTO> runComputeDegreeCourseStatistics(Integer competenceCourseId, Integer executionPeriodId) throws FenixServiceException  {
+    public static List<DegreeCourseStatisticsDTO> runComputeDegreeCourseStatistics(String competenceCourseId,
+            String executionPeriodId) throws FenixServiceException {
         return serviceInstance.run(competenceCourseId, executionPeriodId);
     }
 

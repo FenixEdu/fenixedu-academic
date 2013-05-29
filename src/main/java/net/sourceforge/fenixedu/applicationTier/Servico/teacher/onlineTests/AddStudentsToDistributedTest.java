@@ -27,7 +27,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class AddStudentsToDistributedTest {
 
-    protected void run(Integer executionCourseId, Integer distributedTestId, List<InfoStudent> infoStudentList, String contextPath)
+    protected void run(String executionCourseId, String distributedTestId, List<InfoStudent> infoStudentList, String contextPath)
             throws InvalidArgumentsServiceException {
         if (infoStudentList == null || infoStudentList.size() == 0) {
             return;
@@ -105,7 +105,7 @@ public class AddStudentsToDistributedTest {
     private static final AddStudentsToDistributedTest serviceInstance = new AddStudentsToDistributedTest();
 
     @Service
-    public static void runAddStudentsToDistributedTest(Integer executionCourseId, Integer distributedTestId,
+    public static void runAddStudentsToDistributedTest(String executionCourseId, String distributedTestId,
             List<InfoStudent> infoStudentList, String contextPath) throws InvalidArgumentsServiceException,
             NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);

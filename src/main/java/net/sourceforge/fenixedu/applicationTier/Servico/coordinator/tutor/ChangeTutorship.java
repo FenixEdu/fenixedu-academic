@@ -23,7 +23,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ChangeTutorship extends TutorshipManagement {
 
-    public List<TutorshipErrorBean> run(Integer executionDegreeID, List<ChangeTutorshipBean> beans) throws FenixServiceException {
+    public List<TutorshipErrorBean> run(String executionDegreeID, List<ChangeTutorshipBean> beans) throws FenixServiceException {
 
         final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeID);
         final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
@@ -62,7 +62,7 @@ public class ChangeTutorship extends TutorshipManagement {
     private static final ChangeTutorship serviceInstance = new ChangeTutorship();
 
     @Service
-    public static List<TutorshipErrorBean> runChangeTutorship(Integer executionDegreeID, List<ChangeTutorshipBean> beans)
+    public static List<TutorshipErrorBean> runChangeTutorship(String executionDegreeID, List<ChangeTutorshipBean> beans)
             throws FenixServiceException, NotAuthorizedException {
         try {
             TutorshipAuthorizationFilter.instance.execute();

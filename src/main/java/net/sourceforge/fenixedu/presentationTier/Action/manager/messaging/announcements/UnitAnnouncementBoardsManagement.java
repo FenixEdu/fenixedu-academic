@@ -304,9 +304,9 @@ public class UnitAnnouncementBoardsManagement extends AnnouncementManagement {
                 .getRequestedUnitOID(request));
     }
 
-    private Integer getRequestedUnitOID(HttpServletRequest request) {
-        return request.getParameter("keyUnit") == null || request.getParameter("keyUnit").equals("null") ? null : Integer
-                .valueOf(request.getParameter("keyUnit"));
+    private String getRequestedUnitOID(HttpServletRequest request) {
+        return request.getParameter("keyUnit") == null || request.getParameter("keyUnit").equals("null") ? null : request
+                .getParameter("keyUnit");
     }
 
     @Override

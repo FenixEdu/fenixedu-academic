@@ -31,7 +31,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class AcceptNewProjectProposal {
 
-    protected Boolean run(Integer executionCourseId, Integer groupPropertiesId, String acceptancePersonUserName)
+    protected Boolean run(String executionCourseId, String groupPropertiesId, String acceptancePersonUserName)
             throws FenixServiceException {
 
         if (groupPropertiesId == null) {
@@ -129,7 +129,7 @@ public class AcceptNewProjectProposal {
     private static final AcceptNewProjectProposal serviceInstance = new AcceptNewProjectProposal();
 
     @Service
-    public static Boolean runAcceptNewProjectProposal(Integer executionCourseId, Integer groupPropertiesId,
+    public static Boolean runAcceptNewProjectProposal(String executionCourseId, String groupPropertiesId,
             String acceptancePersonUserName) throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
         return serviceInstance.run(executionCourseId, groupPropertiesId, acceptancePersonUserName);

@@ -38,8 +38,7 @@ public class ManageResearchUnitAnnoucementsDA extends UnitSiteBoardsDA {
         }
         String siteID = request.getParameter("siteID");
         if (siteID != null) {
-            ResearchUnitSite site =
-                    (ResearchUnitSite) AbstractDomainObject.fromExternalId(ResearchUnitSite.class, Integer.valueOf(siteID));
+            ResearchUnitSite site = (ResearchUnitSite) AbstractDomainObject.fromExternalId(siteID);
             return site;
         } else {
             return null;

@@ -163,30 +163,15 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
     }
 
     private Degree getDegree(HttpServletRequest request) {
-        final Integer id = getIntegerFromRequest(request, "degreeID");
-        if (id == null) {
-            return null;
-        } else {
-            return AbstractDomainObject.fromExternalId(id);
-        }
+        return getDomainObject(request, "degreeID");
     }
 
     private ExecutionDegree getExecutionDegree(HttpServletRequest request) {
-        final Integer executionDegreeOID = getIntegerFromRequest(request, "executionDegreeOID");
-        if (executionDegreeOID == null) {
-            return null;
-        } else {
-            return AbstractDomainObject.fromExternalId(Integer.valueOf(executionDegreeOID));
-        }
+        return getDomainObject(request, "executionDegreeOID");
     }
 
     private ExecutionYear getExecutionYear(HttpServletRequest request) {
-        final Integer id = getIntegerFromRequest(request, "executionYearID");
-        if (id == null) {
-            return null;
-        } else {
-            return AbstractDomainObject.fromExternalId(id);
-        }
+        return getDomainObject(request, "executionYearID");
     }
 
     public ActionForward listThesis(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -211,20 +196,12 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
         return mapping.findForward("list-thesis");
     }
 
-    public Integer getIntegerParameter(final HttpServletRequest request, final String paramName) {
-        final String string = request.getParameter(paramName);
-        return (string == null || string.isEmpty()) ? null : Integer.valueOf(string);
-    }
-
     public ActionForward listScientificComission(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        final Integer degreeId = getIntegerParameter(request, "degreeId");
-        final Degree degree = degreeId == null ? null : AbstractDomainObject.fromExternalId(degreeId);
+        final Degree degree = getDomainObject(request, "degreeId");
         request.setAttribute("degree", degree);
 
-        final Integer executionYearId = getIntegerParameter(request, "executionYearId");
-        final ExecutionYear executionYear =
-                (ExecutionYear) (executionYearId == null ? null : AbstractDomainObject.fromExternalId(executionYearId));
+        final ExecutionYear executionYear = getDomainObject(request, "executionYearId");
         request.setAttribute("executionYear", executionYear);
 
         if (degree == null || executionYear == null) {
@@ -245,8 +222,7 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
 
     public ActionForward removeScientificCommission(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        ScientificCommission scientificCommission =
-                AbstractDomainObject.fromExternalId(Integer.valueOf(request.getParameter("commissionID")));
+        ScientificCommission scientificCommission = getDomainObject(request, "commissionID");
         removeScientificCommissionFromExecutionDegree(scientificCommission, scientificCommission.getExecutionDegree());
         return listScientificComission(mapping, actionForm, request, response);
     }
@@ -261,8 +237,7 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
             HttpServletResponse response) throws Exception {
         VariantBean bean = getRenderedObject("usernameChoice");
         if (bean != null) {
-            ExecutionDegree executionDegree =
-                    AbstractDomainObject.fromExternalId(Integer.valueOf(request.getParameter("executionDegreeID")));
+            ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(request.getParameter("executionDegreeID"));
             Employee employee = Employee.readByNumber(bean.getInteger());
             if (employee == null || executionDegree.isPersonInScientificCommission(employee.getPerson())) {
                 addActionMessage("addError", request, "error.scientificComission.employee");
@@ -541,15 +516,13 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
                     executionYear = ExecutionYear.readCurrentExecutionYear();
                 }
             } else {
-                final Integer executionYearId = Integer.valueOf(executionYearIdString);
-                executionYear = AbstractDomainObject.fromExternalId(executionYearId);
+                executionYear = AbstractDomainObject.fromExternalId(executionYearIdString);
             }
             thesisCreationPeriodFactoryExecutor.setExecutionYear(executionYear);
 
             final String executionDegreeIdString = request.getParameter("executionDegreeId");
             if (executionDegreeIdString != null) {
-                final Integer executionDegreeId = Integer.valueOf(executionDegreeIdString);
-                final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeId);
+                final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeIdString);
                 thesisCreationPeriodFactoryExecutor.setExecutionDegree(executionDegree);
             }
         }
@@ -614,8 +587,7 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
     public ActionForward downloadDissertationsList(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         final String executionYearIdString = request.getParameter("executionYearId");
-        final Integer executionYearId = executionYearIdString == null ? null : Integer.valueOf(executionYearIdString);
-        final ExecutionYear executionYear = AbstractDomainObject.fromExternalId(executionYearId);
+        final ExecutionYear executionYear = AbstractDomainObject.fromExternalId(executionYearIdString);
 
         response.setContentType("application/vnd.ms-excel");
         response.setHeader("Content-disposition", "attachment; filename=dissertacoes" + executionYear.getYear().replace("/", "")
@@ -866,8 +838,7 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
 
     @Override
     protected DegreeCurricularPlan getDegreeCurricularPlan(HttpServletRequest request) {
-        final Integer degreeId = getIntegerFromRequest(request, "degreeID");
-        Degree degree = AbstractDomainObject.fromExternalId(degreeId);
+        Degree degree = getDomainObject(request, "degreeID");
 
         return degree.getMostRecentDegreeCurricularPlan();
     }

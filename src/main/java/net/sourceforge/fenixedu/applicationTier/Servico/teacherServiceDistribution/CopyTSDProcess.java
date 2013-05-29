@@ -15,7 +15,7 @@ import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class CopyTSDProcess {
-    protected TSDProcess run(List<Integer> executionPeriodIdList, Integer tsdProcessId, Integer personId, String name) {
+    protected TSDProcess run(List<String> executionPeriodIdList, String tsdProcessId, String personId, String name) {
         Person creator = (Person) AbstractDomainObject.fromExternalId(personId);
         List<ExecutionSemester> executionPeriodList = getExecutionPeriods(executionPeriodIdList);
         TSDProcess tsdProcessCopied = AbstractDomainObject.fromExternalId(tsdProcessId);
@@ -26,11 +26,11 @@ public class CopyTSDProcess {
 
     }
 
-    private List<ExecutionSemester> getExecutionPeriods(List<Integer> executionPeriodIdList) {
+    private List<ExecutionSemester> getExecutionPeriods(List<String> executionPeriodIdList) {
         List<ExecutionSemester> executionPeriodList = new ArrayList<ExecutionSemester>();
 
-        for (Integer executionPeriodId : executionPeriodIdList) {
-            executionPeriodList.add(AbstractDomainObject.fromExternalId(executionPeriodId));
+        for (String executionPeriodId : executionPeriodIdList) {
+            executionPeriodList.add(AbstractDomainObject.<ExecutionSemester> fromExternalId(executionPeriodId));
         }
         return executionPeriodList;
     }
@@ -40,7 +40,7 @@ public class CopyTSDProcess {
     private static final CopyTSDProcess serviceInstance = new CopyTSDProcess();
 
     @Service
-    public static TSDProcess runCopyTSDProcess(List<Integer> executionPeriodIdList, Integer tsdProcessId, Integer personId,
+    public static TSDProcess runCopyTSDProcess(List<String> executionPeriodIdList, String tsdProcessId, String personId,
             String name) throws NotAuthorizedException {
         try {
             DepartmentMemberAuthorizationFilter.instance.execute();

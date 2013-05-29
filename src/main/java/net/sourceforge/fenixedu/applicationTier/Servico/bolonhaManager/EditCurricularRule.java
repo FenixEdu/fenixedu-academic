@@ -13,7 +13,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class EditCurricularRule {
 
     @Service
-    public static void run(Integer curricularRuleID, Integer beginExecutionPeriodID, Integer endExecutionPeriodID)
+    public static void run(String curricularRuleID, String beginExecutionPeriodID, String endExecutionPeriodID)
             throws FenixServiceException {
 
         final CurricularRule curricularRule = AbstractDomainObject.fromExternalId(curricularRuleID);
@@ -29,8 +29,8 @@ public class EditCurricularRule {
         }
 
         final ExecutionSemester endExecutionPeriod =
-                (endExecutionPeriodID == null) ? null : AbstractDomainObject.fromExternalId(
-                        endExecutionPeriodID);
+                (endExecutionPeriodID == null) ? null : AbstractDomainObject
+                        .<ExecutionSemester> fromExternalId(endExecutionPeriodID);
 
         CurricularRulesManager.editCurricularRule(curricularRule, beginExecutionPeriod, endExecutionPeriod);
     }

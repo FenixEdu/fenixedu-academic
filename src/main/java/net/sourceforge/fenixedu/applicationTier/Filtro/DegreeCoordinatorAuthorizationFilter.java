@@ -30,7 +30,7 @@ public class DegreeCoordinatorAuthorizationFilter extends AuthorizationByRoleFil
         return RoleType.COORDINATOR;
     }
 
-    public void execute(Integer executionDegreeId) throws NotAuthorizedException {
+    public void execute(String executionDegreeId) throws NotAuthorizedException {
         IUserView id = AccessControl.getUserView();
         try {
             if ((id == null) || (id.getRoleTypes() == null) || !id.hasRoleType(getRoleType())
@@ -42,7 +42,7 @@ public class DegreeCoordinatorAuthorizationFilter extends AuthorizationByRoleFil
         }
     }
 
-    private boolean isCoordinatorOfExecutionDegree(IUserView id, Integer executionDegreeId) {
+    private boolean isCoordinatorOfExecutionDegree(IUserView id, String executionDegreeId) {
         boolean result = false;
         if (executionDegreeId == null) {
             return result;

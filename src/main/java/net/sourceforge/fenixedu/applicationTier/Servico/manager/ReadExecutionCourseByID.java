@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.ManagerAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ScientificCouncilAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -13,7 +12,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ReadExecutionCourseByID {
 
-    protected InfoExecutionCourse run(Integer externalId) throws FenixServiceException {
+    protected InfoExecutionCourse run(String externalId) throws FenixServiceException {
         ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(externalId);
         if (executionCourse == null) {
             throw new NonExistingServiceException();
@@ -27,7 +26,7 @@ public class ReadExecutionCourseByID {
     private static final ReadExecutionCourseByID serviceInstance = new ReadExecutionCourseByID();
 
     @Service
-    public static InfoExecutionCourse runReadExecutionCourseManagerByID(Integer externalId) throws FenixServiceException,
+    public static InfoExecutionCourse runReadExecutionCourseManagerByID(String externalId) throws FenixServiceException,
             NotAuthorizedException {
         try {
             ManagerAuthorizationFilter.instance.execute();

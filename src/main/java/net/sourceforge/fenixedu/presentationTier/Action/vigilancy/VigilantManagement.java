@@ -56,10 +56,7 @@ public class VigilantManagement extends FenixDispatchAction {
     public ActionForward vigilantAcceptsConvoke(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        String id = request.getParameter("oid");
-        Integer externalId = Integer.valueOf(id);
-        OtherCourseVigilancy vigilancy =
-                (OtherCourseVigilancy) AbstractDomainObject.fromExternalId(OtherCourseVigilancy.class, externalId);
+        OtherCourseVigilancy vigilancy = getDomainObject(request, "oid");
 
         ConfirmConvoke.run(vigilancy);
 
@@ -87,17 +84,14 @@ public class VigilantManagement extends FenixDispatchAction {
     public ActionForward showWrittenEvaluationReport(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        String writtenEvaluationId = request.getParameter("writtenEvaluationId");
-        WrittenEvaluation writtenEvaluation =
-                (WrittenEvaluation) AbstractDomainObject.fromExternalId(WrittenEvaluation.class,
-                        Integer.valueOf(writtenEvaluationId));
+        WrittenEvaluation writtenEvaluation = getDomainObject(request, "writtenEvaluationId");
 
         request.setAttribute("writtenEvaluation", writtenEvaluation);
         return mapping.findForward("showReport");
     }
 
     private void prepareBean(VigilantBean bean, HttpServletRequest request, ExecutionYear executionYear)
-            throws  FenixServiceException {
+            throws FenixServiceException {
         List<VigilantWrapper> vigilantWrappers = getVigilantWrappersForPerson(request);
 
         bean.setExecutionYear(executionYear);
@@ -138,8 +132,7 @@ public class VigilantManagement extends FenixDispatchAction {
         request.setAttribute("bean", bean);
     }
 
-    private List<VigilantWrapper> getVigilantWrappersForPerson(HttpServletRequest request) throws 
-            FenixServiceException {
+    private List<VigilantWrapper> getVigilantWrappersForPerson(HttpServletRequest request) throws FenixServiceException {
         Person person = getLoggedPerson(request);
         List<VigilantWrapper> vigilantWrappers = person.getVigilantWrappers();
         return vigilantWrappers;
@@ -147,8 +140,7 @@ public class VigilantManagement extends FenixDispatchAction {
 
     private VigilantGroup getGroupFromRequestOrVigilant(HttpServletRequest request, VigilantWrapper vigilant) {
         String groupId = request.getParameter("gid");
-        return (groupId == null) ? vigilant.getVigilantGroup() : (VigilantGroup) AbstractDomainObject.fromExternalId(
-                VigilantGroup.class, Integer.valueOf(groupId));
+        return (groupId == null) ? vigilant.getVigilantGroup() : (VigilantGroup) AbstractDomainObject.fromExternalId(groupId);
     }
 
 }

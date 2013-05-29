@@ -21,7 +21,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ReadPublishedFinalDegreeWorkProposalHeaders {
 
     @Service
-    public static List<FinalDegreeWorkProposalHeader> run(Integer executionDegreeOID) {
+    public static List<FinalDegreeWorkProposalHeader> run(String executionDegreeOID) {
         final List<FinalDegreeWorkProposalHeader> result = new ArrayList<FinalDegreeWorkProposalHeader>();
 
         final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeOID);

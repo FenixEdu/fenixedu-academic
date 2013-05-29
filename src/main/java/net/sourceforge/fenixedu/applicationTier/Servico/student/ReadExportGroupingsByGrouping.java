@@ -13,7 +13,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ReadExportGroupingsByGrouping {
 
     @Service
-    public static List<InfoExportGrouping> run(Integer groupingOID) {
+    public static List<InfoExportGrouping> run(String groupingOID) {
         final Grouping grouping = AbstractDomainObject.fromExternalId(groupingOID);
         final List<ExportGrouping> exportGroupings = grouping.getExportGroupings();
 

@@ -84,22 +84,21 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
         return super.execute(mapping, actionForm, request, response);
     }
 
-    protected Integer getAnnouncementBoardId(HttpServletRequest request) {
-        return request.getParameter("announcementBoardId") == null ? null : Integer.valueOf(request
-                .getParameter("announcementBoardId"));
+    protected String getAnnouncementBoardId(HttpServletRequest request) {
+        return request.getParameter("announcementBoardId");
     }
 
-    protected Integer getAnnouncementId(HttpServletRequest request) {
-        return Integer.valueOf(request.getParameter("announcementId"));
+    protected String getAnnouncementId(HttpServletRequest request) {
+        return request.getParameter("announcementId");
     }
 
     protected AnnouncementBoard getRequestedAnnouncementBoard(HttpServletRequest request) {
-        Integer id = this.getAnnouncementBoardId(request);
+        String id = this.getAnnouncementBoardId(request);
         return id != null ? (AnnouncementBoard) AbstractDomainObject.fromExternalId(id) : null;
     }
 
     protected Announcement getRequestedAnnouncement(HttpServletRequest request) {
-        Integer id = this.getAnnouncementId(request);
+        String id = this.getAnnouncementId(request);
         return id != null ? (Announcement) AbstractDomainObject.fromExternalId(id) : null;
     }
 
@@ -263,7 +262,7 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
         return this.viewAnnouncements(mapping, form, request, response);
     }
 
-    protected boolean deleteAnnouncement(HttpServletRequest request) throws  FenixServiceException {
+    protected boolean deleteAnnouncement(HttpServletRequest request) throws FenixServiceException {
         IUserView userView = getUserView(request);
         final Announcement announcement = getRequestedAnnouncement(request);
         if (!announcement.getAnnouncementBoard().hasWriter(getLoggedPerson(request))) {
@@ -283,7 +282,7 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
         return this.viewAnnouncements(mapping, form, request, response);
     }
 
-    protected boolean aproveAction(HttpServletRequest request) throws  FenixServiceException {
+    protected boolean aproveAction(HttpServletRequest request) throws FenixServiceException {
         IUserView userView = getUserView(request);
         final Announcement announcement = getRequestedAnnouncement(request);
         final Boolean action = Boolean.valueOf(request.getParameter("action"));
@@ -403,8 +402,7 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
     }
 
     private FileContent getFileContent(HttpServletRequest request) {
-        Integer fileContentId = Integer.valueOf(request.getParameter("fileId"));
-        FileContent fileContent = (FileContent) AbstractDomainObject.fromExternalId(fileContentId);
+        FileContent fileContent = (FileContent) AbstractDomainObject.fromExternalId(request.getParameter("fileId"));
         return fileContent;
     }
 

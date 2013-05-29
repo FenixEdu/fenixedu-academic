@@ -14,7 +14,7 @@ public class DissociateExecutionCourse {
 
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
-    public static void run(Integer executionCourseId, Integer curricularCourseId) throws FenixServiceException {
+    public static void run(String executionCourseId, String curricularCourseId) throws FenixServiceException {
         final CurricularCourse curricularCourse = (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseId);
         if (curricularCourse == null) {
             throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);

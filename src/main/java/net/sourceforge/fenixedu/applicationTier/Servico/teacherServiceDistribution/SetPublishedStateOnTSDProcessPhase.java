@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.EmployeeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilter;
@@ -10,7 +9,7 @@ import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class SetPublishedStateOnTSDProcessPhase {
-    protected void run(Integer tsdProcessPhaseId, Boolean publishedState) {
+    protected void run(String tsdProcessPhaseId, Boolean publishedState) {
         TSDProcessPhase tsdProcessPhase = AbstractDomainObject.fromExternalId(tsdProcessPhaseId);
         tsdProcessPhase.setIsPublished(publishedState);
     }
@@ -20,7 +19,7 @@ public class SetPublishedStateOnTSDProcessPhase {
     private static final SetPublishedStateOnTSDProcessPhase serviceInstance = new SetPublishedStateOnTSDProcessPhase();
 
     @Service
-    public static void runSetPublishedStateOnTSDProcessPhase(Integer tsdProcessPhaseId, Boolean publishedState)
+    public static void runSetPublishedStateOnTSDProcessPhase(String tsdProcessPhaseId, Boolean publishedState)
             throws NotAuthorizedException {
         try {
             DepartmentMemberAuthorizationFilter.instance.execute();

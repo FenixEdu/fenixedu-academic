@@ -95,7 +95,7 @@ public class ManageClassDA extends FenixClassAndExecutionDegreeAndCurricularYear
 
         InfoClass infoClass = (InfoClass) request.getAttribute(PresentationConstants.CLASS_VIEW);
 
-        Integer shiftOID = new Integer(request.getParameter(PresentationConstants.SHIFT_OID));
+        String shiftOID = request.getParameter(PresentationConstants.SHIFT_OID);
 
         InfoShift infoShift = ReadShiftByOID.run(shiftOID);
 

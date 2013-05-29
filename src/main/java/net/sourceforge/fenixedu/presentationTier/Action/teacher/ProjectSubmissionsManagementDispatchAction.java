@@ -90,7 +90,7 @@ public class ProjectSubmissionsManagementDispatchAction extends FenixDispatchAct
     }
 
     public ActionForward downloadProjectsInZipFormat(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException,  IOException, ServletException {
+            HttpServletResponse response) throws FenixActionException, IOException, ServletException {
 
         final Project project = getProject(request);
         final List<ProjectSubmission> projectSubmissions =
@@ -111,7 +111,7 @@ public class ProjectSubmissionsManagementDispatchAction extends FenixDispatchAct
     }
 
     public ActionForward prepareSelectiveDownload(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException,  IOException, ServletException {
+            HttpServletResponse response) throws FenixActionException, IOException, ServletException {
 
         IViewState viewState = RenderUtils.getViewState("selectiveDownload");
         Integer value = (viewState != null) ? (Integer) viewState.getMetaObject().getObject() : null;
@@ -132,7 +132,7 @@ public class ProjectSubmissionsManagementDispatchAction extends FenixDispatchAct
     }
 
     public ActionForward selectiveDownload(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException,  IOException, ServletException {
+            HttpServletResponse response) throws FenixActionException, IOException, ServletException {
 
         final Project project = getProject(request);
         final Integer startIndex = Integer.valueOf(request.getParameter("startIndex"));
@@ -170,12 +170,11 @@ public class ProjectSubmissionsManagementDispatchAction extends FenixDispatchAct
     }
 
     public ActionForward sendCommentThroughEmail(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         final Project project = getProject(request);
 
-        ExecutionCourse course =
-                (ExecutionCourse) AbstractDomainObject.fromExternalId(ExecutionCourse.class, getExecutionCourseID(request));
+        ExecutionCourse course = (ExecutionCourse) AbstractDomainObject.fromExternalId(getExecutionCourseID(request));
 
         NotifyStudentGroup.run(project.getLastProjectSubmissionForStudentGroup(getStudentGroup(request)), course,
                 getLoggedPerson(request));
@@ -193,7 +192,7 @@ public class ProjectSubmissionsManagementDispatchAction extends FenixDispatchAct
     }
 
     private StudentGroup getStudentGroup(HttpServletRequest request) {
-        return AbstractDomainObject.fromExternalId(getRequestParameterAsInteger(request, "studentGroupID"));
+        return getDomainObject(request, "studentGroupID");
     }
 
     private Project getProject(HttpServletRequest request) {
@@ -217,8 +216,8 @@ public class ProjectSubmissionsManagementDispatchAction extends FenixDispatchAct
         return null;
     }
 
-    private Integer getExecutionCourseID(HttpServletRequest request) {
-        return getRequestParameterAsInteger(request, "executionCourseID");
+    private String getExecutionCourseID(HttpServletRequest request) {
+        return request.getParameter("executionCourseID");
     }
 
 }

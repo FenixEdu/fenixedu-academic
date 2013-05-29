@@ -36,14 +36,14 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ManageSpaceResponsibilityDA extends FenixDispatchAction {
 
     public ActionForward showSpaceResponsibility(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         readAndSetAllAttributes(request);
         return mapping.findForward("showSpaceResponsibility");
     }
 
     public ActionForward deleteSpaceResponsibility(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         SpaceResponsibility spaceResponsibility = getSpaceResponsibility(request);
 
@@ -56,7 +56,7 @@ public class ManageSpaceResponsibilityDA extends FenixDispatchAction {
         return showSpaceResponsibility(mapping, form, request, response);
     }
 
-    private void readAndSetAllAttributes(HttpServletRequest request) throws  FenixServiceException {
+    private void readAndSetAllAttributes(HttpServletRequest request) throws FenixServiceException {
 
         SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
         setSpaceInformation(request, spaceInformation);
@@ -65,7 +65,7 @@ public class ManageSpaceResponsibilityDA extends FenixDispatchAction {
     }
 
     public ActionForward prepareEditSpaceResponsibility(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
         setSpaceInformation(request, spaceInformation);
@@ -76,7 +76,7 @@ public class ManageSpaceResponsibilityDA extends FenixDispatchAction {
     }
 
     public ActionForward manageResponsabilityInterval(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
         setSpaceInformation(request, spaceInformation);
@@ -86,7 +86,7 @@ public class ManageSpaceResponsibilityDA extends FenixDispatchAction {
     }
 
     public ActionForward prepareAddExternalUnit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
         setSpaceInformation(request, spaceInformation);
@@ -122,24 +122,20 @@ public class ManageSpaceResponsibilityDA extends FenixDispatchAction {
         final String spaceInformationIDString =
                 request.getParameterMap().containsKey("spaceInformationID") ? request.getParameter("spaceInformationID") : (String) request
                         .getAttribute("spaceInformationID");
-        final Integer spaceInformationID = spaceInformationIDString != null ? Integer.valueOf(spaceInformationIDString) : null;
-        return AbstractDomainObject.fromExternalId(spaceInformationID);
+        return AbstractDomainObject.fromExternalId(spaceInformationIDString);
     }
 
     private SpaceResponsibility getSpaceResponsibility(final HttpServletRequest request) {
         final String spaceResponsibilityIDString =
                 request.getParameterMap().containsKey("spaceResponsibilityID") ? request.getParameter("spaceResponsibilityID") : (String) request
                         .getAttribute("spaceResponsibilityID");
-        final Integer spaceResponsibilityID =
-                spaceResponsibilityIDString != null ? Integer.valueOf(spaceResponsibilityIDString) : null;
-        return (SpaceResponsibility) AbstractDomainObject.fromExternalId(spaceResponsibilityID);
+        return (SpaceResponsibility) AbstractDomainObject.fromExternalId(spaceResponsibilityIDString);
     }
 
     private Unit getResponsibleUnit(final HttpServletRequest request) {
         final String unitIDString =
                 request.getParameterMap().containsKey("unitID") ? request.getParameter("unitID") : (String) request
                         .getAttribute("unitID");
-        final Integer unitID = unitIDString != null ? Integer.valueOf(unitIDString) : null;
-        return (Unit) AbstractDomainObject.fromExternalId(unitID);
+        return (Unit) AbstractDomainObject.fromExternalId(unitIDString);
     }
 }

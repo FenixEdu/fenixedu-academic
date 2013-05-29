@@ -17,8 +17,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
-
 public abstract class UnitSiteAnnouncementManagement extends AnnouncementManagement {
 
     @Override
@@ -42,13 +40,7 @@ public abstract class UnitSiteAnnouncementManagement extends AnnouncementManagem
     }
 
     protected UnitSite getSite(HttpServletRequest request) {
-        Integer oid = getId(request.getParameter("oid"));
-
-        if (oid == null) {
-            return null;
-        }
-
-        return (UnitSite) AbstractDomainObject.fromExternalId(oid);
+        return getDomainObject(request, "oid");
     }
 
     protected Unit getUnit(HttpServletRequest request) {

@@ -11,7 +11,7 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class InfoLessonInstance extends InfoShowOccupation {
 
-    private LessonInstance lessonInstanceReference;
+    private final LessonInstance lessonInstanceReference;
 
     public InfoLessonInstance(LessonInstance lessonInstance) {
         this.lessonInstanceReference = lessonInstance;
@@ -33,7 +33,7 @@ public class InfoLessonInstance extends InfoShowOccupation {
     }
 
     @Override
-    public Integer getExternalId() {
+    public String getExternalId() {
         return getLessonInstance().getExternalId();
     }
 

@@ -29,7 +29,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class DeleteProjectProposal {
 
-    protected Boolean run(Integer objectCode, Integer groupPropertiesCode, Integer executionCourseCode,
+    protected Boolean run(String objectCode, String groupPropertiesCode, String executionCourseCode,
             String withdrawalPersonUsername) throws FenixServiceException {
 
         Person withdrawalPerson = Teacher.readTeacherByUsername(withdrawalPersonUsername).getPerson();
@@ -117,7 +117,7 @@ public class DeleteProjectProposal {
     private static final DeleteProjectProposal serviceInstance = new DeleteProjectProposal();
 
     @Service
-    public static Boolean runDeleteProjectProposal(Integer objectCode, Integer groupPropertiesCode, Integer executionCourseCode,
+    public static Boolean runDeleteProjectProposal(String objectCode, String groupPropertiesCode, String executionCourseCode,
             String withdrawalPersonUsername) throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(objectCode);
         return serviceInstance.run(objectCode, groupPropertiesCode, executionCourseCode, withdrawalPersonUsername);

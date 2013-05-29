@@ -30,7 +30,7 @@ public class ReadSubstituteCandidates {
                     || candidateList[i].equals(SituationName.SUBSTITUTE_CONDICIONAL_FINALIST_STRING)
                     || candidateList[i].equals(SituationName.SUBSTITUTE_CONDICIONAL_OTHER_STRING)) {
 
-                Integer externalId = new Integer(ids[i]);
+                String externalId = ids[i];
 
                 MasterDegreeCandidate masterDegreeCandidateToWrite = AbstractDomainObject.fromExternalId(externalId);
                 result.add(InfoMasterDegreeCandidateWithInfoPerson.newInfoFromDomain(masterDegreeCandidateToWrite));

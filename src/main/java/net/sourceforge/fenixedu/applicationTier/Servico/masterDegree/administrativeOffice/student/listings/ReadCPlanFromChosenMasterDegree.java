@@ -19,7 +19,7 @@ public class ReadCPlanFromChosenMasterDegree {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
-    public static List run(Integer externalId) throws FenixServiceException {
+    public static List run(String externalId) throws FenixServiceException {
         Degree degree = AbstractDomainObject.fromExternalId(externalId);
 
         List<InfoDegreeCurricularPlan> result = new ArrayList<InfoDegreeCurricularPlan>();

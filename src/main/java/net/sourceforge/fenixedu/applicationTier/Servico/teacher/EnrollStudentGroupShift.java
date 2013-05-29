@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -25,7 +24,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class EnrollStudentGroupShift {
 
-    protected Boolean run(Integer executionCourseCode, Integer studentGroupCode, Integer groupPropertiesCode, Integer newShiftCode)
+    protected Boolean run(String executionCourseCode, String studentGroupCode, String groupPropertiesCode, String newShiftCode)
             throws FenixServiceException {
 
         Grouping grouping = AbstractDomainObject.fromExternalId(groupPropertiesCode);
@@ -60,8 +59,8 @@ public class EnrollStudentGroupShift {
     private static final EnrollStudentGroupShift serviceInstance = new EnrollStudentGroupShift();
 
     @Service
-    public static Boolean runEnrollStudentGroupShift(Integer executionCourseCode, Integer studentGroupCode,
-            Integer groupPropertiesCode, Integer newShiftCode) throws FenixServiceException, NotAuthorizedException {
+    public static Boolean runEnrollStudentGroupShift(String executionCourseCode, String studentGroupCode,
+            String groupPropertiesCode, String newShiftCode) throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseCode);
         return serviceInstance.run(executionCourseCode, studentGroupCode, groupPropertiesCode, newShiftCode);
     }

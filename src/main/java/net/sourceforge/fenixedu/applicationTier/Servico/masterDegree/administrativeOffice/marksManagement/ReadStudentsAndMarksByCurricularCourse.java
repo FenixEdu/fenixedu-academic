@@ -36,7 +36,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ReadStudentsAndMarksByCurricularCourse {
 
     @Service
-    public static InfoSiteEnrolmentEvaluation run(Integer curricularCourseCode, String yearString) throws FenixServiceException {
+    public static InfoSiteEnrolmentEvaluation run(String curricularCourseCode, String yearString) throws FenixServiceException {
 
         List infoEnrolmentEvaluations = new ArrayList();
         Date lastEvaluationDate = null;

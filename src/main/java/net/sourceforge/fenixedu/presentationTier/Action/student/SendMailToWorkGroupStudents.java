@@ -31,8 +31,8 @@ public class SendMailToWorkGroupStudents extends FenixDispatchAction {
 
     public ActionForward sendEmail(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        Integer executionCourseCode = Integer.parseInt(request.getParameter("objectCode"));
-        Integer studentGroupCode = Integer.parseInt(request.getParameter("studentGroupCode"));
+        String executionCourseCode = request.getParameter("objectCode");
+        String studentGroupCode = request.getParameter("studentGroupCode");
         ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseCode);
         StudentGroup studentGroup = AbstractDomainObject.fromExternalId(studentGroupCode);
         Group groupToSend = new StudentGroupStudentsGroup(studentGroup);
@@ -46,8 +46,8 @@ public class SendMailToWorkGroupStudents extends FenixDispatchAction {
 
     public ActionForward sendGroupingEmail(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        Integer executionCourseCode = Integer.parseInt(request.getParameter("objectCode"));
-        Integer groupingCode = Integer.parseInt(request.getParameter("groupingCode"));
+        String executionCourseCode = request.getParameter("objectCode");
+        String groupingCode = request.getParameter("groupingCode");
         ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseCode);
         Grouping grouping = AbstractDomainObject.fromExternalId(groupingCode);
         Group groupToSend = new GroupingGroup(grouping);

@@ -31,7 +31,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class PrepareCreateStudentGroup {
 
-    protected ISiteComponent run(Integer executionCourseCode, Integer groupPropertiesCode) throws ExistingServiceException {
+    protected ISiteComponent run(String executionCourseCode, String groupPropertiesCode) throws ExistingServiceException {
 
         final Grouping grouping = AbstractDomainObject.fromExternalId(groupPropertiesCode);
 
@@ -78,7 +78,7 @@ public class PrepareCreateStudentGroup {
     private static final PrepareCreateStudentGroup serviceInstance = new PrepareCreateStudentGroup();
 
     @Service
-    public static ISiteComponent runPrepareCreateStudentGroup(Integer executionCourseCode, Integer groupPropertiesCode)
+    public static ISiteComponent runPrepareCreateStudentGroup(String executionCourseCode, String groupPropertiesCode)
             throws ExistingServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseCode);
         return serviceInstance.run(executionCourseCode, groupPropertiesCode);

@@ -13,9 +13,9 @@ public class TutorshipManagementBean implements Serializable {
 
     private Teacher teacher;
 
-    private Integer executionDegreeID;
+    private String executionDegreeID;
 
-    private Integer degreeCurricularPlanID;
+    private String degreeCurricularPlanID;
 
     private Month tutorshipEndMonth;
 
@@ -34,32 +34,32 @@ public class TutorshipManagementBean implements Serializable {
         this.setDefaultFields();
     }
 
-    public TutorshipManagementBean(Integer executionDegreeID, Integer degreeCurricularPlanID) {
+    public TutorshipManagementBean(String executionDegreeID, String degreeCurricularPlanID) {
         this();
         this.executionDegreeID = executionDegreeID;
         this.degreeCurricularPlanID = degreeCurricularPlanID;
     }
 
-    public TutorshipManagementBean(Integer executionDegreeID, Integer degreeCurricularPlanID, String teacherId) {
+    public TutorshipManagementBean(String executionDegreeID, String degreeCurricularPlanID, String teacherId) {
         this();
         this.executionDegreeID = executionDegreeID;
         this.degreeCurricularPlanID = degreeCurricularPlanID;
         this.teacherId = teacherId;
     }
 
-    public Integer getDegreeCurricularPlanID() {
+    public String getDegreeCurricularPlanID() {
         return degreeCurricularPlanID;
     }
 
-    public void setDegreeCurricularPlanID(Integer degreeCurricularPlanID) {
+    public void setDegreeCurricularPlanID(String degreeCurricularPlanID) {
         this.degreeCurricularPlanID = degreeCurricularPlanID;
     }
 
-    public Integer getExecutionDegreeID() {
+    public String getExecutionDegreeID() {
         return executionDegreeID;
     }
 
-    public void setExecutionDegreeID(Integer executionDegreeID) {
+    public void setExecutionDegreeID(String executionDegreeID) {
         this.executionDegreeID = executionDegreeID;
     }
 

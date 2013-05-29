@@ -46,7 +46,7 @@ public class ShowExecutionCourseSitesDispatchAction extends FenixDispatchAction 
         final Degree degree = ShowDegreeSiteAction.getDegree(request);
 
         // degreeID
-        final Integer degreeOID = FenixContextDispatchAction.getFromRequest("degreeID", request);
+        final String degreeOID = FenixContextDispatchAction.getFromRequest("degreeID", request);
         getDegreeAndSetInfoDegree(request, degreeOID);
         final List<ExecutionCourseView> executionCourseViews = getExecutionCourseViews(request, degree);
         final InfoExecutionPeriod infoExecutionPeriod = getPreviousExecutionPeriod(request);
@@ -56,7 +56,7 @@ public class ShowExecutionCourseSitesDispatchAction extends FenixDispatchAction 
         return mapping.findForward("show-exeution-course-site-list");
     }
 
-    private Degree getDegreeAndSetInfoDegree(HttpServletRequest request, Integer degreeOID) {
+    private Degree getDegreeAndSetInfoDegree(HttpServletRequest request, String degreeOID) {
         final Degree degree = AbstractDomainObject.fromExternalId(degreeOID);
 
         final InfoDegree infoDegree = InfoDegree.newInfoFromDomain(degree);

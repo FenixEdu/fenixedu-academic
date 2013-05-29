@@ -46,7 +46,7 @@ public class SeniorInformationAction extends FenixDispatchAction {
 
         Registration registration = null;
 
-        final Integer registrationOID = getIntegerFromRequest(request, "registrationOID");
+        final String registrationOID = getFromRequest(request, "registrationOID").toString();
         final Student loggedStudent = getUserView(request).getPerson().getStudent();
 
         if (registrationOID != null) {

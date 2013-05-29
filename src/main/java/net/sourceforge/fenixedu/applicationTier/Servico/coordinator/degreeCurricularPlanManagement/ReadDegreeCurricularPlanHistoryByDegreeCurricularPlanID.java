@@ -19,7 +19,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ReadDegreeCurricularPlanHistoryByDegreeCurricularPlanID {
     @Checked("RolePredicates.COORDINATOR_PREDICATE")
     @Service
-    public static InfoDegreeCurricularPlan run(Integer degreeCurricularPlanID) throws FenixServiceException {
+    public static InfoDegreeCurricularPlan run(String degreeCurricularPlanID) throws FenixServiceException {
 
         InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
 

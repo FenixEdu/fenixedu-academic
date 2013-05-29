@@ -84,9 +84,11 @@ public class AlumniSearchBean extends AlumniMailSendToBean {
         final String finalYear = values[3];
 
         ExecutionYear first =
-                (firstYear.equals("null") ? ExecutionYear.readFirstExecutionYear() : AbstractDomainObject.fromExternalId(Integer.valueOf(firstYear)));
+                (firstYear.equals("null") ? ExecutionYear.readFirstExecutionYear() : AbstractDomainObject
+                        .<ExecutionYear> fromExternalId(firstYear));
         ExecutionYear last =
-                (finalYear.equals("null") ? ExecutionYear.readLastExecutionYear() : AbstractDomainObject.fromExternalId(Integer.valueOf(finalYear)));
+                (finalYear.equals("null") ? ExecutionYear.readLastExecutionYear() : AbstractDomainObject
+                        .<ExecutionYear> fromExternalId(finalYear));
 
         if (values[0].equals("null")) {
             return new AlumniSearchBean(values[1], first, last);

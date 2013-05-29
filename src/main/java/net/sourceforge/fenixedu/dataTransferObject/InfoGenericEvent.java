@@ -49,7 +49,7 @@ public class InfoGenericEvent extends InfoShowOccupation implements GanttDiagram
     }
 
     @Override
-    public Integer getExternalId() {
+    public String getExternalId() {
         final GenericEvent genericEvent = getGenericEvent();
         return genericEvent == null ? null : genericEvent.getExternalId();
     }

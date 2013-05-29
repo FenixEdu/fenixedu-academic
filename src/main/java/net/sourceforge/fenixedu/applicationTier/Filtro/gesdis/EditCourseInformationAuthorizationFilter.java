@@ -32,8 +32,7 @@ public class EditCourseInformationAuthorizationFilter extends AuthorizationByRol
         return RoleType.TEACHER;
     }
 
-    public void execute(Integer courseReportID, InfoCourseReport infoCourseReport, String newReport)
-            throws NotAuthorizedException {
+    public void execute(String courseReportID, InfoCourseReport infoCourseReport, String newReport) throws NotAuthorizedException {
         IUserView id = AccessControl.getUserView();
 
         try {
@@ -50,8 +49,7 @@ public class EditCourseInformationAuthorizationFilter extends AuthorizationByRol
         final Person person = id.getPerson();
 
         InfoExecutionCourse infoExecutionCourse = infoCourseReport.getInfoExecutionCourse();
-        ExecutionCourse executionCourse =
-                AbstractDomainObject.fromExternalId(infoExecutionCourse.getExternalId());
+        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(infoExecutionCourse.getExternalId());
 
         List<Professorship> responsiblesFor = executionCourse.responsibleFors();
 

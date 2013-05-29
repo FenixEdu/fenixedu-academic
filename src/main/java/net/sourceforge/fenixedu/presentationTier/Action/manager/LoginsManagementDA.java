@@ -194,25 +194,23 @@ public class LoginsManagementDA extends FenixDispatchAction {
 
     private Person getPersonFromParameter(HttpServletRequest request) {
         String personIDString = request.getParameter("personID");
-        return (Person) ((StringUtils.isEmpty(personIDString)) ? null : AbstractDomainObject.fromExternalId(Integer
-                .valueOf(personIDString)));
+        return (Person) ((StringUtils.isEmpty(personIDString)) ? null : AbstractDomainObject.fromExternalId(personIDString));
     }
 
     private Login getLoginFromParameter(HttpServletRequest request) {
         String loginIDString = request.getParameter("loginID");
-        return (Login) ((StringUtils.isEmpty(loginIDString)) ? null : AbstractDomainObject.fromExternalId(Integer
-                .valueOf(loginIDString)));
+        return (Login) ((StringUtils.isEmpty(loginIDString)) ? null : AbstractDomainObject.fromExternalId(loginIDString));
     }
 
     private LoginAlias getLoginAliasFromParameter(HttpServletRequest request) {
         String loginAliasIDString = request.getParameter("loginAliasID");
-        return (StringUtils.isEmpty(loginAliasIDString)) ? null : AbstractDomainObject.fromExternalId(Integer
-                .valueOf(loginAliasIDString));
+        return (LoginAlias) ((StringUtils.isEmpty(loginAliasIDString)) ? null : AbstractDomainObject
+                .fromExternalId(loginAliasIDString));
     }
 
     private LoginPeriod getLoginPeriodFromParameter(HttpServletRequest request) {
         String loginPeriodIDString = request.getParameter("loginPeriodID");
-        return (StringUtils.isEmpty(loginPeriodIDString)) ? null : AbstractDomainObject.fromExternalId(Integer
-                .valueOf(loginPeriodIDString));
+        return (LoginPeriod) ((StringUtils.isEmpty(loginPeriodIDString)) ? null : AbstractDomainObject
+                .fromExternalId(loginPeriodIDString));
     }
 }

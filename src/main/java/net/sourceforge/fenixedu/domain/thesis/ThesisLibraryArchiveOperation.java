@@ -20,9 +20,9 @@ public class ThesisLibraryArchiveOperation extends ThesisLibraryArchiveOperation
         setLibraryReference(libraryReference);
     }
 
-    public ThesisLibraryArchiveOperation(Integer thesisId, Integer performerId, String comment) {
-        this(AbstractDomainObject.fromExternalId(thesisId), (Person) AbstractDomainObject.fromExternalId(
-                performerId), comment);
+    public ThesisLibraryArchiveOperation(String thesisId, String performerId, String comment) {
+        this(AbstractDomainObject.<Thesis> fromExternalId(thesisId), AbstractDomainObject.<Person> fromExternalId(performerId),
+                comment);
     }
 
     @Override

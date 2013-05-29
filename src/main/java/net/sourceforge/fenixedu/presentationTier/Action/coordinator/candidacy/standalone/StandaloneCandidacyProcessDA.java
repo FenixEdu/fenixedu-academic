@@ -57,7 +57,7 @@ public class StandaloneCandidacyProcessDA extends
 
     @Override
     public ActionForward executeSendToCoordinator(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         throw new RuntimeException("not allowed");
     }
 
@@ -97,7 +97,6 @@ public class StandaloneCandidacyProcessDA extends
 
     private DegreeCurricularPlan getDegreeCurricularPlan(final HttpServletRequest request) {
         final String param = request.getParameter("degreeCurricularPlanID");
-        return param == null || param.isEmpty() ? null : AbstractDomainObject.fromExternalId(new Integer(param));
+        return (DegreeCurricularPlan) (param == null || param.isEmpty() ? null : AbstractDomainObject.fromExternalId(param));
     }
-
 }

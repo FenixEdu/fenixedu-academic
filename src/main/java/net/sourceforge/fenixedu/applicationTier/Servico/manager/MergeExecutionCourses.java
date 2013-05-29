@@ -78,7 +78,7 @@ public class MergeExecutionCourses {
         private static final long serialVersionUID = 3761968254943244338L;
     }
 
-    protected void run(Integer executionCourseDestinationId, Integer executionCourseSourceId) throws FenixServiceException {
+    protected void run(String executionCourseDestinationId, String executionCourseSourceId) throws FenixServiceException {
 
         ServiceMonitoring.logService(this.getClass(), executionCourseDestinationId, executionCourseSourceId);
 

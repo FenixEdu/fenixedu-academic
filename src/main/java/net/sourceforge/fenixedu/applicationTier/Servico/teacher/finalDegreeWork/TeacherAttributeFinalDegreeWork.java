@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.finalDegreeWork;
 
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
@@ -18,7 +17,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class TeacherAttributeFinalDegreeWork {
 
     @Service
-    public static Boolean run(Integer selectedGroupProposalOID) throws FenixServiceException {
+    public static Boolean run(String selectedGroupProposalOID) throws FenixServiceException {
         final GroupProposal groupProposal = AbstractDomainObject.fromExternalId(selectedGroupProposalOID);
 
         if (groupProposal != null) {

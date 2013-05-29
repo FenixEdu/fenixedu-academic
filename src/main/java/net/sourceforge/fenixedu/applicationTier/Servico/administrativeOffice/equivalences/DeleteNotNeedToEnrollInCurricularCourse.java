@@ -3,7 +3,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.equivalences;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.AcademicAdministrativeOfficeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.DegreeAdministrativeOfficeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ManagerAuthorizationFilter;
@@ -20,7 +19,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class DeleteNotNeedToEnrollInCurricularCourse {
 
-    protected void run(Integer notNeedToEnrollInCurricularCourseID) {
+    protected void run(String notNeedToEnrollInCurricularCourseID) {
         NotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse =
                 AbstractDomainObject.fromExternalId(notNeedToEnrollInCurricularCourseID);
         notNeedToEnrollInCurricularCourse.delete();
@@ -31,7 +30,7 @@ public class DeleteNotNeedToEnrollInCurricularCourse {
     private static final DeleteNotNeedToEnrollInCurricularCourse serviceInstance = new DeleteNotNeedToEnrollInCurricularCourse();
 
     @Service
-    public static void runDeleteNotNeedToEnrollInCurricularCourse(Integer notNeedToEnrollInCurricularCourseID)
+    public static void runDeleteNotNeedToEnrollInCurricularCourse(String notNeedToEnrollInCurricularCourseID)
             throws NotAuthorizedException {
         try {
             ManagerAuthorizationFilter.instance.execute();

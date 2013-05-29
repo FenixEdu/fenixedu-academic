@@ -50,14 +50,14 @@ public abstract class ForunsManagement extends FenixDispatchAction {
     private static final Integer DEFAULT_PAGE_SIZE = 20;
 
     public ActionForward viewForum(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         prepareViewForum(request);
         return mapping.findForward("viewForum");
     }
 
     public ActionForward prepareCreateThreadAndMessage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         request.setAttribute("forum", getRequestedForum(request));
         request.setAttribute("person", getLoggedPerson(request));
@@ -67,14 +67,14 @@ public abstract class ForunsManagement extends FenixDispatchAction {
     }
 
     public ActionForward createThreadAndMessage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         CreateConversationThreadAndMessageBean createConversationThreadAndMessageBean =
                 (CreateConversationThreadAndMessageBean) RenderUtils.getViewState("createThreadAndMessage").getMetaObject()
                         .getObject();
 
         try {
-            CreateConversationThreadAndMessage.runCreateConversationThreadAndMessage( createConversationThreadAndMessageBean );
+            CreateConversationThreadAndMessage.runCreateConversationThreadAndMessage(createConversationThreadAndMessageBean);
         } catch (DomainException e) {
             ActionMessages actionMessages = new ActionMessages();
             actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage(e.getKey()));
@@ -111,7 +111,7 @@ public abstract class ForunsManagement extends FenixDispatchAction {
     }
 
     public ActionForward viewThread(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException,  IOException {
+            HttpServletResponse response) throws FenixServiceException, IOException {
 
         if (getLoggedPerson(request) == null) {
             RequestUtils.sendLoginRedirect(request, response);
@@ -136,7 +136,7 @@ public abstract class ForunsManagement extends FenixDispatchAction {
                 (CreateConversationMessageBean) RenderUtils.getViewState("createMessage").getMetaObject().getObject();
 
         try {
-            CreateConversationMessage.runCreateConversationMessage( createConversationMessageBean );
+            CreateConversationMessage.runCreateConversationMessage(createConversationMessageBean);
         } catch (DomainException e) {
             ActionMessages actionMessages = new ActionMessages();
             actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage(e.getKey()));
@@ -151,7 +151,7 @@ public abstract class ForunsManagement extends FenixDispatchAction {
     }
 
     public ActionForward emailSubscribe(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         AddForumEmailSubscriber.run(getRequestedForum(request), getLoggedPerson(request));
 
@@ -161,7 +161,7 @@ public abstract class ForunsManagement extends FenixDispatchAction {
     }
 
     public ActionForward emailUnsubscribe(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         RemoveForumEmailSubscriber.run(getRequestedForum(request), getLoggedPerson(request));
 
@@ -170,9 +170,8 @@ public abstract class ForunsManagement extends FenixDispatchAction {
         return mapping.findForward("viewForum");
     }
 
-    protected Integer getQuotedMessageId(HttpServletRequest request) {
-        String message = request.getParameter("quoteMessageId");
-        return message == null ? null : Integer.valueOf(message);
+    protected String getQuotedMessageId(HttpServletRequest request) {
+        return request.getParameter("quoteMessageId");
     }
 
     protected Integer getPageNumber(HttpServletRequest request) {
@@ -185,11 +184,11 @@ public abstract class ForunsManagement extends FenixDispatchAction {
     }
 
     protected ConversationThread getRequestedThread(HttpServletRequest request) {
-        return (ConversationThread) AbstractDomainObject.fromExternalId(Integer.valueOf(request.getParameter("threadId")));
+        return (ConversationThread) AbstractDomainObject.fromExternalId(request.getParameter("threadId"));
     }
 
     protected Forum getRequestedForum(HttpServletRequest request) {
-        return (Forum) AbstractDomainObject.fromExternalId(Integer.valueOf(request.getParameter("forumId")));
+        return (Forum) AbstractDomainObject.fromExternalId(request.getParameter("forumId"));
     }
 
     private List<Content> getContentToDisplay(List<Node> nodes, Integer pageNumber, Integer pageSize) {
@@ -210,7 +209,7 @@ public abstract class ForunsManagement extends FenixDispatchAction {
 
     private MultiLanguageString getQuotationText(HttpServletRequest request) {
 
-        Integer quotedMessageId = this.getQuotedMessageId(request);
+        String quotedMessageId = this.getQuotedMessageId(request);
         String quotationText = null;
         if (quotedMessageId != null) {
             MessageResources resources = this.getResources(request, "MESSAGING_RESOURCES");
@@ -226,7 +225,7 @@ public abstract class ForunsManagement extends FenixDispatchAction {
         return new MultiLanguageString(quotationText);
     }
 
-    private void prepareViewForum(HttpServletRequest request) throws  FenixServiceException {
+    private void prepareViewForum(HttpServletRequest request) throws FenixServiceException {
 
         Forum forum = this.getRequestedForum(request);
         request.setAttribute("forum", forum);

@@ -42,7 +42,7 @@ import pt.ist.fenixframework.pstm.Transaction;
 
 public class InsertDistributedTest {
 
-    protected void run(Integer executionCourseId, Integer testId, String testInformation, String evaluationTitle,
+    protected void run(String executionCourseId, String testId, String testInformation, String evaluationTitle,
             Calendar beginDate, Calendar beginHour, Calendar endDate, Calendar endHour, TestType testType,
             CorrectionAvailability correctionAvaiability, Boolean imsFeedback, List<InfoStudent> infoStudentList,
             String contextPath) throws FenixServiceException {
@@ -65,7 +65,7 @@ public class InsertDistributedTest {
 
             final String replacedContextPath = contextPath.replace('\\', '/');
 
-            final Integer distributedTestId = distributedTestCreator.distributedTestId;
+            final String distributedTestId = distributedTestCreator.distributedTestId;
             if (distributedTestId == null) {
                 throw new Error("Creator thread was unable to create a distributed test!");
             }
@@ -80,9 +80,9 @@ public class InsertDistributedTest {
 
     public static class DistributedTestCreator extends Thread implements TransactionalCommand {
 
-        private final Integer executionCourseId;
+        private final String executionCourseId;
 
-        private final Integer testId;
+        private final String testId;
 
         private final String testInformation;
 
@@ -104,9 +104,9 @@ public class InsertDistributedTest {
 
         private final IUserView userView;
 
-        private Integer tempDistributedTestId = null;
+        private String tempDistributedTestId = null;
 
-        public Integer distributedTestId = null;
+        public String distributedTestId = null;
 
         public DistributedTestCreator(final ExecutionCourse executionCourse, final Test test, final String testInformation,
                 final String evaluationTitle, final Calendar beginDate, final Calendar beginHour, final Calendar endDate,
@@ -189,9 +189,9 @@ public class InsertDistributedTest {
     }
 
     private static class QuestionPair {
-        private final Integer testQuestionId;
+        private final String testQuestionId;
 
-        private final Integer questionId;
+        private final String questionId;
 
         public QuestionPair(final TestQuestion testQuestion, final Question question) {
             testQuestionId = testQuestion.getExternalId();
@@ -254,13 +254,13 @@ public class InsertDistributedTest {
 
         private final List<InfoStudent> infoStudentList;
 
-        private final Integer distributedTestId;
+        private final String distributedTestId;
 
-        private final Integer testId;
+        private final String testId;
 
         private final String replacedContextPath;
 
-        public Distributor(final List<InfoStudent> infoStudentList, final Integer distributedTestId, final Integer testId,
+        public Distributor(final List<InfoStudent> infoStudentList, final String distributedTestId, final String testId,
                 final String replacedContextPath) {
             this.infoStudentList = infoStudentList;
             this.distributedTestId = distributedTestId;
@@ -291,15 +291,15 @@ public class InsertDistributedTest {
             }
         }
 
-        protected static void runThread(final List<InfoStudent> infoStudentList, final Integer distributedTestId,
-                final Integer testId, final String replacedContextPath) throws InterruptedException {
+        protected static void runThread(final List<InfoStudent> infoStudentList, final String distributedTestId,
+                final String testId, final String replacedContextPath) throws InterruptedException {
             final Distributor distributor = new Distributor(infoStudentList, distributedTestId, testId, replacedContextPath);
             distributor.start();
             distributor.join();
         }
     }
 
-    private static void addAllQuestions(final List<Integer> questionList, final List<Question> visibleQuestions) {
+    private static void addAllQuestions(final List<String> questionList, final List<Question> visibleQuestions) {
         for (final Question question : visibleQuestions) {
             questionList.add(question.getExternalId());
         }
@@ -307,7 +307,7 @@ public class InsertDistributedTest {
 
     public static class DistributeForStudentThread extends Thread implements TransactionalCommand {
 
-        private final Integer distributedTestId;
+        private final String distributedTestId;
 
         private final String replacedContextPath;
 
@@ -315,7 +315,7 @@ public class InsertDistributedTest {
 
         private final Collection<QuestionPair> questionList;
 
-        public DistributeForStudentThread(final Integer distributedTestId, final String replacedContextPath,
+        public DistributeForStudentThread(final String distributedTestId, final String replacedContextPath,
                 final InfoStudent infoStudent, final Collection<QuestionPair> questionList) {
             this.distributedTestId = distributedTestId;
             this.replacedContextPath = replacedContextPath;
@@ -367,7 +367,7 @@ public class InsertDistributedTest {
                     .parseSubQuestion(question, path) : question;
         }
 
-        protected static void runThread(final Integer distributedTestId, final String replacedContextPath,
+        protected static void runThread(final String distributedTestId, final String replacedContextPath,
                 final InfoStudent infoStudent, final Collection<QuestionPair> questionList) throws InterruptedException {
             final DistributeForStudentThread distributeForStudentThread =
                     new DistributeForStudentThread(distributedTestId, replacedContextPath, infoStudent, questionList);
@@ -382,7 +382,7 @@ public class InsertDistributedTest {
     private static final InsertDistributedTest serviceInstance = new InsertDistributedTest();
 
     @Service
-    public static void runInsertDistributedTest(Integer executionCourseId, Integer testId, String testInformation,
+    public static void runInsertDistributedTest(String executionCourseId, String testId, String testInformation,
             String evaluationTitle, Calendar beginDate, Calendar beginHour, Calendar endDate, Calendar endHour,
             TestType testType, CorrectionAvailability correctionAvaiability, Boolean imsFeedback,
             List<InfoStudent> infoStudentList, String contextPath) throws FenixServiceException, NotAuthorizedException {

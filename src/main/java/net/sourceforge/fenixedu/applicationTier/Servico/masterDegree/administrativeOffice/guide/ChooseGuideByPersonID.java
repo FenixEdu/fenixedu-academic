@@ -28,7 +28,7 @@ public class ChooseGuideByPersonID {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
-    public static List run(Integer personID) throws Exception {
+    public static List run(String personID) throws Exception {
 
         // Check if person exists
         Person person = (Person) AbstractDomainObject.fromExternalId(personID);

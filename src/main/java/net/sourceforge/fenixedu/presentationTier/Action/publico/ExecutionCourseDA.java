@@ -73,7 +73,7 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
 
         ExecutionCourse executionCourse = null;
         if (executionCourseIDString != null) {
-            executionCourse = AbstractDomainObject.fromExternalId(Integer.valueOf(executionCourseIDString));
+            executionCourse = AbstractDomainObject.fromExternalId(executionCourseIDString);
         } else {
             ExecutionCourseSite site =
                     (ExecutionCourseSite) AbstractFunctionalityContext.getCurrentContext(request).getSelectedContainer();
@@ -147,13 +147,13 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
             }
             final String shiftID = (String) dynaActionForm.get("shiftID");
             if (shiftID != null && shiftID.length() > 0) {
-                summariesSearchBean.setShift(AbstractDomainObject.fromExternalId(Integer.valueOf(shiftID)));
+                summariesSearchBean.setShift(AbstractDomainObject.<Shift> fromExternalId(shiftID));
             }
             final String professorshipID = (String) dynaActionForm.get("professorshipID");
             if (professorshipID != null && professorshipID.equals("-1")) {
                 summariesSearchBean.setShowOtherProfessors(Boolean.TRUE);
             } else if (professorshipID != null && !professorshipID.equals("0")) {
-                summariesSearchBean.setProfessorship(AbstractDomainObject.fromExternalId(Integer.valueOf(professorshipID)));
+                summariesSearchBean.setProfessorship(AbstractDomainObject.<Professorship> fromExternalId(professorshipID));
             }
         }
         return mapping.findForward("execution-course-summaries");
@@ -301,14 +301,12 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
     }
 
     protected StudentGroup getStudentGroup(final HttpServletRequest request) {
-        final Integer studentGroupID = Integer.valueOf(request.getParameter("studentGroupID"));
-        return AbstractDomainObject.fromExternalId(studentGroupID);
+        return AbstractDomainObject.fromExternalId(request.getParameter("studentGroupID"));
     }
 
     protected Shift getShift(final HttpServletRequest request) {
         if (request.getParameter("shiftID") != null) {
-            final Integer shiftID = Integer.valueOf(request.getParameter("shiftID"));
-            return AbstractDomainObject.fromExternalId(shiftID);
+            return AbstractDomainObject.fromExternalId(request.getParameter("shiftID"));
         } else {
             return null;
         }
@@ -451,8 +449,7 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
 
     public ActionForward showInquiryCourseResult(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        final StudentInquiriesCourseResult courseResult =
-                AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "resultId"));
+        final StudentInquiriesCourseResult courseResult = getDomainObject(request, "resultId");
         request.setAttribute("inquiryResult", courseResult);
 
         final ExecutionSemester executionPeriod = courseResult.getExecutionCourse().getExecutionPeriod();
@@ -466,8 +463,7 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
 
     public ActionForward showInquiryTeachingResult(ActionMapping actionMapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        final StudentInquiriesTeachingResult teachingResult =
-                AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "resultId"));
+        final StudentInquiriesTeachingResult teachingResult = getDomainObject(request, "resultId");
         request.setAttribute("inquiryResult", teachingResult);
 
         final ExecutionSemester executionPeriod = teachingResult.getProfessorship().getExecutionCourse().getExecutionPeriod();
@@ -482,8 +478,7 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
     public ActionForward showInquiryTeachingReport(ActionMapping actionMapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) {
 
-        final TeachingInquiry teachingInquiry =
-                AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "teachingInquiry"));
+        final TeachingInquiry teachingInquiry = getDomainObject(request, "teachingInquiry");
         request.setAttribute("teachingInquiry", teachingInquiry);
 
         final ExecutionSemester executionPeriod = teachingInquiry.getProfessorship().getExecutionCourse().getExecutionPeriod();
@@ -499,9 +494,7 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
     public ActionForward showYearDelegateInquiryReport(ActionMapping actionMapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        final YearDelegateCourseInquiry delegateCourseInquiry =
-                AbstractDomainObject.fromExternalId(
-                        getIntegerFromRequest(request, "yearDelegateInquiryId"));
+        final YearDelegateCourseInquiry delegateCourseInquiry = getDomainObject(request, "yearDelegateInquiryId");
 
         request.setAttribute("delegateInquiryDTO", new YearDelegateCourseInquiryDTO(delegateCourseInquiry));
         return new ActionForward(null, "/inquiries/showFilledDelegateInquiry.jsp", false, "/coordinator");

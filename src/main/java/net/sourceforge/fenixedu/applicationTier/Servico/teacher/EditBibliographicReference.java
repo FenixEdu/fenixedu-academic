@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseAndBibliographicReferenceLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -15,11 +14,10 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class EditBibliographicReference {
 
-    protected Boolean run(Integer bibliographicReferenceID, String newTitle, String newAuthors, String newReference,
+    protected Boolean run(String bibliographicReferenceID, String newTitle, String newAuthors, String newReference,
             String newYear, Boolean optional) throws FenixServiceException {
 
-        final BibliographicReference bibliographicReference =
-                AbstractDomainObject.fromExternalId(bibliographicReferenceID);
+        final BibliographicReference bibliographicReference = AbstractDomainObject.fromExternalId(bibliographicReferenceID);
         if (bibliographicReference == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -33,7 +31,7 @@ public class EditBibliographicReference {
     private static final EditBibliographicReference serviceInstance = new EditBibliographicReference();
 
     @Service
-    public static Boolean runEditBibliographicReference(Integer bibliographicReferenceID, String newTitle, String newAuthors,
+    public static Boolean runEditBibliographicReference(String bibliographicReferenceID, String newTitle, String newAuthors,
             String newReference, String newYear, Boolean optional) throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseAndBibliographicReferenceLecturingTeacherAuthorizationFilter.instance.execute(bibliographicReferenceID);
         return serviceInstance.run(bibliographicReferenceID, newTitle, newAuthors, newReference, newYear, optional);

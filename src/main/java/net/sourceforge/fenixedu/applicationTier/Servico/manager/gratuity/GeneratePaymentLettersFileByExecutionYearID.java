@@ -169,7 +169,7 @@ public class GeneratePaymentLettersFileByExecutionYearID {
 
     @Checked("RolePredicates.MANAGER_PREDICATE")
     @Service
-    public static byte[] run(Integer executionYearID, Date paymentEndDate) throws FenixServiceException {
+    public static byte[] run(String executionYearID, Date paymentEndDate) throws FenixServiceException {
         ExecutionYear executionYear = AbstractDomainObject.fromExternalId(executionYearID);
         InsuranceValue insuranceValue = executionYear.getInsuranceValue();
         if (insuranceValue == null) {
@@ -189,7 +189,7 @@ public class GeneratePaymentLettersFileByExecutionYearID {
         DecimalFormat decimalFormat = (DecimalFormat) numberFormat;
         decimalFormat.applyPattern("######.##");
 
-        Set<Integer> studentsWithInsuranceChecked = new HashSet<Integer>();
+        Set<String> studentsWithInsuranceChecked = new HashSet<String>();
 
         for (Iterator iter = executionDegreeList.iterator(); iter.hasNext();) {
 

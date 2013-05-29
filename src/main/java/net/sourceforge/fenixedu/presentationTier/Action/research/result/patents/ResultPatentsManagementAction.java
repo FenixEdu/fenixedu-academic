@@ -37,7 +37,7 @@ import pt.utl.ist.fenix.tools.file.FileManagerException;
 public class ResultPatentsManagementAction extends ResultsManagementAction {
 
     public ActionForward management(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         /*
          * for(Message message : RenderUtils.getViewState().getMessages()) {
@@ -50,7 +50,7 @@ public class ResultPatentsManagementAction extends ResultsManagementAction {
     }
 
     public ActionForward prepareDetails(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         final ResearchResultPatent patent = (ResearchResultPatent) getResultFromRequest(request);
         if (patent == null) {
             return management(mapping, form, request, response);
@@ -60,7 +60,7 @@ public class ResultPatentsManagementAction extends ResultsManagementAction {
     }
 
     public ActionForward createPatent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         final ResearchResultPatent patent = (ResearchResultPatent) getResultFromRequest(request);
 
@@ -74,7 +74,7 @@ public class ResultPatentsManagementAction extends ResultsManagementAction {
     }
 
     public ActionForward showPatent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         final ResearchResultPatent patent = (ResearchResultPatent) getResultFromRequest(request);
         if (patent == null) {
@@ -131,8 +131,8 @@ public class ResultPatentsManagementAction extends ResultsManagementAction {
     }
 
     public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws  FenixServiceException {
-        final Integer resultId = getRequestParameterAsInteger(request, "resultId");
+            throws FenixServiceException {
+        final String resultId = request.getParameter("resultId");
 
         if (getFromRequest(request, "cancel") != null) {
             ResearchResultPatent patent = (ResearchResultPatent) getResultByIdFromRequest(request);

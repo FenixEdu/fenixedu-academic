@@ -18,7 +18,7 @@ import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class CreateTSDTeacher {
-    protected Boolean run(String teacherName, Integer categoryId, Double requiredHours, Integer tsdId) {
+    protected Boolean run(String teacherName, String categoryId, Double requiredHours, String tsdId) {
 
         ProfessionalCategory category = AbstractDomainObject.fromExternalId(categoryId);
         TeacherServiceDistribution tsd = AbstractDomainObject.fromExternalId(tsdId);
@@ -51,7 +51,7 @@ public class CreateTSDTeacher {
     private static final CreateTSDTeacher serviceInstance = new CreateTSDTeacher();
 
     @Service
-    public static Boolean runCreateTSDTeacher(String teacherName, Integer categoryId, Double requiredHours, Integer tsdId)
+    public static Boolean runCreateTSDTeacher(String teacherName, String categoryId, Double requiredHours, String tsdId)
             throws NotAuthorizedException {
         try {
             DepartmentMemberAuthorizationFilter.instance.execute();

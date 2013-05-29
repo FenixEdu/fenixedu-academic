@@ -22,7 +22,7 @@ public class AddShiftsToSchoolClass {
         }
 
         for (final String shiftOID : shiftOIDs) {
-            final Shift shift = AbstractDomainObject.fromExternalId(new Integer(shiftOID));
+            final Shift shift = AbstractDomainObject.fromExternalId(shiftOID);
             if (shift == null) {
                 throw new InvalidArgumentsServiceException();
             }

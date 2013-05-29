@@ -15,7 +15,7 @@ import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class SetTSDProfessorship {
-    protected TSDProfessorship run(Integer tsdCourseId, Integer tsdTeacherId, Map<String, Object> tsdCourseParameters) {
+    protected TSDProfessorship run(String tsdCourseId, String tsdTeacherId, Map<String, Object> tsdCourseParameters) {
 
         TSDCourse tsdCourse = AbstractDomainObject.fromExternalId(tsdCourseId);
         TSDTeacher tsdTeacher = AbstractDomainObject.fromExternalId(tsdTeacherId);
@@ -38,7 +38,7 @@ public class SetTSDProfessorship {
     private static final SetTSDProfessorship serviceInstance = new SetTSDProfessorship();
 
     @Service
-    public static TSDProfessorship runSetTSDProfessorship(Integer tsdCourseId, Integer tsdTeacherId,
+    public static TSDProfessorship runSetTSDProfessorship(String tsdCourseId, String tsdTeacherId,
             Map<String, Object> tsdCourseParameters) throws NotAuthorizedException {
         try {
             DepartmentMemberAuthorizationFilter.instance.execute();

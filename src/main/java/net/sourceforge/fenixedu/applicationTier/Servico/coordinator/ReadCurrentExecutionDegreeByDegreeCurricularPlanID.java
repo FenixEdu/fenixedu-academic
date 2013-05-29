@@ -18,7 +18,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ReadCurrentExecutionDegreeByDegreeCurricularPlanID {
 
-    protected InfoExecutionDegree run(final Integer degreeCurricularPlanID) {
+    protected InfoExecutionDegree run(final String degreeCurricularPlanID) {
 
         final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
 
@@ -40,7 +40,7 @@ public class ReadCurrentExecutionDegreeByDegreeCurricularPlanID {
             new ReadCurrentExecutionDegreeByDegreeCurricularPlanID();
 
     @Service
-    public static InfoExecutionDegree runReadCurrentExecutionDegreeByDegreeCurricularPlanID(Integer degreeCurricularPlanID)
+    public static InfoExecutionDegree runReadCurrentExecutionDegreeByDegreeCurricularPlanID(String degreeCurricularPlanID)
             throws NotAuthorizedException {
         try {
             ManagerAuthorizationFilter.instance.execute();

@@ -282,8 +282,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
         if (parameter == null) {
             return null;
         }
-        final Integer itemID = Integer.valueOf(parameter);
-        return (Item) AbstractDomainObject.fromExternalId(itemID);
+        return (Item) AbstractDomainObject.fromExternalId(parameter);
     }
 
     protected Section getSection(final HttpServletRequest request) {
@@ -291,8 +290,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
         if (parameter == null) {
             return null;
         }
-        final Integer sectionID = Integer.valueOf(parameter);
-        return (Section) AbstractDomainObject.fromExternalId(sectionID);
+        return (Section) AbstractDomainObject.fromExternalId(parameter);
     }
 
     public ActionForward fileUpload(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -600,7 +598,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward deleteFile(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException,  FenixServiceException {
+            HttpServletResponse response) throws FenixActionException, FenixServiceException {
 
         Item item = selectItem(request);
         if (item == null) {
@@ -623,7 +621,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward editDisplayName(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException,  FenixServiceException {
+            HttpServletResponse response) throws FenixActionException, FenixServiceException {
 
         Item item = selectItem(request);
         Section section = selectSection(request);
@@ -646,7 +644,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
             return null;
         }
 
-        FileContent fileContent = FileContent.readByOID(Integer.valueOf(fileItemIdString));
+        FileContent fileContent = FileContent.readByOID(fileItemIdString);
         request.setAttribute("fileItem", fileContent);
 
         return fileContent;
@@ -881,8 +879,8 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
             return prepareAddFromPool(mapping, actionForm, request, response);
         }
 
-        Container container = (Container) AbstractDomainObject.fromExternalId(Integer.valueOf(containerId));
-        Content content = AbstractDomainObject.fromExternalId(Integer.valueOf(contentId));
+        Container container = (Container) AbstractDomainObject.fromExternalId(containerId);
+        Content content = AbstractDomainObject.fromExternalId(contentId);
 
         AddFunctionalityToContainer.run((Functionality) content, container);
 
@@ -893,9 +891,9 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
     public ActionForward removeFunctionalityFromContainer(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) {
         String contentId = request.getParameter("contentID");
-        Content content = AbstractDomainObject.fromExternalId(Integer.valueOf(contentId));
+        Content content = AbstractDomainObject.fromExternalId(contentId);
         String containerId = request.getParameter("containerID");
-        Container container = (Container) AbstractDomainObject.fromExternalId(Integer.valueOf(containerId));
+        Container container = (Container) AbstractDomainObject.fromExternalId(containerId);
 
         try {
             RemoveContentFromContainer.run(container, content);
@@ -908,7 +906,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
     }
 
     protected Site getSite(HttpServletRequest request) {
-        Integer siteId = getId(request.getParameter("siteID"));
+        String siteId = request.getParameter("siteID");
 
         if (siteId == null) {
             return null;
@@ -918,7 +916,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
     }
 
     protected FunctionalityCall getFunctionalityCall(HttpServletRequest request) {
-        Integer functionalityId = getId(request.getParameter("functionalityID"));
+        String functionalityId = request.getParameter("functionalityID");
 
         if (functionalityId == null) {
             return null;

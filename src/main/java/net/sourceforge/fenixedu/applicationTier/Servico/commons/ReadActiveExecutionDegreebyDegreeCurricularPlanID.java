@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -11,7 +10,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ReadActiveExecutionDegreebyDegreeCurricularPlanID {
 
     @Service
-    public static InfoExecutionDegree run(final Integer degreeCurricularPlanID) throws FenixServiceException {
+    public static InfoExecutionDegree run(final String degreeCurricularPlanID) throws FenixServiceException {
 
         final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
         if (degreeCurricularPlan == null) {

@@ -13,7 +13,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ReadCurricularCourseScopes {
 
     @Service
-    public static List<InfoCurricularCourseScope> run(Integer curricularCourseId) throws FenixServiceException {
+    public static List<InfoCurricularCourseScope> run(String curricularCourseId) throws FenixServiceException {
         CurricularCourse curricularCourse = (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseId);
 
         List<CurricularCourseScope> curricularCourseScopes = curricularCourse.getScopes();

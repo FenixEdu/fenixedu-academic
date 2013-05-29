@@ -166,8 +166,8 @@ public class Teacher extends Teacher_Base {
         return null;
     }
 
-    public void updateResponsabilitiesFor(Integer executionYearId, List<Integer> executionCourses)
-            throws MaxResponsibleForExceed, InvalidCategory {
+    public void updateResponsabilitiesFor(String executionYearId, List<Integer> executionCourses) throws MaxResponsibleForExceed,
+            InvalidCategory {
 
         if (executionYearId == null || executionCourses == null) {
             throw new NullPointerException();

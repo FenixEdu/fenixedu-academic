@@ -52,8 +52,7 @@ public class SendEmailToStudents extends FenixDispatchAction {
         final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
         request.setAttribute("currentExecutionYear", currentExecutionYear);
         if (electionPeriodBean == null) {
-            Integer degreeOID = Integer.parseInt(request.getParameter("degreeOID"));
-            final Degree degree = AbstractDomainObject.fromExternalId(degreeOID);
+            final Degree degree = AbstractDomainObject.fromExternalId(request.getParameter("degreeOID"));
 
             electionPeriodBean = new ElectionPeriodBean();
             electionPeriodBean.setDegree(degree);
@@ -87,7 +86,7 @@ public class SendEmailToStudents extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(request.getParameter("executionYear"));
         CurricularYear curricularYear = CurricularYear.readByYear(Integer.valueOf(request.getParameter("curricularYear")));
-        Degree degree = AbstractDomainObject.fromExternalId(Integer.valueOf(request.getParameter("degreeId")));
+        Degree degree = AbstractDomainObject.fromExternalId(request.getParameter("degreeId"));
 
         StudentsByDegreeAndCurricularYear studentsByDegreeAndCurricularYear =
                 new StudentsByDegreeAndCurricularYear(degree, curricularYear, executionYear);

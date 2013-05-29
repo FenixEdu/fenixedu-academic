@@ -91,11 +91,11 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 
     protected final ResourceBundle enumerationBundle = getResourceBundle("resources/EnumerationResources");
 
-    protected Integer executionCourseID;
+    protected String executionCourseID;
 
     private HtmlInputHidden executionCourseIdHidden;
 
-    protected Integer evaluationID;
+    protected String evaluationID;
 
     private HtmlInputHidden evaluationIdHidden;
 
@@ -157,7 +157,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 
     private String selectedEnd;
 
-    protected Map<Integer, String> marks = new HashMap<Integer, String>();
+    protected Map<String, String> marks = new HashMap<String, String>();
 
     protected String[] attendsIDs;
 
@@ -171,9 +171,9 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 
     protected Integer[] roomsToDelete;
 
-    protected Integer[] roomsToAssociate;
+    protected String[] roomsToAssociate;
 
-    protected Map<Integer, Boolean> canManageRoomsMap = new HashMap<Integer, Boolean>();
+    protected Map<String, Boolean> canManageRoomsMap = new HashMap<String, Boolean>();
 
     protected GradeScale gradeScale;
 
@@ -183,32 +183,32 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         /*
          * HACK: it's necessary set the executionCourseID for struts menu
          */
-        getAndHoldIntegerParameter("executionCourseID");
+        getAndHoldStringParameter("executionCourseID");
 
         initializeEnrolmentFilter();
     }
 
-    public Integer getExecutionCourseID() {
+    public String getExecutionCourseID() {
         if (this.executionCourseID == null) {
             if (this.executionCourseIdHidden != null && this.executionCourseIdHidden.getValue() != null) {
-                this.executionCourseID = Integer.valueOf(this.executionCourseIdHidden.getValue().toString());
+                this.executionCourseID = this.executionCourseIdHidden.getValue().toString();
             } else {
                 String executionCourseIDString = this.getRequestParameter("executionCourseID");
                 if (executionCourseIDString != null && executionCourseIDString.length() > 0) {
-                    this.executionCourseID = Integer.valueOf(executionCourseIDString);
+                    this.executionCourseID = executionCourseIDString;
                 }
             }
         }
         return this.executionCourseID;
     }
 
-    public void setExecutionCourseID(Integer executionCourseId) {
+    public void setExecutionCourseID(String executionCourseId) {
         this.executionCourseID = executionCourseId;
     }
 
     public HtmlInputHidden getExecutionCourseIdHidden() {
         if (this.executionCourseIdHidden == null) {
-            Integer executionCourseId = this.getExecutionCourseID();
+            String executionCourseId = this.getExecutionCourseID();
 
             this.executionCourseIdHidden = new HtmlInputHidden();
             this.executionCourseIdHidden.setValue(executionCourseId);
@@ -219,7 +219,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 
     public void setExecutionCourseIdHidden(HtmlInputHidden executionCourseIdHidden) {
         if (executionCourseIdHidden != null) {
-            this.executionCourseID = Integer.valueOf(executionCourseIdHidden.getValue().toString());
+            this.executionCourseID = executionCourseIdHidden.getValue().toString();
             /*
              * HACK: it's necessary set the executionCourseID for struts menu
              */
@@ -228,25 +228,25 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         this.executionCourseIdHidden = executionCourseIdHidden;
     }
 
-    public Integer getEvaluationID() {
+    public String getEvaluationID() {
         if (this.evaluationID == null) {
             if (this.evaluationIdHidden != null && this.evaluationIdHidden.getValue() != null
                     && !this.evaluationIdHidden.getValue().equals("")) {
-                this.evaluationID = Integer.valueOf(this.evaluationIdHidden.getValue().toString());
+                this.evaluationID = this.evaluationIdHidden.getValue().toString();
             } else if (this.getRequestParameter("evaluationID") != null && !this.getRequestParameter("evaluationID").equals("")) {
-                this.evaluationID = Integer.valueOf(this.getRequestParameter("evaluationID"));
+                this.evaluationID = this.getRequestParameter("evaluationID");
             }
         }
         return this.evaluationID;
     }
 
-    public void setEvaluationID(Integer evaluationId) {
+    public void setEvaluationID(String evaluationId) {
         this.evaluationID = evaluationId;
     }
 
     public HtmlInputHidden getEvaluationIdHidden() {
         if (this.evaluationIdHidden == null) {
-            Integer evaluationId = this.getEvaluationID();
+            String evaluationId = this.getEvaluationID();
             this.evaluationIdHidden = new HtmlInputHidden();
             this.evaluationIdHidden.setValue(evaluationId);
         }
@@ -257,7 +257,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     public void setEvaluationIdHidden(HtmlInputHidden evaluationIdHidden) {
         if (evaluationIdHidden != null && evaluationIdHidden.getValue() != null
                 && !evaluationIdHidden.getValue().toString().equals("")) {
-            this.evaluationID = Integer.valueOf(evaluationIdHidden.getValue().toString());
+            this.evaluationID = evaluationIdHidden.getValue().toString();
         }
 
         this.evaluationIdHidden = evaluationIdHidden;
@@ -484,11 +484,11 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         this.distributeEnroledStudentsOption = distributeEnroledStudentsOption;
     }
 
-    public Integer getRoomToChangeID() throws FenixServiceException {
+    public String getRoomToChangeID() throws FenixServiceException {
         if (getViewState().getAttribute("roomToChangeID") == null) {
             getViewState().setAttribute("roomToChangeID", getElementKeyFor(getEvaluationRoomsPositions(), 1));
         }
-        return (Integer) getViewState().getAttribute("roomToChangeID");
+        return (String) getViewState().getAttribute("roomToChangeID");
     }
 
     public void setRoomToChangeID(Integer roomToChangeID) {
@@ -611,7 +611,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 
     private List<AttendsMark> buildAttendsMark() {
         final List<AttendsMark> result = new ArrayList<AttendsMark>();
-        for (Entry<Integer, String> entry : this.marks.entrySet()) {
+        for (Entry<String, String> entry : this.marks.entrySet()) {
             result.add(new AttendsMark(entry.getKey(), entry.getValue()));
         }
         return result;
@@ -676,7 +676,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         return AbstractDomainObject.fromExternalId(getExecutionCourseID());
     }
 
-    public Map<Integer, String> getMarks() throws FenixServiceException {
+    public Map<String, String> getMarks() throws FenixServiceException {
         final Evaluation evaluation = getEvaluation();
         final ExecutionCourse executionCourse = getExecutionCourse();
         if (executionCourse != null) {
@@ -690,7 +690,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         return marks;
     }
 
-    public void setMarks(Map<Integer, String> marks) {
+    public void setMarks(Map<String, String> marks) {
         this.marks = marks;
     }
 
@@ -866,14 +866,14 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 
     public List<AllocatableSpace> getEvaluationRooms() throws FenixServiceException {
         final AllocatableSpace[] result = new AllocatableSpace[getEvaluationRoomsPositions().size()];
-        for (final Entry<Integer, Integer> entry : getEvaluationRoomsPositions().entrySet()) {
+        for (final Entry<String, Integer> entry : getEvaluationRoomsPositions().entrySet()) {
             final AllocatableSpace room = getRoom(entry.getKey());
             result[entry.getValue() - 1] = room;
         }
         return Arrays.asList(result);
     }
 
-    private AllocatableSpace getRoom(final Integer roomID) throws FenixServiceException {
+    private AllocatableSpace getRoom(final String roomID) throws FenixServiceException {
         for (final WrittenEvaluationSpaceOccupation roomOccupation : ((WrittenEvaluation) getEvaluation())
                 .getWrittenEvaluationSpaceOccupations()) {
             if (roomOccupation.getRoom().getExternalId().equals(roomID)) {
@@ -883,16 +883,16 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         return null;
     }
 
-    public Map<Integer, Integer> getEvaluationRoomsPositions() throws FenixServiceException {
+    public Map<String, Integer> getEvaluationRoomsPositions() throws FenixServiceException {
         if (getViewState().getAttribute("evaluationRooms") == null) {
-            final Map<Integer, Integer> evaluationRooms = initializeEvaluationRoomsPositions();
+            final Map<String, Integer> evaluationRooms = initializeEvaluationRoomsPositions();
             getViewState().setAttribute("evaluationRooms", evaluationRooms);
         }
-        return (Map<Integer, Integer>) getViewState().getAttribute("evaluationRooms");
+        return (Map<String, Integer>) getViewState().getAttribute("evaluationRooms");
     }
 
-    private Map<Integer, Integer> initializeEvaluationRoomsPositions() throws FenixServiceException {
-        final Map<Integer, Integer> evaluationRooms = new TreeMap();
+    private Map<String, Integer> initializeEvaluationRoomsPositions() throws FenixServiceException {
+        final Map<String, Integer> evaluationRooms = new TreeMap();
         final List<WrittenEvaluationSpaceOccupation> roomOccupations =
                 new ArrayList(((WrittenEvaluation) getEvaluation()).getWrittenEvaluationSpaceOccupations());
         Collections.sort(roomOccupations, new ReverseComparator(new BeanComparator("room.examCapacity")));
@@ -911,14 +911,14 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         final Integer roomToChangeNewPosition = (Integer) valueChangeEvent.getNewValue();
         if (roomToChangeNewPosition != 0) {
             final Integer roomToChangeOldPosition = getEvaluationRoomsPositions().get(getRoomToChangeID());
-            final Integer elementKey = getElementKeyFor(getEvaluationRoomsPositions(), roomToChangeNewPosition);
+            final String elementKey = getElementKeyFor(getEvaluationRoomsPositions(), roomToChangeNewPosition);
             getEvaluationRoomsPositions().put(elementKey, roomToChangeOldPosition);
             getEvaluationRoomsPositions().put(getRoomToChangeID(), roomToChangeNewPosition);
         }
     }
 
-    private Integer getElementKeyFor(Map<Integer, Integer> evaluationRooms, Integer roomPosition) {
-        for (final Entry<Integer, Integer> entry : evaluationRooms.entrySet()) {
+    private String getElementKeyFor(Map<String, Integer> evaluationRooms, Integer roomPosition) {
+        for (final Entry<String, Integer> entry : evaluationRooms.entrySet()) {
             if (entry.getValue().equals(roomPosition)) {
                 return entry.getKey();
             }
@@ -959,9 +959,9 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         }
     }
 
-    private List<Integer> getRoomIDs() throws FenixServiceException {
+    private List<String> getRoomIDs() throws FenixServiceException {
         final List<AllocatableSpace> rooms = getEvaluationRooms();
-        final List<Integer> result = new ArrayList(rooms.size());
+        final List<String> result = new ArrayList(rooms.size());
         for (final AllocatableSpace room : rooms) {
             result.add(room.getExternalId());
         }
@@ -1214,18 +1214,18 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         return result;
     }
 
-    public Integer[] getRoomsToAssociate() {
+    public String[] getRoomsToAssociate() {
         if (roomsToAssociate == null) {
-            List<Integer> roomIds = new ArrayList<Integer>();
+            List<String> roomIds = new ArrayList<String>();
             for (AllocatableSpace room : ((WrittenTest) getEvaluation()).getAssociatedRooms()) {
                 roomIds.add(room.getExternalId());
             }
-            roomsToAssociate = roomIds.toArray(new Integer[] {});
+            roomsToAssociate = roomIds.toArray(new String[] {});
         }
         return roomsToAssociate;
     }
 
-    public void setRoomsToAssociate(Integer[] roomsToAssociate) {
+    public void setRoomsToAssociate(String[] roomsToAssociate) {
         this.roomsToAssociate = roomsToAssociate;
     }
 
@@ -1238,9 +1238,9 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         return "";
     }
 
-    private List<AllocatableSpace> getRooms(Integer[] roomsToAssociate) {
+    private List<AllocatableSpace> getRooms(String[] roomsToAssociate) {
         List<AllocatableSpace> rooms = new ArrayList<AllocatableSpace>();
-        for (Integer roomId : roomsToAssociate) {
+        for (String roomId : roomsToAssociate) {
             AllocatableSpace space = (AllocatableSpace) AbstractDomainObject.fromExternalId(roomId);
             if (space == null) {
                 throw new IllegalArgumentException();
@@ -1250,11 +1250,11 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         return rooms;
     }
 
-    public Map<Integer, Boolean> getCanManageRoomsMap() {
+    public Map<String, Boolean> getCanManageRoomsMap() {
         return canManageRoomsMap;
     }
 
-    public void setCanManageRoomsMap(Map<Integer, Boolean> canManageRoomsMap) {
+    public void setCanManageRoomsMap(Map<String, Boolean> canManageRoomsMap) {
         this.canManageRoomsMap = canManageRoomsMap;
     }
 

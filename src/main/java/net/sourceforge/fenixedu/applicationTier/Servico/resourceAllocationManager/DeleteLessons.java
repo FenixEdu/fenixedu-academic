@@ -20,10 +20,10 @@ public class DeleteLessons {
 
     @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
     @Service
-    public static void run(final List<Integer> lessonOIDs) throws FenixServiceException {
+    public static void run(final List<String> lessonOIDs) throws FenixServiceException {
         final List<DomainException> exceptionList = new ArrayList<DomainException>();
 
-        for (final Integer lessonOID : lessonOIDs) {
+        for (final String lessonOID : lessonOIDs) {
             try {
                 Lesson lesson = AbstractDomainObject.fromExternalId(lessonOID);
                 if (lesson != null) {

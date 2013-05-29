@@ -20,7 +20,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ReadDegreeCurricularPlansByDegree {
 
     @Service
-    public static List run(Integer idDegree) throws FenixServiceException {
+    public static List run(String idDegree) throws FenixServiceException {
         final Degree degree = AbstractDomainObject.fromExternalId(idDegree);
 
         List<InfoDegreeCurricularPlan> result = new ArrayList<InfoDegreeCurricularPlan>();

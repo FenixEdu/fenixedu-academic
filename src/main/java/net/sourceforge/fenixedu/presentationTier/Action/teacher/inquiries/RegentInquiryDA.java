@@ -274,8 +274,7 @@ public class RegentInquiryDA extends FenixDispatchAction {
     }
 
     private ExecutionCourse readAndSaveExecutionCourse(HttpServletRequest request) {
-        ExecutionCourse executionCourse =
-                AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "executionCourseID"));
+        ExecutionCourse executionCourse = getDomainObject(request, "executionCourseID");
         if (executionCourse == null) {
             return (ExecutionCourse) request.getAttribute("executionCourse");
         }

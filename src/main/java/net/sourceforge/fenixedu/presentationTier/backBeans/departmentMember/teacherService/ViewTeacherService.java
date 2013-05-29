@@ -41,7 +41,7 @@ public class ViewTeacherService extends FenixBackingBean {
 
     private List<ExecutionCourseDistributionServiceEntryDTO> executionCourseServiceDTO;
 
-    private Integer selectedExecutionYearID;
+    private String selectedExecutionYearID;
 
     private String selectedExecutionYearName;
 
@@ -81,7 +81,7 @@ public class ViewTeacherService extends FenixBackingBean {
 
     }
 
-    public UISelectItems getExecutionYearItems() throws  FenixServiceException {
+    public UISelectItems getExecutionYearItems() throws FenixServiceException {
         if (this.executionYearItems == null) {
             this.executionYearItems = new UISelectItems();
             executionYearItems.setValue(this.getExecutionYears());
@@ -90,7 +90,7 @@ public class ViewTeacherService extends FenixBackingBean {
         return executionYearItems;
     }
 
-    public UISelectItems getExecutionPeriodsItems() throws  FenixServiceException {
+    public UISelectItems getExecutionPeriodsItems() throws FenixServiceException {
         if (this.executionPeriodsItems == null) {
             this.executionPeriodsItems = new UISelectItems();
             this.executionPeriodsItems.setValue(this.getExecutionPeriods());
@@ -103,15 +103,15 @@ public class ViewTeacherService extends FenixBackingBean {
         this.executionYearItems = selectItems;
     }
 
-    public Integer getSelectedExecutionYearID() throws  FenixServiceException {
+    public String getSelectedExecutionYearID() throws FenixServiceException {
         String executionYearIDString = this.getRequestParameter("selectedExecutionYearID");
 
         if (executionYearIDString != null) {
-            this.selectedExecutionYearID = Integer.valueOf(this.getRequestParameter("selectedExecutionYearID"));
+            this.selectedExecutionYearID = this.getRequestParameter("selectedExecutionYearID");
         } else {
             if (this.selectedExecutionYearID == null) {
                 List<SelectItem> executionYearItems = (List<SelectItem>) this.getExecutionYearItems().getValue();
-                this.selectedExecutionYearID = (Integer) executionYearItems.get(0).getValue();
+                this.selectedExecutionYearID = (String) executionYearItems.get(0).getValue();
             }
 
         }
@@ -132,12 +132,12 @@ public class ViewTeacherService extends FenixBackingBean {
         return selectedExecutionPeriodID;
     }
 
-    public void setSelectedExecutionYearID(Integer selectedExecutionYearID) throws  FenixServiceException {
+    public void setSelectedExecutionYearID(String selectedExecutionYearID) throws FenixServiceException {
 
         this.selectedExecutionYearID = selectedExecutionYearID;
     }
 
-    public String getSelectedExecutionYearName() throws  FenixServiceException {
+    public String getSelectedExecutionYearName() throws FenixServiceException {
 
         return selectedExecutionYearName;
     }
@@ -146,7 +146,7 @@ public class ViewTeacherService extends FenixBackingBean {
         this.selectedExecutionYearName = selectedExecutionYearName;
     }
 
-    public List getTeacherServiceDTO() throws  FenixServiceException, ParseException {
+    public List getTeacherServiceDTO() throws FenixServiceException, ParseException {
         if (teacherServiceDTO == null) {
             loadDistributionServiceData();
         }
@@ -157,8 +157,7 @@ public class ViewTeacherService extends FenixBackingBean {
         this.teacherServiceDTO = teacherServiceDTO;
     }
 
-    public List<ExecutionCourseDistributionServiceEntryDTO> getExecutionCourseServiceDTO() throws 
-            FenixServiceException {
+    public List<ExecutionCourseDistributionServiceEntryDTO> getExecutionCourseServiceDTO() throws FenixServiceException {
         if (executionCourseServiceDTO == null) {
             loadDistributionServiceDataByCourse();
         }
@@ -169,7 +168,7 @@ public class ViewTeacherService extends FenixBackingBean {
         this.executionCourseServiceDTO = executionCourseServiceDTO;
     }
 
-    private List<SelectItem> getExecutionYears() throws  FenixServiceException {
+    private List<SelectItem> getExecutionYears() throws FenixServiceException {
 
         List<InfoExecutionYear> executionYears = ReadNotClosedExecutionYears.run();
 
@@ -186,7 +185,7 @@ public class ViewTeacherService extends FenixBackingBean {
 
     }
 
-    private List<SelectItem> getExecutionPeriods() throws  FenixServiceException {
+    private List<SelectItem> getExecutionPeriods() throws FenixServiceException {
 
         ResourceBundle rb = ResourceBundle.getBundle("resources.DepartmentMemberResources", Language.getLocale());
 
@@ -206,7 +205,7 @@ public class ViewTeacherService extends FenixBackingBean {
         return currentWorkingDepartment == null ? null : currentWorkingDepartment.getRealName();
     }
 
-    public String getTeacherService() throws  FenixServiceException, ParseException {
+    public String getTeacherService() throws FenixServiceException, ParseException {
 
         InfoExecutionYear infoExecutionYear = ReadExecutionYearByID.run(this.getSelectedExecutionYearID());
 
@@ -216,14 +215,14 @@ public class ViewTeacherService extends FenixBackingBean {
         return "listDistributionTeachersByTeacher";
     }
 
-    public String getTeacherServiceByCourse() throws  FenixServiceException {
+    public String getTeacherServiceByCourse() throws FenixServiceException {
         loadDistributionServiceDataByCourse();
         return "listDistributionTeachersByCourse";
     }
 
-    private void loadDistributionServiceData() throws  FenixServiceException, ParseException {
+    private void loadDistributionServiceData() throws FenixServiceException, ParseException {
 
-        List<Integer> ExecutionPeriodsIDs = buildExecutionPeriodsIDsList();
+        List<String> ExecutionPeriodsIDs = buildExecutionPeriodsIDsList();
 
         this.teacherServiceDTO =
                 ReadTeacherServiceDistributionByTeachers.runReadTeacherServiceDistributionByTeachers(getUserView().getPerson()
@@ -231,9 +230,9 @@ public class ViewTeacherService extends FenixBackingBean {
 
     }
 
-    private void loadDistributionServiceDataByCourse() throws  FenixServiceException {
+    private void loadDistributionServiceDataByCourse() throws FenixServiceException {
 
-        List<Integer> ExecutionPeriodsIDs = buildExecutionPeriodsIDsList();
+        List<String> ExecutionPeriodsIDs = buildExecutionPeriodsIDsList();
 
         Object[] args =
                 { getUserView().getPerson().getEmployee().getCurrentDepartmentWorkingPlace().getExternalId(), ExecutionPeriodsIDs };
@@ -244,7 +243,7 @@ public class ViewTeacherService extends FenixBackingBean {
 
     }
 
-    private List<Integer> buildExecutionPeriodsIDsList() throws  FenixServiceException {
+    private List<String> buildExecutionPeriodsIDsList() throws FenixServiceException {
         List<InfoExecutionPeriod> executionPeriods = ReadExecutionPeriodsByExecutionYear.run(this.getSelectedExecutionYearID());
 
         Collections.sort(executionPeriods, new BeanComparator("beginDate"));
@@ -257,13 +256,13 @@ public class ViewTeacherService extends FenixBackingBean {
             previousExecutionYear = null;
         }
 
-        List<Integer> periodsIDsList = new ArrayList<Integer>();
+        List<String> periodsIDsList = new ArrayList<String>();
 
         for (InfoExecutionPeriod executionPeriod : executionPeriods) {
             periodsIDsList.add(executionPeriod.getExternalId());
         }
 
-        List<Integer> returnList = new ArrayList<Integer>();
+        List<String> returnList = new ArrayList<String>();
         int periodID = getSelectedExecutionPeriodID();
 
         if ((periodID != BOTH_SEMESTERS_ID) && (periodsIDsList.size() > 1)) {
@@ -280,7 +279,7 @@ public class ViewTeacherService extends FenixBackingBean {
     }
 
     public void onSelectedExecutionYearIDChanged(ValueChangeEvent valueChangeEvent) {
-        this.selectedExecutionYearID = (Integer) valueChangeEvent.getNewValue();
+        this.selectedExecutionYearID = (String) valueChangeEvent.getNewValue();
     }
 
     public void onSelectedExecutionPeriodIDChanged(ValueChangeEvent valueChangeEvent) {
@@ -311,7 +310,7 @@ public class ViewTeacherService extends FenixBackingBean {
 
     private final int VIEW_CREDITS_INFORMATION = 7;
 
-    public UISelectItems getViewOptionsItems() throws  FenixServiceException {
+    public UISelectItems getViewOptionsItems() throws FenixServiceException {
         if (this.viewOptionsItems == null) {
             this.viewOptionsItems = new UISelectItems();
             viewOptionsItems.setValue(this.getViewOptions());
@@ -320,7 +319,7 @@ public class ViewTeacherService extends FenixBackingBean {
         return viewOptionsItems;
     }
 
-    public UISelectItems getViewByTeacherOptionsItems() throws  FenixServiceException {
+    public UISelectItems getViewByTeacherOptionsItems() throws FenixServiceException {
         if (this.viewOptionsItems == null) {
             this.viewOptionsItems = new UISelectItems();
             viewOptionsItems.setValue(this.getByTeacherViewOptions());
@@ -329,7 +328,7 @@ public class ViewTeacherService extends FenixBackingBean {
         return viewOptionsItems;
     }
 
-    private List<SelectItem> getViewOptions() throws  FenixServiceException {
+    private List<SelectItem> getViewOptions() throws FenixServiceException {
 
         ResourceBundle rb = ResourceBundle.getBundle("resources.DepartmentMemberResources", Language.getLocale());
 
@@ -342,7 +341,7 @@ public class ViewTeacherService extends FenixBackingBean {
         return result;
     }
 
-    private List<SelectItem> getByTeacherViewOptions() throws  FenixServiceException {
+    private List<SelectItem> getByTeacherViewOptions() throws FenixServiceException {
 
         ResourceBundle rb = ResourceBundle.getBundle("resources.DepartmentMemberResources", Language.getLocale());
         List<SelectItem> result = new ArrayList<SelectItem>();
@@ -412,7 +411,7 @@ public class ViewTeacherService extends FenixBackingBean {
         return isOptionSelected(VIEW_CREDITS_INFORMATION);
     }
 
-    public InfoExecutionYear getPreviousExecutionYear() throws  FenixServiceException {
+    public InfoExecutionYear getPreviousExecutionYear() throws FenixServiceException {
         if (previousExecutionYear == null) {
             buildExecutionPeriodsIDsList();
         }

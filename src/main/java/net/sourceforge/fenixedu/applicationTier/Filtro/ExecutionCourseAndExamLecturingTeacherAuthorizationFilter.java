@@ -4,8 +4,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Filtro;
 
-import java.util.List;
-
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Evaluation;
@@ -33,8 +31,7 @@ public class ExecutionCourseAndExamLecturingTeacherAuthorizationFilter extends A
         return RoleType.TEACHER;
     }
 
-    public void execute(Integer executionCourseID, Integer evaluationID, List<Integer> roomIDs, Boolean sendSMS,
-            Boolean distributeOnlyEnroledStudents) throws NotAuthorizedException {
+    public void execute(String executionCourseID, String evaluationID) throws NotAuthorizedException {
         IUserView id = AccessControl.getUserView();
 
         try {
@@ -49,7 +46,7 @@ public class ExecutionCourseAndExamLecturingTeacherAuthorizationFilter extends A
 
     }
 
-    private boolean lecturesExecutionCourse(IUserView id, Integer executionCourseID) {
+    private boolean lecturesExecutionCourse(IUserView id, String executionCourseID) {
         if (executionCourseID == null) {
             return false;
         }
@@ -67,7 +64,7 @@ public class ExecutionCourseAndExamLecturingTeacherAuthorizationFilter extends A
         }
     }
 
-    private boolean examBelongsExecutionCourse(IUserView id, Integer executionCourseID, Integer evaluationID) {
+    private boolean examBelongsExecutionCourse(IUserView id, String executionCourseID, String evaluationID) {
         if (executionCourseID == null || evaluationID == null) {
             return false;
         }

@@ -25,7 +25,7 @@ public class SetBasicCurricularCoursesService {
 
     @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
     @Service
-    public static Boolean run(List curricularCoursesIds, Integer degreeCurricularPlanId) throws FenixServiceException {
+    public static Boolean run(List<String> curricularCoursesIds, String degreeCurricularPlanId) throws FenixServiceException {
 
         DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanId);
 
@@ -40,12 +40,11 @@ public class SetBasicCurricularCoursesService {
             basicCourse.setBasic(new Boolean(false));
         }
 
-        Iterator itId = curricularCoursesIds.iterator();
+        Iterator<String> itId = curricularCoursesIds.iterator();
 
         while (itId.hasNext()) {
 
-            CurricularCourse curricularCourseBasic =
-                    (CurricularCourse) AbstractDomainObject.fromExternalId((Integer) itId.next());
+            CurricularCourse curricularCourseBasic = (CurricularCourse) AbstractDomainObject.fromExternalId(itId.next());
             curricularCourseBasic.setBasic(new Boolean(true));
 
         }

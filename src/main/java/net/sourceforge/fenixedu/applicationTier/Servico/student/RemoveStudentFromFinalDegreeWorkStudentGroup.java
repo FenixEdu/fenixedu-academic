@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
@@ -28,7 +27,7 @@ public class RemoveStudentFromFinalDegreeWorkStudentGroup {
 
     @Checked("RolePredicates.STUDENT_PREDICATE")
     @Service
-    public static Boolean run(String username, Integer groupOID, Integer studentToRemoveID) throws FenixServiceException {
+    public static Boolean run(String username, String groupOID, String studentToRemoveID) throws FenixServiceException {
         FinalDegreeWorkGroup group = AbstractDomainObject.fromExternalId(groupOID);
         Registration registration = Registration.readByUsername(username);
 
@@ -51,7 +50,7 @@ public class RemoveStudentFromFinalDegreeWorkStudentGroup {
     }
 
     private static class PREDICATE_FILTER_STUDENT_ID implements Predicate {
-        Integer studentID;
+        String studentID;
 
         @Override
         public boolean evaluate(Object arg0) {
@@ -64,7 +63,7 @@ public class RemoveStudentFromFinalDegreeWorkStudentGroup {
 
         }
 
-        public PREDICATE_FILTER_STUDENT_ID(Integer studentID) {
+        public PREDICATE_FILTER_STUDENT_ID(String studentID) {
             super();
             this.studentID = studentID;
         }

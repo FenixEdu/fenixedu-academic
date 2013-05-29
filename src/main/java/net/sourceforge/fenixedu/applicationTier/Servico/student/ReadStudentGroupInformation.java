@@ -33,7 +33,7 @@ public class ReadStudentGroupInformation {
 
     @Checked("RolePredicates.STUDENT_PREDICATE")
     @Service
-    public static ISiteComponent run(Integer studentGroupCode) throws FenixServiceException {
+    public static ISiteComponent run(String studentGroupCode) throws FenixServiceException {
 
         InfoSiteStudentGroup infoSiteStudentGroup = new InfoSiteStudentGroup();
         StudentGroup studentGroup = null;

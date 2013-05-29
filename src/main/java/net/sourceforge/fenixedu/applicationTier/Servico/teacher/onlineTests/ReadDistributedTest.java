@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -18,8 +17,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class ReadDistributedTest {
 
-    protected InfoDistributedTest run(Integer executionCourseId, Integer distributedTestId)
-            throws InvalidArgumentsServiceException {
+    protected InfoDistributedTest run(String executionCourseId, String distributedTestId) throws InvalidArgumentsServiceException {
         DistributedTest distributedTest = AbstractDomainObject.fromExternalId(distributedTestId);
         if (distributedTest == null) {
             throw new InvalidArgumentsServiceException();
@@ -33,7 +31,7 @@ public class ReadDistributedTest {
     private static final ReadDistributedTest serviceInstance = new ReadDistributedTest();
 
     @Service
-    public static InfoDistributedTest runReadDistributedTest(Integer executionCourseId, Integer distributedTestId)
+    public static InfoDistributedTest runReadDistributedTest(String executionCourseId, String distributedTestId)
             throws InvalidArgumentsServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
         return serviceInstance.run(executionCourseId, distributedTestId);

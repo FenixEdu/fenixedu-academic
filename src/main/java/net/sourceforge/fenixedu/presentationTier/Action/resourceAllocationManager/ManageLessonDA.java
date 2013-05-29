@@ -481,8 +481,8 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
     public ActionForward deleteLesson(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        List<Integer> lessons = new ArrayList<Integer>();
-        lessons.add(Integer.valueOf(request.getParameter(PresentationConstants.LESSON_OID)));
+        List<String> lessons = new ArrayList<String>();
+        lessons.add(request.getParameter(PresentationConstants.LESSON_OID));
 
         try {
             DeleteLessons.run(lessons);

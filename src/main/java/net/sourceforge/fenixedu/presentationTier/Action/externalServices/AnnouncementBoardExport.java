@@ -24,7 +24,6 @@ import org.joda.time.DateTime;
 import org.joda.time.IllegalFieldValueException;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import com.thoughtworks.xstream.XStream;
@@ -78,12 +77,8 @@ public class AnnouncementBoardExport extends ExternalInterfaceDispatchAction {
         return null;
     }
 
-    protected Integer getAnnouncementBoardId(final HttpServletRequest request) {
-        return getRequestParameterAsInteger(request, "announcementBoardId");
-    }
-
     protected AnnouncementBoard getRequestedAnnouncementBoard(final HttpServletRequest request) {
-        return (AnnouncementBoard) AbstractDomainObject.fromExternalId(getAnnouncementBoardId(request));
+        return getDomainObject(request, "announcementBoardId");
     }
 
     protected String getRequestedLanguageString(HttpServletRequest request) {

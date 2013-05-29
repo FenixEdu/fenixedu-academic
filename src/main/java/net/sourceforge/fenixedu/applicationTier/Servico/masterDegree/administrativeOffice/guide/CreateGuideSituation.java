@@ -19,7 +19,7 @@ public class CreateGuideSituation {
 
     @Checked("RolePredicates.MANAGER_PREDICATE")
     @Service
-    public static void run(Integer guideID, String remarks, GuideState situation, Date date) {
+    public static void run(String guideID, String remarks, GuideState situation, Date date) {
 
         Guide guide = AbstractDomainObject.fromExternalId(guideID);
 

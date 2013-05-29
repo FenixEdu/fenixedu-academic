@@ -79,16 +79,6 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
         return UserView.getUser();
     }
 
-    @SuppressWarnings({ "static-access", "unchecked" })
-    protected DomainObject readDomainObject(final HttpServletRequest request, final Class clazz, final Integer externalId) {
-        return AbstractDomainObject.fromExternalId(clazz, externalId);
-    }
-
-    @SuppressWarnings({ "static-access", "unchecked" })
-    protected Collection readAllDomainObjects(final HttpServletRequest request, final Class clazz) {
-        return rootDomainObject.readAllDomainObjects(clazz);
-    }
-
     protected Person getLoggedPerson(HttpServletRequest request) {
         final IUserView userView = getUserView(request);
         return (userView == null) ? null : userView.getPerson();
@@ -136,11 +126,11 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
         return value == null || value.length() == 0 ? null : Integer.valueOf(value);
     }
 
-    protected Integer getRequestParameterAsInteger(HttpServletRequest request, String parameterName) {
+    protected String getRequestParameterAsString(HttpServletRequest request, String parameterName) {
         final String requestParameter = request.getParameter(parameterName);
 
         if (!StringUtils.isEmpty(requestParameter)) {
-            return Integer.valueOf(requestParameter);
+            return requestParameter;
         } else {
             return null;
         }
@@ -168,6 +158,11 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
     protected Object getFromRequest(HttpServletRequest request, String name) {
         final String requestParameter = request.getParameter(name);
         return (requestParameter != null) ? requestParameter : request.getAttribute(name);
+    }
+
+    protected String getStringFromRequest(HttpServletRequest request, String name) {
+        final String requestParameter = request.getParameter(name);
+        return (requestParameter != null) ? requestParameter : (String) request.getAttribute(name);
     }
 
     protected Integer getIntegerFromRequest(HttpServletRequest request, String name) {
@@ -212,11 +207,11 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
         return input;
     }
 
-    protected Object executeFactoryMethod() throws  FenixServiceException {
+    protected Object executeFactoryMethod() throws FenixServiceException {
         return executeFactoryMethod(getFactoryObject());
     }
 
-    protected Object executeFactoryMethod(FactoryExecutor executor) throws  FenixServiceException {
+    protected Object executeFactoryMethod(FactoryExecutor executor) throws FenixServiceException {
         return ExecuteFactoryMethod.run(executor);
     }
 
@@ -332,42 +327,6 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 
         for (final LabelFormatter each : messages) {
             addActionMessageLiteral(propertyName, request, each.toString(messageResourceProvider));
-        }
-    }
-
-    protected Integer getExternalId(HttpServletRequest request, String param) {
-        String id = request.getParameter(param);
-
-        if (id == null) {
-            return null;
-        }
-
-        try {
-            return new Integer(id);
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    protected List<Integer> getExternalIds(HttpServletRequest request, String param) {
-        String[] ids = request.getParameterValues(param);
-
-        if (ids == null) {
-            return null;
-        }
-
-        try {
-            List<Integer> idNumbers = new ArrayList<Integer>(ids.length);
-
-            for (String id : ids) {
-                idNumbers.add(new Integer(id));
-            }
-
-            return idNumbers;
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-            return null;
         }
     }
 

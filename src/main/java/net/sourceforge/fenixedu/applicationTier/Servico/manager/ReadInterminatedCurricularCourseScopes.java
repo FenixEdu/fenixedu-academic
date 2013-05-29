@@ -15,7 +15,7 @@ public class ReadInterminatedCurricularCourseScopes {
 
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
-    public static List<InfoCurricularCourseScope> run(Integer curricularCourseId) throws FenixServiceException {
+    public static List<InfoCurricularCourseScope> run(String curricularCourseId) throws FenixServiceException {
         CurricularCourse curricularCourse = (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseId);
 
         List<CurricularCourseScope> curricularCourseScopes = curricularCourse.getInterminatedScopes();

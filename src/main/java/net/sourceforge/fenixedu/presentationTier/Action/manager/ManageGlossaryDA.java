@@ -57,9 +57,7 @@ public class ManageGlossaryDA extends FenixDispatchAction {
         String entryIdString = request.getParameter("entryId");
 
         if (entryIdString != null && StringUtils.isNumeric(entryIdString)) {
-            Integer entryId = new Integer(entryIdString);
-
-            DeleteGlossaryEntry.run(entryId);
+            DeleteGlossaryEntry.run(entryIdString);
         }
 
         return mapping.getInputForward();

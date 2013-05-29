@@ -89,8 +89,7 @@ public class TeacherPersonalExpectationsDefinitionPeriodDA extends FenixDispatch
 
     protected ExecutionYear getExecutionYearFromParameter(final HttpServletRequest request) {
         final String executionYearIDString = request.getParameter("executionYearId");
-        final Integer executionYearID = Integer.valueOf(executionYearIDString);
-        return AbstractDomainObject.fromExternalId(executionYearID);
+        return AbstractDomainObject.fromExternalId(executionYearIDString);
     }
 
     protected Department getDepartment(HttpServletRequest request) {

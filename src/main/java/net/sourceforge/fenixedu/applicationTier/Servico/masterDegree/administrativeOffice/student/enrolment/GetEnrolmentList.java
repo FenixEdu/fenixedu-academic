@@ -16,7 +16,7 @@ public class GetEnrolmentList {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
-    public static List<InfoEnrolment> run(Integer studentCurricularPlanID, EnrollmentState enrollmentState) {
+    public static List<InfoEnrolment> run(String studentCurricularPlanID, EnrollmentState enrollmentState) {
 
         final List<InfoEnrolment> result = new ArrayList<InfoEnrolment>();
         for (final Enrolment enrolment : getStudentCurricularPlan(studentCurricularPlanID).getEnrolmentsByState(enrollmentState)) {
@@ -32,7 +32,7 @@ public class GetEnrolmentList {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
-    public static List<InfoEnrolment> run(Integer studentCurricularPlanID) {
+    public static List<InfoEnrolment> run(String studentCurricularPlanID) {
         final List<InfoEnrolment> result = new ArrayList<InfoEnrolment>();
         for (final Enrolment enrolment : getStudentCurricularPlan(studentCurricularPlanID).getEnrolments()) {
             if (enrolment.isExtraCurricular()) {
@@ -47,14 +47,13 @@ public class GetEnrolmentList {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
-    public static List<InfoEnrolment> run(Integer studentCurricularPlanID, EnrollmentState enrollmentState,
-            Boolean pTypeEnrolments) {
+    public static List<InfoEnrolment> run(String studentCurricularPlanID, EnrollmentState enrollmentState, Boolean pTypeEnrolments) {
         return run(studentCurricularPlanID, enrollmentState, pTypeEnrolments, Boolean.FALSE);
     }
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
-    public static List<InfoEnrolment> run(Integer studentCurricularPlanID, EnrollmentState enrollmentState,
+    public static List<InfoEnrolment> run(String studentCurricularPlanID, EnrollmentState enrollmentState,
             Boolean pTypeEnrolments, Boolean includeExtraCurricular) {
 
         if (!pTypeEnrolments.booleanValue()) {
@@ -72,7 +71,7 @@ public class GetEnrolmentList {
         return result;
     }
 
-    private static StudentCurricularPlan getStudentCurricularPlan(Integer studentCurricularPlanID) {
+    private static StudentCurricularPlan getStudentCurricularPlan(String studentCurricularPlanID) {
         return AbstractDomainObject.fromExternalId(studentCurricularPlanID);
     }
 

@@ -11,7 +11,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class DeleteCurricularRule {
 
     @Service
-    public static void run(Integer curricularRuleID) throws FenixServiceException {
+    public static void run(String curricularRuleID) throws FenixServiceException {
         final CurricularRule curricularRule = AbstractDomainObject.fromExternalId(curricularRuleID);
         if (curricularRule == null) {
             throw new FenixServiceException("error.noCurricularRule");

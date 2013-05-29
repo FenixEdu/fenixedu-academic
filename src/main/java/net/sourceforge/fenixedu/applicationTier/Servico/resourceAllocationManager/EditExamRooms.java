@@ -19,10 +19,10 @@ public class EditExamRooms {
 
     @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
     @Service
-    public static InfoExam run(InfoExam infoExam, final List<Integer> roomsForExam) throws FenixServiceException {
+    public static InfoExam run(InfoExam infoExam, final List<String> roomsForExam) throws FenixServiceException {
 
         final List<AllocatableSpace> finalRoomList = new ArrayList<AllocatableSpace>();
-        for (final Integer id : roomsForExam) {
+        for (final String id : roomsForExam) {
             finalRoomList.add((AllocatableSpace) AbstractDomainObject.fromExternalId(id));
         }
 

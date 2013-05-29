@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.curricularPlans;
 
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -16,8 +15,8 @@ public class EditDegreeCurricularPlan {
 
     @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
     @Service
-    public static void run(Integer dcpId, String name, CurricularStage curricularStage,
-            DegreeCurricularPlanState degreeCurricularPlanState, GradeScale gradeScale, Integer executionYearID)
+    public static void run(String dcpId, String name, CurricularStage curricularStage,
+            DegreeCurricularPlanState degreeCurricularPlanState, GradeScale gradeScale, String executionYearID)
             throws FenixServiceException {
 
         if (dcpId == null || name == null || curricularStage == null) {
@@ -30,7 +29,7 @@ public class EditDegreeCurricularPlan {
         }
 
         final ExecutionYear executionYear =
-                (executionYearID == null) ? null : AbstractDomainObject.fromExternalId(executionYearID);
+                (executionYearID == null) ? null : AbstractDomainObject.<ExecutionYear> fromExternalId(executionYearID);
 
         dcpToEdit.edit(name, curricularStage, degreeCurricularPlanState, gradeScale, executionYear);
     }

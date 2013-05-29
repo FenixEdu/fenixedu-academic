@@ -20,7 +20,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ReadStudentListByCurricularCourse {
 
-    protected List run(final IUserView userView, final Integer curricularCourseID, final String executionYear)
+    protected List run(final IUserView userView, final String curricularCourseID, final String executionYear)
             throws FenixServiceException {
 
         final CurricularCourse curricularCourse = (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseID);
@@ -53,8 +53,9 @@ public class ReadStudentListByCurricularCourse {
     private static final ReadStudentListByCurricularCourse serviceInstance = new ReadStudentListByCurricularCourse();
 
     @Service
-    public static List runReadStudentListByCurricularCourse(IUserView userView, Integer curricularCourseID, String executionYear) throws FenixServiceException  , NotAuthorizedException {
-        StudentListByCurricularCourseAuthorizationFilter.instance.execute(userView, curricularCourseID, executionYear);
+    public static List runReadStudentListByCurricularCourse(IUserView userView, String curricularCourseID, String executionYear)
+            throws FenixServiceException, NotAuthorizedException {
+        StudentListByCurricularCourseAuthorizationFilter.instance.execute(curricularCourseID);
         return serviceInstance.run(userView, curricularCourseID, executionYear);
     }
 

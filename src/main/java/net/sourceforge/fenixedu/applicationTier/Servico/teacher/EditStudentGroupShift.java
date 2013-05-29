@@ -26,7 +26,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class EditStudentGroupShift {
 
-    protected Boolean run(Integer executionCourseCode, Integer studentGroupCode, Integer groupPropertiesCode, Integer newShiftCode)
+    protected Boolean run(String executionCourseCode, String studentGroupCode, String groupPropertiesCode, String newShiftCode)
             throws FenixServiceException {
 
         Grouping grouping = AbstractDomainObject.fromExternalId(groupPropertiesCode);
@@ -62,8 +62,8 @@ public class EditStudentGroupShift {
     private static final EditStudentGroupShift serviceInstance = new EditStudentGroupShift();
 
     @Service
-    public static Boolean runEditStudentGroupShift(Integer executionCourseCode, Integer studentGroupCode,
-            Integer groupPropertiesCode, Integer newShiftCode) throws FenixServiceException, NotAuthorizedException {
+    public static Boolean runEditStudentGroupShift(String executionCourseCode, String studentGroupCode,
+            String groupPropertiesCode, String newShiftCode) throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseCode);
         return serviceInstance.run(executionCourseCode, studentGroupCode, groupPropertiesCode, newShiftCode);
     }

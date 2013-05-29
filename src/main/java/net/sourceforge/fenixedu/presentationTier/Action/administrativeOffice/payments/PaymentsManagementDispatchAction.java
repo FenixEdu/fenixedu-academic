@@ -35,7 +35,6 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/payments", module = "academicAdministration", formBeanClass = FenixActionForm.class)
 @Forwards({ @Forward(name = "showOperations", path = "/academicAdminOffice/payments/showOperations.jsp"),
@@ -159,7 +158,7 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
     }
 
     protected Person getPerson(HttpServletRequest request) {
-        return (Person) AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "personId"));
+        return getDomainObject(request, "personId");
     }
 
     protected Unit getCurrentUnit(HttpServletRequest request) {
@@ -223,7 +222,7 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
     }
 
     protected Event getEvent(HttpServletRequest request) {
-        return (Event) AbstractDomainObject.fromExternalId(Event.class, getIntegerFromRequest(request, "eventId"));
+        return getDomainObject(request, "eventId");
     }
 
     public ActionForward preparePrintGuide(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

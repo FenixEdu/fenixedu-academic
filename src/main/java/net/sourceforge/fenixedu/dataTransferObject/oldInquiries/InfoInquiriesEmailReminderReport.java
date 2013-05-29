@@ -29,7 +29,7 @@ public class InfoInquiriesEmailReminderReport extends InfoObject implements Comp
         numberStudentsWithEmail = 0;
     }
 
-    public InfoInquiriesEmailReminderReport(Integer externalId) {
+    public InfoInquiriesEmailReminderReport(String externalId) {
         super(externalId);
         // TODO Auto-generated constructor stub
     }

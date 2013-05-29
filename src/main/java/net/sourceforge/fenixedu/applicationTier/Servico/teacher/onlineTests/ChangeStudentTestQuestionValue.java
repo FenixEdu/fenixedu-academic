@@ -32,8 +32,8 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class ChangeStudentTestQuestionValue {
-    protected void run(Integer executionCourseId, Integer distributedTestId, Double newValue, Integer questionId,
-            Integer studentId, TestQuestionStudentsChangesType studentsType, String path) throws FenixServiceException {
+    protected void run(String executionCourseId, String distributedTestId, Double newValue, String questionId, String studentId,
+            TestQuestionStudentsChangesType studentsType, String path) throws FenixServiceException {
 
         DistributedTest distributedTest = AbstractDomainObject.fromExternalId(distributedTestId);
         Question question = distributedTest.findQuestionByOID(questionId);
@@ -127,8 +127,8 @@ public class ChangeStudentTestQuestionValue {
     private static final ChangeStudentTestQuestionValue serviceInstance = new ChangeStudentTestQuestionValue();
 
     @Service
-    public static void runChangeStudentTestQuestionValue(Integer executionCourseId, Integer distributedTestId, Double newValue,
-            Integer questionId, Integer studentId, TestQuestionStudentsChangesType studentsType, String path)
+    public static void runChangeStudentTestQuestionValue(String executionCourseId, String distributedTestId, Double newValue,
+            String questionId, String studentId, TestQuestionStudentsChangesType studentsType, String path)
             throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
         serviceInstance.run(executionCourseId, distributedTestId, newValue, questionId, studentId, studentsType, path);

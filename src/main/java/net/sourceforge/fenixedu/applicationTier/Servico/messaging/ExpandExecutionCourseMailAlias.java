@@ -44,7 +44,7 @@ public class ExpandExecutionCourseMailAlias {
     public static ForwardMailsReport run(String address, String prefix, String host) throws FenixServiceException {
         ForwardMailsReport report = new ForwardMailsReport();
 
-        Integer id = extractExecutionCourseId(address, prefix, host, report);
+        String id = extractExecutionCourseId(address, prefix, host, report);
         if (id != null) {
             ExecutionCourse course = AbstractDomainObject.fromExternalId(id);
             if (course != null) {

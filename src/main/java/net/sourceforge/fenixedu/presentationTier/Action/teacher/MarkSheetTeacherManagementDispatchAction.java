@@ -99,7 +99,7 @@ public class MarkSheetTeacherManagementDispatchAction extends ManageExecutionCou
     }
 
     public ActionForward gradeSubmissionStepTwo(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         IUserView userView = getUserView(request);
         MarkSheetTeacherGradeSubmissionBean submissionBean =
@@ -125,7 +125,7 @@ public class MarkSheetTeacherManagementDispatchAction extends ManageExecutionCou
     }
 
     public ActionForward backToMainPage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         return mapping.findForward("mainPage");
     }
@@ -257,11 +257,10 @@ public class MarkSheetTeacherManagementDispatchAction extends ManageExecutionCou
     public ActionForward viewMarkSheet(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
-        Integer markSheetID = Integer.valueOf(request.getParameter("msID"));
+        String markSheetID = request.getParameter("msID");
         MarkSheet markSheet = AbstractDomainObject.fromExternalId(markSheetID);
         request.setAttribute("markSheet", markSheet);
         request.setAttribute("executionCourseID", executionCourse.getExternalId());
         return mapping.findForward("viewMarkSheet");
     }
-
 }

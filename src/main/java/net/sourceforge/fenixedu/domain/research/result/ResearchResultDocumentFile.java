@@ -72,9 +72,8 @@ public class ResearchResultDocumentFile extends ResearchResultDocumentFile_Base 
         }
     }
 
-    public final static ResearchResultDocumentFile readByOID(Integer oid) {
-        final ResearchResultDocumentFile documentFile =
-                (ResearchResultDocumentFile) AbstractDomainObject.fromExternalId(oid);
+    public final static ResearchResultDocumentFile readByOID(String oid) {
+        final ResearchResultDocumentFile documentFile = AbstractDomainObject.fromExternalId(oid);
 
         if (documentFile == null) {
             throw new DomainException("error.researcher.ResultDocumentFile.null");

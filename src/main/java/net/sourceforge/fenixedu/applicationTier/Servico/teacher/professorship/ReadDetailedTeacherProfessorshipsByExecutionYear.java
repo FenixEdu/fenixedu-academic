@@ -17,7 +17,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ReadDetailedTeacherProfessorshipsByExecutionYear extends ReadDetailedTeacherProfessorshipsAbstractService {
 
-    protected List run(Integer teacherID, Integer executionYearID) throws FenixServiceException {
+    protected List run(String teacherID, String executionYearID) throws FenixServiceException {
 
         final Teacher teacher = AbstractDomainObject.fromExternalId(teacherID);
         if (teacher == null) {
@@ -46,7 +46,7 @@ public class ReadDetailedTeacherProfessorshipsByExecutionYear extends ReadDetail
             new ReadDetailedTeacherProfessorshipsByExecutionYear();
 
     @Service
-    public static List runReadDetailedTeacherProfessorshipsByExecutionYear(Integer teacherID, Integer executionYearID)
+    public static List runReadDetailedTeacherProfessorshipsByExecutionYear(String teacherID, String executionYearID)
             throws FenixServiceException {
         return serviceInstance.run(teacherID, executionYearID);
     }

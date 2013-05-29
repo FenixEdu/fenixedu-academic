@@ -56,7 +56,7 @@ public class ScientificCommissionTeamDA extends FenixDispatchAction {
     }
 
     private DegreeCurricularPlan getDegreeCurricularPlan(HttpServletRequest request) {
-        Integer id = getId(request.getParameter("degreeCurricularPlanID"));
+        String id = request.getParameter("degreeCurricularPlanID");
         if (id == null) {
             return null;
         } else {
@@ -69,7 +69,7 @@ public class ScientificCommissionTeamDA extends FenixDispatchAction {
         if (bean != null) {
             return bean.getExecutionDegree();
         } else {
-            Integer id = getId(request.getParameter("executionDegreeID"));
+            String id = request.getParameter("executionDegreeID");
             if (id == null) {
                 return getDefaultExecutionDegree(request);
             } else {
@@ -86,19 +86,6 @@ public class ScientificCommissionTeamDA extends FenixDispatchAction {
         executionDegrees.addAll(degreeCurricularPlan.getExecutionDegrees());
 
         return executionDegrees.isEmpty() ? null : executionDegrees.last();
-    }
-
-    private Integer getId(String id) {
-        if (id == null || id.equals("")) {
-            return null;
-        }
-
-        try {
-            return new Integer(id);
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-            return null;
-        }
     }
 
     public ActionForward manage(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -166,7 +153,7 @@ public class ScientificCommissionTeamDA extends FenixDispatchAction {
                 ExecutionDegree executionDegree = getExecutionDegree(request);
 
                 try {
-                    AddScientificCommission.runAddScientificCommission( executionDegree.getExternalId(), employee.getPerson() );
+                    AddScientificCommission.runAddScientificCommission(executionDegree.getExternalId(), employee.getPerson());
                     RenderUtils.invalidateViewState("usernameChoice");
                 } catch (DomainException e) {
                     addActionMessage("addError", request, e.getKey(), e.getArgs());
@@ -179,7 +166,7 @@ public class ScientificCommissionTeamDA extends FenixDispatchAction {
 
     public ActionForward removeMember(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        Integer memberId = getId(request.getParameter("memberID"));
+        String memberId = request.getParameter("memberID");
 
         if (memberId != null) {
             ExecutionDegree executionDegree = getExecutionDegree(request);
@@ -187,7 +174,7 @@ public class ScientificCommissionTeamDA extends FenixDispatchAction {
             for (ScientificCommission commission : executionDegree.getScientificCommissionMembers()) {
                 if (commission.getExternalId().equals(memberId)) {
                     try {
-                        DeleteScientificCommission.runDeleteScientificCommission( executionDegree.getExternalId(), commission );
+                        DeleteScientificCommission.runDeleteScientificCommission(executionDegree.getExternalId(), commission);
                     } catch (DomainException e) {
                         addActionMessage("addError", request, e.getKey(), e.getArgs());
                     }

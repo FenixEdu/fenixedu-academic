@@ -3,7 +3,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
@@ -25,7 +24,7 @@ public class ReadCurricularCourseScope {
      */
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
-    public static InfoCurricularCourseScope run(Integer externalId) throws FenixServiceException {
+    public static InfoCurricularCourseScope run(String externalId) throws FenixServiceException {
         CurricularCourseScope curricularCourseScope;
 
         curricularCourseScope = AbstractDomainObject.fromExternalId(externalId);

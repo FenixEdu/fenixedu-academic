@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.curricularPlans;
 
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -15,7 +14,7 @@ public class CreateDegreeCurricularPlan {
 
     @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
     @Service
-    public static void run(Integer degreeId, String name, GradeScale gradeScale) throws FenixServiceException {
+    public static void run(String degreeId, String name, GradeScale gradeScale) throws FenixServiceException {
 
         if (degreeId == null || name == null) {
             throw new InvalidArgumentsServiceException();

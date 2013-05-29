@@ -5,7 +5,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil;
 
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
@@ -24,7 +23,7 @@ public class ReadCurriculumByOIdService {
 
     @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
     @Service
-    public static SiteView run(Integer curriculumId) throws FenixServiceException {
+    public static SiteView run(String curriculumId) throws FenixServiceException {
         Curriculum curriculum = AbstractDomainObject.fromExternalId(curriculumId);
         InfoCurriculum infoCurriculum = InfoCurriculum.newInfoFromDomain(curriculum);
         SiteView siteView = new SiteView(infoCurriculum);

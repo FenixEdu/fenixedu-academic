@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -15,8 +14,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class DeleteTestQuestion {
 
-    protected void run(Integer executionCourseId, Integer testId, final Integer questionId)
-            throws InvalidArgumentsServiceException {
+    protected void run(String executionCourseId, String testId, final String questionId) throws InvalidArgumentsServiceException {
         Test test = AbstractDomainObject.fromExternalId(testId);
         if (test == null) {
             throw new InvalidArgumentsServiceException();
@@ -41,7 +39,7 @@ public class DeleteTestQuestion {
     private static final DeleteTestQuestion serviceInstance = new DeleteTestQuestion();
 
     @Service
-    public static void runDeleteTestQuestion(Integer executionCourseId, Integer testId, Integer questionId)
+    public static void runDeleteTestQuestion(String executionCourseId, String testId, String questionId)
             throws InvalidArgumentsServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
         serviceInstance.run(executionCourseId, testId, questionId);

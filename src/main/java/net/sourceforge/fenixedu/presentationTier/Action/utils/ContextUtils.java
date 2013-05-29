@@ -72,9 +72,9 @@ public class ContextUtils {
             executionPeriodOIDString = request.getParameter(PresentationConstants.EXECUTION_PERIOD_OID);
         }
 
-        Integer executionPeriodOID = null;
+        String executionPeriodOID = null;
         if (executionPeriodOIDString != null && !executionPeriodOIDString.equals("") && !executionPeriodOIDString.equals("null")) {
-            executionPeriodOID = new Integer(executionPeriodOIDString);
+            executionPeriodOID = executionPeriodOIDString;
         }
 
         InfoExecutionPeriod infoExecutionPeriod = null;
@@ -637,23 +637,21 @@ public class ContextUtils {
             }
             if (request.getAttribute(PresentationConstants.EXECUTION_DEGREE_OID) != null) {
                 executionDegree =
-                        AbstractDomainObject.fromExternalId(
-                                Integer.parseInt((String) request.getAttribute(PresentationConstants.EXECUTION_DEGREE_OID)));
+                        AbstractDomainObject.fromExternalId((String) request
+                                .getAttribute(PresentationConstants.EXECUTION_DEGREE_OID));
             } else if (request.getParameter(PresentationConstants.EXECUTION_DEGREE_OID) != null) {
                 executionDegree =
-                        AbstractDomainObject.fromExternalId(
-                                Integer.parseInt(request.getParameter(PresentationConstants.EXECUTION_DEGREE_OID)));
+                        AbstractDomainObject.fromExternalId(request.getParameter(PresentationConstants.EXECUTION_DEGREE_OID));
             }
             if (request.getAttribute(PresentationConstants.CURRICULAR_YEAR_OID) != null
                     && !request.getParameter(PresentationConstants.CURRICULAR_YEAR_OID).equals("null")) {
                 curricularYear =
-                        AbstractDomainObject.fromExternalId(
-                                Integer.parseInt((String) request.getAttribute(PresentationConstants.CURRICULAR_YEAR_OID)));
+                        AbstractDomainObject.fromExternalId((String) request
+                                .getAttribute(PresentationConstants.CURRICULAR_YEAR_OID));
             } else if (request.getParameter(PresentationConstants.CURRICULAR_YEAR_OID) != null
                     && !request.getParameter(PresentationConstants.CURRICULAR_YEAR_OID).equals("null")) {
                 curricularYear =
-                        AbstractDomainObject.fromExternalId(
-                                Integer.parseInt(request.getParameter(PresentationConstants.CURRICULAR_YEAR_OID)));
+                        AbstractDomainObject.fromExternalId(request.getParameter(PresentationConstants.CURRICULAR_YEAR_OID));
             }
             if (request.getAttribute("execution_course_name") != null) {
                 courseName = (String) request.getAttribute("execution_course_name");

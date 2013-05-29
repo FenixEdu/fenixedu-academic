@@ -39,10 +39,7 @@ public class MathMlServlet extends HttpServlet {
             return;
         }
 
-        int mathMlMaterialId = Integer.parseInt(oid);
-
-        NewMathMlMaterial mathMlMaterial =
-                (NewMathMlMaterial) AbstractDomainObject.fromExternalId(mathMlMaterialId);
+        NewMathMlMaterial mathMlMaterial = AbstractDomainObject.fromExternalId(oid);
 
         response.setContentType("image/gif");
 

@@ -32,7 +32,6 @@ import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 
 public abstract class UnitFunctionalities extends FenixDispatchAction {
@@ -248,18 +247,15 @@ public abstract class UnitFunctionalities extends FenixDispatchAction {
     }
 
     protected UnitFile getUnitFile(HttpServletRequest request) {
-        Integer id = getExternalId(request, "fid");
-        return (UnitFile) AbstractDomainObject.fromExternalId(id);
+        return getDomainObject(request, "fid");
     }
 
     protected Unit getUnit(HttpServletRequest request) {
-        Integer id = getExternalId(request, "unitId");
-        return (Unit) AbstractDomainObject.fromExternalId(id);
+        return getDomainObject(request, "unitId");
     }
 
     protected PersistentGroupMembers getGroup(HttpServletRequest request) {
-        Integer id = getExternalId(request, "groupId");
-        return AbstractDomainObject.fromExternalId(id);
+        return getDomainObject(request, "groupId");
     }
 
     protected PersistentGroupMembersBean getNewPersistentGroupBean(HttpServletRequest request) {

@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -33,7 +32,7 @@ public class EnrollGroupShift {
 
     @Checked("RolePredicates.STUDENT_PREDICATE")
     @Service
-    public static Boolean run(Integer studentGroupCode, Integer groupPropertiesCode, Integer newShiftCode, String username)
+    public static Boolean run(String studentGroupCode, String groupPropertiesCode, String newShiftCode, String username)
             throws FenixServiceException {
 
         Grouping groupProperties = AbstractDomainObject.fromExternalId(groupPropertiesCode);

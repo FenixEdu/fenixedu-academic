@@ -6,7 +6,7 @@ import org.joda.time.YearMonthDay;
 
 public class GivenCreditsEntry extends CreditsCurriculumEntry {
 
-    private Double givenCredits;
+    private final Double givenCredits;
 
     public GivenCreditsEntry(final Double givenCredits) {
         this.givenCredits = givenCredits;
@@ -18,8 +18,8 @@ public class GivenCreditsEntry extends CreditsCurriculumEntry {
     }
 
     @Override
-    public Integer getExternalId() {
-        return givenCredits.intValue();
+    public String getExternalId() {
+        return givenCredits.toString();
     }
 
     @Override

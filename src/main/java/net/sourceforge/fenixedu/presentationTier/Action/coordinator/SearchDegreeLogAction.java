@@ -95,10 +95,8 @@ public class SearchDegreeLogAction extends FenixDispatchAction {
 
     private SearchDegreeLogBean readSearchBean(HttpServletRequest request, Degree degree) {
         String degreeID = request.getParameter("degree");
-        Integer degreeIDInteger = (degreeID == null) ? null : Integer.parseInt(degreeID);
-        if (degreeIDInteger != null) {
-            @SuppressWarnings("deprecation")
-            SearchDegreeLogBean sdlb = new SearchDegreeLogBean(AbstractDomainObject.fromExternalId(degreeIDInteger));
+        if (degreeID != null) {
+            SearchDegreeLogBean sdlb = new SearchDegreeLogBean((Degree) AbstractDomainObject.fromExternalId(degreeID));
 
             String viewPhoto = request.getParameter("viewPhoto");
             if (viewPhoto != null && viewPhoto.equalsIgnoreCase("true")) {

@@ -18,7 +18,6 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "manager", path = "/registrationConclusion", input = "show.markSheetManagement.search.page", scope = "request",
         parameter = "method")
@@ -52,7 +51,7 @@ public class RegistrationConclusionDA extends FenixDispatchAction {
     }
 
     private Registration getRegistration(final HttpServletRequest request) {
-        return AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "registrationId"));
+        return getDomainObject(request, "registrationId");
     }
 
     public ActionForward prepareEditForRegistration(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -80,7 +79,6 @@ public class RegistrationConclusionDA extends FenixDispatchAction {
     }
 
     private CycleCurriculumGroup getCycleCurriculumGroup(HttpServletRequest request) {
-        return (CycleCurriculumGroup) AbstractDomainObject.fromExternalId(getIntegerFromRequest(request,
-                "cycleCurriculumGroupId"));
+        return getDomainObject(request, "cycleCurriculumGroupId");
     }
 }

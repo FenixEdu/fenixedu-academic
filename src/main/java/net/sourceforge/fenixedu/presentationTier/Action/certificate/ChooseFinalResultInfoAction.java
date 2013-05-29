@@ -58,9 +58,9 @@ public class ChooseFinalResultInfoAction extends FenixDispatchAction {
 
         IUserView userView = getUserView(request);
 
-        Integer studentCurricularPlanID = (Integer) request.getAttribute("studentCurricularPlanID");
+        String studentCurricularPlanID = (String) request.getAttribute("studentCurricularPlanID");
         if (studentCurricularPlanID == null) {
-            studentCurricularPlanID = Integer.valueOf(request.getParameter("studentCurricularPlanID"));
+            studentCurricularPlanID = request.getParameter("studentCurricularPlanID");
         }
 
         InfoStudentCurricularPlan infoStudentCurricularPlan = null;

@@ -23,7 +23,7 @@ public class CoordinatorExecutionDegreeAuthorizationFilter extends Filtro {
     public static final CoordinatorExecutionDegreeAuthorizationFilter instance =
             new CoordinatorExecutionDegreeAuthorizationFilter();
 
-    public void execute(Integer executionDegreeId) throws NotAuthorizedException {
+    public void execute(String executionDegreeId) throws NotAuthorizedException {
         IUserView id = AccessControl.getUserView();
         if ((id != null && id.getRoleTypes() != null && !containsRoleType(id.getRoleTypes()))
                 || (id != null && id.getRoleTypes() != null && !hasPrivilege(id, executionDegreeId)) || (id == null)
@@ -40,13 +40,13 @@ public class CoordinatorExecutionDegreeAuthorizationFilter extends Filtro {
         return roles;
     }
 
-    private boolean hasPrivilege(IUserView id, Integer executionDegreeId) {
+    private boolean hasPrivilege(IUserView id, String executionDegreeId) {
         if (id.hasRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER)) {
             return true;
         }
 
         if (id.hasRoleType(RoleType.COORDINATOR)) {
-            Integer executionDegreeID = executionDegreeId;
+            String executionDegreeID = executionDegreeId;
 
             if (executionDegreeID == null) {
                 return false;

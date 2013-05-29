@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
@@ -11,7 +10,7 @@ public class RemoveProposalFromFinalDegreeWorkStudentGroup {
 
     @Checked("RolePredicates.STUDENT_PREDICATE")
     @Service
-    public static Boolean run(final FinalDegreeWorkGroup group, Integer groupProposalOID) throws FenixServiceException {
+    public static Boolean run(final FinalDegreeWorkGroup group, String groupProposalOID) throws FenixServiceException {
         final GroupProposal groupProposal = findGroupProposal(group, groupProposalOID);
         if (groupProposal != null) {
             if (group.getProposalAttributed() == groupProposal.getFinalDegreeWorkProposal()) {
@@ -36,7 +35,7 @@ public class RemoveProposalFromFinalDegreeWorkStudentGroup {
 
     }
 
-    private static GroupProposal findGroupProposal(final FinalDegreeWorkGroup group, final Integer groupProposalOID) {
+    private static GroupProposal findGroupProposal(final FinalDegreeWorkGroup group, final String groupProposalOID) {
         for (final GroupProposal groupProposal : group.getGroupProposalsSet()) {
             if (groupProposal.getExternalId().equals(groupProposalOID)) {
                 return groupProposal;

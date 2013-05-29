@@ -31,26 +31,23 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
         if (objectCodeString == null) {
             objectCodeString = (String) request.getAttribute("objectCode");
         }
-        Integer infoExecutionCourseCode = new Integer(objectCodeString);
 
-        if (readSiteView(request, firstPageComponent, infoExecutionCourseCode, null) == true) {
+        if (readSiteView(request, firstPageComponent, objectCodeString, null) == true) {
             return mapping.findForward("sucess");
         }
         return mapping.findForward("erro");
     }
 
-    private boolean readSiteView(HttpServletRequest request, ISiteComponent firstPageComponent, Integer infoExecutionCourseCode,
+    private boolean readSiteView(HttpServletRequest request, ISiteComponent firstPageComponent, String infoExecutionCourseCode,
             Integer sectionIndex) throws FenixActionException {
 
-        Integer objectCode = null;
+        String objectCodeString = null;
         if (infoExecutionCourseCode == null) {
-            String objectCodeString = request.getParameter("objectCode");
+            objectCodeString = request.getParameter("objectCode");
             if (objectCodeString == null) {
                 objectCodeString = (String) request.getAttribute("objectCode");
 
             }
-            objectCode = new Integer(objectCodeString);
-
         }
 
         ISiteComponent commonComponent = new InfoSiteCommon();
@@ -59,8 +56,8 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
         try {
             ExecutionCourseSiteView siteView =
                     ExecutionCourseSiteComponentService.runExecutionCourseSiteComponentService(commonComponent,
-                            firstPageComponent, objectCode, infoExecutionCourseCode, sectionIndex, null);
-            request.setAttribute("objectCode", objectCode);
+                            firstPageComponent, objectCodeString, infoExecutionCourseCode, sectionIndex, null);
+            request.setAttribute("objectCode", objectCodeString);
             if (siteView == null) {
                 result = false;
 

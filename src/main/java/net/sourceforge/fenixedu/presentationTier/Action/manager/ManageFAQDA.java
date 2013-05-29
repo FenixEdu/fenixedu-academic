@@ -122,7 +122,7 @@ public class ManageFAQDA extends FenixDispatchAction {
         InfoFAQSection infoFAQSection = new InfoFAQSection();
         if (parentSectionId != null && parentSectionId.length() > 0 && StringUtils.isNumeric(parentSectionId)) {
             infoFAQSection.setParentSection(new InfoFAQSection());
-            infoFAQSection.getParentSection().setExternalId(new Integer(parentSectionId));
+            infoFAQSection.getParentSection().setExternalId(parentSectionId);
         }
         infoFAQSection.setSectionName(sectionName);
 
@@ -135,10 +135,8 @@ public class ManageFAQDA extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         String sectionIdString = request.getParameter("sectionId");
 
-        if (sectionIdString != null && StringUtils.isNumeric(sectionIdString)) {
-            Integer sectionId = new Integer(sectionIdString);
-
-            DeleteFAQSection.run(sectionId);
+        if (sectionIdString != null) {
+            DeleteFAQSection.run(sectionIdString);
         }
 
         return mapping.findForward("Manage");
@@ -154,7 +152,7 @@ public class ManageFAQDA extends FenixDispatchAction {
         InfoFAQSection infoFAQSection = null;
         if (parentSectionId != null && parentSectionId.length() > 0 && StringUtils.isNumeric(parentSectionId)) {
             infoFAQSection = new InfoFAQSection();
-            infoFAQSection.setExternalId(new Integer(parentSectionId));
+            infoFAQSection.setExternalId(parentSectionId);
         }
 
         InfoFAQEntry infoFAQEntry = new InfoFAQEntry();
@@ -171,10 +169,8 @@ public class ManageFAQDA extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         String entryIdString = request.getParameter("entryId");
 
-        if (entryIdString != null && StringUtils.isNumeric(entryIdString)) {
-            Integer entryId = new Integer(entryIdString);
-
-            DeleteFAQEntry.run(entryId);
+        if (entryIdString != null) {
+            DeleteFAQEntry.run(entryIdString);
         }
 
         return mapping.getInputForward();

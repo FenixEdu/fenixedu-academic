@@ -50,7 +50,7 @@ public class NotInDegreeCurriculumCurriculumEntry extends CurriculumEntry {
     }
 
     @Override
-    public Integer getExternalId() {
+    public String getExternalId() {
         return getEnrolment().getExternalId();
     }
 

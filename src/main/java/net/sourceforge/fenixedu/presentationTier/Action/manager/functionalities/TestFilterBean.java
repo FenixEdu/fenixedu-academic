@@ -18,7 +18,7 @@ public class TestFilterBean implements Serializable {
 
     private String personName;
     private Person person;
-    private Integer personId;
+    private String personId;
     private String parameters;
 
     public TestFilterBean() {
@@ -43,11 +43,11 @@ public class TestFilterBean implements Serializable {
         this.person = person;
     }
 
-    public Integer getPersonId() {
+    public String getPersonId() {
         return this.personId;
     }
 
-    public void setPersonId(Integer personId) {
+    public void setPersonId(String personId) {
         this.personId = personId;
     }
 
@@ -100,13 +100,13 @@ public class TestFilterBean implements Serializable {
             updateInfo(person);
             return person;
         } else {
-            Integer oid = getPersonId();
+            String oid = getPersonId();
 
             if (oid == null) {
                 return null;
             }
 
-            person = (Person) AbstractDomainObject.fromExternalId(Person.class, oid);
+            person = AbstractDomainObject.fromExternalId(oid);
             setPerson(person);
 
             updateInfo(person);

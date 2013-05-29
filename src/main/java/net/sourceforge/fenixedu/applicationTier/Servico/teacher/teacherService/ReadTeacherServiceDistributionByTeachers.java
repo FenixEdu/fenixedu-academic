@@ -41,11 +41,11 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class ReadTeacherServiceDistributionByTeachers {
 
-    protected List run(Integer departmentId, List<Integer> executionPeriodsIDs) throws FenixServiceException, ParseException {
+    protected List run(String departmentId, List<String> executionPeriodsIDs) throws FenixServiceException, ParseException {
 
         final List<ExecutionSemester> executionPeriodList = new ArrayList<ExecutionSemester>();
-        for (Integer executionPeriodID : executionPeriodsIDs) {
-            executionPeriodList.add(AbstractDomainObject.fromExternalId(executionPeriodID));
+        for (String executionPeriodID : executionPeriodsIDs) {
+            executionPeriodList.add(AbstractDomainObject.<ExecutionSemester> fromExternalId(executionPeriodID));
         }
 
         final ExecutionSemester startPeriod = ExecutionSemester.readStartExecutionSemesterForCredits();
@@ -89,11 +89,11 @@ public class ReadTeacherServiceDistributionByTeachers {
                         continue;
                     }
 
-                    Map<Integer, String> degreeNameMap = new LinkedHashMap<Integer, String>();
-                    Map<Integer, Set<String>> degreeCurricularYearsMap = new LinkedHashMap<Integer, Set<String>>();
+                    Map<String, String> degreeNameMap = new LinkedHashMap<String, String>();
+                    Map<String, Set<String>> degreeCurricularYearsMap = new LinkedHashMap<String, Set<String>>();
                     for (CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
                         Degree degree = curricularCourse.getDegreeCurricularPlan().getDegree();
-                        Integer degreeExternalId = degree.getExternalId();
+                        String degreeExternalId = degree.getExternalId();
                         if (!degreeNameMap.containsKey(degreeExternalId)) {
                             degreeNameMap.put(degreeExternalId, degree.getSigla());
                             degreeCurricularYearsMap.put(degreeExternalId, new LinkedHashSet<String>());
@@ -175,7 +175,7 @@ public class ReadTeacherServiceDistributionByTeachers {
             new ReadTeacherServiceDistributionByTeachers();
 
     @Service
-    public static List runReadTeacherServiceDistributionByTeachers(Integer departmentId, List<Integer> executionPeriodsIDs)
+    public static List runReadTeacherServiceDistributionByTeachers(String departmentId, List<String> executionPeriodsIDs)
             throws FenixServiceException, ParseException, NotAuthorizedException {
         try {
             DepartmentMemberAuthorizationFilter.instance.execute();

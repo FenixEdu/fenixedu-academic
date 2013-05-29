@@ -16,7 +16,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ReadActiveCurricularCourseScopesByDegreeCurricularPlanIDAndExecutionYearID {
 
     @Service
-    public static Set<DegreeModuleScope> run(Integer degreeCurricularPlanId, Integer executionYearID) {
+    public static Set<DegreeModuleScope> run(String degreeCurricularPlanId, String executionYearID) {
         final ExecutionYear executionYear = AbstractDomainObject.fromExternalId(executionYearID);
         final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanId);
         final Set<DegreeModuleScope> degreeModuleScopes = degreeCurricularPlan.getDegreeModuleScopes();

@@ -26,7 +26,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class ReadShiftsByDistributedTest {
 
-    public List<InfoShift> run(Integer executionCourseId, Integer distributedTestId) throws FenixServiceException {
+    public List<InfoShift> run(String executionCourseId, String distributedTestId) throws FenixServiceException {
 
         final DistributedTest distributedTest = AbstractDomainObject.fromExternalId(distributedTestId);
         final Set<Registration> students = distributedTest != null ? distributedTest.findStudents() : new HashSet<Registration>();
@@ -53,7 +53,7 @@ public class ReadShiftsByDistributedTest {
     private static final ReadShiftsByDistributedTest serviceInstance = new ReadShiftsByDistributedTest();
 
     @Service
-    public static List<InfoShift> runReadShiftsByDistributedTest(Integer executionCourseId, Integer distributedTestId)
+    public static List<InfoShift> runReadShiftsByDistributedTest(String executionCourseId, String distributedTestId)
             throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
         return serviceInstance.run(executionCourseId, distributedTestId);

@@ -100,7 +100,7 @@ public class SelectRoomsFormAction extends FenixContextAction {
     }
 
     private RoomClassification readTypeRoomFormValue(DynaActionForm roomForm, String name) {
-        Integer obj = readIntegerFormValue(roomForm, name);
+        String obj = readFormValue(roomForm, name);
         if (obj != null) {
             return AbstractDomainObject.fromExternalId(obj);
         }

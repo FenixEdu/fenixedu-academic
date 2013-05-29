@@ -52,7 +52,7 @@ public class EditReimbursementGuide {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
-    public static void run(Integer reimbursementGuideId, String situation, Date officialDate, String remarks, IUserView userView)
+    public static void run(String reimbursementGuideId, String situation, Date officialDate, String remarks, IUserView userView)
             throws FenixServiceException {
         ReimbursementGuide reimbursementGuide = AbstractDomainObject.fromExternalId(reimbursementGuideId);
         if (reimbursementGuide == null) {
@@ -221,8 +221,7 @@ public class EditReimbursementGuide {
 
             // because of an OJB with cache bug we have to read the guide entry
             // again
-            reimbursementGuideEntryTmp =
-                    AbstractDomainObject.fromExternalId(reimbursementGuideEntryTmp.getExternalId());
+            reimbursementGuideEntryTmp = AbstractDomainObject.fromExternalId(reimbursementGuideEntryTmp.getExternalId());
 
             if (reimbursementGuideEntryTmp.getReimbursementGuide().getActiveReimbursementGuideSituation()
                     .getReimbursementGuideState().equals(ReimbursementGuideState.PAYED)) {

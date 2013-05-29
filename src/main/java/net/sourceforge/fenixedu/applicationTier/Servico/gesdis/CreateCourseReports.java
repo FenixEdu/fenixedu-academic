@@ -20,8 +20,8 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class CreateCourseReports {
 
     @Service
-    public static void run(Integer executionPeriodID) {
-        Set<Integer> courseReportsExecutionCoursesIDs = new HashSet<Integer>();
+    public static void run(String executionPeriodID) {
+        Set<String> courseReportsExecutionCoursesIDs = new HashSet<String>();
 
         final ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodID);
         List<ExecutionCourse> executionCourses = executionSemester.getAssociatedExecutionCourses();

@@ -33,7 +33,7 @@ public class TeacherServiceDistributionDTOEntry {
         return sb.toString();
     }
 
-    public Integer getExternalId() {
+    public String getExternalId() {
         return tsd.getExternalId();
     }
 

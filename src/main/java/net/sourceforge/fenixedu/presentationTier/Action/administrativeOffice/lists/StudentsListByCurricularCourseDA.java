@@ -48,7 +48,6 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
@@ -91,7 +90,7 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
     }
 
     public ActionForward showActiveCurricularCourseScope(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException,  FenixServiceException {
+            HttpServletResponse response) throws FenixActionException, FenixServiceException {
 
         final SearchStudentsByCurricularCourseParametersBean searchBean = getOrCreateSearchBean();
 
@@ -111,13 +110,11 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
     }
 
     public ActionForward searchByCurricularCourse(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response)  {
+            HttpServletResponse response) {
 
-        final CurricularCourse curricularCourse =
-                (CurricularCourse) AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "curricularCourseCode"));
+        final CurricularCourse curricularCourse = getDomainObject(request, "curricularCourseCode");
         final Integer semester = getIntegerFromRequest(request, "semester");
-        final ExecutionYear executionYear =
-                AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "executionYearID"));
+        final ExecutionYear executionYear = getDomainObject(request, "executionYearID");
 
         request.setAttribute("semester", semester);
         request.setAttribute("year", getIntegerFromRequest(request, "year"));
@@ -158,8 +155,7 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
     public ActionForward doExportInfoToExcel(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response, Boolean detailed) throws FenixServiceException {
 
-        final CurricularCourse curricularCourse =
-                (CurricularCourse) AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "curricularCourseCode"));
+        final CurricularCourse curricularCourse = getDomainObject(request, "curricularCourseCode");
         final Integer semester = getIntegerFromRequest(request, "semester");
         final ExecutionYear executionYear =
                 ExecutionYear.readExecutionYearByName((String) getFromRequest(request, "curricularYear"));

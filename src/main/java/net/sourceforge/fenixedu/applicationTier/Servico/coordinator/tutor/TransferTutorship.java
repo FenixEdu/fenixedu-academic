@@ -26,7 +26,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class TransferTutorship extends TutorshipManagement {
 
-    public List<TutorshipErrorBean> run(Integer executionDegreeID, TutorshipManagementBean bean,
+    public List<TutorshipErrorBean> run(String executionDegreeID, TutorshipManagementBean bean,
             List<TutorshipManagementByEntryYearBean> tutorshipsToTransfer) throws FenixServiceException {
 
         final Teacher teacher = Teacher.readByIstId(bean.getTeacherId());
@@ -80,7 +80,7 @@ public class TransferTutorship extends TutorshipManagement {
     private static final TransferTutorship serviceInstance = new TransferTutorship();
 
     @Service
-    public static List<TutorshipErrorBean> runTransferTutorship(Integer executionDegreeID, TutorshipManagementBean bean,
+    public static List<TutorshipErrorBean> runTransferTutorship(String executionDegreeID, TutorshipManagementBean bean,
             List<TutorshipManagementByEntryYearBean> tutorshipsToTransfer) throws FenixServiceException, NotAuthorizedException {
         CoordinatorAuthorizationFilter.instance.execute();
         BolonhaOrLEECCoordinatorAuthorizationFilter.instance.execute(executionDegreeID);

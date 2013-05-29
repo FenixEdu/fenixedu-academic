@@ -34,7 +34,7 @@ public class InsertExerciseVariation {
 
     private static final double FILE_SIZE_LIMIT = Math.pow(2, 20);
 
-    protected List run(Integer executionCourseId, Integer metadataId, UploadedFile xmlZipFile, String path)
+    protected List run(String executionCourseId, String metadataId, UploadedFile xmlZipFile, String path)
             throws FenixServiceException, NotExecuteException {
         List<String> badXmls = new ArrayList<String>();
         String replacedPath = path.replace('\\', '/');
@@ -109,7 +109,7 @@ public class InsertExerciseVariation {
     private static final InsertExerciseVariation serviceInstance = new InsertExerciseVariation();
 
     @Service
-    public static List runInsertExerciseVariation(Integer executionCourseId, Integer metadataId, UploadedFile xmlZipFile,
+    public static List runInsertExerciseVariation(String executionCourseId, String metadataId, UploadedFile xmlZipFile,
             String path) throws FenixServiceException, NotExecuteException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
         return serviceInstance.run(executionCourseId, metadataId, xmlZipFile, path);

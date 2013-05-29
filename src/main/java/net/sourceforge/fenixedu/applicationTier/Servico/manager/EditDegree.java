@@ -18,7 +18,7 @@ public class EditDegree {
 
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
-    public static void run(final Integer externalId, final String code, final String name, final String nameEn,
+    public static void run(final String externalId, final String code, final String name, final String nameEn,
             final DegreeType degreeType, final GradeScale gradeScale, ExecutionYear executionYear) throws FenixServiceException {
         if (externalId == null || name == null || nameEn == null || code == null || degreeType == null) {
             throw new InvalidArgumentsServiceException();

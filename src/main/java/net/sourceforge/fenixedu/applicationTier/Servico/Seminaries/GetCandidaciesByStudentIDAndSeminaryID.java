@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCandidacy;
 import net.sourceforge.fenixedu.domain.Seminaries.Seminary;
 import net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
 import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
@@ -27,7 +26,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class GetCandidaciesByStudentIDAndSeminaryID {
 
-    protected List run(Integer studentID, Integer seminaryID) throws BDException {
+    protected List run(String studentID, String seminaryID) {
         List candidaciesInfo = new LinkedList();
 
         Registration registration = AbstractDomainObject.fromExternalId(studentID);
@@ -44,12 +43,14 @@ public class GetCandidaciesByStudentIDAndSeminaryID {
 
         return candidaciesInfo;
     }
+
     // Service Invokers migrated from Berserk
 
     private static final GetCandidaciesByStudentIDAndSeminaryID serviceInstance = new GetCandidaciesByStudentIDAndSeminaryID();
 
     @Service
-    public static List runGetCandidaciesByStudentIDAndSeminaryID(Integer studentID, Integer seminaryID) throws BDException  , NotAuthorizedException {
+    public static List runGetCandidaciesByStudentIDAndSeminaryID(String studentID, String seminaryID)
+            throws NotAuthorizedException {
         SeminaryCoordinatorOrStudentFilter.instance.execute();
         return serviceInstance.run(studentID, seminaryID);
     }

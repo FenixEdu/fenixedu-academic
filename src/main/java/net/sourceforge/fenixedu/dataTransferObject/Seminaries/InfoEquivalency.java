@@ -51,7 +51,7 @@ public class InfoEquivalency extends InfoObject {
     /**
      * @return
      */
-    public Integer getSeminaryExternalId() {
+    public String getSeminaryExternalId() {
         return getInfoSeminary().getExternalId();
     }
 

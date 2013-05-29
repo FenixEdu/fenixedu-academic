@@ -106,8 +106,7 @@ public class ManageCreditsPeriods extends FenixDispatchAction {
 
     private ExecutionSemester getExecutionPeriodToEditPeriod(HttpServletRequest request) {
         String parameter = request.getParameter("executionPeriodId");
-        Integer executionPeriodId = parameter != null ? Integer.valueOf(parameter) : null;
-        return AbstractDomainObject.fromExternalId(executionPeriodId);
+        return AbstractDomainObject.fromExternalId(parameter);
     }
 
     public ActionForward prepareEditAnnualCreditsDates(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

@@ -79,8 +79,7 @@ public class GenerateUserUID extends FenixDispatchAction {
 
     // Private Methods
 
-    private void readAndSetResultPersons(HttpServletRequest request, PersonBean personBean) throws 
-            FenixServiceException {
+    private void readAndSetResultPersons(HttpServletRequest request, PersonBean personBean) throws FenixServiceException {
 
         SearchPerson.SearchParameters parameters =
                 new SearchParameters(personBean.getName(), null, personBean.getUsername(), personBean.getDocumentIdNumber(),
@@ -95,7 +94,6 @@ public class GenerateUserUID extends FenixDispatchAction {
 
     private Person getPersonFromParameter(HttpServletRequest request) {
         String personIDString = request.getParameter("personID");
-        return (Person) ((StringUtils.isEmpty(personIDString)) ? null : AbstractDomainObject.fromExternalId(Integer
-                .valueOf(personIDString)));
+        return (Person) ((StringUtils.isEmpty(personIDString)) ? null : AbstractDomainObject.fromExternalId(personIDString));
     }
 }

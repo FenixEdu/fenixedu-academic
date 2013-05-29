@@ -17,7 +17,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class WrittenEvaluationRoomDistribution {
 
-    protected void run(Integer executionCourseID, Integer evaluationID, List<Integer> roomIDs, Boolean sendSMS,
+    protected void run(String executionCourseID, String evaluationID, List<String> roomIDs, Boolean sendSMS,
             Boolean distributeOnlyEnroledStudents) throws FenixServiceException {
 
         final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) AbstractDomainObject.fromExternalId(evaluationID);
@@ -42,13 +42,13 @@ public class WrittenEvaluationRoomDistribution {
         }
     }
 
-    private List<AllocatableSpace> readRooms(final WrittenEvaluation writtenEvaluation, final List<Integer> roomIDs) {
+    private List<AllocatableSpace> readRooms(final WrittenEvaluation writtenEvaluation, final List<String> roomIDs) {
 
-        List<Integer> selectedRoomIDs = removeDuplicatedEntries(roomIDs);
+        List<String> selectedRoomIDs = removeDuplicatedEntries(roomIDs);
         final List<AllocatableSpace> writtenEvaluationRooms = writtenEvaluation.getAssociatedRooms();
         final List<AllocatableSpace> selectedRooms = new ArrayList<AllocatableSpace>(selectedRoomIDs.size());
 
-        for (final Integer roomID : selectedRoomIDs) {
+        for (final String roomID : selectedRoomIDs) {
             for (final AllocatableSpace room : writtenEvaluationRooms) {
                 if (room.getExternalId().equals(roomID)) {
                     selectedRooms.add(room);
@@ -59,9 +59,9 @@ public class WrittenEvaluationRoomDistribution {
         return selectedRooms;
     }
 
-    private List<Integer> removeDuplicatedEntries(List<Integer> roomIDs) {
-        List<Integer> result = new ArrayList<Integer>();
-        for (final Integer roomID : roomIDs) {
+    private List<String> removeDuplicatedEntries(List<String> roomIDs) {
+        List<String> result = new ArrayList<String>();
+        for (final String roomID : roomIDs) {
             if (!result.contains(roomID)) {
                 result.add(roomID);
             }
@@ -98,11 +98,9 @@ public class WrittenEvaluationRoomDistribution {
     private static final WrittenEvaluationRoomDistribution serviceInstance = new WrittenEvaluationRoomDistribution();
 
     @Service
-    public static void runWrittenEvaluationRoomDistribution(Integer executionCourseID, Integer evaluationID,
-            List<Integer> roomIDs, Boolean sendSMS, Boolean distributeOnlyEnroledStudents) throws FenixServiceException,
-            NotAuthorizedException {
-        ExecutionCourseAndExamLecturingTeacherAuthorizationFilter.instance.execute(executionCourseID, evaluationID, roomIDs,
-                sendSMS, distributeOnlyEnroledStudents);
+    public static void runWrittenEvaluationRoomDistribution(String executionCourseID, String evaluationID, List<String> roomIDs,
+            Boolean sendSMS, Boolean distributeOnlyEnroledStudents) throws FenixServiceException, NotAuthorizedException {
+        ExecutionCourseAndExamLecturingTeacherAuthorizationFilter.instance.execute(executionCourseID, evaluationID);
         serviceInstance.run(executionCourseID, evaluationID, roomIDs, sendSMS, distributeOnlyEnroledStudents);
     }
 

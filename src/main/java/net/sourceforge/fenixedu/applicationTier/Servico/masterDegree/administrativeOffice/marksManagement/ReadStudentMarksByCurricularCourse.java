@@ -35,7 +35,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ReadStudentMarksByCurricularCourse {
 
     @Service
-    public static List run(Integer curricularCourseID, Integer studentNumber, String executionYear, Integer enrolmentId)
+    public static List run(String curricularCourseID, Integer studentNumber, String executionYear, String enrolmentId)
             throws FenixServiceException {
 
         List enrolmentEvaluations = null;
@@ -87,7 +87,7 @@ public class ReadStudentMarksByCurricularCourse {
         return infoSiteEnrolmentEvaluations;
     }
 
-    private static Enrolment getEnrolment(Integer curricularCourseID, Integer studentNumber, String executionYear)
+    private static Enrolment getEnrolment(String curricularCourseID, Integer studentNumber, String executionYear)
             throws ExistingServiceException {
         CurricularCourse curricularCourse = (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseID);
 

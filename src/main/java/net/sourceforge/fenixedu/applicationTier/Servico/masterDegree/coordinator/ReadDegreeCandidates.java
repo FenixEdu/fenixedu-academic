@@ -22,7 +22,7 @@ public class ReadDegreeCandidates {
         return createInfoMasterDegreeCandidates(executionDegree.getMasterDegreeCandidatesSet());
     }
 
-    public static List run(Integer degreeCurricularPlanId) {
+    public static List run(String degreeCurricularPlanId) {
         final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanId);
         return createInfoMasterDegreeCandidates(degreeCurricularPlan.readMasterDegreeCandidates());
     }

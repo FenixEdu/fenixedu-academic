@@ -170,7 +170,7 @@ public class RoomSearchDA extends FenixContextDispatchAction {
         List<InfoRoom> availableRooms = new ArrayList<InfoRoom>();
         for (String element : availableRoomsId) {
 
-            InfoRoom infoRoom = ReadRoomByOID.run(new Integer(element));
+            InfoRoom infoRoom = ReadRoomByOID.run(element);
             availableRooms.add(infoRoom);
         }
         if ((sortParameter != null) && (sortParameter.length() != 0)) {

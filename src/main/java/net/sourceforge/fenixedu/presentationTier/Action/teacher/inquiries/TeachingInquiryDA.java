@@ -278,8 +278,7 @@ public class TeachingInquiryDA extends FenixDispatchAction {
     }
 
     private ExecutionCourse readAndSaveExecutionCourse(HttpServletRequest request) {
-        ExecutionCourse executionCourse =
-                AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "executionCourseID"));
+        ExecutionCourse executionCourse = getDomainObject(request, "executionCourseID");
         if (executionCourse == null) {
             return (ExecutionCourse) request.getAttribute("executionCourse");
         }
@@ -294,8 +293,7 @@ public class TeachingInquiryDA extends FenixDispatchAction {
     public ActionForward showInquiryCourseResult(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         final StudentInquiriesCourseResult courseResult =
-                AbstractDomainObject.fromExternalId(
-                        Integer.valueOf(getFromRequest(request, "resultId").toString()));
+                AbstractDomainObject.fromExternalId(getFromRequest(request, "resultId").toString());
         final Person loggedPerson = AccessControl.getPerson();
         if (!loggedPerson.isPedagogicalCouncilMember() && loggedPerson.getPersonRole(RoleType.GEP) == null
                 && loggedPerson.getPersonRole(RoleType.DEPARTMENT_MEMBER) == null
@@ -318,8 +316,7 @@ public class TeachingInquiryDA extends FenixDispatchAction {
     public ActionForward showInquiryTeachingResult(ActionMapping actionMapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         final StudentInquiriesTeachingResult teachingResult =
-                AbstractDomainObject.fromExternalId(
-                        Integer.valueOf(getFromRequest(request, "resultId").toString()));
+                AbstractDomainObject.fromExternalId(getFromRequest(request, "resultId").toString());
         final Person loggedPerson = AccessControl.getPerson();
         if (!loggedPerson.isPedagogicalCouncilMember() && loggedPerson.getPersonRole(RoleType.GEP) == null
                 && loggedPerson.getPersonRole(RoleType.DEPARTMENT_MEMBER) == null

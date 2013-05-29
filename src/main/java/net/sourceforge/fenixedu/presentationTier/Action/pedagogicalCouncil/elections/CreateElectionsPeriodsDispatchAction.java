@@ -63,8 +63,7 @@ public class CreateElectionsPeriodsDispatchAction extends ElectionsPeriodsManage
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         if (getFromRequest(request, "selectedPeriod") != null) {
-            final Integer electionOID = Integer.parseInt(request.getParameter("selectedPeriod"));
-            final DelegateElection election = AbstractDomainObject.fromExternalId(electionOID);
+            final DelegateElection election = AbstractDomainObject.fromExternalId(request.getParameter("selectedPeriod"));
 
             Degree degree = election.getDegree();
             CurricularYear curricularYear = ((YearDelegateElection) election).getCurricularYear();
@@ -73,8 +72,7 @@ public class CreateElectionsPeriodsDispatchAction extends ElectionsPeriodsManage
         } else {
             final Integer year = Integer.parseInt(request.getParameter("selectedYear"));
             final CurricularYear curricularYear = CurricularYear.readByYear(year);
-            final Integer degreeOID = Integer.parseInt(request.getParameter("selectedDegree"));
-            final Degree degree = AbstractDomainObject.fromExternalId(degreeOID);
+            final Degree degree = AbstractDomainObject.fromExternalId(request.getParameter("selectedDegree"));
 
             return prepareCreateYearDelegateElectionPeriod(mapping, actionForm, request, response, degree, curricularYear, null);
         }
@@ -86,10 +84,7 @@ public class CreateElectionsPeriodsDispatchAction extends ElectionsPeriodsManage
     public ActionForward prepareCreateYearDelegateVotingPeriod(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        final String forwardTo = (String) getFromRequest(request, "forwardTo");
-
-        Integer electionOID = Integer.parseInt(request.getParameter("selectedPeriod"));
-        final DelegateElection election = AbstractDomainObject.fromExternalId(electionOID);
+        final DelegateElection election = AbstractDomainObject.fromExternalId(request.getParameter("selectedPeriod"));
 
         Degree degree = election.getDegree();
         CurricularYear curricularYear = ((YearDelegateElection) election).getCurricularYear();

@@ -27,6 +27,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoPeriod;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -69,11 +70,9 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
 
         DynaActionForm dynaForm = (DynaActionForm) form;
 
-        Integer executionDegreeId = new Integer(request.getParameter("executionDegreeId"));
-
         InfoExecutionDegree oldInfoExecutionDegree = null;
         try {
-            oldInfoExecutionDegree = ReadExecutionDegree.runReadExecutionDegree(executionDegreeId);
+            oldInfoExecutionDegree = ReadExecutionDegree.runReadExecutionDegree(request.getParameter("executionDegreeId"));
         } catch (NonExistingServiceException e) {
             throw new NonExistingActionException("message.nonExistingExecutionDegree",
                     mapping.findForward("readDegreeCurricularPlan"));
@@ -165,9 +164,9 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
     public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixActionException {
 
-        Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
+        String degreeCurricularPlanId = request.getParameter("degreeCurricularPlanId");
         final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanId);
-        Integer executionDegreeId = new Integer(request.getParameter("executionDegreeId"));
+        String executionDegreeId = request.getParameter("executionDegreeId");
 
         DynaActionForm dynaForm = (DynaValidatorForm) form;
         String executionYearString = (String) dynaForm.get("executionYearId");
@@ -179,7 +178,7 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
         InfoExecutionDegreeEditor infoExecutionDegree = new InfoExecutionDegreeEditor();
 
         InfoExecutionYear infoExecutionYear =
-                new InfoExecutionYear(AbstractDomainObject.fromExternalId(Integer.valueOf(executionYearString)));
+                new InfoExecutionYear(AbstractDomainObject.<ExecutionYear> fromExternalId(executionYearString));
         infoExecutionDegree.setInfoExecutionYear(infoExecutionYear);
 
         // InfoTeacher infoTeacher = new InfoTeacher();
@@ -192,7 +191,7 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
         infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
         infoExecutionDegree.setExternalId(executionDegreeId);
 
-        InfoCampus infoCampus = new InfoCampus(Integer.valueOf(campusIdString));
+        InfoCampus infoCampus = new InfoCampus(campusIdString);
         infoExecutionDegree.setInfoCampus(infoCampus);
 
         try {
@@ -388,8 +387,7 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
             }
         }
         InfoExecutionDegreeEditor infoExecutionDegree = new InfoExecutionDegreeEditor();
-        Integer executionDegreeId = new Integer(request.getParameter("executionDegreeId"));
-        infoExecutionDegree.setExternalId(executionDegreeId);
+        infoExecutionDegree.setExternalId(request.getParameter("executionDegreeId"));
 
         infoExecutionDegree.setInfoPeriodLessonsFirstSemester(periodLessonFirstSemester[0]);
         infoExecutionDegree.setInfoPeriodLessonsSecondSemester(periodLessonSecondSemester[0]);

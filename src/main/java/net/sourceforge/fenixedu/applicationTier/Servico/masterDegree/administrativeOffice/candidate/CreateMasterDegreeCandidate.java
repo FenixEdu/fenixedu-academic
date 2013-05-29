@@ -33,7 +33,7 @@ public class CreateMasterDegreeCandidate {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
-    public static InfoMasterDegreeCandidate run(Specialization degreeType, Integer executionDegreeID, String name,
+    public static InfoMasterDegreeCandidate run(Specialization degreeType, String executionDegreeID, String name,
             String identificationDocumentNumber, IDDocumentType identificationDocumentType) throws Exception {
 
         // Read the Execution of this degree in the current execution Year

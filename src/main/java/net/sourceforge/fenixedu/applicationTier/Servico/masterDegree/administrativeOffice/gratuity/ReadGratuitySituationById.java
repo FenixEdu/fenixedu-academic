@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity;
 
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation;
@@ -20,7 +19,7 @@ public class ReadGratuitySituationById {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
-    public static InfoGratuitySituation run(Integer gratuitySituationID) throws FenixServiceException {
+    public static InfoGratuitySituation run(String gratuitySituationID) throws FenixServiceException {
         InfoGratuitySituation infoGratuitySituation = null;
 
         GratuitySituation gratuitySituation = AbstractDomainObject.fromExternalId(gratuitySituationID);

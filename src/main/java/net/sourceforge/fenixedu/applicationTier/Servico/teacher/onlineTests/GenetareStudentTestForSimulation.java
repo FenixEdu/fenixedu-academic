@@ -28,7 +28,7 @@ import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class GenetareStudentTestForSimulation {
-    protected List run(Integer executionCourseId, Integer testId, String path, TestType testType,
+    protected List run(String executionCourseId, String testId, String path, TestType testType,
             CorrectionAvailability correctionAvailability, Boolean imsfeedback, String testInformation)
             throws FenixServiceException {
         List<InfoStudentTestQuestion> infoStudentTestQuestionList = new ArrayList<InfoStudentTestQuestion>();
@@ -109,7 +109,7 @@ public class GenetareStudentTestForSimulation {
     private static final GenetareStudentTestForSimulation serviceInstance = new GenetareStudentTestForSimulation();
 
     @Service
-    public static List runGenetareStudentTestForSimulation(Integer executionCourseId, Integer testId, String path,
+    public static List runGenetareStudentTestForSimulation(String executionCourseId, String testId, String path,
             TestType testType, CorrectionAvailability correctionAvailability, Boolean imsfeedback, String testInformation)
             throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);

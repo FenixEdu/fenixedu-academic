@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -14,7 +13,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class CreateBibliographicReference {
 
-    protected Boolean run(Integer infoExecutionCourseID, String newBibliographyTitle, String newBibliographyAuthors,
+    protected Boolean run(String infoExecutionCourseID, String newBibliographyTitle, String newBibliographyAuthors,
             String newBibliographyReference, String newBibliographyYear, Boolean newBibliographyOptional)
             throws FenixServiceException {
 
@@ -33,7 +32,7 @@ public class CreateBibliographicReference {
     private static final CreateBibliographicReference serviceInstance = new CreateBibliographicReference();
 
     @Service
-    public static Boolean runCreateBibliographicReference(Integer infoExecutionCourseID, String newBibliographyTitle,
+    public static Boolean runCreateBibliographicReference(String infoExecutionCourseID, String newBibliographyTitle,
             String newBibliographyAuthors, String newBibliographyReference, String newBibliographyYear,
             Boolean newBibliographyOptional) throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(infoExecutionCourseID);

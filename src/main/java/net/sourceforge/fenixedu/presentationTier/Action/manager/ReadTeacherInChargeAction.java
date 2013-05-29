@@ -38,7 +38,7 @@ public class ReadTeacherInChargeAction extends FenixAction {
             throws FenixActionException {
 
         IUserView userView = UserView.getUser();
-        Integer executionCourseId = new Integer(request.getParameter("executionCourseId"));
+        String executionCourseId = request.getParameter("executionCourseId");
 
         InfoExecutionCourse infoExecutionCourse = null;
         try {
@@ -48,7 +48,7 @@ public class ReadTeacherInChargeAction extends FenixAction {
             throw new FenixActionException(fenixServiceException.getMessage());
         }
 
-        List infoTeachersList = null;
+        List<InfoTeacher> infoTeachersList = null;
 
         try {
             infoTeachersList = ReadExecutionCourseTeachers.runReadExecutionCourseTeachers(executionCourseId);
@@ -59,33 +59,30 @@ public class ReadTeacherInChargeAction extends FenixAction {
 
         List infoNonAffiliatedTeachers = infoExecutionCourse.getNonAffiliatedTeachers();
         if (infoTeachersList != null) {
-            List<Integer> teachersIds = new ArrayList<Integer>();
+            List<String> teachersIds = new ArrayList<String>();
             Integer teacherId;
-            Iterator iter = infoTeachersList.iterator();
+            Iterator<InfoTeacher> iter = infoTeachersList.iterator();
             while (iter.hasNext()) {
-                teacherId = ((InfoTeacher) iter.next()).getExternalId();
-                teachersIds.add(teacherId);
+                teachersIds.add(iter.next().getExternalId());
             }
 
-            Integer[] professorShipTeachersIds = teachersIds.toArray(new Integer[] {});
+            String[] professorShipTeachersIds = teachersIds.toArray(new String[] {});
             DynaActionForm newForm = (DynaActionForm) form;
             newForm.set("professorShipTeachersIds", professorShipTeachersIds);
 
-            List<Integer> nonAffiliatedTeacherIDs = new ArrayList<Integer>();
-            Integer nonAffiliatedTeacherID;
+            List<String> nonAffiliatedTeacherIDs = new ArrayList<String>();
 
             if (infoNonAffiliatedTeachers != null) {
                 for (Iterator iterator = infoNonAffiliatedTeachers.iterator(); iterator.hasNext();) {
                     InfoNonAffiliatedTeacher infoNonAffiliatedTeacher = (InfoNonAffiliatedTeacher) iterator.next();
-                    nonAffiliatedTeacherID = infoNonAffiliatedTeacher.getExternalId();
-                    nonAffiliatedTeacherIDs.add(nonAffiliatedTeacherID);
+                    nonAffiliatedTeacherIDs.add(infoNonAffiliatedTeacher.getExternalId());
                 }
 
-                Integer[] nonAffiliatedTeacherArrayIDs = nonAffiliatedTeacherIDs.toArray(new Integer[] {});
+                String[] nonAffiliatedTeacherArrayIDs = nonAffiliatedTeacherIDs.toArray(new String[] {});
                 newForm.set("nonAffiliatedTeachersIds", nonAffiliatedTeacherArrayIDs);
             }
 
-            List<Integer> responsiblesIds = null;
+            List<String> responsiblesIds = null;
             try {
                 responsiblesIds = ReadExecutionCourseResponsiblesIds.runReadExecutionCourseResponsiblesIds(executionCourseId);
 
@@ -93,7 +90,7 @@ public class ReadTeacherInChargeAction extends FenixAction {
                 throw new FenixActionException(fenixServiceException.getMessage());
             }
 
-            Integer[] responsibleTeachersIds = responsiblesIds.toArray(new Integer[] {});
+            String[] responsibleTeachersIds = responsiblesIds.toArray(new String[] {});
             newForm.set("responsibleTeachersIds", responsibleTeachersIds);
             request.setAttribute("infoTeachersList", infoTeachersList);
             request.setAttribute("infoNonAffiliatedTeachers", infoNonAffiliatedTeachers);
@@ -102,5 +99,4 @@ public class ReadTeacherInChargeAction extends FenixAction {
         request.setAttribute("executionCourseName", infoExecutionCourse.getNome());
         return mapping.findForward("readExecutionCourseTeachers");
     }
-
 }

@@ -99,9 +99,9 @@ public class ManageThesisDA extends AbstractManageThesisDA {
     }
 
     private ExecutionYear getExecutionYear(HttpServletRequest request) {
-        Integer id = getId(request.getParameter("executionYearId"));
+        String id = request.getParameter("executionYearId");
         if (id == null) {
-            id = getId(request.getParameter("executionYear"));
+            id = request.getParameter("executionYear");
         }
         if (id == null) {
             TreeSet<ExecutionYear> executionYears = new TreeSet<ExecutionYear>(new ReverseComparator());
@@ -134,20 +134,6 @@ public class ManageThesisDA extends AbstractManageThesisDA {
             executionYears.addAll(getDegreeCurricularPlan(request).getExecutionYears());
 
             return new ThesisContextBean(executionYears, executionYear);
-        }
-    }
-
-    @Override
-    protected Integer getId(String id) {
-        if (id == null) {
-            return null;
-        }
-
-        try {
-            return new Integer(id);
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-            return null;
         }
     }
 

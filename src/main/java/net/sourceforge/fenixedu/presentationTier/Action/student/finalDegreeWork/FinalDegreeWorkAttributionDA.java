@@ -37,6 +37,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Luis Cruz
@@ -122,8 +123,8 @@ public class FinalDegreeWorkAttributionDA extends FenixDispatchAction {
         final ExecutionYear executionYear;
         final String executionYearOID = (String) finalDegreeWorkAttributionForm.get("executionYearOID");
         executionYear =
-                executionYearOID == null || executionYearOID.equals("") ? ExecutionYear.readCurrentExecutionYear() : rootDomainObject
-                        .readExecutionYearByOID(Integer.valueOf(executionYearOID));
+                executionYearOID == null || executionYearOID.equals("") ? ExecutionYear.readCurrentExecutionYear() : AbstractDomainObject
+                        .<ExecutionYear> fromExternalId(executionYearOID);
         return prepare(mapping, finalDegreeWorkAttributionForm, request, executionYear);
     }
 
@@ -153,7 +154,7 @@ public class FinalDegreeWorkAttributionDA extends FenixDispatchAction {
 
         if (selectedGroupProposalOID != null && !selectedGroupProposalOID.equals("")) {
 
-            ConfirmAttributionOfFinalDegreeWork.run(userView.getUtilizador(), new Integer(selectedGroupProposalOID));
+            ConfirmAttributionOfFinalDegreeWork.run(userView.getUtilizador(), selectedGroupProposalOID);
         }
 
         return mapping.findForward("prepareShowFinalDegreeWorkList");
@@ -161,7 +162,7 @@ public class FinalDegreeWorkAttributionDA extends FenixDispatchAction {
 
     private class PREDICATE_FIND_PROPOSAL_ATTRIBUTED_TO_GROUP_BY_TEACHER implements Predicate {
 
-        Integer groupID = null;
+        String groupID = null;
 
         @Override
         public boolean evaluate(Object arg0) {
@@ -171,7 +172,7 @@ public class FinalDegreeWorkAttributionDA extends FenixDispatchAction {
                             .getExternalId()));
         }
 
-        public PREDICATE_FIND_PROPOSAL_ATTRIBUTED_TO_GROUP_BY_TEACHER(Integer groupID) {
+        public PREDICATE_FIND_PROPOSAL_ATTRIBUTED_TO_GROUP_BY_TEACHER(String groupID) {
             super();
             this.groupID = groupID;
         }

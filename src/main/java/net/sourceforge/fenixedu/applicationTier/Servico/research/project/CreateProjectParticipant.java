@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.research.project;
 
-
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.externalPerson.InsertExternalPerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.research.ProjectParticipantFullCreationBean;
@@ -33,7 +32,7 @@ public class CreateProjectParticipant {
      */
     @Checked("ResultPredicates.author")
     @Service
-    public static ProjectParticipation run(ProjectParticipantSimpleCreationBean bean, Integer projectId)
+    public static ProjectParticipation run(ProjectParticipantSimpleCreationBean bean, String projectId)
             throws FenixServiceException {
         ProjectParticipation participation = null;
         final Project project = AbstractDomainObject.fromExternalId(projectId);
@@ -64,7 +63,7 @@ public class CreateProjectParticipant {
      */
     @Checked("ResultPredicates.author")
     @Service
-    public static ProjectParticipation run(ProjectParticipantFullCreationBean bean, Integer projectId)
+    public static ProjectParticipation run(ProjectParticipantFullCreationBean bean, String projectId)
             throws FenixServiceException {
         final ProjectParticipation participation;
         final ExternalContract externalPerson;
@@ -98,7 +97,7 @@ public class CreateProjectParticipant {
 
     @Checked("ResultPredicates.author")
     @Service
-    public static ProjectParticipation run(ProjectParticipantUnitCreationBean bean, Integer projectId)
+    public static ProjectParticipation run(ProjectParticipantUnitCreationBean bean, String projectId)
             throws FenixServiceException {
         final ProjectParticipation participation;
         final Unit unit;

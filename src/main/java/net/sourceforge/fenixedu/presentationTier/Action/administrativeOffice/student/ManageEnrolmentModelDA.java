@@ -24,7 +24,6 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -35,9 +34,8 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ManageEnrolmentModelDA extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
-        Registration registration =
-                AbstractDomainObject.fromExternalId(getRequestParameterAsInteger(request, "registrationID"));
+            HttpServletResponse response) throws FenixServiceException {
+        Registration registration = getDomainObject(request, "registrationID");
         EnrolmentModelFactoryEditor enrolmentModelFactoryEditor = new EnrolmentModelFactoryEditor(registration);
 
         request.setAttribute("enrolmentModelBean", enrolmentModelFactoryEditor);
@@ -45,7 +43,7 @@ public class ManageEnrolmentModelDA extends FenixDispatchAction {
     }
 
     public ActionForward setEnrolmentModel(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         EnrolmentModelFactoryEditor enrolmentModelFactoryEditor = null;
 
         if (RenderUtils.getViewState() != null) {

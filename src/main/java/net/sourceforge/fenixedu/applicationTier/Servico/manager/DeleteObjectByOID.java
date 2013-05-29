@@ -22,9 +22,9 @@ public class DeleteObjectByOID {
 
     @Checked("RolePredicates.MANAGER_PREDICATE")
     @Service
-    public static Boolean run(Class clazz, Integer externalId) throws FenixServiceException {
+    public static Boolean run(String externalId) throws FenixServiceException {
         try {
-            MethodUtils.invokeMethod(AbstractDomainObject.fromExternalId(clazz, externalId), "delete", null);
+            MethodUtils.invokeMethod(AbstractDomainObject.fromExternalId(externalId), "delete", null);
         } catch (InvocationTargetException e) {
             if (e.getTargetException() != null) {
                 if (e.getTargetException() instanceof IllegalWriteException) {

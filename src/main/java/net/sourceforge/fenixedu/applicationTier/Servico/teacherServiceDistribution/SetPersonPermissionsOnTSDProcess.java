@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.EmployeeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilter;
@@ -11,7 +10,7 @@ import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class SetPersonPermissionsOnTSDProcess {
-    protected void run(Integer tsdProcessId, Integer personId, Boolean phaseManagementPermission,
+    protected void run(String tsdProcessId, String personId, Boolean phaseManagementPermission,
             Boolean automaticValuationPermission, Boolean omissionConfigurationPermission,
             Boolean tsdCoursesAndTeachersManagementPermission) {
 
@@ -48,7 +47,7 @@ public class SetPersonPermissionsOnTSDProcess {
     private static final SetPersonPermissionsOnTSDProcess serviceInstance = new SetPersonPermissionsOnTSDProcess();
 
     @Service
-    public static void runSetPersonPermissionsOnTSDProcess(Integer tsdProcessId, Integer personId,
+    public static void runSetPersonPermissionsOnTSDProcess(String tsdProcessId, String personId,
             Boolean phaseManagementPermission, Boolean automaticValuationPermission, Boolean omissionConfigurationPermission,
             Boolean tsdCoursesAndTeachersManagementPermission) throws NotAuthorizedException {
         try {

@@ -15,7 +15,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ReadInfoExecutionCourseByOID {
 
     @Service
-    public static InfoExecutionCourse run(Integer executionCourseOID) throws FenixServiceException {
+    public static InfoExecutionCourse run(String executionCourseOID) throws FenixServiceException {
 
         if (executionCourseOID == null) {
             throw new FenixServiceException("nullId");

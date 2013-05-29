@@ -14,7 +14,7 @@ public class InfoCampus extends InfoObject {
     /**
      * @param integer
      */
-    public InfoCampus(Integer campusId) {
+    public InfoCampus(String campusId) {
         super(campusId);
     }
 

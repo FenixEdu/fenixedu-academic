@@ -26,7 +26,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class LoginRequestManagement extends FenixDispatchAction {
 
     public ActionForward start(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         String requestHash = request.getParameter("request");
         LoginRequest loginRequest = LoginRequest.getLoginRequestWithHash(requestHash);
@@ -36,13 +36,12 @@ public class LoginRequestManagement extends FenixDispatchAction {
     }
 
     public ActionForward register(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         String documentID = (String) RenderUtils.getViewState("documentID").getMetaObject().getObject();
 
         String requestID = request.getParameter("oid");
-        LoginRequest loginRequest =
-                (LoginRequest) AbstractDomainObject.fromExternalId(LoginRequest.class, Integer.valueOf(requestID));
+        LoginRequest loginRequest = (LoginRequest) AbstractDomainObject.fromExternalId(requestID);
 
         if (documentID.equalsIgnoreCase(loginRequest.getUser().getPerson().getIdDocuments().get(0).getValue())) {
             request.setAttribute("loginBean", new LoginRequestBean(loginRequest));
@@ -55,7 +54,7 @@ public class LoginRequestManagement extends FenixDispatchAction {
     }
 
     public ActionForward cycleLoginScreen(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         LoginRequestBean bean = (LoginRequestBean) RenderUtils.getViewState("edit.loginBean").getMetaObject().getObject();
         request.setAttribute("loginBean", bean);
@@ -63,7 +62,7 @@ public class LoginRequestManagement extends FenixDispatchAction {
     }
 
     public ActionForward finish(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         LoginRequestBean bean = (LoginRequestBean) RenderUtils.getViewState("edit.loginBean").getMetaObject().getObject();
         if (!bean.getPassword().equals(bean.getPasswordConfirmation())) {

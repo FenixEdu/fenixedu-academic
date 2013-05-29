@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement;
 
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
@@ -19,7 +18,7 @@ public class CreateFunction {
     @Checked("RolePredicates.MANAGER_PREDICATE")
     @Service
     public static void run(MultiLanguageString functionName, YearMonthDay begin, YearMonthDay end, FunctionType type,
-            Integer unitID) throws FenixServiceException, DomainException {
+            String unitID) throws FenixServiceException, DomainException {
 
         Unit unit = (Unit) AbstractDomainObject.fromExternalId(unitID);
         if (unit == null) {

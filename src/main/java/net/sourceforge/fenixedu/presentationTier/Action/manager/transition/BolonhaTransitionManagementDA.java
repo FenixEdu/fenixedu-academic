@@ -18,7 +18,6 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "manager", path = "/bolonhaTransitionManagement", attribute = "bolonhaTransitionManagementForm",
         formBean = "bolonhaTransitionManagementForm", scope = "request", parameter = "method")
@@ -50,7 +49,7 @@ public class BolonhaTransitionManagementDA extends AbstractBolonhaTransitionMana
     }
 
     private Student getStudent(final HttpServletRequest request) {
-        return AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "studentId"));
+        return getDomainObject(request, "studentId");
     }
 
 }

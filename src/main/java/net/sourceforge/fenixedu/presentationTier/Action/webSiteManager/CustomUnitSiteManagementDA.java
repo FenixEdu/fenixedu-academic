@@ -79,14 +79,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 
     @Override
     protected UnitSite getSite(HttpServletRequest request) {
-
-        Integer oid = getId(request.getParameter("oid"));
-
-        if (oid == null) {
-            return null;
-        }
-
-        return (UnitSite) AbstractDomainObject.fromExternalId(oid);
+        return getDomainObject(request, "oid");
     }
 
     protected Unit getUnit(HttpServletRequest request) {
@@ -415,7 +408,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
         return footerNavigation(mapping, actionForm, request, response);
     }
 
-    protected void saveLinksOrder(HttpServletRequest request, boolean top) throws  FenixServiceException {
+    protected void saveLinksOrder(HttpServletRequest request, boolean top) throws FenixServiceException {
         UnitSite site = getSite(request);
         String orderString = request.getParameter("linksOrder");
 
@@ -493,7 +486,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
     }
 
     private Person getSelectedPerson(HttpServletRequest request) {
-        Integer id = getExternalId(request, "personID");
+        String id = request.getParameter("personID");
         if (id != null) {
             return (Person) AbstractDomainObject.fromExternalId(id);
         }
@@ -580,8 +573,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
     }
 
     private Unit getTargetUnit(HttpServletRequest request) {
-        Integer id = getExternalId(request, "unitID");
-        return (Unit) AbstractDomainObject.fromExternalId(id);
+        return getDomainObject(request, "unitID");
     }
 
     public ActionForward prepareEditFunction(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -627,8 +619,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
     }
 
     private Function getTargetFunction(HttpServletRequest request) {
-        Integer id = getExternalId(request, "functionID");
-        return (Function) AbstractDomainObject.fromExternalId(id);
+        return getDomainObject(request, "functionID");
     }
 
     public ActionForward organizeFunctions(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -685,8 +676,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
     }
 
     private PersonFunction getPersonFunction(HttpServletRequest request) {
-        Integer id = getExternalId(request, "personFunctionID");
-        return (PersonFunction) AbstractDomainObject.fromExternalId(id);
+        return getDomainObject(request, "personFunctionID");
     }
 
     public ActionForward removePersonFunction(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -784,11 +774,11 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
         return chooseManagers(mapping, actionForm, request, response);
     }
 
-    protected void removeUnitSiteManager(UnitSite site, Person person) throws  FenixServiceException {
+    protected void removeUnitSiteManager(UnitSite site, Person person) throws FenixServiceException {
         RemoveUnitSiteManager.runRemoveUnitSiteManager(site, person);
     }
 
-    protected void addUnitSiteManager(UnitSite site, Person person) throws  FenixServiceException {
+    protected void addUnitSiteManager(UnitSite site, Person person) throws FenixServiceException {
         AddUnitSiteManager.runAddUnitSiteManager(site, person);
     }
 

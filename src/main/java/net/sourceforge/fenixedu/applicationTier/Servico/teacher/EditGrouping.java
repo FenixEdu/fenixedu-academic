@@ -21,7 +21,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class EditGrouping {
 
-    protected List run(Integer executionCourseID, InfoGrouping infoGroupProperties) throws FenixServiceException {
+    protected List run(String executionCourseID, InfoGrouping infoGroupProperties) throws FenixServiceException {
         final Grouping grouping = AbstractDomainObject.fromExternalId(infoGroupProperties.getExternalId());
         if (grouping == null) {
             throw new InvalidArgumentsServiceException();
@@ -104,7 +104,7 @@ public class EditGrouping {
     private static final EditGrouping serviceInstance = new EditGrouping();
 
     @Service
-    public static List runEditGrouping(Integer executionCourseID, InfoGrouping infoGroupProperties) throws FenixServiceException,
+    public static List runEditGrouping(String executionCourseID, InfoGrouping infoGroupProperties) throws FenixServiceException,
             NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseID);
         return serviceInstance.run(executionCourseID, infoGroupProperties);

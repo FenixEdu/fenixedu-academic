@@ -66,7 +66,7 @@ public class TutorManagementDispatchAction extends FenixDispatchAction {
         }
 
         final ExecutionDegree executionDegree =
-                (ExecutionDegree) AbstractDomainObject.fromExternalId(ExecutionDegree.class, bean.getExecutionDegreeID());
+                (ExecutionDegree) AbstractDomainObject.fromExternalId(bean.getExecutionDegreeID());
 
         if (!validateDegreeTypeAccessRestrictions(executionDegree)) {
             addActionMessage(request, "error.tutor.notAuthorized.notBolonhaOrLEEC");
@@ -190,8 +190,8 @@ public class TutorManagementDispatchAction extends FenixDispatchAction {
     }
 
     protected TutorshipManagementBean getTutorshipBeanWithRequestParameters(HttpServletRequest request) {
-        final Integer executionDegreeId = new Integer(request.getParameter("executionDegreeId"));
-        final Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+        final String executionDegreeId = request.getParameter("executionDegreeId");
+        final String degreeCurricularPlanID = request.getParameter("degreeCurricularPlanID");
         final String teacherId = request.getParameter("teacherId");
 
         return ((teacherId != null) ? new TutorshipManagementBean(executionDegreeId, degreeCurricularPlanID, teacherId) : new TutorshipManagementBean(

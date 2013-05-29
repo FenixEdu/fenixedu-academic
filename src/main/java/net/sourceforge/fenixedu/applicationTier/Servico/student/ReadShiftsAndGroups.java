@@ -37,7 +37,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ReadShiftsAndGroups {
 
     @Service
-    public static ISiteComponent run(Integer groupingCode, String username) throws FenixServiceException {
+    public static ISiteComponent run(String groupingCode, String username) throws FenixServiceException {
 
         final Grouping grouping = AbstractDomainObject.fromExternalId(groupingCode);
         if (grouping == null) {

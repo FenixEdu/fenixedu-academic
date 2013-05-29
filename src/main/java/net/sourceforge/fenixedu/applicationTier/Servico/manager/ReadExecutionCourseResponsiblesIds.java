@@ -21,12 +21,12 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ReadExecutionCourseResponsiblesIds {
 
-    protected List run(Integer executionCourseId) throws FenixServiceException {
+    protected List<String> run(String executionCourseId) throws FenixServiceException {
         ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
 
         List<Professorship> responsibles = executionCourse.responsibleFors();
 
-        List<Integer> responsibleIDs = new ArrayList<Integer>();
+        List<String> responsibleIDs = new ArrayList<String>();
         if (responsibles != null) {
             for (Professorship responsibleFor : responsibles) {
                 responsibleIDs.add(responsibleFor.getTeacher().getExternalId());
@@ -40,7 +40,7 @@ public class ReadExecutionCourseResponsiblesIds {
     private static final ReadExecutionCourseResponsiblesIds serviceInstance = new ReadExecutionCourseResponsiblesIds();
 
     @Service
-    public static List runReadExecutionCourseResponsiblesIds(Integer executionCourseId) throws FenixServiceException,
+    public static List<String> runReadExecutionCourseResponsiblesIds(String executionCourseId) throws FenixServiceException,
             NotAuthorizedException {
         try {
             ManagerAuthorizationFilter.instance.execute();

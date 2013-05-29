@@ -40,7 +40,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class ReadTeacherServiceDistributionByCourse {
 
-    protected List run(Integer departmentId, List<Integer> executionPeriodsIDs) throws FenixServiceException {
+    protected List run(String departmentId, List<String> executionPeriodsIDs) throws FenixServiceException {
 
         Department department = AbstractDomainObject.fromExternalId(departmentId);
 
@@ -49,13 +49,13 @@ public class ReadTeacherServiceDistributionByCourse {
         List<CompetenceCourse> competenceCourseList = department.getDepartmentUnit().getCompetenceCourses();
 
         List<ExecutionSemester> executionPeriodList = new ArrayList<ExecutionSemester>();
-        for (Integer executionPeriodID : executionPeriodsIDs) {
-            executionPeriodList.add(AbstractDomainObject.fromExternalId(executionPeriodID));
+        for (String executionPeriodID : executionPeriodsIDs) {
+            executionPeriodList.add(AbstractDomainObject.<ExecutionSemester> fromExternalId(executionPeriodID));
         }
 
         DistributionTeacherServicesByCourseDTO returnDTO = new DistributionTeacherServicesByCourseDTO();
 
-        Map<Integer, Boolean> executionCoursesMap = new HashMap<Integer, Boolean>();
+        Map<String, Boolean> executionCoursesMap = new HashMap<String, Boolean>();
 
         for (CompetenceCourse cc : competenceCourseList) {
             for (CurricularCourse curricularCourseEntry : cc.getAssociatedCurricularCourses()) {
@@ -189,7 +189,7 @@ public class ReadTeacherServiceDistributionByCourse {
                 continue;
             }
 
-            Integer teacherExternalId = teacher.getExternalId();
+            String teacherExternalId = teacher.getExternalId();
             String teacherName = teacher.getPerson().getName();
 
             DecimalFormat df = new DecimalFormat("#.##");
@@ -231,7 +231,7 @@ public class ReadTeacherServiceDistributionByCourse {
     private static final ReadTeacherServiceDistributionByCourse serviceInstance = new ReadTeacherServiceDistributionByCourse();
 
     @Service
-    public static List runReadTeacherServiceDistributionByCourse(Integer departmentId, List<Integer> executionPeriodsIDs)
+    public static List runReadTeacherServiceDistributionByCourse(String departmentId, List<String> executionPeriodsIDs)
             throws FenixServiceException, NotAuthorizedException {
         try {
             DepartmentAdministrativeOfficeAuthorizationFilter.instance.execute();

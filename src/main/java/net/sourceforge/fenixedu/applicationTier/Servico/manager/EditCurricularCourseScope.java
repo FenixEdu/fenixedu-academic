@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScopeEditor;
@@ -21,14 +20,14 @@ public class EditCurricularCourseScope {
         CurricularSemester newCurricularSemester = null;
         Branch newBranch = null;
 
-        Integer branchId = newInfoCurricularCourseScope.getInfoBranch().getExternalId();
+        String branchId = newInfoCurricularCourseScope.getInfoBranch().getExternalId();
         newBranch = AbstractDomainObject.fromExternalId(branchId);
 
         if (newBranch == null) {
             throw new NonExistingServiceException("message.non.existing.branch", null);
         }
 
-        Integer curricularSemesterId = newInfoCurricularCourseScope.getInfoCurricularSemester().getExternalId();
+        String curricularSemesterId = newInfoCurricularCourseScope.getInfoCurricularSemester().getExternalId();
         newCurricularSemester = AbstractDomainObject.fromExternalId(curricularSemesterId);
 
         if (newCurricularSemester == null) {

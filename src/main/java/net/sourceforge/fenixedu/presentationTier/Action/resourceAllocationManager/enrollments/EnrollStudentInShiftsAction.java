@@ -34,11 +34,11 @@ public class EnrollStudentInShiftsAction extends FenixAction {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response)  {
+            HttpServletResponse response) {
 
         final IUserView userView = getUserView(request);
 
-        final Integer shiftId = Integer.valueOf(request.getParameter("shiftId"));
+        final String shiftId = request.getParameter("shiftId");
         if (!StringUtils.isEmpty(request.getParameter("executionCourseID"))) {
             request.setAttribute("executionCourseID", request.getParameter("executionCourseID"));
         }
@@ -75,7 +75,7 @@ public class EnrollStudentInShiftsAction extends FenixAction {
     }
 
     private Registration getRegistration(HttpServletRequest request) {
-        return AbstractDomainObject.fromExternalId(Integer.valueOf(request.getParameter("registrationOID")));
+        return AbstractDomainObject.fromExternalId(request.getParameter("registrationOID"));
     }
 
     private Registration getStudent(final IUserView userView) {

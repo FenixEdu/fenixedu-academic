@@ -83,7 +83,7 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
     private final static String LINE_BRAKE = "\n";
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws  FenixServiceException {
+            throws FenixServiceException {
 
         final List<ExecutionYear> notClosedExecutionYears = ExecutionYear.readNotClosedExecutionYears();
 
@@ -124,7 +124,7 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
     }
 
     public ActionForward viewMasterDegreeCredits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         DynaActionForm dynaForm = (DynaActionForm) form;
         Integer executionDegreeID = (Integer) dynaForm.get("executionDegreeID");
@@ -149,7 +149,7 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
     }
 
     public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         DynaActionForm dynaForm = (DynaActionForm) form;
 
@@ -162,7 +162,7 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
         if (executionDegreeID != null) {
             executionDegree = AbstractDomainObject.fromExternalId(executionDegreeID);
         } else {
-            Integer executionCourseID = Integer.parseInt(request.getParameter("executionCourseId"));
+            String executionCourseID = request.getParameter("executionCourseId");
             ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseID);
             executionDegree =
                     curricularCourse.getDegreeCurricularPlan().getExecutionDegreeByYear(
@@ -181,7 +181,7 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
     }
 
     public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws  FenixServiceException {
+            throws FenixServiceException {
 
         IUserView userView = UserView.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
@@ -484,7 +484,6 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
 
     private ExecutionDegree getExecutionDegreeFromParameter(final HttpServletRequest request) {
         final String executionDegreeIDString = request.getParameter("executionDegreeID");
-        final Integer executionDegreeID = Integer.valueOf(executionDegreeIDString);
-        return AbstractDomainObject.fromExternalId(executionDegreeID);
+        return AbstractDomainObject.fromExternalId(executionDegreeIDString);
     }
 }

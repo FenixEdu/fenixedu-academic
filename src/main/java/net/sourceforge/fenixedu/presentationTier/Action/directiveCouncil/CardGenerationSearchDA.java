@@ -82,9 +82,8 @@ public class CardGenerationSearchDA extends FenixDispatchAction {
     public ActionForward viewPersonCards(final ActionMapping mapping, final ActionForm actionForm,
             final HttpServletRequest request, final HttpServletResponse response) throws Exception {
         final String personIdString = request.getParameter("personId");
-        final Integer personId = personIdString != null && personIdString.length() > 0 ? Integer.valueOf(personIdString) : null;
-        if (personId != null) {
-            final Person person = (Person) AbstractDomainObject.fromExternalId(personId);
+        if (personIdString != null) {
+            final Person person = (Person) AbstractDomainObject.fromExternalId(personIdString);
             request.setAttribute("person", person);
         }
         return mapping.findForward("viewPersonCards");
@@ -93,11 +92,8 @@ public class CardGenerationSearchDA extends FenixDispatchAction {
     public ActionForward viewPersonCard(final ActionMapping mapping, final ActionForm actionForm,
             final HttpServletRequest request, final HttpServletResponse response) throws Exception {
         final String cardGenerationEntryIdString = request.getParameter("cardGenerationEntryId");
-        final Integer cardGenerationEntryId =
-                cardGenerationEntryIdString != null && cardGenerationEntryIdString.length() > 0 ? Integer
-                        .valueOf(cardGenerationEntryIdString) : null;
-        if (cardGenerationEntryId != null) {
-            final CardGenerationEntry cardGenerationEntry = AbstractDomainObject.fromExternalId(cardGenerationEntryId);
+        if (cardGenerationEntryIdString != null) {
+            final CardGenerationEntry cardGenerationEntry = AbstractDomainObject.fromExternalId(cardGenerationEntryIdString);
             request.setAttribute("cardGenerationEntry", cardGenerationEntry);
             final Person person = cardGenerationEntry.getPerson();
             request.setAttribute("person", person);

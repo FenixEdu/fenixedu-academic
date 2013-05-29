@@ -37,8 +37,7 @@ public class ICalStudentTimeTable extends FenixDispatchAction {
     public ActionForward show(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         if (getRenderedObject("bean") == null) {
-            Registration registration =
-                    AbstractDomainObject.fromExternalId(Integer.valueOf(request.getParameter("registrationId")));
+            Registration registration = AbstractDomainObject.fromExternalId(request.getParameter("registrationId"));
 
             return forwardToShow(registration, mapping, request);
         } else {

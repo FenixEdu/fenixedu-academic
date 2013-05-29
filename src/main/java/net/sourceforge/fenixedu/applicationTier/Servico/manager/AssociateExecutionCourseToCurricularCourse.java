@@ -16,7 +16,7 @@ public class AssociateExecutionCourseToCurricularCourse {
 
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
-    public static void run(Integer executionCourseId, Integer curricularCourseId, Integer executionPeriodId)
+    public static void run(String executionCourseId, String curricularCourseId, String executionPeriodId)
             throws FenixServiceException {
 
         final CurricularCourse curricularCourse = (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseId);

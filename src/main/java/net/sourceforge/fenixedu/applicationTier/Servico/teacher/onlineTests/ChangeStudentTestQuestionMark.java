@@ -34,8 +34,8 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class ChangeStudentTestQuestionMark {
-    protected void run(Integer executionCourseId, Integer distributedTestId, Double newMark, Integer questionId,
-            Integer studentId, TestQuestionStudentsChangesType studentsType, String path) throws FenixServiceException {
+    protected void run(String executionCourseId, String distributedTestId, Double newMark, String questionId, String studentId,
+            TestQuestionStudentsChangesType studentsType, String path) throws FenixServiceException {
         path = path.replace('\\', '/');
 
         DistributedTest distributedTest = AbstractDomainObject.fromExternalId(distributedTestId);
@@ -125,8 +125,8 @@ public class ChangeStudentTestQuestionMark {
     private static final ChangeStudentTestQuestionMark serviceInstance = new ChangeStudentTestQuestionMark();
 
     @Service
-    public static void runChangeStudentTestQuestionMark(Integer executionCourseId, Integer distributedTestId, Double newMark,
-            Integer questionId, Integer studentId, TestQuestionStudentsChangesType studentsType, String path)
+    public static void runChangeStudentTestQuestionMark(String executionCourseId, String distributedTestId, Double newMark,
+            String questionId, String studentId, TestQuestionStudentsChangesType studentsType, String path)
             throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
         serviceInstance.run(executionCourseId, distributedTestId, newMark, questionId, studentId, studentsType, path);

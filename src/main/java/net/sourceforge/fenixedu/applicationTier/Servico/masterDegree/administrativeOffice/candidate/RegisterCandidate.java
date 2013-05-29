@@ -45,7 +45,7 @@ public class RegisterCandidate {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
-    public static InfoCandidateRegistration run(Integer candidateID, Integer branchID, Integer studentNumber, IUserView userView)
+    public static InfoCandidateRegistration run(String candidateID, String branchID, Integer studentNumber, IUserView userView)
             throws FenixServiceException {
         MasterDegreeCandidate masterDegreeCandidate = AbstractDomainObject.fromExternalId(candidateID);
 
@@ -153,7 +153,7 @@ public class RegisterCandidate {
         }
     }
 
-    private static StudentCurricularPlan createNewStudentCurricularPlan(Registration registration, Integer branchID,
+    private static StudentCurricularPlan createNewStudentCurricularPlan(Registration registration, String branchID,
             MasterDegreeCandidate masterDegreeCandidate) {
         Branch branch = AbstractDomainObject.fromExternalId(branchID);
         DegreeCurricularPlan degreecurricularPlan = masterDegreeCandidate.getExecutionDegree().getDegreeCurricularPlan();

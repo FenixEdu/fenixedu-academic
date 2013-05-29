@@ -122,9 +122,8 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         // verificar autorização
 
-        Integer code = getIntegerFromRequest(request, "externalId");
+        final ParkingRequest parkingRequest = getDomainObject(request, "externalId");
 
-        final ParkingRequest parkingRequest = AbstractDomainObject.fromExternalId(code);
         if (parkingRequest.getParkingRequestState() == ParkingRequestState.PENDING) {
             request.setAttribute("groups", ParkingGroup.getAll());
         }
@@ -182,8 +181,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
     public ActionForward showPhoto(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        Integer personID = new Integer(request.getParameter("personID"));
-        Party party = AbstractDomainObject.fromExternalId(personID);
+        Party party = AbstractDomainObject.fromExternalId(request.getParameter("personID"));
         if (party.isPerson()) {
             Person person = (Person) party;
             Photograph personalPhoto = person.getPersonalPhoto();
@@ -203,7 +201,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 
     public ActionForward editFirstTimeParkingParty(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        Integer parkingRequestID = new Integer(request.getParameter("code"));
+        String parkingRequestID = request.getParameter("code");
         final ParkingRequest parkingRequest = AbstractDomainObject.fromExternalId(parkingRequestID);
 
         String note = request.getParameter("note");
@@ -232,7 +230,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
         DynaActionForm dynaForm = (DynaActionForm) actionForm;
         if (!StringUtils.isEmpty((String) dynaForm.get("accepted")) || request.getParameter("acceptPrint") != null) {
             Long cardNumber = null;
-            Integer group = null;
+            String group = null;
             try {
                 cardNumber = new Long(request.getParameter("cardNumber"));
                 if (cardNumber < 0) {
@@ -250,7 +248,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
                 return showRequest(mapping, actionForm, request, response);
             }
             try {
-                group = new Integer(request.getParameter("groupID"));
+                group = request.getParameter("groupID");
             } catch (NullPointerException e) {
                 saveErrorMessage(request, "group", "error.requiredGroup");
                 request.setAttribute("externalId", parkingRequestID);
@@ -300,9 +298,9 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
             }
             Integer mostSignificantNumber =
                     getMostSignificantNumber((Person) parkingRequest.getParkingParty().getParty(),
-                            AbstractDomainObject.fromExternalId(group));
+                            AbstractDomainObject.<ParkingGroup> fromExternalId(group));
             UpdateParkingParty.run(parkingRequest, ParkingRequestState.ACCEPTED, cardNumber,
-                    AbstractDomainObject.fromExternalId(group), note, parkingPartyBean.getCardStartDate(),
+                    AbstractDomainObject.<ParkingGroup> fromExternalId(group), note, parkingPartyBean.getCardStartDate(),
                     parkingPartyBean.getCardEndDate(), mostSignificantNumber);
         } else if (request.getParameter("reject") != null) {
             UpdateParkingParty.run(parkingRequest, ParkingRequestState.REJECTED, null, null, note, null, null, null);
@@ -317,10 +315,8 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 
         String parkingPartyID = request.getParameter("parkingPartyID");
 
-        final ParkingParty parkingParty = AbstractDomainObject.fromExternalId(new Integer(parkingPartyID));
-        Integer parkingGroupID = null;
-
-        parkingGroupID = request.getParameter("groupID") != null ? Integer.valueOf(request.getParameter("groupID")) : null;
+        final ParkingParty parkingParty = AbstractDomainObject.fromExternalId(parkingPartyID);
+        String parkingGroupID = request.getParameter("groupID");
 
         if (parkingGroupID != null) {
             Integer parkingRequestID = new Integer(request.getParameter("code"));
@@ -422,7 +418,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
         return null;
     }
 
-    private boolean isValidGroup(Integer groupId) {
+    private boolean isValidGroup(String groupId) {
         for (ParkingGroup group : rootDomainObject.getParkingGroups()) {
             if (group.getExternalId().equals(groupId)) {
                 return true;
@@ -472,7 +468,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
             request.setAttribute("partyList", partyList);
 
         } else if (request.getParameter("partyID") != null || request.getAttribute("partyID") != null) {
-            final Integer externalId = getPopertyID(request, "partyID");
+            final String externalId = getPopertyID(request, "partyID");
             final String carPlateNumber = request.getParameter("plateNumber");
             final String parkingCardNumberString = request.getParameter("parkingCardNumber");
             Long parkingCardNumber = null;
@@ -486,16 +482,16 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
         return mapping.findForward("showParkingPartyRequests");
     }
 
-    private int getPopertyID(HttpServletRequest request, String property) {
+    private String getPopertyID(HttpServletRequest request, String property) {
         if (request.getParameter(property) != null) {
-            return new Integer(request.getParameter(property));
+            return request.getParameter(property);
         } else {
-            return (Integer) request.getAttribute(property);
+            return (String) request.getAttribute(property);
         }
     }
 
     private void setupParkingRequests(HttpServletRequest request, Party party, String carPlateNumber, Long parkingCardNumber)
-            throws  FenixServiceException {
+            throws FenixServiceException {
         if (party.getParkingParty() != null) {
             request.setAttribute("parkingRequests", party.getParkingParty().getParkingRequests());
         }
@@ -516,7 +512,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
             ((DynaActionForm) actionForm).set("addVehicle", "no");
             RenderUtils.invalidateViewState();
         } else {
-            Integer parkingPartyID = getPopertyID(request, "parkingPartyID");
+            String parkingPartyID = getPopertyID(request, "parkingPartyID");
             parkingParty = AbstractDomainObject.fromExternalId(parkingPartyID);
             request.setAttribute("parkingPartyBean", new ParkingPartyBean(parkingParty));
             request.setAttribute("parkingPartyID", parkingParty.getExternalId());
@@ -661,11 +657,11 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
     public ActionForward showHistory(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         final String codeString = request.getParameter("externalId");
-        Integer code = null;
+        String code = null;
         if (codeString == null) {
-            code = (Integer) request.getAttribute("externalId");
+            code = (String) request.getAttribute("externalId");
         } else {
-            code = new Integer(codeString);
+            code = codeString;
         }
         final ParkingRequest parkingRequest = AbstractDomainObject.fromExternalId(code);
         List<ParkingPartyHistory> parkingPartyHistories =
@@ -680,11 +676,11 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
     public ActionForward showParkingPartyHistory(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         final String codeString = request.getParameter("externalId");
-        Integer code = null;
+        String code = null;
         if (codeString == null) {
-            code = (Integer) request.getAttribute("externalId");
+            code = (String) request.getAttribute("externalId");
         } else {
-            code = new Integer(codeString);
+            code = codeString;
         }
         final ParkingParty parkingParty = AbstractDomainObject.fromExternalId(code);
         List<ParkingPartyHistory> parkingPartyHistories =

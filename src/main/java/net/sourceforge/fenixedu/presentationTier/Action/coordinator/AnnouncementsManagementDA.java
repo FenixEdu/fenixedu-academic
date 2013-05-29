@@ -26,7 +26,7 @@ public class AnnouncementsManagementDA extends AnnouncementManagement {
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         CoordinatedDegreeInfo.setCoordinatorContext(request);
-        final Integer degreeCurricularPlanOID = (Integer) request.getAttribute("degreeCurricularPlanID");
+        final String degreeCurricularPlanOID = (String) request.getAttribute("degreeCurricularPlanID");
         final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanOID);
         if (degreeCurricularPlan != null) {
             request.setAttribute("degreeCurricularPlan", degreeCurricularPlan);
@@ -43,8 +43,7 @@ public class AnnouncementsManagementDA extends AnnouncementManagement {
         }
 
         try {
-            Integer oid = new Integer(parameter);
-            return AbstractDomainObject.fromExternalId(oid);
+            return AbstractDomainObject.fromExternalId(parameter);
         } catch (NumberFormatException e) {
             return null;
         }

@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.ManagerAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.gep.GEPAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -15,7 +14,7 @@ public class InsertProfessorShipNonAffiliatedTeacher {
 
     @Checked("RolePredicates.GEP_PREDICATE")
     @Service
-    public static void run(Integer nonAffiliatedTeacherID, Integer executionCourseID) {
+    public static void run(String nonAffiliatedTeacherID, String executionCourseID) {
 
         final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseID);
         if (executionCourse == null) {
@@ -36,18 +35,16 @@ public class InsertProfessorShipNonAffiliatedTeacher {
 
     // Service Invokers migrated from Berserk
 
-    private static final InsertProfessorShipNonAffiliatedTeacher serviceInstance = new InsertProfessorShipNonAffiliatedTeacher();
-
     @Service
-    public static void runInsertProfessorShipNonAffiliatedTeacher(Integer nonAffiliatedTeacherID, Integer executionCourseID)
+    public static void runInsertProfessorShipNonAffiliatedTeacher(String nonAffiliatedTeacherID, String executionCourseID)
             throws NotAuthorizedException {
         try {
             ManagerAuthorizationFilter.instance.execute();
-            serviceInstance.run(nonAffiliatedTeacherID, executionCourseID);
+            run(nonAffiliatedTeacherID, executionCourseID);
         } catch (NotAuthorizedException ex1) {
             try {
                 GEPAuthorizationFilter.instance.execute();
-                serviceInstance.run(nonAffiliatedTeacherID, executionCourseID);
+                run(nonAffiliatedTeacherID, executionCourseID);
             } catch (NotAuthorizedException ex2) {
                 throw ex2;
             }

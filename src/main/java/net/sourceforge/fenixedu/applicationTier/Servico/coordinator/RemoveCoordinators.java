@@ -14,9 +14,9 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class RemoveCoordinators {
 
     @Service
-    public static void run(Integer executionDegreeID, List<Integer> coordinatorsToRemoveIDs) {
+    public static void run(String executionDegreeID, List<String> coordinatorsToRemoveIDs) {
 
-        for (final Integer coordinatorToRemoveID : coordinatorsToRemoveIDs) {
+        for (final String coordinatorToRemoveID : coordinatorsToRemoveIDs) {
             final Coordinator coordinator = AbstractDomainObject.fromExternalId(coordinatorToRemoveID);
             if (coordinator != null) {
                 final Person person = coordinator.getPerson();
@@ -38,7 +38,7 @@ public class RemoveCoordinators {
     private static final RemoveCoordinators serviceInstance = new RemoveCoordinators();
 
     @Service
-    public static void runRemoveCoordinators(Integer executionDegreeID, List<Integer> coordinatorsToRemoveIDs)
+    public static void runRemoveCoordinators(String executionDegreeID, List<String> coordinatorsToRemoveIDs)
             throws NotAuthorizedException {
         ResponsibleDegreeCoordinatorAuthorizationFilter.instance.execute(executionDegreeID);
         serviceInstance.run(executionDegreeID, coordinatorsToRemoveIDs);

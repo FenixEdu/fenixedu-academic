@@ -78,9 +78,7 @@ public class UnavailablePeriodManagement extends FenixDispatchAction {
     public ActionForward deleteUnavailablePeriod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         String id = request.getParameter("oid");
-        Integer externalId = Integer.valueOf(id);
-        UnavailablePeriod unavailablePeriod =
-                (UnavailablePeriod) AbstractDomainObject.fromExternalId(UnavailablePeriod.class, externalId);
+        UnavailablePeriod unavailablePeriod = (UnavailablePeriod) AbstractDomainObject.fromExternalId(id);
 
         VigilantWrapper vigilant = unavailablePeriod.getPerson().getVigilantWrappers().get(0);
         deletePeriod(request);
@@ -120,7 +118,7 @@ public class UnavailablePeriodManagement extends FenixDispatchAction {
             return mapping.findForward("editPeriodOfVigilant");
         }
         String gid = request.getParameter("gid");
-        VigilantGroup group = (VigilantGroup) AbstractDomainObject.fromExternalId(VigilantGroup.class, Integer.valueOf(gid));
+        VigilantGroup group = (VigilantGroup) AbstractDomainObject.fromExternalId(gid);
         VigilantGroupBean bean = new VigilantGroupBean();
         ExamCoordinator coordinator = getLoggedPerson(request).getCurrentExamCoordinator();
         bean.setExamCoordinator(coordinator);
@@ -170,7 +168,7 @@ public class UnavailablePeriodManagement extends FenixDispatchAction {
         ExamCoordinator coordinator = getLoggedPerson(request).getCurrentExamCoordinator();
         bean.setExamCoordinator(coordinator);
         String gid = request.getParameter("gid");
-        VigilantGroup group = (VigilantGroup) AbstractDomainObject.fromExternalId(VigilantGroup.class, Integer.valueOf(gid));
+        VigilantGroup group = (VigilantGroup) AbstractDomainObject.fromExternalId(gid);
         bean.setSelectedVigilantGroup(group);
         putUnavailablePeriodsOnRequest(request, group);
         request.setAttribute("bean", bean);
@@ -182,7 +180,7 @@ public class UnavailablePeriodManagement extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         String gid = request.getParameter("gid");
-        VigilantGroup group = (VigilantGroup) AbstractDomainObject.fromExternalId(VigilantGroup.class, Integer.valueOf(gid));
+        VigilantGroup group = (VigilantGroup) AbstractDomainObject.fromExternalId(gid);
 
         UnavailablePeriodBean bean = new UnavailablePeriodBean();
         Person person = getLoggedPerson(request);
@@ -218,7 +216,7 @@ public class UnavailablePeriodManagement extends FenixDispatchAction {
         VigilantGroupBean beanToPutOnRequest = new VigilantGroupBean();
         String gid = request.getParameter("gid");
 
-        VigilantGroup group = (VigilantGroup) AbstractDomainObject.fromExternalId(VigilantGroup.class, Integer.valueOf(gid));
+        VigilantGroup group = (VigilantGroup) AbstractDomainObject.fromExternalId(gid);
         ExamCoordinator coordinator = getLoggedPerson(request).getCurrentExamCoordinator();
         beanToPutOnRequest.setExamCoordinator(coordinator);
         beanToPutOnRequest.setSelectedVigilantGroup(group);
@@ -230,10 +228,8 @@ public class UnavailablePeriodManagement extends FenixDispatchAction {
 
     private void prepareForEdit(HttpServletRequest request) {
         String id = request.getParameter("oid");
-        int externalId = Integer.valueOf(id);
 
-        UnavailablePeriod unavailablePeriod =
-                (UnavailablePeriod) AbstractDomainObject.fromExternalId(UnavailablePeriod.class, externalId);
+        UnavailablePeriod unavailablePeriod = (UnavailablePeriod) AbstractDomainObject.fromExternalId(id);
         UnavailablePeriodBean bean = new UnavailablePeriodBean();
         bean.setUnavailablePeriod(unavailablePeriod);
         bean.setBeginDate(unavailablePeriod.getBeginDate());
@@ -244,12 +240,11 @@ public class UnavailablePeriodManagement extends FenixDispatchAction {
         request.setAttribute("bean", bean);
     }
 
-    private void deletePeriod(HttpServletRequest request) throws  FenixServiceException {
+    private void deletePeriod(HttpServletRequest request) throws FenixServiceException {
         String id = request.getParameter("oid");
-        Integer externalId = Integer.valueOf(id);
 
         try {
-            DeleteUnavailablePeriodByOID.run(externalId);
+            DeleteUnavailablePeriodByOID.run(id);
         } catch (DomainException e) {
             addActionMessage(request, e.getMessage());
         }
@@ -285,8 +280,7 @@ public class UnavailablePeriodManagement extends FenixDispatchAction {
 
     private VigilantGroup getGroupInRequestOrFirstGroupFromVigilant(HttpServletRequest request, VigilantWrapper vigilant) {
         String groupId = request.getParameter("gid");
-        return (groupId == null) ? vigilant.getVigilantGroup() : (VigilantGroup) AbstractDomainObject.fromExternalId(
-                VigilantGroup.class, Integer.valueOf(groupId));
+        return (groupId == null) ? vigilant.getVigilantGroup() : (VigilantGroup) AbstractDomainObject.fromExternalId(groupId);
     }
 
 }

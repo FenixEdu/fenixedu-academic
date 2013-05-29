@@ -25,7 +25,7 @@ public class ReadExecutionDegreeByCandidateIDAuthorizationFilter extends Filtro 
     public ReadExecutionDegreeByCandidateIDAuthorizationFilter() {
     }
 
-    public void execute(Integer candidateID) throws NotAuthorizedException {
+    public void execute(String candidateID) throws NotAuthorizedException {
         IUserView id = AccessControl.getUserView();
         if ((id != null && id.getRoleTypes() != null && !containsRoleType(id.getRoleTypes()))
                 || (id != null && id.getRoleTypes() != null && !hasPrivilege(id, candidateID)) || (id == null)
@@ -50,7 +50,7 @@ public class ReadExecutionDegreeByCandidateIDAuthorizationFilter extends Filtro 
      * @param argumentos
      * @return
      */
-    private boolean hasPrivilege(IUserView id, Integer candidateID) {
+    private boolean hasPrivilege(IUserView id, String candidateID) {
         if (id.hasRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE)) {
             return true;
         }
@@ -60,8 +60,7 @@ public class ReadExecutionDegreeByCandidateIDAuthorizationFilter extends Filtro 
 
             final Person person = id.getPerson();
 
-            MasterDegreeCandidate masterDegreeCandidate =
-                    AbstractDomainObject.fromExternalId(candidateID);
+            MasterDegreeCandidate masterDegreeCandidate = AbstractDomainObject.fromExternalId(candidateID);
 
             if (masterDegreeCandidate == null) {
                 return false;

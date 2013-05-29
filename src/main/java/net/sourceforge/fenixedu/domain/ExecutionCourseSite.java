@@ -93,8 +93,8 @@ public class ExecutionCourseSite extends ExecutionCourseSite_Base {
         return getSiteExecutionCourse().getExecutionPeriod();
     }
 
-    public static ExecutionCourseSite readExecutionCourseSiteByOID(Integer oid) {
-        Site site = (Site) AbstractDomainObject.fromExternalId(ExecutionCourseSite.class, oid);
+    public static ExecutionCourseSite readExecutionCourseSiteByOID(String oid) {
+        Site site = (Site) AbstractDomainObject.fromExternalId(oid);
         if (site == null) {
             return null;
         }

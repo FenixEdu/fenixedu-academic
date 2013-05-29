@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.support.SupportRequestBean;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.presentationTier.Action.ExceptionHandlingAction;
 
 import org.apache.struts.action.ActionForm;
@@ -32,7 +33,7 @@ public class StudentEnrolmentSupportHelpDA extends ExceptionHandlingAction {
 
         final SupportRequestBean requestBean = new SupportRequestBean();
         requestBean.setResponseEmail(getLoggedPerson(request).getInstitutionalOrDefaultEmailAddressValue());
-        requestBean.setRequestContext(AbstractDomainObject.fromExternalId(Integer.valueOf(request.getParameter("contextId"))));
+        requestBean.setRequestContext(AbstractDomainObject.<Content> fromExternalId(request.getParameter("contextId")));
 
         final ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
         final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();

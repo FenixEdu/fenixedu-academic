@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
+import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
@@ -23,7 +24,8 @@ public class ReadCandidates {
         int i = 0;
         for (i = 0; i < size; i++) {
 
-            result.add(InfoMasterDegreeCandidateWithInfoPerson.newInfoFromDomain(AbstractDomainObject.fromExternalId(new Integer(candidateList[i]))));
+            result.add(InfoMasterDegreeCandidateWithInfoPerson.newInfoFromDomain(AbstractDomainObject
+                    .<MasterDegreeCandidate> fromExternalId(candidateList[i])));
         }
 
         return result;

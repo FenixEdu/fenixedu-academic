@@ -17,10 +17,10 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.Pair;
 
 public class ReadTSDCoursesFromTSDProcesses {
-    public List<TSDCourseDTOEntry> run(Map<Integer, Pair<Integer, Integer>> tsdProcessIdMap) {
+    public List<TSDCourseDTOEntry> run(Map<String, Pair<String, String>> tsdProcessIdMap) {
         List<TSDCourseDTOEntry> tsdCourseDTOEntryList = new ArrayList<TSDCourseDTOEntry>();
 
-        for (Integer tsdProcessPhaseId : tsdProcessIdMap.keySet()) {
+        for (String tsdProcessPhaseId : tsdProcessIdMap.keySet()) {
             TeacherServiceDistribution tsd = null;
 
             tsd = AbstractDomainObject.fromExternalId(tsdProcessIdMap.get(tsdProcessPhaseId).getKey());
@@ -39,7 +39,7 @@ public class ReadTSDCoursesFromTSDProcesses {
         return tsdCourseDTOEntryList;
     }
 
-    private List<ExecutionSemester> getExecutionPeriodList(TeacherServiceDistribution tsd, Integer executionPeriodId) {
+    private List<ExecutionSemester> getExecutionPeriodList(TeacherServiceDistribution tsd, String executionPeriodId) {
         List<ExecutionSemester> executionPeriodList = new ArrayList<ExecutionSemester>();
 
         ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodId);
@@ -58,7 +58,7 @@ public class ReadTSDCoursesFromTSDProcesses {
     private static final ReadTSDCoursesFromTSDProcesses serviceInstance = new ReadTSDCoursesFromTSDProcesses();
 
     @Service
-    public static List<TSDCourseDTOEntry> runReadTSDCoursesFromTSDProcesses(Map<Integer, Pair<Integer, Integer>> tsdProcessIdMap)
+    public static List<TSDCourseDTOEntry> runReadTSDCoursesFromTSDProcesses(Map<String, Pair<String, String>> tsdProcessIdMap)
             throws NotAuthorizedException {
         try {
             DepartmentMemberAuthorizationFilter.instance.execute();

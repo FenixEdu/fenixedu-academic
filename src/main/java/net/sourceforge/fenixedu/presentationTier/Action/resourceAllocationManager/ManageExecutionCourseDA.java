@@ -116,10 +116,9 @@ public class ManageExecutionCourseDA extends FenixExecutionCourseAndExecutionDeg
     }
 
     private void readAndSetExecutionCourseClasses(HttpServletRequest request, ExecutionCourse executionCourse)
-            throws  FenixServiceException {
+            throws FenixServiceException {
 
-        List<InfoClass> infoClasses =
-                (List<InfoClass>) ReadClassesByExecutionCourse.runReadClassesByExecutionCourse( executionCourse );
+        List<InfoClass> infoClasses = ReadClassesByExecutionCourse.runReadClassesByExecutionCourse(executionCourse);
 
         if (infoClasses != null && !infoClasses.isEmpty()) {
             Collections.sort(infoClasses, new BeanComparator("nome"));
@@ -130,7 +129,6 @@ public class ManageExecutionCourseDA extends FenixExecutionCourseAndExecutionDeg
     private CourseLoad getCourseLoadFromParameter(final HttpServletRequest request) {
         final String idString =
                 request.getParameterMap().containsKey("courseLoadID") ? request.getParameter("courseLoadID") : null;
-        final Integer courseLoadID = idString != null ? Integer.valueOf(idString) : null;
-        return AbstractDomainObject.fromExternalId(courseLoadID);
+        return AbstractDomainObject.fromExternalId(idString);
     }
 }

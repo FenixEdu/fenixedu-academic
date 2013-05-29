@@ -11,14 +11,14 @@ public class TutorBean implements Serializable {
 
     private String teacherName;
 
-    private Integer executionDegreeID;
+    private String executionDegreeID;
 
-    private Integer degreeCurricularPlanID;
+    private String degreeCurricularPlanID;
 
     private TutorBean() {
     }
 
-    public TutorBean(Integer executionDegreeID, Integer degreeCurricularPlanID, Teacher teacher) {
+    public TutorBean(String executionDegreeID, String degreeCurricularPlanID, Teacher teacher) {
         this();
         setExecutionDegreeID(executionDegreeID);
         setDegreeCurricularPlanID(degreeCurricularPlanID);
@@ -27,19 +27,19 @@ public class TutorBean implements Serializable {
         setTeacherName(teacher.getPerson().getName());
     }
 
-    public Integer getDegreeCurricularPlanID() {
+    public String getDegreeCurricularPlanID() {
         return degreeCurricularPlanID;
     }
 
-    public void setDegreeCurricularPlanID(Integer degreeCurricularPlanID) {
+    public void setDegreeCurricularPlanID(String degreeCurricularPlanID) {
         this.degreeCurricularPlanID = degreeCurricularPlanID;
     }
 
-    public Integer getExecutionDegreeID() {
+    public String getExecutionDegreeID() {
         return executionDegreeID;
     }
 
-    public void setExecutionDegreeID(Integer executionDegreeID) {
+    public void setExecutionDegreeID(String executionDegreeID) {
         this.executionDegreeID = executionDegreeID;
     }
 

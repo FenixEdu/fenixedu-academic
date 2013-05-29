@@ -51,15 +51,15 @@ import com.google.common.base.Predicates;
 public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
 
     static public class ErasmusCandidacyProcessForm extends CandidacyProcessForm {
-        private Integer selectedProcessId;
+        private String selectedProcessId;
 
         private String[] selectedProcesses;
 
-        public Integer getSelectedProcessId() {
+        public String getSelectedProcessId() {
             return selectedProcessId;
         }
 
-        public void setSelectedProcessId(Integer selectedProcessId) {
+        public void setSelectedProcessId(String selectedProcessId) {
             this.selectedProcessId = selectedProcessId;
         }
 

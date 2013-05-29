@@ -21,7 +21,7 @@ public class LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular {
     @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
     @Service
     public static List run(InfoExecutionDegree infoExecutionDegree, InfoExecutionPeriod infoExecutionPeriod,
-            Integer curricularYearID) {
+            String curricularYearID) {
 
         List listInfoDE = new ArrayList();
 
@@ -49,7 +49,7 @@ public class LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular {
 
     @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
     @Service
-    public static List run(InfoExecutionDegree infoExecutionDegree, AcademicInterval academicInterval, Integer curricularYearID) {
+    public static List run(InfoExecutionDegree infoExecutionDegree, AcademicInterval academicInterval, String curricularYearID) {
 
         List listInfoDE = new ArrayList();
 

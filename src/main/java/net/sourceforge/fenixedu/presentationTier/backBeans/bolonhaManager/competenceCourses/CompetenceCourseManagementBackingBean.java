@@ -64,10 +64,10 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     private final ResourceBundle domainResources = getResourceBundle("resources/DomainExceptionResources");
     private final Integer NO_SELECTION = 0;
 
-    private Integer selectedDepartmentUnitID = null;
-    private Integer competenceCourseID = null;
-    private Integer executionYearID = null;
-    private Integer executionSemesterID = null;
+    private String selectedDepartmentUnitID = null;
+    private String competenceCourseID = null;
+    private String executionYearID = null;
+    private String executionSemesterID = null;
     private Unit competenceCourseGroupUnit = null;
     private CompetenceCourse competenceCourse = null;
 
@@ -199,8 +199,8 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         return result;
     }
 
-    public Integer getCompetenceCourseGroupUnitID() {
-        return getAndHoldIntegerParameter("competenceCourseGroupUnitID");
+    public String getCompetenceCourseGroupUnitID() {
+        return getAndHoldStringParameter("competenceCourseGroupUnitID");
     }
 
     public Unit getCompetenceCourseGroupUnit() {
@@ -414,13 +414,13 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         }
     }
 
-    public Integer getSelectedDepartmentUnitID() {
+    public String getSelectedDepartmentUnitID() {
         if (selectedDepartmentUnitID == null) {
             Container site = AbstractFunctionalityContext.getCurrentContext(getRequest()).getSelectedContainer();
             if (site != null && site instanceof DepartmentSite) {
                 selectedDepartmentUnitID = ((DepartmentSite) site).getDepartment().getDepartmentUnit().getExternalId();
-            } else if (getAndHoldIntegerParameter("selectedDepartmentUnitID") != null) {
-                selectedDepartmentUnitID = getAndHoldIntegerParameter("selectedDepartmentUnitID");
+            } else if (getAndHoldStringParameter("selectedDepartmentUnitID") != null) {
+                selectedDepartmentUnitID = getAndHoldStringParameter("selectedDepartmentUnitID");
             } else if (getPersonDepartment() != null) {
                 selectedDepartmentUnitID = getPersonDepartment().getDepartmentUnit().getExternalId();
             }
@@ -428,15 +428,15 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         return selectedDepartmentUnitID;
     }
 
-    public void setSelectedDepartmentUnitID(Integer selectedDepartmentUnitID) {
+    public void setSelectedDepartmentUnitID(String selectedDepartmentUnitID) {
         this.selectedDepartmentUnitID = selectedDepartmentUnitID;
     }
 
-    public Integer getCompetenceCourseID() {
-        return (competenceCourseID == null) ? (competenceCourseID = getAndHoldIntegerParameter("competenceCourseID")) : competenceCourseID;
+    public String getCompetenceCourseID() {
+        return (competenceCourseID == null) ? (competenceCourseID = getAndHoldStringParameter("competenceCourseID")) : competenceCourseID;
     }
 
-    public void setCompetenceCourseID(Integer competenceCourseID) {
+    public void setCompetenceCourseID(String competenceCourseID) {
         this.competenceCourseID = competenceCourseID;
     }
 
@@ -917,8 +917,8 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     }
 
     public void onChangeDepartmentUnit(ValueChangeEvent event) {
-        setTransferToDepartmentUnitID((Integer) event.getNewValue());
-        getScientificAreaUnitItems().setValue(readScientificAreaUnitLabels((Integer) event.getNewValue()));
+        setTransferToDepartmentUnitID((String) event.getNewValue());
+        getScientificAreaUnitItems().setValue(readScientificAreaUnitLabels((String) event.getNewValue()));
         getCompetenceCourseGroupUnitItems().setValue(readCompetenceCourseGroupUnitLabels(null));
     }
 
@@ -948,13 +948,13 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     }
 
     public void onChangeScientificAreaUnit(ValueChangeEvent event) {
-        setTransferToScientificAreaUnitID((Integer) event.getNewValue());
-        getCompetenceCourseGroupUnitItems().setValue(readCompetenceCourseGroupUnitLabels((Integer) event.getNewValue()));
+        setTransferToScientificAreaUnitID((String) event.getNewValue());
+        getCompetenceCourseGroupUnitItems().setValue(readCompetenceCourseGroupUnitLabels((String) event.getNewValue()));
     }
 
-    private List<SelectItem> readScientificAreaUnitLabels(Integer transferToDepartmentUnitID) {
+    private List<SelectItem> readScientificAreaUnitLabels(String transferToDepartmentUnitID) {
         final List<SelectItem> result = new ArrayList<SelectItem>();
-        if (transferToDepartmentUnitID != null && transferToDepartmentUnitID != 0) {
+        if (transferToDepartmentUnitID != null) {
             for (final ScientificAreaUnit unit : readDepartmentUnitToTransferTo(transferToDepartmentUnitID)
                     .getScientificAreaUnits()) {
                 result.add(new SelectItem(unit.getExternalId(), unit.getName()));
@@ -965,18 +965,18 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         return result;
     }
 
-    public Integer getTransferToDepartmentUnitID() {
+    public String getTransferToDepartmentUnitID() {
         if (getViewState().getAttribute("transferToDepartmentUnitID") != null) {
-            return (Integer) getViewState().getAttribute("transferToDepartmentUnitID");
+            return (String) getViewState().getAttribute("transferToDepartmentUnitID");
         }
-        return 0;
+        return null;
     }
 
-    public void setTransferToDepartmentUnitID(Integer transferToDepartmentUnitID) {
+    public void setTransferToDepartmentUnitID(String transferToDepartmentUnitID) {
         this.getViewState().setAttribute("transferToDepartmentUnitID", transferToDepartmentUnitID);
     }
 
-    private DepartmentUnit readDepartmentUnitToTransferTo(Integer transferToDepartmentUnitID) {
+    private DepartmentUnit readDepartmentUnitToTransferTo(String transferToDepartmentUnitID) {
         return (DepartmentUnit) AbstractDomainObject.fromExternalId(transferToDepartmentUnitID);
     }
 
@@ -992,9 +992,9 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         this.competenceCourseGroupUnitItems = competenceCourseGroupUnitItems;
     }
 
-    private List<SelectItem> readCompetenceCourseGroupUnitLabels(Integer transferToScientificAreaUnitID) {
+    private List<SelectItem> readCompetenceCourseGroupUnitLabels(String transferToScientificAreaUnitID) {
         final List<SelectItem> result = new ArrayList<SelectItem>();
-        if (transferToScientificAreaUnitID != null && transferToScientificAreaUnitID != 0) {
+        if (transferToScientificAreaUnitID != null) {
             for (final Unit unit : readScientificAreaUnitToTransferTo(transferToScientificAreaUnitID)
                     .getCompetenceCourseGroupUnits()) {
                 result.add(new SelectItem(unit.getExternalId(), unit.getName()));
@@ -1005,18 +1005,18 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         return result;
     }
 
-    public Integer getTransferToScientificAreaUnitID() {
+    public String getTransferToScientificAreaUnitID() {
         if (getViewState().getAttribute("transferToScientificAreaUnitID") != null) {
-            return (Integer) getViewState().getAttribute("transferToScientificAreaUnitID");
+            return (String) getViewState().getAttribute("transferToScientificAreaUnitID");
         }
-        return 0;
+        return null;
     }
 
-    public void setTransferToScientificAreaUnitID(Integer transferToScientificAreaUnitID) {
+    public void setTransferToScientificAreaUnitID(String transferToScientificAreaUnitID) {
         this.getViewState().setAttribute("transferToScientificAreaUnitID", transferToScientificAreaUnitID);
     }
 
-    private ScientificAreaUnit readScientificAreaUnitToTransferTo(Integer transferToScientificAreaUnitID) {
+    private ScientificAreaUnit readScientificAreaUnitToTransferTo(String transferToScientificAreaUnitID) {
         return (ScientificAreaUnit) AbstractDomainObject.fromExternalId(transferToScientificAreaUnitID);
     }
 
@@ -1049,11 +1049,11 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         return null;
     }
 
-    public Integer getTransferToCompetenceCourseGroupUnitID() {
+    public String getTransferToCompetenceCourseGroupUnitID() {
         if (getViewState().getAttribute("transferToCompetenceCourseGroupUnitID") != null) {
-            return (Integer) getViewState().getAttribute("transferToCompetenceCourseGroupUnitID");
+            return (String) getViewState().getAttribute("transferToCompetenceCourseGroupUnitID");
         }
-        return 0;
+        return null;
     }
 
     public void setTransferToCompetenceCourseGroupUnitID(Integer transferToCompetenceCourseGroupUnitID) {
@@ -1064,9 +1064,9 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         return AbstractDomainObject.fromExternalId(getExecutionSemesterID());
     }
 
-    public Integer getExecutionSemesterID() {
+    public String getExecutionSemesterID() {
         if (executionSemesterID == null) {
-            executionSemesterID = (Integer) getViewState().getAttribute("executionSemesterID");
+            executionSemesterID = (String) getViewState().getAttribute("executionSemesterID");
         }
         ExecutionSemester currentSemester = ExecutionSemester.readActualExecutionSemester();
         if ((executionSemesterID == null) && (getCompetenceCourse() != null)) {
@@ -1082,7 +1082,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         return executionSemesterID;
     }
 
-    public void setExecutionSemesterID(Integer executionSemesterID) {
+    public void setExecutionSemesterID(String executionSemesterID) {
         this.executionSemesterID = executionSemesterID;
         reset();
     }
@@ -1091,9 +1091,9 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         return AbstractDomainObject.fromExternalId(getExecutionYearID());
     }
 
-    public Integer getExecutionYearID() {
+    public String getExecutionYearID() {
         if (executionYearID == null) {
-            executionYearID = getAndHoldIntegerParameter("executionYearID");
+            executionYearID = getAndHoldStringParameter("executionYearID");
         }
         if (executionYearID == null) {
             executionYearID = ExecutionYear.readCurrentExecutionYear().getExternalId();
@@ -1101,7 +1101,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         return executionYearID;
     }
 
-    public void setExecutionYearID(Integer executionYearID) {
+    public void setExecutionYearID(String executionYearID) {
         this.executionYearID = executionYearID;
         reset();
     }

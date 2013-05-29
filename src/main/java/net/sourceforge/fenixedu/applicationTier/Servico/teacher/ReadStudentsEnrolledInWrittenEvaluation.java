@@ -28,7 +28,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ReadStudentsEnrolledInWrittenEvaluation {
 
-    protected SiteView run(Integer executionCourseID, Integer writtenEvaluationID) throws FenixServiceException {
+    protected SiteView run(String executionCourseID, String writtenEvaluationID) throws FenixServiceException {
 
         final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) AbstractDomainObject.fromExternalId(writtenEvaluationID);
         if (writtenEvaluation == null) {
@@ -78,7 +78,7 @@ public class ReadStudentsEnrolledInWrittenEvaluation {
     private static final ReadStudentsEnrolledInWrittenEvaluation serviceInstance = new ReadStudentsEnrolledInWrittenEvaluation();
 
     @Service
-    public static SiteView runReadStudentsEnrolledInWrittenEvaluation(Integer executionCourseID, Integer writtenEvaluationID)
+    public static SiteView runReadStudentsEnrolledInWrittenEvaluation(String executionCourseID, String writtenEvaluationID)
             throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseID);
         return serviceInstance.run(executionCourseID, writtenEvaluationID);

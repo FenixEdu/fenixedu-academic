@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.EmployeeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilter;
@@ -12,7 +11,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class CopyTSDProcessPhaseDataToTSDProcessPhase {
 
-    protected void run(Integer oldTSDProcessPhaseId, Integer newTSDProcessPhaseId) {
+    protected void run(String oldTSDProcessPhaseId, String newTSDProcessPhaseId) {
         TSDProcessPhase oldTSDProcessPhase = AbstractDomainObject.fromExternalId(oldTSDProcessPhaseId);
         TSDProcessPhase newTSDProcessPhase = AbstractDomainObject.fromExternalId(newTSDProcessPhaseId);
 
@@ -27,7 +26,7 @@ public class CopyTSDProcessPhaseDataToTSDProcessPhase {
             new CopyTSDProcessPhaseDataToTSDProcessPhase();
 
     @Service
-    public static void runCopyTSDProcessPhaseDataToTSDProcessPhase(Integer oldTSDProcessPhaseId, Integer newTSDProcessPhaseId)
+    public static void runCopyTSDProcessPhaseDataToTSDProcessPhase(String oldTSDProcessPhaseId, String newTSDProcessPhaseId)
             throws NotAuthorizedException {
         try {
             DepartmentMemberAuthorizationFilter.instance.execute();

@@ -58,8 +58,7 @@ public class EditElectionsPeriodsDispatchAction extends ElectionsPeriodsManageme
     public ActionForward prepareEditYearDelegateCandidacyPeriod(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        Integer electionOID = Integer.parseInt((String) getFromRequest(request, "selectedPeriod"));
-        final DelegateElection election = AbstractDomainObject.fromExternalId(electionOID);
+        final DelegateElection election = AbstractDomainObject.fromExternalId((String) getFromRequest(request, "selectedPeriod"));
 
         YearMonthDay startDate = election.getCandidacyStartDate();
         YearMonthDay endDate = election.getCandidacyEndDate();
@@ -70,8 +69,7 @@ public class EditElectionsPeriodsDispatchAction extends ElectionsPeriodsManageme
     public ActionForward prepareEditYearDelegateVotingPeriod(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        Integer electionOID = Integer.parseInt((String) getFromRequest(request, "selectedPeriod"));
-        final DelegateElection election = AbstractDomainObject.fromExternalId(electionOID);
+        final DelegateElection election = AbstractDomainObject.fromExternalId((String) getFromRequest(request, "selectedPeriod"));
 
         YearMonthDay startDate = election.getLastVotingStartDate();
         YearMonthDay endDate = election.getLastVotingEndDate();

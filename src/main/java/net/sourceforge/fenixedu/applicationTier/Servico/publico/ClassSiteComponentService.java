@@ -30,7 +30,7 @@ public class ClassSiteComponentService {
 
     @Service
     public static Object run(ISiteComponent bodyComponent, String executionYearName, String executionPeriodName,
-            String degreeInitials, String nameDegreeCurricularPlan, String className, Integer curricularYear, Integer classId)
+            String degreeInitials, String nameDegreeCurricularPlan, String className, Integer curricularYear, String classId)
             throws FenixServiceException {
 
         final ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(executionYearName);

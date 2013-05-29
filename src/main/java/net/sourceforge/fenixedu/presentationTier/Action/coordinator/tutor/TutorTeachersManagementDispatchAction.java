@@ -219,7 +219,7 @@ public class TutorTeachersManagementDispatchAction extends FenixDispatchAction {
     }
 
     private DegreeCurricularPlan getDegreeCurricularPlan(HttpServletRequest request) {
-        return AbstractDomainObject.fromExternalId(Integer.valueOf(request.getParameter("degreeCurricularPlanID")));
+        return AbstractDomainObject.fromExternalId(request.getParameter("degreeCurricularPlanID"));
     }
 
     @Service

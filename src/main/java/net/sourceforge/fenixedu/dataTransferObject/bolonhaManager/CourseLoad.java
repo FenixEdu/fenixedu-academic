@@ -18,7 +18,7 @@ public class CourseLoad implements Serializable {
     private Double autonomousWorkHours = Double.valueOf(0);
     private Double ectsCredits = Double.valueOf(0);
 
-    private Integer identification = null;
+    private String identification = null;
     private int order;
     private String action; // create-edit-delete
 
@@ -119,11 +119,11 @@ public class CourseLoad implements Serializable {
         this.tutorialOrientationHours = tutorialOrientationHours;
     }
 
-    public Integer getIdentification() {
+    public String getIdentification() {
         return identification;
     }
 
-    public void setIdentification(Integer identification) {
+    public void setIdentification(String identification) {
         this.identification = identification;
     }
 

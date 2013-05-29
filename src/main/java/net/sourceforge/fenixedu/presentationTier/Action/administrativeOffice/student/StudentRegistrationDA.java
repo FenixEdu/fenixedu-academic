@@ -19,10 +19,10 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public abstract class StudentRegistrationDA extends FenixDispatchAction {
 
     protected Registration getAndSetRegistration(final HttpServletRequest request) {
-        final Integer registrationID =
-                getIntegerFromRequest(request, "registrationID") != null ? getIntegerFromRequest(request, "registrationID") : getIntegerFromRequest(
-                        request, "registrationId");
-        final Registration registration = AbstractDomainObject.fromExternalId(Integer.valueOf(registrationID));
+        final String registrationID =
+                getFromRequest(request, "registrationID") != null ? getFromRequest(request, "registrationID").toString() : getFromRequest(
+                        request, "registrationId").toString();
+        final Registration registration = AbstractDomainObject.fromExternalId(registrationID);
         request.setAttribute("registration", registration);
         return registration;
     }

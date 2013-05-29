@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseResponsibleForTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -20,8 +19,8 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class EditProgram {
 
-    protected Boolean run(Integer executionCourseOID, Integer curricularCourseOID, InfoCurriculum infoCurriculumNew,
-            String username) throws FenixServiceException {
+    protected Boolean run(String executionCourseOID, String curricularCourseOID, InfoCurriculum infoCurriculumNew, String username)
+            throws FenixServiceException {
 
         final Person person = Person.readPersonByUsername(username);
         final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseOID);
@@ -66,10 +65,9 @@ public class EditProgram {
     private static final EditProgram serviceInstance = new EditProgram();
 
     @Service
-    public static Boolean runEditProgram(Integer executionCourseOID, Integer curricularCourseOID,
-            InfoCurriculum infoCurriculumNew, String username) throws FenixServiceException, NotAuthorizedException {
-        ExecutionCourseResponsibleForTeacherAuthorizationFilter.instance.execute(executionCourseOID, curricularCourseOID,
-                infoCurriculumNew, username);
+    public static Boolean runEditProgram(String executionCourseOID, String curricularCourseOID, InfoCurriculum infoCurriculumNew,
+            String username) throws FenixServiceException, NotAuthorizedException {
+        ExecutionCourseResponsibleForTeacherAuthorizationFilter.instance.execute(executionCourseOID);
         return serviceInstance.run(executionCourseOID, curricularCourseOID, infoCurriculumNew, username);
     }
 

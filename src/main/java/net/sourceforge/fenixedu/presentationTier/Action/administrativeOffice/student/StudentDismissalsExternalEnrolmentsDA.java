@@ -13,7 +13,6 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/studentDismissalsExternalEnrolments", module = "academicAdministration",
         formBean = "studentExternalEnrolmentsForm")
@@ -46,7 +45,6 @@ public class StudentDismissalsExternalEnrolmentsDA extends StudentExternalEnrolm
     }
 
     private StudentCurricularPlan getStudentCurricularPlan(final HttpServletRequest request) {
-        final Integer scpID = getIntegerFromRequest(request, "scpID");
-        return AbstractDomainObject.fromExternalId(scpID);
+        return getDomainObject(request, "scpID");
     }
 }

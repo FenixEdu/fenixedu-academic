@@ -63,8 +63,7 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
         final DynaActionForm form = (DynaActionForm) actionForm;
         final Integer degreeCurricularPlanID = (Integer) form.get("degreeCurricularPlanID");
         if (degreeCurricularPlanID != null) {
-            final DegreeCurricularPlan degreeCurricularPlan =
-                    AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
+            final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
             if (degreeCurricularPlan != null) {
                 request.setAttribute("executionDegrees", degreeCurricularPlan.getExecutionDegreesSet());
             }
@@ -90,14 +89,14 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
     }
 
     private void setResponsibleCoordinatorsIDs(ExecutionDegree executionDegree, DynaActionForm form) {
-        final List<Integer> responsibleCoordinatorsList = new ArrayList<Integer>();
+        final List<String> responsibleCoordinatorsList = new ArrayList<String>();
         for (final Coordinator coordinator : executionDegree.getCoordinatorsListSet()) {
             if (coordinator.isResponsible()) {
                 responsibleCoordinatorsList.add(coordinator.getExternalId());
             }
         }
         form.set("responsibleCoordinatorsIDs",
-                responsibleCoordinatorsList.toArray(new Integer[responsibleCoordinatorsList.size()]));
+                responsibleCoordinatorsList.toArray(new String[responsibleCoordinatorsList.size()]));
     }
 
     public ActionForward prepareInsertCoordinator(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -207,7 +206,7 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
     }
 
     public ActionForward editExecutionDegree(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response)  {
+            HttpServletResponse response) {
 
         final DynaActionForm form = (DynaActionForm) actionForm;
         final Integer executionDegreeID = (Integer) form.get("executionDegreeID");

@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity;
 
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituationWithInfoPersonAndInfoExecutionDegree;
@@ -23,7 +22,7 @@ public class ReadGratuitySituationByStudentCurricularPlanByGratuityValues {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
-    public static Object run(Integer studentCurricularPlanID, Integer gratuityValuesID) throws FenixServiceException {
+    public static Object run(String studentCurricularPlanID, String gratuityValuesID) throws FenixServiceException {
 
         GratuitySituation gratuitySituation = null;
 

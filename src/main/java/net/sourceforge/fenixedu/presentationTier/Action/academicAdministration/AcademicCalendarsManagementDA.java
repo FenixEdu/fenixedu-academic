@@ -284,14 +284,12 @@ public class AcademicCalendarsManagementDA extends FenixDispatchAction {
 
     private AcademicCalendarEntry getAcademicCalendarEntryFromParameter(final HttpServletRequest request) {
         final String calendarIDString = request.getParameter("entryID");
-        final Integer calendarID = Integer.valueOf(calendarIDString);
-        return AbstractDomainObject.fromExternalId(calendarID);
+        return AbstractDomainObject.fromExternalId(calendarIDString);
     }
 
     private AcademicCalendarRootEntry getAcademicCalendarRootEntryFromParameter(final HttpServletRequest request) {
         final String calendarIDString = request.getParameter("rootEntryID");
-        final Integer calendarID = Integer.valueOf(calendarIDString);
-        return (AcademicCalendarRootEntry) AbstractDomainObject.fromExternalId(calendarID);
+        return (AcademicCalendarRootEntry) AbstractDomainObject.fromExternalId(calendarIDString);
     }
 
     private Partial getBeginFromParameter(final HttpServletRequest request) {

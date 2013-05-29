@@ -4,12 +4,12 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.ReadFinalDegreeWorkProposalAuthorization;
 import net.sourceforge.fenixedu.applicationTier.Filtro.coordinator.AccessFinalDegreeWorkProposalAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoProposal;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
@@ -19,8 +19,8 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class ReadFinalDegreeWorkProposal {
 
-    protected InfoProposal run(Integer finalDegreeWorkProposalOID) throws FenixServiceException {
-        return InfoProposal.newInfoFromDomain(AbstractDomainObject.fromExternalId(finalDegreeWorkProposalOID));
+    protected InfoProposal run(String finalDegreeWorkProposalOID) throws FenixServiceException {
+        return InfoProposal.newInfoFromDomain(AbstractDomainObject.<Proposal> fromExternalId(finalDegreeWorkProposalOID));
     }
 
     // Service Invokers migrated from Berserk
@@ -28,7 +28,7 @@ public class ReadFinalDegreeWorkProposal {
     private static final ReadFinalDegreeWorkProposal serviceInstance = new ReadFinalDegreeWorkProposal();
 
     @Service
-    public static InfoProposal runReadFinalDegreeWorkProposal(Integer DegreeWorkProposalOID) throws FenixServiceException,
+    public static InfoProposal runReadFinalDegreeWorkProposal(String DegreeWorkProposalOID) throws FenixServiceException,
             NotAuthorizedException {
         try {
             ReadFinalDegreeWorkProposalAuthorization.instance.execute(DegreeWorkProposalOID);

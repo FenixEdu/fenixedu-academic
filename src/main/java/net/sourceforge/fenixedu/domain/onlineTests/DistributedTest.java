@@ -142,7 +142,7 @@ public class DistributedTest extends DistributedTest_Base {
         setEndHourDate(date);
     }
 
-    public StudentTestLog getLastSubmissionStudentTestLog(final Integer registrationId) {
+    public StudentTestLog getLastSubmissionStudentTestLog(final String registrationId) {
         Registration registration = AbstractDomainObject.fromExternalId(registrationId);
         for (final StudentTestLog studentTestLog : this.getStudentsLogs()) {
             if (studentTestLog.getEvent().startsWith("Submeter Teste;") && registration.equals(studentTestLog.getStudent())) {
@@ -307,7 +307,7 @@ public class DistributedTest extends DistributedTest_Base {
         return getDistributedTestQuestionsSet().size() / getNumberOfQuestions().intValue();
     }
 
-    public Question findQuestionByOID(Integer questionId) {
+    public Question findQuestionByOID(String questionId) {
         for (StudentTestQuestion studentTestQuestion : this.getDistributedTestQuestions()) {
             if (studentTestQuestion.getQuestion().getExternalId().equals(questionId)) {
                 return studentTestQuestion.getQuestion();

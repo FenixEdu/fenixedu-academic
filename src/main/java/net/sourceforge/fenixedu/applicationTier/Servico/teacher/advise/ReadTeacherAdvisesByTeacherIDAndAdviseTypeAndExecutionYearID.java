@@ -24,7 +24,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class ReadTeacherAdvisesByTeacherIDAndAdviseTypeAndExecutionYearID {
 
-    public List<Advise> run(AdviseType adviseType, Integer teacherID, Integer executionYearID) throws FenixServiceException,
+    public List<Advise> run(AdviseType adviseType, String teacherID, String executionYearID) throws FenixServiceException,
             DomainException {
         Teacher teacher = AbstractDomainObject.fromExternalId(teacherID);
         List<Advise> result;
@@ -48,7 +48,7 @@ public class ReadTeacherAdvisesByTeacherIDAndAdviseTypeAndExecutionYearID {
 
     @Service
     public static List<Advise> runReadTeacherAdvisesByTeacherIDAndAdviseTypeAndExecutionYearID(AdviseType adviseType,
-            Integer teacherID, Integer executionYearID) throws FenixServiceException, DomainException, NotAuthorizedException {
+            String teacherID, String executionYearID) throws FenixServiceException, DomainException, NotAuthorizedException {
         try {
             DepartmentMemberAuthorizationFilter.instance.execute();
             return serviceInstance.run(adviseType, teacherID, executionYearID);

@@ -175,7 +175,7 @@ public abstract class ResearchResult extends ResearchResult_Base {
         deleteDomainObject();
     }
 
-    public final static ResearchResult readByOid(Integer oid) {
+    public final static ResearchResult readByOid(String oid) {
         final ResearchResult result = AbstractDomainObject.fromExternalId(oid);
 
         if (result == null) {

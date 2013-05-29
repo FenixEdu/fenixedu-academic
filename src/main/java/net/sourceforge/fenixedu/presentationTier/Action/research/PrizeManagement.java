@@ -32,14 +32,14 @@ public class PrizeManagement extends FenixDispatchAction {
     }
 
     public ActionForward prepareDelete(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         request.setAttribute("deleteRequest", "deleteRequest");
         return showPrize(mapping, form, request, response);
     }
 
     public ActionForward deletePrize(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         if (request.getParameter("confirm") == null) {
             return showPrize(mapping, form, request, response);
@@ -57,7 +57,7 @@ public class PrizeManagement extends FenixDispatchAction {
     }
 
     public ActionForward editPrize(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         Prize prize = getPrize(request);
         if (prize != null && prize.isEditableByUser(getLoggedPerson(request))) {
@@ -74,7 +74,7 @@ public class PrizeManagement extends FenixDispatchAction {
     }
 
     public ActionForward createPrize(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         IViewState viewState = RenderUtils.getViewState("createPrize");
         if (viewState != null) {
@@ -89,7 +89,7 @@ public class PrizeManagement extends FenixDispatchAction {
     }
 
     public ActionForward showPrize(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         Prize prize = getPrize(request);
         request.setAttribute("prize", prize);
@@ -97,7 +97,7 @@ public class PrizeManagement extends FenixDispatchAction {
     }
 
     public ActionForward personPostBack(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         ActionForward returnAction = associatePerson(mapping, form, request, response);
         RenderUtils.invalidateViewState("createAssociation");
@@ -105,7 +105,7 @@ public class PrizeManagement extends FenixDispatchAction {
     }
 
     public ActionForward associatePerson(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         Prize prize = getPrize(request);
         request.setAttribute("prize", prize);
@@ -118,7 +118,7 @@ public class PrizeManagement extends FenixDispatchAction {
     }
 
     public ActionForward associatePersonToPrize(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         Prize prize = getPrize(request);
         IViewState viewState = RenderUtils.getViewState("createAssociation");
@@ -140,11 +140,11 @@ public class PrizeManagement extends FenixDispatchAction {
     }
 
     public ActionForward removePersonFromPrize(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         Prize prize = getPrize(request);
         String personID = request.getParameter("pid");
-        Person person = (Person) AbstractDomainObject.fromExternalId(Person.class, Integer.valueOf(personID));
+        Person person = (Person) AbstractDomainObject.fromExternalId(personID);
 
         if (person != null && prize != null && !prize.isLastParticipation()) {
             try {
@@ -158,7 +158,7 @@ public class PrizeManagement extends FenixDispatchAction {
     }
 
     public ActionForward unitPostBack(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         ActionForward returnAction = associateUnit(mapping, form, request, response);
         RenderUtils.invalidateViewState("createAssociation");
@@ -166,7 +166,7 @@ public class PrizeManagement extends FenixDispatchAction {
     }
 
     public ActionForward associateUnit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         Prize prize = getPrize(request);
         request.setAttribute("prize", prize);
@@ -180,7 +180,7 @@ public class PrizeManagement extends FenixDispatchAction {
     }
 
     public ActionForward associateUnitToPrize(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         Prize prize = getPrize(request);
         IViewState viewState = RenderUtils.getViewState("createAssociation");
@@ -202,11 +202,11 @@ public class PrizeManagement extends FenixDispatchAction {
     }
 
     public ActionForward removeUnitFromPrize(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         Prize prize = getPrize(request);
         String unitID = request.getParameter("uid");
-        Unit unit = (Unit) AbstractDomainObject.fromExternalId(Unit.class, Integer.valueOf(unitID));
+        Unit unit = (Unit) AbstractDomainObject.fromExternalId(unitID);
 
         if (unit != null && prize != null) {
             try {
@@ -221,7 +221,7 @@ public class PrizeManagement extends FenixDispatchAction {
 
     private Prize getPrize(HttpServletRequest request) {
         String prizeID = request.getParameter("oid");
-        Prize prize = (Prize) AbstractDomainObject.fromExternalId(Prize.class, Integer.valueOf(prizeID));
+        Prize prize = (Prize) AbstractDomainObject.fromExternalId(prizeID);
         return prize;
     }
 

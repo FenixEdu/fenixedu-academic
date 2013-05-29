@@ -40,7 +40,7 @@ public class EditExecutionDegreeCoordinationDA extends FenixDispatchAction {
     public ActionForward prepareEditCoordination(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 
-        final Integer degreeCurricularPlanId = Integer.valueOf(request.getParameter("degreeCurricularPlanId"));
+        final String degreeCurricularPlanId = request.getParameter("degreeCurricularPlanId");
         DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanId);
 
         final Set<ExecutionDegree> executionDegrees = degreeCurricularPlan.getExecutionDegreesSet();
@@ -55,7 +55,7 @@ public class EditExecutionDegreeCoordinationDA extends FenixDispatchAction {
     public ActionForward editCoordination(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 
-        Integer executionDegreeId = Integer.valueOf(request.getParameter("executionDegreeId"));
+        String executionDegreeId = request.getParameter("executionDegreeId");
 
         ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeId);
 
@@ -103,14 +103,14 @@ public class EditExecutionDegreeCoordinationDA extends FenixDispatchAction {
     public ActionForward switchResponsability(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 
-        final Integer coordinatorId = Integer.valueOf(request.getParameter("coordinatorId"));
+        final String coordinatorId = request.getParameter("coordinatorId");
         Coordinator coordinator = AbstractDomainObject.fromExternalId(coordinatorId);
 
-        final Integer executionDegreeId = Integer.valueOf(request.getParameter("executionDegreeId"));
+        final String executionDegreeId = request.getParameter("executionDegreeId");
         ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeId);
 
         final String personId = request.getParameter("personId");
-        final Person personSwitching = rootDomainObject.fromExternalId(personId);
+        final Person personSwitching = AbstractDomainObject.fromExternalId(personId);
 
         String backPath = request.getParameter("backPath");
 
@@ -133,14 +133,14 @@ public class EditExecutionDegreeCoordinationDA extends FenixDispatchAction {
     public ActionForward deleteCoordinator(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 
-        final Integer coordinatorId = Integer.valueOf(request.getParameter("coordinatorId"));
+        final String coordinatorId = request.getParameter("coordinatorId");
         Coordinator coordinator = AbstractDomainObject.fromExternalId(coordinatorId);
 
-        final Integer executionDegreeId = Integer.valueOf(request.getParameter("executionDegreeId"));
+        final String executionDegreeId = request.getParameter("executionDegreeId");
         ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeId);
 
         final String personId = request.getParameter("personId");
-        final Person personDeleting = rootDomainObject.fromExternalId(personId);
+        final Person personDeleting = AbstractDomainObject.fromExternalId(personId);
 
         String backPath = request.getParameter("backPath");
 
@@ -174,7 +174,7 @@ public class EditExecutionDegreeCoordinationDA extends FenixDispatchAction {
             sessionBean = new ExecutionDegreeCoordinatorsBean();
             final String executionYearId = String.valueOf(request.getParameter("executionYearId"));
             if (!executionYearId.equals("null")) {
-                ExecutionYear executionYear = AbstractDomainObject.fromExternalId(new Integer(executionYearId));
+                ExecutionYear executionYear = AbstractDomainObject.fromExternalId(executionYearId);
                 sessionBean.setExecutionYear(executionYear);
             } else {
                 request.setAttribute("sessionBean", sessionBean);
@@ -219,7 +219,7 @@ public class EditExecutionDegreeCoordinationDA extends FenixDispatchAction {
     public ActionForward prepareCoordinatorLog(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 
-        Integer execDegId = Integer.valueOf(request.getParameter("executionYearId"));
+        String execDegId = request.getParameter("executionYearId");
         ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(execDegId);
         List<CoordinatorLog> coordinatorLogs = getCoordinatorLogsByExecDegree(executionDegree);
         request.setAttribute("coordinatorLogs", coordinatorLogs);

@@ -27,7 +27,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class GetCandidatesByID {
 
     @Service
-    public static InfoMasterDegreeCandidate run(Integer candidateID) throws FenixServiceException {
+    public static InfoMasterDegreeCandidate run(String candidateID) throws FenixServiceException {
         MasterDegreeCandidate masterDegreeCandidate = null;
 
         if (candidateID == null) {

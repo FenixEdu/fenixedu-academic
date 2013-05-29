@@ -42,14 +42,14 @@ public class DistributeStudentsByRoomDispatchAction extends FenixDispatchAction 
             throws Exception {
 
         final DynaActionForm distributionExam = (DynaActionForm) form;
-        final Integer evaluationCode = Integer.valueOf((String) distributionExam.get("evaluationCode"));
-        final Integer executionCourseCode = Integer.valueOf((String) distributionExam.get("objectCode"));
+        final String evaluationCode = (String) distributionExam.get("evaluationCode");
+        final String executionCourseCode = (String) distributionExam.get("objectCode");
 
         final InfoSiteExamExecutionCourses infoSiteExamExecutionCourses = new InfoSiteExamExecutionCourses();
 
         final TeacherAdministrationSiteView siteView =
                 TeacherAdministrationSiteComponentService.runTeacherAdministrationSiteComponentService(executionCourseCode,
-                        new InfoSiteCommon(), infoSiteExamExecutionCourses, null, evaluationCode, null);
+                        new InfoSiteCommon(), infoSiteExamExecutionCourses, evaluationCode, null);
 
         final InfoExam infoExam = infoSiteExamExecutionCourses.getInfoExam();
         final List<InfoExecutionCourse> infoExecutionCourses = infoSiteExamExecutionCourses.getInfoExecutionCourses();
@@ -74,8 +74,8 @@ public class DistributeStudentsByRoomDispatchAction extends FenixDispatchAction 
             HttpServletResponse response) throws Exception {
 
         final DynaActionForm distributionExam = (DynaActionForm) form;
-        final Integer evaluationCode = Integer.valueOf((String) distributionExam.get("evaluationCode"));
-        final Integer executionCourseCode = Integer.valueOf((String) distributionExam.get("objectCode"));
+        final String evaluationCode = (String) distributionExam.get("evaluationCode");
+        final String executionCourseCode = (String) distributionExam.get("objectCode");
         final Boolean distributeOnlyEnroledStudents = Boolean.valueOf((String) distributionExam.get("enroll"));
         final List rooms = Arrays.asList((Integer[]) distributionExam.get("rooms"));
 

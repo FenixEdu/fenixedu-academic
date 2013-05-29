@@ -47,7 +47,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcessDA
     @Override
     public ActionForward listProcessAllowedActivities(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
-        final Integer degreeCurricularPlanOID = CoordinatedDegreeInfo.findDegreeCurricularPlanID(request);
+        final String degreeCurricularPlanOID = CoordinatedDegreeInfo.findDegreeCurricularPlanID(request);
         final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanOID);
         request.setAttribute("seriesGrade", getProcess(request).getCandidacy()
                 .getDegreeCandidacyForGraduatedPersonSeriesGadeForDegree(degreeCurricularPlan.getDegree()));
@@ -57,7 +57,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcessDA
     @Override
     public ActionForward prepareExecuteIntroduceCandidacyResult(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) {
-        final Integer degreeCurricularPlanOID = CoordinatedDegreeInfo.findDegreeCurricularPlanID(request);
+        final String degreeCurricularPlanOID = CoordinatedDegreeInfo.findDegreeCurricularPlanID(request);
         final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanOID);
         request.setAttribute("individualCandidacyResultBean", new DegreeCandidacyForGraduatedPersonIndividualCandidacyResultBean(
                 getProcess(request), degreeCurricularPlan.getDegree()));

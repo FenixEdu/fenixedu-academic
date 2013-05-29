@@ -114,7 +114,7 @@ public class PrepareCreateGuide {
                 throw new NonExistingServiceException("O Aluno", null);
             }
 
-            final Integer degreeCurricularPlanID = degreeCurricularPlan.getExternalId();
+            final String degreeCurricularPlanID = degreeCurricularPlan.getExternalId();
             List studentCurricularPlanList =
                     (List) CollectionUtils.select(registration.getStudentCurricularPlans(), new Predicate() {
 

@@ -24,7 +24,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class PrepareEditStudentGroupMembers {
 
-    protected List run(Integer executionCourseID, Integer studentGroupID) throws FenixServiceException {
+    protected List run(String executionCourseID, String studentGroupID) throws FenixServiceException {
         final StudentGroup studentGroup = AbstractDomainObject.fromExternalId(studentGroupID);
         if (studentGroup == null) {
             throw new InvalidArgumentsServiceException();
@@ -51,7 +51,7 @@ public class PrepareEditStudentGroupMembers {
     private static final PrepareEditStudentGroupMembers serviceInstance = new PrepareEditStudentGroupMembers();
 
     @Service
-    public static List runPrepareEditStudentGroupMembers(Integer executionCourseID, Integer studentGroupID)
+    public static List runPrepareEditStudentGroupMembers(String executionCourseID, String studentGroupID)
             throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseID);
         return serviceInstance.run(executionCourseID, studentGroupID);

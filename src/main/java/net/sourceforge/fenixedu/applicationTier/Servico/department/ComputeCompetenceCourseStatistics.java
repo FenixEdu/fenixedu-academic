@@ -24,7 +24,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class ComputeCompetenceCourseStatistics extends ComputeCourseStatistics {
 
-    public List<CompetenceCourseStatisticsDTO> run(Integer departementID, Integer executionPeriodID) throws FenixServiceException {
+    public List<CompetenceCourseStatisticsDTO> run(String departementID, String executionPeriodID) throws FenixServiceException {
         final List<CompetenceCourseStatisticsDTO> results = new ArrayList<CompetenceCourseStatisticsDTO>();
 
         final Department department = AbstractDomainObject.fromExternalId(departementID);
@@ -50,12 +50,14 @@ public class ComputeCompetenceCourseStatistics extends ComputeCourseStatistics {
 
         return results;
     }
+
     // Service Invokers migrated from Berserk
 
     private static final ComputeCompetenceCourseStatistics serviceInstance = new ComputeCompetenceCourseStatistics();
 
     @Service
-    public static List<CompetenceCourseStatisticsDTO> runComputeCompetenceCourseStatistics(Integer departementID, Integer executionPeriodID) throws FenixServiceException  {
+    public static List<CompetenceCourseStatisticsDTO> runComputeCompetenceCourseStatistics(String departementID,
+            String executionPeriodID) throws FenixServiceException {
         return serviceInstance.run(departementID, executionPeriodID);
     }
 

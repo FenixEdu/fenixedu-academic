@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.gesdis;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.gesdis.EditCourseInformationAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -19,9 +18,9 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class EditCourseInformation {
 
-    protected void run(Integer courseReportID, InfoCourseReport infoCourseReport, String newReport) throws FenixServiceException {
+    protected void run(String courseReportID, InfoCourseReport infoCourseReport, String newReport) throws FenixServiceException {
         final CourseReport courseReport;
-        if (courseReportID != 0) {
+        if (courseReportID != null) {
             courseReport = AbstractDomainObject.fromExternalId(courseReportID);
         } else {
             final ExecutionCourse executionCourse =
@@ -42,7 +41,7 @@ public class EditCourseInformation {
     private static final EditCourseInformation serviceInstance = new EditCourseInformation();
 
     @Service
-    public static void runEditCourseInformation(Integer courseReportID, InfoCourseReport infoCourseReport, String newReport)
+    public static void runEditCourseInformation(String courseReportID, InfoCourseReport infoCourseReport, String newReport)
             throws FenixServiceException, NotAuthorizedException {
         EditCourseInformationAuthorizationFilter.instance.execute(courseReportID, infoCourseReport, newReport);
         serviceInstance.run(courseReportID, infoCourseReport, newReport);

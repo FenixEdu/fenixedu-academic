@@ -18,9 +18,8 @@ public class ThesisLibraryCancelOperation extends ThesisLibraryCancelOperation_B
         init(thesis, performer);
     }
 
-    public ThesisLibraryCancelOperation(Integer thesisId, Integer performerId) {
-        this(AbstractDomainObject.fromExternalId(thesisId), (Person) AbstractDomainObject.fromExternalId(
-                performerId));
+    public ThesisLibraryCancelOperation(String thesisId, String performerId) {
+        this(AbstractDomainObject.<Thesis> fromExternalId(thesisId), AbstractDomainObject.<Person> fromExternalId(performerId));
     }
 
     @Override

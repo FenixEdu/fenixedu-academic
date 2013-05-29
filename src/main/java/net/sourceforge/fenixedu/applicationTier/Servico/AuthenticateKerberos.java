@@ -18,7 +18,7 @@ public class AuthenticateKerberos extends Authenticate {
 
     public static abstract class WorkerThread extends Thread implements TransactionalCommand {
 
-        private final Integer personID;
+        private final String personID;
 
         public WorkerThread(final Person person) {
             personID = person.getExternalId();

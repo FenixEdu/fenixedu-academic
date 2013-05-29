@@ -35,8 +35,7 @@ public class UnEnrollGroupShift {
 
     @Checked("RolePredicates.STUDENT_PREDICATE")
     @Service
-    public static Boolean run(Integer studentGroupCode, Integer groupPropertiesCode, String username)
-            throws FenixServiceException {
+    public static Boolean run(String studentGroupCode, String groupPropertiesCode, String username) throws FenixServiceException {
         Grouping groupProperties = AbstractDomainObject.fromExternalId(groupPropertiesCode);
 
         if (groupProperties == null) {

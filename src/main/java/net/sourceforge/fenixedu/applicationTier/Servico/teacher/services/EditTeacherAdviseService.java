@@ -33,7 +33,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class EditTeacherAdviseService {
 
-    protected void run(Teacher teacher, Integer executionPeriodID, final Integer studentNumber, Double percentage,
+    protected void run(Teacher teacher, String executionPeriodID, final Integer studentNumber, Double percentage,
             AdviseType adviseType, RoleType roleType) throws FenixServiceException {
 
         ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodID);
@@ -76,7 +76,7 @@ public class EditTeacherAdviseService {
     private static final EditTeacherAdviseService serviceInstance = new EditTeacherAdviseService();
 
     @Service
-    public static void runEditTeacherAdviseService(Teacher teacher, Integer executionPeriodID, Integer studentNumber,
+    public static void runEditTeacherAdviseService(Teacher teacher, String executionPeriodID, Integer studentNumber,
             Double percentage, AdviseType adviseType, RoleType roleType) throws FenixServiceException, NotAuthorizedException {
         try {
             ScientificCouncilAuthorizationFilter.instance.execute();

@@ -281,7 +281,7 @@ public abstract class RegistrationState extends RegistrationState_Base implement
 
         @Override
         public Object execute() {
-            AbstractDomainObject.fromExternalId(getInteger()).delete();
+            AbstractDomainObject.<RegistrationState> fromExternalId(getString()).delete();
             return null;
         }
     }

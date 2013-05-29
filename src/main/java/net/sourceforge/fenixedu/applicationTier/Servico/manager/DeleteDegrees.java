@@ -20,12 +20,12 @@ public class DeleteDegrees {
     // delete a set of degrees
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
-    public static List run(List degreesInternalIds) throws FenixServiceException {
-        Iterator iter = degreesInternalIds.iterator();
+    public static List<String> run(List<String> degreesInternalIds) throws FenixServiceException {
+        Iterator<String> iter = degreesInternalIds.iterator();
 
         List<String> undeletedDegreesNames = new ArrayList<String>();
         while (iter.hasNext()) {
-            Integer internalId = (Integer) iter.next();
+            String internalId = iter.next();
             Degree degree = AbstractDomainObject.fromExternalId(internalId);
 
             if (degree != null) {

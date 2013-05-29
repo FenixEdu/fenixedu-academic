@@ -38,8 +38,7 @@ public class ReadAdmitedCandidates {
                     || candidateList[i].equals(SituationName.ADMITED_CONDICIONAL_FINALIST_STRING)
                     || candidateList[i].equals(SituationName.ADMITED_CONDICIONAL_OTHER_STRING)) {
 
-                MasterDegreeCandidate masterDegreeCandidate =
-                        AbstractDomainObject.fromExternalId(new Integer(ids[i]));
+                MasterDegreeCandidate masterDegreeCandidate = AbstractDomainObject.fromExternalId(ids[i]);
                 if (!masterDegreeCandidate.getSpecialization().equals(Specialization.STUDENT_CURRICULAR_PLAN_SPECIALIZATION)) {
                     result.add(candidateList[i]);
                 }

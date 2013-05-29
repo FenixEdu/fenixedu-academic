@@ -142,14 +142,12 @@ public class ReadPersonProfessorshipsByExecutionYearAction extends Action {
         return infoPerson;
     }
 
-    List getDetailedProfessorships(IUserView userView, Integer personId, DynaActionForm actionForm, HttpServletRequest request)
+    List getDetailedProfessorships(IUserView userView, String personId, DynaActionForm actionForm, HttpServletRequest request)
             throws FenixServiceException {
 
-        List<Professorship> professorshipList =
-                ((Person) AbstractDomainObject.fromExternalId(personId)).getProfessorships();
+        List<Professorship> professorshipList = ((Person) AbstractDomainObject.fromExternalId(personId)).getProfessorships();
 
-        ExecutionYear executionYear =
-                AbstractDomainObject.fromExternalId(((Integer) actionForm.get("executionYearId")));
+        ExecutionYear executionYear = AbstractDomainObject.fromExternalId(((Integer) actionForm.get("executionYearId")));
         if (executionYear == null) {
             executionYear = ExecutionYear.readCurrentExecutionYear();
         }
@@ -191,7 +189,7 @@ public class ReadPersonProfessorshipsByExecutionYearAction extends Action {
         for (int i = 0; i < detailedProfessorshipList.size(); i++) {
             DetailedProfessorship dps = (DetailedProfessorship) detailedProfessorshipList.get(i);
 
-            Integer executionCourseId = dps.getInfoProfessorship().getInfoExecutionCourse().getExternalId();
+            String executionCourseId = dps.getInfoProfessorship().getInfoExecutionCourse().getExternalId();
             if (dps.getResponsibleFor().booleanValue()) {
                 executionCourseIds.add(executionCourseId);
             }
@@ -202,7 +200,7 @@ public class ReadPersonProfessorshipsByExecutionYearAction extends Action {
             }
         }
 
-        dynaForm.set("executionCourseResponsability", executionCourseIds.toArray(new Integer[] {}));
+        dynaForm.set("executionCourseResponsability", executionCourseIds.toArray(new String[] {}));
         dynaForm.set("hours", hours);
 
     }

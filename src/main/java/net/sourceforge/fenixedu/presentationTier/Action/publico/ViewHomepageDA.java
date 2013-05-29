@@ -242,7 +242,7 @@ public class ViewHomepageDA extends SiteVisualizationDA {
     public ActionForward emailPng(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         String emailId = request.getParameter("email");
-        EmailAddress email = (EmailAddress) AbstractDomainObject.fromExternalId(Integer.parseInt(emailId));
+        EmailAddress email = (EmailAddress) AbstractDomainObject.fromExternalId(emailId);
         if (email != null && StringUtils.isNotEmpty(email.getValue())) {
             final byte[] pngFile = TextPngCreator.createPng("arial", 12, "000000", email.getValue());
             response.setContentType("image/png");
@@ -449,7 +449,7 @@ public class ViewHomepageDA extends SiteVisualizationDA {
             return (Homepage) container;
         } else {
             String homepageID = request.getParameter("homepageID");
-            return (Homepage) AbstractDomainObject.fromExternalId(Integer.valueOf(homepageID));
+            return (Homepage) AbstractDomainObject.fromExternalId(homepageID);
         }
 
     }

@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.credits;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentAdministrativeOfficeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilter;
@@ -19,7 +18,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class EditTeacherServiceNotes {
 
-    protected Boolean run(Teacher teacher, Integer executionPeriodId, String managementFunctionNote, String serviceExemptionNote,
+    protected Boolean run(Teacher teacher, String executionPeriodId, String managementFunctionNote, String serviceExemptionNote,
             String otherNote, String masterDegreeTeachingNote, String functionsAccumulation, String thesisNote, RoleType roleType)
             throws FenixServiceException {
 
@@ -55,7 +54,7 @@ public class EditTeacherServiceNotes {
     private static final EditTeacherServiceNotes serviceInstance = new EditTeacherServiceNotes();
 
     @Service
-    public static Boolean runEditTeacherServiceNotes(Teacher teacher, Integer executionPeriodId, String managementFunctionNote,
+    public static Boolean runEditTeacherServiceNotes(Teacher teacher, String executionPeriodId, String managementFunctionNote,
             String serviceExemptionNote, String otherNote, String masterDegreeTeachingNote, String functionsAccumulation,
             String thesisNote, RoleType roleType) throws FenixServiceException, NotAuthorizedException {
         try {

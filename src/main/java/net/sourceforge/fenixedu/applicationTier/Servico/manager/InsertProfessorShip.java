@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.ManagerAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ScientificCouncilAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.credits.DepartmentInsertProfessorshipAuthorization;
@@ -15,7 +14,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class InsertProfessorShip {
 
-    protected void run(final Integer executionCourseId, final String teacherId, final Boolean responsibleFor, final Double hours)
+    protected void run(final String executionCourseId, final String teacherId, final Boolean responsibleFor, final Double hours)
             throws FenixServiceException {
 
         final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
@@ -35,7 +34,7 @@ public class InsertProfessorShip {
     private static final InsertProfessorShip serviceInstance = new InsertProfessorShip();
 
     @Service
-    public static void runInsertProfessorShip(Integer executionCourseId, String teacherId, Boolean responsibleFor, Double hours)
+    public static void runInsertProfessorShip(String executionCourseId, String teacherId, Boolean responsibleFor, Double hours)
             throws FenixServiceException, NotAuthorizedException {
         try {
             ManagerAuthorizationFilter.instance.execute();
@@ -53,7 +52,7 @@ public class InsertProfessorShip {
     // Service Invokers migrated from Berserk
 
     @Service
-    public static void runInsertProfessorshipByDepartment(Integer executionCourseId, String teacherId, Boolean responsibleFor,
+    public static void runInsertProfessorshipByDepartment(String executionCourseId, String teacherId, Boolean responsibleFor,
             Double hours) throws FenixServiceException, NotAuthorizedException {
         DepartmentInsertProfessorshipAuthorization.instance.execute(teacherId);
         serviceInstance.run(executionCourseId, teacherId, responsibleFor, hours);

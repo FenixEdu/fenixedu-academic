@@ -65,14 +65,13 @@ public abstract class AbstractReadProfessorshipsAction extends Action {
         InfoTeacher infoTeacher = (InfoTeacher) request.getAttribute("infoTeacher");
         if (infoTeacher == null) {
             final IUserView userView = UserView.getUser();
-            infoTeacher =
-                    (InfoTeacher) ReadTeacherByOID.runReadTeacherByOID(Integer.valueOf(dynaForm.get("externalId").toString()));
+            infoTeacher = (InfoTeacher) ReadTeacherByOID.runReadTeacherByOID(dynaForm.get("externalId").toString());
             request.setAttribute("infoTeacher", infoTeacher);
 
         }
         return infoTeacher;
     }
 
-    abstract List getDetailedProfessorships(IUserView userView, Integer teacherId, DynaActionForm actionForm,
+    abstract List getDetailedProfessorships(IUserView userView, String teacherId, DynaActionForm actionForm,
             HttpServletRequest request) throws FenixServiceException;
 }

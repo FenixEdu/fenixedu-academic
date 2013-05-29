@@ -21,8 +21,8 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class CreateProject {
 
-    protected void run(Integer executionCourseID, String name, Date begin, Date end, String description,
-            Boolean onlineSubmissionsAllowed, Integer maxSubmissionsToKeep, Integer groupingID, GradeScale gradeScale,
+    protected void run(String executionCourseID, String name, Date begin, Date end, String description,
+            Boolean onlineSubmissionsAllowed, Integer maxSubmissionsToKeep, String groupingID, GradeScale gradeScale,
             List<Department> departments) throws FenixServiceException {
 
         final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseID);
@@ -30,7 +30,7 @@ public class CreateProject {
             throw new FenixServiceException("error.noExecutionCourse");
         }
 
-        final Grouping grouping = (groupingID != null) ? AbstractDomainObject.fromExternalId(groupingID) : null;
+        final Grouping grouping = (groupingID != null) ? AbstractDomainObject.<Grouping> fromExternalId(groupingID) : null;
 
         final Project project =
                 new Project(name, begin, end, description, onlineSubmissionsAllowed, maxSubmissionsToKeep, grouping,
@@ -43,8 +43,8 @@ public class CreateProject {
     private static final CreateProject serviceInstance = new CreateProject();
 
     @Service
-    public static void runCreateProject(Integer executionCourseID, String name, Date begin, Date end, String description,
-            Boolean onlineSubmissionsAllowed, Integer maxSubmissionsToKeep, Integer groupingID, GradeScale gradeScale,
+    public static void runCreateProject(String executionCourseID, String name, Date begin, Date end, String description,
+            Boolean onlineSubmissionsAllowed, Integer maxSubmissionsToKeep, String groupingID, GradeScale gradeScale,
             List<Department> departments) throws FenixServiceException, NotAuthorizedException {
         try {
             ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseID);

@@ -57,8 +57,8 @@ public class MergeObjectsDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward chooseObjects(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException, IllegalAccessException,
-            NoSuchMethodException, ClassNotFoundException {
+            HttpServletResponse response) throws FenixServiceException, IllegalAccessException, NoSuchMethodException,
+            ClassNotFoundException {
 
         DynaActionForm actionForm = (DynaActionForm) form;
         String classToMerge = (String) actionForm.get("classToMerge");
@@ -193,17 +193,16 @@ public class MergeObjectsDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward mergeProperty(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException, IllegalAccessException,
-            InvocationTargetException, NoSuchMethodException, ClassNotFoundException {
+            HttpServletResponse response) throws FenixServiceException, IllegalAccessException, InvocationTargetException,
+            NoSuchMethodException, ClassNotFoundException {
 
         IUserView userView = UserView.getUser();
 
-        String classToMerge = request.getParameter("classToMerge");
-        Integer object1ExternalId = Integer.valueOf(request.getParameter("object1ExternalId"));
-        Integer object2ExternalId = Integer.valueOf(request.getParameter("object2ExternalId"));
+        String object1ExternalId = request.getParameter("object1ExternalId");
+        String object2ExternalId = request.getParameter("object2ExternalId");
 
-        DomainObject domainObject1 = AbstractDomainObject.fromExternalId(Class.forName(classToMerge), object1ExternalId);
-        DomainObject domainObject2 = AbstractDomainObject.fromExternalId(Class.forName(classToMerge), object2ExternalId);
+        DomainObject domainObject1 = AbstractDomainObject.fromExternalId(object1ExternalId);
+        DomainObject domainObject2 = AbstractDomainObject.fromExternalId(object2ExternalId);
 
         Integer sourceOrder = Integer.valueOf(request.getParameter("source"));
         String slotName = request.getParameter("slotName");
@@ -216,16 +215,16 @@ public class MergeObjectsDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws  FenixServiceException, IllegalAccessException, InvocationTargetException,
-            NoSuchMethodException, ClassNotFoundException {
+            throws FenixServiceException, IllegalAccessException, InvocationTargetException, NoSuchMethodException,
+            ClassNotFoundException {
 
         IUserView userView = UserView.getUser();
-        Integer objectExternalId = Integer.valueOf(request.getParameter("objectExternalId"));
+        String objectExternalId = request.getParameter("objectExternalId");
 
         final String classToMerge = request.getParameter("classToMerge");
 
         try {
-            DeleteObjectByOID.run(Class.forName(classToMerge), objectExternalId);
+            DeleteObjectByOID.run(objectExternalId);
         } catch (DomainException e) {
             e.printStackTrace();
             return chooseObjects(mapping, form, request, response);

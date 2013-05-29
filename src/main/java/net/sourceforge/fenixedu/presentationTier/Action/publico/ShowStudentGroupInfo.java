@@ -39,7 +39,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 
 public class ShowStudentGroupInfo extends Action {
-    public String buildInfo(Integer executionCourseID, String username, String password, String requestURL) {
+    public String buildInfo(String executionCourseID, String username, String password, String requestURL) {
         String result = new String();
         if (username == null) {
             return new String();

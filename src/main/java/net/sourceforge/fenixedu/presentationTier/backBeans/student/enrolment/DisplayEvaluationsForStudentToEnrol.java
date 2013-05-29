@@ -29,6 +29,8 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.collections.comparators.ReverseComparator;
 
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
+
 public class DisplayEvaluationsForStudentToEnrol extends FenixBackingBean {
 
     private final ResourceBundle messages = getResourceBundle("resources/StudentResources");
@@ -42,7 +44,7 @@ public class DisplayEvaluationsForStudentToEnrol extends FenixBackingBean {
     protected static final Integer EXAMS = Integer.valueOf(1);
     protected static final Integer WRITTENTESTS = Integer.valueOf(2);
 
-    private Integer executionPeriodID;
+    private String executionPeriodID;
     protected Integer evaluationType;
     private ExecutionSemester executionSemester;
     private List<SelectItem> executionPeriodsLabels;
@@ -51,7 +53,7 @@ public class DisplayEvaluationsForStudentToEnrol extends FenixBackingBean {
     private List<Evaluation> notEnroledEvaluations;
     private List<Evaluation> enroledEvaluations;
     private List<Evaluation> evaluationsWithoutEnrolmentPeriod;
-    private Map<Integer, List<ExecutionCourse>> executionCourses;
+    private Map<String, List<ExecutionCourse>> executionCourses;
 
     public List<SelectItem> getExecutionPeriodsLabels() {
         if (this.executionPeriodsLabels == null) {
@@ -218,8 +220,8 @@ public class DisplayEvaluationsForStudentToEnrol extends FenixBackingBean {
     }
 
     protected ExecutionSemester getExecutionPeriod() {
-        return executionSemester == null && getExecutionPeriodID() != null ? rootDomainObject
-                .readExecutionSemesterByOID(getExecutionPeriodID()) : executionSemester;
+        return executionSemester == null && getExecutionPeriodID() != null ? AbstractDomainObject
+                .<ExecutionSemester> fromExternalId(getExecutionPeriodID()) : executionSemester;
     }
 
     protected Registration getStudent() {
@@ -234,9 +236,9 @@ public class DisplayEvaluationsForStudentToEnrol extends FenixBackingBean {
         return this.student;
     }
 
-    public Integer getExecutionPeriodID() {
+    public String getExecutionPeriodID() {
         if (getRequestParameter("executionPeriodID") != null) {
-            this.executionPeriodID = Integer.valueOf(getRequestParameter("executionPeriodID"));
+            this.executionPeriodID = getRequestParameter("executionPeriodID");
         }
         if (this.executionPeriodID == null) {
             this.executionPeriodID = getCurrentExecutionPeriod().getExternalId();
@@ -244,7 +246,7 @@ public class DisplayEvaluationsForStudentToEnrol extends FenixBackingBean {
         return executionPeriodID;
     }
 
-    public void setExecutionPeriodID(Integer executionPeriodID) {
+    public void setExecutionPeriodID(String executionPeriodID) {
         this.executionPeriodID = executionPeriodID;
     }
 
@@ -269,14 +271,14 @@ public class DisplayEvaluationsForStudentToEnrol extends FenixBackingBean {
         this.evaluationType = evaluationType;
     }
 
-    public Map<Integer, List<ExecutionCourse>> getExecutionCourses() {
+    public Map<String, List<ExecutionCourse>> getExecutionCourses() {
         if (this.executionCourses == null) {
-            this.executionCourses = new HashMap<Integer, List<ExecutionCourse>>();
+            this.executionCourses = new HashMap<String, List<ExecutionCourse>>();
         }
         return this.executionCourses;
     }
 
-    public void setExecutionCourses(Map<Integer, List<ExecutionCourse>> executionCourses) {
+    public void setExecutionCourses(Map<String, List<ExecutionCourse>> executionCourses) {
         this.executionCourses = executionCourses;
     }
 }

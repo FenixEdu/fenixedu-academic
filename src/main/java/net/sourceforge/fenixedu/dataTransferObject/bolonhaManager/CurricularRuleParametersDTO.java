@@ -9,10 +9,10 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 
 public class CurricularRuleParametersDTO extends DataTranferObject {
 
-    private Integer selectedDegreeModuleID;
-    private Integer contextCourseGroupID;
-    private Integer selectedDegreeID;
-    private Integer selectedDepartmentUnitID;
+    private String selectedDegreeModuleID;
+    private String contextCourseGroupID;
+    private String selectedDegreeID;
+    private String selectedDepartmentUnitID;
     private CurricularPeriodInfoDTO curricularPeriodInfoDTO;
     private Double minimumCredits;
     private Double maximumCredits;
@@ -27,11 +27,11 @@ public class CurricularRuleParametersDTO extends DataTranferObject {
     public CurricularRuleParametersDTO() {
     }
 
-    public Integer getContextCourseGroupID() {
+    public String getContextCourseGroupID() {
         return contextCourseGroupID;
     }
 
-    public void setContextCourseGroupID(Integer contextCourseGroup) {
+    public void setContextCourseGroupID(String contextCourseGroup) {
         this.contextCourseGroupID = contextCourseGroup;
     }
 
@@ -59,11 +59,11 @@ public class CurricularRuleParametersDTO extends DataTranferObject {
         this.minimumCredits = minDouble;
     }
 
-    public Integer getSelectedDegreeModuleID() {
+    public String getSelectedDegreeModuleID() {
         return selectedDegreeModuleID;
     }
 
-    public void setSelectedDegreeModuleID(Integer precedenceDegreeModule) {
+    public void setSelectedDegreeModuleID(String precedenceDegreeModule) {
         this.selectedDegreeModuleID = precedenceDegreeModule;
     }
 
@@ -83,19 +83,19 @@ public class CurricularRuleParametersDTO extends DataTranferObject {
         this.maximumLimit = maximumLimit;
     }
 
-    public Integer getSelectedDegreeID() {
+    public String getSelectedDegreeID() {
         return selectedDegreeID;
     }
 
-    public void setSelectedDegreeID(Integer selectedDegreeID) {
+    public void setSelectedDegreeID(String selectedDegreeID) {
         this.selectedDegreeID = selectedDegreeID;
     }
 
-    public Integer getSelectedDepartmentUnitID() {
+    public String getSelectedDepartmentUnitID() {
         return selectedDepartmentUnitID;
     }
 
-    public void setSelectedDepartmentUnitID(Integer departmentUnitID) {
+    public void setSelectedDepartmentUnitID(String departmentUnitID) {
         this.selectedDepartmentUnitID = departmentUnitID;
     }
 

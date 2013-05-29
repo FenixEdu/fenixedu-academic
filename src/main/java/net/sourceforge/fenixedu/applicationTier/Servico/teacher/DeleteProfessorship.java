@@ -22,7 +22,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class DeleteProfessorship {
 
-    protected Boolean run(Integer infoExecutionCourseCode, Integer teacherCode) throws FenixServiceException {
+    protected Boolean run(String infoExecutionCourseCode, String teacherCode) throws FenixServiceException {
 
         Teacher teacher = AbstractDomainObject.fromExternalId(teacherCode);
         ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(infoExecutionCourseCode);
@@ -66,12 +66,14 @@ public class DeleteProfessorship {
             super(key);
         }
     }
+
     // Service Invokers migrated from Berserk
 
     private static final DeleteProfessorship serviceInstance = new DeleteProfessorship();
 
     @Service
-    public static Boolean runDeleteProfessorship(Integer infoExecutionCourseCode, Integer teacherCode) throws FenixServiceException  , NotAuthorizedException {
+    public static Boolean runDeleteProfessorship(String infoExecutionCourseCode, String teacherCode)
+            throws FenixServiceException, NotAuthorizedException {
         DeleteProfessorshipAuthorizationFilter.instance.execute(infoExecutionCourseCode, teacherCode);
         return serviceInstance.run(infoExecutionCourseCode, teacherCode);
     }

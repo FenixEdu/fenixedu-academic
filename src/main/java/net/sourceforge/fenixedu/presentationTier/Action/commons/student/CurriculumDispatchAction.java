@@ -70,7 +70,7 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
 
         Registration registration = null;
 
-        final Integer registrationOID = getRegistrationOID(request);
+        final String registrationOID = getRegistrationOID(request);
         final Student loggedStudent = getUserView(request).getPerson().getStudent();
 
         if (registrationOID != null) {
@@ -115,14 +115,13 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
         return result;
     }
 
-    private Integer getRegistrationOID(HttpServletRequest request) {
+    private String getRegistrationOID(HttpServletRequest request) {
         String registrationOID = request.getParameter("registrationOID");
-        if (registrationOID == null || !StringUtils.isNumeric(registrationOID)) {
+        if (registrationOID == null) {
             registrationOID = (String) request.getAttribute("registrationOID");
         }
 
-        return (registrationOID == null || registrationOID.equals("") || !StringUtils.isNumeric(registrationOID)) ? null : Integer
-                .valueOf(registrationOID);
+        return (registrationOID == null || registrationOID.equals("")) ? null : registrationOID;
     }
 
     public ActionForward prepareReadByStudentNumber(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -136,8 +135,7 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
         Student student = getStudent(actionForm);
         if (student != null) {
             if (degreeCurricularPlanId != null && degreeCurricularPlanId > 0) {
-                DegreeCurricularPlan degreeCurricularPlan =
-                        AbstractDomainObject.fromExternalId(degreeCurricularPlanId);
+                DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanId);
                 registration = student.readRegistrationByDegreeCurricularPlan(degreeCurricularPlan);
             } else {
                 final List<Registration> registrations = student.getRegistrations();
@@ -299,7 +297,7 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward getCurriculumForCoordinator(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws ExistingActionException,  FenixServiceException {
+            HttpServletResponse response) throws ExistingActionException, FenixServiceException {
 
         // get and set the degreeCurricularPlanID from the request and onto the
         // request
@@ -311,11 +309,11 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
 
         final String studentCurricularPlanID = getStudentCPID(request, (DynaActionForm) form);
 
-        Integer executionDegreeID = getExecutionDegree(request);
+        String executionDegreeID = getExecutionDegree(request);
         List result = null;
         try {
             // TODO check
-            result = ReadStudentCurriculum.runReadStudentCurriculum(executionDegreeID, Integer.valueOf(studentCurricularPlanID));
+            result = ReadStudentCurriculum.runReadStudentCurriculum(executionDegreeID, studentCurricularPlanID);
         } catch (NotAuthorizedException e) {
             return mapping.findForward("NotAuthorized");
         }
@@ -336,7 +334,7 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
         InfoStudentCurricularPlan infoStudentCurricularPlan = null;
         try {
 
-            infoStudentCurricularPlan = ReadStudentCurricularPlan.run(Integer.valueOf(studentCurricularPlanID));
+            infoStudentCurricularPlan = ReadStudentCurricularPlan.run(studentCurricularPlanID);
         } catch (ExistingServiceException e) {
             throw new ExistingActionException(e);
         }
@@ -347,19 +345,14 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
         return mapping.findForward("ShowStudentCurriculum");
     }
 
-    private Integer getExecutionDegree(HttpServletRequest request) {
-        Integer executionDegreeId = null;
-
+    private String getExecutionDegree(HttpServletRequest request) {
         String executionDegreeIdString = request.getParameter("executionDegreeId");
         if (executionDegreeIdString == null) {
             executionDegreeIdString = (String) request.getAttribute("executionDegreeId");
         }
-        if (executionDegreeIdString != null) {
-            executionDegreeId = Integer.valueOf(executionDegreeIdString);
-        }
-        request.setAttribute("executionDegreeId", executionDegreeId);
+        request.setAttribute("executionDegreeId", executionDegreeIdString);
 
-        return executionDegreeId;
+        return executionDegreeIdString;
     }
 
 }

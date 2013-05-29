@@ -24,7 +24,7 @@ public class ReadActiveMasterDegreeThesisDataVersionsByDegreeCurricularPlan {
 
     @Checked("RolePredicates.COORDINATOR_PREDICATE")
     @Service
-    public static List run(Integer degreeCurricularPlanID) throws FenixServiceException {
+    public static List run(String degreeCurricularPlanID) throws FenixServiceException {
 
         DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
 

@@ -80,7 +80,7 @@ public class TransferCurricularCourse {
 
         deleteShiftStudents(sourceExecutionCourse, curricularCourse);
 
-        Set<Integer> transferedStudents = new HashSet<Integer>();
+        Set<String> transferedStudents = new HashSet<String>();
         transferAttends(destinationExecutionCourseId, sourceExecutionCourse, destinationExecutionCourse, curricularCourse,
                 transferedStudents);
 
@@ -96,8 +96,8 @@ public class TransferCurricularCourse {
      * @param transferedStudents
      * @throws ExcepcaoPersistencia
      */
-    private static void transferAttends(Integer destinationExecutionCourseId, ExecutionCourse sourceExecutionCourse,
-            ExecutionCourse destinationExecutionCourse, CurricularCourse curricularCourse, Set<Integer> transferedStudents) {
+    private static void transferAttends(String destinationExecutionCourseId, ExecutionCourse sourceExecutionCourse,
+            ExecutionCourse destinationExecutionCourse, CurricularCourse curricularCourse, Set<String> transferedStudents) {
         for (Attends attend : sourceExecutionCourse.getAttends()) {
             Enrolment enrollment = attend.getEnrolment();
             final Registration registration = attend.getRegistration();

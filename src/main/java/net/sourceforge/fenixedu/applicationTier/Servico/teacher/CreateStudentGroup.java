@@ -34,8 +34,8 @@ public class CreateStudentGroup {
         return studentList;
     }
 
-    protected Boolean run(Integer executionCourseID, Integer groupNumber, Integer groupingID, Integer shiftID,
-            List studentUserNames) throws FenixServiceException {
+    protected Boolean run(String executionCourseID, Integer groupNumber, String groupingID, String shiftID, List studentUserNames)
+            throws FenixServiceException {
         final Grouping grouping = AbstractDomainObject.fromExternalId(groupingID);
 
         if (grouping == null) {
@@ -56,8 +56,8 @@ public class CreateStudentGroup {
     private static final CreateStudentGroup serviceInstance = new CreateStudentGroup();
 
     @Service
-    public static Boolean runCreateStudentGroup(Integer executionCourseID, Integer groupNumber, Integer groupingID,
-            Integer shiftID, List studentUserNames) throws FenixServiceException, NotAuthorizedException {
+    public static Boolean runCreateStudentGroup(String executionCourseID, Integer groupNumber, String groupingID, String shiftID,
+            List studentUserNames) throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseID);
         return serviceInstance.run(executionCourseID, groupNumber, groupingID, shiftID, studentUserNames);
     }

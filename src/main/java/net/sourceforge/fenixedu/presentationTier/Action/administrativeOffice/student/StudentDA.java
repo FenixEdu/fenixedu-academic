@@ -34,7 +34,7 @@ public class StudentDA extends StudentRegistrationDA {
 
     private Student getAndSetStudent(final HttpServletRequest request) {
         final String studentID = getFromRequest(request, "studentID").toString();
-        final Student student = AbstractDomainObject.fromExternalId(Integer.valueOf(studentID));
+        final Student student = AbstractDomainObject.fromExternalId(studentID);
         request.setAttribute("student", student);
         request.setAttribute("choosePhdOrRegistration", new ChooseRegistrationOrPhd(student));
         return student;
@@ -55,7 +55,7 @@ public class StudentDA extends StudentRegistrationDA {
     }
 
     public ActionForward editPersonalData(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         getAndSetStudent(request);
         try {
             executeFactoryMethod();

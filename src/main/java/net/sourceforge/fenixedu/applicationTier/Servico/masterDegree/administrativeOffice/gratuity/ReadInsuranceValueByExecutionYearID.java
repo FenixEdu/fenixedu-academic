@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity;
 
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoInsuranceValue;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -13,7 +12,7 @@ public class ReadInsuranceValueByExecutionYearID {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
-    public static InfoInsuranceValue run(Integer executionYearID) throws FenixServiceException {
+    public static InfoInsuranceValue run(String executionYearID) throws FenixServiceException {
         ExecutionYear executionYear = AbstractDomainObject.fromExternalId(executionYearID);
         InsuranceValue insuranceValue = executionYear.getInsuranceValue();
         if (insuranceValue != null) {

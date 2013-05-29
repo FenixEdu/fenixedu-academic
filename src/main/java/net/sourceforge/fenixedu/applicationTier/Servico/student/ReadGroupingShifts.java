@@ -33,7 +33,7 @@ public class ReadGroupingShifts {
 
     @Checked("RolePredicates.STUDENT_PREDICATE")
     @Service
-    public static InfoSiteShifts run(Integer groupingCode, Integer studentGroupCode) throws FenixServiceException {
+    public static InfoSiteShifts run(String groupingCode, String studentGroupCode) throws FenixServiceException {
 
         InfoSiteShifts infoSiteShifts = new InfoSiteShifts();
         List infoShifts = new ArrayList();

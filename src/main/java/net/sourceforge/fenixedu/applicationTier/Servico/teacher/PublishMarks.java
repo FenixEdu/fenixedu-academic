@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -30,7 +29,7 @@ public class PublishMarks {
 
     private final static String OPTIMUS_NETWORK_PREFIX = "93";
 
-    protected Object run(Integer executionCourseCode, Integer evaluationCode, String publishmentMessage, Boolean sendSMS,
+    protected Object run(String executionCourseCode, String evaluationCode, String publishmentMessage, Boolean sendSMS,
             String announcementTitle) throws ExcepcaoInexistente, FenixServiceException {
 
         final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseCode);
@@ -84,7 +83,7 @@ public class PublishMarks {
     private static final PublishMarks serviceInstance = new PublishMarks();
 
     @Service
-    public static Object runPublishMarks(Integer executionCourseCode, Integer evaluationCode, String publishmentMessage,
+    public static Object runPublishMarks(String executionCourseCode, String evaluationCode, String publishmentMessage,
             Boolean sendSMS, String announcementTitle) throws ExcepcaoInexistente, FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseCode);
         return serviceInstance.run(executionCourseCode, evaluationCode, publishmentMessage, sendSMS, announcementTitle);

@@ -15,18 +15,18 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class SaveTeachersBody {
 
-    protected Boolean run(final List responsibleTeachersIds, final List<Integer> professorShipTeachersIds,
-            final Integer executionCourseId) throws FenixServiceException {
+    protected Boolean run(final List responsibleTeachersIds, final List<String> professorShipTeachersIds,
+            final String executionCourseId) throws FenixServiceException {
 
         final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
 
-        final List<Integer> auxProfessorshipTeacherIDs = new ArrayList<Integer>(professorShipTeachersIds);
+        final List<String> auxProfessorshipTeacherIDs = new ArrayList<String>(professorShipTeachersIds);
 
         final List<Professorship> professorships = executionCourse.getProfessorships();
         for (int i = 0; i < professorships.size(); i++) {
             final Professorship professorship = professorships.get(i);
             final Teacher teacher = professorship.getTeacher();
-            final Integer teacherID = teacher.getExternalId();
+            final String teacherID = teacher.getExternalId();
             if (auxProfessorshipTeacherIDs.contains(teacherID)) {
                 if (responsibleTeachersIds.contains(teacherID) && !professorship.getResponsibleFor()) {
                     professorship.setResponsibleFor(Boolean.TRUE);
@@ -40,7 +40,7 @@ public class SaveTeachersBody {
             }
         }
 
-        for (final Integer teacherID : auxProfessorshipTeacherIDs) {
+        for (final String teacherID : auxProfessorshipTeacherIDs) {
             final Teacher teacher = AbstractDomainObject.fromExternalId(teacherID);
             final Boolean isResponsible = Boolean.valueOf(responsibleTeachersIds.contains(teacherID));
             Professorship.create(isResponsible, executionCourse, teacher, null);
@@ -54,8 +54,8 @@ public class SaveTeachersBody {
     private static final SaveTeachersBody serviceInstance = new SaveTeachersBody();
 
     @Service
-    public static Boolean runSaveTeachersBody(List responsibleTeachersIds, List<Integer> professorShipTeachersIds,
-            Integer executionCourseId) throws FenixServiceException, NotAuthorizedException {
+    public static Boolean runSaveTeachersBody(List responsibleTeachersIds, List<String> professorShipTeachersIds,
+            String executionCourseId) throws FenixServiceException, NotAuthorizedException {
         try {
             ManagerAuthorizationFilter.instance.execute();
             return serviceInstance.run(responsibleTeachersIds, professorShipTeachersIds, executionCourseId);

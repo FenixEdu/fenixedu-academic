@@ -14,9 +14,9 @@ public class SeminariesCoordinatorFilter {
 
     public static final SeminariesCoordinatorFilter instance = new SeminariesCoordinatorFilter();
 
-    public void execute(Integer executionDegreeCode, Integer studentCurricularPlanID) throws NotAuthorizedException {
+    public void execute(String executionDegreeCode, String studentCurricularPlanID) throws NotAuthorizedException {
         IUserView id = AccessControl.getUserView();
-        Integer SCPIDINternal = studentCurricularPlanID;
+        String SCPIDINternal = studentCurricularPlanID;
 
         boolean seminaryCandidate = false;
         if (SCPIDINternal != null) {
@@ -29,7 +29,7 @@ public class SeminariesCoordinatorFilter {
         }
     }
 
-    public boolean doesThisSCPBelongToASeminaryCandidate(Integer SCPIDInternal) {
+    public boolean doesThisSCPBelongToASeminaryCandidate(String SCPIDInternal) {
         StudentCurricularPlan scp = AbstractDomainObject.fromExternalId(SCPIDInternal);
         if (scp != null) {
             List<SeminaryCandidacy> candidacies = scp.getRegistration().getAssociatedCandidancies();

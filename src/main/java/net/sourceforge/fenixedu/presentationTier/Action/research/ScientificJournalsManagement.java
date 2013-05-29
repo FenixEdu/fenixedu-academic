@@ -19,7 +19,7 @@ public class ScientificJournalsManagement extends FenixDispatchAction {
 
         String journalId = request.getParameter("journalId");
         if (journalId != null) {
-            ScientificJournal scientificJournal = AbstractDomainObject.fromExternalId(Integer.valueOf(journalId));
+            ScientificJournal scientificJournal = AbstractDomainObject.fromExternalId(journalId);
             request.setAttribute("journal", scientificJournal);
         }
 

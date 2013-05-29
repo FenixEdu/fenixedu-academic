@@ -138,7 +138,7 @@ public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProce
     }
 
     private Degree getDegree(final String degreeId) {
-        return AbstractDomainObject.fromExternalId(Integer.valueOf(degreeId));
+        return AbstractDomainObject.fromExternalId(degreeId);
     }
 
     public ActionForward prepareExecuteEditCandidacyPersonalInformation(ActionMapping mapping, ActionForm actionForm,

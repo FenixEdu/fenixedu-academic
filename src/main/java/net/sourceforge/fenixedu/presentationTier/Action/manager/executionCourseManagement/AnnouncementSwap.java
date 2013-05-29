@@ -23,8 +23,8 @@ public class AnnouncementSwap extends FenixDispatchAction {
             HttpServletResponse response) {
 
         Boolean chooseNotLinked = Boolean.valueOf(request.getParameter("executionCoursesNotLinked"));
-        Integer executionCourseId = Integer.valueOf(request.getParameter("executionCourseId"));
-        Integer executionPeriodId = Integer.valueOf(request.getParameter("executionPeriodId"));
+        String executionCourseId = request.getParameter("executionCourseId");
+        String executionPeriodId = request.getParameter("executionPeriodId");
 
         ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
         ExecutionSemester executionPeriod = AbstractDomainObject.fromExternalId(executionPeriodId);
@@ -36,8 +36,8 @@ public class AnnouncementSwap extends FenixDispatchAction {
         sessionBean.setChooseNotLinked(chooseNotLinked);
 
         if (!chooseNotLinked) {
-            Integer executionDegreeId = Integer.valueOf(request.getParameter("executionDegreeId"));
-            Integer curricularYearId = Integer.valueOf(request.getParameter("curYearId"));
+            String executionDegreeId = request.getParameter("executionDegreeId");
+            String curricularYearId = request.getParameter("curYearId");
 
             ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeId);
             CurricularYear curYear = AbstractDomainObject.fromExternalId(curricularYearId);

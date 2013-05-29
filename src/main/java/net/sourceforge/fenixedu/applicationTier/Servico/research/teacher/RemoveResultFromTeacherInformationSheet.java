@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.research.teacher;
 
-
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
@@ -12,7 +11,7 @@ public class RemoveResultFromTeacherInformationSheet {
 
     @Checked("ResultPredicates.author")
     @Service
-    public static void run(Teacher teacher, Integer resultId) throws DomainException {
+    public static void run(Teacher teacher, String resultId) throws DomainException {
         ResearchResult result = AbstractDomainObject.fromExternalId(resultId);
         teacher.removeFromTeacherInformationSheet(result);
     }

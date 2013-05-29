@@ -21,7 +21,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYear {
 
     @Service
-    public static List run(Integer executionDegreeId, Integer executionPeriodId, Integer curricularYearInt)
+    public static List run(String executionDegreeId, String executionPeriodId, Integer curricularYearInt)
             throws FenixServiceException {
 
         if (executionPeriodId == null) {
@@ -51,7 +51,7 @@ public class ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYe
     }
 
     private static ExecutionDegree findExecutionDegreeByID(final ExecutionSemester executionSemester,
-            final Integer executionDegreeId) {
+            final String executionDegreeId) {
         final ExecutionYear executionYear = executionSemester.getExecutionYear();
         for (final ExecutionDegree executionDegree : executionYear.getExecutionDegreesSet()) {
             if (executionDegree.getExternalId().equals(executionDegreeId)) {

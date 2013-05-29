@@ -5,7 +5,6 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -30,7 +29,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class VerifyStudentGroupAtributes {
 
-    private static boolean checkGroupStudentEnrolment(Integer studentGroupCode, String username) throws FenixServiceException {
+    private static boolean checkGroupStudentEnrolment(String studentGroupCode, String username) throws FenixServiceException {
         boolean result = false;
 
         StudentGroup studentGroup = AbstractDomainObject.fromExternalId(studentGroupCode);
@@ -60,7 +59,7 @@ public class VerifyStudentGroupAtributes {
         return true;
     }
 
-    private static boolean checkGroupEnrolment(Integer groupPropertiesCode, Integer shiftCode, String username)
+    private static boolean checkGroupEnrolment(String groupPropertiesCode, String shiftCode, String username)
             throws FenixServiceException {
         boolean result = false;
         final Grouping groupProperties = AbstractDomainObject.fromExternalId(groupPropertiesCode);
@@ -91,7 +90,7 @@ public class VerifyStudentGroupAtributes {
         return true;
     }
 
-    private static boolean checkUnEnrollStudentInGroup(Integer studentGroupCode, String username) throws FenixServiceException {
+    private static boolean checkUnEnrollStudentInGroup(String studentGroupCode, String username) throws FenixServiceException {
 
         boolean result = false;
 
@@ -121,7 +120,7 @@ public class VerifyStudentGroupAtributes {
         return true;
     }
 
-    private static boolean checkEditStudentGroupShift(Integer studentGroupCode, Integer groupPropertiesCode, String username)
+    private static boolean checkEditStudentGroupShift(String studentGroupCode, String groupPropertiesCode, String username)
             throws FenixServiceException {
         boolean result = false;
 
@@ -154,7 +153,7 @@ public class VerifyStudentGroupAtributes {
         return true;
     }
 
-    private static boolean checkEnrollStudentGroupShift(Integer studentGroupCode, Integer groupPropertiesCode, String username)
+    private static boolean checkEnrollStudentGroupShift(String studentGroupCode, String groupPropertiesCode, String username)
             throws FenixServiceException {
         boolean result = false;
         Grouping groupProperties = AbstractDomainObject.fromExternalId(groupPropertiesCode);
@@ -194,7 +193,7 @@ public class VerifyStudentGroupAtributes {
 
     @Checked("RolePredicates.STUDENT_PREDICATE")
     @Service
-    public static Boolean run(Integer groupPropertiesCode, Integer shiftCode, Integer studentGroupCode, String username,
+    public static Boolean run(String groupPropertiesCode, String shiftCode, String studentGroupCode, String username,
             Integer option) throws FenixServiceException {
 
         boolean result = false;

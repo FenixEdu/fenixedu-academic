@@ -33,7 +33,7 @@ public class ReadShiftsByExecutionCourseIDAuthorizationFilter extends Filtro {
     public ReadShiftsByExecutionCourseIDAuthorizationFilter() {
     }
 
-    public void execute(Integer executionCourseID) throws NotAuthorizedException {
+    public void execute(String executionCourseID) throws NotAuthorizedException {
         IUserView id = AccessControl.getUserView();
         if ((((id != null && id.getRoleTypes() != null && !containsRoleType(id.getRoleTypes()))
                 || (id != null && id.getRoleTypes() != null && !hasPrivilege(id, executionCourseID)) || (id == null) || (id
@@ -58,7 +58,7 @@ public class ReadShiftsByExecutionCourseIDAuthorizationFilter extends Filtro {
      * @param argumentos
      * @return
      */
-    private boolean hasPrivilege(IUserView id, Integer executionCourseID) {
+    private boolean hasPrivilege(IUserView id, String executionCourseID) {
         if (id.hasRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER)) {
             return true;
         }
@@ -96,7 +96,7 @@ public class ReadShiftsByExecutionCourseIDAuthorizationFilter extends Filtro {
         return false;
     }
 
-    private boolean lecturesExecutionCourse(IUserView id, Integer executionCourseID) {
+    private boolean lecturesExecutionCourse(IUserView id, String executionCourseID) {
         if (executionCourseID == null) {
             return false;
         }

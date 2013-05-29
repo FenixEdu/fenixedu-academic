@@ -9,7 +9,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.PerformanceGridTableDTO;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.StudentsPerformanceInfoBean;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Tutorship;
@@ -26,7 +28,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/viewStudentsPerformanceGrid", module = "teacher")
 @Forwards(tileProperties = @Tile(navLocal = "/teacher/commons/navigationBarIndex.jsp"), value = { @Forward(
@@ -72,10 +73,9 @@ public class ViewStudentsPerformanceGridDispatchAction extends StudentsPerforman
 
     protected StudentsPerformanceInfoBean generateStudentsPerformanceBeanFromRequest(HttpServletRequest request, Person person) {
         StudentsPerformanceInfoBean bean = StudentsPerformanceInfoBean.create(person.getTeacher());
-        bean.setDegree(AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "degreeOID")));
-        bean.setStudentsEntryYear(AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "entryYearOID")));
-        bean.setCurrentMonitoringYear(rootDomainObject
-                .readExecutionYearByOID(getIntegerFromRequest(request, "monitoringYearOID")));
+        bean.setDegree((Degree) getDomainObject(request, "degreeOID"));
+        bean.setStudentsEntryYear((ExecutionYear) getDomainObject(request, "entryYearOID"));
+        bean.setCurrentMonitoringYear((ExecutionYear) getDomainObject(request, "monitoringYearOID"));
         request.setAttribute("performanceGridFiltersBean", bean);
         return bean;
     }

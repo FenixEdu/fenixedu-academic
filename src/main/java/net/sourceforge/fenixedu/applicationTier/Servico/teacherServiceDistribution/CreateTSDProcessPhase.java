@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.EmployeeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilter;
@@ -11,7 +10,7 @@ import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class CreateTSDProcessPhase {
-    protected TSDProcessPhase run(Integer tsdProcessId, String name) {
+    protected TSDProcessPhase run(String tsdProcessId, String name) {
         TSDProcess tsdProcess = AbstractDomainObject.fromExternalId(tsdProcessId);
 
         return tsdProcess.createTSDProcessPhase(name);
@@ -22,7 +21,7 @@ public class CreateTSDProcessPhase {
     private static final CreateTSDProcessPhase serviceInstance = new CreateTSDProcessPhase();
 
     @Service
-    public static TSDProcessPhase runCreateTSDProcessPhase(Integer tsdProcessId, String name) throws NotAuthorizedException {
+    public static TSDProcessPhase runCreateTSDProcessPhase(String tsdProcessId, String name) throws NotAuthorizedException {
         try {
             DepartmentMemberAuthorizationFilter.instance.execute();
             return serviceInstance.run(tsdProcessId, name);

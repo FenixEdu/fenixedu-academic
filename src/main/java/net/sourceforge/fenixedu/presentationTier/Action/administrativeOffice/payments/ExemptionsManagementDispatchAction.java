@@ -55,7 +55,6 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/exemptionsManagement", module = "academicAdministration", formBeanClass = FenixActionForm.class)
 @Forwards({
@@ -274,7 +273,7 @@ public class ExemptionsManagementDispatchAction extends PaymentsManagementDispat
     }
 
     private Exemption getExemption(final HttpServletRequest request) {
-        return AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "exemptionId"));
+        return getDomainObject(request, "exemptionId");
     }
 
     public ActionForward prepareCreateImprovementOfApprovedEnrolmentPenaltyExemption(ActionMapping mapping, ActionForm form,

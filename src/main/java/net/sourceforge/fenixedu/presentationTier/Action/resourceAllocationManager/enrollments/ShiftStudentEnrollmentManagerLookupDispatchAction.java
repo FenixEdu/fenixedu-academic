@@ -81,8 +81,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ShiftStudentEnrollmentManagerLookupDispatchAction extends TransactionalLookupDispatchAction {
 
     private Registration getAndSetRegistration(final HttpServletRequest request) {
-        final Registration registration =
-                AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "registrationOID"));
+        final Registration registration = AbstractDomainObject.fromExternalId(getStringFromRequest(request, "registrationOID"));
         if (!registration.getPerson().getStudent().getRegistrationsToEnrolInShiftByStudent().contains(registration)) {
             return null;
         }
@@ -166,7 +165,7 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
     }
 
     public ActionForward proceedToShiftEnrolment(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         checkParameter(request);
         final Integer classIdSelected = readClassSelected(request);
@@ -242,7 +241,7 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
 
     private ExecutionCourse getExecutionCourse(HttpServletRequest request) {
         if (!StringUtils.isEmpty(request.getParameter("executionCourseID"))) {
-            return AbstractDomainObject.fromExternalId(Integer.valueOf(request.getParameter("executionCourseID")));
+            return AbstractDomainObject.fromExternalId(request.getParameter("executionCourseID"));
         } else {
             return null;
         }

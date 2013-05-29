@@ -28,7 +28,7 @@ public class ReadStudentTest {
 
     @Checked("RolePredicates.STUDENT_PREDICATE")
     @Service
-    public static List<StudentTestQuestion> run(Registration registration, Integer distributedTestId, Boolean log, String path)
+    public static List<StudentTestQuestion> run(Registration registration, String distributedTestId, Boolean log, String path)
             throws FenixServiceException {
         final DistributedTest distributedTest = AbstractDomainObject.fromExternalId(distributedTestId);
         return run(registration, distributedTest, log, path);
@@ -74,7 +74,7 @@ public class ReadStudentTest {
     // Service Invokers migrated from Berserk
 
     @Service
-    public static List<StudentTestQuestion> runReadStudentTestForCorrection(Registration registration, Integer distributedTestId,
+    public static List<StudentTestQuestion> runReadStudentTestForCorrection(Registration registration, String distributedTestId,
             Boolean log, String path) throws FenixServiceException, NotAuthorizedException {
         ReadStudentTestForCorrectionFilter.instance.execute(distributedTestId);
         return run(registration, distributedTestId, log, path);
@@ -90,7 +90,7 @@ public class ReadStudentTest {
     // Service Invokers migrated from Berserk
 
     @Service
-    public static List<StudentTestQuestion> runReadStudentTestToDo(Registration registration, Integer distributedTestId,
+    public static List<StudentTestQuestion> runReadStudentTestToDo(Registration registration, String distributedTestId,
             Boolean log, String path) throws FenixServiceException, NotAuthorizedException {
         ReadStudentTestToDoFilter.instance.execute(distributedTestId);
         return run(registration, distributedTestId, log, path);

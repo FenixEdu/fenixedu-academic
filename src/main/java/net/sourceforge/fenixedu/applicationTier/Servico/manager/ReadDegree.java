@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
@@ -23,7 +22,7 @@ public class ReadDegree {
      */
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
-    public static InfoDegree run(Integer externalId) throws FenixServiceException {
+    public static InfoDegree run(String externalId) throws FenixServiceException {
         final Degree degree = AbstractDomainObject.fromExternalId(externalId);
 
         if (degree == null) {

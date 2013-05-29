@@ -63,7 +63,7 @@ public class ReadExamsByDate {
     private static List<InfoDegree> readInfoDegrees(final Exam exam, InfoViewExamByDayAndShift viewExamByDayAndShift) {
 
         final List<InfoDegree> result = new ArrayList<InfoDegree>();
-        final Set<Integer> curricularCourseIDs = new HashSet<Integer>();
+        final Set<String> curricularCourseIDs = new HashSet<String>();
 
         // Select an ExecutionPeriod from any ExecutionCourses
         final ExecutionSemester executionSemester = exam.getAssociatedExecutionCourses().get(0).getExecutionPeriod();

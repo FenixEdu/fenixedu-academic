@@ -29,7 +29,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class DeleteGroupingMembersByExecutionCourseID {
 
-    protected Boolean run(Integer executionCourseCode, Integer groupingCode) throws FenixServiceException {
+    protected Boolean run(String executionCourseCode, String groupingCode) throws FenixServiceException {
         Grouping grouping = AbstractDomainObject.fromExternalId(groupingCode);
 
         if (grouping == null) {
@@ -98,7 +98,7 @@ public class DeleteGroupingMembersByExecutionCourseID {
             new DeleteGroupingMembersByExecutionCourseID();
 
     @Service
-    public static Boolean runDeleteGroupingMembersByExecutionCourseID(Integer executionCourseCode, Integer groupingCode)
+    public static Boolean runDeleteGroupingMembersByExecutionCourseID(String executionCourseCode, String groupingCode)
             throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseCode);
         return serviceInstance.run(executionCourseCode, groupingCode);

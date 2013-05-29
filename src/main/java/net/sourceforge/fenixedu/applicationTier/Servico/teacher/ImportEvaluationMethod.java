@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -9,7 +8,7 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ImportEvaluationMethod {
 
-    protected void run(Integer executionCourseToId, ExecutionCourse executionCourseTo, ExecutionCourse executionCourseFrom,
+    protected void run(String executionCourseToId, ExecutionCourse executionCourseTo, ExecutionCourse executionCourseFrom,
             Shift shift) {
         if (executionCourseTo != null && executionCourseFrom != null) {
             executionCourseTo.copyEvaluationMethodFrom(executionCourseFrom);
@@ -21,7 +20,7 @@ public class ImportEvaluationMethod {
     private static final ImportEvaluationMethod serviceInstance = new ImportEvaluationMethod();
 
     @Service
-    public static void runImportEvaluationMethod(Integer executionCourseToId, ExecutionCourse executionCourseTo,
+    public static void runImportEvaluationMethod(String executionCourseToId, ExecutionCourse executionCourseTo,
             ExecutionCourse executionCourseFrom, Shift shift) throws NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseToId);
         serviceInstance.run(executionCourseToId, executionCourseTo, executionCourseFrom, shift);

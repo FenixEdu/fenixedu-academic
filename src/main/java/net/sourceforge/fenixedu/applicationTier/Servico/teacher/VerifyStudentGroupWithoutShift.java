@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -22,8 +21,8 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class VerifyStudentGroupWithoutShift {
 
-    protected Integer run(Integer executionCourseCode, Integer studentGroupCode, Integer groupPropertiesCode,
-            String shiftCodeString) throws FenixServiceException {
+    protected Integer run(String executionCourseCode, String studentGroupCode, String groupPropertiesCode, String shiftCodeString)
+            throws FenixServiceException {
         Grouping groupProperties = AbstractDomainObject.fromExternalId(groupPropertiesCode);
 
         if (groupProperties == null) {
@@ -80,8 +79,8 @@ public class VerifyStudentGroupWithoutShift {
     private static final VerifyStudentGroupWithoutShift serviceInstance = new VerifyStudentGroupWithoutShift();
 
     @Service
-    public static Integer runVerifyStudentGroupWithoutShift(Integer executionCourseCode, Integer studentGroupCode,
-            Integer groupPropertiesCode, String shiftCodeString) throws FenixServiceException, NotAuthorizedException {
+    public static Integer runVerifyStudentGroupWithoutShift(String executionCourseCode, String studentGroupCode,
+            String groupPropertiesCode, String shiftCodeString) throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseCode);
         return serviceInstance.run(executionCourseCode, studentGroupCode, groupPropertiesCode, shiftCodeString);
     }

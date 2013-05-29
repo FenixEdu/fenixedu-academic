@@ -40,7 +40,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
         @Forward(name = "listAnnouncements", path = "public-list-announcements") })
 public class ExecutionCoursePublicAnnouncementManagement extends PublicAnnouncementDispatchAction {
 
-    protected Integer getRequestedExecutionCourseId(HttpServletRequest request) {
+    protected String getRequestedExecutionCourseId(HttpServletRequest request) {
 
         final String executionCourseIDString = request.getParameter("executionCourseID");
 
@@ -50,11 +50,11 @@ public class ExecutionCoursePublicAnnouncementManagement extends PublicAnnouncem
             return site.getSiteExecutionCourse().getExternalId();
         }
 
-        return Integer.valueOf(executionCourseIDString);
+        return executionCourseIDString;
     }
 
     protected ExecutionCourse getRequestedExecutionCourse(HttpServletRequest request) {
-        Integer id = this.getRequestedExecutionCourseId(request);
+        String id = this.getRequestedExecutionCourseId(request);
         return AbstractDomainObject.fromExternalId(id);
     }
 

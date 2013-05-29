@@ -5,7 +5,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -22,7 +21,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ReadStudentById {
 
     @Service
-    public static Object run(Integer id) throws FenixServiceException {
+    public static Object run(String id) throws FenixServiceException {
         InfoStudent infoStudent = null;
 
         Registration registration = AbstractDomainObject.fromExternalId(id);

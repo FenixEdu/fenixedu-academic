@@ -29,7 +29,7 @@ public class RecoverInactivePersonDA extends FenixDispatchAction {
     }
 
     public ActionForward search(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws  FenixServiceException {
+            throws FenixServiceException {
         final FindPersonFactory findPersonFactory = (FindPersonFactory) executeFactoryMethod();
         for (final Iterator<Person> personIterator = findPersonFactory.getPeople().iterator(); personIterator.hasNext();) {
             final Person person = personIterator.next();
@@ -42,11 +42,10 @@ public class RecoverInactivePersonDA extends FenixDispatchAction {
     }
 
     public ActionForward activate(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws  FenixServiceException {
+            throws FenixServiceException {
         final String personIDString = request.getParameter("personID");
         if (personIDString != null && StringUtils.isNumeric(personIDString)) {
-            final Integer personID = Integer.valueOf(personIDString);
-            final Person person = (Person) AbstractDomainObject.fromExternalId(personID);
+            final Person person = (Person) AbstractDomainObject.fromExternalId(personIDString);
             final Set<Role> roles = new HashSet<Role>();
             roles.add(Role.getRoleByRoleType(RoleType.PERSON));
 

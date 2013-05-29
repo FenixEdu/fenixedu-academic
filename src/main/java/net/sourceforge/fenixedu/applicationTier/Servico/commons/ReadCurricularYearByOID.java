@@ -5,7 +5,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularYear;
 import net.sourceforge.fenixedu.domain.CurricularYear;
@@ -20,7 +19,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ReadCurricularYearByOID {
 
     @Service
-    public static InfoCurricularYear run(Integer oid) throws FenixServiceException {
+    public static InfoCurricularYear run(String oid) throws FenixServiceException {
         InfoCurricularYear result = null;
 
         CurricularYear curricularYear = AbstractDomainObject.fromExternalId(oid);

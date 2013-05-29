@@ -33,17 +33,17 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class CurricularPlansMembersManagementBackingBean extends FenixBackingBean {
     private final ResourceBundle scouncilBundle = getResourceBundle("resources/ScientificCouncilResources");
 
-    private Integer[] selectedPersonsIDsToAdd;
-    private Integer[] selectedPersonsIDsToRemove;
+    private String[] selectedPersonsIDsToAdd;
+    private String[] selectedPersonsIDsToRemove;
 
     private String istIdToAdd;
 
-    public void addMembers(ActionEvent event) throws  FenixServiceException {
+    public void addMembers(ActionEvent event) throws FenixServiceException {
         if (!StringUtils.isEmpty(this.istIdToAdd)) {
             Person person = Person.findByUsername(this.istIdToAdd);
 
             if (person != null) {
-                Integer[] personToAdd = new Integer[] { person.getExternalId() };
+                String[] personToAdd = new String[] { person.getExternalId() };
 
                 UpdateDegreeCurricularPlanMembersGroup.run(getDegreeCurricularPlan(), personToAdd, null);
             }
@@ -53,7 +53,7 @@ public class CurricularPlansMembersManagementBackingBean extends FenixBackingBea
         selectedPersonsIDsToRemove = null;
     }
 
-    public void removeMembers(ActionEvent event) throws  FenixServiceException {
+    public void removeMembers(ActionEvent event) throws FenixServiceException {
         if (selectedPersonsIDsToRemove != null) {
 
             UpdateDegreeCurricularPlanMembersGroup.run(getDegreeCurricularPlan(), null, selectedPersonsIDsToRemove);
@@ -133,41 +133,41 @@ public class CurricularPlansMembersManagementBackingBean extends FenixBackingBea
         return result;
     }
 
-    public Integer[] getSelectedPersonsIDsToRemove() {
+    public String[] getSelectedPersonsIDsToRemove() {
         return selectedPersonsIDsToRemove;
     }
 
-    public void setSelectedPersonsIDsToRemove(Integer[] selectedPersonsIDsToRemove) {
+    public void setSelectedPersonsIDsToRemove(String[] selectedPersonsIDsToRemove) {
         this.selectedPersonsIDsToRemove = selectedPersonsIDsToRemove;
     }
 
-    public Integer[] getSelectedPersonsIDsToAdd() {
+    public String[] getSelectedPersonsIDsToAdd() {
         return selectedPersonsIDsToAdd;
     }
 
-    public void setSelectedPersonsIDsToAdd(Integer[] selectedPersonsIDsToAdd) {
+    public void setSelectedPersonsIDsToAdd(String[] selectedPersonsIDsToAdd) {
         this.selectedPersonsIDsToAdd = selectedPersonsIDsToAdd;
     }
 
-    public Integer getSelectedCurricularPlanID() {
+    public String getSelectedCurricularPlanID() {
         if (this.getViewState().getAttribute("selectedCurricularPlanID") != null) {
-            return (Integer) this.getViewState().getAttribute("selectedCurricularPlanID");
-        } else if (getAndHoldIntegerParameter("dcpId") != null) {
-            return getAndHoldIntegerParameter("dcpId");
+            return (String) this.getViewState().getAttribute("selectedCurricularPlanID");
+        } else if (getAndHoldStringParameter("dcpId") != null) {
+            return getAndHoldStringParameter("dcpId");
         } else {
-            return getAndHoldIntegerParameter("degreeCurricularPlanID");
+            return getAndHoldStringParameter("degreeCurricularPlanID");
         }
     }
 
-    public void setSelectedCurricularPlanID(Integer selectedCurricularPlanID) {
+    public void setSelectedCurricularPlanID(String selectedCurricularPlanID) {
         this.getViewState().setAttribute("selectedCurricularPlanID", selectedCurricularPlanID);
     }
 
-    public Integer getSelectedDepartmentID() {
-        return (Integer) this.getViewState().getAttribute("selectedDepartmentID");
+    public String getSelectedDepartmentID() {
+        return (String) this.getViewState().getAttribute("selectedDepartmentID");
     }
 
-    public void setSelectedDepartmentID(Integer selectedDepartmentID) {
+    public void setSelectedDepartmentID(String selectedDepartmentID) {
         this.getViewState().setAttribute("selectedDepartmentID", selectedDepartmentID);
     }
 

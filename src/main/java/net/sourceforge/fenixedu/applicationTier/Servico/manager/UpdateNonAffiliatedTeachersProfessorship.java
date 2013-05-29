@@ -15,7 +15,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class UpdateNonAffiliatedTeachersProfessorship {
 
-    protected void run(List<Integer> nonAffiliatedTeachersIds, Integer executionCourseId) throws FenixServiceException {
+    protected void run(List<String> nonAffiliatedTeachersIds, String executionCourseId) throws FenixServiceException {
 
         final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
         if (executionCourse == null) {
@@ -40,8 +40,8 @@ public class UpdateNonAffiliatedTeachersProfessorship {
             new UpdateNonAffiliatedTeachersProfessorship();
 
     @Service
-    public static void runUpdateNonAffiliatedTeachersProfessorship(List<Integer> nonAffiliatedTeachersIds,
-            Integer executionCourseId) throws FenixServiceException, NotAuthorizedException {
+    public static void runUpdateNonAffiliatedTeachersProfessorship(List<String> nonAffiliatedTeachersIds, String executionCourseId)
+            throws FenixServiceException, NotAuthorizedException {
         try {
             ManagerAuthorizationFilter.instance.execute();
             serviceInstance.run(nonAffiliatedTeachersIds, executionCourseId);

@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.transactions;
 
-
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.transactions.InfoPaymentTransaction;
@@ -14,7 +13,7 @@ public class ReadPaymentTransactionByGuideEntryID {
 
     @Checked("RolePredicates.MANAGER_PREDICATE")
     @Service
-    public static InfoPaymentTransaction run(Integer guideEntryId) throws FenixServiceException {
+    public static InfoPaymentTransaction run(String guideEntryId) throws FenixServiceException {
         GuideEntry guideEntry = AbstractDomainObject.fromExternalId(guideEntryId);
         PaymentTransaction paymentTransaction = guideEntry.getPaymentTransaction();
         if (paymentTransaction == null) {

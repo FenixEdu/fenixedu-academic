@@ -20,7 +20,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class EditCurriculumForCurricularCourse {
 
-    protected Boolean run(Integer infoExecutionDegreeId, Integer oldCurriculumId, Integer curricularCourseCode,
+    protected Boolean run(String infoExecutionDegreeId, String oldCurriculumId, String curricularCourseCode,
             InfoCurriculum newInfoCurriculum, String username, String language) throws FenixServiceException {
         Boolean result = new Boolean(false);
 
@@ -84,11 +84,10 @@ public class EditCurriculumForCurricularCourse {
     private static final EditCurriculumForCurricularCourse serviceInstance = new EditCurriculumForCurricularCourse();
 
     @Service
-    public static Boolean runEditCurriculumForCurricularCourse(Integer infoExecutionDegreeId, Integer oldCurriculumId,
-            Integer curricularCourseCode, InfoCurriculum newInfoCurriculum, String username, String language)
+    public static Boolean runEditCurriculumForCurricularCourse(String infoExecutionDegreeId, String oldCurriculumId,
+            String curricularCourseCode, InfoCurriculum newInfoCurriculum, String username, String language)
             throws FenixServiceException, NotAuthorizedException {
-        CurrentDegreeCoordinatorAuthorizationFilter.instance.execute(infoExecutionDegreeId, oldCurriculumId,
-                curricularCourseCode, newInfoCurriculum, username, language);
+        CurrentDegreeCoordinatorAuthorizationFilter.instance.execute(infoExecutionDegreeId);
         return serviceInstance.run(infoExecutionDegreeId, oldCurriculumId, curricularCourseCode, newInfoCurriculum, username,
                 language);
     }

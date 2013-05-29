@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide;
 
-
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Guide;
@@ -18,7 +17,7 @@ public class EditGuideInformationInManager {
 
     @Checked("RolePredicates.MANAGER_PREDICATE")
     @Service
-    public static void run(Integer guideID, Integer degreeCurricularPlanID, String executionYear, String newPaymentType) {
+    public static void run(String guideID, String degreeCurricularPlanID, String executionYear, String newPaymentType) {
         Guide guide = AbstractDomainObject.fromExternalId(guideID);
 
         DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);

@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.framework;
 
-
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import pt.ist.fenixframework.DomainObject;
 
@@ -15,7 +14,7 @@ import pt.ist.fenixframework.DomainObject;
  */
 public abstract class ReadDomainObjectService {
 
-    protected InfoObject run(Integer objectId) {
+    protected InfoObject run(String objectId) {
         DomainObject domainObject = readDomainObject(objectId);
         InfoObject infoObject = null;
 
@@ -26,7 +25,7 @@ public abstract class ReadDomainObjectService {
         return infoObject;
     }
 
-    protected abstract DomainObject readDomainObject(final Integer externalId);
+    protected abstract DomainObject readDomainObject(final String externalId);
 
     protected abstract InfoObject newInfoFromDomain(DomainObject domainObject);
 

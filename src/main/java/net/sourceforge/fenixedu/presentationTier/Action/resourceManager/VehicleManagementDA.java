@@ -97,7 +97,7 @@ public class VehicleManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward createVehicle(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws InvalidArgumentException,  FenixServiceException {
+            HttpServletResponse response) throws InvalidArgumentException, FenixServiceException {
 
         VehicleBean bean = getRenderedObject("createVehicleBeanID");
 
@@ -115,7 +115,7 @@ public class VehicleManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward deleteVehicle(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws InvalidArgumentException,  FenixServiceException {
+            HttpServletResponse response) throws InvalidArgumentException, FenixServiceException {
 
         Vehicle vehicle = getVehicleFromParameter(request);
 
@@ -133,8 +133,7 @@ public class VehicleManagementDA extends FenixDispatchAction {
 
     private Vehicle getVehicleFromParameter(HttpServletRequest request) {
         final String vehicleIDString = request.getParameter("vehicleID");
-        final Integer vehicleID = vehicleIDString != null ? Integer.valueOf(vehicleIDString) : null;
-        return (Vehicle) AbstractDomainObject.fromExternalId(vehicleID);
+        return (Vehicle) AbstractDomainObject.fromExternalId(vehicleIDString);
     }
 
 }

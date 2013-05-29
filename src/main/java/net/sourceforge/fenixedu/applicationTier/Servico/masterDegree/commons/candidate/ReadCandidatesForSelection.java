@@ -20,7 +20,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class ReadCandidatesForSelection {
 
-    protected List run(Integer executionDegreeID, List<SituationName> situationNames) throws FenixServiceException {
+    protected List run(String executionDegreeID, List<SituationName> situationNames) throws FenixServiceException {
 
         // Read the candidates
 
@@ -48,7 +48,8 @@ public class ReadCandidatesForSelection {
     private static final ReadCandidatesForSelection serviceInstance = new ReadCandidatesForSelection();
 
     @Service
-    public static List runReadCandidatesForSelection(Integer executionDegreeID, List<SituationName> situationNames) throws FenixServiceException  , NotAuthorizedException {
+    public static List runReadCandidatesForSelection(String executionDegreeID, List<SituationName> situationNames)
+            throws FenixServiceException, NotAuthorizedException {
         ReadCandidatesForSelectionAuthorizationFilter.instance.execute(executionDegreeID, situationNames);
         return serviceInstance.run(executionDegreeID, situationNames);
     }

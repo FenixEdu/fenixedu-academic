@@ -130,9 +130,8 @@ public class ThesisDocumentConfirmationDA extends AbstractManageThesisDA {
     public ActionForward viewThesis(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws InvalidArgumentException {
         final String thesisIdString = request.getParameter("thesisID");
-        final Integer thesisId = thesisIdString == null ? null : Integer.valueOf(thesisIdString);
 
-        final Thesis thesis = thesisId == null ? null : AbstractDomainObject.fromExternalId(thesisId);
+        final Thesis thesis = AbstractDomainObject.fromExternalId(thesisIdString);
         request.setAttribute("thesis", thesis);
 
         final ThesisPresentationState thesisPresentationState = ThesisPresentationState.getThesisPresentationState(thesis);;
@@ -148,11 +147,10 @@ public class ThesisDocumentConfirmationDA extends AbstractManageThesisDA {
     }
 
     public ActionForward confirmDocuments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws InvalidArgumentException,  FenixServiceException {
+            HttpServletResponse response) throws InvalidArgumentException, FenixServiceException {
         final String thesisIdString = request.getParameter("thesisID");
-        final Integer thesisId = thesisIdString == null ? null : Integer.valueOf(thesisIdString);
 
-        final Thesis thesis = thesisId == null ? null : AbstractDomainObject.fromExternalId(thesisId);
+        final Thesis thesis = AbstractDomainObject.fromExternalId(thesisIdString);
         ConfirmThesisDocumentSubmission.run(thesis);
 
         request.setAttribute("documentsConfirmed", Boolean.TRUE);

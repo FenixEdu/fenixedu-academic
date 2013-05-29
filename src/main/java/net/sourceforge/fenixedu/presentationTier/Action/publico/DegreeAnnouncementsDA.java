@@ -74,10 +74,8 @@ public class DegreeAnnouncementsDA extends AnnouncementManagement {
         if (parameter == null) {
             return null;
         }
-
         try {
-            Integer oid = new Integer(parameter);
-            return AbstractDomainObject.fromExternalId(oid);
+            return AbstractDomainObject.fromExternalId(parameter);
         } catch (NumberFormatException e) {
             return null;
         }

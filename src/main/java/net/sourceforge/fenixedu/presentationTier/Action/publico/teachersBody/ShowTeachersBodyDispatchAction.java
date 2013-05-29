@@ -94,7 +94,7 @@ public class ShowTeachersBodyDispatchAction extends FenixDispatchAction {
             Iterator iter = executionYears.iterator();
             while (iter.hasNext()) {
                 InfoExecutionYear year = (InfoExecutionYear) iter.next();
-                if (year.getExternalId().intValue() == executionYearId.intValue()) {
+                if (year.getExternalId().equals(executionYearId)) {
                     request.setAttribute("searchDetails", makeBodyHeader(year.getYear(), semester, teacherType));
                     break;
                 }

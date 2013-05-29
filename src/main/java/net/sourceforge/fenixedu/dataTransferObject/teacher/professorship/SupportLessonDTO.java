@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.util.DiaSemana;
 
 public class SupportLessonDTO extends InfoObject {
 
-    private Integer professorshipID;
+    private String professorshipID;
 
     private DiaSemana weekDay;
 
@@ -33,11 +33,11 @@ public class SupportLessonDTO extends InfoObject {
         this.place = place;
     }
 
-    public Integer getProfessorshipID() {
+    public String getProfessorshipID() {
         return professorshipID;
     }
 
-    public void setProfessorshipID(Integer professorshipID) {
+    public void setProfessorshipID(String professorshipID) {
         this.professorshipID = professorshipID;
     }
 

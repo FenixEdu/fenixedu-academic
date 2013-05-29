@@ -11,8 +11,8 @@ public class ChangeCandidacyApprovanceStatus {
 
     @Checked("RolePredicates.SEMINARIES_COORDINATOR_PREDICATE")
     @Service
-    public static void run(List<Integer> candidaciesIDs) {
-        for (Integer candidacyID : candidaciesIDs) {
+    public static void run(List<String> candidaciesIDs) {
+        for (String candidacyID : candidaciesIDs) {
             SeminaryCandidacy candidacy = AbstractDomainObject.fromExternalId(candidacyID);
             if (candidacy.getApproved() == null) {
                 candidacy.setApproved(Boolean.FALSE);

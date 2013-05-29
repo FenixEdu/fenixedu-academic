@@ -49,13 +49,11 @@ public class GroupStudentEnrolmentDispatchAction extends FenixDispatchAction {
 
         String studentGroupCodeString = request.getParameter("studentGroupCode");
 
-        Integer studentGroupCode = new Integer(studentGroupCodeString);
-
         String shiftCodeString = request.getParameter("shiftCode");
         request.setAttribute("shiftCode", shiftCodeString);
 
         try {
-            VerifyStudentGroupAtributes.run(null, null, studentGroupCode, userView.getUtilizador(), new Integer(1));
+            VerifyStudentGroupAtributes.run(null, null, studentGroupCodeString, userView.getUtilizador(), new Integer(1));
 
         } catch (NotAuthorizedException e) {
             ActionErrors actionErrors = new ActionErrors();
@@ -96,7 +94,7 @@ public class GroupStudentEnrolmentDispatchAction extends FenixDispatchAction {
 
         ISiteComponent viewStudentGroup = null;
         try {
-            viewStudentGroup = ReadStudentGroupInformation.run(studentGroupCode);
+            viewStudentGroup = ReadStudentGroupInformation.run(studentGroupCodeString);
 
         } catch (InvalidSituationServiceException e) {
             ActionErrors actionErrors3 = new ActionErrors();
@@ -119,17 +117,15 @@ public class GroupStudentEnrolmentDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward enrolment(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response)  {
+            HttpServletResponse response) {
 
         IUserView userView = getUserView(request);
 
         String studentGroupCodeString = request.getParameter("studentGroupCode");
 
-        Integer studentGroupCode = new Integer(studentGroupCodeString);
-
         try {
 
-            GroupStudentEnrolment.run(studentGroupCode, userView.getUtilizador());
+            GroupStudentEnrolment.run(studentGroupCodeString, userView.getUtilizador());
 
         } catch (NotAuthorizedException e) {
             ActionErrors actionErrors = new ActionErrors();

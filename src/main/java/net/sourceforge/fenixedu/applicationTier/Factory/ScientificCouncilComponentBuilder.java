@@ -46,8 +46,8 @@ public class ScientificCouncilComponentBuilder {
         return instance;
     }
 
-    public ISiteComponent getComponent(ISiteComponent component, Integer degreeId, Integer curricularYear,
-            Integer degreeCurricularPlanId) throws FenixServiceException {
+    public ISiteComponent getComponent(ISiteComponent component, String degreeId, Integer curricularYear,
+            String degreeCurricularPlanId) throws FenixServiceException {
         if (component instanceof InfoSiteSCDegrees) {
             return getInfoSiteSCDegrees((InfoSiteSCDegrees) component);
         } else if (component instanceof InfoSiteDegreeCurricularPlans) {
@@ -69,10 +69,9 @@ public class ScientificCouncilComponentBuilder {
      * @throws ExcepcaoPersistencia
      */
     private ISiteComponent getInfoSiteBasicCurricularCourses(InfoSiteBasicCurricularCourses component,
-            Integer degreeCurricularPlanId) throws FenixServiceException {
+            String degreeCurricularPlanId) throws FenixServiceException {
 
-        DegreeCurricularPlan degreeCurricularPlan =
-                AbstractDomainObject.fromExternalId(degreeCurricularPlanId);
+        DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanId);
         if (degreeCurricularPlan == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -109,11 +108,10 @@ public class ScientificCouncilComponentBuilder {
      * @return
      * @throws ExcepcaoPersistencia
      */
-    private ISiteComponent getInfoSiteCurricularCourses(InfoSiteCurricularCourses component, Integer degreeCurricularPlanId)
+    private ISiteComponent getInfoSiteCurricularCourses(InfoSiteCurricularCourses component, String degreeCurricularPlanId)
             throws FenixServiceException {
 
-        DegreeCurricularPlan degreeCurricularPlan =
-                AbstractDomainObject.fromExternalId(degreeCurricularPlanId);
+        DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanId);
         if (degreeCurricularPlan == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -139,7 +137,7 @@ public class ScientificCouncilComponentBuilder {
      * @return
      * @throws ExcepcaoPersistencia
      */
-    private ISiteComponent getInfoSiteDegreeCurricularPlans(InfoSiteDegreeCurricularPlans component, Integer degreeId)
+    private ISiteComponent getInfoSiteDegreeCurricularPlans(InfoSiteDegreeCurricularPlans component, String degreeId)
             throws FenixServiceException {
 
         Degree degree = AbstractDomainObject.fromExternalId(degreeId);

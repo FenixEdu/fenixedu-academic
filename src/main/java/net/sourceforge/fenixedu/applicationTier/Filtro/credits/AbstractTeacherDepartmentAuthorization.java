@@ -31,7 +31,7 @@ public abstract class AbstractTeacherDepartmentAuthorization<T> extends Filtro {
             throw new NotAuthorizedException();
         }
 
-        Integer teacherId = getTeacherId(object);
+        String teacherId = getTeacherId(object);
         if (teacherId != null) {
 
             final Person requesterPerson = requester.getPerson();
@@ -49,5 +49,5 @@ public abstract class AbstractTeacherDepartmentAuthorization<T> extends Filtro {
 
     }
 
-    protected abstract Integer getTeacherId(T object) throws FenixServiceException;
+    protected abstract String getTeacherId(T object) throws FenixServiceException;
 }

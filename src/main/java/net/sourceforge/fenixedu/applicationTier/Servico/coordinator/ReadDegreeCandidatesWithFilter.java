@@ -21,7 +21,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ReadDegreeCandidatesWithFilter {
 
     @Service
-    public static List run(Integer degreeCurricularPlanId, PrintAllCandidatesFilter filterBy, String filterValue)
+    public static List run(String degreeCurricularPlanId, PrintAllCandidatesFilter filterBy, String filterValue)
             throws FenixServiceException {
 
         final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanId);

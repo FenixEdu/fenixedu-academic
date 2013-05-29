@@ -16,7 +16,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "operator", path = "/alumni", scope = "request", parameter = "method")
 @Forwards(value = {
@@ -37,9 +36,8 @@ public class AlumniOperations extends FenixDispatchAction {
     public ActionForward prepareIdentityValidation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        return innerPrepareValidation(mapping, request,
-                AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "requestId")),
-                (Person) AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "personId")));
+        return innerPrepareValidation(mapping, request, (AlumniIdentityCheckRequest) getDomainObject(request, "requestId"),
+                (Person) getDomainObject(request, "personId"));
     }
 
     private ActionForward innerPrepareValidation(ActionMapping mapping, HttpServletRequest request,
@@ -53,10 +51,8 @@ public class AlumniOperations extends FenixDispatchAction {
     public ActionForward showIdentityValidation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        request.setAttribute("requestBody",
-                AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "requestId")));
-        request.setAttribute("personBody",
-                AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "personId")));
+        request.setAttribute("requestBody", getDomainObject(request, "requestId"));
+        request.setAttribute("personBody", getDomainObject(request, "personId"));
         return mapping.findForward("alumni.validate.request");
     }
 
@@ -90,9 +86,8 @@ public class AlumniOperations extends FenixDispatchAction {
     public ActionForward updateSocialSecurityNumber(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        AlumniIdentityCheckRequest checkRequest =
-                AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "requestId"));
-        Person alumniPerson = (Person) AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "personId"));
+        AlumniIdentityCheckRequest checkRequest = getDomainObject(request, "requestId");
+        Person alumniPerson = getDomainObject(request, "personId");
         ValidateAlumniIdentity.runValidateAlumniIdentity(checkRequest, alumniPerson);
         return innerPrepareValidation(mapping, request, checkRequest, alumniPerson);
     }

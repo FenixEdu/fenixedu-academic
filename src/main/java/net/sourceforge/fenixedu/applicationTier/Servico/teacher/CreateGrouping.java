@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -22,7 +21,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class CreateGrouping {
 
-    protected Boolean run(Integer executionCourseID, InfoGrouping infoGrouping) throws FenixServiceException {
+    protected Boolean run(String executionCourseID, InfoGrouping infoGrouping) throws FenixServiceException {
 
         final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseID);
         if (executionCourse == null) {
@@ -47,7 +46,7 @@ public class CreateGrouping {
     private static final CreateGrouping serviceInstance = new CreateGrouping();
 
     @Service
-    public static Boolean runCreateGrouping(Integer executionCourseID, InfoGrouping infoGrouping) throws FenixServiceException,
+    public static Boolean runCreateGrouping(String executionCourseID, InfoGrouping infoGrouping) throws FenixServiceException,
             NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseID);
         return serviceInstance.run(executionCourseID, infoGrouping);

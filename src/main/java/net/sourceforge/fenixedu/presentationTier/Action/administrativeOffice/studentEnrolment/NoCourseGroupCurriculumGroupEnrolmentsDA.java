@@ -44,11 +44,11 @@ abstract public class NoCourseGroupCurriculumGroupEnrolmentsDA extends FenixDisp
     }
 
     protected StudentCurricularPlan getStudentCurricularPlan(final HttpServletRequest request) {
-        return AbstractDomainObject.fromExternalId(Integer.valueOf(request.getParameter("scpID")));
+        return AbstractDomainObject.fromExternalId(request.getParameter("scpID"));
     }
 
     protected ExecutionSemester getExecutionSemester(final HttpServletRequest request) {
-        return AbstractDomainObject.fromExternalId(Integer.valueOf(request.getParameter("executionPeriodID")));
+        return AbstractDomainObject.fromExternalId(request.getParameter("executionPeriodID"));
     }
 
     protected ActionForward showExtraEnrolments(NoCourseGroupEnrolmentBean bean, ActionMapping mapping, ActionForm actionForm,
@@ -143,7 +143,7 @@ abstract public class NoCourseGroupCurriculumGroupEnrolmentsDA extends FenixDisp
     }
 
     protected Enrolment getEnrolment(HttpServletRequest request) {
-        return (Enrolment) AbstractDomainObject.fromExternalId(Integer.valueOf(request.getParameter("enrolment")));
+        return (Enrolment) AbstractDomainObject.fromExternalId(request.getParameter("enrolment"));
     }
 
     public ActionForward back(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

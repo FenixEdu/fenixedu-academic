@@ -50,13 +50,11 @@ public class UnEnrollStudentInGroupDispatchAction extends FenixDispatchAction {
 
         String studentGroupCodeString = request.getParameter("studentGroupCode");
 
-        Integer studentGroupCode = new Integer(studentGroupCodeString);
-
         String shiftCodeString = request.getParameter("shiftCode");
         request.setAttribute("shiftCode", shiftCodeString);
 
         try {
-            VerifyStudentGroupAtributes.run(null, null, studentGroupCode, userView.getUtilizador(), new Integer(3));
+            VerifyStudentGroupAtributes.run(null, null, studentGroupCodeString, userView.getUtilizador(), new Integer(3));
 
         } catch (NotAuthorizedException e) {
             ActionErrors actionErrors = new ActionErrors();
@@ -96,7 +94,7 @@ public class UnEnrollStudentInGroupDispatchAction extends FenixDispatchAction {
         ISiteComponent viewStudentGroup;
 
         try {
-            viewStudentGroup = ReadStudentGroupInformation.run(studentGroupCode);
+            viewStudentGroup = ReadStudentGroupInformation.run(studentGroupCodeString);
 
         } catch (InvalidSituationServiceException e) {
             ActionErrors actionErrors = new ActionErrors();
@@ -123,11 +121,10 @@ public class UnEnrollStudentInGroupDispatchAction extends FenixDispatchAction {
         String userName = userView.getUtilizador();
 
         String studentGroupCodeString = request.getParameter("studentGroupCode");
-        Integer studentGroupCode = new Integer(studentGroupCodeString);
 
         Boolean shiftWithGroups;
         try {
-            shiftWithGroups = UnEnrollStudentInGroup.run(userName, studentGroupCode);
+            shiftWithGroups = UnEnrollStudentInGroup.run(userName, studentGroupCodeString);
 
         } catch (NotAuthorizedException e) {
             ActionErrors actionErrors = new ActionErrors();

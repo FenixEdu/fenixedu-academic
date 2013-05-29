@@ -10,26 +10,26 @@ import pt.ist.fenixframework.DomainObject;
  * @author jpvl
  */
 public abstract class InfoObject extends DataTranferObject {
-    private Integer externalId;
+    private String externalId;
 
     public InfoObject() {
     }
 
-    public InfoObject(Integer externalId) {
+    public InfoObject(String externalId) {
         setExternalId(externalId);
     }
 
     /**
      * @return
      */
-    public Integer getExternalId() {
+    public String getExternalId() {
         return externalId;
     }
 
     /**
      * @param integer
      */
-    public void setExternalId(Integer integer) {
+    public void setExternalId(String integer) {
         externalId = integer;
     }
 
@@ -51,7 +51,7 @@ public abstract class InfoObject extends DataTranferObject {
     @Override
     public int hashCode() {
         if (this.externalId != null) {
-            return this.externalId.intValue();
+            return this.externalId.hashCode();
         }
 
         return 0;

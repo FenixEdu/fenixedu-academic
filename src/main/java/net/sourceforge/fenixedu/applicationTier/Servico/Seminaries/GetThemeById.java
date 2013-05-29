@@ -5,7 +5,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.Seminaries;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.SeminaryCoordinatorOrStudentFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoTheme;
@@ -22,7 +21,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class GetThemeById {
 
-    protected InfoTheme run(Integer themeID) {
+    protected InfoTheme run(String themeID) {
         InfoTheme infoTheme = null;
         if (themeID != null) {
             Theme theme = AbstractDomainObject.fromExternalId(themeID);
@@ -37,7 +36,7 @@ public class GetThemeById {
     private static final GetThemeById serviceInstance = new GetThemeById();
 
     @Service
-    public static InfoTheme runGetThemeById(Integer themeID) throws NotAuthorizedException {
+    public static InfoTheme runGetThemeById(String themeID) throws NotAuthorizedException {
         SeminaryCoordinatorOrStudentFilter.instance.execute();
         return serviceInstance.run(themeID);
     }

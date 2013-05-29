@@ -17,7 +17,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class ReadGuidedMasterDegreeThesisByTeacherIDAndExecutionYearID {
 
-    public List<MasterDegreeThesisDataVersion> run(Integer teacherID, Integer executionYearID) throws FenixServiceException {
+    public List<MasterDegreeThesisDataVersion> run(String teacherID, String executionYearID) throws FenixServiceException {
         Teacher teacher = AbstractDomainObject.fromExternalId(teacherID);
         List<MasterDegreeThesisDataVersion> masterDegreeThesisDataVersions;
 
@@ -40,7 +40,7 @@ public class ReadGuidedMasterDegreeThesisByTeacherIDAndExecutionYearID {
 
     @Service
     public static List<MasterDegreeThesisDataVersion> runReadGuidedMasterDegreeThesisByTeacherIDAndExecutionYearID(
-            Integer teacherID, Integer executionYearID) throws FenixServiceException, NotAuthorizedException {
+            String teacherID, String executionYearID) throws FenixServiceException, NotAuthorizedException {
         try {
             DepartmentMemberAuthorizationFilter.instance.execute();
             return serviceInstance.run(teacherID, executionYearID);

@@ -38,8 +38,7 @@ public class InsertGratuityData {
             throw new FenixServiceException("impossible.insertGratuityValues");
         }
         if (infoGratuityValues.getInfoExecutionDegree() == null
-                || infoGratuityValues.getInfoExecutionDegree().getExternalId() == null
-                || infoGratuityValues.getInfoExecutionDegree().getExternalId().intValue() <= 0) {
+                || infoGratuityValues.getInfoExecutionDegree().getExternalId() == null) {
             throw new FenixServiceException("impossible.insertGratuityValues");
         }
 

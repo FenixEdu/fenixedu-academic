@@ -32,7 +32,7 @@ public class ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
-    public static Object run(Integer degreeCurricularPlanID, String executionYearName) throws FenixServiceException {
+    public static Object run(String degreeCurricularPlanID, String executionYearName) throws FenixServiceException {
         if (degreeCurricularPlanID == null || executionYearName == null) {
             throw new FenixServiceException("error.impossible.noGratuityValues");
         }

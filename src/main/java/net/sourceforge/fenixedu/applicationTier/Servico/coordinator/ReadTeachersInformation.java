@@ -23,7 +23,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ReadTeachersInformation {
 
     @Service
-    public static List run(Integer executionDegreeId, Boolean basic, String executionYearString) {
+    public static List run(String executionDegreeId, Boolean basic, String executionYearString) {
 
         List<Professorship> professorships = null;
         ExecutionYear executionYear = null;
@@ -104,7 +104,7 @@ public class ReadTeachersInformation {
     private static final ReadTeachersInformation serviceInstance = new ReadTeachersInformation();
 
     @Service
-    public static List runReadTeachersInformation(Integer executionDegreeId, Boolean basic, String executionYearString)
+    public static List runReadTeachersInformation(String executionDegreeId, Boolean basic, String executionYearString)
             throws NotAuthorizedException {
         try {
             CoordinatorAuthorizationFilter.instance.execute();

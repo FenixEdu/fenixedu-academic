@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -12,8 +11,7 @@ public class DefineExamComment {
 
     @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
     @Service
-    public static void run(String executionCourseInitials, Integer executionPeriodId, String comment)
-            throws FenixServiceException {
+    public static void run(String executionCourseInitials, String executionPeriodId, String comment) throws FenixServiceException {
         final ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodId);
         final ExecutionCourse executionCourse = executionSemester.getExecutionCourseByInitials(executionCourseInitials);
 

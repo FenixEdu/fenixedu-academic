@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -12,7 +11,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class InsertTest {
 
-    protected Integer run(Integer executionCourseId, String title, String information) throws InvalidArgumentsServiceException {
+    protected String run(String executionCourseId, String title, String information) throws InvalidArgumentsServiceException {
         ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
         if (executionCourse == null) {
             throw new InvalidArgumentsServiceException();
@@ -30,7 +29,7 @@ public class InsertTest {
     private static final InsertTest serviceInstance = new InsertTest();
 
     @Service
-    public static Integer runInsertTest(Integer executionCourseId, String title, String information)
+    public static String runInsertTest(String executionCourseId, String title, String information)
             throws InvalidArgumentsServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
         return serviceInstance.run(executionCourseId, title, information);

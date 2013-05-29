@@ -18,7 +18,7 @@ public class EditExecutionDegree {
 
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
-    public static void run(Integer executionDegreeID, Integer executionYearID, Integer campusID, Boolean publishedExamMap,
+    public static void run(String executionDegreeID, String executionYearID, String campusID, Boolean publishedExamMap,
             Date periodLessonsFirstSemesterBegin, Date periodLessonsFirstSemesterEnd, Date periodExamsFirstSemesterBegin,
             Date periodExamsFirstSemesterEnd, Date periodLessonsSecondSemesterBegin, Date periodLessonsSecondSemesterEnd,
             Date periodExamsSecondSemesterBegin, Date periodExamsSecondSemesterEnd, Date periodExamsSpecialSeasonBegin,

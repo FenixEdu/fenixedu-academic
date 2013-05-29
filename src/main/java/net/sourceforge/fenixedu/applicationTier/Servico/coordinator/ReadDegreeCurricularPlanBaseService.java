@@ -26,7 +26,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 abstract public class ReadDegreeCurricularPlanBaseService {
 
-    protected List<InfoCurricularCourseScope> readActiveCurricularCourseScopes(final Integer degreeCurricularPlanId) {
+    protected List<InfoCurricularCourseScope> readActiveCurricularCourseScopes(final String degreeCurricularPlanId) {
         List<InfoCurricularCourseScope> infoActiveScopes = null;
 
         if (degreeCurricularPlanId != null) {

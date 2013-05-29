@@ -69,7 +69,7 @@ public class VehicleManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward createAllocation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws InvalidArgumentException,  FenixServiceException {
+            HttpServletResponse response) throws InvalidArgumentException, FenixServiceException {
 
         VehicleAllocationBean bean = getRenderedObject();
 
@@ -93,7 +93,7 @@ public class VehicleManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward deleteAllocation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws InvalidArgumentException,  FenixServiceException {
+            HttpServletResponse response) throws InvalidArgumentException, FenixServiceException {
 
         VehicleAllocation allocation = getAllocationFromParameter(request);
 
@@ -139,7 +139,6 @@ public class VehicleManagementDA extends FenixDispatchAction {
 
     private VehicleAllocation getAllocationFromParameter(final HttpServletRequest request) {
         final String allocationIDString = request.getParameter("allocationID");
-        final Integer allocationID = allocationIDString != null ? Integer.valueOf(allocationIDString) : null;
-        return (VehicleAllocation) AbstractDomainObject.fromExternalId(allocationID);
+        return (VehicleAllocation) AbstractDomainObject.fromExternalId(allocationIDString);
     }
 }

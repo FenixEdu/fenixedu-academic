@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.EmployeeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilter;
@@ -11,7 +10,7 @@ import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class AssociateTSDCourseWithTeacherServiceDistribution {
-    protected void run(Integer tsdId, Integer tsdcourseId) {
+    protected void run(String tsdId, String tsdcourseId) {
         TeacherServiceDistribution tsd = AbstractDomainObject.fromExternalId(tsdId);
 
         if (tsdcourseId == null) {
@@ -29,7 +28,7 @@ public class AssociateTSDCourseWithTeacherServiceDistribution {
             new AssociateTSDCourseWithTeacherServiceDistribution();
 
     @Service
-    public static void runAssociateTSDCourseWithTeacherServiceDistribution(Integer tsdId, Integer tsdcourseId)
+    public static void runAssociateTSDCourseWithTeacherServiceDistribution(String tsdId, String tsdcourseId)
             throws NotAuthorizedException {
         try {
             DepartmentMemberAuthorizationFilter.instance.execute();

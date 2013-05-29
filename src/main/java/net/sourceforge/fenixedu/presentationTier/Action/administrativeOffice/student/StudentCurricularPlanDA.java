@@ -19,7 +19,6 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -36,8 +35,7 @@ public class StudentCurricularPlanDA extends FenixDispatchAction {
     public ActionForward prepareCreateSCP(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
 
-        final Registration registration =
-                AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "registrationId"));
+        final Registration registration = getDomainObject(request, "registrationId");
 
         request.setAttribute("studentCurricularPlanCreator",
                 new StudentCurricularPlanFactoryExecutor.StudentCurricularPlanCreator(registration));
@@ -47,7 +45,7 @@ public class StudentCurricularPlanDA extends FenixDispatchAction {
     }
 
     public ActionForward createSCP(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         executeFactoryMethod();
         addActionMessage(request, "message.registration.addNewSCP.success");

@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoEquivalency;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoTheme;
 import net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency;
 import net.sourceforge.fenixedu.domain.Seminaries.Theme;
-import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -30,7 +29,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class GetEquivalency {
 
-    protected InfoEquivalency run(Integer equivalencyID) throws BDException {
+    protected InfoEquivalency run(String equivalencyID) {
         InfoEquivalency infoEquivalency = null;
 
         CourseEquivalency equivalency = AbstractDomainObject.fromExternalId(equivalencyID);
@@ -54,7 +53,7 @@ public class GetEquivalency {
     private static final GetEquivalency serviceInstance = new GetEquivalency();
 
     @Service
-    public static InfoEquivalency runGetEquivalency(Integer equivalencyID) throws BDException, NotAuthorizedException {
+    public static InfoEquivalency runGetEquivalency(String equivalencyID) throws NotAuthorizedException {
         SeminaryCoordinatorOrStudentFilter.instance.execute();
         return serviceInstance.run(equivalencyID);
     }

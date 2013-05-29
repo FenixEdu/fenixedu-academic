@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.research.project;
 
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.research.ProjectEventAssociationFullCreationBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.ProjectEventAssociationSimpleCreationBean;
@@ -31,7 +30,7 @@ public class CreateProjectEventAssociation {
      */
     @Checked("ResultPredicates.author")
     @Service
-    public static ProjectEventAssociation run(ProjectEventAssociationSimpleCreationBean bean, Integer projectId)
+    public static ProjectEventAssociation run(ProjectEventAssociationSimpleCreationBean bean, String projectId)
             throws FenixServiceException {
         ProjectEventAssociation association = null;
         final Project project = AbstractDomainObject.fromExternalId(projectId);
@@ -63,7 +62,7 @@ public class CreateProjectEventAssociation {
      */
     @Checked("ResultPredicates.author")
     @Service
-    public static ProjectEventAssociation run(ProjectEventAssociationFullCreationBean bean, Integer projectId)
+    public static ProjectEventAssociation run(ProjectEventAssociationFullCreationBean bean, String projectId)
             throws FenixServiceException {
         final ProjectEventAssociation association;
 

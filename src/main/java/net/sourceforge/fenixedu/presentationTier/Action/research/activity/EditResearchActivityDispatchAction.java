@@ -165,7 +165,7 @@ public class EditResearchActivityDispatchAction extends ActivitiesManagementDisp
     }
 
     public ActionForward editParticipants(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         String forwardTo = request.getParameter("forwardTo");
 
@@ -261,8 +261,8 @@ public class EditResearchActivityDispatchAction extends ActivitiesManagementDisp
 
         String forwardTo = request.getParameter("forwardTo");
 
-        final Integer oid = Integer.parseInt(request.getParameter("participationId"));
-        Participation participation = (Participation) AbstractDomainObject.fromExternalId(Participation.class, oid);
+        Participation participation =
+                (Participation) AbstractDomainObject.fromExternalId(request.getParameter("participationId"));
 
         if (participation != null) {
             try {

@@ -86,7 +86,7 @@ public class ConfirmMarksAction extends FenixDispatchAction {
 
     public ActionForward confirm(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        Integer curricularCourseCode = new Integer(MarksManagementDispatchAction.getFromRequest("courseId", request));
+        String curricularCourseCode = MarksManagementDispatchAction.getFromRequest("courseId", request);
         MarksManagementDispatchAction.getFromRequest("objectCode", request);
         MarksManagementDispatchAction.getFromRequest("degreeId", request);
 

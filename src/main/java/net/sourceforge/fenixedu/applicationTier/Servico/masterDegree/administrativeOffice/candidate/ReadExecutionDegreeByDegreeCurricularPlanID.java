@@ -35,7 +35,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ReadExecutionDegreeByDegreeCurricularPlanID {
 
-    protected InfoExecutionDegree run(Integer degreeCurricularPlanID, Integer executionDegreeIndex) {
+    protected InfoExecutionDegree run(String degreeCurricularPlanID, Integer executionDegreeIndex) {
         List infoExecutionDegreeList = null;
         List executionDegrees = null;
 
@@ -71,7 +71,7 @@ public class ReadExecutionDegreeByDegreeCurricularPlanID {
      * @return
      * @throws ExcepcaoPersistencia
      */
-    protected InfoExecutionDegree run(Integer degreeCurricularPlanID, final String executionYear) {
+    protected InfoExecutionDegree run(String degreeCurricularPlanID, final String executionYear) {
         DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
 
         if (executionYear.equals("")) {
@@ -100,7 +100,7 @@ public class ReadExecutionDegreeByDegreeCurricularPlanID {
             new ReadExecutionDegreeByDegreeCurricularPlanID();
 
     @Service
-    public static InfoExecutionDegree runReadExecutionDegreeByDegreeCurricularPlanID(Integer degreeCurricularPlanID,
+    public static InfoExecutionDegree runReadExecutionDegreeByDegreeCurricularPlanID(String degreeCurricularPlanID,
             Integer executionDegreeIndex) throws NotAuthorizedException {
         try {
             ManagerAuthorizationFilter.instance.execute();
@@ -121,7 +121,7 @@ public class ReadExecutionDegreeByDegreeCurricularPlanID {
     }
 
     @Service
-    public static InfoExecutionDegree runReadExecutionDegreeByDegreeCurricularPlanID(Integer degreeCurricularPlanID,
+    public static InfoExecutionDegree runReadExecutionDegreeByDegreeCurricularPlanID(String degreeCurricularPlanID,
             final String executionYear) throws NotAuthorizedException {
         try {
             ManagerAuthorizationFilter.instance.execute();

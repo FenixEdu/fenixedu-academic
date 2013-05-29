@@ -21,7 +21,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class UpdateDegreeTeachingServices {
 
-    protected void run(Integer professorshipID, List<ShiftIDTeachingPercentage> shiftsIDsTeachingPercentages, RoleType roleType) {
+    protected void run(String professorshipID, List<ShiftIDTeachingPercentage> shiftsIDsTeachingPercentages, RoleType roleType) {
 
         Professorship professorship = AbstractDomainObject.fromExternalId(professorshipID);
         Teacher teacher = professorship.getTeacher();
@@ -65,7 +65,7 @@ public class UpdateDegreeTeachingServices {
     private static final UpdateDegreeTeachingServices serviceInstance = new UpdateDegreeTeachingServices();
 
     @Service
-    public static void runUpdateDegreeTeachingServices(Integer professorshipID,
+    public static void runUpdateDegreeTeachingServices(String professorshipID,
             List<ShiftIDTeachingPercentage> shiftsIDsTeachingPercentages, RoleType roleType) throws NotAuthorizedException {
         try {
             ScientificCouncilAuthorizationFilter.instance.execute();

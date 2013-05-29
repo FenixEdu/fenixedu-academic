@@ -17,7 +17,7 @@ public class InfoDegree extends InfoObject implements Comparable {
 
     private final Degree degreeDomainReference;
 
-    private boolean showEnVersion = (Language.getUserLanguage() == Language.en);
+    private final boolean showEnVersion = (Language.getUserLanguage() == Language.en);
 
     public InfoDegree(final Degree degree) {
         degreeDomainReference = degree;
@@ -96,12 +96,12 @@ public class InfoDegree extends InfoObject implements Comparable {
     }
 
     @Override
-    public Integer getExternalId() {
+    public String getExternalId() {
         return getDegree().getExternalId();
     }
 
     @Override
-    public void setExternalId(Integer integer) {
+    public void setExternalId(String integer) {
         throw new Error("Method should not be called!");
     }
 

@@ -32,7 +32,7 @@ public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName {
 
     @Checked("RolePredicates.COORDINATOR_PREDICATE")
     @Service
-    public static InfoCurriculum run(Integer executionDegreeCode, Integer curricularCourseCode, String stringExecutionYear)
+    public static InfoCurriculum run(Integer executionDegreeCode, String curricularCourseCode, String stringExecutionYear)
             throws FenixServiceException {
         InfoCurriculum infoCurriculum = null;
 

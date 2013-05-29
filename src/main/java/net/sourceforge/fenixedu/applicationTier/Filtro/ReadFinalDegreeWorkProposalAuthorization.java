@@ -18,9 +18,9 @@ public class ReadFinalDegreeWorkProposalAuthorization {
 
     public static final ReadFinalDegreeWorkProposalAuthorization instance = new ReadFinalDegreeWorkProposalAuthorization();
 
-    public void execute(Integer DegreeWorkProposalOID) throws NotAuthorizedException {
+    public void execute(String DegreeWorkProposalOID) throws NotAuthorizedException {
         IUserView id = AccessControl.getUserView();
-        Integer finalDegreeWorkProposalOID = DegreeWorkProposalOID;
+        String finalDegreeWorkProposalOID = DegreeWorkProposalOID;
         if (finalDegreeWorkProposalOID != null) {
             Proposal proposal = AbstractDomainObject.fromExternalId(finalDegreeWorkProposalOID);
             if (proposal != null) {

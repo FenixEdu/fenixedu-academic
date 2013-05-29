@@ -33,7 +33,7 @@ public class DeleteWrittenEvaluation {
      *            executionCourseOID used in filtering
      *            (ExecutionCourseLecturingTeacherAuthorizationFilter)
      */
-    protected void run(Integer executionCourseOID, Integer writtenEvaluationOID) throws FenixServiceException {
+    protected void run(String executionCourseOID, String writtenEvaluationOID) throws FenixServiceException {
         final WrittenEvaluation writtenEvaluationToDelete =
                 (WrittenEvaluation) AbstractDomainObject.fromExternalId(writtenEvaluationOID);
         if (writtenEvaluationToDelete == null) {
@@ -78,7 +78,7 @@ public class DeleteWrittenEvaluation {
     private static final DeleteWrittenEvaluation serviceInstance = new DeleteWrittenEvaluation();
 
     @Service
-    public static void runDeleteWrittenEvaluation(Integer executionCourseOID, Integer writtenEvaluationOID)
+    public static void runDeleteWrittenEvaluation(String executionCourseOID, String writtenEvaluationOID)
             throws FenixServiceException, NotAuthorizedException {
         EditWrittenEvaluationAuthorization.instance.execute(writtenEvaluationOID);
         try {

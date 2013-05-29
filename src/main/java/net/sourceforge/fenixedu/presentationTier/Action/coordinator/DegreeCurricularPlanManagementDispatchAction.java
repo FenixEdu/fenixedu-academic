@@ -80,7 +80,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
     public ActionForward showActiveCurricularCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
 
-        final Integer degreeCurricularPlanID = getAndSetIntegerToRequest("degreeCurricularPlanID", request);
+        final String degreeCurricularPlanID = getAndSetStringToRequest("degreeCurricularPlanID", request);
         List activeCurricularCourseScopes = null;
         try {
             activeCurricularCourseScopes =
@@ -111,17 +111,10 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
         return mapping.findForward("showActiveCurricularCourses");
     }
 
-    private Integer getAndSetIntegerToRequest(String parameter, HttpServletRequest request) {
-        Integer parameterInteger = new Integer(request.getParameter(parameter));
-        request.setAttribute(parameter, parameterInteger);
-
-        return parameterInteger;
-    }
-
     public ActionForward showCurricularCoursesHistory(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
 
-        Integer degreeCurricularPlanID = getAndSetIntegerToRequest("degreeCurricularPlanID", request);
+        String degreeCurricularPlanID = getAndSetStringToRequest("degreeCurricularPlanID", request);
 
         InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
 
@@ -145,7 +138,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
         if (infoDegreeCurricularPlan != null && infoDegreeCurricularPlan.getCurricularCourses() != null) {
 
             // order list by year, next semester, next course
-            List allCurricularCourseScopes = new ArrayList();
+            List<InfoCurricularCourseScope> allCurricularCourseScopes = new ArrayList<InfoCurricularCourseScope>();
             Iterator iter = infoDegreeCurricularPlan.getCurricularCourses().listIterator();
             while (iter.hasNext()) {
                 InfoCurricularCourse infoCurricularCourse = (InfoCurricularCourse) iter.next();
@@ -159,25 +152,25 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
             Collections.sort(allCurricularCourseScopes, comparatorChain);
 
             // build hashmap for jsp
-            HashMap curricularCourseScopesHashMap = new HashMap();
-            Integer lastKey = new Integer(0);
-            Iterator iterCurricularCourseScopes = allCurricularCourseScopes.iterator();
+            HashMap<String, List<InfoCurricularCourseScope>> curricularCourseScopesHashMap =
+                    new HashMap<String, List<InfoCurricularCourseScope>>();
+            String lastKey = null;
+            Iterator<InfoCurricularCourseScope> iterCurricularCourseScopes = allCurricularCourseScopes.iterator();
             while (iterCurricularCourseScopes.hasNext()) {
-                InfoCurricularCourseScope curricularCourseScope = (InfoCurricularCourseScope) iterCurricularCourseScopes.next();
+                InfoCurricularCourseScope curricularCourseScope = iterCurricularCourseScopes.next();
 
-                List equalCurricularCourseScopes = null;
-                if (lastKey.intValue() != 0) {
-                    InfoCurricularCourseScope lastIntroduced =
-                            (InfoCurricularCourseScope) ((List) curricularCourseScopesHashMap.get(lastKey)).get(0);
+                List<InfoCurricularCourseScope> equalCurricularCourseScopes = null;
+                if (lastKey != null) {
+                    InfoCurricularCourseScope lastIntroduced = curricularCourseScopesHashMap.get(lastKey).get(0);
 
                     if (scopesAreEqual(curricularCourseScope, lastIntroduced)) {
-                        equalCurricularCourseScopes = (List) curricularCourseScopesHashMap.get(lastKey);
+                        equalCurricularCourseScopes = curricularCourseScopesHashMap.get(lastKey);
                         equalCurricularCourseScopes.add(curricularCourseScope);
                         curricularCourseScopesHashMap.put(lastKey, equalCurricularCourseScopes);
                         continue;
                     }
                 }
-                equalCurricularCourseScopes = new ArrayList();
+                equalCurricularCourseScopes = new ArrayList<InfoCurricularCourseScope>();
                 equalCurricularCourseScopes.add(curricularCourseScope);
                 curricularCourseScopesHashMap.put(curricularCourseScope.getExternalId(), equalCurricularCourseScopes);
                 lastKey = curricularCourseScope.getExternalId();
@@ -228,10 +221,10 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
 
         IUserView userView = getUserView(request);
 
-        Integer infoCurricularCourseCode = getAndSetIntegerToRequest("infoCurricularCourseCode", request);
-        Integer degreeCurricularPlanID = getAndSetIntegerToRequest("degreeCurricularPlanID", request);
+        String infoCurricularCourseCode = getAndSetStringToRequest("infoCurricularCourseCode", request);
+        String degreeCurricularPlanID = getAndSetStringToRequest("degreeCurricularPlanID", request);
 
-        Integer infoExecutionDegreeCode = null;
+        String infoExecutionDegreeCode = null;
 
         InfoExecutionDegree infoExecutionDegree =
                 ReadCurrentExecutionDegreeByDegreeCurricularPlanID
@@ -313,7 +306,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
 
         infoExecutionYears = ReadNotClosedExecutionYears.run();
 
-        getAndSetIntegerToRequest("infoCurricularCourseCode", request);
+        getAndSetStringToRequest("infoCurricularCourseCode", request);
         getAndSetStringToRequest("infoCurricularCourseName", request);
         getAndSetStringToRequest("degreeCurricularPlanID", request);
 
@@ -332,9 +325,9 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
     public ActionForward viewCurricularCourseInformationHistory(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
 
-        Integer infoCurricularCourseCode = getAndSetIntegerToRequest("infoCurricularCourseCode", request);
+        String infoCurricularCourseCode = getAndSetStringToRequest("infoCurricularCourseCode", request);
         String executionYear = getAndSetStringToRequest("executionYear", request);
-        getAndSetIntegerToRequest("degreeCurricularPlanID", request);
+        getAndSetStringToRequest("degreeCurricularPlanID", request);
         getAndSetStringToRequest("infoCurricularCourseName", request);
 
         InfoCurriculum infoCurriculum = null;
@@ -384,9 +377,9 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
             HttpServletResponse response) throws FenixActionException {
         IUserView userView = getUserView(request);
 
-        Integer infoExecutionDegreeCode = getAndSetIntegerToRequest("infoExecutionDegreeCode", request);
-        Integer infoCurricularCourseCode = getAndSetIntegerToRequest("infoCurricularCourseCode", request);
-        getAndSetIntegerToRequest("degreeCurricularPlanID", request);
+        String infoExecutionDegreeCode = getAndSetStringToRequest("infoExecutionDegreeCode", request);
+        String infoCurricularCourseCode = getAndSetStringToRequest("infoCurricularCourseCode", request);
+        getAndSetStringToRequest("degreeCurricularPlanID", request);
 
         // check that this user can edit curricular course information
         Boolean canEdit = new Boolean(false);
@@ -465,9 +458,9 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
             HttpServletResponse response) throws FenixActionException, FenixServiceException {
         IUserView userView = getUserView(request);
 
-        Integer infoExecutionDegreeCode = getAndSetIntegerToRequest("infoExecutionDegreeCode", request);
-        Integer infoCurricularCourseCode = getAndSetIntegerToRequest("infoCurricularCourseCode", request);
-        Integer infoCurriculumCode = getAndSetIntegerToRequest("infoCurriculumCode", request);
+        String infoExecutionDegreeCode = getAndSetStringToRequest("infoExecutionDegreeCode", request);
+        String infoCurricularCourseCode = getAndSetStringToRequest("infoCurricularCourseCode", request);
+        String infoCurriculumCode = getAndSetStringToRequest("infoCurriculumCode", request);
 
         String language = request.getParameter("language");
         InfoCurriculum infoCurriculum = getDataFromForm(form, language);

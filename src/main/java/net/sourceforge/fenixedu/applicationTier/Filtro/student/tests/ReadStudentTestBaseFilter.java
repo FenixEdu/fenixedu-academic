@@ -17,7 +17,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public abstract class ReadStudentTestBaseFilter extends AuthorizationByRoleFilter {
 
-    final public void execute(Integer testId) throws NotAuthorizedException {
+    final public void execute(String testId) throws NotAuthorizedException {
         super.execute();
 
         DistributedTest distributedTest = AbstractDomainObject.fromExternalId(testId);

@@ -412,7 +412,7 @@ public class Context extends Context_Base implements Comparable<Context> {
         }
 
         @Override
-        public Integer getExternalId() {
+        public String getExternalId() {
             return context.getExternalId();
         }
 

@@ -19,8 +19,8 @@ public class EditCompetenceCourseLoad {
 
     @Checked("RolePredicates.BOLONHA_MANAGER_PREDICATE")
     @Service
-    public static void run(Integer competenceCourseID, RegimeType regimeType, Integer numberOfPeriods,
-            List<CourseLoad> courseLoads) throws FenixServiceException {
+    public static void run(String competenceCourseID, RegimeType regimeType, Integer numberOfPeriods, List<CourseLoad> courseLoads)
+            throws FenixServiceException {
         final CompetenceCourse competenceCourse = AbstractDomainObject.fromExternalId(competenceCourseID);
         if (competenceCourse == null) {
             throw new FenixServiceException("error.noCompetenceCourse");

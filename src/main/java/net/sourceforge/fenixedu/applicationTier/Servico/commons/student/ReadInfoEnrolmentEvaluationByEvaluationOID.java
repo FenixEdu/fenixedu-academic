@@ -7,7 +7,6 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.commons.student;
 
-
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -23,7 +22,7 @@ public class ReadInfoEnrolmentEvaluationByEvaluationOID {
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
     public static InfoEnrolmentEvaluation run(IUserView userView, Integer studentNumber, DegreeType degreeType,
-            Integer enrolmentOID) throws ExcepcaoInexistente, FenixServiceException {
+            String enrolmentOID) throws ExcepcaoInexistente, FenixServiceException {
         return (new GetEnrolmentGrade()).run((Enrolment) AbstractDomainObject.fromExternalId(enrolmentOID));
     }
 

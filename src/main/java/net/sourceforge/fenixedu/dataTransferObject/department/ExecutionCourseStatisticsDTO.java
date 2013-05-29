@@ -18,7 +18,7 @@ public class ExecutionCourseStatisticsDTO extends CourseStatisticsDTO {
         super();
     }
 
-    public ExecutionCourseStatisticsDTO(int externalId, String name, int firstEnrolledCount, int firstApprovedCount,
+    public ExecutionCourseStatisticsDTO(String externalId, String name, int firstEnrolledCount, int firstApprovedCount,
             IGrade firstApprovedAverage, IGrade firstApprovedSum, int restEnrolledCount, int restApprovedCount,
             IGrade restApprovedAverage, IGrade restApprovedSum, int totalEnrolledCount, int totalApprovedCount,
             IGrade totalApprovedAverage, IGrade totalApprovedSum, List<String> degrees, String executionPeriod,

@@ -87,8 +87,7 @@ public class DegreeSiteManagementDispatchAction extends SiteManagementDA {
         }
 
         try {
-            Integer oid = new Integer(parameter);
-            return AbstractDomainObject.fromExternalId(oid);
+            return AbstractDomainObject.fromExternalId(parameter);
         } catch (NumberFormatException e) {
             return null;
         }
@@ -110,11 +109,10 @@ public class DegreeSiteManagementDispatchAction extends SiteManagementDA {
     }
 
     public ActionForward viewInformation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         RequestUtils.getAndSetStringToRequest(request, "info");
 
-        Integer degreeCurricularPlanID =
-                Integer.valueOf(RequestUtils.getAndSetStringToRequest(request, "degreeCurricularPlanID"));
+        String degreeCurricularPlanID = RequestUtils.getAndSetStringToRequest(request, "degreeCurricularPlanID");
         DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
 
         ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
@@ -153,8 +151,7 @@ public class DegreeSiteManagementDispatchAction extends SiteManagementDA {
 
     public ActionForward viewDescriptionCurricularPlan(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
-        Integer degreeCurricularPlanID =
-                Integer.valueOf(RequestUtils.getAndSetStringToRequest(request, "degreeCurricularPlanID"));
+        String degreeCurricularPlanID = RequestUtils.getAndSetStringToRequest(request, "degreeCurricularPlanID");
         DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
         if (degreeCurricularPlan == null) {
             final ActionErrors errors = new ActionErrors();
@@ -174,10 +171,9 @@ public class DegreeSiteManagementDispatchAction extends SiteManagementDA {
     }
 
     public ActionForward viewHistoric(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response)  {
+            HttpServletResponse response) {
         // read execution degree
-        Integer degreeCurricularPlanID =
-                Integer.valueOf(RequestUtils.getAndSetStringToRequest(request, "degreeCurricularPlanID"));
+        String degreeCurricularPlanID = RequestUtils.getAndSetStringToRequest(request, "degreeCurricularPlanID");
         DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
 
         if (degreeCurricularPlan.hasAnyExecutionDegrees()) {

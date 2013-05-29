@@ -148,7 +148,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
     }
 
     public ActionForward createProgram(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException,  FenixServiceException {
+            HttpServletResponse response) throws FenixActionException, FenixServiceException {
         executeFactoryMethod();
         return mapping.findForward("program");
     }
@@ -179,7 +179,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
     }
 
     public ActionForward editProgram(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException,  FenixServiceException {
+            HttpServletResponse response) throws FenixActionException, FenixServiceException {
         executeFactoryMethod();
         return mapping.findForward("program");
     }
@@ -198,7 +198,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
     }
 
     public ActionForward createObjectives(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException, FenixActionException {
+            HttpServletResponse response) throws FenixServiceException, FenixActionException {
         executeFactoryMethod();
         return mapping.findForward("objectives");
     }
@@ -309,7 +309,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
     }
 
     public ActionForward importEvaluationMethod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         importContent(request, "ImportEvaluationMethod");
         return mapping.findForward("evaluationMethod");
@@ -391,7 +391,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 
         final String bibliographicReferenceIDString = request.getParameter("bibliographicReferenceID");
         final IUserView userView = getUserView(request);
-        DeleteBibliographicReference.runDeleteBibliographicReference(Integer.valueOf(bibliographicReferenceIDString));
+        DeleteBibliographicReference.runDeleteBibliographicReference(bibliographicReferenceIDString);
 
         return mapping.findForward("bibliographicReference");
     }
@@ -425,7 +425,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
     }
 
     public ActionForward importBibliographicReferences(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         importContent(request, "ImportBibliographicReferences");
         return mapping.findForward("bibliographicReference");
@@ -465,7 +465,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
     }
 
     public ActionForward importLessonPlannings(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         final IViewState viewState = RenderUtils.getViewState();
         ImportLessonPlanningsBean bean = (ImportLessonPlanningsBean) viewState.getMetaObject().getObject();
@@ -491,7 +491,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
     }
 
     public ActionForward importLessonPlanningsBySummaries(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         final IViewState viewState = RenderUtils.getViewState();
         ImportLessonPlanningsBean bean = (ImportLessonPlanningsBean) viewState.getMetaObject().getObject();
@@ -526,10 +526,9 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
     }
 
     public ActionForward moveUpLessonPlanning(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
-        Integer lessonPlanningID = Integer.valueOf(request.getParameter("lessonPlanningID"));
-        LessonPlanning lessonPlanning = AbstractDomainObject.fromExternalId(lessonPlanningID);
+        LessonPlanning lessonPlanning = AbstractDomainObject.fromExternalId(request.getParameter("lessonPlanningID"));
         try {
             MoveLessonPlanning.runMoveLessonPlanning(lessonPlanning.getExecutionCourse().getExternalId(), lessonPlanning,
                     (lessonPlanning.getOrderOfPlanning() - 1));
@@ -541,10 +540,9 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
     }
 
     public ActionForward moveDownLessonPlanning(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
-        Integer lessonPlanningID = Integer.valueOf(request.getParameter("lessonPlanningID"));
-        LessonPlanning lessonPlanning = AbstractDomainObject.fromExternalId(lessonPlanningID);
+        LessonPlanning lessonPlanning = AbstractDomainObject.fromExternalId(request.getParameter("lessonPlanningID"));
         try {
             MoveLessonPlanning.runMoveLessonPlanning(lessonPlanning.getExecutionCourse().getExternalId(), lessonPlanning,
                     (lessonPlanning.getOrderOfPlanning() + 1));
@@ -566,14 +564,13 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
     public ActionForward prepareEditLessonPlanning(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 
-        Integer lessonPlanningID = Integer.valueOf(request.getParameter("lessonPlanningID"));
-        LessonPlanning lessonPlanning = AbstractDomainObject.fromExternalId(lessonPlanningID);
+        LessonPlanning lessonPlanning = AbstractDomainObject.fromExternalId(request.getParameter("lessonPlanningID"));
         request.setAttribute("lessonPlanning", lessonPlanning);
         return mapping.findForward("create-lessonPlanning");
     }
 
     public ActionForward createLessonPlanning(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         IViewState viewState = RenderUtils.getViewState();
         final CreateLessonPlanningBean lessonPlanningBean = (CreateLessonPlanningBean) viewState.getMetaObject().getObject();
@@ -591,10 +588,9 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
     }
 
     public ActionForward deleteLessonPlanning(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
-        Integer lessonPlanningID = Integer.valueOf(request.getParameter("lessonPlanningID"));
-        LessonPlanning lessonPlanning = AbstractDomainObject.fromExternalId(lessonPlanningID);
+        LessonPlanning lessonPlanning = AbstractDomainObject.fromExternalId(request.getParameter("lessonPlanningID"));
         if (lessonPlanning != null) {
             try {
                 DeleteLessonPlanning.runDeleteLessonPlanning(lessonPlanning.getExecutionCourse().getExternalId(), lessonPlanning,
@@ -607,7 +603,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
     }
 
     public ActionForward deleteLessonPlannings(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         ShiftType lessonType = ShiftType.valueOf(request.getParameter("shiftType"));
         final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
@@ -701,7 +697,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
     }
 
     public ActionForward importSections(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         importContent(request, "ImportSections");
         return mapping.findForward("sectionsManagement");
     }
@@ -764,7 +760,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
     }
 
     public ActionForward sortBibliographyReferences(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         ExecutionCourse executionCourse = getExecutionCourse(request);
         boolean optional = request.getParameter("optional") != null;
 
@@ -818,7 +814,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 
         String executionCourseID = request.getParameter("executionCourseID");
 
-        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(Integer.valueOf(executionCourseID));
+        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseID);
         SortedSet<Shift> shifts = executionCourse.getShiftsOrderedByLessons();
 
         request.setAttribute("shifts", shifts);
@@ -838,11 +834,11 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
             request.setAttribute("showPhotos", "false");
         }
 
-        Shift shift = AbstractDomainObject.fromExternalId(Integer.valueOf(shiftID));
-        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(Integer.valueOf(executionCourseID));
+        Shift shift = AbstractDomainObject.fromExternalId(shiftID);
+        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseID);
 
         if (registrationID != null) {
-            Registration registration = AbstractDomainObject.fromExternalId(Integer.valueOf(registrationID));
+            Registration registration = AbstractDomainObject.fromExternalId(registrationID);
             shift.removeAttendFromShift(registration, executionCourse);
             request.setAttribute("registration", registration);
         }
@@ -866,13 +862,12 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         PersonBean bean = getRenderedObject("personBean");
         String id = bean.getUsername();
         Student student = Student.readStudentByNumber(Integer.valueOf(id));
-        ExecutionCourse executionCourse =
-                AbstractDomainObject.fromExternalId(Integer.parseInt(request.getParameter("executionCourseID")));
+        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(request.getParameter("executionCourseID"));
 
         if (student != null) {
             try {
                 new EnrollStudentInShifts().run(executionCourse.getRegistration(student.getPerson()),
-                        Integer.parseInt(request.getParameter("shiftID")));
+                        request.getParameter("shiftID"));
             } catch (FenixServiceException e) {
                 final ActionErrors actionErrors = new ActionErrors();
                 actionErrors.add("error", new ActionMessage("label.invalid.student.number"));
@@ -894,12 +889,12 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         String executionCourseID = request.getParameter("executionCourseID");
         String removeAll = request.getParameter("removeAll");
 
-        Shift shift = AbstractDomainObject.fromExternalId(Integer.valueOf(shiftID));
+        Shift shift = AbstractDomainObject.fromExternalId(shiftID);
 
         if (removeAll != null) {
             request.setAttribute("removeAll", removeAll);
         } else {
-            Registration registration = AbstractDomainObject.fromExternalId(Integer.valueOf(registrationID));
+            Registration registration = AbstractDomainObject.fromExternalId(registrationID);
             request.setAttribute("registration", registration);
         }
 
@@ -915,8 +910,8 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         String executionCourseID = request.getParameter("executionCourseID");
         String shiftID = request.getParameter("shiftID");
 
-        Shift shift = AbstractDomainObject.fromExternalId(Integer.valueOf(shiftID));
-        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(Integer.valueOf(executionCourseID));
+        Shift shift = AbstractDomainObject.fromExternalId(shiftID);
+        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseID);
 
         for (Registration registration : shift.getStudents()) {
             shift.removeAttendFromShift(registration, executionCourse);

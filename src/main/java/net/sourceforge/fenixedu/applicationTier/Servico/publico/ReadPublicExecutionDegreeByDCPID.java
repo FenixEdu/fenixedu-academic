@@ -18,7 +18,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ReadPublicExecutionDegreeByDCPID {
 
     @Service
-    public static List<InfoExecutionDegree> run(Integer degreeCurricularPlanID) throws FenixServiceException {
+    public static List<InfoExecutionDegree> run(String degreeCurricularPlanID) throws FenixServiceException {
         DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
 
         List<InfoExecutionDegree> result = new ArrayList<InfoExecutionDegree>();
@@ -30,7 +30,7 @@ public class ReadPublicExecutionDegreeByDCPID {
     }
 
     @Service
-    public static InfoExecutionDegree run(Integer degreeCurricularPlanID, Integer executionYearID) {
+    public static InfoExecutionDegree run(String degreeCurricularPlanID, String executionYearID) {
         DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
         ExecutionYear executionYear = AbstractDomainObject.fromExternalId(executionYearID);
 

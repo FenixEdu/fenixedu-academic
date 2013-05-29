@@ -96,7 +96,7 @@ public class PresentationMaterialManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward prepareDeletePresentationMaterial(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         Integer presentationMaterialId = getCodeFromRequest(request, "oid");
 
         NewPresentationMaterial presentationMaterial = AbstractDomainObject.fromExternalId(presentationMaterialId);
@@ -110,7 +110,7 @@ public class PresentationMaterialManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward deletePresentationMaterial(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         Integer presentationMaterialId = getCodeFromRequest(request, "oid");
 
         NewPresentationMaterial presentationMaterial = AbstractDomainObject.fromExternalId(presentationMaterialId);
@@ -132,7 +132,7 @@ public class PresentationMaterialManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward switchPresentationMaterial(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         Integer presentationMaterialId = getCodeFromRequest(request, "oid");
 
         NewPresentationMaterial presentationMaterial = AbstractDomainObject.fromExternalId(presentationMaterialId);
@@ -149,7 +149,7 @@ public class PresentationMaterialManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward createPresentationMaterial(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         PresentationMaterialBean bean = (PresentationMaterialBean) getMetaObject("edit-presentation-materials");
 
         bean.setPresentationMaterialType(null);
@@ -162,7 +162,7 @@ public class PresentationMaterialManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward createPictureMaterial(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException, IOException {
+            HttpServletResponse response) throws FenixServiceException, IOException {
         PresentationMaterialBean bean = (PresentationMaterialBean) getMetaObject("create-picture-material");
 
         IUserView userView = getUserView(request);
@@ -180,7 +180,7 @@ public class PresentationMaterialManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward invalidCreatePresentationMaterial(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         PresentationMaterialBean bean = (PresentationMaterialBean) getMetaObject("edit-presentation-materials");
 
         request.setAttribute("bean", bean);
@@ -189,7 +189,7 @@ public class PresentationMaterialManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward invalidCreatePictureMaterial(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         PresentationMaterialBean bean = (PresentationMaterialBean) getMetaObject("create-picture-material");
 
         request.setAttribute("bean", bean);

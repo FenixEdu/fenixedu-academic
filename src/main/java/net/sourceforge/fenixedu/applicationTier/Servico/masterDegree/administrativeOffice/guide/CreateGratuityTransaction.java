@@ -29,7 +29,7 @@ public class CreateGratuityTransaction {
 
     @Checked("RolePredicates.MANAGER_PREDICATE")
     @Service
-    public static void run(Integer guideEntryID, IUserView userView) {
+    public static void run(String guideEntryID, IUserView userView) {
 
         GuideEntry guideEntry = AbstractDomainObject.fromExternalId(guideEntryID);
 

@@ -113,7 +113,7 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
     }
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws  FenixServiceException {
+            throws FenixServiceException {
         final Collection<ExecutionSemester> executionSemesters = rootDomainObject.getExecutionPeriodsSet();
         final Set<ExecutionSemester> sortedExecutionPeriods = new TreeSet<ExecutionSemester>(executionSemesters);
         request.setAttribute("executionPeriods", sortedExecutionPeriods);
@@ -179,12 +179,9 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
     }
 
     private DomainObject setDomainObjectInRequest(final DynaActionForm dynaActionForm, final HttpServletRequest request,
-            final Class clazz, final String formAttributeName, final String requestAttributeName) throws 
-            FenixServiceException {
+            final Class clazz, final String formAttributeName, final String requestAttributeName) throws FenixServiceException {
         final String domainObjectIDString = (String) dynaActionForm.get(formAttributeName);
-        final Integer domainObjectID =
-                domainObjectIDString == null || domainObjectIDString.length() == 0 ? null : Integer.valueOf(domainObjectIDString);
-        final DomainObject domainObject = AbstractDomainObject.fromExternalId(clazz, domainObjectID);
+        final DomainObject domainObject = AbstractDomainObject.fromExternalId(domainObjectIDString);
         request.setAttribute(requestAttributeName, domainObject);
         return domainObject;
     }

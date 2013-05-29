@@ -52,7 +52,7 @@ public class EditGroupShift {
 
     @Checked("RolePredicates.STUDENT_PREDICATE")
     @Service
-    public static Boolean run(Integer studentGroupID, Integer groupingID, Integer newShiftID, String username)
+    public static Boolean run(String studentGroupID, String groupingID, String newShiftID, String username)
             throws FenixServiceException {
 
         ServiceMonitoring.logService(EditGroupShift.class, studentGroupID, groupingID, newShiftID, username);

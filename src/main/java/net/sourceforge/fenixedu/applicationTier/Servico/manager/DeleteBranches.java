@@ -23,15 +23,15 @@ public class DeleteBranches {
     // delete a set of branches
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
-    public static List run(List internalIds, Boolean forceDelete) throws FenixServiceException {
-        Iterator iter = internalIds.iterator();
+    public static List run(List<String> internalIds, Boolean forceDelete) throws FenixServiceException {
+        Iterator<String> iter = internalIds.iterator();
 
         List undeletedCodes = new ArrayList();
-        Integer internalId;
+        String internalId;
         Branch branch;
 
         while (iter.hasNext()) {
-            internalId = (Integer) iter.next();
+            internalId = iter.next();
             branch = AbstractDomainObject.fromExternalId(internalId);
             if (branch != null) {
                 try {

@@ -16,8 +16,8 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class AddContextToCurricularCourse {
 
     @Service
-    public static void run(CurricularCourse curricularCourse, CourseGroup courseGroup, Integer beginExecutionPeriodID,
-            Integer endExecutionPeriodID, Integer year, Integer semester) throws FenixServiceException {
+    public static void run(CurricularCourse curricularCourse, CourseGroup courseGroup, String beginExecutionPeriodID,
+            String endExecutionPeriodID, Integer year, Integer semester) throws FenixServiceException {
 
         CurricularPeriod degreeCurricularPeriod = courseGroup.getParentDegreeCurricularPlan().getDegreeStructure();
 
@@ -55,7 +55,7 @@ public class AddContextToCurricularCourse {
         courseGroup.addContext(curricularCourse, curricularPeriod, beginExecutionPeriod, endExecutionPeriod);
     }
 
-    private static ExecutionSemester getBeginExecutionPeriod(final Integer beginExecutionPeriodID) {
+    private static ExecutionSemester getBeginExecutionPeriod(final String beginExecutionPeriodID) {
         if (beginExecutionPeriodID == null) {
             return ExecutionSemester.readActualExecutionSemester();
         } else {
@@ -63,10 +63,10 @@ public class AddContextToCurricularCourse {
         }
     }
 
-    private static ExecutionSemester getEndExecutionPeriod(Integer endExecutionPeriodID) {
+    private static ExecutionSemester getEndExecutionPeriod(String endExecutionPeriodID) {
         final ExecutionSemester endExecutionPeriod =
-                (endExecutionPeriodID == null) ? null : AbstractDomainObject.fromExternalId(
-                        endExecutionPeriodID);
+                (endExecutionPeriodID == null) ? null : AbstractDomainObject
+                        .<ExecutionSemester> fromExternalId(endExecutionPeriodID);
         return endExecutionPeriod;
     }
 }

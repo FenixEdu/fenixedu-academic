@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.ManagerAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.OperatorAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ScientificCouncilAuthorizationFilter;
@@ -16,7 +15,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class DeletePersonFunction {
 
-    protected void run(Integer personFunctionID) throws FenixServiceException {
+    protected void run(String personFunctionID) throws FenixServiceException {
         PersonFunction personFunction = (PersonFunction) AbstractDomainObject.fromExternalId(personFunctionID);
         if (personFunction == null) {
             throw new FenixServiceException("error.delete.personFunction.no.personFunction");
@@ -29,7 +28,7 @@ public class DeletePersonFunction {
     private static final DeletePersonFunction serviceInstance = new DeletePersonFunction();
 
     @Service
-    public static void runDeletePersonFunction(Integer personFunctionID) throws FenixServiceException, NotAuthorizedException {
+    public static void runDeletePersonFunction(String personFunctionID) throws FenixServiceException, NotAuthorizedException {
         try {
             ManagerAuthorizationFilter.instance.execute();
             serviceInstance.run(personFunctionID);

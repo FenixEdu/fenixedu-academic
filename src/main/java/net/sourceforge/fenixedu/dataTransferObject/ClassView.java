@@ -27,7 +27,7 @@ public class ClassView {
         return getSchoolClass().getNome();
     }
 
-    public Integer getClassOID() {
+    public String getClassOID() {
         return getSchoolClass().getExternalId();
     }
 
@@ -39,7 +39,7 @@ public class ClassView {
         return getSchoolClass().getExecutionPeriod().getSemester();
     }
 
-    public Integer getDegreeCurricularPlanID() {
+    public String getDegreeCurricularPlanID() {
         return getSchoolClass().getExecutionDegree().getDegreeCurricularPlan().getExternalId();
     }
 
@@ -47,7 +47,7 @@ public class ClassView {
         return getSchoolClass().getExecutionDegree().getDegreeCurricularPlan().getDegree().getSigla();
     }
 
-    public Integer getExecutionPeriodOID() {
+    public String getExecutionPeriodOID() {
         return getSchoolClass().getExecutionPeriod().getExternalId();
     }
 

@@ -23,7 +23,7 @@ public class SearchPublicationsDA extends SearchPublicationsAction {
 
     @Override
     public ActionForward prepareSearchPublication(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         SearchDSpaceBean bean = createNewBean();
         bean.addSearchElement();
@@ -53,7 +53,7 @@ public class SearchPublicationsDA extends SearchPublicationsAction {
             site = (Site) context.getLastContentInPath(Site.class);
         } else {
             String siteID = request.getParameter("siteID");
-            site = (Site) AbstractDomainObject.fromExternalId(Integer.valueOf(siteID));
+            site = (Site) AbstractDomainObject.fromExternalId(siteID);
         }
         request.setAttribute("site", site);
     }

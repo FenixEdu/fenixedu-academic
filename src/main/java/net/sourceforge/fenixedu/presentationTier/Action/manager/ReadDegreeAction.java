@@ -50,9 +50,9 @@ public class ReadDegreeAction extends FenixAction {
 
         IUserView userView = UserView.getUser();
 
-        Integer degreeId = null;
+        String degreeId = null;
         if (request.getParameter("degreeId") != null) {
-            degreeId = new Integer(request.getParameter("degreeId"));
+            degreeId = request.getParameter("degreeId");
         }
         InfoDegree degree = null;
 

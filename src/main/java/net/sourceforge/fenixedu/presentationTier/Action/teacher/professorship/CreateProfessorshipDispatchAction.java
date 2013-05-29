@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
@@ -49,10 +50,10 @@ public class CreateProfessorshipDispatchAction extends FenixDispatchAction {
 
         final DynaActionForm personExecutionCourseForm = (DynaActionForm) form;
 
-        final Integer executionCourseId = Integer.valueOf((String) personExecutionCourseForm.get("executionCourseId"));
+        final String executionCourseId = (String) personExecutionCourseForm.get("executionCourseId");
         final Boolean responsibleFor = (Boolean) personExecutionCourseForm.get("responsibleFor");
 
-        Professorship.create(responsibleFor, AbstractDomainObject.fromExternalId(executionCourseId),
+        Professorship.create(responsibleFor, AbstractDomainObject.<ExecutionCourse> fromExternalId(executionCourseId),
                 getPerson(personExecutionCourseForm), 0.0);
 
         return mapping.findForward("final-step");
@@ -113,8 +114,8 @@ public class CreateProfessorshipDispatchAction extends FenixDispatchAction {
     private void prepareThirdStep(DynaValidatorForm personExecutionCourseForm, HttpServletRequest request)
             throws FenixServiceException {
         prepareSecondStep(personExecutionCourseForm, request);
-        Integer executionDegreeId = Integer.valueOf((String) personExecutionCourseForm.get("executionDegreeId"));
-        Integer executionPeriodId = Integer.valueOf((String) personExecutionCourseForm.get("executionPeriodId"));
+        String executionDegreeId = (String) personExecutionCourseForm.get("executionDegreeId");
+        String executionPeriodId = (String) personExecutionCourseForm.get("executionPeriodId");
 
         List executionCourses = ReadExecutionCoursesByExecutionDegreeService.run(executionDegreeId, executionPeriodId);
         String personId = (String) personExecutionCourseForm.get("teacherId");

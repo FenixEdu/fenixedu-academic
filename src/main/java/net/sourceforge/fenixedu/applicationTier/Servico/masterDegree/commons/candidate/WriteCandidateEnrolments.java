@@ -23,7 +23,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class WriteCandidateEnrolments {
 
-    protected void run(Set<Integer> selectedCurricularCoursesIDs, Integer candidateID, Double credits, String givenCreditsRemarks)
+    protected void run(Set<String> selectedCurricularCoursesIDs, String candidateID, Double credits, String givenCreditsRemarks)
             throws FenixServiceException {
 
         MasterDegreeCandidate masterDegreeCandidate = AbstractDomainObject.fromExternalId(candidateID);
@@ -38,8 +38,8 @@ public class WriteCandidateEnrolments {
         }
 
         List<CandidateEnrolment> candidateEnrolments = masterDegreeCandidate.getCandidateEnrolments();
-        List<Integer> candidateEnrolmentsCurricularCoursesIDs =
-                (List<Integer>) CollectionUtils.collect(candidateEnrolments, new Transformer() {
+        List<String> candidateEnrolmentsCurricularCoursesIDs =
+                (List<String>) CollectionUtils.collect(candidateEnrolments, new Transformer() {
                     @Override
                     public Object transform(Object arg0) {
                         CandidateEnrolment candidateEnrolment = (CandidateEnrolment) arg0;
@@ -47,7 +47,7 @@ public class WriteCandidateEnrolments {
                     }
                 });
 
-        Collection<Integer> curricularCoursesToEnroll =
+        Collection<String> curricularCoursesToEnroll =
                 CollectionUtils.subtract(selectedCurricularCoursesIDs, candidateEnrolmentsCurricularCoursesIDs);
 
         final Collection<Integer> curricularCoursesToDelete =
@@ -77,12 +77,12 @@ public class WriteCandidateEnrolments {
      * @throws ExcepcaoPersistencia
      */
     private void writeFilteredEnrollments(MasterDegreeCandidate masterDegreeCandidate,
-            Collection<Integer> curricularCoursesToEnroll) throws NonExistingServiceException {
-        Iterator iterCurricularCourseIds = curricularCoursesToEnroll.iterator();
+            Collection<String> curricularCoursesToEnroll) throws NonExistingServiceException {
+        Iterator<String> iterCurricularCourseIds = curricularCoursesToEnroll.iterator();
         while (iterCurricularCourseIds.hasNext()) {
 
             CurricularCourse curricularCourse =
-                    (CurricularCourse) AbstractDomainObject.fromExternalId((Integer) iterCurricularCourseIds.next());
+                    (CurricularCourse) AbstractDomainObject.fromExternalId(iterCurricularCourseIds.next());
 
             if (curricularCourse == null) {
                 throw new NonExistingServiceException();
@@ -100,8 +100,8 @@ public class WriteCandidateEnrolments {
     private static final WriteCandidateEnrolments serviceInstance = new WriteCandidateEnrolments();
 
     @Service
-    public static void runWriteCandidateEnrolments(Set<Integer> selectedCurricularCoursesIDs, Integer candidateID,
-            Double credits, String givenCreditsRemarks) throws FenixServiceException, NotAuthorizedException {
+    public static void runWriteCandidateEnrolments(Set<String> selectedCurricularCoursesIDs, String candidateID, Double credits,
+            String givenCreditsRemarks) throws FenixServiceException, NotAuthorizedException {
         WriteCandidateEnrolmentsAuhorizationFilter.instance.execute(selectedCurricularCoursesIDs, candidateID, credits,
                 givenCreditsRemarks);
         serviceInstance.run(selectedCurricularCoursesIDs, candidateID, credits, givenCreditsRemarks);

@@ -21,18 +21,18 @@ public class ExecutionCourseWrittenEvaluationAgregationBean {
 
             };
 
-    private ExecutionCourse executionCourse;
-    private Integer curricularYear;
-    private Collection<WrittenEvaluation> writtenEvaluations;
+    private final ExecutionCourse executionCourse;
+    private final String curricularYear;
+    private final Collection<WrittenEvaluation> writtenEvaluations;
 
-    public ExecutionCourseWrittenEvaluationAgregationBean(Integer curricularYear, ExecutionCourse executionCourse,
+    public ExecutionCourseWrittenEvaluationAgregationBean(String curricularYear, ExecutionCourse executionCourse,
             Set<WrittenEvaluation> writtenEvaluations) {
         this.curricularYear = curricularYear;
         this.executionCourse = executionCourse;
         this.writtenEvaluations = writtenEvaluations;
     }
 
-    public Integer getCurricularYear() {
+    public String getCurricularYear() {
         return curricularYear;
     }
 

@@ -3,7 +3,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBranch;
 import net.sourceforge.fenixedu.domain.Branch;
@@ -21,7 +20,7 @@ public class InsertBranch {
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
     public static void run(InfoBranch infoBranch) throws NonExistingServiceException {
-        final Integer degreeCurricularPlanId = infoBranch.getInfoDegreeCurricularPlan().getExternalId();
+        final String degreeCurricularPlanId = infoBranch.getInfoDegreeCurricularPlan().getExternalId();
         final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanId);
 
         if (degreeCurricularPlan == null) {

@@ -52,7 +52,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization {
      */
     @Checked("RolePredicates.MANAGER_PREDICATE")
     @Service
-    public static Object run(Integer executionDegreeId, String executionYearName, String persistentSupportecializationName,
+    public static Object run(String executionDegreeId, String executionYearName, String persistentSupportecializationName,
             String gratuitySituationTypeName) throws FenixServiceException {
 
         // at least one of the arguments it's obligator
@@ -210,7 +210,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization {
     // Service Invokers migrated from Berserk
 
     @Service
-    public static Object runReadGratuitySituationListByExecutionDegreeAndSpecialization(Integer executionDegreeId,
+    public static Object runReadGratuitySituationListByExecutionDegreeAndSpecialization(String executionDegreeId,
             String executionYearName, String persistentSupportecializationName, String gratuitySituationTypeName)
             throws FenixServiceException, NotAuthorizedException {
         try {

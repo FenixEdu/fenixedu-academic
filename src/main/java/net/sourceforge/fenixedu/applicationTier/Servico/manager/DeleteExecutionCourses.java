@@ -24,10 +24,10 @@ public class DeleteExecutionCourses {
     // called from ReadExecutionCourseAction
     //      (not present in any funcionality)
     @Service
-    public static List<String> run(final List<Integer> executionCourseIDs) throws FenixServiceException {
+    public static List<String> run(final List<String> executionCourseIDs) throws FenixServiceException {
         final List<String> undeletedExecutionCoursesCodes = new ArrayList<String>();
 
-        for (final Integer executionCourseID : executionCourseIDs) {
+        for (final String executionCourseID : executionCourseIDs) {
             final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseID);
 
             if (!executionCourse.canBeDeleted()) {

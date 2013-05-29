@@ -32,7 +32,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class ReadInquiryStatistics {
 
-    public List<InfoInquiryStatistics> run(Integer executionCourseId, Integer distributedTestId, String path)
+    public List<InfoInquiryStatistics> run(String executionCourseId, String distributedTestId, String path)
             throws FenixServiceException {
         List<InfoInquiryStatistics> infoInquiryStatisticsList = new ArrayList<InfoInquiryStatistics>();
         DistributedTest distributedTest = AbstractDomainObject.fromExternalId(distributedTestId);
@@ -103,7 +103,7 @@ public class ReadInquiryStatistics {
     private static final ReadInquiryStatistics serviceInstance = new ReadInquiryStatistics();
 
     @Service
-    public static List<InfoInquiryStatistics> runReadInquiryStatistics(Integer executionCourseId, Integer distributedTestId,
+    public static List<InfoInquiryStatistics> runReadInquiryStatistics(String executionCourseId, String distributedTestId,
             String path) throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
         return serviceInstance.run(executionCourseId, distributedTestId, path);

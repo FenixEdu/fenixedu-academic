@@ -36,9 +36,9 @@ public class CreateExecutionDegreesForExecutionYearBean extends FenixBackingBean
 
     private String chosenDegreeType;
 
-    private Integer[] choosenDegreeCurricularPlansIDs;
+    private String[] choosenDegreeCurricularPlansIDs;
 
-    private Integer[] choosenBolonhaDegreeCurricularPlansIDs;
+    private String[] choosenBolonhaDegreeCurricularPlansIDs;
 
     private UISelectItems degreeCurricularPlansSelectItems;
 
@@ -218,7 +218,7 @@ public class CreateExecutionDegreesForExecutionYearBean extends FenixBackingBean
     }
 
     public void onChoosenExecutionYearChanged(ValueChangeEvent valueChangeEvent) {
-        setChoosenExecutionYearID((Integer) valueChangeEvent.getNewValue());
+        setChoosenExecutionYearID((String) valueChangeEvent.getNewValue());
 
         setYearsAccordingToChosenExecutionYear();
     }
@@ -341,19 +341,19 @@ public class CreateExecutionDegreesForExecutionYearBean extends FenixBackingBean
         return Data.getExpirationYearsSelectItems();
     }
 
-    public Integer[] getChoosenDegreeCurricularPlansIDs() {
+    public String[] getChoosenDegreeCurricularPlansIDs() {
         return choosenDegreeCurricularPlansIDs;
     }
 
-    public void setChoosenDegreeCurricularPlansIDs(Integer[] choosenDegreeCurricularPlansIDs) {
+    public void setChoosenDegreeCurricularPlansIDs(String[] choosenDegreeCurricularPlansIDs) {
         this.choosenDegreeCurricularPlansIDs = choosenDegreeCurricularPlansIDs;
     }
 
-    public Integer[] getChoosenBolonhaDegreeCurricularPlansIDs() {
+    public String[] getChoosenBolonhaDegreeCurricularPlansIDs() {
         return choosenBolonhaDegreeCurricularPlansIDs;
     }
 
-    public void setChoosenBolonhaDegreeCurricularPlansIDs(Integer[] choosenBolonhaDegreeCurricularPlansIDs) {
+    public void setChoosenBolonhaDegreeCurricularPlansIDs(String[] choosenBolonhaDegreeCurricularPlansIDs) {
         this.choosenBolonhaDegreeCurricularPlansIDs = choosenBolonhaDegreeCurricularPlansIDs;
     }
 
@@ -361,11 +361,11 @@ public class CreateExecutionDegreesForExecutionYearBean extends FenixBackingBean
         return AbstractDomainObject.fromExternalId(getChoosenExecutionYearID());
     }
 
-    public Integer getChoosenExecutionYearID() {
-        return (Integer) this.getViewState().getAttribute("choosenExecutionYearID");
+    public String getChoosenExecutionYearID() {
+        return (String) this.getViewState().getAttribute("choosenExecutionYearID");
     }
 
-    public void setChoosenExecutionYearID(Integer choosenExecutionYearID) {
+    public void setChoosenExecutionYearID(String choosenExecutionYearID) {
         this.getViewState().setAttribute("choosenExecutionYearID", choosenExecutionYearID);
     }
 

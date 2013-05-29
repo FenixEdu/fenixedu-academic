@@ -20,11 +20,11 @@ public class ReadAvailableExecutionPeriods {
 
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
-    public static List run(List<Integer> unavailableExecutionPeriodsIDs) throws FenixServiceException {
+    public static List run(List<String> unavailableExecutionPeriodsIDs) throws FenixServiceException {
 
         final Collection<ExecutionSemester> filteredExecutionPeriods =
                 new ArrayList<ExecutionSemester>(RootDomainObject.getInstance().getExecutionPeriodsSet());
-        for (final Integer executionPeriodID : unavailableExecutionPeriodsIDs) {
+        for (final String executionPeriodID : unavailableExecutionPeriodsIDs) {
             final ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodID);
             filteredExecutionPeriods.remove(executionSemester);
         }

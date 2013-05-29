@@ -35,7 +35,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class ReadStudentsAndMarksByEvaluation {
 
-    protected Object run(Integer executionCourseCode, Integer evaluationCode) throws FenixServiceException {
+    protected Object run(String executionCourseCode, String evaluationCode) throws FenixServiceException {
 
         InfoEvaluation infoEvaluation = new InfoEvaluation();
 
@@ -107,7 +107,7 @@ public class ReadStudentsAndMarksByEvaluation {
     private static final ReadStudentsAndMarksByEvaluation serviceInstance = new ReadStudentsAndMarksByEvaluation();
 
     @Service
-    public static Object runReadStudentsAndMarksByEvaluation(Integer executionCourseCode, Integer evaluationCode)
+    public static Object runReadStudentsAndMarksByEvaluation(String executionCourseCode, String evaluationCode)
             throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseCode);
         return serviceInstance.run(executionCourseCode, evaluationCode);

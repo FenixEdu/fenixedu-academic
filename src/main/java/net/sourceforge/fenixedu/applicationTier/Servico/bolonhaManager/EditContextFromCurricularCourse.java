@@ -14,7 +14,7 @@ public class EditContextFromCurricularCourse {
 
     @Service
     public static void run(CurricularCourse curricularCourse, Context context, CourseGroup courseGroup, Integer year,
-            Integer semester, Integer beginExecutionPeriodID, Integer endExecutionPeriodID) {
+            Integer semester, String beginExecutionPeriodID, String endExecutionPeriodID) {
 
         final CurricularPeriod degreeCurricularPeriod =
                 context.getParentCourseGroup().getParentDegreeCurricularPlan().getDegreeStructure();
@@ -51,7 +51,7 @@ public class EditContextFromCurricularCourse {
                 getEndExecutionPeriod(endExecutionPeriodID));
     }
 
-    private static ExecutionSemester getBeginExecutionPeriod(final Integer beginExecutionPeriodID) {
+    private static ExecutionSemester getBeginExecutionPeriod(final String beginExecutionPeriodID) {
         if (beginExecutionPeriodID == null) {
             return ExecutionSemester.readActualExecutionSemester();
         } else {
@@ -59,10 +59,10 @@ public class EditContextFromCurricularCourse {
         }
     }
 
-    private static ExecutionSemester getEndExecutionPeriod(Integer endExecutionPeriodID) {
+    private static ExecutionSemester getEndExecutionPeriod(String endExecutionPeriodID) {
         final ExecutionSemester endExecutionPeriod =
-                (endExecutionPeriodID == null) ? null : AbstractDomainObject.fromExternalId(
-                        endExecutionPeriodID);
+                (endExecutionPeriodID == null) ? null : AbstractDomainObject
+                        .<ExecutionSemester> fromExternalId(endExecutionPeriodID);
         return endExecutionPeriod;
     }
 }

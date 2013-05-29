@@ -3,7 +3,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.BolonhaManagerAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ScientificCouncilAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingCompetenceCourseInformationException;
@@ -20,13 +19,13 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class EditCompetenceCourse {
 
-    protected void run(Integer competenceCourseID, String objectives, String program, String evaluationMethod,
+    protected void run(String competenceCourseID, String objectives, String program, String evaluationMethod,
             String objectivesEn, String programEn, String evaluationMethodEn) throws FenixServiceException {
         final CompetenceCourse competenceCourse = readCompetenceCourse(competenceCourseID);
         competenceCourse.edit(objectives, program, evaluationMethod, objectivesEn, programEn, evaluationMethodEn);
     }
 
-    protected void run(Integer competenceCourseID, String name, String nameEn, Boolean basic,
+    protected void run(String competenceCourseID, String name, String nameEn, Boolean basic,
             CompetenceCourseLevel competenceCourseLevel, CompetenceCourseType type, CurricularStage curricularStage)
             throws FenixServiceException {
         final CompetenceCourse competenceCourse = readCompetenceCourse(competenceCourseID);
@@ -34,23 +33,23 @@ public class EditCompetenceCourse {
         competenceCourse.edit(name, nameEn, basic, competenceCourseLevel, type, curricularStage);
     }
 
-    protected void run(Integer competenceCourseID, String acronym) throws FenixServiceException {
+    protected void run(String competenceCourseID, String acronym) throws FenixServiceException {
         final CompetenceCourse competenceCourse = readCompetenceCourse(competenceCourseID);
         competenceCourse.editAcronym(acronym);
     }
 
-    protected void run(Integer competenceCourseID, CurricularStage curricularStage) throws FenixServiceException {
+    protected void run(String competenceCourseID, CurricularStage curricularStage) throws FenixServiceException {
         final CompetenceCourse competenceCourse = readCompetenceCourse(competenceCourseID);
         competenceCourse.changeCurricularStage(curricularStage);
     }
 
-    protected void run(Integer competenceCourseID, String year, String title, String authors, String reference,
+    protected void run(String competenceCourseID, String year, String title, String authors, String reference,
             BibliographicReferenceType bibliographicReferenceType, String url) throws FenixServiceException {
         final CompetenceCourse competenceCourse = readCompetenceCourse(competenceCourseID);
         competenceCourse.createBibliographicReference(year, title, authors, reference, buildUrl(url), bibliographicReferenceType);
     }
 
-    protected void run(Integer competenceCourseID, Integer bibliographicReferenceID, String year, String title, String authors,
+    protected void run(String competenceCourseID, Integer bibliographicReferenceID, String year, String title, String authors,
             String reference, BibliographicReferenceType bibliographicReferenceType, String url) throws FenixServiceException {
 
         final CompetenceCourse competenceCourse = readCompetenceCourse(competenceCourseID);
@@ -58,17 +57,17 @@ public class EditCompetenceCourse {
                 bibliographicReferenceType);
     }
 
-    protected void run(Integer competenceCourseID, Integer bibliographicReferenceID) throws FenixServiceException {
+    protected void run(String competenceCourseID, Integer bibliographicReferenceID) throws FenixServiceException {
         final CompetenceCourse competenceCourse = readCompetenceCourse(competenceCourseID);
         competenceCourse.deleteBibliographicReference(bibliographicReferenceID);
     }
 
-    protected void run(Integer competenceCourseID, Integer oldPosition, Integer newPosition) throws FenixServiceException {
+    protected void run(String competenceCourseID, Integer oldPosition, Integer newPosition) throws FenixServiceException {
         final CompetenceCourse competenceCourse = readCompetenceCourse(competenceCourseID);
         competenceCourse.switchBibliographicReferencePosition(oldPosition, newPosition);
     }
 
-    private CompetenceCourse readCompetenceCourse(Integer competenceCourseID) throws FenixServiceException {
+    private CompetenceCourse readCompetenceCourse(String competenceCourseID) throws FenixServiceException {
         final CompetenceCourse competenceCourse = AbstractDomainObject.fromExternalId(competenceCourseID);
         if (competenceCourse == null) {
             throw new FenixServiceException("error.noCompetenceCourse");
@@ -109,7 +108,7 @@ public class EditCompetenceCourse {
     private static final EditCompetenceCourse serviceInstance = new EditCompetenceCourse();
 
     @Service
-    public static void runEditCompetenceCourse(Integer competenceCourseID, String objectives, String program,
+    public static void runEditCompetenceCourse(String competenceCourseID, String objectives, String program,
             String evaluationMethod, String objectivesEn, String programEn, String evaluationMethodEn)
             throws FenixServiceException, NotAuthorizedException {
         try {
@@ -128,7 +127,7 @@ public class EditCompetenceCourse {
     }
 
     @Service
-    public static void runEditCompetenceCourse(Integer competenceCourseID, CurricularStage curricularStage)
+    public static void runEditCompetenceCourse(String competenceCourseID, CurricularStage curricularStage)
             throws FenixServiceException, NotAuthorizedException {
         try {
             BolonhaManagerAuthorizationFilter.instance.execute();
@@ -144,7 +143,7 @@ public class EditCompetenceCourse {
     }
 
     @Service
-    public static void runEditCompetenceCourse(Integer competenceCourseID, String acronym) throws FenixServiceException,
+    public static void runEditCompetenceCourse(String competenceCourseID, String acronym) throws FenixServiceException,
             NotAuthorizedException {
         try {
             BolonhaManagerAuthorizationFilter.instance.execute();
@@ -160,7 +159,7 @@ public class EditCompetenceCourse {
     }
 
     @Service
-    public static void runEditCompetenceCourse(Integer competenceCourseID, String year, String title, String author,
+    public static void runEditCompetenceCourse(String competenceCourseID, String year, String title, String author,
             String reference, BibliographicReferenceType valueOf, String url) throws FenixServiceException {
         try {
             BolonhaManagerAuthorizationFilter.instance.execute();
@@ -176,7 +175,7 @@ public class EditCompetenceCourse {
     }
 
     @Service
-    public static void runEditCompetenceCourse(Integer competenceCourseID, Integer bibliographicReferenceID, String year,
+    public static void runEditCompetenceCourse(String competenceCourseID, Integer bibliographicReferenceID, String year,
             String title, String author, String reference, BibliographicReferenceType valueOf, String url)
             throws FenixServiceException {
         try {
@@ -193,7 +192,7 @@ public class EditCompetenceCourse {
     }
 
     @Service
-    public static void runEditCompetenceCourse(Integer competenceCourseID, Integer bibliographicReferenceIDToDelete)
+    public static void runEditCompetenceCourse(String competenceCourseID, Integer bibliographicReferenceIDToDelete)
             throws FenixServiceException {
         try {
             BolonhaManagerAuthorizationFilter.instance.execute();
@@ -209,7 +208,7 @@ public class EditCompetenceCourse {
     }
 
     @Service
-    public static void runEditCompetenceCourse(Integer competenceCourseID, Integer oldPosition, Integer newPosition)
+    public static void runEditCompetenceCourse(String competenceCourseID, Integer oldPosition, Integer newPosition)
             throws FenixServiceException {
         try {
             BolonhaManagerAuthorizationFilter.instance.execute();
@@ -225,7 +224,7 @@ public class EditCompetenceCourse {
     }
 
     @Service
-    public static void runEditCompetenceCourse(Integer competenceCourseID, String name, String nameEn, Boolean basic,
+    public static void runEditCompetenceCourse(String competenceCourseID, String name, String nameEn, Boolean basic,
             CompetenceCourseLevel enumCompetenceCourseLevel, CompetenceCourseType enumCompetenceCourseType,
             CurricularStage valueOf) throws FenixServiceException {
         try {

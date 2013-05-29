@@ -25,9 +25,9 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class EditDistributedTest {
 
-    protected void run(Integer executionCourseId, final Integer distributedTestId, String testInformation,
-            String evaluationTitle, Calendar beginDate, Calendar beginHour, Calendar endDate, Calendar endHour,
-            TestType testType, CorrectionAvailability correctionAvailability, Boolean imsFeedback) throws FenixServiceException {
+    protected void run(String executionCourseId, final String distributedTestId, String testInformation, String evaluationTitle,
+            Calendar beginDate, Calendar beginHour, Calendar endDate, Calendar endHour, TestType testType,
+            CorrectionAvailability correctionAvailability, Boolean imsFeedback) throws FenixServiceException {
         ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
         if (executionCourse == null) {
             throw new InvalidArgumentsServiceException();
@@ -112,7 +112,7 @@ public class EditDistributedTest {
     private static final EditDistributedTest serviceInstance = new EditDistributedTest();
 
     @Service
-    public static void runEditDistributedTest(Integer executionCourseId, Integer distributedTestId, String testInformation,
+    public static void runEditDistributedTest(String executionCourseId, String distributedTestId, String testInformation,
             String evaluationTitle, Calendar beginDate, Calendar beginHour, Calendar endDate, Calendar endHour,
             TestType testType, CorrectionAvailability correctionAvailability, Boolean imsFeedback) throws FenixServiceException,
             NotAuthorizedException {

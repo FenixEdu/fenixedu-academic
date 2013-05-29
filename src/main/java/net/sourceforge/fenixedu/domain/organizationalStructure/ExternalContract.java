@@ -112,7 +112,7 @@ public class ExternalContract extends ExternalContract_Base {
     }
 
     public static ExternalContract readByPersonNameAddressAndInstitutionID(final String name, final String address,
-            final Integer institutionID) {
+            final String institutionID) {
         for (Accountability accountability : RootDomainObject.getInstance().getAccountabilitys()) {
             if (accountability instanceof ExternalContract) {
                 ExternalContract externalPerson = (ExternalContract) accountability;
@@ -127,7 +127,7 @@ public class ExternalContract extends ExternalContract_Base {
         return null;
     }
 
-    public static List<ExternalContract> readByIDs(Collection<Integer> accountabilityIDs) {
+    public static List<ExternalContract> readByIDs(Collection<String> accountabilityIDs) {
         List<ExternalContract> externalPersons = new ArrayList<ExternalContract>();
         if (accountabilityIDs == null || accountabilityIDs.isEmpty()) {
             return externalPersons;

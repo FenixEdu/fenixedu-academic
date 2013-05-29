@@ -18,7 +18,7 @@ import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class CreateTSDCurricularCourses {
-    protected void run(Integer tsdId, Integer competenceCourseId, Integer tsdProcessPhaseId, Integer executionPeriodId,
+    protected void run(String tsdId, String competenceCourseId, String tsdProcessPhaseId, String executionPeriodId,
             Boolean activateCourses) {
 
         TeacherServiceDistribution tsd = AbstractDomainObject.fromExternalId(tsdId);
@@ -48,8 +48,8 @@ public class CreateTSDCurricularCourses {
     private static final CreateTSDCurricularCourses serviceInstance = new CreateTSDCurricularCourses();
 
     @Service
-    public static void runCreateTSDCurricularCourses(Integer tsdId, Integer competenceCourseId, Integer tsdProcessPhaseId,
-            Integer executionPeriodId, Boolean activateCourses) throws NotAuthorizedException {
+    public static void runCreateTSDCurricularCourses(String tsdId, String competenceCourseId, String tsdProcessPhaseId,
+            String executionPeriodId, Boolean activateCourses) throws NotAuthorizedException {
         try {
             DepartmentMemberAuthorizationFilter.instance.execute();
             serviceInstance.run(tsdId, competenceCourseId, tsdProcessPhaseId, executionPeriodId, activateCourses);

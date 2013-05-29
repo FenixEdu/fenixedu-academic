@@ -28,7 +28,7 @@ public class ReadCandidateList {
             Integer candidateNumber, String executionYearString) {
 
         final ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(executionYearString);
-        ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(Integer.valueOf(degreeName));
+        ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(degreeName);
 
         final Set<MasterDegreeCandidate> result;
         if (executionDegree == null && degreeType == null && candidateSituation == null && candidateNumber == null) {

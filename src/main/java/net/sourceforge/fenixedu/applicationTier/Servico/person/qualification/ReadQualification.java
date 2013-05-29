@@ -33,7 +33,7 @@ public class ReadQualification extends ReadDomainObjectService {
     }
 
     @Override
-    protected DomainObject readDomainObject(final Integer externalId) {
+    protected DomainObject readDomainObject(final String externalId) {
         return AbstractDomainObject.fromExternalId(externalId);
     }
 
@@ -42,7 +42,7 @@ public class ReadQualification extends ReadDomainObjectService {
     private static final ReadQualification serviceInstance = new ReadQualification();
 
     @Service
-    public static InfoObject runReadQualification(Integer externalId) throws NotAuthorizedException {
+    public static InfoObject runReadQualification(String externalId) throws NotAuthorizedException {
         ReadQualificationAuthorizationFilter.instance.execute(externalId);
         return serviceInstance.run(externalId);
     }

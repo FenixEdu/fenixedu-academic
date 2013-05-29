@@ -18,7 +18,6 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -45,14 +44,13 @@ public class ManageExternalRegistrationDataDA extends FenixDispatchAction {
     }
 
     public ActionForward edit(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         executeFactoryMethod();
         return prepare(mapping, actionForm, request, response);
     }
 
     private Registration getAndTransportRegistration(final HttpServletRequest request) {
-        final Registration registration =
-                AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "registrationId"));
+        final Registration registration = getDomainObject(request, "registrationId");
         request.setAttribute("registration", registration);
         return registration;
     }

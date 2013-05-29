@@ -20,7 +20,7 @@ public class BolonhaOrLEECCoordinatorAuthorizationFilter extends AuthorizationBy
         return RoleType.COORDINATOR;
     }
 
-    public void execute(Integer executionDegreeID) throws NotAuthorizedException {
+    public void execute(String executionDegreeID) throws NotAuthorizedException {
         Person person = AccessControl.getUserView().getPerson();
 
         if (!person.hasRole(getRoleType())) {
@@ -32,7 +32,7 @@ public class BolonhaOrLEECCoordinatorAuthorizationFilter extends AuthorizationBy
         }
     }
 
-    private boolean executionDegreeIsBolonhaOrLEEC(Integer executionDegreeID) {
+    private boolean executionDegreeIsBolonhaOrLEEC(String executionDegreeID) {
         if (executionDegreeID == null) {
             return false;
         }
@@ -46,7 +46,7 @@ public class BolonhaOrLEECCoordinatorAuthorizationFilter extends AuthorizationBy
         return false;
     }
 
-    private boolean isCoordinatorOfExecutionDegree(Person person, Integer executionDegreeID) {
+    private boolean isCoordinatorOfExecutionDegree(Person person, String executionDegreeID) {
         if (executionDegreeID == null) {
             return false;
         }

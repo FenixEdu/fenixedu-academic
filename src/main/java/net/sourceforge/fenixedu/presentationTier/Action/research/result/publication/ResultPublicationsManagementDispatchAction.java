@@ -327,14 +327,10 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
         ResearchResultPublication result;
         String resultId = request.getParameter("resultId");
         if (resultId != null) {
-            result =
-                    (ResearchResultPublication) AbstractDomainObject.fromExternalId(ResearchResult.class,
-                            Integer.valueOf(resultId));
+            result = (ResearchResultPublication) AbstractDomainObject.fromExternalId(resultId);
             request.setAttribute("resultId", result.getExternalId());
         } else {
-            result =
-                    (ResearchResultPublication) AbstractDomainObject.fromExternalId(ResearchResult.class,
-                            (Integer) request.getAttribute("resultId"));
+            result = (ResearchResultPublication) AbstractDomainObject.fromExternalId((String) request.getAttribute("resultId"));
         }
         return result;
     }
@@ -395,7 +391,7 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
     }
 
     public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-        final Integer resultId = getRequestParameterAsInteger(request, "resultId");
+        final String resultId = getRequestParameterAsString(request, "resultId");
 
         if (getFromRequest(request, "cancel") != null) {
             final ResearchResultPublication publication = (ResearchResultPublication) getResultFromRequest(request);
@@ -652,7 +648,7 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
     public ActionForward addUnitToAll(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         Person person = getLoggedPerson(request);
-        Unit unit = (Unit) AbstractDomainObject.fromExternalId(Integer.parseInt(request.getParameter("unitID")));
+        Unit unit = (Unit) AbstractDomainObject.fromExternalId(request.getParameter("unitID"));
         for (ResearchResultPublication publication : getLoggedPerson(request).getResearchResultPublications()) {
             if (publication.getClass().getSimpleName().equalsIgnoreCase("unstructured") == false) {
                 ResultUnitAssociationCreationBean bean = new ResultUnitAssociationCreationBean(publication);

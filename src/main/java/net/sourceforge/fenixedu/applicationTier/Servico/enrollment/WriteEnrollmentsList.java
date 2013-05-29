@@ -35,7 +35,7 @@ public class WriteEnrollmentsList {
         }
 
         for (final String enrolmentInfo : curricularCourses) {
-            final Integer curricularCourseId = Integer.valueOf(enrolmentInfo.split("-")[0]);
+            final String curricularCourseId = enrolmentInfo.split("-")[0];
             final CurricularCourse curricularCourse = readCurricularCourse(curricularCourseId);
 
             final Integer enrollmentclass = Integer.valueOf(optionalEnrollments.get(curricularCourseId.toString()).toString());
@@ -45,7 +45,7 @@ public class WriteEnrollmentsList {
         }
     }
 
-    private CurricularCourse readCurricularCourse(final Integer curricularCourseId) {
+    private CurricularCourse readCurricularCourse(final String curricularCourseId) {
         return (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseId);
     }
 

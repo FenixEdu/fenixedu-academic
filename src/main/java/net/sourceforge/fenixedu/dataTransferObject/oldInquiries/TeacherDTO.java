@@ -17,7 +17,7 @@ public abstract class TeacherDTO implements Serializable {
 
     public abstract DomainObject getTeacher();
 
-    public Integer getPersonID() {
+    public String getPersonID() {
         return null;
     }
 

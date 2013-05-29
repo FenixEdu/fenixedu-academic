@@ -12,7 +12,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class DeleteContextFromDegreeModule {
 
     @Service
-    public static void run(final Integer degreeModuleID, final Integer contextID) throws FenixServiceException {
+    public static void run(final String degreeModuleID, final String contextID) throws FenixServiceException {
         final DegreeModule degreeModule = AbstractDomainObject.fromExternalId(degreeModuleID);
         if (degreeModule == null) {
             throw new FenixServiceException("error.noDegreeModule");

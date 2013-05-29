@@ -28,7 +28,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class CreateExercise {
 
-    protected Boolean run(Integer executionCourseId, Integer metadataId, String author, String description,
+    protected Boolean run(String executionCourseId, String metadataId, String author, String description,
             QuestionDifficultyType questionDifficultyType, String mainSubject, String secondarySubject, Calendar learningTime,
             String level, SubQuestion subQuestion, String questionText, String secondQuestionText, String[] options,
             String[] correctOptions, String[] shuffle, String correctFeedbackText, String wrongFeedbackText,
@@ -92,7 +92,7 @@ public class CreateExercise {
     private static final CreateExercise serviceInstance = new CreateExercise();
 
     @Service
-    public static Boolean runCreateExercise(Integer executionCourseId, Integer metadataId, String author, String description,
+    public static Boolean runCreateExercise(String executionCourseId, String metadataId, String author, String description,
             QuestionDifficultyType questionDifficultyType, String mainSubject, String secondarySubject, Calendar learningTime,
             String level, SubQuestion subQuestion, String questionText, String secondQuestionText, String[] options,
             String[] correctOptions, String[] shuffle, String correctFeedbackText, String wrongFeedbackText,

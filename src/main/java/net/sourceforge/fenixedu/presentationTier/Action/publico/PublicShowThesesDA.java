@@ -24,8 +24,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
-
 public abstract class PublicShowThesesDA extends FenixDispatchAction {
 
     protected Boolean getFromRequestBoolean(String parameter, HttpServletRequest request) {
@@ -99,23 +97,11 @@ public abstract class PublicShowThesesDA extends FenixDispatchAction {
     }
 
     private Degree getCustomDegree(HttpServletRequest request) {
-        Integer id = getExternalId(request, "degreeID");
-
-        if (id == null) {
-            return null;
-        }
-
-        return AbstractDomainObject.fromExternalId(id);
+        return getDomainObject(request, "degreeID");
     }
 
     private ExecutionYear getCustomExecutionYear(HttpServletRequest request) {
-        Integer id = getExternalId(request, "executionYearID");
-
-        if (id == null) {
-            return null;
-        }
-
-        return AbstractDomainObject.fromExternalId(id);
+        return getDomainObject(request, "executionYearID");
     }
 
     protected void collectTheses(HttpServletRequest request, SortedSet<ExecutionYear> years,
@@ -160,9 +146,7 @@ public abstract class PublicShowThesesDA extends FenixDispatchAction {
 
     public ActionForward showThesisDetails(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        Integer thesisId = getIntegerFromRequest(request, "thesisID");
-
-        Thesis thesis = AbstractDomainObject.fromExternalId(thesisId);
+        Thesis thesis = getDomainObject(request, "thesisID");
         request.setAttribute("thesis", thesis);
 
         return mapping.findForward("showThesisDetails");
@@ -170,9 +154,8 @@ public abstract class PublicShowThesesDA extends FenixDispatchAction {
 
     public ActionForward showResult(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        Integer thesisId = getIntegerFromRequest(request, "thesisID");
 
-        ResearchResult result = AbstractDomainObject.fromExternalId(thesisId);
+        ResearchResult result = getDomainObject(request, "thesisID");
         request.setAttribute("result", result);
 
         return mapping.findForward("showResult");

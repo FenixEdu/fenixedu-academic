@@ -13,7 +13,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ReadExecutionDegreesByExecutionYearId {
 
     @Service
-    public static List run(Integer executionYearId) {
+    public static List run(String executionYearId) {
 
         List<InfoExecutionDegree> infoExecutionDegreeList = null;
 

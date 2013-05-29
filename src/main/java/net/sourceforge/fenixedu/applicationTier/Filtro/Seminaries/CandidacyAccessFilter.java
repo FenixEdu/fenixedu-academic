@@ -27,16 +27,16 @@ public class CandidacyAccessFilter {
     public CandidacyAccessFilter() {
     }
 
-    public void execute(Integer candidacyID) throws NotAuthorizedException {
+    public void execute(String candidacyID) throws NotAuthorizedException {
         IUserView id = AccessControl.getUserView();
 
-        if ((!this.checkCandidacyOwnership(id, candidacyID)) && (!this.checkCoordinatorRole(id, candidacyID))) {
+        if ((!this.checkCandidacyOwnership(id, candidacyID)) && (!this.checkCoordinatorRole(id))) {
             throw new NotAuthorizedException();
         }
 
     }
 
-    boolean checkCoordinatorRole(IUserView id, Integer candidacyID) {
+    boolean checkCoordinatorRole(IUserView id) {
         boolean result = true;
         // Collection roles = id.getRoles();
         // Iterator iter = roles.iterator();
@@ -51,15 +51,14 @@ public class CandidacyAccessFilter {
         return result;
     }
 
-    boolean checkCandidacyOwnership(IUserView id, Integer candidacyID) {
+    boolean checkCandidacyOwnership(IUserView id, String candidacyID) {
         boolean result = true;
 
         Registration registration = Registration.readByUsername(id.getUtilizador());
         if (registration != null) {
             SeminaryCandidacy candidacy = AbstractDomainObject.fromExternalId(candidacyID);
             //
-            if ((candidacy != null)
-                    && (candidacy.getStudent().getExternalId().intValue() != registration.getExternalId().intValue())) {
+            if ((candidacy != null) && !(candidacy.getStudent().getExternalId().equals(registration.getExternalId()))) {
                 result = false;
             }
         } else {

@@ -39,7 +39,7 @@ public class CreateGuideFromTransactions {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
-    public static InfoGuide run(InfoGuide infoGuide, String remarks, GuideState situationOfGuide, List transactionsIDs)
+    public static InfoGuide run(InfoGuide infoGuide, String remarks, GuideState situationOfGuide, List<String> transactionsIDs)
             throws FenixServiceException {
 
         GuideSituation guideSituation = null;
@@ -80,8 +80,7 @@ public class CreateGuideFromTransactions {
         }
 
         // Get the Execution Degree
-        ExecutionDegree executionDegree =
-                AbstractDomainObject.fromExternalId(infoGuide.getInfoExecutionDegree().getExternalId());
+        ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(infoGuide.getInfoExecutionDegree().getExternalId());
 
         Party contributor = Party.readByContributorNumber(infoGuide.getInfoContributor().getContributorNumber());
         Person person = Person.readPersonByUsername(infoGuide.getInfoPerson().getUsername());
@@ -93,14 +92,13 @@ public class CreateGuideFromTransactions {
         // Write the new Guide
 
         // Write the new Entries of the Guide
-        Iterator iterator = transactionsIDs.iterator();
+        Iterator<String> iterator = transactionsIDs.iterator();
         PaymentTransaction transaction = null;
-        Integer transactionId = null;
         GuideEntry guideEntry = null;
         double guideTotal = 0;
 
         while (iterator.hasNext()) {
-            transactionId = (Integer) iterator.next();
+            String transactionId = iterator.next();
             transaction = (PaymentTransaction) AbstractDomainObject.fromExternalId(transactionId);
             if (transaction == null) {
                 throw new ExcepcaoInexistente();

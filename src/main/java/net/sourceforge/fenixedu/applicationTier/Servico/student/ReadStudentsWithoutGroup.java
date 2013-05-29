@@ -37,7 +37,7 @@ public class ReadStudentsWithoutGroup {
 
     @Checked("RolePredicates.STUDENT_PREDICATE")
     @Service
-    public static ISiteComponent run(final Integer groupPropertiesCode, final String username) throws FenixServiceException {
+    public static ISiteComponent run(final String groupPropertiesCode, final String username) throws FenixServiceException {
 
         final InfoSiteStudentsWithoutGroup infoSiteStudentsWithoutGroup = new InfoSiteStudentsWithoutGroup();
         final Grouping grouping = AbstractDomainObject.fromExternalId(groupPropertiesCode);

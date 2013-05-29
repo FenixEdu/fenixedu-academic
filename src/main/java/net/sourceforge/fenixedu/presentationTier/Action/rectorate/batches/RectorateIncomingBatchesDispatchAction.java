@@ -102,8 +102,7 @@ public class RectorateIncomingBatchesDispatchAction extends FenixDispatchAction 
     }
 
     protected IDocumentRequest getDocumentRequest(HttpServletRequest request) {
-        return (IDocumentRequest) AbstractDomainObject.fromExternalId(getRequestParameterAsInteger(request,
-                "documentRequestId"));
+        return (IDocumentRequest) AbstractDomainObject.fromExternalId(getRequestParameterAsString(request, "documentRequestId"));
     }
 
     public ActionForward printDocument(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

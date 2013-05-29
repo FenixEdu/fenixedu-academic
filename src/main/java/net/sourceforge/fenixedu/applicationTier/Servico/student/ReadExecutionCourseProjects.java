@@ -28,7 +28,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ReadExecutionCourseProjects {
 
     @Service
-    public static ISiteComponent run(Integer executionCourseID, String userName) throws FenixServiceException {
+    public static ISiteComponent run(String executionCourseID, String userName) throws FenixServiceException {
 
         InfoSiteProjects infoSiteProjects = null;
 

@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity;
 
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentStatus;
 import net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFileEntry;
@@ -17,7 +16,7 @@ public class FixSibsEntryByID {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
-    public static void run(Integer sibsEntryId) throws FenixServiceException {
+    public static void run(String sibsEntryId) throws FenixServiceException {
         SibsPaymentFileEntry sibsPaymentFileEntry = AbstractDomainObject.fromExternalId(sibsEntryId);
         if (sibsPaymentFileEntry == null) {
             throw new FenixServiceException();

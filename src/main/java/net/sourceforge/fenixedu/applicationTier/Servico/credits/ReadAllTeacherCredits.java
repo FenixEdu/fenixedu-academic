@@ -23,7 +23,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ReadAllTeacherCredits {
 
     @Service
-    public static List<CreditLineDTO> run(Integer teacherID) throws ParseException {
+    public static List<CreditLineDTO> run(String teacherID) throws ParseException {
 
         List<CreditLineDTO> creditLines = new ArrayList<CreditLineDTO>();
         final Teacher teacher = AbstractDomainObject.fromExternalId(teacherID);

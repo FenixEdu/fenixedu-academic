@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -23,7 +22,7 @@ public class VerifyGroupingAndStudentGroupWithoutShift {
 
     @Checked("RolePredicates.STUDENT_PREDICATE")
     @Service
-    public static Integer run(Integer studentGroupCode, Integer groupPropertiesCode, String shiftCodeString, String username)
+    public static Integer run(String studentGroupCode, String groupPropertiesCode, String shiftCodeString, String username)
             throws FenixServiceException {
         Grouping groupProperties = AbstractDomainObject.fromExternalId(groupPropertiesCode);
 
@@ -37,21 +36,16 @@ public class VerifyGroupingAndStudentGroupWithoutShift {
             throw new InvalidSituationServiceException();
         }
 
-        Integer shiftCode = null;
-        if (shiftCodeString != null) {
-            shiftCode = new Integer(shiftCodeString);
-        }
-
-        if (studentGroup.getShift() != null && shiftCode == null) {
+        if (studentGroup.getShift() != null && shiftCodeString == null) {
             throw new InvalidArgumentsServiceException();
         }
 
         if (studentGroup.getShift() == null) {
-            if (shiftCode != null) {
+            if (shiftCodeString != null) {
                 throw new InvalidArgumentsServiceException();
             }
         } else {
-            if (studentGroup.getShift().getExternalId().intValue() != shiftCode.intValue()) {
+            if (!studentGroup.getShift().getExternalId().equals(shiftCodeString)) {
                 throw new InvalidArgumentsServiceException();
             }
         }

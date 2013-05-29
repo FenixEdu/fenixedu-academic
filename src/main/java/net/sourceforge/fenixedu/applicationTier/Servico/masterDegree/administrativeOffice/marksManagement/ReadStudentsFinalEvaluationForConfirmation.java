@@ -31,7 +31,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ReadStudentsFinalEvaluationForConfirmation {
 
     @Service
-    public static InfoSiteEnrolmentEvaluation run(Integer curricularCourseCode, String yearString) throws FenixServiceException {
+    public static InfoSiteEnrolmentEvaluation run(String curricularCourseCode, String yearString) throws FenixServiceException {
 
         List infoEnrolmentEvaluations = new ArrayList();
         InfoTeacher infoTeacher = null;

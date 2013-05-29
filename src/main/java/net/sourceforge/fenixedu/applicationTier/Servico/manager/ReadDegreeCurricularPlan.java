@@ -3,7 +3,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.CoordinatorAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ManagerAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.OperatorAuthorizationFilter;
@@ -22,7 +21,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ReadDegreeCurricularPlan {
 
-    protected InfoDegreeCurricularPlan run(final Integer externalId) throws FenixServiceException {
+    protected InfoDegreeCurricularPlan run(final String externalId) throws FenixServiceException {
 
         final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(externalId);
 
@@ -38,7 +37,7 @@ public class ReadDegreeCurricularPlan {
     private static final ReadDegreeCurricularPlan serviceInstance = new ReadDegreeCurricularPlan();
 
     @Service
-    public static InfoDegreeCurricularPlan runReadDegreeCurricularPlan(Integer externalId) throws FenixServiceException,
+    public static InfoDegreeCurricularPlan runReadDegreeCurricularPlan(String externalId) throws FenixServiceException,
             NotAuthorizedException {
         try {
             ManagerAuthorizationFilter.instance.execute();

@@ -42,7 +42,7 @@ public class ProjectManagementBackingBean extends EvaluationManagementBackingBea
 
     protected Project project;
 
-    protected Integer projectID;
+    protected String projectID;
 
     protected List<Project> associatedProjects;
 
@@ -50,7 +50,7 @@ public class ProjectManagementBackingBean extends EvaluationManagementBackingBea
 
     protected Integer maxSubmissionsToKeep;
 
-    protected Integer groupingID;
+    protected String groupingID;
 
     protected List<SelectItem> executionCourseGroupings;
 
@@ -139,7 +139,7 @@ public class ProjectManagementBackingBean extends EvaluationManagementBackingBea
         return this.project;
     }
 
-    public List<Project> getAssociatedProjects() throws  FenixServiceException {
+    public List<Project> getAssociatedProjects() throws FenixServiceException {
         if (this.associatedProjects == null) {
             final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(getExecutionCourseID());
             this.associatedProjects = executionCourse.getAssociatedProjects();
@@ -193,16 +193,16 @@ public class ProjectManagementBackingBean extends EvaluationManagementBackingBea
         return this.description;
     }
 
-    public Integer getProjectID() {
+    public String getProjectID() {
         if (this.projectID == null) {
             if (this.getRequestParameter("projectID") != null && !this.getRequestParameter("projectID").equals("")) {
-                this.projectID = Integer.valueOf(this.getRequestParameter("projectID"));
+                this.projectID = this.getRequestParameter("projectID");
             }
         }
         return this.projectID;
     }
 
-    public void setProjectID(Integer projectID) {
+    public void setProjectID(String projectID) {
         this.projectID = projectID;
     }
 
@@ -228,7 +228,7 @@ public class ProjectManagementBackingBean extends EvaluationManagementBackingBea
         this.endProjectHour = endProjectHour;
     }
 
-    public Integer getGroupingID() {
+    public String getGroupingID() {
         if (this.groupingID == null && this.getProject() != null) {
             Grouping grouping = this.getProject().getGrouping();
 
@@ -237,7 +237,7 @@ public class ProjectManagementBackingBean extends EvaluationManagementBackingBea
         return groupingID;
     }
 
-    public void setGroupingID(Integer groupingID) {
+    public void setGroupingID(String groupingID) {
         this.groupingID = groupingID;
     }
 
@@ -263,7 +263,7 @@ public class ProjectManagementBackingBean extends EvaluationManagementBackingBea
         this.onlineSubmissionsAllowed = onlineSubmissionsAllowed;
     }
 
-    public List<SelectItem> getExecutionCourseGroupings() throws  FenixServiceException {
+    public List<SelectItem> getExecutionCourseGroupings() throws FenixServiceException {
         if (this.executionCourseGroupings == null) {
             this.executionCourseGroupings = new ArrayList<SelectItem>();
 

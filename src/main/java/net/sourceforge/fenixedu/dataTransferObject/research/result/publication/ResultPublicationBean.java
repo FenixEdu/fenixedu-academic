@@ -103,7 +103,7 @@ public abstract class ResultPublicationBean implements Serializable {
 
     private Month month;
 
-    private Integer externalId;
+    private String externalId;
 
     private Boolean createEvent = Boolean.FALSE;
 
@@ -445,11 +445,11 @@ public abstract class ResultPublicationBean implements Serializable {
         this.publicationType = publicationType;
     }
 
-    public Integer getExternalId() {
+    public String getExternalId() {
         return externalId;
     }
 
-    public void setExternalId(Integer externalId) {
+    public void setExternalId(String externalId) {
         this.externalId = externalId;
     }
 

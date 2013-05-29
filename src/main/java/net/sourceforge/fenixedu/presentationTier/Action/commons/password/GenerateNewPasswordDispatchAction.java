@@ -63,7 +63,7 @@ public class GenerateNewPasswordDispatchAction extends FenixDispatchAction {
 
         IUserView userView = getUserView(request);
 
-        Integer personID = new Integer(request.getParameter("personID"));
+        String personID = request.getParameter("personID");
 
         String password = null;
 

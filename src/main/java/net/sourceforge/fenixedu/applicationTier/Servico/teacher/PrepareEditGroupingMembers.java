@@ -24,7 +24,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class PrepareEditGroupingMembers {
 
     @Service
-    public static List run(Integer executionCourseCode, Integer groupingID) throws FenixServiceException {
+    public static List run(Integer executionCourseCode, String groupingID) throws FenixServiceException {
         final Grouping grouping = AbstractDomainObject.fromExternalId(groupingID);
         if (grouping == null) {
             throw new InvalidArgumentsServiceException();

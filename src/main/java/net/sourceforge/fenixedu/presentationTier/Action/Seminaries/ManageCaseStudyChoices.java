@@ -143,7 +143,7 @@ public class ManageCaseStudyChoices extends FenixAction {
         return destiny;
     }
 
-    public InfoSeminaryWithEquivalencies readSeminaryById(IUserView userView, Integer id) throws FenixActionException {
+    public InfoSeminaryWithEquivalencies readSeminaryById(IUserView userView, String id) throws FenixActionException {
         InfoSeminaryWithEquivalencies seminary = null;
         try {
             seminary = GetSeminary.runGetSeminary(id);

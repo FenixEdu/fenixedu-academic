@@ -45,9 +45,9 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class ReadCandidacies {
 
-    protected List run(Integer modalityID, Integer seminaryID, Integer themeID, Integer case1Id, Integer case2Id,
-            Integer case3Id, Integer case4Id, Integer case5Id, Integer curricularCourseID, Integer degreeCurricularPlanID,
-            Boolean approved) throws BDException {
+    protected List run(String modalityID, String seminaryID, String themeID, String case1Id, String case2Id, String case3Id,
+            String case4Id, String case5Id, String curricularCourseID, String degreeCurricularPlanID, Boolean approved)
+            throws BDException {
         // IDs == -1 => not selected
         // approved == nulll => not selected
         //
@@ -60,7 +60,8 @@ public class ReadCandidacies {
         DegreeCurricularPlan degreeCurricularPlan =
                 degreeCurricularPlanID.intValue() == -1 ? null : AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
         CurricularCourse curricularCourse =
-                curricularCourseID.intValue() == -1 ? null : (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseID);
+                curricularCourseID.intValue() == -1 ? null : (CurricularCourse) AbstractDomainObject
+                        .fromExternalId(curricularCourseID);
 
         CaseStudy caseStudy1 = case1Id.intValue() == -1 ? null : AbstractDomainObject.fromExternalId(case1Id);
         CaseStudy caseStudy2 = case2Id.intValue() == -1 ? null : AbstractDomainObject.fromExternalId(case2Id);
@@ -184,9 +185,9 @@ public class ReadCandidacies {
     private static final ReadCandidacies serviceInstance = new ReadCandidacies();
 
     @Service
-    public static List runReadCandidacies(Integer modalityID, Integer seminaryID, Integer themeID, Integer case1Id,
-            Integer case2Id, Integer case3Id, Integer case4Id, Integer case5Id, Integer curricularCourseID,
-            Integer degreeCurricularPlanID, Boolean approved) throws NotAuthorizedException, BDException {
+    public static List runReadCandidacies(String modalityID, String seminaryID, String themeID, String case1Id, String case2Id,
+            String case3Id, String case4Id, Integer case5Id, String curricularCourseID, String degreeCurricularPlanID,
+            Boolean approved) throws NotAuthorizedException, BDException {
         CandidaciesAccessFilter.instance.execute();
         return serviceInstance.run(modalityID, seminaryID, themeID, case1Id, case2Id, case3Id, case4Id, case5Id,
                 curricularCourseID, degreeCurricularPlanID, approved);

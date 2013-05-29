@@ -24,7 +24,7 @@ public class ReadPersonFunctionsByPersonIDAndExecutionYearID {
 
     @Checked("RolePredicates.PERSON_PREDICATE")
     @Service
-    public static List<PersonFunction> run(Integer personID, Integer executionYearID) throws FenixServiceException {
+    public static List<PersonFunction> run(String personID, String executionYearID) throws FenixServiceException {
         Person person = (Person) AbstractDomainObject.fromExternalId(personID);
 
         List<PersonFunction> personFunctions = null;

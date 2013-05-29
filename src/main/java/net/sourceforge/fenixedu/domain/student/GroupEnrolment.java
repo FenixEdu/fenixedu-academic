@@ -36,12 +36,12 @@ public class GroupEnrolment {
 
     @Checked("RolePredicates.STUDENT_AND_TEACHER_PREDICATE")
     @Service
-    public static Boolean run(Integer groupingID, Integer shiftID, Integer groupNumber, List<String> studentUsernames,
+    public static Boolean run(String groupingID, String shiftID, Integer groupNumber, List<String> studentUsernames,
             String studentUsername) throws FenixServiceException {
         return enrole(groupingID, shiftID, groupNumber, studentUsernames, studentUsername);
     }
 
-    public static Boolean enrole(Integer groupingID, Integer shiftID, Integer groupNumber, List<String> studentUsernames,
+    public static Boolean enrole(String groupingID, String shiftID, Integer groupNumber, List<String> studentUsernames,
             String studentUsername) throws FenixServiceException {
         final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
         final Grouping grouping = AbstractDomainObject.fromExternalId(groupingID);

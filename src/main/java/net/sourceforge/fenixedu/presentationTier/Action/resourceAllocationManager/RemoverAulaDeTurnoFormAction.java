@@ -38,7 +38,7 @@ public class RemoverAulaDeTurnoFormAction extends FenixShiftAndExecutionCourseAn
 
         IUserView userView = UserView.getUser();
 
-        Integer shiftOID = new Integer(request.getParameter(PresentationConstants.SHIFT_OID));
+        String shiftOID = request.getParameter(PresentationConstants.SHIFT_OID);
 
         InfoShift infoTurno = ReadShiftByOID.run(shiftOID);
 

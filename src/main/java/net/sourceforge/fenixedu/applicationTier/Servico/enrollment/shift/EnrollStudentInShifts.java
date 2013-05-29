@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift;
 
-
 import net.sourceforge.fenixedu.applicationTier.ServiceMonitoring;
 import net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.ClassEnrollmentAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -16,7 +15,7 @@ public class EnrollStudentInShifts {
     public class StudentNotFoundServiceException extends FenixServiceException {
     }
 
-    public ShiftEnrollmentErrorReport run(final Registration registration, final Integer shiftId) throws FenixServiceException {
+    public ShiftEnrollmentErrorReport run(final Registration registration, final String shiftId) throws FenixServiceException {
 
         ServiceMonitoring.logService(this.getClass(), registration, shiftId);
 
@@ -68,7 +67,7 @@ public class EnrollStudentInShifts {
     private static final EnrollStudentInShifts serviceInstance = new EnrollStudentInShifts();
 
     @Service
-    public static ShiftEnrollmentErrorReport runEnrollStudentInShifts(Registration registration, Integer shiftId)
+    public static ShiftEnrollmentErrorReport runEnrollStudentInShifts(Registration registration, String shiftId)
             throws FenixServiceException, NotAuthorizedException {
         ClassEnrollmentAuthorizationFilter.instance.execute(registration);
         return serviceInstance.run(registration, shiftId);

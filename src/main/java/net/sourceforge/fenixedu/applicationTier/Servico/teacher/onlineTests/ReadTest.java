@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -10,7 +9,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ReadTest {
 
-    protected Test run(Integer executionCourseId, Integer testId) throws FenixServiceException {
+    protected Test run(String executionCourseId, String testId) throws FenixServiceException {
         final Test test = AbstractDomainObject.fromExternalId(testId);
         if (test == null) {
             throw new FenixServiceException();
@@ -23,8 +22,7 @@ public class ReadTest {
     private static final ReadTest serviceInstance = new ReadTest();
 
     @Service
-    public static Test runReadTest(Integer executionCourseId, Integer testId) throws FenixServiceException,
-            NotAuthorizedException {
+    public static Test runReadTest(String executionCourseId, String testId) throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
         return serviceInstance.run(executionCourseId, testId);
     }

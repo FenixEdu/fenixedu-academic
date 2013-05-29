@@ -34,8 +34,7 @@ public class DelegatesManagementDispatchActionForCoordinator extends DelegatesMa
             HttpServletResponse response) throws Exception {
 
         ExecutionDegree executionDegree =
-                (ExecutionDegree) AbstractDomainObject.fromExternalId(ExecutionDegree.class,
-                        (Integer.valueOf((String) getFromRequest(request, "executionDegreeId"))));
+                (ExecutionDegree) AbstractDomainObject.fromExternalId((String) getFromRequest(request, "executionDegreeId"));
         DelegateBean bean = new DelegateBean();
         bean.setDegreeType(executionDegree.getDegreeType());
         bean.setDegree(executionDegree.getDegree());

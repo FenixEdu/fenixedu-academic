@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.gesdis;
 
-
 import net.sourceforge.fenixedu.applicationTier.Factory.TeacherAdministrationSiteComponentBuilder;
 import net.sourceforge.fenixedu.applicationTier.Filtro.gep.GEPAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.gesdis.ReadCourseInformationAuthorizationFilter;
@@ -25,7 +24,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class ReadCourseInformation {
 
-    protected TeacherAdministrationSiteView run(final Integer executionCourseOID) throws FenixServiceException {
+    protected TeacherAdministrationSiteView run(final String executionCourseOID) throws FenixServiceException {
         final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseOID);
         final InfoSiteCourseInformation resultComponent = new InfoSiteCourseInformation(executionCourse);
 
@@ -42,8 +41,8 @@ public class ReadCourseInformation {
     private static final ReadCourseInformation serviceInstance = new ReadCourseInformation();
 
     @Service
-    public static TeacherAdministrationSiteView runReadCourseInformation(Integer executionCourseOID)
-            throws FenixServiceException, NotAuthorizedException {
+    public static TeacherAdministrationSiteView runReadCourseInformation(String executionCourseOID) throws FenixServiceException,
+            NotAuthorizedException {
         try {
             ReadCourseInformationAuthorizationFilter.instance.execute(executionCourseOID);
             return serviceInstance.run(executionCourseOID);

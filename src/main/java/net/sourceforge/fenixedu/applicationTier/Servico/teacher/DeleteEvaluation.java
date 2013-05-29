@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseCoordinatorAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -20,7 +19,7 @@ public class DeleteEvaluation {
      *            executionCourseID used in filtering
      *            (ExecutionCourseLecturingTeacherAuthorizationFilter)
      */
-    protected void run(Integer executionCourseID, Integer evaluationID) throws FenixServiceException {
+    protected void run(String executionCourseID, String evaluationID) throws FenixServiceException {
         final Evaluation evaluation = AbstractDomainObject.fromExternalId(evaluationID);
         if (evaluation == null) {
             throw new FenixServiceException("error.noEvaluation");
@@ -33,7 +32,7 @@ public class DeleteEvaluation {
     private static final DeleteEvaluation serviceInstance = new DeleteEvaluation();
 
     @Service
-    public static void runDeleteEvaluation(Integer executionCourseID, Integer evaluationID) throws FenixServiceException,
+    public static void runDeleteEvaluation(String executionCourseID, String evaluationID) throws FenixServiceException,
             NotAuthorizedException {
         try {
             ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseID);
