@@ -101,13 +101,6 @@
                   <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
                   <form-property type="java.lang.String" name="method"></form-property>
             </form-bean>
-            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="protocolsForm">
-                  <form-property type="java.lang.String" name="method"></form-property>
-                  <form-property type="java.lang.String" name="responsibleID"></form-property>
-                  <form-property type="java.lang.String" name="unitID"></form-property>
-                  <form-property type="java.lang.String" name="fileID"></form-property>
-                  <form-property type="java.lang.String" name="fileName"></form-property>
-            </form-bean>
             <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="creditsPeriodForm">
                   <form-property type="java.lang.String" name="method"></form-property>
             </form-bean>

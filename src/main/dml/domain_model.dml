@@ -277,14 +277,6 @@ valueType net.sourceforge.fenixedu.domain.degreeStructure.EctsComparabilityPerce
     internalizeWith fromString();
 }
 
-valueType net.sourceforge.fenixedu.domain.protocols.util.ProtocolAction as ProtocolAction {
-    externalizeWith {
-        String toString();
-    }
-
-    internalizeWith fromString();
-}
-
 valueType net.sourceforge.fenixedu.domain.tests.TestsGrade as TestsGrade {
     externalizeWith {
         bytearray pt.ist.fenixframework.Externalization.externalizeSerializableGZiped();
@@ -1364,9 +1356,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
         class parking.ParkingFile extends File {
         }
 
-        class protocols.ProtocolFile extends File {
-        }
-
         class research.result.ResearchResultDocumentFile extends File {
             FileResultPermittedGroupType fileResultPermittedGroupType;
             Boolean visible;
@@ -1547,7 +1536,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
         Group assiduousnessManagers;
         Group assiduousnessSectionStaff;
         Group payrollSectionStaff;
-        Group protocolManagers;
     }
 
     class Mark  {
@@ -4490,21 +4478,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
         Integer keyProjectCoordinator;
         Boolean itProject;
         BackendInstance instance;
-    }
-
-    class protocols.Protocol  {
-        Boolean active;
-        String observations;
-        ProtocolAction protocolAction;
-        String protocolNumber;
-        Boolean renewable;
-        String scientificAreas;
-        YearMonthDay signedDate;
-    }
-
-    class protocols.ProtocolHistory  {
-        YearMonthDay beginDate;
-        YearMonthDay endDate;
     }
 
     class reimbursementGuide.ReimbursementGuide  {
@@ -13375,65 +13348,6 @@ relation ProposalTeacherByOrientator {
     Person playsRole orientator;
 }
 
-relation ProtocolFileProtocol {
-    protocols.Protocol playsRole protocol;
-    protocols.ProtocolFile playsRole protocolFiles {
-        multiplicity *;
-    }
-}
-
-relation ProtocolHistoryProtocol {
-    protocols.Protocol playsRole protocol;
-    protocols.ProtocolHistory playsRole protocolHistories {
-        multiplicity *;
-    }
-}
-
-relation ProtocolPartner {
-    organizationalStructure.Unit playsRole partners {
-        multiplicity *;
-    }
-    protocols.Protocol playsRole partnerProtocols {
-        multiplicity *;
-    }
-}
-
-relation ProtocolResponsible {
-    Person playsRole responsibles {
-        multiplicity *;
-    }
-    protocols.Protocol playsRole protocols {
-        multiplicity *;
-    }
-    }
-
-relation ProtocolResponsibleFunction {
-    organizationalStructure.Function playsRole responsibleFunctions {
-        multiplicity *;
-    }
-    protocols.Protocol playsRole protocols {
-        multiplicity *;
-    }
-}
-
-relation ProtocolResponsiblePartner {
-    Person playsRole partnerResponsibles {
-        multiplicity *;
-    }
-    protocols.Protocol playsRole partnerProtocols {
-        multiplicity *;
-    }
-}
-
-relation ProtocolUnit {
-    organizationalStructure.Unit playsRole units {
-        multiplicity *;
-    }
-    protocols.Protocol playsRole protocols {
-        multiplicity *;
-    }
-}
-
 relation PublicationCollaborators {
     organizationalStructure.ResearchUnit playsRole collaboratorIn {
         multiplicity *;
@@ -15326,20 +15240,6 @@ relation RootDomainObjectProjectSubmissionLog {
 relation RootDomainObjectProposal {
     RootDomainObject playsRole rootDomainObject;
     finalDegreeWork.Proposal playsRole proposals {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectProtocol {
-    RootDomainObject playsRole rootDomainObject;
-    protocols.Protocol playsRole protocols {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectProtocolHistory {
-    RootDomainObject playsRole rootDomainObject;
-    protocols.ProtocolHistory playsRole protocolHistories {
         multiplicity *;
     }
 }

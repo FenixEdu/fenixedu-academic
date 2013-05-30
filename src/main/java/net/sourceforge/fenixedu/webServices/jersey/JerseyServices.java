@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.protocols.Protocol;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 
@@ -144,25 +143,6 @@ public class JerseyServices {
             }
         }
         return infos.toJSONString();
-    }
-
-    @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    @Path("readAllProtocols")
-    public static String readAllProtocols() {
-        JSONArray array = new JSONArray();
-        for (Protocol protocol : RootDomainObject.getInstance().getProtocols()) {
-            array.add(protocol.getExternalId());
-        }
-        return array.toJSONString();
-    }
-
-    @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    @Path("readProtocol")
-    public static String readProtocol(@QueryParam("id") String externalId) {
-        Protocol protocol = Protocol.fromExternalId(externalId);
-        return protocol.readProtocol().toJSONString();
     }
 
 }

@@ -419,13 +419,6 @@
     </filter>
 
     <filter>
-        <name>ProtocolsManagementGroup</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.ProtocolsManagementGroup</implementationClass>
-        <description></description>
-        <isTransactional>false</isTransactional>
-    </filter>
-
-    <filter>
         <name>PublishedExamsMapAuthorization</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.PublishedExamsMapAuthorizationFilter</implementationClass>
         <description></description>

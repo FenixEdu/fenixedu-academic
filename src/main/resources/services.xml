@@ -55,15 +55,6 @@
     </service>
 
     <service>
-        <name>AddFileToProtocol</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.protocol.AddFileToProtocol</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="ProtocolsManagementGroup"/>
-        </filterChains>
-    </service>
-
-    <service>
         <name>AddPartyToPrize</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.prizes.AddPartyToPrize</implementationClass>
         <isTransactional>true</isTransactional>

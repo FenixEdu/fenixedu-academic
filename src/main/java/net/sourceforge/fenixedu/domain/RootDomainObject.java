@@ -1211,14 +1211,6 @@ public class RootDomainObject extends RootDomainObject_Base {
     }
 
     @Deprecated
-    public net.sourceforge.fenixedu.domain.protocols.Protocol readProtocolByOID(Integer idInternal) {
-        final net.sourceforge.fenixedu.domain.protocols.Protocol domainObject =
-                (net.sourceforge.fenixedu.domain.protocols.Protocol) pt.ist.fenixframework.pstm.Transaction.readDomainObject(
-                        net.sourceforge.fenixedu.domain.protocols.Protocol.class.getName(), idInternal);
-        return (domainObject == null || domainObject.getRootDomainObject() == null) ? null : domainObject;
-    }
-
-    @Deprecated
     public net.sourceforge.fenixedu.domain.MetaDomainObject readMetaDomainObjectByOID(Integer idInternal) {
         final net.sourceforge.fenixedu.domain.MetaDomainObject domainObject =
                 (net.sourceforge.fenixedu.domain.MetaDomainObject) pt.ist.fenixframework.pstm.Transaction.readDomainObject(
@@ -3198,17 +3190,6 @@ public class RootDomainObject extends RootDomainObject_Base {
             @Override
             public java.util.Set readAllDomainObjects() {
                 return getThemesSet();
-            }
-        });
-        closureAccessMap.put(net.sourceforge.fenixedu.domain.protocols.Protocol.class.getName(), new DomainObjectReader() {
-            @Override
-            public DomainObject readDomainObjectByOID(final Integer idInternal) {
-                return readProtocolByOID(idInternal);
-            }
-
-            @Override
-            public java.util.Set readAllDomainObjects() {
-                return getProtocolsSet();
             }
         });
         closureAccessMap.put(net.sourceforge.fenixedu.domain.MetaDomainObject.class.getName(), new DomainObjectReader() {

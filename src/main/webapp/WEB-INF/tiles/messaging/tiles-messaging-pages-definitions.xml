@@ -101,18 +101,6 @@
 		<put name="body" value="/commons/blank.jsp" />
 	</definition>
 
-	<!-- === Protocols === -->
-	<definition name="search-protocols" extends="definition.messaging.masterPage">
-		<put name="bundle" value="TITLES_RESOURCES"/>
-	    <put name="title" value="private.messaging.search.protocols"/>
-        <put name="body" value="/protocols/searchProtocols.jsp"/>
-    </definition>
-	<definition name="view-protocol-details" extends="definition.messaging.masterPage">
-		<put name="bundle" value="TITLES_RESOURCES"/>
-	    <put name="title" value="private.messaging.search.protocols"/>
-        <put name="body" value="/protocols/viewProtocolDetails.jsp"/>
-    </definition> 
-
 	<!--  ===== Find Experts ===== -->
 	<definition name="show-researchers-results" extends="definition.messaging.masterPage">
        <put name="body" value="/researcher/expertDetails/searchResearchers.jsp"/>

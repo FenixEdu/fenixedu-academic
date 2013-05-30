@@ -33,13 +33,6 @@ public class ManagementGroups extends ManagementGroups_Base {
                 && managementGroups.iterator().next().getPayrollSectionStaff().isMember(person);
     }
 
-    public static boolean isProtocolManagerMember(Person person) {
-        List<ManagementGroups> managementGroups = RootDomainObject.getInstance().getManagementGroups();
-        return managementGroups == null || managementGroups.isEmpty() ? false : managementGroups.iterator().next()
-                .getProtocolManagers() != null
-                && managementGroups.iterator().next().getProtocolManagers().isMember(person);
-    }
-
     public static class AssiduousnessManagerGroupBuilder implements GroupBuilder {
         @Override
         public Group build(Object[] arguments) {
