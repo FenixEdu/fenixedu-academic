@@ -179,6 +179,17 @@ a:hover {
 	color:#7bc2e0;
 }
 
+.disabledLinkAsTag {
+	color: #fff !important;
+	text-shadow: 1px 1px #bbb;
+	cursor: default !important;
+	background-color: #dfdfdf;
+	border-radius: 4px;
+	padding: 2px 5px;
+	text-decoration: none;
+	border-bottom: 0px !important;
+}
+
 img,
 a img {
 	border:0;
@@ -1020,6 +1031,9 @@ table.smalltxt tr td { font-size: 0.85em;}
 .mvert15 { margin-top: 1.5em; margin-bottom: 1.5em; }
 .mvert2 { margin-top: 2em; margin-bottom: 2em; }
 .mvert3 { margin-top: 3em; margin-bottom: 3em; }
+.indent1 { margin-left: 1em; }
+.indent2 { margin-left: 2em; }
+.indent3 { margin-left: 3em; }
 .indent6 { margin-left: 6em; }
 .indent9 { margin-left: 9em; }
 .indent12 { margin-left: 12em; }

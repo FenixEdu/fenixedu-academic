@@ -245,7 +245,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
             addActionMessage("error", request, "mobility.error.mobility.cant.be.null");
             return mapping.findForward("choose-mobility-program");
         }
-
+        request.setAttribute("mobilityIndividualApplicationProcessBean", bean);
         request.setAttribute("degreeCourseInformationBean",
                 new DegreeCourseInformationBean((ExecutionYear) getCurrentOpenParentProcess().getCandidacyExecutionInterval(),
                         (MobilityApplicationProcess) bean.getCandidacyProcess()));
@@ -257,6 +257,10 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
         return getRenderedObject("degree.course.information.bean");
     }
 
+    private MobilityIndividualApplicationProcessBean readMobilityDegreeInformation(HttpServletRequest request) {
+        return getRenderedObject("mobility.individual.application");
+    }
+
     public ActionForward chooseDegree(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
         ActionForward actionForwardError = verifySubmissionPreconditions(mapping);
@@ -264,6 +268,31 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
             return actionForwardError;
         }
 
+        MobilityIndividualApplicationProcessBean bean = readMobilityDegreeInformation(request);
+        request.setAttribute("mobilityIndividualApplicationProcessBean", bean);
+        request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+        request.setAttribute("degreeCourseInformationBean", readDegreeCourseInformationBean(request));
+
+        RenderUtils.invalidateViewState();
+
+        if ("editCandidacy".equals(request.getParameter("userAction"))) {
+            return mapping.findForward("edit-candidacy-degree-and-courses");
+        }
+
+        return mapping.findForward("fill-degree-and-courses-information");
+    }
+
+    public ActionForward chooseDegreeForMobility(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        ActionForward actionForwardError = verifySubmissionPreconditions(mapping);
+        if (actionForwardError != null) {
+            return actionForwardError;
+        }
+
+        MobilityIndividualApplicationProcessBean bean = readMobilityDegreeInformation(request);
+
+        request.setAttribute("selectDegreeView", true);
+        request.setAttribute("mobilityIndividualApplicationProcessBean", bean);
         request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
         request.setAttribute("degreeCourseInformationBean", readDegreeCourseInformationBean(request));
 
@@ -294,7 +323,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
         }
 
         request.setAttribute("degreeCourseInformationBean", readDegreeCourseInformationBean(request));
-
+        request.setAttribute("mobilityIndividualApplicationProcessBean", bean);
         RenderUtils.invalidateViewState();
 
         if ("editCandidacy".equals(request.getParameter("userAction"))) {
@@ -321,7 +350,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
         bean.removeCurricularCourse(courseToRemove);
 
         request.setAttribute("degreeCourseInformationBean", readDegreeCourseInformationBean(request));
-
+        request.setAttribute("mobilityIndividualApplicationProcessBean", bean);
         RenderUtils.invalidateViewState();
 
         if ("editCandidacy".equals(request.getParameter("userAction"))) {
@@ -651,11 +680,13 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
             return actionForwardError;
         }
 
+        MobilityIndividualApplicationProcessBean bean =
+                (MobilityIndividualApplicationProcessBean) getIndividualCandidacyProcessBean();
         request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
         request.setAttribute("degreeCourseInformationBean", new DegreeCourseInformationBean(
                 (ExecutionYear) getCurrentOpenParentProcess().getCandidacyExecutionInterval(),
                 (MobilityApplicationProcess) getIndividualCandidacyProcessBean().getCandidacyProcess()));
-
+        request.setAttribute("mobilityIndividualApplicationProcessBean", bean);
         return mapping.findForward("edit-candidacy-degree-and-courses");
     }
 
@@ -684,6 +715,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
             executeActivity(bean.getIndividualCandidacyProcess(), "EditPublicDegreeAndCoursesInformation",
                     getIndividualCandidacyProcessBean());
         } catch (final DomainException e) {
+            request.setAttribute("mobilityIndividualApplicationProcessBean", bean);
             request.setAttribute("degreeCourseInformationBean", readDegreeCourseInformationBean(request));
             request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
             addActionMessage("error", request, e.getMessage());

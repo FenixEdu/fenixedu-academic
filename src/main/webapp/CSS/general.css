@@ -2715,6 +2715,17 @@ color: #777 !important;
 border-bottom: 1px dotted #aaa !important;
 }
 
+.disabledLinkAsTag {
+	color: #fff !important;
+	text-shadow: 1px 1px #bbb;
+	cursor: default !important;
+	background-color: #dfdfdf;
+	border-radius: 4px;
+	padding: 2px 5px;
+	text-decoration: none;
+	border-bottom: 0px !important;
+}
+
 table.publications td {
 vertical-align: top;
 padding-bottom: 1em;

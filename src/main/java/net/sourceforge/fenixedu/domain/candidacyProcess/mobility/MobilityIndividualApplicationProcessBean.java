@@ -11,6 +11,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
@@ -32,6 +33,10 @@ public class MobilityIndividualApplicationProcessBean extends IndividualCandidac
     private static final long serialVersionUID = 1L;
 
     private Set<CurricularCourse> selectedCurricularCourses;
+
+    private Degree degree;
+
+    ExecutionYear executionYear;
 
     private MobilityStudentDataBean mobilityStudentDataBean;
 
@@ -78,7 +83,7 @@ public class MobilityIndividualApplicationProcessBean extends IndividualCandidac
         setMobilityStudentDataBean(new MobilityStudentDataBean(process.getCandidacy().getMobilityStudentData()));
         setCandidacyDate(process.getCandidacyDate());
         setObservations(process.getCandidacy().getObservations());
-
+        setDegree(process.getCandidacySelectedDegree());
         setValidatedByErasmusCoordinator(process.getValidatedByMobilityCoordinator());
         setValidatedByGri(process.getValidatedByGri());
 
@@ -105,6 +110,14 @@ public class MobilityIndividualApplicationProcessBean extends IndividualCandidac
 
     public void setMobilityStudentDataBean(MobilityStudentDataBean mobilityStudentDataBean) {
         this.mobilityStudentDataBean = mobilityStudentDataBean;
+    }
+
+    public ExecutionYear getExecutionYear() {
+        return executionYear;
+    }
+
+    public void setExecutionYear(ExecutionYear executionYear) {
+        this.executionYear = executionYear;
     }
 
     public void addCurricularCourse(final CurricularCourse curricularCourse) {
@@ -207,11 +220,34 @@ public class MobilityIndividualApplicationProcessBean extends IndividualCandidac
         this.idCardAvoidanceOtherReason = idCardAvoidanceOtherReason;
     }
 
+    public Degree getDegree() {
+        return degree;
+    }
+
+    public void setDegree(Degree degree) {
+        this.degree = degree;
+    }
+
     public MobilityQuota determineMobilityQuota() {
         MobilityApplicationPeriod period = (MobilityApplicationPeriod) getCandidacyProcess().getCandidacyPeriod();
         MobilityAgreement agreement = getMobilityStudentDataBean().getMobilityAgreement();
 
-        Degree selectedDegree = getMostDominantDegreeFromCourses();
+        Degree selectedDegree = null;
+
+        if (getDegree() == null) {
+            if (getSelectedCurricularCourses() != null && !getSelectedCurricularCourses().isEmpty()) {
+                selectedDegree = getMostDominantDegreeFromCourses();
+            } else {
+                selectedDegree = null;
+            }
+        } else {
+            if ((getSelectedCurricularCourses() == null || getSelectedCurricularCourses().isEmpty())
+                    || (!getSelectedCurricularCourses().isEmpty() && getDegree() == getMostDominantDegreeFromCourses())) {
+                selectedDegree = getDegree();
+            } else {
+                throw new DomainException("error.mobility.application.process.courses.and.degree.selection.dont.match");
+            }
+        }
 
         MobilityQuota quota = period.getAssociatedOpening(selectedDegree, agreement);
 
