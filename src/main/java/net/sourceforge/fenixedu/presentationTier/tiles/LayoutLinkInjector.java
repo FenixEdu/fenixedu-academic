@@ -3,8 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.tiles;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.lang.StringUtils;
-
 public class LayoutLinkInjector {
 
     public static Map<String, String> fenixLayout2colMap = new HashMap<String, String>();
@@ -41,8 +39,7 @@ public class LayoutLinkInjector {
         addScript(stringBuilder, contextPath, "text/javascript", "/CSS/scripts/checkall.js");
         addScript(stringBuilder, contextPath, "text/javascript", "/javaScript/jquery/jquery.js");
         addScript(stringBuilder, contextPath, "text/javascript", "/javaScript/jquery/jquery-ui.js");
-        addScript(stringBuilder, StringUtils.EMPTY, "text/javascript",
-                "https://d3eoax9i5htok0.cloudfront.net/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML");
+        addScript(stringBuilder, contextPath, "text/javascript", "/javaScript/MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML");
     }
 
     private static void addLink(final StringBuilder stringBuilder, final String contextPath, final String rel, final String type,
