@@ -44,3 +44,5 @@ function executeWithTempFile() {
 }
 
 
+execute "Alter table ExecutionCourse" alterTableExecutionCourse.sql
+execute "Alter table DepartmentCreditsPool" alterTableDepartmentCreditsPool.sql
