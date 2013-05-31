@@ -96,6 +96,9 @@ enum net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLevel      
 enum net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage                                                      as CurricularStage;
 enum net.sourceforge.fenixedu.domain.degreeStructure.CycleType                                                            as CycleType;
 enum net.sourceforge.fenixedu.domain.degreeStructure.RegimeType                                                           as degreeStructure.RegimeType;
+enum net.sourceforge.fenixedu.domain.dissertation.DissertationParticipationType                                           as DissertationParticipationType;
+enum net.sourceforge.fenixedu.domain.dissertation.DissertationStateValue                                                  as DissertationStateValue;
+enum net.sourceforge.fenixedu.domain.dissertation.DissertationVisibilityType                                              as DissertationVisibilityType;
 enum net.sourceforge.fenixedu.domain.documents.GeneratedDocumentType                                                      as GeneratedDocumentType;
 enum net.sourceforge.fenixedu.domain.gratuity.ExemptionGratuityType                                                       as ExemptionGratuityType;
 enum net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState                                                     as ReimbursementGuideState;
@@ -168,7 +171,7 @@ enum net.sourceforge.fenixedu.util.Month                                        
 enum net.sourceforge.fenixedu.util.RegimeType                                                                             as RegimeType;
 enum net.sourceforge.fenixedu.util.StudentPersonalDataAuthorizationChoice                                                 as StudentPersonalDataAuthorizationChoice;
 enum net.sourceforge.fenixedu.util.WeekDay                                                                                as WeekDay;
-enum pt.utl.ist.fenix.tools.util.i18n.Language                                                                            as Language;
+enum pt.utl.ist.fenix.tools.util.i18n.Language                         													  as Language;
 enum net.sourceforge.fenixedu.domain.messaging.AnnouncementCategoryType                                                   as AnnouncementCategoryType;
 enum net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessState                                                 as PhdIndividualProgramProcessState;
 enum net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramCollaborationType                                            as PhdIndividualProgramCollaborationType;
@@ -2910,7 +2913,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
         class contacts.PhysicalAddressValidationFile extends File {
         
         }
-        
 
     class credits.CreditLine  {
     }
@@ -3184,6 +3186,90 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
     class finalDegreeWork.FinalDegreeWorkGroup  {
     }
 
+	class dissertation.Dissertation {
+		String proposalNumber;
+		MultiLanguageString title;
+		MultiLanguageString keywords;
+		MultiLanguageString description;
+		MultiLanguageString objectives;
+		MultiLanguageString deliverable;
+		MultiLanguageString framing;
+		String url;
+		Boolean declarationAccepted;
+		DissertationVisibilityType visibility;
+		DateTime documentPublicAvailabilityDate;
+		String proposedPlace;
+		DateTime proposalDiscussionDate;
+		MultiLanguageString thesisAbstract;
+		Integer mark;
+	}
+	
+	class dissertation.DissertationEvaluationParticipant  {
+        String affiliation;
+        String category;
+        String personName;
+        DissertationParticipationType type;
+    }
+	
+	class dissertation.Comment {
+		DateTime created;
+		MultiLanguageString requirements;
+	}
+	
+	class dissertation.DissertationState {
+		DateTime from;
+		DissertationStateValue value;
+	}
+	
+	class dissertation.Location {
+	
+	}
+	
+		class dissertation.SpaceLocation extends dissertation.Location {
+			String description;
+		}
+		
+		class dissertation.ExternalLocation extends dissertation.Location {
+			String description;
+		}
+
+	class dissertation.Scheduling  {
+        Boolean allowSimultaneousCoorientationAndCompanion;
+        Boolean attributionByTeachers;
+        Boolean allowCandaciesOnlyForStudentsWithADissertationEnrolment;
+        Integer currentProposalNumber;
+        YearMonthDay endOfCandidacyPeriodDateYearMonthDay;
+        HourMinuteSecond endOfCandidacyPeriodTimeHourMinuteSecond;
+        YearMonthDay endOfProposalPeriodDateYearMonthDay;
+        HourMinuteSecond endOfProposalPeriodTimeHourMinuteSecond;
+        Integer maximumNumberOfProposalsPerPerson;
+        Integer maximumCurricularYearToCountCompletedCourses;
+        Integer maximumNumberOfProposalCandidaciesPerGroup;
+        Integer maximumNumberOfStudents;
+        Integer minimumCompletedCurricularYear;
+        Integer minimumNumberOfCompletedCourses;
+        Integer minimumNumberOfStudents;
+        Integer minimumCompletedCreditsFirstCycle;
+        Integer minimumCompletedCreditsSecondCycle;
+        YearMonthDay startOfCandidacyPeriodDateYearMonthDay;
+        HourMinuteSecond startOfCandidacyPeriodTimeHourMinuteSecond;
+        YearMonthDay startOfProposalPeriodDateYearMonthDay;
+        HourMinuteSecond startOfProposalPeriodTimeHourMinuteSecond;
+    }
+
+	class dissertation.DissertationCandidacy {
+	
+	}
+	
+	class dissertation.Log {
+	
+	}
+	
+	class dissertation.DissertationFile extends File {
+		Language language;
+        String title;
+	}
+	
     class finalDegreeWork.GroupProposal  {
         Integer orderOfPreference;
     }
@@ -20566,4 +20652,139 @@ relation AnnualTeachingCreditsDocumentAnnualTeachingCredits {
 		multiplicity *;
 	}
 	credits.AnnualTeachingCredits playsRole annualTeachingCredits;
+}
+
+relation DissertationDissertationEvaluationParticipant {
+	dissertation.Dissertation playsRole dissertation {
+		multiplicity 1..1;
+	}
+	dissertation.DissertationEvaluationParticipant playsRole dissertationEvaluationParticipants {
+		multiplicity *;
+	}
+}
+	
+relation DissertationEnrolment {
+	Enrolment playsRole enrolments {
+		multiplicity *;
+	}
+	dissertation.Dissertation playsRole dissertation {
+		multiplicity 1..1;
+	}
+}
+
+relation DissertationComment {
+	dissertation.Comment playsRole comments {
+		multiplicity *;
+	}
+	dissertation.Dissertation playsRole dissertation {
+		multiplicity 1..1;
+	}
+}
+	
+relation CommentUser {
+	User playsRole user {
+		multiplicity 1..1;
+	}
+	dissertation.Comment playsRole comment {
+		multiplicity 1..1;
+	}
+}
+	
+relation DissertationDisserationState {
+	dissertation.DissertationState playsRole dissertationState {
+		multiplicity 1..1;
+	}
+	dissertation.Dissertation playsRole dissertation {
+		multiplicity 1..1;
+	}
+}
+
+relation PreviousDissertationState {
+	dissertation.DissertationState playsRole nextDissertationState {
+		multiplicity 1..1;
+	}
+	dissertation.DissertationState playsRole previousDissertationState {
+		multiplicity 1..1;
+	}
+}
+
+relation DissertationLocation {
+	dissertation.Location playsRole location {
+		multiplicity 1..1;
+	}
+	dissertation.Dissertation playsRole dissertations {
+		multiplicity *;
+	}
+}
+	
+relation DissertationScheduling {
+	dissertation.Dissertation playsRole dissertation {
+		multiplicity 1..1;
+	}
+	dissertation.Scheduling playsRole schedulings {
+		multiplicity *;
+	}
+}
+	
+relation DissertationCandidacyRegistration {
+	student.Registration playsRole registrations {
+		multiplicity *;
+	}
+	dissertation.DissertationCandidacy playsRole candidacy {
+		multiplicity 1..1;
+	}
+}
+	
+relation DissertationDissertationCandidacy {
+	dissertation.DissertationCandidacy playsRole candidacies {
+		multiplicity *;
+	}
+	dissertation.Dissertation playsRole dissertation {
+		multiplicity 1..1;
+	}
+}
+	
+relation DissertationCandidacyScheduling {
+	dissertation.Scheduling playsRole scheduling {
+		multiplicity 1..1;
+	}
+	dissertation.DissertationCandidacy playsRole candidacies {
+		multiplicity *;
+	}
+}
+	
+relation DissertationLog {
+	dissertation.Log playsRole logs {
+		multiplicity *;
+	}
+	dissertation.Dissertation playsRole dissertation {
+		multiplicity 1..1;
+	}
+}
+
+relation LogUser {
+	User playsRole user {
+		multiplicity 1..1;
+	}
+	dissertation.Log playsRole dissertation {
+		multiplicity 1..1;
+	}
+}
+	
+relation DissertationDissertationFile {
+	dissertation.DissertationFile playsRole dissertationFiles {
+		multiplicity *;
+	}
+	dissertation.Dissertation playsRole dissertation {
+		multiplicity 1..1;
+	}
+}
+	
+relation PreviousDissertationFile {
+	dissertation.DissertationFile playsRole nextDissertationFile {
+		multiplicity 1..1;
+	}
+	dissertation.DissertationFile playsRole previousDissertationFile {
+		multiplicity 1..1;
+	}
 }

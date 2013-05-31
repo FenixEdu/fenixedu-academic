@@ -44,10 +44,9 @@
     <!ENTITY pedagogicalCouncilSchemas SYSTEM "pedagogicalCouncil-schemas.xml">
     <!ENTITY delegatesSchemas SYSTEM "delegates-schemas.xml">
     <!ENTITY cardGeneration SYSTEM "cardGeneration-schemas.xml">
-    <!--ENTITY facultyAdmOffice SYSTEM "facultyAdmOffice-schemas.xml"-->
-	<!ENTITY contentSchemas SYSTEM "content-schemas.xml">
-	<!ENTITY caseHandlingSchemas SYSTEM "caseHandling-schemas.xml">
-	<!ENTITY residenceManagement SYSTEM "residenceManagement-schemas.xml">
+    <!ENTITY contentSchemas SYSTEM "content-schemas.xml">
+    <!ENTITY caseHandlingSchemas SYSTEM "caseHandling-schemas.xml">
+    <!ENTITY residenceManagement SYSTEM "residenceManagement-schemas.xml">
     <!ENTITY support SYSTEM "support-schemas.xml">
     <!ENTITY alumni SYSTEM "alumni-schemas.xml">
     <!ENTITY internationalRelationsOffice SYSTEM "internationalRelationsOffice-schemas.xml">
