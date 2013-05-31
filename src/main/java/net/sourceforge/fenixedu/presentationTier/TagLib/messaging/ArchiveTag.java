@@ -5,7 +5,6 @@
 package net.sourceforge.fenixedu.presentationTier.TagLib.messaging;
 
 import java.io.IOException;
-import java.util.Calendar;
 import java.util.Locale;
 
 import javax.servlet.jsp.JspException;
@@ -17,6 +16,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.messaging.announcements.
 import net.sourceforge.fenixedu.presentationTier.Action.messaging.announcements.dto.YearAnnouncementArchiveEntry;
 
 import org.apache.struts.taglib.TagUtils;
+import org.joda.time.LocalDate;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -139,10 +139,10 @@ public class ArchiveTag extends TagSupport {
             }
             if (month != null) {
                 Locale locale = Language.getLocale();
-                Calendar calendar = Calendar.getInstance();
-                calendar.set(Calendar.MONTH, i - 1);
+                LocalDate localDate = new LocalDate();
+                localDate = localDate.withMonthOfYear(month.getMonth());
 
-                buffer.append(String.format(locale, "%tb.", calendar.getTime()));
+                buffer.append(localDate.toString("MMM.", locale));
                 buffer.append(" (");
                 buffer.append(month.getAnnouncementCount());
                 buffer.append(")");
