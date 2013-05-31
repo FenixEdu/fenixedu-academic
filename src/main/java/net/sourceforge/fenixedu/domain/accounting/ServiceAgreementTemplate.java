@@ -90,7 +90,7 @@ public abstract class ServiceAgreementTemplate extends ServiceAgreementTemplate_
         if (postingRule == null) {
             throw new DomainException(
                     "error.accounting.agreement.ServiceAgreementTemplate.cannot.find.postingRule.for.eventType.and.date.desc",
-                    when.toLocalDate().toString("dd-MM-yyyy"), getEnumerationResourcesString(eventType.getQualifiedName()));
+                    when.toDateTime().toString("dd-MM-yyyy HH:mm"), getEnumerationResourcesString(eventType.getQualifiedName()));
         }
 
         return postingRule;
@@ -120,7 +120,6 @@ public abstract class ServiceAgreementTemplate extends ServiceAgreementTemplate_
                 return postingRule;
             }
         }
-
         return null;
     }
 

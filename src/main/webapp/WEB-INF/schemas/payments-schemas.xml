@@ -191,6 +191,7 @@
 	<slot name="cancelJustification" key="label.net.sourceforge.fenixedu.domain.accounting.Event.cancelJustification" layout="null-as-label">
 		<property name="label" value="-"/>
 	</slot>
+	<slot name="whenOccured"/>
 </schema>
 
 <schema name="AccountingEvent.view-with-amountToPay" type="net.sourceforge.fenixedu.domain.accounting.Event" bundle="APPLICATION_RESOURCES" extends="AccountingEvent.view">
