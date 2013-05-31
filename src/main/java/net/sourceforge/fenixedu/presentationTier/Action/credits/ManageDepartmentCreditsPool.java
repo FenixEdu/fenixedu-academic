@@ -55,8 +55,23 @@ public class ManageDepartmentCreditsPool extends FenixDispatchAction {
         if (departmentCreditsBean == null) {
             return prepareManageUnitCredits(mapping, form, request, response);
         }
+        RenderUtils.invalidateViewState();
         request.setAttribute("departmentCreditsBean", departmentCreditsBean);
         DepartmentCreditsPoolBean departmentCreditsPoolBean = new DepartmentCreditsPoolBean(departmentCreditsBean);
+        request.setAttribute("departmentCreditsPoolBean", departmentCreditsPoolBean);
+        return mapping.findForward("manageUnitCredits");
+    }
+
+    public ActionForward postBackUnitCredits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
+        DepartmentCreditsPoolBean departmentCreditsPoolBean = getRenderedObject("departmentCreditsPoolBean");
+        if (departmentCreditsPoolBean == null) {
+            return prepareManageUnitCredits(mapping, form, request, response);
+        }
+        DepartmentCreditsBean departmentCreditsBean = getDepartmentCreditsBean();
+        departmentCreditsBean.setDepartment(departmentCreditsPoolBean.getDepartment());
+        departmentCreditsBean.setExecutionYear(departmentCreditsPoolBean.getAnnualCreditsState().getExecutionYear());
+        request.setAttribute("departmentCreditsBean", departmentCreditsBean);
         request.setAttribute("departmentCreditsPoolBean", departmentCreditsPoolBean);
         return mapping.findForward("manageUnitCredits");
     }
@@ -94,6 +109,8 @@ public class ManageDepartmentCreditsPool extends FenixDispatchAction {
 
         getExecutionCoursesSheet(departmentCreditsPoolBean.getDepartmentSharedExecutionCourses(), spreadsheet,
                 "Disciplinas_Partilhadas");
+        getExecutionCoursesSheet(departmentCreditsPoolBean.getOtherDepartmentSharedExecutionCourses(), spreadsheet,
+                "Disciplinas_Partilhadas_Outros_Dep");
         getExecutionCoursesSheet(departmentCreditsPoolBean.getDepartmentExecutionCourses(), spreadsheet, "Restantes_Disciplinas");
 
         response.setContentType("text/plain");
@@ -127,7 +144,7 @@ public class ManageDepartmentCreditsPool extends FenixDispatchAction {
             spreadsheet.newRow();
             spreadsheet.addCell(departmentExecutionCourse.getExecutionCourse().getName());
             spreadsheet.addCell(departmentExecutionCourse.getExecutionCourse().getDegreePresentationString());
-            spreadsheet.addCell(departmentExecutionCourse.getExecutionCourse().getExecutionPeriod().getName());
+            spreadsheet.addCell(departmentExecutionCourse.getExecutionCourse().getExecutionPeriod().getSemester());
             spreadsheet.addCell(departmentExecutionCourse.getExecutionCourse().getEffortRate());
             spreadsheet.addCell(departmentExecutionCourse.getDepartmentEffectiveLoad());
             spreadsheet.addCell(departmentExecutionCourse.getTotalEffectiveLoad());

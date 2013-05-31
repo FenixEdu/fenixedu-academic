@@ -28,6 +28,8 @@ public class DepartmentCreditsPoolBean implements Serializable {
 
     private SortedSet<DepartmentExecutionCourse> departmentSharedExecutionCourses;
 
+    private SortedSet<DepartmentExecutionCourse> otherDepartmentSharedExecutionCourses;
+
     private SortedSet<DepartmentExecutionCourse> departmentExecutionCourses;
 
     protected BigDecimal availableCredits;
@@ -45,6 +47,7 @@ public class DepartmentCreditsPoolBean implements Serializable {
     protected void setValues() {
         departmentSharedExecutionCourses = new TreeSet<DepartmentExecutionCourse>();
         departmentExecutionCourses = new TreeSet<DepartmentExecutionCourse>();
+        otherDepartmentSharedExecutionCourses = new TreeSet<DepartmentExecutionCourse>();
         availableCredits = BigDecimal.ZERO;
         assignedCredits = BigDecimal.ZERO;
         if (departmentCreditsPool != null) {
@@ -52,15 +55,13 @@ public class DepartmentCreditsPoolBean implements Serializable {
                 for (ExecutionCourse executionCourse : executionSemester.getAssociatedExecutionCourses()) {
                     if (!(executionCourse.isDissertation() || executionCourse.getProjectTutorialCourse())) {
                         if (executionCourse.getDepartments().contains(getDepartment())) {
-                            DepartmentExecutionCourse departmentExecutionCourse = new DepartmentExecutionCourse(executionCourse);
                             if (isSharedExecutionCourse(executionCourse)) {
-                                departmentSharedExecutionCourses.add(departmentExecutionCourse);
+                                addToSet(departmentSharedExecutionCourses, executionCourse);
                             } else {
-                                departmentExecutionCourses.add(departmentExecutionCourse);
+                                addToSet(departmentExecutionCourses, executionCourse);
                             }
-                            assignedCredits =
-                                    assignedCredits.add(departmentExecutionCourse.getDepartmentEffectiveLoad().multiply(
-                                            executionCourse.getUnitCreditValue()));
+                        } else if (isTaughtByTeacherFromThisDepartment(executionCourse)) {
+                            addToSet(otherDepartmentSharedExecutionCourses, executionCourse);
                         }
                     }
                 }
@@ -69,19 +70,35 @@ public class DepartmentCreditsPoolBean implements Serializable {
         }
     }
 
-    private boolean isSharedExecutionCourse(ExecutionCourse executionCourse) {
-        Department otherProfessorshipDepartment = null;
+    private void addToSet(SortedSet<DepartmentExecutionCourse> set, ExecutionCourse executionCourse) {
+        DepartmentExecutionCourse departmentExecutionCourse = new DepartmentExecutionCourse(executionCourse);
+        set.add(departmentExecutionCourse);
+        assignedCredits =
+                assignedCredits.add(departmentExecutionCourse.getDepartmentEffectiveLoad().multiply(
+                        executionCourse.getUnitCreditValue()));
+    }
+
+    private boolean isTaughtByTeacherFromThisDepartment(ExecutionCourse executionCourse) {
         for (Professorship professorship : executionCourse.getProfessorships()) {
             Department professorshipDepartment =
                     professorship.getTeacher().getLastWorkingDepartment(
                             executionCourse.getExecutionPeriod().getBeginDateYearMonthDay(),
                             executionCourse.getExecutionPeriod().getEndDateYearMonthDay());
-            if (professorshipDepartment != null) {
-                if (otherProfessorshipDepartment == null) {
-                    otherProfessorshipDepartment = professorshipDepartment;
-                } else if (!professorshipDepartment.equals(otherProfessorshipDepartment)) {
-                    return true;
-                }
+            if (professorshipDepartment != null && professorshipDepartment.equals(getDepartment())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean isSharedExecutionCourse(ExecutionCourse executionCourse) {
+        for (Professorship professorship : executionCourse.getProfessorships()) {
+            Department professorshipDepartment =
+                    professorship.getTeacher().getLastWorkingDepartment(
+                            executionCourse.getExecutionPeriod().getBeginDateYearMonthDay(),
+                            executionCourse.getExecutionPeriod().getEndDateYearMonthDay());
+            if (professorshipDepartment != null && !professorshipDepartment.equals(getDepartment())) {
+                return true;
             }
         }
         return false;
@@ -125,6 +142,10 @@ public class DepartmentCreditsPoolBean implements Serializable {
         return departmentSharedExecutionCourses;
     }
 
+    public Set<DepartmentExecutionCourse> getOtherDepartmentSharedExecutionCourses() {
+        return otherDepartmentSharedExecutionCourses;
+    }
+
     public Set<DepartmentExecutionCourse> getDepartmentExecutionCourses() {
         return departmentExecutionCourses;
     }
@@ -150,6 +171,7 @@ public class DepartmentCreditsPoolBean implements Serializable {
         protected BigDecimal departmentEffectiveLoad = BigDecimal.ZERO;
         protected BigDecimal totalEffectiveLoad = BigDecimal.ZERO;
         protected BigDecimal unitCreditValue = BigDecimal.ZERO;
+        protected String unitCreditJustification;
 
         public DepartmentExecutionCourse(ExecutionCourse executionCourse) {
             super();
@@ -180,6 +202,14 @@ public class DepartmentCreditsPoolBean implements Serializable {
 
         public void setUnitCreditValue(BigDecimal unitCreditValue) {
             this.unitCreditValue = unitCreditValue;
+        }
+
+        public String getUnitCreditJustification() {
+            return unitCreditJustification;
+        }
+
+        public void setUnitCreditJustification(String unitCreditJustification) {
+            this.unitCreditJustification = unitCreditJustification;
         }
 
         public void setEfectiveLoads() {
@@ -221,18 +251,27 @@ public class DepartmentCreditsPoolBean implements Serializable {
             }
             return compareTo == 0 ? getExecutionCourse().getExternalId().compareTo(o.getExecutionCourse().getExternalId()) : compareTo;
         }
+
     }
 
     @Service
     public void editUnitCredits() {
         BigDecimal newAssignedCredits = BigDecimal.ZERO;
+        for (DepartmentExecutionCourse departmentExecutionCourse : otherDepartmentSharedExecutionCourses) {
+            BigDecimal newExecutionCourseCLE =
+                    departmentExecutionCourse.getDepartmentEffectiveLoad().multiply(
+                            departmentExecutionCourse.getUnitCreditValue());
+            newAssignedCredits = newAssignedCredits.add(newExecutionCourseCLE);
+        }
+
         for (DepartmentExecutionCourse departmentExecutionCourse : departmentSharedExecutionCourses) {
             newAssignedCredits =
-                    setExecutionCourseUnitCredit(departmentExecutionCourse, getCanEditSharedUnitCredits(), newAssignedCredits);
+                    setExecutionCourseUnitCredit(departmentExecutionCourse, getCanEditSharedUnitCredits(), newAssignedCredits,
+                            true);
         }
         for (DepartmentExecutionCourse departmentExecutionCourse : departmentExecutionCourses) {
             newAssignedCredits =
-                    setExecutionCourseUnitCredit(departmentExecutionCourse, getCanEditUnitCredits(), newAssignedCredits);
+                    setExecutionCourseUnitCredit(departmentExecutionCourse, getCanEditUnitCredits(), newAssignedCredits, false);
         }
         if (newAssignedCredits.compareTo(getDepartmentCreditsPool().getCreditsPool()) > 0) {
             throw new DomainException("label.excededDepartmentCreditsPool", getDepartmentCreditsPool().getCreditsPool()
@@ -242,13 +281,14 @@ public class DepartmentCreditsPoolBean implements Serializable {
     }
 
     protected BigDecimal setExecutionCourseUnitCredit(DepartmentExecutionCourse departmentExecutionCourse,
-            boolean canEditUnitValue, BigDecimal newAssignedCredits) {
+            boolean canEditUnitValue, BigDecimal newAssignedCredits, Boolean shared) {
         if (canEditUnitValue) {
             BigDecimal newExecutionCourseCLE =
                     departmentExecutionCourse.getDepartmentEffectiveLoad().multiply(
                             departmentExecutionCourse.getUnitCreditValue());
             newAssignedCredits = newAssignedCredits.add(newExecutionCourseCLE);
-            departmentExecutionCourse.executionCourse.setUnitCreditValue(departmentExecutionCourse.getUnitCreditValue());
+            departmentExecutionCourse.executionCourse.setUnitCreditValue(departmentExecutionCourse.getUnitCreditValue(),
+                    departmentExecutionCourse.getUnitCreditJustification());
         } else {
             BigDecimal oldExecutionCourseCLE =
                     departmentExecutionCourse.getDepartmentEffectiveLoad().multiply(
@@ -257,4 +297,5 @@ public class DepartmentCreditsPoolBean implements Serializable {
         }
         return newAssignedCredits;
     }
+
 }

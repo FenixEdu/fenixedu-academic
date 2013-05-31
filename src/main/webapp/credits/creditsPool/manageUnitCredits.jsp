@@ -23,18 +23,20 @@
     left:425px;
     border-bottom: 1px solid black;
 }
+
+.badInput { 
+	background-color: #F6CECE;
+    border-color: #F6CECE;
+}
 -->
 </style>
 
-<html:messages id="message" message="true" bundle="TEACHER_CREDITS_SHEET_RESOURCES">
-	<span class="error">
-		<bean:write name="message" filter="false"/>
-	</span>
-</html:messages>
-
-
+<html:messages id="message" message="true" bundle="TEACHER_CREDITS_SHEET_RESOURCES"><span class="error"><bean:write name="message" filter="false" /></span></html:messages>
+<fr:hasMessages><p><span class="error0"><fr:messages><fr:message/></fr:messages></span></p></fr:hasMessages>
+	
 <logic:present name="departmentCreditsBean">
-	<fr:form action="/creditsPool.do?method=viewDepartmentExecutionCourses">
+	<div class="thisPage">
+	<fr:form id="f1" action="/creditsPool.do?method=viewDepartmentExecutionCourses">
 		<fr:edit id="departmentCreditsBean" name="departmentCreditsBean">
 			<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.credits.util.DepartmentCreditsBean">
 				<fr:slot name="department" key="label.department" layout="menu-select" required="true">
@@ -63,7 +65,7 @@
 				<span id="notification-bar-error"><bean:message bundle="TEACHER_CREDITS_SHEET_RESOURCES" key="label.department.credits.pool.change.error"/></span>
 				<ul>
 					<li>
-						<bean:message bundle="TEACHER_CREDITS_SHEET_RESOURCES" key="label.departmentCreditsPool"/>:
+						<bean:message bundle="TEACHER_CREDITS_SHEET_RESOURCES" key="label.changedDepartmentCreditsPool"/>:
 						<span id="creditsPool"><bean:write name="departmentCreditsPoolBean" property="departmentCreditsPool.creditsPool"/></span>
 					</li>
 					<li>
@@ -79,7 +81,8 @@
 			</div>
 			<fr:view name="departmentCreditsPoolBean">
 				<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.credits.util.DepartmentCreditsPoolBean">
-					<fr:slot name="departmentCreditsPool.creditsPool" key="label.departmentCreditsPool"/>
+					<fr:slot name="departmentCreditsPool.originalCreditsPool" key="label.departmentCreditsPool"/>
+					<fr:slot name="departmentCreditsPool.creditsPool" key="label.changedDepartmentCreditsPool"/>
 					<fr:slot name="assignedCredits" key="label.assignedCredits"/>
 					<fr:slot name="availableCredits" key="label.availableCredits"/>
 				</fr:schema>
@@ -90,9 +93,9 @@
 		
 			<h3><bean:message bundle="TEACHER_CREDITS_SHEET_RESOURCES" key="label.courses.shared"/></h3>
 			<bean:define id="canEditSharedUnitCredits" name="departmentCreditsPoolBean" property="canEditSharedUnitCredits" type="java.lang.Boolean"/>
-			<fr:form id="banana" action="/creditsPool.do?method=editUnitCredits">
+			<fr:form id="sharedUnitCreditsForm" action="/creditsPool.do?method=editUnitCredits">
 				<fr:edit id="departmentCreditsPoolBean" name="departmentCreditsPoolBean" visible="false"/>
-				<fr:edit name="departmentCreditsPoolBean" property="departmentSharedExecutionCourses" >
+				<fr:edit id="departmentCreditsPoolBean2" name="departmentCreditsPoolBean" property="departmentSharedExecutionCourses" >
 					<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.credits.util.DepartmentCreditsPoolBean$DepartmentExecutionCourse">
 						<fr:slot name="executionCourse.name" key="label.course" readOnly="true"/>
 						<fr:slot name="executionCourse.degreePresentationString" key="label.degrees" readOnly="true"/>
@@ -103,21 +106,44 @@
 						<fr:slot name="unitCreditValue" key="label.unitCredit" readOnly="<%=!canEditSharedUnitCredits%>" >
 							<fr:property name="maxLength" value="4"/>
 							<fr:property name="size" value="2"/>
+							<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.DoubleValidator"/>
 						</fr:slot>
+						<fr:slot name="unitCreditJustification" key="label.justification" readOnly="<%=!canEditSharedUnitCredits%>"/>
 					</fr:schema>
 					<fr:layout name="tabular-editable">
 						<fr:property name="classes" value="tstyle2 thleft thlight mtop05"/>
+						<fr:property name="columnClasses" value=",,,,,,,,tdclear tderror1"/>
+						<fr:property name="requiredMarkShown" value="true" />
 					</fr:layout>
+					<fr:destination name="invalid" path="/creditsPool.do?method=postBackUnitCredits" />
 				</fr:edit>
 				<logic:equal name="canEditSharedUnitCredits" value="true">
-					<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.submit"/></html:submit>
+					<html:submit styleId="sb1" bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.submit"/></html:submit>
 				</logic:equal>
 			</fr:form>
+			<h3><bean:message bundle="TEACHER_CREDITS_SHEET_RESOURCES" key="label.courses.shared.other.departments"/></h3>
+			<fr:view name="departmentCreditsPoolBean" property="otherDepartmentSharedExecutionCourses">
+				<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.credits.util.DepartmentCreditsPoolBean$DepartmentExecutionCourse">
+					<fr:slot name="executionCourse.departmentNames" key="label.department" readOnly="true" />
+					<fr:slot name="executionCourse.name" key="label.course" readOnly="true"/>
+					<fr:slot name="executionCourse.degreePresentationString" key="label.degrees" readOnly="true"/>
+					<fr:slot name="executionCourse.executionPeriod.name" key="label.execution-period" readOnly="true"/>
+					<fr:slot name="executionCourse.effortRate" key="label.effortRate" readOnly="true"/>
+					<fr:slot name="departmentEffectiveLoad" key="label.departmentEffectiveLoad" readOnly="true"/>
+					<fr:slot name="totalEffectiveLoad" key="label.totalEffectiveLoad" readOnly="true"/>
+					<fr:slot name="unitCreditValue" key="label.unitCredit" readOnly="true"/>
+				</fr:schema>
+				<fr:layout name="tabular-editable">
+					<fr:property name="classes" value="tstyle2 thleft thlight mtop05"/>
+				</fr:layout>
+			</fr:view>
+			
+			
 			<h3><bean:message bundle="TEACHER_CREDITS_SHEET_RESOURCES" key="label.courses.not.shared"/></h3>
 			<bean:define id="canEditUnitCredits" name="departmentCreditsPoolBean" property="canEditUnitCredits" type="java.lang.Boolean"/>
-			<fr:form action="/creditsPool.do?method=editUnitCredits">
-				<fr:edit id="departmentCreditsPoolBean" name="departmentCreditsPoolBean" visible="false"/>
-				<fr:edit name="departmentCreditsPoolBean" property="departmentExecutionCourses">
+			<fr:form id="f2" action="/creditsPool.do?method=editUnitCredits">
+				<fr:edit id="departmentCreditsPoolBean3" name="departmentCreditsPoolBean" visible="false"/>
+				<fr:edit id="departmentCreditsPoolBean4" name="departmentCreditsPoolBean" property="departmentExecutionCourses">
 					<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.credits.util.DepartmentCreditsPoolBean$DepartmentExecutionCourse">
 						<fr:slot name="executionCourse.name" key="label.course" readOnly="true"/>
 						<fr:slot name="executionCourse.degreePresentationString" key="label.degrees" readOnly="true"/>
@@ -129,13 +155,14 @@
 							<fr:property name="maxLength" value="4"/>
 							<fr:property name="size" value="2"/>
 						</fr:slot>
+						<fr:slot name="unitCreditJustification" key="label.justification" readOnly="<%=!canEditUnitCredits%>"/>
 					</fr:schema>
 					<fr:layout name="tabular-editable">
 						<fr:property name="classes" value="tstyle2 thleft thlight mtop05"/>
 					</fr:layout>
 				</fr:edit>
 				<logic:equal name="canEditUnitCredits" value="true">
-					<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.submit"/></html:submit>
+					<html:submit styleId="sb2" bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.submit"/></html:submit>
 				</logic:equal>
 			</fr:form>
 		</logic:present>
@@ -143,24 +170,37 @@
 			<bean:message bundle="TEACHER_CREDITS_SHEET_RESOURCES" key="label.department.credits.pool.not.defined"/>
 		</logic:notPresent>
 	</logic:present>
+	</div>
 </logic:present>
 
 <script type="text/javascript" language="javascript">
 	$(document).ready(function(){
-		$(':input').change(function(){
-			$("#notification-bar").toggle(true);
-			var i = $(this).attr("name");
-			var assignedCredits = 0;
-			$( 'input[name$="unitCreditValue"]' ).each(function() {
+		var creditsPool = parseFloat($("#creditsPool").html());
+		var otherAssignedCredits = parseFloat($("#assignedCredits").html());
+
+		$( '.thisPage input[name$="unitCreditValue"]' ).each(function() {
+			var inputVal = $(this).val();
+			if (inputVal && !isNaN(inputVal)){
 				var cleTotal = parseFloat($(this).parent().parent().parent().children().eq(4).html());
-				assignedCredits += cleTotal * parseFloat($(this).val());
+				otherAssignedCredits = otherAssignedCredits - (cleTotal * parseFloat(inputVal));
+			}
+		});
+
+		$(':input[name$="unitCreditValue"]').change(function(){
+			$("#notification-bar").toggle(true);
+			var assignedCredits = otherAssignedCredits;
+			$( '.thisPage input[name$="unitCreditValue"]' ).each(function() {
+				var inputVal = $(this).val();
+				if (inputVal && !isNaN(inputVal)){
+					var cleTotal = parseFloat($(this).parent().parent().parent().children().eq(4).html());
+					assignedCredits += cleTotal * parseFloat(inputVal);
+				}
 			});
-			$("#assignedCredits").text(assignedCredits);
 
-			var creditsPool = parseFloat($("#creditsPool").html());
-			var newAvailable = creditsPool - assignedCredits;
-			$("#availableCredits").text(newAvailable);
-
+			var newAvailable = (creditsPool - assignedCredits);
+			$("#availableCredits").text(newAvailable.toFixed(2));
+			$("#assignedCredits").text(assignedCredits.toFixed(2));
+			
 			if (assignedCredits > creditsPool) {
 				$("#notification-bar").removeClass("yellowStuff");
 				$("#notification-bar").addClass("redStuff");
@@ -173,17 +213,32 @@
 				$("#notification-bar-error").toggle(false);
 			}
 
-			var bk = parseFloat($(this).parent().parent().parent().children().eq(4).html());
-
-			if (parseFloat($(this).val()) > 1) {
-				$('<span class="badValue">O valor tem que ser <= 1 !</span>').insertAfter($(this));
-			} else if (parseFloat($(this).val()) <= 0) {
-				$('<span class="badValue">O valor tem que ser > 0 !</span>').insertAfter($(this));
-			} else if (parseFloat($(this).val()) <= bk) {
-				$('<span class="badValue">O valor tem que ser justificado uma vez que � < Bk !</span>').insertAfter($(this));
-			} else {
-				$(this).nextAll().remove();
-			}
+			var bk = Math.min(parseFloat($(this).parent().parent().parent().children().eq(3).html()),1);
+			$(this).parent().parent().parent().children().eq(7).children().eq(0).nextAll().remove();
+			var inputVal = $(this).val();
+			$(this).removeClass("badInput");
+			if(!inputVal || isNaN(inputVal)){
+				$(this).addClass("badInput");
+				$('<span class="badValue">O valor tem de ser um número.</span>').insertAfter($(this).parent().parent().parent().children().eq(7).children().eq(0));
+			}else if (parseFloat(inputVal) > 1) {
+				$(this).addClass("badInput");
+				$('<span class="badValue">O valor tem que ser <= 1 !</span>').insertAfter($(this).parent().parent().parent().children().eq(7).children().eq(0));
+			} else if (parseFloat(inputVal) <0) {
+				$('<span class="badValue">O valor tem que ser >= 0 !</span>').insertAfter($(this).parent().parent().parent().children().eq(7).children().eq(0));
+				$(this).addClass("badInput");
+			} else if (parseFloat(inputVal) < bk) {
+				$('<span class="badValue">O valor tem que ser justificado uma vez que é < min(Bk,1) !</span>').insertAfter($(this).parent().parent().parent().children().eq(7).children().eq(0));
+			} 
+			
+			var badCount = 0;
+			$( '.thisPage input[name$="unitCreditValue"]' ).each(function() {
+				var inputVal = $(this).val();
+				if ((!inputVal) || isNaN(inputVal) || parseFloat(inputVal) > 1 || parseFloat(inputVal) <0){
+					badCount += 1;
+				}
+			});
+			$('#sb1').attr("disabled", badCount > 0);
+			$('#sb2').attr("disabled", badCount > 0);
 		});
 	});
 </script>

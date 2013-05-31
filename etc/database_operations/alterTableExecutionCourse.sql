@@ -1,0 +1,1 @@
+alter table `EXECUTION_COURSE` add `UNIT_CREDIT_VALUE_NOTES` text;

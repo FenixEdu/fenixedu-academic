@@ -10,13 +10,18 @@ public class DepartmentCreditsPool extends DepartmentCreditsPool_Base {
         super();
     }
 
-    public DepartmentCreditsPool(Department department, ExecutionYear executionYear, BigDecimal creditsPool) {
+    public DepartmentCreditsPool(Department department, ExecutionYear executionYear, BigDecimal originalCreditsPool,
+            BigDecimal creditsPool) {
         super();
         if (department == null || executionYear == null) {
             throw new DomainException("arguments can't be null");
         }
         setDepartment(department);
         setExecutionYear(executionYear);
+        if (originalCreditsPool == null) {
+            originalCreditsPool = BigDecimal.ZERO;
+        }
+        setOriginalCreditsPool(originalCreditsPool);
         if (creditsPool == null) {
             creditsPool = BigDecimal.ZERO;
         }

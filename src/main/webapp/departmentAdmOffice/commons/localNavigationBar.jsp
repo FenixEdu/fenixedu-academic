@@ -77,6 +77,11 @@
 					<bean:message key="label.executionCourses.types" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
 				</html:link>
 			</li>
+			<li>
+				<html:link page="/creditsPool.do?method=prepareManageUnitCredits">
+					<bean:message key="label.departmentCreditsPool" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+				</html:link>
+			</li>
 
 			<!-- Temporary solution (until we make expectations available for all departments) DEI Code = 28 -->
 			<% String deiCode = "28"; %>

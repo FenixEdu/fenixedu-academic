@@ -1907,6 +1907,26 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         return Boolean.TRUE;
     }
 
+    @Override
+    public void setUnitCreditValue(BigDecimal unitCreditValue) {
+        setUnitCreditValue(unitCreditValue, getUnitCreditValueNotes());
+    }
+
+    public void setUnitCreditValue(BigDecimal unitCreditValue, String justification) {
+        if (unitCreditValue != null
+                && (unitCreditValue.compareTo(BigDecimal.ZERO) < 0 || unitCreditValue.compareTo(BigDecimal.ONE) > 0)) {
+            throw new DomainException("error.executionCourse.unitCreditValue.range");
+        }
+        if (getEffortRate() == null
+                || (unitCreditValue != null
+                        && unitCreditValue.compareTo(BigDecimal.valueOf(Math.min(getEffortRate().doubleValue(), 1.0))) < 0 && StringUtils
+                            .isBlank(justification))) {
+            throw new DomainException("error.executionCourse.unitCreditValue.lower.effortRate.withoutJustification");
+        }
+        super.setUnitCreditValueNotes(justification);
+        super.setUnitCreditValue(unitCreditValue);
+    }
+
     public Set<Department> getDepartments() {
         final ExecutionSemester executionSemester = getExecutionPeriod();
         final Set<Department> departments = new TreeSet<Department>(Department.COMPARATOR_BY_NAME);
@@ -1923,6 +1943,24 @@ public class ExecutionCourse extends ExecutionCourse_Base {
             }
         }
         return departments;
+    }
+
+    public String getDepartmentNames() {
+        final ExecutionSemester executionSemester = getExecutionPeriod();
+        final Set<String> departments = new TreeSet<String>();
+        for (final CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
+            final CompetenceCourse competenceCourse = curricularCourse.getCompetenceCourse();
+            if (competenceCourse != null) {
+                final DepartmentUnit departmentUnit = competenceCourse.getDepartmentUnit(executionSemester);
+                if (departmentUnit != null) {
+                    final Department department = departmentUnit.getDepartment();
+                    if (department != null) {
+                        departments.add(department.getName());
+                    }
+                }
+            }
+        }
+        return StringUtils.join(departments, ", ");
     }
 
     public boolean isFromDepartment(final Department departmentToCheck) {
