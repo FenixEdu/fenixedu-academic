@@ -17,7 +17,6 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import jvstm.TransactionalCommand;
 import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
@@ -26,7 +25,6 @@ import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -41,7 +39,6 @@ import org.joda.time.DateTime;
 import pt.ist.fenixWebFramework.FenixWebFramework;
 import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
-import pt.ist.fenixframework.pstm.Transaction;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 import edu.yale.its.tp.cas.client.CASAuthenticationException;
 import edu.yale.its.tp.cas.client.CASReceipt;
@@ -266,36 +263,6 @@ public class Authenticate implements Serializable {
             }
         } else {
             return getUserView(person, requestURL);
-        }
-    }
-
-    public static class RegisterUserLoginThread extends Thread implements TransactionalCommand {
-
-        private final Integer userID;
-        private final String remoteHost;
-
-        public RegisterUserLoginThread(final User user, final String remoteHost) {
-            userID = user.getIdInternal();
-            this.remoteHost = remoteHost;
-        }
-
-        @Override
-        public void run() {
-            Transaction.withTransaction(this);
-        }
-
-        @Override
-        public void doIt() {
-            final User user = RootDomainObject.getInstance().readUserByOID(userID);
-            user.setLastLoginHost(user.getCurrentLoginHost());
-            user.setLastLoginDateTimeDateTime(user.getCurrentLoginDateTimeDateTime());
-            user.setCurrentLoginDateTimeDateTime(new DateTime());
-            user.setCurrentLoginHost(remoteHost);
-        }
-
-        protected static void runThread(final User user, final String remoteHost) {
-            final RegisterUserLoginThread registerUserLoginThread = new RegisterUserLoginThread(user, remoteHost);
-            registerUserLoginThread.start();
         }
     }
 

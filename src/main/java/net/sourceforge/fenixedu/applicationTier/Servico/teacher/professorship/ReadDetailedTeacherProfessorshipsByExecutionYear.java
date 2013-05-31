@@ -17,9 +17,6 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadDetailedTeacherProfessorshipsByExecutionYear extends ReadDetailedTeacherProfessorshipsAbstractService {
 
-    public class NotFoundExecutionYear extends FenixServiceException {
-    }
-
     protected List run(Integer teacherID, Integer executionYearID) throws FenixServiceException {
 
         final Teacher teacher = RootDomainObject.getInstance().readTeacherByOID(teacherID);
@@ -42,12 +39,15 @@ public class ReadDetailedTeacherProfessorshipsByExecutionYear extends ReadDetail
         }
         return getDetailedProfessorships(teacher.getProfessorships(executionYear), responsibleFors);
     }
+
     // Service Invokers migrated from Berserk
 
-    private static final ReadDetailedTeacherProfessorshipsByExecutionYear serviceInstance = new ReadDetailedTeacherProfessorshipsByExecutionYear();
+    private static final ReadDetailedTeacherProfessorshipsByExecutionYear serviceInstance =
+            new ReadDetailedTeacherProfessorshipsByExecutionYear();
 
     @Service
-    public static List runReadDetailedTeacherProfessorshipsByExecutionYear(Integer teacherID, Integer executionYearID) throws FenixServiceException  {
+    public static List runReadDetailedTeacherProfessorshipsByExecutionYear(Integer teacherID, Integer executionYearID)
+            throws FenixServiceException {
         return serviceInstance.run(teacherID, executionYearID);
     }
 
