@@ -31,16 +31,6 @@
             <bean:message key="link.student.thesis.identification.download"/>
         </html:link>
     </li>
-    <logic:notEmpty name="thesis">
-  	<bean:define id="thesis" name="thesis" type="net.sourceforge.fenixedu.domain.thesis.Thesis"/>
-  			<% if(ThesisPresentationState.getThesisPresentationState(thesis).ordinal() >= ThesisPresentationState.APPROVED.ordinal()) {  %>
-		        <li>
-     					<html:link page="<%= String.format("/manageThesis.do?method=downloadJuryReportSheet&degreeCurricularPlanID=%s&executionYear=%s&thesisID=%s",dcpId,executionYearId,thesisId)%>">
-			            <bean:message key="link.student.thesis.juryreport.download"/>
-			        </html:link>
-		    	</li>
-		    <% } %>
-    </logic:notEmpty>
 </ul>
 
 <%-- Dissertation --%>

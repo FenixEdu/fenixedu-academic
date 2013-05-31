@@ -17,18 +17,6 @@
             <bean:message key="link.student.thesis.identification.download"/>
         </html:link>
     </li>
-    <logic:notEmpty name="thesis">
-  	<bean:define id="thesis" name="thesis" type="net.sourceforge.fenixedu.domain.thesis.Thesis"/>
-	        <% if(ThesisPresentationState.areDocumentsSubmitted(thesis)) {
-		    %>
-		        <li>
-			        <html:link page="/thesisSubmission.do?method=downloadJuryReportSheet"
-					        paramId="thesisId" paramName="thesis" paramProperty="externalId">
-			            <bean:message key="link.student.thesis.juryreport.download"/>
-			        </html:link>
-		    	</li>
-		    <% } %>
-    </logic:notEmpty>
 </ul>
 
 <%-- pending items --%>

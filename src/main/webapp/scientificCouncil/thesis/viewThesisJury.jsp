@@ -48,16 +48,6 @@
 	<%
 		}
 	%>
-	<%
-		if (thesis.getState().ordinal() >= ThesisState.APPROVED.ordinal()) {
-	%>
-	|
-	<html:link href="<%= request.getContextPath() + String.format("/coordinator/manageThesis.do?method=downloadJuryReportSheet&amp;executionYearId=%s&amp;thesisID=%s", thesis.getExecutionYear().getIdInternal(), thesis.getExternalId()) %>">
-		<bean:message key="link.student.thesis.juryreport.download" bundle="APPLICATION_RESOURCES"/>
-	</html:link>
-	<%
-		}
-	%>
 </div>
 <table class="tstyle4 thlight mtop05" style="margin-left: 35px; width: 90%;">
 	<tr>

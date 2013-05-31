@@ -28,11 +28,6 @@
             <bean:message key="link.student.thesis.identification.download"/>
         </html:link>
     </li>
-    <li>
-     	<html:link page="<%= String.format("/manageThesis.do?method=downloadJuryReportSheet&degreeCurricularPlanID=%s&executionYear=%s&thesisID=%s",dcpId,executionYearId,thesisId)%>">
-           <bean:message key="link.student.thesis.juryreport.download"/>
-       </html:link>
-  	</li>
      <li>
      	<html:link page="<%= String.format("/manageThesis.do?method=viewOperationsThesis&degreeCurricularPlanID=%s&executionYear=%s&thesisID=%s",dcpId,executionYearId,thesisId)%>">
             <bean:message key="link.thesis.operation" bundle="STUDENT_RESOURCES"/>
