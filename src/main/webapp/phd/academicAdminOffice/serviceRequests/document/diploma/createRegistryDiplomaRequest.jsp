@@ -19,6 +19,9 @@
 			<fr:slot name="givenNames" required="true" />
 			<fr:slot name="familyNames" required="true" />
 			<fr:slot name="requestDate" required="true" />
+			<fr:slot name="language" >
+				<fr:property name="includedValues" value="pt, en" />
+			</fr:slot>
 		</fr:schema>
 		
 		<fr:layout name="tabular">

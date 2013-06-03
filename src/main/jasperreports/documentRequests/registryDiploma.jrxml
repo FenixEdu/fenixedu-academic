@@ -6,49 +6,45 @@
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
 	<style name="Header" isDefault="false" mode="Transparent" fill="Solid" hAlign="Center" vAlign="Middle" lineSpacing="Double" fontSize="12" pdfFontName="Courier" isPdfEmbedded="true"/>
-	<parameter name="code" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="university" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="principal" class="net.sourceforge.fenixedu.domain.Person" isForPrompting="false"/>
 	<parameter name="studentName" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="idDocType" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="idNumber" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="parishOfBirth" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="degreeDescription" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="institution" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="conclusionDay" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="finalAverage" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="finalAverageQualified" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="date" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="graduateTitle" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="idHolder" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="isForRegistration" class="java.lang.Boolean" isForPrompting="false"/>
-	<parameter name="isForPhd" class="java.lang.Boolean" isForPrompting="false"/>
+	<parameter name="degreeRegistrationDiploma" class="java.lang.String"/>
+	<parameter name="portugueseRepublic_1" class="java.lang.String"/>
+	<parameter name="portugueseRepublic_2" class="java.lang.String"/>
+	<parameter name="president" class="java.lang.String"/>
+	<parameter name="rector" class="java.lang.String"/>
+	<parameter name="dateParagraph" class="java.lang.String"/>
+	<parameter name="firstParagraph" class="java.lang.String"/>
+	<parameter name="secondParagraph" class="java.lang.String"/>
+	<parameter name="thirdParagraph" class="java.lang.String"/>
+	<parameter name="fifthParagraph" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
 		<band height="145" splitType="Stretch">
-			<staticText>
+			<textField>
 				<reportElement key="staticText-1" mode="Transparent" x="0" y="0" width="180" height="22"/>
-				<textElement textAlignment="Right">
+				<textElement textAlignment="Right" markup="none">
 					<font fontName="Lucida Handwriting" size="12" pdfFontName="LucidaHandwriting.ttf" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[REPÚBLICA]]></text>
-			</staticText>
-			<staticText>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{portugueseRepublic_1}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<textField>
 				<reportElement key="staticText-2" mode="Transparent" x="300" y="0" width="175" height="22"/>
-				<textElement textAlignment="Left">
+				<textElement textAlignment="Left" markup="none">
 					<font fontName="Lucida Handwriting" size="12" pdfFontName="LucidaHandwriting.ttf" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[PORTUGUESA]]></text>
-			</staticText>
-			<staticText>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{portugueseRepublic_2}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<textField>
 				<reportElement key="staticText-3" x="0" y="87" width="475" height="22"/>
-				<textElement textAlignment="Center">
+				<textElement textAlignment="Center" markup="none">
 					<font fontName="Lucida Handwriting" size="12" pdfFontName="LucidaHandwriting.ttf" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[DIPLOMA DE REGISTO]]></text>
-			</staticText>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{degreeRegistrationDiploma}.toUpperCase()]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>
@@ -64,7 +60,7 @@
 				<textElement>
 					<font fontName="Garamond" pdfFontName="AdobeGaramondPro.ttf" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[($P{principal}.isMale() ? "O Reitor da " : "A Reitora da ") + $P{university} + ($P{principal}.isMale() ? ", Professor Doutor " : ", Professora Doutora ") + $P{principal}.getValidatedName() + ", certifica que do registo número " + $P{code} + " consta que"]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{firstParagraph}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
 				<reportElement key="textField-2" positionType="Float" x="0" y="22" width="475" height="60"/>
@@ -78,7 +74,7 @@
 				<textElement>
 					<font fontName="Garamond" pdfFontName="AdobeGaramondPro.ttf" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{idHolder} + " do " + $P{idDocType} + " nº " + $P{idNumber} + ", natural de " + $P{parishOfBirth} + ", concluiu o " + $P{degreeDescription} + " no"]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{secondParagraph}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
 				<reportElement key="textField-4" positionType="Float" x="0" y="104" width="475" height="60"/>
@@ -92,7 +88,7 @@
 				<textElement>
 					<font fontName="Garamond" pdfFontName="AdobeGaramondPro.ttf" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["desta Universidade, no " + $P{conclusionDay} + ", tendo-lhe sido atribuído o grau de"]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{thirdParagraph}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
 				<reportElement key="textField-6" positionType="Float" x="0" y="186" width="475" height="60"/>
@@ -102,22 +98,11 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{graduateTitle}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-				<reportElement key="textField-7" positionType="Float" x="0" y="246" width="475" height="13">
-					<printWhenExpression><![CDATA[$P{isForRegistration}]]></printWhenExpression>
-				</reportElement>
+				<reportElement key="textField-11" positionType="Float" x="0" y="246" width="475" height="13"/>
 				<textElement>
 					<font fontName="Garamond" pdfFontName="AdobeGaramondPro.ttf" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["com a qualificação de " + $P{finalAverage} + " Valores (" + $P{finalAverageQualified} + "), pelo que, em conformidade com as disposições legais em vigor, lhe é passado o presente Diploma de Registo."]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-				<reportElement key="textField-11" positionType="Float" x="0" y="246" width="475" height="13">
-					<printWhenExpression><![CDATA[$P{isForPhd}]]></printWhenExpression>
-				</reportElement>
-				<textElement>
-					<font fontName="Garamond" pdfFontName="AdobeGaramondPro.ttf" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["com a qualificação de " + $P{finalAverage} + ", pelo que, em conformidade com as disposições legais em vigor, lhe é passado o presente Diploma de Registo."]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{fifthParagraph}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -134,7 +119,7 @@
 				<textElement>
 					<font fontName="Garamond" pdfFontName="AdobeGaramondPro.ttf" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{university} + ", " + $P{date} + "."]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{dateParagraph}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement key="line-1" x="20" y="64" width="180" height="1"/>
@@ -147,14 +132,14 @@
 				<textElement textAlignment="Center">
 					<font fontName="Garamond" pdfFontName="AdobeGaramondPro.ttf" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["O Presidente do " + $P{institution}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{president}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
 				<reportElement key="textField-10" positionType="Float" x="261" y="76" width="213" height="21"/>
 				<textElement textAlignment="Center">
 					<font fontName="Garamond" pdfFontName="AdobeGaramondPro.ttf" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{principal}.isMale() ? "O Reitor" : "A Reitora"]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{rector}]]></textFieldExpression>
 			</textField>
 		</band>
 	</lastPageFooter>
