@@ -169,7 +169,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         }
         setEntryPhase(entryPhase);
         setProjectTutorialCourse(Boolean.FALSE);
-        setUnitCreditValue(BigDecimal.ZERO);
+        setUnitCreditValue(null);
     }
 
     public void editInformation(String nome, String sigla, String comment, Boolean availableGradeSubmission, EntryPhase entryPhase) {
@@ -1917,8 +1917,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
                 && (unitCreditValue.compareTo(BigDecimal.ZERO) < 0 || unitCreditValue.compareTo(BigDecimal.ONE) > 0)) {
             throw new DomainException("error.executionCourse.unitCreditValue.range");
         }
-        if (getEffortRate() == null
-                || (unitCreditValue != null
+        if (getEffortRate() != null
+                && (unitCreditValue != null
                         && unitCreditValue.compareTo(BigDecimal.valueOf(Math.min(getEffortRate().doubleValue(), 1.0))) < 0 && StringUtils
                             .isBlank(justification))) {
             throw new DomainException("error.executionCourse.unitCreditValue.lower.effortRate.withoutJustification");
