@@ -23,7 +23,7 @@ public class ResearchUnitElementGroup extends DomainBackedGroup<ResearchUnit> {
 
     @Override
     public String getPresentationNameBundle() {
-        return "resources.Researcher";
+        return "resources.ResearcherResources";
     }
 
     @Override

@@ -26,7 +26,7 @@ public class ResearchUnitMembersGroup extends DomainBackedGroup<ResearchUnit> {
 
     @Override
     public String getPresentationNameBundle() {
-        return "resources.Messaging";
+        return "resources.MessagingResources";
     }
 
     @Override
