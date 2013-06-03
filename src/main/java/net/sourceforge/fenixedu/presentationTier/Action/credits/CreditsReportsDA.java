@@ -104,7 +104,6 @@ public class CreditsReportsDA extends FenixDispatchAction {
 
         AnnualCreditsState annualCreditsState =
                 AnnualCreditsState.getAnnualCreditsState(departmentCreditsBean.getExecutionSemester().getExecutionYear());
-        Boolean isFinalCreditsCalculated = annualCreditsState != null && annualCreditsState.getIsFinalCreditsCalculated();
         for (Department department : departments) {
             String sheetName = "Cargos_" + department.getAcronym();
             spreadsheet.getSheet(sheetName);
@@ -119,10 +118,8 @@ public class CreditsReportsDA extends FenixDispatchAction {
                     "label.managementPosition.unit"), 10000);
             spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources",
                     "label.teacher-dfp-student.percentage"));
-            if (isFinalCreditsCalculated) {
-                spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources",
-                        "label.managementPosition.credits"));
-            }
+            spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources",
+                    "label.managementPosition.credits"));
             for (Teacher teacher : department.getAllTeachers(departmentCreditsBean.getExecutionSemester().getAcademicInterval())) {
 
                 for (PersonFunction personFunction : teacher.getPerson().getPersonFuntions(
@@ -135,9 +132,7 @@ public class CreditsReportsDA extends FenixDispatchAction {
                     spreadsheet.addCell(personFunction.getFunction().getUnit().getPresentationName());
                     spreadsheet.addCell(personFunction.isPersonFunctionShared() ? ((PersonFunctionShared) personFunction)
                             .getPercentage() : "-");
-                    if (isFinalCreditsCalculated) {
-                        spreadsheet.addCell(personFunction.getCredits());
-                    }
+                    spreadsheet.addCell(personFunction.getCredits());
                 }
             }
         }

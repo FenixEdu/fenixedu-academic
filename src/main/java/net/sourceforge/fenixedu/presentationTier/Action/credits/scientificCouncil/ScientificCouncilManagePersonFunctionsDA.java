@@ -77,6 +77,7 @@ public class ScientificCouncilManagePersonFunctionsDA extends ManagePersonFuncti
             departmentCreditsBean.setAvailableDepartments(new ArrayList<Department>(rootDomainObject.getDepartments()));
         }
         request.setAttribute("departmentCreditsBean", departmentCreditsBean);
+        request.setAttribute("canViewCredits", "true");
         return mapping.findForward("showDepartmentPersonFunctions");
     }
 

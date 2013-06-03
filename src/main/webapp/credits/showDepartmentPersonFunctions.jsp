@@ -38,17 +38,45 @@
 		<html:cancel><bean:message key="label.export" bundle="APPLICATION_RESOURCES" /></html:cancel>
 	</fr:form>
 	<logic:notEmpty name="departmentCreditsBean" property="departmentPersonFunctions">
-		<bean:define id="departmentOid" name="departmentCreditsBean" property="department.externalId"/>
-		<fr:view name="departmentCreditsBean" property="departmentPersonFunctions">
-			<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction">
-				<fr:slot name="person.username" key="label.teacher.id"/>
-				<fr:slot name="person.name" key="label.name"/>
-				<fr:slot name="function.name" key="label.managementPosition.position"/>
-				<fr:slot name="function.unit.presentationName" key="label.managementPosition.unit" />
-			</fr:schema>
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle2 thlight thleft mtop05 mbottom05"/>
-			</fr:layout>
-		</fr:view>
+		<bean:define id="canShowCredits" value="false" type="java.lang.String"/>
+		<logic:present name="canViewCredits">
+			<bean:define id="canShowCredits" name="canViewCredits" type="java.lang.String"/>
+		</logic:present>
+		<table class="tstyle2 thlight thleft mtop05 mbottom05">
+			<tr>
+				<th><bean:message key="label.teacher.id" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
+				<th><bean:message key="label.name" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
+				<th><bean:message key="label.managementPosition.position" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
+				<th><bean:message key="label.managementPosition.unit" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
+				<th><bean:message key="label.beginDate" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
+				<th><bean:message key="label.endDate" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
+				<logic:equal name="canShowCredits" value="true">
+					<th><bean:message key="label.percentage" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
+					<th><bean:message key="label.managementPosition.credits" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
+				</logic:equal>
+			</tr>
+			<logic:iterate id="personFunction" name="departmentCreditsBean" property="departmentPersonFunctions">
+				<tr>
+					<td><bean:write name="personFunction" property="person.username"/></td>
+					<td><bean:write name="personFunction" property="person.name"/></td>
+					<td><bean:write name="personFunction" property="function.name"/></td>
+					<td><bean:write name="personFunction" property="function.unit.presentationName"/></td>
+					<td><bean:write name="personFunction" property="beginDate"/></td>
+					<td><bean:write name="personFunction" property="endDate"/></td>
+					<logic:equal name="canShowCredits" value="true">
+						<% if(personFunction instanceof net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunctionShared){ %>
+							<td align="center"><bean:write name="personFunction" property="percentage"/></td>
+						<% } else { %>
+							<td align="center">-</td>
+						<% }%>
+						<%-- --%>
+						<td><bean:write name="personFunction" property="credits"/></td>
+					</logic:equal>
+					<logic:notEqual name="canShowCredits" value="true">
+						<td/><td/>
+					</logic:notEqual>
+				</tr>
+			</logic:iterate>
+		</table>
 	</logic:notEmpty>
 </logic:present>

@@ -1,7 +1,9 @@
 package net.sourceforge.fenixedu.domain.reports;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Employee;
@@ -20,8 +22,10 @@ import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessi
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalRegime;
 import net.sourceforge.fenixedu.domain.teacher.CategoryType;
+import net.sourceforge.fenixedu.domain.teacher.OtherService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.Interval;
 import org.joda.time.PeriodType;
 import org.joda.time.YearMonthDay;
@@ -66,9 +70,11 @@ public class TeacherCreditsReportFile extends TeacherCreditsReportFile_Base {
         spreadsheet.setHeader("CL");
         spreadsheet.setHeader("CG");
         spreadsheet.setHeader("O");
+        spreadsheet.setHeader("O - Descrição");
         spreadsheet.setHeader("AD65 requerido");
         spreadsheet.setHeader("AD65 atribuído");
         spreadsheet.setHeader("SNE");
+        spreadsheet.setHeader("SNE - Descrição");
         spreadsheet.setHeader("CLN");
         //1º sem
         spreadsheet.setHeader("COT");
@@ -127,7 +133,7 @@ public class TeacherCreditsReportFile extends TeacherCreditsReportFile_Base {
                     row.setCell(teacher.getManagementFunctionsCredits(executionSemester)); // CG
                     //CG (desc)
                     row.setCell(teacherService == null ? 0 : teacherService.getOtherServiceCredits());// O
-                    //O (desc)
+                    row.setCell(teacherService == null ? EMPTY_CELL : getOthersDesciption(teacherService));//O (desc)
                     Double creditsReductionRequired =
                             teacherService == null ? null : teacherService.getReductionService() == null ? null : teacherService
                                     .getReductionService().getCreditsReduction() == null ? null : teacherService
@@ -141,7 +147,7 @@ public class TeacherCreditsReportFile extends TeacherCreditsReportFile_Base {
                     row.setCell(creditsReductionAttributed);// AD65 atribuído
 
                     row.setCell(teacher.getServiceExemptionCredits(executionSemester)); //SNE
-                    //SNE Desc
+                    row.setCell(getServiceExemptionDescription(executionSemester, teacher)); //SNE Desc
                     row.setCell(teacher.getMandatoryLessonHours(executionSemester)); //CLN
 
                     AnnualTeachingCreditsBean annualTeachingCreditsBean =
@@ -219,4 +225,22 @@ public class TeacherCreditsReportFile extends TeacherCreditsReportFile_Base {
                 PeriodType.days()).getDays() + 1;
     }
 
+    private String getOthersDesciption(TeacherService teacherService) {
+        List<String> others = new ArrayList<String>();
+        for (OtherService otherService : teacherService.getOtherServices()) {
+            others.add(otherService.getReason() + " (" + otherService.getCredits() + " créditos)");
+        }
+        return StringUtils.join(others, ", ");
+    }
+
+    public String getServiceExemptionDescription(ExecutionSemester executionSemester, Teacher teacher) {
+        Set<PersonContractSituation> personProfessionalExemptions = teacher.getValidTeacherServiceExemptions(executionSemester);
+        List<String> serviceExemption = new ArrayList<String>();
+
+        for (PersonContractSituation personContractSituation : personProfessionalExemptions) {
+            serviceExemption.add(personContractSituation.getContractSituation().getName().getContent());
+        }
+
+        return StringUtils.join(serviceExemption, ", ");
+    }
 }

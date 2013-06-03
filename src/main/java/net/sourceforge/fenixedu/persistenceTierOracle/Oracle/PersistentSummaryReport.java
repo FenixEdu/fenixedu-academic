@@ -49,9 +49,9 @@ public class PersistentSummaryReport extends PersistentReport {
                 }
                 queryBuffer.append("'");
                 String projectCode = projectCodes.get(i);
-                if (projectCode.matches("[a-zA-Z][a-zA-Z]\\d{1,4}")) {
-                    projectCode = projectCodes.get(i).substring(2);
-                }
+//                if (projectCode.matches("[a-zA-Z][a-zA-Z]\\d{1,4}")) {
+//                    projectCode = projectCodes.get(i).substring(2);
+//                }
                 queryBuffer.append(projectCode);
                 queryBuffer.append("'");
             }
