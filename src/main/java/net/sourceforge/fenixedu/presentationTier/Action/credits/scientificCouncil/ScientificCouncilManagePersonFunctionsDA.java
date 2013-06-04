@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.credits.scientificCouncil;
 
-import java.util.ArrayList;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -74,7 +72,7 @@ public class ScientificCouncilManagePersonFunctionsDA extends ManagePersonFuncti
         DepartmentCreditsBean departmentCreditsBean = getRenderedObject();
         if (departmentCreditsBean == null) {
             departmentCreditsBean = new DepartmentCreditsBean();
-            departmentCreditsBean.setAvailableDepartments(new ArrayList<Department>(rootDomainObject.getDepartments()));
+            departmentCreditsBean.setAvailableDepartments(Department.readActiveDepartments());
         }
         request.setAttribute("departmentCreditsBean", departmentCreditsBean);
         request.setAttribute("canViewCredits", "true");

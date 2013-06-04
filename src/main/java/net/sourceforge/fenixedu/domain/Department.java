@@ -458,4 +458,14 @@ public class Department extends Department_Base {
         return null;
     }
 
+    public static List<Department> readActiveDepartments() {
+        final List<Department> departments = new ArrayList<Department>();
+        for (final Department department : RootDomainObject.getInstance().getDepartments()) {
+            if (department.getActive()) {
+                departments.add(department);
+            }
+        }
+        Collections.sort(departments, Department.COMPARATOR_BY_NAME);
+        return departments;
+    }
 }

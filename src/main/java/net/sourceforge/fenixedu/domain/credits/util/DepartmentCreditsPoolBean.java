@@ -16,6 +16,9 @@ import net.sourceforge.fenixedu.domain.credits.AnnualCreditsState;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingServiceCorrection;
+
+import org.apache.commons.lang.StringUtils;
+
 import pt.ist.fenixWebFramework.services.Service;
 
 public class DepartmentCreditsPoolBean implements Serializable {
@@ -66,7 +69,9 @@ public class DepartmentCreditsPoolBean implements Serializable {
                     }
                 }
             }
-            availableCredits = departmentCreditsPool.getCreditsPool().subtract(assignedCredits);
+            assignedCredits = assignedCredits.setScale(2, BigDecimal.ROUND_HALF_UP);
+            availableCredits =
+                    departmentCreditsPool.getCreditsPool().subtract(assignedCredits).setScale(2, BigDecimal.ROUND_HALF_UP);
         }
     }
 
@@ -177,6 +182,7 @@ public class DepartmentCreditsPoolBean implements Serializable {
             super();
             this.executionCourse = executionCourse;
             setUnitCreditValue(getExecutionCourse().getUnitCreditValue());
+            setUnitCreditJustification(getExecutionCourse().getUnitCreditValueNotes());
             setEfectiveLoads();
         }
 
@@ -287,8 +293,13 @@ public class DepartmentCreditsPoolBean implements Serializable {
                     departmentExecutionCourse.getDepartmentEffectiveLoad().multiply(
                             departmentExecutionCourse.getUnitCreditValue());
             newAssignedCredits = newAssignedCredits.add(newExecutionCourseCLE);
-            departmentExecutionCourse.executionCourse.setUnitCreditValue(departmentExecutionCourse.getUnitCreditValue(),
-                    departmentExecutionCourse.getUnitCreditJustification());
+            if (departmentExecutionCourse.executionCourse.getUnitCreditValue().compareTo(
+                    departmentExecutionCourse.getUnitCreditValue()) != 0
+                    || StringUtils.equals(departmentExecutionCourse.executionCourse.getUnitCreditValueNotes(),
+                            departmentExecutionCourse.getUnitCreditJustification())) {
+                departmentExecutionCourse.executionCourse.setUnitCreditValue(departmentExecutionCourse.getUnitCreditValue(),
+                        departmentExecutionCourse.getUnitCreditJustification());
+            }
         } else {
             BigDecimal oldExecutionCourseCLE =
                     departmentExecutionCourse.getDepartmentEffectiveLoad().multiply(
@@ -297,5 +308,4 @@ public class DepartmentCreditsPoolBean implements Serializable {
         }
         return newAssignedCredits;
     }
-
 }

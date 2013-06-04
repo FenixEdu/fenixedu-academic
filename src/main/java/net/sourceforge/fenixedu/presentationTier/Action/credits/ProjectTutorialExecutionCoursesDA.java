@@ -32,7 +32,7 @@ public class ProjectTutorialExecutionCoursesDA extends FenixDispatchAction {
         DepartmentCreditsBean departmentCreditsBean = getRenderedObject();
         if (departmentCreditsBean == null) {
             departmentCreditsBean = new DepartmentCreditsBean();
-            departmentCreditsBean.setAvailableDepartments(new ArrayList<Department>(rootDomainObject.getDepartments()));
+            departmentCreditsBean.setAvailableDepartments(Department.readActiveDepartments());
         }
         request.setAttribute("departmentCreditsBean", departmentCreditsBean);
         return mapping.findForward("showDepartmentExecutionCourses");

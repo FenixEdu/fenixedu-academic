@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.credits.scientificCouncil;
 
-import java.util.ArrayList;
-
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.credits.util.DepartmentCreditsBean;
 import net.sourceforge.fenixedu.presentationTier.Action.credits.ManageDepartmentCreditsPool;
@@ -13,7 +11,7 @@ public class ScientificCouncilManageDepartmentCreditsPool extends ManageDepartme
     @Override
     protected DepartmentCreditsBean getDepartmentCreditsBean() {
         DepartmentCreditsBean departmentCreditsBean = new DepartmentCreditsBean();
-        departmentCreditsBean.setAvailableDepartments(new ArrayList<Department>(rootDomainObject.getDepartments()));
+        departmentCreditsBean.setAvailableDepartments(Department.readActiveDepartments());
         return departmentCreditsBean;
     }
 

@@ -39,7 +39,7 @@ public class CreditsReportsDA extends FenixDispatchAction {
     public ActionForward prepareExportDepartmentCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
         DepartmentCreditsBean departmentCreditsBean = new DepartmentCreditsBean();
-        departmentCreditsBean.setAvailableDepartments(new ArrayList<Department>(rootDomainObject.getDepartments()));
+        departmentCreditsBean.setAvailableDepartments(Department.readActiveDepartments());
         request.setAttribute("departmentCreditsBean", departmentCreditsBean);
         return mapping.findForward("exportDepartmentCourses");
     }

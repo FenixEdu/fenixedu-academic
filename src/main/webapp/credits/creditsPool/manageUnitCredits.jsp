@@ -92,79 +92,93 @@
 			</fr:view>
 		
 			<h3><bean:message bundle="TEACHER_CREDITS_SHEET_RESOURCES" key="label.courses.shared"/></h3>
-			<bean:define id="canEditSharedUnitCredits" name="departmentCreditsPoolBean" property="canEditSharedUnitCredits" type="java.lang.Boolean"/>
-			<fr:form id="sharedUnitCreditsForm" action="/creditsPool.do?method=editUnitCredits">
-				<fr:edit id="departmentCreditsPoolBean" name="departmentCreditsPoolBean" visible="false"/>
-				<fr:edit id="departmentCreditsPoolBean2" name="departmentCreditsPoolBean" property="departmentSharedExecutionCourses" >
+			<logic:notEmpty name="departmentCreditsPoolBean" property="departmentSharedExecutionCourses">
+				<bean:define id="canEditSharedUnitCredits" name="departmentCreditsPoolBean" property="canEditSharedUnitCredits" type="java.lang.Boolean"/>
+				<fr:form id="sharedUnitCreditsForm" action="/creditsPool.do?method=editUnitCredits">
+					<fr:edit id="departmentCreditsPoolBean" name="departmentCreditsPoolBean" visible="false"/>
+					<fr:edit id="departmentCreditsPoolBean2" name="departmentCreditsPoolBean" property="departmentSharedExecutionCourses" >
+						<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.credits.util.DepartmentCreditsPoolBean$DepartmentExecutionCourse">
+							<fr:slot name="executionCourse.name" key="label.course" readOnly="true"/>
+							<fr:slot name="executionCourse.degreePresentationString" key="label.degrees" readOnly="true"/>
+							<fr:slot name="executionCourse.executionPeriod.semester" key="label.execution-period" readOnly="true"/>
+							<fr:slot name="executionCourse.effortRate" key="label.effortRate" readOnly="true"/>
+							<fr:slot name="departmentEffectiveLoad" key="label.departmentEffectiveLoad" readOnly="true"/>
+							<fr:slot name="totalEffectiveLoad" key="label.totalEffectiveLoad" readOnly="true"/>
+							<fr:slot name="unitCreditValue" key="label.unitCredit" readOnly="<%=!canEditSharedUnitCredits%>" >
+								<fr:property name="maxLength" value="4"/>
+								<fr:property name="size" value="2"/>
+								<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.DoubleValidator"/>
+							</fr:slot>
+							<fr:slot name="unitCreditJustification" key="label.justification" readOnly="<%=!canEditSharedUnitCredits%>"/>
+						</fr:schema>
+						<fr:layout name="tabular-editable">
+							<fr:property name="classes" value="tstyle2 thleft thlight mtop05"/>
+							<fr:property name="columnClasses" value=",,,,,,,,tdclear tderror1"/>
+							<fr:property name="requiredMarkShown" value="true" />
+						</fr:layout>
+						<fr:destination name="invalid" path="/creditsPool.do?method=postBackUnitCredits" />
+					</fr:edit>
+					<logic:equal name="canEditSharedUnitCredits" value="true">
+						<html:submit styleId="sb1" bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.submit"/></html:submit>
+					</logic:equal>
+				</fr:form>
+			</logic:notEmpty>
+			<logic:empty name="departmentCreditsPoolBean" property="departmentSharedExecutionCourses">
+				<bean:message bundle="TEACHER_CREDITS_SHEET_RESOURCES" key="message.noRecordsFound"/>
+			</logic:empty>
+			<h3><bean:message bundle="TEACHER_CREDITS_SHEET_RESOURCES" key="label.courses.shared.other.departments"/></h3>
+			<logic:notEmpty name="departmentCreditsPoolBean" property="otherDepartmentSharedExecutionCourses">
+				<fr:view name="departmentCreditsPoolBean" property="otherDepartmentSharedExecutionCourses">
 					<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.credits.util.DepartmentCreditsPoolBean$DepartmentExecutionCourse">
+						<fr:slot name="executionCourse.departmentNames" key="label.department" readOnly="true" />
 						<fr:slot name="executionCourse.name" key="label.course" readOnly="true"/>
 						<fr:slot name="executionCourse.degreePresentationString" key="label.degrees" readOnly="true"/>
-						<fr:slot name="executionCourse.executionPeriod.semester" key="label.execution-period" readOnly="true"/>
+						<fr:slot name="executionCourse.executionPeriod.name" key="label.execution-period" readOnly="true"/>
 						<fr:slot name="executionCourse.effortRate" key="label.effortRate" readOnly="true"/>
 						<fr:slot name="departmentEffectiveLoad" key="label.departmentEffectiveLoad" readOnly="true"/>
 						<fr:slot name="totalEffectiveLoad" key="label.totalEffectiveLoad" readOnly="true"/>
-						<fr:slot name="unitCreditValue" key="label.unitCredit" readOnly="<%=!canEditSharedUnitCredits%>" >
-							<fr:property name="maxLength" value="4"/>
-							<fr:property name="size" value="2"/>
-							<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.DoubleValidator"/>
-						</fr:slot>
-						<fr:slot name="unitCreditJustification" key="label.justification" readOnly="<%=!canEditSharedUnitCredits%>"/>
+						<fr:slot name="unitCreditValue" key="label.unitCredit" readOnly="true"/>
 					</fr:schema>
 					<fr:layout name="tabular-editable">
 						<fr:property name="classes" value="tstyle2 thleft thlight mtop05"/>
-						<fr:property name="columnClasses" value=",,,,,,,,tdclear tderror1"/>
-						<fr:property name="requiredMarkShown" value="true" />
 					</fr:layout>
-					<fr:destination name="invalid" path="/creditsPool.do?method=postBackUnitCredits" />
-				</fr:edit>
-				<logic:equal name="canEditSharedUnitCredits" value="true">
-					<html:submit styleId="sb1" bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.submit"/></html:submit>
-				</logic:equal>
-			</fr:form>
-			<h3><bean:message bundle="TEACHER_CREDITS_SHEET_RESOURCES" key="label.courses.shared.other.departments"/></h3>
-			<fr:view name="departmentCreditsPoolBean" property="otherDepartmentSharedExecutionCourses">
-				<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.credits.util.DepartmentCreditsPoolBean$DepartmentExecutionCourse">
-					<fr:slot name="executionCourse.departmentNames" key="label.department" readOnly="true" />
-					<fr:slot name="executionCourse.name" key="label.course" readOnly="true"/>
-					<fr:slot name="executionCourse.degreePresentationString" key="label.degrees" readOnly="true"/>
-					<fr:slot name="executionCourse.executionPeriod.name" key="label.execution-period" readOnly="true"/>
-					<fr:slot name="executionCourse.effortRate" key="label.effortRate" readOnly="true"/>
-					<fr:slot name="departmentEffectiveLoad" key="label.departmentEffectiveLoad" readOnly="true"/>
-					<fr:slot name="totalEffectiveLoad" key="label.totalEffectiveLoad" readOnly="true"/>
-					<fr:slot name="unitCreditValue" key="label.unitCredit" readOnly="true"/>
-				</fr:schema>
-				<fr:layout name="tabular-editable">
-					<fr:property name="classes" value="tstyle2 thleft thlight mtop05"/>
-				</fr:layout>
-			</fr:view>
-			
+				</fr:view>
+			</logic:notEmpty>
+			<logic:empty name="departmentCreditsPoolBean" property="otherDepartmentSharedExecutionCourses">
+				<bean:message bundle="TEACHER_CREDITS_SHEET_RESOURCES" key="message.noRecordsFound"/>
+			</logic:empty>
 			
 			<h3><bean:message bundle="TEACHER_CREDITS_SHEET_RESOURCES" key="label.courses.not.shared"/></h3>
-			<bean:define id="canEditUnitCredits" name="departmentCreditsPoolBean" property="canEditUnitCredits" type="java.lang.Boolean"/>
-			<fr:form id="f2" action="/creditsPool.do?method=editUnitCredits">
-				<fr:edit id="departmentCreditsPoolBean3" name="departmentCreditsPoolBean" visible="false"/>
-				<fr:edit id="departmentCreditsPoolBean4" name="departmentCreditsPoolBean" property="departmentExecutionCourses">
-					<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.credits.util.DepartmentCreditsPoolBean$DepartmentExecutionCourse">
-						<fr:slot name="executionCourse.name" key="label.course" readOnly="true"/>
-						<fr:slot name="executionCourse.degreePresentationString" key="label.degrees" readOnly="true"/>
-						<fr:slot name="executionCourse.executionPeriod.semester" key="label.execution-period" readOnly="true"/>
-						<fr:slot name="executionCourse.effortRate" key="label.effortRate" readOnly="true"/>
-						<fr:slot name="departmentEffectiveLoad" key="label.departmentEffectiveLoad" readOnly="true"/>
-						<fr:slot name="totalEffectiveLoad" key="label.totalEffectiveLoad" readOnly="true"/>
-						<fr:slot name="unitCreditValue" key="label.unitCredit" readOnly="<%=!canEditUnitCredits%>">
-							<fr:property name="maxLength" value="4"/>
-							<fr:property name="size" value="2"/>
-						</fr:slot>
-						<fr:slot name="unitCreditJustification" key="label.justification" readOnly="<%=!canEditUnitCredits%>"/>
-					</fr:schema>
-					<fr:layout name="tabular-editable">
-						<fr:property name="classes" value="tstyle2 thleft thlight mtop05"/>
-					</fr:layout>
-				</fr:edit>
-				<logic:equal name="canEditUnitCredits" value="true">
-					<html:submit styleId="sb2" bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.submit"/></html:submit>
-				</logic:equal>
-			</fr:form>
+			<logic:notEmpty name="departmentCreditsPoolBean" property="departmentExecutionCourses">
+				<bean:define id="canEditUnitCredits" name="departmentCreditsPoolBean" property="canEditUnitCredits" type="java.lang.Boolean"/>
+				<fr:form id="f2" action="/creditsPool.do?method=editUnitCredits">
+					<fr:edit id="departmentCreditsPoolBean3" name="departmentCreditsPoolBean" visible="false"/>
+					<fr:edit id="departmentCreditsPoolBean4" name="departmentCreditsPoolBean" property="departmentExecutionCourses">
+						<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.credits.util.DepartmentCreditsPoolBean$DepartmentExecutionCourse">
+							<fr:slot name="executionCourse.name" key="label.course" readOnly="true"/>
+							<fr:slot name="executionCourse.degreePresentationString" key="label.degrees" readOnly="true"/>
+							<fr:slot name="executionCourse.executionPeriod.semester" key="label.execution-period" readOnly="true"/>
+							<fr:slot name="executionCourse.effortRate" key="label.effortRate" readOnly="true"/>
+							<fr:slot name="departmentEffectiveLoad" key="label.departmentEffectiveLoad" readOnly="true"/>
+							<fr:slot name="totalEffectiveLoad" key="label.totalEffectiveLoad" readOnly="true"/>
+							<fr:slot name="unitCreditValue" key="label.unitCredit" readOnly="<%=!canEditUnitCredits%>">
+								<fr:property name="maxLength" value="4"/>
+								<fr:property name="size" value="2"/>
+							</fr:slot>
+							<fr:slot name="unitCreditJustification" key="label.justification" readOnly="<%=!canEditUnitCredits%>"/>
+						</fr:schema>
+						<fr:layout name="tabular-editable">
+							<fr:property name="classes" value="tstyle2 thleft thlight mtop05"/>
+						</fr:layout>
+					</fr:edit>
+					<logic:equal name="canEditUnitCredits" value="true">
+						<html:submit styleId="sb2" bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.submit"/></html:submit>
+					</logic:equal>
+				</fr:form>
+			</logic:notEmpty>
+			<logic:empty name="departmentCreditsPoolBean" property="departmentExecutionCourses">
+				<bean:message bundle="TEACHER_CREDITS_SHEET_RESOURCES" key="message.noRecordsFound"/>
+			</logic:empty>
 		</logic:present>
 		<logic:notPresent name="departmentCreditsPoolBean" property="departmentCreditsPool">
 			<bean:message bundle="TEACHER_CREDITS_SHEET_RESOURCES" key="label.department.credits.pool.not.defined"/>
@@ -183,6 +197,11 @@
 			if (inputVal && !isNaN(inputVal)){
 				var cleTotal = parseFloat($(this).parent().parent().parent().children().eq(4).html());
 				otherAssignedCredits = otherAssignedCredits - (cleTotal * parseFloat(inputVal));
+			}
+			var bk = parseFloat($(this).parent().parent().parent().children().eq(3).html());
+			if(!bk || isNaN(bk)){
+				 $(this).prop('readonly', true);
+				 $(this).parent().parent().parent().children().eq(7).children().children().eq(0).prop('readonly', true);
 			}
 		});
 
