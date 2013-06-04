@@ -21,6 +21,15 @@
 
 <h2><bean:message key="title.show.all.lesson.dates" bundle="SOP_RESOURCES"/></h2>
 
+<script type="text/javascript">
+	function invertSelection() {
+		$('input[name="lessonDatesToDelete"]').each(function() {
+			var inputVal = $(this).val();
+			$(this).attr('checked', !($(this).is(':checked')));
+		});
+	};
+</script>
+
 <logic:present role="RESOURCE_ALLOCATION_MANAGER">
 
 	<p>
@@ -84,6 +93,7 @@
 	<%-- Delete Lesson Instances --%>		
 	<bean:define id="linkToDelete">/manageLesson.do?method=deleteLessonInstance&amp;<bean:write name="parameters" filter="false"/></bean:define>
 	<bean:define id="linkToDeleteMultiple">/resourceAllocationManager/manageLesson.do?method=deleteLessonInstances&amp;<bean:write name="parameters" filter="false"/></bean:define>
+	<a href="#" onclick="invertSelection();"><bean:message key="label.invert.selection" bundle="SOP_RESOURCES"/></a>
 	<form action="<%= request.getContextPath() + linkToDeleteMultiple %>" method="post">
 		<table class="tstyle1 mtop025 mbottom0 tdcenter">
 			<tr>

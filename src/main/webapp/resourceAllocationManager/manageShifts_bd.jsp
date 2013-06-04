@@ -117,13 +117,16 @@
 			<th rowspan="2">
 				<bean:message key="property.shift.capacity"/>
 			</th>
-			<th colspan="5">
+			<th colspan="6">
 	        	<bean:message key="property.lessons"/>
 	        </th>
 			<th rowspan="2">
 	        </th>
 		</tr>
 		<tr>
+			<th>
+				<bean:message bundle="SOP_RESOURCES" key="label.lesson.week"/>
+			</th>
 			<th>
 				<bean:message key="property.weekday"/>
 			</th>
@@ -219,6 +222,9 @@
 			</logic:equal>
 
        		<logic:iterate id="infoLesson" name="infoShift" property="infoLessons" length="1">
+           	  	<td class="listClasses">
+					<bean:write name="infoLesson" property="occurrenceWeeksAsString"/>
+				</td>
               	<td class="listClasses">
 					<bean:write name="infoLesson" property="diaSemana"/> 
 				</td>
@@ -277,6 +283,9 @@
 		</tr>
           	<logic:iterate id="infoLesson" name="infoShift" property="infoLessons" offset="1">
 				<tr>
+            	  	<td class="listClasses">
+						<bean:write name="infoLesson" property="occurrenceWeeksAsString"/>
+					</td>
             	  	<td class="listClasses">
 						<bean:write name="infoLesson" property="diaSemana"/> 
 					</td>

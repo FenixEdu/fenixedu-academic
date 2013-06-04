@@ -30,6 +30,9 @@
 				<th>
 				</th>
 				<th>
+					<bean:message bundle="SOP_RESOURCES" key="label.lesson.week"/>
+				</th>
+				<th>
 					<bean:message key="property.weekday"/>
 				</th>
 				<th>
@@ -58,6 +61,9 @@
 						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.selectedItems" property="selectedItems">
 							<bean:write name="lesson" property="idInternal"/>
 						</html:multibox>
+					</td>
+					<td>
+						<bean:write name="lesson" property="occurrenceWeeksAsString"/>
 					</td>
 					<td>
 						<bean:write name="lesson" property="diaSemana"/>

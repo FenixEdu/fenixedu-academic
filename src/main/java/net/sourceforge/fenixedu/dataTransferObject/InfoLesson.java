@@ -2,12 +2,19 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.Calendar;
 import java.util.Comparator;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.util.DiaSemana;
 
+import org.joda.time.Interval;
+import org.joda.time.Weeks;
 import org.joda.time.YearMonthDay;
 
 public class InfoLesson extends InfoShowOccupation implements Comparable<InfoLesson> {
@@ -141,4 +148,34 @@ public class InfoLesson extends InfoShowOccupation implements Comparable<InfoLes
     public Lesson getLesson() {
         return lesson;
     }
+
+    public String getOccurrenceWeeksAsString() {
+        final SortedSet<Integer> weeks = new TreeSet<Integer>();
+
+        final ExecutionCourse executionCourse = getLesson().getExecutionCourse();
+        final YearMonthDay firstPossibleLessonDay = executionCourse.getMaxLessonsPeriod().getLeft();
+        final YearMonthDay lastPossibleLessonDay = executionCourse.getMaxLessonsPeriod().getRight();
+        for (final Interval interval : getLesson().getAllLessonIntervals()) {
+            final Integer week = Weeks.weeksBetween(firstPossibleLessonDay, interval.getStart().toLocalDate()).getWeeks() + 1;
+            weeks.add(week);
+        }
+
+        final StringBuilder builder = new StringBuilder();
+        final Integer[] weeksA = weeks.toArray(new Integer[0]);
+        for (int i = 0; i < weeksA.length; i++) {
+            if (i == 0) {
+                builder.append(weeksA[i]);
+            } else if (i == weeksA.length - 1 || ((int) weeksA[i]) + 1 != ((int) weeksA[i + 1])) {
+                final String seperator = ((int) weeksA[i - 1]) + 1 == ((int) weeksA[i])
+                        ? " - " : ", ";
+                builder.append(seperator);
+                builder.append(weeksA[i]);                    
+            } else if (((int) weeksA[i - 1]) + 1 !=  (int) weeksA[i]) {
+                builder.append(", ");
+                builder.append(weeksA[i]);                
+            }
+        }
+        return builder.toString();
+    }
+
 }
