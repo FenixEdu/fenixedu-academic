@@ -97,30 +97,22 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
         final UniversityUnit university = UniversityUnit.getInstitutionsUniversityUnit();
         String universityName = getMLSTextContent(university.getPartyName());
 
-        final Person presidentIst =
-                UniversityUnit.getInstitutionsUniversityUnit().getInstitutionsUniversityResponsible(FunctionType.PRESIDENT);
         final Person rectorIst =
                 UniversityUnit.getInstitutionsUniversityUnit().getInstitutionsUniversityResponsible(FunctionType.PRINCIPAL);
 
-        String rectorGender, presidentGrant;
+        String rectorGender, rectorGrant;
 
         if (rectorIst.isMale()) {
             rectorGender = getResourceBundle().getString("label.phd.registryDiploma.rectorMale");
+            rectorGrant = getResourceBundle().getString("label.phd.registryDiploma.presidentGrantMale");
         } else {
             rectorGender = getResourceBundle().getString("label.phd.registryDiploma.rectorFemale");
-        }
-
-        if (presidentIst.isMale()) {
-            presidentGrant = getResourceBundle().getString("label.phd.registryDiploma.presidentGrantMale");
-        } else {
-            presidentGrant = getResourceBundle().getString("label.phd.registryDiploma.presidentGrantFemale");
+            rectorGrant = getResourceBundle().getString("label.phd.registryDiploma.presidentGrantFemale");
         }
 
         String firstParagraph = getResourceBundle().getString("label.phd.registryDiploma.firstParagraph");
-        addParameter(
-                "firstParagraph",
-                MessageFormat.format(firstParagraph, rectorGender, universityName, presidentGrant,
-                        presidentIst.getValidatedName(), request.getRegistryCode().getCode()));
+        addParameter("firstParagraph", MessageFormat.format(firstParagraph, rectorGender, universityName, rectorGrant,
+                rectorIst.getValidatedName(), request.getRegistryCode().getCode()));
     }
 
     void setSecondParagraph(Person person, IRegistryDiplomaRequest request) {
