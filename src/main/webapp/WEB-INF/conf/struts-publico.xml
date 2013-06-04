@@ -22,7 +22,7 @@
                   <form-property type="java.lang.Integer" name="page"></form-property>
                   <form-property type="java.lang.Integer" name="degreeID"></form-property>
                   <form-property type="java.lang.Integer" name="degreeCurricularPlanID"></form-property>
-                  <form-property type="java.lang.Integer" name="indice"></form-property>
+                  <form-property type="java.lang.String" name="indice"></form-property>
                   <form-property type="java.lang.String" name="windowLocation"></form-property>
             </form-bean>
             <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="chooseExecutionCourseForm">

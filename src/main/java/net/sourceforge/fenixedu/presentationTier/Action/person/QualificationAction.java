@@ -91,7 +91,7 @@ public class QualificationAction extends CRUDActionByOID {
             }
             if (dynaForm.get("countryExternalId") != null && !dynaForm.get("countryExternalId").equals("")) {
                 InfoCountryEditor infoCountry = new InfoCountryEditor();
-                infoCountry.setExternalId((Integer) dynaForm.get("countryExternalId"));
+                infoCountry.setExternalId((String) dynaForm.get("countryExternalId"));
                 infoQualification.setInfoCountry(infoCountry);
             }
             return infoQualification;

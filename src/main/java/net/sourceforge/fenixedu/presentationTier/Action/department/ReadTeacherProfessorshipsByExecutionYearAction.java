@@ -54,7 +54,7 @@ public class ReadTeacherProfessorshipsByExecutionYearAction extends AbstractRead
 
         List detailedInfoProfessorshipList =
                 ReadDetailedTeacherProfessorshipsByExecutionYear.runReadDetailedTeacherProfessorshipsByExecutionYear(teacherId,
-                        (Integer) actionForm.get("executionYearId"));
+                        (String) actionForm.get("executionYearId"));
         request.setAttribute("args", new TreeMap());
         return detailedInfoProfessorshipList;
     }

@@ -50,9 +50,9 @@ public class ViewClassTimeTableAction extends FenixContextAction {
         request.setAttribute("degreeCurricularPlanID", "");
         request.setAttribute("degreeID", "");
         String classIdString = request.getParameter("classId");
-        Integer classId = null;
+        String classId = null;
         if (classIdString != null) {
-            classId = new Integer(classIdString);
+            classId = classIdString;
         } else {
             return mapping.getInputForward();
 

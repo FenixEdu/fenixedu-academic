@@ -59,7 +59,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class TeachingStaffDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         IUserView userView = UserView.getUser();
 
@@ -69,13 +69,12 @@ public class TeachingStaffDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward selectExecutionYear(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         IUserView userView = UserView.getUser();
 
         final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
-        Integer executionYearID = executionYear.getExternalId();
-        Object[] args = { executionYearID };
+        String executionYearID = executionYear.getExternalId();
 
         List degreeCurricularPlans =
                 ReadActiveDegreeCurricularPlansByExecutionYear.runReadActiveDegreeCurricularPlansByExecutionYear(executionYearID);
@@ -92,11 +91,11 @@ public class TeachingStaffDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward selectExecutionDegree(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
-        Integer degreeCurricularPlanID = (Integer) dynaActionForm.get("degreeCurricularPlanID");
-        Integer executionYearID = (Integer) dynaActionForm.get("executionYearID");
+        String degreeCurricularPlanID = (String) dynaActionForm.get("degreeCurricularPlanID");
+        String executionYearID = (String) dynaActionForm.get("executionYearID");
 
         Set<DegreeModuleScope> degreeModuleScopes =
                 ReadActiveCurricularCourseScopesByDegreeCurricularPlanIDAndExecutionYearID.run(degreeCurricularPlanID,
@@ -114,9 +113,9 @@ public class TeachingStaffDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward viewTeachingStaff(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
-        Integer executionCourseID = Integer.valueOf(request.getParameter("executionCourseID"));
+        String executionCourseID = request.getParameter("executionCourseID");
 
         ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseID);
 
@@ -135,11 +134,11 @@ public class TeachingStaffDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward createNewNonAffiliatedTeacher(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
         String nonAffiliatedTeacherName = (String) dynaActionForm.get("nonAffiliatedTeacherName");
-        Integer nonAffiliatedTeacherInstitutionID = (Integer) dynaActionForm.get("nonAffiliatedTeacherInstitutionID");
+        String nonAffiliatedTeacherInstitutionID = (String) dynaActionForm.get("nonAffiliatedTeacherInstitutionID");
         String nonAffiliatedTeacherInstitutionName = (String) dynaActionForm.get("nonAffiliatedTeacherInstitutionName");
 
         if (nonAffiliatedTeacherName.length() == 0) {
@@ -147,29 +146,27 @@ public class TeachingStaffDispatchAction extends FenixDispatchAction {
             return viewTeachingStaff(mapping, actionForm, request, response);
         }
 
-        if (nonAffiliatedTeacherInstitutionID == 0 && nonAffiliatedTeacherInstitutionName.length() == 0) {
+        if (nonAffiliatedTeacherInstitutionID == null && nonAffiliatedTeacherInstitutionName.length() == 0) {
             // define an institution!
             return viewTeachingStaff(mapping, actionForm, request, response);
         }
 
         final Unit institution =
-                nonAffiliatedTeacherInstitutionID == 0 ? (Unit) InsertInstitution.run(nonAffiliatedTeacherInstitutionName) : (Unit) rootDomainObject
-                        .readPartyByOID(nonAffiliatedTeacherInstitutionID);
+                nonAffiliatedTeacherInstitutionID == null ? (Unit) InsertInstitution.run(nonAffiliatedTeacherInstitutionName) : (Unit) AbstractDomainObject
+                        .fromExternalId(nonAffiliatedTeacherInstitutionID);
 
         NonAffiliatedTeacher.associateToInstitutionAndExecutionCourse(nonAffiliatedTeacherName, institution,
-                AbstractDomainObject.fromExternalId((Integer) dynaActionForm.get("executionCourseID")));
+                AbstractDomainObject.<ExecutionCourse> fromExternalId((String) dynaActionForm.get("executionCourseID")));
 
         return viewTeachingStaff(mapping, actionForm, request, response);
 
     }
 
     public ActionForward removeNonAffiliatedTeacher(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
-        final ExecutionCourse executionCourse =
-                AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "executionCourseID"));
-        final NonAffiliatedTeacher nonAffiliatedTeacher =
-                AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "nonAffiliatedTeacherID"));
+        final ExecutionCourse executionCourse = getDomainObject(request, "executionCourseID");
+        final NonAffiliatedTeacher nonAffiliatedTeacher = getDomainObject(request, "nonAffiliatedTeacherID");
 
         nonAffiliatedTeacher.removeExecutionCourse(executionCourse);
 

@@ -93,8 +93,8 @@ public class InsertExternalPerson {
     }
 
     @Service
-    public static ExternalContract run(String name, Boolean organizationName, String phone, String mobile, String email)
-            throws FenixServiceException {
+    public static ExternalContract runWithOrganizationName(String name, String organizationName, String phone, String mobile,
+            String email) throws FenixServiceException {
 
         final Unit organization = Unit.createNewNoOfficialExternalInstitution(organizationName);
         Person externalPerson =
@@ -105,10 +105,9 @@ public class InsertExternalPerson {
     }
 
     @Service
-    public static ExternalContract run(String name, Integer institutionID, String phone, String mobile, String email)
+    public static ExternalContract run(String name, Unit institutionLocation, String phone, String mobile, String email)
             throws FenixServiceException {
 
-        final Unit institutionLocation = (Unit) AbstractDomainObject.fromExternalId(institutionID);
         Person externalPerson =
                 Person.createExternalPerson(name, Gender.MALE, null, phone, mobile, null, email,
                         String.valueOf(System.currentTimeMillis()), IDDocumentType.EXTERNAL);

@@ -21,7 +21,7 @@ public class EditPosGradStudentCurricularPlanStateAndCredits {
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
     public static void run(IUserView userView, String studentCurricularPlanId, String currentState, Double credits,
-            String startDate, List<Integer> extraCurricularOIDs, String observations, String branchId, String specialization)
+            String startDate, List<String> extraCurricularOIDs, String observations, String branchId, String specialization)
             throws FenixServiceException {
         final StudentCurricularPlan scp = AbstractDomainObject.fromExternalId(studentCurricularPlanId);
         if (scp == null) {

@@ -233,7 +233,7 @@
                   <form-property type="java.lang.String" name="graduationType"></form-property>
                   <form-property type="java.lang.String" name="certificateList"></form-property>
                   <form-property type="java.lang.String[]" name="destination"></form-property>
-                  <form-property type="java.lang.Integer" name="studentCurricularPlanID"></form-property>
+                  <form-property type="java.lang.String" name="studentCurricularPlanID"></form-property>
             </form-bean>
             <!-- Bean to Choose the Information for the Certificate  -->
             <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="chooseStudentGuideForm">

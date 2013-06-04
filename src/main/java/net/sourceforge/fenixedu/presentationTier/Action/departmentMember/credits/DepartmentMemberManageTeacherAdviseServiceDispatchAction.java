@@ -46,11 +46,11 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class DepartmentMemberManageTeacherAdviseServiceDispatchAction extends ManageTeacherAdviseServiceDispatchAction {
 
     public ActionForward showTeacherAdvises(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException,  FenixServiceException {
+            HttpServletResponse response) throws NumberFormatException, FenixServiceException {
 
         DynaActionForm dynaForm = (DynaActionForm) form;
 
-        final Integer executionPeriodID = (Integer) dynaForm.get("executionPeriodId");
+        final String executionPeriodID = (String) dynaForm.get("executionPeriodId");
         final ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodID);
 
         Teacher teacher = AbstractDomainObject.fromExternalId(dynaForm.getString("teacherId"));
@@ -76,13 +76,13 @@ public class DepartmentMemberManageTeacherAdviseServiceDispatchAction extends Ma
     }
 
     public ActionForward editAdviseService(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException,  FenixServiceException {
+            HttpServletResponse response) throws NumberFormatException, FenixServiceException {
 
         return editAdviseService(form, request, mapping, RoleType.DEPARTMENT_MEMBER);
     }
 
     public ActionForward deleteAdviseService(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException,  FenixServiceException {
+            HttpServletResponse response) throws NumberFormatException, FenixServiceException {
 
         deleteAdviseService(request, RoleType.DEPARTMENT_MEMBER);
         return mapping.findForward("successfull-delete");

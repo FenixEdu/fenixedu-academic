@@ -60,7 +60,7 @@ public class TeachingReportAction extends FenixDispatchAction {
             InfoCourseReport infoCourseReport = new InfoCourseReport();
             BeanUtils.copyProperties(infoCourseReport, dynaForm);
 
-            Integer executionCourseId = (Integer) dynaForm.get("executionCourseId");
+            String executionCourseId = (String) dynaForm.get("executionCourseId");
             final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
             infoCourseReport.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(executionCourse));
 

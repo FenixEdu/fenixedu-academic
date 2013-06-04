@@ -62,17 +62,17 @@ public class MergeObjectsDispatchAction extends FenixDispatchAction {
 
         DynaActionForm actionForm = (DynaActionForm) form;
         String classToMerge = (String) actionForm.get("classToMerge");
-        Integer object1ExternalId = (Integer) actionForm.get("object1ExternalId");
-        Integer object2ExternalId = (Integer) actionForm.get("object2ExternalId");
+        String object1ExternalId = (String) actionForm.get("object1ExternalId");
+        String object2ExternalId = (String) actionForm.get("object2ExternalId");
 
         if (classToMerge.length() == 0) {
             classToMerge = request.getParameter("classToMerge");
-            object1ExternalId = Integer.valueOf(request.getParameter("object1ExternalId"));
-            object2ExternalId = Integer.valueOf(request.getParameter("object2ExternalId"));
+            object1ExternalId = request.getParameter("object1ExternalId");
+            object2ExternalId = request.getParameter("object2ExternalId");
         }
 
-        DomainObject domainObject1 = AbstractDomainObject.fromExternalId(Class.forName(classToMerge), object1ExternalId);
-        DomainObject domainObject2 = AbstractDomainObject.fromExternalId(Class.forName(classToMerge), object2ExternalId);
+        DomainObject domainObject1 = AbstractDomainObject.fromExternalId(object1ExternalId);
+        DomainObject domainObject2 = AbstractDomainObject.fromExternalId(object2ExternalId);
 
         if (domainObject1 == null || domainObject2 == null) {
             request.setAttribute("domainClasses", getClasses());

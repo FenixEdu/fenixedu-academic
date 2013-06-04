@@ -164,7 +164,7 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
         IUserView userView = UserView.getUser();
 
         DynaActionForm guideForm = (DynaActionForm) actionForm;
-        Integer guideID = (Integer) guideForm.get("guideID");
+        String guideID = (String) guideForm.get("guideID");
         String newEntryDescription = (String) guideForm.get("newEntryDescription");
         Integer newEntryQuantity = (Integer) guideForm.get("newEntryQuantity");
         Double newEntryPrice = (Double) guideForm.get("newEntryPrice");
@@ -190,7 +190,7 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
 
         /** ***************** */
 
-        Integer guideID = (Integer) guideForm.get("guideID");
+        String guideID = (String) guideForm.get("guideID");
         String newSituationRemarks = (String) guideForm.get("newSituationRemarks");
         Integer newSituationDay = (Integer) guideForm.get("newSituationDay");
         Integer newSituationMonth = (Integer) guideForm.get("newSituationMonth");
@@ -220,7 +220,7 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
         DynaActionForm guideForm = (DynaActionForm) actionForm;
 
         String selectedGuideEntryDocumentType = (String) guideForm.get("selectedGuideEntryDocumentType");
-        Integer selectedGuideEntryID = (Integer) guideForm.get("selectedGuideEntryID");
+        String selectedGuideEntryID = (String) guideForm.get("selectedGuideEntryID");
 
         try {
 
@@ -246,9 +246,9 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
 
         DynaActionForm guideForm = (DynaActionForm) actionForm;
 
-        Integer newDegreeCurricularPlanID = (Integer) guideForm.get("newDegreeCurricularPlanID");
+        String newDegreeCurricularPlanID = (String) guideForm.get("newDegreeCurricularPlanID");
         String newExecutionYear = (String) guideForm.get("newExecutionYear");
-        Integer guideID = (Integer) guideForm.get("guideID");
+        String guideID = (String) guideForm.get("guideID");
         String newPaymentType = (String) guideForm.get("newPaymentType");
 
         EditGuideInformationInManager.run(guideID, newDegreeCurricularPlanID, newExecutionYear, newPaymentType);
@@ -263,7 +263,7 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
         IUserView userView = UserView.getUser();
 
         DynaActionForm guideForm = (DynaActionForm) actionForm;
-        Integer guideSituationID = (Integer) guideForm.get("guideSituationID");
+        String guideSituationID = (String) guideForm.get("guideSituationID");
 
         DeleteGuideSituationInManager.run(guideSituationID);
 
@@ -277,7 +277,7 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
         IUserView userView = UserView.getUser();
 
         DynaActionForm guideForm = (DynaActionForm) actionForm;
-        Integer selectedGuideEntryID = (Integer) guideForm.get("selectedGuideEntryID");
+        String selectedGuideEntryID = (String) guideForm.get("selectedGuideEntryID");
 
         try {
             DeleteGuideEntryAndPaymentTransactionInManager.run(selectedGuideEntryID);
@@ -296,7 +296,7 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
         IUserView userView = UserView.getUser();
 
         DynaActionForm guideForm = (DynaActionForm) actionForm;
-        Integer guideID = (Integer) guideForm.get("guideID");
+        String guideID = (String) guideForm.get("guideID");
 
         try {
             DeleteGuideVersionInManager.run(guideID);

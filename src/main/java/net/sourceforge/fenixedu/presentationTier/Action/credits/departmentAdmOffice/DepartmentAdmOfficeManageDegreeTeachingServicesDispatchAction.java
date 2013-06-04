@@ -44,10 +44,10 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class DepartmentAdmOfficeManageDegreeTeachingServicesDispatchAction extends ManageDegreeTeachingServicesDispatchAction {
 
     public ActionForward showTeachingServiceDetails(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException,  FenixServiceException {
+            HttpServletResponse response) throws NumberFormatException, FenixServiceException {
 
         DynaActionForm dynaForm = (DynaActionForm) form;
-        Integer professorshipID = (Integer) dynaForm.get("professorshipID");
+        String professorshipID = (String) dynaForm.get("professorshipID");
         Professorship professorship = AbstractDomainObject.fromExternalId(professorshipID);
 
         if (professorship == null
@@ -81,7 +81,7 @@ public class DepartmentAdmOfficeManageDegreeTeachingServicesDispatchAction exten
     }
 
     public ActionForward updateTeachingServices(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException,  FenixServiceException {
+            HttpServletResponse response) throws NumberFormatException, FenixServiceException {
         return updateTeachingServices(mapping, form, request, RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE);
     }
 }

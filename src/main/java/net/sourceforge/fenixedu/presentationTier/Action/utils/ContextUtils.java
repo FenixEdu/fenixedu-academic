@@ -109,19 +109,10 @@ public class ContextUtils {
             }
         }
 
-        Integer executionDegreeOID = null;
-        if (executionDegreeOIDString != null) {
-            try {
-                executionDegreeOID = new Integer(executionDegreeOIDString);
-            } catch (NumberFormatException ex) {
-                return;
-            }
-        }
-
         InfoExecutionDegree infoExecutionDegree = null;
 
-        if (executionDegreeOID != null) {
-            infoExecutionDegree = ReadExecutionDegreeByOID.run(executionDegreeOID);
+        if (executionDegreeOIDString != null) {
+            infoExecutionDegree = ReadExecutionDegreeByOID.run(executionDegreeOIDString);
 
             if (infoExecutionDegree != null) {
                 // Place it in request
@@ -140,9 +131,9 @@ public class ContextUtils {
             curricularYearOIDString = request.getParameter(PresentationConstants.CURRICULAR_YEAR_OID);
         }
 
-        Integer curricularYearOID = null;
+        String curricularYearOID = null;
         if (curricularYearOIDString != null && !curricularYearOIDString.equals("null")) {
-            curricularYearOID = new Integer(curricularYearOIDString);
+            curricularYearOID = curricularYearOIDString;
         }
 
         InfoCurricularYear infoCurricularYear = null;
@@ -236,9 +227,9 @@ public class ContextUtils {
             executionCourseOIDString = request.getParameter(PresentationConstants.EXECUTION_COURSE_OID);
         }
 
-        Integer executionCourseOID = null;
+        String executionCourseOID = null;
         if (executionCourseOIDString != null && !executionCourseOIDString.equals("") && !executionCourseOIDString.equals("null")) {
-            executionCourseOID = new Integer(executionCourseOIDString);
+            executionCourseOID = executionCourseOIDString;
         }
 
         InfoExecutionCourse infoExecutionCourse = null;
@@ -262,15 +253,10 @@ public class ContextUtils {
             shiftOIDString = request.getParameter(PresentationConstants.SHIFT_OID);
         }
 
-        Integer shiftOID = null;
-        if (shiftOIDString != null) {
-            shiftOID = new Integer(shiftOIDString);
-        }
-
         InfoShift infoShift = null;
 
-        if (shiftOID != null) {
-            infoShift = ReadShiftByOID.run(shiftOID);
+        if (shiftOIDString != null) {
+            infoShift = ReadShiftByOID.run(shiftOIDString);
 
             if (infoShift != null) {
                 // Place it in request
@@ -288,18 +274,13 @@ public class ContextUtils {
             classOIDString = request.getParameter(PresentationConstants.CLASS_VIEW_OID);
         }
 
-        Integer classOID = null;
-        if (classOIDString != null) {
-            classOID = new Integer(classOIDString);
-        }
-
         InfoClass infoClass = null;
 
-        if (classOID != null) {
+        if (classOIDString != null) {
             // Read from database
             try {
 
-                infoClass = ReadClassByOID.run(classOID);
+                infoClass = ReadClassByOID.run(classOIDString);
             } catch (FenixServiceException e) {
                 e.printStackTrace();
             }
@@ -318,15 +299,10 @@ public class ContextUtils {
             lessonOIDString = request.getParameter(PresentationConstants.LESSON_OID);
         }
 
-        Integer lessonOID = null;
-        if (lessonOIDString != null) {
-            lessonOID = new Integer(lessonOIDString);
-        }
-
         InfoLesson infoLesson = null;
 
-        if (lessonOID != null) {
-            infoLesson = ReadLessonByOID.run(lessonOID);
+        if (lessonOIDString != null) {
+            infoLesson = ReadLessonByOID.run(lessonOIDString);
 
             // Place it in request
             request.setAttribute(PresentationConstants.LESSON, infoLesson);
@@ -484,7 +460,7 @@ public class ContextUtils {
     }
 
     private static RoomClassification readTypeRoomRequestValue(HttpServletRequest request, String name) {
-        Integer obj = readIntegerRequestValue(request, name);
+        String obj = readRequestValue(request, name);
         if (obj != null) {
             return AbstractDomainObject.fromExternalId(obj);
         }

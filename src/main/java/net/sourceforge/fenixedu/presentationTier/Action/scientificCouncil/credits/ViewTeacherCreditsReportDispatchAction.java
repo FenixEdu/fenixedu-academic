@@ -106,7 +106,7 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
 
         String fromExecutionYearID = dynaForm.getString("fromExecutionYearID");
         String untilExecutionYearID = dynaForm.getString("untilExecutionYearID");
-        Integer departmentID = (Integer) dynaForm.get("departmentID");
+        String departmentID = (String) dynaForm.get("departmentID");
 
         getDetailedTeachersCreditsMap(request, userView, fromExecutionYearID, untilExecutionYearID, departmentID);
         return mapping.findForward("showCreditsReport");
@@ -190,7 +190,7 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
 
         String fromExecutionYearID = dynaForm.getString("fromExecutionYearID");
         String untilExecutionYearID = dynaForm.getString("untilExecutionYearID");
-        Integer departmentID = (Integer) dynaForm.get("departmentID");
+        String departmentID = (String) dynaForm.get("departmentID");
 
         getGlobalDepartmentCreditsMap(request, userView, fromExecutionYearID, untilExecutionYearID, departmentID);
 

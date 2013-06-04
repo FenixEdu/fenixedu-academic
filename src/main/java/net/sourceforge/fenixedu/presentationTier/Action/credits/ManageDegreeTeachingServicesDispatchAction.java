@@ -84,7 +84,7 @@ public class ManageDegreeTeachingServicesDispatchAction extends FenixDispatchAct
         IUserView userView = UserView.getUser();
         HashMap<String, String> teacherPercentageMap = (HashMap<String, String>) teachingServiceForm.get("teacherPercentageMap");
 
-        Integer professorshipID = (Integer) teachingServiceForm.get("professorshipID");
+        String professorshipID = (String) teachingServiceForm.get("professorshipID");
 
         List<ShiftIDTeachingPercentage> shiftIDPercentages = new ArrayList<ShiftIDTeachingPercentage>();
         Iterator<Map.Entry<String, String>> entryInterator = teacherPercentageMap.entrySet().iterator();
@@ -93,7 +93,7 @@ public class ManageDegreeTeachingServicesDispatchAction extends FenixDispatchAct
             String percentage = entry.getValue();
             if ((percentage != null) && (percentage.length() != 0)) {
                 percentage = percentage.replace(',', '.');
-                Integer shiftID = Integer.valueOf(entry.getKey());
+                String shiftID = entry.getKey();
                 ShiftIDTeachingPercentage shiftIDPercentage = new ShiftIDTeachingPercentage(shiftID, Double.valueOf(percentage));
                 shiftIDPercentages.add(shiftIDPercentage);
             }

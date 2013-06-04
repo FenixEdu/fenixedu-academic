@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoPublicationsNumbe
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoServiceProviderRegime;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoSiteTeacherInformation;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoWeeklyOcupation;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.ResultTeacher;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -82,12 +83,12 @@ public class TeacherInformationAction extends FenixDispatchAction {
      */
     protected InfoServiceProviderRegime getInfoServiceProviderRegimeFromForm(ActionForm form) {
         DynaActionForm dynaForm = (DynaActionForm) form;
-        Integer teacherId = (Integer) dynaForm.get("teacherId");
-        Integer serviceProviderRegimeId = (Integer) dynaForm.get("serviceProviderRegimeId");
+        String teacherId = (String) dynaForm.get("teacherId");
+        String serviceProviderRegimeId = (String) dynaForm.get("serviceProviderRegimeId");
         ProviderRegimeType providerRegimeType =
                 ProviderRegimeType.getEnum((String) dynaForm.get("serviceProviderRegimeTypeName"));
 
-        InfoTeacher infoTeacher = new InfoTeacher(AbstractDomainObject.fromExternalId(teacherId));
+        InfoTeacher infoTeacher = new InfoTeacher(AbstractDomainObject.<Teacher> fromExternalId(teacherId));
 
         InfoServiceProviderRegime infoServiceProviderRegime = new InfoServiceProviderRegime();
         infoServiceProviderRegime.setExternalId(serviceProviderRegimeId);
@@ -106,21 +107,21 @@ public class TeacherInformationAction extends FenixDispatchAction {
      */
     protected List getInfoOrientationsFromForm(ActionForm form) {
         DynaActionForm dynaForm = (DynaActionForm) form;
-        Integer teacherId = (Integer) dynaForm.get("teacherId");
-        Integer degreeOrientationId = (Integer) dynaForm.get("degreeOrientationId");
+        String teacherId = (String) dynaForm.get("teacherId");
+        String degreeOrientationId = (String) dynaForm.get("degreeOrientationId");
         String value = (String) dynaForm.get("degreeStudentsNumber");
         Integer degreeStudentsNumber = value.equals("") ? null : new Integer(value);
         String degreeDescription = (String) dynaForm.get("degreeDescription");
-        Integer masterOrientationId = (Integer) dynaForm.get("masterOrientationId");
+        String masterOrientationId = (String) dynaForm.get("masterOrientationId");
         value = (String) dynaForm.get("masterStudentsNumber");
         Integer masterStudentsNumber = value.equals("") ? null : new Integer(value);
         String masterDescription = (String) dynaForm.get("masterDescription");
-        Integer phdOrientationId = (Integer) dynaForm.get("phdOrientationId");
+        String phdOrientationId = (String) dynaForm.get("phdOrientationId");
         value = (String) dynaForm.get("phdStudentsNumber");
         Integer phdStudentsNumber = value.equals("") ? null : new Integer(value);
         String phdDescription = (String) dynaForm.get("phdDescription");
 
-        InfoTeacher infoTeacher = new InfoTeacher(AbstractDomainObject.fromExternalId(teacherId));
+        InfoTeacher infoTeacher = new InfoTeacher(AbstractDomainObject.<Teacher> fromExternalId(teacherId));
 
         InfoOrientation degreeOrientation = new InfoOrientation();
         degreeOrientation.setExternalId(degreeOrientationId);
@@ -159,26 +160,26 @@ public class TeacherInformationAction extends FenixDispatchAction {
      */
     protected List getInfoPublicationsNumberFromForm(ActionForm form) {
         DynaActionForm dynaForm = (DynaActionForm) form;
-        Integer teacherId = (Integer) dynaForm.get("teacherId");
-        Integer comunicationPublicationsNumberId = (Integer) dynaForm.get("comunicationPublicationsNumberId");
+        String teacherId = (String) dynaForm.get("teacherId");
+        String comunicationPublicationsNumberId = (String) dynaForm.get("comunicationPublicationsNumberId");
         String value = (String) dynaForm.get("comunicationNational");
         Integer comunicationNational = value.equals("") ? null : new Integer(value);
         value = (String) dynaForm.get("comunicationInternational");
         Integer comunicationInternational = value.equals("") ? null : new Integer(value);
-        Integer magArticlePublicationsNumberId = (Integer) dynaForm.get("magArticlePublicationsNumberId");
+        String magArticlePublicationsNumberId = (String) dynaForm.get("magArticlePublicationsNumberId");
         Integer magArticleNational = new Integer((String) dynaForm.get("magArticleNational"));
         Integer magArticleInternational = new Integer((String) dynaForm.get("magArticleInternational"));
-        Integer authorBookPublicationsNumberId = (Integer) dynaForm.get("authorBookPublicationsNumberId");
+        String authorBookPublicationsNumberId = (String) dynaForm.get("authorBookPublicationsNumberId");
         Integer authorBookNational = new Integer((String) dynaForm.get("authorBookNational"));
         Integer authorBookInternational = new Integer((String) dynaForm.get("authorBookInternational"));
-        Integer editorBookPublicationsNumberId = (Integer) dynaForm.get("editorBookPublicationsNumberId");
+        String editorBookPublicationsNumberId = (String) dynaForm.get("editorBookPublicationsNumberId");
         Integer editorBookNational = new Integer((String) dynaForm.get("editorBookNational"));
         Integer editorBookInternational = new Integer((String) dynaForm.get("editorBookInternational"));
-        Integer articlesChaptersPublicationsNumberId = (Integer) dynaForm.get("articlesChaptersPublicationsNumberId");
+        String articlesChaptersPublicationsNumberId = (String) dynaForm.get("articlesChaptersPublicationsNumberId");
         Integer articlesChaptersNational = new Integer((String) dynaForm.get("articlesChaptersNational"));
         Integer articlesChaptersInternational = new Integer((String) dynaForm.get("articlesChaptersInternational"));
 
-        InfoTeacher infoTeacher = new InfoTeacher(AbstractDomainObject.fromExternalId(teacherId));
+        InfoTeacher infoTeacher = new InfoTeacher(AbstractDomainObject.<Teacher> fromExternalId(teacherId));
 
         InfoPublicationsNumber comunicationPublicationsNumber = new InfoPublicationsNumber();
         comunicationPublicationsNumber.setExternalId(comunicationPublicationsNumberId);
@@ -232,15 +233,15 @@ public class TeacherInformationAction extends FenixDispatchAction {
      */
     protected InfoWeeklyOcupation getInfoWeeklyOcupationFromForm(ActionForm form) {
         DynaActionForm dynaForm = (DynaActionForm) form;
-        Integer teacherId = (Integer) dynaForm.get("teacherId");
-        Integer weeklyOcupationId = (Integer) dynaForm.get("weeklyOcupationId");
+        String teacherId = (String) dynaForm.get("teacherId");
+        String weeklyOcupationId = (String) dynaForm.get("weeklyOcupationId");
         Integer management = new Integer((String) dynaForm.get("management"));
         Integer other = new Integer((String) dynaForm.get("other"));
         Integer research = new Integer((String) dynaForm.get("research"));
         Integer support = new Integer((String) dynaForm.get("support"));
         Integer lecture = new Integer((String) dynaForm.get("lecture"));
 
-        InfoTeacher infoTeacher = new InfoTeacher(AbstractDomainObject.fromExternalId(teacherId));
+        InfoTeacher infoTeacher = new InfoTeacher(AbstractDomainObject.<Teacher> fromExternalId(teacherId));
 
         InfoWeeklyOcupation infoWeeklyOcupation = new InfoWeeklyOcupation();
         infoWeeklyOcupation.setExternalId(weeklyOcupationId);
@@ -300,7 +301,7 @@ public class TeacherInformationAction extends FenixDispatchAction {
             Iterator iter = infoOrientations.iterator();
             while (iter.hasNext()) {
                 InfoOrientation infoOrientation = (InfoOrientation) iter.next();
-                Integer orientationId = infoOrientation.getExternalId();
+                String orientationId = infoOrientation.getExternalId();
                 Integer numberOfStudents = infoOrientation.getNumberOfStudents();
                 String description = infoOrientation.getDescription();
                 if (infoOrientation.getOrientationType().equals(OrientationType.DEGREE)) {
@@ -321,7 +322,7 @@ public class TeacherInformationAction extends FenixDispatchAction {
             iter = infoPublicationsNumbers.iterator();
             while (iter.hasNext()) {
                 InfoPublicationsNumber infoPublicationsNumber = (InfoPublicationsNumber) iter.next();
-                Integer publicationsNumberId = infoPublicationsNumber.getExternalId();
+                String publicationsNumberId = infoPublicationsNumber.getExternalId();
                 Integer national = infoPublicationsNumber.getNational();
                 Integer international = infoPublicationsNumber.getInternational();
 

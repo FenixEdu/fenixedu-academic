@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.masterDegree.DocumentReason;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -30,6 +31,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * 
@@ -81,15 +83,15 @@ public class ChooseDeclarationInfoAction extends FenixDispatchAction {
 
         // Get the Information
         String[] destination = (String[]) chooseDeclaration.get("destination");
-        Integer studentCurricularPlanID = (Integer) chooseDeclaration.get("studentCurricularPlanID");
+        String studentCurricularPlanID = (String) chooseDeclaration.get("studentCurricularPlanID");
 
         if (destination.length != 0) {
             request.setAttribute(PresentationConstants.DOCUMENT_REASON_LIST, destination);
         }
 
         InfoStudentCurricularPlan infoStudentCurricularPlan =
-                InfoStudentCurricularPlan.newInfoFromDomain(rootDomainObject
-                        .readStudentCurricularPlanByOID(studentCurricularPlanID));
+                InfoStudentCurricularPlan.newInfoFromDomain(AbstractDomainObject
+                        .<StudentCurricularPlan> fromExternalId(studentCurricularPlanID));
 
         InfoExecutionYear infoExecutionYear = InfoExecutionYear.newInfoFromDomain(ExecutionYear.readCurrentExecutionYear());
 

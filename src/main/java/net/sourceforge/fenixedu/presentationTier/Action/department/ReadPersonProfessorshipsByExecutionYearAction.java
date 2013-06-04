@@ -135,7 +135,7 @@ public class ReadPersonProfessorshipsByExecutionYearAction extends Action {
         InfoPerson infoPerson = (InfoPerson) request.getAttribute("infoPerson");
         if (infoPerson == null) {
             final IUserView userView = UserView.getUser();
-            infoPerson = ReadPersonByID.run((Integer) dynaForm.get("externalId"));
+            infoPerson = ReadPersonByID.run((String) dynaForm.get("externalId"));
             request.setAttribute("infoPerson", infoPerson);
 
         }
@@ -147,7 +147,7 @@ public class ReadPersonProfessorshipsByExecutionYearAction extends Action {
 
         List<Professorship> professorshipList = ((Person) AbstractDomainObject.fromExternalId(personId)).getProfessorships();
 
-        ExecutionYear executionYear = AbstractDomainObject.fromExternalId(((Integer) actionForm.get("executionYearId")));
+        ExecutionYear executionYear = AbstractDomainObject.fromExternalId(((String) actionForm.get("executionYearId")));
         if (executionYear == null) {
             executionYear = ExecutionYear.readCurrentExecutionYear();
         }

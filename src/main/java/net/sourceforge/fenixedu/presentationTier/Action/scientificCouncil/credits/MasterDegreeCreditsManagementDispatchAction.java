@@ -127,7 +127,7 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
             HttpServletResponse response) throws FenixServiceException {
 
         DynaActionForm dynaForm = (DynaActionForm) form;
-        Integer executionDegreeID = (Integer) dynaForm.get("executionDegreeID");
+        String executionDegreeID = (String) dynaForm.get("executionDegreeID");
 
         if (executionDegreeID != null) {
             ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeID);
@@ -153,10 +153,10 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
 
         DynaActionForm dynaForm = (DynaActionForm) form;
 
-        Integer curricularCourseID = (Integer) dynaForm.get("curricularCourseID");
+        String curricularCourseID = (String) dynaForm.get("curricularCourseID");
         CurricularCourse curricularCourse = (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseID);
 
-        Integer executionDegreeID = (Integer) dynaForm.get("executionDegreeID");
+        String executionDegreeID = (String) dynaForm.get("executionDegreeID");
         ExecutionDegree executionDegree = null;
 
         if (executionDegreeID != null) {

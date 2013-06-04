@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -26,6 +25,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class SeperateExecutionCourse {
 
@@ -205,41 +205,40 @@ public class SeperateExecutionCourse {
     }
 
     @Service
-    public static ExecutionCourse run(Integer executionCourseId, Integer destinationExecutionCourseID,
-            Integer[] shiftIdsToTransfer, Integer[] curricularCourseIdsToTransfer) {
+    public static ExecutionCourse run(String executionCourseId, String destinationExecutionCourseID, String[] shiftIdsToTransfer,
+            String[] curricularCourseIdsToTransfer) {
 
-        ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseId);
-        ExecutionCourse destinationExecutionCourse =
-                RootDomainObject.getInstance().readExecutionCourseByOID(destinationExecutionCourseID);
+        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
+        ExecutionCourse destinationExecutionCourse = AbstractDomainObject.fromExternalId(destinationExecutionCourseID);
         List<Shift> shiftsToTransfer = readShiftsOIDsToTransfer(shiftIdsToTransfer);
         List<CurricularCourse> curricularCoursesToTransfer = readCurricularCoursesOIDsToTransfer(curricularCourseIdsToTransfer);
 
         return run(executionCourse, destinationExecutionCourse, shiftsToTransfer, curricularCoursesToTransfer);
     }
 
-    private static List<Shift> readShiftsOIDsToTransfer(final Integer[] shiftIdsToTransfer) {
+    private static List<Shift> readShiftsOIDsToTransfer(final String[] shiftIdsToTransfer) {
         List<Shift> result = new ArrayList<Shift>();
 
         if (shiftIdsToTransfer == null) {
             return result;
         }
 
-        for (Integer oid : shiftIdsToTransfer) {
-            result.add(RootDomainObject.getInstance().readShiftByOID(oid));
+        for (String oid : shiftIdsToTransfer) {
+            result.add(AbstractDomainObject.<Shift> fromExternalId(oid));
         }
 
         return result;
     }
 
-    private static List<CurricularCourse> readCurricularCoursesOIDsToTransfer(final Integer[] curricularCourseIdsToTransfer) {
+    private static List<CurricularCourse> readCurricularCoursesOIDsToTransfer(final String[] curricularCourseIdsToTransfer) {
         List<CurricularCourse> result = new ArrayList<CurricularCourse>();
 
         if (curricularCourseIdsToTransfer == null) {
             return result;
         }
 
-        for (Integer oid : curricularCourseIdsToTransfer) {
-            result.add((CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(oid));
+        for (String oid : curricularCourseIdsToTransfer) {
+            result.add((CurricularCourse) AbstractDomainObject.fromExternalId(oid));
         }
 
         return result;

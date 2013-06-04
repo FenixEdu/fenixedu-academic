@@ -142,22 +142,16 @@ public class ManageStudentCurricularPlanDA extends FenixDispatchAction {
 
         final DynaActionForm dynaActionForm = (DynaActionForm) form;
         final String selectedStudentCurricularPlanIdString = (String) dynaActionForm.get("selectedStudentCurricularPlanId");
-        final Integer selectedCurriculumGroupID = (Integer) dynaActionForm.get("selectedCurriculumGroupID");
+        final String selectedCurriculumGroupID = (String) dynaActionForm.get("selectedCurriculumGroupID");
         final String[] enrollmentStringIDsToTransfer = (String[]) dynaActionForm.get("enrollmentIDsToTransfer");
 
         if (isPresent(selectedStudentCurricularPlanIdString) && enrollmentStringIDsToTransfer != null
                 && enrollmentStringIDsToTransfer.length > 0) {
 
-            final Integer selectedStudentCurricularPlanId = new Integer(selectedStudentCurricularPlanIdString);
-            final Integer[] enrollmentIDsToTransfer = new Integer[enrollmentStringIDsToTransfer.length];
-            for (int i = 0; i < enrollmentStringIDsToTransfer.length; i++) {
-                final String enrollmentStringIDToTransfer = enrollmentStringIDsToTransfer[i];
-                enrollmentIDsToTransfer[i] = new Integer(enrollmentStringIDToTransfer);
-            }
-
             final IUserView userView = UserView.getUser();
 
-            TransferEnrollments.run(selectedStudentCurricularPlanId, enrollmentIDsToTransfer, selectedCurriculumGroupID);
+            TransferEnrollments.run(selectedStudentCurricularPlanIdString, enrollmentStringIDsToTransfer,
+                    selectedCurriculumGroupID);
         }
 
         return show(mapping, form, request, response);

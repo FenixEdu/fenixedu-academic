@@ -228,19 +228,19 @@ public class GlobalTSDProcessValuationAction extends FenixDispatchAction {
 
     private TeacherServiceDistribution getSelectedTeacherServiceDistribution(DynaActionForm dynaForm)
             throws FenixServiceException {
-        Integer selectedTeacherServiceDistributionId = (Integer) dynaForm.get("tsd");
+        String selectedTeacherServiceDistributionId = (String) dynaForm.get("tsd");
         return AbstractDomainObject.fromExternalId(selectedTeacherServiceDistributionId);
     }
 
     private TSDProcessPhase getSelectedTSDProcessPhase(DynaActionForm dynaForm) throws FenixServiceException {
-        Integer selectedTSDProcessPhaseId = (Integer) dynaForm.get("tsdProcessPhase");
+        String selectedTSDProcessPhaseId = (String) dynaForm.get("tsdProcessPhase");
         TSDProcessPhase selectedTSDProcessPhase = AbstractDomainObject.fromExternalId(selectedTSDProcessPhaseId);
 
         return selectedTSDProcessPhase;
     }
 
     private TSDProcess getTSDProcess(DynaActionForm dynaForm) throws FenixServiceException {
-        Integer tsdProcessId = (Integer) dynaForm.get("tsdProcess");
+        String tsdProcessId = (String) dynaForm.get("tsdProcess");
         TSDProcess tsdProcess = AbstractDomainObject.fromExternalId(tsdProcessId);
 
         return tsdProcess;
@@ -263,13 +263,13 @@ public class GlobalTSDProcessValuationAction extends FenixDispatchAction {
     }
 
     private ExecutionYear getSelectedExecutionYear(IUserView userView, DynaActionForm globalForm) {
-        Integer selectedExecutionYearId = (Integer) globalForm.get("executionYear");
+        String selectedExecutionYearId = (String) globalForm.get("executionYear");
 
         return AbstractDomainObject.fromExternalId(selectedExecutionYearId);
     }
 
     private ExecutionSemester getSelectedExecutionPeriod(DynaActionForm dynaForm) {
-        Integer selectedExecutionPeriodId = (Integer) dynaForm.get("executionPeriod");
+        String selectedExecutionPeriodId = (String) dynaForm.get("executionPeriod");
         return AbstractDomainObject.fromExternalId(selectedExecutionPeriodId);
     }
 

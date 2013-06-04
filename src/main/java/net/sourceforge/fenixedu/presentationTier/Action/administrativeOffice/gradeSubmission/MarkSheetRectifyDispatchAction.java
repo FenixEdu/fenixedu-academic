@@ -42,7 +42,7 @@ public class MarkSheetRectifyDispatchAction extends MarkSheetDispatchAction {
             HttpServletResponse response) {
 
         DynaActionForm form = (DynaActionForm) actionForm;
-        MarkSheet markSheet = AbstractDomainObject.fromExternalId((Integer) form.get("msID"));
+        MarkSheet markSheet = AbstractDomainObject.fromExternalId((String) form.get("msID"));
 
         MarkSheetRectifyBean rectifyBean = new MarkSheetRectifyBean();
         fillMarkSheetBean(actionForm, request, rectifyBean);
@@ -61,7 +61,7 @@ public class MarkSheetRectifyDispatchAction extends MarkSheetDispatchAction {
     public ActionForward rectifyMarkSheetStepOneByEvaluation(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) {
         DynaActionForm form = (DynaActionForm) actionForm;
-        Integer evaluationID = (Integer) form.get("evaluationID");
+        String evaluationID = (String) form.get("evaluationID");
         EnrolmentEvaluation enrolmentEvaluation = AbstractDomainObject.fromExternalId(evaluationID);
         MarkSheet markSheet = enrolmentEvaluation.getMarkSheet();
         MarkSheetRectifyBean rectifyBean = new MarkSheetRectifyBean();
@@ -108,7 +108,7 @@ public class MarkSheetRectifyDispatchAction extends MarkSheetDispatchAction {
     }
 
     public ActionForward rectifyMarkSheetStepTwo(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         MarkSheetRectifyBean rectifyBean = (MarkSheetRectifyBean) RenderUtils.getViewState().getMetaObject().getObject();
 
         ActionMessages actionMessages = new ActionMessages();
@@ -145,7 +145,7 @@ public class MarkSheetRectifyDispatchAction extends MarkSheetDispatchAction {
             HttpServletResponse response) {
 
         DynaActionForm form = (DynaActionForm) actionForm;
-        Integer evaluationID = (Integer) form.get("evaluationID");
+        String evaluationID = (String) form.get("evaluationID");
 
         EnrolmentEvaluation enrolmentEvaluation = AbstractDomainObject.fromExternalId(evaluationID);
         Enrolment enrolment = enrolmentEvaluation.getEnrolment();

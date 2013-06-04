@@ -82,8 +82,8 @@ public class ExternalUnitsMergeDA extends FenixDispatchAction {
             destinationUnit = getDestinationUnitFromParameter(request);
         } else {
             DynaActionForm dynaActionForm = (DynaActionForm) form;
-            Integer fromUnitID = (Integer) dynaActionForm.get("fromUnitID");
-            Integer destinationUnitID = (Integer) dynaActionForm.get("destinationUnitID");
+            String fromUnitID = (String) dynaActionForm.get("fromUnitID");
+            String destinationUnitID = (String) dynaActionForm.get("destinationUnitID");
             fromUnit = (Unit) AbstractDomainObject.fromExternalId(fromUnitID);
             destinationUnit = (Unit) AbstractDomainObject.fromExternalId(destinationUnitID);
         }

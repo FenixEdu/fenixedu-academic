@@ -86,15 +86,15 @@ public class ViewStudentCurriculumDA extends FenixDispatchAction {
 
     }
 
-    private Integer getExecutionDegreeId(final HttpServletRequest request) {
-        return getRequestParameterAsInteger(request, "executionDegreeId");
+    private String getExecutionDegreeId(final HttpServletRequest request) {
+        return request.getParameter("executionDegreeId");
     }
 
-    private Integer getExecutionDegreeId(final ActionForm actionForm) {
-        return (Integer) ((DynaActionForm) actionForm).get("executionDegreeId");
+    private String getExecutionDegreeId(final ActionForm actionForm) {
+        return (String) ((DynaActionForm) actionForm).get("executionDegreeId");
     }
 
-    private void setExecutionDegreeId(final ActionForm actionForm, final Integer id) {
+    private void setExecutionDegreeId(final ActionForm actionForm, final String id) {
         ((DynaActionForm) actionForm).set("executionDegreeId", id);
     }
 
@@ -102,16 +102,16 @@ public class ViewStudentCurriculumDA extends FenixDispatchAction {
         return AbstractDomainObject.fromExternalId(getDegreeCurricularPlanId(form));
     }
 
-    private Integer getDegreeCurricularPlanId(final HttpServletRequest request) {
-        return getRequestParameterAsInteger(request, "degreeCurricularPlanID");
+    private String getDegreeCurricularPlanId(final HttpServletRequest request) {
+        return request.getParameter("degreeCurricularPlanID");
     }
 
-    private void setDegreeCurricularPlanId(final ActionForm actionForm, final Integer id) {
+    private void setDegreeCurricularPlanId(final ActionForm actionForm, final String id) {
         ((DynaActionForm) actionForm).set("degreeCurricularPlanId", id);
     }
 
     private String getDegreeCurricularPlanId(final ActionForm actionForm) {
-        return (Integer) ((DynaActionForm) actionForm).get("degreeCurricularPlanId");
+        return (String) ((DynaActionForm) actionForm).get("degreeCurricularPlanId");
     }
 
     private Student getStudent(final ActionForm actionForm) {

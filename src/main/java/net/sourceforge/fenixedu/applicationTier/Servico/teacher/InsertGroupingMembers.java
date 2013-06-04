@@ -25,7 +25,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class InsertGroupingMembers {
 
-    protected Boolean run(final String executionCourseCode, final String groupPropertiesCode, final List studentCodes)
+    protected Boolean run(final String executionCourseCode, final String groupPropertiesCode, final List<String> studentCodes)
             throws FenixServiceException {
 
         final Grouping groupProperties = AbstractDomainObject.fromExternalId(groupPropertiesCode);
@@ -39,7 +39,7 @@ public class InsertGroupingMembers {
         // studentCodes list has +1 entry if "select all" was selected
         int totalStudentsProcessed = 0;
 
-        for (final String studentCode : (List<String>) studentCodes) {
+        for (final String studentCode : studentCodes) {
             final Registration registration = AbstractDomainObject.fromExternalId(studentCode);
             if (!studentHasSomeAttendsInGrouping(registration, groupProperties)) {
                 final Attends attends = findAttends(registration, executionCourses);
@@ -79,8 +79,8 @@ public class InsertGroupingMembers {
     private static final InsertGroupingMembers serviceInstance = new InsertGroupingMembers();
 
     @Service
-    public static Boolean runInsertGroupingMembers(String executionCourseCode, String groupPropertiesCode, List studentCodes)
-            throws FenixServiceException, NotAuthorizedException {
+    public static Boolean runInsertGroupingMembers(String executionCourseCode, String groupPropertiesCode,
+            List<String> studentCodes) throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseCode);
         return serviceInstance.run(executionCourseCode, groupPropertiesCode, studentCodes);
     }

@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -92,35 +91,22 @@ public class EquivalencyPlanDA extends FenixDispatchAction {
 
     private EquivalencePlanEntry getEquivalencePlanEntry(HttpServletRequest request) {
         final String equivalencePlanEntryIDString = request.getParameter("equivalencePlanEntryID");
-        final Integer equivalencePlanEntryID = getInteger(equivalencePlanEntryIDString);
-        return equivalencePlanEntryID == null ? null : (EquivalencePlanEntry) AbstractDomainObject.fromExternalId(equivalencePlanEntryID);
+        return AbstractDomainObject.fromExternalId(equivalencePlanEntryIDString);
     }
 
     private DegreeModule getDegreeModule(HttpServletRequest request) {
         final String degreeModuleIDString = request.getParameter("degreeModuleID");
-        final Integer degreeModuleID = getInteger(degreeModuleIDString);
-        return degreeModuleID == null ? null : (DegreeModule) AbstractDomainObject.fromExternalId(degreeModuleID);
+        return AbstractDomainObject.fromExternalId(degreeModuleIDString);
     }
 
     private EquivalencePlan getEquivalencePlan(HttpServletRequest request) {
         final String equivalencePlanIDString = request.getParameter("equivalencePlanID");
-        final Integer equivalencePlanID = getInteger(equivalencePlanIDString);
-        return equivalencePlanID == null ? null : AbstractDomainObject.fromExternalId(equivalencePlanID);
+        return AbstractDomainObject.fromExternalId(equivalencePlanIDString);
     }
 
     private DegreeCurricularPlan getDegreeCurricularPlan(HttpServletRequest request) {
         final String degreeCurricularPlanIDString = request.getParameter("degreeCurricularPlanID");
-        final Integer degreeCurricularPlanID = getInteger(degreeCurricularPlanIDString);
-        return degreeCurricularPlanID == null ? null : AbstractDomainObject.fromExternalId(
-                degreeCurricularPlanID);
-    }
-
-    private Integer getInteger(final String string) {
-        return isValidNumber(string) ? Integer.valueOf(string) : null;
-    }
-
-    private boolean isValidNumber(final String string) {
-        return string != null && string.length() > 0 && StringUtils.isNumeric(string);
+        return AbstractDomainObject.fromExternalId(degreeCurricularPlanIDString);
     }
 
 }

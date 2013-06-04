@@ -95,9 +95,9 @@ public class ManageNotNeedToEnrollDispathAction extends FenixDispatchAction {
         Integer studentNumber = null;
         DynaActionForm notNeedToEnrollForm = (DynaActionForm) form;
 
-        Integer scpID = getIntegerFromRequest(request, "scpID");
+        String scpID = getStringFromRequest(request, "scpID");
         if (scpID == null) {
-            scpID = (Integer) notNeedToEnrollForm.get("studentCurricularPlanID");
+            scpID = (String) notNeedToEnrollForm.get("studentCurricularPlanID");
         }
 
         StudentCurricularPlan studentCurricularPlan = AbstractDomainObject.fromExternalId(scpID);
@@ -145,8 +145,8 @@ public class ManageNotNeedToEnrollDispathAction extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         DynaActionForm notNeedToEnrollForm = (DynaActionForm) form;
-        Integer[] curricularCoursesID = (Integer[]) notNeedToEnrollForm.get("curricularCoursesID");
-        Integer studentCurricularPlanID = (Integer) notNeedToEnrollForm.get("studentCurricularPlanID");
+        String[] curricularCoursesID = (String[]) notNeedToEnrollForm.get("curricularCoursesID");
+        String studentCurricularPlanID = (String) notNeedToEnrollForm.get("studentCurricularPlanID");
 
         InsertNotNeedToEnrollInCurricularCourses.runInsertNotNeedToEnrollInCurricularCourses(studentCurricularPlanID,
                 curricularCoursesID);

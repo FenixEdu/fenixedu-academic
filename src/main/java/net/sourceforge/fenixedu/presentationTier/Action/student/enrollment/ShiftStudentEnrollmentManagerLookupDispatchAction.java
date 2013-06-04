@@ -107,7 +107,7 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
 
         final IUserView userView = getUserView(request);
         final DynaActionForm form = (DynaActionForm) actionForm;
-        final Integer executionCourseId = (Integer) form.get("wantedCourse");
+        final String executionCourseId = (String) form.get("wantedCourse");
 
         try {
             WriteStudentAttendingCourse.runWriteStudentAttendingCourse(registration, executionCourseId);
@@ -142,13 +142,13 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
         checkParameter(request);
 
         final DynaActionForm form = (DynaActionForm) actionForm;
-        final Integer executionCourseId = (Integer) form.get("removedCourse");
+        final String executionCourseId = (String) form.get("removedCourse");
         if (executionCourseId == null) {
             return mapping.findForward("prepareShiftEnrollment");
         }
 
         try {
-            registration.removeAttendFor(AbstractDomainObject.fromExternalId(executionCourseId));
+            registration.removeAttendFor(AbstractDomainObject.<ExecutionCourse> fromExternalId(executionCourseId));
         } catch (DomainException e) {
             addActionMessage(request, e.getMessage());
             return mapping.getInputForward();

@@ -131,12 +131,12 @@ public class RoomSiteViewerDispatchAction extends FenixContextDispatchAction {
             if (executionPeriodIDString == null) {
                 executionPeriodIDString = (String) request.getAttribute("selectedExecutionPeriodID");
             }
-            Integer executionPeriodID = (executionPeriodIDString != null) ? Integer.valueOf(executionPeriodIDString) : null;
+            String executionPeriodID = (executionPeriodIDString != null) ? executionPeriodIDString : null;
             if (executionPeriodID == null) {
                 try {
                     // executionPeriodID = (Integer)
                     // indexForm.get("selectedExecutionPeriodID");
-                    executionPeriodID = Integer.valueOf((String) indexForm.get("selectedExecutionPeriodID"));
+                    executionPeriodID = (String) indexForm.get("selectedExecutionPeriodID");
                 } catch (IllegalArgumentException ex) {
                 }
             }

@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.util.HostAccessControl;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -96,6 +97,16 @@ public class AnnouncementBoardExport extends ExternalInterfaceDispatchAction {
 
     private Integer getSelectedYear(HttpServletRequest request) {
         return getRequestParameterAsInteger(request, "selectedYear");
+    }
+
+    protected Integer getRequestParameterAsInteger(HttpServletRequest request, String parameterName) {
+        final String requestParameter = request.getParameter(parameterName);
+
+        if (!StringUtils.isEmpty(requestParameter)) {
+            return Integer.valueOf(requestParameter);
+        } else {
+            return null;
+        }
     }
 
     private static final Comparator<Announcement> EXTERNAL_ANNOUNCEMENTS_COMPARATOR_BY_NEWEST_FIRST =

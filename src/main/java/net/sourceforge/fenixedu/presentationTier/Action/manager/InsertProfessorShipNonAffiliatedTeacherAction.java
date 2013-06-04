@@ -92,7 +92,7 @@ public class InsertProfessorShipNonAffiliatedTeacherAction extends FenixDispatch
             HttpServletResponse response) throws FenixServiceException, NonExistingActionException {
 
         DynaActionForm dynaForm = (DynaActionForm) form;
-        Integer institutionID = (Integer) dynaForm.get("institutionID");
+        String institutionID = (String) dynaForm.get("institutionID");
         String nonAffiliatedTeacherNameToInsert = (String) dynaForm.get("nonAffiliatedTeacherNameToInsert");
 
         if (nonAffiliatedTeacherNameToInsert == null || nonAffiliatedTeacherNameToInsert.equals("")) {

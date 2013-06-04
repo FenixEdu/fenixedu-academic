@@ -79,7 +79,7 @@ public class CompetenceCourseDispatchAction extends FenixDispatchAction {
         IUserView userView = UserView.getUser();
         DynaActionForm actionForm = (DynaActionForm) form;
 
-        String[] competenceCoursesIDs = (Integer[]) actionForm.get("competenceCoursesIds");
+        String[] competenceCoursesIDs = (String[]) actionForm.get("competenceCoursesIds");
 
         try {
             DeleteCompetenceCourses.run(competenceCoursesIDs);
@@ -166,7 +166,7 @@ public class CompetenceCourseDispatchAction extends FenixDispatchAction {
 
         String code = (String) actionForm.get("code");
         String name = (String) actionForm.get("name");
-        String departmentID = (Integer) actionForm.get("departmentID");
+        String departmentID = (String) actionForm.get("departmentID");
 
         InfoCompetenceCourse competenceCourse = null;
         try {

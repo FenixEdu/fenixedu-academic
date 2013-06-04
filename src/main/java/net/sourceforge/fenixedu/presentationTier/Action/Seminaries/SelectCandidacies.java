@@ -54,7 +54,6 @@ public class SelectCandidacies extends FenixDispatchAction {
             seminaryID = wildcard;
         }
 
-        Object[] args = { new Boolean(false), seminaryID };
         try {
             SelectCandidaciesDTO serviceResult = SelectCandidaciesService.runSelectCandidaciesService(false, seminaryID);
             request.setAttribute("seminaries", serviceResult.getSeminaries());

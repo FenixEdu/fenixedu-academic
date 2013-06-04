@@ -61,7 +61,7 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
             HttpServletResponse response) {
 
         final DynaActionForm form = (DynaActionForm) actionForm;
-        final Integer degreeCurricularPlanID = (Integer) form.get("degreeCurricularPlanID");
+        final String degreeCurricularPlanID = (String) form.get("degreeCurricularPlanID");
         if (degreeCurricularPlanID != null) {
             final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
             if (degreeCurricularPlan != null) {
@@ -75,7 +75,7 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
             HttpServletResponse response) {
 
         final DynaActionForm form = (DynaActionForm) actionForm;
-        final Integer executionDegreeID = (Integer) form.get("executionDegreeID");
+        final String executionDegreeID = (String) form.get("executionDegreeID");
         if (executionDegreeID != null) {
             final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeID);
 
@@ -109,7 +109,7 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
 
         final DynaActionForm form = (DynaActionForm) actionForm;
         final Integer coordinatorNumber = (Integer) form.get("coordinatorNumber");
-        final Integer executionDegreeID = (Integer) form.get("executionDegreeID");
+        final String executionDegreeID = (String) form.get("executionDegreeID");
         String istUsername = Employee.readByNumber(coordinatorNumber).getPerson().getIstUsername();
 
         try {
@@ -130,13 +130,13 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
             HttpServletResponse response) {
 
         final DynaActionForm form = (DynaActionForm) actionForm;
-        final Integer executionDegreeID = (Integer) form.get("executionDegreeID");
+        final String executionDegreeID = (String) form.get("executionDegreeID");
 
         try {
-            final Integer[] coordinatorsToBeResponsibleIDs = (Integer[]) form.get("responsibleCoordinatorsIDs");
+            final String[] coordinatorsToBeResponsibleIDs = (String[]) form.get("responsibleCoordinatorsIDs");
             ResponsibleCoordinators.run(executionDegreeID, Arrays.asList(coordinatorsToBeResponsibleIDs));
 
-            final Integer[] coordinatorsToRemoveIDs = (Integer[]) form.get("removeCoordinatorsIDs");
+            final String[] coordinatorsToRemoveIDs = (String[]) form.get("removeCoordinatorsIDs");
             RemoveCoordinators.run(executionDegreeID, Arrays.asList(coordinatorsToRemoveIDs));
 
         } catch (final IllegalDataAccessException e) {
@@ -153,7 +153,7 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
             HttpServletResponse response) {
 
         final DynaActionForm form = (DynaActionForm) actionForm;
-        final Integer executionDegreeID = (Integer) form.get("executionDegreeID");
+        final String executionDegreeID = (String) form.get("executionDegreeID");
         if (executionDegreeID != null) {
             final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeID);
 
@@ -209,9 +209,9 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
             HttpServletResponse response) {
 
         final DynaActionForm form = (DynaActionForm) actionForm;
-        final Integer executionDegreeID = (Integer) form.get("executionDegreeID");
-        final Integer executionYearID = (Integer) form.get("executionYearID");
-        final Integer campusID = (Integer) form.get("campusID");
+        final String executionDegreeID = (String) form.get("executionDegreeID");
+        final String executionYearID = (String) form.get("executionYearID");
+        final String campusID = (String) form.get("campusID");
         final String dateFormat = "dd/MM/yyyy";
         final Boolean temporaryExamMap = Boolean.valueOf((String) form.get("temporaryExamMap"));
 
@@ -305,7 +305,7 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
     private ActionForward readExecutionDegree(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             String findForward) {
         final DynaActionForm form = (DynaActionForm) actionForm;
-        final Integer executionDegreeID = (Integer) form.get("executionDegreeID");
+        final String executionDegreeID = (String) form.get("executionDegreeID");
         if (executionDegreeID != null) {
             final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeID);
             request.setAttribute("executionDegree", executionDegree);
@@ -324,7 +324,7 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
     public ActionForward deleteExecutionDegrees(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
         DynaActionForm deleteForm = (DynaActionForm) form;
-        List<Integer> executionDegreesIds = Arrays.asList((Integer[]) deleteForm.get("internalIds"));
+        List<String> executionDegreesIds = Arrays.asList((String[]) deleteForm.get("internalIds"));
 
         try {
 

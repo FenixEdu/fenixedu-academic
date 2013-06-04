@@ -54,11 +54,11 @@ public class UpdateTeacherExecutionCourseResponsabilitiesAction extends Action {
             throws Exception {
 
         DynaActionForm teacherExecutionYearResponsabilitiesForm = (DynaActionForm) form;
-        Integer[] executionCourseResponsabilities =
-                (Integer[]) teacherExecutionYearResponsabilitiesForm.get("executionCourseResponsability");
+        String[] executionCourseResponsabilities =
+                (String[]) teacherExecutionYearResponsabilitiesForm.get("executionCourseResponsability");
 
         String teacherId = (String) teacherExecutionYearResponsabilitiesForm.get("teacherName");
-        Integer executionYearId = (Integer) teacherExecutionYearResponsabilitiesForm.get("executionYearId");
+        String executionYearId = (String) teacherExecutionYearResponsabilitiesForm.get("executionYearId");
         Person person = Person.readPersonByIstUsername(teacherId);
         ExecutionYear executionYear = AbstractDomainObject.fromExternalId(executionYearId);
         try {

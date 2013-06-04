@@ -11,7 +11,7 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class UpdateProfessorshipWithPerson {
     @Service
-    public static Boolean run(Person person, ExecutionYear executionYear, final List executionCourseResponsabilities)
+    public static Boolean run(Person person, ExecutionYear executionYear, final List<String> executionCourseResponsabilities)
             throws MaxResponsibleForExceed, InvalidCategory, NotAuthorizedException {
         AbstractModifyProfessorshipWithPerson.run(person);
         person.updateResponsabilitiesFor(executionYear.getExternalId(), executionCourseResponsabilities);

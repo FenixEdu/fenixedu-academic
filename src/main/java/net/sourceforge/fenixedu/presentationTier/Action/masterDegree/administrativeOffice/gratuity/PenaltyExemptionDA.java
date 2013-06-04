@@ -40,7 +40,7 @@ public class PenaltyExemptionDA extends FenixDispatchAction {
         }
 
         request.setAttribute("gratuitySituation",
-                AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "gratuitySituationID")));
+                AbstractDomainObject.fromExternalId(getStringFromRequest(request, "gratuitySituationID")));
         return mapping.findForward("edit");
     }
 

@@ -55,16 +55,16 @@ public class ShowCandidacySecondForm extends FenixAction {
         // externalId is equivalency's ExternalId
         String equivalencyIDString = request.getParameter("externalId");
         String themeIDString = request.getParameter("themeID");
-        Integer equivalencyID = null;
-        Integer themeID = null;
+        String equivalencyID = null;
+        String themeID = null;
         if (equivalencyIDString == null) {
             throw new FenixActionException(mapping.findForward("invalidQueryString"));
         }
         try {
             if (themeIDString != null) {
-                themeID = new Integer(themeIDString);
+                themeID = themeIDString;
             }
-            equivalencyID = new Integer(equivalencyIDString);
+            equivalencyID = equivalencyIDString;
         } catch (Exception ex) {
             throw new FenixActionException(mapping.findForward("invalidQueryString"));
         }

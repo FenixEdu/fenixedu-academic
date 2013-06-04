@@ -15,6 +15,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
+
 public class ManageFinalDegreeWorksDA extends FenixDispatchAction {
 
     @Override
@@ -25,7 +27,7 @@ public class ManageFinalDegreeWorksDA extends FenixDispatchAction {
     }
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws  FenixServiceException {
+            throws FenixServiceException {
 
         final DegreeCurricularPlan degreeCurricularPlan = readDegreeCurricularPlan(request);
         request.setAttribute("degreeCurricularPlan", degreeCurricularPlan);
@@ -68,16 +70,12 @@ public class ManageFinalDegreeWorksDA extends FenixDispatchAction {
         return mostRecentExecutionDegree;
     }
 
-    private DegreeCurricularPlan readDegreeCurricularPlan(final HttpServletRequest request) throws 
-            FenixServiceException {
+    private DegreeCurricularPlan readDegreeCurricularPlan(final HttpServletRequest request) {
         String degreeCurricularPlanIDString = request.getParameter("degreeCurricularPlanID");
         if (degreeCurricularPlanIDString == null || degreeCurricularPlanIDString.length() == 0) {
             degreeCurricularPlanIDString = (String) request.getAttribute("degreeCurricularPlanID");
         }
-        final Integer degreeCurricularPlanID =
-                (degreeCurricularPlanIDString != null && degreeCurricularPlanIDString.length() > 0) ? Integer
-                        .valueOf(degreeCurricularPlanIDString) : null;
-        return (DegreeCurricularPlan) readDomainObject(request, DegreeCurricularPlan.class, degreeCurricularPlanID);
+        return AbstractDomainObject.fromExternalId(degreeCurricularPlanIDString);
     }
 
 }

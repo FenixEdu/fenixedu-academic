@@ -481,7 +481,6 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
             final HttpServletResponse response) {
         UploadBean bean = getRenderedObject("uploadBean");
         RenderUtils.invalidateViewState("uploadBean");
-        fixBadData();
         try {
             process(request, FileUtils.copyToTemporaryFile(bean.getInputStream()));
         } catch (FileNotFoundException e) {
@@ -491,18 +490,6 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
         }
         request.setAttribute("readingComplete", true);
         return mapping.findForward("uploadCardInfo");
-    }
-
-    private void fixBadData() {
-        switchPerson(395374, 82254);
-        switchPerson(1728, 8336);
-    }
-
-    @Service
-    private void switchPerson(final String personId, final String cardGenerationEntryId) {
-        final Person person = (Person) AbstractDomainObject.fromExternalId(personId);
-        final CardGenerationEntry cardGenerationEntry = AbstractDomainObject.fromExternalId(cardGenerationEntryId);
-        cardGenerationEntry.setPerson(person);
     }
 
     @Service

@@ -54,7 +54,7 @@ public class ShowStudyPlanForCandidateAction extends FenixAction {
         return (InfoMasterDegreeCandidate) candidates.get(0);
     }
 
-    private ArrayList getCandidateStudyPlanByCandidateID(Integer candidateID, IUserView userView) {
+    private ArrayList getCandidateStudyPlanByCandidateID(String candidateID, IUserView userView) {
         try {
             return (ArrayList) ReadCandidateEnrolmentsByCandidateID.runReadCandidateEnrolmentsByCandidateID(candidateID);
         } catch (Exception e) {

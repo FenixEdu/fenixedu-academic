@@ -131,10 +131,10 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
         DynaActionForm actionForm = (DynaActionForm) form;
         Registration registration = null;
 
-        final Integer degreeCurricularPlanId = (Integer) actionForm.get("degreeCurricularPlanID");
+        final String degreeCurricularPlanId = (String) actionForm.get("degreeCurricularPlanID");
         Student student = getStudent(actionForm);
         if (student != null) {
-            if (degreeCurricularPlanId != null && degreeCurricularPlanId > 0) {
+            if (degreeCurricularPlanId != null) {
                 DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanId);
                 registration = student.readRegistrationByDegreeCurricularPlan(degreeCurricularPlan);
             } else {

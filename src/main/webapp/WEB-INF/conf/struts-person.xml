@@ -27,7 +27,7 @@
                   <form-property type="java.lang.String" name="degreeRecognition"></form-property>
                   <form-property type="java.lang.String" name="tempEquivalenceDate"></form-property>
                   <form-property type="java.lang.String" name="equivalenceSchool"></form-property>
-                  <form-property type="java.lang.Integer" name="countryExternalId"></form-property>
+                  <form-property type="java.lang.String" name="countryExternalId"></form-property>
                   <form-property type="java.lang.Integer" name="infoPerson#externalId"></form-property>
             </form-bean>
             <!-- Dynamic-FormBean for Qualification Edit-->

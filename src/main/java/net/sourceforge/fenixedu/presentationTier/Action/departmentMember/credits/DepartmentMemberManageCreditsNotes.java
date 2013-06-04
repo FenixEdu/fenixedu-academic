@@ -52,7 +52,7 @@ public class DepartmentMemberManageCreditsNotes extends ManageCreditsNotes {
 
         DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
         Teacher teacher = AbstractDomainObject.fromExternalId((String) dynaActionForm.get("teacherId"));
-        Integer executionPeriodId = (Integer) dynaActionForm.get("executionPeriodId");
+        String executionPeriodId = (String) dynaActionForm.get("executionPeriodId");
         String noteType = dynaActionForm.getString("noteType");
 
         return editNote(request, dynaActionForm, teacher, executionPeriodId, RoleType.DEPARTMENT_MEMBER, mapping, noteType);

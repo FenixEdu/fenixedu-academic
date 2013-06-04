@@ -73,9 +73,9 @@ public class MakePrecedenceConjunctionForDegreeCurricularPlanDA extends FenixDis
         DynaActionForm mergePrecedencesForm = (DynaActionForm) form;
         IUserView userView = UserView.getUser();
 
-        Integer degreeID = (Integer) mergePrecedencesForm.get("degreeId");
-        Integer degreeCurricularPlanID = (Integer) mergePrecedencesForm.get("degreeCurricularPlanId");
-        Integer firstPrecedenceID = (Integer) mergePrecedencesForm.get("firstPrecedence");
+        String degreeID = (String) mergePrecedencesForm.get("degreeId");
+        String degreeCurricularPlanID = (String) mergePrecedencesForm.get("degreeCurricularPlanId");
+        String firstPrecedenceID = (String) mergePrecedencesForm.get("firstPrecedence");
 
         try {
             Map result = ReadPrecedencesFromDegreeCurricularPlan.run(degreeCurricularPlanID);
@@ -98,10 +98,10 @@ public class MakePrecedenceConjunctionForDegreeCurricularPlanDA extends FenixDis
         DynaActionForm mergePrecedencesForm = (DynaActionForm) form;
         IUserView userView = UserView.getUser();
 
-        Integer degreeID = (Integer) mergePrecedencesForm.get("degreeId");
-        Integer degreeCurricularPlanID = (Integer) mergePrecedencesForm.get("degreeCurricularPlanId");
-        Integer firstPrecedenceID = (Integer) mergePrecedencesForm.get("firstPrecedence");
-        Integer secondPrecedenceID = (Integer) mergePrecedencesForm.get("secondPrecedence");
+        String degreeID = (String) mergePrecedencesForm.get("degreeId");
+        String degreeCurricularPlanID = (String) mergePrecedencesForm.get("degreeCurricularPlanId");
+        String firstPrecedenceID = (String) mergePrecedencesForm.get("firstPrecedence");
+        String secondPrecedenceID = (String) mergePrecedencesForm.get("secondPrecedence");
 
         try {
             MergePrecedencesForDegreeCurricularPlan.run(firstPrecedenceID, secondPrecedenceID);

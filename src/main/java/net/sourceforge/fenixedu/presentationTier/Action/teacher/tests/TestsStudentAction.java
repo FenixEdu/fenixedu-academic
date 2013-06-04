@@ -33,7 +33,6 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * 
@@ -56,7 +55,7 @@ public class TestsStudentAction extends FenixDispatchAction {
     }
 
     public ActionForward viewTests(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         List<NewTestGroup> publishedTestGroups = new ArrayList<NewTestGroup>();
         List<NewTestGroup> finishedTestGroups = new ArrayList<NewTestGroup>();
 
@@ -76,9 +75,8 @@ public class TestsStudentAction extends FenixDispatchAction {
 
     public ActionForward viewTest(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixServiceException, ExcepcaoPersistencia {
-        Integer testGroupId = getCodeFromRequest(request, "oid");
 
-        NewTestGroup testGroup = AbstractDomainObject.fromExternalId(testGroupId);
+        NewTestGroup testGroup = getDomainObject(request, "oid");
 
         NewTest test = GetStudentTest.run(getPerson(request), testGroup);
 
@@ -90,9 +88,8 @@ public class TestsStudentAction extends FenixDispatchAction {
 
     public ActionForward deleteAnswer(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException, ExcepcaoPersistencia {
-        Integer atomicQuestionId = getCodeFromRequest(request, "oid");
 
-        NewAtomicQuestion atomicQuestion = (NewAtomicQuestion) AbstractDomainObject.fromExternalId(atomicQuestionId);
+        NewAtomicQuestion atomicQuestion = getDomainObject(request, "oid");
 
         NewTestGroup testGroup = atomicQuestion.getTest().getTestGroup();
 
@@ -105,9 +102,8 @@ public class TestsStudentAction extends FenixDispatchAction {
 
     public ActionForward giveUpQuestion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException, ExcepcaoPersistencia {
-        Integer atomicQuestionId = getCodeFromRequest(request, "oid");
 
-        NewAtomicQuestion atomicQuestion = (NewAtomicQuestion) AbstractDomainObject.fromExternalId(atomicQuestionId);
+        NewAtomicQuestion atomicQuestion = getDomainObject(request, "oid");
 
         NewTestGroup testGroup = atomicQuestion.getTest().getTestGroup();
 

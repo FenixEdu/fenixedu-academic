@@ -44,7 +44,7 @@ public class ManageCreditsNotes extends FenixDispatchAction {
     }
 
     protected ActionForward editNote(HttpServletRequest request, DynaActionForm dynaActionForm, Teacher teacher,
-            Integer executionPeriodId, RoleType roleType, ActionMapping mapping, String noteType) throws FenixServiceException {
+            String executionPeriodId, RoleType roleType, ActionMapping mapping, String noteType) throws FenixServiceException {
 
         ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodId);
         String managementFunctionNote, serviceExemptionNote, otherNote, masterDegreeTeachingNote, functionsAccumulation, thesisNote;

@@ -38,7 +38,7 @@ import pt.ist.fenixWebFramework.security.UserView;
 public class CreateClassificationsForStudentsDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws  FenixServiceException {
+            throws FenixServiceException {
 
         IUserView userView = UserView.getUser();
 
@@ -65,12 +65,12 @@ public class CreateClassificationsForStudentsDispatchAction extends FenixDispatc
     }
 
     public ActionForward createClassifications(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException, IOException {
+            HttpServletResponse response) throws FenixServiceException, IOException {
 
         IUserView userView = UserView.getUser();
 
         DynaActionForm dynaActionForm = (DynaActionForm) form;
-        Integer degreeCurricularPlanID = (Integer) dynaActionForm.get("degreeCurricularPlanID");
+        String degreeCurricularPlanID = (String) dynaActionForm.get("degreeCurricularPlanID");
         Integer[] entryGradeLimits = (Integer[]) dynaActionForm.get("entryGradeLimits");
         Integer[] approvationRatioLimits = (Integer[]) dynaActionForm.get("approvationRatioLimits");
         Integer[] arithmeticMeanLimits = (Integer[]) dynaActionForm.get("arithmeticMeanLimits");

@@ -20,7 +20,7 @@
             </form-bean>
             <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="removeCoordinators">
                   <form-property type="java.lang.Integer" name="page"></form-property>
-                  <form-property type="java.lang.Integer[]" name="coordinatorsIds"></form-property>
+                  <form-property type="java.lang.String[]" name="coordinatorsIds"></form-property>
             </form-bean>
             <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="addCoordinator">
                   <form-property type="java.lang.Integer" name="page"></form-property>
@@ -158,7 +158,7 @@
             </form-bean>
             <!-- TEACHING REPORT FORM  -->
             <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="teachingReportForm">
-                  <form-property type="java.lang.Integer" name="executionCourseId"></form-property>
+                  <form-property type="java.lang.String" name="executionCourseId"></form-property>
             </form-bean>
             <!-- FINAL DEGREE WORK  -->
             <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="manageFinalDegreeWorksForm">
@@ -259,8 +259,8 @@
             <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="viewStudentCurriculumForm">
                   <form-property type="java.lang.String" name="method"></form-property>
                   <form-property type="java.lang.String" name="studentNumber"></form-property>
-                  <form-property type="java.lang.Integer" name="executionDegreeId"></form-property>
-                  <form-property type="java.lang.Integer" name="degreeCurricularPlanId"></form-property>
+                  <form-property type="java.lang.String" name="executionDegreeId"></form-property>
+                  <form-property type="java.lang.String" name="degreeCurricularPlanId"></form-property>
             </form-bean>
       </form-beans>
       <!--

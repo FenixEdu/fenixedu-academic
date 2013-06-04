@@ -51,15 +51,15 @@ public class SelectCandidatesDispatchAction extends FenixDispatchAction {
         String executionYear = (String) request.getAttribute("executionYear");
         String degree = (String) request.getAttribute("degree");
 
-        Integer executionDegree = Integer.valueOf(getFromRequest("executionDegreeID", request));
+        String executionDegree = getFromRequest("executionDegreeID", request);
         if (executionDegree == null) {
-            executionDegree = Integer.valueOf((String) request.getAttribute(PresentationConstants.EXECUTION_DEGREE));
+            executionDegree = (String) request.getAttribute(PresentationConstants.EXECUTION_DEGREE);
         }
         request.setAttribute(PresentationConstants.EXECUTION_DEGREE, executionDegree);
 
-        Integer degreeCurricularPlanID = Integer.valueOf(getFromRequest("degreeCurricularPlanID", request));
+        String degreeCurricularPlanID = getFromRequest("degreeCurricularPlanID", request);
         if (degreeCurricularPlanID == null) {
-            degreeCurricularPlanID = Integer.valueOf((String) request.getAttribute(PresentationConstants.EXECUTION_DEGREE));
+            degreeCurricularPlanID = (String) request.getAttribute(PresentationConstants.EXECUTION_DEGREE);
         }
         if (executionYear == null) {
             executionYear = (String) approvalForm.get("executionYear");
@@ -544,7 +544,7 @@ public class SelectCandidatesDispatchAction extends FenixDispatchAction {
         for (int i = 0; i < candidateList.length; i++) {
             InfoCandidateApproval infoCandidateApproval = new InfoCandidateApproval();
             infoCandidateApproval.setCandidateName(((InfoMasterDegreeCandidate) candidates.get(i)).getInfoPerson().getNome());
-            infoCandidateApproval.setExternalId(new Integer(ids[i]));
+            infoCandidateApproval.setExternalId(ids[i]);
             if ((substitutes[i] != null) && (substitutes[i].length() > 0)) {
                 infoCandidateApproval.setOrderPosition(new Integer(substitutes[i]));
             } else {

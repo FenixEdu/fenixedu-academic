@@ -49,7 +49,7 @@ public class ReadQuestionImage {
     }
 
     @Service
-    public static String run(String distributedTestId, Integer questionId, String optionShuffle, Integer imageId,
+    public static String run(String distributedTestId, String questionId, String optionShuffle, Integer imageId,
             Integer feedbackId, String path) throws FenixServiceException {
 
         Question question = null;

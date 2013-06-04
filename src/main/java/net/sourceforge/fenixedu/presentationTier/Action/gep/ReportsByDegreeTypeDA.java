@@ -81,7 +81,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
             return executionYearReference;
         }
 
-        public Integer getExecutionYearOID() {
+        public String getExecutionYearOID() {
             return getExecutionYear() == null ? null : getExecutionYear().getExternalId();
         }
 
@@ -227,7 +227,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 
     private ExecutionYear getExecutionYear(final HttpServletRequest httpServletRequest) {
         final String OIDString = httpServletRequest.getParameter("executionYearID");
-        return StringUtils.isEmpty(OIDString) ? null : AbstractDomainObject.fromExternalId(Integer.valueOf(OIDString));
+        return StringUtils.isEmpty(OIDString) ? null : AbstractDomainObject.<ExecutionYear> fromExternalId(OIDString);
     }
 
     private String getFormat(final HttpServletRequest httpServletRequest) {

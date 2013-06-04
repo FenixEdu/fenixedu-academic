@@ -41,8 +41,11 @@ public class DocumentRequestDispatchAction extends FenixDispatchAction {
     }
 
     private Registration getRegistration(final HttpServletRequest request, final ActionForm actionForm) {
-        return AbstractDomainObject.fromExternalId(getIntegerFromRequestOrForm(request, (DynaActionForm) actionForm,
-                "registrationId"));
+        String registrationId = getStringFromRequest(request, "registrationId");
+        if (registrationId == null) {
+            registrationId = ((DynaActionForm) actionForm).getString("registrationId");
+        }
+        return AbstractDomainObject.fromExternalId(registrationId);
     }
 
     public ActionForward viewDocumentRequests(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

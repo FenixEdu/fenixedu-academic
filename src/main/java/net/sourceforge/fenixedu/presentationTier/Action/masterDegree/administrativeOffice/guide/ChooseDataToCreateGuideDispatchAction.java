@@ -49,9 +49,9 @@ public class ChooseDataToCreateGuideDispatchAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         // Get the Chosen Master Degree
-        Integer masterDegreeID = new Integer(request.getParameter("degreeID"));
+        String masterDegreeID = request.getParameter("degreeID");
         if (masterDegreeID == null) {
-            masterDegreeID = (Integer) request.getAttribute("degreeID");
+            masterDegreeID = (String) request.getAttribute("degreeID");
         }
 
         List result = null;
@@ -75,9 +75,9 @@ public class ChooseDataToCreateGuideDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         // Get execution degrees for given degree curricular plan
-        Integer curricularPlanID = new Integer(request.getParameter("curricularPlanID"));
+        String curricularPlanID = request.getParameter("curricularPlanID");
         if (curricularPlanID == null) {
-            curricularPlanID = (Integer) request.getAttribute("curricularPlanID");
+            curricularPlanID = (String) request.getAttribute("curricularPlanID");
         }
 
         List result = null;

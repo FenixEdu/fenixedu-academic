@@ -11,9 +11,9 @@
             </form-bean>
             <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="studentShiftEnrollmentForm">
                   <form-property type="java.lang.Integer" name="studentId"></form-property>
-                  <form-property type="java.lang.Integer" name="degree"></form-property>
-                  <form-property type="java.lang.Integer" name="wantedCourse"></form-property>
-                  <form-property type="java.lang.Integer" name="removedCourse"></form-property>
+                  <form-property type="java.lang.String" name="degree"></form-property>
+                  <form-property type="java.lang.String" name="wantedCourse"></form-property>
+                  <form-property type="java.lang.String" name="removedCourse"></form-property>
                   <form-property type="java.util.HashMap" name="shiftMap"></form-property>
                   <form-property type="java.lang.Integer[]" name="shifts"></form-property>
                   <form-property type="java.lang.String" name="class"></form-property>
@@ -189,11 +189,11 @@
                   <form-property initial="false" type="java.lang.String" name="urgentRequest"></form-property>
                   <form-property type="java.lang.String" name="justification"></form-property>
                   <form-property type="java.lang.Integer" name="numberOfPages"></form-property>
-                  <form-property type="java.lang.Integer" name="registrationId"></form-property>
+                  <form-property type="java.lang.String" name="registrationId"></form-property>
                   <form-property type="java.lang.String" name="method"></form-property>
             </form-bean>
             <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="studentTimeTableForm">
-                  <form-property type="java.lang.Integer" name="registrationId"></form-property>
+                  <form-property type="java.lang.String" name="registrationId"></form-property>
                   <form-property type="java.lang.Integer" name="page"></form-property>
                   <form-property type="java.lang.String" name="method"></form-property>
             </form-bean>

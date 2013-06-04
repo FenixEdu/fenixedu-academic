@@ -82,9 +82,9 @@ public class ManageBranchesDA extends FenixDispatchAction {
         String degreeCurricularPlanIdString = request.getParameter("degreeCurricularPlanId");
         String degreeIdString = request.getParameter("degreeId");
 
-        Integer degreeCurricularPlanId = null;
+        String degreeCurricularPlanId = null;
         if (degreeCurricularPlanIdString != null) {
-            degreeCurricularPlanId = new Integer(degreeCurricularPlanIdString);
+            degreeCurricularPlanId = degreeCurricularPlanIdString;
         }
 
         DynaActionForm branchesForm = (DynaActionForm) form;
@@ -188,9 +188,9 @@ public class ManageBranchesDA extends FenixDispatchAction {
         request.setAttribute("degreeCurricularPlanId", degreeCurricularPlanIdString);
         request.setAttribute("degreeId", degreeIdString);
 
-        Integer degreeCurricularPlanId = null;
+        String degreeCurricularPlanId = null;
         if (degreeCurricularPlanIdString != null) {
-            degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
+            degreeCurricularPlanId = request.getParameter("degreeCurricularPlanId");
         }
         final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanId);
 
@@ -239,7 +239,7 @@ public class ManageBranchesDA extends FenixDispatchAction {
 
         DynaActionForm editForm = (DynaActionForm) form;
         IUserView userView = UserView.getUser();
-        Integer branchId = new Integer(request.getParameter("branchId"));
+        String branchId = request.getParameter("branchId");
 
         InfoBranch infoBranch;
 
@@ -264,7 +264,7 @@ public class ManageBranchesDA extends FenixDispatchAction {
             throws Exception {
 
         IUserView userView = UserView.getUser();
-        Integer branchId = new Integer(request.getParameter("branchId"));
+        String branchId = request.getParameter("branchId");
 
         DynaActionForm editForm = (DynaActionForm) form;
         String name = (String) editForm.get("name");

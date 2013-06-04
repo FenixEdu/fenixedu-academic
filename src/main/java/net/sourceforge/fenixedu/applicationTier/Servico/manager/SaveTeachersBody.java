@@ -15,7 +15,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class SaveTeachersBody {
 
-    protected Boolean run(final List responsibleTeachersIds, final List<String> professorShipTeachersIds,
+    protected Boolean run(final List<String> responsibleTeachersIds, final List<String> professorShipTeachersIds,
             final String executionCourseId) throws FenixServiceException {
 
         final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
@@ -54,7 +54,7 @@ public class SaveTeachersBody {
     private static final SaveTeachersBody serviceInstance = new SaveTeachersBody();
 
     @Service
-    public static Boolean runSaveTeachersBody(List responsibleTeachersIds, List<String> professorShipTeachersIds,
+    public static Boolean runSaveTeachersBody(List<String> responsibleTeachersIds, List<String> professorShipTeachersIds,
             String executionCourseId) throws FenixServiceException, NotAuthorizedException {
         try {
             ManagerAuthorizationFilter.instance.execute();

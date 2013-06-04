@@ -25,7 +25,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public abstract class ViewTeacherCreditsDA extends FenixDispatchAction {
 
     public ActionForward prepareTeacherSearch(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException,  FenixServiceException {
+            HttpServletResponse response) throws NumberFormatException, FenixServiceException {
         request.setAttribute("teacherBean", new TeacherCreditsBean());
         return mapping.findForward("selectTeacher");
     }
@@ -41,8 +41,7 @@ public abstract class ViewTeacherCreditsDA extends FenixDispatchAction {
         Teacher teacher = AbstractDomainObject.fromExternalId((String) getFromRequest(request, "teacherOid"));
         ExecutionYear executionYear = AbstractDomainObject.fromExternalId((String) getFromRequest(request, "executionYearOid"));
         if (teacher == null) {
-            Professorship professorship =
-                    AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "professorshipID"));
+            Professorship professorship = AbstractDomainObject.fromExternalId(getStringFromRequest(request, "professorshipID"));
             if (professorship != null) {
                 teacher = professorship.getTeacher();
                 executionYear = professorship.getExecutionCourse().getExecutionYear();

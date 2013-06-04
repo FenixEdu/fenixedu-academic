@@ -13,7 +13,7 @@ public class ResponsibleCoordinators {
 
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
-    public static void run(String executionDegreeId, List<Integer> coordinatorsToBeResponsibleIDs) throws FenixServiceException {
+    public static void run(String executionDegreeId, List<String> coordinatorsToBeResponsibleIDs) throws FenixServiceException {
 
         final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeId);
         if (executionDegree == null) {

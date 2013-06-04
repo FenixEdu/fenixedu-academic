@@ -71,7 +71,7 @@ public class ScientificCouncilShowTeacherCreditsDispatchAction extends ShowTeach
 
     private ExecutionSemester getExecutionSemesterFromRequestOrForm(HttpServletRequest request, DynaActionForm teacherCreditsForm) {
         ExecutionSemester executionSemester =
-                AbstractDomainObject.fromExternalId((Integer) teacherCreditsForm.get("executionPeriodId"));
+                AbstractDomainObject.fromExternalId((String) teacherCreditsForm.get("executionPeriodId"));
         if (executionSemester != null) {
             return executionSemester;
         }

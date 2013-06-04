@@ -33,8 +33,8 @@ public class CurricularCourseCompetenceCourseDispatchAction extends FenixDispatc
         IUserView userView = UserView.getUser();
         DynaActionForm actionForm = (DynaActionForm) form;
 
-        Integer competenceCourseID = (Integer) actionForm.get("competenceCourseID");
-        Integer[] curricularCoursesIDs = (Integer[]) actionForm.get("curricularCoursesIds");
+        String competenceCourseID = (String) actionForm.get("competenceCourseID");
+        String[] curricularCoursesIDs = (String[]) actionForm.get("curricularCoursesIds");
 
         try {
             RemoveCurricularCoursesFromCompetenceCourse.run(competenceCourseID, curricularCoursesIDs);
@@ -50,8 +50,8 @@ public class CurricularCourseCompetenceCourseDispatchAction extends FenixDispatc
         IUserView userView = UserView.getUser();
         DynaActionForm actionForm = (DynaActionForm) form;
 
-        Integer competenceCourseID = (Integer) actionForm.get("competenceCourseID");
-        Integer[] curricularCoursesIDs = (Integer[]) actionForm.get("curricularCoursesIds");
+        String competenceCourseID = (String) actionForm.get("competenceCourseID");
+        String[] curricularCoursesIDs = (String[]) actionForm.get("curricularCoursesIds");
 
         try {
             AssociateCurricularCoursesToCompetenceCourse.run(competenceCourseID, curricularCoursesIDs);
@@ -63,7 +63,7 @@ public class CurricularCourseCompetenceCourseDispatchAction extends FenixDispatc
     }
 
     public ActionForward readDegrees(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException,  FenixServiceException {
+            HttpServletResponse response) throws FenixActionException, FenixServiceException {
         IUserView userView = UserView.getUser();
         String requestString = RequestUtils.getAndSetStringToRequest(request, "competenceCourseID");
         Integer competenceCourseID = (requestString != null ? Integer.valueOf(requestString) : null);
@@ -81,7 +81,7 @@ public class CurricularCourseCompetenceCourseDispatchAction extends FenixDispatc
             HttpServletResponse response) throws FenixActionException {
         IUserView userView = UserView.getUser();
         DynaActionForm actionForm = (DynaActionForm) form;
-        Integer degreeCurricularPlanID = (Integer) actionForm.get("degreeCurricularPlanID");
+        String degreeCurricularPlanID = (String) actionForm.get("degreeCurricularPlanID");
 
         List<InfoCurricularCourse> result = null;
         try {

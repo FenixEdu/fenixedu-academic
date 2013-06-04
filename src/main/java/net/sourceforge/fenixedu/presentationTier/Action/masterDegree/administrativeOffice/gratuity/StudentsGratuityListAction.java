@@ -186,7 +186,7 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
             degree = request.getParameter("degree");
         }
 
-        Integer executionDegreeId = null;
+        String executionDegreeId = null;
         try {
             executionDegreeId = findExecutionDegreeId(degree);
         } catch (NumberFormatException exception) {
@@ -341,7 +341,7 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
         DynaActionForm studentGratuityListForm = (DynaActionForm) actionForm;
 
         String degree = (String) studentGratuityListForm.get("degree");
-        Integer executionDegreeID = null;
+        String executionDegreeID = null;
 
         try {
             executionDegreeID = findExecutionDegreeId(degree);
@@ -361,7 +361,7 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
         }
 
         List infoExecutionDegrees = null;
-        Integer degreeCurricularPlanID = infoExecutionDegree.getInfoDegreeCurricularPlan().getExternalId();
+        String degreeCurricularPlanID = infoExecutionDegree.getInfoDegreeCurricularPlan().getExternalId();
 
         try {
             infoExecutionDegrees =
@@ -371,8 +371,8 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
             throw new FenixActionException(exception);
         }
 
-        Integer firstExecutionDegreeID = ((InfoExecutionDegree) infoExecutionDegrees.get(0)).getExternalId();
-        Integer secondExecutionDegreeID = ((InfoExecutionDegree) infoExecutionDegrees.get(1)).getExternalId();
+        String firstExecutionDegreeID = ((InfoExecutionDegree) infoExecutionDegrees.get(0)).getExternalId();
+        String secondExecutionDegreeID = ((InfoExecutionDegree) infoExecutionDegrees.get(1)).getExternalId();
 
         if (executionDegreeID.equals(firstExecutionDegreeID)) {
             degree = (degree.substring(0, degree.lastIndexOf('>') + 1)).concat(secondExecutionDegreeID.toString());
@@ -421,14 +421,14 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
      *            <execution degree's id internal>'
      * @return Integer whith execution degree id internal
      */
-    private Integer findExecutionDegreeId(String degree) {
-        Integer externalId = null;
+    private String findExecutionDegreeId(String degree) {
+        String externalId = null;
         // if degree is the string "all", then all degrees are desirable
         if (!degree.equals("all")) {
             String idInString = degree.substring(degree.indexOf(">") + 1, degree.length());
             try {
                 if (idInString.length() != 0) {
-                    externalId = Integer.valueOf(idInString);
+                    externalId = idInString;
                 }
             } catch (NumberFormatException numberFormatException) {
                 numberFormatException.printStackTrace();

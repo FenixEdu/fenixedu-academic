@@ -155,8 +155,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
     public ActionForward prepareGenerateCard(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
 
-        Integer personID = getIntegerFromRequest(request, "personID");
-        Person person = (Person) AbstractDomainObject.fromExternalId(personID);
+        Person person = getDomainObject(request, "personID");
         PartyClassification partyClassification = person.getPartyClassification();
         LibraryCardDTO libraryCardDTO = new LibraryCardDTO(person, partyClassification);
 
@@ -569,13 +568,13 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
         if (externalPersonBean.getUnit() == null) {
 
             externalContract =
-                    InsertExternalPerson.run(externalPersonBean.getName(), externalPersonBean.getUnitName(),
+                    InsertExternalPerson.runWithOrganizationName(externalPersonBean.getName(), externalPersonBean.getUnitName(),
                             externalPersonBean.getPhone(), externalPersonBean.getMobile(), externalPersonBean.getEmail());
         }
         if (externalPersonBean.getUnit() != null) {
 
             externalContract =
-                    InsertExternalPerson.run(externalPersonBean.getName(), externalPersonBean.getUnit().getExternalId(),
+                    InsertExternalPerson.run(externalPersonBean.getName(), externalPersonBean.getUnit(),
                             externalPersonBean.getPhone(), externalPersonBean.getMobile(), externalPersonBean.getEmail());
         }
 

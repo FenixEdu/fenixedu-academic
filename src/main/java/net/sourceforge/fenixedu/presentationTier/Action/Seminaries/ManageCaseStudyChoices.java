@@ -176,16 +176,16 @@ public class ManageCaseStudyChoices extends FenixAction {
         String motivation = request.getParameter("motivation");
         String submition = request.getParameter("submition");
         IUserView userView = getUserView(request);
-        Integer equivalencyID = null;
-        Integer themeID = null;
+        String equivalencyID = null;
+        String themeID = null;
         if (equivalencyIDString == null) {
             throw new FenixActionException(mapping.findForward("invalidQueryString"));
         }
         try {
-            equivalencyID = new Integer(equivalencyIDString);
+            equivalencyID = equivalencyIDString;
             /* struts translates null values to the string "null". bad thing. */
             if (themeIDString != null && !themeIDString.equals("null")) {
-                themeID = new Integer(themeIDString);
+                themeID = themeIDString;
             }
         } catch (Exception ex) {
             throw new FenixActionException(mapping.findForward("invalidQueryString"));

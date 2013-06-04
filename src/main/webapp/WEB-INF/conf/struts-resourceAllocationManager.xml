@@ -5,8 +5,8 @@
       <form-beans type="org.apache.struts.action.ActionFormBean">
       		<form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="studentShiftEnrollmentForm">
                   <form-property type="java.lang.Integer" name="studentId"></form-property>
-                  <form-property type="java.lang.Integer" name="degree"></form-property>
-                  <form-property type="java.lang.Integer" name="wantedCourse"></form-property>
+                  <form-property type="java.lang.String" name="degree"></form-property>
+                  <form-property type="java.lang.String" name="wantedCourse"></form-property>
                   <form-property type="java.lang.Integer" name="removedCourse"></form-property>
                   <form-property type="java.util.HashMap" name="shiftMap"></form-property>
                   <form-property type="java.lang.Integer[]" name="shifts"></form-property>
@@ -31,7 +31,7 @@
             </form-bean>
             <form-bean name="escolherContextoForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
                   <form-property name="index" type="java.lang.String"></form-property>
-                  <form-property name="anoCurricular" type="java.lang.Integer"></form-property>
+                  <form-property name="anoCurricular" type="java.lang.String"></form-property>
                   <!--        <form-property name="semestre" type="java.lang.Integer"/> -->
             </form-bean>
             <!-- Dynamic-FormBean for Choose Context -->

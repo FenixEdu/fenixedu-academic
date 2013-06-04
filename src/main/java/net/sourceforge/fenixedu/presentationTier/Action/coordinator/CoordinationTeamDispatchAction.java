@@ -169,8 +169,8 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) throws FenixActionException, FenixServiceException {
         IUserView userView = getUserView(request);
         DynaActionForm removeCoordinatorsForm = (DynaActionForm) form;
-        Integer[] coordinatorsIds = (Integer[]) removeCoordinatorsForm.get("coordinatorsIds");
-        List<Integer> coordinators = Arrays.asList(coordinatorsIds);
+        String[] coordinatorsIds = (String[]) removeCoordinatorsForm.get("coordinatorsIds");
+        List<String> coordinators = Arrays.asList(coordinatorsIds);
 
         String infoExecutionDegreeIdString = request.getParameter("infoExecutionDegreeId");
         request.setAttribute("infoExecutionDegreeId", infoExecutionDegreeIdString);

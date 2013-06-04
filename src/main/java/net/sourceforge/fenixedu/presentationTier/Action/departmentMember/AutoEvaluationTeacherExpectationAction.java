@@ -33,8 +33,7 @@ public class AutoEvaluationTeacherExpectationAction extends FenixDispatchAction 
 
         String executionYearID = request.getParameter("executionYearId");
         if (executionYearID != null) {
-            ExecutionYear executionYear =
-                    (ExecutionYear) AbstractDomainObject.fromExternalId(ExecutionYear.class, Integer.valueOf(executionYearID));
+            ExecutionYear executionYear = AbstractDomainObject.fromExternalId(executionYearID);
             request.setAttribute("expectation", getTeacherExpectationForGivenYearInRequest(request, executionYear));
         }
         return mapping.findForward("editAutoEvaluation");
@@ -63,7 +62,7 @@ public class AutoEvaluationTeacherExpectationAction extends FenixDispatchAction 
         } else {
             String id = request.getParameter("executionYearId");
             year =
-                    id != null ? (ExecutionYear) AbstractDomainObject.fromExternalId(ExecutionYear.class, Integer.valueOf(id)) : ExecutionYear
+                    id != null ? (ExecutionYear) AbstractDomainObject.fromExternalId(id) : ExecutionYear
                             .readCurrentExecutionYear();
         }
         return year;

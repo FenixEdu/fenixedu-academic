@@ -113,15 +113,14 @@ public class PersonalExpectationManagement extends FenixDispatchAction {
     }
 
     public ActionForward createTeacherPersonalExpectations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         IViewState viewState = RenderUtils.getViewState("teacherPersonalExpectationWithMainFocusProfessionalActivities");
         TeacherPersonalExpectationBean bean = (TeacherPersonalExpectationBean) viewState.getMetaObject().getObject();
         TeacherPersonalExpectation teacherPersonalExpectation = null;
 
         try {
-            teacherPersonalExpectation =
-                    (TeacherPersonalExpectation) InsertTeacherPersonalExpectation.runInsertTeacherPersonalExpectation( bean );
+            teacherPersonalExpectation = InsertTeacherPersonalExpectation.runInsertTeacherPersonalExpectation(bean);
 
         } catch (DomainException exception) {
             saveMessages(request, exception);
@@ -133,7 +132,7 @@ public class PersonalExpectationManagement extends FenixDispatchAction {
     }
 
     public ActionForward prepareEditEducationExpectations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException, FenixActionException {
+            HttpServletResponse response) throws FenixServiceException, FenixActionException {
 
         TeacherPersonalExpectation teacherPersonalExpectation = getTeacherPersonalExpectationFromParameter(request);
         checkTeacherAndPeriodToEdit(request, teacherPersonalExpectation);
@@ -142,14 +141,13 @@ public class PersonalExpectationManagement extends FenixDispatchAction {
     }
 
     public ActionForward editEducationExpectations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         return viewTeacherPersonalExpectation(request, "teacherPersonalExpectationWithEducationMainFocus", mapping);
     }
 
     public ActionForward prepareEditResearchAndDevelopmentExpectations(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException,
-            FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException, FenixActionException {
 
         TeacherPersonalExpectation teacherPersonalExpectation = getTeacherPersonalExpectationFromParameter(request);
         checkTeacherAndPeriodToEdit(request, teacherPersonalExpectation);
@@ -158,14 +156,13 @@ public class PersonalExpectationManagement extends FenixDispatchAction {
     }
 
     public ActionForward editResearchAndDevelopmentExpectations(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException {
 
         return viewTeacherPersonalExpectation(request, "teacherPersonalExpectationWithOrientationMainFocus", mapping);
     }
 
     public ActionForward prepareEditUniversityServicesExpectations(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException,
-            FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException, FenixActionException {
 
         TeacherPersonalExpectation teacherPersonalExpectation = getTeacherPersonalExpectationFromParameter(request);
         checkTeacherAndPeriodToEdit(request, teacherPersonalExpectation);
@@ -174,14 +171,13 @@ public class PersonalExpectationManagement extends FenixDispatchAction {
     }
 
     public ActionForward editUniversityServicesExpectations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         return viewTeacherPersonalExpectation(request, "teacherPersonalExpectationWithMainFocusUniversityServices", mapping);
     }
 
     public ActionForward prepareEditProfessionalActivitiesExpectations(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException,
-            FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException, FenixActionException {
 
         TeacherPersonalExpectation teacherPersonalExpectation = getTeacherPersonalExpectationFromParameter(request);
         checkTeacherAndPeriodToEdit(request, teacherPersonalExpectation);
@@ -190,7 +186,7 @@ public class PersonalExpectationManagement extends FenixDispatchAction {
     }
 
     public ActionForward editProfessionalActivitiesExpectations(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException {
 
         return viewTeacherPersonalExpectation(request, "teacherPersonalExpectationWithMainFocusProfessionalActivities", mapping);
     }
@@ -244,14 +240,12 @@ public class PersonalExpectationManagement extends FenixDispatchAction {
 
     private ExecutionYear getExecutionYearFromParameter(final HttpServletRequest request) {
         final String executionYearIDString = request.getParameter("executionYearID");
-        final Integer executionYearID = Integer.valueOf(executionYearIDString);
-        return AbstractDomainObject.fromExternalId(executionYearID);
+        return AbstractDomainObject.fromExternalId(executionYearIDString);
     }
 
     private TeacherPersonalExpectation getTeacherPersonalExpectationFromParameter(final HttpServletRequest request) {
         final String teacherPersonalExpectationIDString = request.getParameter("teacherPersonalExpectationID");
-        final Integer teacherPersonalExpectationID = Integer.valueOf(teacherPersonalExpectationIDString);
-        return AbstractDomainObject.fromExternalId(teacherPersonalExpectationID);
+        return AbstractDomainObject.fromExternalId(teacherPersonalExpectationIDString);
     }
 
     private void saveMessages(HttpServletRequest request, DomainException e) {

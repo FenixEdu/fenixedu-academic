@@ -99,7 +99,7 @@ public class OldMarkSheetCreateDispatchAction extends MarkSheetCreateDispatchAct
             HttpServletResponse response) {
 
         DynaActionForm form = (DynaActionForm) actionForm;
-        MarkSheet markSheet = AbstractDomainObject.fromExternalId((Integer) form.get("msID"));
+        MarkSheet markSheet = AbstractDomainObject.fromExternalId((String) form.get("msID"));
 
         MarkSheetRectifyBean rectifyBean = new MarkSheetRectifyBean();
         fillMarkSheetBean(actionForm, request, rectifyBean);

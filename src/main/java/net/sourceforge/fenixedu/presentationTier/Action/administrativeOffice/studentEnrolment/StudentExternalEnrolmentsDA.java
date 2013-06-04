@@ -222,11 +222,11 @@ public class StudentExternalEnrolmentsDA extends FenixDispatchAction {
     }
 
     protected Registration getRegistration(final HttpServletRequest request, ActionForm form) {
-        return AbstractDomainObject.fromExternalId(getIntegerFromRequestOrForm(request, (DynaActionForm) form, "registrationId"));
+        return AbstractDomainObject.fromExternalId(getStringFromRequestOrForm(request, (DynaActionForm) form, "registrationId"));
     }
 
     protected Unit getExternalUnit(final HttpServletRequest request, ActionForm actionForm) {
-        return (Unit) AbstractDomainObject.fromExternalId(getIntegerFromRequestOrForm(request, (DynaActionForm) actionForm,
+        return AbstractDomainObject.fromExternalId(getStringFromRequestOrForm(request, (DynaActionForm) actionForm,
                 "externalUnitId"));
     }
 
@@ -235,7 +235,12 @@ public class StudentExternalEnrolmentsDA extends FenixDispatchAction {
     }
 
     protected ExternalEnrolment getExternalEnrolment(final HttpServletRequest request, ActionForm actionForm) {
-        return AbstractDomainObject.fromExternalId(getIntegerFromRequestOrForm(request, (DynaActionForm) actionForm,
+        return AbstractDomainObject.fromExternalId(getStringFromRequestOrForm(request, (DynaActionForm) actionForm,
                 "externalEnrolmentId"));
+    }
+
+    protected String getStringFromRequestOrForm(final HttpServletRequest request, final DynaActionForm form, final String name) {
+        final String value = getStringFromRequest(request, name);
+        return (value != null) ? value : form.getString(name);
     }
 }

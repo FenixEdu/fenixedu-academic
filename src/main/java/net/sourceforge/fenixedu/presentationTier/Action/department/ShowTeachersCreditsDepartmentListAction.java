@@ -52,12 +52,12 @@ public class ShowTeachersCreditsDepartmentListAction extends FenixAction {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws NumberFormatException,  FenixServiceException, ParseException {
+            throws NumberFormatException, FenixServiceException, ParseException {
 
         DynaActionForm dynaActionForm = (DynaActionForm) form;
         IUserView userView = UserView.getUser();
 
-        Integer executionPeriodID = (Integer) dynaActionForm.get("executionPeriodId");
+        String executionPeriodID = (String) dynaActionForm.get("executionPeriodId");
 
         ExecutionSemester executionSemester = null;
         if (executionPeriodID == null) {
@@ -119,7 +119,7 @@ public class ShowTeachersCreditsDepartmentListAction extends FenixAction {
         return orderedIterator;
     }
 
-    private void readAndSaveAllExecutionPeriods(HttpServletRequest request) throws  FenixServiceException {
+    private void readAndSaveAllExecutionPeriods(HttpServletRequest request) throws FenixServiceException {
         List<InfoExecutionPeriod> notClosedExecutionPeriods = new ArrayList<InfoExecutionPeriod>();
 
         notClosedExecutionPeriods = ReadNotClosedExecutionPeriods.run();

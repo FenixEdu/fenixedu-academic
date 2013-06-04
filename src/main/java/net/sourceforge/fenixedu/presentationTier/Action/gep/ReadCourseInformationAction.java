@@ -45,15 +45,14 @@ public class ReadCourseInformationAction extends FenixAction {
         IUserView userView = UserView.getUser();
 
         TeacherAdministrationSiteView teacherAdministrationSiteView =
-                ReadCourseInformation.runReadCourseInformation(new Integer(request.getParameter("executionCourseId")));
+                ReadCourseInformation.runReadCourseInformation(request.getParameter("executionCourseId"));
         InfoSiteCourseInformation infoSiteCourseInformation =
                 (InfoSiteCourseInformation) teacherAdministrationSiteView.getComponent();
         request.setAttribute("infoSiteCourseInformation", infoSiteCourseInformation);
 
         if (request.getParameter("executionDegreeId") != null) {
 
-            InfoExecutionDegree infoExecutionDegree =
-                    ReadExecutionDegreeByOID.run(new Integer(request.getParameter("executionDegreeId")));
+            InfoExecutionDegree infoExecutionDegree = ReadExecutionDegreeByOID.run(request.getParameter("executionDegreeId"));
             request.setAttribute("infoExecutionDegree", infoExecutionDegree);
         }
 

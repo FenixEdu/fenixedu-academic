@@ -50,7 +50,7 @@ public class CreateEditCompetenceCourseDispatchAction extends FenixDispatchActio
 
         String code = (String) actionForm.get("code");
         String name = (String) actionForm.get("name");
-        Integer[] departmentIDs = (Integer[]) actionForm.get("departmentIDs");
+        String[] departmentIDs = (String[]) actionForm.get("departmentIDs");
 
         InfoCompetenceCourse competenceCourse = null;
         try {
@@ -69,7 +69,7 @@ public class CreateEditCompetenceCourseDispatchAction extends FenixDispatchActio
             HttpServletResponse response) throws FenixActionException {
         IUserView userView = UserView.getUser();
 
-        Integer competenceCourseID = Integer.valueOf(request.getParameter("competenceCourse"));
+        String competenceCourseID = request.getParameter("competenceCourse");
 
         InfoCompetenceCourse competenceCourse = null;
         List<InfoDepartment> infoDepartments = null;
@@ -89,11 +89,11 @@ public class CreateEditCompetenceCourseDispatchAction extends FenixDispatchActio
         actionForm.set("competenceCourseID", competenceCourse.getExternalId());
         actionForm.set("code", competenceCourse.getCode());
         actionForm.set("name", competenceCourse.getName());
-        List<Integer> departmentIDs = new ArrayList<Integer>();
+        List<String> departmentIDs = new ArrayList<String>();
         for (InfoDepartment department : competenceCourse.getDepartments()) {
             departmentIDs.add(department.getExternalId());
         }
-        Integer[] a = new Integer[departmentIDs.size()];
+        String[] a = new String[departmentIDs.size()];
         departmentIDs.toArray(a);
         actionForm.set("departmentIDs", a);
 
@@ -104,10 +104,10 @@ public class CreateEditCompetenceCourseDispatchAction extends FenixDispatchActio
             throws FenixActionException {
         IUserView userView = UserView.getUser();
         DynaActionForm actionForm = (DynaActionForm) form;
-        Integer competenceCourseID = (Integer) actionForm.get("competenceCourseID");
+        String competenceCourseID = (String) actionForm.get("competenceCourseID");
         String code = (String) actionForm.get("code");
         String name = (String) actionForm.get("name");
-        Integer[] departmentIDs = (Integer[]) actionForm.get("departmentIDs");
+        String[] departmentIDs = (String[]) actionForm.get("departmentIDs");
 
         InfoCompetenceCourse competenceCourse = null;
         try {

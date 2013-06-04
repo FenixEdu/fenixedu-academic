@@ -29,7 +29,7 @@ public class SimulateTest {
 
     private final String path = new String();
 
-    protected InfoSiteStudentTestFeedback run(Integer executionCourseId, Integer testId, Response[] responses,
+    protected InfoSiteStudentTestFeedback run(String executionCourseId, String testId, Response[] responses,
             String[] questionCodes, String[] optionShuffle, TestType testType, CorrectionAvailability correctionAvailability,
             Boolean imsfeedback, String testInformation, String path) throws FenixServiceException {
 
@@ -153,7 +153,7 @@ public class SimulateTest {
     }
 
     private List<InfoStudentTestQuestion> getInfoStudentTestQuestionList(String[] questionCodes, String[] optionShuffle,
-            Response[] responses, InfoDistributedTest infoDistributedTest, Integer testId)
+            Response[] responses, InfoDistributedTest infoDistributedTest, String testId)
             throws InvalidArgumentsServiceException, FenixServiceException {
         List<InfoStudentTestQuestion> infoStudentTestQuestionList = new ArrayList<InfoStudentTestQuestion>();
 
@@ -170,7 +170,7 @@ public class SimulateTest {
             infoStudentTestQuestion.setCorrectionFormula(testQuestionExample.getCorrectionFormula());
             infoStudentTestQuestion.setTestQuestionMark(Double.valueOf(0));
             infoStudentTestQuestion.setResponse(null);
-            Question question = AbstractDomainObject.fromExternalId(Integer.valueOf(questionCodes[i]));
+            Question question = AbstractDomainObject.fromExternalId(questionCodes[i]);
             if (question == null) {
                 throw new InvalidArgumentsServiceException();
             }
@@ -198,7 +198,7 @@ public class SimulateTest {
     private static final SimulateTest serviceInstance = new SimulateTest();
 
     @Service
-    public static InfoSiteStudentTestFeedback runSimulateTest(Integer executionCourseId, Integer testId, Response[] responses,
+    public static InfoSiteStudentTestFeedback runSimulateTest(String executionCourseId, String testId, Response[] responses,
             String[] questionCodes, String[] optionShuffle, TestType testType, CorrectionAvailability correctionAvailability,
             Boolean imsfeedback, String testInformation, String path) throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);

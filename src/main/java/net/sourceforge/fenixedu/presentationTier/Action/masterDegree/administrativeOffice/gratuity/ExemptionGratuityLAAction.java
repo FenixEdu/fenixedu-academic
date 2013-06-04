@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoEmployee;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuityValues;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.gratuity.ExemptionGratuityType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixLookupDispatchAction;
 
@@ -109,18 +110,18 @@ public class ExemptionGratuityLAAction extends FenixLookupDispatchAction {
 
         InfoGratuitySituation infoGratuitySituation = new InfoGratuitySituation();
         if (gratuitySituationID != null) {
-            infoGratuitySituation.setExternalId(Integer.valueOf(gratuitySituationID));
+            infoGratuitySituation.setExternalId(gratuitySituationID);
         }
 
         // Registration Curricular Plan
         InfoStudentCurricularPlan infoStudentCurricularPlan =
-                new InfoStudentCurricularPlan(AbstractDomainObject.fromExternalId(
-                        Integer.valueOf(studentCurricularPlanID)));
+                new InfoStudentCurricularPlan(
+                        AbstractDomainObject.<StudentCurricularPlan> fromExternalId(studentCurricularPlanID));
         infoGratuitySituation.setInfoStudentCurricularPlan(infoStudentCurricularPlan);
 
         // Gratuity Values
         InfoGratuityValues infoGratuityValues = new InfoGratuityValues();
-        infoGratuityValues.setExternalId(Integer.valueOf(gratuityValuesID));
+        infoGratuityValues.setExternalId(gratuityValuesID);
         infoGratuitySituation.setInfoGratuityValues(infoGratuityValues);
 
         // employee who made register

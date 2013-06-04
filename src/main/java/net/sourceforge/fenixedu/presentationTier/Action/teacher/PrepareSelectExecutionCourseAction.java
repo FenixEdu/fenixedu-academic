@@ -62,15 +62,13 @@ public class PrepareSelectExecutionCourseAction extends FenixContextAction {
         return mapping.findForward("sucess");
     }
 
-    private SiteView readSiteView(HttpServletRequest request, ISiteComponent firstPageComponent, Integer infoExecutionCourseCode,
+    private SiteView readSiteView(HttpServletRequest request, ISiteComponent firstPageComponent, String infoExecutionCourseCode,
             Object obj1, Object obj2) throws FenixActionException {
 
         IUserView userView = getUserView(request);
 
-        Integer objectCode = null;
         if (infoExecutionCourseCode == null) {
-            objectCode = getObjectCode(request);
-            infoExecutionCourseCode = objectCode;
+            infoExecutionCourseCode = getObjectCode(request);
         }
 
         ISiteComponent commonComponent = new InfoSiteCommon();
@@ -78,7 +76,7 @@ public class PrepareSelectExecutionCourseAction extends FenixContextAction {
         try {
             TeacherAdministrationSiteView siteView =
                     TeacherAdministrationSiteComponentService.runTeacherAdministrationSiteComponentService(
-                            infoExecutionCourseCode, commonComponent, firstPageComponent, objectCode, obj1, obj2);
+                            infoExecutionCourseCode, commonComponent, firstPageComponent, obj1, obj2);
             request.setAttribute("siteView", siteView);
             request.setAttribute("objectCode", ((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse()
                     .getExternalId());
@@ -94,16 +92,12 @@ public class PrepareSelectExecutionCourseAction extends FenixContextAction {
 
     }
 
-    private Integer getObjectCode(HttpServletRequest request) {
-        Integer objectCode = null;
+    private String getObjectCode(HttpServletRequest request) {
         String objectCodeString = request.getParameter("objectCode");
         if (objectCodeString == null) {
             objectCodeString = (String) request.getAttribute("objectCode");
         }
-        if (objectCodeString != null) {
-            objectCode = new Integer(objectCodeString);
-        }
-        return objectCode;
+        return objectCodeString;
     }
 
 }

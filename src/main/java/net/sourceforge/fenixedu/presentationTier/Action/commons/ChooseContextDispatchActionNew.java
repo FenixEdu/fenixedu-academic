@@ -254,7 +254,7 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
 
         InfoExecutionPeriod infoExecutionPeriod =
                 (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
-        Integer executionPeriodID = (Integer) escolherContextoForm.get("indice");
+        String executionPeriodID = (String) escolherContextoForm.get("indice");
         if (executionPeriodID == null) {
             executionPeriodID = getFromRequest("indice", request);
         }

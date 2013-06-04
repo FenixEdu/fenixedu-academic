@@ -128,7 +128,7 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
 
     }
 
-    public static Set<StudentCandidacy> readByIds(final List<Integer> studentCandidacyIds) {
+    public static Set<StudentCandidacy> readByIds(final List<String> studentCandidacyIds) {
         final Set<StudentCandidacy> result = new HashSet<StudentCandidacy>();
 
         for (final Candidacy candidacy : RootDomainObject.getInstance().getCandidaciesSet()) {

@@ -38,7 +38,6 @@ import org.apache.struts.validator.DynaValidatorForm;
  * 
  */
 public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
-
     public ActionForward editExecutionCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
 
@@ -201,7 +200,7 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
         DynaActionForm editExecutionCourseForm = (DynaActionForm) actionForm;
 
         try {
-            infoExecutionCourse.setExternalId((String) editExecutionCourseForm.get("executionCourseId"));
+            infoExecutionCourse.setIdInternal(new Integer((String) editExecutionCourseForm.get("executionCourseId")));
             infoExecutionCourse.setNome((String) editExecutionCourseForm.get("name"));
             infoExecutionCourse.setSigla((String) editExecutionCourseForm.get("code"));
             infoExecutionCourse.setComment((String) editExecutionCourseForm.get("comment"));

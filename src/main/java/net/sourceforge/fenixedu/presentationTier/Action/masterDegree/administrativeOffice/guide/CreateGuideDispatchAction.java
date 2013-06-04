@@ -61,12 +61,11 @@ public class CreateGuideDispatchAction extends FenixDispatchAction {
 
         // Transport chosen Execution Degree
         String executionDegreeIDParam = getFromRequest(PresentationConstants.EXECUTION_DEGREE_OID, request);
-        Integer executionDegreeID = Integer.valueOf(executionDegreeIDParam);
-        createGuideForm.set("executionDegreeID", executionDegreeID);
-        request.setAttribute(PresentationConstants.EXECUTION_DEGREE_OID, executionDegreeID);
+        createGuideForm.set("executionDegreeID", executionDegreeIDParam);
+        request.setAttribute(PresentationConstants.EXECUTION_DEGREE_OID, executionDegreeIDParam);
 
         InfoExecutionDegree infoExecutionDegree = null;
-        infoExecutionDegree = ReadExecutionDegreeByOID.run(executionDegreeID);
+        infoExecutionDegree = ReadExecutionDegreeByOID.run(executionDegreeIDParam);
         if (infoExecutionDegree != null) {
             request.setAttribute(PresentationConstants.EXECUTION_DEGREE, infoExecutionDegree);
         }
@@ -84,7 +83,7 @@ public class CreateGuideDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward requesterChosen(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException,  FenixServiceException {
+            HttpServletResponse response) throws FenixActionException, FenixServiceException {
 
         final DynaActionForm createGuideForm = (DynaActionForm) form;
 
@@ -97,8 +96,8 @@ public class CreateGuideDispatchAction extends FenixDispatchAction {
                         DocumentType.RANK_RECOGNITION_AND_EQUIVALENCE_PROCESS);
 
         final InfoExecutionDegree infoExecutionDegree =
-                InfoExecutionDegree.newInfoFromDomain(AbstractDomainObject.fromExternalId(
-                        (Integer) createGuideForm.get("executionDegreeID")));
+                InfoExecutionDegree.newInfoFromDomain(AbstractDomainObject.fromExternalId((Integer) createGuideForm
+                        .get("executionDegreeID")));
 
         try {
 

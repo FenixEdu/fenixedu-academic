@@ -141,8 +141,8 @@ public class MakeSimplePrecedenceAction extends FenixDispatchAction {
 
         String classeNameRestriction = (String) insertRestrictionForm.get("className");
         Integer number = (Integer) insertRestrictionForm.get("number");
-        Integer curricularCourseToAddPrecedenceID = (Integer) insertRestrictionForm.get("curricularCourseToAddPrecedenceID");
-        Integer precedentCurricularCourseID = (Integer) insertRestrictionForm.get("precedentCurricularCourseID");
+        String curricularCourseToAddPrecedenceID = (String) insertRestrictionForm.get("curricularCourseToAddPrecedenceID");
+        String precedentCurricularCourseID = (String) insertRestrictionForm.get("precedentCurricularCourseID");
 
         request.setAttribute("className", classeNameRestriction);
         request.setAttribute("number", number);

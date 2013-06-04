@@ -41,12 +41,12 @@ public class ShowCandidacyOptions extends FenixAction {
             throws FenixActionException {
         IUserView userView = getUserView(request);
         String seminaryIDString = request.getParameter("objectCode");
-        Integer seminaryID;
+        String seminaryID;
         if (seminaryIDString == null) {
             throw new FenixActionException(mapping.findForward("invalidQueryString"));
         }
         try {
-            seminaryID = new Integer(seminaryIDString);
+            seminaryID = seminaryIDString;
         } catch (Exception ex) {
             throw new FenixActionException(mapping.findForward("invalidQueryString"));
         }

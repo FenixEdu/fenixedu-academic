@@ -41,7 +41,7 @@ public class MarksListAction extends FenixDispatchAction {
         try {
             TeacherAdministrationSiteView siteView =
                     TeacherAdministrationSiteComponentService.runTeacherAdministrationSiteComponentService(executionCourseCode,
-                            commonComponent, new InfoEvaluation(), null, evaluationCode, null);
+                            commonComponent, new InfoEvaluation(), evaluationCode, null);
 
             request.setAttribute("siteView", siteView);
             request.setAttribute("objectCode", ((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse()
@@ -99,7 +99,7 @@ public class MarksListAction extends FenixDispatchAction {
         try {
             siteView =
                     TeacherAdministrationSiteComponentService.runTeacherAdministrationSiteComponentService(
-                            infoExecutionCourseCode, commonComponent, new InfoEvaluation(), null, evaluationCode, null);
+                            infoExecutionCourseCode, commonComponent, new InfoEvaluation(), evaluationCode, null);
 
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);

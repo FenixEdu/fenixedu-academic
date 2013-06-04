@@ -37,16 +37,16 @@ public class SaveTeachersBodyAction extends FenixAction {
             throws FenixActionException, FenixServiceException {
 
         IUserView userView = UserView.getUser();
-        Integer executionCourseId = new Integer(request.getParameter("executionCourseId"));
+        String executionCourseId = request.getParameter("executionCourseId");
         DynaActionForm actionForm = (DynaActionForm) form;
 
-        Integer[] responsibleTeachersIds = (Integer[]) actionForm.get("responsibleTeachersIds");
-        Integer[] professorShipTeachersIds = (Integer[]) actionForm.get("professorShipTeachersIds");
-        Integer[] nonAffiliatedTeachersIds = (Integer[]) actionForm.get("nonAffiliatedTeachersIds");
+        String[] responsibleTeachersIds = (String[]) actionForm.get("responsibleTeachersIds");
+        String[] professorShipTeachersIds = (String[]) actionForm.get("professorShipTeachersIds");
+        String[] nonAffiliatedTeachersIds = (String[]) actionForm.get("nonAffiliatedTeachersIds");
 
-        List<Integer> respTeachersIds = Arrays.asList(responsibleTeachersIds);
-        List<Integer> profTeachersIds = Arrays.asList(professorShipTeachersIds);
-        List<Integer> nonAffilTeachersIds = Arrays.asList(nonAffiliatedTeachersIds);
+        List<String> respTeachersIds = Arrays.asList(responsibleTeachersIds);
+        List<String> profTeachersIds = Arrays.asList(professorShipTeachersIds);
+        List<String> nonAffilTeachersIds = Arrays.asList(nonAffiliatedTeachersIds);
 
         // TODO: Collections.sort(profTeachersIds, new BeanComparator("name"));
         Boolean result;

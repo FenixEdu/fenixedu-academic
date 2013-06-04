@@ -87,7 +87,7 @@ public class SendEmailReminderAction extends FenixDispatchAction {
 
         DynaActionForm form = (DynaActionForm) actionForm;
 
-        String[] degreeCurricularPlanIds = (Integer[]) form.get("degreeCurricularPlanIds");
+        String[] degreeCurricularPlanIds = (String[]) form.get("degreeCurricularPlanIds");
 
         InquiryResponsePeriod openPeriod = InquiryResponsePeriod.readOpenPeriod(InquiryResponsePeriodType.STUDENT);
         if (openPeriod == null) {

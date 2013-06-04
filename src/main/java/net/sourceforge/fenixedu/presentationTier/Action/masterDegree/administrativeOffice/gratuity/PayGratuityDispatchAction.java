@@ -118,7 +118,7 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
 
             // Read Insurance Situation
             InfoInsuranceTransaction infoInsuranceTransaction = null;
-            Integer executionYearID =
+            String executionYearID =
                     infoGratuitySituation.getInfoGratuityValues().getInfoExecutionDegree().getInfoExecutionYear().getExternalId();
 
             try {
@@ -334,7 +334,7 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
      * @return
      * @throws FenixActionException
      */
-    private InfoGratuitySituation readGratuitySituation(IUserView userView, Integer gratuitySituationId)
+    private InfoGratuitySituation readGratuitySituation(IUserView userView, String gratuitySituationId)
             throws FenixActionException {
         InfoGratuitySituation infoGratuitySituation = null;
 
@@ -357,7 +357,7 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
      * @throws FenixActionException
      * @throws NonExistingActionException
      */
-    private InfoStudent readStudent(ActionMapping mapping, IUserView userView, Integer studentId) throws FenixActionException,
+    private InfoStudent readStudent(ActionMapping mapping, IUserView userView, String studentId) throws FenixActionException,
             NonExistingActionException {
         InfoStudent infoStudent = null;
 
@@ -381,7 +381,7 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
      * @return
      * @throws FenixActionException
      */
-    private InfoInsuranceValue readInsuranceValue(IUserView userView, Integer insuranceExecutionYearId)
+    private InfoInsuranceValue readInsuranceValue(IUserView userView, String insuranceExecutionYearId)
             throws FenixActionException {
         InfoInsuranceValue infoInsuranceValue = null;
 

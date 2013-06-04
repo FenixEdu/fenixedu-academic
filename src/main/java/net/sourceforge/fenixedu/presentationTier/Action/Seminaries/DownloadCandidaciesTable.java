@@ -112,9 +112,6 @@ public class DownloadCandidaciesTable extends FenixAction {
         } catch (NumberFormatException ex) {
             degreeID = new Integer(-1);
         }
-        Object[] arguments =
-                { modalityID, seminaryID, themeID, case1Id, case2Id, case3Id, case4Id, case5Id, curricularCourseID, degreeID,
-                        approved };
 
         return ReadCandidacies.runReadCandidacies(modalityID, seminaryID, themeID, case1Id, case2Id, case3Id, case4Id, case5Id,
                 curricularCourseID, degreeID, approved);

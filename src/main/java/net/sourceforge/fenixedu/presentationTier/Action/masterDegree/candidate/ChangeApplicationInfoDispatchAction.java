@@ -162,7 +162,7 @@ public class ChangeApplicationInfoDispatchAction extends FenixDispatchAction {
         DynaActionForm changeApplicationInfoForm = (DynaActionForm) form;
         IUserView userView = UserView.getUser();
 
-        Integer choosenCandidateID = Integer.valueOf(request.getParameter("candidateID"));
+        String choosenCandidateID = request.getParameter("candidateID");
         request.setAttribute("candidateID", choosenCandidateID);
 
         InfoMasterDegreeCandidate masterDegreeCandidate = readMasterDegreeCandidate(userView, choosenCandidateID);
@@ -216,8 +216,8 @@ public class ChangeApplicationInfoDispatchAction extends FenixDispatchAction {
 
     }
 
-    private InfoMasterDegreeCandidate readMasterDegreeCandidate(IUserView userView, Integer candidateID)
-            throws  FenixActionException {
+    private InfoMasterDegreeCandidate readMasterDegreeCandidate(IUserView userView, String candidateID)
+            throws FenixActionException {
         InfoMasterDegreeCandidate masterDegreeCandidate = null;
         masterDegreeCandidate = ReadMasterDegreeCandidateByID.run(candidateID);
         return masterDegreeCandidate;

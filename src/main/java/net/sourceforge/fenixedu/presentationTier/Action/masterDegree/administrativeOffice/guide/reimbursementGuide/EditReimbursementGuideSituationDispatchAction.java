@@ -71,7 +71,7 @@ public class EditReimbursementGuideSituationDispatchAction extends FenixDispatch
 
         DynaActionForm editReimbursementGuideSituationForm = (DynaActionForm) form;
 
-        Integer reimbursementGuideId = new Integer(this.getFromRequest("id", request));
+        String reimbursementGuideId = this.getFromRequest("id", request);
 
         InfoReimbursementGuide infoReimbursementGuide = null;
 

@@ -37,7 +37,7 @@ public class EditStudentCurricularCoursePlan extends FenixDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         DynaActionForm editStudentCurricularPlanForm = (DynaActionForm) form;
-        Integer studentCurricularPlanId = new Integer(getFromRequest("studentCurricularPlanId", request));
+        String studentCurricularPlanId = getFromRequest("studentCurricularPlanId", request);
         IUserView userView = getUserView(request);
 
         InfoStudentCurricularPlan infoStudentCurricularPlan = null;
@@ -77,7 +77,7 @@ public class EditStudentCurricularCoursePlan extends FenixDispatchAction {
         for (Iterator iter = infoStudentCurricularPlan.getInfoEnrolments().iterator(); iter.hasNext();) {
             Object enrollment = iter.next();
             if (enrollment instanceof InfoEnrolmentInExtraCurricularCourse) {
-                Integer enrollmentId = ((InfoEnrolmentInExtraCurricularCourse) enrollment).getExternalId();
+                String enrollmentId = ((InfoEnrolmentInExtraCurricularCourse) enrollment).getExternalId();
                 formValues[i] = enrollmentId.toString();
             }
             i++;
@@ -91,7 +91,7 @@ public class EditStudentCurricularCoursePlan extends FenixDispatchAction {
             throws Exception {
         final IUserView userView = getUserView(request);
 
-        final Integer scpOID = getIntegerFromRequest(request, "studentCurricularPlanId");
+        final String scpOID = getStringFromRequest(request, "studentCurricularPlanId");
         request.setAttribute("studentCurricularPlanId", scpOID);
 
         final DynaActionForm editForm = (DynaActionForm) form;
@@ -105,9 +105,9 @@ public class EditStudentCurricularCoursePlan extends FenixDispatchAction {
         final Double credits =
                 (creditsObj != null && ((String) creditsObj).length() > 0) ? (Double.valueOf((String) creditsObj)) : null;
 
-        final List<Integer> extraCurricularOIDs = new ArrayList<Integer>();
+        final List<String> extraCurricularOIDs = new ArrayList<String>();
         for (final String extraCurricular : Arrays.asList((String[]) editForm.get("extraCurricularCourses"))) {
-            extraCurricularOIDs.add(Integer.valueOf(extraCurricular));
+            extraCurricularOIDs.add(extraCurricular);
         }
 
         try {
@@ -123,8 +123,7 @@ public class EditStudentCurricularCoursePlan extends FenixDispatchAction {
     public ActionForward enrol(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
-        Enrolment enrolment =
-                (Enrolment) AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "enrolmentID"));
+        Enrolment enrolment = (Enrolment) AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "enrolmentID"));
         SetEnrolmentState.run(enrolment, EnrollmentState.ENROLLED);
 
         request.setAttribute("studentCurricularPlanId", enrolment.getStudentCurricularPlan().getExternalId());

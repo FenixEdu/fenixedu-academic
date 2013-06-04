@@ -61,7 +61,7 @@ public class ChangeMarkDispatchAction extends FenixDispatchAction {
         try {
             listEnrolmentEvaluation =
                     ReadStudentMarksListByCurricularCourse.runReadStudentMarksListByCurricularCourse(userView,
-                            Integer.valueOf(curricularCourseId), null);
+                            curricularCourseId, null);
         } catch (NotAuthorizedException e) {
             return mapping.findForward("NotAuthorized");
         } catch (NonExistingServiceException e) {
@@ -104,8 +104,8 @@ public class ChangeMarkDispatchAction extends FenixDispatchAction {
         try {
 
             infoSiteEnrolmentEvaluations =
-                    ReadStudentMarksByCurricularCourse.run(Integer.valueOf(curricularCourseId), studentNumber, null,
-                            getIntegerFromRequest(request, "enrolmentId"));
+                    ReadStudentMarksByCurricularCourse.run(curricularCourseId, studentNumber, null,
+                            getStringFromRequest(request, "enrolmentId"));
         } catch (ExistingServiceException e) {
             // invalid student number
             addErrorMessage(request, "StudentNotExist", "error.student.notExist");
@@ -259,7 +259,7 @@ public class ChangeMarkDispatchAction extends FenixDispatchAction {
 
         DynaActionForm studentNumberForm = (DynaActionForm) form;
         // get input
-        Integer enrolmentEvaluationCode = Integer.valueOf(MarksManagementDispatchAction.getFromRequest("teacherCode", request));
+        String enrolmentEvaluationCode = MarksManagementDispatchAction.getFromRequest("teacherCode", request);
         String grade = MarksManagementDispatchAction.getFromRequest("grade", request);
 
         String evaluation = MarksManagementDispatchAction.getFromRequest("enrolmentEvaluationType", request);
@@ -325,8 +325,7 @@ public class ChangeMarkDispatchAction extends FenixDispatchAction {
         infoEnrolmentEvaluation.setGradeAvailableDate(examDate.getTime());
 
         final InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(Teacher.readByIstId(teacherId));
-        final EnrolmentEvaluation enrolmentEvaluation =
-                AbstractDomainObject.fromExternalId(enrolmentEvaluationCode);
+        final EnrolmentEvaluation enrolmentEvaluation = AbstractDomainObject.fromExternalId(enrolmentEvaluationCode);
         infoEnrolmentEvaluation.setEnrolmentEvaluationType(enrolmentEvaluationType);
 
         infoEnrolmentEvaluation.setGradeValue(grade);

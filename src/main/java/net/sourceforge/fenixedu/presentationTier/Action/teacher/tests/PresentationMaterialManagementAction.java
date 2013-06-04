@@ -29,7 +29,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 
 @Mapping(module = "teacher", path = "/tests/questionBank/presentationMaterial", attribute = "testForm", formBean = "testForm",
@@ -73,9 +72,8 @@ public class PresentationMaterialManagementAction extends FenixDispatchAction {
 
     public ActionForward prepareEditPresentationMaterials(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
-        Integer testElementId = getCodeFromRequest(request, "oid");
 
-        NewTestElement testElement = AbstractDomainObject.fromExternalId(testElementId);
+        NewTestElement testElement = getDomainObject(request, "oid");
 
         request.setAttribute("bean", new PresentationMaterialBean(testElement, request.getParameter("returnPath"),
                 getCodeFromRequest(request, "returnId"), request.getParameter("contextKey")));
@@ -85,9 +83,8 @@ public class PresentationMaterialManagementAction extends FenixDispatchAction {
 
     public ActionForward editPresentationMaterial(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
-        Integer testElementId = getCodeFromRequest(request, "oid");
 
-        NewTestElement testElement = AbstractDomainObject.fromExternalId(testElementId);
+        NewTestElement testElement = getDomainObject(request, "oid");
 
         request.setAttribute("bean", new PresentationMaterialBean(testElement, request.getParameter("returnPath"),
                 getCodeFromRequest(request, "returnId"), request.getParameter("contextKey")));
@@ -97,9 +94,8 @@ public class PresentationMaterialManagementAction extends FenixDispatchAction {
 
     public ActionForward prepareDeletePresentationMaterial(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException {
-        Integer presentationMaterialId = getCodeFromRequest(request, "oid");
 
-        NewPresentationMaterial presentationMaterial = AbstractDomainObject.fromExternalId(presentationMaterialId);
+        NewPresentationMaterial presentationMaterial = getDomainObject(request, "oid");
 
         request.setAttribute("presentationMaterial", presentationMaterial);
         request.setAttribute("bean",
@@ -111,9 +107,8 @@ public class PresentationMaterialManagementAction extends FenixDispatchAction {
 
     public ActionForward deletePresentationMaterial(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException {
-        Integer presentationMaterialId = getCodeFromRequest(request, "oid");
 
-        NewPresentationMaterial presentationMaterial = AbstractDomainObject.fromExternalId(presentationMaterialId);
+        NewPresentationMaterial presentationMaterial = getDomainObject(request, "oid");
 
         request.setAttribute("oid", presentationMaterial.getTestElement().getExternalId());
 
@@ -133,9 +128,8 @@ public class PresentationMaterialManagementAction extends FenixDispatchAction {
 
     public ActionForward switchPresentationMaterial(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException {
-        Integer presentationMaterialId = getCodeFromRequest(request, "oid");
 
-        NewPresentationMaterial presentationMaterial = AbstractDomainObject.fromExternalId(presentationMaterialId);
+        NewPresentationMaterial presentationMaterial = getDomainObject(request, "oid");
 
         Integer relativePosition = getCodeFromRequest(request, "relativePosition");
 

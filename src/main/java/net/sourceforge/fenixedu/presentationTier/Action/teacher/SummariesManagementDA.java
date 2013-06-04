@@ -248,7 +248,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward createSummary(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         final IViewState viewState = RenderUtils.getViewState();
         SummariesManagementBean bean = (SummariesManagementBean) viewState.getMetaObject().getObject();
@@ -276,7 +276,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward createSummaryAndNew(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         final IViewState viewState = RenderUtils.getViewState();
         SummariesManagementBean bean = (SummariesManagementBean) viewState.getMetaObject().getObject();
@@ -298,7 +298,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward createSummaryAndSame(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         final IViewState viewState = RenderUtils.getViewState();
         SummariesManagementBean bean = (SummariesManagementBean) viewState.getMetaObject().getObject();
@@ -332,7 +332,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward prepareEditSummary(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         Professorship teacherLogged = ((Professorship) request.getAttribute("loggedTeacherProfessorship"));
         DynaActionForm dynaActionForm = (DynaActionForm) form;
@@ -361,7 +361,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward deleteSummary(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         Summary summary = getSummaryFromParameter(request);
         Professorship professorshipLogged = (Professorship) request.getAttribute("loggedTeacherProfessorship");
@@ -552,7 +552,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward createComplexSummary(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         SummariesManagementBean summaryBean = getSummariesManagementBean();
         readAndSaveTeacher(summaryBean, (DynaActionForm) form, request, mapping);
@@ -838,16 +838,14 @@ public class SummariesManagementDA extends FenixDispatchAction {
         final String executionCourseIDString =
                 request.getParameterMap().containsKey("executionCourseID") ? request.getParameter("executionCourseID") : (String) request
                         .getAttribute("executionCourseID");
-        final Integer executionCourseID = executionCourseIDString != null ? Integer.valueOf(executionCourseIDString) : null;
-        return AbstractDomainObject.fromExternalId(executionCourseID);
+        return AbstractDomainObject.fromExternalId(executionCourseIDString);
     }
 
     private Summary getSummaryFromParameter(final HttpServletRequest request) {
         final String summaryIDString =
                 request.getParameterMap().containsKey("summaryID") ? request.getParameter("summaryID") : (String) request
                         .getAttribute("summaryID");
-        final Integer summaryID = summaryIDString != null ? Integer.valueOf(summaryIDString) : null;
-        return AbstractDomainObject.fromExternalId(summaryID);
+        return AbstractDomainObject.fromExternalId(summaryIDString);
     }
 
     private NextPossibleSummaryLessonsAndDatesBean getNextSummaryDateBeanFromParameter(final HttpServletRequest request) {
@@ -864,8 +862,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
                         .getAttribute("teacher");
         if (!StringUtils.isEmpty(professorshipIDString)
                 && !(professorshipIDString.equals("0") || professorshipIDString.equals("-1"))) {
-            final Integer professorshipID = professorshipIDString != null ? Integer.valueOf(professorshipIDString) : null;
-            return AbstractDomainObject.fromExternalId(professorshipID);
+            return AbstractDomainObject.fromExternalId(professorshipIDString);
         }
         return null;
     }

@@ -160,7 +160,7 @@ public class GuideListingDispatchAction extends FenixDispatchAction {
 
         IUserView userView = getUserView(request);
 
-        Integer personID = Integer.valueOf(request.getParameter("personID"));
+        String personID = request.getParameter("personID");
 
         List result = null;
         try {

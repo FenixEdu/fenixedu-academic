@@ -58,7 +58,7 @@ public class ManageTeacherAdviseServiceDispatchAction extends FenixDispatchActio
     }
 
     protected ActionForward editAdviseService(ActionForm form, HttpServletRequest request, ActionMapping mapping,
-            RoleType roleType) throws NumberFormatException,  FenixServiceException {
+            RoleType roleType) throws NumberFormatException, FenixServiceException {
 
         DynaActionForm adviseServiceForm = (DynaActionForm) form;
 
@@ -84,9 +84,9 @@ public class ManageTeacherAdviseServiceDispatchAction extends FenixDispatchActio
     }
 
     protected void deleteAdviseService(HttpServletRequest request, RoleType roleType) throws NumberFormatException,
-             FenixServiceException {
+            FenixServiceException {
 
-        Integer adviseServiceID = Integer.valueOf(request.getParameter("teacherAdviseServiceID"));
+        String adviseServiceID = request.getParameter("teacherAdviseServiceID");
         try {
             DeleteTeacherAdviseServiceByOID.runDeleteTeacherAdviseServiceByOID(adviseServiceID, roleType);
         } catch (DomainException e) {

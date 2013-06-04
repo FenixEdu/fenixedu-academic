@@ -41,11 +41,11 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ScientificCouncilManageTeacherSupportLessonsDispatchAction extends ManageTeacherSupportLessonsDispatchAction {
 
     public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException,  FenixServiceException {
+            HttpServletResponse response) throws NumberFormatException, FenixServiceException {
 
         DynaActionForm supportLessonForm = (DynaActionForm) form;
-        Integer supportLesssonID = (Integer) supportLessonForm.get("supportLessonID");
-        Integer professorshipID = (Integer) supportLessonForm.get("professorshipID");
+        String supportLesssonID = (String) supportLessonForm.get("supportLessonID");
+        String professorshipID = (String) supportLessonForm.get("professorshipID");
 
         Professorship professorship = AbstractDomainObject.fromExternalId(professorshipID);
 
@@ -54,7 +54,7 @@ public class ScientificCouncilManageTeacherSupportLessonsDispatchAction extends 
         }
 
         SupportLesson supportLesson = null;
-        if (supportLesssonID != null && supportLesssonID != 0) {
+        if (supportLesssonID != null) {
             supportLesson = AbstractDomainObject.fromExternalId(supportLesssonID);
             if (!professorship.getSupportLessons().contains(supportLesson)) {
                 return mapping.findForward("teacher-not-found");
@@ -66,15 +66,14 @@ public class ScientificCouncilManageTeacherSupportLessonsDispatchAction extends 
     }
 
     public ActionForward editSupportLesson(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException,  FenixServiceException,
-            InvalidPeriodException {
+            HttpServletResponse response) throws NumberFormatException, FenixServiceException, InvalidPeriodException {
 
         editSupportLesson(form, request, RoleType.SCIENTIFIC_COUNCIL);
         return mapping.findForward("successfull-edit");
     }
 
     public ActionForward deleteSupportLesson(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException,  FenixServiceException {
+            HttpServletResponse response) throws NumberFormatException, FenixServiceException {
 
         deleteSupportLesson(request, form, RoleType.SCIENTIFIC_COUNCIL);
         return mapping.findForward("successfull-delete");

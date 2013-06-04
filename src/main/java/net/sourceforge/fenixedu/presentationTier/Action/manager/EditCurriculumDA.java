@@ -133,7 +133,7 @@ public class EditCurriculumDA extends FenixDispatchAction {
         String programEn = (String) editForm.get("programEn");
         infoCurriculum.setProgramEn(StringUtils.isEmpty(programEn) && curriculum != null ? curriculum.getProgramEn() : programEn);
 
-        Integer executionYearId = (Integer) editForm.get("executionYearId");
+        String executionYearId = (String) editForm.get("executionYearId");
         infoCurriculum.setExecutionYearId(executionYearId);
 
         try {

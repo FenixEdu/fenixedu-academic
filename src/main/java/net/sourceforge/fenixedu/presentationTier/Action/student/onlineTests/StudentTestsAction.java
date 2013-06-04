@@ -268,7 +268,7 @@ public class StudentTestsAction extends FenixDispatchAction {
         final Integer itemIndex = getRequestParameterAsInteger(request, "item");
         final String path = getServlet().getServletContext().getRealPath("/");
 
-        final DistributedTest distributedTest = AbstractDomainObject.fromExternalId(new Integer(testCode));
+        final DistributedTest distributedTest = AbstractDomainObject.fromExternalId(testCode);
         if (distributedTest == null) {
             request.setAttribute("invalidTest", new Boolean(true));
             return mapping.findForward("testError");

@@ -45,7 +45,7 @@ public class MarkSheetEditDispatchAction extends MarkSheetDispatchAction {
         fillMarkSheetBean(actionForm, request, editBean);
 
         DynaActionForm form = (DynaActionForm) actionForm;
-        Integer markSheetID = (Integer) form.get("msID");
+        String markSheetID = (String) form.get("msID");
 
         MarkSheet markSheet = AbstractDomainObject.fromExternalId(markSheetID);
 
@@ -60,7 +60,7 @@ public class MarkSheetEditDispatchAction extends MarkSheetDispatchAction {
     }
 
     public ActionForward updateMarkSheet(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         MarkSheetManagementEditBean editBean = getMarkSheetManagementEditBean();
         request.setAttribute("edit", editBean);
@@ -94,7 +94,7 @@ public class MarkSheetEditDispatchAction extends MarkSheetDispatchAction {
     }
 
     public ActionForward editMarkSheet(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         MarkSheetManagementEditBean editBean = getMarkSheetManagementEditBean();
 

@@ -36,7 +36,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ViewStudentTimeTable extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixActionException,  FenixServiceException {
+            throws FenixActionException, FenixServiceException {
 
         List<Registration> registrations = getUserView(request).getPerson().getStudent().getActiveRegistrations();
         if (registrations.size() == 1) {
@@ -48,19 +48,19 @@ public class ViewStudentTimeTable extends FenixDispatchAction {
     }
 
     public ActionForward showTimeTable(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException,  FenixServiceException {
+            HttpServletResponse response) throws FenixActionException, FenixServiceException {
 
         return forwardToShowTimeTable(getRegistration(actionForm, request), mapping, request);
     }
 
     protected ActionForward forwardToShowTimeTableForSupervisor(Registration registration, ActionMapping mapping,
-            HttpServletRequest request) throws FenixActionException,  FenixServiceException {
+            HttpServletRequest request) throws FenixActionException, FenixServiceException {
 
         return forwardToShowTimeTable(registration, mapping, request);
     }
 
     public static ActionForward forwardToShowTimeTable(Registration registration, ActionMapping mapping,
-            HttpServletRequest request) throws FenixActionException,  FenixServiceException {
+            HttpServletRequest request) throws FenixActionException, FenixServiceException {
 
         List<InfoLesson> infoLessons = ReadStudentTimeTable.run(registration);
 
@@ -71,9 +71,9 @@ public class ViewStudentTimeTable extends FenixDispatchAction {
     }
 
     private Registration getRegistration(final ActionForm form, final HttpServletRequest request) {
-        Integer registrationId = (Integer) ((DynaActionForm) form).get("registrationId");
+        String registrationId = (String) ((DynaActionForm) form).get("registrationId");
         if (registrationId == null && !StringUtils.isEmpty(request.getParameter("registrationId"))) {
-            registrationId = Integer.valueOf(request.getParameter("registrationId"));
+            registrationId = request.getParameter("registrationId");
         }
         return AbstractDomainObject.fromExternalId(registrationId);
     }

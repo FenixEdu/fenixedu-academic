@@ -232,7 +232,7 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
     private ExecutionDegree getSelectedExecutionDegree(final DynaActionForm form, final Registration registration,
             final ExecutionSemester executionSemester, final List<ExecutionDegree> executionDegrees) {
 
-        final Integer executionDegreeIdChosen = (Integer) form.get("degree");
+        final String executionDegreeIdChosen = (String) form.get("degree");
         final ExecutionDegree executionDegreeChosen = AbstractDomainObject.fromExternalId(executionDegreeIdChosen);
         if (executionDegreeChosen != null && executionDegreeChosen.getExecutionYear() == executionSemester.getExecutionYear()) {
             return executionDegreeChosen;

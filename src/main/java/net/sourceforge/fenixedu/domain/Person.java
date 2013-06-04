@@ -3637,7 +3637,7 @@ public class Person extends Person_Base {
         return professorships;
     }
 
-    public void updateResponsabilitiesFor(final String executionYearId, final List<Integer> executionCourses)
+    public void updateResponsabilitiesFor(final String executionYearId, final List<String> executionCourses)
             throws MaxResponsibleForExceed, InvalidCategory {
 
         if (executionYearId == null || executionCourses == null) {

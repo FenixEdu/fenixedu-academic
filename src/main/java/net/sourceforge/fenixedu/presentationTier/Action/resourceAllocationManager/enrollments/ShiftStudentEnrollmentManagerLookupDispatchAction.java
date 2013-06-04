@@ -107,7 +107,7 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
 
         final IUserView userView = getUserView(request);
         final DynaActionForm form = (DynaActionForm) actionForm;
-        final Integer executionCourseId = (Integer) form.get("wantedCourse");
+        final String executionCourseId = (String) form.get("wantedCourse");
 
         try {
             WriteStudentAttendingCourse.runWriteStudentAttendingCourse(registration, executionCourseId);
