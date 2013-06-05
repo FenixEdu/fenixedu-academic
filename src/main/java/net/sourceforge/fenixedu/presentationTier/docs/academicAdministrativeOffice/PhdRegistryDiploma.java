@@ -65,7 +65,7 @@ public class PhdRegistryDiploma extends RegistryDiploma {
 
         String thirdParagraph = getResourceBundle().getString("label.phd.registryDiploma.phdThirdParagraph");
 
-        String dateWord[] = getDateByWords(request.getConclusionDate(), getLocale().toLanguageTag());
+        String dateWord[] = getDateByWords(request.getConclusionDate());
 
         addParameter("thirdParagraph", MessageFormat.format(thirdParagraph, dateWord[0], dateWord[1], dateWord[2]));
 

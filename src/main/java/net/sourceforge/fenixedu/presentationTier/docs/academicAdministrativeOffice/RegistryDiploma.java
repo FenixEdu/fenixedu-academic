@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice;
 
 import java.text.MessageFormat;
-import java.util.Locale;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Person;
@@ -69,7 +68,7 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
         setSecondParagraph(person, request);
         String thirdParagraph = getResourceBundle().getString("label.phd.registryDiploma.thirdParagraph");
 
-        String dateWord[] = getDateByWords(request.getConclusionDate(), getLocale().toLanguageTag());
+        String dateWord[] = getDateByWords(request.getConclusionDate());
 
         addParameter("thirdParagraph", MessageFormat.format(thirdParagraph, dateWord[0], dateWord[1], dateWord[2]));
 
@@ -167,11 +166,11 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
         return result.toString();
     }
 
-    protected String[] getDateByWords(LocalDate date, String locale) {
+    protected String[] getDateByWords(LocalDate date) {
 
         String dayOrdinal = Integer.toString(date.getDayOfMonth()) + ".ordinal";
         String day = getEnumerationBundle().getString(dayOrdinal);
-        String month = date.toString("MMMM", new Locale(locale));
+        String month = date.toString("MMMM", getLocale());
         String year = getEnumerationBundle().getString(Integer.toString(date.getYear()));
         String finalDate[] = new String[] { day, month, year };
         return finalDate;
