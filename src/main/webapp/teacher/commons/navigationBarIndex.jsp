@@ -144,4 +144,11 @@
 			<li><html:link page="/caseHandlingMobilityApplicationProcess.do?method=intro"><bean:message key="link.coordinator.erasmus.application" bundle="APPLICATION_RESOURCES" /></html:link></li>
 		</logic:equal>
 	</logic:present>
+	<li class="navheader">
+		<bean:message key="label.teacher.dissertations"/>
+	</li>
+	<li>
+		<html:link page="/phdIndividualProgramProcess.do?method=manageProcesses">
+		<bean:message key="label.teacher.dissertations.view"/></html:link>
+	</li>
 </ul>

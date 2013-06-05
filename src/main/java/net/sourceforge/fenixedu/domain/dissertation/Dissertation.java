@@ -36,15 +36,17 @@ public class Dissertation extends Dissertation_Base {
     private MultiLanguageString dissertationAbstract = null;
     private Integer mark = null;
     
-   private List<DissertationCandidacy> candidacies = null;
+   private List<DissertationCandidacy> dissertationCandidacies = null;
    private List<Enrolment> enrolments = null;
    private List<Comment> comments = null;
    private List<Log> logs = null;
-   private List<DissertationState> dissertationStates = null;
+   private DissertationState dissertationState = null;
    private List<DissertationFile> dissertationFiles = null;
    private List<DissertationEvaluationParticipant> dissertationEvaluationParticipants = null;
    private List<Location> locations = null;
    private List<Scheduling> schedulings = null;
+   
+   private final static double CREDITS = 1;
    
 	public String getProposalNumber() {
 		return proposalNumber;
@@ -143,11 +145,11 @@ public class Dissertation extends Dissertation_Base {
 	public void setMark(Integer mark) {
 		this.mark = mark;
 	}
-	public List<DissertationCandidacy> getCandidacies() {
-		return candidacies;
+	public List<DissertationCandidacy> getDissertationCandidacies() {
+		return dissertationCandidacies;
 	}
-	public void setCandidacies(List<DissertationCandidacy> candidacies) {
-		this.candidacies = candidacies;
+	public void setCandidacies(List<DissertationCandidacy> dissertationCandidacies) {
+		this.dissertationCandidacies = dissertationCandidacies;
 	}
 	public List<Enrolment> getEnrolments() {
 		return enrolments;
@@ -167,11 +169,11 @@ public class Dissertation extends Dissertation_Base {
 	public void setLogs(List<Log> logs) {
 		this.logs = logs;
 	}
-	public List<DissertationState> getDissertationStates() {
-		return dissertationStates;
+	public DissertationState getDissertationState() {
+		return dissertationState;
 	}
-	public void setDissertationStates(List<DissertationState> dissertationStates) {
-		this.dissertationStates = dissertationStates;
+	public void setDissertationStates(DissertationState dissertationState) {
+		this.dissertationState = dissertationState;
 	}
 	public List<DissertationFile> getDissertationFiles() {
 		return dissertationFiles;
@@ -210,21 +212,21 @@ public class Dissertation extends Dissertation_Base {
 
     public void setOrientatorCreditsDistribution(Integer percent) {
         if (percent != null && (percent < 0 || percent > 100)) {
-            throw new DomainException("thesis.orietation.credits.notValid");
+            throw new DomainException(/*"thesis.orietation.credits.notValid"*/ "A IMPLEMENTAR NOS RESOURCES");
         }
 
         setOrientatorCreditsDistribution(percent);
     }
     
-    /*public Integer getCoorientatorCreditsDistribution() {
+    public Integer getCoorientatorCreditsDistribution() {
         Integer distribution = getOrientatorCreditsDistribution();
 
         return distribution != null ? 100 - distribution : null;
-    }*/
+    }
     
     public void setCoorientatorCreditsDistribution(Integer percent) {
         if (percent != null && (percent < 0 || percent > 100)) {
-            throw new DomainException("thesis.orietation.credits.notValid");
+            throw new DomainException(/*"thesis.orietation.credits.notValid"*/ "A IMPLEMENTAR NOS RESOURCES");
         }
 
         setOrientatorCreditsDistribution(percent != null ? 100 - percent : null);
@@ -250,5 +252,11 @@ public class Dissertation extends Dissertation_Base {
     
     public boolean isEvaluated() {
         return getDissertationState().getDissertationStateValue() == DissertationStateValue.EVALUATED;
+    }
+    
+    // the credits calculation always depends on the current credits' value for
+    // the thesis (no history)
+    public static double getCredits() {
+        return CREDITS;
     }
 }

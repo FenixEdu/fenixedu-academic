@@ -3202,6 +3202,7 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
 		DateTime proposalDiscussionDate;
 		MultiLanguageString thesisAbstract;
 		Integer mark;
+		Integer orientatorCreditsDistribution;
 	}
 	
 	class dissertation.DissertationEvaluationParticipant  {
@@ -20744,7 +20745,7 @@ relation DissertationDissertationCandidacy {
 	}
 }
 	
-relation DissertationCandidacyScheduling {
+relation SchedulingDissertationCandidacy {
 	dissertation.Scheduling playsRole scheduling {
 		multiplicity 1..1;
 	}
@@ -20787,4 +20788,18 @@ relation PreviousDissertationFile {
 	dissertation.DissertationFile playsRole previousDissertationFile {
 		multiplicity 1..1;
 	}
+}
+
+relation DissertationEvaluationParticipantRootDomainObject {
+    RootDomainObject playsRole rootDomainObject;
+    dissertation.DissertationEvaluationParticipant playsRole dissertationEvaluatioParticipant {
+        multiplicity *;
+    }
+}
+
+relation PersonDissertationEvaluationParticipant {
+    Person playsRole person;
+    dissertation.DissertationEvaluationParticipant playsRole dissertationEvaluationParticipants {
+        multiplicity *;
+    }
 }

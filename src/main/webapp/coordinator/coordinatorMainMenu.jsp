@@ -341,11 +341,12 @@
             </li>
         </logic:present>
 
-	        <li>
-		        <html:link target="_blank" href='<%= request.getContextPath() + "/publico/viewFinalDegreeWorkProposals.do" %>'>
-		        	<bean:message key="link.finalDegreeWork.proposal.listings" bundle="STUDENT_RESOURCES"/>
-		        </html:link>
-	        </li>
+	    <li>
+			<html:link target="_blank" href='<%= request.getContextPath() + "/publico/viewFinalDegreeWorkProposals.do" %>'>
+		    	<bean:message key="link.finalDegreeWork.proposal.listings" bundle="STUDENT_RESOURCES"/>
+		    </html:link>
+	    </li>
+		<li>
 		<li class="navheader">
 			<bean:message key="label.coordinator.logs"/>
 		</li>

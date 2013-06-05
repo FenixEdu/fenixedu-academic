@@ -1,11 +1,20 @@
 package net.sourceforge.fenixedu.domain.dissertation;
 
+import java.text.Collator;
+import java.util.Comparator;
+
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
+
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
+
 import dml.runtime.RelationAdapter;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 
 public class DissertationEvaluationParticipant extends DissertationEvaluationParticipant_Base {
@@ -14,9 +23,9 @@ public class DissertationEvaluationParticipant extends DissertationEvaluationPar
         super();
     }
     
-    /*private static KeepParticipationNumberAdapter KEEP_PARTICIPATION_NUMBER_ADAPTER = new KeepParticipationNumberAdapter();
+    private static KeepParticipationNumberAdapter KEEP_PARTICIPATION_NUMBER_ADAPTER = new KeepParticipationNumberAdapter();
     static {
-        DissertationHasParticipations.addListener(KEEP_PARTICIPATION_NUMBER_ADAPTER);
+    	DissertationDissertationEvaluationParticipant.addListener(KEEP_PARTICIPATION_NUMBER_ADAPTER);
     }
 
     public final static Comparator<DissertationEvaluationParticipant> COMPARATOR_BY_PERSON_NAME = new ComparatorChain();
@@ -25,8 +34,7 @@ public class DissertationEvaluationParticipant extends DissertationEvaluationPar
         ((ComparatorChain) COMPARATOR_BY_PERSON_NAME).addComparator(AbstractDomainObject.COMPARATOR_BY_ID);
     }
 
-    public final static Comparator<DissertationEvaluationParticipant> COMPARATOR_BY_STUDENT_NUMBER = new BeanComparator(
-            "thesis.student.number");
+	public final static Comparator<DissertationEvaluationParticipant> COMPARATOR_BY_STUDENT_NUMBER = new BeanComparator("dissertation.student.number");
 
     public DissertationEvaluationParticipant(Dissertation dissertation, Person person, DissertationParticipationType type) {
         super();
@@ -86,9 +94,9 @@ public class DissertationEvaluationParticipant extends DissertationEvaluationPar
 
     public double getParticipationCredits() {
         return Dissertation.getCredits() * getCreditsDistribution() / 100;
-    }*/
+    }
 
-    /*public double getCreditsDistribution() {
+    public double getCreditsDistribution() {
         Dissertation dissertation = getDissertation();
 
         if (!dissertation.hasCredits()) {
@@ -98,7 +106,7 @@ public class DissertationEvaluationParticipant extends DissertationEvaluationPar
         DissertationParticipationType type = this.getType();
 
         if (type.equals(DissertationParticipationType.ORIENTATOR)) {
-            /*if (dissertation.getOrientatorCreditsDistribution() != null) {
+            if (dissertation.getOrientatorCreditsDistribution() != null) {
                 return dissertation.getOrientatorCreditsDistribution();
             }
         }
@@ -107,26 +115,26 @@ public class DissertationEvaluationParticipant extends DissertationEvaluationPar
             if (dissertation.getCoorientatorCreditsDistribution() != null) {
                 return dissertation.getCoorientatorCreditsDistribution();
             }
-        }*/
+        }
 
-      /*  return 0.0;
-    }*/
+        return 0.0;
+    }
 
-    public void delete() {
-        //removeRootDomainObject();
-        //removePerson();
+	public void delete() {
+        removeRootDomainObject();
+        removePerson();
         removeDissertation();
         
 
         deleteDomainObject();
     }
 
-    /*@Override
+    @Override
     public void setType(DissertationParticipationType type) {
         super.setType(type);
 
         KEEP_PARTICIPATION_NUMBER_ADAPTER.changedType(this);
-    }*/
+    }
 
     public static class KeepParticipationNumberAdapter extends RelationAdapter<DissertationEvaluationParticipant, Dissertation> {
 
