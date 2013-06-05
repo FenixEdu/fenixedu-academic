@@ -185,10 +185,9 @@ public class InsertExercise extends FenixService {
             throws IOException {
         File[] filesInZip = unzipDir.listFiles();
         Arrays.sort(filesInZip);
-
         for (File file : filesInZip) {
             if (file.isDirectory()) {
-                recursiveZipProcess(file, dirBaseName, xmlListMap);
+                recursiveZipProcess(file, file.getName(), xmlListMap);
             } else {
                 FileInputStream is = new FileInputStream(file);
                 if (file.getName().endsWith("zip")) {
