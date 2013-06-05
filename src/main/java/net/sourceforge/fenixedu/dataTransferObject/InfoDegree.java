@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeInfo;
 import net.sourceforge.fenixedu.domain.GradeScale;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -56,15 +57,15 @@ public class InfoDegree extends InfoObject implements Comparable {
         return getDegree().isBolonhaDegree();
     }
 
-    public Enum getDegreeType() {
+    public DegreeType getDegreeType() {
         return getDegree().getDegreeType();
     }
 
-    public Enum getTipoCurso() {
+    public DegreeType getTipoCurso() {
         return getDegree().getDegreeType();
     }
 
-    public List getInfoDegreeCurricularPlans() {
+    public List<InfoDegreeCurricularPlan> getInfoDegreeCurricularPlans() {
         final List<InfoDegreeCurricularPlan> infoDegreeCurricularPlans = new ArrayList<InfoDegreeCurricularPlan>();
         for (final DegreeCurricularPlan degreeCurricularPlan : getDegree().getDegreeCurricularPlansSet()) {
             infoDegreeCurricularPlans.add(InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan));
@@ -78,7 +79,7 @@ public class InfoDegree extends InfoObject implements Comparable {
         return this.getNome().compareTo(degree.getNome());
     }
 
-    public List getInfoDegreeInfos() {
+    public List<InfoDegreeInfo> getInfoDegreeInfos() {
         final List<InfoDegreeInfo> infoDegreeInfos = new ArrayList<InfoDegreeInfo>();
         for (final DegreeInfo degreeInfo : getDegree().getDegreeInfosSet()) {
             infoDegreeInfos.add(InfoDegreeInfo.newInfoFromDomain(degreeInfo));

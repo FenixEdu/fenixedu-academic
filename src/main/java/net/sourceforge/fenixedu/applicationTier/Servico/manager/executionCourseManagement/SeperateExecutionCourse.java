@@ -1,11 +1,11 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.executionCourseManagement;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod;
 import net.sourceforge.fenixedu.applicationTier.utils.ExecutionCourseUtils;
 import net.sourceforge.fenixedu.domain.Attends;
@@ -16,8 +16,10 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -26,12 +28,20 @@ import org.apache.commons.collections.Transformer;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class SeperateExecutionCourse extends FenixService {
+public class SeperateExecutionCourse {
 
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
     public static ExecutionCourse run(final ExecutionCourse originExecutionCourse, ExecutionCourse destinationExecutionCourse,
             final List<Shift> shiftsToTransfer, final List<CurricularCourse> curricularCourseToTransfer) {
+
+        if (originExecutionCourse.hasAnyInquiryResults()) {
+            throw new DomainException("error.manager.executionCourseManagement.separateCourse.inqueriesPresent");
+        }
+
+        if (curricularCourseToTransfer == null || curricularCourseToTransfer.isEmpty()) {
+            throw new DomainException("error.selection.noCurricularCourse");
+        }
 
         if (destinationExecutionCourse == null) {
             destinationExecutionCourse = createNewExecutionCourse(originExecutionCourse);
@@ -56,6 +66,11 @@ public class SeperateExecutionCourse extends FenixService {
 
     private static void transferCurricularCourses(final ExecutionCourse originExecutionCourse,
             final ExecutionCourse destinationExecutionCourse, final List<CurricularCourse> curricularCoursesToTransfer) {
+        // The last curricular course must not be removed.
+        if (originExecutionCourse.getAssociatedCurricularCoursesCount() - curricularCoursesToTransfer.size() < 1) {
+            throw new DomainException("error.manager.executionCourseManagement.lastCurricularCourse");
+        }
+
         for (final CurricularCourse curricularCourse : curricularCoursesToTransfer) {
             originExecutionCourse.removeAssociatedCurricularCourses(curricularCourse);
             destinationExecutionCourse.addAssociatedCurricularCourses(curricularCourse);
@@ -185,6 +200,47 @@ public class SeperateExecutionCourse extends FenixService {
         }
 
         return false;
+    }
+
+    @Service
+    public static void run(Integer executionCourseId, Integer destinationExecutionCourseID, Integer[] shiftIdsToTransfer,
+            Integer[] curricularCourseIdsToTransfer) {
+
+        ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseId);
+        ExecutionCourse destinationExecutionCourse =
+                RootDomainObject.getInstance().readExecutionCourseByOID(destinationExecutionCourseID);
+        List<Shift> shiftsToTransfer = readShiftsOIDsToTransfer(shiftIdsToTransfer);
+        List<CurricularCourse> curricularCoursesToTransfer = readCurricularCoursesOIDsToTransfer(curricularCourseIdsToTransfer);
+
+        run(executionCourse, destinationExecutionCourse, shiftsToTransfer, curricularCoursesToTransfer);
+    }
+
+    private static List<Shift> readShiftsOIDsToTransfer(final Integer[] shiftIdsToTransfer) {
+        List<Shift> result = new ArrayList<Shift>();
+
+        if (shiftIdsToTransfer == null) {
+            return result;
+        }
+
+        for (Integer oid : shiftIdsToTransfer) {
+            result.add(RootDomainObject.getInstance().readShiftByOID(oid));
+        }
+
+        return result;
+    }
+
+    private static List<CurricularCourse> readCurricularCoursesOIDsToTransfer(final Integer[] curricularCourseIdsToTransfer) {
+        List<CurricularCourse> result = new ArrayList<CurricularCourse>();
+
+        if (curricularCourseIdsToTransfer == null) {
+            return result;
+        }
+
+        for (Integer oid : curricularCourseIdsToTransfer) {
+            result.add((CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(oid));
+        }
+
+        return result;
     }
 
 }

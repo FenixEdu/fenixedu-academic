@@ -100,7 +100,7 @@
 									</th>
 									<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.code" />
 									</th>
-									<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.underGraduate" />
+									<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.degreeCurricularPlan" />
 									</th>
 									<th class="listClasses-header">&nbsp;
 									</th>

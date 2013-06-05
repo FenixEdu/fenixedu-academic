@@ -194,6 +194,7 @@ public class InfoExecutionCourse extends InfoObject {
                 result.add(infoCurricularCourse);
             }
 
+            setFilteredAssociatedInfoCurricularCourses(result);
             return result;
         } else {
             return getFilteredAssociatedInfoCurricularCourses();

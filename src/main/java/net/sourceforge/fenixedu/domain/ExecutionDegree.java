@@ -721,7 +721,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
     }
 
     final public String getPresentationName() {
-        return getDegreeCurricularPlan().getPresentationName();
+        return getDegreeCurricularPlan().getPresentationName(getExecutionYear());
     }
 
     public String getDegreeName() {

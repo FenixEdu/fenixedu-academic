@@ -20,10 +20,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.PendingRequest;
 import net.sourceforge.fenixedu.presentationTier.util.HostRedirector;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -72,21 +72,26 @@ public class RequestUtils {
             @Override
             public Object transform(Object arg0) {
                 InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) arg0;
-                InfoDegreeCurricularPlan infoDegreeCurricularPlan = infoExecutionDegree.getInfoDegreeCurricularPlan();
-                InfoDegree infoDegree = infoDegreeCurricularPlan.getInfoDegree();
-
+                //InfoDegreeCurricularPlan infoDegreeCurricularPlan = infoExecutionDegree.getInfoDegreeCurricularPlan();
+                //InfoDegree infoDegree = infoDegreeCurricularPlan.getInfoDegree();
+                /*
+                TODO: DUPLICATE check really needed?
                 StringBuilder label = new StringBuilder();
                 label.append(infoDegree.getDegreeType().toString());
-                label.append(" em ");
+                label.append(" " + BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.in") + " ");
                 label.append(infoDegree.getNome());
                 if (((Boolean) duplicateDegreesMap.get(infoDegree.getNome())).booleanValue()) {
                     label.append(" - ");
                     label.append(infoDegreeCurricularPlan.getName());
-                }
+                }*/
+
+                String label =
+                        infoExecutionDegree.getInfoDegreeCurricularPlan().getDegreeCurricularPlan()
+                                .getPresentationName(infoExecutionDegree.getInfoExecutionYear().getExecutionYear());
 
                 String value = infoExecutionDegree.getIdInternal().toString();
 
-                return new LabelValueBean(label.toString(), value);
+                return new LabelValueBean(label, value);
             }
 
         });
@@ -97,14 +102,20 @@ public class RequestUtils {
         return lableValueList;
     }
 
-    public static final List buildCurricularYearLabelValueBean() {
-        final List curricularYears = new ArrayList();
-        curricularYears.add(new LabelValueBean("escolher", ""));
-        curricularYears.add(new LabelValueBean("1 º", "1"));
-        curricularYears.add(new LabelValueBean("2 º", "2"));
-        curricularYears.add(new LabelValueBean("3 º", "3"));
-        curricularYears.add(new LabelValueBean("4 º", "4"));
-        curricularYears.add(new LabelValueBean("5 º", "5"));
+    public static final List<LabelValueBean> buildCurricularYearLabelValueBean() {
+        final List<LabelValueBean> curricularYears = new ArrayList<LabelValueBean>();
+        curricularYears.add(new LabelValueBean(BundleUtil.getStringFromResourceBundle("resources.RendererResources",
+                "renderers.menu.default.title"), ""));
+        curricularYears.add(new LabelValueBean(BundleUtil.getStringFromResourceBundle("resources.EnumerationResources",
+                "1.ordinal.short"), "1"));
+        curricularYears.add(new LabelValueBean(BundleUtil.getStringFromResourceBundle("resources.EnumerationResources",
+                "2.ordinal.short"), "2"));
+        curricularYears.add(new LabelValueBean(BundleUtil.getStringFromResourceBundle("resources.EnumerationResources",
+                "3.ordinal.short"), "3"));
+        curricularYears.add(new LabelValueBean(BundleUtil.getStringFromResourceBundle("resources.EnumerationResources",
+                "4.ordinal.short"), "4"));
+        curricularYears.add(new LabelValueBean(BundleUtil.getStringFromResourceBundle("resources.EnumerationResources",
+                "5.ordinal.short"), "5"));
         return curricularYears;
     }
 

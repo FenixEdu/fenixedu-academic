@@ -95,7 +95,6 @@ public class ExecutionCourseBean implements Serializable, HasExecutionSemester, 
         List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
         if (this.chooseNotLinked) {
             result = this.getExecutionSemester().getExecutionCoursesWithNoCurricularCourses();
-            Collections.sort(result, ExecutionCourse.EXECUTION_COURSE_NAME_COMPARATOR);
         } else {
             for (final CurricularCourse curricularCourse : getDegreeCurricularPlan().getCurricularCourses(getExecutionSemester())) {
                 if (curricularCourse.hasScopeInGivenSemesterAndCurricularYearInDCP(getCurricularYear(),
@@ -104,6 +103,7 @@ public class ExecutionCourseBean implements Serializable, HasExecutionSemester, 
                 }
             }
         }
+        Collections.sort(result, ExecutionCourse.EXECUTION_COURSE_NAME_COMPARATOR);
         return result;
     }
 

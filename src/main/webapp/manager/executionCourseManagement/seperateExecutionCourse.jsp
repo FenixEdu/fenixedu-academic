@@ -9,7 +9,25 @@
 	<bean:message bundle="MANAGER_RESOURCES" key="title.manager.executionCourseManagement.seperate.executionCourse"/>
 </h2>
 
+<logic:messagesPresent message="true" property="success">
+	<p>
+		<span class="success0">
+			<html:messages id="messages" message="true" bundle="MANAGER_RESOURCES" property="success">
+				<bean:write name="messages" />
+			</html:messages>
+		</span>
+	</p>
+</logic:messagesPresent>
 <span class="error"><!-- Error messages go here --><html:errors /></span>
+<logic:messagesPresent message="true" property="error">
+	<p>
+		<span class="error0">
+			<html:messages id="messages" message="true" bundle="MANAGER_RESOURCES" property="error">
+				<bean:write name="messages" />
+			</html:messages>
+		</span>
+	</p>
+</logic:messagesPresent>
 
 <logic:present name="infoExecutionCourse">
 	<bean:define id="executionCourseID" name="infoExecutionCourse" property="idInternal"/>
@@ -25,6 +43,7 @@
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseId" property="executionCourseId" value="<%= pageContext.findAttribute("executionCourseID").toString() %>"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.curricularYearId" property="curricularYearId" value="<%= pageContext.findAttribute("curricularYearId").toString()%>"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.originExecutionDegreeID" property="originExecutionDegreeID" value="<%= pageContext.findAttribute("originExecutionDegreeID").toString()%>"/>
+
 		<bean:message bundle="MANAGER_RESOURCES" key="executionDegree.destination"/>:<br />
 		<html:select bundle="HTMLALT_RESOURCES" altKey="select.destinationExecutionDegreeId" property="destinationExecutionDegreeId" size="1"
 				onchange="this.form.method.value='changeDestinationContext'; this.form.submit();">
@@ -59,16 +78,19 @@
 
 		<br />
 		<br />
-		<bean:message bundle="MANAGER_RESOURCES" key="curricularCourses.toTransfer"/>:<br />
+		<strong><bean:message bundle="MANAGER_RESOURCES" key="curricularCourses.toTransfer"/>:</strong><br />
+		<logic:notEmpty name="infoExecutionCourse" property="associatedInfoCurricularCourses">
 		<table>
 			<tr>
+				<th class="listClasses-header"></th>
 				<th class="listClasses-header">
+					<bean:message key="label.manager.executionCourseManagement.curricularCourse" bundle="MANAGER_RESOURCES" />
 				</th>
 				<th class="listClasses-header">
+					<bean:message key="label.manager.executionCourseManagement.code" bundle="MANAGER_RESOURCES" />
 				</th>
 				<th class="listClasses-header">
-				</th>
-				<th class="listClasses-header">
+					<bean:message key="label.manager.executionCourseManagement.degreeCurricularPlan" bundle="MANAGER_RESOURCES" />
 				</th>
 			</tr>
 			<logic:iterate id="infoCurricularCourse" name="infoExecutionCourse" property="associatedInfoCurricularCourses">
@@ -90,19 +112,28 @@
 				</tr>
 			</logic:iterate>
 		</table>
+		</logic:notEmpty>
+		<logic:empty name="infoExecutionCourse" property="associatedInfoCurricularCourses">
+			(<bean:message key="message.manager.executionCourseManagement.noCurricularCourses.this" bundle="MANAGER_RESOURCES"/>)
+			<br/>
+			<br/>
+		</logic:empty>
 
 		<br />
 		<br />
-		<bean:message bundle="MANAGER_RESOURCES" key="shifts.toTransfer"/>:<br />
+		<strong><bean:message bundle="MANAGER_RESOURCES" key="shifts.toTransfer"/>:</strong><br />
+		<logic:notEmpty name="infoExecutionCourse" property="associatedInfoShifts">
 		<table>
 			<tr>
+				<th class="listClasses-header"></th>
 				<th class="listClasses-header">
+					<bean:message key="label.manager.executionCourseManagement.shifts.name" bundle="MANAGER_RESOURCES" />
 				</th>
 				<th class="listClasses-header">
+					<bean:message key="label.manager.executionCourseManagement.shifts.type" bundle="MANAGER_RESOURCES" />
 				</th>
 				<th class="listClasses-header">
-				</th>
-				<th class="listClasses-header">
+					<bean:message key="label.manager.executionCourseManagement.shifts.roomAndDateTime" bundle="MANAGER_RESOURCES" />
 				</th>
 			</tr>
 			<logic:iterate id="infoShift" name="infoExecutionCourse" property="associatedInfoShifts">
@@ -138,11 +169,19 @@
 				</tr>
 			</logic:iterate>
 		</table>
+		</logic:notEmpty>
+		<logic:empty name="infoExecutionCourse" property="associatedInfoShifts">
+			(<bean:message key="message.manager.executionCourseManagement.noShifts.this" bundle="MANAGER_RESOURCES"/>)
+			<br/>
+			<br/>
+		</logic:empty>
 
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
+		<bean:define id="transferConfirm">
+			return confirm('<bean:message bundle="MANAGER_RESOURCES" key="message.manager.executionCourseManagement.separate.confirm"/>')
+		</bean:define>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick="<%= transferConfirm %>">
 			<bean:message bundle="MANAGER_RESOURCES" key="button.transfer"/>
 		</html:submit>
 
 	</html:form>
-
 </logic:present>
