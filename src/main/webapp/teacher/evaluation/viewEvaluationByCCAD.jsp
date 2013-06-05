@@ -91,8 +91,7 @@
 
 		<logic:notEqual name="process" property="readyForCCADConsideration" value="true">
 		<logic:equal name="process" property="autoEvaluationLocked" value="true">
-			<p class="mbottom05"><strong><fr:view name="process" property="type" layout="null-as-label" /> (<fr:view
-				name="process" property="facultyEvaluationProcess.title" />)</strong></p>
+			<p class="mbottom05"><strong><fr:view name="process" property="type" layout="null-as-label" /> (<fr:view name="process" property="facultyEvaluationProcess.title" />)</strong></p>
 			<logic:notEmpty name="process" property="teacherEvaluationFileBeanSet">
 				<bean:define id="externalId" name="process" property="externalId" />
 				<fr:view name="process" property="teacherEvaluationFileBeanSet">
@@ -166,8 +165,7 @@
 		</div>
 
 	<logic:present name="process" property="currentTeacherEvaluation">
-		<p class="mbottom05"><strong><fr:view name="process" property="type" layout="null-as-label" /> (<fr:view
-			name="process" property="facultyEvaluationProcess.title" />)</strong></p>
+		<p class="mbottom05"><strong><fr:view name="process" property="type" layout="null-as-label" /> (<fr:view name="process" property="facultyEvaluationProcess.title" />)</strong></p>
 
 		<logic:notEmpty name="process" property="teacherAutoEvaluationFileBeanSet">
 			<bean:define id="externalId" name="process" property="externalId" />
@@ -204,10 +202,11 @@
 
 <% } %>
 <logic:equal name="process" property="readyForCCADConsideration" value="true">
+	<logic:notEmpty name="process" property="teacherEvaluationFileBeanSet">
+	<logic:present name="process" property="type">
 	<p class="mbottom05"><strong><fr:view name="process" property="type" layout="null-as-label" /> (<fr:view
 		name="process" property="facultyEvaluationProcess.title" />)</strong></p>
-
-	<logic:notEmpty name="process" property="teacherEvaluationFileBeanSet">
+	</logic:present>
 		<bean:define id="externalId" name="process" property="externalId" />
 		<fr:view name="process" property="teacherEvaluationFileBeanSet">
 			<fr:schema bundle="RESEARCHER_RESOURCES"
