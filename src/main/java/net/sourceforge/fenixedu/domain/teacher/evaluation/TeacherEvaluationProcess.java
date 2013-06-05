@@ -104,7 +104,7 @@ public class TeacherEvaluationProcess extends TeacherEvaluationProcess_Base {
 
     public boolean isInEvaluation() {
         return isInEvaluationInterval() && isAutoEvaluationLocked() && !isEvaluationLocked()
-                && getEvaluator().equals(AccessControl.getPerson());
+                && (getEvaluator().equals(AccessControl.getPerson()) || AccessControl.getPerson().isTeacherEvaluationCoordinatorCouncilMember());
     }
 
     public boolean isPossibleToInsertApprovedMark() {
@@ -118,11 +118,11 @@ public class TeacherEvaluationProcess extends TeacherEvaluationProcess_Base {
     }
 
     public boolean isPossibleToLockEvaluation() {
-        return getEvaluationMark() != null && hasAllNeededFiles() && getEvaluator().equals(AccessControl.getPerson());
+        return getEvaluationMark() != null && hasAllNeededFiles() && (getEvaluator().equals(AccessControl.getPerson()) || AccessControl.getPerson().isTeacherEvaluationCoordinatorCouncilMember());
     }
 
     public boolean isPossibleToViewEvaluation() {
-        return isPossibleToInsertApprovedMark() || getEvaluator().equals(AccessControl.getPerson());
+        return isPossibleToInsertApprovedMark() || getEvaluator().equals(AccessControl.getPerson()) || AccessControl.getPerson().isTeacherEvaluationCoordinatorCouncilMember();
     }
 
     public boolean isPossibleToUnlockAutoEvaluation() {

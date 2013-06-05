@@ -103,7 +103,11 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
     public ActionForward insertEvaluationMark(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         TeacherEvaluationProcess process = getDomainObject(request, "process");
-        request.setAttribute("action", "viewEvaluation&evalueeOID=" + process.getEvaluee().getExternalId());
+        if (process.getEvaluator() != AccessControl.getPerson() && AccessControl.getPerson().isTeacherEvaluationCoordinatorCouncilMember()) {
+            request.setAttribute("action", "viewEvaluationByCCAD&processId=" + process.getExternalId());
+        } else {
+            request.setAttribute("action", "viewEvaluation&evalueeOID=" + process.getEvaluee().getExternalId());
+        }
         request.setAttribute("process", process);
         request.setAttribute("slot", "evaluationMark");
         return mapping.findForward("insertEvaluationMark");
@@ -136,7 +140,14 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         TeacherEvaluationProcess process = getDomainObject(request, "process");
         process.getCurrentTeacherEvaluation().lickEvaluationStamp();
-        return viewEvaluation(mapping, request, process.getEvaluee());
+        if ((AccessControl.getPerson().isTeacherEvaluationCoordinatorCouncilMember() || AccessControl.getPerson().hasRole(
+                RoleType.MANAGER))
+                && process.getEvaluee() != AccessControl.getPerson()) {
+            request.setAttribute("process", process);
+            return mapping.findForward("viewEvaluationByCCAD");
+        } else {
+            return viewEvaluation(mapping, request, process.getEvaluee());
+        }
     }
 
     public ActionForward unlockAutoEvaluation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -220,7 +231,12 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
     public ActionForward prepareUploadEvaluationFile(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         prepareUploadFile(request);
-        request.setAttribute("backAction", "viewEvaluation");
+        final String param = request.getParameter("backAction");
+        if (param == null || param.isEmpty()) {
+            request.setAttribute("backAction", "viewEvaluation");
+        } else {
+            request.setAttribute("backAction", param);
+        }
         return mapping.findForward("uploadEvaluationFile");
     }
 
