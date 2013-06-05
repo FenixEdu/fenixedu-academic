@@ -46,7 +46,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
         @Forward(name = "site-section-adviseLogin-UnitSite", path = "basicUnit-section-adviseLogin"),
         @Forward(name = "viewItem-ResearchUnitSite", path = "view-researchUnit-item"),
         @Forward(name = "viewSection-ExecutionCourseSite", path = "execution-course-section"),
-        @Forward(name = "site-section-deny-ResearchUnitSite", path = "researchUnit-section-deny"),
+        @Forward(name = "site-section-deny-ResearchUnitSite", path = "view-researchUnit-section-deny"),
         @Forward(name = "site-section-deny-ScientificCouncilSite", path = "scientificCouncil-section-deny"),
         @Forward(name = "site-section-adviseLogin-EdamSite", path = "basicUnit-section-adviseLogin"),
         @Forward(name = "viewSection-TutorSite", path = "basicUnit-section"),
