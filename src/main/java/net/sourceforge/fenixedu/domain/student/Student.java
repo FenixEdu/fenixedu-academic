@@ -18,7 +18,6 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.applicationTier.utils.GeneratePasswordBase;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.CurricularCourseInquiriesRegistryDTO;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
@@ -1805,7 +1804,7 @@ public class Student extends Student_Base {
     public boolean hasAnyMissingPersonalInformation() {
         ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
         for (final Registration registration : getRegistrations()) {
-            if (isValidRegistrationForRAIDES(registration) && registration.hasMissingPersonalInformation(currentExecutionYear)) {
+            if (registration.isValidForRAIDES() && registration.hasMissingPersonalInformation(currentExecutionYear)) {
                 return true;
             }
         }
@@ -1816,11 +1815,6 @@ public class Student extends Student_Base {
             }
         }
         return false;
-    }
-
-    public boolean isValidRegistrationForRAIDES(Registration registration) {
-        return registration.isActive() && !registration.getDegreeType().isEmpty() && registration.isBolonha()
-                && !RegistrationAgreement.MOBILITY_AGREEMENTS.contains(registration.getRegistrationAgreement());
     }
 
     public boolean isValidAndActivePhdProcess(PhdIndividualProgramProcess phdProcess) {
@@ -1837,7 +1831,7 @@ public class Student extends Student_Base {
         ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
 
         for (final Registration registration : getRegistrations()) {
-            if (isValidRegistrationForRAIDES(registration) && registration.hasMissingPersonalInformation(currentExecutionYear)) {
+            if (registration.isValidForRAIDES() && registration.hasMissingPersonalInformation(currentExecutionYear)) {
                 result.add(registration.getPersonalInformationBean(currentExecutionYear));
             }
         }

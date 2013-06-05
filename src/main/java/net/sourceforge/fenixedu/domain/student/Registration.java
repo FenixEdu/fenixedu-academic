@@ -152,6 +152,12 @@ public class Registration extends Registration_Base {
         COMPARATOR_BY_NUMBER_AND_ID.addComparator(COMPARATOR_BY_ID);
     }
 
+    private static final List<RegistrationAgreement> RAIDES_MOBILITY = Arrays.asList(RegistrationAgreement.ALMEIDA_GARRETT,
+            RegistrationAgreement.BILATERAL_AGREEMENT, RegistrationAgreement.ERASMUS, RegistrationAgreement.SOCRATES_ERASMUS,
+            RegistrationAgreement.SMILE, RegistrationAgreement.IST_USP, RegistrationAgreement.BRAZIL_AGREEMENTS,
+            RegistrationAgreement.SCIENCE_WITHOUT_BORDERS, RegistrationAgreement.RUSSIA_AGREEMENTS,
+            RegistrationAgreement.IBERO_SANTANDER, RegistrationAgreement.TECMIC, RegistrationAgreement.INOV_IST);
+
     private transient Double approvationRatio;
 
     private transient Double arithmeticMean;
@@ -4105,5 +4111,9 @@ public class Registration extends Registration_Base {
             }
         }
         return false;
+    }
+
+    public boolean isValidForRAIDES() {
+        return isActive() && isBolonha() && !getDegreeType().isEmpty() && !RAIDES_MOBILITY.contains(getRegistrationAgreement());
     }
 }
