@@ -411,7 +411,13 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
     private boolean validateProcessDocuments(final HttpServletRequest request, final PhdIndividualProgramProcess process) {
         boolean result = true;
 
-        BigDecimal numberOfDocumentsToSubmit = new BigDecimal(5 + process.getQualifications().size());
+        boolean hasPaymentFees = process.getCandidacyProcess().hasPaymentCodeToPay();
+        request.setAttribute("hasPaymentFees", hasPaymentFees);
+        int totalDocuments = 5; //with payment fees
+        if (!hasPaymentFees) {
+            totalDocuments = 4;
+        }
+        BigDecimal numberOfDocumentsToSubmit = new BigDecimal(totalDocuments + process.getQualifications().size());
         BigDecimal numberOfDocumentsSubmitted = new BigDecimal(0);
 
         if (!process.hasCandidacyProcessDocument(PhdIndividualProgramDocumentType.ID_DOCUMENT)) {
@@ -422,11 +428,13 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
             numberOfDocumentsSubmitted = numberOfDocumentsSubmitted.add(new BigDecimal(1));
         }
 
-        if (!process.hasCandidacyProcessDocument(PhdIndividualProgramDocumentType.PAYMENT_DOCUMENT)) {
-            addValidationMessage(request, "message.validation.missing.payment.document");
-            result &= false;
-        } else {
-            numberOfDocumentsSubmitted = numberOfDocumentsSubmitted.add(new BigDecimal(1));
+        if (hasPaymentFees) {
+            if (!process.hasCandidacyProcessDocument(PhdIndividualProgramDocumentType.PAYMENT_DOCUMENT)) {
+                addValidationMessage(request, "message.validation.missing.payment.document");
+                result &= false;
+            } else {
+                numberOfDocumentsSubmitted = numberOfDocumentsSubmitted.add(new BigDecimal(1));
+            }
         }
 
         if (!process.hasCandidacyProcessDocument(PhdIndividualProgramDocumentType.SOCIAL_SECURITY)) {
@@ -676,6 +684,7 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
 
         request.setAttribute("candidacyBean", bean);
         request.setAttribute("candidacyProcessDocuments", process.getLatestDocumentVersions());
+        request.setAttribute("hasPaymentFees", process.hasPaymentCodeToPay());
 
         final PhdProgramDocumentUploadBean uploadBean = new PhdProgramDocumentUploadBean();
         uploadBean.setIndividualProgramProcess(process.getIndividualProgramProcess());

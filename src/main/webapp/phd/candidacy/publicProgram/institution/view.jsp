@@ -296,25 +296,27 @@ max-width: 231px;
 </logic:equal>
 
 <%--  ### Payment details ### --%>
-<h2 style="margin-top: 1.5em;"><bean:message key="title.phd.public.candidacy.payment.details" bundle="PHD_RESOURCES"/> </h2>
-
-<logic:notEmpty name="process" property="associatedPaymentCode">
-<p> <bean:message key="message.phd.institution.application.sibs.payment.details" bundle="PHD_RESOURCES" /></p>
-<table>
-	<tr>
-		<td><strong><bean:message key="label.sibs.entity.code" bundle="CANDIDATE_RESOURCES"/>:</strong></td>
-		<td><bean:write name="sibsEntityCode"/></td>
-	</tr>
-	<tr>
-		<td><strong><bean:message key="label.sibs.payment.code" bundle="CANDIDATE_RESOURCES"/>:</strong></td>
-		<td><fr:view name="process" property="associatedPaymentCode.formattedCode"/></td>
-	</tr>
-	<tr>
-		<td><strong><bean:message key="label.sibs.amount" bundle="CANDIDATE_RESOURCES"/>:</strong></td>
-		<td><fr:view name="process" property="associatedPaymentCode.minAmount"/> &euro;</td>
-	</tr>
-</table>
-</logic:notEmpty>
+<logic:equal value="true" name="hasPaymentFees">
+	<h2 style="margin-top: 1.5em;"><bean:message key="title.phd.public.candidacy.payment.details" bundle="PHD_RESOURCES"/> </h2>
+	
+	<logic:notEmpty name="process" property="associatedPaymentCode">
+	<p> <bean:message key="message.phd.institution.application.sibs.payment.details" bundle="PHD_RESOURCES" /></p>
+	<table>
+		<tr>
+			<td><strong><bean:message key="label.sibs.entity.code" bundle="CANDIDATE_RESOURCES"/>:</strong></td>
+			<td><bean:write name="sibsEntityCode"/></td>
+		</tr>
+		<tr>
+			<td><strong><bean:message key="label.sibs.payment.code" bundle="CANDIDATE_RESOURCES"/>:</strong></td>
+			<td><fr:view name="process" property="associatedPaymentCode.formattedCode"/></td>
+		</tr>
+		<tr>
+			<td><strong><bean:message key="label.sibs.amount" bundle="CANDIDATE_RESOURCES"/>:</strong></td>
+			<td><fr:view name="process" property="associatedPaymentCode.minAmount"/> &euro;</td>
+		</tr>
+	</table>
+	</logic:notEmpty>
+</logic:equal>
 
 <%--  ### Phd Supervisors ### --%>
 <h2 style="margin-top: 1.5em;"><bean:message key="title.public.phd.guidings" bundle="PHD_RESOURCES"/> <span style="font-weight: normal; font-size: 13px; color: #777;">(<bean:message key="title.public.phd.if.applicable" bundle="PHD_RESOURCES"/>)</span></h2>

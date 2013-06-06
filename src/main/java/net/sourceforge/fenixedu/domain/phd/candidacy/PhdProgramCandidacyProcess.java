@@ -205,6 +205,14 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
         return getEvent().getAssociatedPaymentCode();
     }
 
+    public boolean hasPaymentCodeToPay() {
+        if (!hasEvent()) {
+            return false;
+        }
+        return getEvent().getAssociatedPaymentCode().getMinAmount().isPositive()
+                && getEvent().getAssociatedPaymentCode().getMaxAmount().isPositive();
+    }
+
     private void checkCandidacyDate(ExecutionYear executionYear, LocalDate candidacyDate) {
         // TODO: check this - in august candidacy dates will not be contained in
         // given execution year
