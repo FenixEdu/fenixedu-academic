@@ -52,8 +52,12 @@
 	<h:form>
 		<h:outputText escape="false" value="<input alt='input.competenceCourseID' id='competenceCourseID' name='competenceCourseID' type='hidden' value='#{CompetenceCourseManagement.competenceCourseID}'/>"/>
 		<h:outputText escape="false" value="<input alt='input.selectedDepartmentUnitID' id='selectedDepartmentUnitID' name='selectedDepartmentUnitID' type='hidden' value='#{CompetenceCourseManagement.selectedDepartmentUnitID}'/>"/>
+		
+		<fc:selectOneMenu value="#{CompetenceCourseManagement.executionSemesterID}" onchange="submit()">
+			<f:selectItems binding="#{CompetenceCourseManagement.competenceCourseExecutionSemesters}"/>
+		</fc:selectOneMenu>
 	</h:form>
-	
+
 	<h:outputText value="<h2 class='arrow_bullet'>#{bolonhaBundle['area']}</h2>" escape="false"/>
 	<fc:dataRepeater value="#{CompetenceCourseManagement.competenceCourse.competenceCourseGroupUnit.parentUnits}" var="scientificAreaUnit">
 		<h:outputText value="<p style='margin-left: 0px;'>#{scientificAreaUnit.name} > #{CompetenceCourseManagement.competenceCourse.competenceCourseGroupUnit.name}</p>" escape="false"/>
