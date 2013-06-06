@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.contents.FunctionalityCall;
 import net.sourceforge.fenixedu.domain.contents.InvalidContentPathException;
 import net.sourceforge.fenixedu.domain.contents.MetaDomainObjectPortal;
 import net.sourceforge.fenixedu.domain.contents.Portal;
+import net.sourceforge.fenixedu.domain.contents.Redirect;
 import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
 import net.sourceforge.fenixedu.domain.functionalities.Functionality;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
@@ -237,6 +238,9 @@ public class FilterFunctionalityContext extends AbstractFunctionalityContext {
                 hasContentJump = true;
             }
             if (content instanceof Site && hasContentJump) {
+                continue;
+            }
+            if (content instanceof Redirect) {
                 continue;
             }
             if (content != RootDomainObject.getInstance().getRootPortal()) {
