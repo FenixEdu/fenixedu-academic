@@ -14,6 +14,8 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PhotoState;
 import net.sourceforge.fenixedu.domain.Photograph;
+import net.sourceforge.fenixedu.domain.accounting.EventType;
+import net.sourceforge.fenixedu.domain.accounting.PostingRule;
 import net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.IndividualCandidacyPaymentCode;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
@@ -28,6 +30,7 @@ import net.sourceforge.fenixedu.domain.phd.PhdProgram;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramFocusArea;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
+import net.sourceforge.fenixedu.domain.phd.PhdProgramServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdFinalProofRequestAlert;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdPublicPresentationSeminarAlert;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdRegistrationFormalizationAlert;
@@ -145,7 +148,9 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
         if (!isMigratedProcess) {
             if (!bean.hasCollaborationType() || bean.getCollaborationType().generateCandidacyDebt()) {
-                new PhdProgramCandidacyEvent(person, this);
+                if (hasPaymentFees(EventType.CANDIDACY_ENROLMENT)) {
+                    new PhdProgramCandidacyEvent(person, this);
+                }
             }
         }
 
@@ -157,6 +162,23 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
             setPublicPhdCandidacyPeriod(bean.getPhdCandidacyPeriod());
         }
 
+    }
+
+    private boolean hasPaymentFees(final EventType candidacyEnrolmentEventType) {
+        final PhdProgramServiceAgreementTemplate serviceAgreementTemplate = getPhdProgram().getServiceAgreementTemplate();
+        for (final PostingRule postingRule : serviceAgreementTemplate.getAllPostingRulesFor(candidacyEnrolmentEventType)) {
+            if (postingRule.isActive()) {
+                if (postingRule instanceof PhdProgramCandidacyPR) {
+                    final PhdProgramCandidacyPR phdProgramCandidacyPR = (PhdProgramCandidacyPR) postingRule;
+                    if (phdProgramCandidacyPR.getFixedAmount().isPositive()) {
+                        return true;
+                    }
+                } else {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public static boolean hasOnlineApplicationForPeriod(final Person person, PhdCandidacyPeriod phdCandidacyPeriod) {
