@@ -300,16 +300,19 @@ public class AdministrativeOfficeDocument extends FenixReport {
     }
 
     protected void setNationality(final Person person) {
-        StringBuilder builder = new StringBuilder();
+        /*StringBuilder builder = new StringBuilder();
         builder.append(getResourceBundle().getString("label.and")).append(SINGLE_SPACE);
         builder.append(getResourceBundle().getString("documents.nationality.one"));
-        final String nationality = person.getCountry().getFilteredNationality(getLocale());
-        builder.append(SINGLE_SPACE).append(nationality.toUpperCase()).append(SINGLE_SPACE);
+        */
+        final String nationality = person.getCountry().getFilteredNationality(getLocale()).toUpperCase();
+        // builder.append(SINGLE_SPACE).append(nationality.toUpperCase()).append(SINGLE_SPACE);
+        String labelNationality = getResourceBundle().getString("message.documents.nationality");
 
+        String nationalityMessage = MessageFormat.format(labelNationality, nationality);
         if (getDocumentRequest().getDocumentRequestType().equals(DocumentRequestType.APPROVEMENT_MOBILITY_CERTIFICATE)) {
-            addParameter("nationality", builder.toString());
+            addParameter("nationality", nationalityMessage);
         } else {
-            addParameter("nationality", StringUtils.multipleLineRightPad(builder.toString(), LINE_LENGTH, END_CHAR));
+            addParameter("nationality", StringUtils.multipleLineRightPad(nationalityMessage, LINE_LENGTH, END_CHAR));
         }
     }
 

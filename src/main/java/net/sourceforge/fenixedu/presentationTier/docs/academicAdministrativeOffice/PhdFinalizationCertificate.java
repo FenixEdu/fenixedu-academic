@@ -1,22 +1,21 @@
 package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice;
 
+import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicServiceRequestEvent;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.phd.PhdFinalizationCertificateRequestPR;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
-import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.serviceRequests.documentRequests.certificates.PhdFinalizationCertificateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
 import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.StringUtils;
-
-import org.joda.time.LocalDate;
-
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class PhdFinalizationCertificate extends AdministrativeOfficeDocument {
@@ -100,19 +99,82 @@ public class PhdFinalizationCertificate extends AdministrativeOfficeDocument {
     @Override
     protected void fillReport() {
         super.fillReport();
+        Unit adminOfficeUnit = getAdministrativeOffice().getUnit();
+        Person coordinator = adminOfficeUnit.getActiveUnitCoordinator();
+
+        String institutionName = getMLSTextContent(RootDomainObject.getInstance().getInstitutionUnit().getPartyName());
+        String coordinatorTitle;
+        if (coordinator.isMale()) {
+            coordinatorTitle = getResourceBundle().getString("label.academicDocument.declaration.maleCoordinator");
+        } else {
+            coordinatorTitle = getResourceBundle().getString("label.academicDocument.declaration.femaleCoordinator");
+        }
+
+        fillFirstParagraph(coordinator, adminOfficeUnit, coordinatorTitle);
 
         addPersonalInfo();
-
+        setFooter(getDocumentRequest(), true);
         addProgrammeInfo();
+        setEmployeeFields(institutionName, adminOfficeUnit);
+
+    }
+
+    private void setFooter(PhdFinalizationCertificateRequest documentRequest, boolean checked) {
+
+        PhdIndividualProgramProcess phdIndividualProgramProcess = getDocumentRequest().getPhdIndividualProgramProcess();
+        String student;
+
+        if (phdIndividualProgramProcess.getStudent().getPerson().isMale()) {
+            student = getResourceBundle().getString("label.academicDocument.declaration.maleStudent");
+        } else {
+            student = getResourceBundle().getString("label.academicDocument.declaration.femaleStudent");
+        }
+        StringBuilder studentNumber = new StringBuilder();
+        String stringTemplate = getResourceBundle().getString("label.academicDocument.declaration.footer.studentNumber");
+        studentNumber.append(MessageFormat.format(stringTemplate, student, phdIndividualProgramProcess.getStudent().getNumber()
+                .toString()));
+        studentNumber.append("/D");
+        addParameter("studentNumber", studentNumber.toString());
+
+        StringBuilder documentNumber = new StringBuilder();
+        stringTemplate = getResourceBundle().getString("label.serviceRequestNumberYear");
+        documentNumber.append(stringTemplate);
+        documentNumber.append(": ");
+        documentNumber.append(documentRequest.getServiceRequestNumberYear());
+        addParameter("documentNumber", documentNumber.toString());
+
+    }
+
+    protected void fillFirstParagraph(Person coordinator, Unit adminOfficeUnit, String coordinatorTitle) {
+
+        String adminOfficeName = getMLSTextContent(adminOfficeUnit.getPartyName());
+        String institutionName = getMLSTextContent(RootDomainObject.getInstance().getInstitutionUnit().getPartyName());
+        String universityName = getMLSTextContent(UniversityUnit.getInstitutionsUniversityUnit().getPartyName());
+
+        String stringTemplate = getResourceBundle().getString("label.academicDocument.declaration.firstParagraph");
+
+        addParameter(
+                "firstParagraph",
+                "     "
+                        + MessageFormat.format(stringTemplate, coordinator.getName(), coordinatorTitle,
+                                adminOfficeName.toUpperCase(getLocale()), institutionName.toUpperCase(getLocale()),
+                                universityName.toUpperCase(getLocale())));
+
+        addParameter("certificate", getResourceBundle().getString("message.phd.finalization.certificate.certifies.that"));
     }
 
     private void addProgrammeInfo() {
         PhdIndividualProgramProcess phdIndividualProgramProcess = getDocumentRequest().getPhdIndividualProgramProcess();
-        addParameter("conclusionDate", phdIndividualProgramProcess.getConclusionDate().toString("dd/MM/yyyy"));
-        String thesisFinalGrade = phdIndividualProgramProcess.getFinalGrade().getLocalizedName(getLocale());
-        addParameter("thesisFinalGrade", thesisFinalGrade);
-        addParameter("thesisTitle", getThesisTitle(phdIndividualProgramProcess));
-        addParameter("studentNumber", phdIndividualProgramProcess.getStudent().getNumber());
+        String stringTemplate = getResourceBundle().getString("label.phd.finalization.certificate.concluded.in");
+        String conclusionDate =
+                MessageFormat.format(stringTemplate, phdIndividualProgramProcess.getConclusionDate().toString("dd/MM/yyyy"));
+        addParameter("conclusionDate", conclusionDate);
+
+        StringBuilder thesisTitle = new StringBuilder();
+        thesisTitle.append("\"");
+        thesisTitle.append(getThesisTitle(phdIndividualProgramProcess));
+        thesisTitle.append("\"");
+        addParameter("thesisTitle", thesisTitle.toString());
 
         StringBuilder builder = new StringBuilder();
         builder.append(
@@ -124,26 +186,6 @@ public class PhdFinalizationCertificate extends AdministrativeOfficeDocument {
         addParameter("phdProgram", customMultipleLineRightPad(builder.toString(), LINE_LENGTH, END_CHAR));
         addParameter("finalizationInfo", buildFinalizationInfo());
 
-        addParameter("serviceRequestNumberYear", getDocumentRequest().getServiceRequestNumberYear());
-
-        if (getLanguage().equals(Language.en)) {
-            LocalDate localDate = new LocalDate();
-            addParameter(
-                    "day",
-                    String.format(localDate.toString("MMMM, dd", getLocale()) + findNumeralSufixForDay(localDate.getDayOfMonth())
-                            + localDate.toString(", yyyy")));
-        } else {
-            LocalDate localDate = new LocalDate();
-            StringBuilder dayBuilder = new StringBuilder();
-            dayBuilder.append(localDate.toString("dd")).append(SINGLE_SPACE).append("de").append(SINGLE_SPACE);
-            dayBuilder.append(localDate.toString("MMMM", getLocale())).append(SINGLE_SPACE).append("de").append(SINGLE_SPACE);
-            dayBuilder.append(localDate.toString("yyyy"));
-
-            addParameter("day", dayBuilder.toString());
-        }
-
-        addParameter("universityName",
-                getMLSTextContent(UniversityUnit.getInstitutionsUniversityUnit().getPartyName(), Language.pt));
     }
 
     private String getThesisTitle(final PhdIndividualProgramProcess phdIndividualProgramProcess) {
@@ -152,23 +194,6 @@ public class PhdFinalizationCertificate extends AdministrativeOfficeDocument {
         }
 
         return phdIndividualProgramProcess.getThesisTitle();
-    }
-
-    private String findNumeralSufixForDay(int dayOfMonth) {
-
-        if (dayOfMonth == 1 || dayOfMonth == 21 || dayOfMonth == 31) {
-            return "st";
-        }
-
-        if (dayOfMonth == 2 || dayOfMonth == 22) {
-            return "nd";
-        }
-
-        if (dayOfMonth == 3 || dayOfMonth == 23) {
-            return "rd";
-        }
-
-        return "th";
     }
 
     private String buildFinalizationInfo() {
@@ -189,25 +214,23 @@ public class PhdFinalizationCertificate extends AdministrativeOfficeDocument {
     private void addPersonalInfo() {
         Person person = getDocumentRequest().getPerson();
 
-        String fatherPrefixKey = "label.phd.finalization.certificate.father.prefix";
-        String motherPrefixKey = "label.phd.finalization.certificate.mother.prefix";
+        String genderPrefix;
 
-        if (Gender.MALE.equals(person.getGender())) {
-            fatherPrefixKey += ".for.male";
-            motherPrefixKey += ".for.male";
+        if (person.isMale()) {
+            genderPrefix = getResourceBundle().getString("label.phd.finalization.certificate.father.prefix.for.male");
         } else {
-            fatherPrefixKey += ".for.female";
-            motherPrefixKey += ".for.female";
+            genderPrefix = getResourceBundle().getString("label.phd.finalization.certificate.father.prefix.for.female");
         }
 
         StringBuilder builder = new StringBuilder();
-        builder.append(getResourceBundle().getString(fatherPrefixKey)).append(SINGLE_SPACE);
+        builder.append(genderPrefix).append(SINGLE_SPACE);
         builder.append(person.getNameOfFather().toUpperCase());
 
         addParameter("fatherName", StringUtils.multipleLineRightPad(builder.toString(), LINE_LENGTH, END_CHAR));
 
         builder = new StringBuilder();
-        builder.append(getResourceBundle().getString(motherPrefixKey)).append(SINGLE_SPACE);
+        builder.append(getResourceBundle().getString("label.phd.finalization.certificate.mother.prefix.for.female")).append(
+                SINGLE_SPACE);
         builder.append(person.getNameOfMother().toUpperCase());
         addParameter("motherName", StringUtils.multipleLineRightPad(builder.toString(), LINE_LENGTH, END_CHAR));
 

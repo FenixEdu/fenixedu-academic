@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice;
 
+import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -10,10 +11,13 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Grade;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DegreeFinalizationCertificateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
@@ -38,21 +42,82 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
     protected void fillReport() {
         super.fillReport();
 
+        Unit adminOfficeUnit = getAdministrativeOffice().getUnit();
+        Person coordinator = adminOfficeUnit.getActiveUnitCoordinator();
+        String institutionName = getMLSTextContent(RootDomainObject.getInstance().getInstitutionUnit().getPartyName());
+
+        String coordinatorTitle;
+        if (coordinator.isMale()) {
+            coordinatorTitle = getResourceBundle().getString("label.academicDocument.declaration.maleCoordinator");
+        } else {
+            coordinatorTitle = getResourceBundle().getString("label.academicDocument.declaration.femaleCoordinator");
+        }
+
+        fillFirstParagraph(coordinator, adminOfficeUnit, coordinatorTitle);
+
+        fillSecondParagraph();
         final DegreeFinalizationCertificateRequest req = getDocumentRequest();
 
-        addParameter("degreeFinalizationDate", getDegreeFinalizationDate(req));
-        addParameter("exceptionalConclusionInfo", getExceptionalConclusionInfo(req));
-        addParameter("degreeFinalizationGrade",
-                req.getAverage() ? getDegreeFinalizationGrade(req.getFinalAverage(), getLocale()) : EMPTY_STR);
-        addParameter("degreeFinalizationEcts", getDegreeFinalizationEcts(req));
-        addParameter("creditsDescription", getCreditsDescription());
-        addParameter("graduateTitle",
-                getGraduateTitle(getDocumentRequest().getRegistration(), req.getWhatShouldBeRequestedCycle()));
-        addParameter("diplomaDescription", getDiplomaDescription());
-        addParameter("detailedInfoIntro", getDetailedInfoIntro(req));
         addParameter("degreeFinalizationInfo", getDegreeFinalizationInfo(req));
 
+        setEmployeeFields(institutionName, adminOfficeUnit);
+        setFooter(req, true);
         setBranchField();
+    }
+
+    private void fillSecondParagraph() {
+
+        final DegreeFinalizationCertificateRequest req = getDocumentRequest();
+        final StringBuilder result = new StringBuilder();
+
+        result.append(getResourceBundle().getString("conclusion.document.concluded.lowercase"));
+        result.append(" ");
+        result.append(getResourceBundle().getString("label.the.male"));
+        result.append(" ");
+        result.append(getDegreeDescription());
+        result.append(",");
+
+        if (getDocumentRequest().getBranch() == null || getDocumentRequest().getBranch().isEmpty()) {
+            result.append("");
+        } else {
+            result.append(",");
+        }
+
+        result.append(getDegreeFinalizationDate(req));
+        result.append(getExceptionalConclusionInfo(req));
+
+        if (req.getAverage()) {
+            result.append(getDegreeFinalizationGrade(req.getFinalAverage(), getLocale()));
+        } else {
+            result.append(EMPTY_STR);
+        }
+
+        result.append(getDegreeFinalizationEcts(req));
+        result.append(getGraduateTitle(getDocumentRequest().getRegistration(), req.getWhatShouldBeRequestedCycle()));
+        result.append(getDiplomaDescription());
+        result.append(getDetailedInfoIntro(req));
+
+        addParameter("secondParagraph", result.toString());
+
+    }
+
+    protected void fillFirstParagraph(Person coordinator, Unit adminOfficeUnit, String coordinatorTitle) {
+
+        String adminOfficeName = getMLSTextContent(adminOfficeUnit.getPartyName());
+        String institutionName = getMLSTextContent(RootDomainObject.getInstance().getInstitutionUnit().getPartyName());
+        String universityName = getMLSTextContent(UniversityUnit.getInstitutionsUniversityUnit().getPartyName());
+
+        String stringTemplate = getResourceBundle().getString("label.academicDocument.declaration.firstParagraph");
+
+        addParameter(
+                "firstParagraph",
+                "     "
+                        + MessageFormat.format(stringTemplate, coordinator.getName(), coordinatorTitle,
+                                adminOfficeName.toUpperCase(getLocale()), institutionName.toUpperCase(getLocale()),
+                                universityName.toUpperCase(getLocale())));
+
+        addParameter("certificate",
+                getResourceBundle().getString("label.academicDocument.standaloneEnrolmentCertificate.secondParagraph"));
     }
 
     private void setBranchField() {
@@ -86,7 +151,7 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
         final StringBuilder result = new StringBuilder();
 
         if (!request.mustHideConclusionDate()) {
-            result.append(SINGLE_SPACE).append(getResourceBundle().getString("label.in"));
+            result.append(SINGLE_SPACE).append(getResourceBundle().getString("label.onThe"));
             result.append(SINGLE_SPACE).append(request.getConclusionDate().toString(DD_MMMM_YYYY, getLocale()));
         }
 
