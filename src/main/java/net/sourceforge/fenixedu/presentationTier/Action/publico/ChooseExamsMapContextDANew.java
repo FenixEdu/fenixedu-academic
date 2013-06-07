@@ -89,7 +89,7 @@ public class ChooseExamsMapContextDANew extends FenixContextDispatchAction {
         request.setAttribute("index", indexValue);
 
         // degreeID
-        Integer degreeId = (Integer) chooseExamContextoForm.get("degreeID");
+        String degreeId = (String) chooseExamContextoForm.get("degreeID");
         request.setAttribute("degreeID", degreeId);
         final Degree degree = AbstractDomainObject.fromExternalId(degreeId);
         request.setAttribute("degree", degree);
@@ -131,7 +131,7 @@ public class ChooseExamsMapContextDANew extends FenixContextDispatchAction {
 
         InfoExecutionPeriod infoExecutionPeriod =
                 (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
-        Integer executionPeriodID = (Integer) chooseExamContextoForm.get("indice");
+        String executionPeriodID = (String) chooseExamContextoForm.get("indice");
         if (executionPeriodID != null) {
             infoExecutionPeriod = ReadExecutionPeriodByOID.run(executionPeriodID);
         }

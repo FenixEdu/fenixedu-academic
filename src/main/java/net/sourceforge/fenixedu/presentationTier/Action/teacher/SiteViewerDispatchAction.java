@@ -44,7 +44,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
         if (objectCodeString == null) {
             objectCodeString = (String) request.getAttribute("objectCode");
         }
-        Integer infoExecutionCourseCode = new Integer(objectCodeString);
+        String infoExecutionCourseCode = objectCodeString;
 
         setFromRequest(request);
 
@@ -176,16 +176,16 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 
     }
 
-    private SiteView readSiteView(HttpServletRequest request, ISiteComponent firstPageComponent, Integer infoExecutionCourseCode,
+    private SiteView readSiteView(HttpServletRequest request, ISiteComponent firstPageComponent, String infoExecutionCourseCode,
             Integer sectionIndex, Integer curricularCourseId) throws FenixActionException {
-        Integer objectCode = null;
+        String objectCode = null;
         if (infoExecutionCourseCode == null) {
             String objectCodeString = request.getParameter("objectCode");
             if (objectCodeString == null) {
                 objectCodeString = (String) request.getAttribute("objectCode");
 
             }
-            objectCode = new Integer(objectCodeString);
+            objectCode = objectCodeString;
         }
 
         ISiteComponent commonComponent = new InfoSiteCommon();

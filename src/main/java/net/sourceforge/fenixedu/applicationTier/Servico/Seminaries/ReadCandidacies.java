@@ -53,21 +53,18 @@ public class ReadCandidacies {
         //
         // case[1-5]Id => case study ids in the desired order
 
-        Modality modality = modalityID.intValue() == -1 ? null : AbstractDomainObject.fromExternalId(modalityID);
-        Seminary seminary = seminaryID.intValue() == -1 ? null : AbstractDomainObject.fromExternalId(seminaryID);
-        Theme theme = themeID.intValue() == -1 ? null : AbstractDomainObject.fromExternalId(themeID);
+        Modality modality = AbstractDomainObject.fromExternalId(modalityID);
+        Seminary seminary = AbstractDomainObject.fromExternalId(seminaryID);
+        Theme theme = AbstractDomainObject.fromExternalId(themeID);
 
-        DegreeCurricularPlan degreeCurricularPlan =
-                degreeCurricularPlanID.intValue() == -1 ? null : AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
-        CurricularCourse curricularCourse =
-                curricularCourseID.intValue() == -1 ? null : (CurricularCourse) AbstractDomainObject
-                        .fromExternalId(curricularCourseID);
+        DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
+        CurricularCourse curricularCourse = AbstractDomainObject.fromExternalId(curricularCourseID);
 
-        CaseStudy caseStudy1 = case1Id.intValue() == -1 ? null : AbstractDomainObject.fromExternalId(case1Id);
-        CaseStudy caseStudy2 = case2Id.intValue() == -1 ? null : AbstractDomainObject.fromExternalId(case2Id);
-        CaseStudy caseStudy3 = case3Id.intValue() == -1 ? null : AbstractDomainObject.fromExternalId(case3Id);
-        CaseStudy caseStudy4 = case4Id.intValue() == -1 ? null : AbstractDomainObject.fromExternalId(case4Id);
-        CaseStudy caseStudy5 = case5Id.intValue() == -1 ? null : AbstractDomainObject.fromExternalId(case5Id);
+        CaseStudy caseStudy1 = AbstractDomainObject.fromExternalId(case1Id);
+        CaseStudy caseStudy2 = AbstractDomainObject.fromExternalId(case2Id);
+        CaseStudy caseStudy3 = AbstractDomainObject.fromExternalId(case3Id);
+        CaseStudy caseStudy4 = AbstractDomainObject.fromExternalId(case4Id);
+        CaseStudy caseStudy5 = AbstractDomainObject.fromExternalId(case5Id);
 
         List<SeminaryCandidacy> filteredCandidacies = new ArrayList<SeminaryCandidacy>();
 
@@ -86,7 +83,7 @@ public class ReadCandidacies {
 
             // TODO: converte Modality into a enumeration
             if (theme != null) {
-                if (!candidacy.getTheme().equals(theme) && !(candidacy.getModality().getExternalId().intValue() == 1)) {
+                if (!candidacy.getTheme().equals(theme) /*&& !(candidacy.getModality().getExternalId().intValue() == 1) */) {
                     continue;
                 }
             }
@@ -186,7 +183,7 @@ public class ReadCandidacies {
 
     @Service
     public static List runReadCandidacies(String modalityID, String seminaryID, String themeID, String case1Id, String case2Id,
-            String case3Id, String case4Id, Integer case5Id, String curricularCourseID, String degreeCurricularPlanID,
+            String case3Id, String case4Id, String case5Id, String curricularCourseID, String degreeCurricularPlanID,
             Boolean approved) throws NotAuthorizedException, BDException {
         CandidaciesAccessFilter.instance.execute();
         return serviceInstance.run(modalityID, seminaryID, themeID, case1Id, case2Id, case3Id, case4Id, case5Id,

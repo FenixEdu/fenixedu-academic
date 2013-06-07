@@ -41,7 +41,7 @@ public class StudentDismissalsExternalEnrolmentsDA extends StudentExternalEnrolm
 
     @Override
     protected String getParameters(final HttpServletRequest request) {
-        return "scpID=" + getIntegerFromRequest(request, "scpID");
+        return "scpID=" + getStringFromRequest(request, "scpID");
     }
 
     private StudentCurricularPlan getStudentCurricularPlan(final HttpServletRequest request) {

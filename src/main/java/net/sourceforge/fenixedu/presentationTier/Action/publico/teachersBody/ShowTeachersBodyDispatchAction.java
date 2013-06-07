@@ -62,7 +62,7 @@ public class ShowTeachersBodyDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) throws FenixActionException {
 
         DynaActionForm executionYearForm = (DynaActionForm) actionForm;
-        Integer executionYearId = (Integer) executionYearForm.get("executionYearId");
+        String executionYearId = (String) executionYearForm.get("executionYearId");
         Integer semester = (Integer) executionYearForm.get("semester");
         Integer teacherType = (Integer) executionYearForm.get("teacherType");
 
@@ -123,7 +123,7 @@ public class ShowTeachersBodyDispatchAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
 
         DynaActionForm executionDegreeForm = (DynaActionForm) actionForm;
-        Integer executionDegreeId = (Integer) executionDegreeForm.get("executionDegreeId");
+        String executionDegreeId = (String) executionDegreeForm.get("executionDegreeId");
 
         Integer semester = (Integer) executionDegreeForm.get("semester");
         Integer teacherType = (Integer) executionDegreeForm.get("teacherType");
@@ -176,8 +176,8 @@ public class ShowTeachersBodyDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) throws FenixActionException {
 
         DynaActionForm departmentForm = (DynaActionForm) actionForm;
-        Integer departmentId = (Integer) departmentForm.get("departmentId");
-        Integer executionYearId = (Integer) departmentForm.get("executionYearId");
+        String departmentId = (String) departmentForm.get("departmentId");
+        String executionYearId = (String) departmentForm.get("executionYearId");
 
         Integer semester = (Integer) departmentForm.get("semester");
         Integer teacherType = (Integer) departmentForm.get("teacherType");

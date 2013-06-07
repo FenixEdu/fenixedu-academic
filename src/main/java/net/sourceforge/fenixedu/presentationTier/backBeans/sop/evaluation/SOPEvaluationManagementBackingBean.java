@@ -33,6 +33,7 @@ import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameF
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope.DegreeModuleScopeCurricularCourseScope;
+import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.Evaluation;
@@ -772,7 +773,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
             for (final Integer curricularYearID : curricularYears) {
                 executionCourses.addAll(ExecutionCourse.filterByAcademicIntervalAndDegreeCurricularPlanAndCurricularYearAndName(
                         getAcademicIntervalFromParameter(getAcademicInterval()), getExecutionDegree().getDegreeCurricularPlan(),
-                        AbstractDomainObject.fromExternalId(curricularYearID), "%"));
+                        CurricularYear.readByYear(curricularYearID), "%"));
             }
         }
         // Integer[] curricularYears = getCurricularYearIDs();
@@ -811,7 +812,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
                 final List<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
                 executionCourses.addAll(ExecutionCourse.filterByAcademicIntervalAndDegreeCurricularPlanAndCurricularYearAndName(
                         getAcademicIntervalFromParameter(getAcademicInterval()), getExecutionDegree().getDegreeCurricularPlan(),
-                        AbstractDomainObject.fromExternalId(curricularYearID), "%"));
+                        CurricularYear.readByYear(curricularYearID), "%"));
 
                 for (final ExecutionCourse executionCourse : executionCourses) {
                     final Set<WrittenEvaluation> writtenEvaluations =
@@ -1564,7 +1565,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         final List<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
         executionCourses.addAll(ExecutionCourse.filterByAcademicIntervalAndDegreeCurricularPlanAndCurricularYearAndName(
                 getAcademicIntervalFromParameter(getAcademicInterval()), executionDegree.getDegreeCurricularPlan(),
-                AbstractDomainObject.fromExternalId(curricularYearID), "%"));
+                CurricularYear.readByYear(curricularYearID), "%"));
         Collections.sort(executionCourses, new BeanComparator("sigla"));
         return executionCourses;
     }

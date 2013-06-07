@@ -57,9 +57,9 @@ public class ExecutionCourseInfoDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareChoice(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        Integer degreeCurricularPlanID = null;
+        String degreeCurricularPlanID = null;
         if (request.getParameter("degreeCurricularPlanID") != null) {
-            degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+            degreeCurricularPlanID = request.getParameter("degreeCurricularPlanID");
             request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
         }
 
@@ -129,7 +129,7 @@ public class ExecutionCourseInfoDispatchAction extends FenixDispatchAction {
 
         DynaActionForm searchExecutionCourse = (DynaActionForm) form;
 
-        Integer degreeCurricularPlanID = (Integer) searchExecutionCourse.get("degreeCurricularPlanID");
+        String degreeCurricularPlanID = (String) searchExecutionCourse.get("degreeCurricularPlanID");
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
 
         // Mandatory Selection
@@ -195,9 +195,9 @@ public class ExecutionCourseInfoDispatchAction extends FenixDispatchAction {
 
         IUserView userView = getUserView(request);
 
-        Integer degreeCurricularPlanID = null;
+        String degreeCurricularPlanID = null;
         if (request.getParameter("degreeCurricularPlanID") != null) {
-            degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+            degreeCurricularPlanID = request.getParameter("degreeCurricularPlanID");
             request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
         }
 
@@ -299,9 +299,9 @@ public class ExecutionCourseInfoDispatchAction extends FenixDispatchAction {
     public ActionForward showLoads(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        Integer degreeCurricularPlanID = null;
+        String degreeCurricularPlanID = null;
         if (request.getParameter("degreeCurricularPlanID") != null) {
-            degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+            degreeCurricularPlanID = request.getParameter("degreeCurricularPlanID");
             request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
         }
 

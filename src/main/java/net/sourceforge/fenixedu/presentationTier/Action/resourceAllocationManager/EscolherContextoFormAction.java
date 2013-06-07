@@ -67,7 +67,8 @@ public class EscolherContextoFormAction extends FenixContextAction {
 
         if (infoExecutionDegree != null) {
             CurricularYearAndSemesterAndInfoExecutionDegree cYSiED =
-                    new CurricularYearAndSemesterAndInfoExecutionDegree(anoCurricular, semestre, infoExecutionDegree);
+                    new CurricularYearAndSemesterAndInfoExecutionDegree(Integer.parseInt(anoCurricular), semestre,
+                            infoExecutionDegree);
             request.setAttribute(PresentationConstants.CONTEXT_KEY, cYSiED);
 
             request.setAttribute(PresentationConstants.EXECUTION_DEGREE, infoExecutionDegree);

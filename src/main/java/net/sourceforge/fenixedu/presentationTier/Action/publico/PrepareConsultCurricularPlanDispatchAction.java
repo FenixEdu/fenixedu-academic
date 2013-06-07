@@ -34,19 +34,19 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 public class PrepareConsultCurricularPlanDispatchAction extends FenixContextDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixActionException,  FenixServiceException {
+            throws FenixActionException, FenixServiceException {
 
         request.removeAttribute(PresentationConstants.LABELLIST_EXECUTIONPERIOD);
 
-        Integer degreeCurricularPlanId = (Integer) request.getAttribute("degreeCurricularPlanID");
+        String degreeCurricularPlanId = (String) request.getAttribute("degreeCurricularPlanID");
         if (degreeCurricularPlanId == null) {
-            degreeCurricularPlanId = Integer.valueOf(request.getParameter("degreeCurricularPlanID"));
+            degreeCurricularPlanId = request.getParameter("degreeCurricularPlanID");
         }
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
 
-        Integer degreeId = (Integer) request.getAttribute("degreeID");
+        String degreeId = (String) request.getAttribute("degreeID");
         if (degreeId == null) {
-            degreeId = Integer.valueOf(request.getParameter("degreeID"));
+            degreeId = request.getParameter("degreeID");
         }
         request.setAttribute("degreeID", degreeId);
 
@@ -111,7 +111,7 @@ public class PrepareConsultCurricularPlanDispatchAction extends FenixContextDisp
         }
 
         InfoExecutionDegree infoExecutionDegree =
-                ReadPublicExecutionDegreeByDCPID.run(degreeCurricularPlanId, (Integer) indexForm.get("indice"));
+                ReadPublicExecutionDegreeByDCPID.run(degreeCurricularPlanId, (String) indexForm.get("indice"));
         if (infoExecutionDegree == null) {
             try {
 
@@ -142,17 +142,17 @@ public class PrepareConsultCurricularPlanDispatchAction extends FenixContextDisp
 
         DynaActionForm escolherContextoForm = (DynaActionForm) form;
 
-        Integer executionYear = (Integer) escolherContextoForm.get("indice");
+        String executionYear = (String) escolherContextoForm.get("indice");
 
-        Integer degreeCurricularPlanId = (Integer) request.getAttribute("degreeCurricularPlanID");
+        String degreeCurricularPlanId = (String) request.getAttribute("degreeCurricularPlanID");
         if (degreeCurricularPlanId == null) {
-            degreeCurricularPlanId = Integer.valueOf(request.getParameter("degreeCurricularPlanID"));
+            degreeCurricularPlanId = request.getParameter("degreeCurricularPlanID");
         }
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
 
-        Integer degreeId = (Integer) request.getAttribute("degreeID");
+        String degreeId = (String) request.getAttribute("degreeID");
         if (degreeId == null) {
-            degreeId = Integer.valueOf(request.getParameter("degreeID"));
+            degreeId = request.getParameter("degreeID");
         }
 
         request.setAttribute("degreeID", degreeId);

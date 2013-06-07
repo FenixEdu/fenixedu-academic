@@ -347,7 +347,8 @@ public class TestsManagementAction extends FenixDispatchAction {
     public ActionForward showTests(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
         final String executionCourseId = getStringFromRequest(request, "objectCode");
-        final TestScope testScope = TestScope.readByDomainObject(ExecutionCourse.class, executionCourseId);
+        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
+        final TestScope testScope = executionCourse.getTestScope();
         List<Test> testList = new ArrayList<Test>();
         if (testScope != null) {
             testList = testScope.getTests();
@@ -680,7 +681,8 @@ public class TestsManagementAction extends FenixDispatchAction {
     public ActionForward showDistributedTests(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
         final String objectCode = getStringFromRequest(request, "objectCode");
-        final TestScope testScope = TestScope.readByDomainObject(ExecutionCourse.class, objectCode);
+        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(objectCode);
+        final TestScope testScope = executionCourse.getTestScope();
         List<DistributedTest> distributedTestList = new ArrayList<DistributedTest>();
         if (testScope != null) {
             distributedTestList = testScope.getDistributedTests();

@@ -70,12 +70,11 @@ public class ListPayedInsurancesDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward generateList(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException, IOException {
+            HttpServletResponse response) throws FenixServiceException, IOException {
 
         DynaActionForm actionForm = (DynaActionForm) form;
 
-        ExecutionYear executionYear =
-                AbstractDomainObject.fromExternalId((Integer) actionForm.get("executionYearID"));
+        ExecutionYear executionYear = AbstractDomainObject.fromExternalId((String) actionForm.get("executionYearID"));
 
         Integer endDateDay = (Integer) actionForm.get("endDateDay");
         Integer endDateMonth = (Integer) actionForm.get("endDateMonth");

@@ -37,7 +37,7 @@ public class PrepareStudentDataForThesisOperationsDispatchAction extends FenixDi
             HttpServletResponse response) throws Exception {
 
         StudentCurricularPlan studentCurricularPlan =
-                AbstractDomainObject.fromExternalId((Integer) ((DynaActionForm) form).get("scpID"));
+                AbstractDomainObject.fromExternalId((String) ((DynaActionForm) form).get("scpID"));
 
         request.setAttribute(PresentationConstants.STUDENT, studentCurricularPlan.getRegistration());
         request.setAttribute("scpID", studentCurricularPlan.getExternalId());

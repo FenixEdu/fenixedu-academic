@@ -17,7 +17,7 @@
             <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="qualificationForm">
                   <form-property type="java.lang.String" name="tempDate"></form-property>
                   <form-property type="java.lang.Integer" name="page"></form-property>
-                  <form-property initial="0" type="java.lang.Integer" name="externalId"></form-property>
+                  <form-property initial="0" type="java.lang.String" name="externalId"></form-property>
                   <form-property type="java.lang.String" name="mark"></form-property>
                   <form-property type="java.lang.String" name="school"></form-property>
                   <form-property type="java.lang.String" name="degree"></form-property>
@@ -28,7 +28,7 @@
                   <form-property type="java.lang.String" name="tempEquivalenceDate"></form-property>
                   <form-property type="java.lang.String" name="equivalenceSchool"></form-property>
                   <form-property type="java.lang.String" name="countryExternalId"></form-property>
-                  <form-property type="java.lang.Integer" name="infoPerson#externalId"></form-property>
+                  <form-property type="java.lang.String" name="infoPerson#externalId"></form-property>
             </form-bean>
             <!-- Dynamic-FormBean for Qualification Edit-->
             <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="sendSmsForm">

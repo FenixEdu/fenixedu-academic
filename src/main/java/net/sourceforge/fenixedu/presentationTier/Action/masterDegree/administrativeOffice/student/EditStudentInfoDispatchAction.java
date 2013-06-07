@@ -44,7 +44,7 @@ public class EditStudentInfoDispatchAction extends FenixDispatchAction {
         DynaActionForm changeApplicationInfoForm = (DynaActionForm) form;
         IUserView userView = getUserView(request);
 
-        Integer personCode = Integer.valueOf(getFromRequest("externalId", request));
+        String personCode = getFromRequest("externalId", request);
         Integer number = Integer.valueOf(getFromRequest("number", request));
         // Create Dates
 

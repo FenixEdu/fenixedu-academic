@@ -156,7 +156,7 @@ public class ExemptionGratuityAction extends FenixDispatchAction {
         }
         request.setAttribute("executionYear", executionYear);
 
-        Integer studentCurricularPlanID = getFromRequest("studentCurricularPlanID", request);
+        String studentCurricularPlanID = getFromRequest("studentCurricularPlanID", request);
         request.setAttribute("studentCurricularPlanID", studentCurricularPlanID);
 
         // read student curricular plan only for show in jsp
@@ -246,13 +246,13 @@ public class ExemptionGratuityAction extends FenixDispatchAction {
         }
     }
 
-    private Integer getFromRequest(String parameter, HttpServletRequest request) {
-        Integer parameterCode = null;
+    private String getFromRequest(String parameter, HttpServletRequest request) {
+        String parameterCode = null;
         String parameterCodeString = request.getParameter(parameter);
         if (parameterCodeString != null) // parameter
         {
             try {
-                parameterCode = new Integer(parameterCodeString);
+                parameterCode = parameterCodeString;
             } catch (Exception exception) {
                 return null;
             }
@@ -260,12 +260,10 @@ public class ExemptionGratuityAction extends FenixDispatchAction {
         {
             if (request.getAttribute(parameter) instanceof String) {
                 try {
-                    parameterCode = new Integer((String) request.getAttribute(parameter));
+                    parameterCode = (String) request.getAttribute(parameter);
                 } catch (Exception exception) {
                     return null;
                 }
-            } else if (request.getAttribute(parameter) instanceof Integer) {
-                parameterCode = (Integer) request.getAttribute(parameter);
             }
         }
         return parameterCode;

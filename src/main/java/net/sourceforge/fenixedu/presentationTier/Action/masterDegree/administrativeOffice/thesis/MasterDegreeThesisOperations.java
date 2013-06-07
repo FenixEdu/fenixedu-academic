@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.thesis;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,7 +35,11 @@ public class MasterDegreeThesisOperations extends FenixDispatchAction {
 
         DynaActionForm getStudentByNumberAndDegreeTypeForm = (DynaActionForm) form;
 
-        Integer scpID = getIntegerFromRequestOrForm(request, getStudentByNumberAndDegreeTypeForm, "scpID");
+        String scpID = getStringFromRequest(request, "scpID");
+        if (scpID == null) {
+            scpID = (String) ((DynaActionForm) form).get("scpID");
+        }
+
         StudentCurricularPlan studentCurricularPlan = AbstractDomainObject.fromExternalId(scpID);
 
         return transportStudentCurricularPlan(form, request, actionErrors, studentCurricularPlan);
@@ -79,7 +84,7 @@ public class MasterDegreeThesisOperations extends FenixDispatchAction {
 
         String[] teachersNumbersArray = (String[]) masterDegreeThesisForm.get(teachersNumbersListField);
         List<String> teachersNumbersList = CollectionUtils.toList(teachersNumbersArray);
-        teachersNumbersList.remove(new Integer(0));
+        teachersNumbersList.remove(null);
         return teachersNumbersList;
 
     }
@@ -100,13 +105,13 @@ public class MasterDegreeThesisOperations extends FenixDispatchAction {
 
     }
 
-    public List<Integer> getExternalPersonsIDs(ActionForm form, String externalPersonNameField) {
+    public List<String> getExternalPersonsIDs(ActionForm form, String externalPersonNameField) {
 
         DynaActionForm masterDegreeThesisForm = (DynaActionForm) form;
 
-        Integer[] externalPersonsIDsArray = (Integer[]) masterDegreeThesisForm.get(externalPersonNameField);
-        List<Integer> externalPersonsIDsList = CollectionUtils.toList(externalPersonsIDsArray);
-        externalPersonsIDsList.remove(new Integer(0));
+        String[] externalPersonsIDsArray = (String[]) masterDegreeThesisForm.get(externalPersonNameField);
+        List<String> externalPersonsIDsList = Arrays.asList(externalPersonsIDsArray);
+        externalPersonsIDsList.remove(null);
         return externalPersonsIDsList;
 
     }

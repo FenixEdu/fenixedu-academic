@@ -65,7 +65,7 @@ public class ManageTeacherAdviseServiceDispatchAction extends FenixDispatchActio
         Integer studentNumber = Integer.valueOf(adviseServiceForm.getString("studentNumber"));
         Double percentage = Double.valueOf(adviseServiceForm.getString("percentage"));
         Teacher teacher = AbstractDomainObject.fromExternalId((String) adviseServiceForm.get("teacherId"));
-        Integer executionPeriodID = (Integer) adviseServiceForm.get("executionPeriodId");
+        String executionPeriodID = (String) adviseServiceForm.get("executionPeriodId");
         try {
             EditTeacherAdviseService.runEditTeacherAdviseService(teacher, executionPeriodID, studentNumber, percentage,
                     AdviseType.FINAL_WORK_DEGREE, roleType);

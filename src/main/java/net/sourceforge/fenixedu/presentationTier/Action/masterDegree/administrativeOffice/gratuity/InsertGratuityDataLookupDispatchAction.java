@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoEmployee;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuityValues;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPaymentPhase;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixLookupDispatchAction;
 import net.sourceforge.fenixedu.util.Data;
 
@@ -149,7 +150,7 @@ public class InsertGratuityDataLookupDispatchAction extends FenixLookupDispatchA
     }
 
     public ActionForward insertGratuityData(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response)  {
+            HttpServletResponse response) {
         IUserView userView = UserView.getUser();
         ActionErrors errors = new ActionErrors();
         DynaValidatorForm gratuityForm = (DynaValidatorForm) form;
@@ -173,7 +174,7 @@ public class InsertGratuityDataLookupDispatchAction extends FenixLookupDispatchA
             return mapping.getInputForward();
         }
 
-        Integer degreeId = new Integer(infoGratuityValues.getInfoExecutionDegree().getExternalId().intValue());
+        String degreeId = infoGratuityValues.getInfoExecutionDegree().getExternalId();
 
         infoGratuityValues = null;
 
@@ -192,10 +193,10 @@ public class InsertGratuityDataLookupDispatchAction extends FenixLookupDispatchA
     private InfoGratuityValues fillGratuity(IUserView userView, DynaValidatorForm actionForm) {
 
         String degree = (String) actionForm.get("degree");
-        Integer degreeId = Integer.valueOf(StringUtils.substringAfter(degree, "#"));
+        String degreeId = StringUtils.substringAfter(degree, "#");
 
         InfoExecutionDegree infoExecutionDegree =
-                new InfoExecutionDegree(AbstractDomainObject.fromExternalId(degreeId));
+                new InfoExecutionDegree(AbstractDomainObject.<ExecutionDegree> fromExternalId(degreeId));
 
         InfoGratuityValues infoGratuityValues = new InfoGratuityValues();
 
@@ -203,7 +204,7 @@ public class InsertGratuityDataLookupDispatchAction extends FenixLookupDispatchA
         infoGratuityValues.setInfoEmployee(new InfoEmployee(userView.getPerson().getEmployee()));
 
         if ((String) actionForm.get("gratuityId") != null && ((String) actionForm.get("gratuityId")).length() > 0) {
-            infoGratuityValues.setExternalId(Integer.valueOf((String) actionForm.get("gratuityId")));
+            infoGratuityValues.setExternalId((String) actionForm.get("gratuityId"));
         }
 
         if (actionForm.get("annualValue") != null && ((String) actionForm.get("annualValue")).length() > 0) {

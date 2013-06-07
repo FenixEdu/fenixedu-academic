@@ -96,7 +96,7 @@ public class EditStudentCurricularCoursePlan extends FenixDispatchAction {
 
         final DynaActionForm editForm = (DynaActionForm) form;
         final String currentState = (String) editForm.get("currentState");
-        final Integer branchOID = (Integer) editForm.get("branch");
+        final String branchOID = (String) editForm.get("branch");
         final String specialization = (String) editForm.get("specialization");
         final String startDate = (String) editForm.get("startDate");
         final String observations = (String) editForm.get("observations");
@@ -123,7 +123,7 @@ public class EditStudentCurricularCoursePlan extends FenixDispatchAction {
     public ActionForward enrol(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
-        Enrolment enrolment = (Enrolment) AbstractDomainObject.fromExternalId(getIntegerFromRequest(request, "enrolmentID"));
+        Enrolment enrolment = (Enrolment) AbstractDomainObject.fromExternalId(getStringFromRequest(request, "enrolmentID"));
         SetEnrolmentState.run(enrolment, EnrollmentState.ENROLLED);
 
         request.setAttribute("studentCurricularPlanId", enrolment.getStudentCurricularPlan().getExternalId());

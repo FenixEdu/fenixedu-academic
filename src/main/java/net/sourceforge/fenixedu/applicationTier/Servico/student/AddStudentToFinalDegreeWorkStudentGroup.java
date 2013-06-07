@@ -85,8 +85,7 @@ public class AddStudentToFinalDegreeWorkStudentGroup {
                 final CurricularSemester curricularSemester = curricularCourseScope.getCurricularSemester();
                 final CurricularYear curricularYear = curricularSemester.getCurricularYear();
 
-                if (minimumCompletedCurricularYear != null
-                        && curricularYear.getExternalId().intValue() <= minimumCompletedCurricularYear.intValue()) {
+                if (minimumCompletedCurricularYear != null && curricularYear.getYear() <= minimumCompletedCurricularYear) {
                     if (!isCurricularCourseApproved) {
                         notCompletedCurricularCoursesForMinimumCurricularYear.add(curricularCourse);
                     }

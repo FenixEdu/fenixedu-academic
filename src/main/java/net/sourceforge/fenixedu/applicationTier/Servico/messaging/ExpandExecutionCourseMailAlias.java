@@ -71,9 +71,9 @@ public class ExpandExecutionCourseMailAlias {
 
     }
 
-    private static Integer extractExecutionCourseId(String address, String emailAddressPrefix, String host,
+    private static String extractExecutionCourseId(String address, String emailAddressPrefix, String host,
             ForwardMailsReport report) {
-        Integer result = null;
+        String result = null;
         if (address != null) {
             String[] splittedAddress = address.split("@");
             if (splittedAddress.length == 2) {
@@ -81,7 +81,7 @@ public class ExpandExecutionCourseMailAlias {
                     if (splittedAddress[0].startsWith(emailAddressPrefix)) {
                         String stringId = splittedAddress[0].substring(emailAddressPrefix.length());
                         try {
-                            result = Integer.valueOf(stringId);
+                            result = stringId;
                         } catch (NumberFormatException e) {
                             report.status = AliasExpandingStatus.INVALID_ADDRESS;
                         }

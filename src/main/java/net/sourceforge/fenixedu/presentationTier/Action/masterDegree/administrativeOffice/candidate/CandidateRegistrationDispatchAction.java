@@ -60,7 +60,7 @@ public class CandidateRegistrationDispatchAction extends FenixDispatchAction {
         String executionYearString = request.getParameter("executionYear");
         String degreeCode = request.getParameter("degree");
 
-        Integer executionDegree = Integer.valueOf(request.getParameter("executionDegreeID"));
+        String executionDegree = request.getParameter("executionDegreeID");
         if ((executionYearString == null) || (executionYearString.length() == 0)) {
             executionYearString = (String) candidateRegistration.get("executionYear");
         }
@@ -105,7 +105,7 @@ public class CandidateRegistrationDispatchAction extends FenixDispatchAction {
         DynaActionForm candidateRegistration = (DynaActionForm) form;
 
         IUserView userView = getUserView(request);
-        Integer candidateID = new Integer(request.getParameter("candidateID"));
+        String candidateID = request.getParameter("candidateID");
 
         candidateRegistration.set("candidateID", candidateID);
         candidateRegistration.set("studentNumber", null);
@@ -137,8 +137,8 @@ public class CandidateRegistrationDispatchAction extends FenixDispatchAction {
         DynaActionForm candidateRegistration = (DynaActionForm) form;
 
         IUserView userView = getUserView(request);
-        Integer candidateID = (Integer) candidateRegistration.get("candidateID");
-        Integer branchID = (Integer) candidateRegistration.get("branchID");
+        String candidateID = (String) candidateRegistration.get("candidateID");
+        String branchID = (String) candidateRegistration.get("branchID");
 
         String studentNumberString = (String) candidateRegistration.get("studentNumber");
         Integer studentNumber = null;
@@ -206,7 +206,7 @@ public class CandidateRegistrationDispatchAction extends FenixDispatchAction {
         DynaActionForm candidateRegistration = (DynaActionForm) form;
 
         IUserView userView = getUserView(request);
-        Integer candidateID = (Integer) candidateRegistration.get("candidateID");
+        String candidateID = (String) candidateRegistration.get("candidateID");
 
         InfoCandidateRegistration infoCandidateRegistration = null;
         infoCandidateRegistration = GetCandidateRegistrationInformation.run(candidateID);

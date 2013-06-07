@@ -203,8 +203,8 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
     public ActionForward chooseCandidate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        Integer personID = Integer.valueOf(request.getParameter("personID"));
-        request.setAttribute("candidateID", new Integer(request.getParameter("candidateID")));
+        String personID = request.getParameter("personID");
+        request.setAttribute("candidateID", request.getParameter("candidateID"));
 
         // Read the Candidates for This Person
 
@@ -225,10 +225,10 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         IUserView userView = getUserView(request);
-        Integer candidateID = (Integer) request.getAttribute("candidateID");
+        String candidateID = (String) request.getAttribute("candidateID");
 
         if (candidateID == null) {
-            candidateID = Integer.valueOf(request.getParameter("candidateID"));
+            candidateID = request.getParameter("candidateID");
         }
 
         // Read the Candidates for This Person
@@ -256,9 +256,9 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 
         DynaActionForm editCandidateForm = (DynaActionForm) form;
 
-        Integer candidateID = (Integer) request.getAttribute("candidateID");
+        String candidateID = (String) request.getAttribute("candidateID");
         if (candidateID == null) {
-            candidateID = Integer.valueOf(request.getParameter("candidateID"));
+            candidateID = request.getParameter("candidateID");
         }
 
         // Read the Candidates for This Person
@@ -310,7 +310,7 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 
         DynaActionForm editCandidateForm = (DynaActionForm) form;
 
-        Integer candidateID = (Integer) editCandidateForm.get("candidateID");
+        String candidateID = (String) editCandidateForm.get("candidateID");
 
         // FIXME: Check All if fields are empty
 
@@ -451,7 +451,7 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 
         // Read the Candidate
 
-        final Integer candidateID = Integer.valueOf(request.getParameter("candidateID"));
+        final String candidateID = request.getParameter("candidateID");
         InfoMasterDegreeCandidate infoMasterDegreeCandidate = null;
 
         try {
@@ -615,7 +615,7 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
         return false;
     }
 
-    private List getCandidateStudyPlanByCandidateID(Integer candidateID, IUserView userView) {
+    private List getCandidateStudyPlanByCandidateID(String candidateID, IUserView userView) {
 
         try {
             return ReadCandidateEnrolmentsByCandidateID.runReadCandidateEnrolmentsByCandidateID(candidateID);

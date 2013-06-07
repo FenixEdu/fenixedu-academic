@@ -71,13 +71,12 @@ public class ManageStudentCurricularPlanDA extends FenixDispatchAction {
         final String enrollmentIdString = request.getParameter("enrollmentId");
         final String studentNumberString = request.getParameter("studentNumber");
         final String degreeTypeString = request.getParameter("degreeType");
-        final Integer enrollmentId = Integer.valueOf(enrollmentIdString);
         final Integer studentNumber = Integer.valueOf(studentNumberString);
         final DegreeType degreeType = DegreeType.valueOf(degreeTypeString);
 
         final IUserView userView = UserView.getUser();
 
-        DeleteEnrollment.run(studentNumber, degreeType, enrollmentId);
+        DeleteEnrollment.run(studentNumber, degreeType, enrollmentIdString);
 
         return show(mapping, form, request, response);
     }

@@ -117,14 +117,14 @@ public class InsertExternalPersonDispatchAction extends FenixDispatchAction {
 
         String name = (String) insertExternalPersonForm.get("name");
         String sex = (String) insertExternalPersonForm.get("sex");
-        Integer institutionID = (Integer) insertExternalPersonForm.get("institutionID");
+        String institutionID = (String) insertExternalPersonForm.get("institutionID");
         String address = (String) insertExternalPersonForm.get("address");
         String phone = (String) insertExternalPersonForm.get("phone");
         String mobile = (String) insertExternalPersonForm.get("mobile");
         String homepage = (String) insertExternalPersonForm.get("homepage");
         String email = (String) insertExternalPersonForm.get("email");
 
-        if (institutionID == 0) {
+        if (institutionID == null) {
             request.setAttribute(PresentationConstants.SEX_LIST_KEY,
                     Gender.getSexLabelValues((Locale) request.getAttribute(Globals.LOCALE_KEY)));
 

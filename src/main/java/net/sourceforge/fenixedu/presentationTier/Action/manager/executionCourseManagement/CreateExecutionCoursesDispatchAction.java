@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -29,6 +28,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.Pair;
 
 /**
@@ -80,23 +80,21 @@ public class CreateExecutionCoursesDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) throws FenixServiceException {
 
         DynaActionForm actionForm = (DynaActionForm) form;
-        Integer[] degreeCurricularPlansIDs = (Integer[]) actionForm.get("degreeCurricularPlansIDs");
-        Integer executionPeriodID = (Integer) actionForm.get("executionPeriodID");
+        String[] degreeCurricularPlansIDs = (String[]) actionForm.get("degreeCurricularPlansIDs");
+        String executionPeriodID = (String) actionForm.get("executionPeriodID");
         try {
-            HashMap<Integer, Pair<Integer, String>> result =
+            HashMap<String, Pair<Integer, String>> result =
                     CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod.run(degreeCurricularPlansIDs,
                             executionPeriodID);
 
             // avmc (ist150958): success messages: 1 line for each DCP
-            final ExecutionSemester executionPeriod =
-                    RootDomainObject.getInstance().readExecutionSemesterByOID(executionPeriodID);
+            final ExecutionSemester executionPeriod = AbstractDomainObject.fromExternalId(executionPeriodID);
             addActionMessage("successHead", request,
                     "message.executionCourseManagement.createExecutionCoursesForDegreeCurricularPlan.successHead",
                     executionPeriod.getName() + " " + executionPeriod.getExecutionYear().getYear());
 
-            for (final Integer degreeCurricularPlanID : degreeCurricularPlansIDs) {
-                final DegreeCurricularPlan degreeCurricularPlan =
-                        RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+            for (final String degreeCurricularPlanID : degreeCurricularPlansIDs) {
+                final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
                 addActionMessage("successDCP", request,
                         "message.executionCourseManagement.createExecutionCoursesForDegreeCurricularPlan.successDCP",
                         degreeCurricularPlan.getPresentationName(), result.get(degreeCurricularPlanID).getKey().toString(),

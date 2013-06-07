@@ -48,7 +48,7 @@ public class ChangeApplicationInfoDispatchAction extends FenixDispatchAction {
         IUserView userView = UserView.getUser();
         DynaActionForm changeApplicationInfoForm = (DynaActionForm) form;
 
-        Integer candidateID = (Integer) changeApplicationInfoForm.get("candidateID");
+        String candidateID = (String) changeApplicationInfoForm.get("candidateID");
         request.setAttribute("candidateID", candidateID);
 
         if (!isTokenValid(request)) {

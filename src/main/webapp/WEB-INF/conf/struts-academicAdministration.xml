@@ -62,7 +62,7 @@
               <form-property type="java.lang.String" name="parishOfResidence"></form-property>
               <form-property type="java.lang.String" name="districtSubdivisionOfResidence"></form-property>
               <form-property type="java.lang.String" name="districtOfResidence"></form-property>
-              <form-property type="java.lang.Integer" name="contributorId"></form-property>
+              <form-property type="java.lang.String" name="contributorId"></form-property>
         </form-bean>
         <!-- Bean for The Choosing of a Contributor -->
         <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="chooseContributorForm">

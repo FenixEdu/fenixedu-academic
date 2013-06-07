@@ -46,7 +46,7 @@ public class SubmitMarksAction extends FenixDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
-        Integer curricularCourseCode = Integer.valueOf(MarksManagementDispatchAction.getFromRequest("courseId", request));
+        String curricularCourseCode = MarksManagementDispatchAction.getFromRequest("courseId", request);
         MarksManagementDispatchAction.getFromRequest("objectCode", request);
         MarksManagementDispatchAction.getFromRequest("degreeId", request);
 
@@ -102,7 +102,7 @@ public class SubmitMarksAction extends FenixDispatchAction {
     }
 
     public ActionForward submit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws  FenixActionException {
+            throws FenixActionException {
 
         MarksManagementDispatchAction.getFromRequest("courseId", request);
         MarksManagementDispatchAction.getFromRequest("objectCode", request);
@@ -155,17 +155,17 @@ public class SubmitMarksAction extends FenixDispatchAction {
     }
 
     private InfoEnrolmentEvaluation getFinalEvaluation(HttpServletRequest request, int index) {
-        Integer studentCode = null;
-        Integer enrolmentCode = null;
-        Integer evaluationId = null;
+        String studentCode = null;
+        String enrolmentCode = null;
+        String evaluationId = null;
         String evaluation = request.getParameter("enrolmentEvaluation[" + index + "].grade");
 
         if (!StringUtils.isEmpty(evaluation) && request.getParameter("enrolmentEvaluation[" + index + "].studentCode") != null) {
-            studentCode = Integer.valueOf(request.getParameter("enrolmentEvaluation[" + index + "].studentCode"));
+            studentCode = request.getParameter("enrolmentEvaluation[" + index + "].studentCode");
 
-            enrolmentCode = Integer.valueOf(request.getParameter("enrolmentEvaluation[" + index + "].enrolmentCode"));
+            enrolmentCode = request.getParameter("enrolmentEvaluation[" + index + "].enrolmentCode");
 
-            evaluationId = Integer.valueOf(request.getParameter("enrolmentEvaluation[" + index + "].externalId"));
+            evaluationId = request.getParameter("enrolmentEvaluation[" + index + "].externalId");
 
         }
 

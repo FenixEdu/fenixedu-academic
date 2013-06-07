@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.CreateReceiptBean;
 import net.sourceforge.fenixedu.domain.DocumentType;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.GraduationType;
 import net.sourceforge.fenixedu.domain.GuideState;
 import net.sourceforge.fenixedu.domain.masterDegree.GuideRequester;
@@ -96,8 +97,8 @@ public class CreateGuideDispatchAction extends FenixDispatchAction {
                         DocumentType.RANK_RECOGNITION_AND_EQUIVALENCE_PROCESS);
 
         final InfoExecutionDegree infoExecutionDegree =
-                InfoExecutionDegree.newInfoFromDomain(AbstractDomainObject.fromExternalId((Integer) createGuideForm
-                        .get("executionDegreeID")));
+                InfoExecutionDegree.newInfoFromDomain(AbstractDomainObject
+                        .<ExecutionDegree> fromExternalId((String) createGuideForm.get("executionDegreeID")));
 
         try {
 

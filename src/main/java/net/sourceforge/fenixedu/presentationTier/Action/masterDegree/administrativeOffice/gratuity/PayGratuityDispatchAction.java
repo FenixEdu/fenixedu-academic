@@ -104,15 +104,15 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
         IUserView userView = UserView.getUser();
 
         Integer contributorNumber = (Integer) payGratuityForm.get("contributorNumber");
-        Integer studentId = (Integer) payGratuityForm.get("studentId");
-        Integer gratuitySituationId = (Integer) payGratuityForm.get("gratuitySituationId");
-        Integer insuranceExecutionYearId = (Integer) payGratuityForm.get("insuranceExecutionYearId");
+        String studentId = (String) payGratuityForm.get("studentId");
+        String gratuitySituationId = (String) payGratuityForm.get("gratuitySituationId");
+        String insuranceExecutionYearId = (String) payGratuityForm.get("insuranceExecutionYearId");
 
         // Read Registration
         InfoStudent infoStudent = readStudent(mapping, userView, studentId);
         request.setAttribute(PresentationConstants.STUDENT, infoStudent);
 
-        if (gratuitySituationId.intValue() > 0) {
+        if (gratuitySituationId == null) {
             // Read Gratuity Situation
             InfoGratuitySituation infoGratuitySituation = readGratuitySituation(userView, gratuitySituationId);
 
@@ -141,7 +141,7 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
 
         }
 
-        if (insuranceExecutionYearId.intValue() > 0) {
+        if (insuranceExecutionYearId == null) {
             // Read Insurance Value
             InfoInsuranceValue infoInsuranceValue = readInsuranceValue(userView, insuranceExecutionYearId);
 
@@ -173,9 +173,9 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
         IUserView userView = UserView.getUser();
 
         Integer contributorNumber = (Integer) payGratuityForm.get("contributorNumber");
-        Integer gratuitySituationId = (Integer) payGratuityForm.get("gratuitySituationId");
-        Integer studentId = (Integer) payGratuityForm.get("studentId");
-        Integer insuranceExecutionYearId = (Integer) payGratuityForm.get("insuranceExecutionYearId");
+        String gratuitySituationId = (String) payGratuityForm.get("gratuitySituationId");
+        String studentId = (String) payGratuityForm.get("studentId");
+        String insuranceExecutionYearId = (String) payGratuityForm.get("insuranceExecutionYearId");
         Double adHocValue = (Double) payGratuityForm.get("adHocValue");
 
         InfoGuide infoGuide = new InfoGuide();
@@ -188,7 +188,7 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
 
         List infoGuideEntries = new ArrayList();
 
-        if (gratuitySituationId.intValue() > 0) {
+        if (gratuitySituationId == null) {
             // Read Gratuity Situation
             InfoGratuitySituation infoGratuitySituation = readGratuitySituation(userView, gratuitySituationId);
 
@@ -222,7 +222,7 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
 
         }
 
-        if ((insuranceExecutionYearId != null) && (insuranceExecutionYearId.intValue() > 0)) {
+        if ((insuranceExecutionYearId != null) && (insuranceExecutionYearId == null)) {
             // Read Insurance Transaction
             InfoInsuranceValue infoInsuranceValue = readInsuranceValue(userView, insuranceExecutionYearId);
 

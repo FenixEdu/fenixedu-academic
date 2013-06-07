@@ -64,7 +64,7 @@ public class IndexAction extends Action {
      */
     private void setChoosedExecutionPeriod(HttpServletRequest request, List executionPeriodsNotClosed,
             DynaValidatorForm executionPeriodForm) {
-        final Integer executionPeriodId = (Integer) executionPeriodForm.get("executionPeriodId");
+        final String executionPeriodId = (String) executionPeriodForm.get("executionPeriodId");
         InfoExecutionPeriod infoExecutionPeriod = null;
         if (executionPeriodId == null) {
             infoExecutionPeriod = (InfoExecutionPeriod) CollectionUtils.find(executionPeriodsNotClosed, new Predicate() {

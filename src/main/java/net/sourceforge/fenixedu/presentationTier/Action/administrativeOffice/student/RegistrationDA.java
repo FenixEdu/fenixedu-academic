@@ -68,7 +68,7 @@ public class RegistrationDA extends StudentRegistrationDA {
         final RegistrationCurriculumBean registrationCurriculumBean = new RegistrationCurriculumBean(registration);
         request.setAttribute("registrationCurriculumBean", registrationCurriculumBean);
 
-        final Integer degreeCurricularPlanID = getIntegerFromRequest(request, "degreeCurricularPlanID");
+        final String degreeCurricularPlanID = getStringFromRequest(request, "degreeCurricularPlanID");
         if (degreeCurricularPlanID != null) {
             request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
         }
@@ -122,7 +122,7 @@ public class RegistrationDA extends StudentRegistrationDA {
             registrationCurriculumBean.setExecutionYear(currentExecutionYear);
         }
 
-        final Integer degreeCurricularPlanID = getIntegerFromRequest(request, "degreeCurricularPlanID");
+        final String degreeCurricularPlanID = getStringFromRequest(request, "degreeCurricularPlanID");
         if (degreeCurricularPlanID != null) {
             request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
         }

@@ -977,7 +977,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return null;
     }
 
-    final public Enrolment findEnrolmentByEnrolmentID(final Integer enrolmentID) {
+    final public Enrolment findEnrolmentByEnrolmentID(final String enrolmentID) {
         for (final Enrolment enrolment : getEnrolmentsSet()) {
             if (enrolment.getExternalId().equals(enrolmentID)) {
                 return enrolment;

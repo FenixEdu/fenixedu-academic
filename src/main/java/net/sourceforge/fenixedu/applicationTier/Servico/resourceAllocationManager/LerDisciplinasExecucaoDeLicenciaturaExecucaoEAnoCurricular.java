@@ -20,12 +20,11 @@ public class LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular {
 
     @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
     @Service
-    public static List run(InfoExecutionDegree infoExecutionDegree, InfoExecutionPeriod infoExecutionPeriod,
-            String curricularYearID) {
+    public static List run(InfoExecutionDegree infoExecutionDegree, InfoExecutionPeriod infoExecutionPeriod, Integer year) {
 
         List listInfoDE = new ArrayList();
 
-        CurricularYear curricularYear = AbstractDomainObject.fromExternalId(curricularYearID);
+        CurricularYear curricularYear = CurricularYear.readByYear(year);
         ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(infoExecutionPeriod.getExternalId());
         DegreeCurricularPlan degreeCurricularPlan =
                 AbstractDomainObject.fromExternalId(infoExecutionDegree.getInfoDegreeCurricularPlan().getExternalId());
@@ -49,11 +48,12 @@ public class LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular {
 
     @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
     @Service
-    public static List run(InfoExecutionDegree infoExecutionDegree, AcademicInterval academicInterval, String curricularYearID) {
+    public static List run(InfoExecutionDegree infoExecutionDegree, AcademicInterval academicInterval, Integer year) {
 
         List listInfoDE = new ArrayList();
 
-        CurricularYear curricularYear = AbstractDomainObject.fromExternalId(curricularYearID);
+        CurricularYear curricularYear = CurricularYear.readByYear(year);
+
         DegreeCurricularPlan degreeCurricularPlan =
                 AbstractDomainObject.fromExternalId(infoExecutionDegree.getInfoDegreeCurricularPlan().getExternalId());
 

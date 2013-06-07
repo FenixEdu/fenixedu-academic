@@ -32,8 +32,7 @@ public class Tutorship extends Tutorship_Base {
             } else if (t2.getEndDate() == null) {
                 return 1;
             } else {
-                return (t1.getEndDate().isBefore(t2.getEndDate()) ? -1 : (t1.getEndDate().isAfter(t2.getEndDate()) ? 1 : (t1
-                        .getExternalId() <= t2.getExternalId()) ? -1 : 1));
+                return (t1.getEndDate().isBefore(t2.getEndDate()) ? -1 : (t1.getEndDate().isAfter(t2.getEndDate()) ? 1 : 0));
             }
         }
     };
@@ -46,8 +45,7 @@ public class Tutorship extends Tutorship_Base {
             } else if (t2.getStartDate() == null) {
                 return 1;
             } else {
-                return (t1.getStartDate().isBefore(t2.getStartDate()) ? -1 : (t1.getStartDate().isAfter(t2.getStartDate()) ? 1 : (t1
-                        .getExternalId() <= t2.getExternalId()) ? -1 : 1));
+                return (t1.getStartDate().isBefore(t2.getStartDate()) ? -1 : (t1.getStartDate().isAfter(t2.getStartDate()) ? 1 : 0));
             }
         }
     };

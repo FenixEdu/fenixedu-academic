@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.domain.EntryPhase;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -33,6 +32,8 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.validator.DynaValidatorForm;
 
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
+
 /**
  * @author Fernanda Quitério 19/Dez/2003
  * 
@@ -45,7 +46,7 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
 
         InfoExecutionCourse infoExecutionCourse;
         try {
-            infoExecutionCourse = ReadInfoExecutionCourseByOID.run(Integer.valueOf(executionCourseId));
+            infoExecutionCourse = ReadInfoExecutionCourseByOID.run(executionCourseId);
 
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
@@ -100,13 +101,12 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
 
         DynaActionForm executionCourseForm = prepareReturnAttributes(form, request);
 
-        List<Integer> internalIds = new ArrayList<Integer>();
-        internalIds.add(new Integer(executionCourseId));
+        List<String> internalIds = new ArrayList<String>();
+        internalIds.add(executionCourseId);
 
         List<String> errorCodes = new ArrayList<String>();
 
-        ExecutionCourse executionCourseToBeDeleted =
-                RootDomainObject.getInstance().readExecutionCourseByOID(Integer.valueOf(executionCourseId));
+        ExecutionCourse executionCourseToBeDeleted = AbstractDomainObject.fromExternalId(executionCourseId);
         String executionCourseName = executionCourseToBeDeleted.getNome();
         String executionCourseSigla = executionCourseToBeDeleted.getSigla();
 
@@ -165,13 +165,13 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
 
     protected void prepareReturnSessionBean(HttpServletRequest request, Boolean chooseNotLinked, String executionCourseId) {
         // Preparing sessionBean for the EditExecutionCourseDA.list...Actions...
-        Integer executionPeriodId = (Integer) request.getAttribute("executionPeriodId");
+        String executionPeriodId = (String) request.getAttribute("executionPeriodId");
 
         ExecutionCourse executionCourse = null;
         if (!net.sourceforge.fenixedu.util.StringUtils.isEmpty(executionCourseId)) {
-            executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(Integer.valueOf(executionCourseId));
+            executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
         }
-        ExecutionSemester executionPeriod = RootDomainObject.getInstance().readExecutionSemesterByOID(executionPeriodId);
+        ExecutionSemester executionPeriod = AbstractDomainObject.fromExternalId(executionPeriodId);
 
         ExecutionCourseBean sessionBean = new ExecutionCourseBean();
 
@@ -180,11 +180,11 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
         sessionBean.setChooseNotLinked(chooseNotLinked);
 
         if (!chooseNotLinked) {
-            Integer executionDegreeId = (Integer) request.getAttribute("executionDegreeId");
-            Integer curricularYearId = (Integer) request.getAttribute("curYearId");
+            String executionDegreeId = (String) request.getAttribute("executionDegreeId");
+            String curricularYearId = (String) request.getAttribute("curYearId");
 
-            ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeId);
-            CurricularYear curYear = RootDomainObject.getInstance().readCurricularYearByOID(curricularYearId);
+            ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeId);
+            CurricularYear curYear = AbstractDomainObject.fromExternalId(curricularYearId);
 
             sessionBean.setExecutionDegree(executionDegree);
             sessionBean.setCurricularYear(curYear);
@@ -200,7 +200,7 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
         DynaActionForm editExecutionCourseForm = (DynaActionForm) actionForm;
 
         try {
-            infoExecutionCourse.setIdInternal(new Integer((String) editExecutionCourseForm.get("executionCourseId")));
+            infoExecutionCourse.setExternalId((String) editExecutionCourseForm.get("executionCourseId"));
             infoExecutionCourse.setNome((String) editExecutionCourseForm.get("name"));
             infoExecutionCourse.setSigla((String) editExecutionCourseForm.get("code"));
             infoExecutionCourse.setComment((String) editExecutionCourseForm.get("comment"));
@@ -215,7 +215,7 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
         return infoExecutionCourse;
     }
 
-    protected Integer separateLabel(ActionForm form, HttpServletRequest request, String property, String id, String name) {
+    protected String separateLabel(ActionForm form, HttpServletRequest request, String property, String id, String name) {
 
         DynaActionForm executionCourseForm = (DynaActionForm) form;
 
@@ -228,13 +228,13 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
             }
         }
 
-        Integer objectId = null;
+        String objectId = null;
         String objectName = null;
         if (object != null && object.length() > 0 && object.indexOf("~") > 0) {
             executionCourseForm.set(property, object);
             request.setAttribute(property, object);
 
-            objectId = Integer.valueOf(StringUtils.substringAfter(object, "~"));
+            objectId = StringUtils.substringAfter(object, "~");
             objectName = object.substring(0, object.indexOf("~"));
 
             request.setAttribute(name, objectName);

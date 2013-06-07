@@ -26,25 +26,18 @@ public class TransferCurricularCourse {
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Deprecated
     @Service
-    public static void run(String sourceExecutionCourseIdString, final String curricularCourseIdString,
-            String destinationExecutionCourseIdString) {
+    public static void run(String sourceExecutionCourseId, final String curricularCourseId, String destinationExecutionCourseId) {
 
-        if (StringUtils.isEmpty(destinationExecutionCourseIdString) || !StringUtils.isNumeric(destinationExecutionCourseIdString)) {
+        if (StringUtils.isEmpty(destinationExecutionCourseId) || !StringUtils.isNumeric(destinationExecutionCourseId)) {
             throw new DomainException("error.selection.noDestinationExecutionCourse");
         }
-
-        Integer sourceExecutionCourseId = Integer.valueOf(sourceExecutionCourseIdString);
-        Integer destinationExecutionCourseId = Integer.valueOf(destinationExecutionCourseIdString);
-        Integer curricularCourseId = Integer.valueOf(curricularCourseIdString);
 
         if (destinationExecutionCourseId.equals(sourceExecutionCourseId)) {
             throw new DomainException("error.selection.sameSourceDestinationCourse");
         }
 
-        final ExecutionCourse sourceExecutionCourse =
-                AbstractDomainObject.fromExternalId(sourceExecutionCourseId);
-        final ExecutionCourse destinationExecutionCourse =
-                AbstractDomainObject.fromExternalId(destinationExecutionCourseId);
+        final ExecutionCourse sourceExecutionCourse = AbstractDomainObject.fromExternalId(sourceExecutionCourseId);
+        final ExecutionCourse destinationExecutionCourse = AbstractDomainObject.fromExternalId(destinationExecutionCourseId);
 
         if (destinationExecutionCourse == null) {
             throw new DomainException("error.selection.noDestinationExecutionCourse");
@@ -59,7 +52,7 @@ public class TransferCurricularCourse {
         }
 
         if (curricularCourse == null) {
-            curricularCourse = (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(curricularCourseId);
+            curricularCourse = AbstractDomainObject.fromExternalId(curricularCourseId);
 
             StringBuilder curricularCourseNameSB = new StringBuilder();
             if (StringUtils.isEmpty(curricularCourse.getNameI18N().getContent())) {

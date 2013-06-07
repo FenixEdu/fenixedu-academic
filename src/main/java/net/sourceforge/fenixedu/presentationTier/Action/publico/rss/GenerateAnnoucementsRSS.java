@@ -21,8 +21,7 @@ public class GenerateAnnoucementsRSS extends FenixDispatchAction {
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         final String executionCourseIdString = request.getParameter("id");
-        final Integer executionCourseId = Integer.valueOf(executionCourseIdString);
-        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
+        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseIdString);
         if (executionCourse == null) {
             return forward("/publico/notFound.do");
         }

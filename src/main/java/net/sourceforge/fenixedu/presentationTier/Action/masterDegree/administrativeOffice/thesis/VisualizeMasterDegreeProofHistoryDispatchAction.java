@@ -31,9 +31,8 @@ public class VisualizeMasterDegreeProofHistoryDispatchAction extends FenixDispat
 
         new MasterDegreeThesisOperations().getStudentByNumberAndDegreeType(form, request, new ActionErrors());
 
-        Integer masterDegreeProofVersionID = Integer.valueOf(request.getParameter("masterDegreeProofVersionID"));
-        MasterDegreeProofVersion masterDegreeProofVersion =
-                AbstractDomainObject.fromExternalId(masterDegreeProofVersionID);
+        String masterDegreeProofVersionID = request.getParameter("masterDegreeProofVersionID");
+        MasterDegreeProofVersion masterDegreeProofVersion = AbstractDomainObject.fromExternalId(masterDegreeProofVersionID);
 
         if (masterDegreeProofVersion.getJuries().isEmpty() == false) {
             request.setAttribute(PresentationConstants.JURIES_LIST, masterDegreeProofVersion.getJuries());

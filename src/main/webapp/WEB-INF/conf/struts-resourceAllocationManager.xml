@@ -105,7 +105,7 @@
             <!-- SALAS -->
             <!-- Dynamic-FormBean para CriarSala -->
             <form-bean name="roomForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-                  <form-property name="executionPeriodId" type="java.lang.Integer"></form-property>
+                  <form-property name="executionPeriodId" type="java.lang.String"></form-property>
                   <form-property name="name" type="java.lang.String"></form-property>
                   <form-property name="building" type="java.lang.String"></form-property>
                   <form-property name="floor" type="java.lang.String"></form-property>

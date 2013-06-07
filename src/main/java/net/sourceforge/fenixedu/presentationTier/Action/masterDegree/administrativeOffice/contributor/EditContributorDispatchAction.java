@@ -24,6 +24,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/editContributor", module = "academicAdministration", formBean = "createContributorForm")
 @Forwards({ @Forward(name = "EditReady", path = "/academicAdminOffice/contributor/editContributor.jsp"),
@@ -58,8 +59,14 @@ public class EditContributorDispatchAction extends FenixDispatchAction {
 
     private InfoContributor getInfoContributor(HttpServletRequest request, DynaActionForm form) {
         final InfoContributor infoContributor = (InfoContributor) request.getAttribute(PresentationConstants.CONTRIBUTOR);
-        return infoContributor != null ? infoContributor : InfoContributor.newInfoFromDomain((Party) readDomainObject(request,
-                Party.class, getIntegerFromRequestOrForm(request, form, "contributorId")));
+
+        String id = getStringFromRequest(request, "contributorId");
+        if (id == null) {
+            id = (String) form.get("contributorId");
+        }
+
+        return infoContributor != null ? infoContributor : InfoContributor.newInfoFromDomain((Party) AbstractDomainObject
+                .fromExternalId(id));
     }
 
     public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)

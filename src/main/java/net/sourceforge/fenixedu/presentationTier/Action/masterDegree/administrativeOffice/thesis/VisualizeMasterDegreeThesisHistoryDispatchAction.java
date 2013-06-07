@@ -29,7 +29,7 @@ public class VisualizeMasterDegreeThesisHistoryDispatchAction extends FenixDispa
     public ActionForward getStudentAndMasterDegreeThesisDataVersion(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        Integer masterDegreeThesisDataVersionID = Integer.valueOf(request.getParameter("masterDegreeThesisDataVersionID"));
+        String masterDegreeThesisDataVersionID = request.getParameter("masterDegreeThesisDataVersionID");
 
         new MasterDegreeThesisOperations().getStudentByNumberAndDegreeType(form, request, new ActionErrors());
 

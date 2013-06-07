@@ -378,10 +378,10 @@ public class TSDProcessValuationAction extends FenixDispatchAction {
     private ActionForward generateTSDProcessValuationChart(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response, TeacherServiceDistributionChart tsdProcessChart) throws FenixServiceException {
 
-        Integer tsdId = new Integer(request.getParameter("tsd"));
+        String tsdId = request.getParameter("tsd");
         TeacherServiceDistribution tsd = AbstractDomainObject.fromExternalId(tsdId);
 
-        Integer executionPeriodId = new Integer(request.getParameter("executionPeriod"));
+        String executionPeriodId = request.getParameter("executionPeriod");
         ExecutionSemester selectedExecutionPeriod = AbstractDomainObject.fromExternalId(executionPeriodId);
 
         List<ExecutionSemester> executionPeriodList = new ArrayList<ExecutionSemester>();
@@ -445,7 +445,7 @@ public class TSDProcessValuationAction extends FenixDispatchAction {
 
     private TeacherServiceDistribution getSelectedTeacherServiceDistribution(IUserView userView, DynaActionForm dynaForm,
             TeacherServiceDistribution rootTeacherServiceDistribution) throws FenixServiceException {
-        Integer selectedTeacherServiceDistributionId = (Integer) dynaForm.get("tsd");
+        String selectedTeacherServiceDistributionId = (String) dynaForm.get("tsd");
         TeacherServiceDistribution selectedTeacherServiceDistribution =
                 AbstractDomainObject.fromExternalId(selectedTeacherServiceDistributionId);
 
@@ -457,14 +457,14 @@ public class TSDProcessValuationAction extends FenixDispatchAction {
     }
 
     private TSDProcessPhase getSelectedTSDProcessPhase(IUserView userView, DynaActionForm dynaForm) throws FenixServiceException {
-        Integer selectedTSDProcessPhaseId = (Integer) dynaForm.get("tsdProcessPhase");
+        String selectedTSDProcessPhaseId = (String) dynaForm.get("tsdProcessPhase");
         TSDProcessPhase selectedTSDProcessPhase = AbstractDomainObject.fromExternalId(selectedTSDProcessPhaseId);
 
         return selectedTSDProcessPhase;
     }
 
     private TSDProcess getTSDProcess(IUserView userView, DynaActionForm dynaForm) {
-        Integer tsdProcessId = (Integer) dynaForm.get("tsdProcess");
+        String tsdProcessId = (String) dynaForm.get("tsdProcess");
         TSDProcess tsdProcess = AbstractDomainObject.fromExternalId(tsdProcessId);
 
         return tsdProcess;
@@ -486,8 +486,8 @@ public class TSDProcessValuationAction extends FenixDispatchAction {
         return viewType;
     }
 
-    private Integer getFromRequestAndSetOnFormTSDProcessId(HttpServletRequest request, DynaActionForm dynaForm) {
-        Integer tsdProcessId = new Integer(request.getParameter("tsdProcess"));
+    private String getFromRequestAndSetOnFormTSDProcessId(HttpServletRequest request, DynaActionForm dynaForm) {
+        String tsdProcessId = request.getParameter("tsdProcess");
         dynaForm.set("tsdProcess", tsdProcessId);
         return tsdProcessId;
     }
@@ -506,10 +506,10 @@ public class TSDProcessValuationAction extends FenixDispatchAction {
     private List<TSDTeacherDTOEntry> getTSDTeacherDTOEntries(IUserView userView, TSDProcessPhase selectedTSDProcessPhase,
             TeacherServiceDistribution selectedTeacherServiceDistribution, ExecutionSemester executionSemester)
             throws FenixServiceException {
-        Map<Integer, Pair<Integer, Integer>> tsdProcessIdMap = new HashMap<Integer, Pair<Integer, Integer>>();
+        Map<String, Pair<String, String>> tsdProcessIdMap = new HashMap<String, Pair<String, String>>();
         tsdProcessIdMap.put(selectedTSDProcessPhase.getExternalId(),
-                new Pair<Integer, Integer>(selectedTeacherServiceDistribution.getExternalId(),
-                        (executionSemester == null) ? 0 : executionSemester.getExternalId()));
+                new Pair<String, String>(selectedTeacherServiceDistribution.getExternalId(),
+                        (executionSemester == null) ? null : executionSemester.getExternalId()));
 
         return ReadTSDTeachersFromTSDProcesses.runReadTSDTeachersFromTSDProcesses(tsdProcessIdMap);
     }
@@ -518,10 +518,10 @@ public class TSDProcessValuationAction extends FenixDispatchAction {
     private List<TSDCourseDTOEntry> getTSDCourseDTOEntries(IUserView userView, TSDProcessPhase selectedTSDProcessPhase,
             TeacherServiceDistribution selectedTeacherServiceDistribution, ExecutionSemester executionSemester)
             throws FenixServiceException {
-        Map<Integer, Pair<Integer, Integer>> tsdProcessIdMap = new HashMap<Integer, Pair<Integer, Integer>>();
+        Map<String, Pair<String, String>> tsdProcessIdMap = new HashMap<String, Pair<String, String>>();
         tsdProcessIdMap.put(selectedTSDProcessPhase.getExternalId(),
-                new Pair<Integer, Integer>(selectedTeacherServiceDistribution.getExternalId(),
-                        (executionSemester == null) ? 0 : executionSemester.getExternalId()));
+                new Pair<String, String>(selectedTeacherServiceDistribution.getExternalId(),
+                        (executionSemester == null) ? null : executionSemester.getExternalId()));
 
         return ReadTSDCoursesFromTSDProcesses.runReadTSDCoursesFromTSDProcesses(tsdProcessIdMap);
     }
@@ -540,7 +540,7 @@ public class TSDProcessValuationAction extends FenixDispatchAction {
 
     private ExecutionSemester getSelectedExecutionPeriod(IUserView userView, DynaActionForm dynaForm,
             List<ExecutionSemester> executionPeriodList) throws FenixServiceException {
-        Integer selectedExecutionPeriodId = (Integer) dynaForm.get("executionPeriod");
+        String selectedExecutionPeriodId = (String) dynaForm.get("executionPeriod");
         ExecutionSemester selectedExecutionPeriod = AbstractDomainObject.fromExternalId(selectedExecutionPeriodId);
 
         if (selectedExecutionPeriod == null) {

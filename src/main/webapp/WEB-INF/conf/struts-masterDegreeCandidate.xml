@@ -63,7 +63,7 @@
                   <form-property type="java.lang.String" name="idExpirationDateYear"></form-property>
                   <form-property type="java.lang.String" name="username"></form-property>
                   <form-property type="java.lang.String" name="areaOfAreaCode"></form-property>
-                  <form-property type="java.lang.Integer" name="candidateID"></form-property>
+                  <form-property type="java.lang.String" name="candidateID"></form-property>
             </form-bean>
       </form-beans>
       <!-- ========== Global Exception Definitions ============================== -->

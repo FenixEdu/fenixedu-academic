@@ -157,7 +157,7 @@ public class MarkSheetSearchDispatchAction extends MarkSheetDispatchAction {
     public ActionForward choosePrinter(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         DynaActionForm form = (DynaActionForm) actionForm;
-        Integer markSheetID = (Integer) form.get("msID");
+        String markSheetID = (String) form.get("msID");
         request.setAttribute("markSheet", markSheetID.toString());
         return mapping.findForward("choosePrinter");
     }

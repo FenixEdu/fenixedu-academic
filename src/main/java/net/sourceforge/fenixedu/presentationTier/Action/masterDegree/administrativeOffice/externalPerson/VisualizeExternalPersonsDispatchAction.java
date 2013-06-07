@@ -101,7 +101,7 @@ public class VisualizeExternalPersonsDispatchAction extends FenixDispatchAction 
         IUserView userView = UserView.getUser();
 
         DynaActionForm visualizeExternalPersonsForm = (DynaActionForm) form;
-        Integer institutionId = (Integer) visualizeExternalPersonsForm.get("institutionId");
+        String institutionId = (String) visualizeExternalPersonsForm.get("institutionId");
 
         List infoExternalPersons = null;
 

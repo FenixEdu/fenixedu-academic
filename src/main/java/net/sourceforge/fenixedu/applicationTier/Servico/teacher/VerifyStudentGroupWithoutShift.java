@@ -35,9 +35,9 @@ public class VerifyStudentGroupWithoutShift {
             throw new InvalidSituationServiceException();
         }
 
-        Integer shiftCode = null;
+        String shiftCode = null;
         if (shiftCodeString != null && shiftCodeString.length() > 0) {
-            shiftCode = new Integer(shiftCodeString);
+            shiftCode = shiftCodeString;
         }
 
         if (studentGroup.getShift() != null && shiftCode == null) {
@@ -49,7 +49,7 @@ public class VerifyStudentGroupWithoutShift {
                 throw new InvalidArgumentsServiceException();
             }
         } else {
-            if (studentGroup.getShift().getExternalId().intValue() != shiftCode.intValue()) {
+            if (!studentGroup.getShift().getExternalId().equals(shiftCode)) {
                 throw new InvalidArgumentsServiceException();
             }
         }

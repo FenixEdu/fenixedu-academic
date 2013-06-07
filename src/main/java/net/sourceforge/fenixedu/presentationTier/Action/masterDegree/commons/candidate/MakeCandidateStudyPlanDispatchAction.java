@@ -144,7 +144,7 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
         String executionYear = getFromRequest("executionYear", request);
 
         String candidateID = getFromRequest("candidateID", request);
-        chooseSecondMasterDegreeForm.set("candidateID", Integer.valueOf(candidateID));
+        chooseSecondMasterDegreeForm.set("candidateID", candidateID);
         chooseSecondMasterDegreeForm.set("masterDegree", null);
 
         request.setAttribute("jspTitle", getFromRequest("jspTitle", request));
@@ -340,7 +340,7 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
             chooseCurricularCoursesForm.set("attributedCredits", null);
         }
 
-        chooseCurricularCoursesForm.set("candidateID", Integer.valueOf(candidateID));
+        chooseCurricularCoursesForm.set("candidateID", candidateID);
         chooseCurricularCoursesForm.set("selection", selection);
     }
 
@@ -380,8 +380,8 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
 
         DynaActionForm chooseCurricularCoursesForm = (DynaActionForm) form;
 
-        Integer[] selection = (Integer[]) chooseCurricularCoursesForm.get("selection");
-        Integer degreeCurricularPlanID = (Integer) chooseCurricularCoursesForm.get("degreeCurricularPlanID");
+        String[] selection = (String[]) chooseCurricularCoursesForm.get("selection");
+        String degreeCurricularPlanID = (String) chooseCurricularCoursesForm.get("degreeCurricularPlanID");
 
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
 
@@ -389,7 +389,7 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
             throw new NoChoiceMadeActionException(null);
         }
 
-        Integer candidateID = (Integer) chooseCurricularCoursesForm.get("candidateID");
+        String candidateID = (String) chooseCurricularCoursesForm.get("candidateID");
 
         String attributedCreditsString = (String) chooseCurricularCoursesForm.get("attributedCredits");
 
@@ -402,7 +402,7 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
 
         String givenCreditsRemarks = (String) chooseCurricularCoursesForm.get("givenCreditsRemarks");
 
-        Set<String> selectedCurricularCourses = convertIntegerArrayToSet(selection);
+        Set<String> selectedCurricularCourses = convertStringArrayToSet(selection);
 
         try {
 
@@ -452,7 +452,7 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
         return mapping.findForward("ChooseSuccess");
     }
 
-    private Set<String> convertIntegerArrayToSet(String[] values) {
+    private Set<String> convertStringArrayToSet(String[] values) {
         Set<String> selectedCurricularCourses = new HashSet<String>();
         for (String value : values) {
             selectedCurricularCourses.add(value);

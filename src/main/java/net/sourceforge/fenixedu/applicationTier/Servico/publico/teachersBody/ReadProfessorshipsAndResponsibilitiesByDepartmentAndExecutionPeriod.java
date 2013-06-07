@@ -105,9 +105,11 @@ public class ReadProfessorshipsAndResponsibilitiesByDepartmentAndExecutionPeriod
                 DetailedProfessorship detailedProfessorship1 = (DetailedProfessorship) o1;
                 DetailedProfessorship detailedProfessorship2 = (DetailedProfessorship) o2;
                 int result =
-                        detailedProfessorship1.getInfoProfessorship().getInfoExecutionCourse().getExternalId().intValue()
-                                - detailedProfessorship2.getInfoProfessorship().getInfoExecutionCourse().getExternalId()
-                                        .intValue();
+                        detailedProfessorship1
+                                .getInfoProfessorship()
+                                .getInfoExecutionCourse()
+                                .getExternalId()
+                                .compareTo(detailedProfessorship2.getInfoProfessorship().getInfoExecutionCourse().getExternalId());
                 if (result == 0
                         && (detailedProfessorship1.getResponsibleFor().booleanValue() || detailedProfessorship2
                                 .getResponsibleFor().booleanValue())) {

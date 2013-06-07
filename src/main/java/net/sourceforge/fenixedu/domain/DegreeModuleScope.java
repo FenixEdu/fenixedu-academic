@@ -149,7 +149,7 @@ public abstract class DegreeModuleScope {
         return getExternalId() + KEY_SEPARATOR + getClassName();
     }
 
-    public static String getKey(Integer externalId, String className) {
+    public static String getKey(String externalId, String className) {
         return externalId + KEY_SEPARATOR + className;
     }
 

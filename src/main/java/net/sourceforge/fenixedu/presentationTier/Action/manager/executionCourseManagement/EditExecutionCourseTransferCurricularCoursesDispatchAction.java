@@ -25,7 +25,6 @@ import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.RequestUtils;
@@ -39,6 +38,7 @@ import org.apache.struts.action.DynaActionForm;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * 
@@ -58,10 +58,9 @@ public class EditExecutionCourseTransferCurricularCoursesDispatchAction extends 
     public ActionForward prepareTransferCurricularCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException {
 
-        Integer executionCourseId = Integer.valueOf(RequestUtils.getAndSetStringToRequest(request, "executionCourseId"));
-        Integer curricularCourseId = Integer.valueOf(RequestUtils.getAndSetStringToRequest(request, "curricularCourseId"));
-        Integer executionPeriodId =
-                Integer.valueOf(separateLabel(request, "executionPeriod", "executionPeriodId", "executionPeriodName"));
+        String executionCourseId = RequestUtils.getAndSetStringToRequest(request, "executionCourseId");
+        String curricularCourseId = RequestUtils.getAndSetStringToRequest(request, "curricularCourseId");
+        String executionPeriodId = separateLabel(request, "executionPeriod", "executionPeriodId", "executionPeriodName");
 
         InfoExecutionCourse infoExecutionCourse = ReadExecutionCourseByOID.run(executionCourseId);
         request.setAttribute("infoExecutionCourse", infoExecutionCourse);
@@ -90,15 +89,14 @@ public class EditExecutionCourseTransferCurricularCoursesDispatchAction extends 
 
         RequestUtils.getAndSetStringToRequest(request, "executionCourseId");
         RequestUtils.getAndSetStringToRequest(request, "curricularCourseId");
-        Integer executionPeriodId =
-                Integer.valueOf(separateLabel(request, "executionPeriod", "executionPeriodId", "executionPeriodName"));
+        String executionPeriodId = separateLabel(request, "executionPeriod", "executionPeriodId", "executionPeriodName");
 
         String destinationExecutionDegreeIdString = (String) dynaActionForm.get("destinationExecutionDegreeId");
         String curricularYearString = (String) dynaActionForm.get("curricularYear");
 
         if (!StringUtils.isEmpty(destinationExecutionDegreeIdString) && !StringUtils.isEmpty(curricularYearString)
                 && StringUtils.isNumeric(destinationExecutionDegreeIdString) && StringUtils.isNumeric(curricularYearString)) {
-            Integer destinationExecutionDegreeId = Integer.valueOf(destinationExecutionDegreeIdString);
+            String destinationExecutionDegreeId = destinationExecutionDegreeIdString;
             Integer curricularYear = Integer.valueOf(curricularYearString);
 
             List executionCourses =
@@ -135,11 +133,8 @@ public class EditExecutionCourseTransferCurricularCoursesDispatchAction extends 
 
             TransferCurricularCourse.run(executionCourseIdString, curricularCourseIdString, destinationExecutionCourseIdString);
 
-            CurricularCourse curricularCourseForMessage =
-                    (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(
-                            Integer.valueOf(curricularCourseIdString));
-            ExecutionCourse executionCourseForMessage =
-                    RootDomainObject.getInstance().readExecutionCourseByOID(Integer.valueOf(destinationExecutionCourseIdString));
+            CurricularCourse curricularCourseForMessage = AbstractDomainObject.fromExternalId(curricularCourseIdString);
+            ExecutionCourse executionCourseForMessage = AbstractDomainObject.fromExternalId(destinationExecutionCourseIdString);
             String curricularCourseName = curricularCourseForMessage.getNameI18N().getContent();
             if (StringUtils.isEmpty(curricularCourseName)) {
                 curricularCourseName = curricularCourseForMessage.getName();
@@ -168,13 +163,13 @@ public class EditExecutionCourseTransferCurricularCoursesDispatchAction extends 
 
     private void prepareReturnSessionBean(HttpServletRequest request, Boolean chooseNotLinked, String executionCourseId) {
         // Preparing sessionBean for the EditExecutionCourseDA.list...Actions... (needed on the editExecutionCourse page)
-        Integer executionPeriodId = Integer.valueOf((String) request.getAttribute("executionPeriodId"));
+        String executionPeriodId = (String) request.getAttribute("executionPeriodId");
 
         ExecutionCourse executionCourse = null;
         if (!StringUtils.isEmpty(executionCourseId)) {
-            executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(Integer.valueOf(executionCourseId));
+            executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
         }
-        ExecutionSemester executionPeriod = RootDomainObject.getInstance().readExecutionSemesterByOID(executionPeriodId);
+        ExecutionSemester executionPeriod = AbstractDomainObject.fromExternalId(executionPeriodId);
 
         ExecutionCourseBean sessionBean = new ExecutionCourseBean();
 
@@ -186,11 +181,11 @@ public class EditExecutionCourseTransferCurricularCoursesDispatchAction extends 
             separateLabel(request, "executionDegree", "executionDegreeId", "executionDegreeName");
             separateLabel(request, "curYear", "curYearId", "curYearName");
 
-            Integer executionDegreeId = Integer.valueOf((String) request.getAttribute("executionDegreeId"));
-            Integer curricularYearId = Integer.valueOf((String) request.getAttribute("curYearId"));
+            String executionDegreeId = (String) request.getAttribute("executionDegreeId");
+            String curricularYearId = (String) request.getAttribute("curYearId");
 
-            ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeId);
-            CurricularYear curYear = RootDomainObject.getInstance().readCurricularYearByOID(curricularYearId);
+            ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeId);
+            CurricularYear curYear = AbstractDomainObject.fromExternalId(curricularYearId);
 
             sessionBean.setExecutionDegree(executionDegree);
             sessionBean.setCurricularYear(curYear);

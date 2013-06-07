@@ -59,14 +59,14 @@ public class GratuitySituationDetailsDispatchAction extends FenixDispatchAction 
         String studentId = getFromRequest("studentId", request);
 
         DynaActionForm createGuideFromTransactionsForm = (DynaActionForm) form;
-        createGuideFromTransactionsForm.set("gratuitySituationId", new Integer(gratuitySituationId));
-        createGuideFromTransactionsForm.set("studentId", new Integer(studentId));
+        createGuideFromTransactionsForm.set("gratuitySituationId", gratuitySituationId);
+        createGuideFromTransactionsForm.set("studentId", studentId);
 
         // Read Registration
         InfoStudent infoStudent = null;
 
         try {
-            infoStudent = (InfoStudent) ReadStudentById.run(new Integer(studentId));
+            infoStudent = (InfoStudent) ReadStudentById.run(studentId);
 
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
@@ -81,7 +81,7 @@ public class GratuitySituationDetailsDispatchAction extends FenixDispatchAction 
         InfoGratuitySituation infoGratuitySituation = null;
 
         try {
-            infoGratuitySituation = ReadGratuitySituationById.run(new Integer(gratuitySituationId));
+            infoGratuitySituation = ReadGratuitySituationById.run(gratuitySituationId);
 
         } catch (ExcepcaoInexistente e) {
             throw new FenixActionException(e);

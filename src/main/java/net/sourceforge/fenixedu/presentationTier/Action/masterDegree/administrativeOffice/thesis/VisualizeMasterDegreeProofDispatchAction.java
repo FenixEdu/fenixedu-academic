@@ -33,7 +33,7 @@ public class VisualizeMasterDegreeProofDispatchAction extends FenixDispatchActio
     public ActionForward getStudentAndMasterDegreeProofVersion(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        final Integer scpID = Integer.valueOf(request.getParameter("scpID"));
+        final String scpID = request.getParameter("scpID");
         StudentCurricularPlan studentCurricularPlan = AbstractDomainObject.fromExternalId(scpID);
 
         new MasterDegreeThesisOperations().transportStudentCurricularPlan(form, request, new ActionErrors(),

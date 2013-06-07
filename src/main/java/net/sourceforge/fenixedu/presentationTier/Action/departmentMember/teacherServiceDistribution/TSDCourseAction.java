@@ -143,7 +143,7 @@ public class TSDCourseAction extends FenixDispatchAction {
         DynaActionForm dynaForm = (DynaActionForm) form;
 
         TeacherServiceDistribution tsd = getSelectedTeacherServiceDistribution(dynaForm);
-        Integer[] tsdCurricularCourseToGroupArray = obtainAssociatedTSDCurricularCoursesFromDynaActionForm(dynaForm);
+        String[] tsdCurricularCourseToGroupArray = obtainAssociatedTSDCurricularCoursesFromDynaActionForm(dynaForm);
 
         if (tsdCurricularCourseToGroupArray.length > 0) {
             TSDCurricularCourseGroup tsdCurricularCourseGroup =
@@ -156,14 +156,8 @@ public class TSDCourseAction extends FenixDispatchAction {
         return loadTSDCourses(mapping, form, request, response);
     }
 
-    private Integer[] obtainAssociatedTSDCurricularCoursesFromDynaActionForm(DynaActionForm dynaForm) {
-        String[] tsdCurricularCourseToGroupArrayString = (String[]) dynaForm.get("tsdCurricularCourseArray");
-        Integer[] tsdCurricularCourseToGroupArray = new Integer[tsdCurricularCourseToGroupArrayString.length];
-
-        for (int i = 0; i < tsdCurricularCourseToGroupArrayString.length; i++) {
-            tsdCurricularCourseToGroupArray[i] = Integer.parseInt(tsdCurricularCourseToGroupArrayString[i]);
-        }
-        return tsdCurricularCourseToGroupArray;
+    private String[] obtainAssociatedTSDCurricularCoursesFromDynaActionForm(DynaActionForm dynaForm) {
+        return (String[]) dynaForm.get("tsdCurricularCourseArray");
     }
 
     public ActionForward deleteTSDCurricularCourseGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -318,8 +312,7 @@ public class TSDCourseAction extends FenixDispatchAction {
     private TSDCurricularCourseGroup getSelectedTSDCurricularCourseGroup(DynaActionForm dynaForm,
             List<TSDCurricularCourseGroup> tsdCurricularCourseGroupList) throws FenixServiceException {
         TSDCurricularCourseGroup selectedTSDCurricularCourseGroup =
-                (TSDCurricularCourseGroup) rootDomainObject
-                        .readTSDCourseByOID((Integer) dynaForm.get("tsdCurricularCourseGroup"));
+                AbstractDomainObject.fromExternalId((String) dynaForm.get("tsdCurricularCourseGroup"));
 
         if (selectedTSDCurricularCourseGroup == null) {
             if (tsdCurricularCourseGroupList != null && !tsdCurricularCourseGroupList.isEmpty()) {
@@ -335,7 +328,7 @@ public class TSDCourseAction extends FenixDispatchAction {
     private TSDCurricularCourse getSelectedTSDCurricularCourse(DynaActionForm dynaForm,
             List<TSDCurricularCourse> tsdCurricularCourseList) throws FenixServiceException {
         TSDCurricularCourse selectedTSDCurricularCourse =
-                (TSDCurricularCourse) AbstractDomainObject.fromExternalId((Integer) dynaForm.get("tsdCurricularCourse"));
+                (TSDCurricularCourse) AbstractDomainObject.fromExternalId((String) dynaForm.get("tsdCurricularCourse"));
 
         if (selectedTSDCurricularCourse == null) {
             if (tsdCurricularCourseList != null && !tsdCurricularCourseList.isEmpty()) {
@@ -350,7 +343,7 @@ public class TSDCourseAction extends FenixDispatchAction {
 
     private TSDCourse getSelectedTSDCourse(IUserView userView, DynaActionForm dynaForm, List<TSDCourse> competenceCourseList)
             throws FenixServiceException {
-        TSDCourse selectedTSDCourse = AbstractDomainObject.fromExternalId((Integer) dynaForm.get("competenceCourse"));
+        TSDCourse selectedTSDCourse = AbstractDomainObject.fromExternalId((String) dynaForm.get("competenceCourse"));
 
         if (selectedTSDCourse == null) {
             if (competenceCourseList != null && !competenceCourseList.isEmpty()) {
@@ -386,24 +379,23 @@ public class TSDCourseAction extends FenixDispatchAction {
         dynaForm.set("tsdCurricularCourseGroup", null);
     }
 
-    private Integer getFromRequestAndSetOnFormTSDProcessId(HttpServletRequest request, DynaActionForm dynaForm) {
-        dynaForm.set("tsdProcess", new Integer(request.getParameter("tsdProcess")));
-        return new Integer(request.getParameter("tsdProcess"));
+    private String getFromRequestAndSetOnFormTSDProcessId(HttpServletRequest request, DynaActionForm dynaForm) {
+        dynaForm.set("tsdProcess", request.getParameter("tsdProcess"));
+        return request.getParameter("tsdProcess");
     }
 
     private TeacherServiceDistribution getSelectedTeacherServiceDistribution(DynaActionForm dynaForm)
             throws FenixServiceException {
-        return AbstractDomainObject.fromExternalId((Integer) dynaForm.get("tsd"));
+        return AbstractDomainObject.fromExternalId((String) dynaForm.get("tsd"));
     }
 
     private TSDProcess getTSDProcess(IUserView userView, DynaActionForm dynaForm) {
-        return AbstractDomainObject.fromExternalId((Integer) dynaForm.get("tsdProcess"));
+        return AbstractDomainObject.fromExternalId((String) dynaForm.get("tsdProcess"));
     }
 
     private ExecutionSemester getSelectedExecutionPeriod(IUserView userView, DynaActionForm dynaForm,
             List<ExecutionSemester> executionPeriodList) throws FenixServiceException {
-        ExecutionSemester selectedExecutionPeriod =
-                AbstractDomainObject.fromExternalId((Integer) dynaForm.get("executionPeriod"));
+        ExecutionSemester selectedExecutionPeriod = AbstractDomainObject.fromExternalId((String) dynaForm.get("executionPeriod"));
 
         if (selectedExecutionPeriod == null) {
             if (executionPeriodList != null && executionPeriodList.size() > 0) {
@@ -426,7 +418,7 @@ public class TSDCourseAction extends FenixDispatchAction {
 
         initializeVariables(userView.getPerson(), dynaForm, tsdProcess.getCurrentTSDProcessPhase());
 
-        Integer selectedTSDCourseId = new Integer(request.getParameter("tsdCourse"));
+        String selectedTSDCourseId = request.getParameter("tsdCourse");
         TSDCourse tsdCourse = AbstractDomainObject.fromExternalId(selectedTSDCourseId);
 
         if (tsdCourse instanceof TSDCurricularCourse) {
@@ -437,7 +429,7 @@ public class TSDCourseAction extends FenixDispatchAction {
 
         }
 
-        dynaForm.set("tsd", new Integer(request.getParameter("tsd")));
+        dynaForm.set("tsd", request.getParameter("tsd"));
         TeacherServiceDistribution tsd = getSelectedTeacherServiceDistribution(dynaForm);
 
         ExecutionSemester period = tsdCourse.getExecutionPeriod();

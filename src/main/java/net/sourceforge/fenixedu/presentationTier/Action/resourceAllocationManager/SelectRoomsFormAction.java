@@ -31,7 +31,7 @@ public class SelectRoomsFormAction extends FenixAction {
 
         DynaActionForm roomForm = (DynaActionForm) form;
 
-        Integer executionPeriodId = (Integer) roomForm.get("executionPeriodId");
+        String executionPeriodId = (String) roomForm.get("executionPeriodId");
         List infoRooms =
                 (List) SelectRooms.run(new InfoRoomEditor(readFormValue(roomForm, "name"), readFormValue(roomForm, "building"),
                         readIntegerFormValue(roomForm, "floor"), readTypeRoomFormValue(roomForm, "type"), readIntegerFormValue(

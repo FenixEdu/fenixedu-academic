@@ -41,11 +41,11 @@
             <!-- Dynamic-FormBean for Choose Context Degree-->
             <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="chooseContextDegreeForm">
                   <form-property type="java.lang.Integer" name="index"></form-property>
-                  <form-property type="java.lang.Integer" name="indice"></form-property>
+                  <form-property type="java.lang.String" name="indice"></form-property>
                   <form-property type="java.lang.Integer" name="curYear"></form-property>
                   <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
-                  <form-property type="java.lang.Integer" name="degreeID"></form-property>
-                  <form-property type="java.lang.Integer" name="degreeCurricularPlanID"></form-property>
+                  <form-property type="java.lang.String" name="degreeID"></form-property>
+                  <form-property type="java.lang.String" name="degreeCurricularPlanID"></form-property>
                   <form-property type="java.lang.Boolean" name="allCurYear"></form-property>
                   <form-property type="java.lang.String" name="method"></form-property>
             </form-bean>
@@ -77,10 +77,10 @@
                   <form-property size="0" type="java.lang.String[]" name="selectedCurricularYears"></form-property>
                   <form-property type="java.lang.Boolean" name="selectAllCurricularYears"></form-property>
                   <form-property type="java.lang.Integer" name="page"></form-property>
-                  <form-property type="java.lang.Integer" name="degreeID"></form-property>
+                  <form-property type="java.lang.String" name="degreeID"></form-property>
                   <form-property type="java.lang.Integer" name="executionDegreeID"></form-property>
                   <form-property type="java.lang.Integer" name="degreeCurricularPlanID"></form-property>
-                  <form-property type="java.lang.Integer" name="indice"></form-property>
+                  <form-property type="java.lang.String" name="indice"></form-property>
             </form-bean>
             <!-- Dynamic-FormBean para Day And Shift Context -->
             <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="chooseDayAndShiftForm">
@@ -91,9 +91,9 @@
                   <form-property type="java.lang.Integer" name="page"></form-property>
             </form-bean>
             <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="teachersBodyForm">
-                  <form-property type="java.lang.Integer" name="executionYearId"></form-property>
-                  <form-property type="java.lang.Integer" name="executionDegreeId"></form-property>
-                  <form-property type="java.lang.Integer" name="departmentId"></form-property>
+                  <form-property type="java.lang.String" name="executionYearId"></form-property>
+                  <form-property type="java.lang.String" name="executionDegreeId"></form-property>
+                  <form-property type="java.lang.String" name="departmentId"></form-property>
                   <form-property type="java.lang.Integer" name="semester"></form-property>
                   <form-property type="java.lang.Integer" name="teacherType"></form-property>
                   <form-property type="java.lang.String" name="searchDetails"></form-property>

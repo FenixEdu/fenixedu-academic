@@ -131,7 +131,7 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
 
             InfoDegreeCurricularPlan infoDegreeCurricularPlan = infoExecutionDegree.getInfoDegreeCurricularPlan();
             InfoDegree infoDegree = infoDegreeCurricularPlan.getInfoDegree();
-            DegreeType degreeTypeEnum = (DegreeType) infoDegree.getDegreeType();
+            DegreeType degreeTypeEnum = infoDegree.getDegreeType();
             MessageResources messageResources = this.getResources(request, "ENUMERATION_RESOURCES");
             String degreeType = messageResources.getMessage(degreeTypeEnum.name());
 
@@ -249,7 +249,7 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
 
         // data from request
         String executionYearString = null;
-        Integer degreeCurricularPlanID = null;
+        String degreeCurricularPlanID = null;
         String orderingType = null;
 
         try {
@@ -257,11 +257,11 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
             orderingType = request.getParameter("order");
             if (orderingType != null) {
                 executionYearString = request.getParameter("chosenYear");
-                degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+                degreeCurricularPlanID = request.getParameter("degreeCurricularPlanID");
 
             } else {
                 executionYearString = (String) studentGratuityListForm.get("chosenYear");
-                degreeCurricularPlanID = (Integer) studentGratuityListForm.get("degreeCurricularPlanID");
+                degreeCurricularPlanID = (String) studentGratuityListForm.get("degreeCurricularPlanID");
                 orderingType = (String) studentGratuityListForm.get("order");
             }
         } catch (NumberFormatException nfe) {

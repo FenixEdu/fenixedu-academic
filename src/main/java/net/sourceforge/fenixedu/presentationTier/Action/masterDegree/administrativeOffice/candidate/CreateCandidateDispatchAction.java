@@ -63,9 +63,9 @@ public class CreateCandidateDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         // Get the Chosen Master Degree
-        Integer masterDegreeID = new Integer(request.getParameter("degreeID"));
+        String masterDegreeID = request.getParameter("degreeID");
         if (masterDegreeID == null) {
-            masterDegreeID = (Integer) request.getAttribute("degreeID");
+            masterDegreeID = (String) request.getAttribute("degreeID");
         }
 
         List result = null;
@@ -87,9 +87,9 @@ public class CreateCandidateDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         // Get the Chosen Master Degree
-        Integer curricularPlanID = new Integer(request.getParameter("curricularPlanID"));
+        String curricularPlanID = request.getParameter("curricularPlanID");
         if (curricularPlanID == null) {
-            curricularPlanID = (Integer) request.getAttribute("curricularPlanID");
+            curricularPlanID = (String) request.getAttribute("curricularPlanID");
         }
         request.setAttribute("curricularPlanID", curricularPlanID);
 
@@ -152,7 +152,7 @@ public class CreateCandidateDispatchAction extends FenixDispatchAction {
         // Get the Information
         DynaActionForm createCandidateForm = (DynaActionForm) form;
         String degreeType = (String) createCandidateForm.get("specialization");
-        Integer executionDegreeOID = new Integer((String) createCandidateForm.get("executionDegreeOID"));
+        String executionDegreeOID = (String) createCandidateForm.get("executionDegreeOID");
         String name = (String) createCandidateForm.get("name");
         String identificationDocumentNumber = (String) createCandidateForm.get("identificationDocumentNumber");
         String identificationDocumentType = (String) createCandidateForm.get("identificationDocumentType");

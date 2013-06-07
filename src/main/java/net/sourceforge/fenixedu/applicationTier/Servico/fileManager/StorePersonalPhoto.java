@@ -8,12 +8,10 @@ import net.sourceforge.fenixedu.dataTransferObject.person.PhotographUploadBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PhotoType;
 import net.sourceforge.fenixedu.domain.Photograph;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.ByteArray;
 import net.sourceforge.fenixedu.util.ContentType;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * 
@@ -30,15 +28,6 @@ public class StorePersonalPhoto {
         if (person == null) {
             throw new ExcepcaoInexistente("Unknown Person !!");
         }
-
-        storePersonalPhoto(contents, compressed, contentType, person);
-    }
-
-    @Checked("RolePredicates.OPERATOR_PREDICATE")
-    @Service
-    public static void run(byte[] contents, byte[] compressed, ContentType contentType, Integer personID)
-            throws ExcepcaoPersistencia {
-        Person person = (Person) AbstractDomainObject.fromExternalId(personID);
 
         storePersonalPhoto(contents, compressed, contentType, person);
     }

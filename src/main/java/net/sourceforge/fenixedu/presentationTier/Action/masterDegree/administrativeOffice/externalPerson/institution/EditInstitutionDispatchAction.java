@@ -99,7 +99,7 @@ public class EditInstitutionDispatchAction extends FenixDispatchAction {
 
         DynaActionForm editInstitutionForm = (DynaActionForm) form;
 
-        Integer oldInstitutionId = (Integer) editInstitutionForm.get("institutionId");
+        String oldInstitutionId = (String) editInstitutionForm.get("institutionId");
         String newInstitutionName = (String) editInstitutionForm.get("name");
 
         try {

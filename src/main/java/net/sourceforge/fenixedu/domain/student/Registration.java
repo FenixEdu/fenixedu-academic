@@ -1620,7 +1620,7 @@ public class Registration extends Registration_Base {
         return readAllNonReimbursedInsuranceTransactionsByExecutionYear(executionYear).isEmpty();
     }
 
-    final public Enrolment findEnrolmentByEnrolmentID(final Integer enrolmentID) {
+    final public Enrolment findEnrolmentByEnrolmentID(final String enrolmentID) {
         for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
             final Enrolment enrolment = studentCurricularPlan.findEnrolmentByEnrolmentID(enrolmentID);
             if (enrolment != null) {

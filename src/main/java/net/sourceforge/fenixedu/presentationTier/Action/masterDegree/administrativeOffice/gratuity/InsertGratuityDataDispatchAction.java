@@ -143,14 +143,14 @@ public class InsertGratuityDataDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward prepareInsertGratuityData(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response)  {
+            HttpServletResponse response) {
         IUserView userView = UserView.getUser();
         DynaValidatorForm gratuityForm = (DynaValidatorForm) form;
         ActionErrors errors = new ActionErrors();
 
         String executionYear = (String) gratuityForm.get("executionYear");
         String degree = (String) gratuityForm.get("degree");
-        Integer degreeId = Integer.valueOf(StringUtils.substringAfter(degree, "#"));
+        String degreeId = StringUtils.substringAfter(degree, "#");
         String degreeName = degree.substring(0, degree.indexOf("#"));
         gratuityForm.set("degreeName", degreeName);
         request.setAttribute("degreeName", degreeName);
