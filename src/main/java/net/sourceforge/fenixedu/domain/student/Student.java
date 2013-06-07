@@ -763,10 +763,8 @@ public class Student extends Student_Base {
         Map<Registration, Set<DistributedTest>> result = new HashMap<Registration, Set<DistributedTest>>();
         for (final Registration registration : getRegistrationsSet()) {
             for (StudentTestQuestion studentTestQuestion : registration.getStudentTestsQuestions()) {
-                if (studentTestQuestion.getDistributedTest().getTestScope().getClassName()
-                        .equals(ExecutionCourse.class.getName())
-                        && studentTestQuestion.getDistributedTest().getTestScope().getKeyClass()
-                                .equals(executionCourse.getExternalId())) {
+                if (studentTestQuestion.getDistributedTest().getTestScope().getExecutionCourse()
+                                .equals(executionCourse)) {
                     Set<DistributedTest> tests = result.get(registration);
                     if (tests == null) {
                         tests = new HashSet<DistributedTest>();
@@ -775,7 +773,7 @@ public class Student extends Student_Base {
                     result.put(registration, tests);
                 }
             }
-        }
+        } 
         return result;
     }
 

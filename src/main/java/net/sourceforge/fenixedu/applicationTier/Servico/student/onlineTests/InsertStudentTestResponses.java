@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarDateCompa
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarHourComparator;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteStudentTestFeedback;
 import net.sourceforge.fenixedu.domain.Attends;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Mark;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
@@ -175,7 +174,7 @@ public class InsertStudentTestResponses {
                 OnlineTest onlineTest = distributedTest.getOnlineTest();
                 Attends attend =
                         registration.getStudent().readAttendByExecutionCourse(
-                                ((ExecutionCourse) distributedTest.getTestScope().getDomainObject()));
+                                (distributedTest.getTestScope().getExecutionCourse()));
                 Mark mark = onlineTest.getMarkByAttend(attend);
 
                 if (mark == null) {

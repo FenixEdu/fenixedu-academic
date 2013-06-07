@@ -155,7 +155,7 @@ public class InsertDistributedTest {
             distributedTest.setImsFeedback(imsFeedback);
             distributedTest.setNumberOfQuestions(test.getTestQuestionsCount());
 
-            TestScope testScope = TestScope.readByDomainObject(ExecutionCourse.class, executionCourseId);
+            TestScope testScope = executionCourse.getTestScope();
 
             if (testScope == null) {
                 testScope = new TestScope(executionCourse);

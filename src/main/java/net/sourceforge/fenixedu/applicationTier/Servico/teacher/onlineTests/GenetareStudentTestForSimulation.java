@@ -38,12 +38,13 @@ public class GenetareStudentTestForSimulation {
             throw new InvalidArgumentsServiceException();
         }
 
-        TestScope testScope = TestScope.readByDomainObject(ExecutionCourse.class, executionCourseId);
+        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
+        if (executionCourse == null) {
+            throw new InvalidArgumentsServiceException();
+        }
+
+        TestScope testScope = executionCourse.getTestScope();
         if (testScope == null) {
-            final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
-            if (executionCourse == null) {
-                throw new InvalidArgumentsServiceException();
-            }
             testScope = new TestScope(executionCourse);
         }
 

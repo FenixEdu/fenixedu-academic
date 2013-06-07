@@ -9,8 +9,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import pt.ist.fenixframework.DomainObject;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * 
@@ -19,50 +17,18 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 public class TestScope extends TestScope_Base {
 
-    private DomainObject domainObject;
-
     public TestScope() {
         setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public TestScope(DomainObject object) {
+    public TestScope(ExecutionCourse executionCourse) {
         this();
-        setDomainObject(object);
-        setClassName(object.getClass().getName());
-        setKeyClass(object.getExternalId());
+        setExecutionCourse(executionCourse);
     }
 
-    public TestScope(String className, String classId) {
-        this();
-        setClassName(className);
-        setKeyClass(classId);
-    }
-
-    public void setDomainObject(DomainObject domainObject) {
-        this.domainObject = domainObject;
-
-    }
-
-    public DomainObject getDomainObject() {
-        if (domainObject == null && getClassName().equals(ExecutionCourse.class.getName())) {
-            ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(getKeyClass());
-            setDomainObject(executionCourse);
-        }
-        return domainObject;
-    }
-
-    public static TestScope readByDomainObject(Class clazz, String externalId) {
-        for (final TestScope testScope : RootDomainObject.getInstance().getTestScopes()) {
-            if (testScope.getKeyClass().equals(externalId) && testScope.getClassName().equals(clazz.getName())) {
-                return testScope;
-            }
-        }
-        return null;
-    }
-
-    public static List<DistributedTest> readDistributedTestsByTestScope(Class clazz, String externalId) {
+    public static List<DistributedTest> readDistributedTestsByTestScope(ExecutionCourse executionCourse) {
         List<DistributedTest> result = new ArrayList<DistributedTest>();
-        TestScope testScope = readByDomainObject(clazz, externalId);
+        TestScope testScope = executionCourse.getTestScope();
         if (testScope != null) {
             result.addAll(testScope.getDistributedTests());
         }

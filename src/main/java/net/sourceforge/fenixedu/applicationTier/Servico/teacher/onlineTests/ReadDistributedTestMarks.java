@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoDistributedTest;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteStudentsTestMarks;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestionMark;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
@@ -79,8 +78,8 @@ public class ReadDistributedTestMarks {
                 new ArrayList<InfoStudentTestQuestionMark>(infoStudentTestQuestionMarkList.values());
         Collections.sort(infoStudentTestQuestionList, new BeanComparator("studentNumber"));
         infoSiteStudentsTestMarks.setInfoStudentTestQuestionList(infoStudentTestQuestionList);
-        infoSiteStudentsTestMarks.setExecutionCourse(InfoExecutionCourse.newInfoFromDomain((ExecutionCourse) distributedTest
-                .getTestScope().getDomainObject()));
+        infoSiteStudentsTestMarks.setExecutionCourse(InfoExecutionCourse.newInfoFromDomain(distributedTest.getTestScope()
+                .getExecutionCourse()));
         infoSiteStudentsTestMarks.setInfoDistributedTest(InfoDistributedTest.newInfoFromDomain(distributedTest));
 
         return infoSiteStudentsTestMarks;

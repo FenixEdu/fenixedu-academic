@@ -42,7 +42,7 @@ public class DistributedTest extends DistributedTest_Base {
     }
 
     public void delete() {
-        ExecutionCourse ec = (ExecutionCourse) getTestScope().getDomainObject();
+        ExecutionCourse ec = getTestScope().getExecutionCourse();
         EvaluationManagementLog.createLog(ec, "resources.MessagingResources",
                 "log.executionCourse.evaluation.tests.distribution.removed", getEvaluationTitle(), getBeginDateTimeFormatted(),
                 ec.getName(), ec.getDegreePresentationString());

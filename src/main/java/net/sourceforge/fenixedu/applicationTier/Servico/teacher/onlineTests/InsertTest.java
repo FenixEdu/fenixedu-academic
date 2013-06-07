@@ -16,9 +16,9 @@ public class InsertTest {
         if (executionCourse == null) {
             throw new InvalidArgumentsServiceException();
         }
-        TestScope testScope = TestScope.readByDomainObject(ExecutionCourse.class, executionCourseId);
+        TestScope testScope = executionCourse.getTestScope();
         if (testScope == null) {
-            testScope = new TestScope(ExecutionCourse.class.getName(), executionCourseId);
+            testScope = new TestScope(executionCourse);
         }
         Test test = new Test(title, information, testScope);
         return test.getExternalId();

@@ -20,7 +20,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarDateComparator;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarHourComparator;
 import net.sourceforge.fenixedu.domain.Attends;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Mark;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
@@ -134,7 +133,7 @@ public class ChangeStudentTestQuestion {
                         OnlineTest onlineTest = studentTestQuestion.getDistributedTest().getOnlineTest();
                         Attends attend =
                                 studentTestQuestion.getStudent().readAttendByExecutionCourse(
-                                        ((ExecutionCourse) currentDistributedTest.getTestScope().getDomainObject()));
+                                        (currentDistributedTest.getTestScope().getExecutionCourse()));
                         Mark mark = onlineTest.getMarkByAttend(attend);
                         if (mark != null) {
                             mark.setMark(getNewStudentMark(studentTestQuestion.getDistributedTest(),
