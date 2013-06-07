@@ -1,4 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<%@page import="net.sourceforge.fenixedu.util.StringUtils"%>
 <%@page import="net.sourceforge.fenixedu._development.PropertiesManager"%>
 <%@page import="net.sourceforge.fenixedu.injectionCode.AccessControl"%>
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
@@ -18,6 +19,10 @@
 </logic:present>
 
 <%-- <link rel="stylesheet" type="text/css" media="screen" href="<%= request.getContextPath() %>/CSS/iststyle.css"/> --%>
+<link rel="stylesheet" type="text/css" media="screen" href="<%= request.getContextPath() %>/CSS/execution_course.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="<%= request.getContextPath() %>/CSS/exam_map.css" />
+<link rel="stylesheet" type="text/css" media="screen,print" href="<%= request.getContextPath() %>/CSS/dotist_timetables.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="<%= request.getContextPath() %>/CSS/general.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="<%= request.getContextPath() %>/CSS/istPublicPagesStyles.css"/>
 <link rel="stylesheet" type="text/css" media="print" href="<%= request.getContextPath() %>/CSS/iststyle_print.css"/>
 <tiles:insert attribute="css-headers" ignore="true" />
@@ -30,27 +35,13 @@
 </script>
 <jsp:include page="/includeMathJax.jsp" />
 
+<tiles:insert attribute="page-context" ignore="true"/>
+<tiles:insert attribute="rss" ignore="true" />
+<tiles:insert attribute="keywords" ignore="true" />
+
 <title>
-<tiles:useAttribute name="title" id="titleK" ignore="true" />
-<tiles:useAttribute name="bundle" id="bundleT" ignore="true" />
-<logic:present name="bundleT">
-	<logic:present name="titleK">
-		<bean:message name="titleK" bundle="<%= bundleT.toString() %>" /> -
-		<bean:message key="institution.name" bundle="GLOBAL_RESOURCES" />
-	</logic:present>
-</logic:present>
-<logic:notPresent name="bundleT">
-	<logic:present name="<%= FilterFunctionalityContext.CONTEXT_KEY %>">
-		<bean:define id="funcContext" name="<%= FilterFunctionalityContext.CONTEXT_KEY %>" property="selectedContent" type="net.sourceforge.fenixedu.domain.contents.Content"/>
-		<bean:define id="contentContext" name="<%= FilterFunctionalityContext.CONTEXT_KEY %>" property="selectedContainer" type="net.sourceforge.fenixedu.domain.contents.Content"/>
-		<logic:equal name="contentContext" property="unitSite" value="true">
-			<bean:write name="funcContext" property="name" /> -
-			<bean:write name="contentContext" property="unit.partyName"/> -
-		</logic:equal>
-	</logic:present>
-	<tiles:getAsString name="title" ignore="true" />
+	<tiles:insert name="title" ignore="true" />
 	<bean:message key="institution.name" bundle="GLOBAL_RESOURCES" />
-</logic:notPresent>
 </title> <%-- TITLE --%>
 
 <!-- Link -->
@@ -78,23 +69,10 @@
 <jsp:include page="devMode.jsp" flush="true"/>
 
 <tiles:insert attribute="page-context" ignore="true"/>
-
-<!-- BEGIN BROWSER UPGRADE MESSAGE -->
-<div class="browser_upgrade">
-  <p><strong>Aviso:</strong>
-  Se est&aacute; a ler esta mensagem, provavelmente, o browser que utiliza n&atilde;o &eacute; compat&iacute;vel
-  com os &quot;standards&quot; recomendados pela <a href="http://www.w3.org">W3C</a>.
-  Sugerimos vivamente que actualize o seu browser para ter uma melhor experi&ecirc;ncia
-  de utiliza&ccedil;&atilde;o deste &quot;website&quot;.
-  Mais informa&ccedil;&otilde;es em <a href="http://www.webstandards.org/upgrade/">webstandards.org</a>.</p>
-  <p><strong>Warning:</strong> If you are reading this message, probably, your
-    browser is not compliant with the standards recommended by the <a href="http://www.w3.org">W3C</a>. We suggest
-    that you upgrade your browser to enjoy a better user experience of this website.
-    More informations on <a href="http://www.webstandards.org/upgrade/">webstandards.org</a>.</p>
-</div>
-<!-- END BROWSER UPGRADE MESSAGE -->
+<jsp:include page="browserUpgradeMessage.jsp" flush="true"/>
 
 <!-- SYMBOLSROW -->
+<!-- h1>IST_LAYOUT &emsp; + &emsp; IST_LAYOUT_CONTENT &emsp; + &emsp; PUBLIC_EXECUTION_COURSE &emsp; + &emsp; PUBLIC_GES_DIS_LAYOUT_2COL &emsp; + &emsp; UNIT_SITE_LAYOUT</h1-->
 <div id="header">
 	<tiles:insert attribute="symbols_row" ignore="true"/>
 </div>
@@ -105,32 +83,50 @@
 </div>
 
 <div id="holder">
-<table id="bigtable" width="100%" border="0" cellpadding="0" cellspacing="0">
-<tr>
-
-<td id="latnav_container">
-<!--MAIN NAVIGATION -->   
-<div id="latnav">
-	<tiles:insert attribute="main_navigation" ignore="true"/>
-</div>
-</td>
-
-<!-- DEGREE SITE -->
-<td width="100%" colspan="3" id="main">
-
-<tiles:useAttribute id="hideLanguage" name="hideLanguage" ignore="true"/>
-<logic:notPresent name="hideLanguage">
-	<jsp:include page="../i18n.jsp"/>
-</logic:notPresent>
-
-<tiles:insert attribute="body-context" ignore="true"/>
-<tiles:insert attribute="body" ignore="true"/>
-<tiles:getAsString name="body-inline" ignore="true"/>
-
-</td>
-
-</tr>
-</table>
+	<logic:present name="courseSite">
+		<logic:notPresent name="executionCourse">
+			<bean:message bundle="GLOBAL_RESOURCES" key="error.message.resource.not.found"/>
+		</logic:notPresent>
+	</logic:present>
+	
+	<logic:notPresent name="courseSite">
+		<table id="bigtable" width="100%" border="0" cellpadding="0" cellspacing="0">
+		<tr>
+		
+		<td rowspan="3" id="latnav_container">
+			<!--MAIN NAVIGATION -->   
+			<div id="latnav">
+				<tiles:insert attribute="main_navigation" ignore="true"/>
+				<tiles:insert attribute="lateral_nav" ignore="true" />
+			</div>
+		</td>
+		
+		<!-- DEGREE SITE -->
+		<tiles:useAttribute id="unitSite" name="unitSite" ignore="true"/>
+		<logic:notPresent name="unitSite">
+			<td width="100%" colspan="3" id="main">
+		</logic:notPresent>
+		<logic:present name="unitSite">
+			<td width="100%" colspan="3" id="main" class="usitemain">
+		</logic:present>
+			<tiles:useAttribute id="hideLanguage" name="hideLanguage" ignore="true"/>
+			<logic:notPresent name="hideLanguage">
+				<jsp:include page="../i18n.jsp"/>
+			</logic:notPresent>
+			
+			<tiles:insert attribute="body_header" ignore="true"/>
+			<tiles:insert attribute="body-context" ignore="true"/>
+			<tiles:insert attribute="banner" ignore="true"/>
+			<tiles:insert attribute="executionCourseName" ignore="true" />
+			<tiles:insert attribute="executionCoursePeriod" ignore="true" />
+			<tiles:insert attribute="body" ignore="true"/>
+			<tiles:getAsString name="body-inline" ignore="true"/>
+		</td>
+		
+		</tr>
+		</table>
+	</logic:notPresent>
+	
 </div>
 <!-- FOOTER --> 
 <div id="footer">

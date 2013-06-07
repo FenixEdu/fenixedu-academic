@@ -101,12 +101,12 @@
 		<put name="body" value="/publico/degreeSite/errorExecutionCourseSite.jsp"/>
 	</definition>	
 	<definition name="searchProfessorships" extends="definition.public.mainPageISTWithtOutLayout">
-		<put name="title" value="public.general.professorships.search" />
+		<put name="titleString" value="public.general.professorships.search" />
 		<put name="main_navigation" value="/publico/degreeSite/mainNavigation_without_teaching.jsp" />	
 		<put name="body" value="/publico/services/teachers/searchProfessorships.jsp"/>
 	</definition>
 	<definition name="showProfessorships" extends="definition.public.mainPageISTWithtOutLayout">
-		<put name="title" value="public.general.professorships.show" />
+		<put name="titleString" value="public.general.professorships.show" />
 		<put name="main_navigation" value="/publico/degreeSite/mainNavigation_without_teaching.jsp" />	
 		<put name="body" value="/publico/services/teachers/showProfessorships.jsp"/>
 	</definition>
@@ -194,7 +194,7 @@
 	</definition>
 
 	<definition name="view-homepage" extends="definition.public.homepage">
-		<put name="title" value="/commons/functionalities/title.jsp" />
+		<put name="title" value="/commons/functionalities/simpleTitle.jsp" />
 		<put name="body" value="/publico/homepage/home.jsp"/>
 	</definition>
 	<definition name="show-publications" extends="definition.public.homepage">
@@ -338,7 +338,8 @@
 	</definition>	
 
 	<definition name="chooseRoom" extends="definition.public.mainPage">
-		<put name="title" value="public.general.chooseRoom" />
+		<put name="titleString" value="public.general.chooseRoom" />
+		<put name="bundle" value="TITLES_RESOURCES"/>
 		<put name="serviceName" value="Instituto Superior Técnico" />
 		<put name="symbols_row" value="/publico/degreeSite/symbolsRow.jsp" />
 		<put name="profile_navigation" value="/publico/degreeSite/profileNavigation.jsp" />
@@ -348,7 +349,8 @@
 	</definition>	
 
 	<definition name="viewRoom" extends="chooseRoom">
-		<put name="title" value="public.general.viewRoom" />
+		<put name="titleString" value="public.general.viewRoom" />
+		<put name="bundle" value="TITLES_RESOURCES"/>
 		<put name="serviceName" value="Instituto Superior Técnico" />
 		<put name="symbols_row" value="/publico/degreeSite/symbolsRow.jsp" />
 		<put name="profile_navigation" value="/publico/degreeSite/profileNavigation.jsp" />
@@ -420,19 +422,19 @@
 
 	<!-- =================== Announcements ============== -->
 	<definition name="public-list-announcements" extends="definition.public.executionCourse">
-		<put name="title" value="public.general.announcements" />
+		<put name="titleString" value="public.general.announcements" />
 		<put name="body" value="/publico/executionCourse/announcements/listAnnouncements.jsp" />
 	</definition>
 	<definition name="public-view-announcement" extends="definition.public.mainPage">
-		<put name="title" value="public.general.announcement" />
+		<put name="titleString" value="public.general.announcement" />
 		<put name="body" value="/messaging/announcements/viewAnnouncement.jsp" />
 	</definition>			
 	<definition name="executionCoruse-view-announcement" extends="definition.public.executionCourse">
-		<put name="title" value="public.general.announcement" />
+		<put name="titleString" value="public.general.announcement" />
 		<put name="body" value="/publico/executionCourse/announcements/viewAnnouncement.jsp" />
 	</definition>			
 	<definition name="execution-course-not-found" extends="definition.public.executionCourse">
-		<put name="title" value="public.general.notFount" />
+		<put name="titleString" value="public.general.notFount" />
 		<put name="body" value="/executionCourse/resourceDoesNotExist.jsp" />
 	</definition>			
 
@@ -741,14 +743,14 @@
 	</definition>		
 
 	<definition name="start-request-login-process" extends="definition.public.mainPageIST">
-		<put name="title" value="public.general.login.start" />
+		<put name="titleString" value="public.general.login.start" />
 		<put name="symbols_row" value="/publico/degreeSite/symbolsRow.jsp" />
 		<put name="body" value="/publico/researchUnitSite/requestLogin.jsp" />
 	  	<put name="footer" value="/commons/blank.jsp" />
 	</definition>		
 
 	<definition name="request-login-finish-process" extends="definition.public.mainPageIST">
-		<put name="title" value="public.general.login.finished" />
+		<put name="titleString" value="public.general.login.finished" />
 		<put name="symbols_row" value="/publico/degreeSite/symbolsRow.jsp" />
 		<put name="body" value="/publico/researchUnitSite/loginProcessFinished.jsp" />
 	  	<put name="footer" value="/commons/blank.jsp" />
@@ -766,11 +768,11 @@
 	<!-- =================== Find Spaces  =================== -->
 	
 	<definition name="list-found-spaces" extends="definition.public.findSpaces">
-		<put name="title" value="public.general.searchSpaces" />
+		<put name="titleString" value="public.general.searchSpaces" />
 		<put name="body" value="/publico/spaces/findSpaces.jsp" />
 	</definition>		
 	<definition name="view-selected-space" extends="definition.public.findSpaces">
-		<put name="title" value="public.general.searchSpaces.selected" />
+		<put name="titleString" value="public.general.searchSpaces.selected" />
 		<put name="body" value="/publico/spaces/viewSelectedSpace.jsp" />
 	</definition>	
 
@@ -805,47 +807,47 @@
         
 	<!--=== Alumni Registration === -->
 	<definition name="alumni.alumniPublicAccess" extends="definition.public.alumni">
-		<put name="title" value="public.alumni.access" />
+		<put name="titleString" value="public.alumni.access" />
 		<put name="body" value="/publico/alumni/alumniPublicAccess.jsp" />
 	</definition>
 	<definition name="alumni.alumniPublicAccessIdentityCheck" extends="definition.public.alumni">
-		<put name="title" value="public.alumni.identityCheck" />
+		<put name="titleString" value="public.alumni.identityCheck" />
 		<put name="body" value="/publico/alumni/alumniPublicAccessIdentityCheck.jsp" />
 	</definition>
 	<definition name="alumni.alumniPublicAccessRegistrationEmail" extends="definition.public.alumni">
-		<put name="title" value="public.alumni.registration.email" />
+		<put name="titleString" value="public.alumni.registration.email" />
 		<put name="body" value="/publico/alumni/alumniPublicAccessRegistrationEmail.jsp" />
 	</definition>
 	<definition name="alumni.alumniPublicAccessMessage" extends="definition.public.alumni">
-		<put name="title" value="public.alumni.message" />
+		<put name="titleString" value="public.alumni.message" />
 		<put name="body" value="/publico/alumni/alumniPublicAccessMessage.jsp" />
 	</definition>
 	<definition name="alumni.alumniPublicAccessInner" extends="definition.public.alumni">
-		<put name="title" value="public.alumni.inner" />
+		<put name="titleString" value="public.alumni.inner" />
 		<put name="body" value="/publico/alumni/alumniPublicAccessInner.jsp" />
 	</definition>
 	<definition name="alumni.alumniPublicAccessInformationInquiry" extends="definition.public.alumni">
-		<put name="title" value="public.alumni.informationInquiry" />
+		<put name="titleString" value="public.alumni.informationInquiry" />
 		<put name="body" value="/publico/alumni/alumniPublicAccessInformationInquiry.jsp" />
 	</definition>
 	<definition name="alumni.alumniCreatePasswordRequest" extends="definition.public.alumni">
-		<put name="title" value="public.alumni.password.create" />
+		<put name="titleString" value="public.alumni.password.create" />
 		<put name="body" value="/publico/alumni/alumniCreatePasswordRequest.jsp" />
 	</definition>
 	<definition name="alumni.alumniPasswordRequired" extends="definition.public.alumni">
-		<put name="title" value="public.alumni.password.required" />
+		<put name="titleString" value="public.alumni.password.required" />
 		<put name="body" value="/publico/alumni/alumniPasswordRequired.jsp" />
 	</definition>
 	<definition name="alumni.alumniRegistrationResult" extends="definition.public.alumni">
-		<put name="title" value="public.alumni.registration.result" />
+		<put name="titleString" value="public.alumni.registration.result" />
 		<put name="body" value="/publico/alumni/alumniRegistrationResult.jsp" />
 	</definition>
 	<definition name="alumni.alumniMailingLists" extends="definition.public.alumni">
-		<put name="title" value="public.alumni.mailingLists" />
+		<put name="titleString" value="public.alumni.mailingLists" />
 		<put name="body" value="/publico/alumni/alumniMailingLists.jsp" />
 	</definition>
 	<definition name="alumni.errorSendMail" extends="definition.public.alumni">
-		<put name="title" value="public.alumni.sendMailError" />
+		<put name="titleString" value="public.alumni.sendMailError" />
 		<put name="body" value="/publico/alumni/alumniPublicAccessErrorSendMail.jsp" />
 	</definition>
 		
@@ -854,88 +856,88 @@
 	<!-- Common -->
 
 	<definition name="candidacy.process.intro" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.general.intro" />
+		<put name="titleString" value="public.candidacy.general.intro" />
 		<put name="body" value="/publico/candidacy/candidaciesEntryPage.jsp"/>
 	</definition>
 
 	<definition name="candidacy.process.intro.en" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.general.intro.en" />	
+		<put name="titleString" value="public.candidacy.general.intro.en" />	
 		<put name="body" value="/publico/candidacy/candidaciesEntryPage_en.jsp"/>
 	</definition>
 
 	<definition name="candidacy.types.information.intro" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.general.type" />
+		<put name="titleString" value="public.candidacy.general.type" />
 		<put name="body" value="/publico/candidacy/candidaciesTypesInformationPage.jsp"/>
 	</definition> 
 	
 	<definition name="candidacy.types.information.intro.en" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.general.type.en" />
+		<put name="titleString" value="public.candidacy.general.type.en" />
 		<put name="body" value="/publico/candidacy/candidaciesTypesInformationPage_en.jsp"/>
 	</definition> 
 
 	<definition name="candidacy.national.admission.test" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.general.nationalAdmissionTest" />
+		<put name="titleString" value="public.candidacy.general.nationalAdmissionTest" />
 		<put name="body" value="/publico/candidacy/nationalAdmissionTest.jsp"/>
 	</definition> 
 
 	<definition name="candidacy.national.admission.test.en" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.general.nationalAdmissionTest.en" />
+		<put name="titleString" value="public.candidacy.general.nationalAdmissionTest.en" />
 		<put name="body" value="/publico/candidacy/nationalAdmissionTest_en.jsp"/>
 	</definition> 
 	
 	<definition name="candidacy.process.closed" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.general.closed" />
+		<put name="titleString" value="public.candidacy.general.closed" />
 		<put name="body" value="/publico/candidacy/candidacyProcessClosed.jsp"/>
 		<put name="hideLanguage" value="true" />
 	</definition>
 	
 	<definition name="inform.submited.candidacy" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.general.submitted" />
+		<put name="titleString" value="public.candidacy.general.submitted" />
 		<put name="body" value="/publico/candidacy/candidacySubmited.jsp"/>
 		<put name="hideLanguage" value="true" />
 	</definition>
 
 	<definition name="show.candadidacy.authentication.page" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.general.authentication" />
+		<put name="titleString" value="public.candidacy.general.authentication" />
 		<put name="body" value="/publico/candidacy/authentication.jsp"/>
 	</definition>
 
 	<definition name="individual.candidacy.not.found" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.general.notFound" />
+		<put name="titleString" value="public.candidacy.general.notFound" />
 		<put name="body" value="/publico/candidacy/individualCandidacyNotFound.jsp"/>
 		<put name="hideLanguage" value="true" />
 	</definition>
 
 	<definition name="show.pre.creation.candidacy.form" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.general.preCreationForm" />
+		<put name="titleString" value="public.candidacy.general.preCreationForm" />
 		<put name="body" value="/publico/candidacy/preCreationCandidacyForm.jsp"/>
 	</definition>
 	
 	<definition name="show.email.message.sent" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.general.showSentEmail" />
+		<put name="titleString" value="public.candidacy.general.showSentEmail" />
 		<put name="body" value="/publico/candidacy/showEmailSent.jsp"/>
 		<put name="hideLanguage" value="true" />
 	</definition>
 	
 	<definition name="individual.candidacy.with.associated.hash.not.found" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.general.notFound" />
+		<put name="titleString" value="public.candidacy.general.notFound" />
 		<put name="body" value="/publico/candidacy/individualCandidacyProcessNotFound.jsp"/>
 		<put name="hideLanguage" value="true" />
 	</definition>
 	
 	<definition name="show.application.submission.conditions" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.general.submission.conditions" />
+		<put name="titleString" value="public.candidacy.general.submission.conditions" />
 		<put name="body" value="/publico/candidacy/applicationSubmissionConditions.jsp"/>
 		<put name="hideLanguage" value="true" />
 	</definition>
 
 	<definition name="show.application.access.recovery.form" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.general.accessRecovery" />
+		<put name="titleString" value="public.candidacy.general.accessRecovery" />
 		<put name="body" value="/publico/candidacy/recoverApplicationAccess.jsp"/>
 	</definition>
 
 	<definition name="show.application.access.recovery.email.sent" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.general.accessRecovery.showMail" />
+		<put name="titleString" value="public.candidacy.general.accessRecovery.showMail" />
 		<put name="body" value="/publico/candidacy/applicationAccessRecoveryEmailSent.jsp"/>
 		<put name="hideLanguage" value="true" />
 	</definition>
@@ -943,245 +945,245 @@
 
 	<!--  Degree Change -->
     <definition name="degree.change.candidacy.creation.page" extends="definition.candidacy.process">
-    	<put name="title" value="public.candidacy.degreeChange.creation.pt1" />
+    	<put name="titleString" value="public.candidacy.degreeChange.creation.pt1" />
     	<put name="body" value="/publico/candidacy/degreechange/createCandidacyPartOne.jsp"/>
     	<put name="hideLanguage" value="true" />
     </definition>    
 	
 	<definition name="degree.change.candidacy.continue.creation" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.degreeChange.creation.pt2" />
+		<put name="titleString" value="public.candidacy.degreeChange.creation.pt2" />
 		<put name="body" value="/publico/candidacy/degreechange/createCandidacyPartTwo.jsp"/>
 		<put name="hideLanguage" value="true" />
 	</definition>
 	
 	<definition name="degree.change.candidacy.process.intro" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.degreeChange.intro" />
+		<put name="titleString" value="public.candidacy.degreeChange.intro" />
 		<put name="body" value="/publico/candidacy/degreechange/main.jsp"/>
 	</definition>
 	
 	<definition name="degree.change.show.candidacy.details" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.degreeChange.view" />
+		<put name="titleString" value="public.candidacy.degreeChange.view" />
 		<put name="body" value="/publico/candidacy/degreechange/viewCandidacy.jsp"/>
 	</definition>
 
 	<definition name="degree.change.edit.candidacy" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.degreeChange.edit" />
+		<put name="titleString" value="public.candidacy.degreeChange.edit" />
 		<put name="body" value="/publico/candidacy/degreechange/editCandidacy.jsp"/>
 		<put name="hideLanguage" value="true" />
 	</definition>
 
 	<definition name="degree.change.edit.candidacy.habilitations" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.degreeChange.edit.habilitations" />
+		<put name="titleString" value="public.candidacy.degreeChange.edit.habilitations" />
 		<put name="body" value="/publico/candidacy/degreechange/editCandidacyHabilitations.jsp"/>
 		<put name="hideLanguage" value="true" />
 	</definition>
 
 	<definition name="degree.change.upload.photo" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.degreeChange.uploadPhoto" />
+		<put name="titleString" value="public.candidacy.degreeChange.uploadPhoto" />
 		<put name="body" value="/publico/candidacy/degreechange/uploadPhoto.jsp"/>
 		<put name="hideLanguage" value="true" />
 	</definition>	
 	
 	<definition name="degree.change.edit.candidacy.documents" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.degreeChange.edit.documents" />
+		<put name="titleString" value="public.candidacy.degreeChange.edit.documents" />
 		<put name="body" value="/publico/candidacy/degreechange/editCandidacyDocuments.jsp"/>
 		<put name="hideLanguage" value="true" />
 	</definition>
 
 	<!--  Degree Transfer -->
     <definition name="degree.transfer.candidacy.creation.page" extends="definition.candidacy.process">
-    	<put name="title" value="public.candidacy.degreeTransfer.creation.pt1" />
+    	<put name="titleString" value="public.candidacy.degreeTransfer.creation.pt1" />
     	<put name="body" value="/publico/candidacy/degreeTransfer/createCandidacyPartOne.jsp"/>
     	<put name="hideLanguage" value="true" />
     </definition>    
 
 	<definition name="degree.transfer.candidacy.continue.creation" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.degreeTransfer.creation.pt2" />
+		<put name="titleString" value="public.candidacy.degreeTransfer.creation.pt2" />
 		<put name="body" value="/publico/candidacy/degreeTransfer/createCandidacyPartTwo.jsp"/>
 		<put name="hideLanguage" value="true" />
 	</definition>
 	
 	<definition name="degree.transfer.candidacy.process.intro" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.degreeTransfer.intro" />
+		<put name="titleString" value="public.candidacy.degreeTransfer.intro" />
 		<put name="body" value="/publico/candidacy/degreeTransfer/main.jsp"/>
 	</definition>
 	
 	<definition name="degree.transfer.show.candidacy.details" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.degreeTransfer.view" />
+		<put name="titleString" value="public.candidacy.degreeTransfer.view" />
 		<put name="body" value="/publico/candidacy/degreeTransfer/viewCandidacy.jsp"/>
 	</definition>
 	
 	<definition name="degree.transfer.edit.candidacy" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.degreeTransfer.edit" />
+		<put name="titleString" value="public.candidacy.degreeTransfer.edit" />
 		<put name="body" value="/publico/candidacy/degreeTransfer/editCandidacy.jsp"/>
 		<put name="hideLanguage" value="true" />
 	</definition>
 
 	<definition name="degree.transfer.edit.candidacy.habilitations" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.degreeTransfer.edit.habilitations" />
+		<put name="titleString" value="public.candidacy.degreeTransfer.edit.habilitations" />
 		<put name="body" value="/publico/candidacy/degreeTransfer/editCandidacyHabilitations.jsp"/>
 		<put name="hideLanguage" value="true" />
 	</definition>
 
 	<definition name="degree.transfer.upload.photo" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.degreeTransfer.uploadPhoto" />
+		<put name="titleString" value="public.candidacy.degreeTransfer.uploadPhoto" />
 		<put name="body" value="/publico/candidacy/degreeTransfer/uploadPhoto.jsp"/>
 		<put name="hideLanguage" value="true" />
 	</definition>	
 	
 	<definition name="degree.transfer.edit.candidacy.documents" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.degreeTransfer.edit.documents" />
+		<put name="titleString" value="public.candidacy.degreeTransfer.edit.documents" />
 		<put name="body" value="/publico/candidacy/degreeTransfer/editCandidacyDocuments.jsp"/>
 		<put name="hideLanguage" value="true" />
 	</definition>
 
 	<!--  Degree Candidacy For Graduated Person -->
     <definition name="degree.candidacy.for.graduated.person.candidacy.creation.page" extends="definition.candidacy.process">
-    	<put name="title" value="public.candidacy.graduatedPerson.creation.pt1"/>
+    	<put name="titleString" value="public.candidacy.graduatedPerson.creation.pt1"/>
     	<put name="body" value="/publico/candidacy/degreeForGraduatedPerson/createCandidacyPartOne.jsp"/>
     	<put name="hideLanguage" value="true" />
     </definition>    
 
     <definition name="degree.candidacy.for.graduated.person.candidacy.continue.creation" extends="definition.candidacy.process">
-    	<put name="title" value="public.candidacy.graduatedPerson.creation.pt2" />
+    	<put name="titleString" value="public.candidacy.graduatedPerson.creation.pt2" />
     	<put name="body" value="/publico/candidacy/degreeForGraduatedPerson/createCandidacyPartTwo.jsp"/>
     	<put name="hideLanguage" value="true" />
     </definition>    
 
 	<definition name="degree.candidacy.for.graduated.person.show.candidacy.details" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.graduatedPerson.view" />
+		<put name="titleString" value="public.candidacy.graduatedPerson.view" />
 		<put name="body" value="/publico/candidacy/degreeForGraduatedPerson/viewCandidacy.jsp"/>
 	</definition>
 	
 	<definition name="degree.candidacy.for.graduated.person.edit.candidacy" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.graduatedPerson.edit" />
+		<put name="titleString" value="public.candidacy.graduatedPerson.edit" />
 		<put name="body" value="/publico/candidacy/degreeForGraduatedPerson/editCandidacy.jsp"/>
 		<put name="hideLanguage" value="true" />
 	</definition>
 	
 	<definition name="degree.candidacy.for.graduated.person.edit.candidacy.documents" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.graduatedPerson.edit.documents" />
+		<put name="titleString" value="public.candidacy.graduatedPerson.edit.documents" />
 		<put name="body" value="/publico/candidacy/degreeForGraduatedPerson/editCandidacyDocuments.jsp"/>
 	</definition>
 
 	<definition name="degree.candidacy.for.graduated.person.upload.photo" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.graduatedPerson.uploadPhoto" />
+		<put name="titleString" value="public.candidacy.graduatedPerson.uploadPhoto" />
 		<put name="body" value="/publico/candidacy/degreeForGraduatedPerson/uploadPhoto.jsp"/>
 		<put name="hideLanguage" value="true" />
 	</definition>
 	
 	<definition name="degree.candidacy.for.graduated.person.edit.candidacy.habilitations" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.graduatedPerson.edit.habilitations" />
+		<put name="titleString" value="public.candidacy.graduatedPerson.edit.habilitations" />
 		<put name="body" value="/publico/candidacy/degreeForGraduatedPerson/editCandidacyHabilitations.jsp"/>
 		<put name="hideLanguage" value="true" />
 	</definition>
 
 	<!--  Over23 Candidacies -->
     <definition name="over23.candidacy.creation.page" extends="definition.candidacy.process">
-    	<put name="title" value="public.candidacy.over23.creation.pt1" />
+    	<put name="titleString" value="public.candidacy.over23.creation.pt1" />
     	<put name="body" value="/publico/candidacy/over23/createCandidacyPartOne.jsp"/>
     	<put name="hideLanguage" value="true" />
     </definition>    
 
     <definition name="over23.candidacy.continue.creation" extends="definition.candidacy.process">
-    	<put name="title" value="public.candidacy.over23.creation.pt2" />
+    	<put name="titleString" value="public.candidacy.over23.creation.pt2" />
     	<put name="body" value="/publico/candidacy/over23/createCandidacyPartTwo.jsp"/>
     	<put name="hideLanguage" value="true" />
     </definition>    
 
 	<definition name="over23.candidacy.process.intro" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.over23.intro" />
+		<put name="titleString" value="public.candidacy.over23.intro" />
 		<put name="body" value="/publico/candidacy/over23/main.jsp"/>
 	</definition>
 
 	<definition name="over23.candidacy.process.intro.en" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.over23.intro.en" />
+		<put name="titleString" value="public.candidacy.over23.intro.en" />
 		<put name="body" value="/publico/candidacy/over23/main.jsp"/>
 	</definition>
 	
 	<definition name="over23.show.candidacy.details" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.over23.view" />
+		<put name="titleString" value="public.candidacy.over23.view" />
 		<put name="body" value="/publico/candidacy/over23/viewCandidacy.jsp"/>
 	</definition>
 	
 	<definition name="over23.edit.candidacy" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.over23.edit" />
+		<put name="titleString" value="public.candidacy.over23.edit" />
 		<put name="body" value="/publico/candidacy/over23/editCandidacy.jsp"/>
 		<put name="hideLanguage" value="true" />
 	</definition>
 	
 	<definition name="over23.edit.candidacy.documents" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.over23.edit.documents" />
+		<put name="titleString" value="public.candidacy.over23.edit.documents" />
 		<put name="body" value="/publico/candidacy/over23/editCandidacyDocuments.jsp"/>
 		<put name="hideLanguage" value="true" />
 	</definition>
 	
 	<definition name="over23.edit.candidacy.habilitations" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.over23.edit.habilitations" />
+		<put name="titleString" value="public.candidacy.over23.edit.habilitations" />
 		<put name="body" value="/publico/candidacy/over23/editCandidacyHabilitations.jsp"/>
 		<put name="hideLanguage" value="true" />
 	</definition>
 	
 	<!-- Second Cycle Candidacies -->
 	<definition name="second.cycle.candidacy.process.intro" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.2ndCycle.intro" />
+		<put name="titleString" value="public.candidacy.2ndCycle.intro" />
 		<put name="body" value="/publico/candidacy/secondCycle/main.jsp"/>
 	</definition>
 
 	<definition name="second.cycle.candidacy.process.intro.en" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.2ndCycle.intro.en" />
+		<put name="titleString" value="public.candidacy.2ndCycle.intro.en" />
 		<put name="body" value="/publico/candidacy/secondCycle/main_en.jsp"/>
 	</definition>
 
     <definition name="second.cycle.candidacy.creation.page" extends="definition.candidacy.process">
-    	<put name="title" value="public.candidacy.2ndCycle.creation.pt1" />
+    	<put name="titleString" value="public.candidacy.2ndCycle.creation.pt1" />
     	<put name="body" value="/publico/candidacy/secondCycle/createCandidacyPartOne.jsp"/>
     	<put name="hideLanguage" value="true" />
     </definition>    
 
     <definition name="second.cycle.candidacy.continue.creation" extends="definition.candidacy.process">
-    	<put name="title" value="public.candidacy.2ndCycle.creation.pt2" />
+    	<put name="titleString" value="public.candidacy.2ndCycle.creation.pt2" />
     	<put name="body" value="/publico/candidacy/secondCycle/createCandidacyPartTwo.jsp"/>
     	<put name="hideLanguage" value="true" />
     </definition>    
 	
 	<definition name="second.cycle.show.candidacy.details" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.2ndCycle.view" />
+		<put name="titleString" value="public.candidacy.2ndCycle.view" />
 		<put name="body" value="/publico/candidacy/secondCycle/viewCandidacy.jsp"/>
 	</definition>
 	
 	<definition name="second.cycle.edit.candidacy" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.2ndCycle.edit" />
+		<put name="titleString" value="public.candidacy.2ndCycle.edit" />
 		<put name="body" value="/publico/candidacy/secondCycle/editCandidacy.jsp"/>
 		<put name="hideLanguage" value="true" />
 	</definition>
 	
 	<definition name="second.cycle.edit.candidacy.documents" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.2ndCycle.edit.documents" />
+		<put name="titleString" value="public.candidacy.2ndCycle.edit.documents" />
 		<put name="body" value="/publico/candidacy/secondCycle/editCandidacyDocuments.jsp"/>
 		<put name="hideLanguage" value="true" />
 	</definition>
 	
 	<definition name="second.cycle.upload.photo" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.2ndCycle.uploadPhoto" />
+		<put name="titleString" value="public.candidacy.2ndCycle.uploadPhoto" />
 		<put name="body" value="/publico/candidacy/secondCycle/uploadPhoto.jsp"/>
 		<put name="hideLanguage" value="true" />
 	</definition>
 	
 	<definition name="second.cycle.edit.candidacy.habilitations" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.2ndCycle.edit.habilitations" />
+		<put name="titleString" value="public.candidacy.2ndCycle.edit.habilitations" />
 		<put name="body" value="/publico/candidacy/secondCycle/editCandidacyHabilitations.jsp"/>
 		<put name="hideLanguage" value="true" />
 	</definition>
 
 	<definition name="second.cycle.show.access.link.form" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.2ndCycle.accessRecovery" />
+		<put name="titleString" value="public.candidacy.2ndCycle.accessRecovery" />
 		<put name="body" value="/publico/candidacy/secondCycle/recoverAccess.jsp" />
 		<put name="hideLanguage" value="true" />
 	</definition>
 
 	<definition name="second.cycle.recovery.email.sent" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.2ndCycle.showSentEmail" />
+		<put name="titleString" value="public.candidacy.2ndCycle.showSentEmail" />
 		<put name="body" value="/publico/candidacy/secondCycle/recoveryEmailSent.jsp" />
 		<put name="hideLanguage" value="true" />
 	</definition>
@@ -1189,181 +1191,181 @@
 	
 	<!-- Mobility Applications -->
 	<definition name="mobility.candidacy.process.intro" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.mobility.intro" />
+		<put name="titleString" value="public.candidacy.mobility.intro" />
 		<put name="body" value="/publico/candidacy/mobility/intro.jsp" />
 		<put name="hideLanguage" value="true" />
 	</definition>
 	
 	<definition name="mobility.candidacy.submission.type" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.mobility.submission.type" />
+		<put name="titleString" value="public.candidacy.mobility.submission.type" />
 		<put name="body" value="/publico/candidacy/mobility/chooseSubmissionType.jsp" />
 		<put name="hideLanguage" value="true" />	
 	</definition>
 	
 	<definition name="mobility.show.pre.creation.candidacy.form" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.mobility.preCreationForm" />
+		<put name="titleString" value="public.candidacy.mobility.preCreationForm" />
 		<put name="body" value="/publico/candidacy/mobility/preCreationCandidacyForm.jsp"/>
 		<put name="hideLanguage" value="true" />
 	</definition>
 	
 	<definition name="mobility.show.email.message.sent" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.mobility.showSentEmail" />
+		<put name="titleString" value="public.candidacy.mobility.showSentEmail" />
 		<put name="body" value="/publico/candidacy/mobility/showEmailSent.jsp"/>
 		<put name="hideLanguage" value="true" />
 	</definition>
 	
 	<definition name="mobility.show.application.submission.conditions" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.mobility.submission.conditions" />
+		<put name="titleString" value="public.candidacy.mobility.submission.conditions" />
 		<put name="body" value="/publico/candidacy/mobility/applicationSubmissionConditions.jsp" />
 		<put name="hideLanguage" value="true" />
 	</definition>
 
     <definition name="mobility.candidacy.creation.page" extends="definition.candidacy.process">
-    	<put name="title" value="public.candidacy.mobility.creation.pt1" />
+    	<put name="titleString" value="public.candidacy.mobility.creation.pt1" />
     	<put name="body" value="/publico/candidacy/mobility/createCandidacyPartOne.jsp"/>
     	<put name="hideLanguage" value="true" />
     </definition>    
 
     <definition name="mobility.candidacy.continue.creation" extends="definition.candidacy.process">
-    	<put name="title" value="public.candidacy.mobility.creation.pt2" />
+    	<put name="titleString" value="public.candidacy.mobility.creation.pt2" />
     	<put name="body" value="/publico/candidacy/mobility/createCandidacyPartTwo.jsp"/>
     	<put name="hideLanguage" value="true" />
     </definition>
 
     <definition name="mobility.candidacy.choose.program" extends="definition.candidacy.process">
-    	<put name="title" value="public.candidacy.mobility.creation.pt3" />
+    	<put name="titleString" value="public.candidacy.mobility.creation.pt3" />
     	<put name="body" value="/publico/candidacy/mobility/chooseMobilityProgram.jsp"/>
     	<put name="hideLanguage" value="true" />
     </definition>
 
 	<definition name="mobility.fill.degree.and.courses.information" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.mobility.creation.pt4" />
+		<put name="titleString" value="public.candidacy.mobility.creation.pt4" />
 		<put name="body" value="/publico/candidacy/mobility/fillDegreeAndCoursesInformation.jsp" />
 		<put name="hideLanguage" value="true" />
 	</definition>
 	
 	<definition name="mobility.fill.accept.honour.declaration" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.mobility.creation.pt5" />
+		<put name="titleString" value="public.candidacy.mobility.creation.pt5" />
 		<put name="body" value="/publico/candidacy/mobility/acceptHonourDeclaration.jsp" />
 		<put name="hideLanguage" value="true" />
 	</definition>
 
 	<definition name="mobility.show.candidacy.details" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.mobility.view" />
+		<put name="titleString" value="public.candidacy.mobility.view" />
 		<put name="body" value="/publico/candidacy/mobility/viewCandidacy.jsp"/>
 		<put name="hideLanguage" value="true" />
 	</definition>
 	
 	<definition name="mobility.inform.submited.candidacy" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.mobility.submitted" />
+		<put name="titleString" value="public.candidacy.mobility.submitted" />
 		<put name="body" value="/publico/candidacy/mobility/candidacySubmited.jsp"/>
 		<put name="hideLanguage" value="true" />
 	</definition>
 	
 	<definition name="mobility.edit.candidacy" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.mobility.edit" />
+		<put name="titleString" value="public.candidacy.mobility.edit" />
 		<put name="body" value="/publico/candidacy/mobility/editCandidacy.jsp"/>
 		<put name="hideLanguage" value="true" />
 	</definition>
 	
 	<definition name="mobility.edit.candidacy.information" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.mobility.edit.information" />
+		<put name="titleString" value="public.candidacy.mobility.edit.information" />
 		<put name="body" value="/publico/candidacy/mobility/editCandidacyInformation.jsp"/>
 		<put name="hideLanguage" value="true" />
 	</definition>
 	
 	<definition name="mobility.edit.candidacy.documents" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.mobility.edit.documents" />
+		<put name="titleString" value="public.candidacy.mobility.edit.documents" />
 		<put name="body" value="/publico/candidacy/mobility/editCandidacyDocuments.jsp"/>
 		<put name="hideLanguage" value="true" />
 	</definition>
 			
 	<definition name="mobility.edit.candidacy.degree.and.courses" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.mobility.edit.degreesAndCourses" />
+		<put name="titleString" value="public.candidacy.mobility.edit.degreesAndCourses" />
 		<put name="body" value="/publico/candidacy/mobility/editCandidacyDegreeAndCourses.jsp"/>
 		<put name="hideLanguage" value="true" />
 	</definition>
 	
 	<definition name="mobility.redirect.to.peps" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.mobility.PEPS.redirect" />
+		<put name="titleString" value="public.candidacy.mobility.PEPS.redirect" />
 		<put name="body" value="/publico/candidacy/mobility/peps.jsp" />
 		<put name="hideLanguage" value="true" />
 	</definition>
 	
 	<definition name="mobility.show.application.submission.conditions.for.stork" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.mobility.STORK.conditions" />
+		<put name="titleString" value="public.candidacy.mobility.STORK.conditions" />
 		<put name="body" value="/publico/candidacy/mobility/applicationSubmissionConditionsForStork.jsp" />
 		<put name="hideLanguage" value="true" />
 	</definition>
 
 	<definition name="mobility.show.stork.error.page" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.mobility.STORK.error" />
+		<put name="titleString" value="public.candidacy.mobility.STORK.error" />
 		<put name="body" value="/publico/candidacy/mobility/showStorkErrorPage.jsp" />
 		<put name="hideLanguage" value="true" />
 	</definition>
 	
 	<definition name="mobility.stork.candidacy.already.bounded" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.mobility.alreadyBound" />
+		<put name="titleString" value="public.candidacy.mobility.alreadyBound" />
 		<put name="body" value="/publico/candidacy/mobility/candidacyAlreadyBounded.jsp" />
 		<put name="hideLanguage" value="true" />
 	</definition>
 	
 	<definition name="mobility.redirect.to.peps.to.access.application" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.mobility.PEPS.reditect.access" />
+		<put name="titleString" value="public.candidacy.mobility.PEPS.reditect.access" />
 		<put name="body" value="/publico/candidacy/mobility/pepsAccessAplication.jsp" />
 		<put name="hideLanguage" value="true" />
 	</definition>
 	
 	<definition name="mobility.stork.authentication.failed" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.mobility.STORK.authenticationFail" />
+		<put name="titleString" value="public.candidacy.mobility.STORK.authenticationFail" />
 		<put name="body" value="/publico/candidacy/mobility/storkAuthenticationFailed.jsp" />
 		<put name="hideLanguage" value="true" />
 	</definition>
 	
 	<definition name="mobility.show.access.link.form" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.mobility.accessRecovery" />
+		<put name="titleString" value="public.candidacy.mobility.accessRecovery" />
 		<put name="body" value="/publico/candidacy/mobility/recoverAccess.jsp" />
 		<put name="hideLanguage" value="true" />
 	</definition>
 
 	<definition name="mobility.recovery.email.sent" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.mobility.accessRecovery.mailSent" />
+		<put name="titleString" value="public.candidacy.mobility.accessRecovery.mailSent" />
 		<put name="body" value="/publico/candidacy/mobility/recoveryEmailSent.jsp" />
 		<put name="hideLanguage" value="true" />
 	</definition>
 	
 	<definition name="mobility.stork.attr.list.test" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.mobility.STORK.test" />
+		<put name="titleString" value="public.candidacy.mobility.STORK.test" />
 		<put name="body" value="/publico/candidacy/mobility/storkAttrListTest.jsp" />
 		<put name="hideLanguage" value="true" />
 	</definition>
 	
 	<definition name="mobility.error.on.application.submission.contact.gri" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.mobility.submission.error" />
+		<put name="titleString" value="public.candidacy.mobility.submission.error" />
 		<put name="body" value="/publico/candidacy/mobility/errorOnSubmission.jsp" />
 		<put name="hideLanguage" value="true" />
 	</definition>
 	
 	<definition name="mobility.individual.candidacy.not.found" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.mobility.notFound" />
+		<put name="titleString" value="public.candidacy.mobility.notFound" />
 		<put name="body" value="/publico/candidacy/mobility/individualCandidacyNotFound.jsp" />
 		<put name="hideLanguage" value="true" />
 	</definition>
 	
 	<definition name="mobility.bind.submited.individua.candidacy.with.stork" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.mobility.STORK.individualBind" />
+		<put name="titleString" value="public.candidacy.mobility.STORK.individualBind" />
 		<put name="body" value="/publico/candidacy/mobility/bindSubmitedIndividualCandidacyWithStork.jsp" />
 		<put name="hideLanguage" value="true" />
 	</definition>
 	
 	<definition name="mobility.show.bind.process.success" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.mobility.showBindSuccess" />
+		<put name="titleString" value="public.candidacy.mobility.showBindSuccess" />
 		<put name="body" value="/publico/candidacy/mobility/showBindProcessSuccess.jsp" />
 		<put name="hideLanguage" value="true" />
 	</definition>
 	
 	<definition name="mobility.candidacy.process.closed" extends="definition.candidacy.process">
-		<put name="title" value="public.candidacy.mobility.closed" />
+		<put name="titleString" value="public.candidacy.mobility.closed" />
 		<put name="body" value="/publico/candidacy/mobility/candidacyProcessClosed.jsp"/>
 		<put name="hideLanguage" value="true" />
 	</definition>

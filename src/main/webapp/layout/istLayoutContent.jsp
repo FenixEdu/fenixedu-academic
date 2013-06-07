@@ -75,6 +75,7 @@
 <!-- END BROWSER UPGRADE MESSAGE -->
 
 <!-- SYMBOLSROW -->
+<h1>IST_LAYOUT_CONTENT</h1>
 <div id="header">
 	<tiles:insert attribute="symbols_row" ignore="true"/>
 </div>

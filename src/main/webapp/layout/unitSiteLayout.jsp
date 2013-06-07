@@ -70,6 +70,7 @@
 
 
 <!-- SYMBOLSROW -->
+<h1>UNIT_SITE_LAYOUT</h1>
 <div id="header">
 	<tiles:insert attribute="symbols_row" ignore="true"/>
 </div>
@@ -102,11 +103,12 @@
 			
 				<tiles:insert attribute="body-context" ignore="true"/>
 				<tiles:insert attribute="banner" ignore="true"/>
+				<tiles:insert attribute="body" ignore="true"/>
 				<tiles:getAsString name="body-inline" ignore="true"/>
 			</td>
 	</tr>
 
-	<tiles:insert attribute="body" ignore="true"/>
+	
 
 </table>
 </div>

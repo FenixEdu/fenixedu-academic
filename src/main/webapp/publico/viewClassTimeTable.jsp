@@ -1,6 +1,6 @@
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles"%>
 <tiles:insert definition="definition.public.mainPage" beanName="" flush="true">
-	<tiles:put name="title" value="public.general.viewClassSchedule" />
+	<tiles:put name="titleString" value="public.general.viewClassSchedule" />
 	<tiles:put name="bundle" value="TITLES_RESOURCES" />
 	<tiles:put name="serviceName" value="Instituto Superior Técnico" />
 	<tiles:put name="profile_navigation" value="/publico/degreeSite/profileNavigation.jsp" />

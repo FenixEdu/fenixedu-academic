@@ -99,6 +99,7 @@ informations on <a href="http://www.webstandards.org/upgrade/">webstandards.org<
 <!-- END BROWSER UPGRADE MESSAGE -->
 
 <!-- SYMBOLSROW -->
+<h1>PUBLIC_GES_DIS_LAYOUT_2COL</h1>
 <div id="header"><tiles:insert attribute="symbols_row" ignore="true" />
 </div>
 

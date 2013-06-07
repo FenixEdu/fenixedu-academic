@@ -75,6 +75,7 @@
 	<jsp:include page="deployWarning.jsp" flush="true"/>
 	<jsp:include page="devMode.jsp" flush="true"/>
 	
+		<h1>PUBLIC_EXECUTION_COURSE</h1>
 		<div id="header">
 			<tiles:insert attribute="symbols_row" ignore="true" />
 		</div>
