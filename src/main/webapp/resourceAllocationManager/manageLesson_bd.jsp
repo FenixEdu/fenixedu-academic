@@ -144,8 +144,8 @@
 		    	    <td>		    	    	
 						<b><bean:write name="lesson_" property="nextPossibleLessonInstanceDate" /></b> <bean:message key="label.until"/> <b><bean:message key="label.new.specified.beginDate"/></b>					
 						<p class="mtop05">
-							<bean:message key="option.manager.true"/> <html:radio property="createLessonInstances" value="<%= Boolean.TRUE.toString() %>" disabled="true" />
-							<bean:message key="option.manager.false"/> <html:radio property="createLessonInstances" value="<%= Boolean.FALSE.toString() %>" disabled="true"/>						
+							<bean:message key="option.manager.true"/> <html:radio property="createLessonInstances" value="<%= Boolean.TRUE.toString() %>" disabled="false" />
+							<bean:message key="option.manager.false"/> <html:radio property="createLessonInstances" value="<%= Boolean.FALSE.toString() %>" disabled="false"/>						
 							<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.week" property="createLessonInstances"/>								
 						</p>										    	    	    	    	
 		    	    </td>
