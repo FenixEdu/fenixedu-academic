@@ -94,7 +94,7 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
     protected void setFirstParagraph(IRegistryDiplomaRequest request) {
 
         final UniversityUnit university = UniversityUnit.getInstitutionsUniversityUnit();
-        String universityName = getMLSTextContent(university.getPartyName());
+        String universityName = university.getPartyName().getPreferedContent();
 
         final Person rectorIst =
                 UniversityUnit.getInstitutionsUniversityUnit().getInstitutionsUniversityResponsible(FunctionType.PRINCIPAL);
@@ -140,16 +140,16 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
     protected void setFooter(String institutionUnitName, String rectorGender, String presidentGender) {
 
         final UniversityUnit university = UniversityUnit.getInstitutionsUniversityUnit();
-        String universityName = getMLSTextContent(university.getPartyName());
+        String universityName = university.getPartyName().getPreferedContent();
 
         addParameter("dateParagraph", getFormatedCurrentDate(universityName));
         addParameter("rector", rectorGender);
         addParameter("president", MessageFormat.format(presidentGender, institutionUnitName));
     }
 
-    private String getFormatedCurrentDate(String Unit) {
+    private String getFormatedCurrentDate(String universityName) {
         final StringBuilder result = new StringBuilder();
-        result.append(Unit);
+        result.append(universityName);
         result.append(", ");
         result.append(new LocalDate().toString(getDatePattern(), getLocale()));
         result.append(".");
