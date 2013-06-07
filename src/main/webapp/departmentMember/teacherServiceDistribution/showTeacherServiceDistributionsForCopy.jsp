@@ -85,7 +85,7 @@
 		<tr>
 			<td>
 				<bean:define id="tsdProcessId" name="tsdProcess" property="externalId" />
-				<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.tsdProcess" property="tsdProcess" value="<%= ((Integer)tsdProcessId).toString() %>"/>
+				<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.tsdProcess" property="tsdProcess" value="<%= (tsdProcessId).toString() %>"/>
 			</td>
 			<td class="highlight7" align="left" width="250">
 				<bean:write name="tsdProcess" property="name"/>

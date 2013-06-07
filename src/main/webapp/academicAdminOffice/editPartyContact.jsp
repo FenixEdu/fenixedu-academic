@@ -12,7 +12,7 @@
 <fr:form action="/partyContacts.do">
     <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method"
         value="editPartyContact" />
-    <bean:define id="studentID" type="java.lang.Integer" name="student" property="externalId" />
+    <bean:define id="studentID" type="java.lang.String" name="student" property="externalId" />
     <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="studentID"
         value="<%= studentID.toString() %>" />
 

@@ -32,7 +32,7 @@
 
 		<br/>
 		<logic:iterate id="infoStudentCurricularPlan" name="infoStudentCurricularPlans">
-			<bean:define id="studentCurricularPlanId" name="infoStudentCurricularPlan" property="externalId" type="java.lang.Integer"/>
+			<bean:define id="studentCurricularPlanId" name="infoStudentCurricularPlan" property="externalId" type="java.lang.String"/>
 
 			<logic:equal name="studentCurricularPlanForm" property="selectedStudentCurricularPlanId" value="<%= studentCurricularPlanId.toString() %>">
 
@@ -152,7 +152,7 @@
 
 		<br />
 		<logic:iterate id="infoStudentCurricularPlan" name="infoStudentCurricularPlans">
-			<bean:define id="studentCurricularPlanId" name="infoStudentCurricularPlan" property="externalId" type="java.lang.Integer"/>
+			<bean:define id="studentCurricularPlanId" name="infoStudentCurricularPlan" property="externalId" type="java.lang.String"/>
 
 			<table>
 				<tr>

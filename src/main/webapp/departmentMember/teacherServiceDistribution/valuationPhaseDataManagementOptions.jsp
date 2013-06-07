@@ -77,7 +77,7 @@
 				<tr>
 					<td>
 						<bean:define id="tsdProcessPhaseId" name="tsdProcessPhase" property="externalId" />
-						<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.selectedTSDProcess" property="tsdProcessPhase" value="<%= ((Integer)tsdProcessPhaseId).toString() %>" />
+						<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.selectedTSDProcess" property="tsdProcessPhase" value="<%= (tsdProcessPhaseId).toString() %>" />
 					</td>
 					<td width="250">
 						<bean:write name="tsdProcessPhase" property="name"/>

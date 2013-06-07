@@ -206,7 +206,7 @@
 	<ul>
 	<logic:iterate name="tsdTeacherDTOEntry" property="TSDProfessorshipDTOEntries" id="tsdProfessorshipDTOEntry">
 		<li>
-			<% Integer tsdTeacherId = ((TSDProfessorshipDTOEntry) tsdProfessorshipDTOEntry).getTSDTeacherDTOEntry().getTSDTeachers().get(0).getExternalId(); %>
+			<% String tsdTeacherId = ((TSDProfessorshipDTOEntry) tsdProfessorshipDTOEntry).getTSDTeacherDTOEntry().getTSDTeachers().get(0).getExternalId(); %>
 			<bean:define id="tsdCourseId" name="tsdProfessorshipDTOEntry" property="TSDCourseDTOEntry.TSDCourse.externalId"/>
 			<html:link page="<%= "/tsdProfessorship.do?method=prepareLinkForTSDProfessorshipByTeacher&amp;tsdProcess=" + 
 			tsdProcessId + "&amp;tsdTeacher=" + tsdTeacherId + "&amp;tsdCourse=" +  tsdCourseId %>">

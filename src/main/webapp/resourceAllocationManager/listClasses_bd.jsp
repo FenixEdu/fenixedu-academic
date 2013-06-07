@@ -34,7 +34,7 @@
 		  </bean:define>
 			<logic:iterate id="classView" name="classesList" scope="request">
 			<bean:define id="classOID"
-						 type="java.lang.Integer"
+						 type="java.lang.String"
 						 name="classView"
 						 property="externalId"/>
 		<tr>

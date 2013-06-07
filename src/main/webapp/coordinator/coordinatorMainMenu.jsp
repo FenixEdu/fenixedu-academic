@@ -7,20 +7,20 @@
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree" %>
 <%@ page import="net.sourceforge.fenixedu.domain.degree.DegreeType" %>
 <%@ page import="net.sourceforge.fenixedu.domain.Degree" %>
-<%@ page import="net.sourceforge.fenixedu.domain.RootDomainObject" %>
-
+<%@ page import="pt.ist.fenixframework.pstm.AbstractDomainObject" %>
+<%@ page import="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" %>
 <html:xhtml/>
 
 <bean:define id="person" name="<%=pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE%>" property="person" type="net.sourceforge.fenixedu.domain.Person"/>
 
 	<bean:define id="infoExecutionDegree" name="<%=PresentationConstants.MASTER_DEGREE%>" type="InfoExecutionDegree" />
 	<bean:define id="infoDegreeCurricularPlan" name="infoExecutionDegree" property="infoDegreeCurricularPlan" />
-	<bean:define id="degreeCurricularPlanID" name="infoDegreeCurricularPlan" property="externalId" type="java.lang.Integer"/>
+	<bean:define id="degreeCurricularPlanID" name="infoDegreeCurricularPlan" property="externalId" type="java.lang.String"/>
 	<bean:define id="degreeCurricularPlanOID" name="infoDegreeCurricularPlan" property="externalId"/>
 	<bean:define id="executionDegreeID" name="infoExecutionDegree" property="externalId" />
 
     <%
-        Degree degree = AbstractDomainObject.fromExternalId(degreeCurricularPlanID).getDegree();
+        Degree degree = AbstractDomainObject.<DegreeCurricularPlan> fromExternalId(degreeCurricularPlanID).getDegree();
         if (degree.isCoordinatorInSomeExecutionYear(person)) {
             request.setAttribute("isCoordinator", true);
         }

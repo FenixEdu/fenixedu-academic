@@ -292,7 +292,7 @@
 				<ul>
 					<li>
 						<%
-							Integer tsdTeacherId = ((TSDProfessorshipDTOEntry) tsdProfessorshipDTOEntry).getTSDTeacherDTOEntry().getTSDTeachers().get(0).getExternalId();
+							String tsdTeacherId = ((TSDProfessorshipDTOEntry) tsdProfessorshipDTOEntry).getTSDTeacherDTOEntry().getTSDTeachers().get(0).getExternalId();
 							TeacherServiceDistribution tsd = (TeacherServiceDistribution) request.getAttribute("selectedTSD");
 							IUserView userView = UserView.getUser();
 							Person person = userView.getPerson();

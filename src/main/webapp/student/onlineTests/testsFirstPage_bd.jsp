@@ -31,7 +31,7 @@
 						<td class="acenter">
 							<% 
 							net.sourceforge.fenixedu.applicationTier.IUserView user = (net.sourceforge.fenixedu.applicationTier.IUserView) session.getAttribute(pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE);
-							net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog studentTestLog = distributedTest.getLastSubmissionStudentTestLog(new Integer(student.toString()));
+							net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog studentTestLog = distributedTest.getLastSubmissionStudentTestLog(student.toString());
 								if(studentTestLog!=null && studentTestLog.getChecksum()!=null){ %>
 							<bean:define id="logId" value="<%= studentTestLog.getExternalId().toString() %>"/>
 							<html:link page="<%="/studentTests.do?method=exportChecksum&logId="+logId.toString()%>">
@@ -69,7 +69,7 @@
 						<td class="acenter">
 							<% 
 							net.sourceforge.fenixedu.applicationTier.IUserView user = (net.sourceforge.fenixedu.applicationTier.IUserView) session.getAttribute(pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE);
-							net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog studentTestLog = distributedTest.getLastSubmissionStudentTestLog(new Integer(student.toString()));
+							net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog studentTestLog = distributedTest.getLastSubmissionStudentTestLog(student.toString());
 								if(studentTestLog!=null && studentTestLog.getChecksum()!=null){ %>
 							<bean:define id="logId" value="<%= studentTestLog.getExternalId().toString() %>"/>
 							<html:link page="<%="/studentTests.do?method=exportChecksum&logId="+logId.toString()%>">

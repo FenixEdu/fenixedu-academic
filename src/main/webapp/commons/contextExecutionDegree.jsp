@@ -13,7 +13,7 @@
 				 toScope="request"
 				 scope="request"/>
 	<bean:define id="executionDegreeOID"
-				 type="java.lang.Integer"
+				 type="java.lang.String"
 				 name="executionDegree"
 				 property="externalId"
 				 toScope="request"

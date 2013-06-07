@@ -56,7 +56,7 @@
 		</table>
 		
 		<logic:present name="insert">
-			<bean:define id="infoStudentCurricularPlanID" name="infoStudentCurricularPlan" property="externalId" type="java.lang.Integer"/>
+			<bean:define id="infoStudentCurricularPlanID" name="infoStudentCurricularPlan" property="externalId" type="java.lang.String"/>
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentCurricularPlanID" property="studentCurricularPlanID" value="<%= infoStudentCurricularPlanID.toString() %>"/>			
 
 			<h3><bean:message bundle="DEGREE_ADM_OFFICE" key="title.student.notNeedToEnroll.toInsert"/></h3>

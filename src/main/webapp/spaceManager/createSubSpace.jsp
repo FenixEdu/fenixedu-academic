@@ -9,8 +9,8 @@
 <h2><bean:message bundle="SPACE_RESOURCES" key="title.create.subspace"/></h2>
 
 <bean:define id="selectedSpace" name="selectedSpaceInformation" property="space"/>
-<bean:define id="suroundingSpaceID" type="java.lang.Integer" name="selectedSpace" property="externalId"/>
-<bean:define id="suroundingSpaceInformationID" type="java.lang.Integer" name="selectedSpace" property="spaceInformation.externalId"/>
+<bean:define id="suroundingSpaceID" type="java.lang.String" name="selectedSpace" property="externalId"/>
+<bean:define id="suroundingSpaceInformationID" type="java.lang.String" name="selectedSpace" property="spaceInformation.externalId"/>
 
 <logic:messagesPresent message="true">
 	<p>

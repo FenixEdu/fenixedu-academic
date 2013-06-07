@@ -179,7 +179,7 @@ return (aVal - bVal);
 						<bean:write name="executionCourse" property="nome"/><br />
 						<bean:define id="executionCourseID" name="executionCourse" property="externalId"/>
 						<bean:define id="academicInterval" name="academicInterval"/>
-						<bean:define id="executionYearID" name="executionCourse" property="executionPeriod.executionYear.externalId" type="java.lang.Integer"/>
+						<bean:define id="executionYearID" name="executionCourse" property="executionPeriod.executionYear.externalId" type="java.lang.String"/>
 					</logic:iterate>
 				</td>
 				<td>

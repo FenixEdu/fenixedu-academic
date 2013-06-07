@@ -137,7 +137,7 @@
 
 	<html:form action="/weeklyWorkLoad.do">
 
-				 <bean:define id="attendsID" type="java.lang.Integer" name="attend" property="externalId"/>		
+				 <bean:define id="attendsID" type="java.lang.String" name="attend" property="externalId"/>		
 				 <tr class="dnone">
 					<td >
 				 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="createFromForm"/>

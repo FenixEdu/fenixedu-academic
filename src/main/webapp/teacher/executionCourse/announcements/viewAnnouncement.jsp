@@ -115,7 +115,7 @@
 		 </logic:equal>
 
 <%-- Data de Criação --%>
-	<bean:define id="externalId" name="announcement" property="externalId" type="java.lang.Integer"/> 
+	<bean:define id="externalId" name="announcement" property="externalId" type="java.lang.String"/> 
 	<html:link linkName="<%= externalId.toString() %>"/>
 		<bean:message key="label.creationDate" bundle="MESSAGING_RESOURCES" />: 
 		<fr:view name="announcement" property="creationDate" type="org.joda.time.DateTime" layout="no-time"/>

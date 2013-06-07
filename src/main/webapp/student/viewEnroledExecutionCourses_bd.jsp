@@ -41,7 +41,7 @@
 		
 		<logic:iterate id="executionCourse" name="executionCourses">
 			<tr>
-				<td><bean:define id="executionCourseID" name="executionCourse" property="externalId" type="java.lang.Integer"/>
+				<td><bean:define id="executionCourseID" name="executionCourse" property="externalId" type="java.lang.String"/>
 					<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.executionCourseCode" property="executionCourseCode" value="<%= executionCourseID.toString() %>"/>
 			 	</td>
 			 	<td><bean:write name="executionCourse" property="nome"/></td>

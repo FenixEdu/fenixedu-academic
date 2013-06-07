@@ -11,7 +11,7 @@
 				 toScope="request"
 				 scope="request"/>
 	<bean:define id="executionPeriodOID"
-				 type="java.lang.Integer"
+				 type="java.lang.String"
 				 name="executionPeriod"
 				 property="externalId"
 				 toScope="request"

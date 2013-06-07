@@ -37,7 +37,7 @@
 						<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 						<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.buildingID" property="buildingID" value="<%= buildingId.toString() %>"/>
 					
-						<bean:define id="campusID" name="building" property="campus.externalId" type="java.lang.Integer"/>
+						<bean:define id="campusID" name="building" property="campus.externalId" type="java.lang.String"/>
 						<html:select bundle="HTMLALT_RESOURCES" property="campusID" size="1" value="<%= campusID.toString() %>" onchange="this.form.submit();">
 							<html:options collection="campuss" property="externalId" labelProperty="name"/>
 						</html:select>				

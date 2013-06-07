@@ -43,7 +43,7 @@
 			if(userView.getUtilizador().startsWith("D"))
 			{
 				InfoStudentCurricularPlan infoScp = (InfoStudentCurricularPlan) ((List) studentCPList).get(0);
-				Integer personCode = infoScp.getInfoStudent().getInfoPerson().getExternalId();
+				String personCode = infoScp.getInfoStudent().getInfoPerson().getExternalId();
 		%>
 		
 	    <html:img align="middle" src="<%= request.getContextPath() +"/person/viewPhoto.do?personCode="+personCode.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" />

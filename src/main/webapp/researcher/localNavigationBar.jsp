@@ -83,7 +83,7 @@
 <ul>
 	<li class="navheader"><bean:message key="label.researchUnits" bundle="RESEARCHER_RESOURCES"/></li>
 	<logic:iterate id="unitIter" name="workingResearchUnits">
-		<bean:define id="unitID" name="unitIter" property="externalId" type="java.lang.Integer"/>
+		<bean:define id="unitID" name="unitIter" property="externalId" type="java.lang.String"/>
 		<bean:define id="unitExternalId" name="unitIter" property="externalId"/>
 		<bean:define id="unitName" name="unitIter" property="name" type="java.lang.String"/>
 		<li> 

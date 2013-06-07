@@ -13,7 +13,7 @@
 				 toScope="request"
 				 scope="request"/>
 	<bean:define id="shiftOID"
-				 type="java.lang.Integer"
+				 type="java.lang.String"
 				 name="shift"
 				 property="externalId"
 				 toScope="request"
