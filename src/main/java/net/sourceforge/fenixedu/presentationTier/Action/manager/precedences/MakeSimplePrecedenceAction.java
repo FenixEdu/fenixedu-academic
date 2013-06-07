@@ -60,8 +60,8 @@ public class MakeSimplePrecedenceAction extends FenixDispatchAction {
 
     public ActionForward showAllRestrictions(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        Integer degreeID = new Integer(request.getParameter("degreeId"));
-        Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanId"));
+        String degreeID = request.getParameter("degreeId");
+        String degreeCurricularPlanID = request.getParameter("degreeCurricularPlanId");
 
         request.setAttribute("degreeId", degreeID);
         request.setAttribute("degreeCurricularPlanId", degreeCurricularPlanID);
@@ -131,8 +131,8 @@ public class MakeSimplePrecedenceAction extends FenixDispatchAction {
 
         ActionErrors errors = new ActionErrors();
 
-        Integer degreeID = new Integer(request.getParameter("degreeId"));
-        Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanId"));
+        String degreeID = request.getParameter("degreeId");
+        String degreeCurricularPlanID = request.getParameter("degreeCurricularPlanId");
 
         request.setAttribute("degreeId", degreeID);
         request.setAttribute("degreeCurricularPlanId", degreeCurricularPlanID);

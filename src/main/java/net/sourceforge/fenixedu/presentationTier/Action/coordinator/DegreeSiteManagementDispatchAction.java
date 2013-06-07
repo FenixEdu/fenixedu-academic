@@ -103,7 +103,7 @@ public class DegreeSiteManagementDispatchAction extends SiteManagementDA {
     }
 
     public ActionForward subMenu(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-        Integer degreeCurricularPlanId = Integer.valueOf(request.getParameter("degreeCurricularPlanID"));
+        String degreeCurricularPlanId = request.getParameter("degreeCurricularPlanID");
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
         return mapping.findForward("degreeSiteMenu");
     }

@@ -246,7 +246,7 @@ public class AlumniPublicAccessDA extends FenixDispatchAction {
         }
 
         request.setAttribute("alumniBean", new AlumniLinkRequestBean(alumni));
-        request.setAttribute("alumniId", getIntegerFromRequest(request, alumniId).toString());
+        request.setAttribute("alumniId", getFromRequest(request, alumniId));
         request.setAttribute("urlToken", request.getParameter(urlToken));
         return mapping.findForward("alumniPublicAccessInner");
     }

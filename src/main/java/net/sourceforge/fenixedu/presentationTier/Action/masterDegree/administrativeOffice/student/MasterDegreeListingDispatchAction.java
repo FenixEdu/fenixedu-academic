@@ -109,7 +109,7 @@ public class MasterDegreeListingDispatchAction extends FenixDispatchAction {
         } catch (NotAuthorizedException e) {
             return mapping.findForward("NotAuthorized");
         } catch (NonExistingServiceException e) {
-            Integer degreeID = new Integer(request.getParameter("degreeID"));
+            String degreeID = request.getParameter("degreeID");
             request.setAttribute("degreeID", degreeID);
 
             ActionErrors errors = new ActionErrors();

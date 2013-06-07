@@ -294,7 +294,7 @@ public class ExercisesManagementAction extends FenixDispatchAction {
         Boolean caseSensitive = (Boolean) ((DynaActionForm) form).get("caseSensitive");
         Boolean integerType = (Boolean) ((DynaActionForm) form).get("integerType");
         Boolean evaluationQuestion = (Boolean) ((DynaActionForm) form).get("evaluationQuestion");
-        request.setAttribute("objectCode", getCodeFromRequest(request, "objectCode"));
+        request.setAttribute("objectCode", getFromRequest(request, "objectCode"));
 
         Boolean breakLineBeforeResponseBox = (Boolean) ((DynaActionForm) form).get("breakLineBeforeResponseBox");
         Boolean breakLineAfterResponseBox = (Boolean) ((DynaActionForm) form).get("breakLineAfterResponseBox");

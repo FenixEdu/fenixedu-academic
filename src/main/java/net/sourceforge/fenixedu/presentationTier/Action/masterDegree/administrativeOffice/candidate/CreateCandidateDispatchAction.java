@@ -107,10 +107,10 @@ public class CreateCandidateDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         request.setAttribute(PresentationConstants.EXECUTION_YEAR, request.getParameter("executionYear"));
-        Integer curricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+        String curricularPlanID = request.getParameter("degreeCurricularPlanID");
 
         if (curricularPlanID == null) {
-            curricularPlanID = (Integer) request.getAttribute("curricularPlanID");
+            curricularPlanID = (String) request.getAttribute("curricularPlanID");
 
         }
         request.setAttribute("degreeCurricularPlanID", curricularPlanID);
@@ -131,12 +131,12 @@ public class CreateCandidateDispatchAction extends FenixDispatchAction {
         }
         request.setAttribute(PresentationConstants.EXECUTION_YEAR, request.getAttribute(PresentationConstants.EXECUTION_YEAR));
 
-        Integer curricularPlanID = null;
+        String curricularPlanID = null;
         String degreeCurricularPlanID = request.getParameter("degreeCurricularPlanID");
         if (degreeCurricularPlanID != null) {
-            curricularPlanID = Integer.valueOf(degreeCurricularPlanID);
+            curricularPlanID = degreeCurricularPlanID;
         } else {
-            curricularPlanID = (Integer) request.getAttribute("curricularPlanID");
+            curricularPlanID = (String) request.getAttribute("curricularPlanID");
         }
 
         request.setAttribute("curricularPlanID", curricularPlanID);

@@ -131,7 +131,7 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
 
         final String classID = request.getParameter("classId");
         if (classID != null) {
-            request.setAttribute("classId", Integer.valueOf(classID));
+            request.setAttribute("classId", classID);
             return mapping.findForward("showEnrollmentPage");
         }
 

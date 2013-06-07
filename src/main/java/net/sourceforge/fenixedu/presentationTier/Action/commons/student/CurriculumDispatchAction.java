@@ -216,7 +216,7 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
                 || Integer.valueOf(request.getParameter("degreeCurricularPlanID")) == 0) {
             return mapping.findForward("ShowStudentCurriculum");
         } else {
-            request.setAttribute("degreeCurricularPlanID", Integer.valueOf(request.getParameter("degreeCurricularPlanID")));
+            request.setAttribute("degreeCurricularPlanID", request.getParameter("degreeCurricularPlanID"));
             return mapping.findForward("ShowStudentCurriculumForCoordinator");
         }
     }
@@ -301,9 +301,9 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
 
         // get and set the degreeCurricularPlanID from the request and onto the
         // request
-        Integer degreeCurricularPlanID = null;
+        String degreeCurricularPlanID = null;
         if (request.getParameter("degreeCurricularPlanID") != null) {
-            degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+            degreeCurricularPlanID = request.getParameter("degreeCurricularPlanID");
             request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
         }
 

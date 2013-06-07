@@ -107,7 +107,7 @@ public class TestsManagementAction extends FenixDispatchAction {
 
     public ActionForward testsFirstPage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
-        request.setAttribute("objectCode", getCodeFromRequest(request, "objectCode"));
+        request.setAttribute("objectCode", getFromRequest(request, "objectCode"));
         return mapping.findForward("testsFirstPage");
     }
 
@@ -125,7 +125,7 @@ public class TestsManagementAction extends FenixDispatchAction {
         final String executionCourseId = getStringFromRequest(request, "objectCode");
         final String title = request.getParameter("title");
         final String information = request.getParameter("information");
-        Integer testCode = null;
+        String testCode = null;
         try {
             InsertTest.runInsertTest(executionCourseId, title, information);
         } catch (FenixServiceException e) {
@@ -140,7 +140,7 @@ public class TestsManagementAction extends FenixDispatchAction {
             HttpServletResponse response) throws FenixActionException {
         final String executionCourseId = getStringFromRequest(request, "objectCode");
         final String testCode = getStringFromRequest(request, "testCode");
-        Integer newTestCode = null;
+        String newTestCode = null;
         try {
             InsertTestAsNewTest.runInsertTestAsNewTest(executionCourseId, testCode);
         } catch (FenixServiceException e) {
@@ -186,10 +186,7 @@ public class TestsManagementAction extends FenixDispatchAction {
         final String executionCourseId = getStringFromRequest(request, "objectCode");
         final String testCode = getStringFromRequest(request, "testCode");
         final String metadataCode = getStringFromRequest(request, "metadataCode");
-        Integer exerciseCode = getCodeFromRequest(request, "exerciseCode");
-        if (exerciseCode == null) {
-            exerciseCode = new Integer(-1);
-        }
+        String exerciseCode = getStringFromRequest(request, "exerciseCode");
         final String path = getServlet().getServletContext().getRealPath("/");
         Test test = null;
         try {
@@ -204,7 +201,7 @@ public class TestsManagementAction extends FenixDispatchAction {
             question = metadata.getVisibleQuestions().get(0);
         } else {
             for (Question visibleQuestion : metadata.getVisibleQuestions()) {
-                if (visibleQuestion.getIdInternal().equals(exerciseCode)) {
+                if (visibleQuestion.getExternalId().equals(exerciseCode)) {
                     question = visibleQuestion;
                     break;
                 }
@@ -312,7 +309,7 @@ public class TestsManagementAction extends FenixDispatchAction {
     public ActionForward editTestQuestion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
         final String executionCourseCode = getStringFromRequest(request, "objectCode");
-        final Integer testCode = getCodeFromRequest(request, "testCode");
+        final Object testCode = getFromRequest(request, "testCode");
         final String testQuestionCode = getStringFromRequest(request, "testQuestionCode");
         final Integer questionOrder = getCodeFromRequest(request, "testQuestionOrder");
         final Double questionValue = new Double(request.getParameter("testQuestionValue"));
@@ -694,7 +691,7 @@ public class TestsManagementAction extends FenixDispatchAction {
 
     public ActionForward prepareEditDistributedTest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
-        final Integer objectCode = getCodeFromRequest(request, "objectCode");
+        final Object objectCode = getFromRequest(request, "objectCode");
         final String distributedTestCode = getStringFromRequest(request, "distributedTestCode");
         final DistributedTest distributedTest = AbstractDomainObject.fromExternalId(distributedTestCode);
         if (distributedTest == null) {
@@ -1126,10 +1123,10 @@ public class TestsManagementAction extends FenixDispatchAction {
 
     public ActionForward prepareChangeStudentTestQuestion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
-        request.setAttribute("objectCode", getCodeFromRequest(request, "objectCode"));
-        request.setAttribute("questionCode", getCodeFromRequest(request, "questionCode"));
-        request.setAttribute("distributedTestCode", getCodeFromRequest(request, "distributedTestCode"));
-        request.setAttribute("studentCode", getCodeFromRequest(request, "studentCode"));
+        request.setAttribute("objectCode", getFromRequest(request, "objectCode"));
+        request.setAttribute("questionCode", getFromRequest(request, "questionCode"));
+        request.setAttribute("distributedTestCode", getFromRequest(request, "distributedTestCode"));
+        request.setAttribute("studentCode", getFromRequest(request, "studentCode"));
         List<LabelValueBean> changesTypeList = (new TestQuestionChangesType()).getAllTypes();
         request.setAttribute("changesTypeList", changesTypeList);
         List<LabelValueBean> studentsTypeList = (new TestQuestionStudentsChangesType()).getAllTypes();
@@ -1199,10 +1196,10 @@ public class TestsManagementAction extends FenixDispatchAction {
 
     public ActionForward prepareChangeStudentTestQuestionValue(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) {
-        request.setAttribute("objectCode", getCodeFromRequest(request, "objectCode"));
-        request.setAttribute("questionCode", getCodeFromRequest(request, "questionCode"));
-        request.setAttribute("distributedTestCode", getCodeFromRequest(request, "distributedTestCode"));
-        request.setAttribute("studentCode", getCodeFromRequest(request, "studentCode"));
+        request.setAttribute("objectCode", getFromRequest(request, "objectCode"));
+        request.setAttribute("questionCode", getFromRequest(request, "questionCode"));
+        request.setAttribute("distributedTestCode", getFromRequest(request, "distributedTestCode"));
+        request.setAttribute("studentCode", getFromRequest(request, "studentCode"));
         List<LabelValueBean> studentsTypeList = (new TestQuestionStudentsChangesType()).getAllTypes();
         request.setAttribute("studentsTypeList", studentsTypeList);
         ((DynaActionForm) form).set("studentsType", "1");
@@ -1234,10 +1231,10 @@ public class TestsManagementAction extends FenixDispatchAction {
 
     public ActionForward prepareChangeStudentTestQuestionMark(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
-        request.setAttribute("objectCode", getCodeFromRequest(request, "objectCode"));
-        request.setAttribute("questionCode", getCodeFromRequest(request, "questionCode"));
-        request.setAttribute("distributedTestCode", getCodeFromRequest(request, "distributedTestCode"));
-        request.setAttribute("studentCode", getCodeFromRequest(request, "studentCode"));
+        request.setAttribute("objectCode", getFromRequest(request, "objectCode"));
+        request.setAttribute("questionCode", getFromRequest(request, "questionCode"));
+        request.setAttribute("distributedTestCode", getFromRequest(request, "distributedTestCode"));
+        request.setAttribute("studentCode", getFromRequest(request, "studentCode"));
         List<LabelValueBean> studentsTypeList = (new TestQuestionStudentsChangesType()).getAllTypes();
         request.setAttribute("studentsTypeList", studentsTypeList);
         ((DynaActionForm) form).set("studentsType", "1");

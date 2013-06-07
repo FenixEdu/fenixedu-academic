@@ -424,7 +424,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 
     public ActionForward prepareForEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        Integer infoExamId = (Integer) request.getAttribute(PresentationConstants.EXAM_OID);
+        String infoExamId = (String) request.getAttribute(PresentationConstants.EXAM_OID);
         request.setAttribute(PresentationConstants.EXAM_OID, infoExamId);
 
         ContextUtils.setCurricularYearsContext(request);

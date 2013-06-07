@@ -493,7 +493,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
 
         if (correctorOids != null) {
             for (String correctorOid : correctorOids) {
-                request.setAttribute("oid", Integer.parseInt(correctorOid));
+                request.setAttribute("oid", correctorOid);
 
                 this.deleteCorrector(mapping, form, request, response);
             }
@@ -592,7 +592,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
 
         DeleteQuestion.run(question);
 
-        Integer parentQuestionGroupId = getCodeFromRequest(request, "parentQuestionGroupOid");
+        String parentQuestionGroupId = getStringFromRequest(request, "parentQuestionGroupOid");
 
         if (parentQuestionGroupId != null) {
             request.setAttribute("oid", parentQuestionGroupId);

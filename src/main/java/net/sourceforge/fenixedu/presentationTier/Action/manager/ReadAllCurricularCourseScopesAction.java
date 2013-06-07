@@ -51,8 +51,8 @@ public class ReadAllCurricularCourseScopesAction extends FenixAction {
 
         IUserView userView = UserView.getUser();
         String curricularCourseId = request.getParameter("curricularCourseId");
-        Integer degreeId = new Integer(request.getParameter("degreeId"));
-        Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
+        String degreeId = request.getParameter("degreeId");
+        String degreeCurricularPlanId = request.getParameter("degreeCurricularPlanId");
         request.setAttribute("curricularCourseId", curricularCourseId);
         request.setAttribute("degreeId", degreeId);
         request.setAttribute("degreeCurricularPlanId", degreeCurricularPlanId);

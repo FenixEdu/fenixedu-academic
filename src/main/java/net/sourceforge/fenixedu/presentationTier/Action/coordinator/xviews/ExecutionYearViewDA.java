@@ -56,7 +56,7 @@ public class ExecutionYearViewDA extends FenixDispatchAction {
 
     public ActionForward showDisclaimer(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
-        Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+        String degreeCurricularPlanID = request.getParameter("degreeCurricularPlanID");
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
         return mapping.findForward("xViewsDisclaimer");
     }

@@ -140,7 +140,7 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
                         ReadTeachersCreditsResumeByPeriodAndUnit.run(unit, fromExecutionPeriod, untilExecutionPeriod);
                 teachersCreditsByDepartment.put(department, teacherCreditsReportList);
             }
-            request.setAttribute("departmentID", 0);
+            request.setAttribute("departmentID", null);
         } else {
             Department department = AbstractDomainObject.fromExternalId(departmentID);
             Unit departmentUnit = department.getDepartmentUnit();

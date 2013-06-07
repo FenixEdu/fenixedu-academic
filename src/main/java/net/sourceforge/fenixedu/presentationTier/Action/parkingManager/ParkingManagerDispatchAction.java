@@ -319,7 +319,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
         String parkingGroupID = request.getParameter("groupID");
 
         if (parkingGroupID != null) {
-            Integer parkingRequestID = new Integer(request.getParameter("code"));
+            String parkingRequestID = request.getParameter("code");
             if (request.getParameter("groupID") == null) {
                 saveErrorMessage(request, "group", "error.invalidGroup");
                 request.setAttribute("externalId", parkingRequestID);
