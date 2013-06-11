@@ -125,7 +125,7 @@
 		</logic:equal>	
 
 		<%-- Start of Master Degree Coordinator Options --%>
-		<logic:equal name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.tipoCurso" value="<%= DegreeType.MASTER_DEGREE.toString() %>">
+		<logic:equal name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.degreeType" value="<%= DegreeType.MASTER_DEGREE.toString() %>">
 			<li class="navheader">
 				<bean:message key="link.coordinator.candidate"/>
 			</li>
@@ -206,7 +206,7 @@
 		</logic:equal>
 		
 		<%-- Start of non-Master Degree Coordinator Options --%>
-		<logic:notEqual name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.tipoCurso" value="<%= DegreeType.MASTER_DEGREE.toString() %>">
+		<logic:notEqual name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.degreeType" value="<%= DegreeType.MASTER_DEGREE.toString() %>">
 
 			<li class="navheader">
 				<bean:message key="label.coordinator.degreeSite.tutorship" />
@@ -239,9 +239,9 @@
                 </html:link>
             </li>
 			
-			<% if(DegreeType.BOLONHA_DEGREE.equals(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso()) || 
-					DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE.equals(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso()) ||
-					DegreeType.BOLONHA_MASTER_DEGREE.equals(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso())) { %>
+			<% if(DegreeType.BOLONHA_DEGREE.equals(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getDegreeType()) || 
+					DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE.equals(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getDegreeType()) ||
+					DegreeType.BOLONHA_MASTER_DEGREE.equals(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getDegreeType())) { %>
                 <li class="navheader">
                     <bean:message key="label.coordinator.degreeSite.candidacies"/>
                 </li>
