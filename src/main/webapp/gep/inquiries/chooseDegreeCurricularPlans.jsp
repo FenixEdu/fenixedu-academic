@@ -82,11 +82,11 @@
 			
 			<logic:iterate id="degreeCurricularPlan" name='<%= InquiriesUtil.DEGREE_CURRICULAR_PLANS_LIST %>' type="net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan">
 				<%--<bean:define id="degreeType">
-					<bean:write name="degreeCurricularPlan" property="infoDegree.tipoCurso.name" />	
+					<bean:write name="degreeCurricularPlan" property="infoDegree.degreeType.name" />	
 				</bean:define>--%>
 					<tr>
 						<td>
-							<bean:message name="degreeCurricularPlan" property="infoDegree.tipoCurso.name" bundle="ENUMERATION_RESOURCES"/>
+							<bean:message name="degreeCurricularPlan" property="infoDegree.degreeType.name" bundle="ENUMERATION_RESOURCES"/>
 						</td>
 						<td>
 							<bean:write name="degreeCurricularPlan" property="infoDegree.nome" /> - <bean:write name="degreeCurricularPlan" property="name" />

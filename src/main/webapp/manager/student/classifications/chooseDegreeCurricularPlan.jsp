@@ -45,7 +45,7 @@
 	<logic:present name="degreeCurricularPlans">
 		<table>
 			<logic:iterate id="degreeCurricularPlan" name="degreeCurricularPlans">
-				<logic:equal name="degreeCurricularPlan" property="infoDegree.tipoCurso.name" value="DEGREE" >
+				<logic:equal name="degreeCurricularPlan" property="infoDegree.degreeType.name" value="DEGREE" >
 					<tr>
 						<td><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.degreeCurricularPlanID" property="degreeCurricularPlanID" idName="degreeCurricularPlan" value="idInternal" /></td>
 						<td><bean:write name="degreeCurricularPlan" property="name" /></td>

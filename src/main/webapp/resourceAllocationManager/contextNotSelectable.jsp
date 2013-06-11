@@ -11,7 +11,7 @@
 		<tr>
 			<td colspan="2">
 				<strong>
-					<bean:write name="<%= PresentationConstants.EXECUTION_DEGREE %>" property="infoDegreeCurricularPlan.infoDegree.tipoCurso"/>
+					<bean:write name="<%= PresentationConstants.EXECUTION_DEGREE %>" property="infoDegreeCurricularPlan.infoDegree.degreeType"/>
 					em
 					<bean:write name="<%= PresentationConstants.EXECUTION_DEGREE %>" property="infoDegreeCurricularPlan.infoDegree.nome"/>
 				</strong>

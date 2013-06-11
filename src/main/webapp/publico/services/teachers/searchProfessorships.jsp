@@ -67,7 +67,7 @@
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionDegreeId" property="executionDegreeId">
 					<logic:iterate id="executionDegree" name="executionDegrees" > 
 						<bean:define    id="executionDegreeId"   name="executionDegree" property="idInternal"/>
-						<bean:define id="degreeType"  name="executionDegree" property="infoDegreeCurricularPlan.infoDegree.tipoCurso"/>
+						<bean:define id="degreeType"  name="executionDegree" property="infoDegreeCurricularPlan.infoDegree.degreeType"/>
 						<html:option value="<%= executionDegreeId.toString() %>"> 
 						<bean:write name="executionDegree" property="infoDegreeCurricularPlan.infoDegree.degree.presentationName"/> </html:option>
 					</logic:iterate>

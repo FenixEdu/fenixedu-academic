@@ -24,7 +24,7 @@
             		<bean:write name="link"/><bean:write name="studentCP" property="idInternal" />
             	</bean:define>
                 <html:link page='<%= pageContext.findAttribute("studentCPLink").toString() %>'>
-                	(<bean:write name="studentCP" property="infoDegreeCurricularPlan.infoDegree.tipoCurso" />)  
+                	(<bean:write name="studentCP" property="infoDegreeCurricularPlan.infoDegree.degreeType" />)  
                     <bean:write name="studentCP" property="infoDegreeCurricularPlan.infoDegree.nome" /> - 
 					<logic:present name="studentCP" property="specialization" >
 	        			<bean:write name="studentCP" property="specialization.name" bundle="ENUMERATION_RESOURCES" /> - 

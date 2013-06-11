@@ -59,7 +59,7 @@
         	</bean:define>
         	<bean:define id="linkDescription">
         		<bean:write name="studentCP" property="infoStudent.number" /> - 
-            	(<bean:write name="studentCP" property="infoDegreeCurricularPlan.infoDegree.tipoCurso" />)  
+            	(<bean:write name="studentCP" property="infoDegreeCurricularPlan.infoDegree.degreeType" />)  
                 <bean:write name="studentCP" property="infoDegreeCurricularPlan.infoDegree.nome" /> - 
 				<logic:present name="studentCP" property="specialization" >
         			<bean:message name="studentCP" property="specialization.name" bundle="ENUMERATION_RESOURCES" /> - 
