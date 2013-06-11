@@ -13,11 +13,12 @@ import net.sourceforge.fenixedu.domain.time.chronologies.AcademicChronology;
 import net.sourceforge.fenixedu.domain.time.chronologies.dateTimeFields.AcademicSemesterDateTimeFieldType;
 import net.sourceforge.fenixedu.domain.time.chronologies.dateTimeFields.AcademicYearDateTimeFieldType;
 
-import org.apache.commons.lang.StringUtils;
 import org.joda.time.Chronology;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 import org.joda.time.base.AbstractInterval;
+
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class AcademicInterval extends AbstractInterval implements Serializable {
 
@@ -47,62 +48,35 @@ public class AcademicInterval extends AbstractInterval implements Serializable {
 
     };
 
-    private final Integer academicCalendarIdInternal;
-    private final Integer entryIdInternal;
-    private final String entryClassName;
+    private final String academicCalendarExternalId;
+    private final String entryExternalId;
 
     private transient AcademicCalendarEntry academicCalendarEntry;
     private transient AcademicCalendarRootEntry academicCalendarRootEntry;
     private transient AcademicChronology academicChronology;
 
-    public AcademicInterval(Integer entryIdInternal, String entryClassName, Integer academicCalendarIdInternal) {
-        if (entryIdInternal == null) {
-            throw new DomainException("error.AcademicInterval.empty.entry.idInternal");
+    private AcademicInterval(String entryExternalId, String academicCalendarExternalId) {
+        if (entryExternalId == null) {
+            throw new DomainException("error.AcademicInterval.empty.entry.externalId");
         }
-        this.entryIdInternal = entryIdInternal;
-        if (entryClassName == null || StringUtils.isEmpty(entryClassName)) {
-            throw new DomainException("error.AcademicInterval.empty.entry.class");
+        this.entryExternalId = entryExternalId;
+        if (academicCalendarExternalId == null) {
+            throw new DomainException("error.AcademicInterval.empty.academic.chronology.externalId");
         }
-        this.entryClassName = entryClassName;
-        if (academicCalendarIdInternal == null) {
-            throw new DomainException("error.AcademicInterval.empty.academic.chronology.idInternal");
-        }
-        this.academicCalendarIdInternal = academicCalendarIdInternal;
-    }
-
-    private AcademicInterval(Integer entryIdInternal, Integer academicCalendarIdInternal) {
-        if (entryIdInternal == null) {
-            throw new DomainException("error.AcademicInterval.empty.entry.idInternal");
-        }
-        this.entryIdInternal = entryIdInternal;
-        AcademicCalendarEntry entry = getAcademicCalendarEntryIntervalWithoutClassNameCheck();
-        String clazz = entry.getClass().getName();
-        if (clazz == null || StringUtils.isEmpty(clazz)) {
-            throw new DomainException("error.AcademicInterval.empty.entry.class");
-        }
-        this.entryClassName = clazz;
-        if (academicCalendarIdInternal == null) {
-            throw new DomainException("error.AcademicInterval.empty.academic.chronology.idInternal");
-        }
-        this.academicCalendarIdInternal = academicCalendarIdInternal;
+        this.academicCalendarExternalId = academicCalendarExternalId;
     }
 
     public AcademicInterval(AcademicCalendarEntry entry, AcademicCalendarRootEntry rootEntry) {
-        Integer entryIdInternal = entry.getIdInternal();
-        if (entryIdInternal == null) {
-            throw new DomainException("error.AcademicInterval.empty.entry.idInternal");
+        String entryExternalId = entry.getExternalId();
+        if (entryExternalId == null) {
+            throw new DomainException("error.AcademicInterval.empty.entry.externalId");
         }
-        this.entryIdInternal = entryIdInternal;
-        String clazz = entry.getClass().getName();
-        if (clazz == null || StringUtils.isEmpty(clazz)) {
-            throw new DomainException("error.AcademicInterval.empty.entry.class");
+        this.entryExternalId = entryExternalId;
+        String academicCalendarExternalId = rootEntry.getExternalId();
+        if (academicCalendarExternalId == null) {
+            throw new DomainException("error.AcademicInterval.empty.academic.chronology.externalId");
         }
-        this.entryClassName = clazz;
-        Integer academicCalendarIdInternal = rootEntry.getIdInternal();
-        if (academicCalendarIdInternal == null) {
-            throw new DomainException("error.AcademicInterval.empty.academic.chronology.idInternal");
-        }
-        this.academicCalendarIdInternal = academicCalendarIdInternal;
+        this.academicCalendarExternalId = academicCalendarExternalId;
         academicCalendarEntry = entry;
         academicCalendarRootEntry = rootEntry;
     }
@@ -155,26 +129,21 @@ public class AcademicInterval extends AbstractInterval implements Serializable {
 
     public AcademicCalendarRootEntry getAcademicCalendar() {
         if (academicCalendarRootEntry == null) {
-            academicCalendarRootEntry =
-                    (AcademicCalendarRootEntry) RootDomainObject.getInstance().readAcademicCalendarEntryByOID(
-                            getAcademicCalendarIdInternal());
+            academicCalendarRootEntry = AbstractDomainObject.fromExternalId(getAcademicCalendarExternalId());
         }
         return academicCalendarRootEntry;
     }
 
     public AcademicCalendarEntry getAcademicCalendarEntry() {
         if (academicCalendarEntry == null) {
-            academicCalendarEntry = RootDomainObject.getInstance().readAcademicCalendarEntryByOID(getEntryIdInternal());
-        }
-        if (!academicCalendarEntry.getClass().getName().equals(getEntryClassName())) {
-            throw new DomainException("error.AcademicInterval.invalid.class.names");
+            academicCalendarEntry = AbstractDomainObject.fromExternalId(getEntryExternalId());
         }
         return academicCalendarEntry;
     }
 
     private AcademicCalendarEntry getAcademicCalendarEntryIntervalWithoutClassNameCheck() {
         if (academicCalendarEntry == null) {
-            academicCalendarEntry = RootDomainObject.getInstance().readAcademicCalendarEntryByOID(getEntryIdInternal());
+            academicCalendarEntry = AbstractDomainObject.fromExternalId(getEntryExternalId());
         }
         return academicCalendarEntry;
     }
@@ -199,39 +168,52 @@ public class AcademicInterval extends AbstractInterval implements Serializable {
         return getAcademicCalendarEntry().isEqualOrEquivalent(interval.getAcademicCalendarEntry());
     }
 
-    public Integer getEntryIdInternal() {
-        return entryIdInternal;
+    public String getEntryExternalId() {
+        return entryExternalId;
     }
 
-    public String getEntryClassName() {
-        return entryClassName;
-    }
-
-    public Integer getAcademicCalendarIdInternal() {
-        return academicCalendarIdInternal;
+    public String getAcademicCalendarExternalId() {
+        return academicCalendarExternalId;
     }
 
     public String getRepresentationInStringFormat() {
-        return getEntryClassName() + FULL_SEPARATOR + getEntryIdInternal() + FULL_SEPARATOR + getAcademicCalendarIdInternal();
+        return getEntryExternalId() + FULL_SEPARATOR + getAcademicCalendarExternalId();
     }
 
     public static AcademicInterval getAcademicIntervalFromString(String representationInStringFormat) {
         String[] split = representationInStringFormat.split(FULL_SEPARATOR);
-        String entryClassName = split[0];
-        Integer entryIdInternal = Integer.valueOf(split[1]);
-        Integer academicCalendarIdInternal = Integer.valueOf(split[2]);
-        return new AcademicInterval(entryIdInternal, entryClassName, academicCalendarIdInternal);
+        if (split.length == 3) {
+            // Do it the old fashioned way...
+            String entryClassName = split[0];
+            Integer entryIdInternal = Integer.valueOf(split[1]);
+            Integer academicCalendarExternalId = Integer.valueOf(split[2]);
+
+            AcademicCalendarEntry entry = RootDomainObject.getInstance().readAcademicCalendarEntryByOID(entryIdInternal);
+            if (!entry.getClass().getName().equals(entryClassName)) {
+                throw new DomainException("error.AcademicInterval.invalid.class.names");
+            }
+            AcademicCalendarRootEntry rootEntry =
+                    (AcademicCalendarRootEntry) RootDomainObject.getInstance().readAcademicCalendarEntryByOID(
+                            academicCalendarExternalId);
+
+            return new AcademicInterval(entry, rootEntry);
+        } else {
+            String entryExternalId = split[0];
+            String academicCalendarExternalId = split[1];
+            return new AcademicInterval(entryExternalId, academicCalendarExternalId);
+        }
+
     }
 
     public String getResumedRepresentationInStringFormat() {
-        return getEntryIdInternal() + RESUMED_SEPARATOR + getAcademicCalendarIdInternal();
+        return getEntryExternalId() + RESUMED_SEPARATOR + getAcademicCalendarExternalId();
     }
 
     public static AcademicInterval getAcademicIntervalFromResumedString(String representationInStringFormat) {
         String[] split = representationInStringFormat.split(RESUMED_SEPARATOR);
-        Integer entryIdInternal = Integer.valueOf(split[0]);
-        Integer academicCalendarIdInternal = Integer.valueOf(split[1]);
-        return new AcademicInterval(entryIdInternal, academicCalendarIdInternal);
+        String entryExternalId = split[0];
+        String academicCalendarExternalId = split[1];
+        return new AcademicInterval(entryExternalId, academicCalendarExternalId);
     }
 
     // Operations for get periods.
