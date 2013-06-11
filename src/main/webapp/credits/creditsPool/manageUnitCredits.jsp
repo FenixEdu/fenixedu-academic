@@ -151,9 +151,9 @@
 			<h3><bean:message bundle="TEACHER_CREDITS_SHEET_RESOURCES" key="label.courses.not.shared"/></h3>
 			<logic:notEmpty name="departmentCreditsPoolBean" property="departmentExecutionCourses">
 				<bean:define id="canEditUnitCredits" name="departmentCreditsPoolBean" property="canEditUnitCredits" type="java.lang.Boolean"/>
-				<fr:form id="f2" action="/creditsPool.do?method=editUnitCredits">
-					<fr:edit id="departmentCreditsPoolBean3" name="departmentCreditsPoolBean" visible="false"/>
-					<fr:edit id="departmentCreditsPoolBean4" name="departmentCreditsPoolBean" property="departmentExecutionCourses">
+				<fr:form id="unitCreditsForm" action="/creditsPool.do?method=editUnitCredits">
+					<fr:edit id="departmentCreditsPoolBean" name="departmentCreditsPoolBean" visible="false"/>
+					<fr:edit id="departmentCreditsPoolBean3" name="departmentCreditsPoolBean" property="departmentExecutionCourses">
 						<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.credits.util.DepartmentCreditsPoolBean$DepartmentExecutionCourse">
 							<fr:slot name="executionCourse.name" key="label.course" readOnly="true"/>
 							<fr:slot name="executionCourse.degreePresentationString" key="label.degrees" readOnly="true"/>
