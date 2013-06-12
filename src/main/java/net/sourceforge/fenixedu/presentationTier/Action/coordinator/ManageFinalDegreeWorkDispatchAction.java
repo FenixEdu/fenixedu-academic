@@ -43,7 +43,6 @@ import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
-import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Employee;
@@ -932,7 +931,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
         if ("orientator".equals(alteredField)) {
             number = (String) finalWorkForm.get("responsableTeacherId");
         }
-        
+
         if ("coorientator".equals(alteredField)) {
             number = (String) finalWorkForm.get("coResponsableTeacherId");
         }
@@ -960,7 +959,8 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
                 person = employee.getPerson();
             }
         }
-        if (person == null || !(person.hasRole(RoleType.TEACHER)) || !(person.hasRole(RoleType.RESEARCHER) || !(person.hasAnyProfessorships()))) {
+        if (person == null || !(person.hasRole(RoleType.TEACHER))
+                || !(person.hasRole(RoleType.RESEARCHER) || !(person.hasAnyProfessorships()))) {
             ActionErrors actionErrors = new ActionErrors();
             actionErrors.add("finalWorkInformationForm.unexistingTeacher", new ActionError(
                     "finalWorkInformationForm.unexistingTeacher"));
@@ -974,11 +974,11 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
             request.setAttribute("orientator", person);
         }
         if ("coorientator".equals(alteredField)) {
-        	finalWorkForm.set("coorientatorOID", person.getIdInternal().toString());
+            finalWorkForm.set("coorientatorOID", person.getIdInternal().toString());
             finalWorkForm.set("coResponsableTeacherName", person.getName());
             request.setAttribute("coorientator", person);
             if (!scheduleing.getAllowSimultaneousCoorientationAndCompanion().booleanValue()) {
-            	finalWorkForm.set("companionName", "");
+                finalWorkForm.set("companionName", "");
                 finalWorkForm.set("companionMail", "");
                 finalWorkForm.set("companionPhone", "");
                 finalWorkForm.set("companyAdress", "");
@@ -1244,8 +1244,8 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
             // scheduleing.getExecutionDegreesSet()) {
             for (final ExecutionDegree otherExecutionDegree : allExecutionDegrees) {
                 final DegreeCurricularPlan degreeCurricularPlan = otherExecutionDegree.getDegreeCurricularPlan();
-                final Degree degree = degreeCurricularPlan.getDegree();
-                final Spreadsheet studentsSpreadsheet = new Spreadsheet("Alunos " + degree.getSigla() + " " + yearString);
+                final Spreadsheet studentsSpreadsheet =
+                        new Spreadsheet("Alunos " + degreeCurricularPlan.getName() + " " + yearString);
                 fillStudentsSpreadSheet(otherExecutionDegree, scheduleing, studentsSpreadsheet);
                 studentsSpreadsheet.exportToXLSSheet(workbook, excelStyle.getHeaderStyle(), excelStyle.getStringStyle());
             }
