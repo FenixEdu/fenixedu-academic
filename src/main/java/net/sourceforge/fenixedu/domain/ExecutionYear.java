@@ -469,15 +469,23 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
     public static class ExecutionYearSearchCache {
         private final Map<Integer, Set<ExecutionYear>> map = new HashMap<Integer, Set<ExecutionYear>>();
 
-        public ExecutionYear findByDateTime(final DateTime dateTime) {
-            final Integer year = Integer.valueOf(dateTime.getYear());
-            Set<ExecutionYear> executionYears = map.get(year);
-            if (executionYears == null || executionYears.isEmpty()) {
+        private Set<ExecutionYear> updateIfNeeded(final Integer year) {
+            Set<ExecutionYear> result = map.get(year);
+
+            // for a given civil year, a maximum of two ExecutionYear can be indexed => must update cache if only one ExecutionYear is cached 
+            if (result == null || result.size() < 2) {
                 for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYearsSet()) {
                     add(executionYear);
                 }
-                executionYears = map.get(year);
+                result = map.get(year);
             }
+            
+            return result;
+        }
+
+        public ExecutionYear findByDateTime(final DateTime dateTime) {
+            final Integer year = Integer.valueOf(dateTime.getYear());
+            final Set<ExecutionYear> executionYears = updateIfNeeded(year);
             if (executionYears != null) {
                 for (final ExecutionYear executionYear : executionYears) {
                     if (executionYear.containsDate(dateTime)) {
@@ -490,13 +498,7 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
 
         public ExecutionYear findByPartial(final Partial partial) {
             final Integer year = Integer.valueOf(partial.get(DateTimeFieldType.year()));
-            Set<ExecutionYear> executionYears = map.get(year);
-            if (executionYears == null || executionYears.isEmpty()) {
-                for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYearsSet()) {
-                    add(executionYear);
-                }
-                executionYears = map.get(year);
-            }
+            final Set<ExecutionYear> executionYears = updateIfNeeded(year);
             if (executionYears != null) {
                 for (final ExecutionYear executionYear : executionYears) {
                     if (executionYear.getBeginDateYearMonthDay().getYear() == year) {
