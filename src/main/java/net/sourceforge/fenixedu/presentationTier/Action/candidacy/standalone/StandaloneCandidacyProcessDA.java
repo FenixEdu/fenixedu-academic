@@ -146,7 +146,7 @@ public class StandaloneCandidacyProcessDA extends CandidacyProcessDA {
     @Override
     protected StandaloneCandidacyProcess getCandidacyProcess(final HttpServletRequest request,
             final ExecutionInterval executionInterval) {
-        final Integer selectedProcessId = getIntegerFromRequest(request, "selectedProcessId");
+        final String selectedProcessId = getStringFromRequest(request, "selectedProcessId");
         if (selectedProcessId != null) {
             for (final StandaloneCandidacyPeriod candidacyPeriod : executionInterval.getStandaloneCandidacyPeriods()) {
                 if (candidacyPeriod.getStandaloneCandidacyProcess().getExternalId().equals(selectedProcessId)) {

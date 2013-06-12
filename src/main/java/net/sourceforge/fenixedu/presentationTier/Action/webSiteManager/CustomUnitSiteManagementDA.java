@@ -219,7 +219,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 
     private UnitSiteBanner getBanner(HttpServletRequest request) {
         UnitSite site = getSite(request);
-        Integer bannerId = getId(request.getParameter("bannerID"));
+        String bannerId = request.getParameter("bannerID");
 
         for (UnitSiteBanner banner : site.getBanners()) {
             if (banner.getExternalId().equals(bannerId)) {
@@ -266,7 +266,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
     public ActionForward removeBanner(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         UnitSite site = getSite(request);
-        Integer bannerId = getId(request.getParameter("bannerID"));
+        String bannerId = request.getParameter("bannerID");
 
         for (UnitSiteBanner banner : site.getBanners()) {
             if (banner.getExternalId().equals(bannerId)) {
@@ -325,7 +325,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
     public ActionForward removeTopLink(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         UnitSite site = getSite(request);
-        Integer linkId = getId(request.getParameter("linkID"));
+        String linkId = request.getParameter("linkID");
 
         for (UnitSiteLink link : site.getTopLinks()) {
             if (link.getExternalId().equals(linkId)) {
@@ -360,7 +360,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
     public ActionForward removeFooterLink(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         UnitSite site = getSite(request);
-        Integer linkId = getId(request.getParameter("linkID"));
+        String linkId = request.getParameter("linkID");
 
         for (UnitSiteLink link : site.getFooterLinks()) {
             if (link.getExternalId().equals(linkId)) {
@@ -705,7 +705,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
             HttpServletResponse response) throws Exception {
         UnitSite site = getSite(request);
 
-        Integer managerId = getId(request.getParameter("managerID"));
+        String managerId = request.getParameter("managerID");
         for (Person manager : site.getManagers()) {
             if (manager.getExternalId().equals(managerId)) {
                 try {

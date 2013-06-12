@@ -91,9 +91,9 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
                 new OrderedIterator<ExecutionYear>(notClosedExecutionYears.iterator(), new BeanComparator("beginDate"));
         request.setAttribute("executionYears", orderedExecutionYearsIter);
         DynaActionForm dynaForm = (DynaActionForm) form;
-        final Integer executionYearID = (Integer) dynaForm.get("executionYearID");
+        final String executionYearID = (String) dynaForm.get("executionYearID");
         ExecutionYear executionYear = null;
-        if (executionYearID == null || executionYearID == 0) {
+        if (executionYearID == null) {
             for (final ExecutionYear tempExecutionYear : notClosedExecutionYears) {
                 if (tempExecutionYear.isCurrent()) {
                     executionYear = tempExecutionYear;

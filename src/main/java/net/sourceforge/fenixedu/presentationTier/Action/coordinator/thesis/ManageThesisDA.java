@@ -534,7 +534,7 @@ public class ManageThesisDA extends AbstractManageThesisDA {
             return null;
         }
 
-        Integer id = Integer.valueOf(parameter);
+        String id = parameter;
 
         Thesis thesis = getThesis(request);
         for (ThesisEvaluationParticipant participant : thesis.getVowels()) {

@@ -40,14 +40,14 @@ public class ManageFinalDegreeWorksDA extends FenixDispatchAction {
             executionDegree = findExecutionDegree(degreeCurricularPlan);
             dynaActionForm.set("executionDegreeID", executionDegree.getExternalId().toString());
         } else {
-            executionDegree = findExecutionDegree(degreeCurricularPlan, Integer.valueOf(executionDegreeIDString));
+            executionDegree = findExecutionDegree(degreeCurricularPlan, executionDegreeIDString);
         }
         request.setAttribute("executionDegree", executionDegree);
 
         return mapping.findForward("show-final-degree-works-managment-page");
     }
 
-    private ExecutionDegree findExecutionDegree(final DegreeCurricularPlan degreeCurricularPlan, final Integer executionDegreeID) {
+    private ExecutionDegree findExecutionDegree(final DegreeCurricularPlan degreeCurricularPlan, final String executionDegreeID) {
         for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegrees()) {
             if (executionDegree.getExternalId().equals(executionDegreeID)) {
                 return executionDegree;

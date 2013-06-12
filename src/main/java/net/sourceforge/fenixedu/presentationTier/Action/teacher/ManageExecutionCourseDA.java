@@ -135,8 +135,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
         final String curricularCourseIDString = request.getParameter("curricularCourseID");
         if (executionCourse != null && curricularCourseIDString != null && curricularCourseIDString.length() > 0) {
-            final CurricularCourse curricularCourse =
-                    findCurricularCourse(executionCourse, Integer.valueOf(curricularCourseIDString));
+            final CurricularCourse curricularCourse = findCurricularCourse(executionCourse, curricularCourseIDString);
             request.setAttribute("curricularCourse", curricularCourse);
         }
     }
@@ -167,7 +166,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 
         final String curriculumIDString = request.getParameter("curriculumID");
         if (executionCourse != null && curriculumIDString != null && curriculumIDString.length() > 0) {
-            final Curriculum curriculum = findCurriculum(executionCourse, Integer.valueOf(curriculumIDString));
+            final Curriculum curriculum = findCurriculum(executionCourse, curriculumIDString);
             if (curriculum != null) {
                 final DynaActionForm dynaActionForm = (DynaActionForm) form;
                 dynaActionForm.set("program", curriculum.getProgram());
@@ -217,7 +216,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 
         final String curriculumIDString = request.getParameter("curriculumID");
         if (executionCourse != null && curriculumIDString != null && curriculumIDString.length() > 0) {
-            final Curriculum curriculum = findCurriculum(executionCourse, Integer.valueOf(curriculumIDString));
+            final Curriculum curriculum = findCurriculum(executionCourse, curriculumIDString);
             if (curriculum != null) {
                 final DynaActionForm dynaActionForm = (DynaActionForm) form;
                 dynaActionForm.set("generalObjectives", curriculum.getGeneralObjectives());
@@ -351,7 +350,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         final String bibliographicReferenceIDString = request.getParameter("bibliographicReferenceID");
         if (executionCourse != null && bibliographicReferenceIDString != null && bibliographicReferenceIDString.length() > 0) {
             final BibliographicReference bibliographicReference =
-                    findBibliographicReference(executionCourse, Integer.valueOf(bibliographicReferenceIDString));
+                    findBibliographicReference(executionCourse, bibliographicReferenceIDString);
             if (bibliographicReference != null) {
                 final DynaActionForm dynaActionForm = (DynaActionForm) form;
                 dynaActionForm.set("title", bibliographicReference.getTitle());
@@ -377,7 +376,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 
         final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
         final BibliographicReference bibliographicReference =
-                findBibliographicReference(executionCourse, Integer.valueOf(bibliographicReferenceIDString));
+                findBibliographicReference(executionCourse, bibliographicReferenceIDString);
         final IUserView userView = getUserView(request);
 
         EditBibliographicReference.runEditBibliographicReference(bibliographicReference.getExternalId(), title, authors,
@@ -626,12 +625,12 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         }
 
         if (executionCourseIDString != null && executionCourseIDString.length() > 0) {
-            final ExecutionCourse executionCourse = findExecutionCourse(request, Integer.valueOf(executionCourseIDString));
+            final ExecutionCourse executionCourse = findExecutionCourse(request, executionCourseIDString);
             request.setAttribute("executionCourse", executionCourse);
         }
     }
 
-    private static ExecutionCourse findExecutionCourse(final HttpServletRequest request, final Integer executionCourseID) {
+    private static ExecutionCourse findExecutionCourse(final HttpServletRequest request, final String executionCourseID) {
         final IUserView userView = getUserView(request);
 
         if (userView != null) {
@@ -649,7 +648,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         return null;
     }
 
-    private BibliographicReference findBibliographicReference(ExecutionCourse executionCourse, Integer bibliographicReferenceID) {
+    private BibliographicReference findBibliographicReference(ExecutionCourse executionCourse, String bibliographicReferenceID) {
         for (final BibliographicReference bibliographicReference : executionCourse.getAssociatedBibliographicReferencesSet()) {
             if (bibliographicReference.getExternalId().equals(bibliographicReferenceID)) {
                 return bibliographicReference;
@@ -658,7 +657,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         return null;
     }
 
-    private Curriculum findCurriculum(final ExecutionCourse executionCourse, final Integer curriculumID) {
+    private Curriculum findCurriculum(final ExecutionCourse executionCourse, final String curriculumID) {
         for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
             for (final Curriculum curriculum : curricularCourse.getAssociatedCurriculumsSet()) {
                 if (curriculum.getExternalId().equals(curriculumID)) {
@@ -669,7 +668,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         return null;
     }
 
-    private CurricularCourse findCurricularCourse(final ExecutionCourse executionCourse, final Integer curricularCourseID) {
+    private CurricularCourse findCurricularCourse(final ExecutionCourse executionCourse, final String curricularCourseID) {
         for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
             if (curricularCourse.getExternalId().equals(curricularCourseID)) {
                 return curricularCourse;

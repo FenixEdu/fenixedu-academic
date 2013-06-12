@@ -60,7 +60,7 @@ public class EditProjectDispatchAction extends FenixDispatchAction {
     public ActionForward prepareEditParticipants(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        final Integer oid = Integer.parseInt(request.getParameter("projectId"));
+        final String oid = request.getParameter("projectId");
 
         for (Project project : rootDomainObject.getProjects()) {
             if (project.getExternalId().equals(oid)) {
@@ -178,7 +178,7 @@ public class EditProjectDispatchAction extends FenixDispatchAction {
     public ActionForward prepareEditEventAssociationsSimple(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        final Integer oid = Integer.parseInt(request.getParameter("projectId"));
+        final String oid = request.getParameter("projectId");
 
         for (Project project : rootDomainObject.getProjects()) {
             if (project.getExternalId().equals(oid)) {
@@ -255,7 +255,7 @@ public class EditProjectDispatchAction extends FenixDispatchAction {
     public ActionForward prepareEditParticipantUnits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        final Integer oid = Integer.parseInt(request.getParameter("projectId"));
+        final String oid = request.getParameter("projectId");
 
         for (Project project : rootDomainObject.getProjects()) {
             if (project.getExternalId().equals(oid)) {
@@ -303,7 +303,7 @@ public class EditProjectDispatchAction extends FenixDispatchAction {
     // ***************************************
 
     private void setAttributeSelectedProject(HttpServletRequest request) {
-        final Integer oid = Integer.parseInt(request.getParameter("projectId"));
+        final String oid = request.getParameter("projectId");
 
         for (Project project : rootDomainObject.getProjects()) {
             if (project.getExternalId().equals(oid)) {

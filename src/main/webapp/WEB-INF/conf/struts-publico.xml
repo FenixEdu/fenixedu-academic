@@ -113,7 +113,7 @@
             </form-bean>
             <!-- OLD INQUIRIES SUMMARY -->
             <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="viewDegreeEvaluationForm">
-                  <form-property initial="0" type="java.lang.Integer" name="executionPeriodId"></form-property>
+                  <form-property initial="0" type="java.lang.String" name="executionPeriodId"></form-property>
                   <form-property initial="0" type="java.lang.Integer" name="semester"></form-property>
             </form-bean>
             <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="changeLocaleForm">

@@ -42,7 +42,7 @@ public class CollectionUtils extends org.apache.commons.collections.CollectionUt
         return result;
     }
 
-    public static InfoObject getByInternalId(Collection<InfoObject> infoObjectList, final Integer externalId) {
+    public static InfoObject getByExternalId(Collection<InfoObject> infoObjectList, final String externalId) {
         InfoObject infoObject = find(infoObjectList, new Predicate<InfoObject>() {
 
             @Override

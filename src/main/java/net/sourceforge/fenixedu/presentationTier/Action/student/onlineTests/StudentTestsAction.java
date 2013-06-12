@@ -487,11 +487,11 @@ public class StudentTestsAction extends FenixDispatchAction {
         final IUserView userView = getUserView(request);
 
         String testCode = null;
-        Integer exerciseCode = null;
+        String exerciseCode = null;
         Integer itemCode = null;
         try {
             testCode = request.getParameter("testCode");
-            exerciseCode = new Integer(request.getParameter("exerciseCode"));
+            exerciseCode = request.getParameter("exerciseCode");
             itemCode = new Integer(request.getParameter("item"));
         } catch (NumberFormatException e) {
             request.setAttribute("invalidTest", new Boolean(true));
@@ -526,11 +526,11 @@ public class StudentTestsAction extends FenixDispatchAction {
         request.setAttribute("item", request.getParameter("item"));
 
         String testCode = null;
-        Integer exerciseCode = null;
+        String exerciseCode = null;
         Integer itemCode = null;
         try {
             testCode = request.getParameter("testCode");
-            exerciseCode = new Integer(request.getParameter("exerciseCode"));
+            exerciseCode = request.getParameter("exerciseCode");
             itemCode = new Integer(request.getParameter("item"));
         } catch (NumberFormatException e) {
             request.setAttribute("invalidTest", new Boolean(true));

@@ -30,7 +30,7 @@ public class GiveUpQuestion {
 
     @Checked("RolePredicates.STUDENT_PREDICATE")
     @Service
-    public static void run(Registration registration, DistributedTest distributedTest, Integer exerciseCode, Integer itemCode,
+    public static void run(Registration registration, DistributedTest distributedTest, String exerciseCode, Integer itemCode,
             String path) throws FenixServiceException {
         if (distributedTest == null) {
             throw new FenixServiceException();

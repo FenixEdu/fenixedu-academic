@@ -161,7 +161,7 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
             HttpServletResponse response) throws FenixServiceException {
 
         checkParameter(request);
-        final Integer classIdSelected = readClassSelected(request);
+        final String classIdSelected = readClassSelected(request);
 
         final Registration registration = getAndSetRegistration(request);
         if (registration == null) {
@@ -196,7 +196,7 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
         return mapping.findForward("showShiftsToEnroll");
     }
 
-    private SchoolClass setSelectedSchoolClass(HttpServletRequest request, final Integer classIdSelected,
+    private SchoolClass setSelectedSchoolClass(HttpServletRequest request, final String classIdSelected,
             final List<SchoolClass> schoolClassesToEnrol) {
 
         final SchoolClass schoolClass =
@@ -207,7 +207,7 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
         return schoolClass;
     }
 
-    private SchoolClass searchSchoolClassFrom(final List<SchoolClass> schoolClassesToEnrol, final Integer classId) {
+    private SchoolClass searchSchoolClassFrom(final List<SchoolClass> schoolClassesToEnrol, final String classId) {
         return (SchoolClass) CollectionUtils.find(schoolClassesToEnrol, new Predicate() {
             @Override
             public boolean evaluate(Object object) {
@@ -261,13 +261,13 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
         }
     }
 
-    private Integer readClassSelected(HttpServletRequest request) {
+    private String readClassSelected(HttpServletRequest request) {
         String classIdSelectedString = request.getParameter("classId");
-        Integer classIdSelected = null;
+        String classIdSelected = null;
         if (classIdSelectedString != null) {
-            classIdSelected = Integer.valueOf(classIdSelectedString);
+            classIdSelected = classIdSelectedString;
         } else {
-            classIdSelected = (Integer) request.getAttribute("classId");
+            classIdSelected = (String) request.getAttribute("classId");
         }
         return classIdSelected;
     }

@@ -241,7 +241,7 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
     protected MobilityApplicationProcess getCandidacyProcess(final HttpServletRequest request,
             final ExecutionInterval executionInterval) {
 
-        final Integer selectedProcessId = getIntegerFromRequest(request, "selectedProcessId");
+        final String selectedProcessId = getStringFromRequest(request, "selectedProcessId");
         if (selectedProcessId != null) {
             for (final MobilityApplicationPeriod applicationPeriod : executionInterval.getMobilityApplicationPeriods()) {
                 if (applicationPeriod.getMobilityApplicationProcess().getExternalId().equals(selectedProcessId)) {

@@ -231,7 +231,7 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
         } else if (scpIdType.isAll()) {
             result = getSortedStudentCurricularPlans(registration);
         } else {
-            result = Collections.singletonList(getStudentCurricularPlan(registration, Integer.valueOf(studentCPID)));
+            result = Collections.singletonList(getStudentCurricularPlan(registration, studentCPID));
         }
 
         return result;
@@ -260,7 +260,7 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
         return result;
     }
 
-    private StudentCurricularPlan getStudentCurricularPlan(final Registration registration, final Integer scpId) {
+    private StudentCurricularPlan getStudentCurricularPlan(final Registration registration, final String scpId) {
         for (final StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
             if (studentCurricularPlan.getExternalId().equals(scpId)) {
                 return studentCurricularPlan;

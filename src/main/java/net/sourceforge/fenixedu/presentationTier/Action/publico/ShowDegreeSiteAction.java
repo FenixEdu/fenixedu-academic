@@ -280,9 +280,9 @@ public class ShowDegreeSiteAction extends FenixDispatchAction {
 
         // Getting the summary information
         DynaActionForm degreeEvaluationForm = (DynaActionForm) actionForm;
-        Integer executionPeriodId = (Integer) degreeEvaluationForm.get("executionPeriodId");
+        String executionPeriodId = (String) degreeEvaluationForm.get("executionPeriodId");
 
-        if ((executionPeriodId != null) && (executionPeriodId.intValue() > 0)) {
+        if (executionPeriodId != null) {
             request.setAttribute("searchExecutionPeriodId", executionPeriodId);
 
             List<InfoOldInquiriesSummary> oldInquiriesSummaries = new ArrayList<InfoOldInquiriesSummary>();

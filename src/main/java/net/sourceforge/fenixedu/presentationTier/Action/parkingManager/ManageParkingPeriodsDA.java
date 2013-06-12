@@ -127,7 +127,7 @@ public class ManageParkingPeriodsDA extends FenixDispatchAction {
         if (request.getParameter("remove") != null) {
             String[] parkingCardsToRemove = ((DynaActionForm) actionForm).getStrings("parkingCardsToRemove");
             for (String element : parkingCardsToRemove) {
-                parkingCardSearchBean.removeSelectedParkingParty(Integer.valueOf(element));
+                parkingCardSearchBean.removeSelectedParkingParty(element);
             }
             request.setAttribute("parkingCardSearchBean", parkingCardSearchBean);
             return mapping.findForward("cardsRenewal");

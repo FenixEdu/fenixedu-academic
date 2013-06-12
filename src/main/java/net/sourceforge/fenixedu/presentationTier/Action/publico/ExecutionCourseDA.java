@@ -313,7 +313,7 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
     }
 
     protected Grouping getGrouping(final HttpServletRequest request) {
-        final Integer groupingID = Integer.valueOf(request.getParameter("groupingID"));
+        final String groupingID = request.getParameter("groupingID");
         final ExecutionCourse executionCourse = getExecutionCourse(request);
         for (final ExportGrouping exportGrouping : executionCourse.getExportGroupingsSet()) {
             final Grouping grouping = exportGrouping.getGrouping();

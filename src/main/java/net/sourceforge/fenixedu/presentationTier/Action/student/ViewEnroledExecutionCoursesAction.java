@@ -29,7 +29,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 public class ViewEnroledExecutionCoursesAction extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         final Student student = getLoggedPerson(request).getStudent();
         final List<Registration> registrations = student.getActiveRegistrations();
@@ -45,15 +45,15 @@ public class ViewEnroledExecutionCoursesAction extends FenixDispatchAction {
     }
 
     public ActionForward select(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         final Registration registration =
-                getRegistrationByID(getLoggedPerson(request).getStudent(), getIntegerFromRequest(request, "registrationId"));
+                getRegistrationByID(getLoggedPerson(request).getStudent(), getStringFromRequest(request, "registrationId"));
         request.setAttribute("executionCourses", ReadEnroledExecutionCourses.run(registration));
         return mapping.findForward("showEnroledExecutionCourses");
     }
 
-    private Registration getRegistrationByID(final Student student, final Integer registrationId) {
+    private Registration getRegistrationByID(final Student student, final String registrationId) {
         for (final Registration registration : student.getActiveRegistrations()) {
             if (registration.getExternalId().equals(registrationId)) {
                 return registration;

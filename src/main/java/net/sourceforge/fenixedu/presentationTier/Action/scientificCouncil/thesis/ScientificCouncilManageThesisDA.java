@@ -785,11 +785,9 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
             return null;
         }
 
-        Integer id = Integer.valueOf(parameter);
-
         Thesis thesis = getThesis(request);
         for (ThesisEvaluationParticipant participant : thesis.getVowels()) {
-            if (participant.getExternalId().equals(id)) {
+            if (participant.getExternalId().equals(parameter)) {
                 return participant;
             }
         }

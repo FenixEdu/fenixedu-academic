@@ -27,7 +27,7 @@ public class ViewProjectDispatchAction extends FenixDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
-        final Integer oid = Integer.parseInt(request.getParameter("projectId"));
+        final String oid = request.getParameter("projectId");
 
         for (Project project : rootDomainObject.getProjects()) {
             if (project.getExternalId().equals(oid)) {

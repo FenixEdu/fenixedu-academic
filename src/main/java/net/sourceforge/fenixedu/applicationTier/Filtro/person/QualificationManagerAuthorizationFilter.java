@@ -53,8 +53,7 @@ public class QualificationManagerAuthorizationFilter {
     }
 
     private boolean isOwnQualification(IUserView userView, InfoQualification infoQualification) {
-        boolean isNew =
-                (infoQualification.getExternalId() == null) || (infoQualification.getExternalId().equals(Integer.valueOf(0)));
+        boolean isNew = infoQualification.getExternalId() == null;
         if (isNew) {
             return true;
         }

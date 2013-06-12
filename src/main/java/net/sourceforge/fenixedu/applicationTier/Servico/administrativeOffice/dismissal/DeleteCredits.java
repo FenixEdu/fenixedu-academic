@@ -10,7 +10,7 @@ public class DeleteCredits {
     @Service
     public static void run(StudentCurricularPlan studentCurricularPlan, String[] creditsIDs) throws FenixServiceException {
         for (String creditsID : creditsIDs) {
-            Credits credits = getCreditsByID(studentCurricularPlan, Integer.valueOf(creditsID));
+            Credits credits = getCreditsByID(studentCurricularPlan, creditsID);
             if (credits == null) {
                 throw new FenixServiceException();
             }
@@ -18,7 +18,7 @@ public class DeleteCredits {
         }
     }
 
-    private static Credits getCreditsByID(StudentCurricularPlan studentCurricularPlan, Integer creditsID) {
+    private static Credits getCreditsByID(StudentCurricularPlan studentCurricularPlan, String creditsID) {
         for (Credits credits : studentCurricularPlan.getCreditsSet()) {
             if (credits.getExternalId().equals(creditsID)) {
                 return credits;

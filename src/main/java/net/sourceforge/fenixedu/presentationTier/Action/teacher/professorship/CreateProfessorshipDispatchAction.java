@@ -130,13 +130,13 @@ public class CreateProfessorshipDispatchAction extends FenixDispatchAction {
 
     private void setChoosedExecutionPeriod(HttpServletRequest request, List executionPeriodsNotClosed,
             DynaValidatorForm personExecutionCourseForm) {
-        Integer executionPeriodIdValue = null;
+        String executionPeriodIdValue = null;
         try {
-            executionPeriodIdValue = Integer.valueOf((String) personExecutionCourseForm.get("executionPeriodId"));
+            executionPeriodIdValue = (String) personExecutionCourseForm.get("executionPeriodId");
         } catch (Exception e) {
             // do nothing
         }
-        final Integer executionPeriodId = executionPeriodIdValue;
+        final String executionPeriodId = executionPeriodIdValue;
         InfoExecutionPeriod infoExecutionPeriod = null;
         if (executionPeriodId == null) {
             infoExecutionPeriod = (InfoExecutionPeriod) CollectionUtils.find(executionPeriodsNotClosed, new Predicate() {

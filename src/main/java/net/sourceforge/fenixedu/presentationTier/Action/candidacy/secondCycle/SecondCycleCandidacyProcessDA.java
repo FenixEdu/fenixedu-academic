@@ -199,7 +199,7 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
     protected SecondCycleCandidacyProcess getCandidacyProcess(final HttpServletRequest request,
             final ExecutionInterval executionInterval) {
 
-        final Integer selectedProcessId = getIntegerFromRequest(request, "selectedProcessId");
+        final String selectedProcessId = getStringFromRequest(request, "selectedProcessId");
         if (selectedProcessId != null) {
             for (final SecondCycleCandidacyPeriod candidacyPeriod : executionInterval.getSecondCycleCandidacyPeriods()) {
                 if (candidacyPeriod.getSecondCycleCandidacyProcess().getExternalId().equals(selectedProcessId)) {

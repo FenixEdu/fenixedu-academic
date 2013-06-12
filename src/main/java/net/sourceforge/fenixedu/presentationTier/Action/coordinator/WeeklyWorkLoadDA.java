@@ -120,7 +120,7 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
 
         final DynaActionForm dynaActionForm = (DynaActionForm) form;
 
-        final Integer executionPeriodID = getExecutionPeriodID(dynaActionForm);
+        final String executionPeriodID = getExecutionPeriodID(dynaActionForm);
         final ExecutionSemester selectedExecutionPeriod = findExecutionPeriod(executionSemesters, executionPeriodID);
         dynaActionForm.set("executionPeriodID", selectedExecutionPeriod.getExternalId().toString());
 
@@ -145,7 +145,7 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
                         "executionCourse");
         request.setAttribute("selectedExecutionCourse", selectedExecutionCourse);
 
-        final Integer curricularYearID = getCurricularYearID(dynaActionForm);
+        final String curricularYearID = getCurricularYearID(dynaActionForm);
         final CurricularYear selecctedCurricularYear =
                 (CurricularYear) setDomainObjectInRequest(dynaActionForm, request, CurricularYear.class, "curricularYearID",
                         "selecctedCurricularYear");
@@ -186,20 +186,18 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
         return domainObject;
     }
 
-    private Integer getCurricularYearID(final DynaActionForm dynaActionForm) {
+    private String getCurricularYearID(final DynaActionForm dynaActionForm) {
         final String curricularYearIDString = dynaActionForm.getString("curricularYearID");
-        return curricularYearIDString == null || curricularYearIDString.length() == 0 ? null : Integer
-                .valueOf(curricularYearIDString);
+        return curricularYearIDString == null || curricularYearIDString.length() == 0 ? null : curricularYearIDString;
     }
 
-    private Integer getExecutionPeriodID(final DynaActionForm dynaActionForm) {
+    private String getExecutionPeriodID(final DynaActionForm dynaActionForm) {
         final String exeutionPeriodIDString = dynaActionForm.getString("executionPeriodID");
-        return exeutionPeriodIDString == null || exeutionPeriodIDString.length() == 0 ? null : Integer
-                .valueOf(exeutionPeriodIDString);
+        return exeutionPeriodIDString == null || exeutionPeriodIDString.length() == 0 ? null : exeutionPeriodIDString;
     }
 
     private ExecutionSemester findExecutionPeriod(final Collection<ExecutionSemester> executionSemesters,
-            final Integer executionPeriodID) {
+            final String executionPeriodID) {
         for (final ExecutionSemester executionSemester : executionSemesters) {
             if (executionPeriodID == null && executionSemester.getState().equals(PeriodState.CURRENT)) {
                 return executionSemester;

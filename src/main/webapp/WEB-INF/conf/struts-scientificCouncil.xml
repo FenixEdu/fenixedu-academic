@@ -22,7 +22,7 @@
                   <form-property type="java.lang.String" name="method"></form-property>
             </form-bean>
             <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="masterDegreeCreditsForm">
-                  <form-property type="java.lang.Integer" name="executionYearID"></form-property>
+                  <form-property type="java.lang.String" name="executionYearID"></form-property>
                   <form-property type="java.lang.String" name="executionDegreeID"></form-property>
                   <form-property type="java.lang.String" name="curricularCourseID"></form-property>
                   <form-property type="java.lang.Integer" name="masterDegreeCurricularPlanID"></form-property>

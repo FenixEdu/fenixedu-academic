@@ -252,7 +252,7 @@
             <!-- bolonhaTransitionManagementForm -->
             <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="bolonhaTransitionManagementForm">
                   <form-property type="java.lang.String" name="method"></form-property>
-                  <form-property type="java.lang.Integer" name="registrationId"></form-property>
+                  <form-property type="java.lang.String" name="registrationId"></form-property>
                   <form-property type="java.lang.Integer" name="studentId"></form-property>
             </form-bean>
             <!-- viewStudentCurriculumForm -->
