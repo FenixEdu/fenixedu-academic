@@ -187,7 +187,7 @@ public class IndividualCandidacyInternalPersonDetails extends IndividualCandidac
 
     @Override
     public Country getCountryOfResidence() {
-        return getDefaultPhysicalAddress().getCountryOfResidence();
+        return getDefaultPhysicalAddress() != null ? getDefaultPhysicalAddress().getCountryOfResidence() : null;
     }
 
     @Override

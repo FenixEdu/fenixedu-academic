@@ -64,7 +64,17 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     static final public Comparator<Degree> COMPARATOR_BY_NAME = new Comparator<Degree>() {
         @Override
         public int compare(final Degree o1, final Degree o2) {
-            return collator.compare(o1.getName(), o2.getName());
+            String name1;
+            String name2;
+            if (Language.getLocale().toString().equalsIgnoreCase("pt")) {
+                name1 = o1.getNameFor((AcademicInterval) null).getContent(Language.pt);
+                name2 = o2.getNameFor((AcademicInterval) null).getContent(Language.pt);
+            } else {
+                name1 = o1.getNameFor((AcademicInterval) null).getContent(Language.en);
+                name2 = o2.getNameFor((AcademicInterval) null).getContent(Language.en);
+            }
+
+            return collator.compare(name1, name2);
         }
     };
 

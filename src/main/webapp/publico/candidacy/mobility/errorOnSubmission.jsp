@@ -30,7 +30,7 @@
 
 <h1><bean:write name="application.name" bundle="CANDIDATE_RESOURCES"/></h1>
 
-It was not possible to submit your application. Please contact Mobility and International Cooperation Office.
+<bean:message key="error.mobility.submission.text" bundle="CANDIDATE_RESOURCES"/>
 
 <div class="mtop15" id="contacts">
 	<bean:message key="erasmus.contacts.text" bundle="CANDIDATE_RESOURCES" />

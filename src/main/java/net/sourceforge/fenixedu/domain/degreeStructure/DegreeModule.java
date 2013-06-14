@@ -41,7 +41,17 @@ abstract public class DegreeModule extends DegreeModule_Base {
 
         @Override
         public int compare(DegreeModule o1, DegreeModule o2) {
-            final int c = Collator.getInstance().compare(o1.getName(), o2.getName());
+            String name1;
+            String name2;
+            if (Language.getLocale().toString().equalsIgnoreCase("pt")) {
+                name1 = o1.getName();
+                name2 = o2.getName();
+            } else {
+                name1 = o1.getNameEn();
+                name2 = o2.getNameEn();
+            }
+
+            final int c = Collator.getInstance().compare(name1, name2);
             return c == 0 ? COMPARATOR_BY_ID.compare(o1, o2) : c;
         }
 

@@ -304,7 +304,7 @@ public class MobilityIndividualApplicationProcessBean extends IndividualCandidac
     }
 
     public String getSelectedCourseNameForView() {
-        ResourceBundle bundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", Language.getLocale());
+        ResourceBundle bundle = ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale());
         try {
             MobilityQuota quota = determineMobilityQuota();
             return quota.getDegree().getNameI18N().getContent(Language.getLanguage());

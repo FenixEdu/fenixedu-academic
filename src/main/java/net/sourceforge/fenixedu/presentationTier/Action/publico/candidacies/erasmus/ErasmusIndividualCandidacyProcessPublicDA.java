@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.publico.candidacies.era
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -13,27 +14,38 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
+import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCodeOperations;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFile;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusApplyForSemesterType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.exceptions.HashCodeForEmailAndProcessAlreadyBounded;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityApplicationProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcessBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityProgram;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityQuota;
+import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityStudentDataBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
+import net.sourceforge.fenixedu.domain.util.email.EmailBean;
+import net.sourceforge.fenixedu.domain.util.email.Recipient;
+import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 import net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.DegreeCourseInformationBean;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.FenixActionForward;
 import net.sourceforge.fenixedu.presentationTier.Action.publico.candidacies.RefactoredIndividualCandidacyProcessPublicDA;
 import net.sourceforge.fenixedu.presentationTier.docs.candidacy.erasmus.LearningAgreementDocument;
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.StringUtils;
 import net.sourceforge.fenixedu.util.report.ReportsUtils;
 import net.sourceforge.fenixedu.util.stork.AttributesManagement;
@@ -44,7 +56,10 @@ import net.spy.memcached.MemcachedClient;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.joda.time.LocalDate;
+import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.servlets.filters.I18NFilter;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -376,6 +391,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
         } catch (DomainException e) {
             addActionMessage("error", request, e.getMessage());
             request.setAttribute("degreeCourseInformationBean", readDegreeCourseInformationBean(request));
+            request.setAttribute("mobilityIndividualApplicationProcessBean", bean);
             RenderUtils.invalidateViewState();
 
             return mapping.findForward("fill-degree-and-courses-information");
@@ -437,9 +453,10 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 
             return mapping.findForward("inform-submited-candidacy");
         } catch (DomainException e) {
-            addActionMessage(request, e.getMessage(), e.getArgs());
+            addActionMessage("error", request, e.getMessage(), e.getArgs());
             e.printStackTrace();
             request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+            sendSubmissionErrorReportMail(getIndividualCandidacyProcessBean(), e);
             return mapping.findForward("error-on-application-submission");
         }
     }
@@ -808,23 +825,26 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
         final List<Person> persons = new ArrayList<Person>(Person.readByDocumentIdNumber(personBean.getDocumentIdNumber()));
 
         if (persons.size() > 1) {
-            addActionMessage("individualCandidacyMessages", request, "mobility.error.person.with.same.identifier.exists");
+            addActionMessage("individualCandidacyMessages", request, "mobility.error.person.with.same.identifier.exists.multiple");
             return executeCreateCandidacyPersonalInformationInvalid(mapping, form, request, response);
 
         } else if (persons.size() == 1) {
             Person person = persons.get(0);
             if (person.hasEmployee()) {
-                addActionMessage("individualCandidacyMessages", request, "mobility.error.person.with.same.identifier.exists");
+                addActionMessage("individualCandidacyMessages", request,
+                        "mobility.error.person.with.same.identifier.exists.employee");
                 return executeCreateCandidacyPersonalInformationInvalid(mapping, form, request, response);
             }
 
             if (person.hasStudent() && person.getStudent().hasActiveRegistrations()) {
-                addActionMessage("individualCandidacyMessages", request, "mobility.error.person.with.same.identifier.exists");
+                addActionMessage("individualCandidacyMessages", request,
+                        "mobility.error.person.with.same.identifier.exists.active.registration");
                 return executeCreateCandidacyPersonalInformationInvalid(mapping, form, request, response);
             }
 
             if (person.hasStudent() && !person.getStudent().getNumber().toString().equals(bean.getPersonNumber())) {
-                addActionMessage("individualCandidacyMessages", request, "mobility.error.person.with.same.identifier.exists");
+                addActionMessage("individualCandidacyMessages", request,
+                        "mobility.error.person.with.same.identifier.exists.different.student");
                 return executeCreateCandidacyPersonalInformationInvalid(mapping, form, request, response);
             }
 
@@ -976,4 +996,200 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
         }
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    // avmc: Methods for creating the mail to send to NMCI in case the submission goes wrong. //
+    //       To avoid code replication, several functions were agregated on the same methods. //
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    //avmc: common usage for filling empty strings.
+    private String fillEmptyString(String value) {
+        return StringUtils.isEmpty(value) ? "«« empty »»" : value;
+    }
+
+    //return string to append from a value String
+    private String reportAppenderAuxString(String field, String value) {
+        return field + ": " + fillEmptyString(value) + "\n";
+    }
+
+    //return string to append from a value Object that can be turned to a simple String with toString
+    private String reportAppenderAuxToStringable(String field, Object obj) {
+        String value = null;
+        if (obj != null) {
+            value = obj.toString();
+        }
+        return field + ": " + fillEmptyString(value) + "\n";
+    }
+
+    //return string to append from a value Enum that implements getLocalizedName
+    private String reportAppenderAuxEnum(String field, IPresentableEnum obj) {
+        String value = null;
+        if (obj != null) {
+            value = obj.getLocalizedName();
+        }
+        return field + ": " + fillEmptyString(value) + "\n";
+    }
+
+    //return string to append from a value date (which can be a YearMonthDay or LocalDate)
+    private String reportAppenderAuxDate(String field, Object obj) {
+        String DATE_FORMAT_STRING = "dd/MM/yyyy";
+        String value = null;
+        if (obj != null) {
+            if (obj instanceof YearMonthDay) {
+                value = ((YearMonthDay) obj).toString(DATE_FORMAT_STRING);
+            } else if (obj instanceof LocalDate) {
+                value = ((LocalDate) obj).toString(DATE_FORMAT_STRING);
+            }
+        }
+        return field + ": " + fillEmptyString(value) + "\n";
+    }
+
+    //return string to append from a value Country (uses simple name)
+    private String reportAppenderAuxCountry(String field, Country obj) {
+        String value = null;
+        if (obj != null) {
+            value = obj.getName();
+        }
+        return field + ": " + fillEmptyString(value) + "\n";
+    }
+
+    //return string to append from a value MobilityProgram (uses MultiLanguageString)
+    private String reportAppenderAuxProgram(String field, MobilityProgram obj) {
+        String value = null;
+        if (obj != null) {
+            value = obj.getName().getContent();
+        }
+        return field + ": " + fillEmptyString(value) + "\n";
+    }
+
+    //return string to append from a value UniversityUnit (uses a presentation name)
+    // TODO: merge with reportAppenderAuxDegree (uses presentationName)
+    private String reportAppenderAuxUniv(String field, UniversityUnit obj) {
+        String value = null;
+        if (obj != null) {
+            value = obj.getPresentationName();
+        }
+        return field + ": " + fillEmptyString(value) + "\n";
+    }
+
+    //return string to append from a value Degree (uses a presentation name)
+    // TODO: merge with reportAppenderAuxUniv (uses presentationName)
+    private String reportAppenderAuxDegree(String field, Degree obj) {
+        String value = null;
+        if (obj != null) {
+            value = obj.getPresentationName();
+        }
+        return field + ": " + fillEmptyString(value) + "\n";
+    }
+
+    //return string to append from a value List of Courses (uses a presentation name)
+    private String reportAppenderAuxCourses(String field, List<CurricularCourse> obj) {
+        StringBuilder value = new StringBuilder();
+        if (obj != null && !obj.isEmpty()) {
+            for (CurricularCourse curricularCourse : obj) {
+                value.append(curricularCourse.getNameI18N().getContent());
+                value.append(", ");
+            }
+            if (value.length() > 0) {
+                value.setLength(value.length() - 2);
+            }
+        }
+        return field + ": " + fillEmptyString(value.toString()) + "\n";
+    }
+
+    private void sendSubmissionErrorReportMail(IndividualCandidacyProcessBean individualCandidacyProcessBean,
+            DomainException exception) {
+
+        StringBuilder sb = new StringBuilder();
+        MobilityIndividualApplicationProcessBean mobilityBean =
+                (MobilityIndividualApplicationProcessBean) individualCandidacyProcessBean;
+
+        // Email intro and error message 
+        sb.append(BundleUtil.getStringFromResourceBundle("resources.CandidateResources", "error.mobility.report.mail.intro"));
+        sb.append("\n");
+        sb.append("\nError message: ");
+        sb.append(BundleUtil.getStringFromResourceBundle("resources.CandidateResources", exception.getKey(), exception.getArgs()));
+        sb.append("\n");
+
+        // Data input from candidate
+        PersonBean personBean = mobilityBean.getPersonBean();
+        sb.append("\nPersonal data entered:\n");
+        sb.append(reportAppenderAuxString("Name.................", personBean.getName()));
+        sb.append(reportAppenderAuxEnum("Gender...............", personBean.getGender()));
+        sb.append(reportAppenderAuxDate("Date of Birth........", personBean.getDateOfBirth()));
+        sb.append(reportAppenderAuxString("Documentation Number.", personBean.getDocumentIdNumber()));
+        sb.append(reportAppenderAuxCountry("Nationality..........", personBean.getNationality()));
+        sb.append(reportAppenderAuxString("Address..............", personBean.getAddress()));
+        sb.append(reportAppenderAuxString("Area Code............", personBean.getAreaCode()));
+        sb.append(reportAppenderAuxString("Area.................", personBean.getArea()));
+        sb.append(reportAppenderAuxCountry("Country of Residence.", personBean.getCountryOfResidence()));
+        sb.append(reportAppenderAuxString("Phone................", personBean.getPhone()));
+        sb.append(reportAppenderAuxString("Email................", personBean.getEmail()));
+        sb.append(reportAppenderAuxString("Email Confirmation...", personBean.getEmailConfirmation()));
+        sb.append(reportAppenderAuxString("IST Number...........", mobilityBean.getPersonNumber()));
+
+        MobilityStudentDataBean mobilityStudentDataBean = mobilityBean.getMobilityStudentDataBean();
+        sb.append("\nMobility Data Entered:\n");
+        sb.append(reportAppenderAuxCountry("Selected Country....", mobilityStudentDataBean.getSelectedCountry()));
+        sb.append(reportAppenderAuxUniv("Selected Univ.......", mobilityStudentDataBean.getSelectedUniversity()));
+        sb.append(reportAppenderAuxEnum("School Level........", mobilityStudentDataBean.getSchoolLevel()));
+        sb.append(reportAppenderAuxString("Other School Level..", mobilityStudentDataBean.getOtherSchoolLevel()));
+        sb.append(reportAppenderAuxString("Exchange Coord Name.",
+                mobilityStudentDataBean.getHomeInstitutionExchangeCoordinatorName()));
+
+        sb.append(reportAppenderAuxToStringable("Has Diploma/Degree..", mobilityStudentDataBean.getHasDiplomaOrDegree()));
+        sb.append(reportAppenderAuxString("Diploma Name........", mobilityStudentDataBean.getDiplomaName()));
+        sb.append(reportAppenderAuxToStringable("Diploma Year........", mobilityStudentDataBean.getDiplomaConclusionYear()));
+        sb.append(reportAppenderAuxToStringable("Experience Research.", mobilityStudentDataBean.getExperienceCarryingOutProject()));
+
+        sb.append(reportAppenderAuxDate("Date of Arrival.....", mobilityStudentDataBean.getDateOfArrival()));
+        sb.append(reportAppenderAuxDate("Date of Departure...", mobilityStudentDataBean.getDateOfDeparture()));
+        sb.append(reportAppenderAuxToStringable("Types of Programme..", mobilityStudentDataBean.getTypeOfProgrammeList()));
+
+        sb.append(reportAppenderAuxString("Thesis Main Subject.", mobilityStudentDataBean.getMainSubjectThesis()));
+        sb.append(reportAppenderAuxToStringable("Has contacted Staff.", mobilityStudentDataBean.getHasContactedOtherStaff()));
+        sb.append(reportAppenderAuxString("Staff Name..........", mobilityStudentDataBean.getNameOfContact()));
+
+        sb.append(reportAppenderAuxEnum("Applying for period.", mobilityStudentDataBean.getApplyFor()));
+        sb.append(reportAppenderAuxString("Observations........", individualCandidacyProcessBean.getObservations()));
+
+        sb.append("\nMobility Program, Degree and Courses:\n");
+        sb.append(reportAppenderAuxProgram("Selected Program.", mobilityStudentDataBean.getSelectedMobilityProgram()));
+        sb.append(reportAppenderAuxDegree("Chosen Degree....", mobilityBean.getDegree()));
+        sb.append(reportAppenderAuxCourses("Chosen Courses...", mobilityBean.getSortedSelectedCurricularCourses()));
+
+        // Exception details
+        sb.append("\n");
+        sb.append(BundleUtil.getStringFromResourceBundle("resources.CandidateResources", "error.mobility.report.mail.stacktrace"));
+        sb.append("\n");
+        sb.append("\nException key: ");
+        sb.append(exception.getKey());
+        sb.append("\nException args:");
+        if (exception.getArgs().length == 0) {
+            sb.append("«« no args »»");
+        } else {
+            for (String arg : exception.getArgs()) {
+                sb.append(" " + arg + ",");
+            }
+        }
+        sb.deleteCharAt(sb.length() - 1);
+        sb.append("\nException stacktrace:\n");
+        sb.append(org.apache.commons.lang.exception.ExceptionUtils.getStackTrace(exception));
+        sb.append("\n");
+
+        // Email construction and sending
+        String errorReportAddress =
+                BundleUtil.getStringFromResourceBundle("resources.CandidateResources", "error.mobility.report.mail.address");
+        String errorReportSubject =
+                BundleUtil.getStringFromResourceBundle("resources.CandidateResources", "error.mobility.report.mail.subject");
+        String errorReportBody = sb.toString();
+
+        SystemSender systemSender = RootDomainObject.getInstance().getSystemSender();
+        EmailBean emailBean = new EmailBean();
+        emailBean.setSender(systemSender);
+        emailBean.setReplyTos(systemSender.getConcreteReplyTos());
+        emailBean.setRecipients(Collections.<Recipient> emptyList());
+        emailBean.setSubject(errorReportSubject);
+        emailBean.setMessage(errorReportBody);
+        emailBean.setBccs(errorReportAddress);
+        emailBean.send();
+    }
 }

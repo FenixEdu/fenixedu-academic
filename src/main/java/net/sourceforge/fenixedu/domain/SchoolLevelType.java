@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
+
 import com.google.common.collect.Lists;
 
-public enum SchoolLevelType {
+public enum SchoolLevelType implements IPresentableEnum {
 
     UNKNOWN(false, false, false),
 
@@ -251,6 +253,7 @@ public enum SchoolLevelType {
         return result;
     }
 
+    @Override
     public String getLocalizedName() {
         return ResourceBundle.getBundle("resources.EnumerationResources").getString(getQualifiedName());
     }
