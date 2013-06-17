@@ -231,7 +231,7 @@ public class CourseLoadRequestDocument extends AdministrativeOfficeDocument {
             super(enrolment.getCurricularCourse().getName(), enrolment.getExecutionYear().getYear());
 
             final CurricularCourse curricularCourse = enrolment.getCurricularCourse();
-            setCurricularCourseName(curricularCourse.getNameI18N(enrolment.getExecutionYear()).getContent(language));
+            setCurricularCourseName(curricularCourse.getNameI18N(enrolment.getExecutionYear()).getContent(getLanguage()));
             setContactLoad(curricularCourse.getContactLoad(enrolment.getExecutionPeriod()));
             setAutonomousWork(curricularCourse.getAutonomousWorkHours(enrolment.getExecutionPeriod()));
             setTotal(curricularCourse.getTotalLoad(enrolment.getExecutionPeriod()));
@@ -266,7 +266,7 @@ public class CourseLoadRequestDocument extends AdministrativeOfficeDocument {
         }
 
         private void initInformation(final CurricularCourse curricularCourse, ExecutionYear executionYear) {
-            setCurricularCourseName(curricularCourse.getNameI18N(executionYear).getContent(language));
+            setCurricularCourseName(curricularCourse.getNameI18N(executionYear).getContent(getLanguage()));
             setTheoreticalHours(curricularCourse.getTheoreticalHours());
             setPraticalHours(curricularCourse.getPraticalHours());
             setLabHours(curricularCourse.getLabHours());
