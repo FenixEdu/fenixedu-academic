@@ -131,7 +131,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
             };
 
     public static OrderedRelationAdapter<ExecutionCourse, BibliographicReference> BIBLIOGRAPHIC_REFERENCE_ORDER_ADAPTER;
-    public static final List<String> DEA_AVAILABLE_INQUIRY_DEGREES = new ArrayList<String>();
+    public static final List<String> THIRD_CYCLE_AVAILABLE_INQUIRY_DEGREES = new ArrayList<String>();
 
     static {
         CurricularCourseExecutionCourse.addListener(new CurricularCourseExecutionCourseListener());
@@ -141,10 +141,10 @@ public class ExecutionCourse extends ExecutionCourse_Base {
                         "referenceOrder");
         ExecutionCourseBibliographicReference.addListener(BIBLIOGRAPHIC_REFERENCE_ORDER_ADAPTER);
 
-        DEA_AVAILABLE_INQUIRY_DEGREES.add("deec");
-        DEA_AVAILABLE_INQUIRY_DEGREES.add("degest");
-        DEA_AVAILABLE_INQUIRY_DEGREES.add("demec");
-        DEA_AVAILABLE_INQUIRY_DEGREES.add("dequim");
+        THIRD_CYCLE_AVAILABLE_INQUIRY_DEGREES.add("deamb");
+        THIRD_CYCLE_AVAILABLE_INQUIRY_DEGREES.add("dec");
+        THIRD_CYCLE_AVAILABLE_INQUIRY_DEGREES.add("erpq");
+        THIRD_CYCLE_AVAILABLE_INQUIRY_DEGREES.add("dfasse");
     }
 
     public ExecutionCourse(final String nome, final String sigla, final ExecutionSemester executionSemester, EntryPhase entryPhase) {
@@ -252,8 +252,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
             if (!degreeType.equals(DegreeType.MASTER_DEGREE)
                     && !degreeType.equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA)
                     && !degreeType.equals(DegreeType.BOLONHA_SPECIALIZATION_DEGREE)
-                    && !DEA_AVAILABLE_INQUIRY_DEGREES.contains(curricularCourse.getDegreeCurricularPlan().getDegree().getSigla()
-                            .toLowerCase())) {
+                    && !THIRD_CYCLE_AVAILABLE_INQUIRY_DEGREES.contains(curricularCourse.getDegreeCurricularPlan().getDegree()
+                            .getSigla().toLowerCase())) {
                 return false;
             }
         }
@@ -267,7 +267,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
                     || degreeType.equals(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE)) {
                 return true;
             }
-            if (DEA_AVAILABLE_INQUIRY_DEGREES.contains(curricularCourse.getDegreeCurricularPlan().getDegree().getSigla()
+            if (THIRD_CYCLE_AVAILABLE_INQUIRY_DEGREES.contains(curricularCourse.getDegreeCurricularPlan().getDegree().getSigla()
                     .toLowerCase())) {
                 return true;
             }

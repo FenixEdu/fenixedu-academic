@@ -3516,7 +3516,7 @@ public class Registration extends Registration_Base {
         final DegreeType degreeType = getDegreeType();
         return degreeType == DegreeType.BOLONHA_DEGREE || degreeType == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE
                 || degreeType == DegreeType.BOLONHA_MASTER_DEGREE
-                || ExecutionCourse.DEA_AVAILABLE_INQUIRY_DEGREES.contains(getDegree().getSigla().toLowerCase());
+                || ExecutionCourse.THIRD_CYCLE_AVAILABLE_INQUIRY_DEGREES.contains(getDegree().getSigla().toLowerCase());
     }
 
     final public boolean hasInquiryResponseFor(final ExecutionCourse executionCourse) {
