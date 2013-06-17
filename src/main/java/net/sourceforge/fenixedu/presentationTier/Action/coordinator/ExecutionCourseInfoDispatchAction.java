@@ -34,6 +34,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.collections.comparators.ReverseComparator;
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -134,7 +135,7 @@ public class ExecutionCourseInfoDispatchAction extends FenixDispatchAction {
 
         // Mandatory Selection
         String executionPeriodOID = null;
-        if (((String) searchExecutionCourse.get("executionPeriodOID")) != null) {
+        if (!StringUtils.isEmpty(((String) searchExecutionCourse.get("executionPeriodOID")))) {
             executionPeriodOID = (String) searchExecutionCourse.get("executionPeriodOID");
         } else {
             executionPeriodOID = request.getParameter("executionPeriodOID");

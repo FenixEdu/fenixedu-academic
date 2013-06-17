@@ -749,7 +749,7 @@ public class ExercisesManagementAction extends FenixDispatchAction {
         final IUserView userView = getUserView(request);
         final String executionCourseId = getStringFromRequest(request, "objectCode");
         final String exerciseId = getStringFromRequest(request, "exerciseCode");
-        Integer variationCode = getCodeFromRequest(request, "variationCode");
+        String variationCode = getStringFromRequest(request, "variationCode");
         Metadata metadata = null;
         try {
             metadata = ReadExercise.runReadExercise(executionCourseId, exerciseId);
@@ -763,7 +763,7 @@ public class ExercisesManagementAction extends FenixDispatchAction {
         ParseSubQuestion parse = new ParseSubQuestion();
         if (variationCode != null) {
             for (Question question : metadata.getVisibleQuestions()) {
-                if ((question.getIdInternal().equals(variationCode) || variationCode.intValue() == -2)
+                if ((question.getExternalId().equals(variationCode) || variationCode.equals("-2"))
                         && (question.getSubQuestions() == null || question.getSubQuestions().size() == 0)) {
                     try {
                         question = parse.parseSubQuestion(question, path);
@@ -773,7 +773,7 @@ public class ExercisesManagementAction extends FenixDispatchAction {
                 }
             }
         } else {
-            variationCode = new Integer(-1);
+            variationCode = null;
         }
 
         request.setAttribute("objectCode", executionCourseId);

@@ -391,7 +391,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
 
     public String getExecutionYearID() {
         if (getViewState().getAttribute("executionYearID") == null) {
-            if (getAndHoldIntegerParameter("executionYearID") != null) {
+            if (getAndHoldStringParameter("executionYearID") != null) {
                 setExecutionYearID(getAndHoldStringParameter("executionYearID"));
             }
         }

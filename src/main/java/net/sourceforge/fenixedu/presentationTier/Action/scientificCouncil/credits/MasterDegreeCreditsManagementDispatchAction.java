@@ -36,6 +36,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -93,7 +94,7 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
         DynaActionForm dynaForm = (DynaActionForm) form;
         final String executionYearID = (String) dynaForm.get("executionYearID");
         ExecutionYear executionYear = null;
-        if (executionYearID == null) {
+        if (StringUtils.isEmpty(executionYearID)) {
             for (final ExecutionYear tempExecutionYear : notClosedExecutionYears) {
                 if (tempExecutionYear.isCurrent()) {
                     executionYear = tempExecutionYear;
@@ -129,7 +130,7 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
         DynaActionForm dynaForm = (DynaActionForm) form;
         String executionDegreeID = (String) dynaForm.get("executionDegreeID");
 
-        if (executionDegreeID != null) {
+        if (!StringUtils.isEmpty(executionDegreeID)) {
             ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeID);
             request.setAttribute("executionDegree", executionDegree);
 
@@ -159,7 +160,7 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
         String executionDegreeID = (String) dynaForm.get("executionDegreeID");
         ExecutionDegree executionDegree = null;
 
-        if (executionDegreeID != null) {
+        if (!StringUtils.isEmpty(executionDegreeID)) {
             executionDegree = AbstractDomainObject.fromExternalId(executionDegreeID);
         } else {
             String executionCourseID = request.getParameter("executionCourseId");

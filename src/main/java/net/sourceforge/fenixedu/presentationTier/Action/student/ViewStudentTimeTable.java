@@ -72,7 +72,7 @@ public class ViewStudentTimeTable extends FenixDispatchAction {
 
     private Registration getRegistration(final ActionForm form, final HttpServletRequest request) {
         String registrationId = (String) ((DynaActionForm) form).get("registrationId");
-        if (registrationId == null && !StringUtils.isEmpty(request.getParameter("registrationId"))) {
+        if (StringUtils.isEmpty(registrationId) && !StringUtils.isEmpty(request.getParameter("registrationId"))) {
             registrationId = request.getParameter("registrationId");
         }
         return AbstractDomainObject.fromExternalId(registrationId);

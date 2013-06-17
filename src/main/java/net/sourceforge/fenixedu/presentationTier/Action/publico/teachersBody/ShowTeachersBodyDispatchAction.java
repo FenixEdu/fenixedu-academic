@@ -29,6 +29,7 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.Detaile
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -74,7 +75,7 @@ public class ShowTeachersBodyDispatchAction extends FenixDispatchAction {
 
             if (executionDegrees != null && executionDegrees.size() > 0) {
                 // put execution year in the form
-                if (executionYearId == null) {
+                if (StringUtils.isEmpty(executionYearId)) {
                     executionYearId = ((InfoExecutionDegree) executionDegrees.get(0)).getInfoExecutionYear().getExternalId();
 
                     executionYearForm.set("executionYearId", executionYearId);

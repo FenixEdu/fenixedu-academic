@@ -30,6 +30,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -146,13 +147,14 @@ public class TeachingStaffDispatchAction extends FenixDispatchAction {
             return viewTeachingStaff(mapping, actionForm, request, response);
         }
 
-        if (nonAffiliatedTeacherInstitutionID == null && nonAffiliatedTeacherInstitutionName.length() == 0) {
+        if (StringUtils.isEmpty(nonAffiliatedTeacherInstitutionID) && nonAffiliatedTeacherInstitutionName.length() == 0) {
             // define an institution!
             return viewTeachingStaff(mapping, actionForm, request, response);
         }
 
         final Unit institution =
-                nonAffiliatedTeacherInstitutionID == null ? (Unit) InsertInstitution.run(nonAffiliatedTeacherInstitutionName) : (Unit) AbstractDomainObject
+                StringUtils.isEmpty(nonAffiliatedTeacherInstitutionID) ? (Unit) InsertInstitution
+                        .run(nonAffiliatedTeacherInstitutionName) : (Unit) AbstractDomainObject
                         .fromExternalId(nonAffiliatedTeacherInstitutionID);
 
         NonAffiliatedTeacher.associateToInstitutionAndExecutionCourse(nonAffiliatedTeacherName, institution,

@@ -97,7 +97,9 @@ public class ManageNotNeedToEnrollDispathAction extends FenixDispatchAction {
 
         String scpID = getStringFromRequest(request, "scpID");
         if (scpID == null) {
-            scpID = (String) notNeedToEnrollForm.get("studentCurricularPlanID");
+            scpID =
+                    notNeedToEnrollForm.get("studentCurricularPlanID").equals("") ? null : (String) notNeedToEnrollForm
+                            .get("studentCurricularPlanID");
         }
 
         StudentCurricularPlan studentCurricularPlan = AbstractDomainObject.fromExternalId(scpID);

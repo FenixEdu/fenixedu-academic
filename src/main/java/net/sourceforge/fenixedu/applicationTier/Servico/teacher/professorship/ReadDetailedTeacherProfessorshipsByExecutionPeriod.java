@@ -13,6 +13,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
+
+import org.apache.commons.lang.StringUtils;
+
 import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
@@ -24,7 +27,7 @@ public class ReadDetailedTeacherProfessorshipsByExecutionPeriod extends ReadDeta
     protected List run(String teacherOID, String executionPeriodOID) throws FenixServiceException {
 
         final ExecutionSemester executionSemester;
-        if (executionPeriodOID == null) {
+        if (StringUtils.isEmpty(executionPeriodOID)) {
             executionSemester = ExecutionSemester.readActualExecutionSemester();
         } else {
             executionSemester = AbstractDomainObject.fromExternalId(executionPeriodOID);

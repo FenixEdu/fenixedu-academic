@@ -18,6 +18,7 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ReverseComparator;
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -66,7 +67,7 @@ public class IndexAction extends Action {
             DynaValidatorForm executionPeriodForm) {
         final String executionPeriodId = (String) executionPeriodForm.get("executionPeriodId");
         InfoExecutionPeriod infoExecutionPeriod = null;
-        if (executionPeriodId == null) {
+        if (StringUtils.isEmpty(executionPeriodId)) {
             infoExecutionPeriod = (InfoExecutionPeriod) CollectionUtils.find(executionPeriodsNotClosed, new Predicate() {
 
                 @Override

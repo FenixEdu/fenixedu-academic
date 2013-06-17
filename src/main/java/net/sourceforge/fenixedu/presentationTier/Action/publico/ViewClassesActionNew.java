@@ -86,7 +86,7 @@ public class ViewClassesActionNew extends FenixContextAction {
 
         // indice
         final DynaActionForm escolherContextoForm = (DynaActionForm) form;
-        Integer indice = (Integer) escolherContextoForm.get("indice");
+        String indice = (String) escolherContextoForm.get("indice");
         escolherContextoForm.set("indice", indice);
         request.setAttribute("indice", indice);
 

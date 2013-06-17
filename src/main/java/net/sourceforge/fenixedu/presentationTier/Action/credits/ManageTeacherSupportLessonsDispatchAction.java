@@ -69,7 +69,8 @@ public class ManageTeacherSupportLessonsDispatchAction extends FenixDispatchActi
         DynaActionForm supportLessonForm = (DynaActionForm) form;
         SupportLessonDTO supportLessonDTO = new SupportLessonDTO();
 
-        supportLessonDTO.setExternalId((String) supportLessonForm.get("supportLessonID"));
+        supportLessonDTO.setExternalId(supportLessonForm.get("supportLessonID").equals("") ? null : (String) supportLessonForm
+                .get("supportLessonID"));
         supportLessonDTO.setProfessorshipID((String) supportLessonForm.get("professorshipID"));
         supportLessonDTO.setWeekDay(getCorrectWeekDay((String) supportLessonForm.get("weekDay")));
         Calendar calendar = Calendar.getInstance();

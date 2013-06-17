@@ -38,6 +38,7 @@ import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalitie
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -282,7 +283,7 @@ public class ShowDegreeSiteAction extends FenixDispatchAction {
         DynaActionForm degreeEvaluationForm = (DynaActionForm) actionForm;
         String executionPeriodId = (String) degreeEvaluationForm.get("executionPeriodId");
 
-        if (executionPeriodId != null) {
+        if (!StringUtils.isEmpty(executionPeriodId)) {
             request.setAttribute("searchExecutionPeriodId", executionPeriodId);
 
             List<InfoOldInquiriesSummary> oldInquiriesSummaries = new ArrayList<InfoOldInquiriesSummary>();

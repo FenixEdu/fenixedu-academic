@@ -143,7 +143,7 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
 
         final DynaActionForm form = (DynaActionForm) actionForm;
         final String executionCourseId = (String) form.get("removedCourse");
-        if (executionCourseId == null) {
+        if (StringUtils.isEmpty(executionCourseId)) {
             return mapping.findForward("prepareShiftEnrollment");
         }
 

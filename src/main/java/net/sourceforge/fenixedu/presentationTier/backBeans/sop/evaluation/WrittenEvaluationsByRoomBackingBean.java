@@ -146,21 +146,21 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
         return allRooms;
     }
 
-    private Set<Integer> selectedRoomIDs = null;
+    private Set<String> selectedRoomIDs = null;
 
-    public Set<Integer> getSelectedRoomIDs() {
+    public Set<String> getSelectedRoomIDs() {
         if (selectedRoomIDs == null) {
             final String[] selectedRoomIDStrings = getRequest().getParameterValues("selectedRoomIDs");
             if (selectedRoomIDStrings != null) {
-                selectedRoomIDs = new HashSet<Integer>(selectedRoomIDStrings.length);
+                selectedRoomIDs = new HashSet<String>(selectedRoomIDStrings.length);
                 for (final String roomIDString : selectedRoomIDStrings) {
-                    selectedRoomIDs.add(Integer.valueOf(roomIDString));
+                    selectedRoomIDs.add(roomIDString);
                 }
 
             } else if (getRequest().getParameter("selectedRoomID") != null) {
                 String roomID = getRequest().getParameter("selectedRoomID");
-                selectedRoomIDs = new HashSet<Integer>(1);
-                selectedRoomIDs.add(Integer.valueOf(roomID));
+                selectedRoomIDs = new HashSet<String>(1);
+                selectedRoomIDs.add(roomID);
             }
         }
         return selectedRoomIDs;
@@ -214,7 +214,7 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
     }
 
     public Collection<AllocatableSpace> getRoomsToDisplayMap() throws FenixServiceException {
-        final Set<Integer> selectedRoomIDs = getSelectedRoomIDs();
+        final Set<String> selectedRoomIDs = getSelectedRoomIDs();
         if (selectedRoomIDs != null) {
             return filterRooms(getAllRooms(), selectedRoomIDs);
         } else {
@@ -224,7 +224,7 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
     }
 
     private Collection<AllocatableSpace> filterRooms(final Collection<AllocatableSpace> allRooms,
-            final Set<Integer> selectedRoomIDs) {
+            final Set<String> selectedRoomIDs) {
         final Collection<AllocatableSpace> rooms = new ArrayList<AllocatableSpace>(selectedRoomIDs.size());
         for (final AllocatableSpace room : allRooms) {
             if (selectedRoomIDs.contains(room.getExternalId())) {

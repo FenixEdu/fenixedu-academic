@@ -38,6 +38,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.PresentationConstants;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -81,15 +82,15 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
         String insuranceExecutionYearId = getFromRequest("insuranceExecutionYearId", request);
 
         DynaActionForm payGratuityForm = (DynaActionForm) form;
-        payGratuityForm.set("studentId", new Integer(studentId));
+        payGratuityForm.set("studentId", studentId);
 
         if (gratuitySituationId != null) {
-            payGratuityForm.set("gratuitySituationId", new Integer(gratuitySituationId));
+            payGratuityForm.set("gratuitySituationId", gratuitySituationId);
             request.setAttribute(PresentationConstants.PAGE_TITLE, "link.masterDegree.administrativeOffice.gratuity.payGratuity");
         }
 
         if (insuranceExecutionYearId != null) {
-            payGratuityForm.set("insuranceExecutionYearId", new Integer(insuranceExecutionYearId));
+            payGratuityForm.set("insuranceExecutionYearId", insuranceExecutionYearId);
             request.setAttribute(PresentationConstants.PAGE_TITLE, "link.masterDegree.administrativeOffice.gratuity.payInsurance");
         }
 
@@ -112,7 +113,7 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
         InfoStudent infoStudent = readStudent(mapping, userView, studentId);
         request.setAttribute(PresentationConstants.STUDENT, infoStudent);
 
-        if (gratuitySituationId == null) {
+        if (StringUtils.isEmpty(gratuitySituationId)) {
             // Read Gratuity Situation
             InfoGratuitySituation infoGratuitySituation = readGratuitySituation(userView, gratuitySituationId);
 

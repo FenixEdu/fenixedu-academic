@@ -40,6 +40,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.util.NumberUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -132,7 +133,7 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
         List<TeacherCreditsReportDTO> teacherCreditsReportList = new ArrayList<TeacherCreditsReportDTO>();
         Map<Department, List<TeacherCreditsReportDTO>> teachersCreditsByDepartment =
                 new HashMap<Department, List<TeacherCreditsReportDTO>>();
-        if (departmentID == null) {
+        if (StringUtils.isEmpty(departmentID)) {
             Collection<Department> departments = rootDomainObject.getDepartments();
             for (Department department : departments) {
                 Unit unit = department.getDepartmentUnit();

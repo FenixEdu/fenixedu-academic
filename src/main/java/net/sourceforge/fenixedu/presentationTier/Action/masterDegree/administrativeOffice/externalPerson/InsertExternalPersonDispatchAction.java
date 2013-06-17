@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.PresentationConstants;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.Globals;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -124,7 +125,7 @@ public class InsertExternalPersonDispatchAction extends FenixDispatchAction {
         String homepage = (String) insertExternalPersonForm.get("homepage");
         String email = (String) insertExternalPersonForm.get("email");
 
-        if (institutionID == null) {
+        if (StringUtils.isEmpty(institutionID)) {
             request.setAttribute(PresentationConstants.SEX_LIST_KEY,
                     Gender.getSexLabelValues((Locale) request.getAttribute(Globals.LOCALE_KEY)));
 

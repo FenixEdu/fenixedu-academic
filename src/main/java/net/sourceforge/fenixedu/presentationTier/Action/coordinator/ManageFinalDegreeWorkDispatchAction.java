@@ -993,7 +993,6 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
         IUserView userView = UserView.getUser();
 
         DynaActionForm finalWorkForm = (DynaActionForm) form;
-        String degreeId = (String) finalWorkForm.get("degree");
         finalWorkForm.set("degreeType", DegreeType.DEGREE.toString());
 
         /*

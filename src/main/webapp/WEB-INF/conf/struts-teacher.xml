@@ -114,7 +114,7 @@
                   <form-property type="java.lang.String" name="selected"></form-property>
                   <form-property type="java.lang.String" name="insertByShifts"></form-property>
                   <form-property type="java.lang.String" name="objectCode"></form-property>
-                  <form-property type="java.lang.Integer" name="distributedTestCode"></form-property>
+                  <form-property type="java.lang.String" name="distributedTestCode"></form-property>
                   <form-property type="java.lang.String" name="title"></form-property>
                   <form-property type="java.lang.String" name="evaluationTitle"></form-property>
                   <form-property initial="0" type="java.lang.Integer" name="page"></form-property>

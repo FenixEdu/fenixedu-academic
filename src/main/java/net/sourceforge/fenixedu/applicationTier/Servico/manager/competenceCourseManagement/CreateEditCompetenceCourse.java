@@ -10,6 +10,9 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCompetenceCourseWithCurri
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
+import org.apache.commons.lang.StringUtils;
+
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
@@ -31,7 +34,7 @@ public class CreateEditCompetenceCourse {
 
         try {
             CompetenceCourse competenceCourse = null;
-            if (competenceCourseID == null) {
+            if (StringUtils.isEmpty(competenceCourseID)) {
                 competenceCourse = new CompetenceCourse(code, name, departments);
             } else {
                 competenceCourse = AbstractDomainObject.fromExternalId(competenceCourseID);

@@ -701,7 +701,7 @@ public class TestsManagementAction extends FenixDispatchAction {
         request.setAttribute("testTypeList", testTypeList);
         final List<LabelValueBean> correctionAvailabilityList = CorrectionAvailability.getAllAvailabilities();
         request.setAttribute("correctionAvailabilityList", correctionAvailabilityList);
-        ((DynaActionForm) form).set("distributedTestCode", distributedTest.getIdInternal());
+        ((DynaActionForm) form).set("distributedTestCode", distributedTest.getExternalId());
         ((DynaActionForm) form).set("title", distributedTest.getTitle());
         if ((((DynaActionForm) form).get("testInformation")).equals("")) {
             ((DynaActionForm) form).set("testInformation", distributedTest.getTestInformation());

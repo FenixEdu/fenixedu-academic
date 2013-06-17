@@ -134,7 +134,7 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
         final String degreeCurricularPlanId = (String) actionForm.get("degreeCurricularPlanID");
         Student student = getStudent(actionForm);
         if (student != null) {
-            if (degreeCurricularPlanId != null) {
+            if (!StringUtils.isEmpty(degreeCurricularPlanId)) {
                 DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanId);
                 registration = student.readRegistrationByDegreeCurricularPlan(degreeCurricularPlan);
             } else {

@@ -30,6 +30,7 @@ import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -62,7 +63,7 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
 
         final DynaActionForm form = (DynaActionForm) actionForm;
         final String degreeCurricularPlanID = (String) form.get("degreeCurricularPlanID");
-        if (degreeCurricularPlanID != null) {
+        if (!StringUtils.isEmpty(degreeCurricularPlanID)) {
             final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
             if (degreeCurricularPlan != null) {
                 request.setAttribute("executionDegrees", degreeCurricularPlan.getExecutionDegreesSet());
@@ -76,7 +77,7 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
 
         final DynaActionForm form = (DynaActionForm) actionForm;
         final String executionDegreeID = (String) form.get("executionDegreeID");
-        if (executionDegreeID != null) {
+        if (!StringUtils.isEmpty(executionDegreeID)) {
             final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeID);
 
             request.setAttribute("executionDegree", executionDegree);

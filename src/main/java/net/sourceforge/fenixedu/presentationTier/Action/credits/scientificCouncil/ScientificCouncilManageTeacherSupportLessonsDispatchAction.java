@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.credits.ManageTeacherSupportLessonsDispatchAction;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -54,7 +55,7 @@ public class ScientificCouncilManageTeacherSupportLessonsDispatchAction extends 
         }
 
         SupportLesson supportLesson = null;
-        if (supportLesssonID != null) {
+        if (!StringUtils.isEmpty(supportLesssonID)) {
             supportLesson = AbstractDomainObject.fromExternalId(supportLesssonID);
             if (!professorship.getSupportLessons().contains(supportLesson)) {
                 return mapping.findForward("teacher-not-found");

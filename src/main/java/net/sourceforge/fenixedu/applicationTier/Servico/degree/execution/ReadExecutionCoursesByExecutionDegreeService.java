@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
+import org.apache.commons.lang.StringUtils;
 
 import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
@@ -27,7 +28,7 @@ public class ReadExecutionCoursesByExecutionDegreeService {
     public static List run(String executionDegreeId, String executionPeriodId) throws FenixServiceException {
 
         final ExecutionSemester executionSemester;
-        if (executionPeriodId == null) {
+        if (StringUtils.isEmpty(executionPeriodId)) {
             executionSemester = ExecutionSemester.readActualExecutionSemester();
         } else {
             executionSemester = AbstractDomainObject.fromExternalId(executionPeriodId);

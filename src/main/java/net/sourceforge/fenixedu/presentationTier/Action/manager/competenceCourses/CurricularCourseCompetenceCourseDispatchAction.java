@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.RequestUtils;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -66,7 +67,7 @@ public class CurricularCourseCompetenceCourseDispatchAction extends FenixDispatc
             HttpServletResponse response) throws FenixActionException, FenixServiceException {
         IUserView userView = UserView.getUser();
         String requestString = RequestUtils.getAndSetStringToRequest(request, "competenceCourseID");
-        Integer competenceCourseID = (requestString != null ? Integer.valueOf(requestString) : null);
+        String competenceCourseID = (!StringUtils.isEmpty(requestString) ? requestString : null);
         DegreeType degreeType = DegreeType.DEGREE;
 
         List<InfoDegreeCurricularPlan> result = null;

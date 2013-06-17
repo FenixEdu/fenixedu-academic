@@ -37,7 +37,7 @@ public class MasterDegreeThesisOperations extends FenixDispatchAction {
 
         String scpID = getStringFromRequest(request, "scpID");
         if (scpID == null) {
-            scpID = (String) ((DynaActionForm) form).get("scpID");
+            scpID = ((DynaActionForm) form).get("scpID").equals("") ? null : (String) ((DynaActionForm) form).get("scpID");
         }
 
         StudentCurricularPlan studentCurricularPlan = AbstractDomainObject.fromExternalId(scpID);

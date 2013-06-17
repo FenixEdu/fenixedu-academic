@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManage
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.RequestUtils;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -255,10 +256,10 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
         InfoExecutionPeriod infoExecutionPeriod =
                 (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
         String executionPeriodID = (String) escolherContextoForm.get("indice");
-        if (executionPeriodID == null) {
+        if (StringUtils.isEmpty(executionPeriodID)) {
             executionPeriodID = getFromRequest("indice", request);
         }
-        if (executionPeriodID != null) {
+        if (!StringUtils.isEmpty(executionPeriodID)) {
             infoExecutionPeriod = ReadExecutionPeriodByOID.run(executionPeriodID);
         }
         request.setAttribute("indice", infoExecutionPeriod.getExternalId());

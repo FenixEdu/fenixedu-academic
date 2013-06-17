@@ -62,7 +62,7 @@ public class ViewClassTimeTableActionNew extends FenixAction {
         }
         DynaActionForm escolherContextoForm = (DynaActionForm) form;
         String className = request.getParameter("className");
-        Integer indice = (Integer) escolherContextoForm.get("indice");
+        String indice = (String) escolherContextoForm.get("indice");
         escolherContextoForm.set("indice", indice);
         InfoExecutionPeriod infoExecutionPeriod =
                 (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);

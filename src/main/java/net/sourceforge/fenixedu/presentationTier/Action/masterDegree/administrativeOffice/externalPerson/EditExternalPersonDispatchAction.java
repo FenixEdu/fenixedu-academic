@@ -61,7 +61,9 @@ public class EditExternalPersonDispatchAction extends FenixDispatchAction {
         try {
             externalPersonId = this.getFromRequest("id", request);
         } catch (Exception e1) {
-            externalPersonId = (String) editExternalPersonForm.get("externalPersonID");
+            externalPersonId =
+                    editExternalPersonForm.get("externalPersonID").equals("") ? null : (String) editExternalPersonForm
+                            .get("externalPersonID");
         }
 
         InfoExternalPerson infoExternalPerson = null;

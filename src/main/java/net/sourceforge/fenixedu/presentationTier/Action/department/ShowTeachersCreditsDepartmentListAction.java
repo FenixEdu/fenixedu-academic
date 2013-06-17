@@ -28,6 +28,7 @@ import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -60,7 +61,7 @@ public class ShowTeachersCreditsDepartmentListAction extends FenixAction {
         String executionPeriodID = (String) dynaActionForm.get("executionPeriodId");
 
         ExecutionSemester executionSemester = null;
-        if (executionPeriodID == null) {
+        if (StringUtils.isEmpty(executionPeriodID)) {
             executionSemester = ExecutionSemester.readLastExecutionSemesterForCredits();
         } else {
             executionSemester = AbstractDomainObject.fromExternalId(executionPeriodID);
