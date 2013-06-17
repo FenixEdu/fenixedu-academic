@@ -52,6 +52,8 @@ import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class CurricularCourse extends CurricularCourse_Base {
 
@@ -1464,10 +1466,11 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public String getObjectives(ExecutionSemester period) {
-        if (isBolonhaDegree()) {
-            return getCompetenceCourse().getObjectives(period);
-        }
-        return getCurriculumFactoryEditCurriculum(period).getObjectives();
+        return getObjectivesI18N(period).getContent(Language.pt);
+        /* if (isBolonhaDegree()) {
+             return getCompetenceCourse().getObjectives(period);
+         }
+         return getCurriculumFactoryEditCurriculum(period).getObjectives();*/
     }
 
     public String getObjectives() {
@@ -1478,10 +1481,11 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public String getObjectivesEn(ExecutionSemester period) {
-        if (isBolonhaDegree()) {
+        return getObjectivesI18N(period).getContent(Language.en);
+        /*if (isBolonhaDegree()) {
             return getCompetenceCourse().getObjectivesEn(period);
         }
-        return getCurriculumFactoryEditCurriculum(period).getObjectivesEn();
+        return getCurriculumFactoryEditCurriculum(period).getObjectivesEn();*/
     }
 
     public String getObjectivesEn() {
@@ -1489,6 +1493,15 @@ public class CurricularCourse extends CurricularCourse_Base {
             return getCompetenceCourse().getObjectivesEn();
         }
         return getCurriculumFactoryEditCurriculum().getObjectivesEn();
+    }
+
+    public MultiLanguageString getObjectivesI18N(ExecutionSemester period) {
+        if (isBolonhaDegree()) {
+            return new MultiLanguageString(Language.pt, getCompetenceCourse().getObjectives(period)).with(Language.en,
+                    getCompetenceCourse().getObjectivesEn(period));
+        }
+        return new MultiLanguageString(Language.pt, getCurriculumFactoryEditCurriculum(period).getObjectives()).with(Language.en,
+                getCurriculumFactoryEditCurriculum(period).getObjectivesEn());
     }
 
     public String getProgram(ExecutionSemester period) {
@@ -1517,6 +1530,19 @@ public class CurricularCourse extends CurricularCourse_Base {
             return getCompetenceCourse().getProgramEn();
         }
         return getCurriculumFactoryEditCurriculum().getProgramEn();
+    }
+
+    public MultiLanguageString getProgramI18N(ExecutionSemester period) {
+        if (isBolonhaDegree()) {
+            return new MultiLanguageString(Language.pt, getCompetenceCourse().getProgram(period)).with(Language.en,
+                    getCompetenceCourse().getProgramEn(period));
+        }
+        return new MultiLanguageString(Language.pt, getCurriculumFactoryEditCurriculum(period).getProgram()).with(Language.en,
+                getCurriculumFactoryEditCurriculum(period).getProgramEn());
+    }
+
+    public MultiLanguageString getPrerequisitesI18N() {
+        return new MultiLanguageString(Language.pt, getPrerequisites()).with(Language.en, getPrerequisitesEn());
     }
 
     public String getEvaluationMethod(ExecutionSemester period) {
@@ -1553,6 +1579,15 @@ public class CurricularCourse extends CurricularCourse_Base {
             return getCompetenceCourse().getEvaluationMethodEn();
         }
         return null;
+    }
+
+    public MultiLanguageString getEvaluationMethodI18N(ExecutionSemester period) {
+        if (isBolonhaDegree()) {
+            return new MultiLanguageString(Language.pt, getCompetenceCourse().getEvaluationMethod(period)).with(Language.en,
+                    getCompetenceCourse().getEvaluationMethodEn(period));
+        }
+        return new MultiLanguageString(Language.pt, getExecutionCoursesByExecutionPeriod(period).get(0).getEvaluationMethodText())
+                .with(Language.en, getExecutionCoursesByExecutionPeriod(period).get(0).getEvaluationMethodTextEn());
     }
 
     public RegimeType getRegime(final ExecutionSemester period) {

@@ -8,6 +8,13 @@
 	<parameter name="SUBREPORT_DIR" class="java.lang.String">
 		<defaultValueExpression><![CDATA["./"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="enrolment" class="java.lang.String"/>
+	<parameter name="degreeLabel" class="java.lang.String"/>
+	<parameter name="degreeCurricularPlanLabel" class="java.lang.String"/>
+	<parameter name="contexts" class="java.lang.String"/>
+	<parameter name="program" class="java.lang.String"/>
+	<parameter name="generalObjectives" class="java.lang.String"/>
+	<parameter name="operationalObjectives" class="java.lang.String"/>
 	<field name="curricularCourse" class="java.lang.String"/>
 	<field name="degree" class="java.lang.String"/>
 	<field name="degreeCurricularPlan" class="java.lang.String"/>
@@ -40,7 +47,7 @@
 				<textElement markup="styled">
 					<font size="14" pdfFontName="Times-Roman"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["<style pdfFontName=\"Times-Bold\">Disciplina: </style>" + $F{curricularCourse}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["<style pdfFontName=\"Times-Bold\">" + $P{enrolment} + ": </style>" + $F{curricularCourse}]]></textFieldExpression>
 			</textField>
 			<break>
 				<reportElement key="element-1" x="0" y="4" width="595" height="1"/>
@@ -56,7 +63,7 @@
 				<textElement markup="styled">
 					<font size="14" pdfFontName="Times-Roman"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["<style pdfFontName=\"Times-Bold\">Curso: </style>" + $F{degree}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["<style pdfFontName=\"Times-Bold\">" + $P{degreeLabel} + ": </style>" + $F{degree}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
 				<reportElement key="textField-3" positionType="Float" x="67" y="60" width="516" height="20"/>
@@ -69,7 +76,7 @@
 				<textElement markup="styled">
 					<font size="14" pdfFontName="Times-Roman"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["<style pdfFontName=\"Times-Bold\">Plano Curricular: </style>" + $F{degreeCurricularPlan}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["<style pdfFontName=\"Times-Bold\">" + $P{degreeCurricularPlanLabel} + ": </style>" + $F{degreeCurricularPlan}]]></textFieldExpression>
 			</textField>
 			<elementGroup>
 				<textField isBlankWhenNull="false">
@@ -83,7 +90,7 @@
 					<textElement markup="styled">
 						<font size="14" pdfFontName="Times-Roman"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA["<style pdfFontName=\"Times-Bold\">Contextos </style>"]]></textFieldExpression>
+					<textFieldExpression class="java.lang.String"><![CDATA["<style pdfFontName=\"Times-Bold\">" + $P{contexts} + " </style>"]]></textFieldExpression>
 				</textField>
 			</elementGroup>
 			<elementGroup>
@@ -100,7 +107,7 @@
 					<textElement markup="styled">
 						<font size="14" pdfFontName="Times-Roman"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA["<style pdfFontName=\"Times-Bold\">Objectivos Gerais</style>"]]></textFieldExpression>
+					<textFieldExpression class="java.lang.String"><![CDATA["<style pdfFontName=\"Times-Bold\">" + $P{generalObjectives} + "</style>"]]></textFieldExpression>
 				</textField>
 			</elementGroup>
 			<elementGroup>
@@ -117,7 +124,7 @@
 					<textElement markup="styled">
 						<font size="14" pdfFontName="Times-Roman"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA["<style pdfFontName=\"Times-Bold\">Programa </style>"]]></textFieldExpression>
+					<textFieldExpression class="java.lang.String"><![CDATA["<style pdfFontName=\"Times-Bold\">" + $P{program} + " </style>"]]></textFieldExpression>
 				</textField>
 			</elementGroup>
 			<elementGroup>
@@ -189,7 +196,7 @@
 				<textElement markup="styled">
 					<font size="14" pdfFontName="Times-Roman"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["<style pdfFontName=\"Times-Bold\">Objectivos Operacionais</style>"]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["<style pdfFontName=\"Times-Bold\">" + $P{operationalObjectives} + "</style>"]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

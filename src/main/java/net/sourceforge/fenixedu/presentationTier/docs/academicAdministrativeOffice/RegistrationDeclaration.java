@@ -49,7 +49,7 @@ public class RegistrationDeclaration extends AdministrativeOfficeDocument {
         Unit adminOfficeUnit = getAdministrativeOffice().getUnit();
         Person coordinator = adminOfficeUnit.getActiveUnitCoordinator();
         Registration registration = getDocumentRequest().getRegistration();
-        String institutionName = getMLSTextContent(RootDomainObject.getInstance().getInstitutionUnit().getPartyName());
+
         String coordinatorTitle;
         if (coordinator.isMale()) {
             coordinatorTitle = getResourceBundle().getString("label.academicDocument.declaration.maleCoordinator");
@@ -70,8 +70,8 @@ public class RegistrationDeclaration extends AdministrativeOfficeDocument {
 
         fillSeventhParagraph(registration, studentRegistered);
 
-        setFooter(getDocumentRequest(), false);
-        setEmployeeFields(institutionName, adminOfficeUnit);
+        setFooter(getDocumentRequest());
+        fillEmployeeFields();
     }
 
     protected void fillFirstParagraph(Person coordinator, Unit adminOfficeUnit, String coordinatorTitle) {

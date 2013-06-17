@@ -5,21 +5,36 @@
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
-	<parameter name="name" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="studentNumber" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="degreeDescription" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="programsDescription" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="administrativeOfficeName" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="institutionName" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="day" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="administrativeOfficeCoordinatorName" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="bolonhaList" class="java.util.ArrayList" isForPrompting="false"/>
 	<parameter name="programSubReportName" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="universityName" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="preBolonhaList" class="java.util.ArrayList" isForPrompting="false"/>
-	<parameter name="coordinatorSignature" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="adminOfficeIntroMessage" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="coordinatorWithoutArticle" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="certification" class="java.lang.String"/>
+	<parameter name="certificationMessage" class="java.lang.String"/>
+	<parameter name="administrativeOfficeCoordinator" class="net.sourceforge.fenixedu.domain.Person"/>
+	<parameter name="signer" class="java.lang.String"/>
+	<parameter name="signerLocation" class="java.lang.String"/>
+	<parameter name="firstPart" class="java.lang.String"/>
+	<parameter name="secondPart" class="java.lang.String"/>
+	<parameter name="thirdPart" class="java.lang.String"/>
+	<parameter name="fourthPart" class="java.lang.String"/>
+	<parameter name="fifthPart" class="java.lang.String"/>
+	<parameter name="sixthPart" class="java.lang.String"/>
+	<parameter name="seventhPart" class="java.lang.String"/>
+	<parameter name="enrolment" class="java.lang.String"/>
+	<parameter name="degreeLabel" class="java.lang.String"/>
+	<parameter name="degreeCurricularPlanLabel" class="java.lang.String"/>
+	<parameter name="weightLabel" class="java.lang.String"/>
+	<parameter name="contexts" class="java.lang.String"/>
+	<parameter name="prerequisites" class="java.lang.String"/>
+	<parameter name="objectives" class="java.lang.String"/>
+	<parameter name="program" class="java.lang.String"/>
+	<parameter name="evaluationMethod" class="java.lang.String"/>
+	<parameter name="bibliography" class="java.lang.String"/>
+	<parameter name="averageGrade" class="java.lang.String"/>
+	<parameter name="generalObjectives" class="java.lang.String"/>
+	<parameter name="operationalObjectives" class="java.lang.String"/>
+	<parameter name="page" class="java.lang.String"/>
+	<parameter name="pageOf" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -36,36 +51,24 @@
 				<textElement textAlignment="Justified" lineSpacing="1_1_2" markup="styled">
 					<font size="14" isBold="false" isItalic="false" pdfFontName="Times-Roman"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{administrativeOfficeCoordinatorName} + ", " + $P{coordinatorWithoutArticle} + " DO " + $P{institutionName}.toUpperCase() + ", " + $P{universityName}.toUpperCase() + ", certifica que foi fornecido ao aluno <style pdfFontName=\"Times-Bold\"> " + $P{name} + "</style>, com o número <style pdfFontName=\"Times-Bold\">" + $P{studentNumber} + "</style>, do <style pdfFontName=\"Times-Bold\">" + $P{degreeDescription} + "</style>, " + $P{programsDescription} + "."]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{firstPart} + "<style pdfFontName=\"Times-Bold\">" + $P{secondPart} + " </style>" + $P{thirdPart} + " <style pdfFontName=\"Times-Bold\">" + $P{fourthPart} +  ", </style>" + $P{fifthPart} + " <style pdfFontName=\"Times-Bold\">" + $P{sixthPart} + "</style>" + $P{seventhPart}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement key="staticText-1" x="219" y="107" width="157" height="25"/>
-				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center">
+			<textField>
+				<reportElement key="staticText-1" x="197" y="107" width="200" height="25"/>
+				<textElement textAlignment="Center" markup="none">
 					<font size="16" isBold="true" pdfFontName="Times-Bold"/>
 				</textElement>
-				<text><![CDATA[CERTIFICADO]]></text>
-			</staticText>
-			<staticText>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{certification}]]></textFieldExpression>
+			</textField>
+			<textField>
 				<reportElement key="staticText-3" x="46" y="471" width="503" height="64"/>
-				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Justified">
+				<textElement textAlignment="Justified" markup="none">
 					<font size="14" pdfFontName="Times-Roman"/>
 				</textElement>
-				<text><![CDATA[Por ser verdade e me haver sido pedido pelo interessado, mandei emitir o presente certificado que vai ser assinado e selado com o selo branco em uso nesta instituição.]]></text>
-			</staticText>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{certificationMessage}]]></textFieldExpression>
+			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-				<reportElement key="textField-3" positionType="Float" x="46" y="644" width="191" height="27"/>
+				<reportElement key="textField-3" positionType="Float" x="46" y="644" width="503" height="27"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -75,7 +78,7 @@
 				<textElement textAlignment="Justified" verticalAlignment="Middle" lineSpacing="1_1_2" markup="styled">
 					<font size="14" isBold="false" isItalic="false" pdfFontName="Times-Roman"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{day}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{signerLocation}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement key="line-1" positionType="Float" x="192" y="587" width="357" height="1"/>
@@ -91,7 +94,7 @@
 				<textElement textAlignment="Right">
 					<font size="14" isItalic="false" pdfFontName="Times-Roman"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{administrativeOfficeCoordinatorName}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{administrativeOfficeCoordinator}.getName()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
 				<reportElement key="textField-5" positionType="Float" x="46" y="618" width="503" height="21"/>
@@ -104,7 +107,7 @@
 				<textElement textAlignment="Right">
 					<font size="14" isItalic="true" pdfFontName="Times-Roman"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{coordinatorSignature}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{signer}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
@@ -118,11 +121,65 @@
 		<band height="93" splitType="Stretch">
 			<subreport isUsingCache="true">
 				<reportElement key="subreport-1" mode="Transparent" x="0" y="3" width="595" height="44"/>
+				<subreportParameter name="degreeCurricularPlanLabel">
+					<subreportParameterExpression><![CDATA[$P{degreeCurricularPlanLabel}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="prerequisites">
+					<subreportParameterExpression><![CDATA[$P{prerequisites}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="objectives">
+					<subreportParameterExpression><![CDATA[$P{objectives}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="enrolment">
+					<subreportParameterExpression><![CDATA[$P{enrolment}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="averageGrade">
+					<subreportParameterExpression><![CDATA[$P{averageGrade}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="program">
+					<subreportParameterExpression><![CDATA[$P{program}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="evaluationMethod">
+					<subreportParameterExpression><![CDATA[$P{evaluationMethod}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="contexts">
+					<subreportParameterExpression><![CDATA[$P{contexts}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="weightLabel">
+					<subreportParameterExpression><![CDATA[$P{weightLabel}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="degreeLabel">
+					<subreportParameterExpression><![CDATA[$P{degreeLabel}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="bibliography">
+					<subreportParameterExpression><![CDATA[$P{bibliography}]]></subreportParameterExpression>
+				</subreportParameter>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource(((Collection)$P{bolonhaList}))]]></dataSourceExpression>
 				<subreportExpression class="java.lang.String"><![CDATA["reports/documentRequests/programCertificateRequest/programBolonhaSubReport.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport isUsingCache="true">
 				<reportElement key="subreport-2" positionType="Float" mode="Transparent" x="0" y="47" width="595" height="44"/>
+				<subreportParameter name="degreeCurricularPlanLabel">
+					<subreportParameterExpression><![CDATA[$P{degreeCurricularPlanLabel}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="enrolment">
+					<subreportParameterExpression><![CDATA[$P{enrolment}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="generalObjectives">
+					<subreportParameterExpression><![CDATA[$P{generalObjectives}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="program">
+					<subreportParameterExpression><![CDATA[$P{program}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="contexts">
+					<subreportParameterExpression><![CDATA[$P{contexts}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="operationalObjectives">
+					<subreportParameterExpression><![CDATA[$P{operationalObjectives}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="degreeLabel">
+					<subreportParameterExpression><![CDATA[$P{degreeLabel}]]></subreportParameterExpression>
+				</subreportParameter>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource(((Collection)$P{preBolonhaList}))]]></dataSourceExpression>
 				<subreportExpression class="java.lang.String"><![CDATA["reports/documentRequests/programCertificateRequest/programPreBolonhaSubReport.jasper"]]></subreportExpression>
 			</subreport>
@@ -134,19 +191,13 @@
 	<pageFooter>
 		<band height="13" splitType="Stretch">
 			<printWhenExpression><![CDATA[$V{PAGE_NUMBER} > 1]]></printWhenExpression>
-			<staticText>
+			<textField>
 				<reportElement key="staticText-4" positionType="Float" x="460" y="1" width="25" height="12"/>
-				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font size="8" isItalic="true" pdfFontName="Courier-Oblique"/>
 				</textElement>
-				<text><![CDATA[Pág.]]></text>
-			</staticText>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{page}]]></textFieldExpression>
+			</textField>
 			<textField isBlankWhenNull="false">
 				<reportElement key="textField-6" positionType="Float" x="485" y="1" width="13" height="12"/>
 				<box>
@@ -160,19 +211,13 @@
 				</textElement>
 				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{PAGE_NUMBER} - 1]]></textFieldExpression>
 			</textField>
-			<staticText>
+			<textField>
 				<reportElement key="staticText-5" positionType="Float" x="498" y="1" width="14" height="12"/>
-				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font size="8" isItalic="true" pdfFontName="Courier-Oblique"/>
 				</textElement>
-				<text><![CDATA[de]]></text>
-			</staticText>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{pageOf}]]></textFieldExpression>
+			</textField>
 			<textField evaluationTime="Report" isBlankWhenNull="false">
 				<reportElement key="textField-7" positionType="Float" x="512" y="1" width="13" height="12"/>
 				<box>
@@ -190,19 +235,13 @@
 	</pageFooter>
 	<lastPageFooter>
 		<band height="14" splitType="Stretch">
-			<staticText>
+			<textField>
 				<reportElement key="staticText-6" positionType="Float" x="460" y="1" width="25" height="12"/>
-				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font size="8" isItalic="true" pdfFontName="Courier-Oblique"/>
 				</textElement>
-				<text><![CDATA[Pág.]]></text>
-			</staticText>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{page}]]></textFieldExpression>
+			</textField>
 			<textField isBlankWhenNull="false">
 				<reportElement key="textField-8" positionType="Float" x="485" y="1" width="13" height="12"/>
 				<box>
@@ -216,19 +255,13 @@
 				</textElement>
 				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{PAGE_NUMBER} - 1]]></textFieldExpression>
 			</textField>
-			<staticText>
+			<textField>
 				<reportElement key="staticText-7" positionType="Float" x="498" y="1" width="14" height="12"/>
-				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font size="8" isItalic="true" pdfFontName="Courier-Oblique"/>
 				</textElement>
-				<text><![CDATA[de]]></text>
-			</staticText>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{pageOf}]]></textFieldExpression>
+			</textField>
 			<textField evaluationTime="Report" isBlankWhenNull="false">
 				<reportElement key="textField-9" positionType="Float" x="512" y="1" width="13" height="12"/>
 				<box>

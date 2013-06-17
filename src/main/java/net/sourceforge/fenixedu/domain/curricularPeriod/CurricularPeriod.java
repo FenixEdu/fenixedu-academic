@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 import net.sourceforge.fenixedu.dataTransferObject.CurricularPeriodInfoDTO;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -159,6 +160,10 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
 
     public String getFullLabel() {
         return CurricularPeriodLabelFormatter.getFullLabel(this, false);
+    }
+
+    public String getFullLabel(final Locale locale) {
+        return CurricularPeriodLabelFormatter.getFullLabelI18N(this, false, locale);
     }
 
     @Override

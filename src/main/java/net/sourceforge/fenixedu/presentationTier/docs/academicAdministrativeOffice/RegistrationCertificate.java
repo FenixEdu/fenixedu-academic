@@ -49,7 +49,7 @@ public class RegistrationCertificate extends AdministrativeOfficeDocument {
         Unit adminOfficeUnit = getAdministrativeOffice().getUnit();
         Person coordinator = adminOfficeUnit.getActiveUnitCoordinator();
         Registration registration = getDocumentRequest().getRegistration();
-        String institutionName = getMLSTextContent(RootDomainObject.getInstance().getInstitutionUnit().getPartyName());
+
         String coordinatorTitle;
         if (coordinator.isMale()) {
             coordinatorTitle = getResourceBundle().getString("label.academicDocument.declaration.maleCoordinator");
@@ -70,8 +70,8 @@ public class RegistrationCertificate extends AdministrativeOfficeDocument {
 
         fillSeventhParagraph(registration, studentRegistered);
 
-        setEmployeeFields(institutionName, adminOfficeUnit);
-        setFooter(getDocumentRequest(), true);
+        fillEmployeeFields();
+        setFooter(getDocumentRequest());
 
     }
 

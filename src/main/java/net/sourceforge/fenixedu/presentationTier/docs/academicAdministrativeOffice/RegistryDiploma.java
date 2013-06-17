@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.phd.serviceRequests.documentRequests.PhdRegistryDiplomaRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.IRegistryDiplomaRequest;
@@ -39,30 +38,7 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
 
         setHeader();
 
-        final Unit institutionUnit = RootDomainObject.getInstance().getInstitutionUnit();
-        String institutionUnitName = getMLSTextContent(institutionUnit.getPartyName());
         addParameter("institution", getMLSTextContent(RootDomainObject.getInstance().getInstitutionUnit().getPartyName()));
-
-        final Person presidentIst =
-                UniversityUnit.getInstitutionsUniversityUnit().getInstitutionsUniversityResponsible(FunctionType.PRESIDENT);
-
-        final Person rectorIst =
-                UniversityUnit.getInstitutionsUniversityUnit().getInstitutionsUniversityResponsible(FunctionType.PRINCIPAL);
-
-        String presidentGender;
-
-        if (presidentIst.isMale()) {
-            presidentGender = getResourceBundle().getString("label.phd.registryDiploma.presidentMale");
-        } else {
-            presidentGender = getResourceBundle().getString("label.phd.registryDiploma.presidentFemale");
-        }
-
-        String rectorGender;
-        if (rectorIst.isMale()) {
-            rectorGender = getResourceBundle().getString("label.phd.registryDiploma.rectorMale");
-        } else {
-            rectorGender = getResourceBundle().getString("label.phd.registryDiploma.rectorFemale");
-        }
 
         setFirstParagraph(request);
         setSecondParagraph(person, request);
@@ -80,7 +56,7 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
 
         addParameter("graduateTitle", request.getGraduateTitle(getLocale()));
 
-        setFooter(institutionUnitName, rectorGender, presidentGender);
+        setFooter();
     }
 
     protected void setHeader() {
@@ -137,8 +113,30 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
                 parishOfBirth, getDegreeDescription()));
     }
 
-    protected void setFooter(String institutionUnitName, String rectorGender, String presidentGender) {
+    protected void setFooter() {
 
+        final Person presidentIst =
+                UniversityUnit.getInstitutionsUniversityUnit().getInstitutionsUniversityResponsible(FunctionType.PRESIDENT);
+
+        final Person rectorIst =
+                UniversityUnit.getInstitutionsUniversityUnit().getInstitutionsUniversityResponsible(FunctionType.PRINCIPAL);
+
+        String presidentGender;
+
+        if (presidentIst.isMale()) {
+            presidentGender = getResourceBundle().getString("label.phd.registryDiploma.presidentMale");
+        } else {
+            presidentGender = getResourceBundle().getString("label.phd.registryDiploma.presidentFemale");
+        }
+
+        String rectorGender;
+        if (rectorIst.isMale()) {
+            rectorGender = getResourceBundle().getString("label.phd.registryDiploma.rectorMale");
+        } else {
+            rectorGender = getResourceBundle().getString("label.phd.registryDiploma.rectorFemale");
+        }
+
+        final String institutionUnitName = getMLSTextContent(RootDomainObject.getInstance().getInstitutionUnit().getPartyName());
         final UniversityUnit university = UniversityUnit.getInstitutionsUniversityUnit();
         String universityName = university.getPartyName().getPreferedContent();
 

@@ -11,6 +11,7 @@
 			<style isDefault="false" style="InvalidCourseLoad" forecolor="#E53F3F" isStrikeThrough="true"/>
 		</conditionalStyle>
 	</style>
+	<parameter name="dissertations" class="java.lang.String"/>
 	<field name="curricularCourseName" class="java.lang.String"/>
 	<field name="year" class="java.lang.String"/>
 	<field name="contactLoad" class="java.lang.Double"/>
@@ -31,13 +32,13 @@
 	</background>
 	<title>
 		<band height="45" splitType="Stretch">
-			<staticText>
+			<textField>
 				<reportElement key="staticText-29" x="64" y="28" width="452" height="15"/>
-				<textElement>
+				<textElement markup="none">
 					<font isBold="false" isItalic="true" pdfFontName="Helvetica-Oblique"/>
 				</textElement>
-				<text><![CDATA[As cargas horárias não se aplicam às seguintes disciplinas:]]></text>
-			</staticText>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{dissertations}]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>

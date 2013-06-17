@@ -29,9 +29,9 @@ abstract public class FenixReport implements Serializable {
 
     private final ResourceBundle enumerationBundle;
 
-    final private Locale locale;
+    public final Locale locale;
 
-    final private Language language;
+    public final Language language;
 
     static final public Locale[] suportedLocales = { Language.getDefaultLocale(), new Locale("en") };
 

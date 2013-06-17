@@ -1,12 +1,13 @@
 package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
@@ -18,7 +19,6 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CourseLo
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.apache.commons.lang.StringUtils;
-import org.joda.time.LocalDate;
 
 public class CourseLoadRequestDocument extends AdministrativeOfficeDocument {
 
@@ -35,75 +35,72 @@ public class CourseLoadRequestDocument extends AdministrativeOfficeDocument {
 
     @Override
     protected void fillReport() {
+
+        addParameter("certification", getResourceBundle().getString("label.certification").toUpperCase());
+        addParameter("certificationMessage", getResourceBundle().getString("label.program.certificate.certification"));
         setPersonFields();
+        fillEmployeeFields();
+        setFooter(getDocumentRequest());
         addParametersInformation();
     }
 
     private void addParametersInformation() {
-        addParameter("studentNumber", getStudentNumber());
-        addParameter("degreeDescription", getDegreeDescription());
 
         AdministrativeOffice administrativeOffice = getAdministrativeOffice();
         Unit adminOfficeUnit = administrativeOffice.getUnit();
         Person activeUnitCoordinator = adminOfficeUnit.getActiveUnitCoordinator();
+        Person student = getDocumentRequest().getPerson();
+        final UniversityUnit university = UniversityUnit.getInstitutionsUniversityUnit();
 
-        addParameter("administrativeOfficeCoordinatorName", activeUnitCoordinator.getName());
-        addParameter("administrativeOfficeName", getMLSTextContent(adminOfficeUnit.getPartyName()));
-        addParameter("institutionName", RootDomainObject.getInstance().getInstitutionUnit().getName());
-        addParameter("universityName", UniversityUnit.getInstitutionsUniversityUnit().getName());
+        String coordinatorGender;
+        if (activeUnitCoordinator.isMale()) {
+            coordinatorGender = getResourceBundle().getString("label.academicDocument.declaration.maleCoordinator");
+        } else {
+            coordinatorGender = getResourceBundle().getString("label.academicDocument.declaration.femaleCoordinator");
+        }
 
-        addParameter("day", new LocalDate().toString(DD_MMMM_YYYY, getLocale()));
+        String labelStudent;
+        if (student.isMale()) {
+            labelStudent = getResourceBundle().getString("label.of.student.male");
+        } else {
+            labelStudent = getResourceBundle().getString("label.of.student.female");
+        }
 
-        addParameter("coordinatorSignature", coordinatorSignature(administrativeOffice, activeUnitCoordinator));
-        addParameter("adminOfficeIntroMessage", adminOfficeIntroMessage(administrativeOffice, activeUnitCoordinator));
+        String coordinatorName = activeUnitCoordinator.getName();
+        String adminOfficeUnitName = getMLSTextContent(adminOfficeUnit.getPartyName()).toUpperCase();
+        String universityName = getMLSTextContent(university.getPartyName()).toUpperCase();
 
-        addParameter("coordinatorWithoutArticle", coordinatorSignatureWithoutArticle(administrativeOffice, activeUnitCoordinator));
+        String institutionName =
+                getMLSTextContent(RootDomainObject.getInstance().getInstitutionUnit().getPartyName()).toUpperCase();
 
+        String template = getResourceBundle().getString("label.courseLoad.personalData.first");
+        String firstPart =
+                MessageFormat.format(template, coordinatorName, coordinatorGender, adminOfficeUnitName, institutionName,
+                        universityName, labelStudent);
+        addParameter("firstPart", firstPart);
+        addParameter("secondPart", student.getName());
+        addParameter("thirdPart", getResourceBundle().getString("label.with.number"));
+        addParameter("fourthPart", getStudentNumber());
+        addParameter("fifthPart", getResourceBundle().getString("label.of.male"));
+        addParameter("sixthPart", getDegreeDescription());
+        addParameter("seventhPart", getResourceBundle().getString("label.courseLoad.endMessage"));
+
+        addLabelsToMultiLanguage();
         createCourseLoadsList();
     }
 
-    private String coordinatorSignatureWithoutArticle(AdministrativeOffice administrativeOffice, Person activeUnitCoordinator) {
-        String coordinatorSignature = coordinatorSignature(administrativeOffice, activeUnitCoordinator);
-        String withoutArticle = coordinatorSignature.substring(2, coordinatorSignature.length());
-        Integer index = withoutArticle.indexOf(" do ");
-
-        return withoutArticle.substring(0, index) + withoutArticle.substring(index, withoutArticle.length()).toUpperCase();
-    }
-
-    private String adminOfficeIntroMessage(AdministrativeOffice administrativeOffice, Person activeUnitCoordinator) {
-        String adminOfficeIntroMessage = "message.academicServiceRequest.course.load.admin.office.intro";
-
-        if (administrativeOffice.isMasterDegree()) {
-            adminOfficeIntroMessage += ".master.degree";
-        } else {
-            adminOfficeIntroMessage += ".degree";
-        }
-
-        if (activeUnitCoordinator.isMale()) {
-            adminOfficeIntroMessage += ".male";
-        } else {
-            adminOfficeIntroMessage += ".female";
-        }
-
-        return ResourceBundle.getBundle("resources.AcademicAdminOffice", getLocale()).getString(adminOfficeIntroMessage);
-    }
-
-    private String coordinatorSignature(AdministrativeOffice administrativeOffice, Person activeUnitCoordinator) {
-        String coordinatorSignatureMessage = "message.academicServiceRequest.course.load.coordinator.signature";
-
-        if (administrativeOffice.isMasterDegree()) {
-            coordinatorSignatureMessage += ".master.degree";
-        } else {
-            coordinatorSignatureMessage += ".degree";
-        }
-
-        if (activeUnitCoordinator.isMale()) {
-            coordinatorSignatureMessage += ".male";
-        } else {
-            coordinatorSignatureMessage += ".female";
-        }
-
-        return ResourceBundle.getBundle("resources.AcademicAdminOffice", getLocale()).getString(coordinatorSignatureMessage);
+    private void addLabelsToMultiLanguage() {
+        addParameter("enrolment", getResourceBundle().getString("label.serviceRequests.enrolment"));
+        addParameter("year", getResourceBundle().getString("label.year"));
+        addParameter("autonomousWork", getResourceBundle().getString("label.autonomousWork"));
+        addParameter("courseLoad", getResourceBundle().getString("label.courseLoad"));
+        addParameter("total", getResourceBundle().getString("label.total.amount"));
+        addParameter("tTotal", getResourceBundle().getString("label.total"));
+        addParameter("lectures", getResourceBundle().getString("label.lectures"));
+        addParameter("practices", getResourceBundle().getString("label.patrice"));
+        addParameter("lecturesPractice", getResourceBundle().getString("label.lecturesPractice"));
+        addParameter("laboratory", getResourceBundle().getString("label.laboratory"));
+        addParameter("dissertations", getResourceBundle().getString("label.courseLoad.dissertations"));
     }
 
     @Override
@@ -161,6 +158,9 @@ public class CourseLoadRequestDocument extends AdministrativeOfficeDocument {
         Collections.sort(dissertations);
     }
 
+    static final protected String DD = "dd";
+    static final protected String MMMM_YYYY = "MMMM yyyy";
+
     @Override
     protected boolean showPriceFields() {
         return false;
@@ -171,7 +171,7 @@ public class CourseLoadRequestDocument extends AdministrativeOfficeDocument {
         addParameter("name", getDocumentRequest().getPerson().getName());
     }
 
-    static abstract public class CourseLoadEntry implements Comparable<CourseLoadEntry> {
+    abstract public class CourseLoadEntry implements Comparable<CourseLoadEntry> {
         private String curricularCourseName;
         private String year;
         private Double total;
@@ -214,7 +214,7 @@ public class CourseLoadRequestDocument extends AdministrativeOfficeDocument {
             return Boolean.valueOf(total.doubleValue() != 0d);
         }
 
-        static CourseLoadEntry create(final Enrolment enrolment) {
+        CourseLoadEntry create(final Enrolment enrolment) {
             if (enrolment.isBolonhaDegree()) {
                 return new BolonhaCourseLoadEntry(enrolment);
             } else {
@@ -223,7 +223,7 @@ public class CourseLoadRequestDocument extends AdministrativeOfficeDocument {
         }
     }
 
-    static public class BolonhaCourseLoadEntry extends CourseLoadEntry {
+    public class BolonhaCourseLoadEntry extends CourseLoadEntry {
         private Double contactLoad;
         private Double autonomousWork;
 
@@ -231,6 +231,7 @@ public class CourseLoadRequestDocument extends AdministrativeOfficeDocument {
             super(enrolment.getCurricularCourse().getName(), enrolment.getExecutionYear().getYear());
 
             final CurricularCourse curricularCourse = enrolment.getCurricularCourse();
+            setCurricularCourseName(curricularCourse.getNameI18N(enrolment.getExecutionYear()).getContent(language));
             setContactLoad(curricularCourse.getContactLoad(enrolment.getExecutionPeriod()));
             setAutonomousWork(curricularCourse.getAutonomousWorkHours(enrolment.getExecutionPeriod()));
             setTotal(curricularCourse.getTotalLoad(enrolment.getExecutionPeriod()));
@@ -253,7 +254,7 @@ public class CourseLoadRequestDocument extends AdministrativeOfficeDocument {
         }
     }
 
-    static public class PreBolonhaCourseLoadEntry extends CourseLoadEntry {
+    public class PreBolonhaCourseLoadEntry extends CourseLoadEntry {
         private Double theoreticalHours;
         private Double praticalHours;
         private Double labHours;
@@ -261,10 +262,11 @@ public class CourseLoadRequestDocument extends AdministrativeOfficeDocument {
 
         public PreBolonhaCourseLoadEntry(final Enrolment enrolment) {
             super(enrolment.getCurricularCourse().getName(), enrolment.getExecutionYear().getYear());
-            initInformation(enrolment.getCurricularCourse());
+            initInformation(enrolment.getCurricularCourse(), enrolment.getExecutionYear());
         }
 
-        private void initInformation(final CurricularCourse curricularCourse) {
+        private void initInformation(final CurricularCourse curricularCourse, ExecutionYear executionYear) {
+            setCurricularCourseName(curricularCourse.getNameI18N(executionYear).getContent(language));
             setTheoreticalHours(curricularCourse.getTheoreticalHours());
             setPraticalHours(curricularCourse.getPraticalHours());
             setLabHours(curricularCourse.getLabHours());

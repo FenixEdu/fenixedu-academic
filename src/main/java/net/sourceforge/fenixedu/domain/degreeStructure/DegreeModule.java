@@ -59,7 +59,7 @@ abstract public class DegreeModule extends DegreeModule_Base {
 
     public static class ComparatorByMinEcts implements Comparator<DegreeModule> {
 
-        private ExecutionSemester executionSemester;
+        private final ExecutionSemester executionSemester;
 
         public ComparatorByMinEcts(final ExecutionSemester executionSemester) {
             this.executionSemester = executionSemester;
@@ -123,6 +123,38 @@ abstract public class DegreeModule extends DegreeModule_Base {
 
     public String getOneFullName() {
         return getOneFullName(null);
+    }
+
+    public String getOneFullNameI18N(final Language language) {
+        return getOneFullNameI18N(null, language);
+    }
+
+    public String getOneFullNameI18N(final ExecutionSemester executionSemester, Language language) {
+        final StringBuilder result = new StringBuilder();
+        getOneFullNameI18N(result, executionSemester, language);
+        return result.toString();
+    }
+
+    protected void getOneFullNameI18N(final StringBuilder result, final ExecutionSemester executionSemester,
+            final Language language) {
+        final String selfName = getNameI18N(executionSemester).getContent(language);
+
+        if (isRoot()) {
+            result.append(selfName);
+        } else {
+            List<Context> parentContextsByExecutionPeriod = getParentContextsByExecutionSemester(executionSemester);
+            if (parentContextsByExecutionPeriod.isEmpty()) {
+                // if not existing, just return all (as previous implementation
+                // of method
+                parentContextsByExecutionPeriod = getParentContexts();
+            }
+
+            final CourseGroup parentCourseGroup = parentContextsByExecutionPeriod.get(0).getParentCourseGroup();
+
+            parentCourseGroup.getOneFullNameI18N(result, executionSemester, language);
+            result.append(FULL_NAME_SEPARATOR);
+            result.append(selfName);
+        }
     }
 
     public MultiLanguageString getNameI18N(final ExecutionSemester executionSemester) {

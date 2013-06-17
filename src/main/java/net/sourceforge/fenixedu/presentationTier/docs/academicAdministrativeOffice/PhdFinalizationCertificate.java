@@ -102,7 +102,6 @@ public class PhdFinalizationCertificate extends AdministrativeOfficeDocument {
         Unit adminOfficeUnit = getAdministrativeOffice().getUnit();
         Person coordinator = adminOfficeUnit.getActiveUnitCoordinator();
 
-        String institutionName = getMLSTextContent(RootDomainObject.getInstance().getInstitutionUnit().getPartyName());
         String coordinatorTitle;
         if (coordinator.isMale()) {
             coordinatorTitle = getResourceBundle().getString("label.academicDocument.declaration.maleCoordinator");
@@ -113,13 +112,13 @@ public class PhdFinalizationCertificate extends AdministrativeOfficeDocument {
         fillFirstParagraph(coordinator, adminOfficeUnit, coordinatorTitle);
 
         addPersonalInfo();
-        setFooter(getDocumentRequest(), true);
+        setFooter(getDocumentRequest());
         addProgrammeInfo();
-        setEmployeeFields(institutionName, adminOfficeUnit);
+        fillEmployeeFields();
 
     }
 
-    private void setFooter(PhdFinalizationCertificateRequest documentRequest, boolean checked) {
+    private void setFooter(PhdFinalizationCertificateRequest documentRequest) {
 
         PhdIndividualProgramProcess phdIndividualProgramProcess = getDocumentRequest().getPhdIndividualProgramProcess();
         String student;
