@@ -148,7 +148,7 @@
 		<bean:message key="label.teacher.dissertations"/>
 	</li>
 	<li>
-		<html:link page="/phdIndividualProgramProcess.do?method=manageProcesses">
+		<html:link page="/dissertationManagement.do?method=listDissertations">
 		<bean:message key="label.teacher.dissertations.view"/></html:link>
 	</li>
 </ul>
