@@ -9,6 +9,8 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.serviceRequests.documentRequests.PhdRegistryDiplomaRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.IRegistryDiplomaRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class PhdRegistryDiploma extends RegistryDiploma {
 
@@ -54,8 +56,13 @@ public class PhdRegistryDiploma extends RegistryDiploma {
 
     @Override
     protected void setHeader() {
-        addParameter("thesisTitle", getDocumentRequest().getPhdIndividualProgramProcess().getThesisTitle());
+        addParameter("thesisTitle", getThesisTitleI18N().getContent(getLanguage()));
         super.setHeader();
+    }
+
+    private MultiLanguageString getThesisTitleI18N() {
+        return new MultiLanguageString(Language.pt, getDocumentRequest().getPhdIndividualProgramProcess().getThesisTitle()).with(
+                Language.en, getDocumentRequest().getPhdIndividualProgramProcess().getThesisTitleEn());
     }
 
     @Override
