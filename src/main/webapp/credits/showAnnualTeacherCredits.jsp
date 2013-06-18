@@ -118,6 +118,8 @@ $(document).ready(function() {
 				<table class="tstyle4 mbottom05 mbottom05">
 				<tr>
 						<th rowspan="2"><bean:message key="label.course" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
+						<th rowspan="2"><bean:message key="label.effortRate" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
+						<th rowspan="2"><bean:message key="label.unitCredit" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
 						<th rowspan="2"><bean:message key="label.shift" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
 						<th rowspan="2"><bean:message key="label.shift.type" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
 						<th colspan="4"><bean:message key="label.lessons" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
@@ -150,6 +152,8 @@ $(document).ready(function() {
 								<bean:write name="professorship" property="executionCourse.name"/> (<bean:write name="professorship" property="degreeSiglas"/>)
 							</logic:notEqual>									
 						</td>
+						<td rowspan="<%= java.lang.Math.max(((Integer)totalNumberOfLessons).intValue(),1)%>"><bean:write name="professorship" property="executionCourse.effortRate"/></td>
+						<td rowspan="<%= java.lang.Math.max(((Integer)totalNumberOfLessons).intValue(),1)%>"><bean:write name="professorship" property="executionCourse.unitCreditValue"/></td>
 						<logic:equal name="numberOfShifts" value="0">
 							<td colspan="10"/>
 						</logic:equal>
