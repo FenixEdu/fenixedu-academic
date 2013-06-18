@@ -483,7 +483,7 @@ public class AdministrativeOfficeDocument extends FenixReport {
         return result.toString();
     }
 
-    protected void setFooter(DocumentRequest documentRequest, Boolean checked) {
+    protected void setFooter(DocumentRequest documentRequest) {
         Registration registration = documentRequest.getRegistration();
         String student;
 
@@ -498,16 +498,16 @@ public class AdministrativeOfficeDocument extends FenixReport {
 
         stringTemplate = getResourceBundle().getString("label.academicDocument.declaration.footer.documentNumber");
         addParameter("documentNumber", MessageFormat.format(stringTemplate, documentRequest.getServiceRequestNumberYear()));
-        if (checked) {
-            addParameter("checked", getResourceBundle().getString("label.academicDocument.irs.declaration.checked"));
-        }
+        addParameter("checked", getResourceBundle().getString("label.academicDocument.irs.declaration.checked"));
         addParameter("page", getResourceBundle().getString("label.academicDocument.declaration.footer.page"));
         addParameter("pageOf", getResourceBundle().getString("label.academicDocument.declaration.footer.pageOf"));
     }
 
-    protected void setEmployeeFields(String institutionName, Unit adminOfficeUnit) {
+    protected void fillEmployeeFields() {
+        final Unit adminOfficeUnit = getAdministrativeOffice().getUnit();
+        final String institutionName = getMLSTextContent(RootDomainObject.getInstance().getInstitutionUnit().getPartyName());
+        final Person coordinator = adminOfficeUnit.getActiveUnitCoordinator();
 
-        Person coordinator = adminOfficeUnit.getActiveUnitCoordinator();
         String coordinatorTitle;
         if (coordinator.isMale()) {
             coordinatorTitle = getResourceBundle().getString("label.academicDocument.declaration.maleCoordinator");
@@ -518,7 +518,11 @@ public class AdministrativeOfficeDocument extends FenixReport {
         addParameter("signer",
                 MessageFormat.format(stringTemplate, coordinatorTitle, getMLSTextContent(adminOfficeUnit.getPartyName())));
 
-        addParameter("administrativeOfficeCoordinator", adminOfficeUnit.getActiveUnitCoordinator());
+        String departmentAndInstitute = getResourceBundle().getString("label.academicDocument.declaration.signer");
+        addParameter("departmentAndInstitute",
+                MessageFormat.format(departmentAndInstitute, getMLSTextContent(adminOfficeUnit.getPartyName()), institutionName));
+
+        addParameter("administrativeOfficeCoordinator", coordinator);
         String location = adminOfficeUnit.getCampus().getLocation();
         String dateDD = new LocalDate().toString("dd", getLocale());
         String dateMMMM = new LocalDate().toString("MMMM", getLocale());
@@ -526,6 +530,6 @@ public class AdministrativeOfficeDocument extends FenixReport {
         stringTemplate = getResourceBundle().getString("label.academicDocument.declaration.signerLocation");
         addParameter("signerLocation",
                 MessageFormat.format(stringTemplate, institutionName, location, dateDD, dateMMMM, dateYYYY));
-
     }
+
 }

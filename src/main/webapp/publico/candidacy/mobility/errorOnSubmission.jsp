@@ -30,7 +30,7 @@
 
 <h1><bean:write name="application.name" bundle="CANDIDATE_RESOURCES"/></h1>
 
-<bean:message key="error.mobility.submission.text" bundle="CANDIDATE_RESOURCES"/>
+<p><span class="error0"><bean:message key="error.mobility.submission.text" bundle="CANDIDATE_RESOURCES"/></span> </p>
 
 <div class="mtop15" id="contacts">
 	<bean:message key="erasmus.contacts.text" bundle="CANDIDATE_RESOURCES" />

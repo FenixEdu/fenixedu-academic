@@ -5,7 +5,6 @@ import java.text.MessageFormat;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
@@ -30,7 +29,7 @@ public class IRSDeclaration extends AdministrativeOfficeDocument {
         final Registration registration = getDocumentRequest().getRegistration();
         final Person person = registration.getPerson();
         final Integer civilYear = ((IRSDeclarationRequest) getDocumentRequest()).getYear();
-        final Unit adminOfficeUnit = getAdministrativeOffice().getUnit();
+
         addParameter("registration", registration);
         addParameter("documentTitle", getResourceBundle().getString("label.academicDocument.title.declaration"));
         String institutionName = getMLSTextContent(RootDomainObject.getInstance().getInstitutionUnit().getPartyName());
@@ -56,8 +55,8 @@ public class IRSDeclaration extends AdministrativeOfficeDocument {
         addParameter("civilYear", civilYear.toString());
 
         setAmounts(person, civilYear);
-        setFooter(getDocumentRequest(), true);
-        setEmployeeFields(institutionName, adminOfficeUnit);
+        setFooter(getDocumentRequest());
+        fillEmployeeFields();
     }
 
     final private void setPersonFields(final Registration registration, final Person person) {

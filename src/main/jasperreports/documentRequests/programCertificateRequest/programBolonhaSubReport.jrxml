@@ -8,6 +8,17 @@
 	<parameter name="SUBREPORT_DIR" class="java.lang.String">
 		<defaultValueExpression><![CDATA["./"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="enrolment" class="java.lang.String"/>
+	<parameter name="degreeLabel" class="java.lang.String"/>
+	<parameter name="degreeCurricularPlanLabel" class="java.lang.String"/>
+	<parameter name="weightLabel" class="java.lang.String"/>
+	<parameter name="contexts" class="java.lang.String"/>
+	<parameter name="prerequisites" class="java.lang.String"/>
+	<parameter name="objectives" class="java.lang.String"/>
+	<parameter name="program" class="java.lang.String"/>
+	<parameter name="evaluationMethod" class="java.lang.String"/>
+	<parameter name="bibliography" class="java.lang.String"/>
+	<parameter name="averageGrade" class="java.lang.String"/>
 	<field name="curricularCourse" class="java.lang.String"/>
 	<field name="degree" class="java.lang.String"/>
 	<field name="degreeCurricularPlan" class="java.lang.String"/>
@@ -43,7 +54,7 @@
 				<textElement markup="styled">
 					<font size="14" pdfFontName="Times-Roman"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["<style pdfFontName=\"Times-Bold\">Disciplina: </style>" + $F{curricularCourse}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["<style pdfFontName=\"Times-Bold\">" + $P{enrolment} + ": </style>" + $F{curricularCourse}]]></textFieldExpression>
 			</textField>
 			<break>
 				<reportElement key="element-1" x="0" y="4" width="595" height="1"/>
@@ -59,7 +70,7 @@
 				<textElement markup="styled">
 					<font size="14" pdfFontName="Times-Roman"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["<style pdfFontName=\"Times-Bold\">Curso: </style>" + $F{degree}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["<style pdfFontName=\"Times-Bold\">" + $P{degreeLabel} + ": </style>" + $F{degree}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
 				<reportElement key="textField-3" positionType="Float" x="67" y="63" width="519" height="20"/>
@@ -72,7 +83,7 @@
 				<textElement markup="styled">
 					<font size="14" pdfFontName="Times-Roman"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["<style pdfFontName=\"Times-Bold\">Plano Curricular: </style>" + $F{degreeCurricularPlan}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["<style pdfFontName=\"Times-Bold\">" + $P{degreeCurricularPlanLabel} + ": </style>" + $F{degreeCurricularPlan}]]></textFieldExpression>
 			</textField>
 			<elementGroup>
 				<textField isBlankWhenNull="false">
@@ -86,7 +97,7 @@
 					<textElement markup="styled">
 						<font size="14" pdfFontName="Times-Roman"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA["<style pdfFontName=\"Times-Bold\">Contextos </style>"]]></textFieldExpression>
+					<textFieldExpression class="java.lang.String"><![CDATA["<style pdfFontName=\"Times-Bold\">" + $P{contexts} + "</style>"]]></textFieldExpression>
 				</textField>
 			</elementGroup>
 			<elementGroup>
@@ -101,7 +112,7 @@
 					<textElement markup="styled">
 						<font size="14" pdfFontName="Times-Roman"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA["<style pdfFontName=\"Times-Bold\">Peso </style>"]]></textFieldExpression>
+					<textFieldExpression class="java.lang.String"><![CDATA["<style pdfFontName=\"Times-Bold\">" + $P{weightLabel} + "</style>"]]></textFieldExpression>
 				</textField>
 			</elementGroup>
 			<elementGroup>
@@ -118,7 +129,7 @@
 					<textElement markup="styled">
 						<font size="14" pdfFontName="Times-Roman"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA["<style pdfFontName=\"Times-Bold\">Objectivos </style>"]]></textFieldExpression>
+					<textFieldExpression class="java.lang.String"><![CDATA["<style pdfFontName=\"Times-Bold\">" + $P{objectives} + "</style>"]]></textFieldExpression>
 				</textField>
 			</elementGroup>
 			<elementGroup>
@@ -135,7 +146,7 @@
 					<textElement markup="styled">
 						<font size="14" pdfFontName="Times-Roman"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA["<style pdfFontName=\"Times-Bold\">Programa </style>"]]></textFieldExpression>
+					<textFieldExpression class="java.lang.String"><![CDATA["<style pdfFontName=\"Times-Bold\">" + $P{program} + "</style>"]]></textFieldExpression>
 				</textField>
 			</elementGroup>
 			<elementGroup>
@@ -152,7 +163,7 @@
 					<textElement markup="styled">
 						<font size="14" pdfFontName="Times-Roman"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA["<style pdfFontName=\"Times-Bold\">Metodologia de Avaliação </style>"]]></textFieldExpression>
+					<textFieldExpression class="java.lang.String"><![CDATA["<style pdfFontName=\"Times-Bold\">" + $P{evaluationMethod} + "</style>"]]></textFieldExpression>
 				</textField>
 			</elementGroup>
 			<elementGroup>
@@ -167,7 +178,7 @@
 					<textElement textAlignment="Justified">
 						<font pdfFontName="Times-Roman"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{weigth} + " (para cálculo da média)"]]></textFieldExpression>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{weigth} + $P{averageGrade}]]></textFieldExpression>
 				</textField>
 			</elementGroup>
 			<elementGroup>
@@ -235,7 +246,7 @@
 					<textElement markup="styled">
 						<font size="14" pdfFontName="Times-Roman"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA["<style pdfFontName=\"Times-Bold\">Pré-requisitos </style>"]]></textFieldExpression>
+					<textFieldExpression class="java.lang.String"><![CDATA["<style pdfFontName=\"Times-Bold\">" + $P{prerequisites} + "</style>"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false">
 					<reportElement key="textField-14" positionType="Float" x="67" y="273" width="519" height="38" isRemoveLineWhenBlank="true">
@@ -267,7 +278,7 @@
 					<textElement markup="styled">
 						<font size="14" pdfFontName="Times-Roman"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA["<style pdfFontName=\"Times-Bold\">Bibliografia </style>"]]></textFieldExpression>
+					<textFieldExpression class="java.lang.String"><![CDATA["<style pdfFontName=\"Times-Bold\">" + $P{bibliography} + "</style>"]]></textFieldExpression>
 				</textField>
 			</elementGroup>
 			<elementGroup>

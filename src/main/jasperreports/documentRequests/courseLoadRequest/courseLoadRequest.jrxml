@@ -11,20 +11,35 @@
 			<style isDefault="false" style="InvalidCourseLoad" forecolor="#E53F3F" isStrikeThrough="true"/>
 		</conditionalStyle>
 	</style>
-	<parameter name="administrativeOfficeName" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="institutionName" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="name" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="degreeDescription" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="day" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="studentNumber" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="administrativeOfficeCoordinatorName" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="universityName" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="administrativeOfficeCoordinator" class="net.sourceforge.fenixedu.domain.Person"/>
 	<parameter name="bolonhaList" class="java.util.ArrayList" isForPrompting="false"/>
 	<parameter name="preBolonhaList" class="java.util.ArrayList" isForPrompting="false"/>
 	<parameter name="dissertationsList" class="java.util.List" isForPrompting="false"/>
-	<parameter name="coordinatorSignature" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="adminOfficeIntroMessage" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="coordinatorWithoutArticle" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="certification" class="java.lang.String"/>
+	<parameter name="signer" class="java.lang.String"/>
+	<parameter name="page" class="java.lang.String"/>
+	<parameter name="pageOf" class="java.lang.String"/>
+	<parameter name="departmentAndInstitute" class="java.lang.String"/>
+	<parameter name="signerLocation" class="java.lang.String"/>
+	<parameter name="firstPart" class="java.lang.String"/>
+	<parameter name="secondPart" class="java.lang.String"/>
+	<parameter name="thirdPart" class="java.lang.String"/>
+	<parameter name="fourthPart" class="java.lang.String"/>
+	<parameter name="fifthPart" class="java.lang.String"/>
+	<parameter name="sixthPart" class="java.lang.String"/>
+	<parameter name="seventhPart" class="java.lang.String"/>
+	<parameter name="enrolment" class="java.lang.String"/>
+	<parameter name="year" class="java.lang.String"/>
+	<parameter name="autonomousWork" class="java.lang.String"/>
+	<parameter name="courseLoad" class="java.lang.String"/>
+	<parameter name="total" class="java.lang.String"/>
+	<parameter name="tTotal" class="java.lang.String"/>
+	<parameter name="lectures" class="java.lang.String"/>
+	<parameter name="practices" class="java.lang.String"/>
+	<parameter name="lecturesPractice" class="java.lang.String"/>
+	<parameter name="laboratory" class="java.lang.String"/>
+	<parameter name="certificationMessage" class="java.lang.String"/>
+	<parameter name="dissertations" class="java.lang.String"/>
 	<group name="endLine">
 		<groupExpression><![CDATA[]]></groupExpression>
 		<groupHeader>
@@ -42,23 +57,17 @@
 		<groupFooter>
 			<band height="248" splitType="Stretch">
 				<line>
-					<reportElement key="line-1" x="131" y="210" width="314" height="1"/>
+					<reportElement key="line-1" x="131" y="210" width="335" height="1"/>
 				</line>
-				<staticText>
-					<reportElement key="staticText-25" x="59" y="76" width="469" height="32"/>
-					<box>
-						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="0.0" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Justified">
+				<textField>
+					<reportElement key="staticText-25" x="64" y="65" width="469" height="48"/>
+					<textElement textAlignment="Justified" markup="none">
 						<font size="11" pdfFontName="Times-Roman"/>
 					</textElement>
-					<text><![CDATA[Por ser verdade e me haver sido pedido mandei passar o presente certificado que vou assinar e autenticar com o selo branco em uso nesta Secretaria.]]></text>
-				</staticText>
+					<textFieldExpression class="java.lang.String"><![CDATA[$P{certificationMessage}]]></textFieldExpression>
+				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-					<reportElement key="textField-27" x="59" y="130" width="469" height="18"/>
+					<reportElement key="textField-27" x="64" y="130" width="469" height="18"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -68,7 +77,7 @@
 					<textElement textAlignment="Justified" verticalAlignment="Top" lineSpacing="Single" markup="styled">
 						<font size="11" isBold="false" isItalic="false" pdfFontName="Times-Roman"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA[$P{day}]]></textFieldExpression>
+					<textFieldExpression class="java.lang.String"><![CDATA[$P{signerLocation}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="false">
 					<reportElement key="textField-28" x="59" y="222" width="469" height="14"/>
@@ -81,10 +90,10 @@
 					<textElement textAlignment="Center">
 						<font size="11" pdfFontName="Times-Roman"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA[$P{administrativeOfficeCoordinatorName}]]></textFieldExpression>
+					<textFieldExpression class="java.lang.String"><![CDATA[$P{administrativeOfficeCoordinator}.getName()]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="false">
-					<reportElement key="textField-29" x="59" y="113" width="469" height="17"/>
+					<reportElement key="textField-29" x="64" y="113" width="469" height="17"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -94,10 +103,10 @@
 					<textElement textAlignment="Justified">
 						<font size="11" pdfFontName="Times-Roman"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA[$P{administrativeOfficeName} + " do " +$P{institutionName}]]></textFieldExpression>
+					<textFieldExpression class="java.lang.String"><![CDATA[$P{departmentAndInstitute}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="false">
-					<reportElement key="textField-32" x="179" y="167" width="239" height="17"/>
+					<reportElement key="textField-32" x="64" y="167" width="469" height="17"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -107,44 +116,44 @@
 					<textElement textAlignment="Center">
 						<font size="11" pdfFontName="Times-Roman"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA[$P{coordinatorSignature}]]></textFieldExpression>
+					<textFieldExpression class="java.lang.String"><![CDATA[$P{signer}]]></textFieldExpression>
 				</textField>
-				<staticText>
+				<textField>
 					<reportElement key="staticText-28" x="59" y="4" width="108" height="11">
 						<printWhenExpression><![CDATA[!$P{preBolonhaList}.isEmpty()]]></printWhenExpression>
 					</reportElement>
-					<textElement>
+					<textElement markup="none">
 						<font size="8" isBold="true"/>
 					</textElement>
-					<text><![CDATA[T - Teóricas]]></text>
-				</staticText>
-				<staticText>
+					<textFieldExpression class="java.lang.String"><![CDATA[$P{lectures}]]></textFieldExpression>
+				</textField>
+				<textField>
 					<reportElement key="staticText-29" x="59" y="16" width="108" height="11">
 						<printWhenExpression><![CDATA[!$P{preBolonhaList}.isEmpty()]]></printWhenExpression>
 					</reportElement>
-					<textElement>
+					<textElement markup="none">
 						<font size="8" isBold="true"/>
 					</textElement>
-					<text><![CDATA[P - Práticas]]></text>
-				</staticText>
-				<staticText>
+					<textFieldExpression class="java.lang.String"><![CDATA[$P{practices}]]></textFieldExpression>
+				</textField>
+				<textField>
 					<reportElement key="staticText-30" x="59" y="28" width="108" height="11">
 						<printWhenExpression><![CDATA[!$P{preBolonhaList}.isEmpty()]]></printWhenExpression>
 					</reportElement>
-					<textElement>
+					<textElement markup="none">
 						<font size="8" isBold="true"/>
 					</textElement>
-					<text><![CDATA[TP - Teórico-Práticas]]></text>
-				</staticText>
-				<staticText>
+					<textFieldExpression class="java.lang.String"><![CDATA[$P{lecturesPractice}]]></textFieldExpression>
+				</textField>
+				<textField>
 					<reportElement key="staticText-31" x="59" y="40" width="108" height="11">
 						<printWhenExpression><![CDATA[!$P{preBolonhaList}.isEmpty()]]></printWhenExpression>
 					</reportElement>
-					<textElement>
+					<textElement markup="none">
 						<font size="8" isBold="true"/>
 					</textElement>
-					<text><![CDATA[L - Laboratoriais]]></text>
-				</staticText>
+					<textFieldExpression class="java.lang.String"><![CDATA[$P{laboratory}]]></textFieldExpression>
+				</textField>
 			</band>
 		</groupFooter>
 	</group>
@@ -153,19 +162,13 @@
 	</background>
 	<title>
 		<band height="331" splitType="Stretch">
-			<staticText>
+			<textField>
 				<reportElement key="staticText-15" x="219" y="129" width="157" height="25"/>
-				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center">
+				<textElement textAlignment="Center" markup="none">
 					<font size="16" isBold="true" pdfFontName="Times-Bold"/>
 				</textElement>
-				<text><![CDATA[CERTIFICADO]]></text>
-			</staticText>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{certification}]]></textFieldExpression>
+			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
 				<reportElement key="textField-16" x="64" y="200" width="469" height="131"/>
 				<box>
@@ -177,7 +180,7 @@
 				<textElement textAlignment="Justified" lineSpacing="1_1_2" markup="styled">
 					<font size="11" isBold="false" isItalic="false" pdfFontName="Times-Roman"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{administrativeOfficeCoordinatorName} + ", " + $P{coordinatorWithoutArticle} + " DO " + $P{institutionName}.toUpperCase() + ", " + $P{universityName}.toUpperCase() + ", certifica que no processo individual do aluno <style pdfFontName=\"Times-Bold\"> " + $P{name} + "</style>, com o número <style pdfFontName=\"Times-Bold\">" + $P{studentNumber} + "</style>, do <style pdfFontName=\"Times-Bold\">" + $P{degreeDescription} + "</style>, consta a seguinte carga horária semanal (em horas):"]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{firstPart} + "<style pdfFontName=\"Times-Bold\">" + $P{secondPart} + ", </style>" + $P{thirdPart} + " <style pdfFontName=\"Times-Bold\">" + $P{fourthPart} + ", </style>" + $P{fifthPart} + " <style pdfFontName=\"Times-Bold\">" + $P{sixthPart} + " </style>" + $P{seventhPart}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
@@ -193,11 +196,35 @@
 		<band height="83" splitType="Stretch">
 			<subreport isUsingCache="true">
 				<reportElement key="subreport-1" isPrintRepeatedValues="false" x="0" y="1" width="595" height="25"/>
+				<subreportParameter name="autonomousWork">
+					<subreportParameterExpression><![CDATA[$P{autonomousWork}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="tTotal">
+					<subreportParameterExpression><![CDATA[$P{tTotal}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="enrolment">
+					<subreportParameterExpression><![CDATA[$P{enrolment}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="courseLoad">
+					<subreportParameterExpression><![CDATA[$P{courseLoad}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="year">
+					<subreportParameterExpression><![CDATA[$P{year}]]></subreportParameterExpression>
+				</subreportParameter>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource((Collection) $P{bolonhaList})]]></dataSourceExpression>
 				<subreportExpression class="java.lang.String"><![CDATA["reports/documentRequests/courseLoadRequest/courseLoadBolonhaRequest.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport isUsingCache="true">
 				<reportElement key="subreport-2" positionType="Float" isPrintRepeatedValues="false" x="0" y="29" width="595" height="25"/>
+				<subreportParameter name="total">
+					<subreportParameterExpression><![CDATA[$P{total}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="enrolment">
+					<subreportParameterExpression><![CDATA[$P{enrolment}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="year">
+					<subreportParameterExpression><![CDATA[$P{year}]]></subreportParameterExpression>
+				</subreportParameter>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource((Collection) $P{preBolonhaList})]]></dataSourceExpression>
 				<subreportExpression class="java.lang.String"><![CDATA["reports/documentRequests/courseLoadRequest/courseLoadPreBolonhaRequest.jasper"]]></subreportExpression>
 			</subreport>
@@ -205,6 +232,9 @@
 				<reportElement key="subreport-3" positionType="Float" isPrintRepeatedValues="false" x="0" y="57" width="595" height="25">
 					<printWhenExpression><![CDATA[!$P{dissertationsList}.isEmpty()]]></printWhenExpression>
 				</reportElement>
+				<subreportParameter name="dissertations">
+					<subreportParameterExpression><![CDATA[$P{dissertations}]]></subreportParameterExpression>
+				</subreportParameter>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource((Collection) $P{dissertationsList})]]></dataSourceExpression>
 				<subreportExpression class="java.lang.String"><![CDATA["reports/documentRequests/courseLoadRequest/courseLoadDissertationsList.jasper"]]></subreportExpression>
 			</subreport>
@@ -215,32 +245,20 @@
 	</columnFooter>
 	<pageFooter>
 		<band height="13" splitType="Stretch">
-			<staticText>
+			<textField>
 				<reportElement key="staticText-18" positionType="Float" x="450" y="0" width="25" height="12"/>
-				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font size="8" isItalic="true" pdfFontName="Courier-Oblique"/>
 				</textElement>
-				<text><![CDATA[Pág.]]></text>
-			</staticText>
-			<staticText>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{page}]]></textFieldExpression>
+			</textField>
+			<textField>
 				<reportElement key="staticText-19" positionType="Float" x="488" y="0" width="14" height="12"/>
-				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font size="8" isItalic="true" pdfFontName="Courier-Oblique"/>
 				</textElement>
-				<text><![CDATA[de]]></text>
-			</staticText>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{pageOf}]]></textFieldExpression>
+			</textField>
 			<textField isBlankWhenNull="false">
 				<reportElement key="textField-23" positionType="Float" x="475" y="0" width="13" height="12"/>
 				<box>
@@ -271,32 +289,20 @@
 	</pageFooter>
 	<lastPageFooter>
 		<band height="14" splitType="Stretch">
-			<staticText>
+			<textField>
 				<reportElement key="staticText-26" positionType="Float" x="450" y="1" width="25" height="12"/>
-				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font size="8" isItalic="true" pdfFontName="Courier-Oblique"/>
 				</textElement>
-				<text><![CDATA[Pág.]]></text>
-			</staticText>
-			<staticText>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{page}]]></textFieldExpression>
+			</textField>
+			<textField>
 				<reportElement key="staticText-27" positionType="Float" x="488" y="1" width="14" height="12"/>
-				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font size="8" isItalic="true" pdfFontName="Courier-Oblique"/>
 				</textElement>
-				<text><![CDATA[de]]></text>
-			</staticText>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{pageOf}]]></textFieldExpression>
+			</textField>
 			<textField isBlankWhenNull="false">
 				<reportElement key="textField-30" positionType="Float" x="475" y="1" width="13" height="12"/>
 				<box>

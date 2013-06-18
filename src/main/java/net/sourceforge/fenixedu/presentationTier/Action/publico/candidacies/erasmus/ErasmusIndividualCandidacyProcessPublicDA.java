@@ -1007,7 +1007,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 
     //return string to append from a value String
     private String reportAppenderAuxString(String field, String value) {
-        return field + ": " + fillEmptyString(value) + "\n";
+        return field + "........: " + fillEmptyString(value) + "\n";
     }
 
     //return string to append from a value Object that can be turned to a simple String with toString
@@ -1016,7 +1016,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
         if (obj != null) {
             value = obj.toString();
         }
-        return field + ": " + fillEmptyString(value) + "\n";
+        return reportAppenderAuxString(field, value);
     }
 
     //return string to append from a value Enum that implements getLocalizedName
@@ -1025,12 +1025,12 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
         if (obj != null) {
             value = obj.getLocalizedName();
         }
-        return field + ": " + fillEmptyString(value) + "\n";
+        return reportAppenderAuxString(field, value);
     }
 
     //return string to append from a value date (which can be a YearMonthDay or LocalDate)
     private String reportAppenderAuxDate(String field, Object obj) {
-        String DATE_FORMAT_STRING = "dd/MM/yyyy";
+        final String DATE_FORMAT_STRING = "dd/MM/yyyy";
         String value = null;
         if (obj != null) {
             if (obj instanceof YearMonthDay) {
@@ -1039,16 +1039,16 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
                 value = ((LocalDate) obj).toString(DATE_FORMAT_STRING);
             }
         }
-        return field + ": " + fillEmptyString(value) + "\n";
+        return reportAppenderAuxString(field, value);
     }
 
     //return string to append from a value Country (uses simple name)
     private String reportAppenderAuxCountry(String field, Country obj) {
         String value = null;
         if (obj != null) {
-            value = obj.getName();
+            value = obj.getLocalizedName().getContent();
         }
-        return field + ": " + fillEmptyString(value) + "\n";
+        return reportAppenderAuxString(field, value);
     }
 
     //return string to append from a value MobilityProgram (uses MultiLanguageString)
@@ -1057,42 +1057,38 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
         if (obj != null) {
             value = obj.getName().getContent();
         }
-        return field + ": " + fillEmptyString(value) + "\n";
+        return reportAppenderAuxString(field, value);
     }
 
-    //return string to append from a value UniversityUnit (uses a presentation name)
-    // TODO: merge with reportAppenderAuxDegree (uses presentationName)
-    private String reportAppenderAuxUniv(String field, UniversityUnit obj) {
+    //return string to append from a value Object that uses a presentation name string (UniversityUnit or Degree)
+    private String reportAppenderAuxUnivUnitDegree(String field, Object obj) {
         String value = null;
         if (obj != null) {
-            value = obj.getPresentationName();
+            if (obj instanceof UniversityUnit) {
+                value = ((UniversityUnit) obj).getPresentationName();
+            } else if (obj instanceof Degree) {
+                value = ((Degree) obj).getPresentationName();
+            }
         }
-        return field + ": " + fillEmptyString(value) + "\n";
+        return reportAppenderAuxString(field, value);
     }
 
-    //return string to append from a value Degree (uses a presentation name)
-    // TODO: merge with reportAppenderAuxUniv (uses presentationName)
-    private String reportAppenderAuxDegree(String field, Degree obj) {
-        String value = null;
-        if (obj != null) {
-            value = obj.getPresentationName();
-        }
-        return field + ": " + fillEmptyString(value) + "\n";
-    }
-
-    //return string to append from a value List of Courses (uses a presentation name)
+    //return string to append from a value List of Courses (I18N multilanguage string)
     private String reportAppenderAuxCourses(String field, List<CurricularCourse> obj) {
         StringBuilder value = new StringBuilder();
         if (obj != null && !obj.isEmpty()) {
             for (CurricularCourse curricularCourse : obj) {
+                value.append("[");
+                value.append(curricularCourse.getDegree().getSigla());
+                value.append("] ");
                 value.append(curricularCourse.getNameI18N().getContent());
-                value.append(", ");
+                value.append("; ");
             }
             if (value.length() > 0) {
                 value.setLength(value.length() - 2);
             }
         }
-        return field + ": " + fillEmptyString(value.toString()) + "\n";
+        return reportAppenderAuxString(field, value.toString());
     }
 
     private void sendSubmissionErrorReportMail(IndividualCandidacyProcessBean individualCandidacyProcessBean,
@@ -1106,55 +1102,56 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
         sb.append(BundleUtil.getStringFromResourceBundle("resources.CandidateResources", "error.mobility.report.mail.intro"));
         sb.append("\n");
         sb.append("\nError message: ");
-        sb.append(BundleUtil.getStringFromResourceBundle("resources.CandidateResources", exception.getKey(), exception.getArgs()));
+        sb.append(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", exception.getKey(),
+                exception.getArgs()));
         sb.append("\n");
 
         // Data input from candidate
         PersonBean personBean = mobilityBean.getPersonBean();
         sb.append("\nPersonal data entered:\n");
-        sb.append(reportAppenderAuxString("Name.................", personBean.getName()));
-        sb.append(reportAppenderAuxEnum("Gender...............", personBean.getGender()));
-        sb.append(reportAppenderAuxDate("Date of Birth........", personBean.getDateOfBirth()));
-        sb.append(reportAppenderAuxString("Documentation Number.", personBean.getDocumentIdNumber()));
-        sb.append(reportAppenderAuxCountry("Nationality..........", personBean.getNationality()));
-        sb.append(reportAppenderAuxString("Address..............", personBean.getAddress()));
-        sb.append(reportAppenderAuxString("Area Code............", personBean.getAreaCode()));
-        sb.append(reportAppenderAuxString("Area.................", personBean.getArea()));
-        sb.append(reportAppenderAuxCountry("Country of Residence.", personBean.getCountryOfResidence()));
-        sb.append(reportAppenderAuxString("Phone................", personBean.getPhone()));
-        sb.append(reportAppenderAuxString("Email................", personBean.getEmail()));
-        sb.append(reportAppenderAuxString("Email Confirmation...", personBean.getEmailConfirmation()));
-        sb.append(reportAppenderAuxString("IST Number...........", mobilityBean.getPersonNumber()));
+        sb.append(reportAppenderAuxString("Name", personBean.getName()));
+        sb.append(reportAppenderAuxEnum("Gender", personBean.getGender()));
+        sb.append(reportAppenderAuxDate("Date of Birth", personBean.getDateOfBirth()));
+        sb.append(reportAppenderAuxString("Documentation Number", personBean.getDocumentIdNumber()));
+        sb.append(reportAppenderAuxCountry("Nationality", personBean.getNationality()));
+        sb.append(reportAppenderAuxString("Address", personBean.getAddress()));
+        sb.append(reportAppenderAuxString("Zip-Code", personBean.getAreaCode()));
+        sb.append(reportAppenderAuxString("City.", personBean.getArea()));
+        sb.append(reportAppenderAuxCountry("Country of Residence", personBean.getCountryOfResidence()));
+        sb.append(reportAppenderAuxString("Phone", personBean.getPhone()));
+        sb.append(reportAppenderAuxString("Email", personBean.getEmail()));
+        sb.append(reportAppenderAuxString("Email Confirmation", personBean.getEmailConfirmation()));
+        sb.append(reportAppenderAuxString("IST Number", mobilityBean.getPersonNumber()));
 
         MobilityStudentDataBean mobilityStudentDataBean = mobilityBean.getMobilityStudentDataBean();
         sb.append("\nMobility Data Entered:\n");
-        sb.append(reportAppenderAuxCountry("Selected Country....", mobilityStudentDataBean.getSelectedCountry()));
-        sb.append(reportAppenderAuxUniv("Selected Univ.......", mobilityStudentDataBean.getSelectedUniversity()));
-        sb.append(reportAppenderAuxEnum("School Level........", mobilityStudentDataBean.getSchoolLevel()));
-        sb.append(reportAppenderAuxString("Other School Level..", mobilityStudentDataBean.getOtherSchoolLevel()));
-        sb.append(reportAppenderAuxString("Exchange Coord Name.",
+        sb.append(reportAppenderAuxCountry("Selected Country", mobilityStudentDataBean.getSelectedCountry()));
+        sb.append(reportAppenderAuxUnivUnitDegree("Selected Univ", mobilityStudentDataBean.getSelectedUniversity()));
+        sb.append(reportAppenderAuxEnum("School Level", mobilityStudentDataBean.getSchoolLevel()));
+        sb.append(reportAppenderAuxString("Other School Level", mobilityStudentDataBean.getOtherSchoolLevel()));
+        sb.append(reportAppenderAuxString("Exchange Coord Name",
                 mobilityStudentDataBean.getHomeInstitutionExchangeCoordinatorName()));
 
-        sb.append(reportAppenderAuxToStringable("Has Diploma/Degree..", mobilityStudentDataBean.getHasDiplomaOrDegree()));
-        sb.append(reportAppenderAuxString("Diploma Name........", mobilityStudentDataBean.getDiplomaName()));
-        sb.append(reportAppenderAuxToStringable("Diploma Year........", mobilityStudentDataBean.getDiplomaConclusionYear()));
-        sb.append(reportAppenderAuxToStringable("Experience Research.", mobilityStudentDataBean.getExperienceCarryingOutProject()));
+        sb.append(reportAppenderAuxToStringable("Has Diploma/Degree", mobilityStudentDataBean.getHasDiplomaOrDegree()));
+        sb.append(reportAppenderAuxString("Diploma Name", mobilityStudentDataBean.getDiplomaName()));
+        sb.append(reportAppenderAuxToStringable("Diploma Year", mobilityStudentDataBean.getDiplomaConclusionYear()));
+        sb.append(reportAppenderAuxToStringable("Experience Research", mobilityStudentDataBean.getExperienceCarryingOutProject()));
 
-        sb.append(reportAppenderAuxDate("Date of Arrival.....", mobilityStudentDataBean.getDateOfArrival()));
-        sb.append(reportAppenderAuxDate("Date of Departure...", mobilityStudentDataBean.getDateOfDeparture()));
-        sb.append(reportAppenderAuxToStringable("Types of Programme..", mobilityStudentDataBean.getTypeOfProgrammeList()));
+        sb.append(reportAppenderAuxDate("Date of Arrival", mobilityStudentDataBean.getDateOfArrival()));
+        sb.append(reportAppenderAuxDate("Date of Departure", mobilityStudentDataBean.getDateOfDeparture()));
+        sb.append(reportAppenderAuxToStringable("Types of Programme", mobilityStudentDataBean.getTypeOfProgrammeList()));
 
-        sb.append(reportAppenderAuxString("Thesis Main Subject.", mobilityStudentDataBean.getMainSubjectThesis()));
-        sb.append(reportAppenderAuxToStringable("Has contacted Staff.", mobilityStudentDataBean.getHasContactedOtherStaff()));
-        sb.append(reportAppenderAuxString("Staff Name..........", mobilityStudentDataBean.getNameOfContact()));
+        sb.append(reportAppenderAuxString("Thesis Main Subject", mobilityStudentDataBean.getMainSubjectThesis()));
+        sb.append(reportAppenderAuxToStringable("Has contacted Staff", mobilityStudentDataBean.getHasContactedOtherStaff()));
+        sb.append(reportAppenderAuxString("Staff Name", mobilityStudentDataBean.getNameOfContact()));
 
-        sb.append(reportAppenderAuxEnum("Applying for period.", mobilityStudentDataBean.getApplyFor()));
-        sb.append(reportAppenderAuxString("Observations........", individualCandidacyProcessBean.getObservations()));
+        sb.append(reportAppenderAuxEnum("Applying for period", mobilityStudentDataBean.getApplyFor()));
+        sb.append(reportAppenderAuxString("Observations", individualCandidacyProcessBean.getObservations()));
 
         sb.append("\nMobility Program, Degree and Courses:\n");
-        sb.append(reportAppenderAuxProgram("Selected Program.", mobilityStudentDataBean.getSelectedMobilityProgram()));
-        sb.append(reportAppenderAuxDegree("Chosen Degree....", mobilityBean.getDegree()));
-        sb.append(reportAppenderAuxCourses("Chosen Courses...", mobilityBean.getSortedSelectedCurricularCourses()));
+        sb.append(reportAppenderAuxProgram("Selected Program", mobilityStudentDataBean.getSelectedMobilityProgram()));
+        sb.append(reportAppenderAuxUnivUnitDegree("Chosen Degree", mobilityBean.getDegree()));
+        sb.append(reportAppenderAuxCourses("Chosen Courses", mobilityBean.getSortedSelectedCurricularCourses()));
 
         // Exception details
         sb.append("\n");
@@ -1170,9 +1167,9 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
                 sb.append(" " + arg + ",");
             }
         }
-        sb.deleteCharAt(sb.length() - 1);
+        sb.deleteCharAt(sb.length() - 1); //remove surplus ','
         sb.append("\nException stacktrace:\n");
-        sb.append(org.apache.commons.lang.exception.ExceptionUtils.getStackTrace(exception));
+        sb.append(org.apache.commons.lang.exception.ExceptionUtils.getStackTrace(exception)); // stacktrace to string
         sb.append("\n");
 
         // Email construction and sending

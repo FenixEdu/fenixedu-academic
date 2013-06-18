@@ -6,12 +6,11 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.phd.serviceRequests.documentRequests.PhdRegistryDiplomaRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.IRegistryDiplomaRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class PhdRegistryDiploma extends RegistryDiploma {
 
@@ -35,30 +34,7 @@ public class PhdRegistryDiploma extends RegistryDiploma {
 
         setHeader();
 
-        final Unit institutionUnit = RootDomainObject.getInstance().getInstitutionUnit();
-        String institutionUnitName = getMLSTextContent(institutionUnit.getPartyName());
         addParameter("institution", getMLSTextContent(RootDomainObject.getInstance().getInstitutionUnit().getPartyName()));
-
-        final Person rectorIst =
-                UniversityUnit.getInstitutionsUniversityUnit().getInstitutionsUniversityResponsible(FunctionType.PRINCIPAL);
-
-        final Person presidentIst =
-                UniversityUnit.getInstitutionsUniversityUnit().getInstitutionsUniversityResponsible(FunctionType.PRESIDENT);
-
-        String presidentGender;
-
-        if (presidentIst.isMale()) {
-            presidentGender = getResourceBundle().getString("label.phd.registryDiploma.presidentMale");
-        } else {
-            presidentGender = getResourceBundle().getString("label.phd.registryDiploma.presidentFemale");
-        }
-
-        String rectorGender;
-        if (rectorIst.isMale()) {
-            rectorGender = getResourceBundle().getString("label.phd.registryDiploma.rectorMale");
-        } else {
-            rectorGender = getResourceBundle().getString("label.phd.registryDiploma.rectorFemale");
-        }
 
         setFirstParagraph(request);
         setSecondParagraph(person, request);
@@ -74,14 +50,19 @@ public class PhdRegistryDiploma extends RegistryDiploma {
         String fifthParagraph = getResourceBundle().getString("label.phd.registryDiploma.phdFifthParagraph");
         addParameter("fifthParagraph", MessageFormat.format(fifthParagraph, getDocumentRequest().getFinalAverage(getLocale())));
 
-        setFooter(institutionUnitName, rectorGender, presidentGender);
+        setFooter();
 
     }
 
     @Override
     protected void setHeader() {
-        addParameter("thesisTitle", getDocumentRequest().getPhdIndividualProgramProcess().getThesisTitle());
+        addParameter("thesisTitle", getThesisTitleI18N().getContent(getLanguage()));
         super.setHeader();
+    }
+
+    private MultiLanguageString getThesisTitleI18N() {
+        return new MultiLanguageString(Language.pt, getDocumentRequest().getPhdIndividualProgramProcess().getThesisTitle()).with(
+                Language.en, getDocumentRequest().getPhdIndividualProgramProcess().getThesisTitleEn());
     }
 
     @Override

@@ -42,26 +42,15 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
     protected void fillReport() {
         super.fillReport();
 
-        Unit adminOfficeUnit = getAdministrativeOffice().getUnit();
-        Person coordinator = adminOfficeUnit.getActiveUnitCoordinator();
-        String institutionName = getMLSTextContent(RootDomainObject.getInstance().getInstitutionUnit().getPartyName());
-
-        String coordinatorTitle;
-        if (coordinator.isMale()) {
-            coordinatorTitle = getResourceBundle().getString("label.academicDocument.declaration.maleCoordinator");
-        } else {
-            coordinatorTitle = getResourceBundle().getString("label.academicDocument.declaration.femaleCoordinator");
-        }
-
-        fillFirstParagraph(coordinator, adminOfficeUnit, coordinatorTitle);
+        fillFirstParagraph();
 
         fillSecondParagraph();
         final DegreeFinalizationCertificateRequest req = getDocumentRequest();
 
         addParameter("degreeFinalizationInfo", getDegreeFinalizationInfo(req));
 
-        setEmployeeFields(institutionName, adminOfficeUnit);
-        setFooter(req, true);
+        fillEmployeeFields();
+        setFooter(req);
         setBranchField();
     }
 
@@ -101,7 +90,17 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
 
     }
 
-    protected void fillFirstParagraph(Person coordinator, Unit adminOfficeUnit, String coordinatorTitle) {
+    protected void fillFirstParagraph() {
+
+        Unit adminOfficeUnit = getAdministrativeOffice().getUnit();
+        Person coordinator = adminOfficeUnit.getActiveUnitCoordinator();
+
+        String coordinatorTitle;
+        if (coordinator.isMale()) {
+            coordinatorTitle = getResourceBundle().getString("label.academicDocument.declaration.maleCoordinator");
+        } else {
+            coordinatorTitle = getResourceBundle().getString("label.academicDocument.declaration.femaleCoordinator");
+        }
 
         String adminOfficeName = getMLSTextContent(adminOfficeUnit.getPartyName());
         String institutionName = getMLSTextContent(RootDomainObject.getInstance().getInstitutionUnit().getPartyName());

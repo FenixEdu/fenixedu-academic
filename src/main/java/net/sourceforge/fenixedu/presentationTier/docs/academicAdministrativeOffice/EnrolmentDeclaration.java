@@ -32,7 +32,7 @@ public class EnrolmentDeclaration extends AdministrativeOfficeDocument {
         Registration registration = getDocumentRequest().getRegistration();
         final Unit adminOfficeUnit = getAdministrativeOffice().getUnit();
         final Person coordinator = adminOfficeUnit.getActiveUnitCoordinator();
-        String institutionName = getMLSTextContent(RootDomainObject.getInstance().getInstitutionUnit().getPartyName());
+
         final List<Enrolment> enrolments =
                 (List<Enrolment>) getDocumentRequest().getRegistration().getEnrolments(getExecutionYear());
         Integer numberEnrolments = Integer.valueOf(enrolments.size());
@@ -58,9 +58,8 @@ public class EnrolmentDeclaration extends AdministrativeOfficeDocument {
         fillFirstParagraph(adminOfficeUnit, coordinatorTitle, coordinator);
         fillSecondParagraph(registration, student);
         fillthirdthParagraph(registration, numberEnrolments, studentEnrolment);
-        setEmployeeFields(institutionName, adminOfficeUnit);
-        //setFooter(registration, studentGender);
-        setFooter(getDocumentRequest(), false);
+        fillEmployeeFields();
+        setFooter(getDocumentRequest());
     }
 
     private void fillthirdthParagraph(Registration registration, Integer numberEnrolments, String studentEnrolment) {

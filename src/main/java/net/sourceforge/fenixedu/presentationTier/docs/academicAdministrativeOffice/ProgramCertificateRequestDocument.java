@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
+import java.util.Locale;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Curriculum;
@@ -19,21 +19,19 @@ import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CourseLoadRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ProgramCertificateRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.HtmlToTextConverterUtil;
 
 import org.apache.commons.lang.StringUtils;
-import org.joda.time.LocalDate;
 
 import pt.ist.utl.fenix.utils.NumberToWordsConverter;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocument {
 
     private static final long serialVersionUID = 12L;
-
-    static final protected String DD = "dd";
-    static final protected String MMMM_YYYY = "MMMM yyyy";
 
     protected ProgramCertificateRequestDocument(final ProgramCertificateRequest documentRequest) {
         super(documentRequest);
@@ -46,86 +44,58 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
 
     @Override
     protected void fillReport() {
+
+        addParameter("certification", getResourceBundle().getString("label.certification").toUpperCase());
+        addParameter("certificationMessage", getResourceBundle().getString("label.program.certificate.certification"));
         setPersonFields();
         addParametersInformation();
+        fillEmployeeFields();
+        setFooter(getDocumentRequest());
+        addParameter("enrolment", getResourceBundle().getString("label.serviceRequests.enrolment"));
     }
 
     private void addParametersInformation() {
-        addParameter("studentNumber", getStudentNumber());
-        addParameter("programsDescription", getProgramsDescription());
-        addParameter("degreeDescription", getDegreeDescription());
 
         AdministrativeOffice administrativeOffice = getAdministrativeOffice();
         Unit adminOfficeUnit = administrativeOffice.getUnit();
         Person activeUnitCoordinator = adminOfficeUnit.getActiveUnitCoordinator();
+        Person student = getDocumentRequest().getPerson();
+        final UniversityUnit university = UniversityUnit.getInstitutionsUniversityUnit();
 
-        addParameter("administrativeOfficeCoordinatorName", activeUnitCoordinator.getName());
-        addParameter("administrativeOfficeName", getMLSTextContent(adminOfficeUnit.getPartyName()));
-        addParameter("institutionName", RootDomainObject.getInstance().getInstitutionUnit().getName());
-        addParameter("universityName", UniversityUnit.getInstitutionsUniversityUnit().getName());
-
-        addParameter("day", new LocalDate().toString(DD_MMMM_YYYY, getLocale()));
-
-        addParameter("coordinatorSignature", coordinatorSignature(administrativeOffice, activeUnitCoordinator));
-        addParameter("coordinatorWithoutArticle", coordinatorSignatureWithoutArticle(administrativeOffice, activeUnitCoordinator));
-        addParameter("adminOfficeIntroMessage", adminOfficeIntroMessage(administrativeOffice, activeUnitCoordinator));
-
-        createProgramsList();
-    }
-
-    private String adminOfficeIntroMessage(AdministrativeOffice administrativeOffice, Person activeUnitCoordinator) {
-        String adminOfficeIntroMessage = "message.academicServiceRequest.course.load.admin.office.intro";
-
-        if (administrativeOffice.isMasterDegree()) {
-            adminOfficeIntroMessage += ".master.degree";
-        } else {
-            adminOfficeIntroMessage += ".degree";
-        }
-
+        String coordinatorGender;
         if (activeUnitCoordinator.isMale()) {
-            adminOfficeIntroMessage += ".male";
+            coordinatorGender = getResourceBundle().getString("label.academicDocument.declaration.maleCoordinator");
         } else {
-            adminOfficeIntroMessage += ".female";
+            coordinatorGender = getResourceBundle().getString("label.academicDocument.declaration.femaleCoordinator");
         }
 
-        return ResourceBundle.getBundle("resources.AcademicAdminOffice", getLocale()).getString(adminOfficeIntroMessage);
-    }
-
-    private String coordinatorSignatureWithoutArticle(AdministrativeOffice administrativeOffice, Person activeUnitCoordinator) {
-        String coordinatorSignature = coordinatorSignature(administrativeOffice, activeUnitCoordinator);
-        String withoutArticle = coordinatorSignature.substring(2, coordinatorSignature.length());
-        Integer index = withoutArticle.indexOf(" do ");
-
-        return withoutArticle.substring(0, index) + withoutArticle.substring(index, withoutArticle.length()).toUpperCase();
-    }
-
-    private String coordinatorSignature(AdministrativeOffice administrativeOffice, Person activeUnitCoordinator) {
-        String coordinatorSignatureMessage = "message.academicServiceRequest.course.load.coordinator.signature";
-
-        if (administrativeOffice.isMasterDegree()) {
-            coordinatorSignatureMessage += ".master.degree";
+        String labelStudent;
+        if (student.isMale()) {
+            labelStudent = getResourceBundle().getString("label.the.student.male");
         } else {
-            coordinatorSignatureMessage += ".degree";
+            labelStudent = getResourceBundle().getString("label.the.student.female");
         }
 
-        if (activeUnitCoordinator.isMale()) {
-            coordinatorSignatureMessage += ".male";
-        } else {
-            coordinatorSignatureMessage += ".female";
-        }
+        String coordinatorName = activeUnitCoordinator.getName();
+        String adminOfficeUnitName = getMLSTextContent(adminOfficeUnit.getPartyName()).toUpperCase();
+        String universityName = getMLSTextContent(university.getPartyName()).toUpperCase();
 
-        return ResourceBundle.getBundle("resources.AcademicAdminOffice", getLocale()).getString(coordinatorSignatureMessage);
-    }
+        String institutionName =
+                getMLSTextContent(RootDomainObject.getInstance().getInstitutionUnit().getPartyName()).toUpperCase();
 
-    private String getStudentNumber() {
-        final Registration registration = getDocumentRequest().getRegistration();
-        if (ProgramCertificateRequest.FREE_PAYMENT_AGREEMENTS.contains(registration.getRegistrationAgreement())) {
-            final String agreementInformation = registration.getAgreementInformation();
-            if (!StringUtils.isEmpty(agreementInformation)) {
-                return registration.getRegistrationAgreement().toString() + SINGLE_SPACE + agreementInformation;
-            }
-        }
-        return registration.getStudent().getNumber().toString();
+        String template = getResourceBundle().getString("label.program.certificate.personalData.first");
+        String firstPart =
+                MessageFormat.format(template, coordinatorName, coordinatorGender, adminOfficeUnitName, institutionName,
+                        universityName, labelStudent);
+        addParameter("firstPart", firstPart);
+        addParameter("secondPart", student.getName());
+        addParameter("thirdPart", getResourceBundle().getString("label.with.number"));
+        addParameter("fourthPart", getStudentNumber());
+        addParameter("fifthPart", getResourceBundle().getString("label.of.male"));
+        addParameter("sixthPart", getDegreeDescription());
+        addParameter("seventhPart", getProgramsDescription());
+
+        createProgramsList(getLanguage());
     }
 
     @Override
@@ -152,7 +122,7 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
     }
 
     private String numberOfPrograms() {
-        return NumberToWordsConverter.convert(getDocumentRequest().getEnrolmentsCount());
+        return NumberToWordsConverter.convert(getDocumentRequest().getEnrolmentsCount(), getLocale());
     }
 
     private String getProgramsDescription() {
@@ -168,30 +138,60 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
         return false;
     }
 
-    private void createProgramsList() {
+    private void createProgramsList(Language language) {
         final List<ProgramInformation> bolonha = new ArrayList<ProgramInformation>();
         final List<ProgramInformation> preBolonha = new ArrayList<ProgramInformation>();
 
         addParameter("bolonhaList", bolonha);
         addParameter("preBolonhaList", preBolonha);
 
+        addLabelsToMultiLanguage();
+
         for (final Enrolment enrolment : getDocumentRequest().getEnrolmentsSet()) {
             if (enrolment.isBolonhaDegree()) {
-                bolonha.add(new BolonhaProgramInformation(enrolment));
+                bolonha.add(new BolonhaProgramInformation(enrolment, language));
             } else {
                 preBolonha.add(new PreBolonhaProgramInformation(enrolment));
             }
         }
     }
 
-    static abstract public class ProgramInformation implements Serializable {
+    private String getStudentNumber() {
+        final Registration registration = getDocumentRequest().getRegistration();
+        if (CourseLoadRequest.FREE_PAYMENT_AGREEMENTS.contains(registration.getRegistrationAgreement())) {
+            final String agreementInformation = registration.getAgreementInformation();
+            if (!StringUtils.isEmpty(agreementInformation)) {
+                return registration.getRegistrationAgreement().toString() + SINGLE_SPACE + agreementInformation;
+            }
+        }
+        return registration.getStudent().getNumber().toString();
+    }
+
+    private void addLabelsToMultiLanguage() {
+        addParameter("enrolment", getResourceBundle().getString("label.serviceRequests.enrolment"));
+        addParameter("degreeLabel", getResourceBundle().getString("label.degree"));
+        addParameter("degreeCurricularPlanLabel", getResourceBundle().getString("label.degreeCurricularPlan"));
+        addParameter("weightLabel", getResourceBundle().getString("label.set.evaluation.enrolment.weight"));
+        addParameter("contexts", getResourceBundle().getString("label.contexts"));
+        addParameter("prerequisites", getResourceBundle().getString("label.prerequisites"));
+        addParameter("objectives", getResourceBundle().getString("label.objectives"));
+        addParameter("program", getResourceBundle().getString("label.program"));
+        addParameter("evaluationMethod", getResourceBundle().getString("label.evaluationMethod"));
+        addParameter("bibliography", getResourceBundle().getString("label.bibliography"));
+        addParameter("averageGrade", getResourceBundle().getString("label.average.grade"));
+        addParameter("generalObjectives", getResourceBundle().getString("label.generalObjectives"));
+        addParameter("operationalObjectives", getResourceBundle().getString("label.operationalObjectives"));
+    }
+
+    abstract public class ProgramInformation implements Serializable {
         private final String degree;
         private final String degreeCurricularPlan;
         private final String curricularCourse;
         private final List<ContextInformation> contexts;
 
         public ProgramInformation(final Enrolment enrolment) {
-            this.degree = enrolment.getCurricularCourse().getDegree().getName();
+            this.degree =
+                    getMLSTextContent(enrolment.getCurricularCourse().getDegree().getNameI18N(enrolment.getExecutionYear()));
             this.degreeCurricularPlan = enrolment.getCurricularCourse().getDegreeCurricularPlan().getName();
             this.curricularCourse = buildCurricularCourseName(enrolment.getCurricularCourse());
             this.contexts = buildContextsInformation(enrolment.getCurricularCourse());
@@ -200,13 +200,13 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
         private List<ContextInformation> buildContextsInformation(final CurricularCourse curricularCourse) {
             final List<ContextInformation> result = new ArrayList<ContextInformation>();
             for (final Context context : curricularCourse.getParentContexts()) {
-                result.add(new ContextInformation(context));
+                result.add(new ContextInformation(context, getLanguage(), getLocale()));
             }
             return result;
         }
 
         private String buildCurricularCourseName(final CurricularCourse curricularCourse) {
-            return curricularCourse.getName()
+            return getMLSTextContent(curricularCourse.getNameI18N())
                     + (StringUtils.isEmpty(curricularCourse.getAcronym()) ? EMPTY_STR : " (" + curricularCourse.getAcronym()
                             + ")");
         }
@@ -228,7 +228,7 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
         }
     }
 
-    static public class BolonhaProgramInformation extends ProgramInformation {
+    public class BolonhaProgramInformation extends ProgramInformation {
         private final String program;
         private final String weigth;
         private final String prerequisites;
@@ -236,18 +236,22 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
         private final String evaluationMethod;
         private final List<BibliographicInformation> bibliographics;
 
-        public BolonhaProgramInformation(final Enrolment enrolment) {
+        public BolonhaProgramInformation(final Enrolment enrolment, Language language) {
             super(enrolment);
 
             final ExecutionSemester executionSemester = enrolment.getExecutionPeriod();
             final CurricularCourse curricularCourse = enrolment.getCurricularCourse();
 
-            this.program = HtmlToTextConverterUtil.convertToText(curricularCourse.getProgram(executionSemester));
-            this.weigth = curricularCourse.getWeigth().toString();
-            this.prerequisites = curricularCourse.getPrerequisites();
-            this.objectives = HtmlToTextConverterUtil.convertToText(curricularCourse.getObjectives(executionSemester));
+            this.program =
+                    HtmlToTextConverterUtil.convertToText(getMLSTextContent(curricularCourse.getProgramI18N(executionSemester)));
+            this.weigth = curricularCourse.getWeight(executionSemester).toString();
+            this.prerequisites = getMLSTextContent(curricularCourse.getPrerequisitesI18N());
+            this.objectives =
+                    HtmlToTextConverterUtil
+                            .convertToText(getMLSTextContent(curricularCourse.getObjectivesI18N(executionSemester)));
             this.evaluationMethod =
-                    HtmlToTextConverterUtil.convertToText(curricularCourse.getEvaluationMethod(executionSemester));
+                    HtmlToTextConverterUtil.convertToText(getMLSTextContent(curricularCourse
+                            .getEvaluationMethodI18N(executionSemester)));
 
             this.bibliographics = buildBibliographicInformation(curricularCourse, executionSemester);
         }
@@ -288,7 +292,7 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
         }
     }
 
-    static public class PreBolonhaProgramInformation extends ProgramInformation {
+    public class PreBolonhaProgramInformation extends ProgramInformation {
         private String program;
         private String generalObjectives;
         private String operationalObjectives;
@@ -297,9 +301,11 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
             super(enrolment);
             final Curriculum curriculum = enrolment.getCurricularCourse().findLatestCurriculum();
             if (curriculum != null) {
-                this.program = HtmlToTextConverterUtil.convertToText(curriculum.getProgram());
-                this.generalObjectives = HtmlToTextConverterUtil.convertToText(curriculum.getGeneralObjectives());
-                this.operationalObjectives = HtmlToTextConverterUtil.convertToText(curriculum.getOperacionalObjectives());
+                this.program = HtmlToTextConverterUtil.convertToText(getMLSTextContent(curriculum.getProgramI18N()));
+                this.generalObjectives =
+                        HtmlToTextConverterUtil.convertToText(getMLSTextContent(curriculum.getGeneralObjectivesI18N()));
+                this.operationalObjectives =
+                        HtmlToTextConverterUtil.convertToText(getMLSTextContent(curriculum.getOperacionalObjectivesI18N()));
             } else {
                 this.program = this.generalObjectives = this.operationalObjectives = EMPTY_STR;
             }
@@ -322,9 +328,10 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
         private final String name;
         private final String period;
 
-        public ContextInformation(final Context context) {
-            this.name = context.getParentCourseGroup().getOneFullName();
-            this.period = context.getCurricularPeriod().getFullLabel();
+        public ContextInformation(final Context context, final Language language, final Locale locale) {
+            this.name = context.getParentCourseGroup().getOneFullNameI18N(language);
+            this.period = context.getCurricularPeriod().getFullLabel(locale);
+
         }
 
         public String getName() {

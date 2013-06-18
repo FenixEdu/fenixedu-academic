@@ -24,7 +24,6 @@
 	<parameter name="urgency" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="total" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="secondParagraph" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="detailed" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="signer" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="signerLocation" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="page" class="java.lang.String" isForPrompting="false"/>

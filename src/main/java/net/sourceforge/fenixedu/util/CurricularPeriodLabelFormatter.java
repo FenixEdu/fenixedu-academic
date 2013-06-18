@@ -27,6 +27,12 @@ public class CurricularPeriodLabelFormatter {
         return getFullLabel(curricularPeriod, bundle, abbreviated);
     }
 
+    public static String getFullLabelI18N(CurricularPeriod curricularPeriod, boolean abbreviated, Locale locale) {
+
+        ResourceBundle bundle = ResourceBundle.getBundle("resources/EnumerationResources", locale);
+        return getFullLabel(curricularPeriod, bundle, abbreviated);
+    }
+
     private static String getLabel(CurricularPeriod curricularPeriod, ResourceBundle bundle, boolean abbreviated) {
         StringBuilder result = new StringBuilder();
         buildLabel(curricularPeriod, bundle, result, abbreviated);
