@@ -72,7 +72,7 @@ public class AnnualTeachingCredits extends AnnualTeachingCredits_Base {
                 serviceExemptionCredits =
                         serviceExemptionCredits.add(new BigDecimal(getTeacher().getServiceExemptionCredits(executionSemester)));
                 BigDecimal thisSemesterTeachingLoad = new BigDecimal(getTeacher().getMandatoryLessonHours(executionSemester));
-                annualTeachingLoad = annualTeachingLoad.add(thisSemesterTeachingLoad);
+                annualTeachingLoad = annualTeachingLoad.add(thisSemesterTeachingLoad).setScale(2, BigDecimal.ROUND_HALF_UP);
                 TeacherService teacherService = getTeacher().getTeacherServiceByExecutionPeriod(executionSemester);
                 BigDecimal thisSemesterCreditsReduction = BigDecimal.ZERO;
                 if (teacherService != null) {
@@ -113,7 +113,7 @@ public class AnnualTeachingCredits extends AnnualTeachingCredits_Base {
         if (hasOrientantionCredits) {
             yearCredits =
                     yearCredits.add(getMasterDegreeThesesCredits()).add(getPhdDegreeThesesCredits())
-                            .add(getProjectsTutorialsCredits());
+                            .add(getProjectsTutorialsCredits()).setScale(2, BigDecimal.ROUND_HALF_UP);
             yearCreditsForFinalCredits =
                     yearCreditsForFinalCredits.add(getMasterDegreeThesesCredits()).add(getPhdDegreeThesesCredits())
                             .add(getProjectsTutorialsCredits());
@@ -123,9 +123,9 @@ public class AnnualTeachingCredits extends AnnualTeachingCredits_Base {
         BigDecimal accumulatedCredits = BigDecimal.ZERO;
         BigDecimal finalCredits = BigDecimal.ZERO;
         if (hasFinalAndAccumulatedCredits) {
-            finalCredits = yearCreditsForFinalCredits.subtract(annualTeachingLoadFinalCredits);
+            finalCredits = yearCreditsForFinalCredits.subtract(annualTeachingLoadFinalCredits).setScale(2, BigDecimal.ROUND_HALF_UP);
             BigDecimal lastYearAccumulated = getPreviousAccumulatedCredits();
-            accumulatedCredits = finalCredits.add(lastYearAccumulated);
+            accumulatedCredits = finalCredits.add(lastYearAccumulated).setScale(2, BigDecimal.ROUND_HALF_UP);
         }
         setFinalCredits(finalCredits);
         setAccumulatedCredits(accumulatedCredits);
