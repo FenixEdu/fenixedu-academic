@@ -84,7 +84,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
         @Forward(name = "chooseCycleCourseGroupToEnrol", path = "/candidacy/erasmus/chooseCycleCourseGroupToEnrol.jsp") })
 public class ErasmusIndividualCandidacyProcessDA extends
         net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.ErasmusIndividualCandidacyProcessDA {
-
+	
     @Override
     protected List<Activity> getAllowedActivities(final IndividualCandidacyProcess process) {
         List<Activity> activities = process.getAllowedActivities(AccessControl.getUserView());
@@ -300,19 +300,30 @@ public class ErasmusIndividualCandidacyProcessDA extends
             HttpServletResponse response) throws FenixFilterException, FenixServiceException {
         MobilityIndividualApplicationProcess process = getProcess(request);
         MobilityIndividualApplication candidacy = process.getCandidacy();
-
-        ExecutionSemester semester = ExecutionSemester.readByYearMonthDay(new YearMonthDay());
-
-        ErasmusBolonhaStudentEnrollmentBean bean =
-                new ErasmusBolonhaStudentEnrollmentBean(candidacy.getRegistration().getActiveStudentCurricularPlan(), semester,
-                        null, CurricularRuleLevel.ENROLMENT_NO_RULES, candidacy);
-
+        Boolean restrictEnrollment;
+        ErasmusBolonhaStudentEnrollmentBean bean;
+        if(candidacy.getRegistration().getActiveStudentCurricularPlan() != null) {
+        	restrictEnrollment = true;
+        	ExecutionSemester semester = ExecutionSemester.readByYearMonthDay(new YearMonthDay());
+        	bean = new ErasmusBolonhaStudentEnrollmentBean(candidacy.getRegistration().getActiveStudentCurricularPlan(), semester, null, CurricularRuleLevel.ENROLMENT_NO_RULES, candidacy);
+        } else {
+        	restrictEnrollment = false;
+        	bean = null;
+        }
         return enrolStudent(mapping, request, process, bean);
     }
 
     private ActionForward enrolStudent(ActionMapping mapping, HttpServletRequest request,
             MobilityIndividualApplicationProcess process, ErasmusBolonhaStudentEnrollmentBean bean) {
+        MobilityIndividualApplication candidacy = process.getCandidacy();
+        Boolean restrictEnrollment;
+        if(candidacy.getRegistration().getActiveStudentCurricularPlan() != null) {
+        	restrictEnrollment = true;
+        } else {
+        	restrictEnrollment = false;
+        }
         request.setAttribute("process", process);
+        request.setAttribute("restrictEnrollment", restrictEnrollment);
         request.setAttribute("bolonhaStudentEnrollmentBean", bean);
         request.setAttribute("action", "/caseHandlingMobilityIndividualApplicationProcess.do");
         return mapping.findForward("enrol-student");
