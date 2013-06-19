@@ -47,9 +47,9 @@ public class AnnualTeachingCredits extends AnnualTeachingCredits_Base {
 
     @Service
     public void calculateCredits() {
-        setMasterDegreeThesesCredits(BigDecimal.ZERO);
-        setPhdDegreeThesesCredits(BigDecimal.ZERO);
-        setProjectsTutorialsCredits(BigDecimal.ZERO);
+        setMasterDegreeThesesCredits(getTeacher().getMasterDegreeThesesCredits(getAnnualCreditsState().getExecutionYear()));
+        setPhdDegreeThesesCredits(getTeacher().getPhdDegreeThesesCredits(getAnnualCreditsState().getExecutionYear()));
+        setProjectsTutorialsCredits(getTeacher().getProjectsTutorialsCredits(getAnnualCreditsState().getExecutionYear()));
 
         BigDecimal teachingCredits = BigDecimal.ZERO;
         BigDecimal managementFunctionsCredits = BigDecimal.ZERO;
@@ -123,7 +123,8 @@ public class AnnualTeachingCredits extends AnnualTeachingCredits_Base {
         BigDecimal accumulatedCredits = BigDecimal.ZERO;
         BigDecimal finalCredits = BigDecimal.ZERO;
         if (hasFinalAndAccumulatedCredits) {
-            finalCredits = yearCreditsForFinalCredits.subtract(annualTeachingLoadFinalCredits).setScale(2, BigDecimal.ROUND_HALF_UP);
+            finalCredits =
+                    yearCreditsForFinalCredits.subtract(annualTeachingLoadFinalCredits).setScale(2, BigDecimal.ROUND_HALF_UP);
             BigDecimal lastYearAccumulated = getPreviousAccumulatedCredits();
             accumulatedCredits = finalCredits.add(lastYearAccumulated).setScale(2, BigDecimal.ROUND_HALF_UP);
         }
