@@ -65,7 +65,7 @@
 
 <%-- Registration Average and Curricular Year calculations --%>
 
-<academic:notAllowed operation="VIEW_FULL_STUDENT_CURRICULUM" program="<%= registration.getDegree() %>">
+<academic:allowed operation="VIEW_FULL_STUDENT_CURRICULUM" program="<%= registration.getDegree() %>">
 	<p class="mtop1 mbottom1">
 		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
 		<bean:define id="url" value="<%="/registration.do?method=prepareViewRegistrationCurriculum&amp;registrationID=" + registration.getIdInternal()%>"/>
@@ -78,7 +78,7 @@
 			<bean:message key="link.registration.viewCurriculum" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 		</html:link>
 	</p>
-</academic:notAllowed>
+</academic:allowed>
 
 <%-- Choose Student Curricular Plan form --%>
 <html:form action="<%="/viewStudentCurriculum.do?method=prepare&registrationOID=" + registration.getIdInternal()%>">
