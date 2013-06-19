@@ -470,7 +470,11 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
 
     public void delete() {
         if (!getCanBeDeleted()) {
-            throw new DomainException("error.enrolmentEvaluation.cannot.be.deleted");
+            if (hasImprovementOfApprovedEnrolmentEvent() && getImprovementOfApprovedEnrolmentEvent().isPayed()) {
+                throw new DomainException("error.enrolmentEvaluation.has.been.payed");
+            } else {
+                throw new DomainException("error.enrolmentEvaluation.cannot.be.deleted");
+            }
         }
 
         deleteObject();
