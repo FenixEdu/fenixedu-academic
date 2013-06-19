@@ -438,9 +438,11 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         this.getEnrolment().setEnrollmentState(newEnrolmentState);
     }
 
-    public boolean getCanBeDeleted() {
-        return isTemporary() && !hasConfirmedMarkSheet()
-                && (!hasImprovementOfApprovedEnrolmentEvent() || !getImprovementOfApprovedEnrolmentEvent().isPayed());
+    public void canBeDeleted() {
+        if (isTemporary() && !hasConfirmedMarkSheet()) {
+            throw new DomainException("error.enrolmentEvaluation.isTemporary.or.hasConfirmedMarksheet");
+        }
+        checkApprovedEnrolmentPayment();
     }
 
     public boolean hasConfirmedMarkSheet() {
@@ -469,23 +471,12 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
     }
 
     public void delete() {
-        if (!getCanBeDeleted()) {
-            if (hasImprovementOfApprovedEnrolmentEvent() && getImprovementOfApprovedEnrolmentEvent().isPayed()) {
-                throw new DomainException("error.enrolmentEvaluation.has.been.payed");
-            } else {
-                throw new DomainException("error.enrolmentEvaluation.cannot.be.deleted");
-            }
-        }
-
+        canBeDeleted();
         deleteObject();
-
     }
 
-    public void deleteObject() {
-
-        if (hasImprovementOfApprovedEnrolmentEvent() && getImprovementOfApprovedEnrolmentEvent().isPayed()) {
-            throw new DomainException("error.enrolmentEvaluation.has.been.payed");
-        }
+    private void deleteObject() {
+        checkApprovedEnrolmentPayment();
 
         removePersonResponsibleForGrade();
         removePerson();
@@ -501,6 +492,12 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         removeRootDomainObject();
 
         super.deleteDomainObject();
+    }
+
+    private void checkApprovedEnrolmentPayment() {
+        if (hasImprovementOfApprovedEnrolmentEvent() && getImprovementOfApprovedEnrolmentEvent().isPayed()) {
+            throw new DomainException("error.enrolmentEvaluation.has.been.payed");
+        }
     }
 
     public void removeFromMarkSheet() {
