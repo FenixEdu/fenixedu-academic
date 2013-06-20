@@ -194,17 +194,6 @@
 		</plugins>
 	</build>
 
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				 <groupId>javax.servlet</groupId>
-		  		 <artifactId>servlet-api</artifactId>
-		  		 <version>2.3</version>
-		  		 <scope>provided</scope>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
-	
 	<dependencies>
 		<dependency>
 			<groupId>net.sourceforge.barbecue</groupId>
@@ -284,7 +273,7 @@
 		<dependency>
 			<groupId>pt.ist</groupId>
 			<artifactId>fenix-web-framework</artifactId>
-			<version>1.0.4</version>
+			<version>2.0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.guava</groupId>
@@ -356,6 +345,7 @@
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-user</artifactId>
 			<version>2.3.0</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>pt.ist</groupId>
@@ -377,6 +367,12 @@
 			<groupId>cas</groupId>
 			<artifactId>casclient</artifactId>
 			<version>2.1.1</version>
+			<exclusions>
+				<exclusion>
+					<groupId>javax.servlet</groupId>
+					<artifactId>servlet-api</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.codehaus.xfire</groupId>
@@ -559,6 +555,22 @@
 		    <artifactId>imgscalr-lib</artifactId>
 		    <version>4.2</version>
 		</dependency>
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>avalon</groupId>
+			<artifactId>avalon-framework</artifactId>
+			<version>4.1.4</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>jsp-api</artifactId>
+			<version>2.1</version>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 
 	<profiles>
@@ -618,20 +630,20 @@
 						</configuration>
 						<executions>
 							<execution>
-							<id>copy-images</id>
-							<phase>validate</phase>
-							<goals>
-								<goal>copy-resources</goal>
-							</goals>
-							<configuration>
-								<outputDirectory>${basedir}/target/classes/images</outputDirectory>
-								<resources>          
-									<resource>
-										<directory>src/main/webapp/images</directory>
-										<filtering>false</filtering>
-									</resource>
-								</resources>              
-							</configuration>  
+								<id>copy-images</id>
+								<phase>validate</phase>
+								<goals>
+									<goal>copy-resources</goal>
+								</goals>
+								<configuration>
+									<outputDirectory>${basedir}/target/classes/images</outputDirectory>
+									<resources>
+										<resource>
+											<directory>src/main/webapp/images</directory>
+											<filtering>false</filtering>
+										</resource>
+									</resources>
+								</configuration>
 							</execution>
 						</executions>
 					</plugin>
