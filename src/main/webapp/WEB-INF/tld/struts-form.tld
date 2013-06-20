@@ -10,6 +10,7 @@
 <taglib>
 <tlibversion>1.0</tlibversion>
 <jspversion>1.1</jspversion>
+<uri>http://struts.apache.org/tags-form</uri>
 <shortname>form</shortname>
 <tag>
 <name>base</name>

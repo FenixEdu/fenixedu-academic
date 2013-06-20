@@ -11,48 +11,51 @@
 
 
 <taglib>
-
 	<!-- ========== Tag Library Description Elements ========================= -->
 	<tlib-version>1.0</tlib-version>
 	<jsp-version>1.2</jsp-version>
 	<short-name>unit</short-name>
-	<uri>http://fenix-ashes.ist.utl.pt</uri>
+	<uri>http://fenix-ashes.ist.utl.pt/taglib/collection-pager</uri>
 	<description>
-		Units tree render
+		Collection pager renders 
 	</description>
  
 	<tag>
-	   <name>tree</name>
-	   <tag-class>net.sourceforge.fenixedu.presentationTier.TagLib.units.UnitsTree</tag-class>
+	   <name>collectionPages</name>
+	   <tag-class>net.sourceforge.fenixedu.presentationTier.TagLib.commons.CollectionPagerTag</tag-class>
 	   <body-content>empty</body-content>
 	   <description>
-	   	  Renders the units tree
+	   	 Collection pager renders 
 	   </description>
 	   <attribute>
-	 	  	<name>initialUnit</name>
+	 	  	<name>url</name>
 	  	 	<required>true</required>
 	  	 	<rtexprvalue>true</rtexprvalue>
 	   </attribute>
 	   <attribute>
-	  	 	<name>unitParamName</name>
+	 	  	<name>bundle</name>
+	  	 	<required>false</required>
+	  	 	<rtexprvalue>true</rtexprvalue>
+	   </attribute>
+	   <attribute>
+	  	 	<name>numberOfPagesAttributeName</name>
 	  	 	<required>true</required>
 	   		<rtexprvalue>true</rtexprvalue>
 	   </attribute>
 	   <attribute>
-			<name>path</name>
+			<name>pageNumberAttributeName</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
-		</attribute>    
+	   </attribute> 
 	   <attribute>
-	   		<name>state</name>
-	   		<required>false</required>
-	   		<rtexprvalue>true</rtexprvalue>
-	   </attribute>
+			<name>numberOfVisualizedPages</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+	   </attribute> 			   	   
 	   <attribute>
-	   		<name>expanded</name>
-	   		<required>false</required>
-	   		<rtexprvalue>true</rtexprvalue>
-	   </attribute>
+			<name>module</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+	   </attribute> 			   	   
 	</tag>
-
 </taglib>  

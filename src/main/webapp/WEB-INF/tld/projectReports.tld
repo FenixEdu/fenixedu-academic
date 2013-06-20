@@ -3,6 +3,7 @@
 <taglib>
 	<tlibversion>1.0</tlibversion>
 	<jspversion>1.2</jspversion>
+	<uri>http://fenix-ashes.ist.utl.pt/taglib/projects-report</uri>
 	<shortname>report</shortname>
 	<tag>
 		<name>sumColumn</name>

@@ -19,7 +19,7 @@
   <tlib-version>1.0</tlib-version>
   <jsp-version>1.2</jsp-version>
   <short-name>e</short-name>
-  <uri>http://fenix-ashes.ist.utl.pt</uri>
+  <uri>http://fenix-ashes.ist.utl.pt/taglib/email</uri>
   <description>
   	Email renders
   </description>
