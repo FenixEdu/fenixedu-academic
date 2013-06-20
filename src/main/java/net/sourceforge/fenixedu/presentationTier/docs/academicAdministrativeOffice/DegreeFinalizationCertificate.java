@@ -95,12 +95,7 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
         Unit adminOfficeUnit = getAdministrativeOffice().getUnit();
         Person coordinator = adminOfficeUnit.getActiveUnitCoordinator();
 
-        String coordinatorTitle;
-        if (coordinator.isMale()) {
-            coordinatorTitle = getResourceBundle().getString("label.academicDocument.declaration.maleCoordinator");
-        } else {
-            coordinatorTitle = getResourceBundle().getString("label.academicDocument.declaration.femaleCoordinator");
-        }
+        String coordinatorTitle = getCoordinatorGender(coordinator);
 
         String adminOfficeName = getMLSTextContent(adminOfficeUnit.getPartyName());
         String institutionName = getMLSTextContent(RootDomainObject.getInstance().getInstitutionUnit().getPartyName());

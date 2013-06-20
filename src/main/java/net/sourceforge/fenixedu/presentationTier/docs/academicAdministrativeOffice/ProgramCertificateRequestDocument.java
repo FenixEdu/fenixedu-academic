@@ -58,16 +58,11 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
 
         AdministrativeOffice administrativeOffice = getAdministrativeOffice();
         Unit adminOfficeUnit = administrativeOffice.getUnit();
-        Person activeUnitCoordinator = adminOfficeUnit.getActiveUnitCoordinator();
+        Person coordinator = adminOfficeUnit.getActiveUnitCoordinator();
         Person student = getDocumentRequest().getPerson();
         final UniversityUnit university = UniversityUnit.getInstitutionsUniversityUnit();
 
-        String coordinatorGender;
-        if (activeUnitCoordinator.isMale()) {
-            coordinatorGender = getResourceBundle().getString("label.academicDocument.declaration.maleCoordinator");
-        } else {
-            coordinatorGender = getResourceBundle().getString("label.academicDocument.declaration.femaleCoordinator");
-        }
+        String coordinatorGender = getCoordinatorGender(coordinator);
 
         String labelStudent;
         if (student.isMale()) {
@@ -76,7 +71,7 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
             labelStudent = getResourceBundle().getString("label.the.student.female");
         }
 
-        String coordinatorName = activeUnitCoordinator.getName();
+        String coordinatorName = coordinator.getName();
         String adminOfficeUnitName = getMLSTextContent(adminOfficeUnit.getPartyName()).toUpperCase();
         String universityName = getMLSTextContent(university.getPartyName()).toUpperCase();
 

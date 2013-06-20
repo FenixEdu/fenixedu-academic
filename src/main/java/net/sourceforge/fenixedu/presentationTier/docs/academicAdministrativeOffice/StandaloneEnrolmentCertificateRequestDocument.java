@@ -58,18 +58,15 @@ public class StandaloneEnrolmentCertificateRequestDocument extends Administrativ
     }
 
     protected void fillFirstParagraph(Employee loggedEmployee) {
-        String coordinatorTitle;
+
         Person coordinator = loggedEmployee.getCurrentWorkingPlace().getActiveUnitCoordinator();
         String adminOfficeName = getMLSTextContent(loggedEmployee.getCurrentWorkingPlace().getPartyName());
         String institutionName = getMLSTextContent(RootDomainObject.getInstance().getInstitutionUnit().getPartyName());
         String universityName = getMLSTextContent(UniversityUnit.getInstitutionsUniversityUnit().getPartyName());
 
         String stringTemplate = getResourceBundle().getString("label.academicDocument.declaration.firstParagraph");
-        if (coordinator.isMale()) {
-            coordinatorTitle = getResourceBundle().getString("label.academicDocument.declaration.maleCoordinator");
-        } else {
-            coordinatorTitle = getResourceBundle().getString("label.academicDocument.declaration.femaleCoordinator");
-        }
+        String coordinatorTitle = getCoordinatorGender(coordinator);
+
         addParameter(
                 "firstParagraph",
                 "     "
@@ -108,7 +105,7 @@ public class StandaloneEnrolmentCertificateRequestDocument extends Administrativ
     }
 
     protected void fillTrailer(Employee loggedEmployee, Registration registration) {
-        String coordinatorTitle;
+
         Person coordinator = loggedEmployee.getCurrentWorkingPlace().getActiveUnitCoordinator();
         String adminOfficeName = getMLSTextContent(loggedEmployee.getCurrentWorkingPlace().getPartyName());
         String institutionName = getMLSTextContent(RootDomainObject.getInstance().getInstitutionUnit().getPartyName());
@@ -123,12 +120,7 @@ public class StandaloneEnrolmentCertificateRequestDocument extends Administrativ
         } else {
             student = getResourceBundle().getString("label.academicDocument.declaration.femaleStudent");
         }
-
-        if (coordinator.isMale()) {
-            coordinatorTitle = getResourceBundle().getString("label.academicDocument.declaration.maleCoordinator");
-        } else {
-            coordinatorTitle = getResourceBundle().getString("label.academicDocument.declaration.femaleCoordinator");
-        }
+        String coordinatorTitle = getCoordinatorGender(coordinator);
 
         String stringTemplate = getResourceBundle().getString("label.academicDocument.declaration.signer");
         addParameter("signer", MessageFormat.format(stringTemplate, coordinatorTitle, adminOfficeName));

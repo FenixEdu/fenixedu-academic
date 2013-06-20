@@ -50,12 +50,7 @@ public class RegistrationDeclaration extends AdministrativeOfficeDocument {
         Person coordinator = adminOfficeUnit.getActiveUnitCoordinator();
         Registration registration = getDocumentRequest().getRegistration();
 
-        String coordinatorTitle;
-        if (coordinator.isMale()) {
-            coordinatorTitle = getResourceBundle().getString("label.academicDocument.declaration.maleCoordinator");
-        } else {
-            coordinatorTitle = getResourceBundle().getString("label.academicDocument.declaration.femaleCoordinator");
-        }
+        String coordinatorTitle = getCoordinatorGender(coordinator);
 
         String studentRegistered;
         if (registration.getStudent().getPerson().isMale()) {

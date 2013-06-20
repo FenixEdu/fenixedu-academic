@@ -36,12 +36,7 @@ public class EnrolmentCertificate extends AdministrativeOfficeDocument {
         final EnrolmentCertificateRequest request = getDocumentRequest();
         final Registration registration = getDocumentRequest().getRegistration();
 
-        String coordinatorTitle;
-        if (coordinator.isMale()) {
-            coordinatorTitle = getResourceBundle().getString("label.academicDocument.declaration.maleCoordinator");
-        } else {
-            coordinatorTitle = getResourceBundle().getString("label.academicDocument.declaration.femaleCoordinator");
-        }
+        String coordinatorTitle = getCoordinatorGender(coordinator);
 
         String student;
         if (registration.getStudent().getPerson().isMale()) {

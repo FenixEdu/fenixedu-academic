@@ -37,12 +37,7 @@ public class EnrolmentDeclaration extends AdministrativeOfficeDocument {
                 (List<Enrolment>) getDocumentRequest().getRegistration().getEnrolments(getExecutionYear());
         Integer numberEnrolments = Integer.valueOf(enrolments.size());
 
-        String coordinatorTitle;
-        if (coordinator.isMale()) {
-            coordinatorTitle = getResourceBundle().getString("label.academicDocument.declaration.maleCoordinator");
-        } else {
-            coordinatorTitle = getResourceBundle().getString("label.academicDocument.declaration.femaleCoordinator");
-        }
+        String coordinatorTitle = getCoordinatorGender(coordinator);
 
         String student, studentEnrolment;
         if (registration.getStudent().getPerson().isMale()) {

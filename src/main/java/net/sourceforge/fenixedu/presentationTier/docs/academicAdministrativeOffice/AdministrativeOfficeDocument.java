@@ -509,11 +509,7 @@ public class AdministrativeOfficeDocument extends FenixReport {
         final Person coordinator = adminOfficeUnit.getActiveUnitCoordinator();
 
         String coordinatorTitle;
-        if (coordinator.isMale()) {
-            coordinatorTitle = getResourceBundle().getString("label.academicDocument.declaration.maleCoordinator");
-        } else {
-            coordinatorTitle = getResourceBundle().getString("label.academicDocument.declaration.femaleCoordinator");
-        }
+        coordinatorTitle = getCoordinatorGender(coordinator);
         String stringTemplate = getResourceBundle().getString("label.academicDocument.irs.declaration.signer");
         addParameter("signer",
                 MessageFormat.format(stringTemplate, coordinatorTitle, getMLSTextContent(adminOfficeUnit.getPartyName())));
@@ -530,6 +526,14 @@ public class AdministrativeOfficeDocument extends FenixReport {
         stringTemplate = getResourceBundle().getString("label.academicDocument.declaration.signerLocation");
         addParameter("signerLocation",
                 MessageFormat.format(stringTemplate, institutionName, location, dateDD, dateMMMM, dateYYYY));
+    }
+
+    protected String getCoordinatorGender(final Person coordinator) {
+        if (coordinator.isMale()) {
+            return getResourceBundle().getString("label.academicDocument.declaration.maleCoordinator");
+        } else {
+            return getResourceBundle().getString("label.academicDocument.declaration.femaleCoordinator");
+        }
     }
 
 }

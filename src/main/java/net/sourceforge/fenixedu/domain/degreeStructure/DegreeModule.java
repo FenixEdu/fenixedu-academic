@@ -162,12 +162,12 @@ abstract public class DegreeModule extends DegreeModule_Base {
 
         String name = getName(executionSemester);
         if (name != null && name.length() > 0) {
-            multiLanguageString.setContent(Language.pt, name);
+            multiLanguageString.with(Language.pt, name);
         }
 
         String nameEn = getNameEn(executionSemester);
         if (nameEn != null && nameEn.length() > 0) {
-            multiLanguageString.setContent(Language.en, nameEn);
+            multiLanguageString.with(Language.en, nameEn);
         }
 
         return multiLanguageString;

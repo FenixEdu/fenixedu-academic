@@ -102,12 +102,7 @@ public class PhdFinalizationCertificate extends AdministrativeOfficeDocument {
         Unit adminOfficeUnit = getAdministrativeOffice().getUnit();
         Person coordinator = adminOfficeUnit.getActiveUnitCoordinator();
 
-        String coordinatorTitle;
-        if (coordinator.isMale()) {
-            coordinatorTitle = getResourceBundle().getString("label.academicDocument.declaration.maleCoordinator");
-        } else {
-            coordinatorTitle = getResourceBundle().getString("label.academicDocument.declaration.femaleCoordinator");
-        }
+        String coordinatorTitle = getCoordinatorGender(coordinator);
 
         fillFirstParagraph(coordinator, adminOfficeUnit, coordinatorTitle);
 
