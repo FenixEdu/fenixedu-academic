@@ -38,8 +38,6 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.MessageResources;
 import org.apache.struts.validator.DynaValidatorForm;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
-
 /**
  * @author jpvl
  */
@@ -50,10 +48,10 @@ public class CreateProfessorshipDispatchAction extends FenixDispatchAction {
 
         final DynaActionForm personExecutionCourseForm = (DynaActionForm) form;
 
-        final String executionCourseId = (String) personExecutionCourseForm.get("executionCourseId");
         final Boolean responsibleFor = (Boolean) personExecutionCourseForm.get("responsibleFor");
 
-        Professorship.create(responsibleFor, AbstractDomainObject.<ExecutionCourse> fromExternalId(executionCourseId),
+        Professorship.create(responsibleFor,
+                this.<ExecutionCourse> getDomainObject(personExecutionCourseForm, "executionCourseId"),
                 getPerson(personExecutionCourseForm), 0.0);
 
         return mapping.findForward("final-step");

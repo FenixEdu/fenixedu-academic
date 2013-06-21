@@ -56,9 +56,8 @@ public class DepartmentAdmOfficeManageTeacherSupportLessonsDispatchAction extend
 
         DynaActionForm supportLessonForm = (DynaActionForm) form;
         String supportLesssonID = (String) supportLessonForm.get("supportLessonID");
-        String professorshipID = (String) supportLessonForm.get("professorshipID");
 
-        Professorship professorship = AbstractDomainObject.fromExternalId(professorshipID);
+        Professorship professorship = getDomainObject(supportLessonForm, "professorshipID");
 
         if (professorship == null
                 || professorship.getTeacher() == null

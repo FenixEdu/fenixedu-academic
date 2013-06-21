@@ -31,7 +31,6 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author Leonor Almeida
@@ -60,8 +59,7 @@ public class TeachingReportAction extends FenixDispatchAction {
             InfoCourseReport infoCourseReport = new InfoCourseReport();
             BeanUtils.copyProperties(infoCourseReport, dynaForm);
 
-            String executionCourseId = (String) dynaForm.get("executionCourseId");
-            final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
+            final ExecutionCourse executionCourse = getDomainObject(dynaForm, "executionCourseId");
             infoCourseReport.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(executionCourse));
 
             return infoCourseReport;

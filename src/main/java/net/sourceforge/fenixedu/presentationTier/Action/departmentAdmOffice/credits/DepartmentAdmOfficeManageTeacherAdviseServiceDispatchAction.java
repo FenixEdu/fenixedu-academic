@@ -54,13 +54,12 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class DepartmentAdmOfficeManageTeacherAdviseServiceDispatchAction extends ManageTeacherAdviseServiceDispatchAction {
 
     public ActionForward showTeacherAdvises(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException, FenixServiceException {
+            HttpServletResponse response) throws NumberFormatException {
 
         DynaActionForm dynaForm = (DynaActionForm) form;
         IUserView userView = UserView.getUser();
 
-        final String executionPeriodID = (String) dynaForm.get("executionPeriodId");
-        final ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodID);
+        final ExecutionSemester executionSemester = getDomainObject(dynaForm, "executionPeriodId");
 
         Teacher teacher = AbstractDomainObject.fromExternalId(dynaForm.getString("teacherId"));
         List<Department> manageableDepartments = userView.getPerson().getManageableDepartmentCredits();

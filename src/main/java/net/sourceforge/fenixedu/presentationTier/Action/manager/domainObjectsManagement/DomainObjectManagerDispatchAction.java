@@ -33,7 +33,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.DomainObject;
 import pt.ist.fenixframework.FenixFramework;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import dml.DomainClass;
 
 /**
@@ -117,10 +116,7 @@ public class DomainObjectManagerDispatchAction extends FenixDispatchAction {
                 && documentIdNumber.charAt(idPos2Index - 1) == idPos2Value.charValue()
                 && documentIdNumber.charAt(idPos3Index - 1) == idPos3Value.charValue()) {
 
-            String className = (String) actionForm.get("classToManage");
-            String classToEditId = (String) actionForm.get("classToManageId");
-
-            DomainObject object = AbstractDomainObject.fromExternalId(classToEditId);
+            DomainObject object = getDomainObject(actionForm, "classToManageId");
 
             if (object != null) {
                 request.setAttribute("objectToEdit", object);

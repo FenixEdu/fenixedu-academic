@@ -28,8 +28,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
-
 /**
  * 
  * @author naat
@@ -53,9 +51,8 @@ public class GeneratePasswordsForCandidaciesAction extends FenixDispatchAction {
     public ActionForward showCandidacies(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         final DynaActionForm actionForm = (DynaActionForm) form;
-        final String executionDegreeId = (String) actionForm.get("executionDegreeId");
         final EntryPhase entryPhase = EntryPhase.valueOf(actionForm.getString("entryPhase"));
-        final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeId);
+        final ExecutionDegree executionDegree = getDomainObject(actionForm, "executionDegreeId");
         final Set<StudentCandidacy> studentCandidacies =
                 new HashSet<StudentCandidacy>(StudentCandidacy.readNotConcludedBy(executionDegree,
                         ExecutionYear.readCurrentExecutionYear(), entryPhase));

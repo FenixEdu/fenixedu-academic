@@ -154,8 +154,7 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
 
         DynaActionForm dynaForm = (DynaActionForm) form;
 
-        String curricularCourseID = (String) dynaForm.get("curricularCourseID");
-        CurricularCourse curricularCourse = (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseID);
+        CurricularCourse curricularCourse = getDomainObject(dynaForm, "curricularCourseID");
 
         String executionDegreeID = (String) dynaForm.get("executionDegreeID");
         ExecutionDegree executionDegree = null;
@@ -177,7 +176,7 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
         request.setAttribute("masterDegreeCreditsDTO", masterDegreeCreditsDTO);
 
         dynaForm.set("executionDegreeID", executionDegree.getExternalId());
-        dynaForm.set("curricularCourseID", curricularCourseID);
+        dynaForm.set("curricularCourseID", curricularCourse.getExternalId());
         return mapping.findForward("editMasterDegreeCredits");
     }
 

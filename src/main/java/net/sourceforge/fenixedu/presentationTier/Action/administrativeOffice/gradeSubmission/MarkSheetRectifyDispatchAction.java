@@ -61,8 +61,7 @@ public class MarkSheetRectifyDispatchAction extends MarkSheetDispatchAction {
     public ActionForward rectifyMarkSheetStepOneByEvaluation(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) {
         DynaActionForm form = (DynaActionForm) actionForm;
-        String evaluationID = (String) form.get("evaluationID");
-        EnrolmentEvaluation enrolmentEvaluation = AbstractDomainObject.fromExternalId(evaluationID);
+        EnrolmentEvaluation enrolmentEvaluation = getDomainObject(form, "evaluationID");
         MarkSheet markSheet = enrolmentEvaluation.getMarkSheet();
         MarkSheetRectifyBean rectifyBean = new MarkSheetRectifyBean();
         rectifyBean.setMarkSheet(markSheet);
@@ -145,9 +144,7 @@ public class MarkSheetRectifyDispatchAction extends MarkSheetDispatchAction {
             HttpServletResponse response) {
 
         DynaActionForm form = (DynaActionForm) actionForm;
-        String evaluationID = (String) form.get("evaluationID");
-
-        EnrolmentEvaluation enrolmentEvaluation = AbstractDomainObject.fromExternalId(evaluationID);
+        EnrolmentEvaluation enrolmentEvaluation = getDomainObject(form, "evaluationID");
         Enrolment enrolment = enrolmentEvaluation.getEnrolment();
 
         List<EnrolmentEvaluation> rectifiedAndRectificationEvaluations =

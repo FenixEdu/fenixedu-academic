@@ -54,8 +54,7 @@ public class ScientificCouncilManageTeacherAdviseServiceDispatchAction extends M
 
         DynaActionForm dynaForm = (DynaActionForm) form;
 
-        final String executionPeriodID = (String) dynaForm.get("executionPeriodId");
-        final ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodID);
+        final ExecutionSemester executionSemester = getDomainObject(dynaForm, "executionPeriodId");
 
         Teacher teacher = AbstractDomainObject.fromExternalId(dynaForm.getString("teacherId"));
 

@@ -112,7 +112,7 @@ public class FinalDegreeWorkProposalsDispatchAction extends FenixContextDispatch
 
         if (branchOID != null && !branchOID.equals("") && StringUtils.isNumeric(branchOID)) {
             Collection headers = (Collection) request.getAttribute("publishedFinalDegreeWorkProposalHeaders");
-            CollectionUtils.filter(headers, new FILTER_INFOPROSAL_HEADERS_BY_BRANCH_PREDICATE(new Integer(branchOID)));
+            CollectionUtils.filter(headers, new FILTER_INFOPROSAL_HEADERS_BY_BRANCH_PREDICATE(branchOID));
         }
     }
 
@@ -217,9 +217,9 @@ public class FinalDegreeWorkProposalsDispatchAction extends FenixContextDispatch
 
     public class FILTER_INFOPROSAL_HEADERS_BY_BRANCH_PREDICATE implements Predicate {
 
-        Integer branchOID = null;
+        String branchOID = null;
 
-        public FILTER_INFOPROSAL_HEADERS_BY_BRANCH_PREDICATE(Integer branchOID) {
+        public FILTER_INFOPROSAL_HEADERS_BY_BRANCH_PREDICATE(String branchOID) {
             this.branchOID = branchOID;
         }
 

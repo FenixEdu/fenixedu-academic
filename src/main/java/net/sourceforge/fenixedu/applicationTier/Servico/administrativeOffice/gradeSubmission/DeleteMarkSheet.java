@@ -6,13 +6,11 @@ package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.gr
 import net.sourceforge.fenixedu.domain.MarkSheet;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class DeleteMarkSheet {
 
     @Service
-    public static void run(String markSheetID) {
-        MarkSheet markSheet = AbstractDomainObject.fromExternalId(markSheetID);
+    public static void run(MarkSheet markSheet) {
         if (markSheet == null) {
             throw new DomainException("error.noMarkSheet");
         }

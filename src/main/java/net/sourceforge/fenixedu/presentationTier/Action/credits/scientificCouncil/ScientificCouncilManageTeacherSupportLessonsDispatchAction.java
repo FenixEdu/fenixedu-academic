@@ -46,9 +46,8 @@ public class ScientificCouncilManageTeacherSupportLessonsDispatchAction extends 
 
         DynaActionForm supportLessonForm = (DynaActionForm) form;
         String supportLesssonID = (String) supportLessonForm.get("supportLessonID");
-        String professorshipID = (String) supportLessonForm.get("professorshipID");
 
-        Professorship professorship = AbstractDomainObject.fromExternalId(professorshipID);
+        Professorship professorship = getDomainObject(supportLessonForm, "professorshipID");
 
         if (professorship == null) {
             return mapping.findForward("teacher-not-found");

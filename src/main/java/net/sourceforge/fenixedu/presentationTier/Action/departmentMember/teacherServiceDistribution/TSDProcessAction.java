@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.CopyTSDProcess;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.CreateTSDProcess;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.DeleteTSDProcess;
@@ -301,10 +300,8 @@ public class TSDProcessAction extends FenixDispatchAction {
     }
 
     private ExecutionYear getSelectedExecutionYear(IUserView userView, DynaActionForm dynaForm,
-            List<ExecutionYear> executionYearList) throws FenixServiceException {
-        String selectedExecutionYearId = (String) dynaForm.get("executionYear");
-
-        ExecutionYear selectedExecutionYear = AbstractDomainObject.fromExternalId(selectedExecutionYearId);
+            List<ExecutionYear> executionYearList) {
+        ExecutionYear selectedExecutionYear = getDomainObject(dynaForm, "executionYear");
 
         if (selectedExecutionYear == null) {
             if (executionYearList != null && !executionYearList.isEmpty()) {
@@ -317,21 +314,17 @@ public class TSDProcessAction extends FenixDispatchAction {
         return selectedExecutionYear;
     }
 
-    private ExecutionSemester getSelectedExecutionPeriod(IUserView userView, DynaActionForm dynaForm)
-            throws FenixServiceException {
+    private ExecutionSemester getSelectedExecutionPeriod(IUserView userView, DynaActionForm dynaForm) {
         String selectedExeuctionPeriodId = (String) dynaForm.get("executionPeriod");
 
         if (selectedExeuctionPeriodId.equals(NOT_SELECTED_EXECUTION_PERIOD)) {
             return null;
         }
 
-        ExecutionSemester selectedExecutionPeriod = AbstractDomainObject.fromExternalId(selectedExeuctionPeriodId);
-
-        return selectedExecutionPeriod;
+        return getDomainObject(dynaForm, "executionPeriod");
     }
 
-    private void setCurrentExecutionYearInDynamicForm(IUserView userView, DynaActionForm dynaForm, ExecutionYear executionYear)
-            throws FenixServiceException {
+    private void setCurrentExecutionYearInDynamicForm(IUserView userView, DynaActionForm dynaForm, ExecutionYear executionYear) {
         dynaForm.set("executionYear", executionYear.getExternalId());
     }
 
@@ -346,10 +339,8 @@ public class TSDProcessAction extends FenixDispatchAction {
     }
 
     private ExecutionYear getSelectedExecutionYearForCopy(IUserView userView, DynaActionForm dynaForm,
-            List<ExecutionYear> executionYearList) throws FenixServiceException {
-        String selectedExecutionYearId = (String) dynaForm.get("executionYearForCopy");
-
-        ExecutionYear selectedExecutionYear = AbstractDomainObject.fromExternalId(selectedExecutionYearId);
+            List<ExecutionYear> executionYearList) {
+        ExecutionYear selectedExecutionYear = getDomainObject(dynaForm, "executionYearForCopy");
 
         if (selectedExecutionYear == null) {
             if (executionYearList != null && !executionYearList.isEmpty()) {
@@ -362,18 +353,13 @@ public class TSDProcessAction extends FenixDispatchAction {
         return selectedExecutionYear;
     }
 
-    private ExecutionSemester getSelectedExecutionPeriodForCopy(IUserView userView, DynaActionForm dynaForm)
-            throws FenixServiceException {
-        String selectedExecutionPeriodId = (String) dynaForm.get("executionPeriodForCopy");
-
-        ExecutionSemester selectedExecutionPeriod = AbstractDomainObject.fromExternalId(selectedExecutionPeriodId);
-
+    private ExecutionSemester getSelectedExecutionPeriodForCopy(IUserView userView, DynaActionForm dynaForm) {
+        ExecutionSemester selectedExecutionPeriod = getDomainObject(dynaForm, "executionPeriodForCopy");
         return selectedExecutionPeriod;
     }
 
     private TSDProcess getSelectedTSDProcess(IUserView userView, DynaActionForm dynaForm) {
-        String tsdProcessId = (String) dynaForm.get("tsdProcess");
-        TSDProcess tsdProcess = AbstractDomainObject.fromExternalId(tsdProcessId);
+        TSDProcess tsdProcess = getDomainObject(dynaForm, "tsdProcess");
 
         return tsdProcess;
     }

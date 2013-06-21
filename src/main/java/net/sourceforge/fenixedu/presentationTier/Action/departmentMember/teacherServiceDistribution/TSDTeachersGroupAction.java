@@ -296,17 +296,11 @@ public class TSDTeachersGroupAction extends FenixDispatchAction {
         return showFormToCreateCourse(mapping, form, request, response);
     }
 
-    private TeacherServiceDistribution getSelectedTeacherServiceDistribution(DynaActionForm dynaForm)
-            throws FenixServiceException {
-        String selectedTeacherServiceDistributionId = (String) dynaForm.get("tsd");
-        TeacherServiceDistribution selectedTeacherServiceDistribution =
-                AbstractDomainObject.fromExternalId(selectedTeacherServiceDistributionId);
-
-        return selectedTeacherServiceDistribution;
+    private TeacherServiceDistribution getSelectedTeacherServiceDistribution(DynaActionForm dynaForm) {
+        return getDomainObject(dynaForm, "tsd");
     }
 
-    private TeacherServiceDistribution getSelectedTeacherServiceDistribution(HttpServletRequest request)
-            throws FenixServiceException {
+    private TeacherServiceDistribution getSelectedTeacherServiceDistribution(HttpServletRequest request) {
         String selectedTeacherServiceDistributionId = String.valueOf(request.getParameter("tsd"));
         TeacherServiceDistribution selectedTeacherServiceDistribution =
                 AbstractDomainObject.fromExternalId(selectedTeacherServiceDistributionId);
@@ -320,10 +314,8 @@ public class TSDTeachersGroupAction extends FenixDispatchAction {
         return tsdId;
     }
 
-    private Department getSelectedDepartment(DynaActionForm dynaForm, Department distributionDepartment)
-            throws FenixServiceException {
-        String selectedDepartmentId = (String) dynaForm.get("department");
-        Department selectedDepartment = AbstractDomainObject.fromExternalId(selectedDepartmentId);
+    private Department getSelectedDepartment(DynaActionForm dynaForm, Department distributionDepartment) {
+        Department selectedDepartment = getDomainObject(dynaForm, "department");
 
         if (selectedDepartment == null) {
             return distributionDepartment;
@@ -332,36 +324,24 @@ public class TSDTeachersGroupAction extends FenixDispatchAction {
         return selectedDepartment;
     }
 
-    private TSDTeacher getSelectedTSDTeacher(DynaActionForm dynaForm) throws FenixServiceException {
-        String selectedTSDTeacherId = (String) dynaForm.get("tsdTeacher");
-        TSDTeacher selectedTSDTeacher = AbstractDomainObject.fromExternalId(selectedTSDTeacherId);
-
-        return selectedTSDTeacher;
+    private TSDTeacher getSelectedTSDTeacher(DynaActionForm dynaForm) {
+        return getDomainObject(dynaForm, "tsdTeacher");
     }
 
     private Teacher getSelectedTeacher(DynaActionForm dynaForm) {
-        String selectedTeacherId = (String) dynaForm.get("teacher");
-        Teacher selectedTeacher = AbstractDomainObject.fromExternalId(selectedTeacherId);
-
-        return selectedTeacher;
+        return getDomainObject(dynaForm, "teacher");
     }
 
     private TSDCourse getSelectedTSDCourse(DynaActionForm dynaForm) {
-        String selectedCourseId = (String) dynaForm.get("tsdCourse");
-        return AbstractDomainObject.fromExternalId(selectedCourseId);
+        return getDomainObject(dynaForm, "tsdCourse");
     }
 
     private CompetenceCourse getSelectedCompetenceCourse(DynaActionForm dynaForm) {
-        String selectedCourseId = (String) dynaForm.get("tsdCourse");
-        CompetenceCourse course = AbstractDomainObject.fromExternalId(selectedCourseId);
-
-        return course;
+        return getDomainObject(dynaForm, "tsdCourse");
     }
 
     private ProfessionalCategory getSelectedCategory(DynaActionForm dynaForm) {
-        String selectedCategoryId = (String) dynaForm.get("category");
-        ProfessionalCategory selectedCategory = AbstractDomainObject.fromExternalId(selectedCategoryId);
-        return selectedCategory;
+        return getDomainObject(dynaForm, "category");
     }
 
 }

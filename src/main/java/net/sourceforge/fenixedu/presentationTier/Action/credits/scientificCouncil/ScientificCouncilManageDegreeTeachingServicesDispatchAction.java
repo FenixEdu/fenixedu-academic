@@ -18,7 +18,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "scientificCouncil", path = "/degreeTeachingServiceManagement",
         input = "/degreeTeachingServiceManagement.do?method=showTeachingServiceDetails",
@@ -38,8 +37,7 @@ public class ScientificCouncilManageDegreeTeachingServicesDispatchAction extends
             HttpServletResponse response) throws NumberFormatException, FenixServiceException {
 
         DynaActionForm dynaForm = (DynaActionForm) form;
-        String professorshipID = (String) dynaForm.get("professorshipID");
-        Professorship professorship = AbstractDomainObject.fromExternalId(professorshipID);
+        Professorship professorship = getDomainObject(dynaForm, "professorshipID");
 
         if (professorship == null) {
             return mapping.findForward("teacher-not-found");

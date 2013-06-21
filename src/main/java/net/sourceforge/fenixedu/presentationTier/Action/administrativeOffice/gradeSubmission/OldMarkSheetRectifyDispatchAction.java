@@ -29,7 +29,6 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 @Mapping(path = "/rectifyOldMarkSheet", module = "academicAdministration", formBean = "markSheetManagementForm",
@@ -112,8 +111,7 @@ public class OldMarkSheetRectifyDispatchAction extends OldMarkSheetCreateDispatc
     public ActionForward rectifyMarkSheetStepOneByEvaluation(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) {
         DynaActionForm form = (DynaActionForm) actionForm;
-        String evaluationID = (String) form.get("evaluationID");
-        EnrolmentEvaluation enrolmentEvaluation = AbstractDomainObject.fromExternalId(evaluationID);
+        EnrolmentEvaluation enrolmentEvaluation = getDomainObject(form, "evaluationID");
         MarkSheetRectifyBean rectifyBean = new MarkSheetRectifyBean();
         rectifyBean.setEnrolmentEvaluation(enrolmentEvaluation);
         fillMarkSheetRectifyBean(actionForm, request, rectifyBean);
@@ -126,18 +124,14 @@ public class OldMarkSheetRectifyDispatchAction extends OldMarkSheetCreateDispatc
     private void fillMarkSheetRectifyBean(ActionForm actionForm, HttpServletRequest request, MarkSheetRectifyBean markSheetBean) {
         DynaActionForm form = (DynaActionForm) actionForm;
 
-        String executionPeriodID = (String) form.get("epID");
-        String degreeID = (String) form.get("dID");
-        String degreeCurricularPlanID = (String) form.get("dcpID");
-        String curricularCourseID = (String) form.get("ccID");
         String markSheetType = form.getString("mst");
 
-        final ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodID);
-        final CurricularCourse curricularCourse = (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseID);
+        final ExecutionSemester executionSemester = getDomainObject(form, "epID");
+        final CurricularCourse curricularCourse = getDomainObject(form, "ccID");
 
         markSheetBean.setExecutionPeriod(executionSemester);
-        markSheetBean.setDegree(AbstractDomainObject.<Degree> fromExternalId(degreeID));
-        markSheetBean.setDegreeCurricularPlan(AbstractDomainObject.<DegreeCurricularPlan> fromExternalId(degreeCurricularPlanID));
+        markSheetBean.setDegree(this.<Degree> getDomainObject(form, "dID"));
+        markSheetBean.setDegreeCurricularPlan(this.<DegreeCurricularPlan> getDomainObject(form, "dcpID"));
         markSheetBean.setCurricularCourseBean(new CurricularCourseMarksheetManagementBean(curricularCourse, executionSemester));
         markSheetBean.setMarkSheetType(MarkSheetType.valueOf(markSheetType));
 

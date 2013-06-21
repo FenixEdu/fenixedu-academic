@@ -37,7 +37,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * 
@@ -88,15 +87,13 @@ public class ChooseCertificateInfoAction extends FenixDispatchAction {
         // Get the Information
         String certificateString = (String) chooseDeclaration.get("certificateList");
         String[] destination = (String[]) chooseDeclaration.get("destination");
-        String studentCurricularPlanID = (String) chooseDeclaration.get("studentCurricularPlanID");
+        StudentCurricularPlan studentCurricularPlan = getDomainObject(chooseDeclaration, "studentCurricularPlanID");
 
         if (destination.length != 0) {
             request.setAttribute(PresentationConstants.DOCUMENT_REASON_LIST, destination);
         }
 
-        InfoStudentCurricularPlan infoStudentCurricularPlan =
-                InfoStudentCurricularPlan.newInfoFromDomain(AbstractDomainObject
-                        .<StudentCurricularPlan> fromExternalId(studentCurricularPlanID));
+        InfoStudentCurricularPlan infoStudentCurricularPlan = InfoStudentCurricularPlan.newInfoFromDomain(studentCurricularPlan);
 
         int initialYear = infoStudentCurricularPlan.getInfoDegreeCurricularPlan().getInitialDate().getYear() + 1900;
         String initialExecutionYear = initialYear + "/" + ++initialYear;
@@ -122,7 +119,7 @@ public class ChooseCertificateInfoAction extends FenixDispatchAction {
 
                 try {
                     infoMasterDegreeProofVersion =
-                            ReadActiveMasterDegreeProofVersionByStudentCurricularPlan.run(studentCurricularPlanID);
+                            ReadActiveMasterDegreeProofVersionByStudentCurricularPlan.run(studentCurricularPlan);
                 } catch (NonExistingServiceException e) {
                     throw new NonExistingActionException("O registo da tese ", e);
                 } catch (ScholarshipNotFinishedServiceException e) {

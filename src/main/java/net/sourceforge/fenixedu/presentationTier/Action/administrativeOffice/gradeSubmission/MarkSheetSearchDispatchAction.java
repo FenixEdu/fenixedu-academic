@@ -144,8 +144,7 @@ public class MarkSheetSearchDispatchAction extends MarkSheetDispatchAction {
             HttpServletRequest request, HttpServletResponse response) {
 
         DynaActionForm form = (DynaActionForm) actionForm;
-        String evaluationID = (String) form.get("evaluationID");
-        EnrolmentEvaluation enrolmentEvaluation = AbstractDomainObject.fromExternalId(evaluationID);
+        EnrolmentEvaluation enrolmentEvaluation = getDomainObject(form, "evaluationID");
         MarkSheet markSheet = enrolmentEvaluation.getRectificationMarkSheet();
 
         request.setAttribute("markSheet", markSheet);
@@ -183,9 +182,8 @@ public class MarkSheetSearchDispatchAction extends MarkSheetDispatchAction {
     public ActionForward listMarkSheet(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         DynaActionForm form = (DynaActionForm) actionForm;
-        String markSheetID = (String) form.get("msID");
 
-        MarkSheet markSheet = AbstractDomainObject.fromExternalId(markSheetID);
+        MarkSheet markSheet = getDomainObject(form, "msID");
 
         request.setAttribute("markSheet", markSheet);
         request.setAttribute("url", buildUrl(form));
@@ -215,9 +213,7 @@ public class MarkSheetSearchDispatchAction extends MarkSheetDispatchAction {
     public ActionForward removeGrades(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException {
         DynaActionForm form = (DynaActionForm) actionForm;
-        String markSheetID = (String) form.get("msID");
-
-        MarkSheet markSheet = AbstractDomainObject.fromExternalId(markSheetID);
+        MarkSheet markSheet = getDomainObject(form, "msID");
         List<EnrolmentEvaluation> evaluations = getEvaluationsToRemove(form);
         try {
             RemoveGradesFromConfirmedMarkSheet.run(markSheet, evaluations);

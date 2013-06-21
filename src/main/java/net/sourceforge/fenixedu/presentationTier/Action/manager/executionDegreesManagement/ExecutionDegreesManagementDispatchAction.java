@@ -155,7 +155,7 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
 
         final DynaActionForm form = (DynaActionForm) actionForm;
         final String executionDegreeID = (String) form.get("executionDegreeID");
-        if (executionDegreeID != null) {
+        if (!StringUtils.isEmpty(executionDegreeID)) {
             final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeID);
 
             request.setAttribute("executionDegree", executionDegree);
@@ -307,7 +307,7 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
             String findForward) {
         final DynaActionForm form = (DynaActionForm) actionForm;
         final String executionDegreeID = (String) form.get("executionDegreeID");
-        if (executionDegreeID != null) {
+        if (!StringUtils.isEmpty(executionDegreeID)) {
             final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeID);
             request.setAttribute("executionDegree", executionDegree);
             return mapping.findForward(findForward);

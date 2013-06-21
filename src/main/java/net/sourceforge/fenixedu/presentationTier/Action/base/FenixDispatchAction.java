@@ -342,6 +342,30 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
         return (T) AbstractDomainObject.fromExternalId(parameter != null ? parameter : (String) request.getAttribute(name));
     }
 
+    /**
+     * Obtains a domain object whose ExternalId is present in the given form.
+     * 
+     * The reason for this method to exist is that in Struts's forms, the default
+     * value of a String is an empty string, and not null.
+     * 
+     * This method should be avoided, as Struts forms are not to be used.
+     * 
+     * @param form
+     *            The {@link DynaActionForm} to extract the id from
+     * @param name
+     *            The name of the parameter. Must be of type {@link String}
+     * @return
+     *         The {@link DomainObject}
+     */
+    protected <T extends DomainObject> T getDomainObject(final DynaActionForm form, final String name) {
+        final String parameter = (String) form.get(name);
+        if (StringUtils.isEmpty(parameter) || parameter.startsWith("-")) {
+            return null;
+        } else {
+            return AbstractDomainObject.fromExternalId(parameter);
+        }
+    }
+
     public ActionForward redirect(String url, HttpServletRequest request) {
         return redirect(url, request, true);
     }

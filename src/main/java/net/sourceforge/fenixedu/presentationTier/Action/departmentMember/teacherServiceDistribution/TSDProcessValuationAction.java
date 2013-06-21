@@ -444,10 +444,8 @@ public class TSDProcessValuationAction extends FenixDispatchAction {
     }
 
     private TeacherServiceDistribution getSelectedTeacherServiceDistribution(IUserView userView, DynaActionForm dynaForm,
-            TeacherServiceDistribution rootTeacherServiceDistribution) throws FenixServiceException {
-        String selectedTeacherServiceDistributionId = (String) dynaForm.get("tsd");
-        TeacherServiceDistribution selectedTeacherServiceDistribution =
-                AbstractDomainObject.fromExternalId(selectedTeacherServiceDistributionId);
+            TeacherServiceDistribution rootTeacherServiceDistribution) {
+        TeacherServiceDistribution selectedTeacherServiceDistribution = getDomainObject(dynaForm, "tsd");
 
         if (selectedTeacherServiceDistribution == null) {
             return rootTeacherServiceDistribution;
@@ -456,18 +454,12 @@ public class TSDProcessValuationAction extends FenixDispatchAction {
         return selectedTeacherServiceDistribution;
     }
 
-    private TSDProcessPhase getSelectedTSDProcessPhase(IUserView userView, DynaActionForm dynaForm) throws FenixServiceException {
-        String selectedTSDProcessPhaseId = (String) dynaForm.get("tsdProcessPhase");
-        TSDProcessPhase selectedTSDProcessPhase = AbstractDomainObject.fromExternalId(selectedTSDProcessPhaseId);
-
-        return selectedTSDProcessPhase;
+    private TSDProcessPhase getSelectedTSDProcessPhase(IUserView userView, DynaActionForm dynaForm) {
+        return getDomainObject(dynaForm, "tsdProcessPhase");
     }
 
     private TSDProcess getTSDProcess(IUserView userView, DynaActionForm dynaForm) {
-        String tsdProcessId = (String) dynaForm.get("tsdProcess");
-        TSDProcess tsdProcess = AbstractDomainObject.fromExternalId(tsdProcessId);
-
-        return tsdProcess;
+        return getDomainObject(dynaForm, "tsdProcess");
     }
 
     private List<ShiftType> getSelectedShiftTypes(DynaActionForm dynaForm) {
@@ -502,7 +494,6 @@ public class TSDProcessValuationAction extends FenixDispatchAction {
         dynaForm.set("viewStudentsEnrolmentsPerShift", false);
     }
 
-    @SuppressWarnings("unchecked")
     private List<TSDTeacherDTOEntry> getTSDTeacherDTOEntries(IUserView userView, TSDProcessPhase selectedTSDProcessPhase,
             TeacherServiceDistribution selectedTeacherServiceDistribution, ExecutionSemester executionSemester)
             throws FenixServiceException {
@@ -514,7 +505,6 @@ public class TSDProcessValuationAction extends FenixDispatchAction {
         return ReadTSDTeachersFromTSDProcesses.runReadTSDTeachersFromTSDProcesses(tsdProcessIdMap);
     }
 
-    @SuppressWarnings("unchecked")
     private List<TSDCourseDTOEntry> getTSDCourseDTOEntries(IUserView userView, TSDProcessPhase selectedTSDProcessPhase,
             TeacherServiceDistribution selectedTeacherServiceDistribution, ExecutionSemester executionSemester)
             throws FenixServiceException {
@@ -539,9 +529,8 @@ public class TSDProcessValuationAction extends FenixDispatchAction {
     }
 
     private ExecutionSemester getSelectedExecutionPeriod(IUserView userView, DynaActionForm dynaForm,
-            List<ExecutionSemester> executionPeriodList) throws FenixServiceException {
-        String selectedExecutionPeriodId = (String) dynaForm.get("executionPeriod");
-        ExecutionSemester selectedExecutionPeriod = AbstractDomainObject.fromExternalId(selectedExecutionPeriodId);
+            List<ExecutionSemester> executionPeriodList) {
+        ExecutionSemester selectedExecutionPeriod = getDomainObject(dynaForm, "executionPeriod");
 
         if (selectedExecutionPeriod == null) {
             if (executionPeriodList != null && executionPeriodList.size() > 0) {

@@ -28,6 +28,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.RequestUtils;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -102,7 +103,7 @@ public class ChooseExamsMapContextDANew extends FenixContextDispatchAction {
         // degreeCurricularPlanID
         String degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
         final DegreeCurricularPlan degreeCurricularPlan;
-        if (degreeCurricularPlanId == null) {
+        if (StringUtils.isEmpty(degreeCurricularPlanId)) {
             degreeCurricularPlan = degree.getMostRecentDegreeCurricularPlan();
         } else {
             degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanId);

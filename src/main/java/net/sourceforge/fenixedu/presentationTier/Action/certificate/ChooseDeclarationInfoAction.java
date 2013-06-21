@@ -31,7 +31,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * 
@@ -83,15 +82,14 @@ public class ChooseDeclarationInfoAction extends FenixDispatchAction {
 
         // Get the Information
         String[] destination = (String[]) chooseDeclaration.get("destination");
-        String studentCurricularPlanID = (String) chooseDeclaration.get("studentCurricularPlanID");
 
         if (destination.length != 0) {
             request.setAttribute(PresentationConstants.DOCUMENT_REASON_LIST, destination);
         }
 
         InfoStudentCurricularPlan infoStudentCurricularPlan =
-                InfoStudentCurricularPlan.newInfoFromDomain(AbstractDomainObject
-                        .<StudentCurricularPlan> fromExternalId(studentCurricularPlanID));
+                InfoStudentCurricularPlan.newInfoFromDomain(this.<StudentCurricularPlan> getDomainObject(chooseDeclaration,
+                        "studentCurricularPlanID"));
 
         InfoExecutionYear infoExecutionYear = InfoExecutionYear.newInfoFromDomain(ExecutionYear.readCurrentExecutionYear());
 
