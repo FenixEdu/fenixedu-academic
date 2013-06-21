@@ -107,6 +107,11 @@
 				<bean:message key="label.departmentCreditsPool" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
 			</html:link>
 		</li>
+		<li>
+			<html:link page="/exportCredits.do?method=prepareExportDepartmentCredits">
+				<bean:message key="label.department.credits" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+			</html:link>
+		</li>
 		<%--
 		<li>
 		  	<html:link page="/showAllTeacherCreditsResume.do?method=prepareTeacherSearch">
@@ -131,7 +136,7 @@
 		</li>
 		<li>
 			<html:link page="/departmentCredits.do?method=prepareDepartmentCredits">
-		  		<bean:message key="link.department.credits"/>
+				<bean:message key="label.departmentAdmOffice" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
 		  	</html:link>
 		</li>		
 		

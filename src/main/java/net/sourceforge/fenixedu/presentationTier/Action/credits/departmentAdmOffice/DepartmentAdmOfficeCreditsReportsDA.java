@@ -32,4 +32,15 @@ public class DepartmentAdmOfficeCreditsReportsDA extends CreditsReportsDA {
         request.setAttribute("departmentCreditsBean", departmentCreditsBean);
         return mapping.findForward("exportDepartmentCourses");
     }
+
+    @Override
+    public ActionForward prepareExportDepartmentCredits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
+        IUserView userView = UserView.getUser();
+        DepartmentCreditsBean departmentCreditsBean = new DepartmentCreditsBean();
+        departmentCreditsBean.setAvailableDepartments(new ArrayList<Department>(userView.getPerson()
+                .getManageableDepartmentCredits()));
+        request.setAttribute("departmentCreditsBean", departmentCreditsBean);
+        return mapping.findForward("exportDepartmentCredits");
+    }
 }

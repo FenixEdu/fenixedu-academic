@@ -73,6 +73,11 @@
 				</html:link>
 			</li>
 			<li>
+				<html:link page="/exportCredits.do?method=prepareExportDepartmentCredits">
+					<bean:message key="label.department.credits" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+				</html:link>
+			</li>
+			<li>
 				<html:link page="/exportCredits.do?method=prepareExportDepartmentCourses">
 					<bean:message key="label.executionCourses.types" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
 				</html:link>

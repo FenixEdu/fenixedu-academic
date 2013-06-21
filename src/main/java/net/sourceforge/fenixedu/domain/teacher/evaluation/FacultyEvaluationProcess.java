@@ -254,20 +254,23 @@ public class FacultyEvaluationProcess extends FacultyEvaluationProcess_Base impl
     }
 
     private TeacherEvaluationMark parseMark(final String mark) {
-        if ("Excelente".equals(mark)) {
-            return TeacherEvaluationMark.EXCELLENT;
-        }
-        if ("Muito Bom".equals(mark)) {
-            return TeacherEvaluationMark.VERY_GOOD;
-        }
-        if ("Bom".equals(mark)) {
-            return TeacherEvaluationMark.GOOD;
-        }
-        if ("N/A".equals(mark)) {
-            return null;
-        }
-        if ("Inadequado".equals(mark)) {
-            return TeacherEvaluationMark.INADEQUATE;
+        if (!StringUtils.isEmpty(mark)) {
+            String trimmedMark = mark.trim();
+            if ("Excelente".equals(trimmedMark)) {
+                return TeacherEvaluationMark.EXCELLENT;
+            }
+            if ("Muito Bom".equals(trimmedMark)) {
+                return TeacherEvaluationMark.VERY_GOOD;
+            }
+            if ("Bom".equals(trimmedMark)) {
+                return TeacherEvaluationMark.GOOD;
+            }
+            if ("N/A".equals(trimmedMark)) {
+                return null;
+            }
+            if ("Inadequado".equals(trimmedMark)) {
+                return TeacherEvaluationMark.INADEQUATE;
+            }
         }
         throw new DomainException("error.unknown.mark.value", mark);
     }
