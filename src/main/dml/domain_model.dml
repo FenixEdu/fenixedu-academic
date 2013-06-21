@@ -240,6 +240,14 @@ valueType java.util.UUID as UUID {
     internalizeWith fromString();
 }
 
+valueType pt.utl.ist.fenix.tools.util.Strings as Strings {
+    externalizeWith {
+        String exportAsString();
+    }
+
+    internalizeWith importFromString();
+}
+
 valueType net.sourceforge.fenixedu.domain.Grade as Grade {
     externalizeWith {
         String exportAsString();
@@ -20677,7 +20685,6 @@ relation AnnualTeachingCreditsDocumentAnnualTeachingCredits {
 	credits.AnnualTeachingCredits playsRole annualTeachingCredits;
 }
 
-
 relation RootDomainObjectGenericApplication {
 	RootDomainObject playsRole rootDomainObject; 
 	candidacy.GenericApplication playsRole genericApplication {
@@ -20770,4 +20777,28 @@ relation PhotographSantanderPhotoEntry {
 	cardGeneration.SantanderPhotoEntry playsRole santanderPhotoEntry {
 		multiplicity *;
 	}
+}
+
+/**
+ * Former Remote Plugin
+ */
+
+package pt.ist.fenixframework.plugins.remote.domain;
+
+class RemoteSystem {
+}
+
+class RemoteHost {
+    String name;
+    Strings url;
+    String username;
+    String password;
+    Boolean allowInvocationAccess;
+}
+
+relation RemoteSystemRemoteHost {
+    RemoteSystem playsRole remoteSystem;
+    RemoteHost playsRole remoteHosts {
+        multiplicity *;
+    }
 }

@@ -34,6 +34,7 @@ import org.slf4j.LoggerFactory;
 import pt.ist.fenixWebFramework.FenixWebFramework;
 import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixframework.FenixFrameworkInitializer;
+import pt.ist.fenixframework.plugins.remote.domain.RemoteSystem;
 import pt.ist.fenixframework.plugins.scheduler.Scheduler;
 import pt.ist.fenixframework.plugins.scheduler.domain.SchedulerSystem;
 import pt.ist.fenixframework.pstm.Transaction;
@@ -64,6 +65,7 @@ public class StartupServlet implements ServletContextListener {
         }
 
         RootDomainObject.init();
+        RemoteSystem.init();
 
         try {
             try {

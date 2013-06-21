@@ -522,11 +522,6 @@
 		</dependency>
 		<dependency>
 			<groupId>pt.ist</groupId>
-			<artifactId>remote-plugin</artifactId>
-			<version>2.0.0</version>
-		</dependency>
-		<dependency>
-			<groupId>pt.ist</groupId>
 			<artifactId>jodaplace</artifactId>
 			<version>1.0.0</version>
 		</dependency>
