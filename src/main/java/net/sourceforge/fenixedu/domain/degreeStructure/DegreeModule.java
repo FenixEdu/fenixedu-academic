@@ -158,16 +158,16 @@ abstract public class DegreeModule extends DegreeModule_Base {
     }
 
     public MultiLanguageString getNameI18N(final ExecutionSemester executionSemester) {
-        final MultiLanguageString multiLanguageString = new MultiLanguageString();
+        MultiLanguageString multiLanguageString = new MultiLanguageString();
 
         String name = getName(executionSemester);
         if (name != null && name.length() > 0) {
-            multiLanguageString.with(Language.pt, name);
+            multiLanguageString = multiLanguageString.with(Language.pt, name);
         }
 
         String nameEn = getNameEn(executionSemester);
         if (nameEn != null && nameEn.length() > 0) {
-            multiLanguageString.with(Language.en, nameEn);
+            multiLanguageString = multiLanguageString.with(Language.en, nameEn);
         }
 
         return multiLanguageString;

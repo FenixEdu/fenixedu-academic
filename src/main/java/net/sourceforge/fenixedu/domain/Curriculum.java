@@ -53,34 +53,34 @@ public class Curriculum extends Curriculum_Base {
     }
 
     public MultiLanguageString getGeneralObjectivesI18N() {
-        final MultiLanguageString multiLanguageString = new MultiLanguageString();
+        MultiLanguageString multiLanguageString = new MultiLanguageString();
         if (getGeneralObjectives() != null && getGeneralObjectives().length() > 0) {
-            multiLanguageString.with(Language.pt, getGeneralObjectives());
+            multiLanguageString = multiLanguageString.with(Language.pt, getGeneralObjectives());
         }
         if (getGeneralObjectivesEn() != null && getGeneralObjectivesEn().length() > 0) {
-            multiLanguageString.with(Language.en, getGeneralObjectivesEn());
+            multiLanguageString = multiLanguageString.with(Language.en, getGeneralObjectivesEn());
         }
         return multiLanguageString;
     }
 
     public MultiLanguageString getOperacionalObjectivesI18N() {
-        final MultiLanguageString multiLanguageString = new MultiLanguageString();
+        MultiLanguageString multiLanguageString = new MultiLanguageString();
         if (getOperacionalObjectives() != null && getOperacionalObjectives().length() > 0) {
-            multiLanguageString.with(Language.pt, getOperacionalObjectives());
+            multiLanguageString = multiLanguageString.with(Language.pt, getOperacionalObjectives());
         }
         if (getOperacionalObjectivesEn() != null && getOperacionalObjectivesEn().length() > 0) {
-            multiLanguageString.with(Language.en, getOperacionalObjectivesEn());
+            multiLanguageString = multiLanguageString.with(Language.en, getOperacionalObjectivesEn());
         }
         return multiLanguageString;
     }
 
     public MultiLanguageString getProgramI18N() {
-        final MultiLanguageString multiLanguageString = new MultiLanguageString();
+        MultiLanguageString multiLanguageString = new MultiLanguageString();
         if (getProgram() != null && getProgram().length() > 0) {
-            multiLanguageString.with(Language.pt, getProgram());
+            multiLanguageString = multiLanguageString.with(Language.pt, getProgram());
         }
         if (getProgramEn() != null && getProgramEn().length() > 0) {
-            multiLanguageString.with(Language.en, getProgramEn());
+            multiLanguageString = multiLanguageString.with(Language.en, getProgramEn());
         }
         return multiLanguageString;
     }
