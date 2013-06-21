@@ -312,11 +312,6 @@
 	</filter-mapping>
 
 	<!-- Servlet -->
-	<servlet>
-        <servlet-name>StartupServlet</servlet-name>
-        <servlet-class>net.sourceforge.fenixedu.presentationTier.servlets.startup.StartupServlet</servlet-class>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
     <servlet>
         <servlet-name>FacesServlet</servlet-name>
         <servlet-class>net.sourceforge.fenixedu.presentationTier.servlets.jsf.FenixFacesServlet</servlet-class>

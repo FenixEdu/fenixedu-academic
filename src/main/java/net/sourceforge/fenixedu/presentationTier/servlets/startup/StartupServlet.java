@@ -1,14 +1,15 @@
 package net.sourceforge.fenixedu.presentationTier.servlets.startup;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
+import javax.servlet.annotation.WebListener;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.Servico.Authenticate;
@@ -38,21 +39,13 @@ import pt.ist.fenixframework.plugins.scheduler.domain.SchedulerSystem;
 import pt.ist.fenixframework.pstm.Transaction;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 
-/**
- * 17/Fev/2003
- * 
- * @author jpvl
- */
-public class StartupServlet extends HttpServlet {
+@WebListener
+public class StartupServlet implements ServletContextListener {
 
     private static final Logger LOG = LoggerFactory.getLogger(StartupServlet.class);
 
     @Override
-    public void init(ServletConfig config) throws ServletException {
-        // Custodian.registerPID();
-
-        super.init(config);
-
+    public void contextInitialized(ServletContextEvent event) {
         try {
             Class.forName(FenixFrameworkInitializer.class.getName());
         } catch (ClassNotFoundException e) {
@@ -65,8 +58,9 @@ public class StartupServlet extends HttpServlet {
         try {
             final InputStream inputStream = Authenticate.class.getResourceAsStream("/build.version");
             PendingRequest.buildVersion = FileUtils.readFile(inputStream);
-        } catch (java.io.IOException e) {
-            throw new ServletException("Unable to load build version file");
+            inputStream.close();
+        } catch (IOException e) {
+            throw new Error("Unable to load build version file");
         }
 
         RootDomainObject.init();
@@ -74,12 +68,12 @@ public class StartupServlet extends HttpServlet {
         try {
             try {
                 InfoExecutionPeriod infoExecutionPeriod = ReadCurrentExecutionPeriod.run();
-                config.getServletContext().setAttribute(PresentationConstants.INFO_EXECUTION_PERIOD_KEY, infoExecutionPeriod);
+                event.getServletContext().setAttribute(PresentationConstants.INFO_EXECUTION_PERIOD_KEY, infoExecutionPeriod);
 
                 setScheduleForGratuitySituationCreation();
 
             } catch (Throwable e) {
-                throw new ServletException("Error reading actual execution period!", e);
+                throw new Error("Error reading actual execution period!", e);
             }
 
             try {
@@ -88,7 +82,7 @@ public class StartupServlet extends HttpServlet {
                 long end = System.currentTimeMillis();
                 System.out.println("CreateMetaDomainObectTypes: " + (end - start) + "ms.");
             } catch (Throwable throwable) {
-                throw new ServletException("Error creating MetaDomainObject!", throwable);
+                throw new Error("Error creating MetaDomainObject!", throwable);
             }
 
             try {
@@ -114,6 +108,11 @@ public class StartupServlet extends HttpServlet {
         } finally {
             Transaction.forceFinish();
         }
+    }
+
+    @Override
+    public void contextDestroyed(ServletContextEvent arg0) {
+
     }
 
     private void startContactValidationServices() {
