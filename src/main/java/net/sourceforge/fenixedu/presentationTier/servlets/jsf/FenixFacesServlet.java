@@ -11,6 +11,7 @@ import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
@@ -20,6 +21,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManage
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
+@WebServlet(urlPatterns = "*.faces")
 public class FenixFacesServlet implements Servlet {
 
     public static ServletConfig servletConfig = null;
@@ -34,7 +36,7 @@ public class FenixFacesServlet implements Servlet {
     @Override
     public void init(ServletConfig config) throws ServletException {
         facesServlet.init(config);
-        this.servletConfig = config;
+        servletConfig = config;
     }
 
     @Override

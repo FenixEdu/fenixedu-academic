@@ -44,6 +44,7 @@ import java.util.List;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -59,7 +60,10 @@ import dml.DomainModel;
 import dml.Role;
 import dml.Slot;
 
+@WebServlet(urlPatterns = "/domainbrowser/*")
 public class DomainBrowserServlet extends HttpServlet {
+
+    private static final long serialVersionUID = -3780027224510147325L;
 
     private static DomainModel domainModel;
     private static HashMap<DomainClass, String> domainClassesDescAttr = new HashMap<DomainClass, String>();

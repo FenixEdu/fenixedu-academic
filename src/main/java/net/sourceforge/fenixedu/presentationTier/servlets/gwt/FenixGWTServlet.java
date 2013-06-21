@@ -6,17 +6,21 @@ import java.util.Map.Entry;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 
 import com.google.gwt.user.client.rpc.IncompatibleRemoteServiceException;
 import com.google.gwt.user.client.rpc.SerializationException;
 import com.google.gwt.user.server.rpc.RPC;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
+@WebServlet(urlPatterns = "*.gwt")
 public class FenixGWTServlet extends RemoteServiceServlet {
+
+    private static final long serialVersionUID = 262190617986363827L;
 
     public ServletConfig servletConfig = null;
 
-    private Map<String, RemoteServiceServlet> dispatchMap;
+    private final Map<String, RemoteServiceServlet> dispatchMap;
 
     public FenixGWTServlet() {
         super();

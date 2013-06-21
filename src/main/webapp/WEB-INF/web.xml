@@ -38,10 +38,6 @@
 		</init-param>
 	</filter>
 	<filter>
-		<filter-name>JerseyAuthFilter</filter-name>
-		<filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.JerseyAuthFilter</filter-class>
-	</filter>
-	<filter>
 		<filter-name>CharsetEncoding</filter-name>
 		<filter-class>pt.ist.fenixWebFramework.servlets.filters.CharsetEncodingFilter</filter-class>
 	</filter>
@@ -185,10 +181,6 @@
 	</filter>
 	<!-- Filter Mapping -->
 	<filter-mapping>
-		<filter-name>JerseyAuthFilter</filter-name>
-		<url-pattern>/jersey/*</url-pattern>
-	</filter-mapping>
-	<filter-mapping>
  		 <filter-name>RequestIgnorer</filter-name>
  		 <url-pattern>/favicon.ico</url-pattern>
 	</filter-mapping>
@@ -312,19 +304,9 @@
 	</filter-mapping>
 
 	<!-- Servlet -->
-    <servlet>
-        <servlet-name>FacesServlet</servlet-name>
-        <servlet-class>net.sourceforge.fenixedu.presentationTier.servlets.jsf.FenixFacesServlet</servlet-class>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
      <servlet>
         <servlet-name>action</servlet-name>
         <servlet-class>net.sourceforge.fenixedu.presentationTier.servlets.ActionServletWrapper</servlet-class>
-        <load-on-startup>2</load-on-startup>
-    </servlet>
-    <servlet>
-        <servlet-name>DomainBrowser</servlet-name>
-        <servlet-class>net.sourceforge.fenixedu.presentationTier.servlets.DomainBrowserServlet</servlet-class>
         <load-on-startup>2</load-on-startup>
     </servlet>
     <servlet>
@@ -337,31 +319,13 @@
 		</init-param>
 	</servlet>
     <servlet>
-        <servlet-name>AutoCompleteServlet</servlet-name>
-        <servlet-class>net.sourceforge.fenixedu.presentationTier.servlets.ajax.AutoCompleteServlet</servlet-class>
-        <load-on-startup>2</load-on-startup>
-    </servlet>
-    <servlet>
-        <servlet-name>DeployNotifierServlet</servlet-name>
-        <servlet-class>net.sourceforge.fenixedu.presentationTier.servlets.ajax.DeployNotifierServlet</servlet-class>
-        <load-on-startup>2</load-on-startup>
-    </servlet>
-    <servlet>
         <servlet-name>MathMlServlet</servlet-name>
         <servlet-class>net.sourceforge.fenixedu.presentationTier.servlets.MathMlServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>FileDownloadServlet</servlet-name>
-        <servlet-class>net.sourceforge.fenixedu.presentationTier.servlets.FileDownloadServlet</servlet-class>
     </servlet>
     <servlet>
         <display-name>XFire Servlet</display-name>
         <servlet-name>XFireServlet</servlet-name>
         <servlet-class>org.codehaus.xfire.transport.http.XFireConfigurableServlet</servlet-class>
-    </servlet>
-    <servlet>
-    	<servlet-name>FenixGWTServlet</servlet-name>
-    	<servlet-class>net.sourceforge.fenixedu.presentationTier.servlets.gwt.FenixGWTServlet</servlet-class>
     </servlet>
     <servlet>
        <servlet-name>Jersey Web Application</servlet-name>
@@ -389,37 +353,13 @@
 		<servlet-name>MathMlServlet</servlet-name>
 		<url-pattern>/mathml/MathMlServlet</url-pattern>
 	</servlet-mapping>
-   	<servlet-mapping>
-		<servlet-name>FileDownloadServlet</servlet-name>
-		<url-pattern>/downloadFile/*</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>AutoCompleteServlet</servlet-name>
-		<url-pattern>/ajax/AutoCompleteServlet</url-pattern>
-	</servlet-mapping>
-   	<servlet-mapping>
-		<servlet-name>DeployNotifierServlet</servlet-name>
-		<url-pattern>/ajax/DeployNotifierServlet</url-pattern>
-	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>dwr-invoker</servlet-name>
 		<url-pattern>/dwr/*</url-pattern>
 	</servlet-mapping>
     <servlet-mapping>
-        <servlet-name>FacesServlet</servlet-name>
-        <url-pattern>*.faces</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>action</servlet-name>
         <url-pattern>*.do</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>DomainBrowser</servlet-name>
-        <url-pattern>/domainbrowser/*</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-    	<servlet-name>FenixGWTServlet</servlet-name>
-    	<url-pattern>*.gwt</url-pattern>
     </servlet-mapping>
 
 	<session-config>

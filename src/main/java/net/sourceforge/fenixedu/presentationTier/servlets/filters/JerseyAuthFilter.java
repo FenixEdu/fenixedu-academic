@@ -8,14 +8,15 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import pt.ist.fenixframework.plugins.remote.domain.RemoteHost;
 import pt.ist.fenixframework.plugins.remote.domain.RemoteSystem;
-import pt.ist.fenixframework.pstm.Transaction;
 
+@WebFilter(urlPatterns = "/jersey/*")
 public class JerseyAuthFilter implements Filter {
 
     final static String systemUsername = PropertiesManager.getProperty("jersey.username");
@@ -53,8 +54,6 @@ public class JerseyAuthFilter implements Filter {
         final String username = request.getHeader(USERNAME_KEY);
         final String password = request.getHeader(PASSWORD_KEY);
         Boolean found = Boolean.FALSE;
-        Transaction.begin(true);
-        Transaction.currentFenixTransaction().setReadOnly();
         for (final RemoteHost remoteHost : RemoteSystem.getInstance().getRemoteHostsSet()) {
             if (remoteHost.matches(url, username, password)) {
                 System.out.println("[Jersey Server Invoke by client " + url);
@@ -62,7 +61,6 @@ public class JerseyAuthFilter implements Filter {
             }
         }
         System.out.println("[Jersey Server] Invoke by client " + url);
-        Transaction.forceFinish();
         return found;
     }
 

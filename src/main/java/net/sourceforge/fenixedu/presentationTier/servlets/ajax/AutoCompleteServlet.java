@@ -3,8 +3,11 @@ package net.sourceforge.fenixedu.presentationTier.servlets.ajax;
 import java.util.Collection;
 import java.util.Map;
 
+import javax.servlet.annotation.WebServlet;
+
 import net.sourceforge.fenixedu.presentationTier.renderers.providers.AutoCompleteProvider;
 
+@WebServlet(urlPatterns = "/ajax/AutoCompleteServlet")
 public class AutoCompleteServlet extends pt.ist.fenixWebFramework.servlets.ajax.AutoCompleteServlet {
 
     private static final long serialVersionUID = 304694047374566088L;
