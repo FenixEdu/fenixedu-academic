@@ -346,12 +346,7 @@ public class Shift extends Shift_Base {
     public Double getAvailableShiftPercentage(Professorship professorship) {
         Double availablePercentage = 100.0;
         for (DegreeTeachingService degreeTeachingService : getDegreeTeachingServices()) {
-            /**
-             * if shift's type is LABORATORIAL the shift professorship
-             * percentage can exceed 100%
-             */
-            if (degreeTeachingService.getProfessorship() != professorship
-                    && (getCourseLoadsCount() != 1 || !containsType(ShiftType.LABORATORIAL))) {
+            if (degreeTeachingService.getProfessorship() != professorship) {
                 availablePercentage -= degreeTeachingService.getPercentage();
             }
         }

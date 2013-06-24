@@ -18,13 +18,13 @@ Boolean canChangeCredits = executionSemester.isInValidCreditsPeriod(net.sourcefo
 <bean:define id="executionSemesterName" value="<%= executionSemester.getQualifiedName()%>"/>
 <bean:define id="canChange" value="<%= canChangeCredits.toString()%>"/>
 <h3><bean:write name="executionSemesterName"/></h3>
-
+<%--
 <logic:equal name="canChange" value="true">
 	<p><html:link page="/creditsReductions.do?method=selectTeacher">
 		<bean:message key="label.reductionService.insert" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
 	</html:link></p>
 </logic:equal>
-
+ --%>
 <logic:present name="creditsReductions">
 	<fr:view name="creditsReductions">
 		<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.teacher.ReductionService">
