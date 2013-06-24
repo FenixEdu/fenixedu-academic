@@ -4162,6 +4162,9 @@ public class Person extends Person_Base {
         return isUpdated;
     }
 
+    /**
+       User socialSecurityNumber instead 
+    */
     @Override
     @Deprecated
     public String getFiscalCode() {
