@@ -46,41 +46,41 @@
 <bean:define id="individualCandidacyProcess" name="phdIndividualProgramProcess" property="candidacyProcess" />
 
 <logic:notEmpty name="individualCandidacyProcess" property="associatedPaymentCode">
-<p> <bean:message key="message.phd.institution.application.sibs.payment.details" bundle="PHD_RESOURCES" /></p>
-<table>
-	<tr>
-		<td><strong><bean:message key="label.sibs.entity.code" bundle="CANDIDATE_RESOURCES"/>:</strong></td>
-		<td><bean:write name="sibsEntityCode"/></td>
-	</tr>
-	<tr>
-		<td><strong><bean:message key="label.sibs.payment.code" bundle="CANDIDATE_RESOURCES"/>:</strong></td>
-		<td><fr:view name="individualCandidacyProcess" property="associatedPaymentCode.formattedCode"/></td>
-	</tr>
-	<tr>
-		<td><strong><bean:message key="label.sibs.amount" bundle="CANDIDATE_RESOURCES"/>:</strong></td>
-		<td><fr:view name="individualCandidacyProcess" property="associatedPaymentCode.minAmount"/> &euro;</td>
-	</tr>
-</table>
+	<p> <bean:message key="message.phd.institution.application.sibs.payment.details" bundle="PHD_RESOURCES" /></p>
+	<table>
+		<tr>
+			<td><strong><bean:message key="label.sibs.entity.code" bundle="CANDIDATE_RESOURCES"/>:</strong></td>
+			<td><bean:write name="sibsEntityCode"/></td>
+		</tr>
+		<tr>
+			<td><strong><bean:message key="label.sibs.payment.code" bundle="CANDIDATE_RESOURCES"/>:</strong></td>
+			<td><fr:view name="individualCandidacyProcess" property="associatedPaymentCode.formattedCode"/></td>
+		</tr>
+		<tr>
+			<td><strong><bean:message key="label.sibs.amount" bundle="CANDIDATE_RESOURCES"/>:</strong></td>
+			<td><fr:view name="individualCandidacyProcess" property="associatedPaymentCode.minAmount"/> &euro;</td>
+		</tr>
+	</table>
+		
+	<% 
+		if(locale.getLanguage().equals(Locale.ENGLISH.getLanguage())) {
+	%>
+	
+	<p>
+		<bean:message key="message.phd.institution.application.unable.to.pay.with.sibs" bundle="PHD_RESOURCES" />:
+		<ul>
+			<li><bean:message key="message.phd.institution.application.unable.to.pay.with.sibs.bank.transfer.bankName" bundle="PHD_RESOURCES" />: CAIXA GERAL DE DEPÓSITOS</li>
+			<li><bean:message key="message.phd.institution.application.unable.to.pay.with.sibs.bank.transfer.swift" bundle="PHD_RESOURCES" />: CGDIPTPL</li>
+			<li><bean:message key="message.phd.institution.application.unable.to.pay.with.sibs.bank.transfer.nib" bundle="PHD_RESOURCES" />: 003503730000914273075</li>
+			<li><bean:message key="message.phd.institution.application.unable.to.pay.with.sibs.bank.transfer.iban" bundle="PHD_RESOURCES" />: PT50003503730000914273075</li>
+			<li><bean:message key="message.phd.institution.application.unable.to.pay.with.sibs.bank.transfer.value" bundle="PHD_RESOURCES" />: <fr:view name="individualCandidacyProcess" property="associatedPaymentCode.minAmount"/> &euro;</li>
+		</ul>
+	</p>
+	
+	<% 
+		}
+	%>
 </logic:notEmpty>
-
-<% 
-	if(locale.getLanguage().equals(Locale.ENGLISH.getLanguage())) {
-%>
-
-<p>
-	<bean:message key="message.phd.institution.application.unable.to.pay.with.sibs" bundle="PHD_RESOURCES" />:
-	<ul>
-		<li><bean:message key="message.phd.institution.application.unable.to.pay.with.sibs.bank.transfer.bankName" bundle="PHD_RESOURCES" />: CAIXA GERAL DE DEPÓSITOS</li>
-		<li><bean:message key="message.phd.institution.application.unable.to.pay.with.sibs.bank.transfer.swift" bundle="PHD_RESOURCES" />: CGDIPTPL</li>
-		<li><bean:message key="message.phd.institution.application.unable.to.pay.with.sibs.bank.transfer.nib" bundle="PHD_RESOURCES" />: 003503730000914273075</li>
-		<li><bean:message key="message.phd.institution.application.unable.to.pay.with.sibs.bank.transfer.iban" bundle="PHD_RESOURCES" />: PT50003503730000914273075</li>
-		<li><bean:message key="message.phd.institution.application.unable.to.pay.with.sibs.bank.transfer.value" bundle="PHD_RESOURCES" />: <fr:view name="individualCandidacyProcess" property="associatedPaymentCode.minAmount"/> &euro;</li>
-	</ul>
-</p>
-
-<% 
-	}
-%>
 
 <p> <bean:message key="message.phd.institution.application.incomplete.missing.documents" bundle="PHD_RESOURCES" /></p>
 
