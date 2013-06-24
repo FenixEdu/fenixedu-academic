@@ -23,6 +23,11 @@
     <li><html:link page="/manageHomepage.do?method=options" titleKey="link.homepage.options"><bean:message key="link.homepage.options"  /></html:link></li>
     <li><html:link page="/manageHomepage.do?method=sections" titleKey="link.manage.homepage.content"><bean:message key="link.manage.homepage.content" /></html:link></li>
 
+	<li class="navheader"><bean:message key="label.externalApp"  /></li>
+ 	<li><html:link page="/externalAuth.do?method=allowExternalApp"><bean:message key="label.auth"  bundle="APPLICATION_RESOURCES"/></html:link></li>
+	<li><html:link page="/externalAuth.do?method=registerExternalApp"><bean:message key="label.registerApp"  bundle="APPLICATION_RESOURCES"/></html:link></li>
+	<li><html:link page="/externalAuth.do?method=listApps"><bean:message key="label.auth.my.apps"  bundle="APPLICATION_RESOURCES"/></html:link></li>	
+
 	<!-- Vigilancy link for people who do not have ROLE TEACHER -->
 
 	<logic:notEmpty name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.vigilantWrappers">

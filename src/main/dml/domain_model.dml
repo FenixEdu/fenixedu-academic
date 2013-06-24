@@ -20771,3 +20771,60 @@ relation PhotographSantanderPhotoEntry {
 		multiplicity *;
 	}
 }
+
+class ExternalApplication  {
+        String name;
+        String oauthKey;
+    }
+    
+class AuthScope  {
+        String name;
+        String endpoints; //should be a list?
+    }
+    
+   
+relation RootDomainObjectApps {
+    RootDomainObject playsRole rootDomainObject;  
+  	ExternalApplication playsRole apps {
+  		multiplicity *;
+  	}
+ }
+ 
+relation RootDomainObjectAuthScope {
+    RootDomainObject playsRole rootDomainObject;  
+  	AuthScope playsRole authScopes {
+  		multiplicity *;
+  	}
+ }
+ 
+    
+relation AppAuthor {
+		User playsRole author {
+			multiplicity 1;
+		}
+		ExternalApplication playsRole appOwned {
+			multiplicity *;
+		}
+	}
+	
+	
+	
+	relation UserAppPermissions {
+		User playsRole user {
+			multiplicity *;
+		}
+		ExternalApplication playsRole appAuthorized {
+			multiplicity *;
+		}
+	}
+    
+    
+	  relation PermissionsScope {
+		AuthScope playsRole scopes {
+			multiplicity *;
+		}
+		ExternalApplication playsRole app {
+			multiplicity 1;
+		}
+	}
+
