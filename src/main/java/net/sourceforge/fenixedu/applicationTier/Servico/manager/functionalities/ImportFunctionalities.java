@@ -169,7 +169,7 @@ public class ImportFunctionalities extends FenixService {
             String language = valueElement.getAttributeValue("language");
             String text = valueElement.getText();
 
-            mlString.setContent(Language.valueOf(language.toLowerCase()), text);
+            mlString = mlString.with(Language.valueOf(language.toLowerCase()), text);
         }
 
         return mlString;

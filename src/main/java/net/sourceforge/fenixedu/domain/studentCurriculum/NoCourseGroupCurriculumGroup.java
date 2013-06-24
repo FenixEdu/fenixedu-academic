@@ -70,12 +70,9 @@ public abstract class NoCourseGroupCurriculumGroup extends NoCourseGroupCurricul
 
     @Override
     public MultiLanguageString getName() {
-        final MultiLanguageString result = new MultiLanguageString();
-
-        result.setContent(Language.pt, getNoCourseGroupCurriculumGroupType().getLocalizedName(new Locale(Language.pt.name())));
-        result.setContent(Language.en, getNoCourseGroupCurriculumGroupType().getLocalizedName(new Locale(Language.en.name())));
-
-        return result;
+        return new MultiLanguageString(Language.pt, getNoCourseGroupCurriculumGroupType().getLocalizedName(
+                new Locale(Language.pt.name()))).with(Language.en,
+                getNoCourseGroupCurriculumGroupType().getLocalizedName(new Locale(Language.en.name())));
     }
 
     @Override

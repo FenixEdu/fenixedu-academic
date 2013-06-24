@@ -460,9 +460,9 @@ public abstract class Content extends Content_Base {
         if (multiLanguageString == null) {
             return null;
         }
-        final MultiLanguageString result = new MultiLanguageString();
+        MultiLanguageString result = new MultiLanguageString();
         for (final Language language : multiLanguageString.getAllLanguages()) {
-            result.setContent(language, normalize(multiLanguageString.getContent(language)));
+            result = result.with(language, normalize(multiLanguageString.getContent(language)));
         }
         return result;
     }

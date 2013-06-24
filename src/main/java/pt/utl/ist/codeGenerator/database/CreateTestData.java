@@ -606,63 +606,55 @@ public class CreateTestData {
             for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYearsSet()) {
                 final DegreeInfo degreeInfo = degree.createCurrentDegreeInfo();
                 degreeInfo.setExecutionYear(executionYear);
-                degreeInfo.setDescription(new MultiLanguageString("Desc. do curso. Bla bla bla bla bla."));
-                degreeInfo.getDescription().setContent(Language.en, "Description of the degree. Blur blur blur and more blur.");
-                degreeInfo.setHistory(new MultiLanguageString("Historial do curso. Bla bla bla bla bla."));
-                degreeInfo.getHistory().setContent(Language.en, "History of the degree. Blur blur blur and more blur.");
-                degreeInfo.setObjectives(new MultiLanguageString("Objectivos do curso. Bla bla bla bla bla."));
-                degreeInfo.getObjectives().setContent(Language.en, "Objectives of the degree. Blur blur blur and more blur.");
-                degreeInfo.setDesignedFor(new MultiLanguageString("Prop. do curso. Bla bla bla bla bla."));
-                degreeInfo.getDesignedFor().setContent(Language.en, "Purpose of the degree. Blur blur blur and more blur.");
-                degreeInfo.setProfessionalExits(new MultiLanguageString("Saidas profissionais. Bla bla bla bla bla."));
-                degreeInfo.getProfessionalExits().setContent(Language.en,
-                        "Professional exists of the degree. Blur blur blur and more blur.");
-                degreeInfo.setOperationalRegime(new MultiLanguageString("Regime operacional. Bla bla bla bla bla."));
-                degreeInfo.getOperationalRegime().setContent(Language.en,
-                        "Operational regime of the degree. Blur blur blur and more blur.");
-                degreeInfo.setGratuity(new MultiLanguageString("Propinas. Bla bla bla bla bla."));
-                degreeInfo.getGratuity().setContent(Language.en, "Gratuity of the degree. Blur blur blur and more blur.");
-                degreeInfo.setSchoolCalendar(new MultiLanguageString("Calendario escolar. Bla bla bla bla bla."));
-                degreeInfo.getSchoolCalendar().setContent(Language.en,
-                        "School calendar of the degree. Blur blur blur and more blur.");
-                degreeInfo.setCandidacyPeriod(new MultiLanguageString("Periodo de candidaturas. Bla bla bla bla bla."));
-                degreeInfo.getCandidacyPeriod().setContent(Language.en,
-                        "Candidacy period of the degree. Blur blur blur and more blur.");
-                degreeInfo.setSelectionResultDeadline(new MultiLanguageString(
-                        "Prazo de publicacao de resultados de candidaturas. Bla bla bla bla bla."));
-                degreeInfo.getSelectionResultDeadline().setContent(Language.en,
-                        "Seletion result deadline of the degree. Blur blur blur and more blur.");
-                degreeInfo.setEnrolmentPeriod(new MultiLanguageString("Periodo de inscricoes. Bla bla bla bla bla."));
-                degreeInfo.getEnrolmentPeriod().setContent(Language.en,
-                        "Enrolment period of the degree. Blur blur blur and more blur.");
-                degreeInfo.setAdditionalInfo(new MultiLanguageString("Informacao adicional. Bla bla bla bla bla."));
-                degreeInfo.getAdditionalInfo().setContent(Language.en,
-                        "Additional information of the degree. Blur blur blur and more blur.");
-                degreeInfo.setLinks(new MultiLanguageString("Links. Bla bla bla bla bla."));
-                degreeInfo.getLinks().setContent(Language.en, "Links of the degree. Blur blur blur and more blur.");
-                degreeInfo.setTestIngression(new MultiLanguageString("Testes de ingressao. Bla bla bla bla bla."));
-                degreeInfo.getTestIngression().setContent(Language.en,
-                        "Ingression tests of the degree. Blur blur blur and more blur.");
-                degreeInfo.setClassifications(new MultiLanguageString("Classificacoes. Bla bla bla bla bla."));
-                degreeInfo.getClassifications().setContent(Language.en,
-                        "Classifications of the degree. Blur blur blur and more blur.");
-                degreeInfo.setAccessRequisites(new MultiLanguageString("Requisitos de acesso. Bla bla bla bla bla."));
-                degreeInfo.getAccessRequisites().setContent(Language.en,
-                        "Access requisites of the degree. Blur blur blur and more blur.");
-                degreeInfo.setCandidacyDocuments(new MultiLanguageString("Documentos de candidatura. Bla bla bla bla bla."));
-                degreeInfo.getCandidacyDocuments().setContent(Language.en,
-                        "Candidacy documents of the degree. Blur blur blur and more blur.");
+                degreeInfo.setDescription(new MultiLanguageString(Language.pt, "Desc. do curso. Bla bla bla bla bla.").with(
+                        Language.en, "Description of the degree. Blur blur blur and more blur."));
+                degreeInfo.setHistory(new MultiLanguageString(Language.pt, "Historial do curso. Bla bla bla bla bla.").with(
+                        Language.en, "History of the degree. Blur blur blur and more blur."));
+                degreeInfo.setObjectives(new MultiLanguageString(Language.pt, "Objectivos do curso. Bla bla bla bla bla.").with(
+                        Language.en, "Objectives of the degree. Blur blur blur and more blur."));
+                degreeInfo.setDesignedFor(new MultiLanguageString(Language.pt, "Prop. do curso. Bla bla bla bla bla.").with(
+                        Language.en, "Purpose of the degree. Blur blur blur and more blur."));
+                degreeInfo
+                        .setProfessionalExits(new MultiLanguageString(Language.pt, "Saidas profissionais. Bla bla bla bla bla.")
+                                .with(Language.en, "Professional exists of the degree. Blur blur blur and more blur."));
+                degreeInfo.setOperationalRegime(new MultiLanguageString(Language.pt, "Regime operacional. Bla bla bla bla bla.")
+                        .with(Language.en, "Operational regime of the degree. Blur blur blur and more blur."));
+                degreeInfo.setGratuity(new MultiLanguageString(Language.pt, "Propinas. Bla bla bla bla bla.").with(Language.en,
+                        "Gratuity of the degree. Blur blur blur and more blur."));
+                degreeInfo.setSchoolCalendar(new MultiLanguageString(Language.pt, "Calendario escolar. Bla bla bla bla bla.")
+                        .with(Language.en, "School calendar of the degree. Blur blur blur and more blur."));
+                degreeInfo.setCandidacyPeriod(new MultiLanguageString(Language.pt,
+                        "Periodo de candidaturas. Bla bla bla bla bla.").with(Language.en,
+                        "Candidacy period of the degree. Blur blur blur and more blur."));
+                degreeInfo.setSelectionResultDeadline(new MultiLanguageString(Language.pt,
+                        "Prazo de publicacao de resultados de candidaturas. Bla bla bla bla bla.").with(Language.en,
+                        "Seletion result deadline of the degree. Blur blur blur and more blur."));
+                degreeInfo.setEnrolmentPeriod(new MultiLanguageString(Language.pt, "Periodo de inscricoes. Bla bla bla bla bla.")
+                        .with(Language.en, "Enrolment period of the degree. Blur blur blur and more blur."));
+                degreeInfo.setAdditionalInfo(new MultiLanguageString(Language.pt, "Informacao adicional. Bla bla bla bla bla.")
+                        .with(Language.en, "Additional information of the degree. Blur blur blur and more blur."));
+                degreeInfo.setLinks(new MultiLanguageString(Language.pt, "Links. Bla bla bla bla bla.").with(Language.en,
+                        "Links of the degree. Blur blur blur and more blur."));
+                degreeInfo.setTestIngression(new MultiLanguageString(Language.pt, "Testes de ingressao. Bla bla bla bla bla.")
+                        .with(Language.en, "Ingression tests of the degree. Blur blur blur and more blur."));
+                degreeInfo.setClassifications(new MultiLanguageString(Language.pt, "Classificacoes. Bla bla bla bla bla.").with(
+                        Language.en, "Classifications of the degree. Blur blur blur and more blur."));
+                degreeInfo.setAccessRequisites(new MultiLanguageString(Language.pt, "Requisitos de acesso. Bla bla bla bla bla.")
+                        .with(Language.en, "Access requisites of the degree. Blur blur blur and more blur."));
+                degreeInfo.setCandidacyDocuments(new MultiLanguageString(Language.pt,
+                        "Documentos de candidatura. Bla bla bla bla bla.").with(Language.en,
+                        "Candidacy documents of the degree. Blur blur blur and more blur."));
                 degreeInfo.setDriftsInitial(Integer.valueOf(1));
                 degreeInfo.setDriftsFirst(Integer.valueOf(1));
                 degreeInfo.setDriftsSecond(Integer.valueOf(1));
                 degreeInfo.setMarkMin(Double.valueOf(12));
                 degreeInfo.setMarkMax(Double.valueOf(20));
                 degreeInfo.setMarkAverage(Double.valueOf(15));
-                degreeInfo.setQualificationLevel(new MultiLanguageString("Nivel de qualificacao. Bla bla bla bla bla."));
-                degreeInfo.getQualificationLevel().setContent(Language.en,
-                        "Qualification level of the degree. Blur blur blur and more blur.");
-                degreeInfo.setRecognitions(new MultiLanguageString("Reconhecimentos. Bla bla bla bla bla."));
-                degreeInfo.getRecognitions().setContent(Language.en, "Recognitions of the degree. Blur blur blur and more blur.");
+                degreeInfo.setQualificationLevel(new MultiLanguageString(Language.pt,
+                        "Nivel de qualificacao. Bla bla bla bla bla.").with(Language.en,
+                        "Qualification level of the degree. Blur blur blur and more blur."));
+                degreeInfo.setRecognitions(new MultiLanguageString(Language.pt, "Reconhecimentos. Bla bla bla bla bla.").with(
+                        Language.en, "Recognitions of the degree. Blur blur blur and more blur."));
             }
         }
     }
@@ -898,10 +890,9 @@ public class CreateTestData {
 
         private static void createPlanning(ExecutionCourse executionCourse, ShiftType shiftType) {
             final LessonPlanning lessonPlanning =
-                    new LessonPlanning(new MultiLanguageString("Titulo do Planeamento"), new MultiLanguageString(
-                            "Corpo do Planeamento"), shiftType, executionCourse);
-            lessonPlanning.getTitle().setContent(Language.en, "Title of the planning.");
-            lessonPlanning.getPlanning().setContent(Language.en, "Planning contents.");
+                    new LessonPlanning(new MultiLanguageString(Language.pt, "Titulo do Planeamento").with(Language.en,
+                            "Title of the planning."), new MultiLanguageString(Language.pt, "Corpo do Planeamento").with(
+                            Language.en, "Planning contents."), shiftType, executionCourse);
         }
 
         private static void createAnnouncements(final AnnouncementBoard announcementBoard, final YearMonthDay day) {
@@ -909,30 +900,27 @@ public class CreateTestData {
             announcement.setAnnouncementBoard(announcementBoard);
             announcement.setAuthor("Autor do anuncio");
             announcement.setAuthorEmail("http://www.google.com/");
-            announcement.setBody(new MultiLanguageString("Corpo do anuncio. Bla bla bla bla."));
-            announcement.getBody().setContent(Language.en, "Content of the announcement. Blur blur blur blur.");
+            announcement.setBody(new MultiLanguageString(Language.pt, "Corpo do anuncio. Bla bla bla bla.").with(Language.en,
+                    "Content of the announcement. Blur blur blur blur."));
             announcement.setCreationDate(day.toDateTimeAtMidnight());
             announcement.setCreator(null);
-            announcement.setExcerpt(new MultiLanguageString("Bla ..."));
-            announcement.getExcerpt().setContent(Language.en, "Blur ...");
-            announcement.setKeywords(new MultiLanguageString("Bla"));
-            announcement.getKeywords().setContent(Language.en, "Blur");
+            announcement.setExcerpt(new MultiLanguageString(Language.pt, "Bla ...").with(Language.en, "Blur ..."));
+            announcement.setKeywords(new MultiLanguageString(Language.pt, "Bla").with(Language.en, "Blur"));
             announcement.setLastModification(day.toDateTimeAtCurrentTime());
             announcement.setPlace("Here.");
             // announcement.setPublicationBegin();
             // announcement.setPublicationEnd();
             // announcement.setReferedSubjectBegin();
             // announcement.setReferedSubjectEnd();
-            announcement.setSubject(new MultiLanguageString("Assunto Bla."));
-            announcement.getSubject().setContent(Language.en, "Subject blur.");
+            announcement.setSubject(new MultiLanguageString(Language.pt, "Assunto Bla.").with(Language.en, "Subject blur."));
             announcement.setVisible(Boolean.TRUE);
         }
 
         private static void createEvaluationMethod(final ExecutionCourse executionCourse) {
             final EvaluationMethod evaluationMethod = new EvaluationMethod();
             evaluationMethod.setExecutionCourse(executionCourse);
-            evaluationMethod.setEvaluationElements(new MultiLanguageString("Metodo de avaliacao. Bla bla bla bla bla."));
-            evaluationMethod.getEvaluationElements().setContent(Language.en, "Evaluation method. Blur blur ble blur bla.");
+            evaluationMethod.setEvaluationElements(new MultiLanguageString(Language.pt,
+                    "Metodo de avaliacao. Bla bla bla bla bla.").with(Language.en, "Evaluation method. Blur blur ble blur bla."));
         }
 
         private static void createBibliographicReferences(final ExecutionCourse executionCourse) {

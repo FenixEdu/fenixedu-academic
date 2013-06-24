@@ -48,11 +48,7 @@ public abstract class UnitSiteMenuRenderer extends SiteMenuRenderer {
     }
 
     protected MultiLanguageString i18n(String pt, String en) {
-        MultiLanguageString mls = new MultiLanguageString();
-        mls.setContent(Language.pt, pt);
-        mls.setContent(Language.en, en);
-
-        return mls;
+        return new MultiLanguageString(Language.pt, pt).with(Language.en, en);
     }
 
     protected abstract List<Section> getBaseSections(Site site);

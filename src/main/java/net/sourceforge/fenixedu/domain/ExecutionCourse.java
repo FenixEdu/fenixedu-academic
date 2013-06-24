@@ -2387,7 +2387,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
      */
     public MultiLanguageString getNameI18N() {
         MultiLanguageString nameI18N = new MultiLanguageString();
-        nameI18N.setContent(Language.pt, super.getNome());
+        nameI18N = nameI18N.with(Language.pt, super.getNome());
 
         final StringBuilder stringBuilder = new StringBuilder();
 
@@ -2407,7 +2407,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         }
 
         if (stringBuilder.length() > 0) {
-            nameI18N.setContent(Language.en, stringBuilder.toString());
+            nameI18N = nameI18N.with(Language.en, stringBuilder.toString());
             return nameI18N;
         }
 
@@ -2422,10 +2422,10 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         }
 
         if (unique) {
-            nameI18N.setContent(Language.en, nameEn);
+            nameI18N = nameI18N.with(Language.en, nameEn);
             return nameI18N;
         } else {
-            nameI18N.setContent(Language.en, super.getNome());
+            nameI18N = nameI18N.with(Language.en, super.getNome());
             return nameI18N;
         }
     }

@@ -85,12 +85,8 @@ public class EvenOddRule extends EvenOddRule_Base {
     }
 
     public String getEvenOddString() {
-        final MultiLanguageString multiLanguageString = new MultiLanguageString();
-        multiLanguageString.setContent(
-                Language.pt,
-                ResourceBundle.getBundle("resources/AcademicAdminOffice", new Locale("pt", "PT")).getString(
-                        "label." + (getEven() ? "even" : "odd")));
-        return multiLanguageString.toString();
+        return new MultiLanguageString(Language.pt, ResourceBundle.getBundle("resources/AcademicAdminOffice",
+                new Locale("pt", "PT")).getString("label." + (getEven() ? "even" : "odd"))).toString();
     }
 
 }

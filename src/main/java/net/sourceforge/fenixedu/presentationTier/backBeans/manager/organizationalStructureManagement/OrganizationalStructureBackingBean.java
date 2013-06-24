@@ -578,9 +578,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
         CreateNewUnitParameters parameters = new CreateNewUnitParameters(this, 1);
 
-        MultiLanguageString unitName = new MultiLanguageString();
-        unitName.setContent(Language.pt, this.getUnitName());
-        unitName.setContent(Language.en, this.getUnitNameEn());
+        MultiLanguageString unitName =
+                new MultiLanguageString(Language.pt, this.getUnitName()).with(Language.en, this.getUnitNameEn());
 
         try {
             CreateUnit.run(null, unitName, this.getUnitNameCard(), this.getUnitCostCenter(), this.getUnitAcronym(),
@@ -614,8 +613,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         CreateNewUnitParameters parameters = new CreateNewUnitParameters(this, 1);
 
         MultiLanguageString unitName = new MultiLanguageString();
-        unitName.setContent(Language.pt, this.getUnitName());
-        unitName.setContent(Language.en, this.getUnitNameEn());
+        unitName = unitName.with(Language.pt, this.getUnitName());
+        unitName = unitName.with(Language.en, this.getUnitNameEn());
 
         try {
             CreateUnit.run(this.getUnit(), unitName, this.getUnitNameCard(), this.getUnitCostCenter(), this.getUnitAcronym(),
@@ -640,8 +639,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         CreateNewUnitParameters parameters = new CreateNewUnitParameters(this, 1);
 
         MultiLanguageString unitName = new MultiLanguageString();
-        unitName.setContent(Language.pt, this.getUnitName());
-        unitName.setContent(Language.en, this.getUnitNameEn());
+        unitName = unitName.with(Language.pt, this.getUnitName());
+        unitName = unitName.with(Language.en, this.getUnitNameEn());
 
         try {
             EditUnit.run(this.getChooseUnit().getIdInternal(), unitName, this.getUnitNameCard(), this.getUnitCostCenter(),
@@ -721,8 +720,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         FunctionType type = getFunctionType();
 
         MultiLanguageString functionName = new MultiLanguageString();
-        functionName.setContent(Language.pt, this.getFunctionName());
-        functionName.setContent(Language.en, this.getFunctionNameEn());
+        functionName = functionName.with(Language.pt, this.getFunctionName());
+        functionName = functionName.with(Language.en, this.getFunctionNameEn());
 
         try {
             CreateFunction.run(functionName, datesResult.getBeginDate(), datesResult.getEndDate(), type, this.getUnit()
@@ -746,8 +745,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         FunctionType type = getFunctionType();
 
         MultiLanguageString functionName = new MultiLanguageString();
-        functionName.setContent(Language.pt, this.getFunctionName());
-        functionName.setContent(Language.en, this.getFunctionNameEn());
+        functionName = functionName.with(Language.pt, this.getFunctionName());
+        functionName = functionName.with(Language.en, this.getFunctionNameEn());
 
         try {
             EditFunction.run(this.getFunction().getIdInternal(), functionName, datesResult.getBeginDate(),

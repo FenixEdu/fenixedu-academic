@@ -424,8 +424,7 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
     public MultiLanguageString getType() {
         MultiLanguageString type = new MultiLanguageString();
         String key = "label." + getClass().getSimpleName() + ".type";
-        type.setContent(Language.pt, ResourceBundle.getBundle("resources/ManagerResources", new Locale("pt", "PT"))
-                .getString(key));
+        type =type.with(Language.pt,ResourceBundle.getBundle("resources/ManagerResources", new Locale("pt", "PT")).getString(key));
         return type;
     }
 

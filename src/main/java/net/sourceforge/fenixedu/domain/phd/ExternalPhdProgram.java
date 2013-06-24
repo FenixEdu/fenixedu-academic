@@ -29,8 +29,7 @@ public class ExternalPhdProgram extends ExternalPhdProgram_Base {
 
         check(name, nameEn, acronym, forCollaborationType);
 
-        MultiLanguageString nameI18N = new MultiLanguageString(Language.pt, name);
-        nameI18N.setContent(Language.en, nameEn);
+        MultiLanguageString nameI18N = new MultiLanguageString(Language.pt, name).with(Language.en, nameEn);
 
         setName(nameI18N);
 

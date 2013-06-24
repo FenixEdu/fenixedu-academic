@@ -34,7 +34,7 @@ public class ResearchInterest extends ResearchInterest_Base {
     }
 
     public void addTranslation(ResearchInterestTranslation translation) {
-        this.getInterest().setContent(translation.getLanguage(), translation.getInterest());
+        this.getInterest().with(translation.getLanguage(), translation.getInterest());
     }
 
     public void removeTranslation(Language language) {
@@ -44,7 +44,7 @@ public class ResearchInterest extends ResearchInterest_Base {
         if (this.getInterest().getAllLanguages().size() == 1) {
             throw new DomainException("errors.researchInterest.lastTranslation");
         }
-        this.getInterest().removeContent(language);
+        this.getInterest().without(language);
     }
 
     public List<ResearchInterestTranslation> getAllTranslations() {

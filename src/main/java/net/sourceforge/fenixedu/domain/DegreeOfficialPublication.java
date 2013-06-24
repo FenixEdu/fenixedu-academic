@@ -27,8 +27,7 @@ public class DegreeOfficialPublication extends DegreeOfficialPublication_Base {
     @Service
     public DegreeSpecializationArea createSpecializationArea(String nameEn, String namePt) {
 
-        MultiLanguageString area = new MultiLanguageString(Language.en, nameEn);
-        area.setContent(Language.pt, namePt);
+        MultiLanguageString area = new MultiLanguageString(Language.en, nameEn).with(Language.pt, namePt);
 
         return new DegreeSpecializationArea(this, area);
     }

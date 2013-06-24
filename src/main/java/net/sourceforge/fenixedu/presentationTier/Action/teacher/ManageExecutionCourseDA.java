@@ -231,14 +231,13 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         MultiLanguageString evaluationElements = evaluationMethod == null ? null : evaluationMethod.getEvaluationElements();
         if (evaluationMethod == null || evaluationElements == null || evaluationElements.isEmpty()
                 || StringUtils.isEmpty(evaluationElements.getContent())) {
-            final MultiLanguageString evaluationMethodMls = new MultiLanguageString();
+            MultiLanguageString evaluationMethodMls = new MultiLanguageString();
             final Set<CompetenceCourse> competenceCourses = executionCourse.getCompetenceCourses();
             if (!competenceCourses.isEmpty()) {
                 final CompetenceCourse competenceCourse = competenceCourses.iterator().next();
                 final String pt = competenceCourse.getEvaluationMethod();
                 final String en = competenceCourse.getEvaluationMethodEn();
-                evaluationMethodMls.setContent(Language.pt, pt == null ? "" : pt);
-                evaluationMethodMls.setContent(Language.en, en == null ? "" : en);
+                evaluationMethodMls = evaluationMethodMls.with(Language.pt, pt == null ? "" : pt).with(Language.en, en == null ? "" : en);
             }
             final Object args[] = { executionCourse, evaluationMethodMls };
             executeService("EditEvaluation", args);
@@ -252,9 +251,9 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         final DynaActionForm dynaActionForm = (DynaActionForm) form;
         final String evaluationMethod = request.getParameter("evaluationMethod");
         final String evaluationMethodEn = dynaActionForm.getString("evaluationMethodEn");
-        final MultiLanguageString multiLanguageString = new MultiLanguageString();
-        multiLanguageString.setContent(Language.pt, evaluationMethod);
-        multiLanguageString.setContent(Language.en, evaluationMethodEn);
+        MultiLanguageString multiLanguageString = new MultiLanguageString();
+        multiLanguageString = multiLanguageString.with(Language.pt, evaluationMethod);
+        multiLanguageString = multiLanguageString.with(Language.en, evaluationMethodEn);
 
         final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
 

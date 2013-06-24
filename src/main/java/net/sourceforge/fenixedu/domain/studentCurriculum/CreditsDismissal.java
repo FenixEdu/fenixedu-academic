@@ -91,11 +91,8 @@ public class CreditsDismissal extends CreditsDismissal_Base {
 
     @Override
     public MultiLanguageString getName() {
-        final MultiLanguageString multiLanguageString = new MultiLanguageString();
-        multiLanguageString.setContent(Language.pt,
-                ResourceBundle.getBundle("resources/AcademicAdminOffice", new Locale("pt", "PT"))
-                        .getString("label.group.credits"));
-        return multiLanguageString;
+        return new MultiLanguageString(Language.pt, ResourceBundle.getBundle("resources/AcademicAdminOffice",
+                new Locale("pt", "PT")).getString("label.group.credits"));
     }
 
     @Override

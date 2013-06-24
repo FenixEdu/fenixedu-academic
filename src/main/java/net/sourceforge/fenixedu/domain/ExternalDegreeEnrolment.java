@@ -46,15 +46,17 @@ public class ExternalDegreeEnrolment extends ExternalDegreeEnrolment_Base {
 
     @Override
     public MultiLanguageString getName() {
-        final MultiLanguageString multiLanguageString = new MultiLanguageString();
+        MultiLanguageString multiLanguageString = new MultiLanguageString();
 
         if (!StringUtils.isEmpty(this.getDegreeModule().getName())) {
-            multiLanguageString.setContent(Language.pt, getDegreeModule().getName() + " ("
-                    + getDegreeCurricularPlanOfDegreeModule().getName() + ")");
+            multiLanguageString =
+                    multiLanguageString.with(Language.pt, getDegreeModule().getName() + " ("
+                            + getDegreeCurricularPlanOfDegreeModule().getName() + ")");
         }
         if (!StringUtils.isEmpty(this.getDegreeModule().getNameEn())) {
-            multiLanguageString.setContent(Language.en, getDegreeModule().getNameEn() + " ("
-                    + getDegreeCurricularPlanOfDegreeModule().getName() + ")");
+            multiLanguageString =
+                    multiLanguageString.with(Language.en, getDegreeModule().getNameEn() + " ("
+                            + getDegreeCurricularPlanOfDegreeModule().getName() + ")");
         }
         return multiLanguageString;
     }

@@ -52,9 +52,9 @@ public class InquiryDefinitionPeriodBean implements Serializable {
             setMessage(new MultiLanguageString());
         }
         if (isChangedLanguage()) {
-            getMessage().setContent(getPreviousLanguage(), displayMessage);
+            setMessage(getMessage().with(getPreviousLanguage(), displayMessage));
         } else {
-            getMessage().setContent(getSelectedLanguage(), displayMessage);
+            setMessage(getMessage().with(getSelectedLanguage(), displayMessage));
         }
     }
 

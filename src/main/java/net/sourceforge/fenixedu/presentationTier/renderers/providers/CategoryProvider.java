@@ -31,12 +31,7 @@ public class CategoryProvider implements DataProvider {
     }
 
     private String hardcoded(String pt, String en) {
-        MultiLanguageString mlString = new MultiLanguageString();
-
-        mlString.setContent(Language.pt, pt);
-        mlString.setContent(Language.en, en);
-
-        return mlString.getContent();
+        return new MultiLanguageString(Language.pt, pt).with(Language.en, en).getContent();
     }
 
     @Override

@@ -55,12 +55,12 @@ public class DegreeSpecializationArea extends DegreeSpecializationArea_Base {
 
     @Service
     public void setNameEn(String nameEn) {
-        this.getName().setContent(Language.en, nameEn);
+        this.getName().with(Language.en, nameEn);
     }
 
     @Service
     public void setNamePt(String namePt) {
-        this.getName().setContent(Language.pt, namePt);
+        this.getName().with(Language.pt, namePt);
     }
 
     public String getNameEn() {

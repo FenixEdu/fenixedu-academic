@@ -124,8 +124,9 @@ public class Unit extends Unit_Base {
         }
 
         MultiLanguageString partyName = getPartyName();
-        partyName = partyName == null ? new MultiLanguageString() : partyName;
-        partyName.setContent(Language.getDefaultLanguage(), name);
+        partyName =
+                partyName == null ? new MultiLanguageString(Language.getDefaultLanguage(), name) : partyName.with(
+                        Language.getDefaultLanguage(), name);
 
         super.setPartyName(partyName);
 

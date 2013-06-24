@@ -1054,14 +1054,14 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     public MultiLanguageString getNameI18N(ExecutionSemester semester) {
-        final MultiLanguageString multiLanguageString = new MultiLanguageString();
+        MultiLanguageString multiLanguageString = new MultiLanguageString();
         String name = getName(semester);
         if (name != null && name.length() > 0) {
-            multiLanguageString.setContent(Language.pt, name);
+            multiLanguageString = multiLanguageString.with(Language.pt, name);
         }
         String nameEn = getNameEn(semester);
         if (nameEn != null && nameEn.length() > 0) {
-            multiLanguageString.setContent(Language.en, nameEn);
+            multiLanguageString = multiLanguageString.with(Language.en, nameEn);
         }
         return multiLanguageString;
     }
@@ -1071,14 +1071,14 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     public MultiLanguageString getObjectivesI18N(ExecutionSemester semester) {
-        final MultiLanguageString multiLanguageString = new MultiLanguageString();
+        MultiLanguageString multiLanguageString = new MultiLanguageString();
         String objectives = getObjectives(semester);
         if (objectives != null && objectives.length() > 0) {
-            multiLanguageString.setContent(Language.pt, objectives);
+            multiLanguageString = multiLanguageString.with(Language.pt, objectives);
         }
         String objectivesEn = getObjectivesEn(semester);
         if (objectivesEn != null && objectivesEn.length() > 0) {
-            multiLanguageString.setContent(Language.en, objectivesEn);
+            multiLanguageString = multiLanguageString.with(Language.en, objectivesEn);
         }
         return multiLanguageString;
     }
@@ -1088,14 +1088,14 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     public MultiLanguageString getProgramI18N(ExecutionSemester semester) {
-        final MultiLanguageString multiLanguageString = new MultiLanguageString();
+        MultiLanguageString multiLanguageString = new MultiLanguageString();
         String program = getProgram(semester);
         if (program != null && program.length() > 0) {
-            multiLanguageString.setContent(Language.pt, program);
+            multiLanguageString = multiLanguageString.with(Language.pt, program);
         }
         String programEn = getProgramEn(semester);
         if (programEn != null && programEn.length() > 0) {
-            multiLanguageString.setContent(Language.en, programEn);
+            multiLanguageString = multiLanguageString.with(Language.en, programEn);
         }
         return multiLanguageString;
     }

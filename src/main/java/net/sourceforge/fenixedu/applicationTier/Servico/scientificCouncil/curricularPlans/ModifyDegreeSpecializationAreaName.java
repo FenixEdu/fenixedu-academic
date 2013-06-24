@@ -26,7 +26,7 @@ public class ModifyDegreeSpecializationAreaName extends FenixService {
             throw new InvalidArgumentsServiceException();
         }
 
-        specializationArea.getName().setContent(language, newName);
+        specializationArea.getName().with(language, newName);
     }
 
 }

@@ -157,13 +157,13 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
     }
 
     public MultiLanguageString getName() {
-        final MultiLanguageString multiLanguageString = new MultiLanguageString();
+        MultiLanguageString multiLanguageString = new MultiLanguageString();
 
         if (this.getDegreeModule().getName() != null && this.getDegreeModule().getName().length() > 0) {
-            multiLanguageString.setContent(Language.pt, this.getDegreeModule().getName());
+            multiLanguageString = multiLanguageString.with(Language.pt, this.getDegreeModule().getName());
         }
         if (this.getDegreeModule().getNameEn() != null && this.getDegreeModule().getNameEn().length() > 0) {
-            multiLanguageString.setContent(Language.en, this.getDegreeModule().getNameEn());
+            multiLanguageString = multiLanguageString.with(Language.en, this.getDegreeModule().getNameEn());
         }
         return multiLanguageString;
     }

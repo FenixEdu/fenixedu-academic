@@ -1988,13 +1988,13 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     public MultiLanguageString getDescriptionI18N() {
-        final MultiLanguageString result = new MultiLanguageString();
+        MultiLanguageString result = new MultiLanguageString();
 
         if (!StringUtils.isEmpty(getDescription())) {
-            result.setContent(Language.pt, getDescription());
+            result = result.with(Language.pt, getDescription());
         }
         if (!StringUtils.isEmpty(getDescriptionEn())) {
-            result.setContent(Language.en, getDescriptionEn());
+            result = result.with(Language.en, getDescriptionEn());
         }
 
         return result;

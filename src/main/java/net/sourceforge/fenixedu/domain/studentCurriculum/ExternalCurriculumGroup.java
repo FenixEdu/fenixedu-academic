@@ -80,16 +80,18 @@ public class ExternalCurriculumGroup extends ExternalCurriculumGroup_Base {
 
     @Override
     public MultiLanguageString getName() {
-        final MultiLanguageString multiLanguageString = new MultiLanguageString();
+        MultiLanguageString multiLanguageString = new MultiLanguageString();
 
         if (!StringUtils.isEmpty(getDegreeModule().getName())) {
-            multiLanguageString.setContent(Language.pt, getDegreeModule().getName() + " ("
-                    + getDegreeCurricularPlanOfDegreeModule().getName() + ")");
+            multiLanguageString =
+                    multiLanguageString.with(Language.pt, getDegreeModule().getName() + " ("
+                            + getDegreeCurricularPlanOfDegreeModule().getName() + ")");
         }
 
         if (!StringUtils.isEmpty(getDegreeModule().getNameEn())) {
-            multiLanguageString.setContent(Language.en, getDegreeModule().getNameEn() + " ("
-                    + getDegreeCurricularPlanOfDegreeModule().getName() + ")");
+            multiLanguageString =
+                    multiLanguageString.with(Language.en, getDegreeModule().getNameEn() + " ("
+                            + getDegreeCurricularPlanOfDegreeModule().getName() + ")");
         }
 
         return multiLanguageString;

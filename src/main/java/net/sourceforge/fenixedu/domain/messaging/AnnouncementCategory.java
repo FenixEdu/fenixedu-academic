@@ -13,8 +13,7 @@ public class AnnouncementCategory extends AnnouncementCategory_Base {
 
     public AnnouncementCategory(String namePt, String nameEn, AnnouncementCategoryType type) {
         this();
-        this.setName(new MultiLanguageString(Language.pt, namePt));
-        this.getName().setContent(Language.en, nameEn);
+        this.setName(new MultiLanguageString(Language.pt, namePt).with(Language.en, nameEn));
         this.setType(type);
     }
 

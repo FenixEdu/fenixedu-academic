@@ -226,8 +226,7 @@ public class Person extends Person_Base {
         String oldName = getPartyName() == null ? null : getPartyName().getPreferedContent();
 
         MultiLanguageString partyName = super.getPartyName();
-        partyName = partyName == null ? new MultiLanguageString() : partyName;
-        partyName.setContent(Language.getDefaultLanguage(), formattedName);
+        partyName = partyName == null ? new MultiLanguageString(Language.getDefaultLanguage(), formattedName) : partyName.with(Language.getDefaultLanguage(), formattedName);
 
         super.setPartyName(partyName);
 
