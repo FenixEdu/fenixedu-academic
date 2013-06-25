@@ -254,55 +254,55 @@ public class CreateExecutionDegreesForExecutionYearBean extends FenixBackingBean
     public String createExecutionDegrees() throws FenixActionException {
 
         Calendar lessonSeason1BeginDate = Calendar.getInstance();
-        lessonSeason1BeginDate.set(getLessonSeason1BeginYear(), getLessonSeason1BeginMonth(), getLessonSeason1BeginDay());
+        lessonSeason1BeginDate.set(getLessonSeason1BeginYear(), getLessonSeason1BeginMonth(), getLessonSeason1BeginDay(), 0, 0, 0);
 
         Calendar lessonSeason1EndDate = Calendar.getInstance();
-        lessonSeason1EndDate.set(getLessonSeason1EndYear(), getLessonSeason1EndMonth(), getLessonSeason1EndDay());
+        lessonSeason1EndDate.set(getLessonSeason1EndYear(), getLessonSeason1EndMonth(), getLessonSeason1EndDay(), 23, 59, 59);
 
         Calendar lessonSeason2BeginDate = Calendar.getInstance();
-        lessonSeason2BeginDate.set(getLessonSeason2BeginYear(), getLessonSeason2BeginMonth(), getLessonSeason2BeginDay());
+        lessonSeason2BeginDate.set(getLessonSeason2BeginYear(), getLessonSeason2BeginMonth(), getLessonSeason2BeginDay(), 0, 0, 0);
 
         Calendar lessonSeason2EndDate = Calendar.getInstance();
-        lessonSeason2EndDate.set(getLessonSeason2EndYear(), getLessonSeason2EndMonth(), getLessonSeason2EndDay());
+        lessonSeason2EndDate.set(getLessonSeason2EndYear(), getLessonSeason2EndMonth(), getLessonSeason2EndDay(), 23, 59, 59);
 
         Calendar lessonSeason2BeginDatePart2 = Calendar.getInstance();
         lessonSeason2BeginDatePart2.set(getLessonSeason2BeginYear(), getLessonSeason2BeginMonthPart2(),
-                getLessonSeason2BeginDayPart2());
+                getLessonSeason2BeginDayPart2(), 0, 0, 0);
 
         Calendar lessonSeason2EndDatePart2 = Calendar.getInstance();
-        lessonSeason2EndDatePart2.set(getLessonSeason2EndYear(), getLessonSeason2EndMonthPart2(), getLessonSeason2EndDayPart2());
+        lessonSeason2EndDatePart2.set(getLessonSeason2EndYear(), getLessonSeason2EndMonthPart2(), getLessonSeason2EndDayPart2(), 23, 59, 59);
 
         Calendar examsSeason1BeginDate = Calendar.getInstance();
-        examsSeason1BeginDate.set(getExamsSeason1BeginYear(), getExamsSeason1BeginMonth(), getExamsSeason1BeginDay());
+        examsSeason1BeginDate.set(getExamsSeason1BeginYear(), getExamsSeason1BeginMonth(), getExamsSeason1BeginDay(), 0, 0, 0);
 
         Calendar examsSeason1EndDate = Calendar.getInstance();
-        examsSeason1EndDate.set(getExamsSeason1EndYear(), getExamsSeason1EndMonth(), getExamsSeason1EndDay());
+        examsSeason1EndDate.set(getExamsSeason1EndYear(), getExamsSeason1EndMonth(), getExamsSeason1EndDay(), 23, 59, 59);
 
         Calendar examsSeason2BeginDate = Calendar.getInstance();
-        examsSeason2BeginDate.set(getExamsSeason2BeginYear(), getExamsSeason2BeginMonth(), getExamsSeason2BeginDay());
+        examsSeason2BeginDate.set(getExamsSeason2BeginYear(), getExamsSeason2BeginMonth(), getExamsSeason2BeginDay(), 0, 0, 0);
 
         Calendar examsSeason2EndDate = Calendar.getInstance();
-        examsSeason2EndDate.set(getExamsSeason2EndYear(), getExamsSeason2EndMonth(), getExamsSeason2EndDay());
+        examsSeason2EndDate.set(getExamsSeason2EndYear(), getExamsSeason2EndMonth(), getExamsSeason2EndDay(), 23, 59, 59);
 
         Calendar examsSpecialSeasonBeginDate = Calendar.getInstance();
         examsSpecialSeasonBeginDate.set(getExamsSpecialSeasonBeginYear(), getExamsSpecialSeasonBeginMonth(),
-                getExamsSpecialSeasonBeginDay());
+                getExamsSpecialSeasonBeginDay(), 0, 0, 0);
 
         Calendar examsSpecialSeasonEndDate = Calendar.getInstance();
         examsSpecialSeasonEndDate.set(getExamsSpecialSeasonEndYear(), getExamsSpecialSeasonEndMonth(),
-                getExamsSpecialSeasonEndDay());
+                getExamsSpecialSeasonEndDay(), 23, 59, 59);
 
         Calendar gradeSubmissionNormalSeason1EndDate = Calendar.getInstance();
         gradeSubmissionNormalSeason1EndDate.set(getGradeSubmissionNormalSeason1EndYear(),
-                getGradeSubmissionNormalSeason1EndMonth(), getGradeSubmissionNormalSeason1EndDay());
+                getGradeSubmissionNormalSeason1EndMonth(), getGradeSubmissionNormalSeason1EndDay(), 23, 59, 59);
 
         Calendar gradeSubmissionNormalSeason2EndDate = Calendar.getInstance();
         gradeSubmissionNormalSeason2EndDate.set(getGradeSubmissionNormalSeason2EndYear(),
-                getGradeSubmissionNormalSeason2EndMonth(), getGradeSubmissionNormalSeason2EndDay());
+                getGradeSubmissionNormalSeason2EndMonth(), getGradeSubmissionNormalSeason2EndDay(), 23, 59, 59);
 
         Calendar gradeSubmissionSpecialSeasonEndDate = Calendar.getInstance();
         gradeSubmissionSpecialSeasonEndDate.set(getGradeSubmissionSpecialSeasonEndYear(),
-                getGradeSubmissionSpecialSeasonEndMonth(), getGradeSubmissionSpecialSeasonEndDay());
+                getGradeSubmissionSpecialSeasonEndMonth(), getGradeSubmissionSpecialSeasonEndDay(), 23, 59, 59);
 
         try {
             createdDegreeCurricularPlans =
