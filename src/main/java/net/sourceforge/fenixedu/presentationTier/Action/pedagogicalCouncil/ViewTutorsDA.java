@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.TutorshipIntention;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -101,9 +102,10 @@ public class ViewTutorsDA extends FenixDispatchAction {
         public List<Person> getTutors() {
             List<Person> tutors = new ArrayList<Person>();
             if (getExecutionDegree() != null) {
-                for (final Teacher teacher : getExecutionDegree().getPossibleTutorsFromExecutionDegreeDepartments()) {
-                    if (teacher.hasTutorshipIntentionFor(getExecutionDegree())) {
-                        tutors.add(teacher.getPerson());
+                for (TutorshipIntention tutorshipIntention : getExecutionDegree().getDegreeCurricularPlan()
+                        .getTutorshipIntentionSet()) {
+                    if (tutorshipIntention.getAcademicInterval().equals(getExecutionDegree().getAcademicInterval())) {
+                        tutors.add(tutorshipIntention.getTeacher().getPerson());
                     }
                 }
             }
