@@ -14,10 +14,10 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 
 @Mapping(path = "/courseLoadOverview", module = "academicAdministration")
@@ -26,11 +26,13 @@ public class CourseLoadOverviewDA extends FenixDispatchAction {
 
     public ActionForward viewInconsistencies(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
             final HttpServletResponse response) {
-        CourseLoadOverviewBean bean = getRenderedObject("");
+        CourseLoadOverviewBean bean = getRenderedObject("courseLoadOverviewBean");
         if (bean == null) {
             bean = new CourseLoadOverviewBean();
         }
         request.setAttribute("courseLoadOverviewBean", bean);
+
+        RenderUtils.invalidateViewState();
 
         return mapping.findForward("viewInconsistencies");
     }
