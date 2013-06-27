@@ -31,7 +31,9 @@ public class UploadUnitSiteLogo extends FenixService {
 
         if (site.hasLogo()) {
             UnitSiteFile logo = site.getLogo();
-            new DeleteFileRequest(AccessControl.getPerson(), logo.getExternalStorageIdentification());
+            if (logo.getExternalStorageIdentification() != null) {
+            	new DeleteFileRequest(AccessControl.getPerson(), logo.getExternalStorageIdentification());
+            }
 
             logo.delete();
         }
