@@ -257,8 +257,6 @@ public class DissertationManagementAction extends FenixDispatchAction {
             HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException,
             IllegalAccessException, InstantiationException {
         final IUserView userView = UserView.getUser();
-        
-        System.out.println("Cabum!");
 
         return mapping.findForward("listDissertations");
     }
