@@ -10,7 +10,9 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
@@ -52,13 +54,16 @@ import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.dissertation.Dissertation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -218,12 +223,60 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
         return mapping.findForward("SubmitionOfFinalDegreeWorkProposalSucessful");
     }
 
+    @SuppressWarnings("static-access")
     public ActionForward changeExecutionYear(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException,  FenixServiceException,
             IllegalAccessException, InstantiationException {
+    	
+    	final IUserView userView = UserView.getUser();
         final DynaActionForm finalWorkForm = (DynaActionForm) form;
-        finalWorkForm.set("degree", "");
-        return chooseDegree(mapping, form, request, response);
+		
+        List<ExecutionYear> inputExecutionYears = rootDomainObject.getInstance().getExecutionYears();
+        String idInternalOfInputExecutionYear = (String) finalWorkForm.get("executionYear");
+        ExecutionYear outputExecutionYear = null;
+        for (ExecutionYear executionYear : inputExecutionYears) {
+        	if (executionYear.getIdInternal().toString().equals(idInternalOfInputExecutionYear)) {
+        		outputExecutionYear = executionYear;
+        	}
+        }
+        
+        List<Proposal> inputProposals = RootDomainObject.getInstance().getProposals();
+        List<Proposal> orientatorProposals = new LinkedList<Proposal>();
+        List<Proposal> coorientatorProposals = new LinkedList<Proposal>();
+        
+        List<Thesis> inputDissertations = RootDomainObject.getInstance().getTheses();
+        List<Thesis> orientatorDissertations = new LinkedList<Thesis>();
+        List<Thesis> coorientatorDissertations = new LinkedList<Thesis>();
+        
+        for (Proposal proposal : inputProposals) {
+        	if (proposal.getOrientator() != null) {
+        		if (proposal.getOrientator().equals(userView.getPerson()) && proposal.getScheduleing().getExecutionYearOfOneExecutionDegree().equals(outputExecutionYear)) {
+           			orientatorProposals.add(proposal);
+            	}
+        	}
+        	if (proposal.getCoorientator() != null) {
+        		if (proposal.getCoorientator().equals(userView.getPerson()) && proposal.getScheduleing().getExecutionYearOfOneExecutionDegree().equals(outputExecutionYear)) {
+           			coorientatorProposals.add(proposal);
+            	}
+        	}
+        }
+        for (Thesis dissertation : inputDissertations) {
+        	if (dissertation.getOrientator() != null) {
+        		if (dissertation.getOrientator().getPerson().equals(userView.getPerson()) && dissertation.getExecutionYear().equals(outputExecutionYear)) {
+           			orientatorDissertations.add(dissertation);
+            	}
+        	}
+        	if (dissertation.getCoorientator() != null) {
+        		if (dissertation.getCoorientator().getPerson().equals(userView.getPerson()) && dissertation.getExecutionYear().equals(outputExecutionYear)) {
+           			coorientatorDissertations.add(dissertation);
+            	}
+        	}
+        }
+        request.setAttribute("orientatorProposals", orientatorProposals);
+        request.setAttribute("coorientatorProposals", coorientatorProposals);
+        request.setAttribute("orientatorDissertations", orientatorDissertations);
+        request.setAttribute("coorientatorDissertations", coorientatorDissertations);
+        return listProposals(mapping, form, request, response);
     }
 
     public ActionForward chooseDegree(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -289,7 +342,6 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
         return mapping.findForward("chooseDegreeForFinalWorkProposal");
     }
 
-    @SuppressWarnings({ "deprecation", "unused" })
     public ActionForward listProposals(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException,  FenixServiceException,
             IllegalAccessException, InstantiationException {
@@ -305,12 +357,12 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
         proposals.addAll(userView.getPerson().findFinalDegreeWorkProposals());
         request.setAttribute("proposals", proposals);
 
-        String executionDegreeString = (String) getFromRequest(request, "degree");
+        /*String executionDegreeString = (String) getFromRequest(request, "degree");
         Integer executionDegreeInteger = Integer.valueOf(executionDegreeString);
         ExecutionDegree executionDegree =
-                (ExecutionDegree) readDomainObject(request, ExecutionDegree.class, executionDegreeInteger);
+                (ExecutionDegree) readDomainObject(request, ExecutionDegree.class, executionDegreeInteger);*/
 
-        if (executionDegree == null) {
+/*        if (executionDegree == null) {
             ActionErrors actionErrors = new ActionErrors();
             actionErrors.add("finalDegreeWorkProposal.ProposalPeriod.interval.undefined", new ActionError(
                     "finalDegreeWorkProposal.ProposalPeriod.interval.undefined"));
@@ -318,14 +370,14 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
             return mapping.findForward("OutOfSubmisionPeriod");
         } else {
             final DegreeCurricularPlan dcp = executionDegree.getDegreeCurricularPlan();
-            final Set<ExecutionDegree> executionDegrees = dcp.getExecutionDegreesWithProposalPeriodOpen();
-            if (executionDegrees.isEmpty()) {
+            //final Set<ExecutionDegree> executionDegrees = dcp.getExecutionDegreesWithProposalPeriodOpen();
+            /*if (executionDegrees.isEmpty()) {
                 ActionErrors actionErrors = new ActionErrors();
                 actionErrors.add("finalDegreeWorkProposal.ProposalPeriod.interval.undefined", new ActionError(
                         "finalDegreeWorkProposal.ProposalPeriod.interval.undefined"));
                 saveErrors(request, actionErrors);
                 return mapping.findForward("OutOfSubmisionPeriod");
-            }
+            }*/
 
             /*
              * This is done this way because executionDegrees set is a tree set
@@ -333,16 +385,16 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
              * is the most recent degree which has a submission proposal period
              * opened.
              */
-            final ExecutionDegree recentDegree = executionDegrees.iterator().next();
+/*            final ExecutionDegree recentDegree = executionDegrees.iterator().next();
             request.setAttribute("executionYear", recentDegree.getExecutionYear().getIdInternal().toString());
-            request.setAttribute("explicitYear", recentDegree.getExecutionYear().getName());
+            request.setAttribute("explicitYear", recentDegree.getExecutionYear().getName());*/
 
-            request.setAttribute("degree", recentDegree.getIdInternal().toString());
-            request.setAttribute("explicitDegree", recentDegree.getDegree().getName());
+            /*request.setAttribute("degree", recentDegree.getIdInternal().toString());
+            request.setAttribute("explicitDegree", recentDegree.getDegree().getName());*/
 
-            request.setAttribute("executionDegrees", executionDegrees);
+            //request.setAttribute("executionDegrees", executionDegrees);
             return mapping.findForward("listProposals");
-        }
+        //}
     }
 
     public ActionForward prepareFinalWorkInformation(ActionMapping mapping, ActionForm form, HttpServletRequest request,

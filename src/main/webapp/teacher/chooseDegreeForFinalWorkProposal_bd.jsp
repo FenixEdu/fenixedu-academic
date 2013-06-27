@@ -3,6 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 <h2>
 	<bean:message bundle="APPLICATION_RESOURCES" key="link.manage.finalWork"/>
@@ -20,13 +21,12 @@
 				<bean:write name="infoScheduleing" property="startOfProposalPeriod.time"/>
 			</dt:format>
 			-
-			<dt:format pattern="dd/MM/yyyy HH:mm">
+			<dt:format pattern="dd/MM/yyyy HH:mm">\
 				<bean:write name="infoScheduleing" property="endOfProposalPeriod.time"/>
 			</dt:format>
 		</span>
 	</p>
 </logic:present>
-
 
 <html:form action="/finalWorkManagement">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareFinalWorkInformation"/>
@@ -39,43 +39,30 @@
 		<tr>
 			<td>
 				<html:select bundle="HTMLALT_RESOURCES" property="executionYear"
-						onchange="this.form.method.value='changeExecutionYear';this.form.submit();"
-						>
+						onchange="this.form.method.value='changeExecutionYear';this.form.submit();">
 					<html:options collection="infoExecutionYears" property="idInternal" labelProperty="nextExecutionYearYear" />
 				</html:select>
 				<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
 					<bean:message bundle="APPLICATION_RESOURCES" key="button.submit"/>
 				</html:submit>
 			</td>
-			<td>
-				<html:select bundle="HTMLALT_RESOURCES" property="degree"
-						onchange="this.form.method.value='chooseDegree';this.form.submit();"
-						>
-					<html:options collection="executionDegreeList" property="idInternal" labelProperty="infoDegreeCurricularPlan.presentationName" />
-				</html:select>
-				<html:submit styleId="javascriptButtonID2" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-					<bean:message bundle="APPLICATION_RESOURCES" key="button.submit"/>
-				</html:submit>
-			</td>
 		</tr>
 	</table>
-	
 	<p class="mbottom05"><strong><bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.role" />:</strong></p>
 	<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.role" property="role" value="responsable" /><bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.responsable"/><br/>
 	<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.role" property="role" value="coResponsable" /><bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.coResponsable"/><br/>
 	<p><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="APPLICATION_RESOURCES" key="button.create"/></html:submit></p>
 </html:form>
 
-<bean:define id="degree" name="finalWorkInformationForm" property="degree"/>
 <bean:define id="executionYear" name="finalWorkInformationForm" property="executionYear"/>
-<logic:notEmpty name="degree">
+
 	<logic:notEmpty name="executionYear">
 		<bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposal.ListOfProposals"/>
-		<html:link page="<%= "/finalWorkManagement.do?method=listProposals&amp;degree=" + degree.toString() + "&amp;executionYear=" + executionYear.toString() %>">
+		<html:link page="<%= "/finalWorkManagement.do?method=changeExecutionYear&amp;executionYear=" + executionYear.toString() %>">
 			<bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposal.here"/>
 		</html:link>.
 	</logic:notEmpty>
-</logic:notEmpty>
+
 
 <logic:present name="finalDegreeWorkProposalHeaders">
 	<logic:greaterEqual name="finalDegreeWorkProposalHeaders" value="1">
@@ -85,6 +72,9 @@
 				</th>
 				<th class="listClasses-header" rowspan="2">
 					<bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposalHeader.number"/>
+				</th>
+				<th class="listClasses-header" rowspan="2">
+					<bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposalHeader.year"/>
 				</th>
 				<th class="listClasses-header" rowspan="2">
 					<bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposalHeader.title"/>
@@ -105,17 +95,17 @@
 		        	<bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposalHeader.coorientatorName"/>
 	    	    </th>
 			</tr>
-			<% java.util.Set processedExecutionDegreeIds = new java.util.HashSet(); %>
-			<bean:define id="degree" name="finalWorkInformationForm" property="degree"/>
 			<logic:iterate id="finalDegreeWorkProposalHeader" name="finalDegreeWorkProposalHeaders">
-				<bean:define id="executionDegreeId" name="finalDegreeWorkProposalHeader" property="executionDegreeOID"/>
-				<logic:equal name="executionDegreeId" value="<%= degree.toString() %>">
+
 					<tr>
 						<th class="listClasses-header" rowspan="2" colspan="2">
 							<bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposalHeader.proposal"/>
 						</th>				
 						<td class="listClasses" rowspan="2">
 							<bean:write name="finalDegreeWorkProposalHeader" property="proposalNumber"/> 
+						</td>
+						<td class="listClasses" rowspan="2">
+							<bean:write name="finalDegreeWorkProposalHeader" property="executionYear"/> 
 						</td>
 						<td class="listClasses" rowspan="2">
 							<logic:equal name="finalDegreeWorkProposalHeader" property="editable" value="true">
@@ -142,9 +132,6 @@
 								<bean:message bundle="APPLICATION_RESOURCES" key="print"/>
 					        </html:link>
 					        <br />
-				        	<html:link target="_self" page="<%= "/finalWorkManagement.do?method=prepareToTransposeFinalDegreeWorkProposal&amp;finalDegreeWorkProposalOID=" + ((net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWorkProposalHeader) finalDegreeWorkProposalHeader).getProposalOID().toString() %>">
-								<bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposalHeader.transpose"/>
-					        </html:link>
 						</td>
 					</tr>
 					<tr>
@@ -154,6 +141,7 @@
 					</tr>
 
 					<logic:equal name="finalDegreeWorkProposalHeader" property="groupProposals.empty" value="false">
+					
 						<bean:size id="numberOfGroups" name="finalDegreeWorkProposalHeader" property="groupProposals"/>
 						<% int total = 1; %>
 						<logic:iterate id="groupProposal" name="finalDegreeWorkProposalHeader" property="groupProposals">
@@ -162,8 +150,6 @@
 								<% total += numberOfStudents.intValue(); %>
 							</logic:notEmpty>
 						</logic:iterate>
-	
-						
 							<tr>
 								<td bgcolor="#a2aebc" align="center" rowspan="<%= total %>">
 									<bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposalHeader.candidates"/>
@@ -236,9 +222,8 @@
 											<bean:define id="student" name="groupStudent" property="student"/>
 											<td bgcolor="<%= bgColor %>" align="center">
 												<bean:define id="registrationOID" name="student" property="idInternal"/>
-												<bean:define id="executionDegreeId" name="finalDegreeWorkProposalHeader" property="executionDegreeOID"/>
 												<bean:define id="curriculumLink">
-													/viewStudentCurriculum.do?method=prepare&amp;registrationOID=<%= registrationOID.toString() %>&amp;executionDegreeId=<%= executionDegreeId.toString() %>
+													/viewStudentCurriculum.do?method=prepare&amp;registrationOID=<%= registrationOID.toString() %>
 												</bean:define>
 												<html:link page='<%= curriculumLink.toString() %>'>
 													<bean:write name="student" property="infoPerson.username"/>
@@ -246,9 +231,8 @@
 											</td>
 											<td bgcolor="<%= bgColor %>" align="center">
 												<bean:define id="registrationOID" name="student" property="idInternal"/>
-												<bean:define id="executionDegreeId" name="finalDegreeWorkProposalHeader" property="executionDegreeOID"/>
 												<bean:define id="curriculumLink">
-													/viewStudentCurriculum.do?method=prepare&amp;registrationOID=<%= registrationOID.toString() %>&amp;executionDegreeId=<%= executionDegreeId.toString() %>
+													/viewStudentCurriculum.do?method=prepare&amp;registrationOID=<%= registrationOID.toString() %>
 												</bean:define>
 												<html:link page='<%= curriculumLink.toString() %>'>
 													<bean:write name="student" property="infoPerson.nome"/>
@@ -276,9 +260,8 @@
 										<tr>
 											<td bgcolor="<%= bgColor %>" align="center">
 												<bean:define id="registrationOID" name="student" property="idInternal"/>
-												<bean:define id="executionDegreeId" name="finalDegreeWorkProposalHeader" property="executionDegreeOID"/>
 												<bean:define id="curriculumLink">
-													/viewStudentCurriculum.do?method=prepare&amp;registrationOID=<%= registrationOID.toString() %>&amp;executionDegreeId=<%= executionDegreeId.toString() %>
+													/viewStudentCurriculum.do?method=prepare&amp;registrationOID=<%= registrationOID.toString() %>
 												</bean:define>
 												<html:link page='<%= curriculumLink.toString() %>'>
 													<bean:write name="student" property="infoPerson.username"/> 
@@ -286,9 +269,8 @@
 											</td>
 											<td bgcolor="<%= bgColor %>" align="center">
 												<bean:define id="registrationOID" name="student" property="idInternal"/>
-												<bean:define id="executionDegreeId" name="finalDegreeWorkProposalHeader" property="executionDegreeOID"/>
 												<bean:define id="curriculumLink">
-													/viewStudentCurriculum.do?method=prepare&amp;registrationOID=<%= registrationOID.toString() %>&amp;executionDegreeId=<%= executionDegreeId.toString() %>
+													/viewStudentCurriculum.do?method=prepare&amp;registrationOID=<%= registrationOID.toString() %>
 												</bean:define>
 												<html:link page='<%= curriculumLink.toString() %>'>
 													<bean:write name="student" property="infoPerson.nome"/>
@@ -313,9 +295,7 @@
 									</logic:iterate>					
 								</logic:notEmpty>
 							</logic:iterate>
-
-					</logic:equal>
-				</logic:equal>
+						</logic:equal>
 			</logic:iterate>
 		</table>
 	</logic:greaterEqual>

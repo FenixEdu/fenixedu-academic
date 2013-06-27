@@ -4,127 +4,140 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 <h2>
 <bean:message bundle="APPLICATION_RESOURCES" key="link.manage.finalWork"/>
 </h2>
 
-<h3><bean:write name="explicitDegree"/></h3>
+<h3>
+	<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.orientatorDissertations"/>
+</h3>
+<logic:notEmpty name="orientatorDissertations">
+	<fr:view name="orientatorDissertations">
+		<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.FinalWorkManagementAction">
+			<fr:slot name="student.name" bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.student"/>
+			<fr:slot name="title" bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.title"/>
+			<fr:slot name="state.name" bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.state"/>
+		</fr:schema>
+			<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle2 mtop15 tdcenter inobullet"/>
+			<fr:property name="sortBy" value="title" />
+			<fr:property name="columnClasses" value="width200px,width400px,width200px"/>
+		</fr:layout>
+	</fr:view>
+</logic:notEmpty>
 
-<p>
-	<span class="error0"><!-- Error messages go here --><html:errors /></span>
-</p>
+<logic:empty name="orientatorDissertations">
+	<span class="error"><!-- Error messages go here --><bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.noDissertations"/></span>
+</logic:empty>
 
-<p class='infoop2'>
-	<bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposal.createProposalFromPrevious.info"/>
-</p>
-<table class="mtop15">
-	<tr>
-		<th class="listClasses-header"><bean:message bundle="APPLICATION_RESOURCES" key="label.executionYear"/></th>
-		<th class="listClasses-header" colspan="2"><bean:message bundle="APPLICATION_RESOURCES" key="label.begin"/></th>
-		<th class="listClasses-header" colspan="2"><bean:message bundle="APPLICATION_RESOURCES" key="label.end"/></th>
-	</tr>
-	<logic:iterate id="degree" name="executionDegrees" type="net.sourceforge.fenixedu.domain.ExecutionDegree">
-	<% if (degree.getExecutionYear().getName().equals(request.getAttribute("explicitYear"))) { %> 
-		<tr class='selected'>
-	 <% } else { %>
-	 	<tr>
-	 <% } %>
-		<td>
-			<bean:write name="degree" property="executionYear.name"/>
-		</td>
-		<td>
-			<dt:format pattern="yyyy-MM-dd"><bean:write name="degree" property="scheduling.startOfProposalPeriod.time"/></dt:format>
-		</td>
-		<td>
-			<dt:format pattern="HH:mm:ss"><bean:write name="degree" property="scheduling.startOfProposalPeriod.time"/></dt:format>
-		</td>
-		<td>
-			<dt:format pattern="yyyy-MM-dd"><bean:write name="degree" property="scheduling.endOfProposalPeriod.time"/></dt:format>
-		</td>
-		<td>
-			<dt:format pattern="HH:mm:ss"><bean:write name="degree" property="scheduling.endOfProposalPeriod.time"/></dt:format>
-		</td>
-	</tr>
-	</logic:iterate>
-</table>
+<h3>
+	<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.coorientatorDissertations"/>
+</h3>
 
-<logic:present name="proposals">
-	<logic:greaterEqual name="proposals" value="1">
-		<table class="mtop15">
+<logic:notEmpty name="coorientatorDissertations">
+	<fr:view name="coorientatorDissertations">
+		<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.FinalWorkManagementAction">
+			<fr:slot name="student.name" bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.student"/>
+			<fr:slot name="title" bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.title"/>
+			<fr:slot name="state.name" bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.state"/>
+		</fr:schema>
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle2 mtop15 tdcenter inobullet"/>
+			<fr:property name="sortBy" value="title" />
+			<fr:property name="columnClasses" value="width200px,width400px,width200px"/>
+		</fr:layout>
+	</fr:view>
+</logic:notEmpty>
+
+<logic:empty name="coorientatorDissertations">
+	<span class="error"><!-- Error messages go here --><bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.noDissertations"/></span>
+</logic:empty>
+
+<h3>
+	<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.submitedOrientatorProposal"/>
+</h3>
+
+<bean:define id="orientatorProposals" name="orientatorProposals"/>
+<bean:define id="proposal" name="orientatorProposals"/>
+
+<logic:notEmpty name="orientatorProposals">
+	<table class="tstyle2 mtop15 tdcenter inobullet">
+		<tr>
+			<th class="listClasses-header" width="200px">
+				<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.proposal"/>
+			</th>
+			<th class="listClasses-header" width="400px">
+				<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.title"/>
+			</th>
+			<th class="listClasses-header" width="200px">
+				<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.state"/>
+			</th>
+		</tr>
+		<tr>
+		<logic:iterate id="orientatorProposal" name="orientatorProposals">
 			<tr>
-				<th class="listClasses-header" rowspan="2">
-					<bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposalHeader.number"/>
-				</th>
-				<th class="listClasses-header" rowspan="2">
-					<bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposalHeader.title"/>
-				</th>
-				<th class="listClasses-header">
-					<bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposalHeader.orientatorName"/>
-				</th>
-				<th class="listClasses-header" rowspan="2">
-					<bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposalHeader.year"/>
-				</th>
-				<th class="listClasses-header" rowspan="2">
-					<bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposalHeader.degree"/>
-				</th>
-				<th class="listClasses-header" rowspan="2">
-				</th>
+				<td>
+					<bean:write name="orientatorProposal" property="proposalNumber"/>
+				</td>
+				<td>
+					<html:link page="<%= "/finalWorkManagement.do?method=viewFinalDegreeWorkProposal&amp;finalDegreeWorkProposalOID=" + ((net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal) orientatorProposal).getIdInternal() %>">
+						<bean:write name="orientatorProposal" property="title"/>
+					</html:link>
+				</td>
+				<td>
+					<bean:define id="status" name="orientatorProposal" property="status"/>
+					<bean:write name="status" property="key"/>
+				</td>
 			</tr>
+		</logic:iterate>
+	</table>
+</logic:notEmpty>
+
+<logic:empty name="orientatorProposals">
+	<span class="error"><!-- Error messages go here --><bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.noProposals"/></span>
+</logic:empty>
+
+<h3>
+	<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.submitedCoorientatorProposal"/>
+</h3>
+	
+<logic:notEmpty name="coorientatorProposals">
+	<table class="tstyle2 mtop15 tdcenter inobullet">
+		<tr>
+			<th class="listClasses-header" width="200px">
+				<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.proposal"/>
+			</th>
+			<th class="listClasses-header" width="400px">
+				<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.title"/>
+			</th>
+			<th class="listClasses-header" width="200px">
+				<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.state"/>
+			</th>
+		</tr>
+		<tr>
+		<logic:iterate id="coorientatorProposal" name="coorientatorProposals">
 			<tr>
-		        <th class="listClasses-header">
-		        	<bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposalHeader.coorientatorName"/>
-	    	    </th>
+				<td>
+					<bean:write name="coorientatorProposal" property="proposalNumber"/>
+				</td>
+				<td>
+					<html:link page="<%= "/finalWorkManagement.do?method=viewFinalDegreeWorkProposal&amp;finalDegreeWorkProposalOID=" + ((net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal) coorientatorProposal).getIdInternal() %>">
+						<bean:write name="coorientatorProposal" property="title"/>
+					</html:link>
+				</td>
+				<td>
+					<bean:define id="status" name="coorientatorProposal" property="status"/>
+					<bean:write name="status" property="key"/>
+				</td>
 			</tr>
+		</logic:iterate>
+	</table></logic:notEmpty>
 
-			<bean:define id="degree" name="finalWorkInformationForm" property="degree"/>
-			<logic:iterate id="proposal" name="proposals">
-					<tr>		
-						<td class="listClasses" rowspan="2">
-							<bean:write name="proposal" property="proposalNumber"/> 
-						</td>
-						<td class="listClasses" rowspan="2">
-							<logic:notEmpty name="proposal" property="title">
-					        	<bean:write name="proposal" property="title"/>
-					        </logic:notEmpty>
-						</td>
-						<td class="listClasses">
-							<bean:write name="proposal" property="orientator.name"/> 
-						</td>
-						<td class="listClasses" rowspan="2">
-							<bean:write name="proposal" property="scheduleing.executionYearOfOneExecutionDegree.qualifiedName"/>
-						</td>
-						<td class="listClasses" rowspan="2">
-							<bean:define id="executionDegrees" name="proposal" property="scheduleing.executionDegrees"/>
-							<logic:iterate id="executionDegree" name="executionDegrees">
-								<p><bean:write name="executionDegree" property="degree.sigla"/></p> 
-							</logic:iterate>
-						</td>
-						<td class="listClasses" rowspan="2">
-					        <html:link page="<%= "/finalWorkManagement.do?method=editToCreateFinalDegreeWorkProposal&amp;degree=" + request.getParameter("degree") + "&amp;executionYear=" + request.getParameter("executionYear") + "&amp;finalDegreeWorkProposalOID=" + ((net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal) proposal).getIdInternal().toString() %>">
-								<bean:message bundle="APPLICATION_RESOURCES" key="editToCreate"/>
-						    </html:link>
-						</td>
-					</tr>
-					<tr>
-						<td class="listClasses">
-							<logic:present name="proposal" property="coorientator">
-								<bean:write name="proposal" property="coorientator.name"/>
-							</logic:present>
-						</td>
-					</tr>
-
-			</logic:iterate>
-		</table>
-	</logic:greaterEqual>
-	<logic:lessThan name="proposals" value="1">
-		<span class="error"><!-- Error messages go here --><bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposalHeaders.notPresent"/></span>
-	</logic:lessThan>
-</logic:present>
-
-<logic:notPresent name="proposals">
-	<span class="error"><!-- Error messages go here --><bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposalHeaders.notPresent"/></span>
-</logic:notPresent>
+<logic:empty name="coorientatorProposals">
+	<span class="error"><!-- Error messages go here --><bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.noProposals"/></span>
+</logic:empty>
 
 <script type="text/javascript" language="javascript">
 switchGlobal();
