@@ -23,7 +23,7 @@
 			<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 mtop15 tdcenter inobullet"/>
 			<fr:property name="sortBy" value="title" />
-			<fr:property name="columnClasses" value="width200px,width400px,width200px"/>
+			<fr:property name="columnClasses" value="width200px,width1100px,width200px"/>
 		</fr:layout>
 	</fr:view>
 </logic:notEmpty>
@@ -37,18 +37,35 @@
 </h3>
 
 <logic:notEmpty name="coorientatorDissertations">
-	<fr:view name="coorientatorDissertations">
-		<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.FinalWorkManagementAction">
-			<fr:slot name="student.name" bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.student"/>
-			<fr:slot name="title" bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.title"/>
-			<fr:slot name="state.name" bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.state"/>
-		</fr:schema>
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle2 mtop15 tdcenter inobullet"/>
-			<fr:property name="sortBy" value="title" />
-			<fr:property name="columnClasses" value="width200px,width400px,width200px"/>
-		</fr:layout>
-	</fr:view>
+	<bean:define id="dissertation" name="coorientatorDissertations"/>
+	<table class="tstyle2 mtop15 tdcenter inobullet">
+		<tr>
+			<th class="listClasses-header" width="200px">
+				<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.student"/>
+			</th>
+			<th class="listClasses-header" width="1100px" >
+				<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.title"/>
+			</th>
+			<th class="listClasses-header" width="200px">
+				<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.state"/>
+			</th>
+		</tr>
+		<tr>
+		<logic:iterate id="orientatorDissertation" name="coorientatorDissertations">
+			<tr>
+				<td>
+					<bean:define id="student" name="orientatorDissertation" property="student"/>
+					<bean:write name="student" property="name"/>
+				</td>
+				<td>
+					<bean:write name="orientatorDissertation" property="title"/>
+				</td>
+				<td>
+					<bean:write name="orientatorDissertation" property="state"/>
+				</td>
+			</tr>
+		</logic:iterate>
+	</table>
 </logic:notEmpty>
 
 <logic:empty name="coorientatorDissertations">
@@ -59,16 +76,14 @@
 	<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.submitedOrientatorProposal"/>
 </h3>
 
-<bean:define id="orientatorProposals" name="orientatorProposals"/>
-<bean:define id="proposal" name="orientatorProposals"/>
-
 <logic:notEmpty name="orientatorProposals">
+	<bean:define id="proposal" name="orientatorProposals"/>
 	<table class="tstyle2 mtop15 tdcenter inobullet">
 		<tr>
 			<th class="listClasses-header" width="200px">
 				<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.proposal"/>
 			</th>
-			<th class="listClasses-header" width="400px">
+			<th class="listClasses-header" width="1100px">
 				<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.title"/>
 			</th>
 			<th class="listClasses-header" width="200px">
@@ -104,12 +119,14 @@
 </h3>
 	
 <logic:notEmpty name="coorientatorProposals">
+	<bean:define id="coorientatorProposals" name="coorientatorProposals"/>
+	<bean:define id="proposal" name="coorientatorProposals"/>
 	<table class="tstyle2 mtop15 tdcenter inobullet">
 		<tr>
 			<th class="listClasses-header" width="200px">
 				<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.proposal"/>
 			</th>
-			<th class="listClasses-header" width="400px">
+			<th class="listClasses-header" width="1100px">
 				<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.title"/>
 			</th>
 			<th class="listClasses-header" width="200px">
