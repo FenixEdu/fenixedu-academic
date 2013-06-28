@@ -5,4 +5,8 @@ deploy/
 configuration.properties
 output/
 .classpath
-
+build.properties.fenixIST
+build.properties.local
+build.properties.slave
+configuration.properties.fenix
+configuration.properties.localhost
