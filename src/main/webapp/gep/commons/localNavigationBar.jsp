@@ -28,7 +28,7 @@
 	</li>
 	<li>
 	  	<html:link page="/reportsByDegreeType.do?method=selectDegreeType">
-	  		<bean:message key="link.reports.by.degree.type" bundle="GEP_RESOURCES" />
+	  		<bean:message key="link.reports" bundle="GEP_RESOURCES" />
 	  	</html:link>
 	</li>
     <li>
@@ -40,7 +40,7 @@
         <html:link page="/a3es.do?method=prepare">
             <bean:message key="link.gep.a3es" bundle="GEP_RESOURCES" />
         </html:link>
-    </li>           
+    </li>
 
 	<li class="navheader">
 		<bean:message key="label.inquiries" bundle="INQUIRIES_RESOURCES"/>

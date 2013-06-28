@@ -6,7 +6,7 @@
 <%@ taglib uri="/WEB-INF/c.tld" prefix="c"%>
 <html:xhtml/>
 
-<h2><bean:message key="link.reports.by.degree.type" bundle="GEP_RESOURCES" /></h2>
+<h2><bean:message key="link.reports" bundle="GEP_RESOURCES" /></h2>
 
 <logic:notEmpty name="queueJobList">
 
@@ -654,6 +654,7 @@
 </logic:present>
 
 <bean:define id="urlGraduations" type="java.lang.String">/reportsByDegreeType.do?method=downloadGraduations&amp;<bean:write name="args" filter="false"/></bean:define>
+<bean:define id="urlPublications" type="java.lang.String">/reportsByDegreeType.do?method=downloadPublications&amp;<bean:write name="args" filter="false"/></bean:define>
 <bean:define id="viewReports" type="java.lang.String">/reportsByDegreeType.do?method=viewReports&amp;<bean:write name="args" filter="false"/></bean:define>
 <table class="tstyle1 thleft thlight mtop05">
 	<tr>
@@ -674,6 +675,27 @@
 		<td>
 			<html:link page="<%= viewReports + "&type=10" %>">
 				<bean:message key="label.view.requests.done" bundle="GEP_RESOURCES" /> (<bean:write name="numberOfReportsType10"/>)
+			</html:link>
+		</td>
+	</tr>
+	<tr>
+		<td style="width: 350px;">
+			<bean:message key="link.publications.report" bundle="GEP_RESOURCES"/>
+		</td>
+		<td>
+			<bean:define id="urlPublicationsCsv" type="java.lang.String"><bean:write name="urlPublications" filter="false"/>&amp;format=csv&amp;type=25</bean:define>
+			<html:link page="<%= urlPublicationsCsv %>">
+				<bean:message key="label.request.csv" bundle="GEP_RESOURCES" />
+			</html:link>
+			|
+			<bean:define id="urlPublicationsXls" type="java.lang.String"><bean:write name="urlPublications" filter="false"/>&amp;format=xls&amp;type=25</bean:define>
+			<html:link page="<%= urlPublicationsXls %>">
+				<bean:message key="label.request.xls" bundle="GEP_RESOURCES" />
+			</html:link>
+		</td>
+		<td>
+			<html:link page="<%= viewReports + "&type=25" %>">
+				<bean:message key="label.view.requests.done" bundle="GEP_RESOURCES" /> (<bean:write name="numberOfReportsType25"/>)
 			</html:link>
 		</td>
 	</tr>
