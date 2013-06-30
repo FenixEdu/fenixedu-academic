@@ -20775,6 +20775,8 @@ relation PhotographSantanderPhotoEntry {
 class ExternalApplication  {
         String name;
         String oauthKey;
+        String clientID;
+        String url;
     }
     
 class AuthScope  {
@@ -20782,7 +20784,12 @@ class AuthScope  {
         String endpoints; //should be a list?
     }
     
-   
+class AppUserSession {
+	String accessToken;
+	String refresToken;
+	DateTime expirationDate;
+}    
+     
 relation RootDomainObjectApps {
     RootDomainObject playsRole rootDomainObject;  
   	ExternalApplication playsRole apps {
@@ -20799,32 +20806,46 @@ relation RootDomainObjectAuthScope {
  
     
 relation AppAuthor {
-		User playsRole author {
-			multiplicity 1;
-		}
-		ExternalApplication playsRole appOwned {
-			multiplicity *;
-		}
+	User playsRole author {
+		multiplicity 1;
 	}
-	
-	
-	
-	relation UserAppPermissions {
-		User playsRole user {
-			multiplicity *;
-		}
-		ExternalApplication playsRole appAuthorized {
-			multiplicity *;
-		}
+	ExternalApplication playsRole appOwned {
+		multiplicity *;
 	}
-    
-    
-	  relation PermissionsScope {
-		AuthScope playsRole scopes {
-			multiplicity *;
-		}
-		ExternalApplication playsRole app {
-			multiplicity 1;
-		}
+}
+		
+relation UserAppPermissions {
+	User playsRole user {
+		multiplicity *;
 	}
+	ExternalApplication playsRole appAuthorized {
+		multiplicity *;
+	}
+}
+      
+relation PermissionsScope {
+	AuthScope playsRole scopes {
+		multiplicity *;
+	}
+	ExternalApplication playsRole app {
+		multiplicity 1;
+	}
+}
 
+relation AppUserSessionApplication {
+	AppUserSession playsRole appUserSession {
+		multiplicity 1;
+	}
+	ExternalApplication playsRole application {
+		multiplicity *;
+	}
+}
+
+relation UserAppUserSession {
+	AppUserSession playsRole appUserSession {
+		multiplicity 1;
+	}
+	User playsRole user {
+		multiplicity *;
+	}
+} 

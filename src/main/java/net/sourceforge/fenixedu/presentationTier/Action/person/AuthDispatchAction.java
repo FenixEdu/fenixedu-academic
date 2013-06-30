@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.domain.AppUserSession;
 import net.sourceforge.fenixedu.domain.ExternalApplication;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -25,6 +26,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "person", path = "/externalAuth")
 @Forwards(value = { @Forward(name = "registerApp", path = "/auth/registerAppRequest.jsp"),
+        @Forward(name = "editApp", path = "/auth/editAppRequest.jsp"),
         @Forward(name = "externalAuthApp", path = "/auth/externalAppRequest.jsp"),
         @Forward(name = "returnKeys", path = "/auth/returnkeys.jsp"), @Forward(name = "myApps", path = "/auth/showOwnedApps.jsp")
 
@@ -40,7 +42,7 @@ public class AuthDispatchAction extends FenixDispatchAction {
 
         request.setAttribute("authApps", authApps);
 
-        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        System.out.println("-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
         System.out.println("authApps size: " + (authApps != null ? authApps.size() : 0));
         System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 
@@ -60,6 +62,24 @@ public class AuthDispatchAction extends FenixDispatchAction {
         System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 
         return mapping.findForward("registerApp");
+    }
+
+    public ActionForward editApp(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+
+        IUserView userView = UserView.getUser();
+        User user = userView.getPerson().getUser();
+        List<ExternalApplication> apps = user.getAppOwned();
+
+        request.setAttribute("apps", apps);
+
+        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        System.out.println("number of owned apps: " + (apps != null ? apps.size() : 0));
+        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+
+        return mapping.findForward("editApp");
+
+        //Should remove auth since important properties may have been edited?
     }
 
     public ActionForward listApps(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -123,6 +143,13 @@ public class AuthDispatchAction extends FenixDispatchAction {
         System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 
         p.getUser().getAppAuthorized().add(app);
+
+        AppUserSession aus = new AppUserSession();
+        aus.addApplication(app);
+        aus.addUser(p.getUser());
+
+        p.getUser().setAppUserSession(aus);
+        app.setAppUserSession(aus);
 
         request.setAttribute("authApps", authApps);
 

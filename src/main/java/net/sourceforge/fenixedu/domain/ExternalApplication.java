@@ -8,6 +8,7 @@ public class ExternalApplication extends ExternalApplication_Base {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
         setOauthKey("" + Math.random() * 100);
+        setClientID("" + Math.random());
     }
 
     public void setScopes(List<AuthScope> scopes) {

@@ -26,7 +26,9 @@
 	<li class="navheader"><bean:message key="label.externalApp"  /></li>
  	<li><html:link page="/externalAuth.do?method=allowExternalApp"><bean:message key="label.auth"  bundle="APPLICATION_RESOURCES"/></html:link></li>
 	<li><html:link page="/externalAuth.do?method=registerExternalApp"><bean:message key="label.registerApp"  bundle="APPLICATION_RESOURCES"/></html:link></li>
-	<li><html:link page="/externalAuth.do?method=listApps"><bean:message key="label.auth.my.apps"  bundle="APPLICATION_RESOURCES"/></html:link></li>	
+	<li><html:link page="/externalAuth.do?method=editApp"><bean:message key="label.editApp"  bundle="APPLICATION_RESOURCES"/></html:link></li>
+	<li><html:link page="/externalAuth.do?method=listApps"><bean:message key="label.auth.my.apps"  bundle="APPLICATION_RESOURCES"/></html:link></li>
+		
 
 	<!-- Vigilancy link for people who do not have ROLE TEACHER -->
 
