@@ -58,7 +58,7 @@
 					<bean:write name="student" property="name"/>
 				</td>
 				<td class="dissertations-table-long-cell">
-					<html:link page="<%= "/coordinator/thesis/manageThesis.do?method=editProposal&amp;degreeCurricularPlanID=" + ((Thesis) orientatorDissertation).getDegree().getDegreeCurricularPlansForYear((net.sourceforge.fenixedu.domain.ExecutionYear) executionYear).get(0).getExternalId() + "&amp;executionYearId=" + executionYearId %>">
+					<html:link page="<%= "/finalWorkManagement.do?method=editProposal&amp;degreeCurricularPlanID=" + ((Thesis) orientatorDissertation).getDegree().getDegreeCurricularPlansForYear((net.sourceforge.fenixedu.domain.ExecutionYear) executionYear).get(0).getIdInternal() + "&amp;executionYearId=" + executionYearId %>">
 						<bean:write name="orientatorDissertation" property="title"/>
 					</html:link>
 				</td>
