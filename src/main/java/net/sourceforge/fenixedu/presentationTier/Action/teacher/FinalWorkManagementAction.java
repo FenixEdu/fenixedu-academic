@@ -49,12 +49,15 @@ import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoGroupProp
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoProposal;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoProposalEditor;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoScheduleing;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.dissertation.Dissertation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -65,6 +68,9 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.StudentThesisInfo;
+import net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisContextBean;
+import net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisPresentationState;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
@@ -74,6 +80,7 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -87,13 +94,23 @@ import org.apache.struts.action.DynaActionFormClass;
 import org.apache.struts.config.FormBeanConfig;
 import org.apache.struts.config.ModuleConfig;
 
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author Nuno Correia
  * @author Ricardo Rodrigues
  */
 
+
+@Mapping(module = "teacher", path = "/manageThesis", scope = "session", parameter = "method")
+@Forwards(value = {
+        @Forward(name = "edit-thesis", path = "/coordinator/thesis/editThesis.jsp", tileProperties = @Tile(
+                title = "private.coordinator.management.courses.dissertations")) })
 public class FinalWorkManagementAction extends FenixDispatchAction {
 
     public ActionForward submit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
@@ -276,6 +293,8 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
         request.setAttribute("coorientatorProposals", coorientatorProposals);
         request.setAttribute("orientatorDissertations", orientatorDissertations);
         request.setAttribute("coorientatorDissertations", coorientatorDissertations);
+        request.setAttribute("executionYear", outputExecutionYear);
+        request.setAttribute("executionYearId", outputExecutionYear.getExternalId());
         return listProposals(mapping, form, request, response);
     }
 
@@ -612,7 +631,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 
         return mapping.findForward("viewFinalDegreeWorkProposal");
     }
-
+    
     public ActionForward print(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixActionException {
         final String finalDegreeWorkProposalOIDString = request.getParameter("finalDegreeWorkProposalOID");
@@ -956,6 +975,133 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
         saveMessages(request, messages);
 
         return mapping.findForward("transposeFinalDegreeWorkProposal");
+    }
+    
+    public ActionForward editProposal(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        Thesis thesis = getThesis(request);
 
+        if (thesis == null) {
+            return listThesis(mapping, actionForm, request, response);
+        }
+
+        request.setAttribute("conditions", thesis.getConditions());
+
+        if (thesis.isOrientatorCreditsDistributionNeeded()) {
+            request.setAttribute("orientatorCreditsDistribution", true);
+        }
+
+        if (thesis.isCoorientatorCreditsDistributionNeeded()) {
+            request.setAttribute("coorientatorCreditsDistribution", true);
+        }
+
+        return mapping.findForward("edit-thesis");
+    }
+    
+    public ActionForward listThesis(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
+        ThesisContextBean bean = getContextBean(request);
+        ThesisPresentationState filter = bean.getPresentationState();
+        if (filter == null) {
+            filter = getFilterFromRequest(request);
+            bean.setPresentationState(filter);
+        }
+        request.setAttribute("filter", (filter != null) ? filter : "null");
+
+        List<StudentThesisInfo> result = new ArrayList<StudentThesisInfo>();
+        for (CurricularCourse curricularCourse : degreeCurricularPlan.getDissertationCurricularCourses(bean.getExecutionYear())) {
+            for (Enrolment enrolment : curricularCourse.getEnrolmentsByExecutionYear(bean.getExecutionYear())) {
+                StudentCurricularPlan studentCurricularPlan = enrolment.getStudentCurricularPlan();
+
+                if (studentCurricularPlan.getDegreeCurricularPlan() != degreeCurricularPlan) {
+                    continue;
+                }
+                final Thesis thesis = enrolment.getThesis();
+                if (filter != null) {
+                    final ThesisPresentationState state = ThesisPresentationState.getThesisPresentationState(thesis);
+                    if (!state.equals(filter)) {
+                        continue;
+                    }
+                }
+                result.add(new StudentThesisInfo(enrolment));
+            }
+        }
+
+        request.setAttribute("theses", result);
+        request.setAttribute("contextBean", bean);
+
+        return mapping.findForward("list-thesis");
+    }
+    
+    protected Thesis getThesis(HttpServletRequest request) {
+        Thesis thesis = (Thesis) request.getAttribute("thesis");
+
+        if (thesis != null) {
+            return thesis;
+        } else {
+            return Thesis.fromExternalId(request.getParameter("thesisID"));
+        }
+    }
+    
+    public ThesisPresentationState getFilterFromRequest(HttpServletRequest request) {
+        String filter = request.getParameter("filter");
+        return filter != null && !filter.isEmpty() && !filter.equals("null") ? ThesisPresentationState.valueOf(filter) : null;
+    }
+    
+    private ThesisContextBean getContextBean(HttpServletRequest request) {
+        ThesisContextBean bean = getRenderedObject("contextBean");
+        RenderUtils.invalidateViewState("contextBean");
+
+        if (bean != null) {
+            return bean;
+        } else {
+            ExecutionYear executionYear = getExecutionYear(request);
+
+            if (executionYear == null) {
+                executionYear = ExecutionYear.readCurrentExecutionYear();
+            }
+
+            TreeSet<ExecutionYear> executionYears = new TreeSet<ExecutionYear>(new ReverseComparator());
+            executionYears.addAll(getDegreeCurricularPlan(request).getExecutionYears());
+
+            return new ThesisContextBean(executionYears, executionYear);
+        }
+    }
+    
+    private ExecutionYear getExecutionYear(HttpServletRequest request) {
+        Integer id = getId(request.getParameter("executionYearId"));
+        if (id == null) {
+            id = getId(request.getParameter("executionYear"));
+        }
+        if (id == null) {
+            TreeSet<ExecutionYear> executionYears = new TreeSet<ExecutionYear>(new ReverseComparator());
+            executionYears.addAll(getDegreeCurricularPlan(request).getExecutionYears());
+
+            if (executionYears.isEmpty()) {
+                return ExecutionYear.readCurrentExecutionYear();
+            } else {
+                return executionYears.first();
+            }
+        } else {
+            return RootDomainObject.getInstance().readExecutionYearByOID(id);
+        }
+    }
+    
+    protected DegreeCurricularPlan getDegreeCurricularPlan(HttpServletRequest request) {
+        return DegreeCurricularPlan.fromExternalId(request.getParameter("degreeCurricularPlanID"));
+    }
+    
+    protected Integer getId(String id) {
+        if (id == null) {
+            return null;
+        }
+
+        try {
+            return new Integer(id);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }
