@@ -439,7 +439,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
     }
 
     public void canBeDeleted() {
-        if (isTemporary() && !hasConfirmedMarkSheet()) {
+        if (!isTemporary() || hasConfirmedMarkSheet()) {
             throw new DomainException("error.enrolmentEvaluation.isTemporary.or.hasConfirmedMarksheet");
         }
         checkApprovedEnrolmentPayment();
