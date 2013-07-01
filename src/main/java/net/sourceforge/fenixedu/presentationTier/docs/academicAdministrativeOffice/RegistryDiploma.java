@@ -147,9 +147,21 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
 
     private String getFormatedCurrentDate(String universityName) {
         final StringBuilder result = new StringBuilder();
+        LocalDate date = new LocalDate();
+        String dayOrdinal = Integer.toString(date.getDayOfMonth());
+        String day = getEnumerationBundle().getString(dayOrdinal);
+        String month = date.toString("MMMM", getLocale());
         result.append(universityName);
         result.append(", ");
-        result.append(new LocalDate().toString(getDatePattern(), getLocale()));
+        result.append(getResourceBundle().getString("label.the.female"));
+        result.append(" ");
+        result.append(day);
+        result.append(" ");
+        result.append(getApplicationBundle().getString("label.of"));
+        result.append(" ");
+        result.append(month);
+        result.append(", ");
+        result.append(date.getYear());
         result.append(".");
         return result.toString();
     }
