@@ -2,10 +2,11 @@ package net.sourceforge.fenixedu.presentationTier.Action.publico.candidacies.era
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -472,13 +473,13 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
             }
 
             PersonBean personBean = bean.getPersonBean();
-            final List<Person> persons = new ArrayList<Person>(Person.readByDocumentIdNumber(personBean.getDocumentIdNumber()));
+            final Set<Person> persons = new HashSet<Person>(Person.readByDocumentIdNumber(personBean.getDocumentIdNumber()));
 
             if (persons.size() > 1) {
                 addActionMessage("individualCandidacyMessages", request, "mobility.error.person.with.same.identifier.exists");
                 return prepareEditCandidacyProcess(mapping, form, request, response);
             } else if (persons.size() == 1
-                    && persons.get(0) != bean.getIndividualCandidacyProcess().getPersonalDetails().getPerson()) {
+                    && persons.iterator().next() != bean.getIndividualCandidacyProcess().getPersonalDetails().getPerson()) {
                 addActionMessage("individualCandidacyMessages", request, "mobility.error.person.with.same.identifier.exists");
                 return prepareEditCandidacyProcess(mapping, form, request, response);
             }
@@ -822,14 +823,14 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
             return executeCreateCandidacyPersonalInformationInvalid(mapping, form, request, response);
         }
 
-        final List<Person> persons = new ArrayList<Person>(Person.readByDocumentIdNumber(personBean.getDocumentIdNumber()));
+        final Set<Person> persons = new HashSet<Person>(Person.readByDocumentIdNumber(personBean.getDocumentIdNumber()));
 
         if (persons.size() > 1) {
             addActionMessage("individualCandidacyMessages", request, "mobility.error.person.with.same.identifier.exists.multiple");
             return executeCreateCandidacyPersonalInformationInvalid(mapping, form, request, response);
 
         } else if (persons.size() == 1) {
-            Person person = persons.get(0);
+            Person person = persons.iterator().next();
             if (person.hasEmployee()) {
                 addActionMessage("individualCandidacyMessages", request,
                         "mobility.error.person.with.same.identifier.exists.employee");

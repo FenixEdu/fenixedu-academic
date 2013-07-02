@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.Action.publico.candidacies.over23;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -211,7 +211,7 @@ public class Over23IndividualCandidacyProcessRefactoredDA extends RefactoredIndi
             return executeCreateCandidacyPersonalInformationInvalid(mapping, form, request, response);
         }
 
-        final List<Person> persons = new ArrayList<Person>(Person.readByDocumentIdNumber(personBean.getDocumentIdNumber()));
+        final Set<Person> persons = new HashSet<Person>(Person.readByDocumentIdNumber(personBean.getDocumentIdNumber()));
 
         if (persons.size() > 1) {
             addActionMessage("individualCandidacyMessages", request, getProcessType().getSimpleName()
@@ -219,7 +219,7 @@ public class Over23IndividualCandidacyProcessRefactoredDA extends RefactoredIndi
             return executeCreateCandidacyPersonalInformationInvalid(mapping, form, request, response);
         }
 
-        final Person person = persons.size() == 1 ? persons.get(0) : null;
+        final Person person = persons.size() == 1 ? persons.iterator().next() : null;
 
         // check if person already exists
         if (person != null) {
@@ -351,7 +351,7 @@ public class Over23IndividualCandidacyProcessRefactoredDA extends RefactoredIndi
                 return beginCandidacyProcessIntro(mapping, form, request, response);
             }
 
-            final List<Person> persons = new ArrayList<Person>(Person.readByDocumentIdNumber(personBean.getDocumentIdNumber()));
+            final Set<Person> persons = new HashSet<Person>(Person.readByDocumentIdNumber(personBean.getDocumentIdNumber()));
 
             if (persons.size() > 1) {
                 addActionMessage("individualCandidacyMessages", request, getProcessType().getSimpleName()
@@ -359,7 +359,7 @@ public class Over23IndividualCandidacyProcessRefactoredDA extends RefactoredIndi
                 return prepareEditCandidacyProcess(mapping, form, request, response);
             }
 
-            final Person person = persons.size() == 1 ? persons.get(0) : null;
+            final Person person = persons.size() == 1 ? persons.iterator().next() : null;
 
             // check if person already exists
             if (person != null) {

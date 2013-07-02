@@ -3,8 +3,10 @@ package net.sourceforge.fenixedu.presentationTier.Action.webSiteManager;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -740,13 +742,18 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
             String documentId = bean.getIdNumber();
 
             if (documentId != null) {
-                ArrayList<Person> persons = new ArrayList<Person>(Person.readByDocumentIdNumber(documentId));
+                Set<Person> persons = new TreeSet<Person>(Person.readByDocumentIdNumber(documentId));
 
                 if (persons.isEmpty()) {
                     person = null;
                 } else {
                     // TODO: show a selection list
-                    person = persons.get(new Random().nextInt() % persons.size());
+                    int i;
+                    Iterator<Person> iter = persons.iterator();
+                    for (i = new Random().nextInt() % persons.size(); iter.hasNext() && i > 0; i--) {
+                        iter.next();
+                    }
+                    person = iter.next();
                 }
 
                 if (person == null) {

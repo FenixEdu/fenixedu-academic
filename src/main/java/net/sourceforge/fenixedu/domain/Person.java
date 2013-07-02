@@ -1428,9 +1428,9 @@ public class Person extends Person_Base {
                 && !hasAnyPunctualRoomsOccupationRequests() && !hasAnyPunctualRoomsOccupationRequestsToProcess()
                 && !hasAnyAssociatedQualifications() && !hasAnyAssociatedAlteredCurriculums() && !hasAnyEnrolmentEvaluations()
                 && !hasAnyExportGroupingSenders() && !hasAnyResponsabilityTransactions() && !hasAnyMasterDegreeCandidates()
-                && !hasAnyGuides() && !hasAnyProjectAccesses() && !hasEmployee() && !hasTeacher()
-                && !hasAnyPayedGuides() && !hasAnyPayedReceipts() && !hasParking() && !hasAnyResearchInterests()
-                && !hasAnyProjectParticipations() && !hasAnyParticipations() && !hasAnyBoards() && !hasAnyPersonFunctions()
+                && !hasAnyGuides() && !hasAnyProjectAccesses() && !hasEmployee() && !hasTeacher() && !hasAnyPayedGuides()
+                && !hasAnyPayedReceipts() && !hasParking() && !hasAnyResearchInterests() && !hasAnyProjectParticipations()
+                && !hasAnyParticipations() && !hasAnyBoards() && !hasAnyPersonFunctions()
                 && (!hasHomepage() || getHomepage().isDeletable()) && !hasLibraryCard() && !hasAnyCardGenerationEntries()
                 && !hasAnyInternalParticipants() && !hasAnyCreatedQualifications() && !hasAnyCreateJobs();
     }
@@ -1849,7 +1849,7 @@ public class Person extends Person_Base {
     }
 
     public static Collection<Person> readByDocumentIdNumber(final String documentIdNumber) {
-        final Collection<Person> result = new ArrayList<Person>();
+        final Collection<Person> result = new HashSet<Person>();
         for (final IdDocument idDocument : IdDocument.find(documentIdNumber)) {
             result.add(idDocument.getPerson());
         }
@@ -4163,8 +4163,8 @@ public class Person extends Person_Base {
     }
 
     /**
-       User socialSecurityNumber instead 
-    */
+     * Use socialSecurityNumber instead
+     */
     @Override
     @Deprecated
     public String getFiscalCode() {

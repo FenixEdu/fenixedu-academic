@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.person;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.TreeSet;
@@ -344,8 +343,9 @@ public class SearchPerson extends FenixService implements Serializable {
         }
 
         allValidPersons = (List<Person>) CollectionUtils.select(persons, predicate);
-        Collections.sort(allValidPersons, Person.COMPARATOR_BY_NAME_AND_ID);
-        return new CollectionPager<Person>(allValidPersons, 25);
+        TreeSet<Person> result = new TreeSet<Person>(Person.COMPARATOR_BY_NAME_AND_ID);
+        result.addAll(allValidPersons);
+        return new CollectionPager<Person>(result, 25);
     }
 
     public static class SearchPersonPredicate implements Predicate {
