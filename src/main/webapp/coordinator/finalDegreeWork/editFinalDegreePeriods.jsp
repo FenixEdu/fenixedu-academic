@@ -46,36 +46,46 @@
 <div id="wrap">
 	<fr:form action="<%= "/manageFinalDegreeWork.do?method=finalDegreeWorkInfo&page=0&degreeCurricularPlanID=" + degreeCurricularPlanID + "&executionDegreeOID=" + executionDegreeOID%>">
             <p class="mbottom05"><strong><bean:message key="finalDegreeWorkProposal.setProposalPeriod.header"/></strong></p>
-			<fr:messages for="proposalPeriods">
-				<li><span class="error0"><fr:message show="label"/>:<fr:message /></span></li>
-			</fr:messages>
+
             <div style="border: thin; margin-left: 25px; padding-left: 25px; background-color: whiteSmoke; width: 50%">
             	<fr:edit name="executionDegree" id="proposalPeriods">
             		<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.ExecutionDegree">
-	            		<fr:slot name="scheduling.startOfProposalPeriodDateTime" key="finalDegreeWorkProposal.setProposalPeriod.start"
-    	        				validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator">
+	            		<fr:slot name="scheduling.startOfProposalPeriodDateTime" key="finalDegreeWorkProposal.setProposalPeriod.start">
+	            			<fr:validator name="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator">
+                                    <fr:property name="required" value="true"/>
+                            </fr:validator>
         	    		</fr:slot>
-	            		<fr:slot name="scheduling.endOfProposalPeriodDateTime" key="finalDegreeWorkProposal.setProposalPeriod.end"
-    	        				validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator">
+	            		<fr:slot name="scheduling.endOfProposalPeriodDateTime" key="finalDegreeWorkProposal.setProposalPeriod.end">
+							<fr:validator name="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator">
+                                    <fr:property name="required" value="true"/>
+                            </fr:validator>
         	    		</fr:slot>
             		</fr:schema>
+            		<fr:layout name="tabular" >
+						<fr:property name="columnClasses" value=",,tderror1" />
+					</fr:layout>
             	</fr:edit>
             </div>
 
 			<p class="mbottom05"><strong><bean:message key="finalDegreeWorkCandidacy.setCandidacyPeriod.header"/></strong></p>
-			<fr:messages for="candidacyPeriods">
-				<li><span class="error0"><fr:message show="label"/>:<fr:message /></span></li>
-			</fr:messages>
+
             <div style="border: thin; margin-left: 25px; padding-left: 25px; background-color: whiteSmoke; width: 50%">
             	<fr:edit name="executionDegree" id="candidacyPeriods">
             		<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.ExecutionDegree">
-	            		<fr:slot name="scheduling.startOfCandidacyPeriodDateTime" key="finalDegreeWorkProposal.setProposalPeriod.start"
-    	        				validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator">
+	            		<fr:slot name="scheduling.startOfCandidacyPeriodDateTime" key="finalDegreeWorkProposal.setProposalPeriod.start">
+	            			<fr:validator name="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator">
+                                    <fr:property name="required" value="true"/>
+                            </fr:validator>
         	    		</fr:slot>
-	            		<fr:slot name="scheduling.endOfCandidacyPeriodDateTime" key="finalDegreeWorkProposal.setProposalPeriod.end"
-    	        				validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator">
+	            		<fr:slot name="scheduling.endOfCandidacyPeriodDateTime" key="finalDegreeWorkProposal.setProposalPeriod.end">
+	            			<fr:validator name="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator">
+                                    <fr:property name="required" value="true"/>
+                            </fr:validator>
         	    		</fr:slot>
             		</fr:schema>
+            		<fr:layout name="tabular" >
+						<fr:property name="columnClasses" value=",,tderror1" />
+					</fr:layout>
             	</fr:edit>
             </div>
 		<p><input value="Submeter" type="submit"></p>
