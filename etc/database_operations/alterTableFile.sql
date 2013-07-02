@@ -1,0 +1,1 @@
+alter table FILE modify column TITLE text;
