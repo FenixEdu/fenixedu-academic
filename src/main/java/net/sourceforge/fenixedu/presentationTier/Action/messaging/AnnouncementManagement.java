@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.messaging.DeleteAnnounce
 import net.sourceforge.fenixedu.applicationTier.Servico.messaging.RemoveAnnouncementBoardBookmark;
 import net.sourceforge.fenixedu.domain.FileContent;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.messaging.UnitAnnouncementBoard;
@@ -365,6 +366,8 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
                             bean.getPermittedGroup(), getLoggedPerson(request) });
         } catch (FileManagerException e) {
             addErrorMessage(request, "unableToStoreFile", "errors.unableToStoreFile", bean.getFileName());
+        } catch (DomainException e) {
+            addErrorMessage(request, "board", e.getKey(), (Object[]) e.getArgs());
         } finally {
             if (formFileInputStream != null) {
                 formFileInputStream.close();

@@ -14,6 +14,7 @@ import javax.activation.MimetypesFileTypeMap;
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.ByteArray;
 
@@ -45,6 +46,18 @@ public abstract class File extends File_Base {
         setUploadTime(new DateTime());
         setChecksum(DigestUtils.shaHex(content));
         setChecksumAlgorithm("SHA");
+    }
+
+    @Override
+    public void setDisplayName(String displayName) {
+        checkInvalidCharacters(displayName);
+        super.setDisplayName(displayName);
+    }
+
+    private void checkInvalidCharacters(String displayName) {
+        if (displayName.contains("+") || displayName.contains(">")) {
+            throw new DomainException("errors.file.displayName.invalid.characters");
+        }
     }
 
     public void storeToContentManager() {
