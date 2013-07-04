@@ -53,6 +53,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
         scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "completedTransfer", path = "/editExecutionCourse.do?method=editExecutionCourse"),
         @Forward(name = "showPage", path = "/manager/executionCourseManagement/transferCurricularCourse.jsp") })
+@Deprecated
 public class EditExecutionCourseTransferCurricularCoursesDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareTransferCurricularCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,

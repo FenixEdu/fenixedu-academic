@@ -3,6 +3,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -25,7 +26,7 @@ public class CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod {
 
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
-    public static void run(Integer[] degreeCurricularPlansIDs, Integer executionPeriodID) {
+    public static HashMap<Integer, Integer> run(Integer[] degreeCurricularPlansIDs, Integer executionPeriodID) {
         final ExecutionSemester executionSemester = RootDomainObject.getInstance().readExecutionSemesterByOID(executionPeriodID);
         if (executionSemester == null) {
             throw new DomainException("error.selection.noPeriod");
@@ -35,7 +36,10 @@ public class CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod {
         if (degreeCurricularPlansIDs.length == 0) {
             throw new DomainException("error.selection.noDegree");
         }
+
+        HashMap<Integer, Integer> numberExecutionCoursesPerDCP = new HashMap<Integer, Integer>();
         for (final Integer degreeCurricularPlanID : degreeCurricularPlansIDs) {
+            int numberExecutionCourses = 0;
             final DegreeCurricularPlan degreeCurricularPlan =
                     RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanID);
             final List<CurricularCourse> curricularCourses = degreeCurricularPlan.getCurricularCourses();
@@ -53,10 +57,14 @@ public class CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod {
                                 new ExecutionCourse(curricularCourse.getName(), sigla, executionSemester, null);
                         executionCourse.createSite();
                         curricularCourse.addAssociatedExecutionCourses(executionCourse);
+                        numberExecutionCourses++;
                     }
                 }
             }
+            numberExecutionCoursesPerDCP.put(degreeCurricularPlanID, Integer.valueOf(numberExecutionCourses));
         }
+
+        return numberExecutionCoursesPerDCP;
     }
 
     private static String getCodeForCurricularCourse(final CurricularCourse curricularCourse) {

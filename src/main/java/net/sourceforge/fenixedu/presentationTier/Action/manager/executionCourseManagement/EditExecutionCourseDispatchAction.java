@@ -30,6 +30,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
@@ -218,7 +219,6 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
 
             separateLabel(form, request, "executionDegree", "executionDegreeId", "executionDegreeName");
             separateLabel(form, request, "curYear", "curYearId", "curYearName");
-            //String curYear = getAndSetStringToRequest(request, "curYear");
             String curYear = (String) request.getAttribute("curYear");
             executionCourseForm.set("curYear", curYear);
             chooseNotLinked = new Boolean(false);
@@ -233,7 +233,6 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         String executionCourseId = RequestUtils.getAndSetStringToRequest(request, "executionCourseId");
-        DynaActionForm executionCourseForm = prepareReturnAttributes(form, request);
 
         InfoExecutionCourse infoExecutionCourse;
         try {
@@ -241,10 +240,6 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
 
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
-        }
-
-        if (infoExecutionCourse.getAssociatedInfoCurricularCourses() != null) {
-            Collections.sort(infoExecutionCourse.getAssociatedInfoCurricularCourses(), new BeanComparator("name"));
         }
 
         request.setAttribute(PresentationConstants.EXECUTION_COURSE, infoExecutionCourse);
@@ -257,6 +252,7 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
         }
         request.setAttribute("entryPhases", entryPhases);
 
+        DynaActionForm executionCourseForm = prepareReturnAttributes(form, request);
         prepareReturnSessionBean(request, (Boolean) executionCourseForm.get("executionCoursesNotLinked"), executionCourseId);
 
         return mapping.findForward("editExecutionCourse");
@@ -295,9 +291,6 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
     public ActionForward updateExecutionCourse(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        String executionCourseId = RequestUtils.getAndSetStringToRequest(request, "executionCourseId");
-        DynaActionForm executionCourseForm = prepareReturnAttributes(actionForm, request);
-
         final InfoExecutionCourseEditor infoExecutionCourseEditor = fillInfoExecutionCourseFromForm(actionForm, request);
         InfoExecutionCourse infoExecutionCourse = null;
 
@@ -307,14 +300,15 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
         } catch (FenixServiceException e) {
             e.printStackTrace();
             throw new FenixActionException(e.getMessage());
-        }
-
-        if (infoExecutionCourse.getAssociatedInfoCurricularCourses() != null) {
-            Collections.sort(infoExecutionCourse.getAssociatedInfoCurricularCourses(), new BeanComparator("name"));
+        } catch (DomainException ex) {
+            addActionMessage("error", request, ex.getMessage(), ex.getArgs());
+            return editExecutionCourse(mapping, actionForm, request, response);
         }
 
         request.setAttribute(PresentationConstants.EXECUTION_COURSE, infoExecutionCourse);
 
+        String executionCourseId = RequestUtils.getAndSetStringToRequest(request, "executionCourseId");
+        DynaActionForm executionCourseForm = prepareReturnAttributes(actionForm, request);
         prepareReturnSessionBean(request, (Boolean) executionCourseForm.get("executionCoursesNotLinked"), executionCourseId);
 
         return mapping.findForward("viewExecutionCourse");

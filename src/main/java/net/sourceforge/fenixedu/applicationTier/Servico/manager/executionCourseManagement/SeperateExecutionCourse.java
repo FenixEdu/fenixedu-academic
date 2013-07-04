@@ -50,6 +50,10 @@ public class SeperateExecutionCourse {
             ExecutionCourseUtils.copyEvaluationMethod(originExecutionCourse, destinationExecutionCourse);
         }
 
+        if (destinationExecutionCourse.equals(originExecutionCourse)) {
+            throw new DomainException("error.selection.sameSourceDestinationCourse");
+        }
+
         transferCurricularCourses(originExecutionCourse, destinationExecutionCourse, curricularCourseToTransfer);
 
         transferAttends(originExecutionCourse, destinationExecutionCourse);

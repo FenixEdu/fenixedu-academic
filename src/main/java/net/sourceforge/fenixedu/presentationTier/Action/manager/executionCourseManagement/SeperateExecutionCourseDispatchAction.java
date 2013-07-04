@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.executionCourseManagement.ReadExecutionCourseWithShiftsAndCurricularCoursesByOID;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.executionCourseManagement.ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYear;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.executionCourseManagement.ReadExecutionDegreesByExecutionPeriodId;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.executionCourseManagement.ReadInfoExecutionCourseByOID;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.executionCourseManagement.SeperateExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
@@ -18,10 +19,12 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.RequestUtils;
 import net.sourceforge.fenixedu.util.BundleUtil;
@@ -46,23 +49,101 @@ public class SeperateExecutionCourseDispatchAction extends FenixDispatchAction {
     public ActionForward prepareTransfer(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException, FenixFilterException {
 
-        Integer executionCourseId = new Integer(request.getParameter("executionCourseId"));
-        Integer executionDegreeID = getIntegerFromRequest(request, "originExecutionDegreeID");
-        Integer curricularYearID = getIntegerFromRequest(request, "curricularYearId");
+        String executionCourseId = RequestUtils.getAndSetStringToRequest(request, "executionCourseId");
+        String originExecutionDegreeId = RequestUtils.getAndSetStringToRequest(request, "originExecutionDegreeId");
+        RequestUtils.getAndSetStringToRequest(request, "curricularYearId");
+        RequestUtils.getAndSetStringToRequest(request, "executionPeriodId"); // maybe not needed (have EC id)
 
-        InfoExecutionCourse infoExecutionCourse = ReadExecutionCourseWithShiftsAndCurricularCoursesByOID.run(executionCourseId);
+        ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(Integer.valueOf(originExecutionDegreeId));
+        request.setAttribute("originExecutionDegreeName", executionDegree.getPresentationName());
+
+        InfoExecutionCourse infoExecutionCourse =
+                ReadExecutionCourseWithShiftsAndCurricularCoursesByOID.run(Integer.valueOf(executionCourseId));
         request.setAttribute("infoExecutionCourse", infoExecutionCourse);
 
-        List<InfoExecutionDegree> executionDegrees =
+        List executionDegrees =
                 ReadExecutionDegreesByExecutionPeriodId.run(infoExecutionCourse.getInfoExecutionPeriod().getIdInternal());
         transformExecutionDegreesIntoLabelValueBean(executionDegrees);
         request.setAttribute("executionDegrees", executionDegrees);
 
         List curricularYears = RequestUtils.buildCurricularYearLabelValueBean();
         request.setAttribute(PresentationConstants.CURRICULAR_YEAR_LIST_KEY, curricularYears);
-        request.setAttribute("originExecutionDegreeID", executionDegreeID);
-        request.setAttribute("curricularYearId", curricularYearID);
-        return mapping.findForward("showSeperationPage");
+        return mapping.findForward("showTransferPage");
+    }
+
+    public ActionForward prepareSeparate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixServiceException, FenixFilterException {
+
+        String executionCourseId = RequestUtils.getAndSetStringToRequest(request, "executionCourseId");
+        String originExecutionDegreeId = RequestUtils.getAndSetStringToRequest(request, "originExecutionDegreeId");
+        RequestUtils.getAndSetStringToRequest(request, "curricularYearId");
+        RequestUtils.getAndSetStringToRequest(request, "executionPeriodId");
+
+        ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(Integer.valueOf(originExecutionDegreeId));
+        request.setAttribute("originExecutionDegreeName", executionDegree.getPresentationName());
+
+        InfoExecutionCourse infoExecutionCourse =
+                ReadExecutionCourseWithShiftsAndCurricularCoursesByOID.run(Integer.valueOf(executionCourseId));
+        request.setAttribute("infoExecutionCourse", infoExecutionCourse);
+
+        return mapping.findForward("showSeparationPage");
+    }
+
+    public ActionForward manageCurricularSeparation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixServiceException, FenixFilterException, FenixActionException {
+
+        // FIXME:  ugly code to get attribute before parameter (parameter needs to be changed when coming from separate)
+        String executionCourseId = (String) request.getAttribute("executionCourseId");
+        if (executionCourseId == null) {
+            executionCourseId = RequestUtils.getAndSetStringToRequest(request, "executionCourseId");
+        }
+
+        InfoExecutionCourse infoExecutionCourse;
+
+        try {
+            infoExecutionCourse = ReadInfoExecutionCourseByOID.run(Integer.valueOf(executionCourseId));
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        }
+
+        if (infoExecutionCourse.getAssociatedInfoCurricularCourses() != null) {
+            Collections.sort(infoExecutionCourse.getAssociatedInfoCurricularCourses(), new BeanComparator("name"));
+        }
+
+        request.setAttribute(PresentationConstants.EXECUTION_COURSE, infoExecutionCourse);
+
+        // Setting bean for return to listExecutionCourseActions
+        String executionCoursesNotLinked = RequestUtils.getAndSetStringToRequest(request, "executionCoursesNotLinked");
+        Boolean chooseNotLinked = false;
+        if (!StringUtils.isEmpty(executionCoursesNotLinked) && Boolean.valueOf(executionCoursesNotLinked)) {
+            chooseNotLinked = true;
+        }
+
+        String executionPeriodId = RequestUtils.getAndSetStringToRequest(request, "executionPeriodId");
+        ExecutionCourse executionCourse =
+                RootDomainObject.getInstance().readExecutionCourseByOID(Integer.valueOf(executionCourseId));
+        ExecutionSemester executionPeriod =
+                RootDomainObject.getInstance().readExecutionSemesterByOID(Integer.valueOf(executionPeriodId));
+
+        ExecutionCourseBean sessionBean = new ExecutionCourseBean();
+        sessionBean.setSourceExecutionCourse(executionCourse);
+        sessionBean.setExecutionSemester(executionPeriod);
+        sessionBean.setChooseNotLinked(chooseNotLinked);
+
+        if (!chooseNotLinked) {
+            String originExecutionDegreeId = RequestUtils.getAndSetStringToRequest(request, "originExecutionDegreeId");
+            String curricularYearId = RequestUtils.getAndSetStringToRequest(request, "curricularYearId");
+            ExecutionDegree executionDegree =
+                    RootDomainObject.getInstance().readExecutionDegreeByOID(Integer.valueOf(originExecutionDegreeId));
+            CurricularYear curYear = RootDomainObject.getInstance().readCurricularYearByOID(Integer.valueOf(curricularYearId));
+            sessionBean.setExecutionDegree(executionDegree);
+            sessionBean.setCurricularYear(curYear);
+            request.setAttribute("originExecutionDegreeName", executionDegree.getPresentationName());
+        }
+
+        request.setAttribute("sessionBean", sessionBean);
+
+        return mapping.findForward("manageCurricularSeparation");
     }
 
     private void transformExecutionDegreesIntoLabelValueBean(List executionDegreeList) {
@@ -119,78 +200,155 @@ public class SeperateExecutionCourseDispatchAction extends FenixDispatchAction {
             request.setAttribute("executionCourses", executionCourses);
         }
 
-        return mapping.findForward("showSeperationPage");
+        return mapping.findForward("showTransferPage");
     }
 
     public ActionForward transfer(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixServiceException, FenixFilterException {
-        /**/
-        ExecutionCourseBean bean = new ExecutionCourseBean();
+            throws FenixServiceException, FenixFilterException, FenixActionException {
 
         /**/
         DynaActionForm dynaActionForm = (DynaActionForm) form;
 
-        Integer executionCourseId = new Integer(request.getParameter("executionCourseId"));
-        String destinationExecutionCourseIDString = (String) dynaActionForm.get("destinationExecutionCourseID");
-        Integer originExecutionDegreeID = (Integer) dynaActionForm.get("originExecutionDegreeID");
-        Integer curricularYearID = (Integer) dynaActionForm.get("curricularYearId");
+        String executionCourseId = RequestUtils.getAndSetStringToRequest(request, "executionCourseId");
+        String destinationExecutionCourseIdString = (String) dynaActionForm.get("destinationExecutionCourseId");
+        String originExecutionDegreeId = RequestUtils.getAndSetStringToRequest(request, "originExecutionDegreeId");
+        Integer curricularYearId = (Integer) dynaActionForm.get("curricularYearId");
         String[] shiftIdsToTransfer = (String[]) dynaActionForm.get("shiftIdsToTransfer");
         String[] curricularCourseIdsToTransfer = (String[]) dynaActionForm.get("curricularCourseIdsToTransfer");
-
-        Integer destinationExecutionCourseID = null;
-        if (!StringUtils.isEmpty(destinationExecutionCourseIDString) && StringUtils.isNumeric(destinationExecutionCourseIDString)) {
-            destinationExecutionCourseID = new Integer(destinationExecutionCourseIDString);
-        }
+        ExecutionDegree originExecutionDegree =
+                rootDomainObject.readExecutionDegreeByOID(Integer.valueOf(originExecutionDegreeId));
+        ExecutionCourse originExecutionCourse = rootDomainObject.readExecutionCourseByOID(Integer.valueOf(executionCourseId));
+        String originExecutionDegreesString = originExecutionCourse.getDegreePresentationString();
+        Integer destinationExecutionCourseId = null;
 
         try {
 
+            if (!StringUtils.isEmpty(destinationExecutionCourseIdString)
+                    && StringUtils.isNumeric(destinationExecutionCourseIdString)) {
+                destinationExecutionCourseId = new Integer(destinationExecutionCourseIdString);
+            } else {
+                throw new DomainException("error.selection.noDestinationExecutionCourse");
+            }
+
             ExecutionCourse destinationExecutionCourse =
-                    SeperateExecutionCourse.run(executionCourseId, destinationExecutionCourseID,
+                    SeperateExecutionCourse.run(Integer.valueOf(executionCourseId), destinationExecutionCourseId,
                             makeIntegerArray(shiftIdsToTransfer), makeIntegerArray(curricularCourseIdsToTransfer));
 
             String destinationExecutionCourseName = destinationExecutionCourse.getNameI18N().getContent();
             if (StringUtils.isEmpty(destinationExecutionCourseName)) {
                 destinationExecutionCourseName = destinationExecutionCourse.getName();
             }
-            String destinationExexcutionCourseCode = destinationExecutionCourse.getSigla();
+            String destinationExecutionCourseCode = destinationExecutionCourse.getSigla();
             String destinationDegreeName = destinationExecutionCourse.getDegreePresentationString();
             String transferedCurricularCourses = makeObjectStringFromArray(curricularCourseIdsToTransfer, CurricularCourse.class);
-            String transferedShifts = makeObjectStringFromArray(shiftIdsToTransfer, Shift.class);
+            String transferedShifts;
 
-            if (destinationExecutionCourseID == null && destinationExecutionCourse != null) {
-                // newly created execution course
-                addActionMessage("success", request, "message.manager.executionCourseManagement.separate.success.create",
-                        destinationExecutionCourseName, destinationDegreeName, destinationExexcutionCourseCode,
-                        transferedCurricularCourses, transferedShifts);
-            } else if (destinationExecutionCourseID != null && destinationExecutionCourse != null) {
-                // existing execution course
-                addActionMessage("success", request, "message.manager.executionCourseManagement.separate.success.transfer",
-                        transferedCurricularCourses, transferedShifts, destinationExecutionCourseName, destinationDegreeName,
-                        destinationExexcutionCourseCode);
+            String successKey;
+            if (shiftIdsToTransfer.length == 0) {
+                successKey = "message.manager.executionCourseManagement.transferCourse.success.many.noShifts";
+                transferedShifts = "";
             } else {
-                // This should never happen
-                addActionMessage("error", request, "Transfer ocurred but something went wrong");
+                successKey = "message.manager.executionCourseManagement.transferCourse.success.many";
+                transferedShifts = makeObjectStringFromArray(shiftIdsToTransfer, Shift.class);
+            }
+            addActionMessage("success", request, successKey, transferedCurricularCourses, transferedShifts,
+                    destinationExecutionCourseName, destinationDegreeName, destinationExecutionCourseCode);
+
+            // check if degree context has changed
+            if (!originExecutionCourse.getExecutionDegrees().contains(originExecutionDegree)) {
+                // origin execution course degree has changed (no longer on original degree)
+                String originCourseName = originExecutionCourse.getNameI18N().getContent();
+                if (StringUtils.isEmpty(originCourseName)) {
+                    originCourseName = originExecutionCourse.getName();
+                }
+                addActionMessage("info", request,
+                        "message.manager.executionCourseManagement.transferCourse.success.switchContext", originCourseName,
+                        originExecutionDegreesString, originExecutionCourse.getDegreePresentationString(),
+                        destinationExecutionCourseName, destinationExecutionCourse.getDegreePresentationString(),
+                        originExecutionDegree.getDegree().getSigla());
+                request.setAttribute("executionCourseId", destinationExecutionCourse.getIdInternal().toString());
             }
 
         } catch (DomainException e) {
             addActionMessage("error", request, e.getMessage(), e.getArgs());
-            return prepareTransfer(mapping, dynaActionForm, request, response);
-        } finally {
-
-            ExecutionDegree originExecutionDegree = rootDomainObject.readExecutionDegreeByOID(originExecutionDegreeID);
-            final ExecutionCourse originExecutionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
-            final CurricularYear curricularYear = rootDomainObject.readCurricularYearByOID(curricularYearID);
-
-            bean.setExecutionDegree(originExecutionDegree);
-            bean.setChooseNotLinked(false);
-            bean.setSourceExecutionCourse(originExecutionCourse);
-            bean.setExecutionSemester(originExecutionCourse.getExecutionPeriod());
-            bean.setCurricularYear(curricularYear);
-            request.setAttribute("originExecutionDegree", originExecutionDegree);
-            request.setAttribute("sessionBean", bean);
+            if (request.getAttribute("destinationExecutionDegreeId") != null) {
+                request.setAttribute("destinationExecutionDegreeId", request.getAttribute("destinationExecutionDegreeId"));
+            }
+            if (curricularYearId != null) {
+                request.setAttribute("destinationCurricularYear", curricularYearId.toString());
+            }
+            if (request.getAttribute("executionCourses") != null) {
+                request.setAttribute("executionCourses", request.getAttribute("executionCourses"));
+            }
+            if (destinationExecutionCourseId != null) {
+                request.setAttribute("destinationExecutionCourseId", destinationExecutionCourseId.toString());
+            }
+            return changeDestinationContext(mapping, dynaActionForm, request, response);
         }
 
-        return mapping.findForward("returnFromTransfer");
+        return manageCurricularSeparation(mapping, dynaActionForm, request, response);
+    }
+
+    public ActionForward separate(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws FenixServiceException, FenixFilterException, FenixActionException {
+
+        DynaActionForm dynaActionForm = (DynaActionForm) form;
+
+        String executionCourseId = RequestUtils.getAndSetStringToRequest(request, "executionCourseId");
+        String originExecutionDegreeId = RequestUtils.getAndSetStringToRequest(request, "originExecutionDegreeId");
+        String[] shiftIdsToTransfer = (String[]) dynaActionForm.get("shiftIdsToTransfer");
+        String[] curricularCourseIdsToTransfer = (String[]) dynaActionForm.get("curricularCourseIdsToTransfer");
+        ExecutionDegree originExecutionDegree =
+                rootDomainObject.readExecutionDegreeByOID(Integer.valueOf(originExecutionDegreeId));
+        ExecutionCourse originExecutionCourse = rootDomainObject.readExecutionCourseByOID(Integer.valueOf(executionCourseId));
+        String originExecutionDegreesString = originExecutionCourse.getDegreePresentationString();
+
+        try {
+
+            ExecutionCourse destinationExecutionCourse =
+                    SeperateExecutionCourse.run(Integer.valueOf(executionCourseId), null, makeIntegerArray(shiftIdsToTransfer),
+                            makeIntegerArray(curricularCourseIdsToTransfer));
+
+            String destinationExecutionCourseName = destinationExecutionCourse.getNameI18N().getContent();
+            if (StringUtils.isEmpty(destinationExecutionCourseName)) {
+                destinationExecutionCourseName = destinationExecutionCourse.getName();
+            }
+            String destinationExecutionCourseCode = destinationExecutionCourse.getSigla();
+            String destinationDegreeName = destinationExecutionCourse.getDegreePresentationString();
+            String transferedCurricularCourses = makeObjectStringFromArray(curricularCourseIdsToTransfer, CurricularCourse.class);
+            String transferedShifts;
+
+            String successKey;
+            if (shiftIdsToTransfer.length == 0) {
+                successKey = "message.manager.executionCourseManagement.separate.success.create.noShifts";
+                transferedShifts = "";
+            } else {
+                successKey = "message.manager.executionCourseManagement.separate.success.create";
+                transferedShifts = makeObjectStringFromArray(shiftIdsToTransfer, Shift.class);
+            }
+            addActionMessage("success", request, successKey, destinationExecutionCourseName, destinationDegreeName,
+                    destinationExecutionCourseCode, transferedCurricularCourses, transferedShifts);
+
+            // check if degree context has changed
+            if (!originExecutionCourse.getExecutionDegrees().contains(originExecutionDegree)) {
+                // origin execution course degree has changed (no longer on original degree)
+                String originCourseName = originExecutionCourse.getNameI18N().getContent();
+                if (StringUtils.isEmpty(originCourseName)) {
+                    originCourseName = originExecutionCourse.getName();
+                }
+                addActionMessage("info", request, "message.manager.executionCourseManagement.separate.success.switchContext",
+                        originCourseName, originExecutionDegreesString, originExecutionCourse.getDegreePresentationString(),
+                        destinationExecutionCourseName, destinationExecutionCourse.getDegreePresentationString(),
+                        originExecutionDegree.getDegree().getSigla());
+                request.setAttribute("executionCourseId", destinationExecutionCourse.getIdInternal().toString());
+            }
+
+        } catch (DomainException e) {
+            addActionMessage("error", request, e.getMessage(), e.getArgs());
+            return prepareSeparate(mapping, dynaActionForm, request, response);
+        }
+
+        return manageCurricularSeparation(mapping, dynaActionForm, request, response); //mapping.findForward("manageCurricularSeparation");
     }
 
     private Integer[] makeIntegerArray(String[] stringArray) {

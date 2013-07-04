@@ -5,6 +5,10 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <h2><bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.edit.executionCourse"/></h2>
+<h3>
+	<bean:message bundle="MANAGER_RESOURCES" key="title.manager.executionCourseManagement.manageCurricularSeparation"/> -
+	<bean:message bundle="MANAGER_RESOURCES" key="link.executionCourseManagement.curricular.associate"/>
+</h3>
 
 <logic:messagesPresent message="true" property="success">
 	<p>
@@ -26,26 +30,41 @@
 	</p>
 </logic:messagesPresent>
 
-<bean:write name="executionPeriodName"/>
-<logic:present name="executionDegreeName">
-	<logic:notEmpty name="executionDegreeName">
-		&gt; <bean:write name="executionDegreeName"/>
-	</logic:notEmpty>
-</logic:present>	
-&gt; <bean:write name="executionCourseName"/>
 
+<logic:notEqual name="executionCoursesNotLinked" value="true">
+	<bean:define id="curricularYearName">
+		<bean:message bundle="ENUMERATION_RESOURCES" key="<%= pageContext.findAttribute("curricularYearId") + ".ordinal.short" %>"/>
+		<bean:message bundle="ENUMERATION_RESOURCES" key="YEAR" />
+	</bean:define>
+</logic:notEqual>
+<logic:equal name="executionCoursesNotLinked" value="true">
+	<bean:define id="curricularYearName" value=""/>
+</logic:equal>
+
+<bean:write name="executionPeriodName"/> &nbsp;&gt;&nbsp;
+<logic:present name="originExecutionDegreeName">
+	<logic:notEmpty name="originExecutionDegreeName">
+		<b><bean:write name="originExecutionDegreeName"/></b> &nbsp;&gt;&nbsp;
+		<bean:write name="curricularYearName"/> &nbsp;&gt;&nbsp;
+	</logic:notEmpty>
+</logic:present>
+<bean:write name="executionCourseName"/>
+
+<br/>
 <table>
 	<tr>
 <html:form action="/editExecutionCourseManageCurricularCourses">
+	<bean:define id="executionCoursesNotLinkedValue" value="<%= pageContext.findAttribute("executionCoursesNotLinked").toString() %>" />
 	<input alt="input.method" type="hidden" name="method" value="prepareAssociateCurricularCourse"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseId" property="executionCourseId" value="<%= pageContext.findAttribute("executionCourseId").toString() %>" />
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseName" property="executionCourseName" value="<%= pageContext.findAttribute("executionCourseName").toString() %>" />
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionPeriod" property="executionPeriod"/>
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionDegree" property="executionDegree"/>
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.curYear" property="curYear"/>				
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionPeriodId" property="executionPeriodId"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCoursesNotLinked" property="executionCoursesNotLinked"/>
-	
-	<b><bean:message bundle="MANAGER_RESOURCES" key="link.manager.executionCourseManagement.associate"/></b>
+	<logic:notEqual name="executionCoursesNotLinkedValue" value="true">
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.originExecutionDegreeId" property="originExecutionDegreeId" value="<%= pageContext.findAttribute("originExecutionDegreeId").toString() %>" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.curricularYearId" property="curricularYearId" value="<%= pageContext.findAttribute("curricularYearId").toString() %>"/>
+	</logic:notEqual>
+
 	<p class="infoop">
 		<bean:message bundle="MANAGER_RESOURCES" key="message.manager.executionCourseManagement.chooseDegree"/>
 	</p>
@@ -56,7 +75,7 @@
 				<bean:message bundle="MANAGER_RESOURCES" key="property.context.degree"/>:
 			</td>
 			<td>
-				<html:select bundle="HTMLALT_RESOURCES" altKey="select.degreeCurricularPlan" property="degreeCurricularPlan" size="1">
+				<html:select bundle="HTMLALT_RESOURCES" altKey="select.degreeCurricularPlan" property="degreeCurricularPlanId" size="1">
 					<html:options collection="<%=PresentationConstants.DEGREES%>" property="value" labelProperty="label"/>
 				</html:select>
 				<br />
@@ -74,16 +93,15 @@
 		</td>
 </html:form>
 		<td align="left">
-			<bean:define id="executionCoursesNotLinkedValue" value="<%= pageContext.findAttribute("executionCoursesNotLinked").toString() %>" />
-			<fr:form action="<%="/editExecutionCourse.do?method=editExecutionCourse&executionCourseId=" + pageContext.findAttribute("executionCourseId").toString() %>">
-				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionPeriod" property="executionPeriod" value="<%= pageContext.findAttribute("executionPeriod").toString() %>" />
-				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="0" />
+			<fr:form action="<%="/seperateExecutionCourse.do?method=manageCurricularSeparation"%>">
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseId" property="executionCourseId" value="<%= pageContext.findAttribute("executionCourseId").toString() %>" />
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionPeriodId" property="executionPeriodId" value="<%= pageContext.findAttribute("executionPeriodId").toString() %>" />
 				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCoursesNotLinked" property="executionCoursesNotLinked" value="<%= pageContext.findAttribute("executionCoursesNotLinked").toString() %>" />
 				<logic:notEqual name="executionCoursesNotLinkedValue" value="true">
-					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionDegree" property="executionDegree" value="<%= pageContext.findAttribute("executionDegree").toString() %>" />	
-					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.curYear" property="curYear" value="<%= pageContext.findAttribute("curYear").toString() %>" />
+					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.originExecutionDegreeId" property="originExecutionDegreeId" value="<%= pageContext.findAttribute("originExecutionDegreeId").toString() %>" />	
+					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.curricularYearId" property="curricularYearId" value="<%= pageContext.findAttribute("curricularYearId").toString() %>" />
 				</logic:notEqual>
-				
+
 				<html:submit>
 					<bean:message bundle="MANAGER_RESOURCES" key="label.cancel"/>
 				</html:submit>

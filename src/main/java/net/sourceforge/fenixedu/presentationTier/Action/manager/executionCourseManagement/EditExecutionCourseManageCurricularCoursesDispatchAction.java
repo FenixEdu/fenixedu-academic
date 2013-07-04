@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameF
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
@@ -53,6 +54,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
         formBean = "executionCourseForm", scope = "request", parameter = "method")
 @Forwards(value = {
         @Forward(name = "editExecutionCourse", path = "/editExecutionCourse.do?method=editExecutionCourse&page=0"),
+        @Forward(name = "manageCurricularSeparation", path = "/seperateExecutionCourse.do?method=manageCurricularSeparation"),
         @Forward(name = "associateCurricularCourse", path = "/manager/executionCourseManagement/associateCurricularCourse.jsp"),
         @Forward(name = "prepareAssociateCurricularCourseChooseDegreeCurricularPlan",
                 path = "/manager/executionCourseManagement/prepareAssociateCurricularCourseChooseDegreeCurricularPlan.jsp") })
@@ -61,84 +63,82 @@ public class EditExecutionCourseManageCurricularCoursesDispatchAction extends Fe
     public ActionForward dissociateCurricularCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-        Integer executionCourseId = new Integer(getAndSetStringToRequest(request, "executionCourseId"));
-        Integer curricularCourseId = new Integer(getAndSetStringToRequest(request, "curricularCourseId"));
-
-        separateLabel(form, request, "executionPeriod", "executionPeriodId", "executionPeriodName");
-
-        String executionCoursesNotLinked = getAndSetStringToRequest(request, "executionCoursesNotLinked");
-        if (executionCoursesNotLinked == null || executionCoursesNotLinked.equals("null")
-                || executionCoursesNotLinked.equals(Boolean.FALSE.toString())) {
-            separateLabel(form, request, "executionDegree", "executionDegreeId", "executionDegreeName");
-        }
+        String executionCourseId = RequestUtils.getAndSetStringToRequest(request, "executionCourseId");
+        String curricularCourseId = RequestUtils.getAndSetStringToRequest(request, "curricularCourseId");
 
         try {
-            DissociateCurricularCourseByExecutionCourseId.run(executionCourseId, curricularCourseId);
-            CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseId);
+            DissociateCurricularCourseByExecutionCourseId.run(Integer.valueOf(executionCourseId),
+                    Integer.valueOf(curricularCourseId));
+            CurricularCourse curricularCourse =
+                    (CurricularCourse) rootDomainObject.readDegreeModuleByOID(Integer.valueOf(curricularCourseId));
             addActionMessage("success", request, "message.manager.executionCourseManagement.dissociate.sucess",
                     curricularCourse.getName(), curricularCourse.getDegreeCurricularPlan().getName());
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
 
-        return mapping.findForward("editExecutionCourse");
+        // destination attributes
+        RequestUtils.getAndSetStringToRequest(request, "executionCoursesNotLinked");
+        RequestUtils.getAndSetStringToRequest(request, "curricularYearId");
+        String originExecutionDegreeId = RequestUtils.getAndSetStringToRequest(request, "originExecutionDegreeId");
+        ExecutionDegree originExecutionDegree =
+                rootDomainObject.readExecutionDegreeByOID(Integer.valueOf(originExecutionDegreeId));
+        request.setAttribute("originExecutionDegreeName", originExecutionDegree.getPresentationName());
+
+        return mapping.findForward("manageCurricularSeparation");
     }
 
     public ActionForward prepareAssociateCurricularCourseChooseDegreeCurricularPlan(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-        getAndSetStringToRequest(request, "executionCourseId");
-        getAndSetStringToRequest(request, "executionCourseName");
-
-        Integer executionPeriodId = separateLabel(form, request, "executionPeriod", "executionPeriodId", "executionPeriodName");
-
-        String executionCoursesNotLinked = getAndSetStringToRequest(request, "executionCoursesNotLinked");
-        if (executionCoursesNotLinked == null || executionCoursesNotLinked.equals("null")
-                || executionCoursesNotLinked.equals(Boolean.FALSE.toString())) {
-            separateLabel(form, request, "executionDegree", "executionDegreeId", "executionDegreeName");
-            getAndSetStringToRequest(request, "curYear");
-        }
-
+        //TODO: check & clean up attributes that are not needed
+        //processing attributes
+        String executionPeriodId = RequestUtils.getAndSetStringToRequest(request, "executionPeriodId");
         List<InfoExecutionDegree> executionDegreeList = null;
         try {
-            executionDegreeList = ReadExecutionDegreesByExecutionPeriodId.run(executionPeriodId);
+            executionDegreeList = ReadExecutionDegreesByExecutionPeriodId.run(Integer.valueOf(executionPeriodId));
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
 
-        List<LabelValueBean> courses = new ArrayList<LabelValueBean>();
-        courses.add(new LabelValueBean(BundleUtil.getStringFromResourceBundle("resources.RendererResources",
+        List<LabelValueBean> degrees = new ArrayList<LabelValueBean>();
+        degrees.add(new LabelValueBean(BundleUtil.getStringFromResourceBundle("resources.RendererResources",
                 "renderers.menu.default.title"), ""));
 
         Collections.sort(executionDegreeList, new ComparatorByNameForInfoExecutionDegree());
+        buildExecutionDegreeLabelValueBean(executionDegreeList, degrees);
+        request.setAttribute(PresentationConstants.DEGREES, degrees);
 
-        buildExecutionDegreeLabelValueBean(executionDegreeList, courses);
+        //destination attributes
+        String executionCoursesNotLinked = RequestUtils.getAndSetStringToRequest(request, "executionCoursesNotLinked");
+        if (StringUtils.isEmpty(executionCoursesNotLinked) || !Boolean.valueOf(executionCoursesNotLinked)) {
+            RequestUtils.getAndSetStringToRequest(request, "curricularYearId");
+            String originExecutionDegreeId = RequestUtils.getAndSetStringToRequest(request, "originExecutionDegreeId");
+            ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(Integer.valueOf(originExecutionDegreeId));
+            request.setAttribute("originExecutionDegreeName", executionDegree.getPresentationName());
 
-        request.setAttribute(PresentationConstants.DEGREES, courses);
-
+        }
+        RequestUtils.getAndSetStringToRequest(request, "executionCourseId");
+        RequestUtils.getAndSetStringToRequest(request, "executionCourseName");
+        ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(Integer.valueOf(executionPeriodId));
+        request.setAttribute("executionPeriodName", executionSemester.getQualifiedName());
         return mapping.findForward("prepareAssociateCurricularCourseChooseDegreeCurricularPlan");
     }
 
     private void buildExecutionDegreeLabelValueBean(List<InfoExecutionDegree> executionDegreeList, List<LabelValueBean> courses) {
 
-        Iterator iterator = executionDegreeList.iterator();
-        while (iterator.hasNext()) {
-            InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) iterator.next();
+        for (InfoExecutionDegree infoExecutionDegree : executionDegreeList) {
             String name =
                     infoExecutionDegree.getInfoDegreeCurricularPlan().getDegreeCurricularPlan()
                             .getPresentationName(infoExecutionDegree.getInfoExecutionYear().getExecutionYear());
-
             /*
             TODO: DUPLICATE check really needed?
-            name =
-                    infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getDegreeType().getLocalizedName() + " em "
-                            + name;
+            name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getDegreeType().getLocalizedName() + " em " + name;
 
-            name +=
-                    duplicateInfoDegree(executionDegreeList, infoExecutionDegree) ? "-"
-                            + infoExecutionDegree.getInfoDegreeCurricularPlan().getName() : "";*/
-            courses.add(new LabelValueBean(name, name + "~"
-                    + infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal().toString()));
+            name += duplicateInfoDegree(executionDegreeList, infoExecutionDegree) ? "-" + infoExecutionDegree.getInfoDegreeCurricularPlan().getName() : "";
+            */
+            // courses.add(new LabelValueBean(name, name + "~" + infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal().toString()));
+            courses.add(new LabelValueBean(name, infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal().toString()));
         }
     }
 
@@ -161,32 +161,37 @@ public class EditExecutionCourseManageCurricularCoursesDispatchAction extends Fe
     public ActionForward prepareAssociateCurricularCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
+        //TODO: check and clean up unneeded attributes
+        //informative and destination attributes
+        String executionCoursesNotLinked = RequestUtils.getAndSetStringToRequest(request, "executionCoursesNotLinked");
+        if (StringUtils.isEmpty(executionCoursesNotLinked) || !Boolean.valueOf(executionCoursesNotLinked)) {
+            RequestUtils.getAndSetStringToRequest(request, "curricularYearId");
+            String originExecutionDegreeId = RequestUtils.getAndSetStringToRequest(request, "originExecutionDegreeId");
+            ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(Integer.valueOf(originExecutionDegreeId));
+            request.setAttribute("originExecutionDegreeName", executionDegree.getPresentationName());
+        }
+        String executionPeriodId = RequestUtils.getAndSetStringToRequest(request, "executionPeriodId");
+        ExecutionSemester executionPeriod = rootDomainObject.readExecutionSemesterByOID(Integer.valueOf(executionPeriodId));
+        request.setAttribute("executionPeriodName", executionPeriod.getQualifiedName());
+        RequestUtils.getAndSetStringToRequest(request, "executionCourseName");
+
+        //FIXME: executionPeriod might not be needed (present in exec course)
+        //processing attributes
+        String degreeCurricularPlanId = RequestUtils.getAndSetStringToRequest(request, "degreeCurricularPlanId");
+        DegreeCurricularPlan degreeCurricularPlan = null;
+        if (!StringUtils.isEmpty(degreeCurricularPlanId)) {
+            degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(Integer.valueOf(degreeCurricularPlanId));
+        }
         try {
-
-            getAndSetStringToRequest(request, "executionCourseId");
-            getAndSetStringToRequest(request, "executionCourseName");
-            separateLabel(form, request, "executionPeriod", "executionPeriodId", "executionPeriodName");
-
-            String executionCoursesNotLinked = getAndSetStringToRequest(request, "executionCoursesNotLinked");
-            if (executionCoursesNotLinked == null || executionCoursesNotLinked.equals("null")
-                    || executionCoursesNotLinked.equals(Boolean.FALSE.toString())) {
-                separateLabel(form, request, "executionDegree", "executionDegreeId", "executionDegreeName");
-                getAndSetStringToRequest(request, "curYear");
-            }
-
-            Integer degreeCurricularPlanId =
-                    separateLabel(form, request, "degreeCurricularPlan", "degreeCurricularPlanId", "degreeCurricularPlanName");
-            final DegreeCurricularPlan degreeCurricularPlan =
-                    rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
-
             if (degreeCurricularPlan == null) {
                 throw new DomainException("error.selection.noDegree");
             }
-
-            final Integer executionCourseID = Integer.valueOf((String) request.getAttribute("executionCourseId"));
-            final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
+            request.setAttribute("degreeCurricularPlanName",
+                    degreeCurricularPlan.getPresentationName(executionPeriod.getExecutionYear()));
+            request.setAttribute("degreeCurricularPlan", degreeCurricularPlan);
+            String executionCourseId = RequestUtils.getAndSetStringToRequest(request, "executionCourseId");
+            final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(Integer.valueOf(executionCourseId));
             final ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
-
             final List<InfoCurricularCourse> infoCurricularCourses = new ArrayList<InfoCurricularCourse>();
             for (final DegreeModule degreeModule : rootDomainObject.getDegreeModulesSet()) {
                 if (degreeModule instanceof CurricularCourse) {
@@ -200,15 +205,13 @@ public class EditExecutionCourseManageCurricularCoursesDispatchAction extends Fe
                     }
                 }
             }
-
             Collections.sort(infoCurricularCourses, new BeanComparator("name"));
-
             request.setAttribute("infoCurricularCourses", infoCurricularCourses);
 
             return mapping.findForward("associateCurricularCourse");
 
         } catch (DomainException e) {
-            addActionMessage("error", request, e.getMessage());
+            addActionMessage("error", request, e.getMessage(), e.getArgs());
             return prepareAssociateCurricularCourseChooseDegreeCurricularPlan(mapping, form, request, response);
         }
     }
@@ -217,9 +220,9 @@ public class EditExecutionCourseManageCurricularCoursesDispatchAction extends Fe
             HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         DynaActionForm executionCourseForm = (DynaValidatorForm) form;
-        getAndSetStringToRequest(request, "executionPeriodId");
-        getAndSetStringToRequest(request, "executionPeriodName");
-        String executionCourseId = getAndSetStringToRequest(request, "executionCourseId");
+        RequestUtils.getAndSetStringToRequest(request, "executionPeriodId");
+        RequestUtils.getAndSetStringToRequest(request, "executionPeriodName");
+        String executionCourseId = RequestUtils.getAndSetStringToRequest(request, "executionCourseId");
 
         Integer curricularCoursesListSize = (Integer) executionCourseForm.get("curricularCoursesListSize");
 
@@ -230,7 +233,7 @@ public class EditExecutionCourseManageCurricularCoursesDispatchAction extends Fe
             AssociateCurricularCoursesToExecutionCourse.run(Integer.valueOf(executionCourseId), curricularCourseIds);
 
             // avmc (ist150958): success messages: 1 line for each curricular course
-            String degreeCurricularPlanId = getAndSetStringToRequest(request, "degreeCurricularPlanId");
+            String degreeCurricularPlanId = RequestUtils.getAndSetStringToRequest(request, "degreeCurricularPlanId");
             DegreeCurricularPlan degreeCurricularPlan =
                     RootDomainObject.getInstance().readDegreeCurricularPlanByOID(new Integer(degreeCurricularPlanId));
 
@@ -248,7 +251,10 @@ public class EditExecutionCourseManageCurricularCoursesDispatchAction extends Fe
             addActionMessage("error", request, e.getMessage());
             return prepareAssociateCurricularCourse(mapping, executionCourseForm, request, response);
         }
-        return mapping.findForward("editExecutionCourse");
+
+        RequestUtils.getAndSetStringToRequest(request, "originExecutionDegreeId");
+        RequestUtils.getAndSetStringToRequest(request, "curricularYearId");
+        return mapping.findForward("manageCurricularSeparation");
     }
 
     private List<Integer> getInformationToDissociate(HttpServletRequest request, Integer curricularCoursesListSize, String what,
@@ -306,9 +312,4 @@ public class EditExecutionCourseManageCurricularCoursesDispatchAction extends Fe
 
         return objectId;
     }
-
-    private String getAndSetStringToRequest(HttpServletRequest request, String name) {
-        return RequestUtils.getAndSetStringToRequest(request, name);
-    }
-
 }

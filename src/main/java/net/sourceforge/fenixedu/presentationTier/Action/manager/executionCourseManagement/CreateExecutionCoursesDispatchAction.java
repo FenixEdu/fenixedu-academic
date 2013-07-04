@@ -4,6 +4,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager.executionCourseManagement;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -82,19 +83,23 @@ public class CreateExecutionCoursesDispatchAction extends FenixDispatchAction {
         Integer[] degreeCurricularPlansIDs = (Integer[]) actionForm.get("degreeCurricularPlansIDs");
         Integer executionPeriodID = (Integer) actionForm.get("executionPeriodID");
         try {
-            CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod.run(degreeCurricularPlansIDs, executionPeriodID);
+            HashMap<Integer, Integer> result =
+                    CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod.run(degreeCurricularPlansIDs,
+                            executionPeriodID);
 
             // avmc (ist150958): success messages: 1 line for each DCP
-            addActionMessage("successHead", request,
-                    "message.executionCourseManagement.createExecutionCoursesForDegreeCurricularPlan.successHead");
             final ExecutionSemester executionPeriod =
                     RootDomainObject.getInstance().readExecutionSemesterByOID(executionPeriodID);
+            addActionMessage("successHead", request,
+                    "message.executionCourseManagement.createExecutionCoursesForDegreeCurricularPlan.successHead",
+                    executionPeriod.getName() + " " + executionPeriod.getExecutionYear().getYear());
+
             for (final Integer degreeCurricularPlanID : degreeCurricularPlansIDs) {
                 final DegreeCurricularPlan degreeCurricularPlan =
                         RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanID);
                 addActionMessage("successDCP", request,
                         "message.executionCourseManagement.createExecutionCoursesForDegreeCurricularPlan.successDCP",
-                        degreeCurricularPlan.getPresentationName(), executionPeriod.getName());
+                        degreeCurricularPlan.getPresentationName(), result.get(degreeCurricularPlanID).toString());
             }
 
         } catch (DomainException e) {
