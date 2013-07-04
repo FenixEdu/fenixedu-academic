@@ -1,10 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.person;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.Department;
@@ -101,9 +100,9 @@ public class SearchPersonMatchingAnyParameter extends SearchPerson {
         }
 
         SearchPersonPredicate predicate = new SearchPersonMatchingAnyParameterPredicate(searchParameters);
-        List<Person> allValidPersons = (List<Person>) CollectionUtils.select(persons, predicate);
-        Collections.sort(allValidPersons, Person.COMPARATOR_BY_NAME_AND_ID);
-        return new CollectionPager<Person>(allValidPersons, 25);
+        TreeSet<Person> result = new TreeSet<Person>(Person.COMPARATOR_BY_NAME_AND_ID);
+        result.addAll(CollectionUtils.select(persons, predicate));
+        return new CollectionPager<Person>(result, 25);
     }
 
     public static class SearchPersonMatchingAnyParameterPredicate extends SearchPersonPredicate {

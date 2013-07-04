@@ -2,9 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.person;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationEntry;
@@ -34,9 +32,9 @@ public class SearchPersonWithCard extends SearchPerson {
         }
 
         acquiredPersons.getCollection().addAll(persons);
-        Collections.sort((List<Person>) acquiredPersons.getCollection(), Person.COMPARATOR_BY_NAME_AND_ID);
-        return new CollectionPager<Person>(new HashSet<Person>(acquiredPersons.getCollection()),
-                acquiredPersons.getMaxElementsPerPage());
+        TreeSet<Person> result = new TreeSet<Person>(Person.COMPARATOR_BY_NAME_AND_ID);
+        result.addAll(acquiredPersons.getCollection());
+        return new CollectionPager<Person>(result, acquiredPersons.getMaxElementsPerPage());
     }
 
     private Collection<Person> findPersons(String searchName) {

@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
@@ -258,7 +257,6 @@ public class SearchPerson extends FenixService implements Serializable {
         }
 
         final Collection<Person> persons;
-        List<Person> allValidPersons = new ArrayList<Person>();
 
         if (searchParameters.getUsername() != null && searchParameters.getUsername().length() > 0) {
 
@@ -342,9 +340,8 @@ public class SearchPerson extends FenixService implements Serializable {
             persons = new ArrayList<Person>(0);
         }
 
-        allValidPersons = (List<Person>) CollectionUtils.select(persons, predicate);
         TreeSet<Person> result = new TreeSet<Person>(Person.COMPARATOR_BY_NAME_AND_ID);
-        result.addAll(allValidPersons);
+        result.addAll(CollectionUtils.select(persons, predicate));
         return new CollectionPager<Person>(result, 25);
     }
 
