@@ -9,6 +9,7 @@ import java.util.Arrays;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.UpdateProfessorshipWithPerson;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
@@ -18,6 +19,8 @@ import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionMessage;
+import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
@@ -58,8 +61,14 @@ public class UpdateTeacherExecutionCourseResponsabilitiesAction extends Action {
         Integer executionYearId = (Integer) teacherExecutionYearResponsabilitiesForm.get("executionYearId");
         Person person = Person.readPersonByIstUsername(teacherId);
         ExecutionYear executionYear = RootDomainObject.getInstance().readExecutionYearByOID(executionYearId);
-
-        UpdateProfessorshipWithPerson.run(person, executionYear, Arrays.asList(executionCourseResponsabilities));
+        try {
+            UpdateProfessorshipWithPerson.run(person, executionYear, Arrays.asList(executionCourseResponsabilities));
+        } catch (NotAuthorizedException e) {
+            ActionMessages messages = new ActionMessages();
+            ActionMessage message = new ActionMessage("error.teacher.not.belong.department");
+            messages.add("error.teacher.not.belong.department", message);
+            addMessages(request, messages);
+        }
 
         return mapping.findForward("successfull-update");
     }

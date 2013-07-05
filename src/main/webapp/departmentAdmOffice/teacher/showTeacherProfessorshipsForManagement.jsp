@@ -41,11 +41,11 @@
 
 <logic:messagesPresent message="true">
 	<p>
-		<em><!-- Error messages go here -->
+		<span class="error0"><!-- Error messages go here -->
 			<html:messages id="message" message="true">
 				<bean:write name="message"/>
 			</html:messages>
-		</em>
+		</span>
 	</p>
 </logic:messagesPresent>
 
