@@ -117,7 +117,7 @@ public class CandidacyProcessPaymentCodesManagementDA extends FenixDispatchActio
         MAXIMUM_MONEY_MAP.put(PaymentCodeType.EXTERNAL_DEGREE_TRANSFER_INDIVIDUAL_CANDIDACY_PROCESS, new Money("140.00"));
         MAXIMUM_MONEY_MAP.put(PaymentCodeType.INTERNAL_DEGREE_TRANSFER_INDIVIDUAL_CANDIDACY_PROCESS, new Money("50.00"));
 
-        MAXIMUM_MONEY_MAP.put(PaymentCodeType.SECOND_CYCLE_INDIVIDUAL_CANDIDACY_PROCESS, new Money("3500.00"));
+        MAXIMUM_MONEY_MAP.put(PaymentCodeType.SECOND_CYCLE_INDIVIDUAL_CANDIDACY_PROCESS, new Money("100.00"));
 
         MAXIMUM_MONEY_MAP.put(PaymentCodeType.OVER_23_INDIVIDUAL_CANDIDACY_PROCESS, new Money("140.00"));
 
