@@ -22,6 +22,8 @@ import net.sourceforge.fenixedu.util.ByteArray;
 import net.sourceforge.fenixedu.util.ContentType;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 
+import com.google.common.io.BaseEncoding;
+
 public class PhotographUploadBean implements Serializable {
     public class UnableToProcessTheImage extends Exception {
         private static final long serialVersionUID = 1728978041377445492L;
@@ -45,7 +47,13 @@ public class PhotographUploadBean implements Serializable {
 
     private String contentType;
 
+    private String base64RawContent;
+
     public InputStream getFileInputStream() throws FileNotFoundException {
+        if (base64RawContent != null) {
+            this.rawContents = BaseEncoding.base64().decode(base64RawContent);
+            return new ByteArrayInputStream(rawContents);
+        }
         if (rawContents != null) {
             return new ByteArrayInputStream(rawContents);
         }
@@ -58,6 +66,14 @@ public class PhotographUploadBean implements Serializable {
 
     public void setFileInputStream(InputStream inputStream) throws IOException {
         this.rawContents = (inputStream != null) ? new ByteArray(inputStream).getBytes() : null;
+    }
+
+    public String getBase64RawContent() {
+        return base64RawContent;
+    }
+
+    public void setBase64RawContent(String base64RawContent) {
+        this.base64RawContent = base64RawContent;
     }
 
     public InputStream getCompressedInputStream() throws FileNotFoundException {

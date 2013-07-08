@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.person;
 
 import java.io.DataOutputStream;
 import java.io.FileInputStream;
+import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,6 +27,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
  * Action to upload personal photographs.
@@ -46,7 +48,11 @@ public class UploadPhotoDA extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
+        final ResourceBundle bundle = ResourceBundle.getBundle("resources/ApplicationResources", Language.getLocale());
         request.setAttribute("photo", new PhotographUploadBean());
+        request.setAttribute("phroperCaption", bundle.getString("phroper.caption"));
+        request.setAttribute("phroperSubCaption", bundle.getString("phroper.subCaption"));
+        request.setAttribute("phroperButtonCaption", bundle.getString("phroper.buttonCaption"));
         return mapping.findForward("upload");
     }
 
@@ -54,6 +60,12 @@ public class UploadPhotoDA extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         PhotographUploadBean photo = getRenderedObject();
         RenderUtils.invalidateViewState();
+        String base64Image = request.getParameter("encodedPicture");
+        if (base64Image != null) {
+            photo.setFilename("mylovelypic.png");
+            photo.setBase64RawContent(base64Image.split(",")[1]);
+            photo.setContentType(base64Image.split(",")[0].split(":")[1].split(";")[0]);
+        }
 
         ActionMessages actionMessages = new ActionMessages();
         if (photo.getFileInputStream() == null) {

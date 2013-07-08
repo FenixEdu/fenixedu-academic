@@ -257,8 +257,7 @@
 </schema>
 <schema name="party.photo.upload" type="net.sourceforge.fenixedu.dataTransferObject.person.PhotographUploadBean"
 	bundle="APPLICATION_RESOURCES">
-	<slot name="fileInputStream" key="label.person.photo.selectfile"
-		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+	<slot name="fileInputStream" key="label.person.photo.selectfile">
 		<property name="fileNameSlot" value="filename" />
 		<property name="fileContentTypeSlot" value="contentType" />
 	</slot>
