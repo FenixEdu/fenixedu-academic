@@ -602,6 +602,7 @@ public class Shift extends Shift_Base {
         if (this.hasAnyAssociatedLessons()) {
             for (Iterator<Lesson> iterator = this.getAssociatedLessonsIterator(); iterator.hasNext();) {
                 Lesson lesson = iterator.next();
+                stringBuilder.append(" ");
                 stringBuilder.append(WeekDay.getWeekDay(lesson.getDiaSemana()).getLabelShort());
                 stringBuilder.append(" ");
                 stringBuilder.append(lesson.getBeginHourMinuteSecond().toString("HH:mm"));
