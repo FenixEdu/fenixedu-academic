@@ -35,3 +35,21 @@
 <br />
 <br />
 <br />
+
+<p>
+	<span class="error">Esta interface vai ser descontinuada brevemente.</span>
+</p>
+<p>
+	Todas as informa&#231;&#245;es relativas aos projetos podem ser consultados na p&#225;gina da respetiva unidade nos seguintes endere&#231;os, conforme a institui&#231;&#227;o em que o projeto decorre:
+	<ul>
+		<li>
+			<a href="https://dot.ist.utl.pt/">https://dot.ist.utl.pt/</a> - para projetos do IST
+		</li>
+		<li>
+			<a href="https://dot.ist-id.ist.utl.pt/">https://dot.ist-id.ist.utl.pt/</a>  - para projetos do IST-ID
+		</li>
+		<li>
+			<a href="https://dot.adist.ist.utl.pt/">https://dot.adist.ist.utl.pt/</a> - para projetos da ADIST
+		</li>
+	</ul>
+</p>
