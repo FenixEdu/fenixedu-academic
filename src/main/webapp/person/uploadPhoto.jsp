@@ -15,8 +15,8 @@
 	}
 </style>
 
-<script src="http://thorium.ist.utl.pt/phroper/fabric-1.2.0.all.min.js" type="text/javascript" ></script>
-<script src="http://thorium.ist.utl.pt/phroper/phroper.js" type="text/javascript" ></script>
+<script src="<%= request.getContextPath() + "/javaScript/phroper/fabric-1.2.0.all.min.js" %>" type="text/javascript" ></script>
+<script src="<%= request.getContextPath() + "/javaScript/phroper/phroper-1.0.1.min.js" %>" type="text/javascript" ></script>
 
 <logic:notPresent name="preview">
 	<script type="text/javascript">
@@ -40,6 +40,10 @@
 				$('#submitButton').click( function () {
 					var base64Picture = phroper.getPicture();
 					$('<input type="hidden" name="encodedPicture" value="'+base64Picture+'">').appendTo('#photoForm');
+				});
+				
+				$('<button id="resetButton" type="button"><%= request.getAttribute("buttonClean") != null ? request.getAttribute("buttonClean") : "Clear canvas"  %></button>').appendTo('#photoForm').click( function () {
+					phroper.reset();
 				});
 			}
 		});

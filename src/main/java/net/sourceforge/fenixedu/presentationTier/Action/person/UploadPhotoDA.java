@@ -53,6 +53,7 @@ public class UploadPhotoDA extends FenixDispatchAction {
         request.setAttribute("phroperCaption", bundle.getString("phroper.caption"));
         request.setAttribute("phroperSubCaption", bundle.getString("phroper.subCaption"));
         request.setAttribute("phroperButtonCaption", bundle.getString("phroper.buttonCaption"));
+        request.setAttribute("buttonClean", bundle.getString("button.clean"));
         return mapping.findForward("upload");
     }
 
