@@ -90,11 +90,12 @@
 				<br />
 			</logic:notEmpty>
 			<logic:empty name="executionCourses">
-				<p class="infoop3"><bean:message bundle="MANAGER_RESOURCES" key="message.manager.executionCourseManagement.noExecutionCourses"/></p>
+				<p class="infoop2"><bean:message bundle="MANAGER_RESOURCES" key="message.manager.executionCourseManagement.noExecutionCourses"/></p>
 			</logic:empty>
 		</logic:present>
 		<logic:notPresent name="executionCourses">
-			<p class="infoop3"><bean:message bundle="MANAGER_RESOURCES" key="message.manager.executionCourseManagement.noExecutionCourses"/></p>
+			<br />
+			<br />
 		</logic:notPresent>
 
 		<br />
@@ -192,10 +193,8 @@
 		</logic:notEmpty>
 		<logic:empty name="infoExecutionCourse" property="associatedInfoShifts">
 			(<bean:message key="message.manager.executionCourseManagement.noShifts.this" bundle="MANAGER_RESOURCES"/>)
-			<br/>
-			<br/>
 		</logic:empty>
-
+		<br/>
 		<bean:define id="transferConfirm">
 			return confirm('<bean:message bundle="MANAGER_RESOURCES" key="message.manager.executionCourseManagement.transferCourse.confirm"/>')
 		</bean:define>

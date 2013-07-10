@@ -94,12 +94,14 @@
 		</tr>
 		<tr>
 			<td>
+				<br/>
 				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 					<bean:message bundle="MANAGER_RESOURCES" key="button.save"/>
 				</html:submit>
 				</html:form>
 			</td>
 			<td>
+				<br/>
 				<fr:form action="/editExecutionCourseChooseExPeriod.do?method=listExecutionCourseActions">
 					<fr:edit id="sessionBeanJSP" name="sessionBean" visible="false"/>
 					<html:submit>

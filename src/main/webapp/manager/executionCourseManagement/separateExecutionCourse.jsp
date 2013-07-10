@@ -50,8 +50,7 @@
 	
 	
 	<p class="infoop"><bean:message bundle="MANAGER_RESOURCES" key="message.manager.executionCourseManagement.separate.chooseCurricularCoursesAndShifts"/></p>
-	<bean:message bundle="MANAGER_RESOURCES" key="executionCourse.origin"/>: 
-	<strong><bean:write name="infoExecutionCourse" property="nome"/></strong>
+	<br/>
 
 	<html:form action="/seperateExecutionCourse">
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="separate"/>
@@ -153,10 +152,9 @@
 		</logic:notEmpty>
 		<logic:empty name="infoExecutionCourse" property="associatedInfoShifts">
 			(<bean:message key="message.manager.executionCourseManagement.noShifts.this" bundle="MANAGER_RESOURCES"/>)
-			<br/>
-			<br/>
 		</logic:empty>
 
+		<br/>
 		<bean:define id="splitConfirm">
 			return confirm('<bean:message bundle="MANAGER_RESOURCES" key="message.manager.executionCourseManagement.separate.confirm"/>')
 		</bean:define>

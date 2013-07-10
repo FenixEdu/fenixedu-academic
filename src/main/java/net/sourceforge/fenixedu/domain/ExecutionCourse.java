@@ -2685,6 +2685,14 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         return result;
     }
 
+    public boolean getHasAnnouncements() {
+        ExecutionCourseAnnouncementBoard board = getBoard();
+        if (board != null) {
+            return board.getAnnouncements().isEmpty();
+        }
+        return false;
+    }
+
 //  TODO in the new version of the framework, this bug (when creating an object the relations come allwats empty) 
 //  will be corrected and should be uncommented   
 //  @ConsistencyPredicate

@@ -191,7 +191,7 @@ public class SeperateExecutionCourseDispatchAction extends FenixDispatchAction {
 
             InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request.getAttribute("infoExecutionCourse");
 
-            List<InfoExecutionCourse> executionCourses =
+            List executionCourses =
                     ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYear.run(new Integer(
                             destinationExecutionDegreeId), infoExecutionCourse.getInfoExecutionPeriod().getIdInternal(),
                             new Integer(destinationCurricularYear));
@@ -206,7 +206,6 @@ public class SeperateExecutionCourseDispatchAction extends FenixDispatchAction {
     public ActionForward transfer(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixServiceException, FenixFilterException, FenixActionException {
 
-        /**/
         DynaActionForm dynaActionForm = (DynaActionForm) form;
 
         String executionCourseId = RequestUtils.getAndSetStringToRequest(request, "executionCourseId");

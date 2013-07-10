@@ -98,22 +98,10 @@
 
 		<fr:property name="linkFormat(swapAnnoun)" value="<%= "/announcementSwap.do?method=prepareSwap&executionCourseId=${idInternal}" + linkGetRequestLilMessage.toString() %>" />
 		<fr:property name="order(swapAnnoun)" value="2" />
+		<fr:property name="visibleIf(swapAnnoun)" value="hasAnnouncements" />
 		<fr:property name="key(swapAnnoun)" value="label.manager.executionCourse.announcementMove" />
 		<fr:property name="bundle(swapAnnoun)" value="MANAGER_RESOURCES" />
 
-		<%--<logic:equal name="notLinked" value="false">
-		<fr:property name="linkFormat(splitCourses)"
-					 value="<%="/seperateExecutionCourse.do?method=prepareTransfer"
-					 		+ "&executionCourseId=${idInternal}"
-					 		+ "&originExecutionDegreeId=" + executionDegreeId.toString()
-					 		+ "&curricularYearId=" + curricularYearId.toString() %>"/> 
-		<fr:property name="order(splitCourses)" value="3" />
-		<fr:property name="visibleIf(splitCourses)" value="splittable" />
-		<fr:property name="key(splitCourses)" value="link.manager.seperate.execution_course" />
-		<fr:property name="bundle(splitCourses)" value="MANAGER_RESOURCES" />
-		</logic:equal> --%>
-		
-		<%-- new version --%>
 		<fr:property name="linkFormat(manageCurricularSeparation)"
 					 value="<%="/seperateExecutionCourse.do?method=manageCurricularSeparation"
 					 		+ "&amp;executionCourseId=${idInternal}"

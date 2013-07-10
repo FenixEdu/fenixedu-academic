@@ -24,6 +24,7 @@ import pt.ist.fenixWebFramework.services.Service;
 public class TransferCurricularCourse {
 
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
+    @Deprecated
     @Service
     public static void run(String sourceExecutionCourseIdString, final String curricularCourseIdString,
             String destinationExecutionCourseIdString) {

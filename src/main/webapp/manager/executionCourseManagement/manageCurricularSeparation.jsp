@@ -176,6 +176,7 @@
 		</tr>
 		<tr>
 			<td colspan="4">
+				<br/>
 				<fr:form action="/editExecutionCourseChooseExPeriod.do?method=listExecutionCourseActions">
 					<fr:edit id="sessionBeanJSP" name="sessionBean" visible="false"/>
 					<html:submit>

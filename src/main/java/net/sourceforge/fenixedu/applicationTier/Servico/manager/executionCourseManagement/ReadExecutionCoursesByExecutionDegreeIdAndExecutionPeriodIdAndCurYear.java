@@ -21,7 +21,7 @@ import pt.ist.fenixWebFramework.services.Service;
 public class ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYear extends FenixService {
 
     @Service
-    public static List<InfoExecutionCourse> run(Integer executionDegreeId, Integer executionPeriodId, Integer curricularYearInt)
+    public static List run(Integer executionDegreeId, Integer executionPeriodId, Integer curricularYearInt)
             throws FenixServiceException {
 
         if (executionPeriodId == null) {
@@ -42,7 +42,7 @@ public class ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYe
                             degreeCurricularPlan, curricularYear, "%");
         }
 
-        final List<InfoExecutionCourse> infoExecutionCourseList = new ArrayList<InfoExecutionCourse>(executionCourseList.size());
+        final List infoExecutionCourseList = new ArrayList(executionCourseList.size());
         for (final ExecutionCourse executionCourse : executionCourseList) {
             infoExecutionCourseList.add(InfoExecutionCourse.newInfoFromDomain(executionCourse));
         }
