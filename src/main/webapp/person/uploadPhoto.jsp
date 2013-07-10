@@ -16,7 +16,7 @@
 </style>
 
 <script src="<%= request.getContextPath() + "/javaScript/phroper/fabric-1.2.0.all.min.js" %>" type="text/javascript" ></script>
-<script src="<%= request.getContextPath() + "/javaScript/phroper/phroper-1.0.1.min.js" %>" type="text/javascript" ></script>
+<script src="<%= request.getContextPath() + "/javaScript/phroper/phroper-1.0.2.min.js" %>" type="text/javascript" ></script>
 
 <logic:notPresent name="preview">
 	<script type="text/javascript">
