@@ -165,7 +165,7 @@
 				<tr>
 					<th><bean:message key="label.other.academic.titles.program.name" bundle="CANDIDATE_RESOURCES"/>: <span class="red">*</span></th>
 					<td>
-						<div class="flowerror_hide">
+						<div class="flowerror">
 							<fr:edit 	id='<%= designationId %>' 
 										name="academicTitle"
 										schema="PublicCandidacyProcessBean.formation.designation">
@@ -183,7 +183,7 @@
 				<tr>
 					<th><bean:message key="label.other.academic.titles.institution" bundle="CANDIDATE_RESOURCES"/>: <span class="red">*</span></th>
 					<td>
-						<div class="flowerror_hide">
+						<div class="flowerror">
 							<fr:edit 	id='<%= institutionNameId %>' 
 								name="academicTitle"
 								schema="PublicCandidacyProcessBean.formation.institutionUnitName">
@@ -198,7 +198,7 @@
 				<tr>
 					<th><bean:message key="label.other.academic.titles.conclusion.date" bundle="CANDIDATE_RESOURCES"/>: <span class="red">*</span></th>
 					<td>
-						<div class="flowerror_hide">
+						<div class="flowerror">
 							<fr:edit 	id='<%= endYearId %>'
 										name="academicTitle"
 										schema="PublicCandidacyProcessBean.formation.conclusion.date">
@@ -214,7 +214,7 @@
 				<tr>
 					<th><bean:message key="label.other.academic.titles.conclusion.grade" bundle="CANDIDATE_RESOURCES"/>: <span class="red">*</span></th>
 					<td>
-						<div class="flowerror_hide">
+						<div class="flowerror">
 							<fr:edit 	id='<%= conclusionGradeId %>'
 										name="academicTitle"
 										schema="PublicCandidacyProcessBean.formation.conclusion.grade">
