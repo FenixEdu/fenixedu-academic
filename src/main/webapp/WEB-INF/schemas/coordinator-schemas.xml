@@ -433,6 +433,7 @@
 <schema name="coordinator.thesis.revision.view" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
     <slot name="mark" key="label.thesis.evaluate.mark"/>
     <slot name="discussed" key="label.thesis.evaluate.discussion.date"/>
+    <slot name="evaluation" key="label.homologationDate" bundle="label.thesis.evaluate.approval.date"/>
 </schema>
 
 <schema name="coordinator.thesis.state" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
