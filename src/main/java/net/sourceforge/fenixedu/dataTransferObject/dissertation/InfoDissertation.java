@@ -76,13 +76,6 @@ public class InfoDissertation extends InfoObject {
     }
 
     /**
-     * @return Returns the requirements.
-     */
-    public MultiLanguageString getRequirements() {
-        return getDissertation().getRequirements();
-    }
-
-    /**
      * @return Returns the title.
      */
     public MultiLanguageString getTitle() {
@@ -108,13 +101,6 @@ public class InfoDissertation extends InfoObject {
      */
     public MultiLanguageString getDeliverable() {
         return getDissertation().getDeliverable();
-    }
-
-    /**
-     * @return Returns the proposalNumber.
-     */
-    public String getProposalNumber() {
-        return getDissertation().getProposalNumber();
     }
 
     /**

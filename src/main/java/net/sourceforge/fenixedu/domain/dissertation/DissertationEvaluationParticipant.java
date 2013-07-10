@@ -24,9 +24,9 @@ public class DissertationEvaluationParticipant extends DissertationEvaluationPar
     }
     
     private static KeepParticipationNumberAdapter KEEP_PARTICIPATION_NUMBER_ADAPTER = new KeepParticipationNumberAdapter();
-    static {
-    	DissertationDissertationEvaluationParticipant.addListener(KEEP_PARTICIPATION_NUMBER_ADAPTER);
-    }
+    /*static {
+    	DissertationEvaluationParticipant.addListener(KEEP_PARTICIPATION_NUMBER_ADAPTER);
+    }*/
 
     public final static Comparator<DissertationEvaluationParticipant> COMPARATOR_BY_PERSON_NAME = new ComparatorChain();
     static {
@@ -99,9 +99,9 @@ public class DissertationEvaluationParticipant extends DissertationEvaluationPar
     public double getCreditsDistribution() {
         Dissertation dissertation = getDissertation();
 
-        if (!dissertation.hasCredits()) {
+/*        if (!dissertation.hasCredits()) {
             return 0.0;
-        }
+        }*/
 
         DissertationParticipationType type = this.getType();
 
@@ -161,13 +161,13 @@ public class DissertationEvaluationParticipant extends DissertationEvaluationPar
                 return;
             }
 
-            if (type.isSingle()) {
+            /*if (type.isSingle()) {
                 DissertationEvaluationParticipant existing = dissertation.getParticipant(type);
 
                 if (existing != null && existing != participant) {
                     existing.delete();
                 }
-            }
+            }*/
         }
     }
 }

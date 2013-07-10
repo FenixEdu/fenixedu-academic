@@ -187,10 +187,6 @@
 		<put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp"/>
 		<put name="body" value="/teacher/listProposals_bd.jsp"/>
 	</definition>
-	<definition name="df.page.prepareListDissertations" extends="definition.teacher.two-column">
-		<put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp"/>
-		<put name="body" value="/teacher/listDissertations.jsp"/>
-	</definition>
 	<definition name="df.page.finalWorkSubmit" extends="definition.teacher.two-column">
 		<put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp"/>
 		<put name="body" value="/teacher/submitFinalWorkProposal_bd.jsp"></put>

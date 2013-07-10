@@ -133,13 +133,6 @@ public class DissertationHeader extends InfoObject {
         return getDissertation().getTitle();
     }
 
-    /**
-     * @return Returns the proposalNumber.
-     */
-    public String getProposalNumber() {
-        return getDissertation().getProposalNumber();
-    }
-
     public Boolean getEditable(Scheduling scheduling) {
 
         return scheduling != null && scheduling.getStartOfProposalPeriod() != null

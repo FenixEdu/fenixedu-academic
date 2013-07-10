@@ -1,4 +1,4 @@
-/* DOMAIN_MODEL.DML
+ /* DOMAIN_MODEL.DML
  * The Fenix Project Domain Model
  * 
  */
@@ -97,7 +97,7 @@ enum net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage            
 enum net.sourceforge.fenixedu.domain.degreeStructure.CycleType                                                            as CycleType;
 enum net.sourceforge.fenixedu.domain.degreeStructure.RegimeType                                                           as degreeStructure.RegimeType;
 enum net.sourceforge.fenixedu.domain.dissertation.DissertationParticipationType                                           as DissertationParticipationType;
-enum net.sourceforge.fenixedu.domain.dissertation.DissertationStateValue                                                  as DissertationStateValue;
+enum net.sourceforge.fenixedu.domain.dissertation.DissertationStateValue                                     as DissertationStateValue;
 enum net.sourceforge.fenixedu.domain.dissertation.DissertationVisibilityType                                              as DissertationVisibilityType;
 enum net.sourceforge.fenixedu.domain.documents.GeneratedDocumentType                                                      as GeneratedDocumentType;
 enum net.sourceforge.fenixedu.domain.gratuity.ExemptionGratuityType                                                       as ExemptionGratuityType;
@@ -3187,7 +3187,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
     }
 
 	class dissertation.Dissertation {
-		String proposalNumber;
 		MultiLanguageString title;
 		MultiLanguageString keywords;
 		MultiLanguageString description;
@@ -3203,6 +3202,7 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
 		MultiLanguageString thesisAbstract;
 		Integer mark;
 		Integer orientatorCreditsDistribution;
+		
 	}
 	
 	class dissertation.DissertationEvaluationParticipant  {
@@ -3218,8 +3218,8 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
 	}
 	
 	class dissertation.DissertationState {
-		DateTime from;
-		DissertationStateValue value;
+		DateTime dissertationStateDate;
+		DissertationStateValue dissertationStateValue;
 	}
 	
 	class dissertation.Location {
@@ -20663,7 +20663,7 @@ relation DissertationDissertationEvaluationParticipant {
 		multiplicity *;
 	}
 }
-	
+
 relation DissertationEnrolment {
 	Enrolment playsRole enrolments {
 		multiplicity *;
@@ -20681,7 +20681,16 @@ relation DissertationComment {
 		multiplicity 1..1;
 	}
 }
-	
+
+relation RootDomainObjectComment {
+	RootDomainObject playsRole rootDomainObject {
+		multiplicity 1..1;
+	}
+	dissertation.Comment playsRole comments {
+		multiplicity *;
+	}
+}
+
 relation CommentUser {
 	User playsRole user {
 		multiplicity 1..1;
@@ -20692,21 +20701,18 @@ relation CommentUser {
 }
 	
 relation DissertationDisserationState {
-	dissertation.DissertationState playsRole dissertationState {
-		multiplicity 1..1;
-	}
-	dissertation.Dissertation playsRole dissertation {
-		multiplicity 1..1;
-	}
+	dissertation.DissertationState playsRole dissertationState;
+	dissertation.Dissertation playsRole dissertation;
+}
+
+relation RootDomainObjectDissertationState {
+	RootDomainObject playsRole rootDomainObject;
+	dissertation.DissertationState playsRole dissertationState;
 }
 
 relation PreviousDissertationState {
-	dissertation.DissertationState playsRole nextDissertationState {
-		multiplicity 1..1;
-	}
-	dissertation.DissertationState playsRole previousDissertationState {
-		multiplicity 1..1;
-	}
+	dissertation.DissertationState playsRole nextDissertationState;
+	dissertation.DissertationState playsRole previousDissertationState;
 }
 
 relation DissertationLocation {
@@ -20717,9 +20723,36 @@ relation DissertationLocation {
 		multiplicity *;
 	}
 }
+
+relation RootDomainObjectLocation {
+	RootDomainObject playsRole rootDomainObject {
+		multiplicity 1..1;
+	}
+	dissertation.Location playsRole location {
+		multiplicity *;
+	}
+}
 	
 relation DissertationScheduling {
 	dissertation.Dissertation playsRole dissertation {
+		multiplicity 1..1;
+	}
+	dissertation.Scheduling playsRole schedulings {
+		multiplicity *;
+	}
+}
+
+relation SchedulingExecutionYear {
+	dissertation.Scheduling playsRole schedulings {
+		multiplicity *;
+	}
+	ExecutionYear playsRole executionYear{
+		multiplicity 1..1;
+	}
+}
+
+relation RootDomainObjectScheduling {
+	RootDomainObject playsRole rootDomainObject {
 		multiplicity 1..1;
 	}
 	dissertation.Scheduling playsRole schedulings {
@@ -20744,6 +20777,15 @@ relation DissertationDissertationCandidacy {
 		multiplicity 1..1;
 	}
 }
+
+relation RootDomainObjectDissertation {
+	RootDomainObject playsRole rootDomainObject {
+		multiplicity 1..1;
+	}
+	dissertation.Dissertation playsRole dissertations {
+		multiplicity *;
+	}
+}
 	
 relation SchedulingDissertationCandidacy {
 	dissertation.Scheduling playsRole scheduling {
@@ -20763,6 +20805,15 @@ relation DissertationLog {
 	}
 }
 
+relation RootDomainObjectLog {
+	RootDomainObject playsRole rootDomainObject {
+		multiplicity 1..1;
+	}
+	dissertation.Log playsRole logs {
+		multiplicity *;
+	}
+}
+
 relation LogUser {
 	User playsRole user {
 		multiplicity 1..1;
@@ -20771,7 +20822,7 @@ relation LogUser {
 		multiplicity 1..1;
 	}
 }
-	
+
 relation DissertationDissertationFile {
 	dissertation.DissertationFile playsRole dissertationFiles {
 		multiplicity *;
@@ -20791,7 +20842,9 @@ relation PreviousDissertationFile {
 }
 
 relation DissertationEvaluationParticipantRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    RootDomainObject playsRole rootDomainObject {
+    	multiplicity 1..1;
+    }
     dissertation.DissertationEvaluationParticipant playsRole dissertationEvaluatioParticipant {
         multiplicity *;
     }

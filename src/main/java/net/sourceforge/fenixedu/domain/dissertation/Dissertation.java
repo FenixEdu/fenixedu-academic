@@ -19,24 +19,8 @@ public class Dissertation extends Dissertation_Base {
     
     public  Dissertation() {
         super();
-    }
-    
-    private String proposalNumber = null;
-    private MultiLanguageString title = null;
-    private MultiLanguageString keywords = null;
-    private MultiLanguageString description = null;
-    private MultiLanguageString requirements = null;
-    private MultiLanguageString objectives = null;
-    private MultiLanguageString deliverable = null;
-    private MultiLanguageString framing = null;
-    private String url = null;
-    private Boolean declarationAccepted = null;
-    private DissertationVisibilityType visibility = null;
-    private DateTime documentPublicAvailabilityDate = null;
-    private String proposedPlace = null;
-    private DateTime proposalDiscussionDate = null;
-    private MultiLanguageString dissertationAbstract = null;
-    private Integer mark = null;
+    }    
+
     private Person orientator = null;
     private Person coorientator = null;
     private Integer orientatorCredits = null;
@@ -56,102 +40,6 @@ public class Dissertation extends Dissertation_Base {
 	  
 	private final static double CREDITS = 1;
 	   
-	public String getProposalNumber() {
-		return proposalNumber;
-	}
-	public void setProposalNumber(String proposalNumber) {
-		this.proposalNumber = proposalNumber;
-	}
-	public MultiLanguageString getTitle() {
-		return title;
-	}
-	public void setTitle(MultiLanguageString title) {
-		this.title = title;
-	}
-	public MultiLanguageString getKeywords() {
-		return keywords;
-	}
-	public void setKeywords(MultiLanguageString keywords) {
-		this.keywords = keywords;
-	}
-	public MultiLanguageString getDescription() {
-		return description;
-	}
-	public void setDescription(MultiLanguageString description) {
-		this.description = description;
-	}
-	public MultiLanguageString getRequirements() {
-		return requirements;
-	}
-	public void setRequirements(MultiLanguageString requirements) {
-		this.requirements = requirements;
-	}
-	public MultiLanguageString getObjectives() {
-		return objectives;
-	}
-	public void setObjectives(MultiLanguageString objectives) {
-		this.objectives = objectives;
-	}
-	public MultiLanguageString getDeliverable() {
-		return deliverable;
-	}
-	public void setDeliverable(MultiLanguageString deliverable) {
-		this.deliverable = deliverable;
-	}
-	public MultiLanguageString getFraming() {
-		return framing;
-	}
-	public void setFraming(MultiLanguageString framing) {
-		this.framing = framing;
-	}
-	public String getUrl() {
-		return url;
-	}
-	public void setUrl(String url) {
-		this.url = url;
-	}
-	public Boolean getDeclarationAccepted() {
-		return declarationAccepted;
-	}
-	public void setDeclarationAccepted(Boolean declarationAccepted) {
-		this.declarationAccepted = declarationAccepted;
-	}
-	public DissertationVisibilityType getVisibility() {
-		return visibility;
-	}
-	public void setVisibility(DissertationVisibilityType visibility) {
-		this.visibility = visibility;
-	}
-	public DateTime getDocumentPublicAvailabilityDate() {
-		return documentPublicAvailabilityDate;
-	}
-	public void setDocumentPublicAvailabilityDate(DateTime documentPublicAvailabilityDate) {
-		this.documentPublicAvailabilityDate = documentPublicAvailabilityDate;
-	}
-	public String getProposedPlace() {
-		return proposedPlace;
-	}
-	public void setProposedPlace(String proposedPlace) {
-		this.proposedPlace = proposedPlace;
-	}
-	public DateTime getProposalDiscussionDate() {
-		return proposalDiscussionDate;
-	}
-	public void setProposalDiscussionDate(DateTime proposalDiscussionDate) {
-		this.proposalDiscussionDate = proposalDiscussionDate;
-	}
-	public MultiLanguageString getDissertationAbstract() {
-		return dissertationAbstract;
-	}
-	public void setDissertationAbstract(MultiLanguageString dissertationAbstract) {
-		this.dissertationAbstract = dissertationAbstract;
-	}
-	public Integer getMark() {
-		return mark;
-	}
-	public void setMark(Integer mark) {
-		this.mark = mark;
-	}
 	public Person getOrientator() {
 		return orientator;
 	}
@@ -219,15 +107,6 @@ public class Dissertation extends Dissertation_Base {
 		this.schedulings = schedulings;
 	}
 	
-	public DissertationEvaluationParticipant getParticipant(DissertationParticipationType type) {
-		for (DissertationEvaluationParticipant participant : getDissertationEvaluationParticipants()) {
-			if (participant.getType() == type) {
-				return participant;
-	        }
-	    }
-	    return null;
-	}
-	
 	public void setOrientatorCreditsDistribution(Integer percent) {
 	    if (percent != null && (percent < 0 || percent > 100)) {
 	        throw new DomainException(/*"thesis.orietation.credits.notValid"*/ "A IMPLEMENTAR NOS RESOURCES");
@@ -264,17 +143,9 @@ public class Dissertation extends Dissertation_Base {
 	    return isApproved;
 	}
 	    
-	public boolean hasCredits() {
-	    if (isEvaluated() && hasFinalEnrolmentEvaluation()) {
-	        return true;
-	    } else {
-	        return false;
-	    }
-	}
-	    
-	public boolean isEvaluated() {
+	/*public boolean isEvaluated() {
 	    return getDissertationState().getDissertationStateValue() == DissertationStateValue.EVALUATED;
-	}
+	}*/
 	    
 	// the credits calculation always depends on the current credits' value for
 	// the thesis (no history)

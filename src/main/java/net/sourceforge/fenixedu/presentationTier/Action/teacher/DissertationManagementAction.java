@@ -50,13 +50,16 @@ import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.dissertation.Dissertation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
@@ -90,105 +93,12 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/dissertationManagement", module = "teacher", scope = "request", attribute = "dissertationForm")
 @Forwards({
-        @Forward(name = "listDissertations", path = "df.page.prepareListDissertations") })
+        @Forward(name = "listDissertations",
+        		path = "/teacher/listDissertations.jsp",
+        		tileProperties = @Tile(navLocal = "/teacher/commons/navigationBarIndex.jsp",
+        			title = "private.teacher.dissertations", bundle = "TITLES_RESOURCES")) })
 
 public class DissertationManagementAction extends FenixDispatchAction {
-
-    @SuppressWarnings("deprecation")
-	public ActionForward submit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixActionException, FenixFilterException {
-        DynaActionForm dissertationForm = (DynaActionForm) form;
-
-        String idInternal = (String) dissertationForm.get("idInternal");
-        String title = (String) dissertationForm.get("title");
-        String responsibleCreditsPercentage = (String) dissertationForm.get("responsibleCreditsPercentage");
-        String coResponsibleCreditsPercentage = (String) dissertationForm.get("coResponsibleCreditsPercentage");
-        String companionName = (String) dissertationForm.get("companionName");
-        String companionMail = (String) dissertationForm.get("companionMail");
-        String companionPhone = (String) dissertationForm.get("companionPhone");
-        String framing = (String) dissertationForm.get("framing");
-        String objectives = (String) dissertationForm.get("objectives");
-        String description = (String) dissertationForm.get("description");
-        String requirements = (String) dissertationForm.get("requirements");
-        String deliverable = (String) dissertationForm.get("deliverable");
-        String url = (String) dissertationForm.get("url");
-        String observations = (String) dissertationForm.get("observations");
-        String location = (String) dissertationForm.get("location");
-        String companyAdress = (String) dissertationForm.get("companyAdress");
-        String companyName = (String) dissertationForm.get("companyName");
-        String orientatorOID = (String) dissertationForm.get("orientatorOID");
-        String coorientatorOID = (String) dissertationForm.get("coorientatorOID");
-        String degree = (String) dissertationForm.get("degree");
-
-        Integer orientatorCreditsPercentage = Integer.valueOf(responsibleCreditsPercentage);
-        Integer coorientatorCreditsPercentage = Integer.valueOf(coResponsibleCreditsPercentage);
-        if (orientatorCreditsPercentage.intValue() < 0 || coorientatorCreditsPercentage.intValue() < 0
-                || orientatorCreditsPercentage.intValue() + coorientatorCreditsPercentage.intValue() != 100) {
-            ActionErrors actionErrors = new ActionErrors();
-            actionErrors.add("finalWorkInformationForm.invalidCreditsPercentageDistribuition", new ActionError(
-                    "finalWorkInformationForm.invalidCreditsPercentageDistribuition"));
-            saveErrors(request, actionErrors);
-            return mapping.getInputForward();
-        }
-
-        InfoProposalEditor infoDissertationProposal = new InfoProposalEditor();
-        if (!StringUtils.isEmpty(idInternal) && StringUtils.isNumeric(idInternal)) {
-            infoDissertationProposal.setIdInternal(Integer.valueOf(idInternal));
-        }
-        infoDissertationProposal.setTitle(title);
-        infoDissertationProposal.setOrientatorsCreditsPercentage(Integer.valueOf(responsibleCreditsPercentage));
-        infoDissertationProposal.setCoorientatorsCreditsPercentage(Integer.valueOf(coResponsibleCreditsPercentage));
-        infoDissertationProposal.setFraming(framing);
-        infoDissertationProposal.setObjectives(objectives);
-        infoDissertationProposal.setDescription(description);
-        infoDissertationProposal.setRequirements(requirements);
-        infoDissertationProposal.setDeliverable(deliverable);
-        infoDissertationProposal.setUrl(url);
-        infoDissertationProposal.setObservations(observations);
-        infoDissertationProposal.setLocation(location);
-
-        infoDissertationProposal.setOrientator(new InfoPerson((Person) rootDomainObject.readPartyByOID(Integer
-                .valueOf(orientatorOID))));
-        if (coorientatorOID != null && !coorientatorOID.equals("")) {
-            infoDissertationProposal.setCoorientator(new InfoPerson((Person) rootDomainObject.readPartyByOID(Integer
-                    .valueOf(coorientatorOID))));
-        }
-        final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(Integer.valueOf(degree));
-        if (!(coorientatorOID != null && !coorientatorOID.equals(""))
-                || executionDegree.getScheduling().getAllowSimultaneousCoorientationAndCompanion().booleanValue()) {
-            infoDissertationProposal.setCompanionName(companionName);
-            infoDissertationProposal.setCompanionMail(companionMail);
-            if (companionPhone != null && !companionPhone.equals("") && StringUtils.isNumeric(companionPhone)) {
-                infoDissertationProposal.setCompanionPhone(Integer.valueOf(companionPhone));
-            }
-            infoDissertationProposal.setCompanyAdress(companyAdress);
-            infoDissertationProposal.setCompanyName(companyName);
-        }
-        infoDissertationProposal.setExecutionDegree(new InfoExecutionDegree(executionDegree));
-
-        try {
-            IUserView userView = UserView.getUser();
-            Object argsProposal[] = { infoDissertationProposal };
-            ServiceUtils.executeService("SubmitFinalWorkProposal", argsProposal);
-        } catch (DomainException ex) {
-            ActionErrors actionErrors = new ActionErrors();
-            actionErrors.add("error.Scheduleing.maximumNumberOfProposalsPerPerson", new ActionError(
-                    "error.Scheduleing.maximumNumberOfProposalsPerPerson"));
-            saveErrors(request, actionErrors);
-            return mapping.getInputForward();
-        } catch (NotAuthorizedFilterException nafe) {
-            ActionErrors actionErrors = new ActionErrors();
-            actionErrors.add("finalDegreeWorkProposal.ProposalPeriod.validator.OutOfPeriod", new ActionError(
-                    "finalDegreeWorkProposal.ProposalPeriod.validator.OutOfPeriod"));
-            saveErrors(request, actionErrors);
-
-            return mapping.findForward("OutOfSubmisionPeriod");
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
-
-        return mapping.findForward("SubmitionOfFinalDegreeWorkProposalSucessful");
-    }
 
     public ActionForward changeExecutionYear(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException,
@@ -253,198 +163,70 @@ public class DissertationManagementAction extends FenixDispatchAction {
         return mapping.findForward("chooseDegreeForFinalWorkProposal");
     }
 
-    public ActionForward listDissertations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	public ActionForward listDissertations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException,
             IllegalAccessException, InstantiationException {
         final IUserView userView = UserView.getUser();
 
+        final DynaActionForm finalWorkForm = (DynaActionForm) form;
+		
+        List<ExecutionYear> inputExecutionYears = rootDomainObject.getExecutionYears();
+        ExecutionYear idInternalOfInputExecutionYear = ExecutionYear.readCurrentExecutionYear();//(String) finalWorkForm.get("executionYear");
+        ExecutionYear outputExecutionYear = null;
+        for (ExecutionYear executionYear : inputExecutionYears) {
+        	if (executionYear.getIdInternal().toString().equals(idInternalOfInputExecutionYear)) {
+        		outputExecutionYear = executionYear;
+        	}
+        }
+        
+        List<Dissertation> inputDissertations = RootDomainObject.getInstance().getDissertations();
+        List<Dissertation> orientatorProposals = new LinkedList<Dissertation>();
+        List<Dissertation> coorientatorProposals = new LinkedList<Dissertation>();
+
+        List<Dissertation> orientatorDissertations = new LinkedList<Dissertation>();
+        List<Dissertation> coorientatorDissertations = new LinkedList<Dissertation>();
+        
+        for (Dissertation dissertation : inputDissertations) {
+        	/*if (dissertation.getOrientator() != null) {
+        		if (dissertation.getOrientator().equals(userView.getPerson())
+        				/*&& dissertation.getSchedulings().get(0).getExecutionYear().equals(outputExecutionYear)
+        				&& (dissertation.getDissertationState().getDissertationStateValue().equals(DissertationStateValue.PROPOSAL_FOR_PUBLICATION)
+        						|| dissertation.getDissertationState().getDissertationStateValue().equals(DissertationStateValue.PROPOSAL_PUBLISHED))*///) {
+           			orientatorProposals.add(dissertation);
+            	/*}
+        		if (dissertation.getOrientator().equals(userView.getPerson())
+        				&& dissertation.getSchedulings().get(0).getExecutionYear().equals(outputExecutionYear)
+        				&& !dissertation.getDissertationState().getDissertationStateValue().equals(DissertationStateValue.PROPOSAL_FOR_PUBLICATION)
+        				&& !dissertation.getDissertationState().getDissertationStateValue().equals(DissertationStateValue.PROPOSAL_PUBLISHED)) {
+        			orientatorDissertations.add(dissertation);
+            	}
+        	}
+        	if (dissertation.getCoorientator() != null) {
+        		if (dissertation.getCoorientator().equals(userView.getPerson())
+        				&& dissertation.getSchedulings().get(0).getExecutionYear().equals(outputExecutionYear)
+        				&& (dissertation.getDissertationState().getDissertationStateValue().equals(DissertationStateValue.PROPOSAL_FOR_PUBLICATION)
+        						|| dissertation.getDissertationState().getDissertationStateValue().equals(DissertationStateValue.PROPOSAL_PUBLISHED))) {
+           			coorientatorProposals.add(dissertation);
+            	}
+        		if (dissertation.getOrientator().equals(userView.getPerson())
+        				&& dissertation.getSchedulings().get(0).getExecutionYear().equals(outputExecutionYear)
+        				&& !dissertation.getDissertationState().getDissertationStateValue().equals(DissertationStateValue.PROPOSAL_FOR_PUBLICATION)
+        				&& !dissertation.getDissertationState().getDissertationStateValue().equals(DissertationStateValue.PROPOSAL_PUBLISHED)) {
+        			coorientatorDissertations.add(dissertation);
+            	}
+        	}*/
+        	orientatorProposals.add(dissertation);
+        }
+        request.setAttribute("orientatorProposals", orientatorProposals);
+        request.setAttribute("coorientatorProposals", coorientatorProposals);
+        request.setAttribute("orientatorDissertations", orientatorDissertations);
+        request.setAttribute("coorientatorDissertations", coorientatorDissertations);
+        request.setAttribute("executionYear", outputExecutionYear);
+        //request.setAttribute("executionYearId", outputExecutionYear.getExternalId());
+        
         return mapping.findForward("listDissertations");
     }
 
-    public ActionForward prepareFinalWorkInformation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
-        IUserView userView = UserView.getUser();
-
-        DynaActionForm finalWorkForm = (DynaActionForm) form;
-        String role = (String) finalWorkForm.get("role");
-        String degreeId = (String) finalWorkForm.get("degree");
-        finalWorkForm.set("degreeType", DegreeType.DEGREE.toString());
-
-        InfoExecutionDegree infoExecutionDegree =
-                CommonServiceRequests.getInfoExecutionDegree(userView, Integer.valueOf(degreeId));
-
-        InfoScheduleing infoScheduleing = null;
-        try {
-
-            infoScheduleing = ReadFinalDegreeWorkProposalSubmisionPeriod.run(infoExecutionDegree.getExecutionDegree());
-            if (infoScheduleing == null || infoScheduleing.getStartOfProposalPeriod() == null
-                    || infoScheduleing.getEndOfProposalPeriod() == null
-                    || infoScheduleing.getStartOfProposalPeriod().getTime() > Calendar.getInstance().getTimeInMillis()
-                    || infoScheduleing.getEndOfProposalPeriod().getTime() < Calendar.getInstance().getTimeInMillis()) {
-                ActionErrors actionErrors = new ActionErrors();
-
-                if (infoScheduleing != null && infoScheduleing.getStartOfProposalPeriod() != null
-                        && infoScheduleing.getEndOfProposalPeriod() != null) {
-                    actionErrors.add("finalDegreeWorkProposal.ProposalPeriod.validator.OutOfPeriod", new ActionError(
-                            "finalDegreeWorkProposal.ProposalPeriod.validator.OutOfPeriod"));
-                    request.setAttribute("infoScheduleing", infoScheduleing);
-                } else {
-                    actionErrors.add("finalDegreeWorkProposal.ProposalPeriod.interval.undefined", new ActionError(
-                            "finalDegreeWorkProposal.ProposalPeriod.interval.undefined"));
-                }
-                saveErrors(request, actionErrors);
-
-                return mapping.findForward("OutOfSubmisionPeriod");
-            }
-        } catch (FenixServiceException fse) {
-            throw new FenixActionException(fse);
-        }
-
-        final Person person = userView.getPerson();
-        if (role != null && role.equals("responsable")) {
-            finalWorkForm.set("orientatorOID", person.getIdInternal().toString());
-            finalWorkForm.set("responsableTeacherName", person.getName());
-            request.setAttribute("orientator", person);
-        } else if (role != null && role.equals("coResponsable")) {
-            finalWorkForm.set("coorientatorOID", person.getIdInternal().toString());
-            finalWorkForm.set("coResponsableTeacherName", person.getName());
-            request.setAttribute("coorientator", person);
-        }
-
-        final ExecutionDegree executionDegree =
-                (ExecutionDegree) readDomainObject(request, ExecutionDegree.class, infoExecutionDegree.getIdInternal());
-        final Scheduleing scheduleing = executionDegree.getScheduling();
-        final List branches = new ArrayList();
-
-        request.setAttribute("branches", branches);
-
-        request.setAttribute("scheduling", executionDegree.getScheduling());
-
-        return mapping.findForward("submitFinalWorkProposal");
-    }
-
-    public ActionForward showTeacherName(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
-        IUserView userView = UserView.getUser();
-
-        DynaActionForm finalWorkForm = (DynaActionForm) form;
-        String alteredField = (String) finalWorkForm.get("alteredField");
-        String number = null;
-
-        if (alteredField.equals("orientator")) {
-            number = (String) finalWorkForm.get("responsableTeacherId");
-        } else if (alteredField.equals("coorientator")) {
-            number = (String) finalWorkForm.get("coResponsableTeacherId");
-        }
-
-        if (number == null || number.equals("")) {
-            if (alteredField.equals("orientator")) {
-                finalWorkForm.set("orientatorOID", "");
-                finalWorkForm.set("responsableTeacherName", "");
-            } else if (alteredField.equals("coorientator")) {
-                finalWorkForm.set("coorientatorOID", "");
-                finalWorkForm.set("coResponsableTeacherName", "");
-            }
-
-            return prepareFinalWorkInformation(mapping, form, request, response);
-        }
-
-        final Person person;
-        if (number.substring(0, 3).equals("ist")) {
-            person = Person.readPersonByIstUsername(number);
-        } else {
-            if (StringUtils.isNumeric(number)) {
-                final Employee employee = Employee.readByNumber(Integer.valueOf(number));
-                if (employee == null) {
-                    person = null;
-                } else {
-                    person = employee.getPerson();
-                }
-            } else {
-                ActionErrors actionErrors = new ActionErrors();
-                actionErrors.add("finalWorkInformationForm.unsuportedFormat", new ActionError(
-                        "finalWorkInformationForm.unsuportedFormat"));
-                saveErrors(request, actionErrors);
-                return mapping.getInputForward();
-            }
-        }
-
-        if (person == null
-                || !(person.hasRole(RoleType.TEACHER) || person.hasAnyProfessorships() || person.hasRole(RoleType.RESEARCHER))) {
-            ActionErrors actionErrors = new ActionErrors();
-            actionErrors.add("finalWorkInformationForm.unexistingTeacher", new ActionError(
-                    "finalWorkInformationForm.unexistingTeacher"));
-            saveErrors(request, actionErrors);
-            return mapping.getInputForward();
-        }
-
-        final Integer executionDegreeOIDString = Integer.valueOf(finalWorkForm.getString("degree"));
-        final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeOIDString);
-        final Scheduleing scheduleing = executionDegree.getScheduling();
-
-        if (alteredField.equals("orientator")) {
-            finalWorkForm.set("orientatorOID", person.getIdInternal().toString());
-            finalWorkForm.set("responsableTeacherName", person.getName());
-            request.setAttribute("orientator", person);
-            if (person == userView.getPerson()) {
-                finalWorkForm.set("role", "responsable");
-            }
-        } else {
-            if (alteredField.equals("coorientator")) {
-                request.setAttribute("coorientator", person);
-                finalWorkForm.set("coorientatorOID", person.getIdInternal().toString());
-                finalWorkForm.set("coResponsableTeacherName", person.getName());
-                if (person == userView.getPerson()) {
-                    finalWorkForm.set("role", "coResponsable");
-                }
-                if (!scheduleing.getAllowSimultaneousCoorientationAndCompanion().booleanValue()) {
-                    finalWorkForm.set("companionName", "");
-                    finalWorkForm.set("companionMail", "");
-                    finalWorkForm.set("companionPhone", "");
-                    finalWorkForm.set("companyAdress", "");
-                    finalWorkForm.set("companyName", "");
-                    finalWorkForm.set("alteredField", "");
-                }
-            }
-        }
-
-        return prepareFinalWorkInformation(mapping, form, request, response);
-    }
-
-    public ActionForward coorientatorVisibility(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
-        DynaActionForm finalWorkForm = (DynaActionForm) form;
-        String alteredField = (String) finalWorkForm.get("alteredField");
-        String companionName = (String) finalWorkForm.get("companionName");
-        String companionMail = (String) finalWorkForm.get("companionMail");
-        String companionPhone = (String) finalWorkForm.get("companionPhone");
-        String companyAdress = (String) finalWorkForm.get("companyAdress");
-        String companyName = (String) finalWorkForm.get("companyName");
-
-        final Integer executionDegreeOIDString = Integer.valueOf(finalWorkForm.getString("degree"));
-        final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeOIDString);
-        final Scheduleing scheduleing = executionDegree.getScheduling();
-
-        if (alteredField.equals("companion") && companionName.equals("") && companionMail.equals("") && companionPhone.equals("")
-                && companyAdress.equals("") && companyName.equals("")) {
-            finalWorkForm.set("alteredField", "");
-        }
-
-        if (alteredField.equals("companion") && companionName.equals("") && companionMail.equals("") && companionPhone.equals("")
-                && companyAdress.equals("") && companyName.equals("")
-                && !scheduleing.getAllowSimultaneousCoorientationAndCompanion().booleanValue()) {
-            finalWorkForm.set("coorientatorOID", "");
-            finalWorkForm.set("coResponsableTeacherName", "");
-            finalWorkForm.set("alteredField", "");
-        } else {
-            if (alteredField.equals("companion") || !companionName.equals("") || !companionMail.equals("")
-                    || !companionPhone.equals("") || !companyAdress.equals("") || !companyName.equals("")) {
-                finalWorkForm.set("alteredField", "companion");
-            }
-        }
-
-        return prepareFinalWorkInformation(mapping, form, request, response);
-    }
 
     public ActionForward viewDissertationProposal(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException {
@@ -466,352 +248,5 @@ public class DissertationManagementAction extends FenixDispatchAction {
         }
 
         return mapping.findForward("viewDissertationProposal");
-    }
-
-    public ActionForward print(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixActionException, FenixFilterException {
-        final String finalDegreeWorkProposalOIDString = request.getParameter("finalDegreeWorkProposalOID");
-        final IUserView userView = getUserView(request);
-        if (finalDegreeWorkProposalOIDString != null && userView != null) {
-            final Integer finalDegreeWorkProposalOID = Integer.valueOf(finalDegreeWorkProposalOIDString);
-            final Proposal finalDegreeWorkProposal = rootDomainObject.readProposalByOID(finalDegreeWorkProposalOID);
-            final Person person = userView.getPerson();
-            if (finalDegreeWorkProposal.getOrientator() == person || finalDegreeWorkProposal.getCoorientator() == person) {
-                request.setAttribute("finalDegreeWorkProposal", finalDegreeWorkProposal);
-            }
-        }
-        return mapping.findForward("print");
-    }
-
-    public ActionForward finalDegreeWorkProposalEdition(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response, boolean newProposal) throws FenixActionException, FenixFilterException {
-        String finalDegreeWorkProposalOIDString = request.getParameter("finalDegreeWorkProposalOID");
-
-        if (finalDegreeWorkProposalOIDString != null && StringUtils.isNumeric(finalDegreeWorkProposalOIDString)) {
-            IUserView userView = UserView.getUser();
-
-            Object args[] = { Integer.valueOf(finalDegreeWorkProposalOIDString) };
-            try {
-                InfoProposal infoProposal = (InfoProposal) ServiceUtils.executeService("ReadFinalDegreeWorkProposal", args);
-
-                if (infoProposal != null) {
-                    DynaActionForm finalWorkForm = (DynaActionForm) form;
-
-                    if (newProposal == false && infoProposal.getIdInternal() != null) {
-                        finalWorkForm.set("idInternal", infoProposal.getIdInternal().toString());
-                    }
-
-                    finalWorkForm.set("title", infoProposal.getTitle());
-                    if (infoProposal.getOrientatorsCreditsPercentage() != null) {
-                        finalWorkForm.set("responsibleCreditsPercentage", infoProposal.getOrientatorsCreditsPercentage()
-                                .toString());
-                    }
-                    if (infoProposal.getCoorientatorsCreditsPercentage() != null) {
-                        finalWorkForm.set("coResponsibleCreditsPercentage", infoProposal.getCoorientatorsCreditsPercentage()
-                                .toString());
-                    }
-                    finalWorkForm.set("companionName", infoProposal.getCompanionName());
-                    finalWorkForm.set("companionMail", infoProposal.getCompanionMail());
-                    if (infoProposal.getCompanionPhone() != null) {
-                        finalWorkForm.set("companionPhone", infoProposal.getCompanionPhone().toString());
-                    }
-                    finalWorkForm.set("framing", infoProposal.getFraming());
-                    finalWorkForm.set("objectives", infoProposal.getObjectives());
-                    finalWorkForm.set("description", infoProposal.getDescription());
-                    finalWorkForm.set("requirements", infoProposal.getRequirements());
-                    finalWorkForm.set("deliverable", infoProposal.getDeliverable());
-                    finalWorkForm.set("url", infoProposal.getUrl());
-                    if (infoProposal.getMaximumNumberOfGroupElements() != null) {
-                        finalWorkForm.set("maximumNumberOfGroupElements", infoProposal.getMaximumNumberOfGroupElements()
-                                .toString());
-                    }
-                    if (infoProposal.getMinimumNumberOfGroupElements() != null) {
-                        finalWorkForm.set("minimumNumberOfGroupElements", infoProposal.getMinimumNumberOfGroupElements()
-                                .toString());
-                    }
-                    if (infoProposal.getDegreeType() != null) {
-                        finalWorkForm.set("degreeType", infoProposal.getDegreeType().getName());
-                    }
-                    finalWorkForm.set("observations", infoProposal.getObservations());
-                    finalWorkForm.set("location", infoProposal.getLocation());
-
-                    finalWorkForm.set("companyAdress", infoProposal.getCompanyAdress());
-                    finalWorkForm.set("companyName", infoProposal.getCompanyName());
-                    if (infoProposal.getOrientator() != null && infoProposal.getOrientator().getIdInternal() != null) {
-                        finalWorkForm.set("orientatorOID", infoProposal.getOrientator().getIdInternal().toString());
-
-                        finalWorkForm.set("responsableTeacherId", infoProposal.getOrientator().getPerson().getIstUsername());
-
-                        finalWorkForm.set("responsableTeacherName", infoProposal.getOrientator().getNome());
-
-                        if (userView.getPerson() == infoProposal.getOrientator().getPerson()) {
-                            finalWorkForm.set("role", "responsable");
-                        } else {
-                            finalWorkForm.set("role", "coResponsable");
-                        }
-                    }
-                    if (infoProposal.getCoorientator() != null && infoProposal.getCoorientator().getIdInternal() != null) {
-                        finalWorkForm.set("coorientatorOID", infoProposal.getCoorientator().getIdInternal().toString());
-
-                        finalWorkForm.set("coResponsableTeacherId", infoProposal.getCoorientator().getPerson().getIstUsername());
-
-                        finalWorkForm.set("coResponsableTeacherName", infoProposal.getCoorientator().getNome());
-                    }
-                    if (infoProposal.getExecutionDegree() != null && infoProposal.getExecutionDegree().getIdInternal() != null) {
-                        finalWorkForm.set("degree", infoProposal.getExecutionDegree().getIdInternal().toString());
-                    }
-
-                    if (infoProposal.getBranches() != null && infoProposal.getBranches().size() > 0) {
-                        String[] branchList = new String[infoProposal.getBranches().size()];
-                        for (int i = 0; i < infoProposal.getBranches().size(); i++) {
-                            InfoBranch infoBranch = infoProposal.getBranches().get(i);
-                            if (infoBranch != null && infoBranch.getIdInternal() != null) {
-                                String brachOIDString = infoBranch.getIdInternal().toString();
-                                if (brachOIDString != null && StringUtils.isNumeric(brachOIDString)) {
-                                    branchList[i] = brachOIDString;
-                                }
-                            }
-                        }
-                        finalWorkForm.set("branchList", branchList);
-                    }
-
-                    ExecutionDegree executionDegree;
-                    if (newProposal) {
-                        String executionDegreeString = (String) getFromRequest(request, "degree");
-                        finalWorkForm.set("degree", executionDegreeString);
-                        Integer executionDegreeInteger = Integer.valueOf(executionDegreeString);
-                        executionDegree =
-                                (ExecutionDegree) readDomainObject(request, ExecutionDegree.class, executionDegreeInteger);
-
-                        String executionYearString = (String) getFromRequest(request, "executionYear");
-                        finalWorkForm.set("executionYear", executionYearString);
-                    } else {
-                        executionDegree =
-                                (ExecutionDegree) readDomainObject(request, ExecutionDegree.class, infoProposal
-                                        .getExecutionDegree().getIdInternal());
-                    }
-                    final Scheduleing scheduleing = executionDegree.getScheduling();
-                    if (scheduleing == null) {
-                        ActionErrors actionErrors = new ActionErrors();
-                        actionErrors.add("finalDegreeWorkProposal.ProposalPeriod.interval.undefined", new ActionError(
-                                "finalDegreeWorkProposal.ProposalPeriod.interval.undefined"));
-                        saveErrors(request, actionErrors);
-                        return mapping.findForward("OutOfSubmisionPeriod");
-                    }
-                    final List branches = new ArrayList();
-                    for (final ExecutionDegree ed : scheduleing.getExecutionDegrees()) {
-                        final DegreeCurricularPlan degreeCurricularPlan = ed.getDegreeCurricularPlan();
-                        branches.addAll(CommonServiceRequests.getBranchesByDegreeCurricularPlan(userView,
-                                degreeCurricularPlan.getIdInternal()));
-                    }
-                    request.setAttribute("branches", branches);
-
-                    request.setAttribute("scheduling", executionDegree.getScheduling());
-                }
-            } catch (FenixServiceException e) {
-                throw new FenixActionException(e);
-            }
-        }
-
-        return mapping.findForward("submitFinalWorkProposal");
-    }
-
-    public ActionForward editToCreateFinalDegreeWorkProposal(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
-        return finalDegreeWorkProposalEdition(mapping, form, request, response, true);
-    }
-
-    public ActionForward editFinalDegreeWorkProposal(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
-        return finalDegreeWorkProposalEdition(mapping, form, request, response, false);
-    }
-
-    public ActionForward attributeFinalDegreeWork(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException, FenixFilterException {
-        DynaActionForm finalWorkAttributionForm = (DynaActionForm) form;
-
-        String selectedGroupProposalOID = (String) finalWorkAttributionForm.get("selectedGroupProposal");
-
-        IUserView userView = UserView.getUser();
-
-        if (selectedGroupProposalOID != null && !selectedGroupProposalOID.equals("")) {
-
-            TeacherAttributeFinalDegreeWork.run(Integer.valueOf(selectedGroupProposalOID));
-        }
-
-        return mapping.findForward("sucess");
-    }
-
-    private class PREDICATE_FIND_GROUP_PROPOSAL_BY_GROUP implements Predicate {
-
-        Integer groupID = null;
-
-        @Override
-        public boolean evaluate(Object arg0) {
-            InfoGroupProposal infoGroupProposal = (InfoGroupProposal) arg0;
-            return infoGroupProposal.getInfoGroup() == null ? false : groupID.equals(infoGroupProposal.getInfoGroup()
-                    .getIdInternal());
-        }
-
-        public PREDICATE_FIND_GROUP_PROPOSAL_BY_GROUP(Integer groupID) {
-            super();
-            this.groupID = groupID;
-        }
-    }
-
-    public ActionForward getCurriculum(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-
-        IUserView userView = getUserView(request);
-
-        String studentCurricularPlanID = request.getParameter("studentCPID");
-        if (studentCurricularPlanID == null) {
-            studentCurricularPlanID = (String) request.getAttribute("studentCPID");
-        }
-
-        Integer executionDegreeId = getExecutionDegree(request);
-        List result = null;
-
-        Object args1[] = { executionDegreeId, Integer.valueOf(studentCurricularPlanID) };
-        result = (ArrayList) ServiceManagerServiceFactory.executeService("ReadStudentCurriculum", args1);
-
-        BeanComparator courseName = new BeanComparator("infoCurricularCourse.name");
-        BeanComparator executionYear = new BeanComparator("infoExecutionPeriod.infoExecutionYear.year");
-        ComparatorChain chainComparator = new ComparatorChain();
-        chainComparator.addComparator(courseName);
-        chainComparator.addComparator(executionYear);
-
-        Collections.sort(result, chainComparator);
-
-        InfoStudentCurricularPlan infoStudentCurricularPlan = null;
-        try {
-
-            infoStudentCurricularPlan = ReadStudentCurricularPlan.run(Integer.valueOf(studentCurricularPlanID));
-        } catch (ExistingServiceException e) {
-            throw new ExistingActionException(e);
-        }
-
-        request.setAttribute(PresentationConstants.CURRICULUM, result);
-        request.setAttribute(PresentationConstants.STUDENT_CURRICULAR_PLAN, infoStudentCurricularPlan);
-
-        return mapping.findForward("ShowStudentCurriculum");
-    }
-
-    public ActionForward getStudentCP(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-
-        IUserView userView = getUserView(request);
-
-        String studentNumber = getStudent(request);
-        List infoStudents = null;
-
-        if (studentNumber == null) {
-            try {
-
-                InfoPerson infoPerson = ReadPersonByUsername.run(userView.getUtilizador());
-
-                Object args2[] = { infoPerson };
-                infoStudents = (List) ServiceManagerServiceFactory.executeService("ReadStudentsByPerson", args2);
-            } catch (FenixServiceException e) {
-                throw new FenixActionException(e);
-            }
-        } else {
-            InfoStudent infoStudent =
-                    (InfoStudent) ReadStudentByNumberAndDegreeType.run(Integer.valueOf(studentNumber), DegreeType.DEGREE);
-            infoStudents = new ArrayList();
-            infoStudents.add(infoStudent);
-
-        }
-
-        List result = new ArrayList();
-        if (infoStudents != null) {
-            Iterator iterator = infoStudents.iterator();
-            while (iterator.hasNext()) {
-                InfoStudent infoStudent = (InfoStudent) iterator.next();
-                try {
-
-                    List resultTemp = ReadStudentCurricularPlans.run(infoStudent.getNumber(), infoStudent.getDegreeType());
-                    result.addAll(resultTemp);
-                } catch (NonExistingServiceException e) {
-                    //
-                }
-            }
-        }
-
-        getExecutionDegree(request);
-
-        request.setAttribute("studentCPs", result);
-
-        return mapping.findForward("ShowStudentCurricularPlans");
-    }
-
-    private String getStudent(HttpServletRequest request) {
-        String studentNumber = request.getParameter("studentNumber");
-        if (studentNumber == null) {
-            studentNumber = (String) request.getAttribute("studentNumber");
-        }
-        return studentNumber;
-    }
-
-    private Integer getExecutionDegree(HttpServletRequest request) {
-        Integer executionDegreeId = null;
-
-        String executionDegreeIdString = request.getParameter("executionDegreeId");
-        if (executionDegreeIdString == null) {
-            executionDegreeIdString = (String) request.getAttribute("executionDegreeId");
-        }
-        if (executionDegreeIdString != null) {
-            executionDegreeId = Integer.valueOf(executionDegreeIdString);
-        }
-        request.setAttribute("executionDegreeId", executionDegreeId);
-
-        return executionDegreeId;
-    }
-
-    public ActionForward prepareToTransposeFinalDegreeWorkProposal(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) {
-
-        String finalDegreeWorkProposalOID = request.getParameter("finalDegreeWorkProposalOID");
-
-        Proposal currentProposal = Proposal.fromExternalId(finalDegreeWorkProposalOID);
-
-        request.setAttribute("finalDegreeWorkProposal", currentProposal);
-
-        List<Student> groupStudents = new LinkedList<Student>();
-
-        for (GroupStudent student : currentProposal.getAttributionGroup()) {
-            groupStudents.add(student.getRegistration().getStudent());
-        }
-
-        if (groupStudents.size() > 0) {
-            request.setAttribute("finalDegreeWorkProposalAttribution", groupStudents);
-        }
-
-        return mapping.findForward("transposeFinalDegreeWorkProposal");
-
-    }
-
-    public ActionForward transposeFinalDegreeWorkProposal(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) {
-
-        String finalDegreeWorkProposalOID = request.getParameter("finalDegreeWorkProposalOID");
-
-        ActionMessages messages = new ActionMessages();
-
-        try {
-            TransposeFinalDegreeWorkProposalToExecutionYear.run(finalDegreeWorkProposalOID);
-            messages.add("finalDegreeWork.success", new ActionMessage("label.teacher.finalWork.transpositionSuccess"));
-        } catch (ProposalPeriodNotDefined e) {
-            messages.add("finalDegreeWork.error", new ActionMessage("label.teacher.finalWork.transposition.periodNotDefined"));
-        } catch (ProposalAlreadyTransposed e) {
-            messages.add("finalDegreeWork.error", new ActionMessage("label.teacher.finalWork.transpositionAlreadyTransposed"));
-        } catch (Exception e) {
-            messages.add("finalDegreeWork.error", new ActionMessage("label.teacher.finalWork.transpositionError"));
-        }
-
-        saveMessages(request, messages);
-
-        return mapping.findForward("transposeFinalDegreeWorkProposal");
-
     }
 }

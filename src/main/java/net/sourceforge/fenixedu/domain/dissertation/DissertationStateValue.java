@@ -1,13 +1,5 @@
 package net.sourceforge.fenixedu.domain.dissertation;
 
-
 public enum DissertationStateValue {
-    DRAFT, SUBMITTED, APPROVED, CONFIRMED, REVISION, // The discussion occured
-    // but the student can
-    // submit information
-    EVALUATED;
-
-    public String getName() {
-        return name();
-    }
+    DRAFT, SUBMITTED, APPROVED, CONFIRMED, REVISION, EVALUATED, PROPOSAL_PUBLISHED, PROPOSAL_FOR_PUBLICATION;
 }
