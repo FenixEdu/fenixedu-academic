@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.domain.transactions.GratuityTransaction;
 import net.sourceforge.fenixedu.domain.transactions.TransactionType;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author <a href="mailto:shezad@ist.utl.pt">Shezad Anavarali </a>
@@ -31,7 +31,7 @@ public class CreateGratuityTransaction {
     @Service
     public static void run(String guideEntryID, IUserView userView) {
 
-        GuideEntry guideEntry = AbstractDomainObject.fromExternalId(guideEntryID);
+        GuideEntry guideEntry = FenixFramework.getDomainObject(guideEntryID);
 
         Guide guide = guideEntry.getGuide();
         Registration registration = guide.getPerson().readStudentByDegreeType(DegreeType.MASTER_DEGREE);

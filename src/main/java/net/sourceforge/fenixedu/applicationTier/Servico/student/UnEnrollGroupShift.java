@@ -24,7 +24,7 @@ import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author joaosa and rmalo
@@ -36,13 +36,13 @@ public class UnEnrollGroupShift {
     @Checked("RolePredicates.STUDENT_PREDICATE")
     @Service
     public static Boolean run(String studentGroupCode, String groupPropertiesCode, String username) throws FenixServiceException {
-        Grouping groupProperties = AbstractDomainObject.fromExternalId(groupPropertiesCode);
+        Grouping groupProperties = FenixFramework.getDomainObject(groupPropertiesCode);
 
         if (groupProperties == null) {
             throw new ExistingServiceException();
         }
 
-        StudentGroup studentGroup = AbstractDomainObject.fromExternalId(studentGroupCode);
+        StudentGroup studentGroup = FenixFramework.getDomainObject(studentGroupCode);
 
         if (studentGroup == null) {
             throw new InvalidArgumentsServiceException();

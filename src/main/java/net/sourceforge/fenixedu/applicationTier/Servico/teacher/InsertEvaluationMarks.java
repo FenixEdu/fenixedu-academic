@@ -30,7 +30,7 @@ import net.sourceforge.fenixedu.domain.Mark;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Fernanda Quitério
@@ -48,11 +48,11 @@ public class InsertEvaluationMarks {
         HashMap<String, String> newHashMarks = new HashMap<String, String>();
 
         // Site
-        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseCode);
+        final ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseCode);
         site = executionCourse.getSite();
 
         // Evaluation
-        evaluation = AbstractDomainObject.fromExternalId(evaluationCode);
+        evaluation = FenixFramework.getDomainObject(evaluationCode);
 
         // Attend List
         attendList = executionCourse.getAttends();

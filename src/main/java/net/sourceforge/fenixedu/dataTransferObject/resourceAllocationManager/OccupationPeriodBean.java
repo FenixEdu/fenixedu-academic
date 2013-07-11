@@ -338,7 +338,7 @@ public class OccupationPeriodBean implements Serializable, Comparable<Occupation
 
             String oid = parts[0];
 
-            ExecutionDegree degree = ExecutionDegree.fromExternalId(oid);
+            ExecutionDegree degree = FenixFramework.getDomainObject(oid);
 
             degreeMap.put(degree, CurricularYearList.internalize(parts[1]));
 

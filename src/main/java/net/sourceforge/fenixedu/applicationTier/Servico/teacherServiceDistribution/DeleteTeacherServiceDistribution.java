@@ -6,11 +6,11 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilte
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class DeleteTeacherServiceDistribution {
     protected void run(String tsdId) {
-        TeacherServiceDistribution tsd = AbstractDomainObject.fromExternalId(tsdId);
+        TeacherServiceDistribution tsd = FenixFramework.getDomainObject(tsdId);
 
         tsd.delete();
     }

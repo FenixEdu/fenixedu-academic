@@ -21,7 +21,7 @@ public class DeleteProfessorshipResultsBean implements Serializable {
     public boolean deleteResults() {
         Professorship professorship = null;
         try {
-            professorship = Professorship.fromExternalId(getProfessorshipOID().toString());
+            professorship = FenixFramework.getDomainObject(getProfessorshipOID().toString());
         } catch (ClassCastException cce) {
             throw new DomainException("error.professorship.dontExist", cce.getCause());
         } catch (MissingObjectException moe) {
@@ -32,7 +32,7 @@ public class DeleteProfessorshipResultsBean implements Serializable {
             InquiryQuestion inquiryQuestion = null;
             if (getInquiryQuestionOID() != null) {
                 try {
-                    inquiryQuestion = InquiryQuestion.fromExternalId(getInquiryQuestionOID().toString());
+                    inquiryQuestion = FenixFramework.getDomainObject(getInquiryQuestionOID().toString());
                 } catch (ClassCastException cce) {
                     throw new DomainException("error.inquiryQuestion.dontExist", cce.getCause());
                 } catch (MissingObjectException moe) {
@@ -49,7 +49,7 @@ public class DeleteProfessorshipResultsBean implements Serializable {
     public boolean deleteAllTeachersResults() {
         ExecutionCourse executionCourse = null;
         try {
-            executionCourse = ExecutionCourse.fromExternalId(getExecutionCourseOID().toString());
+            executionCourse = FenixFramework.getDomainObject(getExecutionCourseOID().toString());
         } catch (ClassCastException cce) {
             throw new DomainException("error.executionCourse.dontExist", cce.getCause());
         } catch (MissingObjectException moe) {

@@ -7,12 +7,12 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCurricularCourse;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCurricularCourseGroup;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class DeleteTSDCurricularCourseGroup {
     protected void run(String tsdCurricularCourseGroupId) {
         TSDCurricularCourseGroup tsdCurricularCourseGroup =
-                (TSDCurricularCourseGroup) AbstractDomainObject.fromExternalId(tsdCurricularCourseGroupId);
+                (TSDCurricularCourseGroup) FenixFramework.getDomainObject(tsdCurricularCourseGroupId);
 
         for (TSDCurricularCourse tsdCurricularCourse : tsdCurricularCourseGroup.getTSDCurricularCourses()) {
             tsdCurricularCourse.setTSDCurricularCourseGroup(null);

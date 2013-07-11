@@ -17,7 +17,7 @@ import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/degreeJurisdiction", module = "academicAdministration")
 @Forwards({ @Forward(name = "manageJurisdictions", path = "/academicAdministration/degreeJurisdictions/manageJurisdictions.jsp") })
@@ -25,9 +25,9 @@ public class DegreeJurisdictionManagementDispacthAction extends FenixDispatchAct
     public ActionForward manageJurisdictions(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         DegreeJurisdictionManagementBean bean = new DegreeJurisdictionManagementBean();
-        AdministrativeOffice alameda = AbstractDomainObject.fromExternalId("2461016260610");
-        AdministrativeOffice tagus = AbstractDomainObject.fromExternalId("2461016260611");
-        AdministrativeOffice posgrad = AbstractDomainObject.fromExternalId("2461016260609");
+        AdministrativeOffice alameda = FenixFramework.getDomainObject("2461016260610");
+        AdministrativeOffice tagus = FenixFramework.getDomainObject("2461016260611");
+        AdministrativeOffice posgrad = FenixFramework.getDomainObject("2461016260609");
 
         request.setAttribute("degrees", bean);
         request.setAttribute("alamedaOffice", alameda);
@@ -52,8 +52,8 @@ public class DegreeJurisdictionManagementDispacthAction extends FenixDispatchAct
 
     @Service
     private void changeDegreeJurisdiction(String programOid, String officeOid) {
-        AcademicProgram program = AbstractDomainObject.fromExternalId(programOid);
-        AdministrativeOffice office = AbstractDomainObject.fromExternalId(officeOid);
+        AcademicProgram program = FenixFramework.getDomainObject(programOid);
+        AdministrativeOffice office = FenixFramework.getDomainObject(officeOid);
 
         program.setAdministrativeOffice(office);
         if (program instanceof Degree) {

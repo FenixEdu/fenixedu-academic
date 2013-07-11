@@ -27,7 +27,7 @@ import net.sourceforge.fenixedu.domain.resource.ResourceAllocation;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ReadExamsMapByRooms {
 
@@ -49,7 +49,7 @@ public class ReadExamsMapByRooms {
         }
 
         final ExecutionSemester executionSemester =
-                AbstractDomainObject.fromExternalId(infoExecutionPeriod.getExternalId());
+                FenixFramework.getDomainObject(infoExecutionPeriod.getExternalId());
 
         for (final InfoRoom infoRoom : infoRooms) {
             final InfoRoomExamsMap infoRoomExamsMap = new InfoRoomExamsMap();
@@ -76,7 +76,7 @@ public class ReadExamsMapByRooms {
 
     private static List<InfoExam> getInfoExams(final InfoRoom infoRoom, final ExecutionSemester executionSemester) {
         final List<InfoExam> result = new ArrayList<InfoExam>();
-        final AllocatableSpace oldRoom = (AllocatableSpace) AbstractDomainObject.fromExternalId(infoRoom.getExternalId());
+        final AllocatableSpace oldRoom = (AllocatableSpace) FenixFramework.getDomainObject(infoRoom.getExternalId());
         for (final ResourceAllocation roomOccupation : oldRoom.getResourceAllocations()) {
             if (roomOccupation.isWrittenEvaluationSpaceOccupation()) {
                 List<WrittenEvaluation> writtenEvaluations =

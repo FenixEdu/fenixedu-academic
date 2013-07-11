@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -24,8 +24,7 @@ public class ReadCandidates {
         int i = 0;
         for (i = 0; i < size; i++) {
 
-            result.add(InfoMasterDegreeCandidateWithInfoPerson.newInfoFromDomain(AbstractDomainObject
-                    .<MasterDegreeCandidate> fromExternalId(candidateList[i])));
+            result.add(InfoMasterDegreeCandidateWithInfoPerson.newInfoFromDomain(FenixFramework.<MasterDegreeCandidate> getDomainObject(candidateList[i])));
         }
 
         return result;

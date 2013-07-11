@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.BibliographicReference;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Fernanda Quitério
@@ -16,7 +16,7 @@ public class DeleteBibliographicReference {
 
     protected Boolean run(String bibliographicReferenceOID) throws FenixServiceException {
 
-        BibliographicReference bibliographicReference = AbstractDomainObject.fromExternalId(bibliographicReferenceOID);
+        BibliographicReference bibliographicReference = FenixFramework.getDomainObject(bibliographicReferenceOID);
         if (bibliographicReference == null) {
             throw new InvalidArgumentsServiceException();
         }

@@ -31,7 +31,7 @@ import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ChangeApplicationInfo {
 
@@ -41,7 +41,7 @@ public class ChangeApplicationInfo {
             InfoPersonEditor infoPersonEditor, IUserView userView, Boolean isNewPerson) throws FenixServiceException {
 
         final ExecutionDegree executionDegree =
-                AbstractDomainObject.fromExternalId(newMasterDegreeCandidate.getInfoExecutionDegree().getExternalId());
+                FenixFramework.getDomainObject(newMasterDegreeCandidate.getInfoExecutionDegree().getExternalId());
 
         Person person =
                 Person.readByDocumentIdNumberAndIdDocumentType(newMasterDegreeCandidate.getInfoPerson()

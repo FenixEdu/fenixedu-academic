@@ -54,7 +54,7 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.Pair;
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 
@@ -81,7 +81,7 @@ public class SummariesControlAction extends FenixDispatchAction {
             executionSemesterID = departmentSummaryElement.getExecutionSemester().getExternalId();
         } else {
             executionSemesterID = (String) getFromRequest(request, "executionSemesterID");
-            ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionSemesterID);
+            ExecutionSemester executionSemester = FenixFramework.getDomainObject(executionSemesterID);
             departmentSummaryElement = new DepartmentSummaryElement(null, executionSemester);
         }
         request.setAttribute("executionSemesters", departmentSummaryElement);
@@ -121,8 +121,8 @@ public class SummariesControlAction extends FenixDispatchAction {
             summaryControlCategory = SummaryControlCategory.valueOf(categoryControl);
         }
 
-        final ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodID);
-        final Department department = AbstractDomainObject.fromExternalId(departmentID);
+        final ExecutionSemester executionSemester = FenixFramework.getDomainObject(executionPeriodID);
+        final Department department = FenixFramework.getDomainObject(departmentID);
         DepartmentSummaryElement departmentSummaryResume = getDepartmentSummaryResume(executionSemester, department);
         departmentSummaryResume.setSummaryControlCategory(summaryControlCategory);
         request.setAttribute("departmentResume", departmentSummaryResume);
@@ -140,7 +140,7 @@ public class SummariesControlAction extends FenixDispatchAction {
         String departmentID = (String) getFromRequest(request, "departmentID");
         String categoryControl = (String) getFromRequest(request, "categoryControl");
         String executionCourseId = (String) getFromRequest(request, "executionCourseID");
-        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
+        ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseId);
 
         List<DetailSummaryElement> executionCoursesResume =
                 getExecutionCourseResume(executionCourse.getExecutionPeriod(), executionCourse.getProfessorships());
@@ -160,7 +160,7 @@ public class SummariesControlAction extends FenixDispatchAction {
         String executionSemesterId = (String) getFromRequest(request, "executionSemesterID");
 
         String personId = (String) getFromRequest(request, "personID");
-        Person person = AbstractDomainObject.fromExternalId(personId);
+        Person person = FenixFramework.getDomainObject(personId);
 
         List<Pair<ExecutionSemester, List<DetailSummaryElement>>> last4SemestersSummaryControl =
                 new ArrayList<Pair<ExecutionSemester, List<DetailSummaryElement>>>();
@@ -244,7 +244,7 @@ public class SummariesControlAction extends FenixDispatchAction {
     private void setAllDepartmentsSummaryResume(HttpServletRequest request, String executionPeriodOID)
             throws  FenixServiceException {
 
-        final ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodOID);
+        final ExecutionSemester executionSemester = FenixFramework.getDomainObject(executionPeriodOID);
 
         List<DepartmentSummaryElement> allDepartmentsSummariesResume = new ArrayList<DepartmentSummaryElement>();
         for (Department department : rootDomainObject.getDepartments()) {
@@ -494,8 +494,8 @@ public class SummariesControlAction extends FenixDispatchAction {
         String executionSemesterID = request.getParameter("executionSemesterID");
         String categoryControl = request.getParameter("categoryControl");
 
-        final ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionSemesterID);
-        final Department department = AbstractDomainObject.fromExternalId(departmentID);
+        final ExecutionSemester executionSemester = FenixFramework.getDomainObject(executionSemesterID);
+        final Department department = FenixFramework.getDomainObject(departmentID);
         SummaryControlCategory summaryControlCategory = null;
         String controlCategory = null;
         if (!StringUtils.isEmpty(categoryControl)) {

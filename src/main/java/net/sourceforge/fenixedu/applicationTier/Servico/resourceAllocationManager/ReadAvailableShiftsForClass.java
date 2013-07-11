@@ -18,7 +18,7 @@ import org.apache.commons.collections.Transformer;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ReadAvailableShiftsForClass {
 
@@ -28,7 +28,7 @@ public class ReadAvailableShiftsForClass {
 
         List infoShifts = null;
 
-        SchoolClass schoolClass = AbstractDomainObject.fromExternalId(infoClass.getExternalId());
+        SchoolClass schoolClass = FenixFramework.getDomainObject(infoClass.getExternalId());
         Set<Shift> shifts = schoolClass.findAvailableShifts();
 
         infoShifts = (List) CollectionUtils.collect(shifts, new Transformer() {

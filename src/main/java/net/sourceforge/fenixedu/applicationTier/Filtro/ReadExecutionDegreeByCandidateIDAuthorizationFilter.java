@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
@@ -60,7 +60,7 @@ public class ReadExecutionDegreeByCandidateIDAuthorizationFilter extends Filtro 
 
             final Person person = id.getPerson();
 
-            MasterDegreeCandidate masterDegreeCandidate = AbstractDomainObject.fromExternalId(candidateID);
+            MasterDegreeCandidate masterDegreeCandidate = FenixFramework.getDomainObject(candidateID);
 
             if (masterDegreeCandidate == null) {
                 return false;

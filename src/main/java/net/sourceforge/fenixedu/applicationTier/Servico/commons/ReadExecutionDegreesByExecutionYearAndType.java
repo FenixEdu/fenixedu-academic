@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Luis Cruz
@@ -24,7 +24,7 @@ public class ReadExecutionDegreesByExecutionYearAndType {
 
     @Service
     public static List run(String executionYearOID, Set<DegreeType> degreeTypes) {
-        final ExecutionYear executionYear = AbstractDomainObject.fromExternalId(executionYearOID);
+        final ExecutionYear executionYear = FenixFramework.getDomainObject(executionYearOID);
 
         final List<ExecutionDegree> executionDegrees = new ArrayList<ExecutionDegree>();
         for (final DegreeType degreeType : degreeTypes) {

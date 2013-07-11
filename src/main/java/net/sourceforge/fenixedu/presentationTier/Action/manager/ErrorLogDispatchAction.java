@@ -129,7 +129,7 @@ public class ErrorLogDispatchAction extends FenixDispatchAction {
     public ActionForward listErrors(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 
-        getErrors(request, (RequestLogDay) RequestLogDay.fromExternalId(request.getParameter("requestLogDay")));
+        getErrors(request, (RequestLogDay) FenixFramework.getDomainObject(request.getParameter("requestLogDay")));
 
         return mapping.findForward("errorsList");
     }
@@ -186,7 +186,7 @@ public class ErrorLogDispatchAction extends FenixDispatchAction {
             throw new FenixActionException("oid is required");
         }
 
-        RequestLog reportLog = RequestLog.fromExternalId(oid);
+        RequestLog reportLog = FenixFramework.getDomainObject(oid);
 
         if (reportLog == null) {
             throw new FenixActionException("invalid OID");
@@ -202,7 +202,7 @@ public class ErrorLogDispatchAction extends FenixDispatchAction {
 
     private Predicate filterForParameter(String filter, final String parameter) {
         if (filter.equals("exception")) {
-            final ExceptionType exceptionType = ExceptionType.fromExternalId(parameter);
+            final ExceptionType exceptionType = FenixFramework.getDomainObject(parameter);
             return new Predicate() {
                 @Override
                 public boolean evaluate(Object arg0) {
@@ -210,7 +210,7 @@ public class ErrorLogDispatchAction extends FenixDispatchAction {
                 }
             };
         } else if (filter.equals("url")) {
-            final RequestMapping requestMapping = RequestMapping.fromExternalId(parameter);
+            final RequestMapping requestMapping = FenixFramework.getDomainObject(parameter);
             return new Predicate() {
                 @Override
                 public boolean evaluate(Object arg0) {
@@ -242,10 +242,10 @@ public class ErrorLogDispatchAction extends FenixDispatchAction {
 
     private String nameForParameter(String filter, String parameter) {
         if (filter.equals("exception")) {
-            return ((ExceptionType) ExceptionType.fromExternalId(parameter)).getType();
+            return ((ExceptionType) FenixFramework.getDomainObject(parameter)).getType();
         } else if (filter.equals("url")) {
-            return ((RequestMapping) RequestMapping.fromExternalId(parameter)).getPath() + "?"
-                    + ((RequestMapping) RequestMapping.fromExternalId(parameter)).getParameters();
+            return ((RequestMapping) FenixFramework.getDomainObject(parameter)).getPath() + "?"
+                    + ((RequestMapping) FenixFramework.getDomainObject(parameter)).getParameters();
         } else if (filter.equals("user")) {
             return parameter;
         } else {

@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class EditDegreeCurricularPlan {
 
@@ -21,7 +21,7 @@ public class EditDegreeCurricularPlan {
             throw new InvalidArgumentsServiceException();
         }
 
-        final DegreeCurricularPlan dcpToEdit = AbstractDomainObject.fromExternalId(infoDcp.getExternalId());
+        final DegreeCurricularPlan dcpToEdit = FenixFramework.getDomainObject(infoDcp.getExternalId());
         if (dcpToEdit == null) {
             throw new FenixServiceException("message.nonExistingDegreeCurricularPlan");
         }

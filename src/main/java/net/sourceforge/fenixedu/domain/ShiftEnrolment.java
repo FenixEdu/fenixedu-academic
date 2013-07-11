@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ShiftEnrolment extends ShiftEnrolment_Base {
 

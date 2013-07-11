@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
 import org.apache.struts.util.LabelValueBean;
 
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Susana Fernandes
@@ -31,7 +31,7 @@ public class DeleteExerciseVariation {
     public List<LabelValueBean> run(String executionCourseId, String questionCode) throws InvalidArgumentsServiceException {
         List<LabelValueBean> result = new ArrayList<LabelValueBean>();
 
-        Question question = AbstractDomainObject.fromExternalId(questionCode);
+        Question question = FenixFramework.getDomainObject(questionCode);
 
         if (question == null) {
             throw new InvalidArgumentsServiceException();

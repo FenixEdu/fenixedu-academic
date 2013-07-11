@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ReadPosGradStudentCurricularPlans {
 
@@ -22,7 +22,7 @@ public class ReadPosGradStudentCurricularPlans {
     public static List<InfoStudentCurricularPlan> run(String studentId) throws FenixServiceException {
         List<InfoStudentCurricularPlan> result = new ArrayList<InfoStudentCurricularPlan>();
 
-        Registration registration = AbstractDomainObject.fromExternalId(studentId);
+        Registration registration = FenixFramework.getDomainObject(studentId);
         if (registration == null) {
             throw new InvalidArgumentsServiceException("invalidStudentId");
         }

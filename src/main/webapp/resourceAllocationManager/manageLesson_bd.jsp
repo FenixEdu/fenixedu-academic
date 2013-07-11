@@ -3,7 +3,7 @@
 <%@page import="org.joda.time.Weeks"%>
 <%@page import="org.joda.time.YearMonthDay"%>
 <%@page import="net.sourceforge.fenixedu.domain.ExecutionCourse"%>
-<%@page import="pt.ist.fenixframework.pstm.AbstractDomainObject"%>
+<%@page import="pt.ist.fenixframework.FenixFramework"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
@@ -27,7 +27,7 @@
 <bean:message key="message.weekdays"/>
 
 <%
-	final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(pageContext.findAttribute("executionCourseOID").toString());
+	final ExecutionCourse executionCourse = FenixFramework.getDomainObject(pageContext.findAttribute("executionCourseOID").toString());
 	final YearMonthDay firstPossibleLessonDay = executionCourse.getMaxLessonsPeriod().getLeft();
 	final YearMonthDay lastPossibleLessonDay = executionCourse.getMaxLessonsPeriod().getRight();
 %>

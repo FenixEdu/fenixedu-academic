@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class GetBranchListByCandidateID {
 
@@ -19,7 +19,7 @@ public class GetBranchListByCandidateID {
     public static List<InfoBranch> run(String candidateID) throws FenixServiceException {
         List<InfoBranch> result = new ArrayList<InfoBranch>();
 
-        MasterDegreeCandidate masterDegreeCandidate = AbstractDomainObject.fromExternalId(candidateID);
+        MasterDegreeCandidate masterDegreeCandidate = FenixFramework.getDomainObject(candidateID);
         List<Branch> branches = masterDegreeCandidate.getExecutionDegree().getDegreeCurricularPlan().getAreas();
         if (branches == null) {
             InfoBranchEditor infoBranch = new InfoBranchEditor();

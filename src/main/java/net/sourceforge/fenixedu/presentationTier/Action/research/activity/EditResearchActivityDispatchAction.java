@@ -26,7 +26,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class EditResearchActivityDispatchAction extends ActivitiesManagementDispatchAction {
 
@@ -262,7 +262,7 @@ public class EditResearchActivityDispatchAction extends ActivitiesManagementDisp
         String forwardTo = request.getParameter("forwardTo");
 
         Participation participation =
-                (Participation) AbstractDomainObject.fromExternalId(request.getParameter("participationId"));
+                (Participation) FenixFramework.getDomainObject(request.getParameter("participationId"));
 
         if (participation != null) {
             try {

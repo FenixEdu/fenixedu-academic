@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.OperatorAuthorizationFilt
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Ricardo Rodrigues
@@ -21,7 +21,7 @@ public class DeleteNotNeedToEnrollInCurricularCourse {
 
     protected void run(String notNeedToEnrollInCurricularCourseID) {
         NotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse =
-                AbstractDomainObject.fromExternalId(notNeedToEnrollInCurricularCourseID);
+                FenixFramework.getDomainObject(notNeedToEnrollInCurricularCourseID);
         notNeedToEnrollInCurricularCourse.delete();
     }
 

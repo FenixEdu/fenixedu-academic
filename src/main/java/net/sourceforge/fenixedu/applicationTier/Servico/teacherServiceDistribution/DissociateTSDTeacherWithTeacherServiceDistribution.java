@@ -7,12 +7,12 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDTeacher;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class DissociateTSDTeacherWithTeacherServiceDistribution {
     protected void run(String tsdId, String tsdTeacherId) {
-        TeacherServiceDistribution tsd = AbstractDomainObject.fromExternalId(tsdId);
-        TSDTeacher tsdTeacher = AbstractDomainObject.fromExternalId(tsdTeacherId);
+        TeacherServiceDistribution tsd = FenixFramework.getDomainObject(tsdId);
+        TSDTeacher tsdTeacher = FenixFramework.getDomainObject(tsdTeacherId);
 
         tsd.removeTSDTeacherFromAllChilds(tsdTeacher);
     }

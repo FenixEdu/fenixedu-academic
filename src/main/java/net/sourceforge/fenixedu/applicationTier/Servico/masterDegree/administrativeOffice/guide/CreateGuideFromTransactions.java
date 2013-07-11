@@ -27,7 +27,7 @@ import net.sourceforge.fenixedu.util.NumberUtils;
 import net.sourceforge.fenixedu.util.State;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * 
@@ -80,7 +80,7 @@ public class CreateGuideFromTransactions {
         }
 
         // Get the Execution Degree
-        ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(infoGuide.getInfoExecutionDegree().getExternalId());
+        ExecutionDegree executionDegree = FenixFramework.getDomainObject(infoGuide.getInfoExecutionDegree().getExternalId());
 
         Party contributor = Party.readByContributorNumber(infoGuide.getInfoContributor().getContributorNumber());
         Person person = Person.readPersonByUsername(infoGuide.getInfoPerson().getUsername());
@@ -99,7 +99,7 @@ public class CreateGuideFromTransactions {
 
         while (iterator.hasNext()) {
             String transactionId = iterator.next();
-            transaction = (PaymentTransaction) AbstractDomainObject.fromExternalId(transactionId);
+            transaction = (PaymentTransaction) FenixFramework.getDomainObject(transactionId);
             if (transaction == null) {
                 throw new ExcepcaoInexistente();
             }

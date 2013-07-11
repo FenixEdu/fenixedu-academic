@@ -4,14 +4,14 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class DeleteFunction {
 
     @Checked("RolePredicates.MANAGER_PREDICATE")
     @Service
     public static void run(String functionID) throws FenixServiceException {
-        Function function = (Function) AbstractDomainObject.fromExternalId(functionID);
+        Function function = (Function) FenixFramework.getDomainObject(functionID);
         if (function == null) {
             throw new FenixServiceException("error.noFunction");
         }

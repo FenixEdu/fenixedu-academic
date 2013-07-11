@@ -15,7 +15,7 @@ import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class EditLesson {
 
@@ -25,7 +25,7 @@ public class EditLesson {
             InfoRoomOccupationEditor infoRoomOccupation, InfoShift infoShift, YearMonthDay newBeginDate, YearMonthDay newEndDate,
             Boolean createLessonInstances) throws FenixServiceException {
 
-        Lesson aula = AbstractDomainObject.fromExternalId(aulaAntiga.getExternalId());
+        Lesson aula = FenixFramework.getDomainObject(aulaAntiga.getExternalId());
 
         if (aula != null) {
 

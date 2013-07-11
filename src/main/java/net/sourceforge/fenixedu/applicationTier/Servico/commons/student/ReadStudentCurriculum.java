@@ -14,13 +14,13 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ReadStudentCurriculum {
 
     protected List run(String executionDegreeCode, String studentCurricularPlanID) throws FenixServiceException {
 
-        final StudentCurricularPlan studentCurricularPlan = AbstractDomainObject.fromExternalId(studentCurricularPlanID);
+        final StudentCurricularPlan studentCurricularPlan = FenixFramework.getDomainObject(studentCurricularPlanID);
         if (studentCurricularPlan == null) {
             throw new NonExistingServiceException("error.readStudentCurriculum.noStudentCurricularPlan");
         }

@@ -15,7 +15,7 @@ import org.apache.commons.collections.Predicate;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Ana e Ricardo
@@ -26,7 +26,7 @@ public class ReadExecutionCourseWithAssociatedCurricularCourses {
     @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
     @Service
     public static InfoExecutionCourse run(String executionCourseID) throws FenixServiceException {
-        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseID);
+        final ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseID);
         if (executionCourse == null) {
             throw new FenixServiceException("error.noExecutionCourse");
         }

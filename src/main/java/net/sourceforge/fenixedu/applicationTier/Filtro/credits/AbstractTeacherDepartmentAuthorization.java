@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * Base class for authorization issues on credits information edition done by
@@ -36,7 +36,7 @@ public abstract class AbstractTeacherDepartmentAuthorization<T> extends Filtro {
 
             final Person requesterPerson = requester.getPerson();
 
-            Teacher teacher = AbstractDomainObject.fromExternalId(teacherId);
+            Teacher teacher = FenixFramework.getDomainObject(teacherId);
 
             Department teacherDepartment = teacher.getCurrentWorkingDepartment();
 

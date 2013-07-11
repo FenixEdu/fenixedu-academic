@@ -53,7 +53,7 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -972,7 +972,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         if (this.unit == null && this.getUnitIDHidden() != null && this.getUnitIDHidden().getValue() != null
                 && !this.getUnitIDHidden().getValue().equals("")) {
 
-            this.unit = (Unit) AbstractDomainObject.fromExternalId(this.getUnitIDHidden().getValue().toString());
+            this.unit = (Unit) FenixFramework.getDomainObject(this.getUnitIDHidden().getValue().toString());
         }
         if (toRemoveParentUnit) {
             getParentUnitsRelationTypes();
@@ -1053,7 +1053,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         if (this.function == null && this.getFunctionIDHidden() != null && this.getFunctionIDHidden().getValue() != null
                 && !this.getFunctionIDHidden().getValue().equals("")) {
 
-            this.function = (Function) AbstractDomainObject.fromExternalId(this.getFunctionIDHidden().getValue().toString());
+            this.function = (Function) FenixFramework.getDomainObject(this.getFunctionIDHidden().getValue().toString());
         }
         return function;
     }
@@ -1110,7 +1110,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         if (this.chooseUnit == null && this.getChooseUnitIDHidden() != null && this.getChooseUnitIDHidden().getValue() != null
                 && !this.getChooseUnitIDHidden().getValue().equals("")) {
 
-            this.chooseUnit = (Unit) AbstractDomainObject.fromExternalId(this.getChooseUnitIDHidden().getValue().toString());
+            this.chooseUnit = (Unit) FenixFramework.getDomainObject(this.getChooseUnitIDHidden().getValue().toString());
         }
 
         return chooseUnit;

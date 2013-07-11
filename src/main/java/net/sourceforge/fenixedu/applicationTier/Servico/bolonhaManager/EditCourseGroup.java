@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class EditCourseGroup {
 
@@ -16,11 +16,11 @@ public class EditCourseGroup {
     public static void run(final String courseGroupID, final String contextID, final String name, final String nameEn,
             final String beginExecutionPeriodID, final String endExecutionPeriodID) throws FenixServiceException {
 
-        final CourseGroup courseGroup = (CourseGroup) AbstractDomainObject.fromExternalId(courseGroupID);
+        final CourseGroup courseGroup = (CourseGroup) FenixFramework.getDomainObject(courseGroupID);
         if (courseGroup == null) {
             throw new FenixServiceException("error.noCourseGroup");
         }
-        final Context context = AbstractDomainObject.fromExternalId(contextID);
+        final Context context = FenixFramework.getDomainObject(contextID);
         if (context == null && !courseGroup.isRoot()) {
             throw new FenixServiceException("error.noContext");
         }
@@ -33,12 +33,11 @@ public class EditCourseGroup {
         if (beginExecutionPeriodID == null) {
             return ExecutionSemester.readActualExecutionSemester();
         } else {
-            return AbstractDomainObject.fromExternalId(beginExecutionPeriodID);
+            return FenixFramework.getDomainObject(beginExecutionPeriodID);
         }
     }
 
     private static ExecutionSemester getEndExecutionPeriod(String endExecutionPeriodID) {
-        return (endExecutionPeriodID == null) ? null : AbstractDomainObject
-                .<ExecutionSemester> fromExternalId(endExecutionPeriodID);
+        return (endExecutionPeriodID == null) ? null : FenixFramework.<ExecutionSemester> getDomainObject(endExecutionPeriodID);
     }
 }

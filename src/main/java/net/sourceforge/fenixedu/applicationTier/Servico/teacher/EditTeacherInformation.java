@@ -14,14 +14,14 @@ import net.sourceforge.fenixedu.domain.teacher.PublicationsNumber;
 import net.sourceforge.fenixedu.domain.teacher.ServiceProviderRegime;
 import net.sourceforge.fenixedu.domain.teacher.WeeklyOcupation;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class EditTeacherInformation {
 
     protected Boolean run(InfoServiceProviderRegime infoServiceProviderRegime, InfoWeeklyOcupation infoWeeklyOcupation,
             List<InfoOrientation> infoOrientations, List<InfoPublicationsNumber> infoPublicationsNumbers) {
 
-        Teacher teacher = AbstractDomainObject.fromExternalId(infoServiceProviderRegime.getInfoTeacher().getExternalId());
+        Teacher teacher = FenixFramework.getDomainObject(infoServiceProviderRegime.getInfoTeacher().getExternalId());
 
         editServiceProviderRegime(infoServiceProviderRegime, teacher);
         editWeeklyOcupation(infoWeeklyOcupation, teacher);
@@ -36,7 +36,7 @@ public class EditTeacherInformation {
     private void editServiceProviderRegime(InfoServiceProviderRegime infoServiceProviderRegime, Teacher teacher) {
 
         ServiceProviderRegime serviceProviderRegime =
-                AbstractDomainObject.fromExternalId(infoServiceProviderRegime.getExternalId());
+                FenixFramework.getDomainObject(infoServiceProviderRegime.getExternalId());
 
         if (serviceProviderRegime == null) {
             serviceProviderRegime = new ServiceProviderRegime(teacher, infoServiceProviderRegime);
@@ -61,7 +61,7 @@ public class EditTeacherInformation {
     private void editOrientations(List<InfoOrientation> infoOrientations, Teacher teacher) {
         // Orientations
         for (InfoOrientation infoOrientation : infoOrientations) {
-            Orientation orientation = AbstractDomainObject.fromExternalId(infoOrientation.getExternalId());
+            Orientation orientation = FenixFramework.getDomainObject(infoOrientation.getExternalId());
 
             if (orientation == null) {
                 orientation = new Orientation(teacher, infoOrientation);
@@ -78,7 +78,7 @@ public class EditTeacherInformation {
         // Publications Number
         for (InfoPublicationsNumber infoPublicationsNumber : infoPublicationsNumbers) {
             PublicationsNumber publicationsNumber =
-                    AbstractDomainObject.fromExternalId(infoPublicationsNumber.getExternalId());
+                    FenixFramework.getDomainObject(infoPublicationsNumber.getExternalId());
 
             if (publicationsNumber == null) {
                 publicationsNumber = new PublicationsNumber(teacher, infoPublicationsNumber);

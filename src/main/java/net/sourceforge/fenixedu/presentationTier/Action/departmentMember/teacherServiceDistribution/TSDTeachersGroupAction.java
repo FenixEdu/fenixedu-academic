@@ -37,7 +37,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class TSDTeachersGroupAction extends FenixDispatchAction {
 
@@ -303,7 +303,7 @@ public class TSDTeachersGroupAction extends FenixDispatchAction {
     private TeacherServiceDistribution getSelectedTeacherServiceDistribution(HttpServletRequest request) {
         String selectedTeacherServiceDistributionId = String.valueOf(request.getParameter("tsd"));
         TeacherServiceDistribution selectedTeacherServiceDistribution =
-                AbstractDomainObject.fromExternalId(selectedTeacherServiceDistributionId);
+                FenixFramework.getDomainObject(selectedTeacherServiceDistributionId);
 
         return selectedTeacherServiceDistribution;
     }

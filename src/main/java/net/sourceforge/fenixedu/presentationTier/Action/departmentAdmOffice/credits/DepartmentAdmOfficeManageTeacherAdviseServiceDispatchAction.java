@@ -27,7 +27,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Ricardo Rodrigues
@@ -61,7 +61,7 @@ public class DepartmentAdmOfficeManageTeacherAdviseServiceDispatchAction extends
 
         final ExecutionSemester executionSemester = getDomainObject(dynaForm, "executionPeriodId");
 
-        Teacher teacher = AbstractDomainObject.fromExternalId(dynaForm.getString("teacherId"));
+        Teacher teacher = FenixFramework.getDomainObject(dynaForm.getString("teacherId"));
         List<Department> manageableDepartments = userView.getPerson().getManageableDepartmentCredits();
 
         if (teacher == null || teacher.getCurrentWorkingDepartment() == null

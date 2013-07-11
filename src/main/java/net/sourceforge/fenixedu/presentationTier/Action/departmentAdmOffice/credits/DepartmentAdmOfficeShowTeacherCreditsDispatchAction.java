@@ -25,7 +25,7 @@ import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "departmentAdmOffice", path = "/showFullTeacherCreditsSheet", attribute = "teacherSearchForm",
         formBean = "teacherSearchForm", scope = "request", parameter = "method")
@@ -38,8 +38,8 @@ public class DepartmentAdmOfficeShowTeacherCreditsDispatchAction extends ShowTea
 
         DynaActionForm teacherCreditsForm = (DynaActionForm) form;
         ExecutionSemester executionSemester =
-                AbstractDomainObject.fromExternalId((String) teacherCreditsForm.get("executionPeriodId"));
-        Teacher teacher = AbstractDomainObject.fromExternalId((String) teacherCreditsForm.get("teacherId"));
+                FenixFramework.getDomainObject((String) teacherCreditsForm.get("executionPeriodId"));
+        Teacher teacher = FenixFramework.getDomainObject((String) teacherCreditsForm.get("teacherId"));
 
         if (teacher == null || !isTeacherOfManageableDepartments(teacher, executionSemester, request)) {
             request.setAttribute("teacherNotFound", "teacherNotFound");

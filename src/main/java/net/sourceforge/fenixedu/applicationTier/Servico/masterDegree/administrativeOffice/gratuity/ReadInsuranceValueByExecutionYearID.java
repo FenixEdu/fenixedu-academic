@@ -6,14 +6,14 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.InsuranceValue;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ReadInsuranceValueByExecutionYearID {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
     public static InfoInsuranceValue run(String executionYearID) throws FenixServiceException {
-        ExecutionYear executionYear = AbstractDomainObject.fromExternalId(executionYearID);
+        ExecutionYear executionYear = FenixFramework.getDomainObject(executionYearID);
         InsuranceValue insuranceValue = executionYear.getInsuranceValue();
         if (insuranceValue != null) {
             return InfoInsuranceValue.newInfoFromDomain(insuranceValue);

@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 import pt.utl.ist.fenix.tools.file.FileSetMetaData;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
@@ -73,7 +73,7 @@ public class ResearchResultDocumentFile extends ResearchResultDocumentFile_Base 
     }
 
     public final static ResearchResultDocumentFile readByOID(String oid) {
-        final ResearchResultDocumentFile documentFile = AbstractDomainObject.fromExternalId(oid);
+        final ResearchResultDocumentFile documentFile = FenixFramework.getDomainObject(oid);
 
         if (documentFile == null) {
             throw new DomainException("error.researcher.ResultDocumentFile.null");

@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.support.FAQEntry;
 import net.sourceforge.fenixedu.domain.support.FAQSection;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Luis Cruz
@@ -22,7 +22,7 @@ public class CreateFAQEntry {
     public static void run(InfoFAQEntry infoFAQEntry) {
         FAQSection parentFAQSection = null;
         if (infoFAQEntry.getParentSection() != null && infoFAQEntry.getParentSection().getExternalId() != null) {
-            parentFAQSection = AbstractDomainObject.fromExternalId(infoFAQEntry.getParentSection().getExternalId());
+            parentFAQSection = FenixFramework.getDomainObject(infoFAQEntry.getParentSection().getExternalId());
         }
 
         FAQEntry faqEntry = new FAQEntry();

@@ -13,7 +13,7 @@ import org.apache.commons.collections.Transformer;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * 
@@ -26,7 +26,7 @@ public class ReadActiveMasterDegreeThesisDataVersionsByDegreeCurricularPlan {
     @Service
     public static List run(String degreeCurricularPlanID) throws FenixServiceException {
 
-        DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
+        DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
 
         List masterDegreeThesisDataVersions = degreeCurricularPlan.readActiveMasterDegreeThesisDataVersions();
 

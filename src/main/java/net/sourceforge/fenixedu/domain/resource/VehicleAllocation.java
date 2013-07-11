@@ -19,7 +19,7 @@ import org.joda.time.DateTime;
 import org.joda.time.Minutes;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class VehicleAllocation extends VehicleAllocation_Base {
 

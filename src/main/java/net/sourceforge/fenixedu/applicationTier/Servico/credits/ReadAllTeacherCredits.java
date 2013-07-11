@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.TeacherCredits;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Ricardo Rodrigues
@@ -26,7 +26,7 @@ public class ReadAllTeacherCredits {
     public static List<CreditLineDTO> run(String teacherID) throws ParseException {
 
         List<CreditLineDTO> creditLines = new ArrayList<CreditLineDTO>();
-        final Teacher teacher = AbstractDomainObject.fromExternalId(teacherID);
+        final Teacher teacher = FenixFramework.getDomainObject(teacherID);
 
         ExecutionSemester executionSemester = ExecutionSemester.readStartExecutionSemesterForCredits();
 

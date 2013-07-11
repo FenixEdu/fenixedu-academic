@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.util.tests.CorrectionFormula;
 import org.apache.commons.beanutils.BeanComparator;
 
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class InsertTestQuestion {
 
@@ -32,7 +32,7 @@ public class InsertTestQuestion {
         this.path = path.replace('\\', '/');
 
         for (String element : metadataId) {
-            Metadata metadata = AbstractDomainObject.fromExternalId(element);
+            Metadata metadata = FenixFramework.getDomainObject(element);
             if (metadata == null) {
                 throw new InvalidArgumentsServiceException();
             }
@@ -45,7 +45,7 @@ public class InsertTestQuestion {
             if (question == null) {
                 throw new InvalidArgumentsServiceException();
             }
-            Test test = AbstractDomainObject.fromExternalId(testId);
+            Test test = FenixFramework.getDomainObject(testId);
             if (test == null) {
                 throw new InvalidArgumentsServiceException();
             }

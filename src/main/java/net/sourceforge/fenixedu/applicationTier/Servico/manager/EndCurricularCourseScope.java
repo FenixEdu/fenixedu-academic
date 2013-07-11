@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScopeEdit
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Fernanda Quitério 28/10/2003
@@ -25,7 +25,7 @@ public class EndCurricularCourseScope {
         }
 
         CurricularCourseScope oldCurricularCourseScope =
-                AbstractDomainObject.fromExternalId(newInfoCurricularCourseScope.getExternalId());
+                FenixFramework.getDomainObject(newInfoCurricularCourseScope.getExternalId());
         if (oldCurricularCourseScope == null) {
             throw new NonExistingServiceException("message.non.existing.curricular.course.scope", null);
         }

@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRulesManager;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class CreateRule {
 
@@ -19,7 +19,7 @@ public class CreateRule {
             CurricularRuleParametersDTO parametersDTO, String beginExecutionPeriodID, String endExecutionPeriodID)
             throws FenixServiceException {
 
-        final DegreeModule degreeModuleToApplyRule = AbstractDomainObject.fromExternalId(degreeModuleToApplyRuleID);
+        final DegreeModule degreeModuleToApplyRule = FenixFramework.getDomainObject(degreeModuleToApplyRuleID);
         if (degreeModuleToApplyRule == null) {
             throw new FenixServiceException("error.noDegreeModule");
         }
@@ -28,12 +28,11 @@ public class CreateRule {
         if (beginExecutionPeriodID == null) {
             beginExecutionPeriod = ExecutionSemester.readActualExecutionSemester();
         } else {
-            beginExecutionPeriod = AbstractDomainObject.fromExternalId(beginExecutionPeriodID);
+            beginExecutionPeriod = FenixFramework.getDomainObject(beginExecutionPeriodID);
         }
 
         final ExecutionSemester endExecutionPeriod =
-                (endExecutionPeriodID == null) ? null : AbstractDomainObject
-                        .<ExecutionSemester> fromExternalId(endExecutionPeriodID);
+                (endExecutionPeriodID == null) ? null : FenixFramework.<ExecutionSemester> getDomainObject(endExecutionPeriodID);
 
         CurricularRulesManager.createCurricularRule(degreeModuleToApplyRule, beginExecutionPeriod, endExecutionPeriod,
                 selectedCurricularRuleType, parametersDTO);

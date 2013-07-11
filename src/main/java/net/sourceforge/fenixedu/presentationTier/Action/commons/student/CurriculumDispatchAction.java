@@ -43,7 +43,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -74,7 +74,7 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
         final Student loggedStudent = getUserView(request).getPerson().getStudent();
 
         if (registrationOID != null) {
-            registration = AbstractDomainObject.fromExternalId(registrationOID);
+            registration = FenixFramework.getDomainObject(registrationOID);
         } else if (loggedStudent != null) {
             /**
              * We no longer want to filter students with 1 registration only.
@@ -135,7 +135,7 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
         Student student = getStudent(actionForm);
         if (student != null) {
             if (!StringUtils.isEmpty(degreeCurricularPlanId)) {
-                DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanId);
+                DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanId);
                 registration = student.readRegistrationByDegreeCurricularPlan(degreeCurricularPlan);
             } else {
                 final List<Registration> registrations = student.getRegistrations();

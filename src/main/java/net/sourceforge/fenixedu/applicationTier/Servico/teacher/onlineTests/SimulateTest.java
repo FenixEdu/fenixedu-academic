@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.util.tests.TestType;
 import org.apache.commons.beanutils.BeanComparator;
 
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class SimulateTest {
 
@@ -36,7 +36,7 @@ public class SimulateTest {
         // InfoSiteStudentTestFeedback infoSiteStudentTestFeedback = new
         // InfoSiteStudentTestFeedback();
         // this.path = path.replace('\\', '/');
-        // Test test = AbstractDomainObject.fromExternalId(testId);
+        // Test test = FenixFramework.getDomainObject(testId);
         // if (test == null)
         // throw new FenixServiceException();
         //
@@ -51,7 +51,7 @@ public class SimulateTest {
         //
         // if (testScope == null) {
         // ExecutionCourse executionCourse =
-        // AbstractDomainObject.fromExternalId(executionCourseId);
+        // FenixFramework.getDomainObject(executionCourseId);
         // if (executionCourse == null)
         // throw new InvalidArgumentsServiceException();
         // testScope = DomainFactory.makeTestScope(executionCourse);
@@ -157,7 +157,7 @@ public class SimulateTest {
             throws InvalidArgumentsServiceException, FenixServiceException {
         List<InfoStudentTestQuestion> infoStudentTestQuestionList = new ArrayList<InfoStudentTestQuestion>();
 
-        Test test = AbstractDomainObject.fromExternalId(testId);
+        Test test = FenixFramework.getDomainObject(testId);
         List<TestQuestion> testQuestionList = new ArrayList<TestQuestion>(test.getTestQuestions());
         Collections.sort(testQuestionList, new BeanComparator("testQuestionOrder"));
         for (int i = 0; i < testQuestionList.size(); i++) {
@@ -170,7 +170,7 @@ public class SimulateTest {
             infoStudentTestQuestion.setCorrectionFormula(testQuestionExample.getCorrectionFormula());
             infoStudentTestQuestion.setTestQuestionMark(Double.valueOf(0));
             infoStudentTestQuestion.setResponse(null);
-            Question question = AbstractDomainObject.fromExternalId(questionCodes[i]);
+            Question question = FenixFramework.getDomainObject(questionCodes[i]);
             if (question == null) {
                 throw new InvalidArgumentsServiceException();
             }

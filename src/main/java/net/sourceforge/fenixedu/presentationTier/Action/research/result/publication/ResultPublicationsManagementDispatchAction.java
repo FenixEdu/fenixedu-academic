@@ -49,7 +49,7 @@ import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.file.FileManagerException;
 
 public class ResultPublicationsManagementDispatchAction extends ResultsManagementAction {
@@ -327,10 +327,10 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
         ResearchResultPublication result;
         String resultId = request.getParameter("resultId");
         if (resultId != null) {
-            result = (ResearchResultPublication) AbstractDomainObject.fromExternalId(resultId);
+            result = (ResearchResultPublication) FenixFramework.getDomainObject(resultId);
             request.setAttribute("resultId", result.getExternalId());
         } else {
-            result = (ResearchResultPublication) AbstractDomainObject.fromExternalId((String) request.getAttribute("resultId"));
+            result = (ResearchResultPublication) FenixFramework.getDomainObject((String) request.getAttribute("resultId"));
         }
         return result;
     }
@@ -592,8 +592,8 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
 
     public ActionForward prepareSetPreferredPublications(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) {
-        ExecutionYear first = AbstractDomainObject.fromExternalId(request.getParameter("firstOID"));
-        ExecutionYear last = AbstractDomainObject.fromExternalId(request.getParameter("lastOID"));
+        ExecutionYear first = FenixFramework.getDomainObject(request.getParameter("firstOID"));
+        ExecutionYear last = FenixFramework.getDomainObject(request.getParameter("lastOID"));
 
         setRequestAttributesToList(request, getLoggedPerson(request), first, last);
         request.setAttribute("first", first);
@@ -648,7 +648,7 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
     public ActionForward addUnitToAll(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         Person person = getLoggedPerson(request);
-        Unit unit = (Unit) AbstractDomainObject.fromExternalId(request.getParameter("unitID"));
+        Unit unit = (Unit) FenixFramework.getDomainObject(request.getParameter("unitID"));
         for (ResearchResultPublication publication : getLoggedPerson(request).getResearchResultPublications()) {
             if (publication.getClass().getSimpleName().equalsIgnoreCase("unstructured") == false) {
                 ResultUnitAssociationCreationBean bean = new ResultUnitAssociationCreationBean(publication);

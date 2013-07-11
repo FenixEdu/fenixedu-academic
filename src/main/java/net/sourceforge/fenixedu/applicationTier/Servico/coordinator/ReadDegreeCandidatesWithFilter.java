@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.util.PrintAllCandidatesFilter;
 import net.sourceforge.fenixedu.util.SituationName;
 import net.sourceforge.fenixedu.util.State;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ReadDegreeCandidatesWithFilter {
 
@@ -24,7 +24,7 @@ public class ReadDegreeCandidatesWithFilter {
     public static List run(String degreeCurricularPlanId, PrintAllCandidatesFilter filterBy, String filterValue)
             throws FenixServiceException {
 
-        final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanId);
+        final DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanId);
         return createInfoMasterDegreeCandidateFromDomain(getMasterDegreeCandidates(degreeCurricularPlan, filterBy, filterValue));
     }
 

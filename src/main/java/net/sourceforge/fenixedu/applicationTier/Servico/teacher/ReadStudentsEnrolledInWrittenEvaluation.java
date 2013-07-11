@@ -24,18 +24,18 @@ import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ReadStudentsEnrolledInWrittenEvaluation {
 
     protected SiteView run(String executionCourseID, String writtenEvaluationID) throws FenixServiceException {
 
-        final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) AbstractDomainObject.fromExternalId(writtenEvaluationID);
+        final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) FenixFramework.getDomainObject(writtenEvaluationID);
         if (writtenEvaluation == null) {
             throw new FenixServiceException("error.noWrittenEvaluation");
         }
 
-        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseID);
+        final ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseID);
         final ExecutionCourseSite site = executionCourse.getSite();
         if (site == null) {
             throw new FenixServiceException("error.noSite");

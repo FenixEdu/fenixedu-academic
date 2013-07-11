@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class UnEnrollStudentFromShift {
 
@@ -23,7 +23,7 @@ public class UnEnrollStudentFromShift {
             throw new FenixServiceException("error.exception.notAuthorized.student.warningTuition");
         }
 
-        final Shift shift = AbstractDomainObject.fromExternalId(shiftId);
+        final Shift shift = FenixFramework.getDomainObject(shiftId);
         if (shift == null) {
             throw new ShiftNotFoundServiceException();
         }

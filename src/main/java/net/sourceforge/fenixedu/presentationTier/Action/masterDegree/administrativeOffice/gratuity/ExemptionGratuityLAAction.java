@@ -28,7 +28,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Fernanda Quitério Created on 31/Aug/2004
@@ -116,7 +116,7 @@ public class ExemptionGratuityLAAction extends FenixLookupDispatchAction {
         // Registration Curricular Plan
         InfoStudentCurricularPlan infoStudentCurricularPlan =
                 new InfoStudentCurricularPlan(
-                        AbstractDomainObject.<StudentCurricularPlan> fromExternalId(studentCurricularPlanID));
+                        FenixFramework.<StudentCurricularPlan> getDomainObject(studentCurricularPlanID));
         infoGratuitySituation.setInfoStudentCurricularPlan(infoStudentCurricularPlan);
 
         // Gratuity Values

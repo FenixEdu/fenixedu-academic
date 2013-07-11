@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCoordinator;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * 
@@ -25,7 +25,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ReadCoordinationTeam {
 
     protected List run(String executionDegreeId) throws FenixServiceException {
-        ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeId);
+        ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreeId);
         if (executionDegree == null) {
             throw new FenixServiceException("errors.invalid.execution.degree");
         }

@@ -27,7 +27,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Tânia Pousão
@@ -40,13 +40,13 @@ public class ReadStudentsAndMarksByEvaluation {
         InfoEvaluation infoEvaluation = new InfoEvaluation();
 
         // Execution Course
-        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseCode);
+        final ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseCode);
 
         // Site
         final ExecutionCourseSite site = executionCourse.getSite();
 
         // Evaluation
-        Evaluation evaluation = AbstractDomainObject.fromExternalId(evaluationCode);
+        Evaluation evaluation = FenixFramework.getDomainObject(evaluationCode);
 
         infoEvaluation = InfoEvaluation.newInfoFromDomain(evaluation);
 

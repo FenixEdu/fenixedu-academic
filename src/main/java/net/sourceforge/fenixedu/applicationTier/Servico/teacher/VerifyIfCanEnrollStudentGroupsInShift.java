@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author joaosa & rmalo
@@ -24,13 +24,13 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class VerifyIfCanEnrollStudentGroupsInShift {
 
     protected Boolean run(String executionCourseCode, String groupPropertiesCode, String shiftCode) throws FenixServiceException {
-        final Grouping grouping = AbstractDomainObject.fromExternalId(groupPropertiesCode);
+        final Grouping grouping = FenixFramework.getDomainObject(groupPropertiesCode);
 
         if (grouping == null) {
             throw new ExistingServiceException();
         }
 
-        final Shift shift = AbstractDomainObject.fromExternalId(shiftCode);
+        final Shift shift = FenixFramework.getDomainObject(shiftCode);
 
         if (!shift.containsType(grouping.getShiftType())) {
             return false;

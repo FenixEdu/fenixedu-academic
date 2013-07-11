@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.Sender;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ChangeStudentsShift {
 
@@ -27,8 +27,8 @@ public class ChangeStudentsShift {
     public static void run(IUserView userView, String oldShiftId, String newShiftId, final Set<Registration> registrations)
             throws FenixServiceException {
 
-        final Shift oldShift = AbstractDomainObject.fromExternalId(oldShiftId);
-        final Shift newShift = AbstractDomainObject.fromExternalId(newShiftId);
+        final Shift oldShift = FenixFramework.getDomainObject(oldShiftId);
+        final Shift newShift = FenixFramework.getDomainObject(newShiftId);
 
         if (newShift != null) {
             if (oldShift == null || !oldShift.getTypes().containsAll(newShift.getTypes())

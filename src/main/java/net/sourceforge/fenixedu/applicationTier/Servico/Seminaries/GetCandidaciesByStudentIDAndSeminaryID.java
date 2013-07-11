@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.domain.Seminaries.Seminary;
 import net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -29,8 +29,8 @@ public class GetCandidaciesByStudentIDAndSeminaryID {
     protected List run(String studentID, String seminaryID) {
         List candidaciesInfo = new LinkedList();
 
-        Registration registration = AbstractDomainObject.fromExternalId(studentID);
-        Seminary seminary = AbstractDomainObject.fromExternalId(seminaryID);
+        Registration registration = FenixFramework.getDomainObject(studentID);
+        Seminary seminary = FenixFramework.getDomainObject(seminaryID);
 
         List<SeminaryCandidacy> candidacies = SeminaryCandidacy.getByStudentAndSeminary(registration, seminary);
 

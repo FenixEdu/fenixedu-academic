@@ -19,12 +19,12 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.gesdis.CourseHistoric;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ReadCourseHistoric {
 
     protected List run(String executionCourseId) throws FenixServiceException {
-        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
+        ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseId);
         Integer semester = executionCourse.getExecutionPeriod().getSemester();
         List<CurricularCourse> curricularCourses = executionCourse.getAssociatedCurricularCourses();
         return getInfoSiteCoursesHistoric(executionCourse, curricularCourses, semester);

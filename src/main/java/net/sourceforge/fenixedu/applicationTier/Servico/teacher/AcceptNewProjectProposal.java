@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.util.ProposalState;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author joaosa & rmalo
@@ -38,12 +38,12 @@ public class AcceptNewProjectProposal {
             return Boolean.FALSE;
         }
 
-        final Grouping grouping = AbstractDomainObject.fromExternalId(groupPropertiesId);
+        final Grouping grouping = FenixFramework.getDomainObject(groupPropertiesId);
         if (grouping == null) {
             throw new NotAuthorizedException();
         }
 
-        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
+        final ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseId);
         final ExportGrouping groupPropertiesExecutionCourse = executionCourse.getExportGrouping(grouping);
 
         if (groupPropertiesExecutionCourse == null) {

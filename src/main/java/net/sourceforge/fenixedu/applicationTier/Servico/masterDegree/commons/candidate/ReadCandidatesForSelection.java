@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.CandidateSituation;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.util.SituationName;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -24,7 +24,7 @@ public class ReadCandidatesForSelection {
 
         // Read the candidates
 
-        ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeID);
+        ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreeID);
 
         List<CandidateSituation> resultTemp = executionDegree.getCandidateSituationsInSituation(situationNames);
 

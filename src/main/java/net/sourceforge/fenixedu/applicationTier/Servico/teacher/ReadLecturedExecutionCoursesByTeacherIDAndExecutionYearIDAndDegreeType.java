@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author naat
@@ -22,7 +22,7 @@ public class ReadLecturedExecutionCoursesByTeacherIDAndExecutionYearIDAndDegreeT
     public List<ExecutionCourse> run(String teacherID, String executionYearID, DegreeType degreeType)
             throws FenixServiceException {
 
-        Teacher teacher = AbstractDomainObject.fromExternalId(teacherID);
+        Teacher teacher = FenixFramework.getDomainObject(teacherID);
 
         List<ExecutionCourse> lecturedExecutionCourses;
 
@@ -30,7 +30,7 @@ public class ReadLecturedExecutionCoursesByTeacherIDAndExecutionYearIDAndDegreeT
             lecturedExecutionCourses = teacher.getAllLecturedExecutionCourses();
 
         } else {
-            ExecutionYear executionYear = AbstractDomainObject.fromExternalId(executionYearID);
+            ExecutionYear executionYear = FenixFramework.getDomainObject(executionYearID);
             lecturedExecutionCourses = teacher.getLecturedExecutionCoursesByExecutionYear(executionYear);
         }
 

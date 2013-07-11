@@ -12,7 +12,7 @@ import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class EditExecutionDegree {
 
@@ -25,17 +25,17 @@ public class EditExecutionDegree {
             Date periodExamsSpecialSeasonEnd, Date gradeSubmissionNormalSeason1EndDate, Date gradeSubmissionNormalSeason2EndDate,
             Date gradeSubmissionSpecialSeasonEndDate) throws FenixServiceException {
 
-        final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeID);
+        final ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreeID);
         if (executionDegree == null) {
             throw new FenixServiceException("error.noExecutionDegree");
         }
 
-        final ExecutionYear executionYear = AbstractDomainObject.fromExternalId(executionYearID);
+        final ExecutionYear executionYear = FenixFramework.getDomainObject(executionYearID);
         if (executionYear == null) {
             throw new FenixServiceException("error.noExecutionDegree");
         }
 
-        final Campus campus = (Campus) AbstractDomainObject.fromExternalId(campusID);
+        final Campus campus = (Campus) FenixFramework.getDomainObject(campusID);
         if (campus == null) {
             throw new FenixServiceException("error.noCampus");
         }

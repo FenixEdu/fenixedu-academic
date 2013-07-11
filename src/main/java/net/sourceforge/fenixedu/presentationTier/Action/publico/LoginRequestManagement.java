@@ -18,7 +18,7 @@ import pt.ist.fenixWebFramework.services.ServiceManager;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "publico", path = "/loginRequest", scope = "session", parameter = "method")
 @Forwards(value = { @Forward(name = "startRequestLoginProcess", path = "start-request-login-process"),
@@ -41,7 +41,7 @@ public class LoginRequestManagement extends FenixDispatchAction {
         String documentID = (String) RenderUtils.getViewState("documentID").getMetaObject().getObject();
 
         String requestID = request.getParameter("oid");
-        LoginRequest loginRequest = (LoginRequest) AbstractDomainObject.fromExternalId(requestID);
+        LoginRequest loginRequest = (LoginRequest) FenixFramework.getDomainObject(requestID);
 
         if (documentID.equalsIgnoreCase(loginRequest.getUser().getPerson().getIdDocuments().get(0).getValue())) {
             request.setAttribute("loginBean", new LoginRequestBean(loginRequest));

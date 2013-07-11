@@ -32,14 +32,14 @@ import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import org.apache.commons.beanutils.BeanComparator;
 
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ReadShiftsAndGroups {
 
     @Service
     public static ISiteComponent run(String groupingCode, String username) throws FenixServiceException {
 
-        final Grouping grouping = AbstractDomainObject.fromExternalId(groupingCode);
+        final Grouping grouping = FenixFramework.getDomainObject(groupingCode);
         if (grouping == null) {
             throw new InvalidSituationServiceException();
         }

@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDRealTeacher;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * 
@@ -19,8 +19,8 @@ public class AddTeacherToTeacherServiceDistribution {
 
     protected void run(String tsdId, final String teacherId) throws FenixServiceException {
 
-        TeacherServiceDistribution rootTSD = AbstractDomainObject.<TeacherServiceDistribution> fromExternalId(tsdId).getRootTSD();
-        Teacher teacher = AbstractDomainObject.fromExternalId(teacherId);
+        TeacherServiceDistribution rootTSD = FenixFramework.<TeacherServiceDistribution> getDomainObject(tsdId).getRootTSD();
+        Teacher teacher = FenixFramework.getDomainObject(teacherId);
 
         if (rootTSD.getTSDTeacherByTeacher(teacher) == null) {
             rootTSD.addTSDTeachers(new TSDRealTeacher(teacher));

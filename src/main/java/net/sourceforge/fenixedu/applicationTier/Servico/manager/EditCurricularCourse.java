@@ -15,7 +15,7 @@ import org.apache.commons.collections.Predicate;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author lmac1
@@ -33,7 +33,7 @@ public class EditCurricularCourse {
         String newNameEn = null;
         String newCode = null;
 
-        oldCurricularCourse = (CurricularCourse) AbstractDomainObject.fromExternalId(newInfoCurricularCourse.getExternalId());
+        oldCurricularCourse = (CurricularCourse) FenixFramework.getDomainObject(newInfoCurricularCourse.getExternalId());
 
         newName = newInfoCurricularCourse.getName();
         newNameEn = newInfoCurricularCourse.getNameEn();

@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * 
@@ -25,7 +25,7 @@ public class ReadCurricularCourseScopesByExecutionCourseID {
 
         final List<InfoCurricularCourse> infoCurricularCourses = new ArrayList<InfoCurricularCourse>();
 
-        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseID);
+        final ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseID);
 
         for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
             final Set<CurricularCourseScope> curricularCourseScopes =

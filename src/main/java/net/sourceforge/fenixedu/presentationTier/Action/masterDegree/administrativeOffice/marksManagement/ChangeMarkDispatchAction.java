@@ -41,7 +41,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Angela 30/06/2003 Modified by Fernanda Quitério
@@ -325,7 +325,7 @@ public class ChangeMarkDispatchAction extends FenixDispatchAction {
         infoEnrolmentEvaluation.setGradeAvailableDate(examDate.getTime());
 
         final InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(Teacher.readByIstId(teacherId));
-        final EnrolmentEvaluation enrolmentEvaluation = AbstractDomainObject.fromExternalId(enrolmentEvaluationCode);
+        final EnrolmentEvaluation enrolmentEvaluation = FenixFramework.getDomainObject(enrolmentEvaluationCode);
         infoEnrolmentEvaluation.setEnrolmentEvaluationType(enrolmentEvaluationType);
 
         infoEnrolmentEvaluation.setGradeValue(grade);

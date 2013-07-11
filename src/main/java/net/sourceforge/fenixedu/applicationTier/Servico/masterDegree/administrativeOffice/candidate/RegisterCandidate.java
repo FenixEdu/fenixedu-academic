@@ -39,7 +39,7 @@ import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class RegisterCandidate {
 
@@ -47,7 +47,7 @@ public class RegisterCandidate {
     @Service
     public static InfoCandidateRegistration run(String candidateID, String branchID, Integer studentNumber, IUserView userView)
             throws FenixServiceException {
-        MasterDegreeCandidate masterDegreeCandidate = AbstractDomainObject.fromExternalId(candidateID);
+        MasterDegreeCandidate masterDegreeCandidate = FenixFramework.getDomainObject(candidateID);
 
         Person person = masterDegreeCandidate.getPerson();
 
@@ -155,7 +155,7 @@ public class RegisterCandidate {
 
     private static StudentCurricularPlan createNewStudentCurricularPlan(Registration registration, String branchID,
             MasterDegreeCandidate masterDegreeCandidate) {
-        Branch branch = AbstractDomainObject.fromExternalId(branchID);
+        Branch branch = FenixFramework.getDomainObject(branchID);
         DegreeCurricularPlan degreecurricularPlan = masterDegreeCandidate.getExecutionDegree().getDegreeCurricularPlan();
 
         StudentCurricularPlan studentCurricularPlan =

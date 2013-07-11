@@ -44,7 +44,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -264,9 +264,9 @@ public class ViewInquiriesResultsForCoordinatorDA extends ViewInquiriesResultsDA
             HttpServletResponse response) throws Exception {
 
         ExecutionCourse executionCourse =
-                AbstractDomainObject.fromExternalId(getFromRequest(request, "executionCourseOID").toString());
+                FenixFramework.getDomainObject(getFromRequest(request, "executionCourseOID").toString());
         ExecutionDegree executionDegree =
-                AbstractDomainObject.fromExternalId(getFromRequest(request, "executionDegreeOID").toString());
+                FenixFramework.getDomainObject(getFromRequest(request, "executionDegreeOID").toString());
 
         CoordinatorResultsBean coordinatorInquiryBean =
                 new CoordinatorResultsBean(executionCourse, executionDegree, AccessControl.getPerson(), false);
@@ -283,12 +283,12 @@ public class ViewInquiriesResultsForCoordinatorDA extends ViewInquiriesResultsDA
             HttpServletResponse response) throws Exception {
 
         ExecutionDegree executionDegree =
-                AbstractDomainObject.fromExternalId(getFromRequest(request, "executionDegreeOID").toString());
+                FenixFramework.getDomainObject(getFromRequest(request, "executionDegreeOID").toString());
         ExecutionSemester executionSemester =
-                AbstractDomainObject.fromExternalId(getFromRequest(request, "executionPeriodOID").toString());
+                FenixFramework.getDomainObject(getFromRequest(request, "executionPeriodOID").toString());
         CoordinatorInquiryTemplate coordinatorInquiryTemplate =
                 CoordinatorInquiryTemplate.getTemplateByExecutionPeriod(executionSemester);
-        Coordinator coordinator = Coordinator.fromExternalId(getFromRequest(request, "coordinatorOID").toString());
+        Coordinator coordinator = FenixFramework.getDomainObject(getFromRequest(request, "coordinatorOID").toString());
         InquiryCoordinatorAnswer inquiryCoordinatorAnswer = null;
         if (coordinatorInquiryTemplate.getShared()) {
             inquiryCoordinatorAnswer = executionDegree.getInquiryCoordinationAnswers(executionSemester);

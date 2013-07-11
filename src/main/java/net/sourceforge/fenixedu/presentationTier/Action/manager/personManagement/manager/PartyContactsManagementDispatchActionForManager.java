@@ -27,13 +27,13 @@ public class PartyContactsManagementDispatchActionForManager extends
     @Override
     protected Party getParty(HttpServletRequest request) {
         final String personID = (String) getFromRequest(request, "personID");
-        return Party.fromExternalId(personID);
+        return FenixFramework.getDomainObject(personID);
     }
 
     public ActionForward validate(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         final String partyContactValidationExtId = (String) getFromRequest(request, "partyContactValidation");
-        final PartyContactValidation partyContactValidation = PartyContactValidation.fromExternalId(partyContactValidationExtId);
+        final PartyContactValidation partyContactValidation = FenixFramework.getDomainObject(partyContactValidationExtId);
         partyContactValidation.setState(PartyContactValidationState.VALID);
         request.setAttribute("personID", partyContactValidation.getPartyContact().getParty().getExternalId());
         return backToShowInformation(mapping, actionForm, request, response);
@@ -56,7 +56,7 @@ public class PartyContactsManagementDispatchActionForManager extends
     public ActionForward resetValidationRequests(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         final String personID = (String) getFromRequest(request, "personID");
-        Person person = Person.fromExternalId(personID);
+        Person person = FenixFramework.getDomainObject(personID);
         if (person != null) {
             person.setNumberOfValidationRequests(0);
         }

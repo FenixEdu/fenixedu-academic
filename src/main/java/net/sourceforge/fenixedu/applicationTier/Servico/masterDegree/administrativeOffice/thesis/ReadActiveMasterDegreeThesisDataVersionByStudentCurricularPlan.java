@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * 
@@ -27,7 +27,7 @@ public class ReadActiveMasterDegreeThesisDataVersionByStudentCurricularPlan {
         InfoMasterDegreeThesisDataVersion infoMasterDegreeThesisDataVersion = null;
 
         StudentCurricularPlan studentCurricularPlan =
-                AbstractDomainObject.fromExternalId(infoStudentCurricularPlan.getExternalId());
+                FenixFramework.getDomainObject(infoStudentCurricularPlan.getExternalId());
 
         MasterDegreeThesisDataVersion masterDegreeThesisDataVersion =
                 studentCurricularPlan.readActiveMasterDegreeThesisDataVersion();

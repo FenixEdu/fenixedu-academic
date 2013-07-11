@@ -31,7 +31,7 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ComparatorChain;
 
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ReadStudentsAndMarksByCurricularCourse {
 
@@ -41,7 +41,7 @@ public class ReadStudentsAndMarksByCurricularCourse {
         List infoEnrolmentEvaluations = new ArrayList();
         Date lastEvaluationDate = null;
 
-        final CurricularCourse curricularCourse = (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseCode);
+        final CurricularCourse curricularCourse = (CurricularCourse) FenixFramework.getDomainObject(curricularCourseCode);
         final List<Enrolment> enrolments =
                 (yearString != null) ? curricularCourse.getEnrolmentsByYear(yearString) : curricularCourse.getEnrolments();
 

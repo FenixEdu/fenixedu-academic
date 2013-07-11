@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * 
@@ -23,7 +23,7 @@ public class ReadDegreeCurricularPlanHistoryByDegreeCurricularPlanID {
 
         InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
 
-        DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
+        DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
 
         if (degreeCurricularPlan != null) {
             List<CurricularCourse> allCurricularCourses = degreeCurricularPlan.getCurricularCourses();

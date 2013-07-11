@@ -23,7 +23,7 @@ import org.apache.commons.beanutils.BeanComparator;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author asnr and scpo
@@ -40,7 +40,7 @@ public class ReadStudentGroupInformation {
         Grouping grouping = null;
         List groupAttendsList = null;
 
-        studentGroup = AbstractDomainObject.fromExternalId(studentGroupCode);
+        studentGroup = FenixFramework.getDomainObject(studentGroupCode);
 
         if (studentGroup == null) {
             return null;

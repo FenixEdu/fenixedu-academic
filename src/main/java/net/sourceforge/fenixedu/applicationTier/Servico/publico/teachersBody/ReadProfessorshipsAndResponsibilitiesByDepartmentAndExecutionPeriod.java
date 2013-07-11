@@ -22,7 +22,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ReadProfessorshipsAndResponsibilitiesByDepartmentAndExecutionPeriod {
 
@@ -32,7 +32,7 @@ public class ReadProfessorshipsAndResponsibilitiesByDepartmentAndExecutionPeriod
 
         ExecutionYear executionYear = null;
         if (executionYearID != null) {
-            executionYear = AbstractDomainObject.fromExternalId(executionYearID);
+            executionYear = FenixFramework.getDomainObject(executionYearID);
         }
 
         final ExecutionSemester executionSemester = executionYear.getExecutionSemesterFor(semester);
@@ -40,7 +40,7 @@ public class ReadProfessorshipsAndResponsibilitiesByDepartmentAndExecutionPeriod
             throw new FenixServiceException("error.noExecutionPeriod");
         }
 
-        final Department department = AbstractDomainObject.fromExternalId(departmentId);
+        final Department department = FenixFramework.getDomainObject(departmentId);
         if (department == null) {
             throw new FenixServiceException("error.noDepartment");
         }

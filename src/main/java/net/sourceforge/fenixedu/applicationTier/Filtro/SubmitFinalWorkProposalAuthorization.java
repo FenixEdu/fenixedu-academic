@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class SubmitFinalWorkProposalAuthorization {
 
@@ -24,13 +24,13 @@ public class SubmitFinalWorkProposalAuthorization {
         final IUserView userView = AccessControl.getUserView();
         final InfoProposalEditor infoProposalEditor = infoProposal;
         if (infoProposalEditor.getExternalId() != null) {
-            final Proposal proposal = AbstractDomainObject.fromExternalId(infoProposalEditor.getExternalId());
+            final Proposal proposal = FenixFramework.getDomainObject(infoProposalEditor.getExternalId());
             if (!authorized(userView.getPerson(), proposal)) {
                 throw new NotAuthorizedException();
             }
         } else {
             final String executionDegreeId = infoProposalEditor.getExecutionDegree().getExternalId();
-            final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeId);
+            final ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreeId);
             final Scheduleing scheduleing = executionDegree.getScheduling();
             if (!authorized(userView.getPerson(), scheduleing)) {
                 throw new NotAuthorizedException();

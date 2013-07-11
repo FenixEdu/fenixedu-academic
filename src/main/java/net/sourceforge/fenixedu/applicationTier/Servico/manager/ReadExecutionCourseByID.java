@@ -8,12 +8,12 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ReadExecutionCourseByID {
 
     protected InfoExecutionCourse run(String externalId) throws FenixServiceException {
-        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(externalId);
+        ExecutionCourse executionCourse = FenixFramework.getDomainObject(externalId);
         if (executionCourse == null) {
             throw new NonExistingServiceException();
         }

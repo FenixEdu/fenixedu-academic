@@ -57,7 +57,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
@@ -433,7 +433,7 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 
         InfoMasterDegreeCandidate infoMasterDegreeCandidateChanged = null;
         try {
-            final MasterDegreeCandidate masterDegreeCandidate = AbstractDomainObject.fromExternalId(candidateID);
+            final MasterDegreeCandidate masterDegreeCandidate = FenixFramework.getDomainObject(candidateID);
 
             infoMasterDegreeCandidateChanged = EditMasterDegreeCandidate.run(masterDegreeCandidate, newCandidate, infoPerson);
         } catch (ExistingServiceException e) {
@@ -463,7 +463,7 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
         String pass = null;
         try {
             final Person person =
-                    (Person) AbstractDomainObject.fromExternalId(infoMasterDegreeCandidate.getInfoPerson().getExternalId());
+                    (Person) FenixFramework.getDomainObject(infoMasterDegreeCandidate.getInfoPerson().getExternalId());
             pass = GenerateNewPasswordService.run(person);
         } catch (FenixServiceException e) {
             throw new FenixActionException();

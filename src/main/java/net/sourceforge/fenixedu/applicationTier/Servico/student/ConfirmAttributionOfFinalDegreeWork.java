@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Luis Cruz
@@ -25,7 +25,7 @@ public class ConfirmAttributionOfFinalDegreeWork {
     @Checked("RolePredicates.STUDENT_PREDICATE")
     @Service
     public static Boolean run(String username, String selectedGroupProposalOID) throws FenixServiceException {
-        GroupProposal groupProposal = AbstractDomainObject.fromExternalId(selectedGroupProposalOID);
+        GroupProposal groupProposal = FenixFramework.getDomainObject(selectedGroupProposalOID);
 
         if (groupProposal != null) {
             FinalDegreeWorkGroup groupAttributed = groupProposal.getFinalDegreeWorkProposal().getGroupAttributedByTeacher();

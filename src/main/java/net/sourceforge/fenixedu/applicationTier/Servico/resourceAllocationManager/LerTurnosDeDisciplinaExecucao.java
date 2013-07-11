@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Shift;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class LerTurnosDeDisciplinaExecucao {
 
@@ -25,7 +25,7 @@ public class LerTurnosDeDisciplinaExecucao {
 
         List<InfoShift> infoShifts = new ArrayList<InfoShift>();
 
-        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(infoExecutionCourse.getExternalId());
+        ExecutionCourse executionCourse = FenixFramework.getDomainObject(infoExecutionCourse.getExternalId());
         Iterator<Shift> itShiftList = executionCourse.getAssociatedShifts().iterator();
 
         while (itShiftList.hasNext()) {

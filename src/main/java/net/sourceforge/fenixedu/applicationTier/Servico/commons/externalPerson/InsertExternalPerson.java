@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class InsertExternalPerson {
 
@@ -46,7 +46,7 @@ public class InsertExternalPerson {
             throw new ExistingServiceException("error.exception.commons.ExternalContract.existingExternalContract");
         }
 
-        final Unit institutionLocation = (Unit) AbstractDomainObject.fromExternalId(institutionID);
+        final Unit institutionLocation = (Unit) FenixFramework.getDomainObject(institutionID);
         Person externalPerson =
                 Person.createExternalPerson(name, Gender.valueOf(sex), new PhysicalAddressData().setAddress(address), phone,
                         mobile, homepage, email, String.valueOf(System.currentTimeMillis()), IDDocumentType.EXTERNAL);

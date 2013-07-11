@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class EditOldCurricularCourse {
 
@@ -17,7 +17,7 @@ public class EditOldCurricularCourse {
             final Double credits, final Double ectsCredits, final Double theoreticalHours, final Double labHours,
             final Double praticalHours, final Double theoPratHours, final GradeScale gradeScale) throws FenixServiceException {
 
-        final CurricularCourse curricularCourse = (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseId);
+        final CurricularCourse curricularCourse = (CurricularCourse) FenixFramework.getDomainObject(curricularCourseId);
         if (curricularCourse == null) {
             throw new FenixServiceException("error.createOldCurricularCourse.no.courseGroup");
         }

@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author asnr and scpo
@@ -41,13 +41,13 @@ public class ReadGroupingShifts {
         boolean result = false;
 
         StudentGroup studentGroup = null;
-        grouping = AbstractDomainObject.fromExternalId(groupingCode);
+        grouping = FenixFramework.getDomainObject(groupingCode);
         if (grouping == null) {
             throw new ExistingServiceException();
         }
         if (studentGroupCode != null) {
 
-            studentGroup = AbstractDomainObject.fromExternalId(studentGroupCode);
+            studentGroup = FenixFramework.getDomainObject(studentGroupCode);
 
             if (studentGroup == null) {
                 throw new InvalidSituationServiceException();

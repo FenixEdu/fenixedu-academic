@@ -378,7 +378,7 @@ public class ExecutionCourseManagementDispatchAction extends FenixDispatchAction
         }
 
         for (String externalId : curricularCourseIds) {
-            result.add((CurricularCourse) CurricularCourse.fromExternalId(externalId));
+            result.add((CurricularCourse) FenixFramework.getDomainObject(externalId));
         }
 
         return result;
@@ -394,7 +394,7 @@ public class ExecutionCourseManagementDispatchAction extends FenixDispatchAction
         }
 
         for (String externalId : shiftsIds) {
-            result.add((Shift) Shift.fromExternalId(externalId));
+            result.add((Shift) FenixFramework.getDomainObject(externalId));
         }
 
         return result;

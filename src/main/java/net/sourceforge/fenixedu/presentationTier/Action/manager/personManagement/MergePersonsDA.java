@@ -83,8 +83,8 @@ public class MergePersonsDA extends FenixDispatchAction {
         }
 
         request.setAttribute("mergePersonsBean", mergePersonsBean);
-        Person domainObject1 = RootDomainObject.fromExternalId(mergePersonsBean.getLeftOid());
-        Person domainObject2 = RootDomainObject.fromExternalId(mergePersonsBean.getRightOid());
+        Person domainObject1 = FenixFramework.getDomainObject(mergePersonsBean.getLeftOid());
+        Person domainObject2 = FenixFramework.getDomainObject(mergePersonsBean.getRightOid());
 
         if (Student.class.getName().equals(mergePersonsBean.getCurrentClass())) {
             return chooseObjects(mapping, form, request, response, domainObject1.getStudent().getExternalId(), domainObject2
@@ -99,8 +99,8 @@ public class MergePersonsDA extends FenixDispatchAction {
             HttpServletResponse response, String leftOid, String rightOid, String currentClass) throws FenixServiceException,
             IllegalAccessException, NoSuchMethodException, ClassNotFoundException {
 
-        DomainObject domainObject1 = RootDomainObject.fromExternalId(leftOid);
-        DomainObject domainObject2 = RootDomainObject.fromExternalId(rightOid);
+        DomainObject domainObject1 = FenixFramework.getDomainObject(leftOid);
+        DomainObject domainObject2 = FenixFramework.getDomainObject(rightOid);
 
         if (domainObject1 == null || domainObject2 == null) {
             request.setAttribute("mergePersonsBean", new MergePersonsBean());
@@ -238,8 +238,8 @@ public class MergePersonsDA extends FenixDispatchAction {
             NoSuchMethodException, ClassNotFoundException {
         MergePersonsBean mergePersonsBean = getMergePersonsBean(request);
         request.setAttribute("mergePersonsBean", mergePersonsBean);
-        Person domainObject1 = RootDomainObject.fromExternalId(mergePersonsBean.getLeftOid());
-        Person domainObject2 = RootDomainObject.fromExternalId(mergePersonsBean.getRightOid());
+        Person domainObject1 = FenixFramework.getDomainObject(mergePersonsBean.getLeftOid());
+        Person domainObject2 = FenixFramework.getDomainObject(mergePersonsBean.getRightOid());
 
         if (Student.class.getName().equals(mergePersonsBean.getCurrentClass())) {
             mergeProperty(mapping, form, request, response, domainObject1.getStudent().getExternalId(), domainObject2
@@ -262,8 +262,8 @@ public class MergePersonsDA extends FenixDispatchAction {
 
         IUserView userView = UserView.getUser();
 
-        DomainObject domainObject1 = RootDomainObject.fromExternalId(leftOid);
-        DomainObject domainObject2 = RootDomainObject.fromExternalId(rightOid);
+        DomainObject domainObject1 = FenixFramework.getDomainObject(leftOid);
+        DomainObject domainObject2 = FenixFramework.getDomainObject(rightOid);
 
         Integer sourceOrder = Integer.valueOf(request.getParameter("source"));
         String slotName = request.getParameter("slotName");
@@ -278,8 +278,8 @@ public class MergePersonsDA extends FenixDispatchAction {
             ClassNotFoundException {
         MergePersonsBean mergePersonsBean = getMergePersonsBean(request);
         request.setAttribute("mergePersonsBean", mergePersonsBean);
-        Person domainObject1 = RootDomainObject.fromExternalId(mergePersonsBean.getLeftOid());
-        Person domainObject2 = RootDomainObject.fromExternalId(mergePersonsBean.getRightOid());
+        Person domainObject1 = FenixFramework.getDomainObject(mergePersonsBean.getLeftOid());
+        Person domainObject2 = FenixFramework.getDomainObject(mergePersonsBean.getRightOid());
 
         if (domainObject1.getStudent() == null || domainObject2.getStudent() == null) {
             return mapping.findForward("only-one-person-with-student-object");
@@ -296,8 +296,8 @@ public class MergePersonsDA extends FenixDispatchAction {
             ClassNotFoundException {
         MergePersonsBean mergePersonsBean = getMergePersonsBean(request);
         request.setAttribute("mergePersonsBean", mergePersonsBean);
-        Person domainObject1 = RootDomainObject.fromExternalId(mergePersonsBean.getLeftOid());
-        Person domainObject2 = RootDomainObject.fromExternalId(mergePersonsBean.getRightOid());
+        Person domainObject1 = FenixFramework.getDomainObject(mergePersonsBean.getLeftOid());
+        Person domainObject2 = FenixFramework.getDomainObject(mergePersonsBean.getRightOid());
 
         if (domainObject1.getStudent() == null || domainObject2.getStudent() == null) {
             return mapping.findForward("only-one-person-with-student-object");
@@ -315,8 +315,8 @@ public class MergePersonsDA extends FenixDispatchAction {
             HttpServletResponse response) {
         MergePersonsBean mergePersonsBean = getMergePersonsBean(request);
         request.setAttribute("mergePersonsBean", mergePersonsBean);
-        Person domainObject1 = RootDomainObject.fromExternalId(mergePersonsBean.getLeftOid());
-        Person domainObject2 = RootDomainObject.fromExternalId(mergePersonsBean.getRightOid());
+        Person domainObject1 = FenixFramework.getDomainObject(mergePersonsBean.getLeftOid());
+        Person domainObject2 = FenixFramework.getDomainObject(mergePersonsBean.getRightOid());
 
         request.setAttribute("studentToDelete", domainObject2.getStudent());
 
@@ -327,8 +327,8 @@ public class MergePersonsDA extends FenixDispatchAction {
             HttpServletResponse response) throws FenixServiceException {
         MergePersonsBean mergePersonsBean = getMergePersonsBean(request);
         request.setAttribute("mergePersonsBean", mergePersonsBean);
-        Person domainObject1 = RootDomainObject.fromExternalId(mergePersonsBean.getLeftOid());
-        Person domainObject2 = RootDomainObject.fromExternalId(mergePersonsBean.getRightOid());
+        Person domainObject1 = FenixFramework.getDomainObject(mergePersonsBean.getLeftOid());
+        Person domainObject2 = FenixFramework.getDomainObject(mergePersonsBean.getRightOid());
 
         Student studentToRemove = domainObject2.getStudent();
 
@@ -345,7 +345,7 @@ public class MergePersonsDA extends FenixDispatchAction {
         MergePersonsBean mergePersonsBean = getMergePersonsBean(request);
         request.setAttribute("mergePersonsBean", mergePersonsBean);
 
-        Person domainObject2 = RootDomainObject.fromExternalId(mergePersonsBean.getRightOid());
+        Person domainObject2 = FenixFramework.getDomainObject(mergePersonsBean.getRightOid());
 
         request.setAttribute("person", domainObject2);
 
@@ -356,8 +356,8 @@ public class MergePersonsDA extends FenixDispatchAction {
             HttpServletResponse response) throws FenixServiceException {
         MergePersonsBean mergePersonsBean = getMergePersonsBean(request);
         request.setAttribute("mergePersonsBean", mergePersonsBean);
-        Person domainObject1 = RootDomainObject.fromExternalId(mergePersonsBean.getLeftOid());
-        Person domainObject2 = RootDomainObject.fromExternalId(mergePersonsBean.getRightOid());
+        Person domainObject1 = FenixFramework.getDomainObject(mergePersonsBean.getLeftOid());
+        Person domainObject2 = FenixFramework.getDomainObject(mergePersonsBean.getRightOid());
 
         domainObject2.mergeAndDelete(domainObject1);
 
@@ -371,8 +371,8 @@ public class MergePersonsDA extends FenixDispatchAction {
             ClassNotFoundException {
         MergePersonsBean mergePersonsBean = getMergePersonsBean(request);
         request.setAttribute("mergePersonsBean", mergePersonsBean);
-        Person domainObject1 = RootDomainObject.fromExternalId(mergePersonsBean.getLeftOid());
-        Person domainObject2 = RootDomainObject.fromExternalId(mergePersonsBean.getRightOid());
+        Person domainObject1 = FenixFramework.getDomainObject(mergePersonsBean.getLeftOid());
+        Person domainObject2 = FenixFramework.getDomainObject(mergePersonsBean.getRightOid());
 
         Student studentDestiny = domainObject1.getStudent();
         Student studentToRemove = domainObject2.getStudent();
@@ -388,8 +388,8 @@ public class MergePersonsDA extends FenixDispatchAction {
             ClassNotFoundException {
         MergePersonsBean mergePersonsBean = getMergePersonsBean(request);
         request.setAttribute("mergePersonsBean", mergePersonsBean);
-        Person domainObject1 = RootDomainObject.fromExternalId(mergePersonsBean.getLeftOid());
-        Person domainObject2 = RootDomainObject.fromExternalId(mergePersonsBean.getRightOid());
+        Person domainObject1 = FenixFramework.getDomainObject(mergePersonsBean.getLeftOid());
+        Person domainObject2 = FenixFramework.getDomainObject(mergePersonsBean.getRightOid());
 
         chooseObjects(mapping, form, request, response, mergePersonsBean.getLeftOid(), mergePersonsBean.getRightOid(),
                 Person.class.getName());
@@ -402,8 +402,8 @@ public class MergePersonsDA extends FenixDispatchAction {
             ClassNotFoundException {
         MergePersonsBean mergePersonsBean = getMergePersonsBean(request);
         request.setAttribute("mergePersonsBean", mergePersonsBean);
-        Person destinyPerson = RootDomainObject.fromExternalId(mergePersonsBean.getLeftOid());
-        Person sourcePerson = RootDomainObject.fromExternalId(mergePersonsBean.getRightOid());
+        Person destinyPerson = FenixFramework.getDomainObject(mergePersonsBean.getLeftOid());
+        Person sourcePerson = FenixFramework.getDomainObject(mergePersonsBean.getRightOid());
 
         destinyPerson.transferEventsAndAccounts(sourcePerson);
 
@@ -414,7 +414,7 @@ public class MergePersonsDA extends FenixDispatchAction {
             HttpServletResponse response) {
         MergePersonsBean mergePersonsBean = getMergePersonsBean(request);
         request.setAttribute("mergePersonsBean", mergePersonsBean);
-        Person sourcePerson = RootDomainObject.fromExternalId(mergePersonsBean.getRightOid());
+        Person sourcePerson = FenixFramework.getDomainObject(mergePersonsBean.getRightOid());
 
         MergePersonsOperations.removeFromPersistentGroups(sourcePerson);
 
@@ -426,7 +426,7 @@ public class MergePersonsDA extends FenixDispatchAction {
 
         MergePersonsBean mergePersonsBean = getMergePersonsBean(request);
         request.setAttribute("mergePersonsBean", mergePersonsBean);
-        Person sourcePerson = RootDomainObject.fromExternalId(mergePersonsBean.getRightOid());
+        Person sourcePerson = FenixFramework.getDomainObject(mergePersonsBean.getRightOid());
 
         MergePersonsOperations.removeFromUploadUnits(sourcePerson);
 

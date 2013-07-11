@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * 
@@ -21,7 +21,7 @@ public class ReadCurricularCoursesByDegreeCurricularPlan {
 
     @Service
     public static List run(final String idDegreeCurricularPlan) throws FenixServiceException {
-        final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(idDegreeCurricularPlan);
+        final DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(idDegreeCurricularPlan);
 
         final List<CurricularCourse> curricularCourses = degreeCurricularPlan.getCurricularCourses();
         final List<InfoCurricularCourse> infoCurricularCourses = new ArrayList<InfoCurricularCourse>(curricularCourses.size());

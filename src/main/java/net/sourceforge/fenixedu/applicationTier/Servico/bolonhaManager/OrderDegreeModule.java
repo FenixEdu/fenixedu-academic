@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class OrderDegreeModule {
 
@@ -13,7 +13,7 @@ public class OrderDegreeModule {
             throw new FenixServiceException();
         }
 
-        final Context context = AbstractDomainObject.fromExternalId(contextID);
+        final Context context = FenixFramework.getDomainObject(contextID);
         if (context == null) {
             throw new FenixServiceException("error.noContext");
         }

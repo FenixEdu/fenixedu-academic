@@ -14,7 +14,7 @@ import org.apache.commons.collections.Predicate;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class InsertCurricularCourseAtDegreeCurricularPlan {
 
@@ -23,7 +23,7 @@ public class InsertCurricularCourseAtDegreeCurricularPlan {
     public static void run(InfoCurricularCourseEditor infoCurricularCourse) throws FenixServiceException {
 
         String degreeCurricularPlanId = infoCurricularCourse.getInfoDegreeCurricularPlan().getExternalId();
-        DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanId);
+        DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanId);
         if (degreeCurricularPlan == null) {
             throw new NonExistingServiceException();
         }

@@ -50,7 +50,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
@@ -206,7 +206,7 @@ public class AlumniInformationAction extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         String recipientOID = (String) getFromRequest(request, "recipientOID");
-        Recipient recipient = AbstractDomainObject.fromExternalId(recipientOID);
+        Recipient recipient = FenixFramework.getDomainObject(recipientOID);
         String fileName = recipient.getToName().replace(" ", "_");
         final Spreadsheet groupSheet;
 

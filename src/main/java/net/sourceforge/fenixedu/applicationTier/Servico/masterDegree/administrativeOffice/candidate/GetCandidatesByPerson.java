@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.util.State;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class GetCandidatesByPerson {
 
@@ -22,7 +22,7 @@ public class GetCandidatesByPerson {
     @Service
     public static List<InfoMasterDegreeCandidate> run(String personID) throws FenixServiceException {
 
-        final Person person = (Person) AbstractDomainObject.fromExternalId(personID);
+        final Person person = (Person) FenixFramework.getDomainObject(personID);
         final State activeCandidateSituationState = new State(State.ACTIVE);
 
         final List<InfoMasterDegreeCandidate> result = new ArrayList<InfoMasterDegreeCandidate>();

@@ -7,7 +7,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <html:html xhtml="true"/>
 
-<%@page import="pt.ist.fenixframework.pstm.AbstractDomainObject"%>
+<%@page import="pt.ist.fenixframework.FenixFramework"%>
 <%@page import="pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter"%>
 <%@page import="net.sourceforge.fenixedu.injectionCode.AccessControl" %>
 <%@page import="net.sourceforge.fenixedu.domain.Person" %>
@@ -16,7 +16,7 @@
 	Load Testing
 </h2>
 
-<% Degree degree = (Degree) AbstractDomainObject.fromExternalId((String)request.getAttribute("degreeOID")); %>
+<% Degree degree = (Degree) FenixFramework.getDomainObject((String)request.getAttribute("degreeOID")); %>
 
 <%= RequestRewriter.HAS_CONTEXT_PREFIX %><a id="viewRandom" href="<%= request.getContextPath()
 							+ "/publico/degreeSite/showDegreeCurricularPlanBolonha.faces?degreeID=" + request.getAttribute("degreeID")

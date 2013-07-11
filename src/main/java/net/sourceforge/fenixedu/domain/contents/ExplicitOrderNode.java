@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ExplicitOrderNode extends ExplicitOrderNode_Base {
 

@@ -45,7 +45,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author lmac1
@@ -192,7 +192,7 @@ public class ManageBranchesDA extends FenixDispatchAction {
         if (degreeCurricularPlanIdString != null) {
             degreeCurricularPlanId = request.getParameter("degreeCurricularPlanId");
         }
-        final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanId);
+        final DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanId);
 
         DynaActionForm insertForm = (DynaActionForm) form;
         String name = (String) insertForm.get("name");

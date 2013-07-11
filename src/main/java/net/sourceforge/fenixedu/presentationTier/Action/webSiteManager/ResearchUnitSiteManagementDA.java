@@ -24,7 +24,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "webSiteManager", path = "/manageResearchUnitSite", scope = "session", parameter = "method")
 @Forwards(value = { @Forward(name = "confirmDeleteFunction", path = "researchSite-confirmDeleteFunction"),
@@ -174,7 +174,7 @@ public class ResearchUnitSiteManagementDA extends CustomUnitSiteManagementDA {
         String contractID = request.getParameter("cid");
 
         if (contractID != null) {
-            ResearchContract contract = AbstractDomainObject.fromExternalId(contractID);
+            ResearchContract contract = FenixFramework.getDomainObject(contractID);
             request.setAttribute("contract", contract);
             return mapping.findForward("editContract");
         }

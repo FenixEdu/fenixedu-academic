@@ -17,7 +17,7 @@ import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class CreateExecutionDegreesForExecutionYear {
 
@@ -33,7 +33,7 @@ public class CreateExecutionDegreesForExecutionYear {
             final Calendar examsSpecialSeasonEndDate, final Calendar gradeSubmissionNormalSeason1EndDate,
             final Calendar gradeSubmissionNormalSeason2EndDate, final Calendar gradeSubmissionSpecialSeasonEndDate) {
 
-        final ExecutionYear executionYear = AbstractDomainObject.fromExternalId(executionYearID);
+        final ExecutionYear executionYear = FenixFramework.getDomainObject(executionYearID);
         final Campus campus = readCampusByName(campusName);
 
         final OccupationPeriod lessonSeason1 = getOccupationPeriod(lessonSeason1BeginDate, lessonSeason1EndDate);
@@ -60,7 +60,7 @@ public class CreateExecutionDegreesForExecutionYear {
 
         final List<DegreeCurricularPlan> created = new ArrayList<DegreeCurricularPlan>();
         for (final String degreeCurricularPlanID : allDegreeCurricularPlanIDs) {
-            final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
+            final DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
             if (degreeCurricularPlan == null) {
                 continue;
             }

@@ -47,7 +47,7 @@ import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
@@ -838,14 +838,14 @@ public class SummariesManagementDA extends FenixDispatchAction {
         final String executionCourseIDString =
                 request.getParameterMap().containsKey("executionCourseID") ? request.getParameter("executionCourseID") : (String) request
                         .getAttribute("executionCourseID");
-        return AbstractDomainObject.fromExternalId(executionCourseIDString);
+        return FenixFramework.getDomainObject(executionCourseIDString);
     }
 
     private Summary getSummaryFromParameter(final HttpServletRequest request) {
         final String summaryIDString =
                 request.getParameterMap().containsKey("summaryID") ? request.getParameter("summaryID") : (String) request
                         .getAttribute("summaryID");
-        return AbstractDomainObject.fromExternalId(summaryIDString);
+        return FenixFramework.getDomainObject(summaryIDString);
     }
 
     private NextPossibleSummaryLessonsAndDatesBean getNextSummaryDateBeanFromParameter(final HttpServletRequest request) {
@@ -862,7 +862,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
                         .getAttribute("teacher");
         if (!StringUtils.isEmpty(professorshipIDString)
                 && !(professorshipIDString.equals("0") || professorshipIDString.equals("-1"))) {
-            return AbstractDomainObject.fromExternalId(professorshipIDString);
+            return FenixFramework.getDomainObject(professorshipIDString);
         }
         return null;
     }

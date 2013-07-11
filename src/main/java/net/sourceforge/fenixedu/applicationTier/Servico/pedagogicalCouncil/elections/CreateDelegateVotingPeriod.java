@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Student;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class CreateDelegateVotingPeriod {
 
@@ -35,7 +35,7 @@ public class CreateDelegateVotingPeriod {
     @Service
     public static void run(ElectionPeriodBean bean, String degreeOID) throws FenixServiceException {
         final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
-        final Degree degree = AbstractDomainObject.fromExternalId(degreeOID);
+        final Degree degree = FenixFramework.getDomainObject(degreeOID);
 
         DelegateElection election =
                 degree.getYearDelegateElectionWithLastCandidacyPeriod(executionYear, bean.getCurricularYear());

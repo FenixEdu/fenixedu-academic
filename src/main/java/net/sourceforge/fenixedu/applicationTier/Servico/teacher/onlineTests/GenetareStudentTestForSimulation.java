@@ -25,7 +25,7 @@ import net.sourceforge.fenixedu.util.tests.TestType;
 import org.apache.commons.beanutils.BeanComparator;
 
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class GenetareStudentTestForSimulation {
     protected List run(String executionCourseId, String testId, String path, TestType testType,
@@ -33,12 +33,12 @@ public class GenetareStudentTestForSimulation {
             throws FenixServiceException {
         List<InfoStudentTestQuestion> infoStudentTestQuestionList = new ArrayList<InfoStudentTestQuestion>();
         path = path.replace('\\', '/');
-        final Test test = AbstractDomainObject.fromExternalId(testId);
+        final Test test = FenixFramework.getDomainObject(testId);
         if (test == null) {
             throw new InvalidArgumentsServiceException();
         }
 
-        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
+        final ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseId);
         if (executionCourse == null) {
             throw new InvalidArgumentsServiceException();
         }

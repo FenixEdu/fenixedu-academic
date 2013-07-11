@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.domain.ExportGrouping;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.util.ProposalState;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author joaosa & rmalo
@@ -24,7 +24,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ExecutionCourseWaitingAnswer {
 
     protected Boolean run(String executionCourseID) throws FenixServiceException {
-        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseID);
+        final ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseID);
         if (executionCourse == null) {
             throw new InvalidArgumentsServiceException();
         }

@@ -25,7 +25,7 @@ import org.apache.struts.util.MessageResources;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author asnr and scpo
@@ -41,7 +41,7 @@ public class GroupStudentEnrolment {
 
         ServiceMonitoring.logService(GroupStudentEnrolment.class, studentGroupCode, username);
 
-        final StudentGroup studentGroup = AbstractDomainObject.fromExternalId(studentGroupCode);
+        final StudentGroup studentGroup = FenixFramework.getDomainObject(studentGroupCode);
         if (studentGroup == null) {
             throw new InvalidArgumentsServiceException();
         }

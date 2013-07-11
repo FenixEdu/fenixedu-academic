@@ -25,7 +25,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "researcher", path = "/interests/interestsManagement", scope = "session", parameter = "method")
 @Forwards(value = {
@@ -100,7 +100,7 @@ public class InterestsManagementDispatchAction extends FenixDispatchAction {
     public ActionForward prepareEditInterest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 
-        ResearchInterest researchInterest = AbstractDomainObject.fromExternalId(request.getParameter("oid"));
+        ResearchInterest researchInterest = FenixFramework.getDomainObject(request.getParameter("oid"));
 
         request.setAttribute("interest", researchInterest);
 
@@ -111,7 +111,7 @@ public class InterestsManagementDispatchAction extends FenixDispatchAction {
         IUserView userView = getUserView(request);
         Person person = userView.getPerson();
 
-        ResearchInterest interest = AbstractDomainObject.fromExternalId(request.getParameter("oid"));
+        ResearchInterest interest = FenixFramework.getDomainObject(request.getParameter("oid"));
         List<ResearchInterest> orderedInterests = getOrderedInterests(request);
 
         int index = orderedInterests.indexOf(interest);

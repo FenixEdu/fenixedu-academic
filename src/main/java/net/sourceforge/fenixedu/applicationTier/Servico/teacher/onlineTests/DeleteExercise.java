@@ -17,12 +17,12 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import org.apache.commons.beanutils.BeanComparator;
 
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class DeleteExercise {
 
     protected void run(String executionCourseId, String metadataId) throws InvalidArgumentsServiceException, ExcepcaoPersistencia {
-        Metadata metadata = AbstractDomainObject.fromExternalId(metadataId);
+        Metadata metadata = FenixFramework.getDomainObject(metadataId);
         if (metadata == null) {
             throw new InvalidArgumentsServiceException();
         }

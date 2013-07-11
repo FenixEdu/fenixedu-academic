@@ -20,7 +20,7 @@ import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.ist.fenixframework.pstm.Transaction;
 
 public class InquiryResult extends InquiryResult_Base {
@@ -223,7 +223,7 @@ public class InquiryResult extends InquiryResult_Base {
 
     private static void setExecutionSemester(String[] columns, InquiryResult inquiryResult) {
         String executionPeriodOID = columns[3];
-        ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodOID);
+        ExecutionSemester executionSemester = FenixFramework.getDomainObject(executionPeriodOID);
         if (executionSemester == null) {
             throw new DomainException("executionPeriod: " + getPrintableColumns(columns));
         }
@@ -241,13 +241,11 @@ public class InquiryResult extends InquiryResult_Base {
         String professorshipOID = columns[8];
         String shiftTypeString = columns[9];
         ExecutionCourse executionCourse =
-                !StringUtils.isEmpty(executionCourseOID) ? (ExecutionCourse) AbstractDomainObject
-                        .fromExternalId(executionCourseOID) : null;
+                !StringUtils.isEmpty(executionCourseOID) ? (ExecutionCourse) FenixFramework.getDomainObject(executionCourseOID) : null;
         ExecutionDegree executionDegree =
-                !StringUtils.isEmpty(executionDegreeOID) ? (ExecutionDegree) AbstractDomainObject
-                        .fromExternalId(executionDegreeOID) : null;
+                !StringUtils.isEmpty(executionDegreeOID) ? (ExecutionDegree) FenixFramework.getDomainObject(executionDegreeOID) : null;
         Professorship professorship =
-                !StringUtils.isEmpty(professorshipOID) ? (Professorship) AbstractDomainObject.fromExternalId(professorshipOID) : null;
+                !StringUtils.isEmpty(professorshipOID) ? (Professorship) FenixFramework.getDomainObject(professorshipOID) : null;
         ShiftType shiftType = !StringUtils.isEmpty(shiftTypeString) ? ShiftType.valueOf(shiftTypeString) : null;
         inquiryResult.setExecutionCourse(executionCourse);
         inquiryResult.setExecutionDegree(executionDegree);
@@ -256,7 +254,7 @@ public class InquiryResult extends InquiryResult_Base {
 
         if (!(StringUtils.isEmpty(inquiryQuestionOID) && ResultClassification.GREY
                 .equals(inquiryResult.getResultClassification()))) {
-            InquiryQuestion inquiryQuestion = AbstractDomainObject.fromExternalId(inquiryQuestionOID);
+            InquiryQuestion inquiryQuestion = FenixFramework.getDomainObject(inquiryQuestionOID);
             if (inquiryQuestion == null) {
                 throw new DomainException("não tem question: " + getPrintableColumns(columns));
             }
@@ -330,8 +328,7 @@ public class InquiryResult extends InquiryResult_Base {
             //se vier com valor + classificação dá erro
             String executionDegreeOID = row[0];
             ExecutionDegree executionDegree =
-                    !StringUtils.isEmpty(executionDegreeOID) ? (ExecutionDegree) AbstractDomainObject
-                            .fromExternalId(executionDegreeOID) : null;
+                    !StringUtils.isEmpty(executionDegreeOID) ? (ExecutionDegree) FenixFramework.getDomainObject(executionDegreeOID) : null;
             setExecutionDegree(executionDegree);
 
             String resultTypeString = row[1];
@@ -345,12 +342,11 @@ public class InquiryResult extends InquiryResult_Base {
 
             String executionCourseOID = row[2];
             ExecutionCourse executionCourse =
-                    !StringUtils.isEmpty(executionCourseOID) ? (ExecutionCourse) AbstractDomainObject
-                            .fromExternalId(executionCourseOID) : null;
+                    !StringUtils.isEmpty(executionCourseOID) ? (ExecutionCourse) FenixFramework.getDomainObject(executionCourseOID) : null;
             setExecutionCourse(executionCourse);
 
             String executionPeriodOID = row[3];
-            ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodOID);
+            ExecutionSemester executionSemester = FenixFramework.getDomainObject(executionPeriodOID);
             if (executionSemester == null) {
                 throw new DomainException("executionPeriod resultType doesn't exists: " + getPrintableColumns(row));
             }
@@ -372,7 +368,7 @@ public class InquiryResult extends InquiryResult_Base {
 
             String inquiryQuestionOID = row[7];//TODO ver melhor
             if (!(StringUtils.isEmpty(inquiryQuestionOID) && ResultClassification.GREY.equals(getResultClassification()))) {
-                InquiryQuestion inquiryQuestion = AbstractDomainObject.fromExternalId(inquiryQuestionOID);
+                InquiryQuestion inquiryQuestion = FenixFramework.getDomainObject(inquiryQuestionOID);
                 if (inquiryQuestion == null) {
                     throw new DomainException("não tem question: " + getPrintableColumns(row));
                 }
@@ -381,8 +377,7 @@ public class InquiryResult extends InquiryResult_Base {
 
             String professorshipOID = row[8];
             Professorship professorship =
-                    !StringUtils.isEmpty(professorshipOID) ? (Professorship) AbstractDomainObject
-                            .fromExternalId(professorshipOID) : null;
+                    !StringUtils.isEmpty(professorshipOID) ? (Professorship) FenixFramework.getDomainObject(professorshipOID) : null;
             setProfessorship(professorship);
 
             String shiftTypeString = row[9];

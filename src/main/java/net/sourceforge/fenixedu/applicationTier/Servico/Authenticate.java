@@ -38,7 +38,7 @@ import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.FenixWebFramework;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 import edu.yale.its.tp.cas.client.CASAuthenticationException;
 import edu.yale.its.tp.cas.client.CASReceipt;
@@ -133,7 +133,7 @@ public class Authenticate implements Serializable {
 
         @Override
         public Person getPerson() {
-            return personOid != null ? (Person) AbstractDomainObject.fromExternalId(personOid) : null;
+            return personOid != null ? (Person) FenixFramework.getDomainObject(personOid) : null;
         }
 
         @Override

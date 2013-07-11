@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.teacher.TeacherServiceNotes;
 import org.apache.commons.lang.StringUtils;
 
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class EditTeacherServiceNotes {
 
@@ -22,7 +22,7 @@ public class EditTeacherServiceNotes {
             String otherNote, String masterDegreeTeachingNote, String functionsAccumulation, String thesisNote, RoleType roleType)
             throws FenixServiceException {
 
-        ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodId);
+        ExecutionSemester executionSemester = FenixFramework.getDomainObject(executionPeriodId);
         TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
 
         if (teacherService == null) {

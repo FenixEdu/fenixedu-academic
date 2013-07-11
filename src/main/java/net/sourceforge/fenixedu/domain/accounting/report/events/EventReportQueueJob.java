@@ -233,7 +233,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
                             for (String oid : block) {
                                 Event event = null;
                                 try {
-                                    event = Event.fromExternalId(oid);
+                                    event = FenixFramework.getDomainObject(oid);
 
                                     if (!isAccountingEventForReport(event)) {
                                         continue;
@@ -480,7 +480,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
                         @Override
                         public void doIt() {
                             for (String oid : block) {
-                                Event event = Event.fromExternalId(oid);
+                                Event event = FenixFramework.getDomainObject(oid);
 
                                 try {
                                     if (!isAccountingEventForReport(event)) {
@@ -594,7 +594,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
                         @Override
                         public void doIt() {
                             for (String oid : block) {
-                                Event event = Event.fromExternalId(oid);
+                                Event event = FenixFramework.getDomainObject(oid);
 
                                 try {
                                     if (!isAccountingEventForReport(event)) {

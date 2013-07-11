@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Susana Fernandes
@@ -26,9 +26,9 @@ public class ReadStudentsWithoutDistributedTest {
 
     protected List run(String executionCourseId, String distributedTestId) throws FenixServiceException {
         final List<InfoStudent> infoStudentList = new ArrayList<InfoStudent>();
-        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
+        final ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseId);
         final List<Attends> attendList = executionCourse.getAttends();
-        final DistributedTest distributedTest = AbstractDomainObject.fromExternalId(distributedTestId);
+        final DistributedTest distributedTest = FenixFramework.getDomainObject(distributedTestId);
         final Set<Registration> students = distributedTest.findStudents();
         for (Attends attend : attendList) {
             if (!students.contains(attend.getRegistration())) {

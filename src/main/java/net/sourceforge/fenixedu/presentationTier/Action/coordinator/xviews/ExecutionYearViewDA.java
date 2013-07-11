@@ -35,7 +35,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/xYear", module = "coordinator")
 @Forwards({
@@ -75,7 +75,7 @@ public class ExecutionYearViewDA extends FenixDispatchAction {
             if (request.getParameter("degreeCurricularPlanID") != null) {
                 degreeCurricularPlanID = request.getParameter("degreeCurricularPlanID");
                 request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
-                degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
+                degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
             }
 
             searchFormBean = new YearViewBean(degreeCurricularPlan);

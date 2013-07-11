@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author joaosa and rmalo
@@ -35,17 +35,17 @@ public class EnrollGroupShift {
     public static Boolean run(String studentGroupCode, String groupPropertiesCode, String newShiftCode, String username)
             throws FenixServiceException {
 
-        Grouping groupProperties = AbstractDomainObject.fromExternalId(groupPropertiesCode);
+        Grouping groupProperties = FenixFramework.getDomainObject(groupPropertiesCode);
         if (groupProperties == null) {
             throw new ExistingServiceException();
         }
 
-        StudentGroup studentGroup = AbstractDomainObject.fromExternalId(studentGroupCode);
+        StudentGroup studentGroup = FenixFramework.getDomainObject(studentGroupCode);
         if (studentGroup == null) {
             throw new InvalidArgumentsServiceException();
         }
 
-        Shift shift = AbstractDomainObject.fromExternalId(newShiftCode);
+        Shift shift = FenixFramework.getDomainObject(newShiftCode);
         if (groupProperties.getShiftType() == null || studentGroup.getShift() != null
                 || (!shift.containsType(groupProperties.getShiftType()))) {
             throw new InvalidStudentNumberServiceException();

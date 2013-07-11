@@ -78,7 +78,7 @@ import org.apache.myfaces.component.html.util.MultipartRequestWrapper;
 import org.apache.struts.util.MessageResources;
 
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
@@ -507,7 +507,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     }
 
     public List<Exam> getExamList() throws FenixServiceException {
-        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(getExecutionCourseID());
+        ExecutionCourse executionCourse = FenixFramework.getDomainObject(getExecutionCourseID());
 
         List<Exam> examsList = new ArrayList(executionCourse.getAssociatedExams());
         Collections.sort(examsList, new BeanComparator("dayDate"));
@@ -515,7 +515,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     }
 
     public List<OnlineTest> getOnlineTestList() throws FenixServiceException {
-        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(getExecutionCourseID());
+        ExecutionCourse executionCourse = FenixFramework.getDomainObject(getExecutionCourseID());
 
         List<OnlineTest> onlineTestList = new ArrayList(executionCourse.getAssociatedOnlineTests());
         Collections.sort(onlineTestList, new BeanComparator("distributedTest.beginDateDate"));
@@ -539,7 +539,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     public Evaluation getEvaluation() {
         if (this.evaluation == null) {
             if (this.getEvaluationID() != null) {
-                evaluation = AbstractDomainObject.fromExternalId(getEvaluationID());
+                evaluation = FenixFramework.getDomainObject(getEvaluationID());
             } else { // Should not happen
                 return null;
             }
@@ -647,7 +647,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         List<String> executionCourseIDs = new ArrayList<String>();
         executionCourseIDs.add(this.getExecutionCourseID().toString());
 
-        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(getExecutionCourseID());
+        ExecutionCourse executionCourse = FenixFramework.getDomainObject(getExecutionCourseID());
 
         final List<String> degreeModuleScopesIDs = getDegreeModuleScopeIDs(executionCourse);
 
@@ -673,7 +673,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     }
 
     public ExecutionCourse getExecutionCourse() {
-        return AbstractDomainObject.fromExternalId(getExecutionCourseID());
+        return FenixFramework.getDomainObject(getExecutionCourseID());
     }
 
     public Map<String, String> getMarks() throws FenixServiceException {
@@ -784,7 +784,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         final List<String> executionCourseIDs = new ArrayList<String>();
         executionCourseIDs.add(this.getExecutionCourseID().toString());
 
-        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(getExecutionCourseID());
+        ExecutionCourse executionCourse = FenixFramework.getDomainObject(getExecutionCourseID());
 
         final List<String> degreeModuleScopesIDs = getDegreeModuleScopeIDs(executionCourse);
 
@@ -1241,7 +1241,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     private List<AllocatableSpace> getRooms(String[] roomsToAssociate) {
         List<AllocatableSpace> rooms = new ArrayList<AllocatableSpace>();
         for (String roomId : roomsToAssociate) {
-            AllocatableSpace space = (AllocatableSpace) AbstractDomainObject.fromExternalId(roomId);
+            AllocatableSpace space = (AllocatableSpace) FenixFramework.getDomainObject(roomId);
             if (space == null) {
                 throw new IllegalArgumentException();
             }

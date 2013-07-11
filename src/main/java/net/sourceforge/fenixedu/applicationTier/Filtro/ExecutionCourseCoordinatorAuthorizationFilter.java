@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author João Mota
@@ -25,7 +25,7 @@ public class ExecutionCourseCoordinatorAuthorizationFilter extends CoordinatorAu
             new ExecutionCourseCoordinatorAuthorizationFilter();
 
     protected ExecutionYear getSpecificExecutionYear(String executionCourseID) {
-        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseID);
+        ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseID);
 
         return (executionCourse == null) ? null : executionCourse.getExecutionYear();
     }

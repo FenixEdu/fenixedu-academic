@@ -36,7 +36,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class SearchExecutionCourses {
 
@@ -61,16 +61,16 @@ public class SearchExecutionCourses {
         List<InfoExecutionCourse> result = null;
 
         final ExecutionSemester executionSemester =
-                AbstractDomainObject.fromExternalId(infoExecutionPeriod.getExternalId());
+                FenixFramework.getDomainObject(infoExecutionPeriod.getExternalId());
 
         ExecutionDegree executionDegree = null;
         if (infoExecutionDegree != null) {
-            executionDegree = AbstractDomainObject.fromExternalId(infoExecutionDegree.getExternalId());
+            executionDegree = FenixFramework.getDomainObject(infoExecutionDegree.getExternalId());
         }
 
         CurricularYear curricularYear = null;
         if (infoCurricularYear != null) {
-            curricularYear = AbstractDomainObject.fromExternalId(infoCurricularYear.getExternalId());
+            curricularYear = FenixFramework.getDomainObject(infoCurricularYear.getExternalId());
         }
 
         List<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();

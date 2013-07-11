@@ -5,14 +5,14 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class RemoveResultFromTeacherInformationSheet {
 
     @Checked("ResultPredicates.author")
     @Service
     public static void run(Teacher teacher, String resultId) throws DomainException {
-        ResearchResult result = AbstractDomainObject.fromExternalId(resultId);
+        ResearchResult result = FenixFramework.getDomainObject(resultId);
         teacher.removeFromTeacherInformationSheet(result);
     }
 

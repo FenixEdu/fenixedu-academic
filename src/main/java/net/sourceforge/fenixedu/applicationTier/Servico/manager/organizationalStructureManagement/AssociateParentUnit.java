@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTyp
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class AssociateParentUnit {
 
@@ -15,7 +15,7 @@ public class AssociateParentUnit {
             throws FenixServiceException {
 
         Unit parentUnit = getParentUnit(parentUnitID);
-        Unit unit = (Unit) AbstractDomainObject.fromExternalId(unitID);
+        Unit unit = (Unit) FenixFramework.getDomainObject(unitID);
 
         if (unit == null) {
             throw new FenixServiceException("error.inexistent.unit");
@@ -26,7 +26,7 @@ public class AssociateParentUnit {
     private static Unit getParentUnit(String parentUnitID) {
         Unit parentUnit = null;
         if (parentUnitID != null) {
-            parentUnit = (Unit) AbstractDomainObject.fromExternalId(parentUnitID);
+            parentUnit = (Unit) FenixFramework.getDomainObject(parentUnitID);
         }
         return parentUnit;
     }

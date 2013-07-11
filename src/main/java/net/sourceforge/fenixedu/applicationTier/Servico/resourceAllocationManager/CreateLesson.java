@@ -20,7 +20,7 @@ import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class CreateLesson {
 
@@ -31,10 +31,10 @@ public class CreateLesson {
             throws FenixServiceException {
 
         final ExecutionSemester executionSemester =
-                AbstractDomainObject.fromExternalId(infoShift.getInfoDisciplinaExecucao().getInfoExecutionPeriod()
+                FenixFramework.getDomainObject(infoShift.getInfoDisciplinaExecucao().getInfoExecutionPeriod()
                         .getExternalId());
 
-        final Shift shift = AbstractDomainObject.fromExternalId(infoShift.getExternalId());
+        final Shift shift = FenixFramework.getDomainObject(infoShift.getExternalId());
 
         AllocatableSpace room = null;
         if (infoRoomOccupation != null) {

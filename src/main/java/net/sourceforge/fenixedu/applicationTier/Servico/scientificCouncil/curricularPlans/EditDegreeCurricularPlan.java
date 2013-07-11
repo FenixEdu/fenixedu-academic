@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricu
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class EditDegreeCurricularPlan {
 
@@ -23,13 +23,13 @@ public class EditDegreeCurricularPlan {
             throw new InvalidArgumentsServiceException();
         }
 
-        final DegreeCurricularPlan dcpToEdit = AbstractDomainObject.fromExternalId(dcpId);
+        final DegreeCurricularPlan dcpToEdit = FenixFramework.getDomainObject(dcpId);
         if (dcpToEdit == null) {
             throw new FenixServiceException("error.degreeCurricularPlan.no.existing.degreeCurricularPlan");
         }
 
         final ExecutionYear executionYear =
-                (executionYearID == null) ? null : AbstractDomainObject.<ExecutionYear> fromExternalId(executionYearID);
+                (executionYearID == null) ? null : FenixFramework.<ExecutionYear> getDomainObject(executionYearID);
 
         dcpToEdit.edit(name, curricularStage, degreeCurricularPlanState, gradeScale, executionYear);
     }

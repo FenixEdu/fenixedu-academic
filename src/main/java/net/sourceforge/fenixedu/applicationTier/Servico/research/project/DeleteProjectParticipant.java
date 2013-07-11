@@ -4,14 +4,14 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.research.project.ProjectParticipation;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class DeleteProjectParticipant {
 
     @Checked("ResultPredicates.author")
     @Service
     public static void run(String participationId) throws FenixServiceException {
-        ProjectParticipation participation = AbstractDomainObject.fromExternalId(participationId);
+        ProjectParticipation participation = FenixFramework.getDomainObject(participationId);
         if (participation == null) {
             throw new FenixServiceException();
         }

@@ -24,7 +24,7 @@ import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class StudentInquiriesCourseResult extends StudentInquiriesCourseResult_Base {
 
@@ -750,12 +750,12 @@ public class StudentInquiriesCourseResult extends StudentInquiriesCourseResult_B
         for (String row : values.split("\n")) {
             String[] columns = row.split("\t");
 
-            ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(columns[executionCourseHeaderIndex]);
+            ExecutionCourse executionCourse = FenixFramework.getDomainObject(columns[executionCourseHeaderIndex]);
             if (executionCourse == null) {
                 throw new DomainException("error.StudentInquiriesCourseResult.executionCourseNotFound",
                         columns[executionCourseHeaderIndex]);
             }
-            ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(columns[executionDegreeHeaderIndex]);
+            ExecutionDegree executionDegree = FenixFramework.getDomainObject(columns[executionDegreeHeaderIndex]);
             if (executionDegree == null) {
                 throw new DomainException("error.StudentInquiriesCourseResult.executionDegreeNotFound",
                         columns[executionDegreeHeaderIndex]);
@@ -802,7 +802,7 @@ public class StudentInquiriesCourseResult extends StudentInquiriesCourseResult_B
                     resetedItems = true;
                 }
             } else {
-                ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(coursesBean.getKeyExecutionCourseHeader());
+                ExecutionCourse executionCourse = FenixFramework.getDomainObject(coursesBean.getKeyExecutionCourseHeader());
                 if (executionCourse == null) {
                     throw new DomainException("error.StudentInquiriesCourseResult.executionCourseNotFound",
                             coursesBean.getKeyExecutionCourseHeader());

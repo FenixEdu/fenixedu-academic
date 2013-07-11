@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseG
 import net.sourceforge.fenixedu.util.StringFormatter;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class CreateCompetenceCourse {
 
@@ -25,7 +25,7 @@ public class CreateCompetenceCourse {
             CompetenceCourseLevel competenceCourseLevel, CompetenceCourseType type, String unitID, ExecutionSemester startSemester)
             throws FenixServiceException {
 
-        final CompetenceCourseGroupUnit unit = (CompetenceCourseGroupUnit) AbstractDomainObject.fromExternalId(unitID);
+        final CompetenceCourseGroupUnit unit = (CompetenceCourseGroupUnit) FenixFramework.getDomainObject(unitID);
         if (unit == null) {
             throw new FenixServiceException("error.invalidUnit");
         }

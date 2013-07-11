@@ -9,7 +9,7 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.domain.EquivalencePlanEntry;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class EquivalencyPlanEntryCurriculumModuleWrapper {
 

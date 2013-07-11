@@ -47,7 +47,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "examCoordination", path = "/vigilancy/vigilantGroupManagement", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "incompatibilities", path = "manage-incompatibilities"),
@@ -70,7 +70,7 @@ public class VigilantGroupManagement extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         String vigilantGroupId = request.getParameter("oid");
-        VigilantGroup group = (VigilantGroup) AbstractDomainObject.fromExternalId(vigilantGroupId);
+        VigilantGroup group = (VigilantGroup) FenixFramework.getDomainObject(vigilantGroupId);
 
         List<WrittenEvaluationVigilancyView> beans = getStatsViewForVigilantGroup(group);
 
@@ -83,7 +83,7 @@ public class VigilantGroupManagement extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         String vigilantGroupId = request.getParameter("oid");
-        VigilantGroup group = (VigilantGroup) AbstractDomainObject.fromExternalId(vigilantGroupId);
+        VigilantGroup group = (VigilantGroup) FenixFramework.getDomainObject(vigilantGroupId);
 
         List<VigilantWrapper> vigilantWrappers = group.getVigilantWrappersThatCanBeConvoked();
         ComparatorChain chain = new ComparatorChain();
@@ -132,7 +132,7 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 
         String groupId = request.getParameter("gid");
         if (groupId != null) {
-            VigilantGroup group = (VigilantGroup) AbstractDomainObject.fromExternalId(groupId);
+            VigilantGroup group = (VigilantGroup) FenixFramework.getDomainObject(groupId);
             bean.setSelectedVigilantGroup(group);
             putIncompatibilitiesInRequest(request, group);
         }
@@ -160,12 +160,12 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 
         String oid = request.getParameter("oid");
 
-        VigilantWrapper vigilantWrapper = (VigilantWrapper) AbstractDomainObject.fromExternalId(oid);
+        VigilantWrapper vigilantWrapper = (VigilantWrapper) FenixFramework.getDomainObject(oid);
 
         RemoveIncompatiblePerson.run(vigilantWrapper);
 
         String gid = request.getParameter("gid");
-        VigilantGroup group = (VigilantGroup) AbstractDomainObject.fromExternalId(gid);
+        VigilantGroup group = (VigilantGroup) FenixFramework.getDomainObject(gid);
 
         VigilantGroupBean bean = new VigilantGroupBean();
         ExamCoordinator coordinator = getLoggedPerson(request).getCurrentExamCoordinator();
@@ -288,7 +288,7 @@ public class VigilantGroupManagement extends FenixDispatchAction {
         String oid = request.getParameter("oid");
         String forwardTo = request.getParameter("forwardTo");
 
-        VigilantGroup group = (VigilantGroup) AbstractDomainObject.fromExternalId(oid);
+        VigilantGroup group = (VigilantGroup) FenixFramework.getDomainObject(oid);
         prepareBeanForVigilantGroupEdition(request, group);
         return mapping.findForward(forwardTo);
     }
@@ -411,7 +411,7 @@ public class VigilantGroupManagement extends FenixDispatchAction {
         bean.setExamCoordinator(coordinator);
 
         String gid = request.getParameter("gid");
-        VigilantGroup group = (VigilantGroup) AbstractDomainObject.fromExternalId(gid);
+        VigilantGroup group = (VigilantGroup) FenixFramework.getDomainObject(gid);
         bean.setSelectedVigilantGroup(group);
 
         request.setAttribute("bean", bean);
@@ -457,9 +457,9 @@ public class VigilantGroupManagement extends FenixDispatchAction {
         String personId = request.getParameter("pid");
         String groupId = request.getParameter("gid");
 
-        VigilantWrapper vigilantWrapper = (VigilantWrapper) AbstractDomainObject.fromExternalId(vigilantId);
-        Person person = (Person) AbstractDomainObject.fromExternalId(personId);
-        VigilantGroup group = (VigilantGroup) AbstractDomainObject.fromExternalId(groupId);
+        VigilantWrapper vigilantWrapper = (VigilantWrapper) FenixFramework.getDomainObject(vigilantId);
+        Person person = (Person) FenixFramework.getDomainObject(personId);
+        VigilantGroup group = (VigilantGroup) FenixFramework.getDomainObject(groupId);
 
         AddIncompatiblePerson.run(vigilantWrapper, person);
 
@@ -489,7 +489,7 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 
         String groupId = request.getParameter("oid");
 
-        VigilantGroup group = (VigilantGroup) AbstractDomainObject.fromExternalId(groupId);
+        VigilantGroup group = (VigilantGroup) FenixFramework.getDomainObject(groupId);
 
         List<VigilantWrapper> vigilantWrappers = new ArrayList<VigilantWrapper>(group.getVigilantWrappers());
         ComparatorChain chain = new ComparatorChain();
@@ -506,7 +506,7 @@ public class VigilantGroupManagement extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         String groupId = request.getParameter("oid");
-        VigilantGroup group = (VigilantGroup) AbstractDomainObject.fromExternalId(groupId);
+        VigilantGroup group = (VigilantGroup) FenixFramework.getDomainObject(groupId);
         request.setAttribute("group", group);
         return mapping.findForward("editVigilantGroupPoints");
     }
@@ -537,9 +537,9 @@ public class VigilantGroupManagement extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         String previousGroupID = request.getParameter("selectedGroupID");
-        VigilantGroup previousGroup = (VigilantGroup) AbstractDomainObject.fromExternalId(previousGroupID);
+        VigilantGroup previousGroup = (VigilantGroup) FenixFramework.getDomainObject(previousGroupID);
         String groupId = request.getParameter("oid");
-        VigilantGroup group = (VigilantGroup) AbstractDomainObject.fromExternalId(groupId);
+        VigilantGroup group = (VigilantGroup) FenixFramework.getDomainObject(groupId);
 
         group.copyPointsFromVigilantGroup(previousGroup);
 
@@ -557,7 +557,7 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 
         String groupId = request.getParameter("oid");
 
-        VigilantGroup group = (VigilantGroup) AbstractDomainObject.fromExternalId(groupId);
+        VigilantGroup group = (VigilantGroup) FenixFramework.getDomainObject(groupId);
 
         List<VigilantWrapper> vigilantWrappers = group.getVigilantWrappersThatCanBeConvoked();
         ComparatorChain chain = new ComparatorChain();

@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ReadExamsMap {
 
@@ -67,7 +67,7 @@ public class ReadExamsMap {
 
         if (degreeCurricularPlan != null) {
             ExecutionSemester executionSemester =
-                    AbstractDomainObject.fromExternalId(infoExecutionPeriod.getExternalId());
+                    FenixFramework.getDomainObject(infoExecutionPeriod.getExternalId());
             // Obtain execution courses and associated information
             // of the given execution degree for each curricular year
             // persistentSupportecified

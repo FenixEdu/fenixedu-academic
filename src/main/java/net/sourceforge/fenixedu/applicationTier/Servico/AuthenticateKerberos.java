@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.kerberos.KerberosException;
 import net.sourceforge.fenixedu.util.kerberos.Script;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.ist.fenixframework.pstm.Transaction;
 
 public class AuthenticateKerberos extends Authenticate {
@@ -31,7 +31,7 @@ public class AuthenticateKerberos extends Authenticate {
 
         @Override
         public void doIt() {
-            final Person person = (Person) AbstractDomainObject.fromExternalId(personID);
+            final Person person = (Person) FenixFramework.getDomainObject(personID);
             doIt(person);
         }
 

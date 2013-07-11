@@ -10,14 +10,14 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ApagarTurma {
 
     @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
     @Service
     public static Boolean run(InfoClass infoClass) {
-        AbstractDomainObject.<SchoolClass> fromExternalId(infoClass.getExternalId()).delete();
+        FenixFramework.<SchoolClass> getDomainObject(infoClass.getExternalId()).delete();
         return Boolean.TRUE;
     }
 

@@ -36,7 +36,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "resourceAllocationManager", path = "/studentShiftEnrollmentManager",
         input = "/studentShiftEnrollmentManager.do?method=prepare", attribute = "studentShiftEnrollmentForm",
@@ -233,7 +233,7 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
             final ExecutionSemester executionSemester, final List<ExecutionDegree> executionDegrees) {
 
         final String executionDegreeIdChosen = (String) form.get("degree");
-        final ExecutionDegree executionDegreeChosen = AbstractDomainObject.fromExternalId(executionDegreeIdChosen);
+        final ExecutionDegree executionDegreeChosen = FenixFramework.getDomainObject(executionDegreeIdChosen);
         if (executionDegreeChosen != null && executionDegreeChosen.getExecutionYear() == executionSemester.getExecutionYear()) {
             return executionDegreeChosen;
         } else {

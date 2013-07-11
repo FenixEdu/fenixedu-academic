@@ -47,7 +47,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/regentInquiry", module = "teacher")
 @Forwards({
@@ -184,7 +184,7 @@ public class RegentInquiryDA extends FenixDispatchAction {
     public ActionForward showRegentInquiry(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        Professorship professorship = AbstractDomainObject.fromExternalId(getFromRequest(request, "professorshipOID").toString());
+        Professorship professorship = FenixFramework.getDomainObject(getFromRequest(request, "professorshipOID").toString());
         RegentInquiryTemplate regentInquiryTemplate = RegentInquiryTemplate.getCurrentTemplate();
 
         RegentInquiryBean regentInquiryBean = new RegentInquiryBean(regentInquiryTemplate, professorship);
@@ -199,7 +199,7 @@ public class RegentInquiryDA extends FenixDispatchAction {
     public ActionForward showTeacherInquiry(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        Professorship professorship = AbstractDomainObject.fromExternalId(getFromRequest(request, "professorshipOID").toString());
+        Professorship professorship = FenixFramework.getDomainObject(getFromRequest(request, "professorshipOID").toString());
 
         TeacherInquiryTemplate teacherInquiryTemplate =
                 TeacherInquiryTemplate.getTemplateByExecutionPeriod(professorship.getExecutionCourse().getExecutionPeriod());
@@ -221,9 +221,9 @@ public class RegentInquiryDA extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         ExecutionCourse executionCourse =
-                AbstractDomainObject.fromExternalId(getFromRequest(request, "executionCourseOID").toString());
+                FenixFramework.getDomainObject(getFromRequest(request, "executionCourseOID").toString());
         ExecutionDegree executionDegree =
-                AbstractDomainObject.fromExternalId(getFromRequest(request, "executionDegreeOID").toString());
+                FenixFramework.getDomainObject(getFromRequest(request, "executionDegreeOID").toString());
 
         DelegateInquiryTemplate delegateInquiryTemplate =
                 DelegateInquiryTemplate.getTemplateByExecutionPeriod(executionCourse.getExecutionPeriod());

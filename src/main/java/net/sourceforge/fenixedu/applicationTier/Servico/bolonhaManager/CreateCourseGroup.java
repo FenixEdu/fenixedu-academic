@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class CreateCourseGroup {
 
@@ -14,11 +14,11 @@ public class CreateCourseGroup {
             final String nameEn, final String beginExecutionPeriodID, final String endExecutionPeriodID)
             throws FenixServiceException {
 
-        final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
+        final DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
         if (degreeCurricularPlan == null) {
             throw new FenixServiceException("error.noDegreeCurricularPlan");
         }
-        final CourseGroup parentCourseGroup = (CourseGroup) AbstractDomainObject.fromExternalId(parentCourseGroupID);
+        final CourseGroup parentCourseGroup = (CourseGroup) FenixFramework.getDomainObject(parentCourseGroupID);
         if (parentCourseGroup == null) {
             throw new FenixServiceException("error.noCourseGroup");
         }
@@ -27,12 +27,11 @@ public class CreateCourseGroup {
         if (beginExecutionPeriodID == null) {
             beginExecutionPeriod = ExecutionSemester.readActualExecutionSemester();
         } else {
-            beginExecutionPeriod = AbstractDomainObject.fromExternalId(beginExecutionPeriodID);
+            beginExecutionPeriod = FenixFramework.getDomainObject(beginExecutionPeriodID);
         }
 
         final ExecutionSemester endExecutionPeriod =
-                (endExecutionPeriodID == null) ? null : AbstractDomainObject
-                        .<ExecutionSemester> fromExternalId(endExecutionPeriodID);
+                (endExecutionPeriodID == null) ? null : FenixFramework.<ExecutionSemester> getDomainObject(endExecutionPeriodID);
 
         degreeCurricularPlan.createCourseGroup(parentCourseGroup, name, nameEn, beginExecutionPeriod, endExecutionPeriod);
     }

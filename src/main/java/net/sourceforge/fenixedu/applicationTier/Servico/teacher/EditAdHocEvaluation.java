@@ -4,7 +4,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.AdHocEvaluation;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class EditAdHocEvaluation {
 
@@ -12,7 +12,7 @@ public class EditAdHocEvaluation {
     public static void run(String executionCourseID, String adHocEvaluationID, String name, String description,
             GradeScale gradeScale) throws FenixServiceException {
 
-        AdHocEvaluation adHocEvaluation = (AdHocEvaluation) AbstractDomainObject.fromExternalId(adHocEvaluationID);
+        AdHocEvaluation adHocEvaluation = (AdHocEvaluation) FenixFramework.getDomainObject(adHocEvaluationID);
 
         if (adHocEvaluation == null) {
             throw new FenixServiceException("error.noEvaluation");

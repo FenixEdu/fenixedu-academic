@@ -23,13 +23,13 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ReadStudentsFromDegreeCurricularPlan {
 
     protected List run(String degreeCurricularPlanID, DegreeType degreeType) throws FenixServiceException {
         // Read the Students
-        DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
+        DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
 
         List students = degreeCurricularPlan.getStudentCurricularPlans();
 

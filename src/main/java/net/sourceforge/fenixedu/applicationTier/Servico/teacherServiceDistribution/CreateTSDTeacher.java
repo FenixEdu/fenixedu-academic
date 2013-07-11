@@ -15,13 +15,13 @@ import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherService
 import org.apache.commons.collections.Predicate;
 
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class CreateTSDTeacher {
     protected Boolean run(String teacherName, String categoryId, Double requiredHours, String tsdId) {
 
-        ProfessionalCategory category = AbstractDomainObject.fromExternalId(categoryId);
-        TeacherServiceDistribution tsd = AbstractDomainObject.fromExternalId(tsdId);
+        ProfessionalCategory category = FenixFramework.getDomainObject(categoryId);
+        TeacherServiceDistribution tsd = FenixFramework.getDomainObject(tsdId);
 
         if (existsVirtualTeacherWithSameName(tsd.getTSDTeachers(), teacherName)) {
             return false;

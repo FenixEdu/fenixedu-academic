@@ -1,6 +1,6 @@
 <%@page import="net.sourceforge.fenixedu.domain.ExecutionCourse"%>
+<%@page import="pt.ist.fenixframework.FenixFramework"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
-<%@page import="pt.ist.fenixframework.pstm.AbstractDomainObject"%>
 <html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
@@ -12,7 +12,7 @@
 	<logic:notPresent name="executionCourse">
 		<bean:define id="executionCourseID" name="executionCourseID" type="java.lang.String"/>
 		<%
-			final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseID);
+			final ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseID);
 			request.setAttribute("executionCourse", executionCourse);
 		%>
 	</logic:notPresent>

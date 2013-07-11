@@ -43,7 +43,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/viewTutorship", module = "pedagogicalCouncil")
 @Forwards({ @Forward(name = "viewTutorship", path = "/pedagogicalCouncil/tutorship/viewTutorship.jsp"),
@@ -92,14 +92,14 @@ public class ViewTutorshipDA extends FenixDispatchAction {
 
         // else
         String studentId = request.getParameter("studentId");
-        Person studentPerson = AbstractDomainObject.fromExternalId(studentId);
+        Person studentPerson = FenixFramework.getDomainObject(studentId);
         Student student = studentPerson.getStudent();
         return student.getActiveTutorships().get(0);
     }
 
     public ActionForward deleteTutorship(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        Tutorship tutorship = AbstractDomainObject.fromExternalId(request.getParameter("tutorshipID"));
+        Tutorship tutorship = FenixFramework.getDomainObject(request.getParameter("tutorshipID"));
 
         ExecutionDegree executionDegree = getExecutionDegree(tutorship);
         deleteTutor(tutorship, executionDegree, request, mapping);
@@ -312,7 +312,7 @@ public class ViewTutorshipDA extends FenixDispatchAction {
 
         // Person studentPerson = (Person) getRenderedObject("studentId");
         String studentPersonId = request.getParameter("studentId");
-        Person studentPerson = AbstractDomainObject.fromExternalId(studentPersonId);
+        Person studentPerson = FenixFramework.getDomainObject(studentPersonId);
         Student student = studentPerson.getStudent();
 
         student.getActiveRegistrations();
@@ -355,7 +355,7 @@ public class ViewTutorshipDA extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         TeacherTutorshipCreationBean teacherTutorshipCreationBean = (TeacherTutorshipCreationBean) getRenderedObject("tutors");
         String studentPersonId = request.getParameter("studentId");
-        Person studentPerson = AbstractDomainObject.fromExternalId(studentPersonId);
+        Person studentPerson = FenixFramework.getDomainObject(studentPersonId);
         Student student = studentPerson.getStudent();
         Partial endDate = createPartialForEndDate();
         Person teacherPerson = teacherTutorshipCreationBean.getTeacher();

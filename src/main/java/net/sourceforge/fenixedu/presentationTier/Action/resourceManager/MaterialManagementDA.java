@@ -24,7 +24,7 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 @Mapping(module = "resourceManager", path = "/materialManagement", scope = "request", parameter = "method")
@@ -158,7 +158,7 @@ public class MaterialManagementDA extends FenixDispatchAction {
 
     private Material getMaterialFromParameter(final HttpServletRequest request) {
         final String materialIDString = request.getParameter("materialID");
-        return (Material) AbstractDomainObject.fromExternalId(materialIDString);
+        return (Material) FenixFramework.getDomainObject(materialIDString);
     }
 
     private MaterialType getMaterialTypeFromParameter(final HttpServletRequest request) {

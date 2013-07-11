@@ -20,7 +20,7 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 @Mapping(module = "publico", path = "/researchSite/manageResearchUnitAnnouncements", scope = "session", parameter = "method")
@@ -38,7 +38,7 @@ public class ManageResearchUnitAnnoucementsDA extends UnitSiteBoardsDA {
         }
         String siteID = request.getParameter("siteID");
         if (siteID != null) {
-            ResearchUnitSite site = (ResearchUnitSite) AbstractDomainObject.fromExternalId(siteID);
+            ResearchUnitSite site = (ResearchUnitSite) FenixFramework.getDomainObject(siteID);
             return site;
         } else {
             return null;

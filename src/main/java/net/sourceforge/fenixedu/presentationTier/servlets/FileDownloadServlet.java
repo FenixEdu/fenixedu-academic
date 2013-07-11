@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.commons.httpclient.HttpStatus;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @WebServlet(urlPatterns = "/downloadFile/*")
 public class FileDownloadServlet extends HttpServlet {
@@ -31,7 +31,7 @@ public class FileDownloadServlet extends HttpServlet {
             sendBadRequest(response);
         } else {
             final String oid = uri.substring(lastSlash + 1);
-            final File file = AbstractDomainObject.fromExternalId(oid);
+            final File file = FenixFramework.getDomainObject(oid);
             if (file == null) {
                 sendBadRequest(response);
             } else {

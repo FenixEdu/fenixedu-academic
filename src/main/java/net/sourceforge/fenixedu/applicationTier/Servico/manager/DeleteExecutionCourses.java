@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author jdnf, mrsp and Luis Cruz
@@ -28,7 +28,7 @@ public class DeleteExecutionCourses {
         final List<String> undeletedExecutionCoursesCodes = new ArrayList<String>();
 
         for (final String executionCourseID : executionCourseIDs) {
-            final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseID);
+            final ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseID);
 
             if (!executionCourse.canBeDeleted()) {
                 undeletedExecutionCoursesCodes.add(executionCourse.getSigla());

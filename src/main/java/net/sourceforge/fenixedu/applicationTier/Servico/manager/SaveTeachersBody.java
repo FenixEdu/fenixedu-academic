@@ -11,14 +11,14 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class SaveTeachersBody {
 
     protected Boolean run(final List<String> responsibleTeachersIds, final List<String> professorShipTeachersIds,
             final String executionCourseId) throws FenixServiceException {
 
-        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
+        final ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseId);
 
         final List<String> auxProfessorshipTeacherIDs = new ArrayList<String>(professorShipTeachersIds);
 
@@ -41,7 +41,7 @@ public class SaveTeachersBody {
         }
 
         for (final String teacherID : auxProfessorshipTeacherIDs) {
-            final Teacher teacher = AbstractDomainObject.fromExternalId(teacherID);
+            final Teacher teacher = FenixFramework.getDomainObject(teacherID);
             final Boolean isResponsible = Boolean.valueOf(responsibleTeachersIds.contains(teacherID));
             Professorship.create(isResponsible, executionCourse, teacher, null);
         }

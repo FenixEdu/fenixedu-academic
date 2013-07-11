@@ -50,7 +50,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "departmentAdmOffice", path = "/showTeacherProfessorshipsForManagement",
         input = "show-teacher-professorships-for-management", attribute = "teacherExecutionCourseResponsabilities",
@@ -146,11 +146,11 @@ public class ReadPersonProfessorshipsByExecutionYearAction extends Action {
     List getDetailedProfessorships(IUserView userView, String personId, DynaActionForm actionForm, HttpServletRequest request)
             throws FenixServiceException {
 
-        List<Professorship> professorshipList = ((Person) AbstractDomainObject.fromExternalId(personId)).getProfessorships();
+        List<Professorship> professorshipList = ((Person) FenixFramework.getDomainObject(personId)).getProfessorships();
 
         String executionYearID = (String) actionForm.get("executionYearId");
         ExecutionYear executionYear =
-                (!StringUtils.isEmpty(executionYearID) ? (ExecutionYear) AbstractDomainObject.fromExternalId(executionYearID) : null);
+                (!StringUtils.isEmpty(executionYearID) ? (ExecutionYear) FenixFramework.getDomainObject(executionYearID) : null);
         if (executionYear == null) {
             executionYear = ExecutionYear.readCurrentExecutionYear();
         }
@@ -223,7 +223,7 @@ public class ReadPersonProfessorshipsByExecutionYearAction extends Action {
                 return false;
             }
         });
-        Person person = (Person) AbstractDomainObject.fromExternalId(infoPerson.getExternalId());
+        Person person = (Person) FenixFramework.getDomainObject(infoPerson.getExternalId());
         InfoDepartment teacherDepartment = null;
         if (person.getTeacher() != null) {
             Department department = person.getTeacher().getCurrentWorkingDepartment();

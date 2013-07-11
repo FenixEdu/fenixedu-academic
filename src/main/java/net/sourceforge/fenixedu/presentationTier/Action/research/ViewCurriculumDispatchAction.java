@@ -47,7 +47,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "researcher", path = "/viewCurriculum", scope = "session", parameter = "method")
 @Forwards(value = { @Forward(name = "Success", path = "/researcher/viewCurriculum.jsp", tileProperties = @Tile(
@@ -61,7 +61,7 @@ public class ViewCurriculumDispatchAction extends FenixAction {
         String personId = request.getParameter("personOID");
 
         final Person person =
-                ((personId != null && personId.length() > 0) ? (Person) AbstractDomainObject.fromExternalId(personId) : getLoggedPerson(request));
+                ((personId != null && personId.length() > 0) ? (Person) FenixFramework.getDomainObject(personId) : getLoggedPerson(request));
 
         request.setAttribute("person", person);
 

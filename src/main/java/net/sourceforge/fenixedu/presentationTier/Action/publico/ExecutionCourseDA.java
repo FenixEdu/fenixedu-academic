@@ -157,13 +157,13 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
             }
             final String shiftID = (String) dynaActionForm.get("shiftID");
             if (shiftID != null && shiftID.length() > 0) {
-                summariesSearchBean.setShift(AbstractDomainObject.<Shift> fromExternalId(shiftID));
+                summariesSearchBean.setShift(FenixFramework.<Shift> getDomainObject(shiftID));
             }
             final String professorshipID = (String) dynaActionForm.get("professorshipID");
             if (professorshipID != null && professorshipID.equals("-1")) {
                 summariesSearchBean.setShowOtherProfessors(Boolean.TRUE);
             } else if (professorshipID != null && !professorshipID.equals("0")) {
-                summariesSearchBean.setProfessorship(AbstractDomainObject.<Professorship> fromExternalId(professorshipID));
+                summariesSearchBean.setProfessorship(FenixFramework.<Professorship> getDomainObject(professorshipID));
             }
         }
         return mapping.findForward("execution-course-summaries");

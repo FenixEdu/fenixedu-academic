@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.Teacher;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class InsertStudentsFinalEvaluation {
 
@@ -20,7 +20,7 @@ public class InsertStudentsFinalEvaluation {
         }
 
         final EnrolmentEvaluation enrolmentEvaluation =
-                AbstractDomainObject.fromExternalId(infoEnrolmentEvaluation.getExternalId());
+                FenixFramework.getDomainObject(infoEnrolmentEvaluation.getExternalId());
         enrolmentEvaluation.insertStudentFinalEvaluationForMasterDegree(infoEnrolmentEvaluation.getGradeValue(),
                 teacher.getPerson(), evaluationDate);
     }

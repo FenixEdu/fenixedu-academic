@@ -54,7 +54,7 @@ import org.joda.time.YearMonthDay;
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.model.MetaSlot;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 
 public class CustomUnitSiteManagementDA extends SiteManagementDA {
@@ -488,7 +488,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
     private Person getSelectedPerson(HttpServletRequest request) {
         String id = request.getParameter("personID");
         if (id != null) {
-            return (Person) AbstractDomainObject.fromExternalId(id);
+            return (Person) FenixFramework.getDomainObject(id);
         }
 
         VariantBean bean = getRenderedObject("addUserBean");

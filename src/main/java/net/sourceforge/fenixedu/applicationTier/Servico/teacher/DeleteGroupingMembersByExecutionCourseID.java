@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.domain.GroupsAndShiftsManagementLog;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author joaosa & rmalo
@@ -30,13 +30,13 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class DeleteGroupingMembersByExecutionCourseID {
 
     protected Boolean run(String executionCourseCode, String groupingCode) throws FenixServiceException {
-        Grouping grouping = AbstractDomainObject.fromExternalId(groupingCode);
+        Grouping grouping = FenixFramework.getDomainObject(groupingCode);
 
         if (grouping == null) {
             throw new ExistingServiceException();
         }
 
-        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseCode);
+        ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseCode);
 
         if (executionCourse == null) {
             throw new InvalidSituationServiceException();

@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationSt
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class WriteMarks {
 
@@ -27,8 +27,8 @@ public class WriteMarks {
     public static void writeByStudent(final String executioCourseOID, final String evaluationOID, final List<StudentMark> marks)
             throws FenixServiceException {
 
-        final Evaluation evaluation = AbstractDomainObject.fromExternalId(evaluationOID);
-        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executioCourseOID);
+        final Evaluation evaluation = FenixFramework.getDomainObject(evaluationOID);
+        final ExecutionCourse executionCourse = FenixFramework.getDomainObject(executioCourseOID);
 
         writeMarks(convertMarks(executionCourse, marks), executionCourse, evaluation);
     }
@@ -38,8 +38,8 @@ public class WriteMarks {
     public static void writeByAttend(final String executioCourseOID, final String evaluationOID, final List<AttendsMark> marks)
             throws FenixServiceException {
 
-        final Evaluation evaluation = AbstractDomainObject.fromExternalId(evaluationOID);
-        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executioCourseOID);
+        final Evaluation evaluation = FenixFramework.getDomainObject(evaluationOID);
+        final ExecutionCourse executionCourse = FenixFramework.getDomainObject(executioCourseOID);
 
         writeMarks(marks, executionCourse, evaluation);
     }

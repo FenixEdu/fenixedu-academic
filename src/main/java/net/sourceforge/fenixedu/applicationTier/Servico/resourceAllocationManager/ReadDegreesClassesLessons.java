@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * TODO Remove cloner deste servi�o...
@@ -38,7 +38,7 @@ public class ReadDegreesClassesLessons {
         List classes = new ArrayList();
         for (int i = 0; i < infoExecutionDegrees.size(); i++) {
             InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) infoExecutionDegrees.get(i);
-            ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(infoExecutionDegree.getExternalId());
+            ExecutionDegree executionDegree = FenixFramework.getDomainObject(infoExecutionDegree.getExternalId());
             List degreeClasses = executionDegree.getSchoolClasses();
             for (Iterator iterator = degreeClasses.iterator(); iterator.hasNext();) {
                 SchoolClass klass = (SchoolClass) iterator.next();

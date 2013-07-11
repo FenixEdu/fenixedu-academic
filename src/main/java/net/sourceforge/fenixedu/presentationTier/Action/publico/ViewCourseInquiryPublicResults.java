@@ -32,7 +32,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/viewCourseResults", module = "publico")
 public class ViewCourseInquiryPublicResults extends ViewInquiryPublicResults {
@@ -46,7 +46,7 @@ public class ViewCourseInquiryPublicResults extends ViewInquiryPublicResults {
 
     public static ActionForward getCourseResultsActionForward(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
-        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(request.getParameter("executionCourseOID"));
+        ExecutionCourse executionCourse = FenixFramework.getDomainObject(request.getParameter("executionCourseOID"));
         ExecutionSemester executionPeriod = executionCourse.getExecutionPeriod();
 
         CurricularCourseInquiryTemplate curricularCourseInquiryTemplate =
@@ -56,7 +56,7 @@ public class ViewCourseInquiryPublicResults extends ViewInquiryPublicResults {
             return mapping.findForward("execution-course-student-inquiries-result-notAvailable");
         }
 
-        DegreeCurricularPlan dcp = AbstractDomainObject.fromExternalId(request.getParameter("degreeCurricularPlanOID"));
+        DegreeCurricularPlan dcp = FenixFramework.getDomainObject(request.getParameter("degreeCurricularPlanOID"));
         ExecutionDegree executionDegree = dcp.getExecutionDegreeByAcademicInterval(executionPeriod.getAcademicInterval());
         List<InquiryResult> results = executionCourse.getInquiryResultsByExecutionDegreeAndForTeachers(executionDegree);
         boolean hasNotRelevantData = executionCourse.hasNotRelevantDataFor(executionDegree);

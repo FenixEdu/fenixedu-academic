@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.GuideState;
 import net.sourceforge.fenixedu.util.State;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * 
@@ -21,7 +21,7 @@ public class CreateGuideSituation {
     @Service
     public static void run(String guideID, String remarks, GuideState situation, Date date) {
 
-        Guide guide = AbstractDomainObject.fromExternalId(guideID);
+        Guide guide = FenixFramework.getDomainObject(guideID);
 
         for (GuideSituation guideSituation : guide.getGuideSituations()) {
             guideSituation.setState(new State(State.INACTIVE));

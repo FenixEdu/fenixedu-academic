@@ -18,7 +18,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -32,7 +32,7 @@ public class GetEquivalency {
     protected InfoEquivalency run(String equivalencyID) {
         InfoEquivalency infoEquivalency = null;
 
-        CourseEquivalency equivalency = AbstractDomainObject.fromExternalId(equivalencyID);
+        CourseEquivalency equivalency = FenixFramework.getDomainObject(equivalencyID);
         if (equivalency != null) {
             infoEquivalency = InfoEquivalency.newInfoFromDomain(equivalency);
             infoEquivalency.setThemes((List) CollectionUtils.collect(equivalency.getThemes(), new Transformer() {

@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Curriculum;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author lmac1
@@ -26,7 +26,7 @@ public class ReadCurriculum {
         CurricularCourse curricularCourse;
         Curriculum curriculum;
 
-        curricularCourse = (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseId);
+        curricularCourse = (CurricularCourse) FenixFramework.getDomainObject(curricularCourseId);
         if (curricularCourse == null) {
             throw new NonExistingServiceException();
         }

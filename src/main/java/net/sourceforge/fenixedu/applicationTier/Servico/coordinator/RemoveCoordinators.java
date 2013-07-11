@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class RemoveCoordinators {
 
@@ -17,7 +17,7 @@ public class RemoveCoordinators {
     public static void run(String executionDegreeID, List<String> coordinatorsToRemoveIDs) {
 
         for (final String coordinatorToRemoveID : coordinatorsToRemoveIDs) {
-            final Coordinator coordinator = AbstractDomainObject.fromExternalId(coordinatorToRemoveID);
+            final Coordinator coordinator = FenixFramework.getDomainObject(coordinatorToRemoveID);
             if (coordinator != null) {
                 final Person person = coordinator.getPerson();
 

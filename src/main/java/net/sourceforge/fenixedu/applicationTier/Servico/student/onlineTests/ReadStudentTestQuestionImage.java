@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Susana Fernandes
@@ -19,15 +19,15 @@ public class ReadStudentTestQuestionImage {
     @Service
     public static String run(String registrationId, String distributedTestId, String questionId, Integer imageId,
             Integer feedbackId, Integer itemIndex, String path) throws FenixServiceException {
-        final DistributedTest distributedTest = AbstractDomainObject.fromExternalId(distributedTestId);
-        final Registration registration = AbstractDomainObject.fromExternalId(registrationId);
+        final DistributedTest distributedTest = FenixFramework.getDomainObject(distributedTestId);
+        final Registration registration = FenixFramework.getDomainObject(registrationId);
         return run(registration, distributedTest, questionId, imageId, feedbackId, itemIndex, path);
     }
 
     @Service
     public static String run(Registration registration, DistributedTest distributedTest, String questionId, Integer imageId,
             Integer feedbackId, Integer itemIndex, String path) throws FenixServiceException {
-        final Question question = AbstractDomainObject.fromExternalId(questionId);
+        final Question question = FenixFramework.getDomainObject(questionId);
         for (StudentTestQuestion studentTestQuestion : registration.getStudentTestsQuestions()) {
             if (studentTestQuestion.getDistributedTest() == distributedTest && studentTestQuestion.getQuestion() == question) {
                 ParseSubQuestion parse = new ParseSubQuestion();

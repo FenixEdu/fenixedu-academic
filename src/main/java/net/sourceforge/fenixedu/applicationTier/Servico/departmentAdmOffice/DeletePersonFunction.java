@@ -11,12 +11,12 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class DeletePersonFunction {
 
     protected void run(String personFunctionID) throws FenixServiceException {
-        PersonFunction personFunction = (PersonFunction) AbstractDomainObject.fromExternalId(personFunctionID);
+        PersonFunction personFunction = (PersonFunction) FenixFramework.getDomainObject(personFunctionID);
         if (personFunction == null) {
             throw new FenixServiceException("error.delete.personFunction.no.personFunction");
         }

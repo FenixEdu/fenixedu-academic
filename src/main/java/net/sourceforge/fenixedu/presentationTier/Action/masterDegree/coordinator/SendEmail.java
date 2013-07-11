@@ -15,7 +15,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "coordinator", path = "/sendEmail")
 public class SendEmail extends FenixDispatchAction {
@@ -28,7 +28,7 @@ public class SendEmail extends FenixDispatchAction {
         }
 
         try {
-            return AbstractDomainObject.fromExternalId(parameter);
+            return FenixFramework.getDomainObject(parameter);
         } catch (NumberFormatException e) {
             return null;
         }

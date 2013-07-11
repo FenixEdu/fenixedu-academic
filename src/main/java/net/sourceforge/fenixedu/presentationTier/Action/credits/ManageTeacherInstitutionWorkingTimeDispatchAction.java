@@ -20,7 +20,7 @@ import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Ricardo Rodrigues
@@ -33,9 +33,9 @@ public class ManageTeacherInstitutionWorkingTimeDispatchAction extends FenixDisp
 
     public ActionForward create(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws NumberFormatException,  FenixServiceException {
-        Teacher teacher = AbstractDomainObject.fromExternalId((String) getFromRequest(request, "teacherId"));
+        Teacher teacher = FenixFramework.getDomainObject((String) getFromRequest(request, "teacherId"));
         ExecutionSemester executionPeriod =
-                AbstractDomainObject.fromExternalId((String) getFromRequest(request, "executionPeriodId"));
+                FenixFramework.getDomainObject((String) getFromRequest(request, "executionPeriodId"));
         TeacherService teacherService = TeacherService.getTeacherService(teacher, executionPeriod);
         request.setAttribute("teacherService", teacherService);
         return mapping.findForward("edit-institution-work-time");
@@ -44,7 +44,7 @@ public class ManageTeacherInstitutionWorkingTimeDispatchAction extends FenixDisp
     public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws NumberFormatException,  FenixServiceException {
         InstitutionWorkTime institutionWorkTime =
-                AbstractDomainObject.fromExternalId((String) getFromRequest(request, "institutionWorkTimeOid"));
+                FenixFramework.getDomainObject((String) getFromRequest(request, "institutionWorkTimeOid"));
         request.setAttribute("institutionWorkTime", institutionWorkTime);
         return mapping.findForward("edit-institution-work-time");
     }
@@ -53,7 +53,7 @@ public class ManageTeacherInstitutionWorkingTimeDispatchAction extends FenixDisp
             HttpServletResponse response, RoleType roleType) throws NumberFormatException, 
             FenixServiceException {
         InstitutionWorkTime institutionWorkTime =
-                AbstractDomainObject.fromExternalId((String) getFromRequest(request, "institutionWorkTimeOid"));
+                FenixFramework.getDomainObject((String) getFromRequest(request, "institutionWorkTimeOid"));
         request.setAttribute("teacherOid", institutionWorkTime.getTeacherService().getTeacher().getExternalId());
         request.setAttribute("executionYearOid", institutionWorkTime.getTeacherService().getExecutionPeriod().getExecutionYear()
                 .getExternalId());

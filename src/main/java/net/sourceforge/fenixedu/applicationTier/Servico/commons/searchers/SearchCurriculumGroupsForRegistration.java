@@ -15,7 +15,7 @@ public class SearchCurriculumGroupsForRegistration implements AutoCompleteProvid
     }
 
     private Registration getRegistration(Map<String, String> arguments) {
-        return Registration.fromExternalId(arguments.get("registrationID"));
+        return FenixFramework.getDomainObject(arguments.get("registrationID"));
     }
 
 }

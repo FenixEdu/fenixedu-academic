@@ -48,7 +48,7 @@ import org.joda.time.LocalDate;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
@@ -361,7 +361,7 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
 
     protected Degree getDegree(final HttpServletRequest request) {
         final String degreeIdParam = request.getParameter("degreeID");
-        return AbstractDomainObject.fromExternalId(degreeIdParam);
+        return FenixFramework.getDomainObject(degreeIdParam);
     }
 
     protected Set<Degree> getDegrees(final DegreeType degreeType) {

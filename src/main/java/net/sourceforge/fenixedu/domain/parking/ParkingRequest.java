@@ -25,7 +25,7 @@ import net.sourceforge.fenixedu.util.ByteArray;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 import pt.utl.ist.fenix.tools.util.FileUtils;
@@ -832,7 +832,7 @@ public class ParkingRequest extends ParkingRequest_Base {
                 parkingRequest.edit(this);
                 VirtualPath filePath = getFilePath(parkingRequest.getExternalId());
                 writeDriverLicenseFile(parkingRequest, filePath);
-                Vehicle firstVehicle = AbstractDomainObject.fromExternalId(getFirstVechicleID());
+                Vehicle firstVehicle = FenixFramework.getDomainObject(getFirstVechicleID());
                 if (firstVehicle != null) {
                     firstVehicle.setPlateNumber(getFirstCarPlateNumber());
                     firstVehicle.setVehicleMake(getFirstCarMake());
@@ -843,7 +843,7 @@ public class ParkingRequest extends ParkingRequest_Base {
                     writeFirstVehicleDocuments(firstVehicle, filePath);
                 }
                 if (getSecondVechicleID() != null) {
-                    Vehicle secondVehicle = AbstractDomainObject.fromExternalId(getSecondVechicleID());
+                    Vehicle secondVehicle = FenixFramework.getDomainObject(getSecondVechicleID());
 
                     if (getSecondCarMake() == null) {
                         secondVehicle.delete();

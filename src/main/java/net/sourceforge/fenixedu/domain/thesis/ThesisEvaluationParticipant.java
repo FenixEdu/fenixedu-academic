@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import dml.runtime.RelationAdapter;
 
 public class ThesisEvaluationParticipant extends ThesisEvaluationParticipant_Base {

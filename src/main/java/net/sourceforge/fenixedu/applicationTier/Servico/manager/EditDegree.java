@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class EditDegree {
@@ -24,7 +24,7 @@ public class EditDegree {
             throw new InvalidArgumentsServiceException();
         }
 
-        final Degree degreeToEdit = AbstractDomainObject.fromExternalId(externalId);
+        final Degree degreeToEdit = FenixFramework.getDomainObject(externalId);
 
         if (degreeToEdit == null) {
             throw new NonExistingServiceException();

@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -93,7 +93,7 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
 
     public DegreeCurricularPlan getDegreeCurricularPlan() {
         final String degreeCurricularPlanID = getDegreeCurricularPlanID();
-        return AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
+        return FenixFramework.getDomainObject(degreeCurricularPlanID);
     }
 
     public String getStudentCurricularPlanStateString() {
@@ -273,7 +273,7 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
 
     public ExecutionYear getExecutionYear() {
         if (executionDegreeId != null) {
-            ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeId);
+            ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreeId);
             return executionDegree.getExecutionYear();
         }
         return ExecutionYear.readCurrentExecutionYear();

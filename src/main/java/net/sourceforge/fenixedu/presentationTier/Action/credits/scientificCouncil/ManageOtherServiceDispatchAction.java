@@ -22,7 +22,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "scientificCouncil", path = "/otherServiceManagement", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "editOtherService", path = "/credits/otherService/editOtherService.jsp"),
@@ -33,13 +33,13 @@ public class ManageOtherServiceDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareEditOtherService(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws NumberFormatException,  FenixServiceException {
-        OtherService otherService = AbstractDomainObject.fromExternalId((String) getFromRequest(request, "otherServiceOid"));
+        OtherService otherService = FenixFramework.getDomainObject((String) getFromRequest(request, "otherServiceOid"));
         if (otherService != null) {
             request.setAttribute("otherService", otherService);
         } else {
             ExecutionSemester executionSemester =
-                    AbstractDomainObject.fromExternalId((String) getFromRequest(request, "executionPeriodOid"));
-            Teacher teacher = AbstractDomainObject.fromExternalId((String) getFromRequest(request, "teacherId"));
+                    FenixFramework.getDomainObject((String) getFromRequest(request, "executionPeriodOid"));
+            Teacher teacher = FenixFramework.getDomainObject((String) getFromRequest(request, "teacherId"));
             TeacherService teacherService = TeacherService.getTeacherService(teacher, executionSemester);
             request.setAttribute("teacherService", teacherService);
         }
@@ -48,7 +48,7 @@ public class ManageOtherServiceDispatchAction extends FenixDispatchAction {
 
     public ActionForward deleteOtherService(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws NumberFormatException,  FenixServiceException {
-        OtherService otherService = AbstractDomainObject.fromExternalId((String) getFromRequest(request, "otherServiceOid"));
+        OtherService otherService = FenixFramework.getDomainObject((String) getFromRequest(request, "otherServiceOid"));
         request.setAttribute("teacherOid", otherService.getTeacherService().getTeacher().getExternalId());
         request.setAttribute("executionYearOid", otherService.getTeacherService().getExecutionPeriod().getExecutionYear()
                 .getExternalId());

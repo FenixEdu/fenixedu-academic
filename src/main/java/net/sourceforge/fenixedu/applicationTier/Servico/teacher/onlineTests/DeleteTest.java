@@ -5,12 +5,12 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.onlineTests.Test;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class DeleteTest {
 
     protected void run(final String executionCourseId, final String testId) throws InvalidArgumentsServiceException {
-        Test test = AbstractDomainObject.fromExternalId(testId);
+        Test test = FenixFramework.getDomainObject(testId);
         test.delete();
     }
 

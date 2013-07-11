@@ -21,7 +21,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class EquivalencyPlanDA extends FenixDispatchAction {
 
@@ -91,22 +91,22 @@ public class EquivalencyPlanDA extends FenixDispatchAction {
 
     private EquivalencePlanEntry getEquivalencePlanEntry(HttpServletRequest request) {
         final String equivalencePlanEntryIDString = request.getParameter("equivalencePlanEntryID");
-        return AbstractDomainObject.fromExternalId(equivalencePlanEntryIDString);
+        return FenixFramework.getDomainObject(equivalencePlanEntryIDString);
     }
 
     private DegreeModule getDegreeModule(HttpServletRequest request) {
         final String degreeModuleIDString = request.getParameter("degreeModuleID");
-        return AbstractDomainObject.fromExternalId(degreeModuleIDString);
+        return FenixFramework.getDomainObject(degreeModuleIDString);
     }
 
     private EquivalencePlan getEquivalencePlan(HttpServletRequest request) {
         final String equivalencePlanIDString = request.getParameter("equivalencePlanID");
-        return AbstractDomainObject.fromExternalId(equivalencePlanIDString);
+        return FenixFramework.getDomainObject(equivalencePlanIDString);
     }
 
     private DegreeCurricularPlan getDegreeCurricularPlan(HttpServletRequest request) {
         final String degreeCurricularPlanIDString = request.getParameter("degreeCurricularPlanID");
-        return AbstractDomainObject.fromExternalId(degreeCurricularPlanIDString);
+        return FenixFramework.getDomainObject(degreeCurricularPlanIDString);
     }
 
 }

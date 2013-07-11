@@ -26,7 +26,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "resourceAllocationManager", path = "/vehicleManagement", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "seeVehicleAllocationHistory", path = "see-vehicle-allocation-history"),
@@ -139,6 +139,6 @@ public class VehicleManagementDA extends FenixDispatchAction {
 
     private VehicleAllocation getAllocationFromParameter(final HttpServletRequest request) {
         final String allocationIDString = request.getParameter("allocationID");
-        return (VehicleAllocation) AbstractDomainObject.fromExternalId(allocationIDString);
+        return (VehicleAllocation) FenixFramework.getDomainObject(allocationIDString);
     }
 }

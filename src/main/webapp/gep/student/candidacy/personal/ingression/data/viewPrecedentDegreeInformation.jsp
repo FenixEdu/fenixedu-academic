@@ -8,7 +8,7 @@
 <% 
 
 request.setAttribute("precedentDegreeInformationTemp", 
-	PrecedentDegreeInformation.fromExternalId(request.getParameter("precedentDegreeInformationId")));
+	FenixFramework.getDomainObject(request.getParameter("precedentDegreeInformationId")));
 
 %>
 

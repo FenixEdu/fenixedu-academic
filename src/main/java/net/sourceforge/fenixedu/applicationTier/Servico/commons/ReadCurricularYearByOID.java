@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularYear;
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -22,7 +22,7 @@ public class ReadCurricularYearByOID {
     public static InfoCurricularYear run(String oid) throws FenixServiceException {
         InfoCurricularYear result = null;
 
-        CurricularYear curricularYear = AbstractDomainObject.fromExternalId(oid);
+        CurricularYear curricularYear = FenixFramework.getDomainObject(oid);
         if (curricularYear != null) {
             result = InfoCurricularYear.newInfoFromDomain(curricularYear);
         } else {

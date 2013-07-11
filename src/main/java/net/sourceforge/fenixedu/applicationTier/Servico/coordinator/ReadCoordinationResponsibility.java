@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author João Mota 17/Set/2003
@@ -20,7 +20,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ReadCoordinationResponsibility {
 
     protected Boolean run(String executionDegreeId, IUserView userView) throws FenixServiceException {
-        ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeId);
+        ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreeId);
         Coordinator coordinator = executionDegree.getCoordinatorByTeacher(userView.getPerson());
 
         if (coordinator == null || !coordinator.getResponsible().booleanValue()) {

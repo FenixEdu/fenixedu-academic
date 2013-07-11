@@ -30,7 +30,7 @@ import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/fctDebts", module = "academicAdministration")
 @Forwards({ @Forward(name = "selectPhdStudent", path = "/academicAdminOffice/payments/selectPhdStudent.jsp"),
@@ -51,7 +51,7 @@ public class ExternalScholarshipManagementDebtsDA extends FenixDispatchAction {
 
     protected PhdIndividualProgramProcess getProcess(HttpServletRequest request) {
         final String processIdAttribute = (String) request.getAttribute("processId");
-        return AbstractDomainObject.fromExternalId(processIdAttribute != null ? processIdAttribute : (String) request
+        return FenixFramework.getDomainObject(processIdAttribute != null ? processIdAttribute : (String) request
                 .getParameter("processId"));
     }
 
@@ -81,7 +81,7 @@ public class ExternalScholarshipManagementDebtsDA extends FenixDispatchAction {
 
         String exemptionId = request.getParameter("exemptiontId");
         PhdGratuityExternalScholarshipExemption exemption =
-                (PhdGratuityExternalScholarshipExemption) Exemption.fromExternalId(exemptionId);
+                (PhdGratuityExternalScholarshipExemption) FenixFramework.getDomainObject(exemptionId);
         request.setAttribute("processId", ((PhdGratuityEvent) exemption.getEvent()).getPhdIndividualProgramProcess()
                 .getExternalId());
         request.setAttribute("exemption", exemption);
@@ -98,7 +98,7 @@ public class ExternalScholarshipManagementDebtsDA extends FenixDispatchAction {
 
         String exemptionId = request.getParameter("externalId");
         PhdGratuityExternalScholarshipExemption exemption =
-                (PhdGratuityExternalScholarshipExemption) Exemption.fromExternalId(exemptionId == null ? (String) request
+                (PhdGratuityExternalScholarshipExemption) FenixFramework.getDomainObject(exemptionId == null ? (String) request
                         .getAttribute("externalId") : exemptionId);
         ExternalScholarshipPhdGratuityContribuitionEvent event = exemption.getExternalScholarshipPhdGratuityContribuitionEvent();
         AmountBean bean = getRenderedObject("bean");
@@ -117,7 +117,7 @@ public class ExternalScholarshipManagementDebtsDA extends FenixDispatchAction {
     public ActionForward cancel(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
         String exemptionId = request.getParameter("externalId");
         PhdGratuityExternalScholarshipExemption exemption =
-                (PhdGratuityExternalScholarshipExemption) Exemption.fromExternalId(exemptionId == null ? (String) request
+                (PhdGratuityExternalScholarshipExemption) FenixFramework.getDomainObject(exemptionId == null ? (String) request
                         .getAttribute("externalId") : exemptionId);
         PhdGratuityEvent event = (PhdGratuityEvent) exemption.getEvent();
         PhdIndividualProgramProcess process = event.getPhdIndividualProgramProcess();

@@ -44,7 +44,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author lmac1
@@ -160,11 +160,10 @@ public class EditCurricularCourseScopeDA extends FenixDispatchAction {
         String curricularSemesterId = curricularSemesterIdString;
 
         InfoCurricularSemester infoCurricularSemester =
-                InfoCurricularSemester.newInfoFromDomain(AbstractDomainObject
-                        .<CurricularSemester> fromExternalId(curricularSemesterId));
+                InfoCurricularSemester.newInfoFromDomain(FenixFramework.<CurricularSemester> getDomainObject(curricularSemesterId));
         newInfoCurricularCourseScope.setInfoCurricularSemester(infoCurricularSemester);
 
-        InfoBranch infoBranch = new InfoBranch(AbstractDomainObject.<Branch> fromExternalId(branchIdString));
+        InfoBranch infoBranch = new InfoBranch(FenixFramework.<Branch> getDomainObject(branchIdString));
         newInfoCurricularCourseScope.setInfoBranch(infoBranch);
         newInfoCurricularCourseScope.setExternalId(oldCurricularCourseScopeId);
 

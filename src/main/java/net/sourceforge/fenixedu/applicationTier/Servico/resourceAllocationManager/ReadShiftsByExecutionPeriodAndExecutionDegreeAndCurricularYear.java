@@ -24,7 +24,7 @@ import org.apache.log4j.Logger;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixframework.DomainObject;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear {
 
@@ -39,9 +39,9 @@ public class ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear {
     public static List<InfoShift> run(AcademicInterval academicInterval, InfoExecutionDegree infoExecutionDegree,
             InfoCurricularYear infoCurricularYear) {
 
-        final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(infoExecutionDegree.getExternalId());
+        final ExecutionDegree executionDegree = FenixFramework.getDomainObject(infoExecutionDegree.getExternalId());
         final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
-        final CurricularYear curricularYear = AbstractDomainObject.fromExternalId(infoCurricularYear.getExternalId());
+        final CurricularYear curricularYear = FenixFramework.getDomainObject(infoCurricularYear.getExternalId());
         logger.warn(String.format("executionDegree %s degreeCurricularPlan %s curricularYear %s", logExternalId(executionDegree),
                 logExternalId(degreeCurricularPlan), logExternalId(curricularYear)));
         final List<InfoShift> infoShifts = new ArrayList<InfoShift>();

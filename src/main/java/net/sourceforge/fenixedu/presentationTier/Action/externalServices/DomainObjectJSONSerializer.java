@@ -12,7 +12,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import pt.ist.fenixWebFramework.FenixWebFramework;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import dml.DomainClass;
 import dml.DomainModel;
 import dml.Role;

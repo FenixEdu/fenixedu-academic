@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoCourseReport;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author jdnf and mrsp
@@ -21,10 +21,10 @@ public class EditCourseInformation {
     protected void run(String courseReportID, InfoCourseReport infoCourseReport, String newReport) throws FenixServiceException {
         final CourseReport courseReport;
         if (courseReportID != null) {
-            courseReport = AbstractDomainObject.fromExternalId(courseReportID);
+            courseReport = FenixFramework.getDomainObject(courseReportID);
         } else {
             final ExecutionCourse executionCourse =
-                    AbstractDomainObject.fromExternalId(infoCourseReport.getInfoExecutionCourse().getExternalId());
+                    FenixFramework.getDomainObject(infoCourseReport.getInfoExecutionCourse().getExternalId());
 
             courseReport = executionCourse.createCourseReport(newReport);
         }

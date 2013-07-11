@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class DeleteDegreeCurricularPlan {
 
@@ -17,7 +17,7 @@ public class DeleteDegreeCurricularPlan {
             throw new InvalidArgumentsServiceException();
         }
 
-        final DegreeCurricularPlan dcpToDelete = AbstractDomainObject.fromExternalId(externalId);
+        final DegreeCurricularPlan dcpToDelete = FenixFramework.getDomainObject(externalId);
 
         if (dcpToDelete == null) {
             throw new NonExistingServiceException();

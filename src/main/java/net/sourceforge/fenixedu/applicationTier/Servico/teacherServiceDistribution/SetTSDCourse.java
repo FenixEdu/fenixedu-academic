@@ -11,12 +11,12 @@ import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCourse;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCurricularLoad;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDValueType;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class SetTSDCourse {
     protected void run(String tsdCourseId, Map<String, Object> tsdCourseParameters) {
 
-        TSDCourse tsdCourse = AbstractDomainObject.fromExternalId(tsdCourseId);
+        TSDCourse tsdCourse = FenixFramework.getDomainObject(tsdCourseId);
 
         String firstTimeEnrolledStudentsTypeStr = (String) tsdCourseParameters.get("firstTimeEnrolledStudentsType");
         // Object removeTSDLoad = tsdCourseParameters.get("removeTSDLoad");

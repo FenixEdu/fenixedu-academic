@@ -17,13 +17,13 @@ import net.sourceforge.fenixedu.domain.teacher.TeacherServiceLog;
 import net.sourceforge.fenixedu.presentationTier.Action.credits.ManageDegreeTeachingServicesDispatchAction.ShiftIDTeachingPercentage;
 import net.sourceforge.fenixedu.util.BundleUtil;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class UpdateDegreeTeachingServices {
 
     protected void run(String professorshipID, List<ShiftIDTeachingPercentage> shiftsIDsTeachingPercentages, RoleType roleType) {
 
-        Professorship professorship = AbstractDomainObject.fromExternalId(professorshipID);
+        Professorship professorship = FenixFramework.getDomainObject(professorshipID);
         Teacher teacher = professorship.getTeacher();
         ExecutionSemester executionSemester = professorship.getExecutionCourse().getExecutionPeriod();
         TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
@@ -36,7 +36,7 @@ public class UpdateDegreeTeachingServices {
                 "label.teacher.schedule.change"));
 
         for (ShiftIDTeachingPercentage shiftIDTeachingPercentage : shiftsIDsTeachingPercentages) {
-            Shift shift = AbstractDomainObject.fromExternalId(shiftIDTeachingPercentage.getShiftID());
+            Shift shift = FenixFramework.getDomainObject(shiftIDTeachingPercentage.getShiftID());
             DegreeTeachingService degreeTeachingService =
                     teacherService.getDegreeTeachingServiceByShiftAndProfessorship(shift, professorship);
             if (degreeTeachingService != null) {

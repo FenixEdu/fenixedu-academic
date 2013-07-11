@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class AssociateExecutionCourseToCurricularCourse {
 
@@ -19,12 +19,12 @@ public class AssociateExecutionCourseToCurricularCourse {
     public static void run(String executionCourseId, String curricularCourseId, String executionPeriodId)
             throws FenixServiceException {
 
-        final CurricularCourse curricularCourse = (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseId);
+        final CurricularCourse curricularCourse = (CurricularCourse) FenixFramework.getDomainObject(curricularCourseId);
         if (curricularCourse == null) {
             throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
         }
 
-        final ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodId);
+        final ExecutionSemester executionSemester = FenixFramework.getDomainObject(executionPeriodId);
         if (executionSemester == null) {
             throw new NonExistingServiceException("message.nonExistingExecutionPeriod", null);
         }
@@ -36,7 +36,7 @@ public class AssociateExecutionCourseToCurricularCourse {
             }
         }
 
-        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
+        final ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseId);
         if (executionCourse == null) {
             throw new NonExistingServiceException("message.nonExisting.executionCourse", null);
         }

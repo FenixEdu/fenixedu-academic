@@ -7,11 +7,11 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcess;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcessPhase;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class CreateTSDProcessPhase {
     protected TSDProcessPhase run(String tsdProcessId, String name) {
-        TSDProcess tsdProcess = AbstractDomainObject.fromExternalId(tsdProcessId);
+        TSDProcess tsdProcess = FenixFramework.getDomainObject(tsdProcessId);
 
         return tsdProcess.createTSDProcessPhase(name);
     }

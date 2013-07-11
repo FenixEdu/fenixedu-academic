@@ -25,7 +25,7 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author nmgo
@@ -35,7 +35,7 @@ public class ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYe
 
     public SortedSet<DegreeModuleScope> run(String degreeCurricularPlanID, AcademicInterval academicInterval)
             throws FenixServiceException {
-        final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
+        final DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
 
         final ComparatorChain comparator = new ComparatorChain();
         comparator.addComparator(new BeanComparator("curricularYear"));
@@ -56,8 +56,8 @@ public class ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYe
 
     @Deprecated
     public SortedSet<DegreeModuleScope> run(String degreeCurricularPlanID, String executioYearID) throws FenixServiceException {
-        final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
-        final ExecutionYear executionYear = AbstractDomainObject.fromExternalId(executioYearID);
+        final DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
+        final ExecutionYear executionYear = FenixFramework.getDomainObject(executioYearID);
 
         final ComparatorChain comparator = new ComparatorChain();
         comparator.addComparator(new BeanComparator("curricularYear"));

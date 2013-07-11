@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.Person;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ChangePersonalStudentInfo {
 
@@ -29,7 +29,7 @@ public class ChangePersonalStudentInfo {
     @Service
     public static InfoPerson run(InfoPersonEditor newInfoPerson) throws FenixServiceException {
 
-        final Person person = (Person) AbstractDomainObject.fromExternalId(newInfoPerson.getExternalId());
+        final Person person = (Person) FenixFramework.getDomainObject(newInfoPerson.getExternalId());
         if (person == null) {
             throw new ExcepcaoInexistente("error.changePersonalStudentInfo.noPerson");
         }

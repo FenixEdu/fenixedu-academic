@@ -32,7 +32,7 @@ import net.sourceforge.fenixedu.util.CalculateGuideTotal;
 import net.sourceforge.fenixedu.util.State;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class EditGuideInformation {
 
@@ -114,7 +114,7 @@ public class EditGuideInformation {
                 }
                 // Remove the Guide entries wich have been deleted
                 for (InfoGuideEntry infoGuideEntry : guideEntriesToRemove) {
-                    GuideEntry guideEntry = AbstractDomainObject.fromExternalId(infoGuideEntry.getExternalId());
+                    GuideEntry guideEntry = FenixFramework.getDomainObject(infoGuideEntry.getExternalId());
                     guideEntry.delete();
                 }
 
@@ -244,7 +244,7 @@ public class EditGuideInformation {
         Party contributor = Party.readByContributorNumber(infoGuide.getInfoContributor().getContributorNumber());
 
         ExecutionDegree executionDegree =
-                AbstractDomainObject.fromExternalId(infoGuide.getInfoExecutionDegree().getExternalId());
+                FenixFramework.getDomainObject(infoGuide.getInfoExecutionDegree().getExternalId());
         Guide guide = new Guide();
 
         // Set the fields

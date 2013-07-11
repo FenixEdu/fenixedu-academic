@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.domain.precedences.Precedence;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class MergePrecedencesForDegreeCurricularPlan {
 
@@ -17,8 +17,8 @@ public class MergePrecedencesForDegreeCurricularPlan {
             throw new InvalidArgumentsServiceException("error.manager.samePrecedencesForMerge");
         }
 
-        Precedence firstPrecedence = AbstractDomainObject.fromExternalId(firstPrecedenceID);
-        Precedence secondPrecedence = AbstractDomainObject.fromExternalId(secondPrecedenceID);
+        Precedence firstPrecedence = FenixFramework.getDomainObject(firstPrecedenceID);
+        Precedence secondPrecedence = FenixFramework.getDomainObject(secondPrecedenceID);
 
         firstPrecedence.mergePrecedences(secondPrecedence);
     }

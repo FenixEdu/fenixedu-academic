@@ -111,7 +111,7 @@ public abstract class AbstractManageThesisDA extends FenixDispatchAction {
             HttpServletResponse response) throws Exception;
 
     protected DegreeCurricularPlan getDegreeCurricularPlan(HttpServletRequest request) {
-        return DegreeCurricularPlan.fromExternalId(request.getParameter("degreeCurricularPlanID"));
+        return FenixFramework.getDomainObject(request.getParameter("degreeCurricularPlanID"));
     }
 
     public ActionForward selectPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

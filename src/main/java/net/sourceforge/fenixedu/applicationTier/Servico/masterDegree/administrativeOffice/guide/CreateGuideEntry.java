@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.domain.GuideEntry;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * 
@@ -20,7 +20,7 @@ public class CreateGuideEntry {
     public static void run(String guideID, GraduationType graduationType, DocumentType documentType, String description,
             Double price, Integer quantity) {
 
-        Guide guide = AbstractDomainObject.fromExternalId(guideID);
+        Guide guide = FenixFramework.getDomainObject(guideID);
 
         GuideEntry guideEntry = new GuideEntry();
 

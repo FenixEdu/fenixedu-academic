@@ -25,7 +25,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/caseHandlingOver23IndividualCandidacyProcess", module = "academicAdministration",
         formBeanClass = Over23IndividualCandidacyProcessDA.CandidacyForm.class)
@@ -138,7 +138,7 @@ public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProce
     }
 
     private Degree getDegree(final String degreeId) {
-        return AbstractDomainObject.fromExternalId(degreeId);
+        return FenixFramework.getDomainObject(degreeId);
     }
 
     public ActionForward prepareExecuteEditCandidacyPersonalInformation(ActionMapping mapping, ActionForm actionForm,

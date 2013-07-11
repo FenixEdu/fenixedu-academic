@@ -5,13 +5,13 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class VerifyIfGroupPropertiesHasProjectProposal {
 
     protected Boolean run(String executionCourseId, String groupPropertiesId) {
-        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
-        final Grouping grouping = AbstractDomainObject.fromExternalId(groupPropertiesId);
+        final ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseId);
+        final Grouping grouping = FenixFramework.getDomainObject(groupPropertiesId);
         return executionCourse.hasExportGrouping(grouping);
     }
 

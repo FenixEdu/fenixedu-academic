@@ -22,7 +22,7 @@ import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
 import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "departmentAdmOffice", path = "/institutionWorkingTimeManagement",
         input = "/institutionWorkingTimeManagement.do?method=prepareEdit&page=0",
@@ -36,7 +36,7 @@ public class DepartmentAdmOfficeManageTeacherInstitutionWorkingTimeDispatchActio
     public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws NumberFormatException,  FenixServiceException {
         InstitutionWorkTime institutionWorkTime =
-                AbstractDomainObject.fromExternalId((String) getFromRequest(request, "institutionWorkTimeOid"));
+                FenixFramework.getDomainObject((String) getFromRequest(request, "institutionWorkTimeOid"));
         Teacher teacher = institutionWorkTime.getTeacherService().getTeacher();
         if (teacher == null
                 || !isTeacherOfManageableDepartments(teacher, institutionWorkTime.getTeacherService().getExecutionPeriod(),

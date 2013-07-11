@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.elections.DelegateElection;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class DeleteDelegateCandidacyPeriod {
 
@@ -28,7 +28,7 @@ public class DeleteDelegateCandidacyPeriod {
     public static void run(ElectionPeriodBean bean, String degreeOID) throws FenixServiceException {
         final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
 
-        Degree degree = AbstractDomainObject.fromExternalId(degreeOID);
+        Degree degree = FenixFramework.getDomainObject(degreeOID);
 
         DelegateElection election =
                 degree.getYearDelegateElectionWithLastCandidacyPeriod(executionYear, bean.getCurricularYear());

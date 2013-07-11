@@ -38,7 +38,7 @@ import org.apache.log4j.Logger;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.StringAppender;
 
 public class InsertStudentTestResponses {
@@ -65,7 +65,7 @@ public class InsertStudentTestResponses {
             throw new NotAuthorizedStudentToDoTestException();
         }
 
-        final DistributedTest distributedTest = AbstractDomainObject.fromExternalId(distributedTestId);
+        final DistributedTest distributedTest = FenixFramework.getDomainObject(distributedTestId);
         if (distributedTest == null) {
             throw new FenixServiceException();
         }

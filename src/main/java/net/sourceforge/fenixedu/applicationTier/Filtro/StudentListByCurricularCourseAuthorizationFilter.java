@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
@@ -62,7 +62,7 @@ public class StudentListByCurricularCourseAuthorizationFilter extends Filtro {
 
         // Read The DegreeCurricularPlan
         try {
-            curricularCourse = (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseID);
+            curricularCourse = (CurricularCourse) FenixFramework.getDomainObject(curricularCourseID);
         } catch (Exception e) {
             return false;
         }

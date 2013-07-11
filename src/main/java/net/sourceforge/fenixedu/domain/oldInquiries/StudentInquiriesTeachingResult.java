@@ -20,7 +20,7 @@ import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class StudentInquiriesTeachingResult extends StudentInquiriesTeachingResult_Base {
 
@@ -613,13 +613,13 @@ public class StudentInquiriesTeachingResult extends StudentInquiriesTeachingResu
         for (String row : values.split("\n")) {
             String[] columns = row.split("\t");
 
-            ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(columns[executionCourseHeaderIndex]);
+            ExecutionCourse executionCourse = FenixFramework.getDomainObject(columns[executionCourseHeaderIndex]);
             if (executionCourse == null) {
                 throw new DomainException("error.StudentInquiriesCourseResult.executionCourseNotFound",
                         columns[executionCourseHeaderIndex]);
             }
 
-            ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(columns[executionDegreeHeaderIndex]);
+            ExecutionDegree executionDegree = FenixFramework.getDomainObject(columns[executionDegreeHeaderIndex]);
             if (executionDegree == null) {
                 throw new DomainException("error.StudentInquiriesCourseResult.executionDegreeNotFound",
                         columns[executionDegreeHeaderIndex]);
@@ -631,7 +631,7 @@ public class StudentInquiriesTeachingResult extends StudentInquiriesTeachingResu
                                 .getExecutionYear().getName(), executionCourse.getNome());
             }
 
-            Professorship professorship = AbstractDomainObject.fromExternalId(columns[professorshipHeaderIndex]);
+            Professorship professorship = FenixFramework.getDomainObject(columns[professorshipHeaderIndex]);
             if (professorship == null) {
                 throw new DomainException("error.StudentInquiriesCourseResult.professorshipNotFound",
                         columns[professorshipHeaderIndex], columns[executionCourseHeaderIndex]);
@@ -687,7 +687,7 @@ public class StudentInquiriesTeachingResult extends StudentInquiriesTeachingResu
                     deletedItems = true;
                 }
             } else {
-                ExecutionCourse executionCourse = ExecutionCourse.fromExternalId(teachingBean.getKeyExecutionCourseHeader());
+                ExecutionCourse executionCourse = FenixFramework.getDomainObject(teachingBean.getKeyExecutionCourseHeader());
                 if (executionCourse == null) {
                     throw new DomainException("error.StudentInquiriesCourseResult.executionCourseNotFound",
                             teachingBean.getKeyExecutionCourseHeader());

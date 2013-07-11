@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.teacher.TeacherMasterDegreeService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class EditTeacherMasterDegreeCredits {
 
@@ -27,7 +27,7 @@ public class EditTeacherMasterDegreeCredits {
             if (hoursString.equals("") && creditsString.equals("")) {
                 continue;
             }
-            Professorship professorship = AbstractDomainObject.fromExternalId(stringID);
+            Professorship professorship = FenixFramework.getDomainObject(stringID);
             Teacher teacher = professorship.getTeacher();
             ExecutionSemester executionSemester = professorship.getExecutionCourse().getExecutionPeriod();
 

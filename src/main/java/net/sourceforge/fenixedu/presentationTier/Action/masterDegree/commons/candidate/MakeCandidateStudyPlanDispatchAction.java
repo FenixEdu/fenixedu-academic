@@ -48,7 +48,7 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
 import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -77,7 +77,7 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
 
         String degreeCurricularPlanID = getFromRequest("degreeCurricularPlanID", request);
         String executionDegreeID = getFromRequest("executionDegreeID", request);
-        ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeID);
+        ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreeID);
 
         ActionErrors errors = new ActionErrors();
         if (executionDegree == null) {

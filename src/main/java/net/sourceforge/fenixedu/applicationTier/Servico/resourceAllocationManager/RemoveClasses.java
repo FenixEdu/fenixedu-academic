@@ -12,17 +12,17 @@ import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class RemoveClasses {
 
     @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
     @Service
     public static Boolean run(InfoShift infoShift, List<String> classOIDs) {
-        final Shift shift = AbstractDomainObject.fromExternalId(infoShift.getExternalId());
+        final Shift shift = FenixFramework.getDomainObject(infoShift.getExternalId());
 
         for (int i = 0; i < classOIDs.size(); i++) {
-            final SchoolClass schoolClass = AbstractDomainObject.fromExternalId(classOIDs.get(i));
+            final SchoolClass schoolClass = FenixFramework.getDomainObject(classOIDs.get(i));
             shift.getAssociatedClasses().remove(schoolClass);
             schoolClass.getAssociatedShifts().remove(shift);
         }

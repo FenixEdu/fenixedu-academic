@@ -26,7 +26,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ManageNotNeedToEnrollDispathAction extends FenixDispatchAction {
 
@@ -102,7 +102,7 @@ public class ManageNotNeedToEnrollDispathAction extends FenixDispatchAction {
                             .get("studentCurricularPlanID");
         }
 
-        StudentCurricularPlan studentCurricularPlan = AbstractDomainObject.fromExternalId(scpID);
+        StudentCurricularPlan studentCurricularPlan = FenixFramework.getDomainObject(scpID);
         InfoStudentCurricularPlan infoSCP = InfoStudentCurricularPlan.newInfoFromDomain(studentCurricularPlan);
 
         final List<InfoNotNeedToEnrollInCurricularCourse> infoNotNeedToEnrollCurricularCourses =

@@ -11,14 +11,14 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ReadStudentsByPerson {
 
     protected List run(InfoPerson infoPerson) {
         final List<InfoStudent> result = new ArrayList<InfoStudent>();
 
-        Person person = (Person) AbstractDomainObject.fromExternalId(infoPerson.getExternalId());
+        Person person = (Person) FenixFramework.getDomainObject(infoPerson.getExternalId());
         for (final Registration registration : person.getStudents()) {
             result.add(InfoStudent.newInfoFromDomain(registration));
         }

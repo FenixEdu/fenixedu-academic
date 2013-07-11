@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class LoggedCoordinatorCanEdit {
 
@@ -28,10 +28,10 @@ public class LoggedCoordinatorCanEdit {
         }
 
         final Person person = Person.readPersonByUsername(username);
-        ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeCode);
+        ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreeCode);
         ExecutionYear executionYear = executionDegree.getExecutionYear();
 
-        CurricularCourse curricularCourse = (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseCode);
+        CurricularCourse curricularCourse = (CurricularCourse) FenixFramework.getDomainObject(curricularCourseCode);
         if (curricularCourse == null) {
             throw new NonExistingServiceException();
         }

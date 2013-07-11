@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Susana Fernandes
@@ -28,10 +28,10 @@ public class ReadShiftsByDistributedTest {
 
     public List<InfoShift> run(String executionCourseId, String distributedTestId) throws FenixServiceException {
 
-        final DistributedTest distributedTest = AbstractDomainObject.fromExternalId(distributedTestId);
+        final DistributedTest distributedTest = FenixFramework.getDomainObject(distributedTestId);
         final Set<Registration> students = distributedTest != null ? distributedTest.findStudents() : new HashSet<Registration>();
 
-        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
+        final ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseId);
         if (executionCourse == null) {
             throw new InvalidArgumentsServiceException();
         }

@@ -4,14 +4,14 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.research.project.Project;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class DeleteResearchProject {
 
     @Checked("ResultPredicates.author")
     @Service
     public static void run(String oid) throws FenixServiceException {
-        Project project = AbstractDomainObject.fromExternalId(oid);
+        Project project = FenixFramework.getDomainObject(oid);
         if (project == null) {
             throw new FenixServiceException();
         }

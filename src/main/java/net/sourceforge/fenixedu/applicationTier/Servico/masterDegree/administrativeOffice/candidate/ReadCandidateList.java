@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.util.SituationName;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ReadCandidateList {
 
@@ -28,7 +28,7 @@ public class ReadCandidateList {
             Integer candidateNumber, String executionYearString) {
 
         final ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(executionYearString);
-        ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(degreeName);
+        ExecutionDegree executionDegree = FenixFramework.getDomainObject(degreeName);
 
         final Set<MasterDegreeCandidate> result;
         if (executionDegree == null && degreeType == null && candidateSituation == null && candidateNumber == null) {

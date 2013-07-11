@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.BibliographicReference;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Fernanda Quitério
@@ -17,7 +17,7 @@ public class EditBibliographicReference {
     protected Boolean run(String bibliographicReferenceID, String newTitle, String newAuthors, String newReference,
             String newYear, Boolean optional) throws FenixServiceException {
 
-        final BibliographicReference bibliographicReference = AbstractDomainObject.fromExternalId(bibliographicReferenceID);
+        final BibliographicReference bibliographicReference = FenixFramework.getDomainObject(bibliographicReferenceID);
         if (bibliographicReference == null) {
             throw new InvalidArgumentsServiceException();
         }

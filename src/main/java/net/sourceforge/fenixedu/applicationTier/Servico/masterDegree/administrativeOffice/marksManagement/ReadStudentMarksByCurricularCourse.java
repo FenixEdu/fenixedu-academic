@@ -26,7 +26,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Fernanda Quitério 01/07/2003
@@ -43,7 +43,7 @@ public class ReadStudentMarksByCurricularCourse {
         List<InfoSiteEnrolmentEvaluation> infoSiteEnrolmentEvaluations = new ArrayList<InfoSiteEnrolmentEvaluation>();
 
         Enrolment enrolment =
-                enrolmentId != null ? (Enrolment) AbstractDomainObject.fromExternalId(enrolmentId) : getEnrolment(
+                enrolmentId != null ? (Enrolment) FenixFramework.getDomainObject(enrolmentId) : getEnrolment(
                         curricularCourseID, studentNumber, executionYear);
 
         if (enrolment != null) {
@@ -89,7 +89,7 @@ public class ReadStudentMarksByCurricularCourse {
 
     private static Enrolment getEnrolment(String curricularCourseID, Integer studentNumber, String executionYear)
             throws ExistingServiceException {
-        CurricularCourse curricularCourse = (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseID);
+        CurricularCourse curricularCourse = (CurricularCourse) FenixFramework.getDomainObject(curricularCourseID);
 
         final CurricularCourse curricularCourseTemp = curricularCourse;
 

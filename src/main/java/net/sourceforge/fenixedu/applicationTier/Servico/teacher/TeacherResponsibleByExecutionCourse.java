@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Teacher;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Tânia Pousão Create on 18/Dez/2003
@@ -21,12 +21,12 @@ public class TeacherResponsibleByExecutionCourse {
 
     private static boolean ExecutionCourseResponsibleTeacher(String teacherUserName, String executionCourseCode) {
         final Teacher teacher = Teacher.readTeacherByUsername(teacherUserName);
-        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseCode);
+        final ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseCode);
         return teacher.isResponsibleFor(executionCourse) != null;
     }
 
     private static boolean CurricularCourseNotBasic(String curricularCourseCode) {
-        CurricularCourse curricularCourse = (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseCode);
+        CurricularCourse curricularCourse = (CurricularCourse) FenixFramework.getDomainObject(curricularCourseCode);
         return curricularCourse.getBasic() == Boolean.FALSE;
     }
 

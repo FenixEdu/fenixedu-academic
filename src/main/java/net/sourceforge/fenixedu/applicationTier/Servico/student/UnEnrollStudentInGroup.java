@@ -28,7 +28,7 @@ import org.apache.struts.util.MessageResources;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author asnr and scpo
@@ -50,7 +50,7 @@ public class UnEnrollStudentInGroup {
 
         ServiceMonitoring.logService(UnEnrollStudentInGroup.class, userName, studentGroupCode);
 
-        StudentGroup studentGroup = AbstractDomainObject.fromExternalId(studentGroupCode);
+        StudentGroup studentGroup = FenixFramework.getDomainObject(studentGroupCode);
         if (studentGroup == null) {
             throw new InvalidSituationServiceException();
         }

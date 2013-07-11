@@ -19,7 +19,7 @@ public class DeleteExecutionCourseResultsBean implements Serializable {
     public boolean deleteResults() {
         ExecutionCourse executionCourse = null;
         try {
-            executionCourse = ExecutionCourse.fromExternalId(getExecutionCourseOID().toString());
+            executionCourse = FenixFramework.getDomainObject(getExecutionCourseOID().toString());
         } catch (ClassCastException cce) {
             throw new DomainException("error.executionCourse.dontExist", cce.getCause());
         } catch (MissingObjectException moe) {
@@ -28,7 +28,7 @@ public class DeleteExecutionCourseResultsBean implements Serializable {
         if (getExecutionDegreeOID() != null) {
             ExecutionDegree executionDegree = null;
             try {
-                executionDegree = ExecutionDegree.fromExternalId(getExecutionDegreeOID().toString());
+                executionDegree = FenixFramework.getDomainObject(getExecutionDegreeOID().toString());
             } catch (ClassCastException cce) {
                 throw new DomainException("error.executionDegree.dontExist", cce.getCause());
             } catch (MissingObjectException moe) {
@@ -37,7 +37,7 @@ public class DeleteExecutionCourseResultsBean implements Serializable {
             InquiryQuestion inquiryQuestion = null;
             if (getInquiryQuestionOID() != null) {
                 try {
-                    inquiryQuestion = InquiryQuestion.fromExternalId(getInquiryQuestionOID().toString());
+                    inquiryQuestion = FenixFramework.getDomainObject(getInquiryQuestionOID().toString());
                 } catch (ClassCastException cce) {
                     throw new DomainException("error.inquiryQuestion.dontExist", cce.getCause());
                 } catch (MissingObjectException moe) {

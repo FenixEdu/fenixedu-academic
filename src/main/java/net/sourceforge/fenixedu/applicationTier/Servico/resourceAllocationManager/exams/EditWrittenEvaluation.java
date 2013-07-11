@@ -40,7 +40,7 @@ import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class EditWrittenEvaluation {
 
@@ -49,9 +49,9 @@ public class EditWrittenEvaluation {
             List<String> roomIDs, String writtenEvaluationOID, Season examSeason, String writtenTestDescription,
             GradeScale gradeScale) throws FenixServiceException {
 
-        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseID);
+        ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseID);
 
-        final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) AbstractDomainObject.fromExternalId(writtenEvaluationOID);
+        final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) FenixFramework.getDomainObject(writtenEvaluationOID);
         if (writtenEvaluation == null) {
             throw new FenixServiceException("error.noWrittenEvaluation");
         }
@@ -135,7 +135,7 @@ public class EditWrittenEvaluation {
     private List<AllocatableSpace> readRooms(final List<String> roomIDs) throws FenixServiceException {
         final List<AllocatableSpace> result = new ArrayList<AllocatableSpace>();
         for (final String roomID : roomIDs) {
-            final AllocatableSpace room = (AllocatableSpace) AbstractDomainObject.fromExternalId(roomID);
+            final AllocatableSpace room = (AllocatableSpace) FenixFramework.getDomainObject(roomID);
             if (room == null) {
                 throw new FenixServiceException("error.noRoom");
             }
@@ -170,7 +170,7 @@ public class EditWrittenEvaluation {
 
         final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
         for (final String executionCourseID : executionCourseIDs) {
-            final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseID);
+            final ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseID);
             if (executionCourse == null) {
                 throw new FenixServiceException("error.invalidExecutionCourse");
             }

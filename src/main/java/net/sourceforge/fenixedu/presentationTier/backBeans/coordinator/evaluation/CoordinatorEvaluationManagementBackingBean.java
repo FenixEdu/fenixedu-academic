@@ -31,7 +31,7 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.collections.comparators.ReverseComparator;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean {
 
@@ -128,7 +128,7 @@ public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean
     }
 
     public ExecutionCourse getExecutionCourse() throws FenixServiceException {
-        return AbstractDomainObject.fromExternalId(this.getExecutionCourseID());
+        return FenixFramework.getDomainObject(this.getExecutionCourseID());
     }
 
     protected List<ExecutionCourse> getExecutionCourses() {
@@ -149,7 +149,7 @@ public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean
     }
 
     public ExecutionSemester getExecutionPeriod() {
-        return executionSemester == null ? AbstractDomainObject.<ExecutionSemester> fromExternalId(getExecutionCourseID()) : this.executionSemester;
+        return executionSemester == null ? FenixFramework.<ExecutionSemester> getDomainObject(getExecutionCourseID()) : this.executionSemester;
     }
 
     protected InfoExecutionPeriod getCurrentExecutionPeriod() {
@@ -168,7 +168,7 @@ public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean
     public Evaluation getEvaluation() {
         try {
             if (this.evaluation == null && this.getEvaluationID() != null) {
-                this.evaluation = AbstractDomainObject.fromExternalId(this.getEvaluationID());
+                this.evaluation = FenixFramework.getDomainObject(this.getEvaluationID());
             }
             return this.evaluation;
         } catch (Exception e) {
@@ -218,7 +218,7 @@ public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean
     }
 
     private DegreeCurricularPlan getDegreeCurricularPlan() {
-        return AbstractDomainObject.fromExternalId(getDegreeCurricularPlanID());
+        return FenixFramework.getDomainObject(getDegreeCurricularPlanID());
     }
 
     /**

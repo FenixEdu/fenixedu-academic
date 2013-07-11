@@ -18,7 +18,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
@@ -29,7 +29,7 @@ public class VigilantGroupExportReport extends VigilantGroupManagement {
             HttpServletResponse response) throws Exception {
 
         String vigilantGroupId = request.getParameter("oid");
-        VigilantGroup group = (VigilantGroup) AbstractDomainObject.fromExternalId(vigilantGroupId);
+        VigilantGroup group = (VigilantGroup) FenixFramework.getDomainObject(vigilantGroupId);
 
         response.setContentType("text/plain");
         response.setHeader("Content-disposition", "attachment; filename=\"" + group.getName() + ".xls\"");

@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.GroupsAndShiftsManagementLog;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author joaosa & rmalo
@@ -32,7 +32,7 @@ public class DeleteGroupingMembers {
     protected Boolean run(String executionCourseCode, String groupingCode, List<String> studentUsernames)
             throws FenixServiceException {
 
-        final Grouping grouping = AbstractDomainObject.fromExternalId(groupingCode);
+        final Grouping grouping = FenixFramework.getDomainObject(groupingCode);
         if (grouping == null) {
             throw new ExistingServiceException();
         }

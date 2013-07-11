@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class AddSchoolClassesToShift {
 
@@ -17,13 +17,13 @@ public class AddSchoolClassesToShift {
     @Service
     public static void run(InfoShift infoShift, List<String> schoolClassOIDs) throws FenixServiceException {
 
-        final Shift shift = AbstractDomainObject.fromExternalId(infoShift.getExternalId());
+        final Shift shift = FenixFramework.getDomainObject(infoShift.getExternalId());
         if (shift == null) {
             throw new InvalidArgumentsServiceException();
         }
 
         for (final String schoolClassOID : schoolClassOIDs) {
-            final SchoolClass schoolClass = AbstractDomainObject.fromExternalId(schoolClassOID);
+            final SchoolClass schoolClass = FenixFramework.getDomainObject(schoolClassOID);
             if (schoolClass == null) {
                 throw new InvalidArgumentsServiceException();
             }

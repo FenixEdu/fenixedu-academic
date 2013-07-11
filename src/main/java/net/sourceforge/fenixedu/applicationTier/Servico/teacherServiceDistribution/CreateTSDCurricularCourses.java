@@ -15,16 +15,16 @@ import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCurricularC
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcessPhase;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class CreateTSDCurricularCourses {
     protected void run(String tsdId, String competenceCourseId, String tsdProcessPhaseId, String executionPeriodId,
             Boolean activateCourses) {
 
-        TeacherServiceDistribution tsd = AbstractDomainObject.fromExternalId(tsdId);
-        CompetenceCourse competenceCourse = AbstractDomainObject.fromExternalId(competenceCourseId);
-        TSDProcessPhase tsdProcessPhase = AbstractDomainObject.fromExternalId(tsdProcessPhaseId);
-        ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodId);
+        TeacherServiceDistribution tsd = FenixFramework.getDomainObject(tsdId);
+        CompetenceCourse competenceCourse = FenixFramework.getDomainObject(competenceCourseId);
+        TSDProcessPhase tsdProcessPhase = FenixFramework.getDomainObject(tsdProcessPhaseId);
+        ExecutionSemester executionSemester = FenixFramework.getDomainObject(executionPeriodId);
 
         List<CurricularCourse> curricularCourseList =
                 competenceCourse.getCurricularCoursesWithActiveScopesInExecutionPeriod(executionSemester);

@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituationWithInfo
 import net.sourceforge.fenixedu.domain.GratuitySituation;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * 
@@ -22,7 +22,7 @@ public class ReadGratuitySituationById {
     public static InfoGratuitySituation run(String gratuitySituationID) throws FenixServiceException {
         InfoGratuitySituation infoGratuitySituation = null;
 
-        GratuitySituation gratuitySituation = AbstractDomainObject.fromExternalId(gratuitySituationID);
+        GratuitySituation gratuitySituation = FenixFramework.getDomainObject(gratuitySituationID);
         if (gratuitySituation == null) {
             throw new NonExistingServiceException("error.exception.masterDegree.gratuity.notExistingGratuitySituation");
         }

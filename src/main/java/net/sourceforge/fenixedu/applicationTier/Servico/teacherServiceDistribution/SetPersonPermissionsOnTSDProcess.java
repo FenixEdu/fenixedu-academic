@@ -7,15 +7,15 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcess;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class SetPersonPermissionsOnTSDProcess {
     protected void run(String tsdProcessId, String personId, Boolean phaseManagementPermission,
             Boolean automaticValuationPermission, Boolean omissionConfigurationPermission,
             Boolean tsdCoursesAndTeachersManagementPermission) {
 
-        TSDProcess tsdProcess = AbstractDomainObject.fromExternalId(tsdProcessId);
-        Person person = (Person) AbstractDomainObject.fromExternalId(personId);
+        TSDProcess tsdProcess = FenixFramework.getDomainObject(tsdProcessId);
+        Person person = (Person) FenixFramework.getDomainObject(personId);
 
         if (phaseManagementPermission) {
             tsdProcess.addPhasesManagementPermission(person);

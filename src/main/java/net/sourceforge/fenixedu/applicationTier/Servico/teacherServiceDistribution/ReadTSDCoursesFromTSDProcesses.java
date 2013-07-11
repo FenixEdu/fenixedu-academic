@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCourse;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.Pair;
 
 public class ReadTSDCoursesFromTSDProcesses {
@@ -23,7 +23,7 @@ public class ReadTSDCoursesFromTSDProcesses {
         for (String tsdProcessPhaseId : tsdProcessIdMap.keySet()) {
             TeacherServiceDistribution tsd = null;
 
-            tsd = AbstractDomainObject.fromExternalId(tsdProcessIdMap.get(tsdProcessPhaseId).getKey());
+            tsd = FenixFramework.getDomainObject(tsdProcessIdMap.get(tsdProcessPhaseId).getKey());
 
             List<ExecutionSemester> executionPeriodList =
                     getExecutionPeriodList(tsd, tsdProcessIdMap.get(tsdProcessPhaseId).getValue());
@@ -42,7 +42,7 @@ public class ReadTSDCoursesFromTSDProcesses {
     private List<ExecutionSemester> getExecutionPeriodList(TeacherServiceDistribution tsd, String executionPeriodId) {
         List<ExecutionSemester> executionPeriodList = new ArrayList<ExecutionSemester>();
 
-        ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodId);
+        ExecutionSemester executionSemester = FenixFramework.getDomainObject(executionPeriodId);
 
         if (executionSemester != null) {
             executionPeriodList.add(executionSemester);

@@ -30,7 +30,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.predicates.Predicate;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
@@ -52,7 +52,7 @@ public class SearchDegreeLogAction extends FenixDispatchAction {
         final String degreeCurricularPlanOID = newFindDegreeCurricularPlanID(request);
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanOID);
 
-        final DegreeCurricularPlan degreeCurricularPlan = DegreeCurricularPlan.fromExternalId(degreeCurricularPlanOID);
+        final DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanOID);
 
         final ExecutionDegree executionDegree = degreeCurricularPlan.getMostRecentExecutionDegree();
 
@@ -96,7 +96,7 @@ public class SearchDegreeLogAction extends FenixDispatchAction {
     private SearchDegreeLogBean readSearchBean(HttpServletRequest request, Degree degree) {
         String degreeID = request.getParameter("degree");
         if (degreeID != null) {
-            SearchDegreeLogBean sdlb = new SearchDegreeLogBean((Degree) AbstractDomainObject.fromExternalId(degreeID));
+            SearchDegreeLogBean sdlb = new SearchDegreeLogBean((Degree) FenixFramework.getDomainObject(degreeID));
 
             String viewPhoto = request.getParameter("viewPhoto");
             if (viewPhoto != null && viewPhoto.equalsIgnoreCase("true")) {

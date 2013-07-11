@@ -18,7 +18,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class AnnouncementsManagementDA extends AnnouncementManagement {
 
@@ -27,7 +27,7 @@ public class AnnouncementsManagementDA extends AnnouncementManagement {
             HttpServletResponse response) throws Exception {
         CoordinatedDegreeInfo.setCoordinatorContext(request);
         final String degreeCurricularPlanOID = (String) request.getAttribute("degreeCurricularPlanID");
-        final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanOID);
+        final DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanOID);
         if (degreeCurricularPlan != null) {
             request.setAttribute("degreeCurricularPlan", degreeCurricularPlan);
         }
@@ -43,7 +43,7 @@ public class AnnouncementsManagementDA extends AnnouncementManagement {
         }
 
         try {
-            return AbstractDomainObject.fromExternalId(parameter);
+            return FenixFramework.getDomainObject(parameter);
         } catch (NumberFormatException e) {
             return null;
         }

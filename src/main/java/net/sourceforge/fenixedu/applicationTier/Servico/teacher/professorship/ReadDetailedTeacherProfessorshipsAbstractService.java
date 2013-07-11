@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author jpvl
@@ -81,7 +81,7 @@ public class ReadDetailedTeacherProfessorshipsAbstractService {
     }
 
     protected Teacher readTeacher(String teacherId) throws NotFoundTeacher {
-        final Teacher teacher = AbstractDomainObject.fromExternalId(teacherId);
+        final Teacher teacher = FenixFramework.getDomainObject(teacherId);
         if (teacher == null) {
             throw new NotFoundTeacher();
         }

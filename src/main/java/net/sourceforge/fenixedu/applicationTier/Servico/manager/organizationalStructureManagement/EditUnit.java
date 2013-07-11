@@ -14,7 +14,7 @@ import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class EditUnit {
@@ -29,17 +29,17 @@ public class EditUnit {
         ServiceMonitoring.logService(EditUnit.class, unitID, unitName, unitNameCard, unitCostCenter, acronym, begin, end,
                 departmentID, degreeID, administrativeOfficeID, webAddress, classification, canBeResponsibleOfSpaces, campusID);
 
-        Unit unit = (Unit) AbstractDomainObject.fromExternalId(unitID);
+        Unit unit = (Unit) FenixFramework.getDomainObject(unitID);
         if (unit == null) {
             throw new FenixServiceException("error.noUnit");
         }
 
         Integer costCenterCode = getCostCenterCode(unitCostCenter);
 
-        Degree degree = AbstractDomainObject.fromExternalId(degreeID);
-        Department department = AbstractDomainObject.fromExternalId(departmentID);
-        AdministrativeOffice administrativeOffice = AbstractDomainObject.fromExternalId(administrativeOfficeID);
-        Campus campus = (Campus) AbstractDomainObject.fromExternalId(campusID);
+        Degree degree = FenixFramework.getDomainObject(degreeID);
+        Department department = FenixFramework.getDomainObject(departmentID);
+        AdministrativeOffice administrativeOffice = FenixFramework.getDomainObject(administrativeOfficeID);
+        Campus campus = (Campus) FenixFramework.getDomainObject(campusID);
 
         unit.edit(unitName, unitNameCard, costCenterCode, acronym, begin, end, webAddress, classification, department, degree,
                 administrativeOffice, canBeResponsibleOfSpaces, campus);

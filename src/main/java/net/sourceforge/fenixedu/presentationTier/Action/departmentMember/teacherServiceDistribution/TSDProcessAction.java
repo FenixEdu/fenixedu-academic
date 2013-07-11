@@ -28,7 +28,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class TSDProcessAction extends FenixDispatchAction {
     private static final String NOT_SELECTED_EXECUTION_PERIOD = "NOT_SELECTED";
@@ -157,9 +157,9 @@ public class TSDProcessAction extends FenixDispatchAction {
 
     private ActionForward loadTSDProcessServices(ActionMapping mapping, HttpServletRequest request, String tsdProcessId,
             IUserView userView) {
-        setPermissionsOnRequest(request, AbstractDomainObject.<TSDProcess> fromExternalId(tsdProcessId), userView.getPerson());
+        setPermissionsOnRequest(request, FenixFramework.<TSDProcess> getDomainObject(tsdProcessId), userView.getPerson());
 
-        request.setAttribute("tsdProcess", AbstractDomainObject.fromExternalId(tsdProcessId));
+        request.setAttribute("tsdProcess", FenixFramework.getDomainObject(tsdProcessId));
         return mapping.findForward("showTSDProcessServices");
     }
 

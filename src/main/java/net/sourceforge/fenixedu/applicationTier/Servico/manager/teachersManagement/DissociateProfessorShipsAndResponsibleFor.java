@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.SupportLesson;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class DissociateProfessorShipsAndResponsibleFor {
 
@@ -38,7 +38,7 @@ public class DissociateProfessorShipsAndResponsibleFor {
         if (professorships != null && responsibleFors != null) {
             List<Professorship> newProfessorships = new ArrayList<Professorship>();
             for (String professorshipId : professorships) {
-                Professorship professorship = AbstractDomainObject.fromExternalId(professorshipId);
+                Professorship professorship = FenixFramework.getDomainObject(professorshipId);
                 if (professorship == null) {
                     throw new FenixServiceException("nullPSNorRF");
                 }
@@ -51,7 +51,7 @@ public class DissociateProfessorShipsAndResponsibleFor {
 
             List<Professorship> newResponsibleFor = new ArrayList<Professorship>();
             for (String responsibleForId : responsibleFors) {
-                Professorship responsibleFor = AbstractDomainObject.fromExternalId(responsibleForId);
+                Professorship responsibleFor = FenixFramework.getDomainObject(responsibleForId);
                 if (responsibleFor == null) {
                     throw new FenixServiceException("nullPSNorRF");
                 }

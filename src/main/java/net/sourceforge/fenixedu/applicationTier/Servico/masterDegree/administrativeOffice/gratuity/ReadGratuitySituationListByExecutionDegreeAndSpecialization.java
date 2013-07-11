@@ -26,7 +26,7 @@ import org.apache.commons.collections.Predicate;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * 
@@ -68,7 +68,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization {
 
             if (executionDegreeId != null) {
 
-                ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeId);
+                ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreeId);
                 executionDegreeList.add(executionDegree);
 
             } else {

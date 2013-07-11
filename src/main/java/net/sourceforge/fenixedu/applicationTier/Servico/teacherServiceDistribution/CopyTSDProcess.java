@@ -12,13 +12,13 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.CopyTSDProcessPhaseService;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcess;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class CopyTSDProcess {
     protected TSDProcess run(List<String> executionPeriodIdList, String tsdProcessId, String personId, String name) {
-        Person creator = (Person) AbstractDomainObject.fromExternalId(personId);
+        Person creator = (Person) FenixFramework.getDomainObject(personId);
         List<ExecutionSemester> executionPeriodList = getExecutionPeriods(executionPeriodIdList);
-        TSDProcess tsdProcessCopied = AbstractDomainObject.fromExternalId(tsdProcessId);
+        TSDProcess tsdProcessCopied = FenixFramework.getDomainObject(tsdProcessId);
 
         CopyTSDProcessPhaseService service = CopyTSDProcessPhaseService.getInstance();
 
@@ -30,7 +30,7 @@ public class CopyTSDProcess {
         List<ExecutionSemester> executionPeriodList = new ArrayList<ExecutionSemester>();
 
         for (String executionPeriodId : executionPeriodIdList) {
-            executionPeriodList.add(AbstractDomainObject.<ExecutionSemester> fromExternalId(executionPeriodId));
+            executionPeriodList.add(FenixFramework.<ExecutionSemester> getDomainObject(executionPeriodId));
         }
         return executionPeriodList;
     }

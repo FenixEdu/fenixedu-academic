@@ -24,7 +24,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author nmgo
@@ -33,7 +33,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ReadActiveDegreeCurricularPlansByExecutionYear {
 
     protected List run(String executionYearID) throws FenixServiceException {
-        ExecutionYear executionYear = AbstractDomainObject.fromExternalId(executionYearID);
+        ExecutionYear executionYear = FenixFramework.getDomainObject(executionYearID);
 
         List executionDegrees = null;
         if (executionYear != null) {

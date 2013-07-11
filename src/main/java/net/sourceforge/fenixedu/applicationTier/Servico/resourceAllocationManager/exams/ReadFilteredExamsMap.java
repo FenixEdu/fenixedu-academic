@@ -25,7 +25,7 @@ import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ReadFilteredExamsMap {
 
@@ -41,7 +41,7 @@ public class ReadFilteredExamsMap {
         result.setInfoExecutionPeriod(infoExecutionPeriod);
         result.setCurricularYears(curricularYears);
 
-        ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(infoExecutionDegree.getExternalId());
+        ExecutionDegree executionDegree = FenixFramework.getDomainObject(infoExecutionDegree.getExternalId());
 
         obtainExamSeasonInfo(result, infoExecutionPeriod.getSemester(), executionDegree);
 
@@ -88,7 +88,7 @@ public class ReadFilteredExamsMap {
     private List<InfoExecutionCourse> obtainInfoExecutionCourses(List<Integer> curricularYears,
             InfoExecutionPeriod infoExecutionPeriod, ExecutionDegree executionDegree) {
         List<InfoExecutionCourse> result = new ArrayList<InfoExecutionCourse>();
-        ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(infoExecutionPeriod.getExternalId());
+        ExecutionSemester executionSemester = FenixFramework.getDomainObject(infoExecutionPeriod.getExternalId());
         for (Integer curricularYear : curricularYears) {
             // Obtain list of execution courses
             List<ExecutionCourse> executionCourses =
@@ -122,7 +122,7 @@ public class ReadFilteredExamsMap {
                 CurricularCourse curricularCourse = degreeModuleScope.getCurricularCourse();
                 if (!checkedCurricularCourses.contains(curricularCourse)) {
                     checkedCurricularCourses.add(curricularCourse);
-                    ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodId);
+                    ExecutionSemester executionSemester = FenixFramework.getDomainObject(executionPeriodId);
                     int numberEnroledStudentsInCurricularCourse =
                             curricularCourse.countEnrolmentsByExecutionPeriod(executionSemester);
                     numberOfStudentsForExam += numberEnroledStudentsInCurricularCourse;

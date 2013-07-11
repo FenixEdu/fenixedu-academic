@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.domain.transactions.PaymentType;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * 
@@ -18,9 +18,9 @@ public class EditGuideInformationInManager {
     @Checked("RolePredicates.MANAGER_PREDICATE")
     @Service
     public static void run(String guideID, String degreeCurricularPlanID, String executionYear, String newPaymentType) {
-        Guide guide = AbstractDomainObject.fromExternalId(guideID);
+        Guide guide = FenixFramework.getDomainObject(guideID);
 
-        DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
+        DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
         ExecutionDegree cursoExecucao =
                 ExecutionDegree.getByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);
 

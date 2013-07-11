@@ -21,7 +21,7 @@ import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class PrizeManagement extends FenixDispatchAction {
 
@@ -144,7 +144,7 @@ public class PrizeManagement extends FenixDispatchAction {
 
         Prize prize = getPrize(request);
         String personID = request.getParameter("pid");
-        Person person = (Person) AbstractDomainObject.fromExternalId(personID);
+        Person person = (Person) FenixFramework.getDomainObject(personID);
 
         if (person != null && prize != null && !prize.isLastParticipation()) {
             try {
@@ -206,7 +206,7 @@ public class PrizeManagement extends FenixDispatchAction {
 
         Prize prize = getPrize(request);
         String unitID = request.getParameter("uid");
-        Unit unit = (Unit) AbstractDomainObject.fromExternalId(unitID);
+        Unit unit = (Unit) FenixFramework.getDomainObject(unitID);
 
         if (unit != null && prize != null) {
             try {
@@ -221,7 +221,7 @@ public class PrizeManagement extends FenixDispatchAction {
 
     private Prize getPrize(HttpServletRequest request) {
         String prizeID = request.getParameter("oid");
-        Prize prize = (Prize) AbstractDomainObject.fromExternalId(prizeID);
+        Prize prize = (Prize) FenixFramework.getDomainObject(prizeID);
         return prize;
     }
 

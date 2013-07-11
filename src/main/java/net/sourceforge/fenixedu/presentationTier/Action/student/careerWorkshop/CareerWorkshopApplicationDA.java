@@ -25,7 +25,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/careerWorkshopApplication", module = "student")
 @Forwards({
@@ -57,7 +57,7 @@ public class CareerWorkshopApplicationDA extends FenixDispatchAction {
 
         final Student student = getLoggedStudent(request);
         final String eventExternalId = request.getParameter("eventId");
-        CareerWorkshopApplicationEvent event = AbstractDomainObject.fromExternalId(eventExternalId);
+        CareerWorkshopApplicationEvent event = FenixFramework.getDomainObject(eventExternalId);
         CareerWorkshopApplication application = retrieveThisWorkshopApplication(student, event);
         request.setAttribute("application", application);
         return actionMapping.findForward("careerWorkshopApplicationForm");
@@ -105,7 +105,7 @@ public class CareerWorkshopApplicationDA extends FenixDispatchAction {
 
         final Student student = getLoggedStudent(request);
         final String eventExternalId = request.getParameter("eventId");
-        CareerWorkshopConfirmationEvent event = AbstractDomainObject.fromExternalId(eventExternalId);
+        CareerWorkshopConfirmationEvent event = FenixFramework.getDomainObject(eventExternalId);
         CareerWorkshopApplication application =
                 retrieveThisWorkshopApplication(student, event.getCareerWorkshopApplicationEvent());
         CareerWorkshopConfirmation confirmation = retrieveThisWorskhopApplicationConfirmation(student, event, application);
@@ -120,7 +120,7 @@ public class CareerWorkshopApplicationDA extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         CareerWorkshopConfirmationBean bean = getRenderedObject("confirmationBean");
-        CareerWorkshopConfirmation confirmation = AbstractDomainObject.fromExternalId(bean.getExternalId());
+        CareerWorkshopConfirmation confirmation = FenixFramework.getDomainObject(bean.getExternalId());
         if (isConfirmationPeriodExpired(confirmation)) {
             addActionMessage("error", request, "error.careerWorkshops.confirmationPeriodExpired");
             return prepare(actionMapping, actionForm, request, response);

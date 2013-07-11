@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.OperatorArg
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.StaticArgument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.WrongNumberOfArgumentsException;
 import pt.ist.fenixframework.DomainObject;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * The <code>$I</code> operator obtains a domain object by it's id and type. The

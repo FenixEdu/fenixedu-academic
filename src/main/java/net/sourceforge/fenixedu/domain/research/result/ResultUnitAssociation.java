@@ -4,7 +4,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ResultUnitAssociation extends ResultUnitAssociation_Base {
 
@@ -45,7 +45,7 @@ public class ResultUnitAssociation extends ResultUnitAssociation_Base {
     }
 
     public final static ResultUnitAssociation readByOid(String oid) {
-        final ResultUnitAssociation association = AbstractDomainObject.fromExternalId(oid);
+        final ResultUnitAssociation association = FenixFramework.getDomainObject(oid);
 
         if (association == null) {
             throw new DomainException("error.researcher.ResultUnitAssociation.null");

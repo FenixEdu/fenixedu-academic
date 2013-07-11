@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.Curriculum;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author João Mota
@@ -25,7 +25,7 @@ public class EditCurriculum {
             String operacionalObjectivesEn, String generalObjectives, String generalObjectivesEn, Boolean basic)
             throws FenixServiceException {
 
-        Curriculum curriculum = AbstractDomainObject.fromExternalId(curriculumId);
+        Curriculum curriculum = FenixFramework.getDomainObject(curriculumId);
         if (curriculum.getCurricularCourse().getBasic().equals(basic)) {
             curriculum.setProgram(program);
             curriculum.setProgramEn(programEn);

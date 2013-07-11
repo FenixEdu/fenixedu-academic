@@ -17,7 +17,7 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ReadGratuityValuesByExecutionDegree {
 
@@ -29,7 +29,7 @@ public class ReadGratuityValuesByExecutionDegree {
 
         List infoPaymentPhases = null;
 
-        ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeID);
+        ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreeID);
         GratuityValues gratuityValues = executionDegree.getGratuityValues();
 
         InfoGratuityValues infoGratuityValues = null;

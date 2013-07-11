@@ -10,14 +10,14 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCompetenceCourse;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class AddCourseToTeacherServiceDistribution {
 
     protected void run(String tsdId, final String courseId) throws FenixServiceException {
 
-        TeacherServiceDistribution rootTSD = AbstractDomainObject.<TeacherServiceDistribution> fromExternalId(tsdId).getRootTSD();
-        CompetenceCourse course = AbstractDomainObject.fromExternalId(courseId);
+        TeacherServiceDistribution rootTSD = FenixFramework.<TeacherServiceDistribution> getDomainObject(tsdId).getRootTSD();
+        CompetenceCourse course = FenixFramework.getDomainObject(courseId);
 
         if (!rootTSD.getCompetenceCourses().contains(course)) {
             for (ExecutionSemester period : rootTSD.getTSDProcessPhase().getTSDProcess().getExecutionPeriods()) {

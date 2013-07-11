@@ -33,7 +33,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "publico", path = "/findSpaces", attribute = "findSpacesForm", formBean = "findSpacesForm", scope = "request",
         parameter = "method")
@@ -141,7 +141,7 @@ public class FindSpacesDA extends FenixDispatchAction {
 
     private Space getSpaceFromParameter(final HttpServletRequest request) {
         final String spaceIDString = request.getParameter("spaceID");
-        return (Space) AbstractDomainObject.fromExternalId(spaceIDString);
+        return (Space) FenixFramework.getDomainObject(spaceIDString);
     }
 
     private void setBlueprintTextRectangles(HttpServletRequest request, Space space) throws IOException {

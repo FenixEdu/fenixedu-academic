@@ -26,7 +26,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "departmentAdmOffice", path = "/credits", scope = "request", parameter = "method")
 @Forwards(value = {
@@ -79,9 +79,9 @@ public class DepartmentAdmOfficeViewTeacherCreditsDA extends ViewTeacherCreditsD
 
     public ActionForward unlockTeacherCredits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws NumberFormatException, FenixServiceException, Exception {
-        Teacher teacher = AbstractDomainObject.fromExternalId((String) getFromRequest(request, "teacherOid"));
+        Teacher teacher = FenixFramework.getDomainObject((String) getFromRequest(request, "teacherOid"));
         ExecutionSemester executionSemester =
-                AbstractDomainObject.fromExternalId((String) getFromRequest(request, "executionPeriodOid"));
+                FenixFramework.getDomainObject((String) getFromRequest(request, "executionPeriodOid"));
         TeacherService teacherService = TeacherService.getTeacherService(teacher, executionSemester);
         teacherService.unlockTeacherCredits();
         request.setAttribute("teacherOid", teacher.getExternalId());

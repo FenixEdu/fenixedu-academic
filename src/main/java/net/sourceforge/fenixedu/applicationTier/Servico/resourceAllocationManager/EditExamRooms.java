@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -23,10 +23,10 @@ public class EditExamRooms {
 
         final List<AllocatableSpace> finalRoomList = new ArrayList<AllocatableSpace>();
         for (final String id : roomsForExam) {
-            finalRoomList.add((AllocatableSpace) AbstractDomainObject.fromExternalId(id));
+            finalRoomList.add((AllocatableSpace) FenixFramework.getDomainObject(id));
         }
 
-        final Exam exam = (Exam) AbstractDomainObject.fromExternalId(infoExam.getExternalId());
+        final Exam exam = (Exam) FenixFramework.getDomainObject(infoExam.getExternalId());
         if (exam == null) {
             throw new NonExistingServiceException();
         }

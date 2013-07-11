@@ -5,7 +5,7 @@ import java.util.Hashtable;
 import java.util.Map;
 
 import net.sourceforge.fenixedu.domain.Person;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * Helper used to collect information to test the functionalitis availability.
@@ -106,7 +106,7 @@ public class TestFilterBean implements Serializable {
                 return null;
             }
 
-            person = AbstractDomainObject.fromExternalId(oid);
+            person = FenixFramework.getDomainObject(oid);
             setPerson(person);
 
             updateInfo(person);

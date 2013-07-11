@@ -309,7 +309,7 @@ public class SIBSOutgoingPaymentFile extends SIBSOutgoingPaymentFile_Base {
 
         @Service
         private void txDo() {
-            Event event = Event.fromExternalId(eventExternalId);
+            Event event = FenixFramework.getDomainObject(eventExternalId);
 
             for (final AccountingEventPaymentCode paymentCode : event.calculatePaymentCodes()) {
                 this.sibsFile.addAssociatedPaymentCode(paymentCode);

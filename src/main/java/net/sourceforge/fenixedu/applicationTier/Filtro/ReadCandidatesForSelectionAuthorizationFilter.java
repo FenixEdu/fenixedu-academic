@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.SituationName;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
@@ -61,7 +61,7 @@ public class ReadCandidatesForSelectionAuthorizationFilter extends Filtro {
         // Read The DegreeCurricularPlan
         try {
 
-            executionDegree = AbstractDomainObject.fromExternalId(executionDegreeID);
+            executionDegree = FenixFramework.getDomainObject(executionDegreeID);
 
         } catch (Exception e) {
             return false;

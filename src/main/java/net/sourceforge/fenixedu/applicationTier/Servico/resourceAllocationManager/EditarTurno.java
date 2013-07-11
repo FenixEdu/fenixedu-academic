@@ -11,16 +11,16 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Shift;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class EditarTurno {
 
     @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
     @Service
     public static Object run(InfoShift infoShiftOld, InfoShiftEditor infoShiftNew) {
-        final Shift shiftToEdit = AbstractDomainObject.fromExternalId(infoShiftOld.getExternalId());
+        final Shift shiftToEdit = FenixFramework.getDomainObject(infoShiftOld.getExternalId());
         final ExecutionCourse newExecutionCourse =
-                AbstractDomainObject.fromExternalId(infoShiftNew.getInfoDisciplinaExecucao().getExternalId());
+                FenixFramework.getDomainObject(infoShiftNew.getInfoDisciplinaExecucao().getExternalId());
         shiftToEdit.edit(infoShiftNew.getTipos(), infoShiftNew.getLotacao(), newExecutionCourse, infoShiftNew.getNome(),
                 infoShiftNew.getComment());
         return InfoShift.newInfoFromDomain(shiftToEdit);

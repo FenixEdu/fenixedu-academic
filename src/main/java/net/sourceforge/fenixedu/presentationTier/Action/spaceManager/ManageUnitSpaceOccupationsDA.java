@@ -25,7 +25,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "SpaceManager", path = "/manageUnitSpaceOccupations", scope = "session", parameter = "method")
 @Forwards(value = {
@@ -97,7 +97,7 @@ public class ManageUnitSpaceOccupationsDA extends FenixDispatchAction {
         final String spaceInformationIDString =
                 request.getParameterMap().containsKey("spaceInformationID") ? request.getParameter("spaceInformationID") : (String) request
                         .getAttribute("spaceInformationID");
-        return AbstractDomainObject.fromExternalId(spaceInformationIDString);
+        return FenixFramework.getDomainObject(spaceInformationIDString);
     }
 
     private void readAndSetAllAttributes(HttpServletRequest request) throws FenixServiceException {
@@ -113,14 +113,14 @@ public class ManageUnitSpaceOccupationsDA extends FenixDispatchAction {
         final String unitIDString =
                 request.getParameterMap().containsKey("unitID") ? request.getParameter("unitID") : (String) request
                         .getAttribute("unitID");
-        return (Unit) AbstractDomainObject.fromExternalId(unitIDString);
+        return (Unit) FenixFramework.getDomainObject(unitIDString);
     }
 
     private UnitSpaceOccupation getUnitSpaceOccupation(final HttpServletRequest request) {
         final String unitSpaceOccupationIDString =
                 request.getParameterMap().containsKey("unitSpaceOccupationID") ? request.getParameter("unitSpaceOccupationID") : (String) request
                         .getAttribute("unitSpaceOccupationID");
-        return (UnitSpaceOccupation) AbstractDomainObject.fromExternalId(unitSpaceOccupationIDString);
+        return (UnitSpaceOccupation) FenixFramework.getDomainObject(unitSpaceOccupationIDString);
     }
 
     private void setSpaceInformation(HttpServletRequest request, final SpaceInformation spaceInformation) {

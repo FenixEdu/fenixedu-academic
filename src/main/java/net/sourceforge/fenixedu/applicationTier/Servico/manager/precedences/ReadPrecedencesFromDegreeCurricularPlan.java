@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.precedences.Precedence;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ReadPrecedencesFromDegreeCurricularPlan {
 
@@ -24,7 +24,7 @@ public class ReadPrecedencesFromDegreeCurricularPlan {
 
         Map finalListOfInfoPrecedences = new HashMap();
 
-        DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
+        DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
 
         List curricularCourses = degreeCurricularPlan.getCurricularCourses();
 

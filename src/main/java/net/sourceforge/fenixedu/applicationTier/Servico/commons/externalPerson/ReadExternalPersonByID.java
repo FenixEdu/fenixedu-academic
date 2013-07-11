@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoExternalPerson;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * 
@@ -20,7 +20,7 @@ public class ReadExternalPersonByID {
         InfoExternalPerson infoExternalPerson = null;
         ExternalContract externalPerson = null;
 
-        externalPerson = (ExternalContract) AbstractDomainObject.fromExternalId(externalPersonID);
+        externalPerson = (ExternalContract) FenixFramework.getDomainObject(externalPersonID);
         if (externalPerson == null) {
             throw new NonExistingServiceException("error.exception.commons.ExternalPersonNotFound");
         }

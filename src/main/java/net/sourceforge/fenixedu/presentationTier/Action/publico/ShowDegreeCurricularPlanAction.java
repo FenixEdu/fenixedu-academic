@@ -28,7 +28,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction {
 
@@ -44,7 +44,7 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction {
         String degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
 
-        DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanId);
+        DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanId);
         return showOldDegreeCurricularPlan(mapping, actionForm, request, degreeCurricularPlan.getExternalId());
     }
 

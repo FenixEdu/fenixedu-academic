@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author lmac1
@@ -21,7 +21,7 @@ public class InsertBranch {
     @Service
     public static void run(InfoBranch infoBranch) throws NonExistingServiceException {
         final String degreeCurricularPlanId = infoBranch.getInfoDegreeCurricularPlan().getExternalId();
-        final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanId);
+        final DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanId);
 
         if (degreeCurricularPlan == null) {
             throw new NonExistingServiceException();

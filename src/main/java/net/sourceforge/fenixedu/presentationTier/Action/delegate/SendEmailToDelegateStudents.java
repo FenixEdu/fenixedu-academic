@@ -39,7 +39,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/sendEmailToDelegateStudents", module = "delegate")
 @Forwards({
@@ -85,8 +85,7 @@ public class SendEmailToDelegateStudents extends FenixDispatchAction {
         GroupsBean recipientsBean = getRenderedObject("recipientsBean");
         String year = request.getParameter("year");
         ExecutionYear executionYear =
-                year == null ? ExecutionYear.readCurrentExecutionYear() : (ExecutionYear) AbstractDomainObject
-                        .fromExternalId(year);
+                year == null ? ExecutionYear.readCurrentExecutionYear() : (ExecutionYear) FenixFramework.getDomainObject(year);
         List<Recipient> recipients;
         List<Group> recipientsGroups;
         if (request.getAttribute("curricularCoursesList") != null) {
@@ -103,8 +102,7 @@ public class SendEmailToDelegateStudents extends FenixDispatchAction {
         RenderUtils.invalidateViewState();
         String year = request.getParameter("year");
         ExecutionYear executionYear =
-                year == null ? ExecutionYear.readCurrentExecutionYear() : (ExecutionYear) AbstractDomainObject
-                        .fromExternalId(year);
+                year == null ? ExecutionYear.readCurrentExecutionYear() : (ExecutionYear) FenixFramework.getDomainObject(year);
         return prepare(mapping, actionForm, request, response, executionYear);
     }
 
@@ -155,7 +153,7 @@ public class SendEmailToDelegateStudents extends FenixDispatchAction {
 
         String year = request.getParameter("year");
         ExecutionYear executionYear =
-                (ExecutionYear) (year != null ? AbstractDomainObject.fromExternalId(year) : ExecutionYear
+                (ExecutionYear) (year != null ? FenixFramework.getDomainObject(year) : ExecutionYear
                         .readCurrentExecutionYear());
         return prepareSendToStudentsFromSelectedCurricularCourses(mapping, actionForm, request, response, executionYear);
     }
@@ -166,7 +164,7 @@ public class SendEmailToDelegateStudents extends FenixDispatchAction {
         final List<String> selectedCurricularCourses = Arrays.asList(request.getParameterValues("selectedCurricularCourses"));
         List<CurricularCourse> curricularCourses = new ArrayList<CurricularCourse>();
         for (String curricularCourseId : selectedCurricularCourses) {
-            CurricularCourse curricularCourse = (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseId);
+            CurricularCourse curricularCourse = (CurricularCourse) FenixFramework.getDomainObject(curricularCourseId);
             curricularCourses.add(curricularCourse);
         }
 

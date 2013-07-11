@@ -25,7 +25,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/qucAudit", module = "pedagogicalCouncil")
 @Forwards({
@@ -72,7 +72,7 @@ public class QucAuditPedagogicalCouncilDA extends ViewQucAuditProcessDA {
             HttpServletResponse response) {
 
         String executionCourseAuditOID = (String) getFromRequest(request, "executionCourseAuditOID");
-        ExecutionCourseAudit executionCourseAudit = AbstractDomainObject.fromExternalId(executionCourseAuditOID);
+        ExecutionCourseAudit executionCourseAudit = FenixFramework.getDomainObject(executionCourseAuditOID);
 
         executionCourseAudit.makeProcessAvailableToView();
         List<CompetenceCourseResultsResume> competenceCoursesToAudit = getCompetenceCourseResultsBeans(executionCourseAudit);
@@ -87,7 +87,7 @@ public class QucAuditPedagogicalCouncilDA extends ViewQucAuditProcessDA {
             HttpServletResponse response) {
 
         String executionCourseAuditOID = (String) getFromRequest(request, "executionCourseAuditOID");
-        ExecutionCourseAudit executionCourseAudit = AbstractDomainObject.fromExternalId(executionCourseAuditOID);
+        ExecutionCourseAudit executionCourseAudit = FenixFramework.getDomainObject(executionCourseAuditOID);
 
         executionCourseAudit.makeProcessUnavailableToView();
         List<CompetenceCourseResultsResume> competenceCoursesToAudit = getCompetenceCourseResultsBeans(executionCourseAudit);
@@ -102,7 +102,7 @@ public class QucAuditPedagogicalCouncilDA extends ViewQucAuditProcessDA {
             HttpServletResponse response) {
 
         String executionCourseAuditOID = (String) getFromRequest(request, "executionCourseAuditOID");
-        ExecutionCourseAudit executionCourseAudit = AbstractDomainObject.fromExternalId(executionCourseAuditOID);
+        ExecutionCourseAudit executionCourseAudit = FenixFramework.getDomainObject(executionCourseAuditOID);
 
         executionCourseAudit.unsealProcess();
         List<CompetenceCourseResultsResume> competenceCoursesToAudit = getCompetenceCourseResultsBeans(executionCourseAudit);
@@ -121,7 +121,7 @@ public class QucAuditPedagogicalCouncilDA extends ViewQucAuditProcessDA {
             executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
         } else {
             String executionCourseOID = request.getParameter("executionCourseOID");
-            executionCourse = AbstractDomainObject.fromExternalId(executionCourseOID);
+            executionCourse = FenixFramework.getDomainObject(executionCourseOID);
         }
 
         ExecutionCourseAudit executionCourseAudit = executionCourse.getExecutionCourseAudit();

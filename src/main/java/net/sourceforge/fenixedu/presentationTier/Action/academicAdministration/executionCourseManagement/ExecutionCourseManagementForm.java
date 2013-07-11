@@ -38,7 +38,7 @@ public class ExecutionCourseManagementForm extends ActionForm {
         List<CurricularCourse> result = new ArrayList<CurricularCourse>();
 
         for (String id : curricularCoursesToTransferIds) {
-            result.add((CurricularCourse) CurricularCourse.fromExternalId(id));
+            result.add((CurricularCourse) FenixFramework.getDomainObject(id));
         }
 
         return result;
@@ -48,7 +48,7 @@ public class ExecutionCourseManagementForm extends ActionForm {
         List<Shift> result = new ArrayList<Shift>();
 
         for (String id : shiftsToTransferIds) {
-            result.add((Shift) Shift.fromExternalId(id));
+            result.add((Shift) FenixFramework.getDomainObject(id));
         }
 
         return result;

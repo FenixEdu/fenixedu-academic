@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class InsertProfessorShipNonAffiliatedTeacher {
 
@@ -16,12 +16,12 @@ public class InsertProfessorShipNonAffiliatedTeacher {
     @Service
     public static void run(String nonAffiliatedTeacherID, String executionCourseID) {
 
-        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseID);
+        final ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseID);
         if (executionCourse == null) {
             throw new DomainException("message.nonExisting.executionCourse");
         }
 
-        final NonAffiliatedTeacher nonAffiliatedTeacher = AbstractDomainObject.fromExternalId(nonAffiliatedTeacherID);
+        final NonAffiliatedTeacher nonAffiliatedTeacher = FenixFramework.getDomainObject(nonAffiliatedTeacherID);
         if (nonAffiliatedTeacher == null) {
             throw new DomainException("message.non.existing.nonAffiliatedTeacher");
         }

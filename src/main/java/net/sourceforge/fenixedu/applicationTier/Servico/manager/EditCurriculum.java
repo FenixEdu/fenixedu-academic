@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author lmac1
@@ -25,7 +25,7 @@ public class EditCurriculum {
     @Service
     public static void run(InfoCurriculum infoCurriculum, String language, String username) throws FenixServiceException {
         CurricularCourse curricularCourse =
-                (CurricularCourse) AbstractDomainObject.fromExternalId(infoCurriculum.getInfoCurricularCourse()
+                (CurricularCourse) FenixFramework.getDomainObject(infoCurriculum.getInfoCurricularCourse()
                         .getExternalId());
 
         if (curricularCourse == null) {

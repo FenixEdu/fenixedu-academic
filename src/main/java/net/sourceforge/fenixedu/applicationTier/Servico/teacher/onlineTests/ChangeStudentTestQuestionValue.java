@@ -28,24 +28,24 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.tests.TestQuestionStudentsChangesType;
 import net.sourceforge.fenixedu.util.tests.TestType;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class ChangeStudentTestQuestionValue {
     protected void run(String executionCourseId, String distributedTestId, Double newValue, String questionId, String studentId,
             TestQuestionStudentsChangesType studentsType, String path) throws FenixServiceException {
 
-        DistributedTest distributedTest = AbstractDomainObject.fromExternalId(distributedTestId);
+        DistributedTest distributedTest = FenixFramework.getDomainObject(distributedTestId);
         Question question = distributedTest.findQuestionByOID(questionId);
 
         List<StudentTestQuestion> studentsTestQuestionList = new ArrayList<StudentTestQuestion>();
         if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.THIS_STUDENT) {
-            final Registration registration = AbstractDomainObject.fromExternalId(studentId);
+            final Registration registration = FenixFramework.getDomainObject(studentId);
             studentsTestQuestionList.add(StudentTestQuestion.findStudentTestQuestion(question, registration, distributedTest));
         } else if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.STUDENTS_FROM_TEST_VARIATION) {
             studentsTestQuestionList.addAll(StudentTestQuestion.findStudentTestQuestions(question, distributedTest));
         } else if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.STUDENTS_FROM_TEST) {
-            final Registration registration = AbstractDomainObject.fromExternalId(studentId);
+            final Registration registration = FenixFramework.getDomainObject(studentId);
             final StudentTestQuestion studentTestQuestion =
                     StudentTestQuestion.findStudentTestQuestion(question, registration, distributedTest);
             studentsTestQuestionList.addAll(distributedTest.findStudentTestQuestionsByTestQuestionOrder(studentTestQuestion
@@ -66,7 +66,7 @@ public class ChangeStudentTestQuestionValue {
                         .setTestQuestionMark(getNewQuestionMark(studentTestQuestion, newValue, path.replace('\\', '/')));
 
                 OnlineTest onlineTest = studentTestQuestion.getDistributedTest().getOnlineTest();
-                ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
+                ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseId);
                 Attends attend = studentTestQuestion.getStudent().readAttendByExecutionCourse(executionCourse);
                 Mark mark = onlineTest.getMarkByAttend(attend);
                 if (mark != null) {

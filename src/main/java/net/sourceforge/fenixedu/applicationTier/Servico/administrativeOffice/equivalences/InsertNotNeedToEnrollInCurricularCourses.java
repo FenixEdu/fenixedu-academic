@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Ricardo Rodrigues
@@ -21,10 +21,10 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class InsertNotNeedToEnrollInCurricularCourses {
 
     protected void run(String studentCurricularPlanID, String[] curricularCoursesID) {
-        StudentCurricularPlan scp = AbstractDomainObject.fromExternalId(studentCurricularPlanID);
+        StudentCurricularPlan scp = FenixFramework.getDomainObject(studentCurricularPlanID);
 
         for (String curricularCourseID : curricularCoursesID) {
-            CurricularCourse curricularCourse = (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseID);
+            CurricularCourse curricularCourse = (CurricularCourse) FenixFramework.getDomainObject(curricularCourseID);
             NotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse = new NotNeedToEnrollInCurricularCourse();
             notNeedToEnrollInCurricularCourse.setCurricularCourse(curricularCourse);
             notNeedToEnrollInCurricularCourse.setStudentCurricularPlan(scp);

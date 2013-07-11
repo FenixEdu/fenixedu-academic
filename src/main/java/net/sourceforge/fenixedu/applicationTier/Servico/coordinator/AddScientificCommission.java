@@ -6,12 +6,12 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.ScientificCommission;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class AddScientificCommission {
 
     protected void run(String executionDegreeId, Person person) {
-        ExecutionDegree execution = AbstractDomainObject.fromExternalId(executionDegreeId);
+        ExecutionDegree execution = FenixFramework.getDomainObject(executionDegreeId);
 
         new ScientificCommission(execution, person);
     }

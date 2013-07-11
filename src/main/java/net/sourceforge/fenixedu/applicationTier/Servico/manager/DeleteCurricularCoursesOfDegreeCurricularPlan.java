@@ -18,7 +18,7 @@ import org.apache.commons.collections.Predicate;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author lmac1 modified by Fernanda Quiterio
@@ -35,7 +35,7 @@ public class DeleteCurricularCoursesOfDegreeCurricularPlan {
 
         while (iter.hasNext()) {
             String curricularCourseId = iter.next();
-            CurricularCourse curricularCourse = (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseId);
+            CurricularCourse curricularCourse = (CurricularCourse) FenixFramework.getDomainObject(curricularCourseId);
             if (curricularCourse != null) {
                 // delete curriculum
                 Curriculum curriculum = curricularCourse.findLatestCurriculum();

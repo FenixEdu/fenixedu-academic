@@ -47,7 +47,7 @@
 		%>
 	</logic:empty>
 	<%
-		final net.sourceforge.fenixedu.domain.ExecutionDegree executionDegree = net.sourceforge.fenixedu.domain.AbstractDomainObject.fromExternalId((String) request.getAttribute("executionDegreeOID"));
+		final net.sourceforge.fenixedu.domain.ExecutionDegree executionDegree = net.sourceforge.fenixedu.domain.FenixFramework.getDomainObject((String) request.getAttribute("executionDegreeOID"));
 		final net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing scheduleing = executionDegree.getScheduling();
 		if (scheduleing.getAllowSimultaneousCoorientationAndCompanion().booleanValue()) {
 			showCoordinator = true;

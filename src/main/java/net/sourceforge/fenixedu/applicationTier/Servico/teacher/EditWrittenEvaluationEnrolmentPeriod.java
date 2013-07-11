@@ -7,13 +7,13 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class EditWrittenEvaluationEnrolmentPeriod {
 
     protected void run(String executionCourseID, String writtenEvaluationID, Date beginDate, Date endDate, Date beginTime,
             Date endTime) throws FenixServiceException {
-        final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) AbstractDomainObject.fromExternalId(writtenEvaluationID);
+        final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) FenixFramework.getDomainObject(writtenEvaluationID);
         if (writtenEvaluation == null) {
             throw new FenixServiceException("error.noWrittenEvaluation");
         }

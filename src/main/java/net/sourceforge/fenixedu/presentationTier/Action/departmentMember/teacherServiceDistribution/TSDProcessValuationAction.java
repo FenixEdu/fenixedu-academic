@@ -38,7 +38,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.Pair;
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -379,10 +379,10 @@ public class TSDProcessValuationAction extends FenixDispatchAction {
             HttpServletResponse response, TeacherServiceDistributionChart tsdProcessChart) throws FenixServiceException {
 
         String tsdId = request.getParameter("tsd");
-        TeacherServiceDistribution tsd = AbstractDomainObject.fromExternalId(tsdId);
+        TeacherServiceDistribution tsd = FenixFramework.getDomainObject(tsdId);
 
         String executionPeriodId = request.getParameter("executionPeriod");
-        ExecutionSemester selectedExecutionPeriod = AbstractDomainObject.fromExternalId(executionPeriodId);
+        ExecutionSemester selectedExecutionPeriod = FenixFramework.getDomainObject(executionPeriodId);
 
         List<ExecutionSemester> executionPeriodList = new ArrayList<ExecutionSemester>();
         if (selectedExecutionPeriod != null) {

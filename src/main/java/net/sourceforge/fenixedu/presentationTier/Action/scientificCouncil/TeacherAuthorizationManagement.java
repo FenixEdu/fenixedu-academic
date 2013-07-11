@@ -344,7 +344,7 @@ public class TeacherAuthorizationManagement extends FenixDispatchAction {
 
     public ActionForward revoke(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        ExternalTeacherAuthorization auth = rootDomainObject.fromExternalId(request.getParameter("oid"));
+        ExternalTeacherAuthorization auth = FenixFramework.getDomainObject(request.getParameter("oid"));
         auth.revoke();
         return list(mapping, actionForm, request, response);
     }

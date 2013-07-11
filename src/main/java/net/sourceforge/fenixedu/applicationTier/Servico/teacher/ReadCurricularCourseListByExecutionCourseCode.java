@@ -24,7 +24,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Tânia Pousão
@@ -37,7 +37,7 @@ public class ReadCurricularCourseListByExecutionCourseCode {
 
         List infoCurricularCourseList = new ArrayList();
         ExecutionCourseSite site = null;
-        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseCode);
+        ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseCode);
 
         if (executionCourse != null && executionCourse.getAssociatedCurricularCourses() != null) {
             for (int i = 0; i < executionCourse.getAssociatedCurricularCourses().size(); i++) {

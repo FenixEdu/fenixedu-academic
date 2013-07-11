@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
 import net.sourceforge.fenixedu.util.tests.CorrectionFormula;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Susana Fernandes
@@ -19,7 +19,7 @@ public class EditTestQuestion {
 
     protected void run(String executionCourseId, String testQuestionId, Integer testQuestionOrder, Double testQuestionValue,
             CorrectionFormula formula) throws FenixServiceException {
-        TestQuestion testQuestion = AbstractDomainObject.fromExternalId(testQuestionId);
+        TestQuestion testQuestion = FenixFramework.getDomainObject(testQuestionId);
         if (testQuestion == null) {
             throw new InvalidArgumentsServiceException();
         }

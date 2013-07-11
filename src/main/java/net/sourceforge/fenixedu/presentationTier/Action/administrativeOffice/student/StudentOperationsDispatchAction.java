@@ -376,7 +376,7 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
      * Integer registrationID =
      * Integer.valueOf(request.getParameter("registrationID"));
      * request.setAttribute("registration",
-     * AbstractDomainObject.fromExternalId(registrationID));
+     * FenixFramework.getDomainObject(registrationID));
      * 
      * return mapping.findForward("printRegistrationDeclarationTemplate"); }
      */

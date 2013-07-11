@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.domain.messaging.UnitAnnouncementBoard;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
@@ -65,7 +65,7 @@ public class CreateUnitAnnouncementBoard {
 
     @Service
     public static void run(UnitAnnouncementBoardParameters parameters) throws FenixServiceException {
-        Unit unit = (Unit) AbstractDomainObject.fromExternalId(parameters.unitId);
+        Unit unit = (Unit) FenixFramework.getDomainObject(parameters.unitId);
         UnitAnnouncementBoard board = new UnitAnnouncementBoard(unit);
 
         board.setUnitPermittedReadGroupType(parameters.readersGroupType);

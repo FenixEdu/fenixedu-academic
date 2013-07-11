@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy;
 import net.sourceforge.fenixedu.domain.Seminaries.Theme;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt Created at
@@ -32,27 +32,27 @@ public class WriteCandidacy {
         candidacy.setMotivation(infoCandidacy.getMotivation());
 
         // Modality
-        final Modality modality = AbstractDomainObject.fromExternalId(infoCandidacy.getInfoModality().getExternalId());
+        final Modality modality = FenixFramework.getDomainObject(infoCandidacy.getInfoModality().getExternalId());
         candidacy.setModality(modality);
 
         // Registration
-        final Registration readStudent = AbstractDomainObject.fromExternalId(infoCandidacy.getInfoStudent().getExternalId());
+        final Registration readStudent = FenixFramework.getDomainObject(infoCandidacy.getInfoStudent().getExternalId());
         candidacy.setStudent(readStudent);
 
         // Seminary
-        final Seminary readSeminary = AbstractDomainObject.fromExternalId(infoCandidacy.getInfoSeminary().getExternalId());
+        final Seminary readSeminary = FenixFramework.getDomainObject(infoCandidacy.getInfoSeminary().getExternalId());
         candidacy.setSeminary(readSeminary);
 
         // Curricular Course
         final CurricularCourse readCurricularCourse =
-                (CurricularCourse) AbstractDomainObject.fromExternalId(infoCandidacy.getCurricularCourse().getExternalId());
+                (CurricularCourse) FenixFramework.getDomainObject(infoCandidacy.getCurricularCourse().getExternalId());
         candidacy.setCurricularCourse(readCurricularCourse);
 
         // Theme
         if (modality.getExternalId().equals(infoCandidacy.getInfoModality().getExternalId())) {
             candidacy.setTheme(null);
         } else {
-            final Theme readTheme = AbstractDomainObject.fromExternalId(infoCandidacy.getTheme().getExternalId());
+            final Theme readTheme = FenixFramework.getDomainObject(infoCandidacy.getTheme().getExternalId());
             candidacy.setTheme(readTheme);
         }
         if (!infoCandidacy.getInfoSeminary().getHasThemes().booleanValue()) {
@@ -65,7 +65,7 @@ public class WriteCandidacy {
 
             caseStudyChoice.setOrder(infoCaseStudyChoice.getOrder());
 
-            final CaseStudy caseStudy = AbstractDomainObject.fromExternalId(infoCaseStudyChoice.getCaseStudy().getExternalId());
+            final CaseStudy caseStudy = FenixFramework.getDomainObject(infoCaseStudyChoice.getCaseStudy().getExternalId());
             caseStudyChoice.setCaseStudy(caseStudy);
 
             caseStudyChoice.setCandidacy(candidacy);

@@ -12,13 +12,13 @@ import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProfessorsh
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDTeacher;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDValueType;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class SetTSDProfessorship {
     protected TSDProfessorship run(String tsdCourseId, String tsdTeacherId, Map<String, Object> tsdCourseParameters) {
 
-        TSDCourse tsdCourse = AbstractDomainObject.fromExternalId(tsdCourseId);
-        TSDTeacher tsdTeacher = AbstractDomainObject.fromExternalId(tsdTeacherId);
+        TSDCourse tsdCourse = FenixFramework.getDomainObject(tsdCourseId);
+        TSDTeacher tsdTeacher = FenixFramework.getDomainObject(tsdTeacherId);
         ShiftType type = ShiftType.valueOf((String) tsdCourseParameters.get("shiftType"));
 
         TSDProfessorship tsdProfessorship = tsdCourse.getTSDProfessorshipByTSDTeacherAndShiftType(tsdTeacher, type);

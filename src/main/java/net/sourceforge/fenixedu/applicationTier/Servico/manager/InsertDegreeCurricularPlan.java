@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlanEdito
 import net.sourceforge.fenixedu.domain.Degree;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class InsertDegreeCurricularPlan {
 
@@ -20,7 +20,7 @@ public class InsertDegreeCurricularPlan {
             throw new InvalidArgumentsServiceException();
         }
 
-        final Degree degree = AbstractDomainObject.fromExternalId(infoDcp.getInfoDegree().getExternalId());
+        final Degree degree = FenixFramework.getDomainObject(infoDcp.getInfoDegree().getExternalId());
         if (degree == null) {
             throw new FenixServiceException("error.degreeCurricularPlan.non.existing.degree");
         }

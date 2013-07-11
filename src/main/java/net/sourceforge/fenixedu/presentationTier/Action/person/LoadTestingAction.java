@@ -24,7 +24,7 @@ import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "person", path = "/loadTesting", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "loadTesting", path = "/person/loadTesting.jsp"),
@@ -65,7 +65,7 @@ public class LoadTestingAction extends FenixDispatchAction {
 
     public ActionForward viewFakeShift(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
-        request.setAttribute("fakeShift", AbstractDomainObject.fromExternalId(request.getParameter("fakeShift")));
+        request.setAttribute("fakeShift", FenixFramework.getDomainObject(request.getParameter("fakeShift")));
         return mapping.findForward("viewFakeShift");
     }
 
@@ -96,7 +96,7 @@ public class LoadTestingAction extends FenixDispatchAction {
     @Service
     public ActionForward createFakeShiftEnrollment(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
-        FakeShift fakeShift = AbstractDomainObject.fromExternalId(request.getParameter("fakeShift"));
+        FakeShift fakeShift = FenixFramework.getDomainObject(request.getParameter("fakeShift"));
         try {
             fakeShift.enroll();
         } catch (DomainException ex) {
@@ -110,7 +110,7 @@ public class LoadTestingAction extends FenixDispatchAction {
     @Service
     public ActionForward resetFakeShiftEnrollments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
-        FakeShift fakeShift = AbstractDomainObject.fromExternalId(request.getParameter("fakeShift"));
+        FakeShift fakeShift = FenixFramework.getDomainObject(request.getParameter("fakeShift"));
         fakeShift.resetCurrentUserEnrollments();
 
         request.setAttribute("fakeShift", fakeShift);

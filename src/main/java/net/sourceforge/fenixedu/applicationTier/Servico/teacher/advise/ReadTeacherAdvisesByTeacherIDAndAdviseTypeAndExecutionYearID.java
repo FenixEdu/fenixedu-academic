@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.teacher.Advise;
 import net.sourceforge.fenixedu.domain.teacher.AdviseType;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author naat
@@ -26,11 +26,11 @@ public class ReadTeacherAdvisesByTeacherIDAndAdviseTypeAndExecutionYearID {
 
     public List<Advise> run(AdviseType adviseType, String teacherID, String executionYearID) throws FenixServiceException,
             DomainException {
-        Teacher teacher = AbstractDomainObject.fromExternalId(teacherID);
+        Teacher teacher = FenixFramework.getDomainObject(teacherID);
         List<Advise> result;
 
         if (executionYearID != null) {
-            ExecutionYear executionYear = AbstractDomainObject.fromExternalId(executionYearID);
+            ExecutionYear executionYear = FenixFramework.getDomainObject(executionYearID);
 
             result = teacher.getAdvisesByAdviseTypeAndExecutionYear(adviseType, executionYear);
         } else {

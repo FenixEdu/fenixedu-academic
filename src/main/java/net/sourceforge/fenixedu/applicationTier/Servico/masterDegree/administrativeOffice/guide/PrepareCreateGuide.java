@@ -33,7 +33,7 @@ import org.apache.commons.collections.Predicate;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -54,7 +54,7 @@ public class PrepareCreateGuide {
 
         ExecutionDegree executionDegree = null;
 
-        executionDegree = AbstractDomainObject.fromExternalId(infoExecutionDegree.getExternalId());
+        executionDegree = FenixFramework.getDomainObject(infoExecutionDegree.getExternalId());
 
         // Check if the Requester is a Candidate
         if (requesterType.equals(GuideRequester.CANDIDATE.name())) {

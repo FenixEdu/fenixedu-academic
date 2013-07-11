@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.GroupsAndShiftsManagementLog;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author joaosa & rmalo
@@ -28,7 +28,7 @@ public class InsertGroupingMembers {
     protected Boolean run(final String executionCourseCode, final String groupPropertiesCode, final List<String> studentCodes)
             throws FenixServiceException {
 
-        final Grouping groupProperties = AbstractDomainObject.fromExternalId(groupPropertiesCode);
+        final Grouping groupProperties = FenixFramework.getDomainObject(groupPropertiesCode);
         if (groupProperties == null) {
             throw new ExistingServiceException();
         }
@@ -40,7 +40,7 @@ public class InsertGroupingMembers {
         int totalStudentsProcessed = 0;
 
         for (final String studentCode : studentCodes) {
-            final Registration registration = AbstractDomainObject.fromExternalId(studentCode);
+            final Registration registration = FenixFramework.getDomainObject(studentCode);
             if (!studentHasSomeAttendsInGrouping(registration, groupProperties)) {
                 final Attends attends = findAttends(registration, executionCourses);
                 if (attends != null) {

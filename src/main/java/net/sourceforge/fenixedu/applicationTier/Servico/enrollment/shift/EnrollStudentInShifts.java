@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.dataTransferObject.enrollment.shift.ShiftEnrollm
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class EnrollStudentInShifts {
 
@@ -21,7 +21,7 @@ public class EnrollStudentInShifts {
 
         final ShiftEnrollmentErrorReport errorReport = new ShiftEnrollmentErrorReport();
 
-        final Shift selectedShift = AbstractDomainObject.fromExternalId(shiftId);
+        final Shift selectedShift = FenixFramework.getDomainObject(shiftId);
 
         if (selectedShift == null) {
             errorReport.getUnExistingShifts().add(shiftId);

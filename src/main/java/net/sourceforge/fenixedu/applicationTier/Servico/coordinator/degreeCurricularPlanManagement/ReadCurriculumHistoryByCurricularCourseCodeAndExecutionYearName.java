@@ -23,7 +23,7 @@ import org.apache.commons.collections.Transformer;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Fernanda Quitério 17/Nov/2003
@@ -42,7 +42,7 @@ public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName {
         if (stringExecutionYear == null || stringExecutionYear.length() == 0) {
             throw new FenixServiceException("nullExecutionYearName");
         }
-        CurricularCourse curricularCourse = (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseCode);
+        CurricularCourse curricularCourse = (CurricularCourse) FenixFramework.getDomainObject(curricularCourseCode);
         if (curricularCourse == null) {
             throw new NonExistingServiceException("noCurricularCourse");
         }

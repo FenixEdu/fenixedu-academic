@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Luis Cruz
@@ -22,7 +22,7 @@ public class AddFinalDegreeWorkProposalCandidacyForGroup {
     @Checked("RolePredicates.STUDENT_PREDICATE")
     @Service
     public static Boolean run(final FinalDegreeWorkGroup group, String proposalOID) throws FenixServiceException {
-        Proposal proposal = AbstractDomainObject.fromExternalId(proposalOID);
+        Proposal proposal = FenixFramework.getDomainObject(proposalOID);
         if (group != null && group.getGroupProposals() != null
         /* && !CollectionUtils.exists(group.getStudents(), ) */) {
             Scheduleing scheduleing = group.getExecutionDegree().getScheduling();

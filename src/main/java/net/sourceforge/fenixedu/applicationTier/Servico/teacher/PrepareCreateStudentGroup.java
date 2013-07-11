@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import org.apache.commons.beanutils.BeanComparator;
 
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author ansr and scpo
@@ -33,7 +33,7 @@ public class PrepareCreateStudentGroup {
 
     protected ISiteComponent run(String executionCourseCode, String groupPropertiesCode) throws ExistingServiceException {
 
-        final Grouping grouping = AbstractDomainObject.fromExternalId(groupPropertiesCode);
+        final Grouping grouping = FenixFramework.getDomainObject(groupPropertiesCode);
 
         if (grouping == null) {
             throw new ExistingServiceException();

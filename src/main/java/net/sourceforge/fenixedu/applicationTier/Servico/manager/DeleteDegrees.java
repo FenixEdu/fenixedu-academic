@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author lmac1
@@ -26,7 +26,7 @@ public class DeleteDegrees {
         List<String> undeletedDegreesNames = new ArrayList<String>();
         while (iter.hasNext()) {
             String internalId = iter.next();
-            Degree degree = AbstractDomainObject.fromExternalId(internalId);
+            Degree degree = FenixFramework.getDomainObject(internalId);
 
             if (degree != null) {
 

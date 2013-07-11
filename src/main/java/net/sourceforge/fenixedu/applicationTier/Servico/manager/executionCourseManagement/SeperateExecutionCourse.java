@@ -25,7 +25,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class SeperateExecutionCourse {
 
@@ -208,8 +208,8 @@ public class SeperateExecutionCourse {
     public static ExecutionCourse run(String executionCourseId, String destinationExecutionCourseID, String[] shiftIdsToTransfer,
             String[] curricularCourseIdsToTransfer) {
 
-        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
-        ExecutionCourse destinationExecutionCourse = AbstractDomainObject.fromExternalId(destinationExecutionCourseID);
+        ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseId);
+        ExecutionCourse destinationExecutionCourse = FenixFramework.getDomainObject(destinationExecutionCourseID);
         List<Shift> shiftsToTransfer = readShiftsOIDsToTransfer(shiftIdsToTransfer);
         List<CurricularCourse> curricularCoursesToTransfer = readCurricularCoursesOIDsToTransfer(curricularCourseIdsToTransfer);
 
@@ -224,7 +224,7 @@ public class SeperateExecutionCourse {
         }
 
         for (String oid : shiftIdsToTransfer) {
-            result.add(AbstractDomainObject.<Shift> fromExternalId(oid));
+            result.add(FenixFramework.<Shift> getDomainObject(oid));
         }
 
         return result;
@@ -238,7 +238,7 @@ public class SeperateExecutionCourse {
         }
 
         for (String oid : curricularCourseIdsToTransfer) {
-            result.add((CurricularCourse) AbstractDomainObject.fromExternalId(oid));
+            result.add((CurricularCourse) FenixFramework.getDomainObject(oid));
         }
 
         return result;

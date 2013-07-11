@@ -30,7 +30,7 @@ public class PartyContactValidationDA extends FenixDispatchAction {
         String tries = "N/A";
 
         if (!StringUtils.isEmpty(validationOID) && !StringUtils.isEmpty(token)) {
-            EmailValidation emailValidation = EmailValidation.fromExternalId(validationOID);
+            EmailValidation emailValidation = FenixFramework.getDomainObject(validationOID);
             if (emailValidation != null) {
                 emailValidation.processValidation(token);
                 state = emailValidation.getState().toString();

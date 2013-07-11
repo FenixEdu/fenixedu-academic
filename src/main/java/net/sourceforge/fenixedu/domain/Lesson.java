@@ -39,7 +39,7 @@ import org.joda.time.Weeks;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class Lesson extends Lesson_Base {
 

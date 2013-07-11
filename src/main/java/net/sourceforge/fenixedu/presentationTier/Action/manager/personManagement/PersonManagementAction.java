@@ -67,7 +67,7 @@ public class PersonManagementAction extends FenixDispatchAction {
     public ActionForward viewPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         String externalId = request.getParameter("personID");
-        Person person = (Person) rootDomainObject.fromExternalId(externalId);
+        Person person = (Person) FenixFramework.getDomainObject(externalId);
         request.setAttribute("person", person);
         return mapping.findForward("viewPerson");
     }

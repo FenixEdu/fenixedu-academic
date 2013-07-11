@@ -7,14 +7,14 @@ import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class RemoveShifts {
 
     @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
     @Service
     public static Boolean run(final InfoClass infoClass, final List shiftOIDs) {
-        final SchoolClass schoolClass = AbstractDomainObject.fromExternalId(infoClass.getExternalId());
+        final SchoolClass schoolClass = FenixFramework.getDomainObject(infoClass.getExternalId());
         final List<Shift> shifts = schoolClass.getAssociatedShifts();
 
         for (int i = 0; i < shifts.size(); i++) {

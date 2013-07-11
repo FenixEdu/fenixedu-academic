@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class EditPosGradStudentCurricularPlanStateAndCredits {
 
@@ -23,7 +23,7 @@ public class EditPosGradStudentCurricularPlanStateAndCredits {
     public static void run(IUserView userView, String studentCurricularPlanId, String currentState, Double credits,
             String startDate, List<String> extraCurricularOIDs, String observations, String branchId, String specialization)
             throws FenixServiceException {
-        final StudentCurricularPlan scp = AbstractDomainObject.fromExternalId(studentCurricularPlanId);
+        final StudentCurricularPlan scp = FenixFramework.getDomainObject(studentCurricularPlanId);
         if (scp == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -38,7 +38,7 @@ public class EditPosGradStudentCurricularPlanStateAndCredits {
             throw new InvalidArgumentsServiceException();
         }
 
-        final Branch branch = AbstractDomainObject.fromExternalId(branchId);
+        final Branch branch = FenixFramework.getDomainObject(branchId);
         if (branch == null) {
             throw new InvalidArgumentsServiceException();
         }

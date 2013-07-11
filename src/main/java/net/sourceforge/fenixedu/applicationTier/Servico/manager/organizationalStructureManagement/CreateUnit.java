@@ -26,7 +26,7 @@ import net.sourceforge.fenixedu.domain.space.Campus;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class CreateUnit {
@@ -42,20 +42,20 @@ public class CreateUnit {
                 canBeResponsibleOfSpaces, campusID);
 
         Integer costCenterCode = getCostCenterCode(unitCostCenter);
-        Campus campus = (Campus) AbstractDomainObject.fromExternalId(campusID);
+        Campus campus = (Campus) FenixFramework.getDomainObject(campusID);
 
         if (type != null) {
 
             switch (type) {
 
             case DEPARTMENT:
-                Department department = AbstractDomainObject.fromExternalId(departmentID);
+                Department department = FenixFramework.getDomainObject(departmentID);
                 return DepartmentUnit.createNewInternalDepartmentUnit(unitName, unitNameCard, costCenterCode, acronym, begin,
                         end, parentUnit, accountabilityType, webAddress, department, classification, canBeResponsibleOfSpaces,
                         campus);
 
             case DEGREE_UNIT:
-                Degree degree = AbstractDomainObject.fromExternalId(degreeID);
+                Degree degree = FenixFramework.getDomainObject(degreeID);
                 return DegreeUnit.createNewInternalDegreeUnit(unitName, unitNameCard, costCenterCode, acronym, begin, end,
                         parentUnit, accountabilityType, webAddress, degree, classification, canBeResponsibleOfSpaces, campus);
 
@@ -80,7 +80,7 @@ public class CreateUnit {
                 if (administrativeOfficeID == null) {
                     office = new AdministrativeOffice();
                 } else {
-                    office = AbstractDomainObject.fromExternalId(administrativeOfficeID);
+                    office = FenixFramework.getDomainObject(administrativeOfficeID);
                 }
                 Unit unit =
                         Unit.createNewUnit(unitName, unitNameCard, costCenterCode, acronym, begin, end, parentUnit,

@@ -423,7 +423,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
         }
 
         for (String externalId : actionForm.getSelectedProcesses()) {
-            processList.add((PhdIndividualProgramProcess) PhdIndividualProgramProcess.fromExternalId(externalId));
+            processList.add((PhdIndividualProgramProcess) FenixFramework.getDomainObject(externalId));
         }
 
         return processList;

@@ -14,7 +14,7 @@ import org.apache.commons.collections.Predicate;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ReadCompetenceCoursesByDepartment {
 
@@ -24,7 +24,7 @@ public class ReadCompetenceCoursesByDepartment {
 
         final List<InfoCompetenceCourse> result = new ArrayList<InfoCompetenceCourse>();
         if (departmentID != null) {
-            final Department department = AbstractDomainObject.fromExternalId(departmentID);
+            final Department department = FenixFramework.getDomainObject(departmentID);
             if (department == null) {
                 throw new NotExistingServiceException("error.manager.noDepartment");
             }

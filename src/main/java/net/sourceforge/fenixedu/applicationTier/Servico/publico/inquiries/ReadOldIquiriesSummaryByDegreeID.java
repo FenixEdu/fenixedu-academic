@@ -15,7 +15,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author João Fialho & Rita Ferreira
@@ -25,7 +25,7 @@ public class ReadOldIquiriesSummaryByDegreeID {
 
     @Service
     public static List run(String degreeID) throws FenixServiceException {
-        Degree degree = AbstractDomainObject.fromExternalId(degreeID);
+        Degree degree = FenixFramework.getDomainObject(degreeID);
 
         if (degree == null) {
             throw new FenixServiceException("nullDegreeId");

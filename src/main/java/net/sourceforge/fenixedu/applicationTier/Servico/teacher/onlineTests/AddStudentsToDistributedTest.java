@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.utilTests.ParseQuestionException;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Susana Fernandes
@@ -32,7 +32,7 @@ public class AddStudentsToDistributedTest {
         if (infoStudentList == null || infoStudentList.size() == 0) {
             return;
         }
-        DistributedTest distributedTest = AbstractDomainObject.fromExternalId(distributedTestId);
+        DistributedTest distributedTest = FenixFramework.getDomainObject(distributedTestId);
         if (distributedTest == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -57,7 +57,7 @@ public class AddStudentsToDistributedTest {
                 questionList.addAll(studentTestQuestionExample.getQuestion().getMetadata().getVisibleQuestions());
 
                 for (InfoStudent infoStudent : infoStudentList) {
-                    Registration registration = AbstractDomainObject.fromExternalId(infoStudent.getExternalId());
+                    Registration registration = FenixFramework.getDomainObject(infoStudent.getExternalId());
                     StudentTestQuestion studentTestQuestion = new StudentTestQuestion();
                     studentTestQuestion.setStudent(registration);
                     studentTestQuestion.setDistributedTest(distributedTest);

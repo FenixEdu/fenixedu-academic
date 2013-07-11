@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Susana Fernandes
@@ -30,7 +30,7 @@ public class ReadStudentTest {
     @Service
     public static List<StudentTestQuestion> run(Registration registration, String distributedTestId, Boolean log, String path)
             throws FenixServiceException {
-        final DistributedTest distributedTest = AbstractDomainObject.fromExternalId(distributedTestId);
+        final DistributedTest distributedTest = FenixFramework.getDomainObject(distributedTestId);
         return run(registration, distributedTest, log, path);
     }
 

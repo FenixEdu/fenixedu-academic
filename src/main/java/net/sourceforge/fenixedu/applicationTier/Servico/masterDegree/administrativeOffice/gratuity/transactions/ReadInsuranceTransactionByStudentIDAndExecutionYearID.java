@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * 
@@ -31,9 +31,9 @@ public class ReadInsuranceTransactionByStudentIDAndExecutionYearID {
 
         InfoInsuranceTransaction infoInsuranceTransaction = null;
 
-        ExecutionYear executionYear = AbstractDomainObject.fromExternalId(executionYearId);
+        ExecutionYear executionYear = FenixFramework.getDomainObject(executionYearId);
 
-        Registration registration = AbstractDomainObject.fromExternalId(studentId);
+        Registration registration = FenixFramework.getDomainObject(studentId);
 
         if ((executionYear == null) || (registration == null)) {
             return null;

@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular {
 
@@ -25,9 +25,9 @@ public class LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular {
         List listInfoDE = new ArrayList();
 
         CurricularYear curricularYear = CurricularYear.readByYear(year);
-        ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(infoExecutionPeriod.getExternalId());
+        ExecutionSemester executionSemester = FenixFramework.getDomainObject(infoExecutionPeriod.getExternalId());
         DegreeCurricularPlan degreeCurricularPlan =
-                AbstractDomainObject.fromExternalId(infoExecutionDegree.getInfoDegreeCurricularPlan().getExternalId());
+                FenixFramework.getDomainObject(infoExecutionDegree.getInfoDegreeCurricularPlan().getExternalId());
 
         if (executionSemester != null) {
             List<ExecutionCourse> listDCDE =
@@ -55,7 +55,7 @@ public class LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular {
         CurricularYear curricularYear = CurricularYear.readByYear(year);
 
         DegreeCurricularPlan degreeCurricularPlan =
-                AbstractDomainObject.fromExternalId(infoExecutionDegree.getInfoDegreeCurricularPlan().getExternalId());
+                FenixFramework.getDomainObject(infoExecutionDegree.getInfoDegreeCurricularPlan().getExternalId());
 
         if (academicInterval != null) {
             List<ExecutionCourse> listDCDE =

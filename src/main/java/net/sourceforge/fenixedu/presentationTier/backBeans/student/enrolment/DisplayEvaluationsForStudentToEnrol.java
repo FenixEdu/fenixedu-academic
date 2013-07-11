@@ -29,7 +29,7 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.collections.comparators.ReverseComparator;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class DisplayEvaluationsForStudentToEnrol extends FenixBackingBean {
 
@@ -220,8 +220,7 @@ public class DisplayEvaluationsForStudentToEnrol extends FenixBackingBean {
     }
 
     protected ExecutionSemester getExecutionPeriod() {
-        return executionSemester == null && getExecutionPeriodID() != null ? AbstractDomainObject
-                .<ExecutionSemester> fromExternalId(getExecutionPeriodID()) : executionSemester;
+        return executionSemester == null && getExecutionPeriodID() != null ? FenixFramework.<ExecutionSemester> getDomainObject(getExecutionPeriodID()) : executionSemester;
     }
 
     protected Registration getStudent() {

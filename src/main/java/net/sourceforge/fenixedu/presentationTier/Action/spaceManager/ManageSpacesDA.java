@@ -71,7 +71,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
@@ -626,7 +626,7 @@ public class ManageSpacesDA extends FenixDispatchAction {
         final String spaceInformationIDString =
                 request.getParameterMap().containsKey("spaceInformationID") ? request.getParameter("spaceInformationID") : (String) request
                         .getAttribute("spaceInformationID");
-        return AbstractDomainObject.fromExternalId(spaceInformationIDString);
+        return FenixFramework.getDomainObject(spaceInformationIDString);
     }
 
     private String getGroupExpressionFromParameter(final HttpServletRequest request) {
@@ -673,16 +673,16 @@ public class ManageSpacesDA extends FenixDispatchAction {
 
     private Space getSpaceFromParameter(final HttpServletRequest request) {
         final String spaceIDString = request.getParameter("spaceID");
-        return (Space) AbstractDomainObject.fromExternalId(spaceIDString);
+        return (Space) FenixFramework.getDomainObject(spaceIDString);
     }
 
     private AllocatableSpace getDestinationRoomFromParameter(final HttpServletRequest request) {
         final String spaceIDString = request.getParameter("destinationRoomID");
-        return (AllocatableSpace) AbstractDomainObject.fromExternalId(spaceIDString);
+        return (AllocatableSpace) FenixFramework.getDomainObject(spaceIDString);
     }
 
     private AllocatableSpace getFromRoomFromParameter(final HttpServletRequest request) {
         final String spaceIDString = request.getParameter("fromRoomID");
-        return (AllocatableSpace) AbstractDomainObject.fromExternalId(spaceIDString);
+        return (AllocatableSpace) FenixFramework.getDomainObject(spaceIDString);
     }
 }

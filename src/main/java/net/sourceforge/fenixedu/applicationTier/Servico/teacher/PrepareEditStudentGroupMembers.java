@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author asnr and scpo
@@ -25,7 +25,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class PrepareEditStudentGroupMembers {
 
     protected List run(String executionCourseID, String studentGroupID) throws FenixServiceException {
-        final StudentGroup studentGroup = AbstractDomainObject.fromExternalId(studentGroupID);
+        final StudentGroup studentGroup = FenixFramework.getDomainObject(studentGroupID);
         if (studentGroup == null) {
             throw new InvalidArgumentsServiceException();
         }

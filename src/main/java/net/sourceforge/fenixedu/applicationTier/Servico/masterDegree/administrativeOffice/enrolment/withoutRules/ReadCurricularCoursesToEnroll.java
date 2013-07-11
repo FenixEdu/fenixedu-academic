@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ReadCurricularCoursesToEnroll {
 
@@ -48,7 +48,7 @@ public class ReadCurricularCoursesToEnroll {
             throw new FenixServiceException("error.student.curriculum.noCurricularPlans");
         }
 
-        final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeID);
+        final ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreeID);
         if (executionDegree == null) {
             throw new FenixServiceException("error.degree.noData");
         }

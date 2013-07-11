@@ -47,7 +47,7 @@ import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyCon
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public abstract class ViewQUCResultsDA extends FenixDispatchAction {
 
@@ -171,8 +171,8 @@ public abstract class ViewQUCResultsDA extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         ExecutionSemester executionSemester =
-                AbstractDomainObject.fromExternalId(getFromRequest(request, "executionSemesterOID").toString());
-        Person person = AbstractDomainObject.fromExternalId(getFromRequest(request, "personOID").toString());
+                FenixFramework.getDomainObject(getFromRequest(request, "executionSemesterOID").toString());
+        Person person = FenixFramework.getDomainObject(getFromRequest(request, "personOID").toString());
 
         DepartmentTeacherDetailsBean departmentTeacherDetailsBean =
                 new DepartmentTeacherDetailsBean(person, executionSemester, AccessControl.getPerson(), Boolean.valueOf(request
@@ -190,9 +190,9 @@ public abstract class ViewQUCResultsDA extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         ExecutionCourse executionCourse =
-                AbstractDomainObject.fromExternalId(getFromRequest(request, "executionCourseOID").toString());
+                FenixFramework.getDomainObject(getFromRequest(request, "executionCourseOID").toString());
         ExecutionDegree executionDegree =
-                AbstractDomainObject.fromExternalId(getFromRequest(request, "executionDegreeOID").toString());
+                FenixFramework.getDomainObject(getFromRequest(request, "executionDegreeOID").toString());
         DepartmentUCResultsBean departmentUCResultsBean =
                 new DepartmentUCResultsBean(executionCourse, executionDegree, AccessControl.getPerson(), Boolean.valueOf(request
                         .getParameter("backToResume")));
@@ -256,7 +256,7 @@ public abstract class ViewQUCResultsDA extends FenixDispatchAction {
             if (StringUtils.isEmpty(executionSemesterOID)) {
                 executionSemester = ExecutionSemester.readActualExecutionSemester().getPreviousExecutionPeriod();
             } else {
-                executionSemester = AbstractDomainObject.fromExternalId(executionSemesterOID);
+                executionSemester = FenixFramework.getDomainObject(executionSemesterOID);
             }
             departmentExecutionSemester = new DepartmentExecutionSemester();
             departmentExecutionSemester.setExecutionSemester(executionSemester);

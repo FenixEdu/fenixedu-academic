@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Ricardo Rodrigues
@@ -25,7 +25,7 @@ public class InsertNonAffiliatedTeacher {
     @Service
     public static NonAffiliatedTeacher run(String nonAffiliatedTeacherName, String institutionID)
             throws NotExistingServiceException {
-        final Unit institution = (Unit) AbstractDomainObject.fromExternalId(institutionID);
+        final Unit institution = (Unit) FenixFramework.getDomainObject(institutionID);
         if (institution == null) {
             throw new NotExistingServiceException("no.institution");
         }

@@ -15,6 +15,6 @@ public class SearchPhdParticipantsByProcess implements AutoCompleteProvider<PhdP
     }
 
     private PhdIndividualProgramProcess getPhdIndividualProgramProcess(Map<String, String> arguments) {
-        return PhdIndividualProgramProcess.fromExternalId(arguments.get("phdProcessOID"));
+        return FenixFramework.getDomainObject(arguments.get("phdProcessOID"));
     }
 }

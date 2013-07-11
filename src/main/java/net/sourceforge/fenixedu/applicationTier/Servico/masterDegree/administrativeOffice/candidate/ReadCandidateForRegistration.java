@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.util.SituationName;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -35,7 +35,7 @@ public class ReadCandidateForRegistration {
                         SituationName.ADMITED_CONDICIONAL_OTHER_OBJ, SituationName.ADMITIDO_OBJ,
                         SituationName.ADMITED_SPECIALIZATION_OBJ });
 
-        ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeCode);
+        ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreeCode);
         List<CandidateSituation> result = executionDegree.getCandidateSituationsInSituation(situationNames);
 
         if (result.isEmpty()) {

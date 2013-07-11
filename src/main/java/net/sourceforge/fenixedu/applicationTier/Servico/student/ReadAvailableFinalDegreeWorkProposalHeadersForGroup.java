@@ -18,7 +18,7 @@ import org.apache.commons.collections.Predicate;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Luis Cruz
@@ -31,7 +31,7 @@ public class ReadAvailableFinalDegreeWorkProposalHeadersForGroup {
     public static List run(String groupOID) {
         final List<FinalDegreeWorkProposalHeader> result = new ArrayList<FinalDegreeWorkProposalHeader>();
 
-        final FinalDegreeWorkGroup group = AbstractDomainObject.fromExternalId(groupOID);
+        final FinalDegreeWorkGroup group = FenixFramework.getDomainObject(groupOID);
 
         if (group != null && group.getExecutionDegree() != null) {
             final Set<Proposal> finalDegreeWorkProposals = group.getExecutionDegree().getScheduling().findPublishedProposals();

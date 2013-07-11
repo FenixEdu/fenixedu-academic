@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.util.State;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -34,7 +34,7 @@ public class GetCandidatesByID {
             throw new NonExistingServiceException();
         }
 
-        masterDegreeCandidate = AbstractDomainObject.fromExternalId(candidateID);
+        masterDegreeCandidate = FenixFramework.getDomainObject(candidateID);
 
         InfoMasterDegreeCandidate infoMasterDegreeCandidate =
                 InfoMasterDegreeCandidateWithInfoPerson.newInfoFromDomain(masterDegreeCandidate);

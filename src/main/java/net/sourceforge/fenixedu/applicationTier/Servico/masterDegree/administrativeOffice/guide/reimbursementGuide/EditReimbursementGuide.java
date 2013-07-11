@@ -31,7 +31,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.State;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author <a href="mailto:joao.mota@ist.utl.pt">Jo�o Mota </a> <br/>
@@ -54,7 +54,7 @@ public class EditReimbursementGuide {
     @Service
     public static void run(String reimbursementGuideId, String situation, Date officialDate, String remarks, IUserView userView)
             throws FenixServiceException {
-        ReimbursementGuide reimbursementGuide = AbstractDomainObject.fromExternalId(reimbursementGuideId);
+        ReimbursementGuide reimbursementGuide = FenixFramework.getDomainObject(reimbursementGuideId);
         if (reimbursementGuide == null) {
             throw new NonExistingServiceException();
         }
@@ -221,7 +221,7 @@ public class EditReimbursementGuide {
 
             // because of an OJB with cache bug we have to read the guide entry
             // again
-            reimbursementGuideEntryTmp = AbstractDomainObject.fromExternalId(reimbursementGuideEntryTmp.getExternalId());
+            reimbursementGuideEntryTmp = FenixFramework.getDomainObject(reimbursementGuideEntryTmp.getExternalId());
 
             if (reimbursementGuideEntryTmp.getReimbursementGuide().getActiveReimbursementGuideSituation()
                     .getReimbursementGuideState().equals(ReimbursementGuideState.PAYED)) {

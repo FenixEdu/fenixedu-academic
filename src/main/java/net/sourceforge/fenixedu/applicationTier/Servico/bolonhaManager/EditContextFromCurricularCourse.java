@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class EditContextFromCurricularCourse {
 
@@ -55,14 +55,13 @@ public class EditContextFromCurricularCourse {
         if (beginExecutionPeriodID == null) {
             return ExecutionSemester.readActualExecutionSemester();
         } else {
-            return AbstractDomainObject.fromExternalId(beginExecutionPeriodID);
+            return FenixFramework.getDomainObject(beginExecutionPeriodID);
         }
     }
 
     private static ExecutionSemester getEndExecutionPeriod(String endExecutionPeriodID) {
         final ExecutionSemester endExecutionPeriod =
-                (endExecutionPeriodID == null) ? null : AbstractDomainObject
-                        .<ExecutionSemester> fromExternalId(endExecutionPeriodID);
+                (endExecutionPeriodID == null) ? null : FenixFramework.<ExecutionSemester> getDomainObject(endExecutionPeriodID);
         return endExecutionPeriod;
     }
 }

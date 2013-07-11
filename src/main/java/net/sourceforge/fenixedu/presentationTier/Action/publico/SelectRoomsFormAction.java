@@ -22,7 +22,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author tfc130
@@ -102,7 +102,7 @@ public class SelectRoomsFormAction extends FenixContextAction {
     private RoomClassification readTypeRoomFormValue(DynaActionForm roomForm, String name) {
         String obj = readFormValue(roomForm, name);
         if (obj != null) {
-            return AbstractDomainObject.fromExternalId(obj);
+            return FenixFramework.getDomainObject(obj);
         }
 
         return null;

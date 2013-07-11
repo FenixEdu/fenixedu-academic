@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Jo�o Mota
@@ -33,7 +33,7 @@ public class ReadAvailableClassesForShift {
     @Service
     public static List run(String shiftOID) {
 
-        final Shift shift = AbstractDomainObject.fromExternalId(shiftOID);
+        final Shift shift = FenixFramework.getDomainObject(shiftOID);
         final ExecutionCourse executionCourse = shift.getDisciplinaExecucao();
         final ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
         final ExecutionYear executionYear = executionSemester.getExecutionYear();

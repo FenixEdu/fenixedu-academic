@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Jo�o Mota
@@ -51,7 +51,7 @@ public class ClassSiteComponentService {
             }
         } else {
 
-            domainClass = AbstractDomainObject.fromExternalId(classId);
+            domainClass = FenixFramework.getDomainObject(classId);
         }
         bodyComponent = componentBuilder.getComponent(bodyComponent, domainClass);
         SiteView siteView = new SiteView(bodyComponent);

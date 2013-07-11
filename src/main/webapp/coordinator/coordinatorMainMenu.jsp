@@ -7,7 +7,7 @@
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree" %>
 <%@ page import="net.sourceforge.fenixedu.domain.degree.DegreeType" %>
 <%@ page import="net.sourceforge.fenixedu.domain.Degree" %>
-<%@ page import="pt.ist.fenixframework.pstm.AbstractDomainObject" %>
+<%@ page import="pt.ist.fenixframework.FenixFramework" %>
 <%@ page import="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" %>
 <html:xhtml/>
 
@@ -20,7 +20,7 @@
 	<bean:define id="executionDegreeID" name="infoExecutionDegree" property="externalId" />
 
     <%
-        Degree degree = AbstractDomainObject.<DegreeCurricularPlan> fromExternalId(degreeCurricularPlanID).getDegree();
+        Degree degree = FenixFramework.<DegreeCurricularPlan> getDomainObject(degreeCurricularPlanID).getDegree();
         if (degree.isCoordinatorInSomeExecutionYear(person)) {
             request.setAttribute("isCoordinator", true);
         }

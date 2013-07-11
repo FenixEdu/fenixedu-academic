@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCaseStudy;
 import net.sourceforge.fenixedu.domain.Seminaries.CaseStudy;
 import net.sourceforge.fenixedu.domain.Seminaries.Theme;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -27,7 +27,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class GetCaseStudiesByThemeID {
 
     protected List run(String themeID) {
-        List cases = AbstractDomainObject.<Theme> fromExternalId(themeID).getCaseStudies();
+        List cases = FenixFramework.<Theme> getDomainObject(themeID).getCaseStudies();
 
         List infoCases = new LinkedList();
         for (Iterator iterator = cases.iterator(); iterator.hasNext();) {

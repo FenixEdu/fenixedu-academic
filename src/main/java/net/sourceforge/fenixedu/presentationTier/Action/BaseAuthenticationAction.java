@@ -47,7 +47,7 @@ import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.servlets.filters.I18NFilter;
 import pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter;
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.ist.fenixframework.pstm.VersionNotAvailableException;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -70,8 +70,8 @@ public abstract class BaseAuthenticationAction extends FenixAction {
             UserView.setUser(userView);
             String pendingRequest = request.getParameter("pendingRequest");
             if (pendingRequest != null && pendingRequest.length() > 0 && !pendingRequest.equals("null")
-                    && AbstractDomainObject.fromExternalId(pendingRequest) != null
-                    && isValidChecksumForUser((PendingRequest) AbstractDomainObject.fromExternalId(pendingRequest))) {
+                    && FenixFramework.getDomainObject(pendingRequest) != null
+                    && isValidChecksumForUser((PendingRequest) FenixFramework.getDomainObject(pendingRequest))) {
                 return handleSessionRestoreAndGetForward(request, form, userView, httpSession);
             } else if (hasMissingTeacherService(userView)) {
                 return handleSessionCreationAndForwardToTeachingService(request, userView, httpSession);

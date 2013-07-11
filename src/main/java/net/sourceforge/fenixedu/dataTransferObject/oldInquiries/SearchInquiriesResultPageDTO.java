@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 
 import org.apache.struts.action.ActionForm;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class SearchInquiriesResultPageDTO extends ActionForm {
 

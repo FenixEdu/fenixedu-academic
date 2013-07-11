@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.GratuityValues;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Tânia Pousão
@@ -26,8 +26,8 @@ public class ReadGratuitySituationByStudentCurricularPlanByGratuityValues {
 
         GratuitySituation gratuitySituation = null;
 
-        StudentCurricularPlan studentCurricularPlan = AbstractDomainObject.fromExternalId(studentCurricularPlanID);
-        GratuityValues gratuityValues = AbstractDomainObject.fromExternalId(gratuityValuesID);
+        StudentCurricularPlan studentCurricularPlan = FenixFramework.getDomainObject(studentCurricularPlanID);
+        GratuityValues gratuityValues = FenixFramework.getDomainObject(gratuityValuesID);
         gratuitySituation = studentCurricularPlan.getGratuitySituationByGratuityValues(gratuityValues);
 
         InfoGratuitySituation infoGratuitySituation = null;

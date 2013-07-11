@@ -96,7 +96,7 @@ color: #000;
 		%>
 	</logic:empty>
 	<%
-	final net.sourceforge.fenixedu.domain.ExecutionDegree executionDegree = ExecutionDegree.fromExternalId((String)request.getAttribute("executionDegreeOID"));
+	final net.sourceforge.fenixedu.domain.ExecutionDegree executionDegree = FenixFramework.getDomainObject((String)request.getAttribute("executionDegreeOID"));
 	final net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing scheduleing = executionDegree.getScheduling();
 	if (scheduleing.getAllowSimultaneousCoorientationAndCompanion().booleanValue()) {
 		showCoordinator = true;

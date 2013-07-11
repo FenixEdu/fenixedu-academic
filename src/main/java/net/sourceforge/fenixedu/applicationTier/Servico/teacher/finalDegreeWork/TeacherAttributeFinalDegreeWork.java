@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Luis Cruz
@@ -18,7 +18,7 @@ public class TeacherAttributeFinalDegreeWork {
 
     @Service
     public static Boolean run(String selectedGroupProposalOID) throws FenixServiceException {
-        final GroupProposal groupProposal = AbstractDomainObject.fromExternalId(selectedGroupProposalOID);
+        final GroupProposal groupProposal = FenixFramework.getDomainObject(selectedGroupProposalOID);
 
         if (groupProposal != null) {
             final Proposal proposal = groupProposal.getFinalDegreeWorkProposal();

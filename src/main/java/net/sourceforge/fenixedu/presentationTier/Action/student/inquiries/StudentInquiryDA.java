@@ -45,7 +45,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author - Ricardo Rodrigues (ricardo.rodrigues@ist.utl.pt)
@@ -161,7 +161,7 @@ public class StudentInquiryDA extends FenixDispatchAction {
         String inquiryRegistryID = (String) getFromRequest(request, "inquiryRegistryID");
         form.set("inquiryRegistryID", inquiryRegistryID);
 
-        request.setAttribute("inquiryRegistry", AbstractDomainObject.fromExternalId(inquiryRegistryID));
+        request.setAttribute("inquiryRegistry", FenixFramework.getDomainObject(inquiryRegistryID));
 
         return actionMapping.findForward("showDontRespond");
     }
@@ -170,7 +170,7 @@ public class StudentInquiryDA extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         DynaActionForm form = (DynaActionForm) actionForm;
-        StudentInquiryRegistry inquiryRegistry = AbstractDomainObject.fromExternalId(form.getString("inquiryRegistryID"));
+        StudentInquiryRegistry inquiryRegistry = FenixFramework.getDomainObject(form.getString("inquiryRegistryID"));
         String notAnsweredJustification = (String) form.get("notAnsweredJustification");
         if (StringUtils.isEmpty(notAnsweredJustification)) {
             addActionMessage(request, "error.inquiries.notAnsweredFillAtLeastOneField");
@@ -220,7 +220,7 @@ public class StudentInquiryDA extends FenixDispatchAction {
 
         if (inquiryBean == null) {
             String inquiryRegistryID = (String) getFromRequest(request, "inquiryRegistryID");
-            StudentInquiryRegistry inquiryRegistry = AbstractDomainObject.fromExternalId(inquiryRegistryID);
+            StudentInquiryRegistry inquiryRegistry = FenixFramework.getDomainObject(inquiryRegistryID);
 
             Set<InquiryBlockDTO> inquiryBlocks = new TreeSet<InquiryBlockDTO>(new BeanComparator("inquiryBlock.blockOrder"));
             for (InquiryBlock inquiryBlock : studentInquiryTemplate.getInquiryBlocks()) {
@@ -261,7 +261,7 @@ public class StudentInquiryDA extends FenixDispatchAction {
         StudentInquiryBean inquiryBean = getRenderedObject("inquiryBean");
         if (inquiryBean == null) {
             String inquiryRegistryID = (String) getFromRequest(request, "inquiryRegistryID");
-            StudentInquiryRegistry inquiryRegistry = AbstractDomainObject.fromExternalId(inquiryRegistryID);
+            StudentInquiryRegistry inquiryRegistry = FenixFramework.getDomainObject(inquiryRegistryID);
             inquiryBean = new StudentInquiryBean(StudentTeacherInquiryTemplate.getCurrentTemplate(), inquiryRegistry);
         }
         RenderUtils.invalidateViewState();

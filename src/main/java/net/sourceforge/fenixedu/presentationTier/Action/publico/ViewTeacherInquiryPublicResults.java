@@ -25,7 +25,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/viewTeacherResults", module = "publico")
 public class ViewTeacherInquiryPublicResults extends ViewInquiryPublicResults {
@@ -39,7 +39,7 @@ public class ViewTeacherInquiryPublicResults extends ViewInquiryPublicResults {
 
     public static ActionForward getTeacherResultsActionForward(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) {
-        Professorship professorship = AbstractDomainObject.fromExternalId(request.getParameter("professorshipOID"));
+        Professorship professorship = FenixFramework.getDomainObject(request.getParameter("professorshipOID"));
         ShiftType shiftType = ShiftType.valueOf(request.getParameter("shiftType"));
 
         List<InquiryResult> inquiryResults = professorship.getInquiryResults(shiftType);

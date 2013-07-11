@@ -24,7 +24,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Ricardo Rodrigues
@@ -36,7 +36,7 @@ public class EditTeacherAdviseService {
     protected void run(Teacher teacher, String executionPeriodID, final Integer studentNumber, Double percentage,
             AdviseType adviseType, RoleType roleType) throws FenixServiceException {
 
-        ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodID);
+        ExecutionSemester executionSemester = FenixFramework.getDomainObject(executionPeriodID);
 
         List<Registration> students = RootDomainObject.getInstance().getRegistrations();
         Registration registration = (Registration) CollectionUtils.find(students, new Predicate() {

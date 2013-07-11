@@ -25,7 +25,7 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/partyContacts", module = "academicAdministration", formBeanClass = FenixActionForm.class)
 @Forwards({ @Forward(name = "createPartyContact", path = "/academicAdminOffice/createPartyContact.jsp"),
@@ -36,7 +36,7 @@ public class PartyContactsAcademicAdministrativeOfficeDA extends PartyContactsMa
 
     private Student getStudent(final HttpServletRequest request) {
         final String studentID = request.getParameter("studentID");
-        final Student student = AbstractDomainObject.fromExternalId(studentID);
+        final Student student = FenixFramework.getDomainObject(studentID);
         request.setAttribute("student", student);
         return student;
     }

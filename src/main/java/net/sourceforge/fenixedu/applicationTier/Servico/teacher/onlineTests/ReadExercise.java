@@ -5,11 +5,11 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ReadExercise {
     protected Metadata run(String executionCourseId, String metadataId) throws FenixServiceException {
-        return AbstractDomainObject.fromExternalId(metadataId);
+        return FenixFramework.getDomainObject(metadataId);
     }
 
     // Service Invokers migrated from Berserk

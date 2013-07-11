@@ -26,7 +26,7 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/degreeCurricularPlan/studentEquivalencyPlan", module = "manager")
 @Forwards({ @Forward(name = "showPlan", path = "/academicAdminOffice/degreeCurricularPlan/showStudentEquivalencyPlan.jsp"),
@@ -152,7 +152,7 @@ public class StudentEquivalencyPlanDA extends FenixDispatchAction {
 
     private EquivalencePlanEntry getEquivalencePlanEntry(HttpServletRequest request) {
         final String equivalencePlanEntryIDString = request.getParameter("equivalencePlanEntryID");
-        return (EquivalencePlanEntry) AbstractDomainObject.fromExternalId(equivalencePlanEntryIDString);
+        return (EquivalencePlanEntry) FenixFramework.getDomainObject(equivalencePlanEntryIDString);
     }
 
     private StudentCurricularPlanEquivalencePlan getStudentCurricularPlanEquivalencePlan(final HttpServletRequest request,
@@ -195,7 +195,7 @@ public class StudentEquivalencyPlanDA extends FenixDispatchAction {
 
     private CurriculumModule getCurriculumModule(final HttpServletRequest request) {
         final String curriculumModuleIDString = request.getParameter("curriculumModuleID");
-        return AbstractDomainObject.fromExternalId(curriculumModuleIDString);
+        return FenixFramework.getDomainObject(curriculumModuleIDString);
     }
 
     private DegreeCurricularPlan getDegreeCurricularPlan(final HttpServletRequest request) {
@@ -211,7 +211,7 @@ public class StudentEquivalencyPlanDA extends FenixDispatchAction {
 
     private DegreeCurricularPlan getDegreeCurricularPlan(final HttpServletRequest request, final String attrName) {
         final String degreeCurricularPlanIDString = request.getParameter(attrName);
-        return AbstractDomainObject.fromExternalId(degreeCurricularPlanIDString);
+        return FenixFramework.getDomainObject(degreeCurricularPlanIDString);
     }
 
 }

@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author jpvl
@@ -35,8 +35,8 @@ public class UpdateProfessorshipsHours {
             if (value != null) {
                 try {
                     Double ecHours = Double.valueOf(value);
-                    Teacher teacher = AbstractDomainObject.fromExternalId(teacherId);
-                    ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(key);
+                    Teacher teacher = FenixFramework.getDomainObject(teacherId);
+                    ExecutionCourse executionCourse = FenixFramework.getDomainObject(key);
                     Professorship professorship = teacher.getProfessorshipByExecutionCourse(executionCourse);
                     professorship.setHours(ecHours);
                 } catch (NumberFormatException e1) {

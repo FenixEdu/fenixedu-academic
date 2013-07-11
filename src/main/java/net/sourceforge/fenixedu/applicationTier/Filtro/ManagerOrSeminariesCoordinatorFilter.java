@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ManagerOrSeminariesCoordinatorFilter {
 
@@ -29,7 +29,7 @@ public class ManagerOrSeminariesCoordinatorFilter {
     }
 
     public boolean doesThisSCPBelongToASeminaryCandidate(String SCPIDInternal) {
-        StudentCurricularPlan scp = AbstractDomainObject.fromExternalId(SCPIDInternal);
+        StudentCurricularPlan scp = FenixFramework.getDomainObject(SCPIDInternal);
         if (scp != null) {
             List<SeminaryCandidacy> candidacies = scp.getRegistration().getAssociatedCandidancies();
             return !candidacies.isEmpty();

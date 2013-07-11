@@ -24,7 +24,7 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.util.ProposalState;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author joaosa & rmalo
@@ -41,9 +41,9 @@ public class NewProjectProposal {
             return result;
         }
 
-        Grouping groupProperties = AbstractDomainObject.fromExternalId(groupPropertiesId);
-        ExecutionCourse goalExecutionCourse = AbstractDomainObject.fromExternalId(goalExecutionCourseId);
-        ExecutionCourse startExecutionCourse = AbstractDomainObject.fromExternalId(objectCode);
+        Grouping groupProperties = FenixFramework.getDomainObject(groupPropertiesId);
+        ExecutionCourse goalExecutionCourse = FenixFramework.getDomainObject(goalExecutionCourseId);
+        ExecutionCourse startExecutionCourse = FenixFramework.getDomainObject(objectCode);
         Person senderPerson = Teacher.readTeacherByUsername(senderPersonUsername).getPerson();
 
         if (groupProperties == null) {

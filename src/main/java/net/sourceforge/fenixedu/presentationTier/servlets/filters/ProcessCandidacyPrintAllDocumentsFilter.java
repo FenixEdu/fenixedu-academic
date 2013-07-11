@@ -58,7 +58,7 @@ import org.xml.sax.SAXException;
 import pt.ist.fenixWebFramework.FenixWebFramework;
 import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.ResponseWrapper;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.Jpeg;
@@ -617,7 +617,7 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
     }
 
     private StudentCandidacy getCandidacy(HttpServletRequest request) {
-        return AbstractDomainObject.fromExternalId(request.getParameter("candidacyID"));
+        return FenixFramework.getDomainObject(request.getParameter("candidacyID"));
     }
 
     private String buildRedirectURL(HttpServletRequest request, final StudentCandidacy candidacy) {

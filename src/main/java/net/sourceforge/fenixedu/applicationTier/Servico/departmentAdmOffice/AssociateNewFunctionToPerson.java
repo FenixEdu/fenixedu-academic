@@ -16,19 +16,19 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class AssociateNewFunctionToPerson {
 
     protected void run(String functionID, String personID, Double credits, YearMonthDay begin, YearMonthDay end)
             throws FenixServiceException, DomainException {
 
-        Person person = (Person) AbstractDomainObject.fromExternalId(personID);
+        Person person = (Person) FenixFramework.getDomainObject(personID);
         if (person == null) {
             throw new FenixServiceException("error.noPerson");
         }
 
-        Function function = (Function) AbstractDomainObject.fromExternalId(functionID);
+        Function function = (Function) FenixFramework.getDomainObject(functionID);
         if (function == null) {
             throw new FenixServiceException("error.noFunction");
         }

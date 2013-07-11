@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoSiteCourseInformation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Leonor Almeida
@@ -25,7 +25,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ReadCourseInformation {
 
     protected TeacherAdministrationSiteView run(final String executionCourseOID) throws FenixServiceException {
-        final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseOID);
+        final ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseOID);
         final InfoSiteCourseInformation resultComponent = new InfoSiteCourseInformation(executionCourse);
 
         final TeacherAdministrationSiteView result = new TeacherAdministrationSiteView();

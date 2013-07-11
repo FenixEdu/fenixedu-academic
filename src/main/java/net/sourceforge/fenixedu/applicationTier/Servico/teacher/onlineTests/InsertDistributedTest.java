@@ -37,7 +37,7 @@ import org.apache.commons.beanutils.BeanComparator;
 
 import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.ist.fenixframework.pstm.Transaction;
 
 public class InsertDistributedTest {
@@ -46,12 +46,12 @@ public class InsertDistributedTest {
             Calendar beginDate, Calendar beginHour, Calendar endDate, Calendar endHour, TestType testType,
             CorrectionAvailability correctionAvaiability, Boolean imsFeedback, List<InfoStudent> infoStudentList,
             String contextPath) throws FenixServiceException {
-        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
+        ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseId);
         if (executionCourse == null) {
             throw new InvalidArgumentsServiceException();
         }
 
-        Test test = AbstractDomainObject.fromExternalId(testId);
+        Test test = FenixFramework.getDomainObject(testId);
         if (test == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -139,8 +139,8 @@ public class InsertDistributedTest {
 
         @Override
         public void doIt() {
-            final ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
-            final Test test = AbstractDomainObject.fromExternalId(testId);
+            final ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseId);
+            final Test test = FenixFramework.getDomainObject(testId);
 
             DistributedTest distributedTest = new DistributedTest();
             distributedTest.setTitle(test.getTitle());
@@ -199,11 +199,11 @@ public class InsertDistributedTest {
         }
 
         public TestQuestion getTestQuestion() {
-            return AbstractDomainObject.fromExternalId(testQuestionId);
+            return FenixFramework.getDomainObject(testQuestionId);
         }
 
         public Question getQuestion() {
-            return AbstractDomainObject.fromExternalId(questionId);
+            return FenixFramework.getDomainObject(questionId);
         }
     }
 
@@ -275,7 +275,7 @@ public class InsertDistributedTest {
 
         @Override
         public void doIt() {
-            Test test = AbstractDomainObject.fromExternalId(testId);
+            Test test = FenixFramework.getDomainObject(testId);
 
             List<TestQuestion> testQuestionList = new ArrayList<TestQuestion>(test.getTestQuestions());
             Collections.sort(testQuestionList, new BeanComparator("testQuestionOrder"));
@@ -330,8 +330,8 @@ public class InsertDistributedTest {
 
         @Override
         public void doIt() {
-            final DistributedTest distributedTest = AbstractDomainObject.fromExternalId(distributedTestId);
-            final Registration registration = AbstractDomainObject.fromExternalId(infoStudent.getExternalId());
+            final DistributedTest distributedTest = FenixFramework.getDomainObject(distributedTestId);
+            final Registration registration = FenixFramework.getDomainObject(infoStudent.getExternalId());
 
             for (final QuestionPair questionPair : questionList) {
                 final TestQuestion testQuestion = questionPair.getTestQuestion();

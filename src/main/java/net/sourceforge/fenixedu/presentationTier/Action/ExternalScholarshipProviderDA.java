@@ -57,7 +57,7 @@ public class ExternalScholarshipProviderDA extends FenixDispatchAction {
 
     @Service
     public ActionForward remove(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-        Party party = Party.fromExternalId(request.getParameter("provider"));
+        Party party = FenixFramework.getDomainObject(request.getParameter("provider"));
         List<Party> externalScholarshipProvider = RootDomainObject.getInstance().getExternalScholarshipProvider();
         externalScholarshipProvider.remove(party);
         return redirect("/externalScholarshipProvider.do?method=list", request);

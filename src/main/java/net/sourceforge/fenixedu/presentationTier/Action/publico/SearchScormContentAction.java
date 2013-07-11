@@ -26,7 +26,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.file.FileSearchCriteria.SearchField;
 import pt.utl.ist.fenix.tools.file.FilesetMetadataQuery.ConjunctionType;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
@@ -43,7 +43,7 @@ public class SearchScormContentAction extends SearchDSpaceGeneralAction {
         String executionCourseId = request.getParameter("executionCourseID");
         ExecutionCourse course = null;
         if (executionCourseId != null) {
-            course = (ExecutionCourse) AbstractDomainObject.fromExternalId(executionCourseId);
+            course = (ExecutionCourse) FenixFramework.getDomainObject(executionCourseId);
         } else {
             ExecutionCourseSite site =
                     (ExecutionCourseSite) AbstractFunctionalityContext.getCurrentContext(request).getSelectedContainer();
@@ -63,7 +63,7 @@ public class SearchScormContentAction extends SearchDSpaceGeneralAction {
             return prepareSearch(mapping, form, request, response, "search");
         }
 
-        ExecutionCourse course = (ExecutionCourse) AbstractDomainObject.fromExternalId(executionCourseId);
+        ExecutionCourse course = (ExecutionCourse) FenixFramework.getDomainObject(executionCourseId);
         SearchDSpaceCoursesBean bean = (SearchDSpaceCoursesBean) createNewBean();
         bean.addSearchElement(new SearchElement(SearchField.COURSE, course.getNome(), ConjunctionType.AND));
         bean.setExecutionYear(course.getExecutionYear());
@@ -153,10 +153,10 @@ public class SearchScormContentAction extends SearchDSpaceGeneralAction {
         bean.setEducationalResourceTypes(typesList);
 
         if (executionYearId != null && executionYearId.length() > 0) {
-            bean.setExecutionYear((ExecutionYear) AbstractDomainObject.fromExternalId(executionYearId));
+            bean.setExecutionYear((ExecutionYear) FenixFramework.getDomainObject(executionYearId));
         }
         if (executionPeriodId != null && executionPeriodId.length() > 0) {
-            bean.setExecutionPeriod((ExecutionSemester) AbstractDomainObject.fromExternalId(executionPeriodId));
+            bean.setExecutionPeriod((ExecutionSemester) FenixFramework.getDomainObject(executionPeriodId));
         }
 
         return bean;

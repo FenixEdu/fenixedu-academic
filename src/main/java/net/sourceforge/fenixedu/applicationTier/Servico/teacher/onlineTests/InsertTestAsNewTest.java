@@ -11,13 +11,13 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.onlineTests.Test;
 import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class InsertTestAsNewTest {
 
     protected String run(String executionCourseId, String oldTestId) throws FenixServiceException {
-        Test oldTest = AbstractDomainObject.fromExternalId(oldTestId);
+        Test oldTest = FenixFramework.getDomainObject(oldTestId);
         if (oldTest == null) {
             throw new InvalidArgumentsServiceException();
         }

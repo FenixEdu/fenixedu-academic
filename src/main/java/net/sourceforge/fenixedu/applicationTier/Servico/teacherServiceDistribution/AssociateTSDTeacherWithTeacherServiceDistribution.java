@@ -7,16 +7,16 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDTeacher;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class AssociateTSDTeacherWithTeacherServiceDistribution {
     protected void run(String tsdId, String tsdTeacherId) {
-        TeacherServiceDistribution tsd = AbstractDomainObject.fromExternalId(tsdId);
+        TeacherServiceDistribution tsd = FenixFramework.getDomainObject(tsdId);
 
         if (tsdTeacherId == null) {
             tsd.getTSDTeachersSet().addAll(tsd.getParent().getTSDTeachers());
         } else {
-            tsd.addTSDTeachers(AbstractDomainObject.<TSDTeacher> fromExternalId(tsdTeacherId));
+            tsd.addTSDTeachers(FenixFramework.<TSDTeacher> getDomainObject(tsdTeacherId));
         }
     }
 

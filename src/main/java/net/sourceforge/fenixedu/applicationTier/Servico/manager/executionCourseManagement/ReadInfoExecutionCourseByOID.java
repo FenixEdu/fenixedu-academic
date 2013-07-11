@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /*
  * 
@@ -21,7 +21,7 @@ public class ReadInfoExecutionCourseByOID {
             throw new FenixServiceException("nullId");
         }
 
-        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseOID);
+        ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseOID);
         return InfoExecutionCourse.newInfoFromDomain(executionCourse);
     }
 

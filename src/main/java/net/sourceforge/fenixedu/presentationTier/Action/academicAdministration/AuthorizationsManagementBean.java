@@ -159,7 +159,7 @@ public class AuthorizationsManagementBean implements Serializable {
     private void extractPrograms(String courses, Set<AcademicProgram> programs) {
         if (!courses.trim().isEmpty()) {
             for (String course : SPLITTER.split(courses)) {
-                AcademicProgram program = AcademicProgram.fromExternalId(course);
+                AcademicProgram program = FenixFramework.getDomainObject(course);
                 programs.add(program);
             }
         }
@@ -168,7 +168,7 @@ public class AuthorizationsManagementBean implements Serializable {
     private void extractOffices(String officesStr, Set<AdministrativeOffice> offices) {
         if (!officesStr.trim().isEmpty()) {
             for (String officeStr : SPLITTER.split(officesStr)) {
-                AdministrativeOffice office = AdministrativeOffice.fromExternalId(officeStr);
+                AdministrativeOffice office = FenixFramework.getDomainObject(officeStr);
                 offices.add(office);
             }
         }

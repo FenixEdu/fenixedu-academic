@@ -43,7 +43,7 @@ import org.joda.time.Interval;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
@@ -356,7 +356,7 @@ public class ManageEnrolementPeriodsDA extends FenixDispatchAction {
         String periodOids = request.getParameter("periods");
         EnrolmentPeriodConfigurationForEdit conf = null;
         for (String periodOid : periodOids.split(":")) {
-            EnrolmentPeriod period = AbstractDomainObject.fromExternalId(periodOid);
+            EnrolmentPeriod period = FenixFramework.getDomainObject(periodOid);
             if (conf == null) {
                 conf = new EnrolmentPeriodConfigurationForEdit(period.getInterval(), semester);
                 conf.addPeriod(period);

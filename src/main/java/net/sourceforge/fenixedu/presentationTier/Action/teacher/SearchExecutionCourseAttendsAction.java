@@ -35,7 +35,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 public class SearchExecutionCourseAttendsAction extends FenixDispatchAction {
@@ -52,7 +52,7 @@ public class SearchExecutionCourseAttendsAction extends FenixDispatchAction {
         // Integer.valueOf(request.getParameter("objectCode"));
         ExecutionCourse executionCourse = getDomainObject(request, "objectCode");
         // ExecutionCourse executionCourse =
-        // AbstractDomainObject.fromExternalId(objectCode);
+        // FenixFramework.getDomainObject(objectCode);
         SearchExecutionCourseAttendsBean searchExecutionCourseAttendsBean = readSearchBean(request, executionCourse);
 
         executionCourse.searchAttends(searchExecutionCourseAttendsBean);
@@ -168,7 +168,7 @@ public class SearchExecutionCourseAttendsAction extends FenixDispatchAction {
             label = degreeStudentsGroup.getLabel();
             String executionDegreeId = (String) getFromRequestOrForm(request, (DynaActionForm) form, "executionDegreeId");
             studentsGroup = degreeStudentsGroup;
-            ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeId);
+            ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreeId);
             sender = CoordinatorSender.newInstance(executionDegree.getDegree());
         }
 

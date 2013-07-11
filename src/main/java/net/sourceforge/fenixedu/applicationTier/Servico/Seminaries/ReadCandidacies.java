@@ -34,7 +34,7 @@ import net.sourceforge.fenixedu.domain.Seminaries.Theme;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -53,18 +53,18 @@ public class ReadCandidacies {
         //
         // case[1-5]Id => case study ids in the desired order
 
-        Modality modality = AbstractDomainObject.fromExternalId(modalityID);
-        Seminary seminary = AbstractDomainObject.fromExternalId(seminaryID);
-        Theme theme = AbstractDomainObject.fromExternalId(themeID);
+        Modality modality = FenixFramework.getDomainObject(modalityID);
+        Seminary seminary = FenixFramework.getDomainObject(seminaryID);
+        Theme theme = FenixFramework.getDomainObject(themeID);
 
-        DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
-        CurricularCourse curricularCourse = AbstractDomainObject.fromExternalId(curricularCourseID);
+        DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
+        CurricularCourse curricularCourse = FenixFramework.getDomainObject(curricularCourseID);
 
-        CaseStudy caseStudy1 = AbstractDomainObject.fromExternalId(case1Id);
-        CaseStudy caseStudy2 = AbstractDomainObject.fromExternalId(case2Id);
-        CaseStudy caseStudy3 = AbstractDomainObject.fromExternalId(case3Id);
-        CaseStudy caseStudy4 = AbstractDomainObject.fromExternalId(case4Id);
-        CaseStudy caseStudy5 = AbstractDomainObject.fromExternalId(case5Id);
+        CaseStudy caseStudy1 = FenixFramework.getDomainObject(case1Id);
+        CaseStudy caseStudy2 = FenixFramework.getDomainObject(case2Id);
+        CaseStudy caseStudy3 = FenixFramework.getDomainObject(case3Id);
+        CaseStudy caseStudy4 = FenixFramework.getDomainObject(case4Id);
+        CaseStudy caseStudy5 = FenixFramework.getDomainObject(case5Id);
 
         List<SeminaryCandidacy> filteredCandidacies = new ArrayList<SeminaryCandidacy>();
 

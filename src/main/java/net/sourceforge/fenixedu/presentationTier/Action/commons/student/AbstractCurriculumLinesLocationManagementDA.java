@@ -23,7 +23,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 abstract public class AbstractCurriculumLinesLocationManagementDA extends FenixDispatchAction {
 
@@ -118,7 +118,7 @@ abstract public class AbstractCurriculumLinesLocationManagementDA extends FenixD
 
         final List<CurriculumLine> result = new ArrayList<CurriculumLine>();
         for (final String curriculumLineIdString : selectedCurriculumLineIds) {
-            result.add((CurriculumLine) AbstractDomainObject.fromExternalId(curriculumLineIdString));
+            result.add((CurriculumLine) FenixFramework.getDomainObject(curriculumLineIdString));
         }
 
         return result;

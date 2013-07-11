@@ -30,7 +30,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 abstract public class ViewInquiriesResultsDA extends FenixDispatchAction {
 
@@ -54,7 +54,7 @@ abstract public class ViewInquiriesResultsDA extends FenixDispatchAction {
             degreeCurricularPlanID = ((ViewInquiriesResultPageDTO) actionForm).getDegreeCurricularPlanID();
         }
         final DegreeCurricularPlan degreeCurricularPlan =
-                AbstractDomainObject.fromExternalId(getStringFromRequest(request, "degreeCurricularPlanID"));
+                FenixFramework.getDomainObject(getStringFromRequest(request, "degreeCurricularPlanID"));
         final List<ExecutionSemester> executionSemesters = new ArrayList<ExecutionSemester>();
         for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
             final ExecutionYear executionYear = executionDegree.getExecutionYear();

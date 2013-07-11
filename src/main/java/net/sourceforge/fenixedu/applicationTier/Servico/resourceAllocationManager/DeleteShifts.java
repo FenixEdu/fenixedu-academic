@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class DeleteShifts {
 
@@ -25,7 +25,7 @@ public class DeleteShifts {
 
         for (final String shiftID : shiftOIDs) {
             try {
-                AbstractDomainObject.<Shift> fromExternalId(shiftID).delete();
+                FenixFramework.<Shift> getDomainObject(shiftID).delete();
             } catch (DomainException e) {
                 exceptionList.add(e);
             }

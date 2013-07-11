@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -17,8 +17,8 @@ public class ReadActiveCurricularCourseScopesByDegreeCurricularPlanIDAndExecutio
 
     @Service
     public static Set<DegreeModuleScope> run(String degreeCurricularPlanId, String executionYearID) {
-        final ExecutionYear executionYear = AbstractDomainObject.fromExternalId(executionYearID);
-        final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanId);
+        final ExecutionYear executionYear = FenixFramework.getDomainObject(executionYearID);
+        final DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanId);
         final Set<DegreeModuleScope> degreeModuleScopes = degreeCurricularPlan.getDegreeModuleScopes();
         final Set<DegreeModuleScope> result =
                 new TreeSet<DegreeModuleScope>(

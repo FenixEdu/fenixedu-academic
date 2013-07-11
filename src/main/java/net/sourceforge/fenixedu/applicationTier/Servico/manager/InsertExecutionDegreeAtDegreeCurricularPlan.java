@@ -15,26 +15,26 @@ import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class InsertExecutionDegreeAtDegreeCurricularPlan {
 
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
     public static void run(InfoExecutionDegreeEditor infoExecutionDegree) throws FenixServiceException {
-        final Campus campus = (Campus) AbstractDomainObject.fromExternalId(infoExecutionDegree.getInfoCampus().getExternalId());
+        final Campus campus = (Campus) FenixFramework.getDomainObject(infoExecutionDegree.getInfoCampus().getExternalId());
         if (campus == null) {
             throw new NonExistingServiceException("message.nonExistingCampus", null);
         }
 
         final DegreeCurricularPlan degreeCurricularPlan =
-                AbstractDomainObject.fromExternalId(infoExecutionDegree.getInfoDegreeCurricularPlan().getExternalId());
+                FenixFramework.getDomainObject(infoExecutionDegree.getInfoDegreeCurricularPlan().getExternalId());
         if (degreeCurricularPlan == null) {
             throw new NonExistingServiceException("message.nonExistingDegreeCurricularPlan", null);
         }
 
         final ExecutionYear executionYear =
-                AbstractDomainObject.fromExternalId(infoExecutionDegree.getInfoExecutionYear().getExternalId());
+                FenixFramework.getDomainObject(infoExecutionDegree.getInfoExecutionYear().getExternalId());
         if (executionYear == null) {
             throw new NonExistingServiceException("message.non.existing.execution.year", null);
         }

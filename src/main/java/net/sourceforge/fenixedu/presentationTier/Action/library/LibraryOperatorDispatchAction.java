@@ -43,7 +43,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/libraryOperator", module = "library")
 @Forwards({
@@ -105,8 +105,8 @@ public class LibraryOperatorDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) {
         LibraryAttendance attendance = getRenderedObject("person.selectPlace");
         if (attendance == null) {
-            SpaceAttendances spaceAttendance = AbstractDomainObject.fromExternalId(request.getParameter("attendanceId"));
-            Space library = AbstractDomainObject.fromExternalId(request.getParameter("libraryId"));
+            SpaceAttendances spaceAttendance = FenixFramework.getDomainObject(request.getParameter("attendanceId"));
+            Space library = FenixFramework.getDomainObject(request.getParameter("libraryId"));
             attendance = new LibraryAttendance(spaceAttendance, library);
         }
         RenderUtils.invalidateViewState();
@@ -172,7 +172,7 @@ public class LibraryOperatorDispatchAction extends FenixDispatchAction {
     private LibraryAttendance getAttendanceFromRequest(HttpServletRequest request, String renderId) {
         LibraryAttendance attendance = getRenderedObject(renderId);
         if (attendance == null) {
-            Space library = AbstractDomainObject.fromExternalId(request.getParameter("libraryId"));
+            Space library = FenixFramework.getDomainObject(request.getParameter("libraryId"));
             String personId = request.getParameter("personIstUsername");
             if (personId != null) {
                 attendance = new LibraryAttendance(personId, library);

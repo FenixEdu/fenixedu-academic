@@ -18,7 +18,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "external", path = "/connect", scope = "request", parameter = "method")
 public class ISTConnectDA extends ExternalInterfaceDispatchAction {
@@ -95,8 +95,7 @@ public class ISTConnectDA extends ExternalInterfaceDispatchAction {
             final JSONArray extIdsJSONArray = (JSONArray) parser.parse(externalIds);
             final JSONArray jsonArrayResult = new JSONArray();
             for (Object externalId : extIdsJSONArray) {
-                jsonArrayResult.add(DomainObjectJSONSerializer.getDomainObject((AbstractDomainObject) AbstractDomainObject
-                        .fromExternalId((String) externalId)));
+                jsonArrayResult.add(DomainObjectJSONSerializer.getDomainObject((AbstractDomainObject) FenixFramework.getDomainObject((String) externalId)));
             }
             writeJSONObject(response, jsonArrayResult);
         } else {

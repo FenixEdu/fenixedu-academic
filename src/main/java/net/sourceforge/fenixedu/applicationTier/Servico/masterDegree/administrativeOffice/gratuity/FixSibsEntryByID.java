@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentStatus;
 import net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFileEntry;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
@@ -17,7 +17,7 @@ public class FixSibsEntryByID {
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
     public static void run(String sibsEntryId) throws FenixServiceException {
-        SibsPaymentFileEntry sibsPaymentFileEntry = AbstractDomainObject.fromExternalId(sibsEntryId);
+        SibsPaymentFileEntry sibsPaymentFileEntry = FenixFramework.getDomainObject(sibsEntryId);
         if (sibsPaymentFileEntry == null) {
             throw new FenixServiceException();
         }

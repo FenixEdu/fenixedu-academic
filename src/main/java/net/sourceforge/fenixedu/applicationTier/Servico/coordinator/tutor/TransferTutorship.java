@@ -22,7 +22,7 @@ import org.joda.time.LocalDate;
 import org.joda.time.Partial;
 
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class TransferTutorship extends TutorshipManagement {
 
@@ -30,7 +30,7 @@ public class TransferTutorship extends TutorshipManagement {
             List<TutorshipManagementByEntryYearBean> tutorshipsToTransfer) throws FenixServiceException {
 
         final Teacher teacher = Teacher.readByIstId(bean.getTeacherId());
-        final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeID);
+        final ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreeID);
         final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
 
         validateTeacher(teacher, executionDegree);

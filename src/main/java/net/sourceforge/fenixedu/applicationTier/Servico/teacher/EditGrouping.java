@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoGrouping;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author asnr and scpo
@@ -22,7 +22,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class EditGrouping {
 
     protected List run(String executionCourseID, InfoGrouping infoGroupProperties) throws FenixServiceException {
-        final Grouping grouping = AbstractDomainObject.fromExternalId(infoGroupProperties.getExternalId());
+        final Grouping grouping = FenixFramework.getDomainObject(infoGroupProperties.getExternalId());
         if (grouping == null) {
             throw new InvalidArgumentsServiceException();
         }

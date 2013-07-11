@@ -27,7 +27,7 @@ import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/viewStudent", module = "externalSupervision")
 @Forwards({ @Forward(name = "selectStudent", path = "/externalSupervision/consult/selectStudent.jsp"),
@@ -66,7 +66,7 @@ public class ExternalSupervisorViewStudentDA extends FenixDispatchAction {
         if (bean == null) {
 
             final String personId = request.getParameter("personId");
-            Person student = AbstractDomainObject.fromExternalId(personId);
+            Person student = FenixFramework.getDomainObject(personId);
 
             RegistrationProtocol protocol = supervisor.getOnlyRegistrationProtocol();
 

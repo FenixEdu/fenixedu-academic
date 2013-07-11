@@ -8,11 +8,11 @@ import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCourse;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProfessorship;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDTeacher;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class DeleteTSDProfessorship {
     protected void run(String tsdProfessorshipId) {
-        TSDProfessorship tsdProfessorship = AbstractDomainObject.fromExternalId(tsdProfessorshipId);
+        TSDProfessorship tsdProfessorship = FenixFramework.getDomainObject(tsdProfessorshipId);
         TSDTeacher tsdTeacher = tsdProfessorship.getTSDTeacher();
         TSDCourse tsdCourse = tsdProfessorship.getTSDCourse();
 

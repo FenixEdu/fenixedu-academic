@@ -16,7 +16,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.file.FileSearchCriteria.SearchField;
 
 public class SearchPublicationsDA extends SearchPublicationsAction {
@@ -53,7 +53,7 @@ public class SearchPublicationsDA extends SearchPublicationsAction {
             site = (Site) context.getLastContentInPath(Site.class);
         } else {
             String siteID = request.getParameter("siteID");
-            site = (Site) AbstractDomainObject.fromExternalId(siteID);
+            site = (Site) FenixFramework.getDomainObject(siteID);
         }
         request.setAttribute("site", site);
     }

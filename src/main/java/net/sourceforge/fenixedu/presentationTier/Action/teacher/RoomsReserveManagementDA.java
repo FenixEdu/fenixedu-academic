@@ -35,7 +35,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 @Mapping(module = "teacher", path = "/roomsReserveManagement", scope = "request", parameter = "method")
@@ -225,7 +225,7 @@ public class RoomsReserveManagementDA extends FenixDispatchAction {
     }
 
     private PunctualRoomsOccupationRequest getPunctualRoomsReserve(final HttpServletRequest request) {
-        return AbstractDomainObject.fromExternalId(request.getParameter("punctualReserveID"));
+        return FenixFramework.getDomainObject(request.getParameter("punctualReserveID"));
     }
 
     private void saveMessages(HttpServletRequest request, DomainException e) {

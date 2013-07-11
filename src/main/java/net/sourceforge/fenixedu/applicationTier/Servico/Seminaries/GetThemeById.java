@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoTheme;
 import net.sourceforge.fenixedu.domain.Seminaries.Theme;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -24,7 +24,7 @@ public class GetThemeById {
     protected InfoTheme run(String themeID) {
         InfoTheme infoTheme = null;
         if (themeID != null) {
-            Theme theme = AbstractDomainObject.fromExternalId(themeID);
+            Theme theme = FenixFramework.getDomainObject(themeID);
             infoTheme = InfoTheme.newInfoFromDomain(theme);
 
         }

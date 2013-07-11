@@ -39,7 +39,7 @@ import org.apache.struts.action.DynaActionForm;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Luis Cruz
@@ -146,7 +146,7 @@ public class FinalDegreeWorkProposalsDispatchAction extends FenixContextDispatch
         if (finalDegreeWorkProposalOIDString != null && !finalDegreeWorkProposalOIDString.equals("")
                 && StringUtils.isNumeric(finalDegreeWorkProposalOIDString)) {
 
-            final Proposal proposal = AbstractDomainObject.fromExternalId(finalDegreeWorkProposalOIDString);
+            final Proposal proposal = FenixFramework.getDomainObject(finalDegreeWorkProposalOIDString);
 
             if (!proposal.canBeReadBy(getUserView(request))) {
                 return mapping.findForward("show-final-degree-work-proposal-not-published-page");

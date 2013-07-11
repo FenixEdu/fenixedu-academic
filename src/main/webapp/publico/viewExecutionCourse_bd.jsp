@@ -111,7 +111,7 @@
             	<logic:iterate id="infoResponsableTeacher" name="component" property="responsibleTeachers">
 				<p style="margin-top: 6px; margin-bottom: 6px;">
 					<bean:define id="teacherID" type="java.lang.String" name="infoResponsableTeacher" property="externalId"/>
-					<% net.sourceforge.fenixedu.domain.Person person = net.sourceforge.fenixedu.domain.AbstractDomainObject.fromExternalId(teacherID).getPerson();
+					<% net.sourceforge.fenixedu.domain.Person person = net.sourceforge.fenixedu.domain.FenixFramework.getDomainObject(teacherID).getPerson();
 					   request.setAttribute("person", person);
 					%>
 
@@ -146,7 +146,7 @@
             <logic:iterate id="infoTeacher" name="component" property="lecturingTeachers">
 				<p style="margin-top: 6px; margin-bottom: 6px;">
 					<bean:define id="teacherID" type="java.lang.String" name="infoTeacher" property="externalId"/>
-					<% net.sourceforge.fenixedu.domain.Person person = net.sourceforge.fenixedu.domain.AbstractDomainObject.fromExternalId(teacherID).getPerson();
+					<% net.sourceforge.fenixedu.domain.Person person = net.sourceforge.fenixedu.domain.FenixFramework.getDomainObject(teacherID).getPerson();
 					   request.setAttribute("person", person);
 					%>
 					<logic:present name="person" property="homepage">

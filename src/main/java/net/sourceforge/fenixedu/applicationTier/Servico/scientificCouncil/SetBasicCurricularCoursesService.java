@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Jo�o Mota
@@ -27,7 +27,7 @@ public class SetBasicCurricularCoursesService {
     @Service
     public static Boolean run(List<String> curricularCoursesIds, String degreeCurricularPlanId) throws FenixServiceException {
 
-        DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanId);
+        DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanId);
 
         List<CurricularCourse> basicCurricularCourses = degreeCurricularPlan.getCurricularCoursesByBasicAttribute(Boolean.TRUE);
 
@@ -44,7 +44,7 @@ public class SetBasicCurricularCoursesService {
 
         while (itId.hasNext()) {
 
-            CurricularCourse curricularCourseBasic = (CurricularCourse) AbstractDomainObject.fromExternalId(itId.next());
+            CurricularCourse curricularCourseBasic = (CurricularCourse) FenixFramework.getDomainObject(itId.next());
             curricularCourseBasic.setBasic(new Boolean(true));
 
         }

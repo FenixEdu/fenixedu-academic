@@ -10,14 +10,14 @@ import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCourse;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDVirtualCourseGroup;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class RemoveCourseFromTeacherServiceDistribution {
 
     protected void run(String tsdId, String courseId) throws FenixServiceException {
 
-        TeacherServiceDistribution tsd = AbstractDomainObject.fromExternalId(tsdId);
-        TSDCourse course = AbstractDomainObject.fromExternalId(courseId);
+        TeacherServiceDistribution tsd = FenixFramework.getDomainObject(tsdId);
+        TSDCourse course = FenixFramework.getDomainObject(courseId);
         CompetenceCourse competenceCourse = course.getCompetenceCourse();
 
         if (course instanceof TSDVirtualCourseGroup) {

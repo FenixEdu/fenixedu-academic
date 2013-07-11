@@ -19,14 +19,14 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class WriteCandidateEnrolments {
 
     protected void run(Set<String> selectedCurricularCoursesIDs, String candidateID, Double credits, String givenCreditsRemarks)
             throws FenixServiceException {
 
-        MasterDegreeCandidate masterDegreeCandidate = AbstractDomainObject.fromExternalId(candidateID);
+        MasterDegreeCandidate masterDegreeCandidate = FenixFramework.getDomainObject(candidateID);
         if (masterDegreeCandidate == null) {
             throw new NonExistingServiceException();
         }
@@ -82,7 +82,7 @@ public class WriteCandidateEnrolments {
         while (iterCurricularCourseIds.hasNext()) {
 
             CurricularCourse curricularCourse =
-                    (CurricularCourse) AbstractDomainObject.fromExternalId(iterCurricularCourseIds.next());
+                    (CurricularCourse) FenixFramework.getDomainObject(iterCurricularCourseIds.next());
 
             if (curricularCourse == null) {
                 throw new NonExistingServiceException();

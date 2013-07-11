@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.teacher.TeacherAdviseService;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Ricardo Rodrigues
@@ -21,7 +21,7 @@ public class DeleteTeacherAdviseServiceByOID {
 
     protected void run(String teacherAdviseServiceID, RoleType roleType) {
         TeacherAdviseService teacherAdviseService =
-                (TeacherAdviseService) AbstractDomainObject.fromExternalId(teacherAdviseServiceID);
+                (TeacherAdviseService) FenixFramework.getDomainObject(teacherAdviseServiceID);
         teacherAdviseService.delete(roleType);
     }
 

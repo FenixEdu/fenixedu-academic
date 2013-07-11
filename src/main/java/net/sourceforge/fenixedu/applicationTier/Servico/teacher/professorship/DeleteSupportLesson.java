@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.domain.teacher.TeacherServiceLog;
 import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.WeekDay;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Ricardo Rodrigues
@@ -28,7 +28,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class DeleteSupportLesson {
 
     protected void run(String supportLessonID, RoleType roleType) {
-        SupportLesson supportLesson = AbstractDomainObject.fromExternalId(supportLessonID);
+        SupportLesson supportLesson = FenixFramework.getDomainObject(supportLessonID);
         log(supportLesson);
         supportLesson.delete(roleType);
     }

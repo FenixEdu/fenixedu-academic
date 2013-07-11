@@ -52,7 +52,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.spreadsheet.SheetData;
 import pt.utl.ist.fenix.tools.spreadsheet.SpreadsheetBuilder;
 import pt.utl.ist.fenix.tools.spreadsheet.WorkbookExportFormat;
@@ -323,7 +323,7 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
         for (String line : file.split("\n")) {
             if (!line.startsWith(BUNDLE.getString("label.externalId"))) {
                 String[] parts = fillArray(line.split(SEPARATOR), 17);
-                CompetenceCourse competence = AbstractDomainObject.fromExternalId(parts[0]);
+                CompetenceCourse competence = FenixFramework.getDomainObject(parts[0]);
                 // if
                 // (!competence.getDepartmentUnit().getName().equals(parts[1]))
                 // {
@@ -391,7 +391,7 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
         for (String line : file.split("\n")) {
             if (!line.startsWith(BUNDLE.getString("label.externalId"))) {
                 String[] parts = fillArray(line.split(SEPARATOR), 15);
-                Degree degree = AbstractDomainObject.fromExternalId(parts[0]);
+                Degree degree = FenixFramework.getDomainObject(parts[0]);
                 if (!degree.getDegreeType().getLocalizedName().equals(parts[1])) {
                     throw new DomainException("error.ects.invalidLine.nonMatchingCourse", parts[0], parts[1], degree
                             .getDegreeType().getLocalizedName());
@@ -568,7 +568,7 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
         for (String line : file.split("\n")) {
             if (!line.startsWith(BUNDLE.getString("label.externalId"))) {
                 String[] parts = fillArray(line.split(SEPARATOR), 26);
-                Degree degree = AbstractDomainObject.fromExternalId(parts[0]);
+                Degree degree = FenixFramework.getDomainObject(parts[0]);
                 if (!degree.getDegreeType().getLocalizedName().equals(parts[1])) {
                     throw new DomainException("error.ects.invalidLine.nonMatchingCourse", parts[0], parts[1], degree
                             .getDegreeType().getLocalizedName());

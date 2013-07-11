@@ -25,7 +25,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author jpvl
@@ -58,7 +58,7 @@ public class RemoveProfessorshipAction extends FenixDispatchAction {
         ActionMessages actionMessages = getMessages(request);
         try {
             RemoveProfessorshipWithPerson.run(Person.readPersonByIstUsername(id),
-                    AbstractDomainObject.<ExecutionCourse> fromExternalId(executionCourseId));
+                    FenixFramework.<ExecutionCourse> getDomainObject(executionCourseId));
         } catch (DomainException de) {
             actionMessages.add(de.getMessage(), new ActionMessage(de.getMessage()));
             saveMessages(request, actionMessages);

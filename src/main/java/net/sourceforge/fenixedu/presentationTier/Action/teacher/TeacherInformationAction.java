@@ -43,7 +43,7 @@ import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Leonor Almeida
@@ -88,7 +88,7 @@ public class TeacherInformationAction extends FenixDispatchAction {
         ProviderRegimeType providerRegimeType =
                 ProviderRegimeType.getEnum((String) dynaForm.get("serviceProviderRegimeTypeName"));
 
-        InfoTeacher infoTeacher = new InfoTeacher(AbstractDomainObject.<Teacher> fromExternalId(teacherId));
+        InfoTeacher infoTeacher = new InfoTeacher(FenixFramework.<Teacher> getDomainObject(teacherId));
 
         InfoServiceProviderRegime infoServiceProviderRegime = new InfoServiceProviderRegime();
         infoServiceProviderRegime.setExternalId(serviceProviderRegimeId);
@@ -121,7 +121,7 @@ public class TeacherInformationAction extends FenixDispatchAction {
         Integer phdStudentsNumber = value.equals("") ? null : new Integer(value);
         String phdDescription = (String) dynaForm.get("phdDescription");
 
-        InfoTeacher infoTeacher = new InfoTeacher(AbstractDomainObject.<Teacher> fromExternalId(teacherId));
+        InfoTeacher infoTeacher = new InfoTeacher(FenixFramework.<Teacher> getDomainObject(teacherId));
 
         InfoOrientation degreeOrientation = new InfoOrientation();
         degreeOrientation.setExternalId(degreeOrientationId);
@@ -179,7 +179,7 @@ public class TeacherInformationAction extends FenixDispatchAction {
         Integer articlesChaptersNational = new Integer((String) dynaForm.get("articlesChaptersNational"));
         Integer articlesChaptersInternational = new Integer((String) dynaForm.get("articlesChaptersInternational"));
 
-        InfoTeacher infoTeacher = new InfoTeacher(AbstractDomainObject.<Teacher> fromExternalId(teacherId));
+        InfoTeacher infoTeacher = new InfoTeacher(FenixFramework.<Teacher> getDomainObject(teacherId));
 
         InfoPublicationsNumber comunicationPublicationsNumber = new InfoPublicationsNumber();
         comunicationPublicationsNumber.setExternalId(comunicationPublicationsNumberId);
@@ -241,7 +241,7 @@ public class TeacherInformationAction extends FenixDispatchAction {
         Integer support = new Integer((String) dynaForm.get("support"));
         Integer lecture = new Integer((String) dynaForm.get("lecture"));
 
-        InfoTeacher infoTeacher = new InfoTeacher(AbstractDomainObject.<Teacher> fromExternalId(teacherId));
+        InfoTeacher infoTeacher = new InfoTeacher(FenixFramework.<Teacher> getDomainObject(teacherId));
 
         InfoWeeklyOcupation infoWeeklyOcupation = new InfoWeeklyOcupation();
         infoWeeklyOcupation.setExternalId(weeklyOcupationId);

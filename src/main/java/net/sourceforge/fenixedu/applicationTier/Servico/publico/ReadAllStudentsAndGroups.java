@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.domain.StudentGroup;
 import org.apache.commons.beanutils.BeanComparator;
 
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author joaosa & rmalo
@@ -35,7 +35,7 @@ public class ReadAllStudentsAndGroups {
     public static InfoSiteStudentsAndGroups run(String groupingId) throws FenixServiceException {
         InfoSiteStudentsAndGroups infoSiteStudentsAndGroups = new InfoSiteStudentsAndGroups();
 
-        Grouping grouping = AbstractDomainObject.fromExternalId(groupingId);
+        Grouping grouping = FenixFramework.getDomainObject(groupingId);
 
         if (grouping == null) {
             throw new ExistingServiceException();

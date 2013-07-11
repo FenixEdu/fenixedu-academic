@@ -18,14 +18,14 @@ import org.apache.commons.collections.Transformer;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ReadShiftsByClass {
 
     @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
     @Service
     public static Object run(InfoClass infoClass) {
-        SchoolClass schoolClass = AbstractDomainObject.fromExternalId(infoClass.getExternalId());
+        SchoolClass schoolClass = FenixFramework.getDomainObject(infoClass.getExternalId());
 
         List<Shift> shifts = schoolClass.getAssociatedShifts();
 

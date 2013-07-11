@@ -23,7 +23,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/enrollment/evaluations/specialSeason", module = "student")
 @Forwards({
@@ -81,7 +81,7 @@ public class SpecialSeasonStudentEnrollmentDA extends AcademicAdminOfficeSpecial
             HttpServletResponse response) {
         final Student student = getLoggedStudent(request);
         final String scpOid = request.getParameter("scpOid");
-        final StudentCurricularPlan scp = AbstractDomainObject.fromExternalId(scpOid);
+        final StudentCurricularPlan scp = FenixFramework.getDomainObject(scpOid);
         SpecialSeasonStudentEnrollmentBean bean = new SpecialSeasonStudentEnrollmentBean(student, scp);
 
         request.setAttribute("bean", bean);

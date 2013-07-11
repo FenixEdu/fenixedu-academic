@@ -17,7 +17,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/viewCurriculum", module = "externalSupervision", formBean = "studentCurricularPlanAndEnrollmentsSelectionForm")
 @Forwards({ @Forward(name = "chooseRegistration", path = "/externalSupervision/consult/chooseRegistration.jsp"),
@@ -29,7 +29,7 @@ public class ShowStudentCurriculum extends CurriculumDispatchAction {
         RenderUtils.invalidateViewState();
 
         final String personId = request.getParameter("personId");
-        final Person personStudent = AbstractDomainObject.fromExternalId(personId);
+        final Person personStudent = FenixFramework.getDomainObject(personId);
         final Student student = personStudent.getStudent();
 
         request.setAttribute("student", student);
@@ -43,7 +43,7 @@ public class ShowStudentCurriculum extends CurriculumDispatchAction {
         Registration registration = null;
 
         final String registrationId = request.getParameter("registrationId");
-        registration = AbstractDomainObject.fromExternalId(registrationId);
+        registration = FenixFramework.getDomainObject(registrationId);
 
         if (registration == null) {
             return mapping.findForward("NotAuthorized");

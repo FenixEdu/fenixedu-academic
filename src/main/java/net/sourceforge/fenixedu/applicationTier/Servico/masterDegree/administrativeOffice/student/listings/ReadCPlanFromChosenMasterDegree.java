@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * 
@@ -20,7 +20,7 @@ public class ReadCPlanFromChosenMasterDegree {
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
     public static List run(String externalId) throws FenixServiceException {
-        Degree degree = AbstractDomainObject.fromExternalId(externalId);
+        Degree degree = FenixFramework.getDomainObject(externalId);
 
         List<InfoDegreeCurricularPlan> result = new ArrayList<InfoDegreeCurricularPlan>();
         for (DegreeCurricularPlan dcp : degree.getDegreeCurricularPlans()) {

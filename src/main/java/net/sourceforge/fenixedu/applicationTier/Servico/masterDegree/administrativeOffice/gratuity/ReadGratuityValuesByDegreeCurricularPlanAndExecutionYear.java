@@ -22,7 +22,7 @@ import org.apache.commons.collections.Transformer;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author T�nia Pous�o
@@ -40,7 +40,7 @@ public class ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear {
         GratuityValues gratuityValues = null;
         List infoPaymentPhases = null;
 
-        DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(degreeCurricularPlanID);
+        DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
         final ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(executionYearName);
         if (degreeCurricularPlan == null || executionYear == null) {
             throw new FenixServiceException("error.impossible.noGratuityValues");

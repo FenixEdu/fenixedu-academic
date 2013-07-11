@@ -4,7 +4,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <%@page import="net.sourceforge.fenixedu.domain.contents.Content"%>
-<%@page import="pt.ist.fenixframework.pstm.AbstractDomainObject"%>
+<%@page import="pt.ist.fenixframework.FenixFramework"%>
 <%@page import="net.sourceforge.fenixedu.domain.Site"%>
 <%@page import="net.sourceforge.fenixedu.domain.UnitSite"%>
 <%@page import="net.sourceforge.fenixedu.injectionCode.AccessControl"%>

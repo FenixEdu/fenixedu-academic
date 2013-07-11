@@ -22,7 +22,7 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "publico", path = "/showDegreeAnnouncements", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "viewAnnouncement", path = "degree-view-announcement"),
@@ -75,7 +75,7 @@ public class DegreeAnnouncementsDA extends AnnouncementManagement {
             return null;
         }
         try {
-            return AbstractDomainObject.fromExternalId(parameter);
+            return FenixFramework.getDomainObject(parameter);
         } catch (NumberFormatException e) {
             return null;
         }

@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.precedences.Precedence;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Tânia Pousão
@@ -22,14 +22,14 @@ public class InsertSimplePrecedence {
     public static void run(String className, String curricularCourseToAddPrecedenceID, String precedentCurricularCourseID,
             Integer number) throws FenixServiceException {
         CurricularCourse curricularCourseToAddPrecedence =
-                (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseToAddPrecedenceID);
+                (CurricularCourse) FenixFramework.getDomainObject(curricularCourseToAddPrecedenceID);
         if (curricularCourseToAddPrecedence == null) {
             throw new FenixServiceException("curricularCourseToAddPrecedence.NULL");
         }
 
         CurricularCourse precedentCurricularCourse = null;
         if (precedentCurricularCourseID != null) {
-            precedentCurricularCourse = (CurricularCourse) AbstractDomainObject.fromExternalId(precedentCurricularCourseID);
+            precedentCurricularCourse = (CurricularCourse) FenixFramework.getDomainObject(precedentCurricularCourseID);
             if (precedentCurricularCourse == null) {
                 throw new FenixServiceException("precedentCurricularCourse.NULL");
             }

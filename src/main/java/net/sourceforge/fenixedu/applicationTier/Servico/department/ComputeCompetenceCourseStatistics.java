@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author pcma
@@ -27,9 +27,9 @@ public class ComputeCompetenceCourseStatistics extends ComputeCourseStatistics {
     public List<CompetenceCourseStatisticsDTO> run(String departementID, String executionPeriodID) throws FenixServiceException {
         final List<CompetenceCourseStatisticsDTO> results = new ArrayList<CompetenceCourseStatisticsDTO>();
 
-        final Department department = AbstractDomainObject.fromExternalId(departementID);
+        final Department department = FenixFramework.getDomainObject(departementID);
 
-        final ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodID);
+        final ExecutionSemester executionSemester = FenixFramework.getDomainObject(executionPeriodID);
 
         final Set<CompetenceCourse> competenceCourses = new HashSet<CompetenceCourse>();
         department.addAllCompetenceCoursesByExecutionPeriod(competenceCourses, executionSemester);

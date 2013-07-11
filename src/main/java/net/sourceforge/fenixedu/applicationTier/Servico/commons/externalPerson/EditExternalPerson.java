@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class EditExternalPerson {
 
@@ -14,12 +14,12 @@ public class EditExternalPerson {
     public static void run(String externalPersonID, String name, String address, String institutionID, String phone,
             String mobile, String homepage, String email) throws FenixServiceException, DomainException {
 
-        ExternalContract storedExternalPerson = (ExternalContract) AbstractDomainObject.fromExternalId(externalPersonID);
+        ExternalContract storedExternalPerson = (ExternalContract) FenixFramework.getDomainObject(externalPersonID);
         if (storedExternalPerson == null) {
             throw new NonExistingServiceException("error.exception.externalPerson.nonExistingExternalPsrson");
         }
 
-        Unit storedInstitution = (Unit) AbstractDomainObject.fromExternalId(institutionID);
+        Unit storedInstitution = (Unit) FenixFramework.getDomainObject(institutionID);
         storedExternalPerson.edit(name, address, phone, mobile, homepage, email, storedInstitution);
     }
 

@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ReadInfoEnrolmentEvaluationByEvaluationOID {
 
@@ -23,7 +23,7 @@ public class ReadInfoEnrolmentEvaluationByEvaluationOID {
     @Service
     public static InfoEnrolmentEvaluation run(IUserView userView, Integer studentNumber, DegreeType degreeType,
             String enrolmentOID) throws ExcepcaoInexistente, FenixServiceException {
-        return (new GetEnrolmentGrade()).run((Enrolment) AbstractDomainObject.fromExternalId(enrolmentOID));
+        return (new GetEnrolmentGrade()).run((Enrolment) FenixFramework.getDomainObject(enrolmentOID));
     }
 
 }

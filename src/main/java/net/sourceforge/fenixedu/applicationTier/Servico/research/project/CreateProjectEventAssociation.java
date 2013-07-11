@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.research.project.ProjectEventAssociation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class CreateProjectEventAssociation {
 
@@ -33,7 +33,7 @@ public class CreateProjectEventAssociation {
     public static ProjectEventAssociation run(ProjectEventAssociationSimpleCreationBean bean, String projectId)
             throws FenixServiceException {
         ProjectEventAssociation association = null;
-        final Project project = AbstractDomainObject.fromExternalId(projectId);
+        final Project project = FenixFramework.getDomainObject(projectId);
         if (project == null) {
             throw new FenixServiceException();
         }
@@ -66,7 +66,7 @@ public class CreateProjectEventAssociation {
             throws FenixServiceException {
         final ProjectEventAssociation association;
 
-        final Project project = AbstractDomainObject.fromExternalId(projectId);
+        final Project project = FenixFramework.getDomainObject(projectId);
         if (project == null) {
             throw new FenixServiceException();
         }

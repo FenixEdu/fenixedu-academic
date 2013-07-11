@@ -61,7 +61,7 @@ import org.apache.struts.action.DynaActionForm;
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -527,7 +527,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
     public ActionForward moveUpLessonPlanning(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException {
 
-        LessonPlanning lessonPlanning = AbstractDomainObject.fromExternalId(request.getParameter("lessonPlanningID"));
+        LessonPlanning lessonPlanning = FenixFramework.getDomainObject(request.getParameter("lessonPlanningID"));
         try {
             MoveLessonPlanning.runMoveLessonPlanning(lessonPlanning.getExecutionCourse().getExternalId(), lessonPlanning,
                     (lessonPlanning.getOrderOfPlanning() - 1));
@@ -541,7 +541,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
     public ActionForward moveDownLessonPlanning(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException {
 
-        LessonPlanning lessonPlanning = AbstractDomainObject.fromExternalId(request.getParameter("lessonPlanningID"));
+        LessonPlanning lessonPlanning = FenixFramework.getDomainObject(request.getParameter("lessonPlanningID"));
         try {
             MoveLessonPlanning.runMoveLessonPlanning(lessonPlanning.getExecutionCourse().getExternalId(), lessonPlanning,
                     (lessonPlanning.getOrderOfPlanning() + 1));
@@ -563,7 +563,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
     public ActionForward prepareEditLessonPlanning(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 
-        LessonPlanning lessonPlanning = AbstractDomainObject.fromExternalId(request.getParameter("lessonPlanningID"));
+        LessonPlanning lessonPlanning = FenixFramework.getDomainObject(request.getParameter("lessonPlanningID"));
         request.setAttribute("lessonPlanning", lessonPlanning);
         return mapping.findForward("create-lessonPlanning");
     }
@@ -589,7 +589,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
     public ActionForward deleteLessonPlanning(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException {
 
-        LessonPlanning lessonPlanning = AbstractDomainObject.fromExternalId(request.getParameter("lessonPlanningID"));
+        LessonPlanning lessonPlanning = FenixFramework.getDomainObject(request.getParameter("lessonPlanningID"));
         if (lessonPlanning != null) {
             try {
                 DeleteLessonPlanning.runDeleteLessonPlanning(lessonPlanning.getExecutionCourse().getExternalId(), lessonPlanning,
@@ -813,7 +813,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 
         String executionCourseID = request.getParameter("executionCourseID");
 
-        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseID);
+        ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseID);
         SortedSet<Shift> shifts = executionCourse.getShiftsOrderedByLessons();
 
         request.setAttribute("shifts", shifts);
@@ -833,11 +833,11 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
             request.setAttribute("showPhotos", "false");
         }
 
-        Shift shift = AbstractDomainObject.fromExternalId(shiftID);
-        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseID);
+        Shift shift = FenixFramework.getDomainObject(shiftID);
+        ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseID);
 
         if (registrationID != null) {
-            Registration registration = AbstractDomainObject.fromExternalId(registrationID);
+            Registration registration = FenixFramework.getDomainObject(registrationID);
             shift.removeAttendFromShift(registration, executionCourse);
             request.setAttribute("registration", registration);
         }
@@ -861,7 +861,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         PersonBean bean = getRenderedObject("personBean");
         String id = bean.getUsername();
         Student student = Student.readStudentByNumber(Integer.valueOf(id));
-        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(request.getParameter("executionCourseID"));
+        ExecutionCourse executionCourse = FenixFramework.getDomainObject(request.getParameter("executionCourseID"));
 
         if (student != null) {
             try {
@@ -888,12 +888,12 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         String executionCourseID = request.getParameter("executionCourseID");
         String removeAll = request.getParameter("removeAll");
 
-        Shift shift = AbstractDomainObject.fromExternalId(shiftID);
+        Shift shift = FenixFramework.getDomainObject(shiftID);
 
         if (removeAll != null) {
             request.setAttribute("removeAll", removeAll);
         } else {
-            Registration registration = AbstractDomainObject.fromExternalId(registrationID);
+            Registration registration = FenixFramework.getDomainObject(registrationID);
             request.setAttribute("registration", registration);
         }
 
@@ -909,8 +909,8 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         String executionCourseID = request.getParameter("executionCourseID");
         String shiftID = request.getParameter("shiftID");
 
-        Shift shift = AbstractDomainObject.fromExternalId(shiftID);
-        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseID);
+        Shift shift = FenixFramework.getDomainObject(shiftID);
+        ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseID);
 
         for (Registration registration : shift.getStudents()) {
             shift.removeAttendFromShift(registration, executionCourse);

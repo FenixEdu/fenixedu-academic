@@ -34,7 +34,7 @@ import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 
 import com.google.common.base.Predicate;
@@ -112,7 +112,7 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
     public ActionForward preLoadLastConfigurations(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         String processEid = request.getParameter("processEid");
-        MobilityApplicationProcess process = AbstractDomainObject.fromExternalId(processEid);
+        MobilityApplicationProcess process = FenixFramework.getDomainObject(processEid);
         preLoadLastProcessConfigurations(process);
         return listProcessAllowedActivities(mapping, actionForm, request, response);
     }
@@ -130,7 +130,7 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
             chooseMobilityProgramBean = new ChooseMobilityProgramBean(getProcess(request));
             String mobilityProgramEid = request.getParameter("mobilityProgramEid");
             if (mobilityProgramEid != null && !mobilityProgramEid.isEmpty()) {
-                MobilityProgram mobilityProgram = AbstractDomainObject.fromExternalId(mobilityProgramEid);
+                MobilityProgram mobilityProgram = FenixFramework.getDomainObject(mobilityProgramEid);
                 chooseMobilityProgramBean.setMobilityProgram(mobilityProgram);
             }
         }
@@ -147,7 +147,7 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
             chooseDegreeBean = new ChooseDegreeBean(getProcess(request));
             String degreeEid = request.getParameter("degreeEid");
             if (degreeEid != null && !degreeEid.isEmpty()) {
-                Degree degree = AbstractDomainObject.fromExternalId(degreeEid);
+                Degree degree = FenixFramework.getDomainObject(degreeEid);
                 chooseDegreeBean.setDegree(degree);
             }
         }

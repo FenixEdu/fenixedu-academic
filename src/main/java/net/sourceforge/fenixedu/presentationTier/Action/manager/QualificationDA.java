@@ -18,7 +18,7 @@ import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/qualification", module = "manager")
 @Forwards({ @Forward(name = "showQualifications", path = "/manager/qualifications/showQualifications.jsp"),
@@ -69,13 +69,13 @@ public class QualificationDA extends FenixDispatchAction {
 
     protected Person getPersonSelectedFromParameter(HttpServletRequest request) {
         String personIDString = request.getParameter("personID");
-        return AbstractDomainObject.fromExternalId(personIDString);
+        return FenixFramework.getDomainObject(personIDString);
 
     }
 
     protected Qualification getQualificationFromParameter(HttpServletRequest request) {
         String qualificationIDString = request.getParameter("qualificationId");
-        return AbstractDomainObject.fromExternalId(qualificationIDString);
+        return FenixFramework.getDomainObject(qualificationIDString);
     }
 
     private void setAttributePerson(HttpServletRequest request) {

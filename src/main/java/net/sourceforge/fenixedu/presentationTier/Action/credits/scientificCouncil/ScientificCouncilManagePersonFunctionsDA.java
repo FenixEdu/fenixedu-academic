@@ -20,7 +20,7 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/managePersonFunctionsShared", module = "scientificCouncil", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "addPersonFunction", path = "/credits/personFunction/addPersonFunction.jsp"),
@@ -32,9 +32,9 @@ public class ScientificCouncilManagePersonFunctionsDA extends ManagePersonFuncti
             HttpServletResponse response) throws NumberFormatException, FenixServiceException, Exception {
         PersonFunctionBean personFunctionBean = getRenderedObject();
         if (personFunctionBean == null) {
-            Teacher teacher = AbstractDomainObject.fromExternalId((String) getFromRequest(request, "teacherOid"));
+            Teacher teacher = FenixFramework.getDomainObject((String) getFromRequest(request, "teacherOid"));
             ExecutionSemester executionSemester =
-                    AbstractDomainObject.fromExternalId((String) getFromRequest(request, "executionPeriodOid"));
+                    FenixFramework.getDomainObject((String) getFromRequest(request, "executionPeriodOid"));
             personFunctionBean = new PersonFunctionBean(teacher, executionSemester);
         }
         request.setAttribute("personFunctionBean", personFunctionBean);
@@ -44,9 +44,9 @@ public class ScientificCouncilManagePersonFunctionsDA extends ManagePersonFuncti
     public ActionForward prepareToEditPersonFunction(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws NumberFormatException, FenixServiceException, Exception {
         PersonFunction personFunction =
-                AbstractDomainObject.fromExternalId((String) getFromRequest(request, "personFunctionOid"));
+                FenixFramework.getDomainObject((String) getFromRequest(request, "personFunctionOid"));
         ExecutionSemester executionSemester =
-                AbstractDomainObject.fromExternalId((String) getFromRequest(request, "executionPeriodOid"));
+                FenixFramework.getDomainObject((String) getFromRequest(request, "executionPeriodOid"));
         request.setAttribute("personFunctionBean", new PersonFunctionBean(personFunction, executionSemester));
         return mapping.findForward("addPersonFunction");
     }

@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class EditCompetenceCourseLoad {
 
@@ -21,7 +21,7 @@ public class EditCompetenceCourseLoad {
     @Service
     public static void run(String competenceCourseID, RegimeType regimeType, Integer numberOfPeriods, List<CourseLoad> courseLoads)
             throws FenixServiceException {
-        final CompetenceCourse competenceCourse = AbstractDomainObject.fromExternalId(competenceCourseID);
+        final CompetenceCourse competenceCourse = FenixFramework.getDomainObject(competenceCourseID);
         if (competenceCourse == null) {
             throw new FenixServiceException("error.noCompetenceCourse");
         }
@@ -35,7 +35,7 @@ public class EditCompetenceCourseLoad {
                         courseLoad.getAutonomousWorkHours(), courseLoad.getEctsCredits(), courseLoad.getOrder(), academicPeriod);
             } else {
                 final CompetenceCourseLoad competenceCourseLoad =
-                        AbstractDomainObject.fromExternalId(courseLoad.getIdentification());
+                        FenixFramework.getDomainObject(courseLoad.getIdentification());
 
                 if (competenceCourseLoad != null && courseLoad.getAction().equals("edit")) {
                     competenceCourseLoad.edit(courseLoad.getTheoreticalHours(), courseLoad.getProblemsHours(),

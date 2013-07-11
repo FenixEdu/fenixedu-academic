@@ -20,7 +20,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * 
@@ -67,7 +67,7 @@ public class GenerateNewPasswordDispatchAction extends FenixDispatchAction {
 
         String password = null;
 
-        final Person person = (Person) AbstractDomainObject.fromExternalId(personID);
+        final Person person = (Person) FenixFramework.getDomainObject(personID);
         if (person != null) {
             SetUserUID.run(person);
         }

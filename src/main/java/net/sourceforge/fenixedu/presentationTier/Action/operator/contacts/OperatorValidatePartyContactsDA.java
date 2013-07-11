@@ -82,7 +82,7 @@ public class OperatorValidatePartyContactsDA extends FenixDispatchAction {
     public ActionForward viewPartyContactValidation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         final String extId = request.getParameter("partyContactValidation");
-        final PhysicalAddressValidation physicalAddressValidation = PartyContactValidation.fromExternalId(extId);
+        final PhysicalAddressValidation physicalAddressValidation = FenixFramework.getDomainObject(extId);
         request.setAttribute("physicalAddressValidation", physicalAddressValidation);
         request.setAttribute("person", physicalAddressValidation.getPartyContact().getParty());
         return mapping.findForward("viewPartyContactValidation");

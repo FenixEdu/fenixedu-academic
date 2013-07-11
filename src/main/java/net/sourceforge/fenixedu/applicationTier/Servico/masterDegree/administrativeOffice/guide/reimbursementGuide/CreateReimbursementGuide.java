@@ -25,7 +25,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.State;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author <a href="mailto:joao.mota@ist.utl.pt">Jo�o Mota </a> <br/>
@@ -58,7 +58,7 @@ public class CreateReimbursementGuide {
     public static String run(String guideId, String remarks, List infoReimbursementGuideEntries, IUserView userView)
             throws FenixServiceException {
 
-        Guide guide = AbstractDomainObject.fromExternalId(guideId);
+        Guide guide = FenixFramework.getDomainObject(guideId);
         if (!guide.getActiveSituation().getSituation().equals(GuideState.PAYED)) {
             throw new InvalidGuideSituationServiceException("error.exception.masterDegree.invalidGuideSituation");
         }
@@ -74,7 +74,7 @@ public class CreateReimbursementGuide {
             }
 
             GuideEntry guideEntry =
-                    AbstractDomainObject.fromExternalId(infoReimbursementGuideEntry.getInfoGuideEntry().getExternalId());
+                    FenixFramework.getDomainObject(infoReimbursementGuideEntry.getInfoGuideEntry().getExternalId());
             if (checkReimbursementGuideEntriesSum(infoReimbursementGuideEntry, guideEntry) == false) {
                 throw new InvalidReimbursementValueServiceException("error.exception.masterDegree.invalidReimbursementValue");
             }

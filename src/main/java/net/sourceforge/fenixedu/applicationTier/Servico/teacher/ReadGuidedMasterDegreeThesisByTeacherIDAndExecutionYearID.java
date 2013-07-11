@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion;
 import net.sourceforge.fenixedu.domain.Teacher;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author naat
@@ -18,13 +18,13 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ReadGuidedMasterDegreeThesisByTeacherIDAndExecutionYearID {
 
     public List<MasterDegreeThesisDataVersion> run(String teacherID, String executionYearID) throws FenixServiceException {
-        Teacher teacher = AbstractDomainObject.fromExternalId(teacherID);
+        Teacher teacher = FenixFramework.getDomainObject(teacherID);
         List<MasterDegreeThesisDataVersion> masterDegreeThesisDataVersions;
 
         if (executionYearID == null) {
             masterDegreeThesisDataVersions = teacher.getAllGuidedMasterDegreeThesis();
         } else {
-            ExecutionYear executionYear = AbstractDomainObject.fromExternalId(executionYearID);
+            ExecutionYear executionYear = FenixFramework.getDomainObject(executionYearID);
 
             masterDegreeThesisDataVersions = teacher.getGuidedMasterDegreeThesisByExecutionYear(executionYear);
         }

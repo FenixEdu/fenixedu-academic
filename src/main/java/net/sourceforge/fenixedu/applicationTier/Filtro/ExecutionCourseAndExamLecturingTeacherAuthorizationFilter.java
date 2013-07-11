@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Luis Egidio, lmre@mega.ist.utl.pt Nuno Ochoa, nmgo@mega.ist.utl.pt
@@ -54,7 +54,7 @@ public class ExecutionCourseAndExamLecturingTeacherAuthorizationFilter extends A
             Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
             Professorship professorship = null;
             if (teacher != null) {
-                ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseID);
+                ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseID);
                 professorship = teacher.getProfessorshipByExecutionCourse(executionCourse);
             }
             return professorship != null;
@@ -69,7 +69,7 @@ public class ExecutionCourseAndExamLecturingTeacherAuthorizationFilter extends A
             return false;
         }
         try {
-            ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseID);
+            ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseID);
 
             if (executionCourse != null && evaluationID != null) {
                 for (Evaluation associatedEvaluation : executionCourse.getAssociatedEvaluations()) {

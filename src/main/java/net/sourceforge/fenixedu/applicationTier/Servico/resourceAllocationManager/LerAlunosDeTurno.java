@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class LerAlunosDeTurno {
 
@@ -25,7 +25,7 @@ public class LerAlunosDeTurno {
     public static List<InfoStudent> run(ShiftKey keyTurno) {
 
         final ExecutionCourse executionCourse =
-                AbstractDomainObject.fromExternalId(keyTurno.getInfoExecutionCourse().getExternalId());
+                FenixFramework.getDomainObject(keyTurno.getInfoExecutionCourse().getExternalId());
         final Shift shift = executionCourse.findShiftByName(keyTurno.getShiftName());
 
         List<Registration> alunos = shift.getStudents();

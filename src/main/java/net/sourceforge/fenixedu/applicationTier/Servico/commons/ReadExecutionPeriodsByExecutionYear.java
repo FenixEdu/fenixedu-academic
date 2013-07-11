@@ -7,14 +7,14 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ReadExecutionPeriodsByExecutionYear {
 
     @Service
     public static List run(String executionYearId) {
         final ExecutionYear executionYear =
-                executionYearId != null ? AbstractDomainObject.<ExecutionYear> fromExternalId(executionYearId) : ExecutionYear
+                executionYearId != null ? FenixFramework.<ExecutionYear> getDomainObject(executionYearId) : ExecutionYear
                         .readCurrentExecutionYear();
 
         final List<InfoExecutionPeriod> infoExecutionPeriods = new ArrayList<InfoExecutionPeriod>();

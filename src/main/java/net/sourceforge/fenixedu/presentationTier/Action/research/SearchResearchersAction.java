@@ -31,7 +31,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 @Mapping(module = "messaging", path = "/searchResearchers", scope = "request", parameter = "method")
@@ -115,7 +115,7 @@ public class SearchResearchersAction extends FenixDispatchAction {
 
         String departmentId = request.getParameter("departmentId");
         if (departmentId != null) {
-            Department department = AbstractDomainObject.fromExternalId(departmentId);
+            Department department = FenixFramework.getDomainObject(departmentId);
             List<Researcher> results = new ArrayList<Researcher>();
             for (Employee employee : department.getDepartmentUnit().getAllCurrentActiveWorkingEmployees()) {
                 Person person = employee.getPerson();

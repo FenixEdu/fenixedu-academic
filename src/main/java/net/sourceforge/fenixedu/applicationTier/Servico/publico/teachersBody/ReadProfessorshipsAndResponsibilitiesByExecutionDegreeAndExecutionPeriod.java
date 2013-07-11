@@ -20,14 +20,14 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ReadProfessorshipsAndResponsibilitiesByExecutionDegreeAndExecutionPeriod {
 
     @Service
     public static List run(String executionDegreeId, Integer semester, Integer teacherType) throws FenixServiceException {
 
-        final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeId);
+        final ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreeId);
 
         List professorships;
         if (semester.intValue() == 0) {

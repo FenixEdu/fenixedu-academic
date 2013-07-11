@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLevel;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.util.StringFormatter;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class EditCompetenceCourse {
 
@@ -68,7 +68,7 @@ public class EditCompetenceCourse {
     }
 
     private CompetenceCourse readCompetenceCourse(String competenceCourseID) throws FenixServiceException {
-        final CompetenceCourse competenceCourse = AbstractDomainObject.fromExternalId(competenceCourseID);
+        final CompetenceCourse competenceCourse = FenixFramework.getDomainObject(competenceCourseID);
         if (competenceCourse == null) {
             throw new FenixServiceException("error.noCompetenceCourse");
         }

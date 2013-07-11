@@ -45,7 +45,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "person", path = "/contentManagement", scope = "request", parameter = "method")
 @Forwards(value = {
@@ -372,7 +372,7 @@ public class ContentManagement extends FenixDispatchAction {
 
     protected Content getContent(HttpServletRequest request) {
         String contentId = request.getParameter("contentId");
-        return AbstractDomainObject.fromExternalId(contentId);
+        return FenixFramework.getDomainObject(contentId);
     }
 
     protected Element getElement(HttpServletRequest request) {
@@ -387,7 +387,7 @@ public class ContentManagement extends FenixDispatchAction {
 
     protected Container getParentContainer(HttpServletRequest request) {
         String containerId = request.getParameter("contentParentId");
-        return AbstractDomainObject.fromExternalId(containerId);
+        return FenixFramework.getDomainObject(containerId);
     }
 
     private List<Content> flatten(Collection<Content> contents) {

@@ -213,7 +213,7 @@ public class ErasmusIndividualCandidacyProcessDA extends
     public ActionForward markApprovedLearningAgreementAsViewed(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) {
         ApprovedLearningAgreementDocumentFile file =
-                ApprovedLearningAgreementDocumentFile.fromExternalId(request.getParameter("approvedLearningAgreementId"));
+                FenixFramework.getDomainObject(request.getParameter("approvedLearningAgreementId"));
         file.markLearningAgreementViewed();
 
         return prepareExecuteViewApprovedLearningAgreements(mapping, actionForm, request, response);
@@ -222,7 +222,7 @@ public class ErasmusIndividualCandidacyProcessDA extends
     public ActionForward markApprovedLearningAgreementAsSent(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) {
         ApprovedLearningAgreementDocumentFile file =
-                ApprovedLearningAgreementDocumentFile.fromExternalId(request.getParameter("approvedLearningAgreementId"));
+                FenixFramework.getDomainObject(request.getParameter("approvedLearningAgreementId"));
         file.markLearningAgreementSent();
 
         return prepareExecuteViewApprovedLearningAgreements(mapping, actionForm, request, response);
@@ -230,7 +230,7 @@ public class ErasmusIndividualCandidacyProcessDA extends
 
     public ActionForward markAlertAsViewed(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws  FenixServiceException {
-        ErasmusAlert alert = ErasmusAlert.fromExternalId(request.getParameter("erasmusAlertId"));
+        ErasmusAlert alert = FenixFramework.getDomainObject(request.getParameter("erasmusAlertId"));
         executeActivity(getProcess(request), "MarkAlertAsViewed", alert);
 
         return prepareExecuteVisualizeAlerts(mapping, actionForm, request, response);
@@ -239,7 +239,7 @@ public class ErasmusIndividualCandidacyProcessDA extends
     public ActionForward sendEmailToAcceptedStudent(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws  FenixServiceException {
         ApprovedLearningAgreementDocumentFile file =
-                ApprovedLearningAgreementDocumentFile.fromExternalId(request.getParameter("approvedLearningAgreementId"));
+                FenixFramework.getDomainObject(request.getParameter("approvedLearningAgreementId"));
         executeActivity(getProcess(request), "SendEmailToAcceptedStudent", null);
 
         return prepareExecuteViewApprovedLearningAgreements(mapping, actionForm, request, response);
@@ -268,7 +268,7 @@ public class ErasmusIndividualCandidacyProcessDA extends
     public ActionForward revokeApprovedLearningAgreement(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws  FenixServiceException {
         ApprovedLearningAgreementDocumentFile file =
-                ApprovedLearningAgreementDocumentFile.fromExternalId(request.getParameter("approvedLearningAgreementId"));
+                FenixFramework.getDomainObject(request.getParameter("approvedLearningAgreementId"));
         CandidacyProcessDocumentUploadBean documentBean = new CandidacyProcessDocumentUploadBean();
         documentBean.setDocumentFile(file);
 

@@ -25,7 +25,7 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean {
     private final ResourceBundle scouncilBundle = getResourceBundle("resources/ScientificCouncilResources");
@@ -63,7 +63,7 @@ public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean 
     }
 
     public DegreeCurricularPlan getDcp() {
-        return (dcp == null) ? (dcp = AbstractDomainObject.fromExternalId(getDcpId())) : dcp;
+        return (dcp == null) ? (dcp = FenixFramework.getDomainObject(getDcpId())) : dcp;
     }
 
     public void setDcp(DegreeCurricularPlan dcp) {

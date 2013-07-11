@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class EditInstitution {
 
@@ -15,7 +15,7 @@ public class EditInstitution {
 
         Unit storedInstitution = UnitUtils.readExternalInstitutionUnitByName(newInstitutionName);
 
-        Unit oldInstitution = (Unit) AbstractDomainObject.fromExternalId(oldInstitutionOID);
+        Unit oldInstitution = (Unit) FenixFramework.getDomainObject(oldInstitutionOID);
         if (oldInstitution == null) {
             throw new NonExistingServiceException("error.exception.commons.institution.institutionNotFound");
         }

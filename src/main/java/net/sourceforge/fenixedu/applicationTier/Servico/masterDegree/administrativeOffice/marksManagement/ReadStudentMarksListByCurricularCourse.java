@@ -17,14 +17,14 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import org.apache.commons.beanutils.BeanComparator;
 
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ReadStudentMarksListByCurricularCourse {
 
     protected List run(IUserView userView, String curricularCourseID, String executionYear) throws ExcepcaoInexistente,
             FenixServiceException {
 
-        final CurricularCourse curricularCourse = (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseID);
+        final CurricularCourse curricularCourse = (CurricularCourse) FenixFramework.getDomainObject(curricularCourseID);
 
         final List<Enrolment> enrolmentList =
                 (executionYear != null) ? curricularCourse.getEnrolmentsByYear(executionYear) : curricularCourse.getEnrolments();

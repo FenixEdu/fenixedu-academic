@@ -45,7 +45,7 @@ import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Teacher;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
@@ -156,7 +156,7 @@ public class ExecutionCourseSiteComponentBuilder {
         final InfoSection infoSection = (InfoSection) commonComponent.getSections().get(sectionIndex.intValue());
         component.setSection(infoSection);
 
-        final Section section = (Section) AbstractDomainObject.fromExternalId(infoSection.getExternalId());
+        final Section section = (Section) FenixFramework.getDomainObject(infoSection.getExternalId());
 
         final List<InfoItem> infoItemsList = new ArrayList<InfoItem>(section.getAssociatedItemsCount());
         for (final Item item : section.getAssociatedItems()) {

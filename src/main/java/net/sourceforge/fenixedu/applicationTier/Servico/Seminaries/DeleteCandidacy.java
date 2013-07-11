@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.SeminaryCoordinatorOrStud
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -21,7 +21,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class DeleteCandidacy {
 
     protected void run(String id) {
-        SeminaryCandidacy candidacy = AbstractDomainObject.fromExternalId(id);
+        SeminaryCandidacy candidacy = FenixFramework.getDomainObject(id);
         candidacy.delete();
     }
 

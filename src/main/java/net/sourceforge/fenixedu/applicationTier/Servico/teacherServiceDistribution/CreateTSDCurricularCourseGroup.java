@@ -11,18 +11,18 @@ import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCurricularC
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCurricularCourseGroup;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class CreateTSDCurricularCourseGroup {
     protected TSDCurricularCourseGroup run(String tsdId, String[] tsdCurricularCourseToGroupArray) {
 
-        TeacherServiceDistribution tsd = AbstractDomainObject.fromExternalId(tsdId);
+        TeacherServiceDistribution tsd = FenixFramework.getDomainObject(tsdId);
         List<TSDCurricularCourse> tsdCurricularCourseList = new ArrayList<TSDCurricularCourse>();
         TSDCurricularCourseGroup tsdCurricularCourseGroup = null;
 
         for (String tsdCurricularCourseId : tsdCurricularCourseToGroupArray) {
             TSDCurricularCourse tsdCurricularCourse =
-                    (TSDCurricularCourse) AbstractDomainObject.fromExternalId(tsdCurricularCourseId);
+                    (TSDCurricularCourse) FenixFramework.getDomainObject(tsdCurricularCourseId);
 
             if (tsdCurricularCourse != null) {
                 tsdCurricularCourseList.add(tsdCurricularCourse);

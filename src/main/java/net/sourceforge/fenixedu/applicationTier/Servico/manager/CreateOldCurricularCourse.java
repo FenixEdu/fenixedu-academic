@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class CreateOldCurricularCourse {
 
@@ -22,12 +22,12 @@ public class CreateOldCurricularCourse {
             final String beginExecutionPeriodId, final String endExecutionPeriodId, final GradeScale gradeScale)
             throws FenixServiceException {
 
-        final DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(dcpId);
+        final DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(dcpId);
         if (degreeCurricularPlan == null) {
             throw new FenixServiceException("error.createOldCurricularCourse.no.degreeCurricularPlan");
         }
 
-        final CourseGroup courseGroup = (CourseGroup) AbstractDomainObject.fromExternalId(cgId);
+        final CourseGroup courseGroup = (CourseGroup) FenixFramework.getDomainObject(cgId);
         if (courseGroup == null) {
             throw new FenixServiceException("error.createOldCurricularCourse.no.courseGroup");
         }
@@ -48,8 +48,8 @@ public class CreateOldCurricularCourse {
         curricularCourse.setGradeScale(gradeScale);
 
         final CurricularPeriod curricularPeriod = getCurricularPeriod(degreeCurricularPlan, year, semester);
-        final ExecutionSemester beginExecutionPeriod = AbstractDomainObject.fromExternalId(beginExecutionPeriodId);
-        final ExecutionSemester endExecutionPeriod = AbstractDomainObject.fromExternalId(endExecutionPeriodId);
+        final ExecutionSemester beginExecutionPeriod = FenixFramework.getDomainObject(beginExecutionPeriodId);
+        final ExecutionSemester endExecutionPeriod = FenixFramework.getDomainObject(endExecutionPeriodId);
 
         courseGroup.addContext(curricularCourse, curricularPeriod, beginExecutionPeriod, endExecutionPeriod);
     }

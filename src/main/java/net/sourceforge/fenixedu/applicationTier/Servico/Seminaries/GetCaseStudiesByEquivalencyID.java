@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.Seminaries.CaseStudy;
 import net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency;
 import net.sourceforge.fenixedu.domain.Seminaries.Theme;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -30,7 +30,7 @@ public class GetCaseStudiesByEquivalencyID {
     protected List run(String equivalencyID) {
         List<InfoCaseStudy> infoCases = new LinkedList<InfoCaseStudy>();
 
-        CourseEquivalency equivalency = AbstractDomainObject.fromExternalId(equivalencyID);
+        CourseEquivalency equivalency = FenixFramework.getDomainObject(equivalencyID);
         List<CaseStudy> cases = new LinkedList<CaseStudy>();
         List themes = equivalency.getThemes();
 

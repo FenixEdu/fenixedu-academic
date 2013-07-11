@@ -14,18 +14,18 @@ import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCourse;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDVirtualCourseGroup;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class CreateTSDVirtualGroup {
     protected TSDCourse run(String courseName, String tsdId, String periodId, String[] shiftTypesArray,
             String[] degreeCurricularPlansIdArray) {
 
-        TeacherServiceDistribution tsd = AbstractDomainObject.fromExternalId(tsdId);
-        ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(periodId);
+        TeacherServiceDistribution tsd = FenixFramework.getDomainObject(tsdId);
+        ExecutionSemester executionSemester = FenixFramework.getDomainObject(periodId);
 
         List<DegreeCurricularPlan> degreeCurricularPlansList = new ArrayList<DegreeCurricularPlan>();
         for (String planId : degreeCurricularPlansIdArray) {
-            degreeCurricularPlansList.add(AbstractDomainObject.<DegreeCurricularPlan> fromExternalId(planId));
+            degreeCurricularPlansList.add(FenixFramework.<DegreeCurricularPlan> getDomainObject(planId));
         }
 
         List<ShiftType> lecturedShiftTypes = new ArrayList<ShiftType>();

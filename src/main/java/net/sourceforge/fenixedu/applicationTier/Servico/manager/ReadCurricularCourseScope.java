@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author lmac1
@@ -27,7 +27,7 @@ public class ReadCurricularCourseScope {
     public static InfoCurricularCourseScope run(String externalId) throws FenixServiceException {
         CurricularCourseScope curricularCourseScope;
 
-        curricularCourseScope = AbstractDomainObject.fromExternalId(externalId);
+        curricularCourseScope = FenixFramework.getDomainObject(externalId);
 
         if (curricularCourseScope == null) {
             throw new NonExistingServiceException();

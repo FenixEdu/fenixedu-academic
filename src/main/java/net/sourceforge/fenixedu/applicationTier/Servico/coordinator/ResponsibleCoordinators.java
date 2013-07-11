@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class ResponsibleCoordinators {
 
@@ -15,7 +15,7 @@ public class ResponsibleCoordinators {
     @Service
     public static void run(String executionDegreeId, List<String> coordinatorsToBeResponsibleIDs) throws FenixServiceException {
 
-        final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeId);
+        final ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreeId);
         if (executionDegree == null) {
             throw new FenixServiceException("error.noExecutionDegree");
         }

@@ -35,7 +35,7 @@ public class PartyContactsManagementDispatchActionForPersonnelSection extends
     @Override
     protected Party getParty(HttpServletRequest request) {
         final String personID = (String) getFromRequest(request, "personID");
-        return Party.fromExternalId(personID);
+        return FenixFramework.getDomainObject(personID);
     }
 
 }

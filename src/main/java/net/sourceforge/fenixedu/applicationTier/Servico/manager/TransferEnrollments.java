@@ -9,7 +9,7 @@ import org.apache.commons.lang.StringUtils;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class TransferEnrollments {
 
@@ -20,11 +20,11 @@ public class TransferEnrollments {
 
         if (!StringUtils.isEmpty(destinationCurriculumGroupID)) {
 
-            CurriculumGroup curriculumGroup = (CurriculumGroup) AbstractDomainObject.fromExternalId(destinationCurriculumGroupID);
+            CurriculumGroup curriculumGroup = (CurriculumGroup) FenixFramework.getDomainObject(destinationCurriculumGroupID);
             StudentCurricularPlan studentCurricularPlan = curriculumGroup.getStudentCurricularPlan();
 
             for (final String enrollmentIDToTransfer : enrollmentIDsToTransfer) {
-                Enrolment enrolment = (Enrolment) AbstractDomainObject.fromExternalId(enrollmentIDToTransfer);
+                Enrolment enrolment = (Enrolment) FenixFramework.getDomainObject(enrollmentIDToTransfer);
 
                 fixEnrolmentCurricularCourse(studentCurricularPlan, enrolment);
 
@@ -35,9 +35,9 @@ public class TransferEnrollments {
         } else {
 
             final StudentCurricularPlan studentCurricularPlan =
-                    AbstractDomainObject.fromExternalId(destinationStudentCurricularPlanId);
+                    FenixFramework.getDomainObject(destinationStudentCurricularPlanId);
             for (final String enrollmentIDToTransfer : enrollmentIDsToTransfer) {
-                final Enrolment enrollment = (Enrolment) AbstractDomainObject.fromExternalId(enrollmentIDToTransfer);
+                final Enrolment enrollment = (Enrolment) FenixFramework.getDomainObject(enrollmentIDToTransfer);
 
                 fixEnrolmentCurricularCourse(studentCurricularPlan, enrollment);
 

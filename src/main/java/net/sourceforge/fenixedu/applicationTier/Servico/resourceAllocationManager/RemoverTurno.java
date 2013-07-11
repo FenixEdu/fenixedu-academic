@@ -11,14 +11,14 @@ import org.apache.commons.collections.Predicate;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class RemoverTurno {
 
     @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
     @Service
     public static Object run(final InfoShift infoShift, final InfoClass infoClass) {
-        final Shift shift = AbstractDomainObject.fromExternalId(infoShift.getExternalId());
+        final Shift shift = FenixFramework.getDomainObject(infoShift.getExternalId());
         if (shift == null) {
             return Boolean.FALSE;
         }

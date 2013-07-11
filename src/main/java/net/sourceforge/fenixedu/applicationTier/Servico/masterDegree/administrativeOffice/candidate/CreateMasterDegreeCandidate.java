@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.util.SituationName;
 import net.sourceforge.fenixedu.util.State;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author <a href="mailto:frnp@mega.ist.utl.pt">Francisco Paulo </a>
@@ -37,7 +37,7 @@ public class CreateMasterDegreeCandidate {
             String identificationDocumentNumber, IDDocumentType identificationDocumentType) throws Exception {
 
         // Read the Execution of this degree in the current execution Year
-        final ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeID);
+        final ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreeID);
         Person person = Person.readByDocumentIdNumberAndIdDocumentType(identificationDocumentNumber, identificationDocumentType);
 
         if (person == null) {

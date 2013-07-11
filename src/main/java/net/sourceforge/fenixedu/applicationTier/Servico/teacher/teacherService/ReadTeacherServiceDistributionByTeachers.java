@@ -33,7 +33,7 @@ import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCa
 import org.joda.time.Duration;
 
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * 
@@ -45,7 +45,7 @@ public class ReadTeacherServiceDistributionByTeachers {
 
         final List<ExecutionSemester> executionPeriodList = new ArrayList<ExecutionSemester>();
         for (String executionPeriodID : executionPeriodsIDs) {
-            executionPeriodList.add(AbstractDomainObject.<ExecutionSemester> fromExternalId(executionPeriodID));
+            executionPeriodList.add(FenixFramework.<ExecutionSemester> getDomainObject(executionPeriodID));
         }
 
         final ExecutionSemester startPeriod = ExecutionSemester.readStartExecutionSemesterForCredits();
@@ -54,7 +54,7 @@ public class ReadTeacherServiceDistributionByTeachers {
 
         DistributionTeacherServicesByTeachersDTO returnDTO = new DistributionTeacherServicesByTeachersDTO();
 
-        Department department = AbstractDomainObject.fromExternalId(departmentId);
+        Department department = FenixFramework.getDomainObject(departmentId);
 
         for (ExecutionSemester executionPeriodEntry : executionPeriodList) {
 

@@ -14,7 +14,7 @@ import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author João Mota
@@ -30,7 +30,7 @@ public class InsertCurriculum {
             String operacionalObjectivesEn, String generalObjectives, String generalObjectivesEn, DateTime lastModification,
             Boolean basic) throws FenixServiceException {
 
-        CurricularCourse curricularCourse = (CurricularCourse) AbstractDomainObject.fromExternalId(curricularCourseId);
+        CurricularCourse curricularCourse = (CurricularCourse) FenixFramework.getDomainObject(curricularCourseId);
 
         if (curricularCourse == null) {
             throw new InvalidArgumentsServiceException();

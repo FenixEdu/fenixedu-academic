@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.InsuranceValue;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class EditInsuranceValueByExecutionYearID {
 
@@ -14,7 +14,7 @@ public class EditInsuranceValueByExecutionYearID {
     @Service
     public static void run(String executionYearID, Double annualValue, Date endDate) {
 
-        final ExecutionYear executionYear = AbstractDomainObject.fromExternalId(executionYearID);
+        final ExecutionYear executionYear = FenixFramework.getDomainObject(executionYearID);
 
         InsuranceValue insuranceValue = executionYear.getInsuranceValue();
 

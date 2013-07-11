@@ -203,7 +203,7 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
         getParty(request); // this must be called because subclasses can
         // populate request with other needed objects
         final String contactId = (String) getFromRequest(request, "contactId");
-        return PartyContact.fromExternalId(contactId);
+        return FenixFramework.getDomainObject(contactId);
     }
 
     public ActionForward forwardToInputValidationCode(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -250,7 +250,7 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
     public ActionForward prepareValidate(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         final String partyContactExtId = request.getParameter("partyContact");
-        PartyContact partyContact = PartyContact.fromExternalId(partyContactExtId);
+        PartyContact partyContact = FenixFramework.getDomainObject(partyContactExtId);
         partyContact.triggerValidationProcessIfNeeded();
         PartyContactBean contactBean = PartyContactBean.createFromDomain(partyContact);
         addWarningMessage(request, contactBean);
@@ -290,7 +290,7 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
         if (validationBean != null) {
             partyContactValidation = validationBean.getValidation();
         } else {
-            partyContactValidation = PartyContactValidation.fromExternalId(extId);
+            partyContactValidation = FenixFramework.getDomainObject(extId);
             partyContactValidation.processValidation(code);
         }
         return forwardToInputValidationCode(mapping, actionForm, request, response, partyContactValidation.getPartyContact());
@@ -323,7 +323,7 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
     public ActionForward requestValidationToken(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         final String partyContactExtId = request.getParameter("partyContactValidation");
-        final PartyContactValidation partyContactValidation = PartyContactValidation.fromExternalId(partyContactExtId);
+        final PartyContactValidation partyContactValidation = FenixFramework.getDomainObject(partyContactExtId);
         final PartyContact partyContact = partyContactValidation.getPartyContact();
         PartyContactBean contactBean = PartyContactBean.createFromDomain(partyContact);
         partyContact.triggerValidationProcess();

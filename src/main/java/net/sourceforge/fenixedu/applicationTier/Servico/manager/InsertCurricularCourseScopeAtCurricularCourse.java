@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.CurricularSemester;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.ist.fenixframework.pstm.IllegalWriteException;
 
 /**
@@ -29,20 +29,20 @@ public class InsertCurricularCourseScopeAtCurricularCourse {
         CurricularSemester curricularSemester = null;
         try {
             curricularSemester =
-                    AbstractDomainObject.fromExternalId(infoCurricularCourseScope.getInfoCurricularSemester()
+                    FenixFramework.getDomainObject(infoCurricularCourseScope.getInfoCurricularSemester()
                             .getExternalId());
             if (curricularSemester == null) {
                 throw new NonExistingServiceException("message.non.existing.curricular.semester", null);
             }
 
             CurricularCourse curricularCourse =
-                    (CurricularCourse) AbstractDomainObject.fromExternalId(infoCurricularCourseScope.getInfoCurricularCourse()
+                    (CurricularCourse) FenixFramework.getDomainObject(infoCurricularCourseScope.getInfoCurricularCourse()
                             .getExternalId());
             if (curricularCourse == null) {
                 throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
             }
 
-            branch = AbstractDomainObject.fromExternalId(infoCurricularCourseScope.getInfoBranch().getExternalId());
+            branch = FenixFramework.getDomainObject(infoCurricularCourseScope.getInfoBranch().getExternalId());
             if (branch == null) {
                 throw new NonExistingServiceException("message.non.existing.branch", null);
             }

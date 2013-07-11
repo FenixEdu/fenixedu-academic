@@ -23,7 +23,7 @@ import org.apache.commons.beanutils.BeanComparator;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Tânia Pousão
@@ -53,7 +53,7 @@ public class InsertGratuityData {
         validateGratuity(infoGratuityValues);
 
         ExecutionDegree executionDegree =
-                AbstractDomainObject.fromExternalId(infoGratuityValues.getInfoExecutionDegree().getExternalId());
+                FenixFramework.getDomainObject(infoGratuityValues.getInfoExecutionDegree().getExternalId());
         GratuityValues gratuityValues = executionDegree.getGratuityValues();
 
         if (gratuityValues == null) // it doesn't exist in database, then

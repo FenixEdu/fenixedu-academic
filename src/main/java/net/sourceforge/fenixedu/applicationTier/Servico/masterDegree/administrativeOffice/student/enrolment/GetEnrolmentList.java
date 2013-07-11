@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 public class GetEnrolmentList {
 
@@ -72,7 +72,7 @@ public class GetEnrolmentList {
     }
 
     private static StudentCurricularPlan getStudentCurricularPlan(String studentCurricularPlanID) {
-        return AbstractDomainObject.fromExternalId(studentCurricularPlanID);
+        return FenixFramework.getDomainObject(studentCurricularPlanID);
     }
 
 }

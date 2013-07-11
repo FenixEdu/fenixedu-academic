@@ -34,7 +34,7 @@ public class LoginRedirectAction extends Action {
 
     @Service
     public Boolean reconstructURL(HttpServletRequest request) {
-        final PendingRequest pendingRequest = PendingRequest.fromExternalId(request.getParameter("pendingRequest"));
+        final PendingRequest pendingRequest = FenixFramework.getDomainObject(request.getParameter("pendingRequest"));
         if (pendingRequest.getBuildVersion().equals(PendingRequest.buildVersion)) {
             String url = pendingRequest.getUrl();
 

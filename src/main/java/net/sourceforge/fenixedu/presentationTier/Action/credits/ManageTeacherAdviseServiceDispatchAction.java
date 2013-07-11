@@ -30,7 +30,7 @@ import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Ricardo Rodrigues
@@ -64,7 +64,7 @@ public class ManageTeacherAdviseServiceDispatchAction extends FenixDispatchActio
 
         Integer studentNumber = Integer.valueOf(adviseServiceForm.getString("studentNumber"));
         Double percentage = Double.valueOf(adviseServiceForm.getString("percentage"));
-        Teacher teacher = AbstractDomainObject.fromExternalId((String) adviseServiceForm.get("teacherId"));
+        Teacher teacher = FenixFramework.getDomainObject((String) adviseServiceForm.get("teacherId"));
         String executionPeriodID = (String) adviseServiceForm.get("executionPeriodId");
         try {
             EditTeacherAdviseService.runEditTeacherAdviseService(teacher, executionPeriodID, studentNumber, percentage,

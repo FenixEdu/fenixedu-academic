@@ -30,6 +30,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 
 @Mapping(module = "academicAdministration", path = "/academicCalendarsManagement", input = "/index.do",
@@ -284,12 +285,12 @@ public class AcademicCalendarsManagementDA extends FenixDispatchAction {
 
     private AcademicCalendarEntry getAcademicCalendarEntryFromParameter(final HttpServletRequest request) {
         final String calendarIDString = request.getParameter("entryID");
-        return AbstractDomainObject.fromExternalId(calendarIDString);
+        return FenixFramework.getDomainObject(calendarIDString);
     }
 
     private AcademicCalendarRootEntry getAcademicCalendarRootEntryFromParameter(final HttpServletRequest request) {
         final String calendarIDString = request.getParameter("rootEntryID");
-        return (AcademicCalendarRootEntry) AbstractDomainObject.fromExternalId(calendarIDString);
+        return (AcademicCalendarRootEntry) FenixFramework.getDomainObject(calendarIDString);
     }
 
     private Partial getBeginFromParameter(final HttpServletRequest request) {
