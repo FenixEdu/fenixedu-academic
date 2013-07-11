@@ -2688,7 +2688,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     public boolean getHasAnnouncements() {
         ExecutionCourseAnnouncementBoard board = getBoard();
         if (board != null) {
-            return board.getAnnouncements().isEmpty();
+            return !board.getAnnouncements().isEmpty();
         }
         return false;
     }
