@@ -19,7 +19,7 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class StudentFirstTimeCycleInquiryBean implements Serializable {
 
@@ -108,7 +108,7 @@ public class StudentFirstTimeCycleInquiryBean implements Serializable {
         return Boolean.toString(true);
     }
 
-    @Service
+    @Atomic
     public void saveAnswers() {
         InquiryStudentCycleAnswer inquiryStudentCycleAnswer = null;
         for (InquiryBlockDTO blockDTO : getStudentInquiryBlocks()) {

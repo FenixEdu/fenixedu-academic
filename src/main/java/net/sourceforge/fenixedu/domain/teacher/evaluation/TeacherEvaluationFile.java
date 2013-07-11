@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.Person;
 
 import org.apache.commons.lang.StringUtils;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
@@ -61,7 +61,7 @@ public class TeacherEvaluationFile extends TeacherEvaluationFile_Base {
         super.delete();
     }
 
-    @Service
+    @Atomic
     public static TeacherEvaluationFile create(FileUploadBean fileUploadBean, Person createdBy) throws IOException {
         return new TeacherEvaluationFile(fileUploadBean.getTeacherEvaluationProcess().getCurrentTeacherEvaluation(),
                 fileUploadBean.getTeacherEvaluationFileType(), fileUploadBean.getFilename(), fileUploadBean.getBytes(), createdBy);

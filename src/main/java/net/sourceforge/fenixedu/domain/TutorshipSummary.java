@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.Tutor
 
 import org.joda.time.LocalDate;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class TutorshipSummary extends TutorshipSummary_Base {
 
@@ -29,7 +29,7 @@ public class TutorshipSummary extends TutorshipSummary_Base {
         return !(curDate.isBefore(beginDate) || curDate.isAfter(endDate));
     }
 
-    @Service
+    @Atomic
     public void update(final CreateSummaryBean bean, boolean relations) {
         setHowManyContactsEmail(bean.getHowManyContactsEmail());
         setHowManyContactsPhone(bean.getHowManyContactsPhone());
@@ -73,7 +73,7 @@ public class TutorshipSummary extends TutorshipSummary_Base {
         }
     }
 
-    @Service
+    @Atomic
     static public TutorshipSummary create(final CreateSummaryBean bean) {
         TutorshipSummary tutorshipSummary = new TutorshipSummary();
 

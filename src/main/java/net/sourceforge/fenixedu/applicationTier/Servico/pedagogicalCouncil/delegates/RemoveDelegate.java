@@ -19,18 +19,18 @@ import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class RemoveDelegate {
 
     @Checked("RolePredicates.PEDAGOGICAL_COUNCIL_PREDICATE")
-    @Service
+    @Atomic
     public static void run(Student student) throws FenixServiceException {
         run(student, FunctionType.DELEGATE_OF_YEAR);
     }
 
     @Checked("RolePredicates.PEDAGOGICAL_COUNCIL_PREDICATE")
-    @Service
+    @Atomic
     public static void run(PersonFunction personFunction, LocalDate newEndDate) throws FenixServiceException {
         Student student = personFunction.getPerson().getStudent();
 
@@ -50,7 +50,7 @@ public class RemoveDelegate {
     }
 
     @Checked("RolePredicates.PEDAGOGICAL_COUNCIL_PREDICATE")
-    @Service
+    @Atomic
     public static void run(PersonFunction personFunction) throws FenixServiceException {
         Student student = personFunction.getPerson().getStudent();
         YearMonthDay yesterday = new YearMonthDay().minusDays(1);
@@ -66,7 +66,7 @@ public class RemoveDelegate {
     }
 
     @Checked("RolePredicates.PEDAGOGICAL_COUNCIL_PREDICATE")
-    @Service
+    @Atomic
     public static void run(Student student, FunctionType delegateFunctionType) throws FenixServiceException {
         final DegreeUnit degreeUnit = student.getLastActiveRegistration().getDegree().getUnit();
 
@@ -91,7 +91,7 @@ public class RemoveDelegate {
     }
 
     @Checked("RolePredicates.PEDAGOGICAL_COUNCIL_PREDICATE")
-    @Service
+    @Atomic
     public static void run(Person person, Function delegateFunction) throws FenixServiceException {
         PedagogicalCouncilUnit unit = (PedagogicalCouncilUnit) delegateFunction.getUnit();
 

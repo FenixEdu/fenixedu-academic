@@ -21,7 +21,7 @@ import org.joda.time.DateTimeFieldType;
 import org.joda.time.LocalDate;
 import org.joda.time.Partial;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class TransferTutorship extends TutorshipManagement {
@@ -79,7 +79,7 @@ public class TransferTutorship extends TutorshipManagement {
 
     private static final TransferTutorship serviceInstance = new TransferTutorship();
 
-    @Service
+    @Atomic
     public static List<TutorshipErrorBean> runTransferTutorship(String executionDegreeID, TutorshipManagementBean bean,
             List<TutorshipManagementByEntryYearBean> tutorshipsToTransfer) throws FenixServiceException, NotAuthorizedException {
         CoordinatorAuthorizationFilter.instance.execute();

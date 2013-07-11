@@ -28,7 +28,7 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class RegentInquiryBean implements Serializable {
 
@@ -111,7 +111,7 @@ public class RegentInquiryBean implements Serializable {
         return Boolean.toString(true);
     }
 
-    @Service
+    @Atomic
     public void saveChanges(Person person, ResultPersonCategory regent) {
         for (ExecutionDegree executionDegree : getCurricularBlockResultsMap().keySet()) {
             saveComments(person, regent, getCurricularBlockResultsMap().get(executionDegree));

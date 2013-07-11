@@ -9,11 +9,11 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class CurriculumValidationServicesHelper {
 
-    @Service
+    @Atomic
     public void concludeRegistration(final RegistrationConclusionBean conclusionBean) {
         final Registration registration = conclusionBean.getRegistration();
 

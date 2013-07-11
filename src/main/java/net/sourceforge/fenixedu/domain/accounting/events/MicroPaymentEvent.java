@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class MicroPaymentEvent extends MicroPaymentEvent_Base {
@@ -90,7 +90,7 @@ public class MicroPaymentEvent extends MicroPaymentEvent_Base {
                 .findPostingRuleBy(getEventType(), getWhenOccured(), null);
     }
 
-    @Service
+    @Atomic
     public static MicroPaymentEvent create(final User responsible, final Person person, final Unit destinationUnit,
             final Money amount, final String paymentTicket) {
         final MicroPaymentEvent event = new MicroPaymentEvent(person, destinationUnit, amount, paymentTicket);

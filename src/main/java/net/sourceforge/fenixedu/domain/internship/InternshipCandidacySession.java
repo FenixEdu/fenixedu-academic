@@ -4,7 +4,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 import org.joda.time.Interval;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class InternshipCandidacySession extends InternshipCandidacySession_Base {
     public InternshipCandidacySession(Interval interval) {
@@ -17,7 +17,7 @@ public class InternshipCandidacySession extends InternshipCandidacySession_Base 
      * This will deep erase the candidacy session, all candidacies created in
      * this session will be wiped out.
      */
-    @Service
+    @Atomic
     public void delete() {
         for (; hasAnyInternshipCandidacy(); getInternshipCandidacy().get(0).delete()) {
             ;

@@ -16,7 +16,7 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class PersonFunction extends PersonFunction_Base {
@@ -212,7 +212,7 @@ public class PersonFunction extends PersonFunction_Base {
     }
 
     @Override
-    @Service
+    @Atomic
     public void delete() {
         if (hasCurricularYear()) {
             setCurricularYear(null);

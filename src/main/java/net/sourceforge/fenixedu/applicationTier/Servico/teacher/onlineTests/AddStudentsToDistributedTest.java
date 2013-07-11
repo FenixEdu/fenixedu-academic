@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.utilTests.ParseQuestionException;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -104,7 +104,7 @@ public class AddStudentsToDistributedTest {
 
     private static final AddStudentsToDistributedTest serviceInstance = new AddStudentsToDistributedTest();
 
-    @Service
+    @Atomic
     public static void runAddStudentsToDistributedTest(String executionCourseId, String distributedTestId,
             List<InfoStudent> infoStudentList, String contextPath) throws InvalidArgumentsServiceException,
             NotAuthorizedException {

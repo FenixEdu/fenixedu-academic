@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcessPhas
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDRealTeacher;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDTeacher;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.Pair;
 
@@ -72,7 +72,7 @@ public class ReadTSDTeachersFromTSDProcesses {
 
     private static final ReadTSDTeachersFromTSDProcesses serviceInstance = new ReadTSDTeachersFromTSDProcesses();
 
-    @Service
+    @Atomic
     public static List<TSDTeacherDTOEntry> runReadTSDTeachersFromTSDProcesses(Map<String, Pair<String, String>> tsdProcessIdMap)
             throws NotAuthorizedException {
         try {

@@ -7,13 +7,13 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.elections.DelegateElection;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class DeleteDelegateCandidacyPeriod {
 
     @Checked("RolePredicates.PEDAGOGICAL_COUNCIL_PREDICATE")
-    @Service
+    @Atomic
     public static void run(ElectionPeriodBean bean) throws FenixServiceException {
         try {
             DelegateElection election = bean.getElection();
@@ -24,7 +24,7 @@ public class DeleteDelegateCandidacyPeriod {
     }
 
     @Checked("RolePredicates.PEDAGOGICAL_COUNCIL_PREDICATE")
-    @Service
+    @Atomic
     public static void run(ElectionPeriodBean bean, String degreeOID) throws FenixServiceException {
         final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
 

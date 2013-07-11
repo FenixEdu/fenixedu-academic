@@ -35,7 +35,7 @@ import net.sourceforge.fenixedu.util.NumberUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class SearchExecutionCourses {
@@ -244,14 +244,14 @@ public class SearchExecutionCourses {
 
     private static final SearchExecutionCourses serviceInstance = new SearchExecutionCourses();
 
-    @Service
+    @Atomic
     public static List<InfoExecutionCourse> runSearchExecutionCourses(AcademicInterval academicInterval,
             ExecutionDegree executionDegree, String courseName) throws NotAuthorizedException {
         CoordinatorExecutionDegreeAuthorizationFilter.instance.execute(executionDegree.getExternalId());
         return serviceInstance.run(academicInterval, executionDegree, courseName);
     }
 
-    @Service
+    @Atomic
     public static List<InfoExecutionCourse> runSearchExecutionCourses(InfoExecutionPeriod infoExecutionPeriod,
             InfoExecutionDegree infoExecutionDegree, InfoCurricularYear infoCurricularYear, String executionCourseName)
             throws NotAuthorizedException {
@@ -259,7 +259,7 @@ public class SearchExecutionCourses {
         return serviceInstance.run(infoExecutionPeriod, infoExecutionDegree, infoCurricularYear, executionCourseName);
     }
 
-    @Service
+    @Atomic
     public static List<InfoExecutionCourse> runSearchExecutionCourses(AcademicInterval academicInterval,
             ExecutionDegree executionDegree, CurricularYear curricularYear, String courseName) throws NotAuthorizedException {
         CoordinatorExecutionDegreeAuthorizationFilter.instance.execute(executionDegree.getExternalId());

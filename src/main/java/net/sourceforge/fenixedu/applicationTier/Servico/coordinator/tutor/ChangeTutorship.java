@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Partial;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class ChangeTutorship extends TutorshipManagement {
@@ -61,7 +61,7 @@ public class ChangeTutorship extends TutorshipManagement {
 
     private static final ChangeTutorship serviceInstance = new ChangeTutorship();
 
-    @Service
+    @Atomic
     public static List<TutorshipErrorBean> runChangeTutorship(String executionDegreeID, List<ChangeTutorshipBean> beans)
             throws FenixServiceException, NotAuthorizedException {
         try {

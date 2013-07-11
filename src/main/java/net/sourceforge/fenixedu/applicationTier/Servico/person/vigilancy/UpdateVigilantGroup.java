@@ -5,11 +5,11 @@ import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class UpdateVigilantGroup {
 
-    @Service
+    @Atomic
     public static void run(VigilantGroup vigilantGroup, String name, String convokeStrategy, String contactEmail,
             String emailPrefix, String rulesLink, DateTime beginFirst, DateTime endFirst, DateTime beginSecond, DateTime endSecond) {
 

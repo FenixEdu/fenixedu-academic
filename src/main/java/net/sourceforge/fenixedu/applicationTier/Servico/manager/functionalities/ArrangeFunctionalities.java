@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.functionalities.IFunctionality;
 import net.sourceforge.fenixedu.domain.functionalities.Module;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.Pair;
 
 /**
@@ -25,7 +25,7 @@ public class ArrangeFunctionalities {
      *            list of pairs (parent, child)
      */
     @Checked("RolePredicates.MANAGER_PREDICATE")
-    @Service
+    @Atomic
     public static void run(List<Pair<Module, Content>> arrangements) {
         for (Pair<Module, Content> pair : arrangements) {
             ((IFunctionality) pair.getValue()).setModule(pair.getKey());

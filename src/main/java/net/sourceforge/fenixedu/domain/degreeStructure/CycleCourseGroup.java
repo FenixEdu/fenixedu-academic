@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.curricularRules.CreditsLimit;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.StringUtils;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -153,7 +153,7 @@ public class CycleCourseGroup extends CycleCourseGroup_Base {
         return mostRecent;
     }
 
-    @Service
+    @Atomic
     public CycleCourseGroupInformation createCycleCourseGroupInformation(final ExecutionYear executionYear,
             String graduatedTitle, String graduatedTitleEn) {
         if (getCycleCourseGroupInformationByExecutionYear(executionYear) != null) {

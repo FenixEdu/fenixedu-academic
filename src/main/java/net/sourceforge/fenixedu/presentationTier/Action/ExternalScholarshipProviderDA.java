@@ -14,7 +14,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -42,7 +42,7 @@ public class ExternalScholarshipProviderDA extends FenixDispatchAction {
         return mapping.findForward("list");
     }
 
-    @Service
+    @Atomic
     public ActionForward add(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
         if (request.getMethod() != "POST") {
             request.setAttribute("bean", new ExternalScholarshipBean());
@@ -55,7 +55,7 @@ public class ExternalScholarshipProviderDA extends FenixDispatchAction {
         }
     }
 
-    @Service
+    @Atomic
     public ActionForward remove(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
         Party party = FenixFramework.getDomainObject(request.getParameter("provider"));
         List<Party> externalScholarshipProvider = RootDomainObject.getInstance().getExternalScholarshipProvider();

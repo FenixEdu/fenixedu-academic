@@ -27,7 +27,7 @@ import net.sourceforge.fenixedu.util.BundleUtil;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
@@ -38,13 +38,13 @@ public class OutboundMobilityCandidacyPeriod extends OutboundMobilityCandidacyPe
         init(executionInterval, start, end);
     }
 
-    @Service
+    @Atomic
     public static OutboundMobilityCandidacyPeriod create(final ExecutionInterval executionInterval, final DateTime start,
             final DateTime end) {
         return new OutboundMobilityCandidacyPeriod(executionInterval, start, end);
     }
 
-    @Service
+    @Atomic
     public OutboundMobilityCandidacyContest createOutboundMobilityCandidacyContest(final ExecutionDegree executionDegree,
             final MobilityProgram mobilityProgram, final UniversityUnit unit, final Integer vacancies) {
         final MobilityAgreement mobilityAgreement = findOrCreateMobilityAgreement(mobilityProgram, unit);
@@ -61,7 +61,7 @@ public class OutboundMobilityCandidacyPeriod extends OutboundMobilityCandidacyPe
         return contest;
     }
 
-    @Service
+    @Atomic
     public OutboundMobilityCandidacyContest createOutboundMobilityCandidacyContest(
             final OutboundMobilityCandidacyContestGroup mobilityGroup, final MobilityProgram mobilityProgram,
             final UniversityUnit unit, final Integer vacancies) {
@@ -119,12 +119,12 @@ public class OutboundMobilityCandidacyPeriod extends OutboundMobilityCandidacyPe
         return null;
     }
 
-    @Service
+    @Atomic
     public void setOptionIntroductoryDestriptionService(final String optionIntroductoryDestription) {
         setOptionIntroductoryDestription(optionIntroductoryDestription);
     }
 
-    @Service
+    @Atomic
     public void addOption(final String optionValue, final Boolean availableForCandidates) {
         new OutboundMobilityCandidacyPeriodConfirmationOption(this, optionValue, availableForCandidates);        
     }
@@ -243,7 +243,7 @@ public class OutboundMobilityCandidacyPeriod extends OutboundMobilityCandidacyPe
         return BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice", key, args);
     }
 
-    @Service
+    @Atomic
     public String selectCandidatesForAllGroups() {
         boolean hasSomePlacement = false;
 

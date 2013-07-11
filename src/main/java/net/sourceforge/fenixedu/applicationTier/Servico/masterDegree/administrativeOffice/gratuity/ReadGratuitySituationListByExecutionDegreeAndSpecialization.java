@@ -25,7 +25,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -51,7 +51,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization {
      * values
      */
     @Checked("RolePredicates.MANAGER_PREDICATE")
-    @Service
+    @Atomic
     public static Object run(String executionDegreeId, String executionYearName, String persistentSupportecializationName,
             String gratuitySituationTypeName) throws FenixServiceException {
 
@@ -209,7 +209,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization {
 
     // Service Invokers migrated from Berserk
 
-    @Service
+    @Atomic
     public static Object runReadGratuitySituationListByExecutionDegreeAndSpecialization(String executionDegreeId,
             String executionYearName, String persistentSupportecializationName, String gratuitySituationTypeName)
             throws FenixServiceException, NotAuthorizedException {

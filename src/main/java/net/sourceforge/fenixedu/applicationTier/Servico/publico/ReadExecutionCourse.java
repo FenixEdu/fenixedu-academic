@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -13,7 +13,7 @@ import pt.ist.fenixframework.FenixFramework;
  */
 public class ReadExecutionCourse {
 
-    @Service
+    @Atomic
     public static Object run(InfoExecutionPeriod infoExecutionPeriod, String code) {
         final ExecutionSemester executionSemester =
                 FenixFramework.getDomainObject(infoExecutionPeriod.getExternalId());

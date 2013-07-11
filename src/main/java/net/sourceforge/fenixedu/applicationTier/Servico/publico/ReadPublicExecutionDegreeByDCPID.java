@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -17,7 +17,7 @@ import pt.ist.fenixframework.FenixFramework;
  */
 public class ReadPublicExecutionDegreeByDCPID {
 
-    @Service
+    @Atomic
     public static List<InfoExecutionDegree> run(String degreeCurricularPlanID) throws FenixServiceException {
         DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
 
@@ -29,7 +29,7 @@ public class ReadPublicExecutionDegreeByDCPID {
         return result;
     }
 
-    @Service
+    @Atomic
     public static InfoExecutionDegree run(String degreeCurricularPlanID, String executionYearID) {
         DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
         ExecutionYear executionYear = FenixFramework.getDomainObject(executionYearID);

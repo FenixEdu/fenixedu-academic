@@ -16,7 +16,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
@@ -44,7 +44,7 @@ public class ViewPersonsWithRoleDA extends FenixDispatchAction {
         return searchWithRole(mapping, form, request, response);
     }
 
-    @Service
+    @Atomic
     public void removePersonFromRole(Person person, Role role) {
         person.removePersonRoles(role);
     }

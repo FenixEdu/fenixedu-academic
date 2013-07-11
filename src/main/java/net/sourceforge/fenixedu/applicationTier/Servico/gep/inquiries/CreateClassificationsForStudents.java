@@ -30,7 +30,7 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.Closure;
 import org.apache.commons.collections.Transformer;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -268,7 +268,7 @@ public class CreateClassificationsForStudents {
 
     private static final CreateClassificationsForStudents serviceInstance = new CreateClassificationsForStudents();
 
-    @Service
+    @Atomic
     public static ByteArrayOutputStream runCreateClassificationsForStudents(Integer[] entryGradeLimits,
             Integer[] approvationRatioLimits, Integer[] arithmeticMeanLimits, String degreeCurricularPlanID)
             throws FileNotFoundException, NotAuthorizedException {

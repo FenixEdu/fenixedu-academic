@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.domain.alumni;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class CerimonyInquiryAnswer extends CerimonyInquiryAnswer_Base implements Comparable<CerimonyInquiryAnswer> {
 
@@ -35,7 +35,7 @@ public class CerimonyInquiryAnswer extends CerimonyInquiryAnswer_Base implements
         setAnswerOrder(order);
     }
 
-    @Service
+    @Atomic
     public void delete() {
         if (!hasAnyCerimonyInquiryPerson()) {
             setCerimonyInquiry(null);

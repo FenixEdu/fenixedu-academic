@@ -1,6 +1,6 @@
 package pt.ist.fenixframework.plugins.remote.domain;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.pstm.PersistentRoot;
 
 public class RemoteSystem extends RemoteSystem_Base {
@@ -15,7 +15,7 @@ public class RemoteSystem extends RemoteSystem_Base {
         }
     }
 
-    @Service
+    @Atomic
     public static synchronized void init() {
         if (instance == null) {
             instance = PersistentRoot.getRoot(RemoteSystem.class.getName());

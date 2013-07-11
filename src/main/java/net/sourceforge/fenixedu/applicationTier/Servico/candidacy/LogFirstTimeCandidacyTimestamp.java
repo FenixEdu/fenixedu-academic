@@ -6,10 +6,10 @@ import net.sourceforge.fenixedu.domain.log.FirstTimeCandidacyLog;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class LogFirstTimeCandidacyTimestamp {
-    @Service
+    @Atomic
     public static void logTimestamp(StudentCandidacy candidacy, FirstTimeCandidacyStage stage) {
         FirstTimeCandidacyLog log = candidacy.getFirstTimeCandidacyLog();
         if (log == null) {

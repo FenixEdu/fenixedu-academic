@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 
 import org.joda.time.LocalDate;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class AnnualIRSDeclarationDocument extends AnnualIRSDeclarationDocument_Base {
 
@@ -42,7 +42,7 @@ public class AnnualIRSDeclarationDocument extends AnnualIRSDeclarationDocument_B
         }
     }
 
-    @Service
+    @Atomic
     public AnnualIRSDeclarationDocument generateAnotherDeclaration(Person operator, byte[] content) {
 
         final Person addressee = getAddressee();
@@ -57,7 +57,7 @@ public class AnnualIRSDeclarationDocument extends AnnualIRSDeclarationDocument_B
         return String.format("IRS-%s-%s-%s.pdf", year, person.getDocumentIdNumber(), new LocalDate().toString("yyyyMMdd"));
     }
 
-    @Service
+    @Atomic
     static public AnnualIRSDeclarationDocument create(Person addressee, Person operator, byte[] content, Integer year) {
         return new AnnualIRSDeclarationDocument(addressee, operator, buildFilename(addressee, year), content, year);
     }

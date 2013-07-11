@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.EmployeeAuthorizationFilt
 import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDTeacher;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class SetExtraCreditsToTSDTeacher {
@@ -22,7 +22,7 @@ public class SetExtraCreditsToTSDTeacher {
 
     private static final SetExtraCreditsToTSDTeacher serviceInstance = new SetExtraCreditsToTSDTeacher();
 
-    @Service
+    @Atomic
     public static void runSetExtraCreditsToTSDTeacher(String tsdTeacherId, String extraCreditsName, Double extraCreditsValue,
             Boolean usingExtraCredits) throws NotAuthorizedException {
         try {

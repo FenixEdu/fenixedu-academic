@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.domain.vigilancy.strategies.StrategySugestion;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class VigilantGroup extends VigilantGroup_Base {
 
@@ -245,7 +245,7 @@ public class VigilantGroup extends VigilantGroup_Base {
         return new ArrayList<WrittenEvaluation>(evaluations);
     }
 
-    @Service
+    @Atomic
     public void copyPointsFromVigilantGroup(VigilantGroup previousGroup) {
         this.setPointsForTeacher(previousGroup.getPointsForTeacher());
         this.setPointsForConvoked(previousGroup.getPointsForConvoked());

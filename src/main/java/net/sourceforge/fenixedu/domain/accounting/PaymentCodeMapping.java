@@ -5,7 +5,7 @@ import java.io.Serializable;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class PaymentCodeMapping extends PaymentCodeMapping_Base {
 
@@ -91,7 +91,7 @@ public class PaymentCodeMapping extends PaymentCodeMapping_Base {
         }
     }
 
-    @Service
+    @Atomic
     public void delete() {
         setExecutionInterval(null);
         setOldPaymentCode(null);
@@ -108,7 +108,7 @@ public class PaymentCodeMapping extends PaymentCodeMapping_Base {
         return getExecutionInterval().equals(executionInterval);
     }
 
-    @Service
+    @Atomic
     static public PaymentCodeMapping create(final ExecutionInterval executionInterval, final PaymentCode oldCode,
             final PaymentCode newCode) {
         return new PaymentCodeMapping(executionInterval, oldCode, newCode);

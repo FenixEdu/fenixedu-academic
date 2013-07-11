@@ -20,7 +20,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -144,12 +144,12 @@ public class ManageSantanderCardGenerationDA extends FenixDispatchAction {
         return (lastCreatedBatch != null && lastCreatedBatch.getSent() != null);
     }
 
-    @Service
+    @Atomic
     private void createNewBatch(Person requester, ExecutionYear executionYear) {
         new SantanderBatch(requester, executionYear);
     }
 
-    @Service
+    @Atomic
     private void destroyBatch(SantanderBatch batch) {
         batch.delete();
     }
@@ -159,7 +159,7 @@ public class ManageSantanderCardGenerationDA extends FenixDispatchAction {
         santanderBean.setAllowNewCreation(canCreateNewBatch(santanderBean.getExecutionYear()));
     }
 
-    @Service
+    @Atomic
     private void sealBatch(SantanderBatch santanderBatch, Person requester) {
         santanderBatch.setSequenceNumber(SantanderSequenceNumberGenerator.getNewSequenceNumber());
         santanderBatch.setSent(new DateTime());

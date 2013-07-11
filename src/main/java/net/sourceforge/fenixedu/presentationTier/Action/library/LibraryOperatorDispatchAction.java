@@ -38,7 +38,7 @@ import org.jfree.data.DefaultCategoryDataset;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -208,7 +208,7 @@ public class LibraryOperatorDispatchAction extends FenixDispatchAction {
         return mapping.findForward("libraryUpdateCapacityAndLockers");
     }
 
-    @Service
+    @Atomic
     public ActionForward updateCapacityAndLockers(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         LibraryInformation libraryInformation = getRenderedObject("libraryUpdate");
@@ -300,7 +300,7 @@ public class LibraryOperatorDispatchAction extends FenixDispatchAction {
         return ret;
     }
 
-    @Service
+    @Atomic
     public ActionForward addOperator(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         LibraryCardSystem libraryCardSystem = RootDomainObject.getInstance().getLibraryCardSystem();
@@ -319,7 +319,7 @@ public class LibraryOperatorDispatchAction extends FenixDispatchAction {
         return mapping.findForward("libraryAddOrRemoveOperators");
     }
 
-    @Service
+    @Atomic
     public ActionForward removeOperator(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         LibraryCardSystem libraryCardSystem = RootDomainObject.getInstance().getLibraryCardSystem();

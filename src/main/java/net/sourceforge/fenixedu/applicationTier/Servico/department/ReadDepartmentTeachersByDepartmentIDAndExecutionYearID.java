@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Teacher;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -43,7 +43,7 @@ public class ReadDepartmentTeachersByDepartmentIDAndExecutionYearID {
     private static final ReadDepartmentTeachersByDepartmentIDAndExecutionYearID serviceInstance =
             new ReadDepartmentTeachersByDepartmentIDAndExecutionYearID();
 
-    @Service
+    @Atomic
     public static List<Teacher> runReadDepartmentTeachersByDepartmentIDAndExecutionYearID(String departmentID,
             String executionYearID) throws FenixServiceException, NotAuthorizedException {
         try {

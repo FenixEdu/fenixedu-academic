@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.onlineTests.SubQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * @author Susana Fernandes
@@ -22,7 +22,7 @@ import pt.ist.fenixWebFramework.services.Service;
 public class CleanSubQuestions {
 
     @Checked("RolePredicates.STUDENT_PREDICATE")
-    @Service
+    @Atomic
     public static void run(Registration registration, DistributedTest distributedTest, String exerciseCode, Integer itemCode,
             String path) throws FenixServiceException {
         if (distributedTest == null) {

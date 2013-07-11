@@ -22,7 +22,7 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -31,7 +31,7 @@ import pt.ist.fenixframework.FenixFramework;
 public class ReadCurrentCurriculumByCurricularCourseCode {
 
     @Checked("RolePredicates.COORDINATOR_PREDICATE")
-    @Service
+    @Atomic
     public static InfoCurriculum run(String executionDegreeCode, String curricularCourseCode) throws FenixServiceException {
 
         if (curricularCourseCode == null) {

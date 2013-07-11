@@ -15,12 +15,12 @@ import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.util.PrintAllCandidatesFilter;
 import net.sourceforge.fenixedu.util.SituationName;
 import net.sourceforge.fenixedu.util.State;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class ReadDegreeCandidatesWithFilter {
 
-    @Service
+    @Atomic
     public static List run(String degreeCurricularPlanId, PrintAllCandidatesFilter filterBy, String filterValue)
             throws FenixServiceException {
 

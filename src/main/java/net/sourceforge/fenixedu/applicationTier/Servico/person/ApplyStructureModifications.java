@@ -8,11 +8,11 @@ import net.sourceforge.fenixedu.domain.contents.DateOrderedNode;
 import net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode;
 import net.sourceforge.fenixedu.domain.contents.Node;
 import net.sourceforge.fenixedu.presentationTier.Action.person.ModifiedContentBean;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class ApplyStructureModifications {
 
-    @Service
+    @Atomic
     public static void run(List<ModifiedContentBean> modifications) {
 
         ServiceMonitoring.logService(ApplyStructureModifications.class, modifications);

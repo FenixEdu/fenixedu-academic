@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.util.Season;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class CreateWrittenEvaluation {
@@ -102,7 +102,7 @@ public class CreateWrittenEvaluation {
 
     private static final CreateWrittenEvaluation serviceInstance = new CreateWrittenEvaluation();
 
-    @Service
+    @Atomic
     public static void runCreateWrittenEvaluation(String executionCourseID, Date writtenEvaluationDate,
             Date writtenEvaluationStartTime, Date writtenEvaluationEndTime, List<String> executionCourseIDs,
             List<String> degreeModuleScopeIDs, List<String> roomIDs, GradeScale gradeScale, Season examSeason,

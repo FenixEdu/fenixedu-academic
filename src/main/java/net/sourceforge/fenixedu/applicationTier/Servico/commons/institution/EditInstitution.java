@@ -5,12 +5,12 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class EditInstitution {
 
-    @Service
+    @Atomic
     public static void run(String oldInstitutionOID, String newInstitutionName) throws FenixServiceException {
 
         Unit storedInstitution = UnitUtils.readExternalInstitutionUnitByName(newInstitutionName);

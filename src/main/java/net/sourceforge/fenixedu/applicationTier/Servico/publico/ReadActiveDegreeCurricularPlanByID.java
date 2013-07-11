@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -128,13 +128,13 @@ public class ReadActiveDegreeCurricularPlanByID extends ReadDegreeCurricularPlan
 
     private static final ReadActiveDegreeCurricularPlanByID serviceInstance = new ReadActiveDegreeCurricularPlanByID();
 
-    @Service
+    @Atomic
     public static List runReadActiveDegreeCurricularPlanByID(String degreeCurricularPlanId, String executionPeriodId,
             Locale locale, String arg) throws FenixServiceException {
         return serviceInstance.run(degreeCurricularPlanId, executionPeriodId, locale, arg);
     }
 
-    @Service
+    @Atomic
     public static List runReadActiveDegreeCurricularPlanByID(InfoExecutionDegree infoExecutionDegree,
             InfoExecutionPeriod infoExecutionPeriod, Integer curricularYear, Locale locale) throws FenixServiceException {
         return serviceInstance.run(infoExecutionDegree, infoExecutionPeriod, curricularYear, locale);

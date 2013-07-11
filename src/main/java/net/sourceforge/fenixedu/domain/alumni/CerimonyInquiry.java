@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.util.email.Recipient;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class CerimonyInquiry extends CerimonyInquiry_Base implements Comparable<CerimonyInquiry> {
 
@@ -37,17 +37,17 @@ public class CerimonyInquiry extends CerimonyInquiry_Base implements Comparable<
         return new TreeSet<CerimonyInquiryAnswer>(getCerimonyInquiryAnswerSet());
     }
 
-    @Service
+    @Atomic
     public static CerimonyInquiry createNew() {
         return new CerimonyInquiry();
     }
 
-    @Service
+    @Atomic
     public CerimonyInquiryAnswer createNewAnswer() {
         return new CerimonyInquiryAnswer(this);
     }
 
-    @Service
+    @Atomic
     public void addPeople(final Set<String> usernames) {
         for (final String username : usernames) {
             final User user = User.readUserByUserUId(username);
@@ -69,7 +69,7 @@ public class CerimonyInquiry extends CerimonyInquiry_Base implements Comparable<
         return false;
     }
 
-    @Service
+    @Atomic
     public void delete() {
         for (final CerimonyInquiryAnswer cerimonyInquiryAnswer : getCerimonyInquiryAnswerSet()) {
             cerimonyInquiryAnswer.delete();
@@ -90,7 +90,7 @@ public class CerimonyInquiry extends CerimonyInquiry_Base implements Comparable<
         return Recipient.newInstance("Inquiridos: " + getDescription(), group);
     }
 
-    @Service
+    @Atomic
     public void toggleObservationFlag() {
         final Boolean allowComments = getAllowComments();
         final boolean value = !(allowComments != null && allowComments.booleanValue());

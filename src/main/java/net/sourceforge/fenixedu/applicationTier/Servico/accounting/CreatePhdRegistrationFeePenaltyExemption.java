@@ -4,11 +4,11 @@ import net.sourceforge.fenixedu.dataTransferObject.accounting.penaltyExemption.C
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.phd.debts.PhdRegistrationFeePenaltyExemption;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class CreatePhdRegistrationFeePenaltyExemption {
 
-    @Service
+    @Atomic
     @Checked("AcademicPredicates.MANAGE_STUDENT_PAYMENTS")
     public static void run(final Person responsible, final CreatePhdRegistrationFeePenaltyExemptionBean penaltyExemptionBean) {
         new PhdRegistrationFeePenaltyExemption(penaltyExemptionBean.getJustificationType(), penaltyExemptionBean.getEvent(),

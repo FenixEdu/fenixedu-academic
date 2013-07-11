@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.util.ProposalState;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -108,7 +108,7 @@ public class RejectNewProjectProposal {
 
     private static final RejectNewProjectProposal serviceInstance = new RejectNewProjectProposal();
 
-    @Service
+    @Atomic
     public static Boolean runRejectNewProjectProposal(String executionCourseId, String groupPropertiesId, String rejectorUserName)
             throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);

@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFill
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class TeacherCreditsPeriodBean implements Serializable {
 
@@ -160,7 +160,7 @@ public class TeacherCreditsPeriodBean implements Serializable {
         return new Interval(getUnitCreditsBeginDate(), getUnitCreditsEndDate());
     }
 
-    @Service
+    @Atomic
     public void editIntervals() {
         annualCreditsState.setSharedUnitCreditsInterval(getSharedUnitCreditsInterval());
         annualCreditsState.setUnitCreditsInterval(getUnitCreditsInterval());

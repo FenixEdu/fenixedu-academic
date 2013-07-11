@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteStudentsT
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.util.tests.CorrectionFormula;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -87,7 +87,7 @@ public class ReadDistributedTestMarksStatistics {
 
     private static final ReadDistributedTestMarksStatistics serviceInstance = new ReadDistributedTestMarksStatistics();
 
-    @Service
+    @Atomic
     public static SiteView runReadDistributedTestMarksStatistics(String executionCourseId, String distributedTestId)
             throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);

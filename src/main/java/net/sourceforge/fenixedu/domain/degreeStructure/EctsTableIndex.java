@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class EctsTableIndex extends EctsTableIndex_Base {
     public EctsTableIndex(AcademicInterval year) {
@@ -45,7 +45,7 @@ public class EctsTableIndex extends EctsTableIndex_Base {
         throw new NoEctsComparabilityTableFound(year);
     }
 
-    @Service
+    @Atomic
     public static EctsTableIndex readOrCreateByYear(AcademicInterval year) {
         EctsTableIndex index = readByYear(year);
         return index == null ? new EctsTableIndex(year) : index;

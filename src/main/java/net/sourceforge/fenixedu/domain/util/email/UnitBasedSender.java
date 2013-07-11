@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers;
 import net.sourceforge.fenixedu.domain.accessControl.UnitMembersGroup;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class UnitBasedSender extends UnitBasedSender_Base {
 
@@ -49,7 +49,7 @@ public class UnitBasedSender extends UnitBasedSender_Base {
         return super.getReplyTos();
     }
 
-    @Service
+    @Atomic
     private void createCurrentUserReplyTo() {
         addReplyTos(new CurrentUserReplyTo());
     }
@@ -78,7 +78,7 @@ public class UnitBasedSender extends UnitBasedSender_Base {
         return false;
     }
 
-    @Service
+    @Atomic
     private void updateRecipients() {
         final Unit unit = getUnit();
         if (unit != null) {
@@ -136,19 +136,19 @@ public class UnitBasedSender extends UnitBasedSender_Base {
         return super.getRecipientsIterator();
     }
 
-    @Service
+    @Atomic
     @Override
     public void addRecipients(final Recipient recipients) {
         super.addRecipients(recipients);
     }
 
-    @Service
+    @Atomic
     @Override
     public void removeRecipients(final Recipient recipients) {
         super.removeRecipients(recipients);
     }
 
-    @Service
+    @Atomic
     protected void createRecipient(final PersistentGroupMembers persistentGroupMembers) {
         addRecipients(new Recipient(null, new PersistentGroup(persistentGroupMembers)));
     }
@@ -157,7 +157,7 @@ public class UnitBasedSender extends UnitBasedSender_Base {
         addRecipients(new Recipient(null, (Group) group));
     }
 
-    @Service
+    @Atomic
     public static UnitBasedSender newInstance(Unit unit) {
         return new UnitBasedSender(unit, Sender.getNoreplyMail(), new UnitMembersGroup(unit));
     }

@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -75,7 +75,7 @@ public class EditTeacherAdviseService {
 
     private static final EditTeacherAdviseService serviceInstance = new EditTeacherAdviseService();
 
-    @Service
+    @Atomic
     public static void runEditTeacherAdviseService(Teacher teacher, String executionPeriodID, Integer studentNumber,
             Double percentage, AdviseType adviseType, RoleType roleType) throws FenixServiceException, NotAuthorizedException {
         try {

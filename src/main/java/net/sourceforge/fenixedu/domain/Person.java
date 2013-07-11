@@ -164,7 +164,7 @@ import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.smtp.EmailSender;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
@@ -755,7 +755,7 @@ public class Person extends Person_Base {
         }
     }
 
-    @Service
+    @Atomic
     public void addPersonRoleByRoleTypeService(final RoleType roleType) {
         this.addPersonRoleByRoleType(roleType);
     }
@@ -907,7 +907,7 @@ public class Person extends Person_Base {
         return vigilancies;
     }
 
-    @Service
+    @Atomic
     public void addExamCoordinator(final ExecutionYear executionYear, final Unit unit) {
         this.addPersonRoleByRoleType(RoleType.EXAM_COORDINATOR);
         new ExamCoordinator(this, executionYear, unit);
@@ -1127,7 +1127,7 @@ public class Person extends Person_Base {
         return "/candidateDocuments/person/P" + getExternalId();
     }
 
-    @Service
+    @Atomic
     public void removeRoleByTypeService(final RoleType roleType) {
         removeRoleByType(roleType);
     }
@@ -1347,7 +1347,7 @@ public class Person extends Person_Base {
      * IMPORTANT: This method is evil and should NOT be used! You are NOT God!
      * 
      */
-    @Service
+    @Atomic
     public void mergeAndDelete(Person personToMergeLogs) {
         removeRelations();
         for (PersonInformationLog personInformationLog : getPersonInformationLogs()) {
@@ -3720,7 +3720,7 @@ public class Person extends Person_Base {
         return null;
     }
 
-    @Service
+    @Atomic
     public void transferEventsAndAccounts(final Person sourcePerson) {
         if (!AccessControl.getPerson().hasRole(RoleType.MANAGER)) {
             throw new DomainException("permission.denied");
@@ -4304,12 +4304,12 @@ public class Person extends Person_Base {
     }
 
     @Override
-    @Service
+    @Atomic
     public void setNumberOfValidationRequests(final Integer numberOfValidationRequests) {
         super.setNumberOfValidationRequests(numberOfValidationRequests);
     }
 
-    @Service
+    @Atomic
     public String generatePaymentTicket() {
         final InstitutionAffiliationEvent event = getOpenAffiliationEvent();
         return event == null ? StringUtils.EMPTY : event.generatePaymentTicket();
@@ -4328,7 +4328,7 @@ public class Person extends Person_Base {
         return getNumberOfValidationRequests() <= MAX_VALIDATION_REQUESTS;
     }
 
-    @Service
+    @Atomic
     public void incValidationRequest() {
         getCanValidateContacts();
         Integer numberOfValidationRequests = getNumberOfValidationRequests();

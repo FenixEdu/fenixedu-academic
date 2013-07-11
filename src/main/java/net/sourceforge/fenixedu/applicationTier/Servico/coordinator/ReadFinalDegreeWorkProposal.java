@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -27,7 +27,7 @@ public class ReadFinalDegreeWorkProposal {
 
     private static final ReadFinalDegreeWorkProposal serviceInstance = new ReadFinalDegreeWorkProposal();
 
-    @Service
+    @Atomic
     public static InfoProposal runReadFinalDegreeWorkProposal(String DegreeWorkProposalOID) throws FenixServiceException,
             NotAuthorizedException {
         try {

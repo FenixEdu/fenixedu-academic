@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateEnrolmentWithCurricularCourseAndMasterDegreeCandidateAndExecutionDegreeAndDegreeCurricularPlanAndDegree;
 import net.sourceforge.fenixedu.domain.CandidateEnrolment;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -52,7 +52,7 @@ public class ReadCandidateEnrolmentsByCandidateID {
 
     private static final ReadCandidateEnrolmentsByCandidateID serviceInstance = new ReadCandidateEnrolmentsByCandidateID();
 
-    @Service
+    @Atomic
     public static List runReadCandidateEnrolmentsByCandidateID(String candidateID) throws FenixServiceException,
             NotAuthorizedException {
         ReadCandidateEnrolmentsByCandidateIDAuthorizationFilter.instance.execute(candidateID);

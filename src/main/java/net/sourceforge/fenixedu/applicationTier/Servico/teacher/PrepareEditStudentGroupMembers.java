@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.StudentGroup;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -50,7 +50,7 @@ public class PrepareEditStudentGroupMembers {
 
     private static final PrepareEditStudentGroupMembers serviceInstance = new PrepareEditStudentGroupMembers();
 
-    @Service
+    @Atomic
     public static List runPrepareEditStudentGroupMembers(String executionCourseID, String studentGroupID)
             throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseID);

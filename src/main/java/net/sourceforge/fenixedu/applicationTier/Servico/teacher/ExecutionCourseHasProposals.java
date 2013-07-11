@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingT
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -31,7 +31,7 @@ public class ExecutionCourseHasProposals {
 
     private static final ExecutionCourseHasProposals serviceInstance = new ExecutionCourseHasProposals();
 
-    @Service
+    @Atomic
     public static Boolean runExecutionCourseHasProposals(String executionCourseCode) throws FenixServiceException,
             NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseCode);

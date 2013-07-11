@@ -34,7 +34,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -104,7 +104,7 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
         return mapping.findForward("viewBatch");
     }
 
-    @Service
+    @Atomic
     public ActionForward closeBatch(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         RectorateSubmissionBatch batch = getDomainObject(request, "batchOid");
@@ -112,7 +112,7 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
         return viewBatch(mapping, actionForm, request, response);
     }
 
-    @Service
+    @Atomic
     public ActionForward markAsSent(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         RectorateSubmissionBatch batch = getDomainObject(request, "batchOid");
@@ -120,7 +120,7 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
         return viewBatch(mapping, actionForm, request, response);
     }
 
-    @Service
+    @Atomic
     public ActionForward markAsReceived(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         RectorateSubmissionBatch batch = getDomainObject(request, "batchOid");
@@ -265,7 +265,7 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
         }
     }
 
-    @Service
+    @Atomic
     public ActionForward delayRequest(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         AcademicServiceRequest document = getDomainObject(request, "academicServiceRequestOid");

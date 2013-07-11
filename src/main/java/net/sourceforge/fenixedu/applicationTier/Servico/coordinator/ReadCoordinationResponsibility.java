@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -33,7 +33,7 @@ public class ReadCoordinationResponsibility {
 
     private static final ReadCoordinationResponsibility serviceInstance = new ReadCoordinationResponsibility();
 
-    @Service
+    @Atomic
     public static Boolean runReadCoordinationResponsibility(String executionDegreeId, IUserView userView)
             throws FenixServiceException, NotAuthorizedException {
         DegreeCoordinatorAuthorizationFilter.instance.execute(executionDegreeId);

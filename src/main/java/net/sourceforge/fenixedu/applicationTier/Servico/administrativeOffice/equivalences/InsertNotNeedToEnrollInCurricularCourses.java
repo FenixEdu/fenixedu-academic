@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -36,7 +36,7 @@ public class InsertNotNeedToEnrollInCurricularCourses {
     private static final InsertNotNeedToEnrollInCurricularCourses serviceInstance =
             new InsertNotNeedToEnrollInCurricularCourses();
 
-    @Service
+    @Atomic
     public static void runInsertNotNeedToEnrollInCurricularCourses(String studentCurricularPlanID, String[] curricularCoursesID)
             throws NotAuthorizedException {
         try {

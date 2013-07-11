@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class DocumentPrintRequest extends DocumentPrintRequest_Base {
 
@@ -37,7 +37,7 @@ public class DocumentPrintRequest extends DocumentPrintRequest_Base {
         super.setNewGraduatedTitleValue(graduatedTitleValue);
     }
 
-    @Service
+    @Atomic
     public static DocumentPrintRequest logRequest(String conclusionDateValue, String degreeDescriptionValue,
             String graduatedTitleValue, DocumentRequest request) {
         return new DocumentPrintRequest(conclusionDateValue, degreeDescriptionValue, graduatedTitleValue, request);

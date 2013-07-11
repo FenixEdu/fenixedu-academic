@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoInstitution;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * @author Ricardo Rodrigues
@@ -21,7 +21,7 @@ import pt.ist.fenixWebFramework.services.Service;
 public class ReadInstitutions {
 
     @Checked("RolePredicates.MANAGER_PREDICATE")
-    @Service
+    @Atomic
     public static List run() {
 
         List<Unit> institutions = UnitUtils.readAllExternalInstitutionUnits();

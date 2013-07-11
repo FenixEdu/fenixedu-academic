@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.ScientificCommission;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class AddScientificCommission {
@@ -20,7 +20,7 @@ public class AddScientificCommission {
 
     private static final AddScientificCommission serviceInstance = new AddScientificCommission();
 
-    @Service
+    @Atomic
     public static void runAddScientificCommission(String executionDegreeId, Person person) throws NotAuthorizedException {
         ResponsibleDegreeCoordinatorAuthorizationFilter.instance.execute();
         serviceInstance.run(executionDegreeId, person);

@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class MobilityApplicationPeriod extends MobilityApplicationPeriod_Base {
 
@@ -219,7 +219,7 @@ public class MobilityApplicationPeriod extends MobilityApplicationPeriod_Base {
         return programs;
     }
 
-    @Service
+    @Atomic
     public void editEmailTemplates(final MobilityEmailTemplateBean bean) {
         final MobilityEmailTemplateType type = bean.getType();
         final String subject = bean.getSubject();

@@ -4,11 +4,11 @@ package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class AttributeFinalDegreeWork {
 
-    @Service
+    @Atomic
     public static void run(GroupProposal groupProposal) {
         if (groupProposal != null) {
             Proposal proposal = groupProposal.getFinalDegreeWorkProposal();

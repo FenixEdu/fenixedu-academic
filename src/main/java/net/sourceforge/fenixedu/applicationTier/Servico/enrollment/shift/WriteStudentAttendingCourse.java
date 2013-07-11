@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class WriteStudentAttendingCourse {
@@ -33,7 +33,7 @@ public class WriteStudentAttendingCourse {
 
     private static final WriteStudentAttendingCourse serviceInstance = new WriteStudentAttendingCourse();
 
-    @Service
+    @Atomic
     public static void runWriteStudentAttendingCourse(Registration registration, String executionCourseId)
             throws FenixServiceException, NotAuthorizedException {
         ClassEnrollmentAuthorizationFilter.instance.execute(registration);

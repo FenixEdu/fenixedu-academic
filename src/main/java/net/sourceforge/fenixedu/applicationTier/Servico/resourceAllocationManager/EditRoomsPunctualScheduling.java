@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.space.GenericEventSpaceOccupation;
 import org.apache.struts.util.MessageResources;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class EditRoomsPunctualScheduling {
 
@@ -19,7 +19,7 @@ public class EditRoomsPunctualScheduling {
             .getMessageResources("resources/ResourceAllocationManagerResources");
 
     @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
-    @Service
+    @Atomic
     public static void run(RoomsPunctualSchedulingBean bean) {
 
         List<AllocatableSpace> roomsToInsert = bean.getRooms();

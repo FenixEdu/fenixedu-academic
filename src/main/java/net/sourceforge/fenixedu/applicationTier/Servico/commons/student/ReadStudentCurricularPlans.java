@@ -18,11 +18,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class ReadStudentCurricularPlans {
 
-    @Service
+    @Atomic
     public static List run(Integer studentNumber, DegreeType degreeType) throws ExcepcaoInexistente, FenixServiceException {
 
         Registration registration = Registration.readStudentByNumberAndDegreeType(studentNumber, degreeType);

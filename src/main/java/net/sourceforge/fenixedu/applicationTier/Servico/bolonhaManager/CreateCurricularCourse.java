@@ -10,12 +10,12 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class CreateCurricularCourse {
 
-    @Service
+    @Atomic
     public static void run(CreateCurricularCourseArgs curricularCourseArgs) throws FenixServiceException {
 
         DegreeCurricularPlan degreeCurricularPlan = readDegreeCurricularPlan(curricularCourseArgs);
@@ -48,7 +48,7 @@ public class CreateCurricularCourse {
      * @param createOptionalCurricularCourseArgs
      * @throws FenixServiceException
      */
-    @Service
+    @Atomic
     public static void run(CreateOptionalCurricularCourseArgs curricularCourseArgs) throws FenixServiceException {
 
         DegreeCurricularPlan degreeCurricularPlan = readDegreeCurricularPlan(curricularCourseArgs);

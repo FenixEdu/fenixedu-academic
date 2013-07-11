@@ -13,7 +13,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -50,7 +50,7 @@ public class DegreeJurisdictionManagementDispacthAction extends FenixDispatchAct
         return manageJurisdictions(mapping, actionForm, request, response);
     }
 
-    @Service
+    @Atomic
     private void changeDegreeJurisdiction(String programOid, String officeOid) {
         AcademicProgram program = FenixFramework.getDomainObject(programOid);
         AdministrativeOffice office = FenixFramework.getDomainObject(officeOid);

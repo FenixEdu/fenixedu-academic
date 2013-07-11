@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculumWithInfoCurricu
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Curriculum;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -20,7 +20,7 @@ import pt.ist.fenixframework.FenixFramework;
 public class ReadCurriculum {
 
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-    @Service
+    @Atomic
     public static InfoCurriculum run(String curricularCourseId) throws FenixServiceException {
 
         CurricularCourse curricularCourse;

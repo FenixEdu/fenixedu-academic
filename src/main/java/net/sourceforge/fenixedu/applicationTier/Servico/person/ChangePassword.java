@@ -6,12 +6,12 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidPasswo
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class ChangePassword {
 
     @Checked("RolePredicates.PERSON_PREDICATE")
-    @Service
+    @Atomic
     public static void run(IUserView userView, String oldPassword, String newPassword) throws Exception {
         Person person = Person.readPersonByUsername(userView.getUtilizador());
         try {

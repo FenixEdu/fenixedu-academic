@@ -20,7 +20,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -151,7 +151,7 @@ public class CareerWorkshopApplicationDA extends FenixDispatchAction {
         return getLoggedPerson(request).getStudent();
     }
 
-    @Service
+    @Atomic
     private CareerWorkshopApplication retrieveThisWorkshopApplication(Student student, CareerWorkshopApplicationEvent event) {
         for (CareerWorkshopApplication application : student.getCareerWorkshopApplications()) {
             if (application.getCareerWorkshopApplicationEvent() == event) {
@@ -161,7 +161,7 @@ public class CareerWorkshopApplicationDA extends FenixDispatchAction {
         return new CareerWorkshopApplication(student, event);
     }
 
-    @Service
+    @Atomic
     private CareerWorkshopConfirmation retrieveThisWorskhopApplicationConfirmation(Student student,
             CareerWorkshopConfirmationEvent confirmationEvent, CareerWorkshopApplication application) {
         for (CareerWorkshopConfirmation confirmation : student.getCareerWorkshopConfirmations()) {

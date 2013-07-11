@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.Document
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.RegistryDiplomaRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 final public class DocumentRequestCreator extends DocumentRequestCreateBean implements FactoryExecutor {
 
@@ -24,7 +24,7 @@ final public class DocumentRequestCreator extends DocumentRequestCreateBean impl
     }
 
     @Override
-    @Service
+    @Atomic
     public Object execute() {
 
         if (getChosenDocumentRequestType().isCertificate()) {

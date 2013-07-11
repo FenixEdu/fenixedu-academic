@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -16,7 +16,7 @@ import pt.ist.fenixframework.FenixFramework;
  */
 public class AlterStudentEnrolmentEvaluation {
 
-    @Service
+    @Atomic
     public static void run(Integer curricularCourseCode, String enrolmentEvaluationCode,
             InfoEnrolmentEvaluation infoEnrolmentEvaluation, String teacherId, IUserView userView) throws FenixServiceException {
 

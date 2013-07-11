@@ -12,7 +12,7 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class SibsPaymentFileProcessReport extends SibsPaymentFileProcessReport_Base {
 
@@ -131,7 +131,7 @@ public class SibsPaymentFileProcessReport extends SibsPaymentFileProcessReport_B
 
     }
 
-    @Service
+    @Atomic
     static public SibsPaymentFileProcessReport create(SibsPaymentFileProcessReportDTO reportDTO) {
         return new SibsPaymentFileProcessReport(reportDTO);
     }

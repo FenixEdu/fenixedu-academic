@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.util.BundleUtil;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class PhysicalAddress extends PhysicalAddress_Base {
 
@@ -140,7 +140,7 @@ public class PhysicalAddress extends PhysicalAddress_Base {
         return false;
     }
 
-    @Service
+    @Atomic
     @Override
     public void setValid() {
         if (!isValid()) {

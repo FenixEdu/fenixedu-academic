@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class TeacherCredits extends TeacherCredits_Base {
 
@@ -32,7 +32,7 @@ public class TeacherCredits extends TeacherCredits_Base {
         return null;
     }
 
-    @Service
+    @Atomic
     public static void closeAllTeacherCredits(ExecutionSemester executionSemester) throws ParseException {
         List<Teacher> teachers = RootDomainObject.getInstance().getTeachers();
         TeacherCreditsState teacherCreditsState = TeacherCreditsState.getTeacherCreditsState(executionSemester);
@@ -45,7 +45,7 @@ public class TeacherCredits extends TeacherCredits_Base {
         teacherCreditsState.setCloseState();
     }
 
-    @Service
+    @Atomic
     public static void closeTeacherCredits(Teacher teacher, TeacherCreditsState teacherCreditsState) throws ParseException {
         TeacherCredits teacherCredits = teacher.getTeacherCredits(teacherCreditsState.getExecutionSemester());
         if (teacherCredits == null) {
@@ -55,13 +55,13 @@ public class TeacherCredits extends TeacherCredits_Base {
         }
     }
 
-    @Service
+    @Atomic
     public static void openAllTeacherCredits(ExecutionSemester executionSemester) throws ParseException {
         TeacherCreditsState teacherCreditsState = TeacherCreditsState.getTeacherCreditsState(executionSemester);
         teacherCreditsState.setOpenState();
     }
 
-    @Service
+    @Atomic
     public void editTeacherCredits(ExecutionSemester executionSemester) throws ParseException {
         saveTeacherCredits();
     }

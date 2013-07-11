@@ -7,12 +7,12 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRulesManager;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class EditCurricularRule {
 
-    @Service
+    @Atomic
     public static void run(String curricularRuleID, String beginExecutionPeriodID, String endExecutionPeriodID)
             throws FenixServiceException {
 

@@ -1,9 +1,8 @@
 package net.sourceforge.fenixedu.domain.util;
 
-import jvstm.TransactionalCommand;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
-import pt.ist.fenixframework.pstm.Transaction;
 
 public class EmailTask extends EmailTask_Base {
 
@@ -14,19 +13,11 @@ public class EmailTask extends EmailTask_Base {
             this.oid = email.getExternalId();
         }
 
+        @Atomic
         @Override
         public void run() {
-            try {
-                Transaction.withTransaction(false, new TransactionalCommand() {
-                    @Override
-                    public void doIt() {
-                        final Email email = FenixFramework.getDomainObject(oid);
-                        email.deliver();
-                    }
-                });
-            } finally {
-                Transaction.forceFinish();
-            }
+            final Email email = FenixFramework.getDomainObject(oid);
+            email.deliver();
         }
     }
 

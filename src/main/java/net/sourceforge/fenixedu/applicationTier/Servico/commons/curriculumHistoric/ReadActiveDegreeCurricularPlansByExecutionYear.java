@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -61,7 +61,7 @@ public class ReadActiveDegreeCurricularPlansByExecutionYear {
     private static final ReadActiveDegreeCurricularPlansByExecutionYear serviceInstance =
             new ReadActiveDegreeCurricularPlansByExecutionYear();
 
-    @Service
+    @Atomic
     public static List runReadActiveDegreeCurricularPlansByExecutionYear(String executionYearID) throws FenixServiceException,
             NotAuthorizedException {
         try {

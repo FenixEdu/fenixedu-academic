@@ -8,7 +8,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -20,7 +20,7 @@ import pt.ist.fenixframework.FenixFramework;
  */
 public class ReadStudentById {
 
-    @Service
+    @Atomic
     public static Object run(String id) throws FenixServiceException {
         InfoStudent infoStudent = null;
 

@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class StudentInquiriesCourseResult extends StudentInquiriesCourseResult_Base {
@@ -735,7 +735,7 @@ public class StudentInquiriesCourseResult extends StudentInquiriesCourseResult_B
         return getValuesMap().containsKey("Repres_div_publica") ? fieldToBoolean(getValuesMap().get("Repres_div_publica")) : false;
     }
 
-    @Service
+    @Atomic
     public static void importResults(String headers, String values, UploadStudentInquiriesCourseResultsBean resultsBean) {
 
         String[] headersSplitted = headers.split("\t");
@@ -790,7 +790,7 @@ public class StudentInquiriesCourseResult extends StudentInquiriesCourseResult_B
 
     }
 
-    @Service
+    @Atomic
     public static Boolean resetCourseAndTeachingResults(UploadStudentInquiriesCourseResultsBean coursesBean) {
         boolean resetedItems = false;
         Set<Professorship> professorships = new HashSet<Professorship>();
@@ -826,7 +826,7 @@ public class StudentInquiriesCourseResult extends StudentInquiriesCourseResult_B
         return resetedItems;
     }
 
-    @Service
+    @Atomic
     public void delete() {
         if (hasCoordinatorComment()) {
             throw new DomainException("error.StudentInquiriesCourseResult.cannotDelete.hasCoordinatorComment");

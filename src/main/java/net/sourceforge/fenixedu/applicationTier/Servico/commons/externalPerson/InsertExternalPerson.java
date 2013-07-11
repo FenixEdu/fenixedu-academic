@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class InsertExternalPerson {
@@ -36,7 +36,7 @@ public class InsertExternalPerson {
 
     }
 
-    @Service
+    @Atomic
     public static ExternalContract run(String name, String sex, String address, String institutionID, String phone,
             String mobile, String homepage, String email) throws FenixServiceException {
 
@@ -54,7 +54,7 @@ public class InsertExternalPerson {
         return new ExternalContract(externalPerson, institutionLocation, new YearMonthDay(), null);
     }
 
-    @Service
+    @Atomic
     public static ExternalContract run(String personName, String organizationName) {
         final Unit organization = Unit.createNewNoOfficialExternalInstitution(organizationName);
         Person externalPerson =
@@ -64,7 +64,7 @@ public class InsertExternalPerson {
         return new ExternalContract(externalPerson, organization, new YearMonthDay(), null);
     }
 
-    @Service
+    @Atomic
     public static ExternalContract run(String personName, String organizationName, Country country) {
         final Unit organization = Unit.createNewNoOfficialExternalInstitution(organizationName, country);
         Person externalPerson =
@@ -74,7 +74,7 @@ public class InsertExternalPerson {
         return new ExternalContract(externalPerson, organization, new YearMonthDay(), null);
     }
 
-    @Service
+    @Atomic
     public static ExternalContract run(ServiceArguments arguments) throws FenixServiceException {
 
         ExternalContract storedExternalContract = null;
@@ -92,7 +92,7 @@ public class InsertExternalPerson {
         return new ExternalContract(externalPerson, organization, new YearMonthDay(), null);
     }
 
-    @Service
+    @Atomic
     public static ExternalContract runWithOrganizationName(String name, String organizationName, String phone, String mobile,
             String email) throws FenixServiceException {
 
@@ -104,7 +104,7 @@ public class InsertExternalPerson {
         return new ExternalContract(externalPerson, organization, new YearMonthDay(), null);
     }
 
-    @Service
+    @Atomic
     public static ExternalContract run(String name, Unit institutionLocation, String phone, String mobile, String email)
             throws FenixServiceException {
 

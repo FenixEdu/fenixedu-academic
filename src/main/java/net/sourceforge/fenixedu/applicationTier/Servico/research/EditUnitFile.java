@@ -7,11 +7,11 @@ import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class EditUnitFile {
 
-    @Service
+    @Atomic
     public static void run(UnitFile file, String name, String description, String tags, IGroup group) {
         file.setDisplayName(name);
         file.setDescription(description);

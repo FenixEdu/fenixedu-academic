@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import net.sourceforge.fenixedu.domain.support.FAQEntry;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -15,7 +15,7 @@ import pt.ist.fenixframework.FenixFramework;
 public class DeleteFAQEntry {
 
     @Checked("RolePredicates.MANAGER_PREDICATE")
-    @Service
+    @Atomic
     public static void run(String entryId) {
         FenixFramework.<FAQEntry> getDomainObject(entryId).delete();
     }

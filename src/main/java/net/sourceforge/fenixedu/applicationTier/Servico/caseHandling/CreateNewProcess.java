@@ -5,17 +5,17 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.caseHandling.Process;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.Pair;
 
 public class CreateNewProcess {
 
-    @Service
+    @Atomic
     public static Process run(String processName, Object object) {
         return Process.createNewProcess(AccessControl.getUserView(), processName, object);
     }
 
-    @Service
+    @Atomic
     public static Process run(Class<? extends Process> processClass, Object object) {
         return Process.createNewProcess(AccessControl.getUserView(), processClass, object);
     }
@@ -37,7 +37,7 @@ public class CreateNewProcess {
      * @param activities
      * @return
      */
-    @Service
+    @Atomic
     public static Process run(Class<? extends Process> processClass, Object object, final List<Pair<Class<?>, Object>> activities) {
         final IUserView userView = AccessControl.getUserView();
         final Process process = Process.createNewProcess(userView, processClass, object);

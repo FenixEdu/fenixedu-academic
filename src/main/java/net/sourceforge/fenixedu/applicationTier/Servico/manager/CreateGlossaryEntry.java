@@ -8,7 +8,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 import net.sourceforge.fenixedu.dataTransferObject.support.InfoGlossaryEntry;
 import net.sourceforge.fenixedu.domain.support.GlossaryEntry;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * @author Luis Cruz
@@ -16,7 +16,7 @@ import pt.ist.fenixWebFramework.services.Service;
 public class CreateGlossaryEntry {
 
     @Checked("RolePredicates.MANAGER_PREDICATE")
-    @Service
+    @Atomic
     public static void run(InfoGlossaryEntry infoGlossaryEntry) {
         GlossaryEntry glossaryEntry = new GlossaryEntry();
         glossaryEntry.setTerm(infoGlossaryEntry.getTerm());

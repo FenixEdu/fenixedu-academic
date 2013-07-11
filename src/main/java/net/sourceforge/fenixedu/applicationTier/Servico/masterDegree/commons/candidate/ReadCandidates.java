@@ -6,7 +6,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -14,7 +14,7 @@ import pt.ist.fenixframework.FenixFramework;
  */
 public class ReadCandidates {
 
-    @Service
+    @Atomic
     public static List run(String[] candidateList) throws FenixServiceException {
 
         List result = new ArrayList();

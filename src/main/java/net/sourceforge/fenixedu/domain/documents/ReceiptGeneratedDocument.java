@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.accounting.Receipt;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * @author Pedro Santos (pmrsa)
@@ -31,7 +31,7 @@ public class ReceiptGeneratedDocument extends ReceiptGeneratedDocument_Base {
         super.delete();
     }
 
-    @Service
+    @Atomic
     public static void store(Receipt source, String filename, byte[] content) {
         if (PropertiesManager.getBooleanProperty(CONFIG_DSPACE_DOCUMENT_STORE)) {
             new ReceiptGeneratedDocument(source, source.getPerson(), AccessControl.getPerson(), filename, content);

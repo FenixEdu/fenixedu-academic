@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.oldInquiries.OldInquiriesSummary;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -23,7 +23,7 @@ import pt.ist.fenixframework.FenixFramework;
  */
 public class ReadOldIquiriesSummaryByDegreeID {
 
-    @Service
+    @Atomic
     public static List run(String degreeID) throws FenixServiceException {
         Degree degree = FenixFramework.getDomainObject(degreeID);
 

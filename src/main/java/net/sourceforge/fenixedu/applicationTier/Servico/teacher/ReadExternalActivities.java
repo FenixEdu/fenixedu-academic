@@ -17,7 +17,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * @author Leonor Almeida
@@ -27,7 +27,7 @@ import pt.ist.fenixWebFramework.services.Service;
 public class ReadExternalActivities {
 
     @Checked("RolePredicates.TEACHER_PREDICATE")
-    @Service
+    @Atomic
     public static SiteView run(String user) {
         Teacher teacher = Teacher.readTeacherByUsername(user);
         InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(teacher);

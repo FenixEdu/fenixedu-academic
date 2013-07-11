@@ -38,13 +38,13 @@ import net.sourceforge.fenixedu.util.State;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class RegisterCandidate {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-    @Service
+    @Atomic
     public static InfoCandidateRegistration run(String candidateID, String branchID, Integer studentNumber, IUserView userView)
             throws FenixServiceException {
         MasterDegreeCandidate masterDegreeCandidate = FenixFramework.getDomainObject(candidateID);

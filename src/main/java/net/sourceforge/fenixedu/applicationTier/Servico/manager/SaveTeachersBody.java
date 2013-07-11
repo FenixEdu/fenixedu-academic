@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class SaveTeachersBody {
@@ -53,7 +53,7 @@ public class SaveTeachersBody {
 
     private static final SaveTeachersBody serviceInstance = new SaveTeachersBody();
 
-    @Service
+    @Atomic
     public static Boolean runSaveTeachersBody(List<String> responsibleTeachersIds, List<String> professorShipTeachersIds,
             String executionCourseId) throws FenixServiceException, NotAuthorizedException {
         try {

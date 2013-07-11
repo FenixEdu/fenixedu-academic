@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoCourseReport;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -40,7 +40,7 @@ public class EditCourseInformation {
 
     private static final EditCourseInformation serviceInstance = new EditCourseInformation();
 
-    @Service
+    @Atomic
     public static void runEditCourseInformation(String courseReportID, InfoCourseReport infoCourseReport, String newReport)
             throws FenixServiceException, NotAuthorizedException {
         EditCourseInformationAuthorizationFilter.instance.execute(courseReportID, infoCourseReport, newReport);

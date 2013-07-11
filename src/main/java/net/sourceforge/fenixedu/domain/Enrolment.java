@@ -55,7 +55,7 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
@@ -1738,7 +1738,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         }
     }
 
-    @Service
+    @Atomic
     public void markAsTemporaryEnrolled() {
         if (!getStudentCurricularPlan().getEvaluationForCurriculumValidationAllowed()) {
             throw new DomainException("error.curriculum.validation.enrolment.evaluatiom.removal.not.allowed");

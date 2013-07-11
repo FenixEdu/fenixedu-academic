@@ -12,14 +12,14 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * @author Luis Cruz
  */
 public class ReadFinalDegreeWorkProposalHeadersByTeacher {
 
-    @Service
+    @Atomic
     public static List run(final Person person) throws FenixServiceException {
         final List<FinalDegreeWorkProposalHeader> result = new ArrayList<FinalDegreeWorkProposalHeader>();
         for (final Proposal proposal : person.findFinalDegreeWorkProposals()) {

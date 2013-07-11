@@ -15,12 +15,12 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class CriarTurma {
 
-    @Service
+    @Atomic
     public static Object run(final String className, final Integer curricularYear, final InfoExecutionDegree infoExecutionDegree,
             final AcademicInterval academicInterval) throws ExistingServiceException {
 
@@ -30,7 +30,7 @@ public class CriarTurma {
         return InfoClass.newInfoFromDomain(schoolClass);
     }
 
-    @Service
+    @Atomic
     public static Object run(final String className, final Integer curricularYear, final InfoExecutionDegree infoExecutionDegree,
             final InfoExecutionPeriod infoExecutionPeriod) throws ExistingServiceException {
 

@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -86,7 +86,7 @@ public class ReadCurricularCourseListByExecutionCourseCode {
     private static final ReadCurricularCourseListByExecutionCourseCode serviceInstance =
             new ReadCurricularCourseListByExecutionCourseCode();
 
-    @Service
+    @Atomic
     public static TeacherAdministrationSiteView runReadCurricularCourseListByExecutionCourseCode(String executionCourseCode)
             throws ExcepcaoInexistente, FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseCode);

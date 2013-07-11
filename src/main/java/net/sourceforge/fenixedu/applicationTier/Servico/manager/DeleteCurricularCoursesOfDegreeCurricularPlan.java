@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import org.apache.commons.collections.Predicate;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -27,7 +27,7 @@ public class DeleteCurricularCoursesOfDegreeCurricularPlan {
 
     // delete a set of curricularCourses
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-    @Service
+    @Atomic
     public static List run(List<String> curricularCoursesIds) throws FenixServiceException {
 
         Iterator<String> iter = curricularCoursesIds.iterator();

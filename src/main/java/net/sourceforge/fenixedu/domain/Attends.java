@@ -32,7 +32,7 @@ import org.joda.time.Interval;
 import org.joda.time.PeriodType;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 import dml.runtime.RelationAdapter;
 
@@ -566,7 +566,7 @@ public class Attends extends Attends_Base {
         return !getExecutionPeriod().isBefore(to.getStartExecutionPeriod());
     }
 
-    @Service
+    @Atomic
     public void deleteShiftEnrolments() {
         final Registration registration = getRegistration();
         final ExecutionCourse executionCourse = getExecutionCourse();

@@ -4,7 +4,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingT
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class VerifyIfGroupPropertiesHasProjectProposal {
@@ -20,7 +20,7 @@ public class VerifyIfGroupPropertiesHasProjectProposal {
     private static final VerifyIfGroupPropertiesHasProjectProposal serviceInstance =
             new VerifyIfGroupPropertiesHasProjectProposal();
 
-    @Service
+    @Atomic
     public static Boolean runVerifyIfGroupPropertiesHasProjectProposal(String executionCourseId, String groupPropertiesId)
             throws NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);

@@ -52,7 +52,7 @@ import org.apache.struts.action.ActionMapping;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -835,7 +835,7 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
         return mapping.findForward("prepareAddFCTPostingRule");
     }
 
-    @Service
+    @Atomic
     public void createFCTScolarshipPostingRule(FctScolarshipPostingRuleBean bean) {
         ExternalScholarshipPhdGratuityContribuitionPR postingRule =
                 new ExternalScholarshipPhdGratuityContribuitionPR(bean.getStartDate(), bean.getEndDate(), AdministrativeOffice
@@ -863,7 +863,7 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
         return mapping.findForward("prepareEditFCTScolarshipPostingRule");
     }
 
-    @Service
+    @Atomic
     public ActionForward editFCTScolarshipPostingRule(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
         FctScolarshipPostingRuleBean bean = getRenderedObject("bean");
@@ -876,7 +876,7 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
         return showFCTScolarshipPostingRules(mapping, form, request, response);
     }
 
-    @Service
+    @Atomic
     public ActionForward deleteFCTScolarshipPostingRule(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
         ExternalScholarshipPhdGratuityContribuitionPR postingRule =

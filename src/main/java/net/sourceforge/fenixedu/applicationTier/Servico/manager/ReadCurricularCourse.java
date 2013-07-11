@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -39,7 +39,7 @@ public class ReadCurricularCourse {
 
     private static final ReadCurricularCourse serviceInstance = new ReadCurricularCourse();
 
-    @Service
+    @Atomic
     public static InfoCurricularCourse runReadCurricularCourse(String externalId) throws FenixServiceException,
             NotAuthorizedException {
         try {

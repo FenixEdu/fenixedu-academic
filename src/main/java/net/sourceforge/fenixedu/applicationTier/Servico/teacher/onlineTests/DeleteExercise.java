@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.beanutils.BeanComparator;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class DeleteExercise {
@@ -72,7 +72,7 @@ public class DeleteExercise {
 
     private static final DeleteExercise serviceInstance = new DeleteExercise();
 
-    @Service
+    @Atomic
     public static void runDeleteExercise(String executionCourseId, String metadataId) throws InvalidArgumentsServiceException,
             ExcepcaoPersistencia, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);

@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.domain.CandidateSituation;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.util.State;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -26,7 +26,7 @@ import pt.ist.fenixframework.FenixFramework;
  */
 public class GetCandidatesByID {
 
-    @Service
+    @Atomic
     public static InfoMasterDegreeCandidate run(String candidateID) throws FenixServiceException {
         MasterDegreeCandidate masterDegreeCandidate = null;
 

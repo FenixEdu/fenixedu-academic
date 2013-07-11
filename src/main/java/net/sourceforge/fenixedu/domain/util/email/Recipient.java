@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class Recipient extends Recipient_Base {
 
@@ -46,7 +46,7 @@ public class Recipient extends Recipient_Base {
         setMembers(members);
     }
 
-    @Service
+    @Atomic
     public void delete() {
         for (final Sender sender : getSendersSet()) {
             removeSenders(sender);
@@ -75,7 +75,7 @@ public class Recipient extends Recipient_Base {
         return super.getToName();
     }
 
-    @Service
+    @Atomic
     private void initToName() {
         setToName(getMembers().getName());
     }
@@ -85,17 +85,17 @@ public class Recipient extends Recipient_Base {
         super.setToName(toName);
     }
 
-    @Service
+    @Atomic
     public static Recipient newInstance(final String toName, final Group members) {
         return new Recipient(toName, members);
     }
 
-    @Service
+    @Atomic
     public static Recipient newInstance(Group group) {
         return new Recipient(group);
     }
 
-    @Service
+    @Atomic
     public static List<Recipient> newInstance(final List<? extends Group> groups) {
         List<Recipient> recipients = new ArrayList<Recipient>();
         for (Group group : groups) {

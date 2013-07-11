@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class CoordinatorLog extends CoordinatorLog_Base {
 
@@ -21,7 +21,7 @@ public class CoordinatorLog extends CoordinatorLog_Base {
         super.setExecutionDegree(executionDegree);
     }
 
-    @Service
+    @Atomic
     public static CoordinatorLog createCoordinatorLog(DateTime time, OperationType operation, Person personActing,
             Coordinator coordinator) {
 

@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class InternshipCandidacy extends InternshipCandidacy_Base {
     private static final int MAX_CODE = 999999;
@@ -26,7 +26,7 @@ public class InternshipCandidacy extends InternshipCandidacy_Base {
         setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    @Service
+    @Atomic
     public static Integer create(InternshipCandidacyBean bean) throws DuplicateInternshipCandidacy {
         Integer code = new Random(System.currentTimeMillis()).nextInt(MAX_CODE - MIN_CODE) + MIN_CODE;
         for (InternshipCandidacy other : bean.getSession().getInternshipCandidacySet()) {
@@ -49,7 +49,7 @@ public class InternshipCandidacy extends InternshipCandidacy_Base {
         return candidacy.getCandidacyCode();
     }
 
-    @Service
+    @Atomic
     public void edit(InternshipCandidacyBean bean) throws DuplicateInternshipCandidacy {
         beanToModel(bean, this);
     }
@@ -96,7 +96,7 @@ public class InternshipCandidacy extends InternshipCandidacy_Base {
         candidacy.setPreviousCandidacy(bean.getPreviousCandidacy());
     }
 
-    @Service
+    @Atomic
     public void delete() {
         setInternshipCandidacySession(null);
         setCountryOfBirth(null);

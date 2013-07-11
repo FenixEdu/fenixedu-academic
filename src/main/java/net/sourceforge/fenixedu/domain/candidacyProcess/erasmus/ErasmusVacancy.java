@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityStudent
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.period.MobilityApplicationPeriod;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class ErasmusVacancy extends ErasmusVacancy_Base {
 
@@ -49,7 +49,7 @@ public class ErasmusVacancy extends ErasmusVacancy_Base {
         }
     }
 
-    @Service
+    @Atomic
     public static ErasmusVacancy createVacancy(final MobilityApplicationPeriod period, Degree degree, UniversityUnit unit,
             Integer numberOfVacancies) {
         return new ErasmusVacancy(period, degree, unit, numberOfVacancies);

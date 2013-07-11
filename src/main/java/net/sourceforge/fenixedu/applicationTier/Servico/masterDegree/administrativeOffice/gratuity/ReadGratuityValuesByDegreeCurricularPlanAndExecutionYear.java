@@ -21,7 +21,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -31,7 +31,7 @@ import pt.ist.fenixframework.FenixFramework;
 public class ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-    @Service
+    @Atomic
     public static Object run(String degreeCurricularPlanID, String executionYearName) throws FenixServiceException {
         if (degreeCurricularPlanID == null || executionYearName == null) {
             throw new FenixServiceException("error.impossible.noGratuityValues");

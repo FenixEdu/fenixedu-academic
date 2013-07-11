@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.credits.util.ProjectTutorialServiceBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.BundleUtil;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class DegreeProjectTutorialService extends DegreeProjectTutorialService_Base {
 
@@ -50,7 +50,7 @@ public class DegreeProjectTutorialService extends DegreeProjectTutorialService_B
         }
     }
 
-    @Service
+    @Atomic
     public static void updateProjectTutorialService(List<ProjectTutorialServiceBean> projectTutorialServicesBean) {
         for (ProjectTutorialServiceBean projectTutorialServiceBean : projectTutorialServicesBean) {
             if (!projectTutorialServiceBean.getProfessorship().getExecutionCourse().getProjectTutorialCourse()) {

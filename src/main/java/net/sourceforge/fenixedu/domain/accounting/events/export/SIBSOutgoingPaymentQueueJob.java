@@ -11,7 +11,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class SIBSOutgoingPaymentQueueJob extends SIBSOutgoingPaymentQueueJob_Base {
 
@@ -28,7 +28,7 @@ public class SIBSOutgoingPaymentQueueJob extends SIBSOutgoingPaymentQueueJob_Bas
         return queueJobResult;
     }
 
-    @Service
+    @Atomic
     public static SIBSOutgoingPaymentQueueJob launchJob(DateTime lastSuccessfulSentPaymentFileDate) {
         return new SIBSOutgoingPaymentQueueJob(lastSuccessfulSentPaymentFileDate);
     }

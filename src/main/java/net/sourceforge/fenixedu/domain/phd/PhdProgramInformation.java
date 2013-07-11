@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain.phd;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.exceptions.PhdDomainOperationException;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class PhdProgramInformation extends PhdProgramInformation_Base {
 
@@ -76,7 +76,7 @@ public class PhdProgramInformation extends PhdProgramInformation_Base {
         return false;
     }
 
-    @Service
+    @Atomic
     public void edit(final PhdProgramInformationBean bean) {
         checkParameters(bean);
 
@@ -89,7 +89,7 @@ public class PhdProgramInformation extends PhdProgramInformation_Base {
         setNumberOfSemesters(bean.getNumberOfSemesters());
     }
 
-    @Service
+    @Atomic
     public static PhdProgramInformation createInformation(final PhdProgramInformationBean bean) {
         return new PhdProgramInformation(bean);
     }

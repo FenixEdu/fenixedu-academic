@@ -49,7 +49,7 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class ReadTeacherInformation {
 
@@ -321,7 +321,7 @@ public class ReadTeacherInformation {
 
     private static final ReadTeacherInformation serviceInstance = new ReadTeacherInformation();
 
-    @Service
+    @Atomic
     public static SiteView runReadTeacherInformation(String user, String argExecutionYear) throws NotAuthorizedException {
         try {
             TeacherAuthorizationFilter.instance.execute();

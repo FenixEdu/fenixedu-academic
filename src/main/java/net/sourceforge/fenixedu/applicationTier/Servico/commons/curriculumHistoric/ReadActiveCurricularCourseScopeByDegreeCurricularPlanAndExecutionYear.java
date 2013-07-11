@@ -24,7 +24,7 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -81,7 +81,7 @@ public class ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYe
     private static final ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear serviceInstance =
             new ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear();
 
-    @Service
+    @Atomic
     public static SortedSet<DegreeModuleScope> runReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear(
             String degreeCurricularPlanID, AcademicInterval academicInterval) throws FenixServiceException,
             NotAuthorizedException {
@@ -124,7 +124,7 @@ public class ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYe
         }
     }
 
-    @Service
+    @Atomic
     public static SortedSet<DegreeModuleScope> runReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear(
             String degreeCurricularPlanID, String executioYearID) throws FenixServiceException, NotAuthorizedException {
         try {

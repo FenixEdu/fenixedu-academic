@@ -26,7 +26,7 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class TeacherInquiryBean implements Serializable {
 
@@ -138,7 +138,7 @@ public class TeacherInquiryBean implements Serializable {
         return Boolean.toString(true);
     }
 
-    @Service
+    @Atomic
     public void saveChanges(Person person, ResultPersonCategory teacher) {
         for (TeacherShiftTypeResultsBean teacherShiftTypeResultsBean : getTeachersResults()) {
             saveComments(person, teacher, teacherShiftTypeResultsBean.getBlockResults());

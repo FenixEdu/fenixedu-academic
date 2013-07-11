@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class StudentInquiriesTeachingResult extends StudentInquiriesTeachingResult_Base {
@@ -590,7 +590,7 @@ public class StudentInquiriesTeachingResult extends StudentInquiriesTeachingResu
                 "Repres_doc_curso_UC_publica")) : false;
     }
 
-    @Service
+    @Atomic
     public static void importResults(String headers, String values, UploadStudentInquiriesTeachingResultsBean resultsBean) {
 
         String[] headersSplitted = headers.split("\t");
@@ -667,7 +667,7 @@ public class StudentInquiriesTeachingResult extends StudentInquiriesTeachingResu
         }
     }
 
-    @Service
+    @Atomic
     public void delete() {
         setExecutionDegree(null);
         setProfessorship(null);
@@ -675,7 +675,7 @@ public class StudentInquiriesTeachingResult extends StudentInquiriesTeachingResu
         super.deleteDomainObject();
     }
 
-    @Service
+    @Atomic
     public static Boolean deleteTeachingResults(UploadStudentInquiriesTeachingResultsBean teachingBean) {
         boolean deletedItems = false;
         List<StudentInquiriesTeachingResult> toDelete = new ArrayList<StudentInquiriesTeachingResult>();

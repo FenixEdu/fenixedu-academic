@@ -9,11 +9,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class ReadNonMasterExecutionDegreesByExecutionYear {
 
-    @Service
+    @Atomic
     public static List run(InfoExecutionYear infoExecutionYear) throws FenixServiceException {
 
         final String yearToSearch;

@@ -4,7 +4,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.exceptions.PhdDomainOperationException;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -58,7 +58,7 @@ public class ThesisSubject extends ThesisSubject_Base {
         }
     }
 
-    @Service
+    @Atomic
     public void edit(MultiLanguageString name, MultiLanguageString description, Teacher teacher, String externalAdvisor) {
         checkParameters(getPhdProgramFocusArea(), name, description, teacher);
 
@@ -68,7 +68,7 @@ public class ThesisSubject extends ThesisSubject_Base {
         setExternalAdvisorName(externalAdvisor);
     }
 
-    @Service
+    @Atomic
     public void delete() {
         for (ThesisSubjectOrder order : getThesisSubjectOrders()) {
             if (isCandidacyPeriodOpen(order.getPhdIndividualProgramProcess())) {
@@ -85,7 +85,7 @@ public class ThesisSubject extends ThesisSubject_Base {
         }
     }
 
-    @Service
+    @Atomic
     public static ThesisSubject createThesisSubject(PhdProgramFocusArea focusArea, MultiLanguageString name,
             MultiLanguageString description, Teacher teacher, String externalAdvisor) {
         return new ThesisSubject(focusArea, name, description, teacher, externalAdvisor);

@@ -34,7 +34,7 @@ import net.sourceforge.fenixedu.util.ContentType;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class Photograph extends Photograph_Base implements Comparable<Photograph> {
@@ -175,7 +175,7 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
         throw new DomainException("error.photograph.has.no.content.of.requested.size");
     }
 
-    @Service
+    @Atomic
     public void cancelSubmission() {
         if (getState() == PhotoState.PENDING) {
             setState(PhotoState.USER_REJECTED);

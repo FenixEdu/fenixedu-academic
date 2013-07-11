@@ -1,20 +1,20 @@
 package net.sourceforge.fenixedu.domain.teacher.evaluation;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class FacultyEvaluationProcessServices {
 
-    @Service
+    @Atomic
     public void delete(final FacultyEvaluationProcess facultyEvaluationProcess) {
         facultyEvaluationProcess.delete();
     }
 
-    @Service
+    @Atomic
     public static void publish(final FacultyEvaluationProcess facultyEvaluationProcess) {
         facultyEvaluationProcess.setAreApprovedMarksPublished(true);
     }
 
-    @Service
+    @Atomic
     public static void unPublish(final FacultyEvaluationProcess facultyEvaluationProcess) {
         facultyEvaluationProcess.setAreApprovedMarksPublished(false);
     }

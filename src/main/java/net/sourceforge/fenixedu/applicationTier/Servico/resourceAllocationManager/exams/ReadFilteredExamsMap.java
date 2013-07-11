@@ -24,7 +24,7 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class ReadFilteredExamsMap {
@@ -148,7 +148,7 @@ public class ReadFilteredExamsMap {
 
     private static final ReadFilteredExamsMap serviceInstance = new ReadFilteredExamsMap();
 
-    @Service
+    @Atomic
     public static InfoExamsMap runReadFilteredExamsMap(InfoExecutionDegree infoExecutionDegree, List<Integer> curricularYears,
             InfoExecutionPeriod infoExecutionPeriod) throws FenixServiceException {
         return serviceInstance.run(infoExecutionDegree, curricularYears, infoExecutionPeriod);

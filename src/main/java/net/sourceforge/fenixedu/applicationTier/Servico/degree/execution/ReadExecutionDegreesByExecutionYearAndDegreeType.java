@@ -10,14 +10,14 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * @author jpvl
  */
 public class ReadExecutionDegreesByExecutionYearAndDegreeType {
 
-    @Service
+    @Atomic
     public static List run(String executionYear, DegreeType... degreeType) {
 
         final List<ExecutionDegree> executionDegrees =

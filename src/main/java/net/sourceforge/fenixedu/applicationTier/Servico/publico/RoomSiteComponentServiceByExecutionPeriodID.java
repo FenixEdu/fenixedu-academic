@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -28,7 +28,7 @@ import pt.ist.fenixframework.FenixFramework;
  */
 public class RoomSiteComponentServiceByExecutionPeriodID {
 
-    @Service
+    @Atomic
     public static Object run(ISiteComponent bodyComponent, RoomKey roomKey, Calendar someDay, String executionPeriodID)
             throws Exception {
         final Calendar day = findMonday(someDay);

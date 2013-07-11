@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.messaging.ExpandExecutionCourseMailAlias.ForwardMailsReport.AliasExpandingStatus;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -40,7 +40,7 @@ public class ExpandExecutionCourseMailAlias {
         }
     }
 
-    @Service
+    @Atomic
     public static ForwardMailsReport run(String address, String prefix, String host) throws FenixServiceException {
         ForwardMailsReport report = new ForwardMailsReport();
 

@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.AdHocEvaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.GradeScale;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class CreateAdHocEvaluation {
@@ -28,7 +28,7 @@ public class CreateAdHocEvaluation {
 
     private static final CreateAdHocEvaluation serviceInstance = new CreateAdHocEvaluation();
 
-    @Service
+    @Atomic
     public static void runCreateAdHocEvaluation(String executionCourseID, String name, String description, GradeScale gradeScale)
             throws FenixServiceException, NotAuthorizedException {
         try {

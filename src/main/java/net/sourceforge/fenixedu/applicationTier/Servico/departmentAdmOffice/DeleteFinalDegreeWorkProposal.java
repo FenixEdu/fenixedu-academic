@@ -2,11 +2,11 @@ package net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice;
 
 
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class DeleteFinalDegreeWorkProposal {
 
-    @Service
+    @Atomic
     public static void run(final Proposal proposal) {
         if (proposal != null) {
             proposal.delete();

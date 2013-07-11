@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public abstract class GlobalCommentsResultsBean implements Serializable {
 
@@ -109,7 +109,7 @@ public abstract class GlobalCommentsResultsBean implements Serializable {
 
     public abstract InquiryGlobalComment getInquiryGlobalComment();
 
-    @Service
+    @Atomic
     public void saveComment() {
         if (!StringUtils.isEmpty(getComment())) {
             if (getInquiryGlobalComment() != null) {

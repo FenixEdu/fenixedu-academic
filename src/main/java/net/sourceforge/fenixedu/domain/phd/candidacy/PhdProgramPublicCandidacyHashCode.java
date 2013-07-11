@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
 import net.sourceforge.fenixedu.util.StringUtils;
 import net.sourceforge.fenixedu.util.phd.PhdProperties;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class PhdProgramPublicCandidacyHashCode extends PhdProgramPublicCandidacyHashCode_Base {
 
@@ -35,7 +35,7 @@ public class PhdProgramPublicCandidacyHashCode extends PhdProgramPublicCandidacy
         return create(email);
     }
 
-    @Service
+    @Atomic
     static private PhdProgramPublicCandidacyHashCode create(final String email) {
         final PhdProgramPublicCandidacyHashCode hash = new PhdProgramPublicCandidacyHashCode();
         hash.setEmail(email);

@@ -30,7 +30,7 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -117,7 +117,7 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
         return listProcessAllowedActivities(mapping, actionForm, request, response);
     }
 
-    @Service
+    @Atomic
     private void preLoadLastProcessConfigurations(MobilityApplicationProcess process) {
         process.resetConfigurations();
         process.preLoadLastConfigurations();

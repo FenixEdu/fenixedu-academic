@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class OutboundMobilityCandidacyContest extends OutboundMobilityCandidacyContest_Base implements
         Comparable<OutboundMobilityCandidacyContest> {
@@ -147,7 +147,7 @@ public class OutboundMobilityCandidacyContest extends OutboundMobilityCandidacyC
         getExecutionDegreeCount();
     }
 
-    @Service
+    @Atomic
     public void delete() {
         final OutboundMobilityCandidacyContestGroup mobilityGroup = getOutboundMobilityCandidacyContestGroup();
         for (final OutboundMobilityCandidacy candidacy : getOutboundMobilityCandidacySet()) {
@@ -179,7 +179,7 @@ public class OutboundMobilityCandidacyContest extends OutboundMobilityCandidacyC
         return vacancies == null || vacancies.intValue() > countSelectedCandidates();
     }
 
-    @Service
+    @Atomic
     public void editVacancies(final Integer vacancies) {
         setVacancies(vacancies);
     }

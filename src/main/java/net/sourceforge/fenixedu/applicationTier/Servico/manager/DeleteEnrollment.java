@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * @author Luis Cruz
@@ -20,7 +20,7 @@ import pt.ist.fenixWebFramework.services.Service;
 public class DeleteEnrollment {
 
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-    @Service
+    @Atomic
     public static void run(final Integer studentNumber, final DegreeType degreeType, final String enrollmentId) {
         for (Registration registration : Registration.readByNumberAndDegreeType(studentNumber, degreeType)) {
             final Enrolment enrollment = registration.findEnrolmentByEnrolmentID(enrollmentId);

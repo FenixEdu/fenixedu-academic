@@ -15,12 +15,12 @@ import net.sourceforge.fenixedu.domain.Curriculum;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.util.PeriodState;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class ReadCurriculumByCurricularCourseCode {
 
-    @Service
+    @Atomic
     public static InfoCurriculum run(final String curricularCourseCode) throws FenixServiceException {
 
         if (curricularCourseCode == null) {

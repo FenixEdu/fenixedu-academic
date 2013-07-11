@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingT
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Evaluation;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class DeleteEvaluation {
@@ -31,7 +31,7 @@ public class DeleteEvaluation {
 
     private static final DeleteEvaluation serviceInstance = new DeleteEvaluation();
 
-    @Service
+    @Atomic
     public static void runDeleteEvaluation(String executionCourseID, String evaluationID) throws FenixServiceException,
             NotAuthorizedException {
         try {

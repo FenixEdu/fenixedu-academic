@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDRealTeacher;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -31,7 +31,7 @@ public class AddTeacherToTeacherServiceDistribution {
 
     private static final AddTeacherToTeacherServiceDistribution serviceInstance = new AddTeacherToTeacherServiceDistribution();
 
-    @Service
+    @Atomic
     public static void runAddTeacherToTeacherServiceDistribution(String tsdId, String teacherId) throws FenixServiceException,
             NotAuthorizedException {
         try {

@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoEquivalency;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoEquivalencyWithCurricularCourse;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class GetAllEquivalencies {
 
@@ -28,7 +28,7 @@ public class GetAllEquivalencies {
 
     private static final GetAllEquivalencies serviceInstance = new GetAllEquivalencies();
 
-    @Service
+    @Atomic
     public static List<InfoEquivalency> runGetAllEquivalencies() throws NotAuthorizedException {
         SeminaryCoordinatorOrStudentFilter.instance.execute();
         return serviceInstance.run();

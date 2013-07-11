@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Tutorship;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class InsertTutorship extends TutorshipManagement {
@@ -87,7 +87,7 @@ public class InsertTutorship extends TutorshipManagement {
 
     private static final InsertTutorship serviceInstance = new InsertTutorship();
 
-    @Service
+    @Atomic
     public static void runInsertTutorship(String executionDegreeID, TutorshipManagementBean bean) throws FenixServiceException,
             NotAuthorizedException {
         try {
@@ -100,7 +100,7 @@ public class InsertTutorship extends TutorshipManagement {
         }
     }
 
-    @Service
+    @Atomic
     public static List<TutorshipErrorBean> runInsertTutorship(String executionDegreeID, StudentsByEntryYearBean bean)
             throws FenixServiceException, NotAuthorizedException {
         try {

@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.SituationName;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -24,7 +24,7 @@ public class ReadAdmitedCandidates {
      * @throws FenixServiceException
      * @throws ExcepcaoPersistencia
      */
-    @Service
+    @Atomic
     public static List run(String[] candidateList, String[] ids) throws FenixServiceException {
         List<String> result = new ArrayList<String>();
 

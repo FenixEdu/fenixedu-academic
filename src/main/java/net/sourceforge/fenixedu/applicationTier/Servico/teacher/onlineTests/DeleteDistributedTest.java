@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class DeleteDistributedTest {
@@ -27,7 +27,7 @@ public class DeleteDistributedTest {
 
     private static final DeleteDistributedTest serviceInstance = new DeleteDistributedTest();
 
-    @Service
+    @Atomic
     public static void runDeleteDistributedTest(String executionCourseId, String distributedTestId) throws NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
         serviceInstance.run(executionCourseId, distributedTestId);

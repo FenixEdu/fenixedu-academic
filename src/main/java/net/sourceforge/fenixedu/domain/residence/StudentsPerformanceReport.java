@@ -27,7 +27,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
@@ -146,7 +146,7 @@ public class StudentsPerformanceReport extends StudentsPerformanceReport_Base {
         return readPendingReport(executionSemester) != null;
     }
 
-    @Service
+    @Atomic
     public static StudentsPerformanceReport launchJob(final ExecutionSemester executionSemester, List<Student> students) {
         return new StudentsPerformanceReport(executionSemester, students);
     }

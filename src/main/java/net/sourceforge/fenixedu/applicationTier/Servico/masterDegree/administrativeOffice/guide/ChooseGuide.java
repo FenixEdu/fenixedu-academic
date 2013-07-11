@@ -26,7 +26,7 @@ import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -183,7 +183,7 @@ public class ChooseGuide {
 
     private static final ChooseGuide serviceInstance = new ChooseGuide();
 
-    @Service
+    @Atomic
     public static List runChooseGuide(Integer guideNumber, Integer guideYear) throws FenixServiceException,
             NotAuthorizedException {
         try {
@@ -199,7 +199,7 @@ public class ChooseGuide {
         }
     }
 
-    @Service
+    @Atomic
     public static List runChooseGuide(String identificationDocumentNumber, IDDocumentType identificationDocumentType)
             throws FenixServiceException, NotAuthorizedException {
         try {
@@ -215,7 +215,7 @@ public class ChooseGuide {
         }
     }
 
-    @Service
+    @Atomic
     public static List runChooseGuide(Integer guideYear) throws FenixServiceException, NotAuthorizedException {
         try {
             ManagerAuthorizationFilter.instance.execute();
@@ -230,7 +230,7 @@ public class ChooseGuide {
         }
     }
 
-    @Service
+    @Atomic
     public static InfoGuide runChooseGuide(Integer guideNumber, Integer guideYear, Integer guideVersion)
             throws FenixServiceException, NotAuthorizedException {
         try {

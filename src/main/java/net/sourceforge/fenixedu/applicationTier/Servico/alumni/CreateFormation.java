@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import net.sourceforge.fenixedu.dataTransferObject.alumni.formation.AlumniFormation;
 import net.sourceforge.fenixedu.domain.Alumni;
 import net.sourceforge.fenixedu.domain.Formation;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class CreateFormation extends FormationManagement {
 
@@ -31,7 +31,7 @@ public class CreateFormation extends FormationManagement {
 
     private static final CreateFormation serviceInstance = new CreateFormation();
 
-    @Service
+    @Atomic
     public static void runCreateFormation(Alumni alumni, AlumniFormation formation) {
         serviceInstance.run(alumni, formation);
     }

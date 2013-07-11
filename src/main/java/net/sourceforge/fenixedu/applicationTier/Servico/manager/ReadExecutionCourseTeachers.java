@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -56,7 +56,7 @@ public class ReadExecutionCourseTeachers {
 
     private static final ReadExecutionCourseTeachers serviceInstance = new ReadExecutionCourseTeachers();
 
-    @Service
+    @Atomic
     public static List<InfoTeacher> runReadExecutionCourseTeachers(String executionCourseId) throws FenixServiceException,
             NotAuthorizedException {
         try {

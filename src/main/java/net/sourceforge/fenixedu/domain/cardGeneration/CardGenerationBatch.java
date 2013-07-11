@@ -31,7 +31,7 @@ import org.apache.commons.collections.Predicate;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class CardGenerationBatch extends CardGenerationBatch_Base {
@@ -106,7 +106,7 @@ public class CardGenerationBatch extends CardGenerationBatch_Base {
     }
 
     @Override
-    @Service
+    @Atomic
     public void setSent(DateTime dateTime) {
         super.setSent(dateTime);
     }
@@ -320,7 +320,7 @@ public class CardGenerationBatch extends CardGenerationBatch_Base {
         return cardGenerationBatchs;
     }
 
-    @Service
+    @Atomic
     public void createCardGenerationEntry(final Student student) {
         final ExecutionYear executionYear = getExecutionYear();
         final DateTime begin = executionYear.getBeginDateYearMonthDay().toDateTimeAtMidnight();
@@ -371,7 +371,7 @@ public class CardGenerationBatch extends CardGenerationBatch_Base {
         }
     }
 
-    @Service
+    @Atomic
     public static CardGenerationBatch findOrCreate(ExecutionYear executionYear, String description) {
         for (final CardGenerationBatch cardGenerationBatch : executionYear.getCardGenerationBatchesSet()) {
             if (description.equals(cardGenerationBatch.getDescription())) {
@@ -381,7 +381,7 @@ public class CardGenerationBatch extends CardGenerationBatch_Base {
         return new CardGenerationBatch(description, executionYear, true);
     }
 
-    @Service
+    @Atomic
     public ImportationReport importCardIdentificationsFromFile(String contents) {
         ImportationReport report = new ImportationReport();
         CardGenerationBatch cardGenerationBatchWithProblems = this.getCardGenerationBatchProblems();

@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -16,7 +16,7 @@ import pt.ist.fenixframework.FenixFramework;
  */
 public class TeacherAttributeFinalDegreeWork {
 
-    @Service
+    @Atomic
     public static Boolean run(String selectedGroupProposalOID) throws FenixServiceException {
         final GroupProposal groupProposal = FenixFramework.getDomainObject(selectedGroupProposalOID);
 

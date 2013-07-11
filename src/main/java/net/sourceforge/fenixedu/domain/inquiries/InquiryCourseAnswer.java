@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class InquiryCourseAnswer extends InquiryCourseAnswer_Base {
 
@@ -29,7 +29,7 @@ public class InquiryCourseAnswer extends InquiryCourseAnswer_Base {
     }
 
     @Checked("RolePredicates.STUDENT_PREDICATE")
-    @Service
+    @Atomic
     public static InquiryCourseAnswer createNotAnsweredInquiryCourse(final StudentInquiryRegistry inquiryRegistry,
             final InquiryNotAnsweredJustification justification, final String otherJustification) {
         final InquiryCourseAnswer courseAnswer = new InquiryCourseAnswer(inquiryRegistry);

@@ -4,7 +4,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.DegreeAdministrativeOffic
 import net.sourceforge.fenixedu.applicationTier.Filtro.ManagerAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.CurricularCourseEquivalence;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class DeleteCurricularCourseEquivalency {
@@ -15,7 +15,7 @@ public class DeleteCurricularCourseEquivalency {
      * This method should check if the admin office should create the
      * equivalence or not
      */
-    @Service
+    @Atomic
     public static void run(final String curricularCourseEquivalencyID) {
         final CurricularCourseEquivalence curricularCourseEquivalence =
                 FenixFramework.getDomainObject(curricularCourseEquivalencyID);
@@ -24,7 +24,7 @@ public class DeleteCurricularCourseEquivalency {
 
     // Service Invokers migrated from Berserk
 
-    @Service
+    @Atomic
     public static void runDeleteCurricularCourseEquivalency(String curricularCourseEquivalencyID) throws NotAuthorizedException {
         try {
             DegreeAdministrativeOfficeAuthorizationFilter.instance.execute();

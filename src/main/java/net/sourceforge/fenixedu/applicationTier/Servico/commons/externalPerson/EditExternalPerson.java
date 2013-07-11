@@ -5,12 +5,12 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class EditExternalPerson {
 
-    @Service
+    @Atomic
     public static void run(String externalPersonID, String name, String address, String institutionID, String phone,
             String mobile, String homepage, String email) throws FenixServiceException, DomainException {
 

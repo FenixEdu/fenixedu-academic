@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.spreadsheet.SheetData;
 import pt.utl.ist.fenix.tools.spreadsheet.SpreadsheetBuilder;
 import pt.utl.ist.fenix.tools.spreadsheet.WorkbookExportFormat;
@@ -69,7 +69,7 @@ public class CareerWorkshopApplicationEvent extends CareerWorkshopApplicationEve
         return getSpreadsheet();
     }
 
-    @Service
+    @Atomic
     public void generateSpreadsheet() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("ISTCareerWorkshopsApplications-");

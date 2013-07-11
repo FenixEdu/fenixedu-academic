@@ -9,12 +9,12 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.gaugingTests.physics.GaugingTestResult;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class readGaugingTestsResults {
 
     @Checked("RolePredicates.STUDENT_PREDICATE")
-    @Service
+    @Atomic
     public static InfoGaugingTestResult run(IUserView userView) throws FenixServiceException {
 
         Person person = Person.readPersonByUsername(userView.getUtilizador());

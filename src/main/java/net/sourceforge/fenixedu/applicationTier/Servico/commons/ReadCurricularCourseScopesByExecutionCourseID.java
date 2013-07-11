@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -20,7 +20,7 @@ import pt.ist.fenixframework.FenixFramework;
 
 public class ReadCurricularCourseScopesByExecutionCourseID {
 
-    @Service
+    @Atomic
     public static List<InfoCurricularCourse> run(String executionCourseID) throws FenixServiceException {
 
         final List<InfoCurricularCourse> infoCurricularCourses = new ArrayList<InfoCurricularCourse>();

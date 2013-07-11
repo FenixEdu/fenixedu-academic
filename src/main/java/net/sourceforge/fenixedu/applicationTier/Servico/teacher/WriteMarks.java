@@ -17,12 +17,12 @@ import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class WriteMarks {
 
-    @Service
+    @Atomic
     @Checked("RolePredicates.TEACHER_PREDICATE")
     public static void writeByStudent(final String executioCourseOID, final String evaluationOID, final List<StudentMark> marks)
             throws FenixServiceException {
@@ -33,7 +33,7 @@ public class WriteMarks {
         writeMarks(convertMarks(executionCourse, marks), executionCourse, evaluation);
     }
 
-    @Service
+    @Atomic
     @Checked("RolePredicates.TEACHER_PREDICATE")
     public static void writeByAttend(final String executioCourseOID, final String evaluationOID, final List<AttendsMark> marks)
             throws FenixServiceException {

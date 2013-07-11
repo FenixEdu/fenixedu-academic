@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class PhdIndividualProgramProcessEmail extends PhdIndividualProgramProcessEmail_Base {
@@ -49,7 +49,7 @@ public class PhdIndividualProgramProcessEmail extends PhdIndividualProgramProces
         return getAdditionalBcc();
     }
 
-    @Service
+    @Atomic
     static public PhdIndividualProgramProcessEmail createEmail(PhdIndividualProgramProcessEmailBean bean) {
         final String errorWhileValidating = validateEmailBean(bean);
         if (errorWhileValidating != null) {

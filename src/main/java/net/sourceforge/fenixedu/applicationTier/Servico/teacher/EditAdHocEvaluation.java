@@ -3,12 +3,12 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.AdHocEvaluation;
 import net.sourceforge.fenixedu.domain.GradeScale;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class EditAdHocEvaluation {
 
-    @Service
+    @Atomic
     public static void run(String executionCourseID, String adHocEvaluationID, String name, String description,
             GradeScale gradeScale) throws FenixServiceException {
 

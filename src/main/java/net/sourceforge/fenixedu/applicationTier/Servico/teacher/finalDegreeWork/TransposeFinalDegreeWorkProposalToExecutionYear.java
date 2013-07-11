@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * Service that transposes the given proposal to another execution year.
@@ -41,7 +41,7 @@ public class TransposeFinalDegreeWorkProposalToExecutionYear {
      */
 
     @Checked("RolePredicates.TEACHER_PREDICATE")
-    @Service
+    @Atomic
     public static Proposal run(String originalProposalOID, ExecutionYear targetExecutionYear) throws FenixServiceException {
 
         Long originalProposalOIDLong;

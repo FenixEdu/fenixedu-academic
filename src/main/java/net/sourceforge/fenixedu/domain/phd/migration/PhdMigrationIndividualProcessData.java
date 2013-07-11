@@ -49,7 +49,7 @@ import net.sourceforge.fenixedu.util.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualProcessData_Base {
@@ -385,7 +385,7 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
         return getProcessBean().getAnnulmentDate() != null;
     }
 
-    @Service
+    @Atomic
     public Boolean proceedWithMigration(IUserView userView) {
 
         PhdMigrationProcessStateType activeState;

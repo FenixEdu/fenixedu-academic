@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * @author jpvl
@@ -89,7 +89,7 @@ public abstract class EnrolmentPeriod extends EnrolmentPeriod_Base {
         return getDegreeCurricularPlan().getDegree();
     }
 
-    @Service
+    @Atomic
     public void delete() {
         setDegreeCurricularPlan(null);
         setExecutionPeriod(null);

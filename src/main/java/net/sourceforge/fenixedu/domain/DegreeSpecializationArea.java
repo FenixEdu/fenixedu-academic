@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -53,12 +53,12 @@ public class DegreeSpecializationArea extends DegreeSpecializationArea_Base {
         deleteDomainObject();
     }
 
-    @Service
+    @Atomic
     public void setNameEn(String nameEn) {
         setName(getName().with(Language.en, nameEn));
     }
 
-    @Service
+    @Atomic
     public void setNamePt(String namePt) {
         setName(getName().with(Language.pt, namePt));
     }

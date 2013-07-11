@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherServiceLog;
 import net.sourceforge.fenixedu.presentationTier.Action.credits.ManageDegreeTeachingServicesDispatchAction.ShiftIDTeachingPercentage;
 import net.sourceforge.fenixedu.util.BundleUtil;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class UpdateDegreeTeachingServices {
@@ -64,7 +64,7 @@ public class UpdateDegreeTeachingServices {
 
     private static final UpdateDegreeTeachingServices serviceInstance = new UpdateDegreeTeachingServices();
 
-    @Service
+    @Atomic
     public static void runUpdateDegreeTeachingServices(String professorshipID,
             List<ShiftIDTeachingPercentage> shiftsIDsTeachingPercentages, RoleType roleType) throws NotAuthorizedException {
         try {

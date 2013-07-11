@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -23,7 +23,7 @@ import pt.ist.fenixframework.FenixFramework;
 public class UpdateProfessorshipsHours {
 
     @Checked("RolePredicates.CREDITS_MANAGER_PREDICATE")
-    @Service
+    @Atomic
     public static Boolean run(String teacherId, String executionYearId, final HashMap hours) throws FenixServiceException {
 
         Iterator entries = hours.entrySet().iterator();

@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class ReadStudentsByPerson {
@@ -30,7 +30,7 @@ public class ReadStudentsByPerson {
 
     private static final ReadStudentsByPerson serviceInstance = new ReadStudentsByPerson();
 
-    @Service
+    @Atomic
     public static List runReadStudentsByPerson(InfoPerson infoPerson) throws NotAuthorizedException {
         try {
             StudentAuthorizationFilter.instance.execute();

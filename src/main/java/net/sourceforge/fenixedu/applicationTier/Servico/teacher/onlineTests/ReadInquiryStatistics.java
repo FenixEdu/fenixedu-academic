@@ -24,7 +24,7 @@ import net.sourceforge.fenixedu.util.tests.ResponseSTR;
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.util.LabelValueBean;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -102,7 +102,7 @@ public class ReadInquiryStatistics {
 
     private static final ReadInquiryStatistics serviceInstance = new ReadInquiryStatistics();
 
-    @Service
+    @Atomic
     public static List<InfoInquiryStatistics> runReadInquiryStatistics(String executionCourseId, String distributedTestId,
             String path) throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);

@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.TutorshipSummaryRelationBean;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class TutorshipSummaryRelation extends TutorshipSummaryRelation_Base {
 
@@ -16,7 +16,7 @@ public class TutorshipSummaryRelation extends TutorshipSummaryRelation_Base {
         return getTutorship().getStudentCurricularPlan();
     }
 
-    @Service
+    @Atomic
     public void update(final TutorshipSummaryRelationBean bean) {
         setParticipationType(bean.getParticipationType());
         setWithoutEnrolments(bean.isWithoutEnrolments());
@@ -28,7 +28,7 @@ public class TutorshipSummaryRelation extends TutorshipSummaryRelation_Base {
         setParticipationRegularly(bean.isParticipationRegularly());
     }
 
-    @Service
+    @Atomic
     static public TutorshipSummaryRelation create(final TutorshipSummaryRelationBean bean) {
         TutorshipSummaryRelation tutorshipSummaryRelation =
                 new TutorshipSummaryRelation(bean.getTutorship(), bean.getTutorshipSummary());

@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 import net.sourceforge.fenixedu.domain.util.workflow.IState;
 import net.sourceforge.fenixedu.domain.util.workflow.StateBean;
 import net.sourceforge.fenixedu.domain.util.workflow.StateMachine;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -15,12 +15,12 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class StateMachineRunner {
 
-    @Service
+    @Atomic
     public static void run(DefaultRunnerArgs defaultRunnerArgs) {
         StateMachine.execute(defaultRunnerArgs.getState());
     }
 
-    @Service
+    @Atomic
     public static void run(RunnerArgs runnerArgs) {
         StateMachine.execute(runnerArgs.getState(), new StateBean(runnerArgs.getNextState()));
     }

@@ -9,12 +9,12 @@ import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class CreateOldCurricularCourse {
 
-    @Service
+    @Atomic
     public static void run(final String dcpId, final String cgId, final String name, final String nameEn, final String code,
             final String acronym, final Integer minimumValueForAcumulatedEnrollments,
             final Integer maximumValueForAcumulatedEnrollments, final Double weigth, final Integer enrolmentWeigth,

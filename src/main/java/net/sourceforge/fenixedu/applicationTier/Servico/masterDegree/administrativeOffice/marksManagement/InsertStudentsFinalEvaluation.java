@@ -6,12 +6,12 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.Teacher;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class InsertStudentsFinalEvaluation {
 
-    @Service
+    @Atomic
     public static void run(final InfoEnrolmentEvaluation infoEnrolmentEvaluation, final String teacherId,
             final Date evaluationDate) throws NonExistingServiceException {
         final Teacher teacher = Teacher.readByIstId(teacherId);

@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseResponsibleT
 import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseStudentsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseTeachersGroup;
 import net.sourceforge.fenixedu.util.BundleUtil;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class ExecutionCourseSender extends ExecutionCourseSender_Base {
 
@@ -63,7 +63,7 @@ public class ExecutionCourseSender extends ExecutionCourseSender_Base {
                         .getQualifiedName().replace('/', ' '));
     }
 
-    @Service
+    @Atomic
     public static ExecutionCourseSender newInstance(ExecutionCourse ec) {
         ExecutionCourseSender sender = ec.getSender();
         return sender == null ? new ExecutionCourseSender(ec) : sender;

@@ -24,7 +24,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import org.apache.struts.util.MessageResources;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -36,7 +36,7 @@ public class GroupStudentEnrolment {
     private static final MessageResources messages = MessageResources.getMessageResources("resources/GlobalResources");
 
     @Checked("RolePredicates.STUDENT_PREDICATE")
-    @Service
+    @Atomic
     public static Boolean run(String studentGroupCode, String username) throws FenixServiceException {
 
         ServiceMonitoring.logService(GroupStudentEnrolment.class, studentGroupCode, username);

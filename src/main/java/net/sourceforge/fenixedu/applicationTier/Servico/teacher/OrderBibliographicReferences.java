@@ -5,7 +5,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.BibliographicReference;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * Changes the presentation order of all the bibliographic references passed to
@@ -16,7 +16,7 @@ import pt.ist.fenixWebFramework.services.Service;
 public class OrderBibliographicReferences {
 
     @Checked("RolePredicates.TEACHER_PREDICATE")
-    @Service
+    @Atomic
     public static void run(ExecutionCourse executionCourse, List<BibliographicReference> references) {
         executionCourse.setBibliographicReferencesOrder(references);
     }

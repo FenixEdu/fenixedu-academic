@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons.degree;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -14,7 +14,7 @@ import pt.ist.fenixframework.FenixFramework;
  */
 public class ReadNumerusClausus {
 
-    @Service
+    @Atomic
     public static Integer run(String degreeCurricularPlanID) throws NonExistingServiceException {
 
         DegreeCurricularPlan degreeCurricularPlan = null;

@@ -35,12 +35,12 @@ import org.joda.time.Interval;
 import org.joda.time.TimeOfDay;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom {
 
-    @Service
+    @Atomic
     public static List<InfoObject> run(AllocatableSpace room, YearMonthDay day) throws FenixServiceException {
 
         List<InfoObject> infoShowOccupations = new ArrayList<InfoObject>();

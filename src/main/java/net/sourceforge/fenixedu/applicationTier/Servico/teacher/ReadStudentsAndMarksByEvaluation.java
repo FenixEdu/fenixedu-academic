@@ -26,7 +26,7 @@ import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -106,7 +106,7 @@ public class ReadStudentsAndMarksByEvaluation {
 
     private static final ReadStudentsAndMarksByEvaluation serviceInstance = new ReadStudentsAndMarksByEvaluation();
 
-    @Service
+    @Atomic
     public static Object runReadStudentsAndMarksByEvaluation(String executionCourseCode, String evaluationCode)
             throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseCode);

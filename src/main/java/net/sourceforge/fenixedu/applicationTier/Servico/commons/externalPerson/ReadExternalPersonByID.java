@@ -4,7 +4,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExternalPerson;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -15,7 +15,7 @@ import pt.ist.fenixframework.FenixFramework;
  */
 public class ReadExternalPersonByID {
 
-    @Service
+    @Atomic
     public static Object run(String externalPersonID) throws FenixServiceException {
         InfoExternalPerson infoExternalPerson = null;
         ExternalContract externalPerson = null;

@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class EditPersonFunction {
@@ -42,7 +42,7 @@ public class EditPersonFunction {
 
     private static final EditPersonFunction serviceInstance = new EditPersonFunction();
 
-    @Service
+    @Atomic
     public static void runEditPersonFunction(String personFunctionID, String functionID, YearMonthDay beginDate,
             YearMonthDay endDate, Double credits) throws FenixServiceException, DomainException, NotAuthorizedException {
         try {

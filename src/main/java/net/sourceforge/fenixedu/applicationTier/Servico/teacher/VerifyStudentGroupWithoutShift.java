@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituat
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.StudentGroup;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -78,7 +78,7 @@ public class VerifyStudentGroupWithoutShift {
 
     private static final VerifyStudentGroupWithoutShift serviceInstance = new VerifyStudentGroupWithoutShift();
 
-    @Service
+    @Atomic
     public static Integer runVerifyStudentGroupWithoutShift(String executionCourseCode, String studentGroupCode,
             String groupPropertiesCode, String shiftCodeString) throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseCode);

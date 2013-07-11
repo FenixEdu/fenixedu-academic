@@ -39,7 +39,7 @@ import net.sourceforge.fenixedu.util.Season;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class EditWrittenEvaluation {
@@ -213,7 +213,7 @@ public class EditWrittenEvaluation {
 
     private static final EditWrittenEvaluation serviceInstance = new EditWrittenEvaluation();
 
-    @Service
+    @Atomic
     public static void runEditWrittenEvaluation(String executionCourseID, Date writtenEvaluationDate,
             Date writtenEvaluationStartTime, Date writtenEvaluationEndTime, List<String> executionCourseIDs,
             List<String> degreeModuleScopeIDs, List<String> roomIDs, String writtenEvaluationOID, Season examSeason,

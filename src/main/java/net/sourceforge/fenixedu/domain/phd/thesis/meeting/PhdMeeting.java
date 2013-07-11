@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class PhdMeeting extends PhdMeeting_Base {
 
@@ -59,7 +59,7 @@ public class PhdMeeting extends PhdMeeting_Base {
                 responsible);
     }
 
-    @Service
+    @Atomic
     public void editAttributes(PhdEditMeetingBean bean) {
         setMeetingDate(bean.getScheduledDate());
         setMeetingPlace(bean.getScheduledPlace());

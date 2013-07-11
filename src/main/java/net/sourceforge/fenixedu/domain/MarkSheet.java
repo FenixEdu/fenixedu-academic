@@ -34,7 +34,7 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -593,7 +593,7 @@ public class MarkSheet extends MarkSheet_Base {
         return null;
     }
 
-    @Service
+    @Atomic
     static public void printMarksheet(MarkSheet markSheet, String printerName) throws FenixServiceException {
         if (markSheet == null) {
             throw new InvalidArgumentsServiceException("mark sheet cannot be null");
@@ -608,7 +608,7 @@ public class MarkSheet extends MarkSheet_Base {
         }
     }
 
-    @Service
+    @Atomic
     static public void printMarksheets(final Collection<MarkSheet> markSheets, final Person person, final String printerName)
             throws FenixServiceException {
         for (final MarkSheet markSheet : markSheets) {

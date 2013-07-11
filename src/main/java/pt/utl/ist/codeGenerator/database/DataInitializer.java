@@ -25,8 +25,7 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.FenixWebFramework;
-import pt.ist.fenixframework.FenixFrameworkInitializer;
-import pt.ist.fenixframework.pstm.Transaction;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -43,26 +42,11 @@ public class DataInitializer {
 
         RootDomainObject.init();
 
-        try {
-            Transaction.withTransaction(false, new jvstm.TransactionalCommand() {
-                @Override
-                public void doIt() {
-                    try {
-                        initialize();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        throw new Error("Found exception while processing script: " + e, e);
-                    }
-                }
-            });
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-
         System.out.println("Initialization complete.");
         System.exit(0);
     }
 
+    @Atomic
     private static void initialize() {
         createRoles();
         createCurricularYearsAndSemesters();

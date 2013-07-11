@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class WriteEnrollmentsList {
@@ -102,7 +102,7 @@ public class WriteEnrollmentsList {
 
     private static final WriteEnrollmentsList serviceInstance = new WriteEnrollmentsList();
 
-    @Service
+    @Atomic
     public static void runWriteEnrollmentsList(StudentCurricularPlan studentCurricularPlan, DegreeType degreeType,
             ExecutionSemester executionSemester, List<String> curricularCourses, Map optionalEnrollments, IUserView userView)
             throws FenixServiceException, NotAuthorizedException {

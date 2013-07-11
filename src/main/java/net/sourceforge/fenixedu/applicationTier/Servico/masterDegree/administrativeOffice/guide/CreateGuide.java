@@ -26,7 +26,7 @@ import net.sourceforge.fenixedu.domain.transactions.PaymentType;
 import net.sourceforge.fenixedu.util.CalculateGuideTotal;
 import net.sourceforge.fenixedu.util.State;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -35,7 +35,7 @@ import pt.ist.fenixframework.FenixFramework;
 public class CreateGuide {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-    @Service
+    @Atomic
     public static InfoGuide run(InfoGuide infoGuide, String othersRemarks, Double othersPrice, String remarks,
             GuideState situationOfGuide, String paymentType) throws FenixServiceException {
 

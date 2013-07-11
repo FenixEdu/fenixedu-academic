@@ -13,12 +13,12 @@ import net.sourceforge.fenixedu.domain.research.activity.ResearchEvent;
 import net.sourceforge.fenixedu.domain.research.activity.ScientificJournal;
 import net.sourceforge.fenixedu.domain.research.activity.ScientificJournalParticipation;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class RemoveResearchActivityParticipation {
 
     @Checked("ResultPredicates.author")
-    @Service
+    @Atomic
     public static void run(EventParticipation participation) {
         ResearchEvent event = participation.getEvent();
         participation.delete();
@@ -26,7 +26,7 @@ public class RemoveResearchActivityParticipation {
     }
 
     @Checked("ResultPredicates.author")
-    @Service
+    @Atomic
     public static void run(ScientificJournalParticipation participation) {
         ScientificJournal journal = participation.getScientificJournal();
         participation.delete();
@@ -34,7 +34,7 @@ public class RemoveResearchActivityParticipation {
     }
 
     @Checked("ResultPredicates.author")
-    @Service
+    @Atomic
     public static void run(EventEditionParticipation participation) {
         EventEdition edition = participation.getEventEdition();
         participation.delete();
@@ -42,7 +42,7 @@ public class RemoveResearchActivityParticipation {
     }
 
     @Checked("ResultPredicates.author")
-    @Service
+    @Atomic
     public static void run(JournalIssueParticipation participation) {
         JournalIssue issue = participation.getJournalIssue();
         participation.delete();
@@ -50,7 +50,7 @@ public class RemoveResearchActivityParticipation {
     }
 
     @Checked("ResultPredicates.author")
-    @Service
+    @Atomic
     public static void run(CooperationParticipation participation) {
         Cooperation cooperation = participation.getCooperation();
         participation.delete();

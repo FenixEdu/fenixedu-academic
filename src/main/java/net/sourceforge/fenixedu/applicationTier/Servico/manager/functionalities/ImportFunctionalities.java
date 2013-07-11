@@ -17,7 +17,7 @@ import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -49,7 +49,7 @@ public class ImportFunctionalities {
      *             when it's not possible to read from the stream
      */
     @Checked("RolePredicates.MANAGER_PREDICATE")
-    @Service
+    @Atomic
     public static void run(Module module, InputStream stream, boolean principalPreserved, boolean uuidUsed) throws IOException {
         Element root = getRootElement(stream);
         importFunctionalities(module, root.getChildren("functionality"), principalPreserved, uuidUsed);

@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -26,7 +26,7 @@ public class ReadInsuranceTransactionByStudentIDAndExecutionYearID {
     }
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-    @Service
+    @Atomic
     public static InfoInsuranceTransaction run(String studentId, String executionYearId) throws FenixServiceException {
 
         InfoInsuranceTransaction infoInsuranceTransaction = null;

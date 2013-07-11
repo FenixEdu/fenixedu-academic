@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.transactions.Transaction;
 
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -21,7 +21,7 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ListPayedInsurancesByDates {
 
-    @Service
+    @Atomic
     public static List<InsuranceTransaction> run(ExecutionYear executionYear, YearMonthDay beginDate, YearMonthDay endDate) {
 
         List<InsuranceTransaction> insuranceTransactions = new ArrayList<InsuranceTransaction>();

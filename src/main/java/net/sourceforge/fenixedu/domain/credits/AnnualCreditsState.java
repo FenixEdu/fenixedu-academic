@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 import org.joda.time.LocalDate;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class AnnualCreditsState extends AnnualCreditsState_Base {
 
@@ -19,7 +19,7 @@ public class AnnualCreditsState extends AnnualCreditsState_Base {
         setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    @Service
+    @Atomic
     public static AnnualCreditsState getAnnualCreditsState(ExecutionYear executionYear) {
         AnnualCreditsState annualCreditsState = executionYear.getAnnualCreditsState();
         if (annualCreditsState == null) {

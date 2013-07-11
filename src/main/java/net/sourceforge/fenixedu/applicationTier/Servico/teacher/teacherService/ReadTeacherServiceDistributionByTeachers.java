@@ -32,7 +32,7 @@ import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCa
 
 import org.joda.time.Duration;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -174,7 +174,7 @@ public class ReadTeacherServiceDistributionByTeachers {
     private static final ReadTeacherServiceDistributionByTeachers serviceInstance =
             new ReadTeacherServiceDistributionByTeachers();
 
-    @Service
+    @Atomic
     public static List runReadTeacherServiceDistributionByTeachers(String departmentId, List<String> executionPeriodsIDs)
             throws FenixServiceException, ParseException, NotAuthorizedException {
         try {

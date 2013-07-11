@@ -33,7 +33,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -217,7 +217,7 @@ public class ResidenceManagementDispatchAction extends FenixDispatchAction {
         return importData(mapping, actionForm, request, response);
     }
 
-    @Service
+    @Atomic
     public void makePayments(List<ResidenceEventBean> events, HttpServletRequest request) throws Exception {
         for (ResidenceEventBean event : events) {
             ResidenceDebtEventBean debtEvent = (ResidenceDebtEventBean) event;

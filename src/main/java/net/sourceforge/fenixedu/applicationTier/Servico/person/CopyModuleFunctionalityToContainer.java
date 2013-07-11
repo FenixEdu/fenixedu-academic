@@ -10,11 +10,11 @@ import net.sourceforge.fenixedu.domain.functionalities.ExpressionGroupAvailabili
 import net.sourceforge.fenixedu.domain.functionalities.Functionality;
 import net.sourceforge.fenixedu.domain.functionalities.GroupAvailability;
 import net.sourceforge.fenixedu.domain.functionalities.Module;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class CopyModuleFunctionalityToContainer {
 
-    @Service
+    @Atomic
     public static void run(Module module, Container container) {
         process(module, container);
     }

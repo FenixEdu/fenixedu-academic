@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class Sender extends Sender_Base {
 
@@ -99,7 +99,7 @@ public class Sender extends Sender_Base {
         return senders;
     }
 
-    @Service
+    @Atomic
     public List<ReplyTo> getConcreteReplyTos() {
         List<ReplyTo> replyTos = new ArrayList<ReplyTo>();
         for (ReplyTo replyTo : getReplyTos()) {

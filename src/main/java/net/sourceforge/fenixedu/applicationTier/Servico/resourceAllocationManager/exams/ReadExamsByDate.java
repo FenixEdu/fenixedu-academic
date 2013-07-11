@@ -19,11 +19,11 @@ import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class ReadExamsByDate {
 
-    @Service
+    @Atomic
     public static InfoViewExam run(Calendar examDay, Calendar examStartTime, Calendar examEndTime) {
 
         final List<Exam> filteredExams = Exam.getAllByDate(examDay, examStartTime, examEndTime);

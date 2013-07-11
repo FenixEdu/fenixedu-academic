@@ -24,7 +24,7 @@ import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class ImportIdentificationCardDataFromFile {
@@ -624,7 +624,7 @@ public class ImportIdentificationCardDataFromFile {
         return newLine.toString();
     }
 
-    @Service
+    @Atomic
     public static String crossReferenceFile(final String description, final ExecutionYear executionYear, final String contents)
             throws Exception {
         final ImportIdentificationCardDataFromFile importIdentificationCardDataFromFile =

@@ -33,7 +33,7 @@ import net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy;
 import net.sourceforge.fenixedu.domain.Seminaries.Theme;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -181,7 +181,7 @@ public class ReadCandidacies {
 
     private static final ReadCandidacies serviceInstance = new ReadCandidacies();
 
-    @Service
+    @Atomic
     public static List runReadCandidacies(String modalityID, String seminaryID, String themeID, String case1Id, String case2Id,
             String case3Id, String case4Id, String case5Id, String curricularCourseID, String degreeCurricularPlanID,
             Boolean approved) throws NotAuthorizedException, BDException {

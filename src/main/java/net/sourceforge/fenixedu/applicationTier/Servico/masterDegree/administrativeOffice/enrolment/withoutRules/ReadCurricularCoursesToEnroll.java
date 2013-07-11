@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class ReadCurricularCoursesToEnroll {
@@ -191,7 +191,7 @@ public class ReadCurricularCoursesToEnroll {
 
     private static final ReadCurricularCoursesToEnroll serviceInstance = new ReadCurricularCoursesToEnroll();
 
-    @Service
+    @Atomic
     public static List<CurricularCourse2Enroll> runReadCurricularCoursesToEnroll(StudentCurricularPlan studentCurricularPlan,
             DegreeType degreeType, ExecutionSemester executionSemester, String executionDegreeID,
             List<Integer> curricularYearsList, List<Integer> curricularSemestersList) throws FenixServiceException,

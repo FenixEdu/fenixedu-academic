@@ -17,12 +17,12 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class ReadTeachersInformation {
 
-    @Service
+    @Atomic
     public static List run(String executionDegreeId, Boolean basic, String executionYearString) {
 
         List<Professorship> professorships = null;
@@ -103,7 +103,7 @@ public class ReadTeachersInformation {
 
     private static final ReadTeachersInformation serviceInstance = new ReadTeachersInformation();
 
-    @Service
+    @Atomic
     public static List runReadTeachersInformation(String executionDegreeId, Boolean basic, String executionYearString)
             throws NotAuthorizedException {
         try {

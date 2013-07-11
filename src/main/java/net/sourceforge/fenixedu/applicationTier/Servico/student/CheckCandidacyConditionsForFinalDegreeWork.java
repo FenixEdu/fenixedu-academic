@@ -27,7 +27,7 @@ import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * @author Luis Cruz
@@ -35,7 +35,7 @@ import pt.ist.fenixWebFramework.services.Service;
 public class CheckCandidacyConditionsForFinalDegreeWork {
 
     @Checked("RolePredicates.STUDENT_PREDICATE")
-    @Service
+    @Atomic
     public static Boolean run(IUserView userView, final ExecutionDegree executionDegree) throws FenixServiceException {
         Scheduleing scheduleing = executionDegree.getScheduling();
 

@@ -3,11 +3,11 @@ package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.di
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Credits;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class DeleteCredits {
 
-    @Service
+    @Atomic
     public static void run(StudentCurricularPlan studentCurricularPlan, String[] creditsIDs) throws FenixServiceException {
         for (String creditsID : creditsIDs) {
             Credits credits = getCreditsByID(studentCurricularPlan, creditsID);

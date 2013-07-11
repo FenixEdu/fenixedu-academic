@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.DegreeOfficialPublication;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class ChangeDegreeOfficialPublicationReference {
 
@@ -17,7 +17,7 @@ public class ChangeDegreeOfficialPublicationReference {
      * @throws FenixServiceException
      */
     @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
-    @Service
+    @Atomic
     public static void run(DegreeOfficialPublication degreeOfficialPublication, String officialReference)
             throws FenixServiceException {
 

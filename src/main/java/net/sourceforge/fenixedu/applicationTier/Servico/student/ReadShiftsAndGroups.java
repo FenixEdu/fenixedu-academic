@@ -31,12 +31,12 @@ import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 
 import org.apache.commons.beanutils.BeanComparator;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class ReadShiftsAndGroups {
 
-    @Service
+    @Atomic
     public static ISiteComponent run(String groupingCode, String username) throws FenixServiceException {
 
         final Grouping grouping = FenixFramework.getDomainObject(groupingCode);
@@ -67,7 +67,7 @@ public class ReadShiftsAndGroups {
         throw new IllegalDataAccessException("", person);
     }
 
-    @Service
+    @Atomic
     public static InfoSiteShiftsAndGroups run(Grouping grouping) throws FenixServiceException {
         checkPermissions(grouping);
         final InfoSiteShiftsAndGroups infoSiteShiftsAndGroups = new InfoSiteShiftsAndGroups();

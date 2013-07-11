@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -18,7 +18,7 @@ import pt.ist.fenixframework.FenixFramework;
 public class EditExamRooms {
 
     @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
-    @Service
+    @Atomic
     public static InfoExam run(InfoExam infoExam, final List<String> roomsForExam) throws FenixServiceException {
 
         final List<AllocatableSpace> finalRoomList = new ArrayList<AllocatableSpace>();

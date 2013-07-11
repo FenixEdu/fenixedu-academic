@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class PhdAcademicServiceRequestCreateBean extends AcademicServiceRequestCreateBean implements IPhdAcademicServiceRequest {
     /**
@@ -49,7 +49,7 @@ public class PhdAcademicServiceRequestCreateBean extends AcademicServiceRequestC
         throw new DomainException("error.PhdAcademicServiceRequestCreateBean.get.registration.invalid");
     }
 
-    @Service
+    @Atomic
     public PhdAcademicServiceRequest createNewRequest() {
         switch (getRequestType()) {
         case PHD_STUDENT_REINGRESSION:

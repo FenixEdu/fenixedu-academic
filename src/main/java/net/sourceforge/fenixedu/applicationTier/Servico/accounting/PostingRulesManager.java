@@ -21,11 +21,11 @@ import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.Standalo
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class PostingRulesManager {
 
-    @Service
+    @Atomic
     @Checked("AcademicPredicates.MANAGE_PAYMENTS")
     static public void createGraduationGratuityPostingRule(final CreateGratuityPostingRuleBean bean) {
 
@@ -55,7 +55,7 @@ public class PostingRulesManager {
 
     }
 
-    @Service
+    @Atomic
     @Checked("AcademicPredicates.MANAGE_PAYMENTS")
     static public void createStandaloneGraduationGratuityPostingRule(final CreateStandaloneEnrolmentGratuityPRBean bean) {
 
@@ -86,7 +86,7 @@ public class PostingRulesManager {
         }
     }
 
-    @Service
+    @Atomic
     @Checked("AcademicPredicates.MANAGE_PAYMENTS")
     static public void createDFAGratuityPostingRule(final CreateDFAGratuityPostingRuleBean bean) {
         if (bean.getRule() == DFAGratuityByAmountPerEctsPR.class) {
@@ -100,7 +100,7 @@ public class PostingRulesManager {
         }
     }
 
-    @Service
+    @Atomic
     @Checked("AcademicPredicates.MANAGE_PAYMENTS")
     static public void createSpecializationDegreeGratuityPostingRule(final CreateSpecializationDegreeGratuityPostingRuleBean bean) {
         if (bean.getRule() == SpecializationDegreeGratuityByAmountPerEctsPR.class) {
@@ -111,13 +111,13 @@ public class PostingRulesManager {
         }
     }
 
-    @Service
+    @Atomic
     @Checked("AcademicPredicates.MANAGE_PAYMENTS")
     static public void deletePostingRule(final PostingRule postingRule) {
         postingRule.delete();
     }
 
-    @Service
+    @Atomic
     @Checked("AcademicPredicates.MANAGE_PAYMENTS")
     public static void createDEAGratuityPostingRule(PaymentPlanBean paymentPlanBean) {
         CreateGratuityPostingRuleBean createGratuityPostingRuleBean = new CreateGratuityPostingRuleBean();

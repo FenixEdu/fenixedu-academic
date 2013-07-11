@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCaseStudy;
 import net.sourceforge.fenixedu.domain.Seminaries.CaseStudy;
 import net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency;
 import net.sourceforge.fenixedu.domain.Seminaries.Theme;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -51,7 +51,7 @@ public class GetCaseStudiesByEquivalencyID {
 
     private static final GetCaseStudiesByEquivalencyID serviceInstance = new GetCaseStudiesByEquivalencyID();
 
-    @Service
+    @Atomic
     public static List runGetCaseStudiesByEquivalencyID(String equivalencyID) throws NotAuthorizedException {
         SeminaryCoordinatorOrStudentFilter.instance.execute();
         return serviceInstance.run(equivalencyID);

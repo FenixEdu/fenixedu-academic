@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.domain.student.Student;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class CareerWorkshopConfirmation extends CareerWorkshopConfirmation_Base {
 
@@ -29,7 +29,7 @@ public class CareerWorkshopConfirmation extends CareerWorkshopConfirmation_Base 
         setCareerWorkshopApplication(application);
     }
 
-    @Service
+    @Atomic
     public void delete() {
         setStudent(null);
         setCareerWorkshopApplication(null);
@@ -38,19 +38,19 @@ public class CareerWorkshopConfirmation extends CareerWorkshopConfirmation_Base 
         deleteDomainObject();
     }
 
-    @Service
+    @Atomic
     @Override
     public void setConfirmation(Boolean confirmation) {
         super.setConfirmation(confirmation);
     }
 
-    @Service
+    @Atomic
     @Override
     public void setConfirmationCode(String confirmationCode) {
         super.setConfirmationCode(confirmationCode);
     }
 
-    @Service
+    @Atomic
     public void sealConfirmation() {
         DateTime timestamp = new DateTime();
         setSealStamp(timestamp);

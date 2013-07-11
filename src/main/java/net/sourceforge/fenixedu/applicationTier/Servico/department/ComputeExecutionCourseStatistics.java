@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Professorship;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class ComputeExecutionCourseStatistics extends ComputeCourseStatistics {
@@ -86,7 +86,7 @@ public class ComputeExecutionCourseStatistics extends ComputeCourseStatistics {
 
     private static final ComputeExecutionCourseStatistics serviceInstance = new ComputeExecutionCourseStatistics();
 
-    @Service
+    @Atomic
     public static List<ExecutionCourseStatisticsDTO> runComputeExecutionCourseStatistics(String competenceCourseId,
             String degreeId, String executionPeriodId) throws FenixServiceException {
         return serviceInstance.run(competenceCourseId, degreeId, executionPeriodId);

@@ -4,7 +4,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.thesis;
 import net.sourceforge.fenixedu.applicationTier.Filtro.student.thesis.StudentThesisAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class RejectThesisDeclaration {
 
@@ -16,7 +16,7 @@ public class RejectThesisDeclaration {
 
     private static final RejectThesisDeclaration serviceInstance = new RejectThesisDeclaration();
 
-    @Service
+    @Atomic
     public static void runRejectThesisDeclaration(Thesis thesis) throws NotAuthorizedException {
         StudentThesisAuthorizationFilter.instance.execute(thesis);
         serviceInstance.run(thesis);

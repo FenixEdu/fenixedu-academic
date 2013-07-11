@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -71,7 +71,7 @@ public class DeleteProfessorship {
 
     private static final DeleteProfessorship serviceInstance = new DeleteProfessorship();
 
-    @Service
+    @Atomic
     public static Boolean runDeleteProfessorship(String infoExecutionCourseCode, String teacherCode)
             throws FenixServiceException, NotAuthorizedException {
         DeleteProfessorshipAuthorizationFilter.instance.execute(infoExecutionCourseCode, teacherCode);

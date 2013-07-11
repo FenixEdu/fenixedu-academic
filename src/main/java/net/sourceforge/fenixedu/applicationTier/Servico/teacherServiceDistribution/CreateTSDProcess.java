@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcess;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -46,7 +46,7 @@ public class CreateTSDProcess {
 
     private static final CreateTSDProcess serviceInstance = new CreateTSDProcess();
 
-    @Service
+    @Atomic
     public static TSDProcess runCreateTSDProcess(List<String> executionPeriodIdList, String departmentId, String creatorId,
             String name) throws NotAuthorizedException {
         try {

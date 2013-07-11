@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import org.apache.log4j.Logger;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.DomainObject;
 import pt.ist.fenixframework.FenixFramework;
 
@@ -35,7 +35,7 @@ public class ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear {
     }
 
     @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
-    @Service
+    @Atomic
     public static List<InfoShift> run(AcademicInterval academicInterval, InfoExecutionDegree infoExecutionDegree,
             InfoCurricularYear infoCurricularYear) {
 

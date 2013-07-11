@@ -7,12 +7,12 @@ import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.Receipt;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class CreateReceipt {
 
     @Checked("AcademicPredicates.MANAGE_STUDENT_PAYMENTS")
-    @Service
+    @Atomic
     public static Receipt run(final Person responsible, final Person person, final Party contributor,
             final String contributorName, final Integer year, final List<Entry> entries) {
 

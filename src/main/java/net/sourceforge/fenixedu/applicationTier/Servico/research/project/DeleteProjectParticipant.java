@@ -3,13 +3,13 @@ package net.sourceforge.fenixedu.applicationTier.Servico.research.project;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.research.project.ProjectParticipation;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class DeleteProjectParticipant {
 
     @Checked("ResultPredicates.author")
-    @Service
+    @Atomic
     public static void run(String participationId) throws FenixServiceException {
         ProjectParticipation participation = FenixFramework.getDomainObject(participationId);
         if (participation == null) {

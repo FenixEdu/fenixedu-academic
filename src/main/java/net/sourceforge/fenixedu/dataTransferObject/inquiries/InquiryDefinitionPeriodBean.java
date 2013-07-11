@@ -16,7 +16,7 @@ import org.joda.time.DateTime;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -154,7 +154,7 @@ public class InquiryDefinitionPeriodBean implements Serializable {
     }
 
     @Checked("RolePredicates.GEP_PREDICATE")
-    @Service
+    @Atomic
     public void writePeriodAndMessage() {
         if (!getEnd().isAfter(getBegin())) {
             throw new DomainException("error.inquiry.endDateMustBeAfterBeginDate");

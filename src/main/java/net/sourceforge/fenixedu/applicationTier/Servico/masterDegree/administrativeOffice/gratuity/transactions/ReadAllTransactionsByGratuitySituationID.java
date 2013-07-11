@@ -22,13 +22,13 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class ReadAllTransactionsByGratuitySituationID {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-    @Service
+    @Atomic
     public static List run(String gratuitySituationID) throws FenixServiceException {
         GratuitySituation gratuitySituation = FenixFramework.getDomainObject(gratuitySituationID);
         List<InsuranceTransaction> insuranceTransactionList =

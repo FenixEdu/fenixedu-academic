@@ -20,7 +20,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -75,7 +75,7 @@ public class LoadTestingAction extends FenixDispatchAction {
         return mapping.findForward("manageFakeShifts");
     }
 
-    @Service
+    @Atomic
     public ActionForward createFakeEnrollment(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
         Person person = AccessControl.getPerson();
@@ -83,7 +83,7 @@ public class LoadTestingAction extends FenixDispatchAction {
         return mapping.findForward("manageFakeEnrollments");
     }
 
-    @Service
+    @Atomic
     public ActionForward resetFakeEnrollments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
         Person person = AccessControl.getPerson();
@@ -93,7 +93,7 @@ public class LoadTestingAction extends FenixDispatchAction {
         return mapping.findForward("manageFakeEnrollments");
     }
 
-    @Service
+    @Atomic
     public ActionForward createFakeShiftEnrollment(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
         FakeShift fakeShift = FenixFramework.getDomainObject(request.getParameter("fakeShift"));
@@ -107,7 +107,7 @@ public class LoadTestingAction extends FenixDispatchAction {
         return mapping.findForward("viewFakeShift");
     }
 
-    @Service
+    @Atomic
     public ActionForward resetFakeShiftEnrollments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
         FakeShift fakeShift = FenixFramework.getDomainObject(request.getParameter("fakeShift"));
@@ -117,7 +117,7 @@ public class LoadTestingAction extends FenixDispatchAction {
         return mapping.findForward("viewFakeShift");
     }
 
-    @Service
+    @Atomic
     public ActionForward importFakeShifts(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
         FakeShift.importFromLastSemesterShifts();
@@ -125,7 +125,7 @@ public class LoadTestingAction extends FenixDispatchAction {
         return mapping.findForward("manageFakeShifts");
     }
 
-    @Service
+    @Atomic
     public ActionForward deleteFakeShifts(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
         FakeShift.deleteAllFakeShifts();

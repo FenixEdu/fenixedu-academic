@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.domain.Seminaries.Seminary;
 import net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy;
 import net.sourceforge.fenixedu.domain.Seminaries.Theme;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -77,7 +77,7 @@ public class WriteCandidacy {
 
     private static final WriteCandidacy serviceInstance = new WriteCandidacy();
 
-    @Service
+    @Atomic
     public static void runWriteCandidacy(InfoCandidacy infoCandidacy) throws NotAuthorizedException {
         SeminaryCoordinatorOrStudentFilter.instance.execute();
         serviceInstance.run(infoCandidacy);

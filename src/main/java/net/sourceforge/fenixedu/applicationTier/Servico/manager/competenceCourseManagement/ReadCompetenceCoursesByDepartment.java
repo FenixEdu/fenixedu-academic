@@ -13,13 +13,13 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class ReadCompetenceCoursesByDepartment {
 
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-    @Service
+    @Atomic
     public static List<InfoCompetenceCourse> run(String departmentID) throws NotExistingServiceException {
 
         final List<InfoCompetenceCourse> result = new ArrayList<InfoCompetenceCourse>();

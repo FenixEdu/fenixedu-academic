@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.domain.util.email.UnitBasedSender;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class PhdAlertMessage extends PhdAlertMessage_Base {
@@ -125,7 +125,7 @@ public class PhdAlertMessage extends PhdAlertMessage_Base {
         throw new DomainException("error.net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage.cannot.modify.readed");
     }
 
-    @Service
+    @Atomic
     public void markAsReaded(Person person) {
         String[] args = {};
         if (person == null) {
@@ -137,7 +137,7 @@ public class PhdAlertMessage extends PhdAlertMessage_Base {
         super.setPersonWhoMarkedAsReaded(person);
     }
 
-    @Service
+    @Atomic
     public void markAsUnread() {
         super.setReaded(false);
         setPersonWhoMarkedAsReaded(null);

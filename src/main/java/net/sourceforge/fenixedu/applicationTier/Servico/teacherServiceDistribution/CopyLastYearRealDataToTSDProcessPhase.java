@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilte
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.CopyLastYearRealDataService;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcessPhase;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class CopyLastYearRealDataToTSDProcessPhase {
@@ -22,7 +22,7 @@ public class CopyLastYearRealDataToTSDProcessPhase {
 
     private static final CopyLastYearRealDataToTSDProcessPhase serviceInstance = new CopyLastYearRealDataToTSDProcessPhase();
 
-    @Service
+    @Atomic
     public static void runCopyLastYearRealDataToTSDProcessPhase(String tsdProcessPhaseId) throws NotAuthorizedException {
         try {
             DepartmentMemberAuthorizationFilter.instance.execute();

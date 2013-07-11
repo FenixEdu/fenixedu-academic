@@ -17,12 +17,12 @@ import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.Sender;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class ChangeStudentsShift {
 
-    @Service
+    @Atomic
     @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
     public static void run(IUserView userView, String oldShiftId, String newShiftId, final Set<Registration> registrations)
             throws FenixServiceException {

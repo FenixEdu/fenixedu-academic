@@ -3,12 +3,12 @@ package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.credi
 
 import net.sourceforge.fenixedu.dataTransferObject.teacherCredits.TeacherCreditsPeriodBean;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class CreateTeacherCreditsFillingPeriod {
 
     @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
-    @Service
+    @Atomic
     public static void run(TeacherCreditsPeriodBean bean) {
         if (bean != null) {
             if (bean.isTeacher()) {

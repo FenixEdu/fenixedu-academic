@@ -4,7 +4,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Teacher;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -12,7 +12,7 @@ import pt.ist.fenixframework.FenixFramework;
  */
 public class TeacherResponsibleByExecutionCourse {
 
-    @Service
+    @Atomic
     public static Boolean run(String teacherUserName, String executionCourseCode, String curricularCourseCode)
             throws FenixServiceException {
         return Boolean.valueOf(ExecutionCourseResponsibleTeacher(teacherUserName, executionCourseCode)

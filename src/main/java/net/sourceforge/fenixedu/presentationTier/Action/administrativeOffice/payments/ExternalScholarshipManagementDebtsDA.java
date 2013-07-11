@@ -26,7 +26,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -92,7 +92,7 @@ public class ExternalScholarshipManagementDebtsDA extends FenixDispatchAction {
         return mapping.findForward("showScolarship");
     }
 
-    @Service
+    @Atomic
     public ActionForward liquidate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 

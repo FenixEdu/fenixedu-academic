@@ -25,7 +25,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -35,7 +35,7 @@ import pt.ist.fenixframework.FenixFramework;
 public class GroupEnrolment {
 
     @Checked("RolePredicates.STUDENT_AND_TEACHER_PREDICATE")
-    @Service
+    @Atomic
     public static Boolean run(String groupingID, String shiftID, Integer groupNumber, List<String> studentUsernames,
             String studentUsername) throws FenixServiceException {
         return enrole(groupingID, shiftID, groupNumber, studentUsernames, studentUsername);

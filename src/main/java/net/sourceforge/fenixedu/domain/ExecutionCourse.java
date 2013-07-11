@@ -73,7 +73,7 @@ import org.joda.time.Period;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.predicates.Predicate;
 import pt.utl.ist.fenix.tools.util.CollectionUtils;
@@ -2550,7 +2550,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         return hasExecutionCourseAudit();
     }
 
-    @Service
+    @Atomic
     public Boolean deleteInquiryResults() {
         boolean deletedResults = false;
         for (InquiryResult inquiryResult : getInquiryResultsSet()) {
@@ -2562,7 +2562,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         return deletedResults;
     }
 
-    @Service
+    @Atomic
     public Boolean deleteInquiryResults(ExecutionDegree executionDegree, InquiryQuestion inquiryQuestion) {
         boolean deletedResults = false;
         for (InquiryResult inquiryResult : getInquiryResultsByExecutionDegree(executionDegree)) {
@@ -2575,7 +2575,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         return deletedResults;
     }
 
-    @Service
+    @Atomic
     public Boolean deleteAllTeachersResults() {
         boolean deletedResults = false;
         for (InquiryResult inquiryResult : getInquiryResultsSet()) {
@@ -2606,7 +2606,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         return false;
     }
 
-    @Service
+    @Atomic
     public void changeProjectTutorialCourse() {
         setProjectTutorialCourse(!getProjectTutorialCourse());
     }
@@ -2624,17 +2624,17 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         super.addAssociatedCurricularCourses(curricularCourse);
     }
 
-    @Service
+    @Atomic
     public void associateCurricularCourse(final CurricularCourse curricularCourse) {
         addAssociatedCurricularCourses(curricularCourse);
     }
 
-    @Service
+    @Atomic
     public void dissociateCurricularCourse(final CurricularCourse curricularCourse) {
         super.removeAssociatedCurricularCourses(curricularCourse);
     }
 
-    @Service
+    @Atomic
     public static ExecutionCourse createExecutionCourse(final ExecutionCourseManagementBean bean) {
         final ExecutionSemester executionSemester = bean.getSemester();
 

@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProcessStateBean;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 abstract public class PhdProcessState extends PhdProcessState_Base {
 
@@ -85,7 +85,7 @@ abstract public class PhdProcessState extends PhdProcessState_Base {
 
     public abstract PhdProgramProcess getProcess();
 
-    @Service
+    @Atomic
     public void editStateDate(PhdProcessStateBean bean) {
         if (bean.getStateDate() == null) {
             throw new PhdDomainOperationException("error.PhdProcessState.state.date.required");

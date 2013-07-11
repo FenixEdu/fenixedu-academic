@@ -28,7 +28,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * @author João Mota
@@ -74,7 +74,7 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
         return professorShip;
     }
 
-    @Service
+    @Atomic
     public static Professorship create(Boolean responsibleFor, ExecutionCourse executionCourse, Person person, Double hours)
             throws MaxResponsibleForExceed, InvalidCategory {
 
@@ -398,7 +398,7 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
         return false;
     }
 
-    @Service
+    @Atomic
     public Boolean deleteInquiryResults() {
         boolean deletedResults = false;
         for (InquiryResult inquiryResult : getInquiryResultsSet()) {
@@ -408,7 +408,7 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
         return deletedResults;
     }
 
-    @Service
+    @Atomic
     public Boolean deleteInquiryResults(ShiftType shiftType, InquiryQuestion inquiryQuestion) {
         boolean deletedResults = false;
         for (InquiryResult inquiryResult : getInquiryResults(shiftType)) {

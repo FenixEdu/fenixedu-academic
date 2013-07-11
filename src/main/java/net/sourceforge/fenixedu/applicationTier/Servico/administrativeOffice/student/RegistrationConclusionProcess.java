@@ -8,11 +8,11 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class RegistrationConclusionProcess {
 
-    @Service
+    @Atomic
     public static void run(final RegistrationConclusionBean conclusionBean) {
         final Registration registration = conclusionBean.getRegistration();
 

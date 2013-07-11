@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class AssociateNewFunctionToPerson {
@@ -40,7 +40,7 @@ public class AssociateNewFunctionToPerson {
 
     private static final AssociateNewFunctionToPerson serviceInstance = new AssociateNewFunctionToPerson();
 
-    @Service
+    @Atomic
     public static void runAssociateNewFunctionToPerson(String functionID, String personID, Double credits, YearMonthDay begin,
             YearMonthDay end) throws FenixServiceException, DomainException, NotAuthorizedException {
         try {

@@ -3,12 +3,12 @@ package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManag
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.domain.Exam;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class ReadExamByOID {
 
-    @Service
+    @Atomic
     public static InfoExam run(String examID) throws FenixServiceException {
         final Exam exam = (Exam) FenixFramework.getDomainObject(examID);
         if (exam == null) {

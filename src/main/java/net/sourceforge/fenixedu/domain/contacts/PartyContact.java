@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.util.BundleUtil;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public abstract class PartyContact extends PartyContact_Base {
@@ -208,13 +208,13 @@ public abstract class PartyContact extends PartyContact_Base {
         return false;
     }
 
-    @Service
+    @Atomic
     @Checked("RolePredicates.PARTY_CONTACT_PREDICATE")
     public void deleteWithoutCheckRules() {
         processDelete();
     }
 
-    @Service
+    @Atomic
     @Checked("RolePredicates.PARTY_CONTACT_PREDICATE")
     public void delete() {
         if (isActiveAndValid()) {

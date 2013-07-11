@@ -16,12 +16,12 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class ReadGratuityValuesByExecutionDegree {
 
-    @Service
+    @Atomic
     public static Object run(String executionDegreeID) throws FenixServiceException {
         if (executionDegreeID == null) {
             throw new FenixServiceException("error.impossible.noGratuityValues");

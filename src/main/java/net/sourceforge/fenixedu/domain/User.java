@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.util.ByteArray;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * @author mrsp
@@ -72,12 +72,12 @@ public class User extends User_Base {
         return aliass.toString();
     }
 
-    @Service
+    @Atomic
     public void logout() {
         setLogoutDateTime(new DateTime());
     }
 
-    @Service
+    @Atomic
     public void generateNewKey() throws Exception {
         KeyGenerator kgen = KeyGenerator.getInstance("AES");
         kgen.init(128);

@@ -4,7 +4,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingT
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Shift;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class ImportEvaluationMethod {
 
@@ -19,7 +19,7 @@ public class ImportEvaluationMethod {
 
     private static final ImportEvaluationMethod serviceInstance = new ImportEvaluationMethod();
 
-    @Service
+    @Atomic
     public static void runImportEvaluationMethod(String executionCourseToId, ExecutionCourse executionCourseTo,
             ExecutionCourse executionCourseFrom, Shift shift) throws NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseToId);

@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class TeacherEditWrittenTestRooms {
 
@@ -20,7 +20,7 @@ public class TeacherEditWrittenTestRooms {
 
     private static final TeacherEditWrittenTestRooms serviceInstance = new TeacherEditWrittenTestRooms();
 
-    @Service
+    @Atomic
     public static void runTeacherEditWrittenTestRooms(ExecutionCourse executionCourse, Teacher teacher, WrittenTest writtenTest,
             List<AllocatableSpace> rooms) throws NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourse);

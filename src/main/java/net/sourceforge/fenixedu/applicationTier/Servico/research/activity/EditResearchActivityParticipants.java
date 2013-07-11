@@ -8,12 +8,12 @@ import net.sourceforge.fenixedu.dataTransferObject.research.activity.ResearchAct
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.research.activity.Participation;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class EditResearchActivityParticipants {
 
     @Checked("ResultPredicates.author")
-    @Service
+    @Atomic
     public static List<ResearchActivityParticipantEditionBean> run(List<ResearchActivityParticipantEditionBean> beans)
             throws FenixServiceException {
 

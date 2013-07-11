@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.domain.WrittenTest;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class ReadStudentsEnrolledInWrittenEvaluation {
@@ -77,7 +77,7 @@ public class ReadStudentsEnrolledInWrittenEvaluation {
 
     private static final ReadStudentsEnrolledInWrittenEvaluation serviceInstance = new ReadStudentsEnrolledInWrittenEvaluation();
 
-    @Service
+    @Atomic
     public static SiteView runReadStudentsEnrolledInWrittenEvaluation(String executionCourseID, String writtenEvaluationID)
             throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseID);

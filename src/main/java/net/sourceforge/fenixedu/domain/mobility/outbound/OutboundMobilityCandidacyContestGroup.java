@@ -25,7 +25,7 @@ import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.apache.commons.collections.CollectionUtils;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
@@ -88,22 +88,22 @@ public class OutboundMobilityCandidacyContestGroup extends OutboundMobilityCandi
         return result;
     }
 
-    @Service
+    @Atomic
     public void addExecutionDegreeService(final ExecutionDegree executionDegree) {
         addExecutionDegree(executionDegree);
     }
 
-    @Service
+    @Atomic
     public void removeExecutionDegreeService(final ExecutionDegree executionDegree) {
         removeExecutionDegree(executionDegree);
     }
 
-    @Service
+    @Atomic
     public void addMobilityCoordinatorService(final Person person) {
         addMobilityCoordinator(person);
     }
 
-    @Service
+    @Atomic
     public void removeMobilityCoordinatorService(final Person person) {
         removeMobilityCoordinator(person);
     }
@@ -256,7 +256,7 @@ public class OutboundMobilityCandidacyContestGroup extends OutboundMobilityCandi
         return BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice", key);
     }
 
-    @Service
+    @Atomic
     public void setGrades(final OutboundMobilityCandidacyPeriod candidacyPeriod, final String contents) {
         final StringBuilder problems = new StringBuilder();
 
@@ -349,7 +349,7 @@ public class OutboundMobilityCandidacyContestGroup extends OutboundMobilityCandi
         return true;
     }
 
-    @Service
+    @Atomic
     public void selectCandidates(final OutboundMobilityCandidacyPeriod period) {
         for (final OutboundMobilityCandidacyContest contest : getOutboundMobilityCandidacyContestSet()) {
             if (contest.getOutboundMobilityCandidacyPeriod() == period) {
@@ -410,22 +410,22 @@ public class OutboundMobilityCandidacyContestGroup extends OutboundMobilityCandi
         }
     }
 
-    @Service
+    @Atomic
     public void concludeCandidateSelection(final OutboundMobilityCandidacyPeriod period) {
         addConcludedCandidateSelectionForPeriod(period);
     }
 
-    @Service
+    @Atomic
     public void revertConcludeCandidateSelection(final OutboundMobilityCandidacyPeriod period) {
         removeConcludedCandidateSelectionForPeriod(period);
     }
 
-    @Service
+    @Atomic
     public void concludeCandidateNotification(final OutboundMobilityCandidacyPeriod period) {
         addCandidatesNotifiedOfSelectionResultsForPeriod(period);
     }
 
-    @Service
+    @Atomic
     public void revertConcludeCandidateNotification(final OutboundMobilityCandidacyPeriod period) {
         removeCandidatesNotifiedOfSelectionResultsForPeriod(period);
     }

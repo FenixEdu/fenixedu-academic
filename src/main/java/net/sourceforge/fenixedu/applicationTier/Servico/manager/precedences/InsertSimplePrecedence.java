@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.precedences.Precedence;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -18,7 +18,7 @@ import pt.ist.fenixframework.FenixFramework;
 public class InsertSimplePrecedence {
 
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-    @Service
+    @Atomic
     public static void run(String className, String curricularCourseToAddPrecedenceID, String precedentCurricularCourseID,
             Integer number) throws FenixServiceException {
         CurricularCourse curricularCourseToAddPrecedence =

@@ -19,11 +19,11 @@ import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class CreateConvokes {
 
-    @Service
+    @Atomic
     public static void run(List<VigilantWrapper> vigilants, WrittenEvaluation writtenEvaluation, VigilantGroup group,
             ExamCoordinator coordinator, String emailMessage) {
         group.convokeVigilants(vigilants, writtenEvaluation);

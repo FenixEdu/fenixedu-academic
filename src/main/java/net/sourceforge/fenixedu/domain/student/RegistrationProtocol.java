@@ -6,7 +6,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import dml.runtime.RelationAdapter;
 
 public class RegistrationProtocol extends RegistrationProtocol_Base {
@@ -52,7 +52,7 @@ public class RegistrationProtocol extends RegistrationProtocol_Base {
         setRegistrationAgreement(registrationAgreement);
     }
 
-    @Service
+    @Atomic
     public static RegistrationProtocol serveRegistrationProtocol(RegistrationAgreement registrationAgreement) {
         Set<RegistrationProtocol> dataset = RootDomainObject.getInstance().getRegistrationProtocolsSet();
         for (RegistrationProtocol iter : dataset) {
@@ -64,12 +64,12 @@ public class RegistrationProtocol extends RegistrationProtocol_Base {
         return newProtocol;
     }
 
-    @Service
+    @Atomic
     public void addSupervisor(Person supervisor) {
         this.addSupervisors(supervisor);
     }
 
-    @Service
+    @Atomic
     public void removeSupervisor(Person supervisor) {
         this.removeSupervisors(supervisor);
     }

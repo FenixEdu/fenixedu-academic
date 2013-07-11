@@ -17,12 +17,12 @@ import net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
 import org.apache.commons.beanutils.BeanComparator;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class ReadCareers {
 
     @Checked("RolePredicates.TEACHER_PREDICATE")
-    @Service
+    @Atomic
     public static SiteView run(CareerType careerType, String user) {
         final Teacher teacher = Teacher.readTeacherByUsername(user);
 

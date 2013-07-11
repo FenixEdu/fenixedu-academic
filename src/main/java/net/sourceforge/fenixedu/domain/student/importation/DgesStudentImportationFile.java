@@ -4,7 +4,7 @@ import net.sourceforge.fenixedu.domain.EntryPhase;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.Campus;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
@@ -33,7 +33,7 @@ public class DgesStudentImportationFile extends DgesStudentImportationFile_Base 
         return filePath;
     }
 
-    @Service
+    @Atomic
     public static DgesStudentImportationFile create(byte[] contents, String filename, ExecutionYear executionYear, Campus campus,
             EntryPhase entryPhase) {
         if (executionYear == null) {

@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoSiteCourseInformation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -40,7 +40,7 @@ public class ReadCourseInformation {
 
     private static final ReadCourseInformation serviceInstance = new ReadCourseInformation();
 
-    @Service
+    @Atomic
     public static TeacherAdministrationSiteView runReadCourseInformation(String executionCourseOID) throws FenixServiceException,
             NotAuthorizedException {
         try {

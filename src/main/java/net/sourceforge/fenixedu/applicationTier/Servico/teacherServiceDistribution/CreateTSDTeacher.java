@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherService
 
 import org.apache.commons.collections.Predicate;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class CreateTSDTeacher {
@@ -50,7 +50,7 @@ public class CreateTSDTeacher {
 
     private static final CreateTSDTeacher serviceInstance = new CreateTSDTeacher();
 
-    @Service
+    @Atomic
     public static Boolean runCreateTSDTeacher(String teacherName, String categoryId, Double requiredHours, String tsdId)
             throws NotAuthorizedException {
         try {

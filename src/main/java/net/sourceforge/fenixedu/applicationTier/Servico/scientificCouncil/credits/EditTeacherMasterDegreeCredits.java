@@ -10,13 +10,13 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.teacher.TeacherMasterDegreeService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class EditTeacherMasterDegreeCredits {
 
     @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
-    @Service
+    @Atomic
     public static void run(Map<String, String> hoursMap, Map<String, String> creditsMap) throws NumberFormatException {
         Set<String> professorshipIDs = new HashSet<String>(hoursMap.keySet());
         professorshipIDs.addAll(creditsMap.keySet());

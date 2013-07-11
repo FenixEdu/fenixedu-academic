@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Project;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class EditProject {
@@ -34,7 +34,7 @@ public class EditProject {
 
     private static final EditProject serviceInstance = new EditProject();
 
-    @Service
+    @Atomic
     public static void runEditProject(String executionCourseID, String projectID, String name, Date begin, Date end,
             String description, Boolean onlineSubmissionsAllowed, Integer maxSubmissionsToKeep, String groupingID,
             GradeScale gradeScale, List<Department> departments) throws FenixServiceException, NotAuthorizedException {

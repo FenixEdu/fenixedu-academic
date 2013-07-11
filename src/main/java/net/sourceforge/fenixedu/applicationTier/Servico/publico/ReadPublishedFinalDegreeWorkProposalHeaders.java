@@ -11,7 +11,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWorkProposalHeader;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -20,7 +20,7 @@ import pt.ist.fenixframework.FenixFramework;
  */
 public class ReadPublishedFinalDegreeWorkProposalHeaders {
 
-    @Service
+    @Atomic
     public static List<FinalDegreeWorkProposalHeader> run(String executionDegreeOID) {
         final List<FinalDegreeWorkProposalHeader> result = new ArrayList<FinalDegreeWorkProposalHeader>();
 

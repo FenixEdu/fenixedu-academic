@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -23,7 +23,7 @@ import pt.ist.fenixframework.FenixFramework;
 public class ReadPersonFunctionsByPersonIDAndExecutionYearID {
 
     @Checked("RolePredicates.PERSON_PREDICATE")
-    @Service
+    @Atomic
     public static List<PersonFunction> run(String personID, String executionYearID) throws FenixServiceException {
         Person person = (Person) FenixFramework.getDomainObject(personID);
 

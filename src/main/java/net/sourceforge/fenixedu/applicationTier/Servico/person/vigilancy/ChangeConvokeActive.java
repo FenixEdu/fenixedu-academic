@@ -17,11 +17,11 @@ import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class ChangeConvokeActive {
 
-    @Service
+    @Atomic
     public static void run(Vigilancy convoke, Boolean bool, Person person) {
 
         convoke.setActive(bool);

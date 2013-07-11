@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class ReadCurrentExecutionDegreeByDegreeCurricularPlanID {
@@ -39,7 +39,7 @@ public class ReadCurrentExecutionDegreeByDegreeCurricularPlanID {
     private static final ReadCurrentExecutionDegreeByDegreeCurricularPlanID serviceInstance =
             new ReadCurrentExecutionDegreeByDegreeCurricularPlanID();
 
-    @Service
+    @Atomic
     public static InfoExecutionDegree runReadCurrentExecutionDegreeByDegreeCurricularPlanID(String degreeCurricularPlanID)
             throws NotAuthorizedException {
         try {

@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class CreateVirtualFunction extends ManageVirtualFunction {
@@ -19,7 +19,7 @@ public class CreateVirtualFunction extends ManageVirtualFunction {
 
     private static final CreateVirtualFunction serviceInstance = new CreateVirtualFunction();
 
-    @Service
+    @Atomic
     public static Function runCreateVirtualFunction(UnitSite site, Unit unit, MultiLanguageString name)
             throws NotAuthorizedException {
         ResearchSiteManagerAuthorizationFilter.instance.execute(site);

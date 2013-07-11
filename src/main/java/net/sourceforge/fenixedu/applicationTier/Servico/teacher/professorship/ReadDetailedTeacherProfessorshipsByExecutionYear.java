@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class ReadDetailedTeacherProfessorshipsByExecutionYear extends ReadDetailedTeacherProfessorshipsAbstractService {
@@ -45,7 +45,7 @@ public class ReadDetailedTeacherProfessorshipsByExecutionYear extends ReadDetail
     private static final ReadDetailedTeacherProfessorshipsByExecutionYear serviceInstance =
             new ReadDetailedTeacherProfessorshipsByExecutionYear();
 
-    @Service
+    @Atomic
     public static List runReadDetailedTeacherProfessorshipsByExecutionYear(String teacherID, String executionYearID)
             throws FenixServiceException {
         return serviceInstance.run(teacherID, executionYearID);

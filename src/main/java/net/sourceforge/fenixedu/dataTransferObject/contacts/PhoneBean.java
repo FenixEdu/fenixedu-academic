@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.domain.contacts.PartyContactType;
 import net.sourceforge.fenixedu.domain.contacts.Phone;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.PhoneUtil;
 
 public class PhoneBean extends PartyContactBean {
@@ -29,7 +29,7 @@ public class PhoneBean extends PartyContactBean {
     }
 
     @Override
-    @Service
+    @Atomic
     public Boolean edit() {
         boolean isValueChanged = super.edit();
         if (isValueChanged) {

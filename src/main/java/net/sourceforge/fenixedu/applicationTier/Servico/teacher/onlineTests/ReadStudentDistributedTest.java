@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -57,7 +57,7 @@ public class ReadStudentDistributedTest {
 
     private static final ReadStudentDistributedTest serviceInstance = new ReadStudentDistributedTest();
 
-    @Service
+    @Atomic
     public static List<StudentTestQuestion> runReadStudentDistributedTest(String executionCourseId, String distributedTestId,
             String studentId, String path) throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);

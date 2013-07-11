@@ -36,8 +36,9 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.Transaction;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.Atomic.TxMode;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
@@ -275,7 +276,7 @@ public class SIBSOutgoingPaymentFile extends SIBSOutgoingPaymentFile_Base {
         return new ArrayList<SIBSOutgoingPaymentFile>(subjectExecutionYear().getSIBSOutgoingPaymentFilesSet());
     }
 
-    @Service
+    @Atomic
     public void markAsSuccessfulSent(DateTime dateTime) {
         setSuccessfulSentDate(dateTime);
     }
@@ -292,22 +293,16 @@ public class SIBSOutgoingPaymentFile extends SIBSOutgoingPaymentFile_Base {
         }
 
         @Override
+        @Atomic(mode = TxMode.READ)
         public void run() {
             try {
-                pt.ist.fenixframework.pstm.Transaction.withTransaction(true, new jvstm.TransactionalCommand() {
-                    @Override
-                    public void doIt() {
-                        txDo();
-                    }
-                });
+                txDo();
             } catch (Throwable e) {
                 appendToErrors(errorsBuilder, eventExternalId, e);
-            } finally {
-                Transaction.forceFinish();
             }
         }
 
-        @Service
+        @Atomic
         private void txDo() {
             Event event = FenixFramework.getDomainObject(eventExternalId);
 
@@ -330,17 +325,9 @@ public class SIBSOutgoingPaymentFile extends SIBSOutgoingPaymentFile_Base {
         }
 
         @Override
+        @Atomic(mode = TxMode.READ)
         public void run() {
-            try {
-                pt.ist.fenixframework.pstm.Transaction.withTransaction(true, new jvstm.TransactionalCommand() {
-                    @Override
-                    public void doIt() {
-                        txDo();
-                    }
-                });
-            } finally {
-                Transaction.forceFinish();
-            }
+            txDo();
         }
 
         private void txDo() {
@@ -359,17 +346,9 @@ public class SIBSOutgoingPaymentFile extends SIBSOutgoingPaymentFile_Base {
         }
 
         @Override
+        @Atomic(mode = TxMode.READ)
         public void run() {
-            try {
-                pt.ist.fenixframework.pstm.Transaction.withTransaction(true, new jvstm.TransactionalCommand() {
-                    @Override
-                    public void doIt() {
-                        txDo();
-                    }
-                });
-            } finally {
-                Transaction.forceFinish();
-            }
+            txDo();
         }
 
         private void txDo() {
@@ -388,18 +367,9 @@ public class SIBSOutgoingPaymentFile extends SIBSOutgoingPaymentFile_Base {
         }
 
         @Override
+        @Atomic(mode = TxMode.READ)
         public void run() {
-
-            try {
-                pt.ist.fenixframework.pstm.Transaction.withTransaction(true, new jvstm.TransactionalCommand() {
-                    @Override
-                    public void doIt() {
-                        txDo();
-                    }
-                });
-            } finally {
-                Transaction.forceFinish();
-            }
+            txDo();
         }
 
         private void txDo() {

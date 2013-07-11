@@ -47,7 +47,7 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
@@ -492,7 +492,7 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
         return mapping.findForward("uploadCardInfo");
     }
 
-    @Service
+    @Atomic
     private void process(HttpServletRequest request, final File file) throws FileNotFoundException, IOException {
         final String contents = FileUtils.readFile(new FileInputStream(file));
         final String[] lines = contents.split("\n");

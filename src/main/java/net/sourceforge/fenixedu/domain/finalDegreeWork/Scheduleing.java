@@ -21,7 +21,7 @@ import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class Scheduleing extends Scheduleing_Base {
 
@@ -223,7 +223,7 @@ public class Scheduleing extends Scheduleing_Base {
         return groups;
     }
 
-    @Service
+    @Atomic
     public static Scheduleing newInstance(ExecutionDegree executionDegree) {
         if (!executionDegree.hasScheduling()) {
             final Scheduleing scheduling = new Scheduleing();

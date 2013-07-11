@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -101,7 +101,7 @@ public class SubmitFinalWorkProposal {
 
     private static final SubmitFinalWorkProposal serviceInstance = new SubmitFinalWorkProposal();
 
-    @Service
+    @Atomic
     public static void runSubmitFinalWorkProposal(InfoProposalEditor infoProposal) throws FenixServiceException,
             NotAuthorizedException {
         SubmitFinalWorkProposalAuthorization.instance.execute(infoProposal);

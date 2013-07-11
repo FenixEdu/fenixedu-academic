@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.predicates.Predicate;
 
 public abstract class PartyContactValidation extends PartyContactValidation_Base {
@@ -68,7 +68,7 @@ public abstract class PartyContactValidation extends PartyContactValidation_Base
         return isValid();
     }
 
-    @Service
+    @Atomic
     public Boolean processValidation(String token) {
 
         if (isRefused()) {
@@ -151,7 +151,7 @@ public abstract class PartyContactValidation extends PartyContactValidation_Base
     }
 
     @Override
-    @Service
+    @Atomic
     public void setState(PartyContactValidationState state) {
         switch (state) {
         case INVALID:

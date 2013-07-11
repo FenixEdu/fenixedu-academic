@@ -16,12 +16,12 @@ import net.sourceforge.fenixedu.util.BundleUtil;
 import org.apache.commons.lang.StringUtils;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class MergeExternalUnits {
 
     @Checked("RolePredicates.MANAGER_PREDICATE")
-    @Service
+    @Atomic
     public static void run(Unit fromUnit, Unit destinationUnit, Boolean sendMail) {
 
         if (fromUnit != null && destinationUnit != null) {

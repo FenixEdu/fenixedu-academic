@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.gesdis.CourseHistoric;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class ReadCourseHistoric {
@@ -79,7 +79,7 @@ public class ReadCourseHistoric {
 
     private static final ReadCourseHistoric serviceInstance = new ReadCourseHistoric();
 
-    @Service
+    @Atomic
     public static List runReadCourseHistoric(String executionCourseId) throws FenixServiceException, NotAuthorizedException {
         try {
             ReadCourseInformationAuthorizationFilter.instance.execute(executionCourseId);

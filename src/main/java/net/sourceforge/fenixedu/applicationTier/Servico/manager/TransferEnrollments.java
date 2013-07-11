@@ -8,13 +8,13 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import org.apache.commons.lang.StringUtils;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class TransferEnrollments {
 
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-    @Service
+    @Atomic
     public static void run(final String destinationStudentCurricularPlanId, final String[] enrollmentIDsToTransfer,
             final String destinationCurriculumGroupID) {
 

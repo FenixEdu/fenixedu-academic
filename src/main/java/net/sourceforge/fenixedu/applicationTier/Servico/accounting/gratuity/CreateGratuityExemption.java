@@ -7,12 +7,12 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.PercentageGratuityExemption;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.ValueGratuityExemption;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class CreateGratuityExemption {
 
     @Checked("AcademicPredicates.MANAGE_STUDENT_PAYMENTS")
-    @Service
+    @Atomic
     public static void run(final Person responsible, final CreateGratuityExemptionBean createGratuityExemptionBean) {
         if (createGratuityExemptionBean.isPercentageExemption()) {
             new PercentageGratuityExemption(responsible, createGratuityExemptionBean.getGratuityEvent(),

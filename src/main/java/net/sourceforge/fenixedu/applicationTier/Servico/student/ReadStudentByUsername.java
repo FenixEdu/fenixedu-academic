@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.StudentAuthorizationFilte
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class ReadStudentByUsername {
 
@@ -23,7 +23,7 @@ public class ReadStudentByUsername {
 
     private static final ReadStudentByUsername serviceInstance = new ReadStudentByUsername();
 
-    @Service
+    @Atomic
     public static InfoStudent runReadStudentByUsername(String username) throws NotAuthorizedException {
         try {
             StudentAuthorizationFilter.instance.execute();

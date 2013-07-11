@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.Pers
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class AuthorizationGroupBean implements Serializable, Comparable<AuthorizationGroupBean> {
 
@@ -90,14 +90,14 @@ public class AuthorizationGroupBean implements Serializable, Comparable<Authoriz
         this.offices = offices;
     }
 
-    @Service
+    @Atomic
     public void edit() {
         if (!group.hasDeletedRootDomainObject()) {
             setGroup(group.changeOperation(operation));
         }
     }
 
-    @Service
+    @Atomic
     public void create(Party party, Set<AcademicProgram> newPrograms, Set<AdministrativeOffice> newOffices) {
         for (PersistentAccessGroup accessGroup : party.getPersistentAccessGroup()) {
             if (accessGroup instanceof PersistentAcademicAuthorizationGroup && !accessGroup.hasDeletedRootDomainObject()) {
@@ -110,14 +110,14 @@ public class AuthorizationGroupBean implements Serializable, Comparable<Authoriz
         party.addPersistentAccessGroup(group);
     }
 
-    @Service
+    @Atomic
     public void editAuthorizationPrograms(Set<AcademicProgram> newPrograms, Set<AdministrativeOffice> newOffices) {
         if (!group.hasDeletedRootDomainObject()) {
             setGroup(group.changeProgramsAndOffices(newPrograms, newOffices));
         }
     }
 
-    @Service
+    @Atomic
     public void delete(Party party) {
         if (group.getMember().size() > 1) {
             group.revoke(party);

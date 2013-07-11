@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilte
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcessPhase;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcessPhaseStatus;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class DeleteTSDProcessPhase {
@@ -30,7 +30,7 @@ public class DeleteTSDProcessPhase {
 
     private static final DeleteTSDProcessPhase serviceInstance = new DeleteTSDProcessPhase();
 
-    @Service
+    @Atomic
     public static void runDeleteTSDProcessPhase(String tsdProcessPhaseId) throws NotAuthorizedException {
         try {
             DepartmentMemberAuthorizationFilter.instance.execute();

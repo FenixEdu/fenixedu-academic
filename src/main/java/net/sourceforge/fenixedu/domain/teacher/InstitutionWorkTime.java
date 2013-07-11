@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.util.CalendarUtil;
 import net.sourceforge.fenixedu.util.WeekDay;
 import net.sourceforge.fenixedu.util.date.TimePeriod;
 import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class InstitutionWorkTime extends InstitutionWorkTime_Base {
 
@@ -57,7 +57,7 @@ public class InstitutionWorkTime extends InstitutionWorkTime_Base {
         return null;
     }
 
-    @Service
+    @Atomic
     public void delete(RoleType roleType) {
         getTeacherService().getExecutionPeriod().checkValidCreditsPeriod(roleType);
         log("label.teacher.schedule.institutionWorkTime.delete");

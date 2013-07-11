@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCurricularCourse;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcessPhase;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class CreateTSDCurricularCourses {
@@ -47,7 +47,7 @@ public class CreateTSDCurricularCourses {
 
     private static final CreateTSDCurricularCourses serviceInstance = new CreateTSDCurricularCourses();
 
-    @Service
+    @Atomic
     public static void runCreateTSDCurricularCourses(String tsdId, String competenceCourseId, String tsdProcessPhaseId,
             String executionPeriodId, Boolean activateCourses) throws NotAuthorizedException {
         try {

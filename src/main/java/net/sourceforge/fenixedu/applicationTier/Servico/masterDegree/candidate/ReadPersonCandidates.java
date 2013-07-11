@@ -9,12 +9,12 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWith
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.Person;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class ReadPersonCandidates {
 
     @Checked("RolePredicates.MASTER_DEGREE_CANDIDATE_PREDICATE")
-    @Service
+    @Atomic
     public static List<InfoMasterDegreeCandidate> run(final String username) throws FenixServiceException {
         final Person person = Person.readPersonByUsername(username);
         if (person == null) {

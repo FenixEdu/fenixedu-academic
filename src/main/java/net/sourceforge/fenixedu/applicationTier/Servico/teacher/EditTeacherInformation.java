@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.teacher.Orientation;
 import net.sourceforge.fenixedu.domain.teacher.PublicationsNumber;
 import net.sourceforge.fenixedu.domain.teacher.ServiceProviderRegime;
 import net.sourceforge.fenixedu.domain.teacher.WeeklyOcupation;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class EditTeacherInformation {
@@ -96,7 +96,7 @@ public class EditTeacherInformation {
 
     private static final EditTeacherInformation serviceInstance = new EditTeacherInformation();
 
-    @Service
+    @Atomic
     public static Boolean runEditTeacherInformation(InfoServiceProviderRegime infoServiceProviderRegime,
             InfoWeeklyOcupation infoWeeklyOcupation, List<InfoOrientation> infoOrientations,
             List<InfoPublicationsNumber> infoPublicationsNumbers) throws NotAuthorizedException {

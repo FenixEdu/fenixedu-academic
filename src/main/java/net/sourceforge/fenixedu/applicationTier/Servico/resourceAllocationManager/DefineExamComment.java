@@ -4,13 +4,13 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class DefineExamComment {
 
     @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
-    @Service
+    @Atomic
     public static void run(String executionCourseInitials, String executionPeriodId, String comment) throws FenixServiceException {
         final ExecutionSemester executionSemester = FenixFramework.getDomainObject(executionPeriodId);
         final ExecutionCourse executionCourse = executionSemester.getExecutionCourseByInitials(executionCourseInitials);

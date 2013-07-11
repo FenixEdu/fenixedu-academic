@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain.student.scholarship.report;
 
 import net.sourceforge.fenixedu.domain.QueueJobResult;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class UTLScholarshipReport extends UTLScholarshipReport_Base {
 
@@ -24,7 +24,7 @@ public class UTLScholarshipReport extends UTLScholarshipReport_Base {
         return null;
     }
 
-    @Service
+    @Atomic
     public static final UTLScholarshipReport launchQueueJob() {
         UTLScholarshipSource source = null;
 

@@ -7,12 +7,12 @@ import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class AddCoordinator {
 
-    @Service
+    @Atomic
     public static Boolean run(final String executionDegreeId, final String istUsername) throws FenixServiceException {
 
         final Person person = Person.readPersonByIstUsername(istUsername);
@@ -40,7 +40,7 @@ public class AddCoordinator {
 
     // Service Invokers migrated from Berserk
 
-    @Service
+    @Atomic
     public static Boolean runAddCoordinator(String executionDegreeId, String istUsername) throws FenixServiceException,
             NotAuthorizedException {
         ResponsibleDegreeCoordinatorAuthorizationFilter.instance.execute(executionDegreeId);

@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Curriculum;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -83,7 +83,7 @@ public class EditCurriculumForCurricularCourse {
 
     private static final EditCurriculumForCurricularCourse serviceInstance = new EditCurriculumForCurricularCourse();
 
-    @Service
+    @Atomic
     public static Boolean runEditCurriculumForCurricularCourse(String infoExecutionDegreeId, String oldCurriculumId,
             String curricularCourseCode, InfoCurriculum newInfoCurriculum, String username, String language)
             throws FenixServiceException, NotAuthorizedException {

@@ -29,7 +29,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.Mark;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -152,7 +152,7 @@ public class InsertEvaluationMarks {
 
     private static final InsertEvaluationMarks serviceInstance = new InsertEvaluationMarks();
 
-    @Service
+    @Atomic
     public static TeacherAdministrationSiteView runInsertEvaluationMarks(String executionCourseCode, String evaluationCode,
             HashMap hashMarks) throws ExcepcaoInexistente, FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseCode);

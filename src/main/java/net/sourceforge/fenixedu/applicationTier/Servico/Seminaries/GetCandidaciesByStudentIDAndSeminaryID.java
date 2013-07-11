@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCandidacy;
 import net.sourceforge.fenixedu.domain.Seminaries.Seminary;
 import net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -48,7 +48,7 @@ public class GetCandidaciesByStudentIDAndSeminaryID {
 
     private static final GetCandidaciesByStudentIDAndSeminaryID serviceInstance = new GetCandidaciesByStudentIDAndSeminaryID();
 
-    @Service
+    @Atomic
     public static List runGetCandidaciesByStudentIDAndSeminaryID(String studentID, String seminaryID)
             throws NotAuthorizedException {
         SeminaryCoordinatorOrStudentFilter.instance.execute();

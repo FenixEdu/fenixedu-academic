@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.phd.PhdThesisReportFeedbackDocument;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class ThesisJuryElement extends ThesisJuryElement_Base {
@@ -92,7 +92,7 @@ public class ThesisJuryElement extends ThesisJuryElement_Base {
                 .getElementOrder().intValue() + 1);
     }
 
-    @Service
+    @Atomic
     public void delete() {
         checkIfCanBeDeleted();
         disconnect();

@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Tutorship;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class DeleteTutorship extends TutorshipManagement {
@@ -46,7 +46,7 @@ public class DeleteTutorship extends TutorshipManagement {
 
     private static final DeleteTutorship serviceInstance = new DeleteTutorship();
 
-    @Service
+    @Atomic
     public static List<TutorshipErrorBean> runDeleteTutorship(String executionDegreeID, List<Tutorship> tutorsToDelete)
             throws NotAuthorizedException {
         try {

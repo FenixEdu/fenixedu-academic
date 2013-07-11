@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.ManagerAuthorizationFilte
 import net.sourceforge.fenixedu.applicationTier.Filtro.OperatorAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -29,7 +29,7 @@ public class DeleteNotNeedToEnrollInCurricularCourse {
 
     private static final DeleteNotNeedToEnrollInCurricularCourse serviceInstance = new DeleteNotNeedToEnrollInCurricularCourse();
 
-    @Service
+    @Atomic
     public static void runDeleteNotNeedToEnrollInCurricularCourse(String notNeedToEnrollInCurricularCourseID)
             throws NotAuthorizedException {
         try {

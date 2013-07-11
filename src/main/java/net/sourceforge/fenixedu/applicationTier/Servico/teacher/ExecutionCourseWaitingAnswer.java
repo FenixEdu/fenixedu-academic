@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExportGrouping;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.util.ProposalState;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -45,7 +45,7 @@ public class ExecutionCourseWaitingAnswer {
 
     private static final ExecutionCourseWaitingAnswer serviceInstance = new ExecutionCourseWaitingAnswer();
 
-    @Service
+    @Atomic
     public static Boolean runExecutionCourseWaitingAnswer(String executionCourseID) throws FenixServiceException,
             NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseID);

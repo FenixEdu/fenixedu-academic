@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class EditExercise {
@@ -38,7 +38,7 @@ public class EditExercise {
 
     private static final EditExercise serviceInstance = new EditExercise();
 
-    @Service
+    @Atomic
     public static Boolean runEditExercise(String executionCourseId, String metadataId, String author, String description,
             String difficulty, Calendar learningTime, String level, String mainSubject, String secondarySubject)
             throws FenixServiceException, NotAuthorizedException {

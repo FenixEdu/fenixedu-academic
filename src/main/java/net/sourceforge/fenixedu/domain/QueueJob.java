@@ -9,7 +9,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public abstract class QueueJob extends QueueJob_Base {
     public static enum Priority {
@@ -74,12 +74,12 @@ public abstract class QueueJob extends QueueJob_Base {
         return Priority.NORMAL;
     }
 
-    @Service
+    @Atomic
     public void cancel() {
         setRootDomainObjectQueueUndone(null);
     }
 
-    @Service
+    @Atomic
     public void resend() {
         setRootDomainObjectQueueUndone(RootDomainObject.getInstance());
     }

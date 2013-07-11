@@ -21,12 +21,12 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class ReadProfessorshipsAndResponsibilitiesByDepartmentAndExecutionPeriod {
 
-    @Service
+    @Atomic
     public static List run(String departmentId, String executionYearID, Integer semester, Integer teacherType)
             throws FenixServiceException {
 

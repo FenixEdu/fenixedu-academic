@@ -31,7 +31,7 @@ import org.apache.commons.lang.StringUtils;
 import org.joda.time.Duration;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class Shift extends Shift_Base {
@@ -545,7 +545,7 @@ public class Shift extends Shift_Base {
         return false;
     }
 
-    @Service
+    @Atomic
     public void removeAttendFromShift(Registration registration, ExecutionCourse executionCourse) {
 
         GroupsAndShiftsManagementLog.createLog(getExecutionCourse(), "resources.MessagingResources",

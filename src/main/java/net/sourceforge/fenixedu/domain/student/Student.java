@@ -82,7 +82,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class Student extends Student_Base {
 
@@ -892,7 +892,7 @@ public class Student extends Student_Base {
     }
 
     @Checked("RolePredicates.STUDENT_PREDICATE")
-    @Service
+    @Atomic
     public void setSpentTimeInPeriodForInquiry(List<CurricularCourseInquiriesRegistryDTO> courses, Integer weeklySpentHours,
             ExecutionSemester executionSemester) {
 
@@ -951,7 +951,7 @@ public class Student extends Student_Base {
     }
 
     @Checked("RolePredicates.STUDENT_PREDICATE")
-    @Service
+    @Atomic
     public Collection<StudentInquiryRegistry> retrieveAndCreateMissingInquiryRegistriesForPeriod(
             ExecutionSemester executionSemester) {
         final Map<ExecutionCourse, StudentInquiryRegistry> coursesToAnswer =
@@ -1831,7 +1831,7 @@ public class Student extends Student_Base {
         }
     }
 
-    @Service
+    @Atomic
     public void acceptRegistrationsFromOtherStudent(java.util.List<Registration> otherRegistrations) {
         List<Registration> registrations = super.getRegistrations();
         registrations.addAll(otherRegistrations);

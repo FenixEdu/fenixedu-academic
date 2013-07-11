@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.util.tests.CorrectionFormula;
 
 import org.apache.commons.beanutils.BeanComparator;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class InsertTestQuestion {
@@ -103,7 +103,7 @@ public class InsertTestQuestion {
 
     private static final InsertTestQuestion serviceInstance = new InsertTestQuestion();
 
-    @Service
+    @Atomic
     public static void runInsertTestQuestion(String executionCourseId, String testId, String[] metadataId, Integer questionOrder,
             Double questionValue, CorrectionFormula formula, String path) throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);

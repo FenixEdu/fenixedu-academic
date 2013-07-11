@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -58,7 +58,7 @@ public class EnrollStudentGroupShift {
 
     private static final EnrollStudentGroupShift serviceInstance = new EnrollStudentGroupShift();
 
-    @Service
+    @Atomic
     public static Boolean runEnrollStudentGroupShift(String executionCourseCode, String studentGroupCode,
             String groupPropertiesCode, String newShiftCode) throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseCode);

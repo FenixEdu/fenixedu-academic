@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class CompetenceCourseInformationChangeRequest extends CompetenceCourseInformationChangeRequest_Base {
 
@@ -154,7 +154,7 @@ public class CompetenceCourseInformationChangeRequest extends CompetenceCourseIn
     }
 
     @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
-    @Service
+    @Atomic
     public void reject(Person analisedBy) {
         if (getApproved() != null) {
             throw new DomainException("error.request.already.processed");
@@ -164,7 +164,7 @@ public class CompetenceCourseInformationChangeRequest extends CompetenceCourseIn
     }
 
     @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
-    @Service
+    @Atomic
     public void approve(Person analisedBy) {
         if (getApproved() != null) {
             throw new DomainException("error.request.already.processed");

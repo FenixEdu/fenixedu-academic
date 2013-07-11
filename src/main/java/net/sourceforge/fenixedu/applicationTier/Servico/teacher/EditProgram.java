@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.Curriculum;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -64,7 +64,7 @@ public class EditProgram {
 
     private static final EditProgram serviceInstance = new EditProgram();
 
-    @Service
+    @Atomic
     public static Boolean runEditProgram(String executionCourseOID, String curricularCourseOID, InfoCurriculum infoCurriculumNew,
             String username) throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseResponsibleForTeacherAuthorizationFilter.instance.execute(executionCourseOID);

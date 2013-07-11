@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.dataTransferObject.person.InfoQualification;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Qualification;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -39,7 +39,7 @@ public class EditQualification {
 
     private static final EditQualification serviceInstance = new EditQualification();
 
-    @Service
+    @Atomic
     public static void runEditQualification(String qualificationId, InfoQualification infoQualification)
             throws FenixServiceException, NotAuthorizedException {
         QualificationManagerAuthorizationFilter.instance.execute(infoQualification);

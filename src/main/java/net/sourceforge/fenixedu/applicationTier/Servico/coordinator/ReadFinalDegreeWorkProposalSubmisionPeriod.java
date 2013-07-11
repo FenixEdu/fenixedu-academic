@@ -8,14 +8,14 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoScheduleing;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * @author Luis Cruz
  */
 public class ReadFinalDegreeWorkProposalSubmisionPeriod {
 
-    @Service
+    @Atomic
     public static InfoScheduleing run(final ExecutionDegree executionDegree) throws FenixServiceException {
 
         InfoScheduleing infoScheduleing = null;

@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class PhdGratuityFineExemption extends PhdGratuityFineExemption_Base {
 
@@ -25,7 +25,7 @@ public class PhdGratuityFineExemption extends PhdGratuityFineExemption_Base {
         event.recalculateState(new DateTime());
     }
 
-    @Service
+    @Atomic
     public static PhdGratuityFineExemption createPhdGratuityFineExemption(Person responsible, PhdGratuityEvent event,
             String justification) {
         if (event.hasExemptionsOfType(PhdGratuityFineExemption.class)) {

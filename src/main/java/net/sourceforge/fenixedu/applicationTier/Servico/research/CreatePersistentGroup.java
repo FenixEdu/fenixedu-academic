@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers;
 import net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembersType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class CreatePersistentGroup {
 
@@ -25,7 +25,7 @@ public class CreatePersistentGroup {
 
     private static final CreatePersistentGroup serviceInstance = new CreatePersistentGroup();
 
-    @Service
+    @Atomic
     public static void runCreatePersistentGroup(Unit unit, String name, List<Person> people, PersistentGroupMembersType type)
             throws NotAuthorizedException {
         ManageUnitPersistentGroup.instance.execute(unit);

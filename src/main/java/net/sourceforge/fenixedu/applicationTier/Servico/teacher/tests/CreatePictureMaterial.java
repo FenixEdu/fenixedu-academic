@@ -14,14 +14,14 @@ import net.sourceforge.fenixedu.domain.tests.PictureMaterialFile;
 
 import org.apache.commons.io.FileUtils;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.file.FileSetMetaData;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
 public class CreatePictureMaterial {
 
-    @Service
+    @Atomic
     public static NewPictureMaterial run(Teacher teacher, NewTestElement testElement, Boolean inline, File mainFile,
             String originalFilename, String displayName) throws FenixServiceException, DomainException, IOException {
 

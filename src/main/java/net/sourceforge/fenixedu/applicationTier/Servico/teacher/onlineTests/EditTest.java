@@ -5,7 +5,7 @@ import java.util.Calendar;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.onlineTests.Test;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class EditTest {
@@ -21,7 +21,7 @@ public class EditTest {
 
     private static final EditTest serviceInstance = new EditTest();
 
-    @Service
+    @Atomic
     public static void runEditTest(String executionCourseId, String testId, String title, String information)
             throws NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);

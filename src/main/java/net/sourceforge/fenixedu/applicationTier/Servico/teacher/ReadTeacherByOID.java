@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.framework.ReadDomainObje
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.Teacher;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.DomainObject;
 import pt.ist.fenixframework.FenixFramework;
 
@@ -31,7 +31,7 @@ public class ReadTeacherByOID extends ReadDomainObjectService {
 
     private static final ReadTeacherByOID serviceInstance = new ReadTeacherByOID();
 
-    @Service
+    @Atomic
     public static InfoObject runReadTeacherByOID(String externalId) {
         return serviceInstance.run(externalId);
     }

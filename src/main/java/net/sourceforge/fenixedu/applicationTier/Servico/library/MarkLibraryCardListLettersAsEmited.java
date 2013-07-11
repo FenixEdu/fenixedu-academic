@@ -7,12 +7,12 @@ import net.sourceforge.fenixedu.dataTransferObject.library.LibraryCardDTO;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class MarkLibraryCardListLettersAsEmited {
 
     @Checked("RolePredicates.LIBRARY_PREDICATE")
-    @Service
+    @Atomic
     public static void run(List<LibraryCardDTO> libraryCardDTOList) {
         for (LibraryCardDTO libraryCardDTO : libraryCardDTOList) {
             libraryCardDTO.getLibraryCard().setLetterGenerationDate(new DateTime());

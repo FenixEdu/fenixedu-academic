@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.spreadsheet.SheetData;
 import pt.utl.ist.fenix.tools.spreadsheet.SpreadsheetBuilder;
 import pt.utl.ist.fenix.tools.spreadsheet.WorkbookExportFormat;
@@ -88,7 +88,7 @@ public class CareerWorkshopConfirmationEvent extends CareerWorkshopConfirmationE
         return super.getConfirmations();
     }
 
-    @Service
+    @Atomic
     public void generateSpreadsheet() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("ISTCareerWorkshopsConfirmations-");
@@ -135,7 +135,7 @@ public class CareerWorkshopConfirmationEvent extends CareerWorkshopConfirmationE
         }
     }
 
-    @Service
+    @Atomic
     private List<CareerWorkshopConfirmation> getProcessedList() {
         for (CareerWorkshopApplication application : getCareerWorkshopApplicationEvent().getCareerWorkshopApplications()) {
             if (!(application.getCareerWorkshopConfirmation() == null)) {

@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.apache.commons.beanutils.BeanComparator;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -77,7 +77,7 @@ public class PrepareCreateStudentGroup {
 
     private static final PrepareCreateStudentGroup serviceInstance = new PrepareCreateStudentGroup();
 
-    @Service
+    @Atomic
     public static ISiteComponent runPrepareCreateStudentGroup(String executionCourseCode, String groupPropertiesCode)
             throws ExistingServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseCode);

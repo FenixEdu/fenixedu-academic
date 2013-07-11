@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.apache.struts.util.LabelValueBean;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -136,14 +136,14 @@ public class ReadStudentsByIdArray {
 
     private static final ReadStudentsByIdArray serviceInstance = new ReadStudentsByIdArray();
 
-    @Service
+    @Atomic
     public static List<InfoStudent> runReadStudentsByIdArray(String executionCourseId, String[] selected, Boolean insertByShifts)
             throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
         return serviceInstance.run(executionCourseId, selected, insertByShifts);
     }
 
-    @Service
+    @Atomic
     public static List<InfoStudent> runReadStudentsByIdArray(String executionCourseId, String distributedTestId,
             String[] selected, Boolean insertByShifts) throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);

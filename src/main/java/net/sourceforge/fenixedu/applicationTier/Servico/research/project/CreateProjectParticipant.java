@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.research.project.Project;
 import net.sourceforge.fenixedu.domain.research.project.ProjectParticipation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class CreateProjectParticipant {
@@ -31,7 +31,7 @@ public class CreateProjectParticipant {
      *             - In case the project doesn't exist.
      */
     @Checked("ResultPredicates.author")
-    @Service
+    @Atomic
     public static ProjectParticipation run(ProjectParticipantSimpleCreationBean bean, String projectId)
             throws FenixServiceException {
         ProjectParticipation participation = null;
@@ -62,7 +62,7 @@ public class CreateProjectParticipant {
      *             - In case the project doesn't exist.
      */
     @Checked("ResultPredicates.author")
-    @Service
+    @Atomic
     public static ProjectParticipation run(ProjectParticipantFullCreationBean bean, String projectId)
             throws FenixServiceException {
         final ProjectParticipation participation;
@@ -96,7 +96,7 @@ public class CreateProjectParticipant {
     }
 
     @Checked("ResultPredicates.author")
-    @Service
+    @Atomic
     public static ProjectParticipation run(ProjectParticipantUnitCreationBean bean, String projectId)
             throws FenixServiceException {
         final ProjectParticipation participation;

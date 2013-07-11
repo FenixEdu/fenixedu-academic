@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.person.IdDocument;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * @author David Santos 2/Out/2003
@@ -63,7 +63,7 @@ public class ReadStudentsByNameIDnumberIDtypeAndStudentNumber {
     }
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-    @Service
+    @Atomic
     public static List run(String studentName, String idNumber, IDDocumentType idType, Integer studentNumber) {
         final SearchSet searchSet = new SearchSet(studentName, idNumber, studentNumber);
         Registration.readMasterDegreeStudentsByNameDocIDNumberIDTypeAndStudentNumber(searchSet, studentName, idNumber, idType,

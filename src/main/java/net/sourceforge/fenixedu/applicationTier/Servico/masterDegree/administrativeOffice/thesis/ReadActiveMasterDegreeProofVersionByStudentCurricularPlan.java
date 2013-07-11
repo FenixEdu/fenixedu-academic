@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeProofVersion;
 import net.sourceforge.fenixedu.domain.MasterDegreeProofVersion;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * 
@@ -21,7 +21,7 @@ import pt.ist.fenixWebFramework.services.Service;
 public class ReadActiveMasterDegreeProofVersionByStudentCurricularPlan {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-    @Service
+    @Atomic
     public static InfoMasterDegreeProofVersion run(StudentCurricularPlan studentCurricularPlan) throws FenixServiceException {
 
         IDegreeCurricularPlanStrategyFactory degreeCurricularPlanStrategyFactory =

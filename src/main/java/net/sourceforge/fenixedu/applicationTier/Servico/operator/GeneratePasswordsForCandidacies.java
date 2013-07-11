@@ -10,12 +10,12 @@ import net.sourceforge.fenixedu.dataTransferObject.person.PasswordBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class GeneratePasswordsForCandidacies {
 
     @Checked("RolePredicates.OPERATOR_PREDICATE")
-    @Service
+    @Atomic
     public static List<PasswordBean> run(final List<String> studentCandidacyIds) {
 
         final Set<StudentCandidacy> studentCandidacies = StudentCandidacy.readByIds(studentCandidacyIds);

@@ -32,7 +32,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.FenixWebFramework;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFrameworkInitializer;
 import pt.ist.fenixframework.plugins.remote.domain.RemoteSystem;
 import pt.ist.fenixframework.plugins.scheduler.Scheduler;
@@ -121,7 +121,7 @@ public class StartupServlet implements ServletContextListener {
         PhoneValidationUtils.getInstance();
     }
 
-    @Service
+    @Atomic
     private void initScheduler() {
         final String scheduleSystemFlag = PropertiesManager.getProperty("schedule.system");
         if (scheduleSystemFlag == null || scheduleSystemFlag.isEmpty() || !scheduleSystemFlag.equalsIgnoreCase("active")) {

@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class PersonFunctionSender extends PersonFunctionSender_Base {
 
@@ -71,7 +71,7 @@ public class PersonFunctionSender extends PersonFunctionSender_Base {
         return groups;
     }
 
-    @Service
+    @Atomic
     public static PersonFunctionSender newInstance(PersonFunction personFunction) {
         PersonFunctionSender sender = personFunction.getSender();
         return sender == null ? new PersonFunctionSender(personFunction) : sender;

@@ -149,21 +149,20 @@ import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.FenixWebFramework;
 import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixframework.pstm.Transaction;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class CreateTestData {
 
-    public static abstract class AtomicAction extends Thread implements jvstm.TransactionalCommand {
+    public static abstract class AtomicAction extends Thread {
+        @Atomic
         @Override
         public void run() {
-            try {
-                Transaction.withTransaction(this);
-            } finally {
-                Transaction.forceFinish();
-            }
+            doIt();
         }
+
+        public abstract void doIt();
     }
 
     public static void doAction(AtomicAction action) {

@@ -3,11 +3,11 @@ package net.sourceforge.fenixedu.applicationTier.Servico.contacts;
 import net.sourceforge.fenixedu.dataTransferObject.contacts.PartyContactBean;
 import net.sourceforge.fenixedu.domain.contacts.PartyContact;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class CreatePartyContact {
 
-    @Service
+    @Atomic
     public static PartyContact run(PartyContactBean contactBean, final boolean toBeValidated) {
         if (contactBean.hasPartyContact()) {
             return null;

@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWith
 import net.sourceforge.fenixedu.domain.CandidateSituation;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.util.SituationName;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -47,7 +47,7 @@ public class ReadCandidatesForSelection {
 
     private static final ReadCandidatesForSelection serviceInstance = new ReadCandidatesForSelection();
 
-    @Service
+    @Atomic
     public static List runReadCandidatesForSelection(String executionDegreeID, List<SituationName> situationNames)
             throws FenixServiceException, NotAuthorizedException {
         ReadCandidatesForSelectionAuthorizationFilter.instance.execute(executionDegreeID, situationNames);

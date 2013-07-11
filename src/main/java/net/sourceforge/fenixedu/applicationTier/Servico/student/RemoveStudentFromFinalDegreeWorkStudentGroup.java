@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import org.apache.commons.collections.Predicate;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -26,7 +26,7 @@ public class RemoveStudentFromFinalDegreeWorkStudentGroup {
     }
 
     @Checked("RolePredicates.STUDENT_PREDICATE")
-    @Service
+    @Atomic
     public static Boolean run(String username, String groupOID, String studentToRemoveID) throws FenixServiceException {
         FinalDegreeWorkGroup group = FenixFramework.getDomainObject(groupOID);
         Registration registration = Registration.readByUsername(username);

@@ -18,11 +18,11 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class ReadStudentCurricularPlansForSeminaries {
 
-    @Service
+    @Atomic
     public static List run(IUserView userView) throws ExcepcaoInexistente, FenixServiceException {
         Registration registration = Registration.readByUsername(userView.getUtilizador());
         List<StudentCurricularPlan> studentCurricularPlans = null;

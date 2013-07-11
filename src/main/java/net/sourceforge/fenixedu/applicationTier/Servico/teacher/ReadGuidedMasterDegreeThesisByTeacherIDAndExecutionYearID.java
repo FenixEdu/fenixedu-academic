@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion;
 import net.sourceforge.fenixedu.domain.Teacher;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -38,7 +38,7 @@ public class ReadGuidedMasterDegreeThesisByTeacherIDAndExecutionYearID {
     private static final ReadGuidedMasterDegreeThesisByTeacherIDAndExecutionYearID serviceInstance =
             new ReadGuidedMasterDegreeThesisByTeacherIDAndExecutionYearID();
 
-    @Service
+    @Atomic
     public static List<MasterDegreeThesisDataVersion> runReadGuidedMasterDegreeThesisByTeacherIDAndExecutionYearID(
             String teacherID, String executionYearID) throws FenixServiceException, NotAuthorizedException {
         try {

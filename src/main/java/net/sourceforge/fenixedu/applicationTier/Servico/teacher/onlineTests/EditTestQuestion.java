@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
 import net.sourceforge.fenixedu.util.tests.CorrectionFormula;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -39,7 +39,7 @@ public class EditTestQuestion {
 
     private static final EditTestQuestion serviceInstance = new EditTestQuestion();
 
-    @Service
+    @Atomic
     public static void runEditTestQuestion(String executionCourseId, String testQuestionId, Integer testQuestionOrder,
             Double testQuestionValue, CorrectionFormula formula) throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);

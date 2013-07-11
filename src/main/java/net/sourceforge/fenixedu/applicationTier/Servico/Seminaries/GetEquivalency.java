@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.domain.Seminaries.Theme;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -52,7 +52,7 @@ public class GetEquivalency {
 
     private static final GetEquivalency serviceInstance = new GetEquivalency();
 
-    @Service
+    @Atomic
     public static InfoEquivalency runGetEquivalency(String equivalencyID) throws NotAuthorizedException {
         SeminaryCoordinatorOrStudentFilter.instance.execute();
         return serviceInstance.run(equivalencyID);

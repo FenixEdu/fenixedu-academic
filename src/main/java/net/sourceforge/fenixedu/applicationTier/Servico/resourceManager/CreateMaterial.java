@@ -6,12 +6,12 @@ import net.sourceforge.fenixedu.dataTransferObject.resourceManager.MaterialBean.
 import net.sourceforge.fenixedu.domain.material.Extension;
 import net.sourceforge.fenixedu.domain.material.FireExtinguisher;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class CreateMaterial {
 
     @Checked("RolePredicates.RESOURCE_MANAGER_PREDICATE")
-    @Service
+    @Atomic
     public static void run(MaterialBean bean) {
 
         if (bean != null) {

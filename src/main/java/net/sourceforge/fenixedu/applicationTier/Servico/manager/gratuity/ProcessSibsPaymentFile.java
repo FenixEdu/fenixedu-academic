@@ -28,7 +28,7 @@ import net.sourceforge.fenixedu.domain.transactions.PaymentType;
 import net.sourceforge.fenixedu.domain.transactions.TransactionType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class ProcessSibsPaymentFile {
 
@@ -41,7 +41,7 @@ public class ProcessSibsPaymentFile {
      * @throws ExcepcaoPersistencia
      */
     @Checked("RolePredicates.MANAGER_PREDICATE")
-    @Service
+    @Atomic
     public static void run(String filename, List fileEntries, IUserView userView) throws FenixServiceException {
 
         throw new UnsupportedOperationException("TO REMOVE");

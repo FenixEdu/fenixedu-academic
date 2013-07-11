@@ -19,12 +19,12 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class ReadProfessorshipsAndResponsibilitiesByExecutionDegreeAndExecutionPeriod {
 
-    @Service
+    @Atomic
     public static List run(String executionDegreeId, Integer semester, Integer teacherType) throws FenixServiceException {
 
         final ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreeId);

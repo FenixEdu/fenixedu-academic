@@ -25,7 +25,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class SelectCandidaciesService {
 
@@ -130,7 +130,7 @@ public class SelectCandidaciesService {
 
     private static final SelectCandidaciesService serviceInstance = new SelectCandidaciesService();
 
-    @Service
+    @Atomic
     public static SelectCandidaciesDTO runSelectCandidaciesService(Boolean inEnrollmentPeriod, String seminaryID)
             throws FenixServiceException, NotAuthorizedException {
         SeminaryCoordinatorOrStudentFilter.instance.execute();

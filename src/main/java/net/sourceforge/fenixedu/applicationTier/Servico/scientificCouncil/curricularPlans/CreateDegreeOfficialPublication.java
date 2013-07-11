@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.DegreeOfficialPublication;
 import org.joda.time.LocalDate;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class CreateDegreeOfficialPublication {
 
@@ -21,7 +21,7 @@ public class CreateDegreeOfficialPublication {
      * @throws FenixServiceException
      */
     @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
-    @Service
+    @Atomic
     public static void run(Degree degree, LocalDate date, String officialReference) throws FenixServiceException {
 
         if (degree == null || date == null) {

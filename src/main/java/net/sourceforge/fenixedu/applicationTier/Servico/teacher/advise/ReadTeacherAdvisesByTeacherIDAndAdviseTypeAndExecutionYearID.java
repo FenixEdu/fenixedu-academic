@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.teacher.Advise;
 import net.sourceforge.fenixedu.domain.teacher.AdviseType;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -46,7 +46,7 @@ public class ReadTeacherAdvisesByTeacherIDAndAdviseTypeAndExecutionYearID {
     private static final ReadTeacherAdvisesByTeacherIDAndAdviseTypeAndExecutionYearID serviceInstance =
             new ReadTeacherAdvisesByTeacherIDAndAdviseTypeAndExecutionYearID();
 
-    @Service
+    @Atomic
     public static List<Advise> runReadTeacherAdvisesByTeacherIDAndAdviseTypeAndExecutionYearID(AdviseType adviseType,
             String teacherID, String executionYearID) throws FenixServiceException, DomainException, NotAuthorizedException {
         try {

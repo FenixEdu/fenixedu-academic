@@ -25,7 +25,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class TeacherService extends TeacherService_Base {
 
@@ -54,7 +54,7 @@ public class TeacherService extends TeacherService_Base {
         }
     }
 
-    @Service
+    @Atomic
     public static TeacherService getTeacherService(Teacher teacher, ExecutionSemester executionPeriod) {
         TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
         if (teacherService == null) {
@@ -344,14 +344,14 @@ public class TeacherService extends TeacherService_Base {
         return new TreeSet<TeacherServiceLog>(getTeacherServiceLogSet());
     }
 
-    @Service
+    @Atomic
     public void lockTeacherCredits() {
         setTeacherServiceLock(new DateTime());
         new TeacherServiceLog(this, BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources",
                 "label.teacher.lockTeacherCredits", getExecutionPeriod().getQualifiedName()));
     }
 
-    @Service
+    @Atomic
     public void unlockTeacherCredits() {
         setTeacherServiceLock(null);
         new TeacherServiceLog(this, BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources",

@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseOccupancy;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Shift;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class ReadShiftsByExecutionCourseID {
@@ -43,7 +43,7 @@ public class ReadShiftsByExecutionCourseID {
 
     private static final ReadShiftsByExecutionCourseID serviceInstance = new ReadShiftsByExecutionCourseID();
 
-    @Service
+    @Atomic
     public static InfoExecutionCourseOccupancy runReadShiftsByExecutionCourseID(String executionCourseID)
             throws NotAuthorizedException {
         ReadShiftsByExecutionCourseIDAuthorizationFilter.instance.execute(executionCourseID);

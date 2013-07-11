@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.space.Campus;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class Announcement extends Announcement_Base {
@@ -319,7 +319,7 @@ public class Announcement extends Announcement_Base {
         return CAMPUS_EXTERNAL;
     }
 
-    @Service
+    @Atomic
     public static Announcement createAnnouncement(AnnouncementBoard board, String authorName, String authorEmail,
             MultiLanguageString body, Campus campus, List<AnnouncementCategory> categories, String place,
             DateTime publicationBeginDate, DateTime publicationEndDate, DateTime referedSubjectBeginDate,
@@ -394,13 +394,13 @@ public class Announcement extends Announcement_Base {
                 && (endPublication == null || endPublication.isAfterNow());
     }
 
-    @Service
+    @Atomic
     public void swap(AnnouncementBoard source, AnnouncementBoard destination) {
         source.removeAnnouncement(this);
         destination.addAnnouncements(this);
     }
 
-    @Service
+    @Atomic
     public void updatePriority(Integer priority) {
         setPriority(priority);
     }
@@ -423,7 +423,7 @@ public class Announcement extends Announcement_Base {
     }
 
     @Override
-    @Service
+    @Atomic
     public void setPriority(Integer priority) {
         super.setPriority(priority);
     }

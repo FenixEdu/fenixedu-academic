@@ -4,11 +4,11 @@ package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.ex
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.externalUnits.CreateExternalCurricularCourseBean;
 import net.sourceforge.fenixedu.domain.ExternalCurricularCourse;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class CreateExternalCurricularCourse {
 
-    @Service
+    @Atomic
     public static ExternalCurricularCourse run(final CreateExternalCurricularCourseBean bean) throws FenixServiceException {
 
         final ExternalCurricularCourse externalCurricularCourse =

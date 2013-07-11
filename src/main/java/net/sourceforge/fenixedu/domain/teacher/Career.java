@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.joda.time.LocalDateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.PossiblyNullEndedInterval;
 
 /**
@@ -42,7 +42,7 @@ public abstract class Career extends Career_Base {
         setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    @Service
+    @Atomic
     public void delete() {
         setPerson(null);
         setTeacher(null);

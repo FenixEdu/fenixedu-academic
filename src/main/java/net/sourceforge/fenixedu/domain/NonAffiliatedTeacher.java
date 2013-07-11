@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * @author Ricardo Rodrigues
@@ -43,7 +43,7 @@ public class NonAffiliatedTeacher extends NonAffiliatedTeacher_Base {
         return nonAffiliatedTeachers;
     }
 
-    @Service
+    @Atomic
     public static void associateToInstitutionAndExecutionCourse(final String nonAffiliatedTeacherName, final Unit institution,
             final ExecutionCourse executionCourse) {
 
@@ -60,7 +60,7 @@ public class NonAffiliatedTeacher extends NonAffiliatedTeacher_Base {
 
     }
 
-    @Service
+    @Atomic
     public void removeExecutionCourse(final ExecutionCourse executionCourse) {
         getExecutionCourses().remove(executionCourse);
     }

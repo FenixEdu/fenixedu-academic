@@ -4,7 +4,7 @@ import net.sourceforge.fenixedu.dataTransferObject.messaging.CreateConversationT
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.messaging.ConversationMessage;
 import net.sourceforge.fenixedu.domain.messaging.ConversationThread;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class CreateConversationThreadAndMessage extends ForumService {
     public CreateConversationThreadAndMessage() {
@@ -29,7 +29,7 @@ public class CreateConversationThreadAndMessage extends ForumService {
 
     private static final CreateConversationThreadAndMessage serviceInstance = new CreateConversationThreadAndMessage();
 
-    @Service
+    @Atomic
     public static void runCreateConversationThreadAndMessage(CreateConversationThreadAndMessageBean createConversationThreadAndMessageBean) {
         serviceInstance.run(createConversationThreadAndMessageBean);
     }

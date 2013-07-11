@@ -14,7 +14,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class LoginRedirectAction extends Action {
 
@@ -32,7 +32,7 @@ public class LoginRedirectAction extends Action {
         }
     }
 
-    @Service
+    @Atomic
     public Boolean reconstructURL(HttpServletRequest request) {
         final PendingRequest pendingRequest = FenixFramework.getDomainObject(request.getParameter("pendingRequest"));
         if (pendingRequest.getBuildVersion().equals(PendingRequest.buildVersion)) {

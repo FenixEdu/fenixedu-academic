@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 import net.sourceforge.fenixedu.util.BundleUtil;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class OutboundMobilityCandidacy extends OutboundMobilityCandidacy_Base implements Comparable<OutboundMobilityCandidacy> {
 
@@ -21,7 +21,7 @@ public class OutboundMobilityCandidacy extends OutboundMobilityCandidacy_Base im
         setSelected(Boolean.FALSE);
     }
 
-    @Service
+    @Atomic
     public void delete() {
         final OutboundMobilityCandidacySubmission submission = getOutboundMobilityCandidacySubmission();
         if (!submission.getOutboundMobilityCandidacyPeriod().isAcceptingCandidacies()) {
@@ -41,7 +41,7 @@ public class OutboundMobilityCandidacy extends OutboundMobilityCandidacy_Base im
         }
     }
 
-    @Service
+    @Atomic
     public void reorder(final int index) {
         final int currentOrder = getPreferenceOrder().intValue();
         if (index != currentOrder) {
@@ -88,7 +88,7 @@ public class OutboundMobilityCandidacy extends OutboundMobilityCandidacy_Base im
         delete();
     }
 
-    @Service
+    @Atomic
     public void select() {
         final OutboundMobilityCandidacySubmission submission = getOutboundMobilityCandidacySubmission();
         if (submission.getSelectedCandidacy() != this) {
@@ -106,7 +106,7 @@ public class OutboundMobilityCandidacy extends OutboundMobilityCandidacy_Base im
         }
     }
 
-    @Service
+    @Atomic
     public void unselect() {
         setSelected(Boolean.FALSE);
         setSubmissionFromSelectedCandidacy(null);

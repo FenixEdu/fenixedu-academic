@@ -12,12 +12,12 @@ import net.sourceforge.fenixedu.util.HourMinuteSecond;
 import org.joda.time.DateTimeFieldType;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class CreateRoomsPunctualScheduling {
 
     @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
-    @Service
+    @Atomic
     public static void run(RoomsPunctualSchedulingBean bean) throws FenixServiceException {
 
         List<AllocatableSpace> selectedRooms = bean.getRooms();

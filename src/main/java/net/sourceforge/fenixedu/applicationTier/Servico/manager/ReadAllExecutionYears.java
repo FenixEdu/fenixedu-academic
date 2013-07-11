@@ -7,11 +7,11 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class ReadAllExecutionYears {
 
-    @Service
+    @Atomic
     public static List<InfoExecutionYear> run() throws FenixServiceException {
         List<InfoExecutionYear> result = new ArrayList<InfoExecutionYear>();
 

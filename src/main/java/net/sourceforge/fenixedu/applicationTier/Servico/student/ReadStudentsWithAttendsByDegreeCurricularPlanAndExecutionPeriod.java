@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.student.Student;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * @author João Fialho & Rita Ferreira
@@ -47,7 +47,7 @@ public class ReadStudentsWithAttendsByDegreeCurricularPlanAndExecutionPeriod {
     private static final ReadStudentsWithAttendsByDegreeCurricularPlanAndExecutionPeriod serviceInstance =
             new ReadStudentsWithAttendsByDegreeCurricularPlanAndExecutionPeriod();
 
-    @Service
+    @Atomic
     public static Set<Student> runReadStudentsWithAttendsByDegreeCurricularPlanAndExecutionPeriod(
             DegreeCurricularPlan degreeCurricularPlan, ExecutionSemester executionSemester) throws FenixServiceException,
             NotAuthorizedException {

@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.TeacherCredits;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -22,7 +22,7 @@ import pt.ist.fenixframework.FenixFramework;
 
 public class ReadAllTeacherCredits {
 
-    @Service
+    @Atomic
     public static List<CreditLineDTO> run(String teacherID) throws ParseException {
 
         List<CreditLineDTO> creditLines = new ArrayList<CreditLineDTO>();

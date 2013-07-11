@@ -6,12 +6,12 @@ import net.sourceforge.fenixedu.domain.library.LibraryCard;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class MarkLibraryCardAsEmited {
 
     @Checked("RolePredicates.LIBRARY_PREDICATE")
-    @Service
+    @Atomic
     public static void run(LibraryCard libraryCard) {
         libraryCard.setCardEmitionDate(new DateTime());
     }

@@ -15,11 +15,11 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class ReadStudentCurricularPlansByNumberAndDegreeType {
 
-    @Service
+    @Atomic
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     public static List<StudentCurricularPlan> run(Integer studentNumber, DegreeType degreeType)
             throws NonExistingServiceException {

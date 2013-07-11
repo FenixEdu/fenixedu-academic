@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWorkProposalHeader;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class ReadFinalDegreeWorkProposalHeadersForDegreeCurricularPlan {
 
@@ -32,7 +32,7 @@ public class ReadFinalDegreeWorkProposalHeadersForDegreeCurricularPlan {
     private static final ReadFinalDegreeWorkProposalHeadersForDegreeCurricularPlan serviceInstance =
             new ReadFinalDegreeWorkProposalHeadersForDegreeCurricularPlan();
 
-    @Service
+    @Atomic
     public static List runReadFinalDegreeWorkProposalHeadersForDegreeCurricularPlan(ExecutionDegree executionDegree)
             throws NotAuthorizedException {
         try {

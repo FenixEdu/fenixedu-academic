@@ -42,7 +42,7 @@ import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 import com.google.common.base.Function;
@@ -312,7 +312,7 @@ public class ManageEnrolementPeriodsDA extends FenixDispatchAction {
         }
 
         @Override
-        @Service
+        @Atomic
         public void save() {
             for (EnrolmentPeriod period : periods) {
                 if (scope.contains(period.getDegreeCurricularPlan())) {

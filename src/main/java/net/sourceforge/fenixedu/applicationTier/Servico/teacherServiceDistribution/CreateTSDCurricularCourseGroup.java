@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCurricularCourse;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCurricularCourseGroup;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class CreateTSDCurricularCourseGroup {
@@ -41,7 +41,7 @@ public class CreateTSDCurricularCourseGroup {
 
     private static final CreateTSDCurricularCourseGroup serviceInstance = new CreateTSDCurricularCourseGroup();
 
-    @Service
+    @Atomic
     public static TSDCurricularCourseGroup runCreateTSDCurricularCourseGroup(String tsdId,
             String[] tsdCurricularCourseToGroupArray) throws NotAuthorizedException {
         try {

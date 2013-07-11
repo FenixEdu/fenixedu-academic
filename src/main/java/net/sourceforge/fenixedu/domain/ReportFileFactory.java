@@ -27,17 +27,17 @@ import net.sourceforge.fenixedu.domain.reports.TeachersListFromGiafReportFile;
 import net.sourceforge.fenixedu.domain.reports.TimetablesReportFile;
 import net.sourceforge.fenixedu.domain.reports.TutorshipProgramReportFile;
 import net.sourceforge.fenixedu.domain.reports.WrittenEvaluationReportFile;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class ReportFileFactory {
 
-    @Service
+    @Atomic
     public static PublicRelationsStudentListQueueJob createPublicRelationsStudentListQueueJob(ExecutionYear executionYear,
             DegreeType degreeType, Boolean concluded, Boolean active) {
         return new PublicRelationsStudentListQueueJob(executionYear, degreeType, concluded, active);
     }
 
-    @Service
+    @Atomic
     static public GepReportFile createStatusAndApprovalReportFile(String type, DegreeType degreeType, ExecutionYear executionYear) {
         final StatusAndApprovalReportFile statusAndApprovalReportFile = new StatusAndApprovalReportFile();
         statusAndApprovalReportFile.setType(type);
@@ -46,7 +46,7 @@ public class ReportFileFactory {
         return statusAndApprovalReportFile;
     }
 
-    @Service
+    @Atomic
     public static GepReportFile createDissertationsProposalsReportFile(String type, DegreeType degreeType,
             ExecutionYear executionYear) {
         final DissertationsProposalsReportFile dissertationsProposalsReportFile = new DissertationsProposalsReportFile();
@@ -56,7 +56,7 @@ public class ReportFileFactory {
         return dissertationsProposalsReportFile;
     }
 
-    @Service
+    @Atomic
     public static GepReportFile createSummaryOccupancyReportFile(String type, ExecutionYear executionYear) {
         final SummaryOccupancyReportFile summaryOccupancyReportFile = new SummaryOccupancyReportFile();
         summaryOccupancyReportFile.setType(type);
@@ -64,7 +64,7 @@ public class ReportFileFactory {
         return summaryOccupancyReportFile;
     }
 
-    @Service
+    @Atomic
     public static GepReportFile createWrittenEvaluationReportFile(String type, ExecutionYear executionYear) {
         final WrittenEvaluationReportFile writtenEvaluationReportFile = new WrittenEvaluationReportFile();
         writtenEvaluationReportFile.setType(type);
@@ -72,7 +72,7 @@ public class ReportFileFactory {
         return writtenEvaluationReportFile;
     }
 
-    @Service
+    @Atomic
     public static GepReportFile createDissertationsWithExternalAffiliationsReportFile(String type, DegreeType degreeType,
             ExecutionYear executionYear) {
         final DissertationsWithExternalAffiliationsReportFile dissertationsWithExternalAffiliationsReportFile =
@@ -83,7 +83,7 @@ public class ReportFileFactory {
         return dissertationsWithExternalAffiliationsReportFile;
     }
 
-    @Service
+    @Atomic
     public static GepReportFile createTeachersListFromGiafReportFile(String type, DegreeType degreeType,
             ExecutionYear executionYear) {
         final TeachersListFromGiafReportFile teachersListFromGiafReportFile = new TeachersListFromGiafReportFile();
@@ -93,7 +93,7 @@ public class ReportFileFactory {
         return teachersListFromGiafReportFile;
     }
 
-    @Service
+    @Atomic
     public static GepReportFile createTimetablesReportFile(String type, DegreeType degreeType, ExecutionYear executionYear) {
         final TimetablesReportFile timetablesReportFile = new TimetablesReportFile();
         timetablesReportFile.setType(type);
@@ -102,7 +102,7 @@ public class ReportFileFactory {
         return timetablesReportFile;
     }
 
-    @Service
+    @Atomic
     public static GepReportFile createGraduationReportFile(String type, DegreeType degreeType, ExecutionYear executionYear) {
         final GraduationReportFile graduationReportFile = new GraduationReportFile();
         graduationReportFile.setType(type);
@@ -111,14 +111,14 @@ public class ReportFileFactory {
         return graduationReportFile;
     }
 
-    @Service
+    @Atomic
     public static PublicationReportFile createPublicationsReportFile(String type) {
         final PublicationReportFile publicationReportFile = new PublicationReportFile();
         publicationReportFile.setType(type);
         return publicationReportFile;
     }
 
-    @Service
+    @Atomic
     public static GepReportFile createEctsLabelCurricularCourseReportFile(String type, DegreeType degreeType,
             ExecutionYear executionYear) {
         final EctsLabelCurricularCourseReportFile ectsLabelCurricularCourseReportFile = new EctsLabelCurricularCourseReportFile();
@@ -128,7 +128,7 @@ public class ReportFileFactory {
         return ectsLabelCurricularCourseReportFile;
     }
 
-    @Service
+    @Atomic
     public static GepReportFile createCourseLoadReportFile(String type, DegreeType degreeType, ExecutionYear executionYear) {
         final CourseLoadReportFile courseLoadReportFile = new CourseLoadReportFile();
         courseLoadReportFile.setType(type);
@@ -137,7 +137,7 @@ public class ReportFileFactory {
         return courseLoadReportFile;
     }
 
-    @Service
+    @Atomic
     public static GepReportFile createEctsLabelDegreeReportFile(String type, DegreeType degreeType, ExecutionYear executionYear) {
         final EctsLabelDegreeReportFile ectsLabelDegreeReportFile = new EctsLabelDegreeReportFile();
         ectsLabelDegreeReportFile.setType(type);
@@ -146,7 +146,7 @@ public class ReportFileFactory {
         return ectsLabelDegreeReportFile;
     }
 
-    @Service
+    @Atomic
     public static GepReportFile createEtiReportFile(String type, DegreeType degreeType, ExecutionYear executionYear) {
         final EtiReportFile etiReportFile = new EtiReportFile();
         etiReportFile.setType(type);
@@ -155,7 +155,7 @@ public class ReportFileFactory {
         return etiReportFile;
     }
 
-    @Service
+    @Atomic
     public static GepReportFile createCourseLoadAndResponsiblesReportFile(String type, DegreeType degreeType,
             ExecutionYear executionYear) {
         final CourseLoadAndResponsiblesReportFile courseLoadAndResponsiblesReportFile = new CourseLoadAndResponsiblesReportFile();
@@ -165,7 +165,7 @@ public class ReportFileFactory {
         return courseLoadAndResponsiblesReportFile;
     }
 
-    @Service
+    @Atomic
     public static GepReportFile createEurAceReportFile(String type, DegreeType degreeType, ExecutionYear executionYear) {
         final EurAceReportFile eurAceReportFile = new EurAceReportFile();
         eurAceReportFile.setType(type);
@@ -174,7 +174,7 @@ public class ReportFileFactory {
         return eurAceReportFile;
     }
 
-    @Service
+    @Atomic
     public static GepReportFile createFlunkedReportFile(String type, DegreeType degreeType, ExecutionYear executionYear) {
         final FlunkedReportFile flunkedReportFile = new FlunkedReportFile();
         flunkedReportFile.setType(type);
@@ -183,7 +183,7 @@ public class ReportFileFactory {
         return flunkedReportFile;
     }
 
-    @Service
+    @Atomic
     public static GepReportFile createRegistrationReportFile(String type, DegreeType degreeType, ExecutionYear executionYear) {
         final RegistrationReportFile registrationReportFile = new RegistrationReportFile();
         registrationReportFile.setType(type);
@@ -192,7 +192,7 @@ public class ReportFileFactory {
         return registrationReportFile;
     }
 
-    @Service
+    @Atomic
     public static GepReportFile createTeachersByShiftReportFile(String type, DegreeType degreeType, ExecutionYear executionYear) {
         final TeachersByShiftReportFile teachersByShiftReportFile = new TeachersByShiftReportFile();
         teachersByShiftReportFile.setType(type);
@@ -201,7 +201,7 @@ public class ReportFileFactory {
         return teachersByShiftReportFile;
     }
 
-    @Service
+    @Atomic
     public static GepReportFile createTutorshipProgramReportFile(String type, DegreeType degreeType, ExecutionYear executionYear) {
         final TutorshipProgramReportFile tutorshipProgramReportFile = new TutorshipProgramReportFile();
         tutorshipProgramReportFile.setType(type);
@@ -210,7 +210,7 @@ public class ReportFileFactory {
         return tutorshipProgramReportFile;
     }
 
-    @Service
+    @Atomic
     public static GepReportFile createRaidesGraduationReportFile(String type, DegreeType degreeType, ExecutionYear executionYear) {
         final RaidesGraduationReportFile reportFile = new RaidesGraduationReportFile();
         reportFile.setType(type);
@@ -219,7 +219,7 @@ public class ReportFileFactory {
         return reportFile;
     }
 
-    @Service
+    @Atomic
     public static GepReportFile createRaidesDfaReportFile(String type, DegreeType degreeType, ExecutionYear executionYear) {
         final RaidesDfaReportFile reportFile = new RaidesDfaReportFile();
         reportFile.setType(type);
@@ -228,7 +228,7 @@ public class ReportFileFactory {
         return reportFile;
     }
 
-    @Service
+    @Atomic
     public static GepReportFile createRaidesPhdReportFile(String type, DegreeType degreeType, ExecutionYear executionYear) {
         final RaidesPhdReportFile reportFile = new RaidesPhdReportFile();
         reportFile.setType(type);
@@ -237,7 +237,7 @@ public class ReportFileFactory {
         return reportFile;
     }
 
-    @Service
+    @Atomic
     public static GepReportFile createRaidesSpecializationReportFile(String type, DegreeType degreeType,
             ExecutionYear executionYear) {
         final RaidesSpecializationReportFile reportFile = new RaidesSpecializationReportFile();
@@ -247,7 +247,7 @@ public class ReportFileFactory {
         return reportFile;
     }
 
-    @Service
+    @Atomic
     public static GepReportFile createTeacherCreditsReportFile(String type, DegreeType degreeType, ExecutionYear executionYear) {
         final TeacherCreditsReportFile TeacherCreditsReportFile = new TeacherCreditsReportFile();
         TeacherCreditsReportFile.setType(type);
@@ -256,7 +256,7 @@ public class ReportFileFactory {
         return TeacherCreditsReportFile;
     }
 
-    @Service
+    @Atomic
     public static GepReportFile createEffectiveTeachingLoadReportFile(String type, DegreeType degreeType,
             ExecutionYear executionYear) {
         final EffectiveTeachingLoadReportFile effectiveTeachingLoadReportFile = new EffectiveTeachingLoadReportFile();

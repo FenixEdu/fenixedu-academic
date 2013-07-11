@@ -7,12 +7,12 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class LoggedCoordinatorCanEdit {
 
-    @Service
+    @Atomic
     public static Boolean run(String executionDegreeCode, String curricularCourseCode, String username)
             throws FenixServiceException {
         Boolean result = new Boolean(false);

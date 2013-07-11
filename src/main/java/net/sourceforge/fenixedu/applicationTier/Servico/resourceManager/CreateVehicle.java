@@ -7,12 +7,12 @@ import net.sourceforge.fenixedu.domain.resource.Vehicle;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class CreateVehicle {
 
     @Checked("RolePredicates.RESOURCE_MANAGER_PREDICATE")
-    @Service
+    @Atomic
     public static void run(String numberPlate, String make, String model, YearMonthDay acquisition, YearMonthDay cease,
             BigDecimal allocationCostMultiplier) {
 

@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 
 public class FileUploadBean implements Serializable {
@@ -79,12 +79,12 @@ public class FileUploadBean implements Serializable {
         bytes = byteArrayOutputStream.toByteArray();
     }
 
-    @Service
+    @Atomic
     public void uploadEvaluators() {
         facultyEvaluationProcess.uploadEvaluators(bytes);
     }
 
-    @Service
+    @Atomic
     public void uploadApprovedEvaluations() {
         facultyEvaluationProcess.uploadApprovedEvaluations(bytes);
     }

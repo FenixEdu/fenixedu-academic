@@ -7,11 +7,11 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.support.InfoFAQEntry;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.support.FAQEntry;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class ReadFAQEntries {
 
-    @Service
+    @Atomic
     public static Collection run() {
         List<InfoFAQEntry> result = new ArrayList<InfoFAQEntry>();
 

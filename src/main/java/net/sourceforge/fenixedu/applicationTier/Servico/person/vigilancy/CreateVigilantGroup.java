@@ -7,11 +7,11 @@ import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class CreateVigilantGroup {
 
-    @Service
+    @Atomic
     public static void run(String name, Unit unit, String convokeStrategy, String contactEmail, String rulesLink,
             DateTime beginFirstAllowedPeriod, DateTime endFirstAllowedPeriod, DateTime beginSecondAllowedPeriod,
             DateTime endSecondAllowedPeriod) {

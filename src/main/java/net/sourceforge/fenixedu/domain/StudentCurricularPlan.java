@@ -94,7 +94,7 @@ import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.predicates.AndPredicate;
 import pt.utl.ist.fenix.tools.predicates.Predicate;
 import pt.utl.ist.fenix.tools.predicates.ResultCollection;
@@ -2135,7 +2135,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
                 EnrolmentContext.createForNoCourseGroupCurriculumGroupEnrolment(this, bean)).manage();
     }
 
-    @Service
+    @Atomic
     public RuleResult removeCurriculumModulesFromNoCourseGroupCurriculumGroup(final List<CurriculumModule> curriculumModules,
             final ExecutionSemester executionSemester, final NoCourseGroupCurriculumGroupType groupType) {
         final EnrolmentContext context =
@@ -2953,7 +2953,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return this.getStartExecutionPeriod().isBefore(FENIX_START_DATE_SEMESTER) && !this.isBolonhaDegree();
     }
 
-    @Service
+    @Atomic
     public void setEvaluationsForCurriculumValidation(List<List<MarkSheetEnrolmentEvaluationBean>> enrolmentEvaluationsBeanList) {
         for (List<MarkSheetEnrolmentEvaluationBean> evaluationsList : enrolmentEvaluationsBeanList) {
             setIndividualEvaluationsForCurriculumValidation(evaluationsList);
@@ -2997,7 +2997,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return enrolmentEvaluationsBeanList;
     }
 
-    @Service
+    @Atomic
     public void editEndStageDate(LocalDate date) {
         this.setEndStageDate(date);
     }

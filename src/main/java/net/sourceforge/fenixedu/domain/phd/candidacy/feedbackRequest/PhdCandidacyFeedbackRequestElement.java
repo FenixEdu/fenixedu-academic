@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class PhdCandidacyFeedbackRequestElement extends PhdCandidacyFeedbackRequestElement_Base {
 
@@ -56,7 +56,7 @@ public class PhdCandidacyFeedbackRequestElement extends PhdCandidacyFeedbackRequ
         return getProcess().getCandidacyProcess();
     }
 
-    @Service
+    @Atomic
     public void delete() {
         checkIfCanBeDeleted();
         disconnect();

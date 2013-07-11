@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class CardGenerationProblem extends CardGenerationProblem_Base {
 
@@ -43,7 +43,7 @@ public class CardGenerationProblem extends CardGenerationProblem_Base {
         deleteDomainObject();
     }
 
-    @Service
+    @Atomic
     public void setPersonForCardGenerationEntry(final CardGenerationEntry cardGenerationEntry, final Person person) {
         cardGenerationEntry.setPerson(person);
         final CardGenerationBatch cardGenerationBatchWithProblems = cardGenerationEntry.getCardGenerationBatch();

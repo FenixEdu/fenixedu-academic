@@ -7,13 +7,13 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class InsertProfessorShipNonAffiliatedTeacher {
 
     @Checked("RolePredicates.GEP_PREDICATE")
-    @Service
+    @Atomic
     public static void run(String nonAffiliatedTeacherID, String executionCourseID) {
 
         final ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseID);
@@ -35,7 +35,7 @@ public class InsertProfessorShipNonAffiliatedTeacher {
 
     // Service Invokers migrated from Berserk
 
-    @Service
+    @Atomic
     public static void runInsertProfessorShipNonAffiliatedTeacher(String nonAffiliatedTeacherID, String executionCourseID)
             throws NotAuthorizedException {
         try {

@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.Curriculum;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -22,7 +22,7 @@ import pt.ist.fenixframework.FenixFramework;
 public class EditCurriculum {
 
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-    @Service
+    @Atomic
     public static void run(InfoCurriculum infoCurriculum, String language, String username) throws FenixServiceException {
         CurricularCourse curricularCourse =
                 (CurricularCourse) FenixFramework.getDomainObject(infoCurriculum.getInfoCurricularCourse()

@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
-import jvstm.TransactionalCommand;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.QueueJobResult;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -41,8 +40,9 @@ import org.apache.commons.collections.Predicate;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
-import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.Transaction;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.Atomic.TxMode;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.resources.DefaultResourceBundleProvider;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 import pt.utl.ist.fenix.tools.spreadsheet.SheetData;
@@ -224,32 +224,26 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
             Thread thread = new Thread() {
 
                 @Override
+                @Atomic(mode = TxMode.READ)
                 public void run() {
-                    Transaction.withTransaction(true, new TransactionalCommand() {
+                    for (String oid : block) {
+                        Event event = null;
+                        try {
+                            event = FenixFramework.getDomainObject(oid);
 
-                        @Override
-                        public void doIt() {
+                            if (!isAccountingEventForReport(event)) {
+                                continue;
+                            }
 
-                            for (String oid : block) {
-                                Event event = null;
-                                try {
-                                    event = FenixFramework.getDomainObject(oid);
-
-                                    if (!isAccountingEventForReport(event)) {
-                                        continue;
-                                    }
-
-                                    result.add(writeEvent(event));
-                                } catch (Throwable e) {
-                                    e.printStackTrace(System.err);
-                                    if (event != null) {
-                                        System.err.println("Error on event -> " + event.getExternalId());
-                                    }
-                                }
-
+                            result.add(writeEvent(event));
+                        } catch (Throwable e) {
+                            e.printStackTrace(System.err);
+                            if (event != null) {
+                                System.err.println("Error on event -> " + event.getExternalId());
                             }
                         }
-                    });
+
+                    }
                 }
             };
 
@@ -474,30 +468,25 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
             Thread thread = new Thread() {
 
                 @Override
+                @Atomic(mode = TxMode.READ)
                 public void run() {
-                    Transaction.withTransaction(true, new TransactionalCommand() {
+                    for (String oid : block) {
+                        Event event = FenixFramework.getDomainObject(oid);
 
-                        @Override
-                        public void doIt() {
-                            for (String oid : block) {
-                                Event event = FenixFramework.getDomainObject(oid);
+                        try {
+                            if (!isAccountingEventForReport(event)) {
+                                continue;
+                            }
 
-                                try {
-                                    if (!isAccountingEventForReport(event)) {
-                                        continue;
-                                    }
-
-                                    result.addAll(writeExemptionInformation(event));
-                                } catch (Throwable e) {
-                                    e.printStackTrace(System.err);
-                                    if (event != null) {
-                                        System.err.println("Error on event -> " + event.getExternalId());
-                                    }
-                                }
-
+                            result.addAll(writeExemptionInformation(event));
+                        } catch (Throwable e) {
+                            e.printStackTrace(System.err);
+                            if (event != null) {
+                                System.err.println("Error on event -> " + event.getExternalId());
                             }
                         }
-                    });
+
+                    }
                 }
             };
 
@@ -588,30 +577,25 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
             Thread thread = new Thread() {
 
                 @Override
+                @Atomic(mode = TxMode.READ)
                 public void run() {
-                    Transaction.withTransaction(true, new TransactionalCommand() {
+                    for (String oid : block) {
+                        Event event = FenixFramework.getDomainObject(oid);
 
-                        @Override
-                        public void doIt() {
-                            for (String oid : block) {
-                                Event event = FenixFramework.getDomainObject(oid);
+                        try {
+                            if (!isAccountingEventForReport(event)) {
+                                continue;
+                            }
 
-                                try {
-                                    if (!isAccountingEventForReport(event)) {
-                                        continue;
-                                    }
-
-                                    result.addAll(writeTransactionInformation(event));
-                                } catch (Throwable e) {
-                                    e.printStackTrace(System.err);
-                                    if (event != null) {
-                                        System.err.println("Error on event -> " + event.getExternalId());
-                                    }
-                                }
-
+                            result.addAll(writeTransactionInformation(event));
+                        } catch (Throwable e) {
+                            e.printStackTrace(System.err);
+                            if (event != null) {
+                                System.err.println("Error on event -> " + event.getExternalId());
                             }
                         }
-                    });
+
+                    }
                 }
             };
 
@@ -810,7 +794,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
         return all;
     }
 
-    @Service
+    @Atomic
     public static EventReportQueueJob createRequest(EventReportQueueJobBean bean) {
         return new EventReportQueueJob(bean);
     }

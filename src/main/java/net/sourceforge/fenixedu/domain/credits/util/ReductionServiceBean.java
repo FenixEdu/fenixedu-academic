@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.teacher.evaluation.FacultyEvaluationProce
 import net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationMark;
 import net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationProcess;
 import net.sourceforge.fenixedu.util.BundleUtil;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class ReductionServiceBean implements Serializable {
     private Teacher teacher;
@@ -52,7 +52,7 @@ public class ReductionServiceBean implements Serializable {
         return category != null ? category.getName().getContent() : null;
     }
 
-    @Service
+    @Atomic
     public TeacherService getTeacherService() {
         ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
         TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);

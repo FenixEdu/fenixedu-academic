@@ -18,7 +18,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class WriteCandidateEnrolments {
@@ -99,7 +99,7 @@ public class WriteCandidateEnrolments {
 
     private static final WriteCandidateEnrolments serviceInstance = new WriteCandidateEnrolments();
 
-    @Service
+    @Atomic
     public static void runWriteCandidateEnrolments(Set<String> selectedCurricularCoursesIDs, String candidateID, Double credits,
             String givenCreditsRemarks) throws FenixServiceException, NotAuthorizedException {
         WriteCandidateEnrolmentsAuhorizationFilter.instance.execute(selectedCurricularCoursesIDs, candidateID, credits,

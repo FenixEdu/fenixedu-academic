@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.domain.contacts.PartyContact;
 import net.sourceforge.fenixedu.domain.contacts.PartyContactType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class MobilePhoneBean extends PartyContactBean {
 
@@ -28,7 +28,7 @@ public class MobilePhoneBean extends PartyContactBean {
     }
 
     @Override
-    @Service
+    @Atomic
     public Boolean edit() {
         boolean isValueChanged = super.edit();
         if (isValueChanged) {

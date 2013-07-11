@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
 
 import org.apache.struts.util.LabelValueBean;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -106,7 +106,7 @@ public class DeleteExerciseVariation {
 
     private static final DeleteExerciseVariation serviceInstance = new DeleteExerciseVariation();
 
-    @Service
+    @Atomic
     public static List<LabelValueBean> runDeleteExerciseVariation(String executionCourseId, String questionCode)
             throws InvalidArgumentsServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);

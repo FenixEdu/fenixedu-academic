@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class LibraryMissingCardsDocument extends LibraryMissingCardsDocument_Base {
 
@@ -30,7 +30,7 @@ public class LibraryMissingCardsDocument extends LibraryMissingCardsDocument_Bas
         return new RoleGroup(RoleType.LIBRARY);
     }
 
-    @Service
+    @Atomic
     public static void store(List<LibraryCard> source, Person operator, byte[] content) {
         if (PropertiesManager.getBooleanProperty(CONFIG_DSPACE_DOCUMENT_STORE)) {
             DateTime time = new DateTime();

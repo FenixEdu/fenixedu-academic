@@ -27,7 +27,7 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -183,14 +183,14 @@ public class ReadDistributedTestMarksToString {
 
     private static final ReadDistributedTestMarksToString serviceInstance = new ReadDistributedTestMarksToString();
 
-    @Service
+    @Atomic
     public static String runReadDistributedTestMarksToString(String executionCourseId, String distributedTestId)
             throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
         return serviceInstance.run(executionCourseId, distributedTestId);
     }
 
-    @Service
+    @Atomic
     public static String runReadDistributedTestMarksToString(String executionCourseId, String[] distributedTestCodes)
             throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);

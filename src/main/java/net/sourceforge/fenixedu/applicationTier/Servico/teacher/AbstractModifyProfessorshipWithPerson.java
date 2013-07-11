@@ -7,10 +7,10 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public abstract class AbstractModifyProfessorshipWithPerson {
-    @Service
+    @Atomic
     public static Boolean run(Person person) throws NotAuthorizedException {
         /* start chain */
         Person requester = AccessControl.getPerson();

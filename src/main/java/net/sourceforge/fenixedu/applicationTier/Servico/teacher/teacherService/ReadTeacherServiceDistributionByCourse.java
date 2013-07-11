@@ -31,7 +31,7 @@ import net.sourceforge.fenixedu.domain.Teacher;
 
 import org.joda.time.Duration;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -230,7 +230,7 @@ public class ReadTeacherServiceDistributionByCourse {
 
     private static final ReadTeacherServiceDistributionByCourse serviceInstance = new ReadTeacherServiceDistributionByCourse();
 
-    @Service
+    @Atomic
     public static List runReadTeacherServiceDistributionByCourse(String departmentId, List<String> executionPeriodsIDs)
             throws FenixServiceException, NotAuthorizedException {
         try {

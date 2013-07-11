@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -22,7 +22,7 @@ import pt.ist.fenixframework.FenixFramework;
  */
 public class ReadExecutionDegreesByExecutionYearAndType {
 
-    @Service
+    @Atomic
     public static List run(String executionYearOID, Set<DegreeType> degreeTypes) {
         final ExecutionYear executionYear = FenixFramework.getDomainObject(executionYearOID);
 
@@ -33,7 +33,7 @@ public class ReadExecutionDegreesByExecutionYearAndType {
         return getInfoExecutionDegrees(executionDegrees);
     }
 
-    @Service
+    @Atomic
     public static List run(final DegreeType typeOfCourse) {
 
         final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
@@ -48,7 +48,7 @@ public class ReadExecutionDegreesByExecutionYearAndType {
         return infoExecutionDegrees;
     }
 
-    @Service
+    @Atomic
     public static List run(Degree degree, ExecutionYear executionYear, String tmp) {
         final List<ExecutionDegree> executionDegrees =
                 ExecutionDegree.getAllByDegreeAndExecutionYear(degree, executionYear.getYear());

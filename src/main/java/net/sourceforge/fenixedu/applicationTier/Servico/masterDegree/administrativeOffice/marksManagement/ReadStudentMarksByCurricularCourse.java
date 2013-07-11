@@ -25,7 +25,7 @@ import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -34,7 +34,7 @@ import pt.ist.fenixframework.FenixFramework;
  */
 public class ReadStudentMarksByCurricularCourse {
 
-    @Service
+    @Atomic
     public static List run(String curricularCourseID, Integer studentNumber, String executionYear, String enrolmentId)
             throws FenixServiceException {
 

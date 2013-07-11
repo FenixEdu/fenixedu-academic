@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExistingSe
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -22,7 +22,7 @@ import pt.ist.fenixframework.FenixFramework;
 public class InsertNonAffiliatedTeacher {
 
     @Checked("RolePredicates.GEP_PREDICATE")
-    @Service
+    @Atomic
     public static NonAffiliatedTeacher run(String nonAffiliatedTeacherName, String institutionID)
             throws NotExistingServiceException {
         final Unit institution = (Unit) FenixFramework.getDomainObject(institutionID);
@@ -43,7 +43,7 @@ public class InsertNonAffiliatedTeacher {
 
     // Service Invokers migrated from Berserk
 
-    @Service
+    @Atomic
     public static NonAffiliatedTeacher runInsertNonAffiliatedTeacher(String nonAffiliatedTeacherName, String institutionID)
             throws NotExistingServiceException, NotAuthorizedException {
         try {

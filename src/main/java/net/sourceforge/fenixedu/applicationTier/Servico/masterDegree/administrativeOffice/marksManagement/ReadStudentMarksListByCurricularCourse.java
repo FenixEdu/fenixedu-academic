@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 
 import org.apache.commons.beanutils.BeanComparator;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class ReadStudentMarksListByCurricularCourse {
@@ -53,7 +53,7 @@ public class ReadStudentMarksListByCurricularCourse {
 
     private static final ReadStudentMarksListByCurricularCourse serviceInstance = new ReadStudentMarksListByCurricularCourse();
 
-    @Service
+    @Atomic
     public static List runReadStudentMarksListByCurricularCourse(IUserView userView, String curricularCourseID,
             String executionYear) throws ExcepcaoInexistente, FenixServiceException, NotAuthorizedException {
         StudentListByCurricularCourseAuthorizationFilter.instance.execute(curricularCourseID);

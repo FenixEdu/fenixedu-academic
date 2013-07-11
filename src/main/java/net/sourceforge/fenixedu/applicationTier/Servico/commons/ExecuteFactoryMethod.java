@@ -2,11 +2,11 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 
 
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class ExecuteFactoryMethod {
 
-    @Service
+    @Atomic
     public static Object run(FactoryExecutor factoryExecutor) {
         if (factoryExecutor != null) {
             return factoryExecutor.execute();

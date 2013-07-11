@@ -28,7 +28,7 @@ import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class Alumni extends Alumni_Base {
 
@@ -478,7 +478,7 @@ public class Alumni extends Alumni_Base {
         return hasPasswordRequest && !hasPasswordRequestAccepted;
     }
 
-    @Service
+    @Atomic
     public void validateEmailFromRegistrationProcess() {
         final Person person = getStudent().getPerson();
         for (final EmailAddress address : person.getPendingEmailAddresses()) {

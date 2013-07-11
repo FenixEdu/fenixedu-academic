@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.util.BundleUtil;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class GOPSendMessageService {
     private static Sender GOP_SENDER = null;
@@ -49,7 +49,7 @@ public class GOPSendMessageService {
         return null;
     }
 
-    @Service
+    @Atomic
     public static void sendMessage(Collection<Recipient> spaceManagers, String email, String subject, String body) {
         final Sender sender = getGOPSender();
         if (email != null || !spaceManagers.isEmpty()) {
@@ -57,7 +57,7 @@ public class GOPSendMessageService {
         }
     }
 
-    @Service
+    @Atomic
     public static void requestRoom(WrittenTest test) {
         final String date = new SimpleDateFormat("dd/MM/yyyy").format(test.getDay().getTime());
         final String time = new SimpleDateFormat("HH:mm").format(test.getBeginning().getTime());
@@ -91,7 +91,7 @@ public class GOPSendMessageService {
         test.setRequestRoomSentDate(new DateTime());
     }
 
-    @Service
+    @Atomic
     public static void requestChangeRoom(WrittenTest test, Date oldDay, Date oldBeginning, Date oldEnd) {
 
         final String oldDate = new SimpleDateFormat("dd/MM/yyyy").format(oldDay);

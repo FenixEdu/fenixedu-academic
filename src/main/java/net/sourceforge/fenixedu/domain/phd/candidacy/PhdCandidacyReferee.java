@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdCandidacyRefereeAlert;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class PhdCandidacyReferee extends PhdCandidacyReferee_Base {
@@ -63,7 +63,7 @@ public class PhdCandidacyReferee extends PhdCandidacyReferee_Base {
         return getPhdProgramCandidacyProcess().getIndividualProgramProcess();
     }
 
-    @Service
+    @Atomic
     public void sendEmail() {
         sendEmail(createSubject(), createBody());
     }

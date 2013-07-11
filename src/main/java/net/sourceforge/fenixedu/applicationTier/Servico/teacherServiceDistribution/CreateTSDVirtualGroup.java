@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCourse;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDVirtualCourseGroup;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class CreateTSDVirtualGroup {
@@ -40,7 +40,7 @@ public class CreateTSDVirtualGroup {
 
     private static final CreateTSDVirtualGroup serviceInstance = new CreateTSDVirtualGroup();
 
-    @Service
+    @Atomic
     public static TSDCourse runCreateTSDVirtualGroup(String courseName, String tsdId, String periodId, String[] shiftTypesArray,
             String[] degreeCurricularPlansIdArray) throws NotAuthorizedException {
         try {

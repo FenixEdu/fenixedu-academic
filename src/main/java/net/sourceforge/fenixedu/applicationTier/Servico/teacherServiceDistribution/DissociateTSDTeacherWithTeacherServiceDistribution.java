@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilte
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDTeacher;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class DissociateTSDTeacherWithTeacherServiceDistribution {
@@ -22,7 +22,7 @@ public class DissociateTSDTeacherWithTeacherServiceDistribution {
     private static final DissociateTSDTeacherWithTeacherServiceDistribution serviceInstance =
             new DissociateTSDTeacherWithTeacherServiceDistribution();
 
-    @Service
+    @Atomic
     public static void runDissociateTSDTeacherWithTeacherServiceDistribution(String tsdId, String tsdTeacherId)
             throws NotAuthorizedException {
         try {

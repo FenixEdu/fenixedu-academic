@@ -7,12 +7,12 @@ import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class EditContextFromCurricularCourse {
 
-    @Service
+    @Atomic
     public static void run(CurricularCourse curricularCourse, Context context, CourseGroup courseGroup, Integer year,
             Integer semester, String beginExecutionPeriodID, String endExecutionPeriodID) {
 

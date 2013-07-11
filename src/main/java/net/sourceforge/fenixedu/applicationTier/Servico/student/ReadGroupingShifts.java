@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -32,7 +32,7 @@ import pt.ist.fenixframework.FenixFramework;
 public class ReadGroupingShifts {
 
     @Checked("RolePredicates.STUDENT_PREDICATE")
-    @Service
+    @Atomic
     public static InfoSiteShifts run(String groupingCode, String studentGroupCode) throws FenixServiceException {
 
         InfoSiteShifts infoSiteShifts = new InfoSiteShifts();

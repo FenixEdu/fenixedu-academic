@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class PhdGratuityExternalScholarshipExemption extends PhdGratuityExternalScholarshipExemption_Base {
@@ -32,7 +32,7 @@ public class PhdGratuityExternalScholarshipExemption extends PhdGratuityExternal
         this.setExternalScholarshipPhdGratuityContribuitionEvent(event);
     }
 
-    @Service
+    @Atomic
     public static PhdGratuityExternalScholarshipExemption createPhdGratuityExternalScholarshipExemption(Person responsible,
             Money value, Party party, PhdGratuityEvent event) {
         if (event.hasExemptionsOfType(PhdGratuityExternalScholarshipExemption.class)) {

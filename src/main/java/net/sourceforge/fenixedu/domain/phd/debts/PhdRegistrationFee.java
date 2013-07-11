@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class PhdRegistrationFee extends PhdRegistrationFee_Base {
 
@@ -71,7 +71,7 @@ public class PhdRegistrationFee extends PhdRegistrationFee_Base {
         return null;
     }
 
-    @Service
+    @Atomic
     static public PhdRegistrationFee create(final PhdIndividualProgramProcess process) {
         return new PhdRegistrationFee(process);
     }

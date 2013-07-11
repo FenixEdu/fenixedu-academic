@@ -16,13 +16,13 @@ import net.sourceforge.fenixedu.domain.space.Campus;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class CreateExecutionDegreesForExecutionYear {
 
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-    @Service
+    @Atomic
     public static List<DegreeCurricularPlan> run(final String[] degreeCurricularPlansIDs,
             final String[] bolonhaDegreeCurricularPlansIDs, final String executionYearID, final String campusName,
             final Boolean publishedExamMap, final Calendar lessonSeason1BeginDate, final Calendar lessonSeason1EndDate,

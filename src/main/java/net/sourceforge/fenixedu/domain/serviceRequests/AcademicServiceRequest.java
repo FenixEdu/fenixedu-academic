@@ -35,7 +35,7 @@ import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base {
@@ -195,7 +195,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
         return getDescription(getAcademicServiceRequestType());
     }
 
-    @Service
+    @Atomic
     final public void process() throws DomainException {
         process(AccessControl.getPerson());
     }
@@ -212,25 +212,25 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
         process(AccessControl.getPerson(), situationDate);
     }
 
-    @Service
+    @Atomic
     public void sendToExternalEntity(final YearMonthDay sendDate, final String description) {
         edit(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.SENT_TO_EXTERNAL_ENTITY,
                 AccessControl.getPerson(), sendDate, description));
     }
 
-    @Service
+    @Atomic
     final public void receivedFromExternalEntity(final YearMonthDay receivedDate, final String description) {
         edit(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.RECEIVED_FROM_EXTERNAL_ENTITY,
                 AccessControl.getPerson(), receivedDate, description));
     }
 
-    @Service
+    @Atomic
     final public void reject(final String justification) {
         edit(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.REJECTED, AccessControl.getPerson(),
                 justification));
     }
 
-    @Service
+    @Atomic
     final public void cancel(final String justification) {
         edit(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.CANCELLED, AccessControl.getPerson(),
                 justification));
@@ -257,7 +257,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
                 justification));
     }
 
-    @Service
+    @Atomic
     final public void conclude(final YearMonthDay situationDate, final String justification, boolean sendEmail) {
         conclude(AccessControl.getPerson(), situationDate, justification);
         if (sendEmail) {
@@ -295,7 +295,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
         new Message(sender, sender.getReplyTos(), recipient.asCollection(), getDescription(), body, "");
     }
 
-    @Service
+    @Atomic
     final public void delivered() {
         delivered(AccessControl.getPerson());
     }

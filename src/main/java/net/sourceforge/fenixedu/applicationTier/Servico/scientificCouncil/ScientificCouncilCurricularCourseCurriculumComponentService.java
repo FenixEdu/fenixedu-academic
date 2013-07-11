@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * @author João Mota
@@ -21,7 +21,7 @@ import pt.ist.fenixWebFramework.services.Service;
 public class ScientificCouncilCurricularCourseCurriculumComponentService {
 
     @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
-    @Service
+    @Atomic
     public static SiteView run(ISiteComponent bodyComponent, String curricularCourseId, Integer curriculumId)
             throws FenixServiceException {
 

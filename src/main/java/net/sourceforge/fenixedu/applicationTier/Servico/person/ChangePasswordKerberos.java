@@ -10,11 +10,11 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.kerberos.KerberosException;
 import net.sourceforge.fenixedu.util.kerberos.Script;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class ChangePasswordKerberos {
 
-    @Service
+    @Atomic
     @Checked("RolePredicates.PERSON_PREDICATE")
     public static void run(IUserView userView, String oldPassword, String newPassword) throws Exception {
         Person person = userView.getPerson();

@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public abstract class PersistentAccessGroup extends PersistentAccessGroup_Base {
     protected PersistentAccessGroup() {
@@ -61,7 +61,7 @@ public abstract class PersistentAccessGroup extends PersistentAccessGroup_Base {
         return newGroup;
     }
 
-    @Service
+    @Atomic
     public PersistentAccessGroup delete() {
         PersistentAccessGroup newGroup = instantiate();
         newGroup.copy(this);

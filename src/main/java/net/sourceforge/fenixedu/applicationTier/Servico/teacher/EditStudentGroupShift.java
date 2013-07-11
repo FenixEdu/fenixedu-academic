@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.GroupsAndShiftsManagementLog;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -61,7 +61,7 @@ public class EditStudentGroupShift {
 
     private static final EditStudentGroupShift serviceInstance = new EditStudentGroupShift();
 
-    @Service
+    @Atomic
     public static Boolean runEditStudentGroupShift(String executionCourseCode, String studentGroupCode,
             String groupPropertiesCode, String newShiftCode) throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseCode);

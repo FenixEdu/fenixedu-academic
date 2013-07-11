@@ -26,7 +26,7 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * 
@@ -346,14 +346,14 @@ public class Employee extends Employee_Base {
         return count >= several ? true : false;
     }
 
-    @Service
+    @Atomic
     public void assignPermission(final Department department) {
         this.getPerson().getManageableDepartmentCredits().add(department);
         this.getPerson().addPersonRoleByRoleType(RoleType.DEPARTMENT_CREDITS_MANAGER);
         this.getPerson().addPersonRoleByRoleType(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE);
     }
 
-    @Service
+    @Atomic
     public void removePermission(Department department) {
         if (!this.hasMultipleDepartments()) {
             this.getPerson().removeRoleByType(RoleType.DEPARTMENT_CREDITS_MANAGER);

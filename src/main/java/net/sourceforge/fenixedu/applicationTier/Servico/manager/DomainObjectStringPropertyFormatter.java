@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.util.StringFormatter;
 import org.apache.commons.beanutils.PropertyUtils;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.DomainObject;
 
 /**
@@ -23,7 +23,7 @@ import pt.ist.fenixframework.DomainObject;
 public class DomainObjectStringPropertyFormatter {
 
     @Checked("RolePredicates.MANAGER_PREDICATE")
-    @Service
+    @Atomic
     public static void run(Class clazz, String slotName) throws FenixServiceException {
 
         try {

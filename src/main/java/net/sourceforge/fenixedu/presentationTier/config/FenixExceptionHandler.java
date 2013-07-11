@@ -26,7 +26,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ExceptionHandler;
 import org.apache.struts.config.ExceptionConfig;
 
-import pt.ist.fenixframework.pstm.Transaction;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * @author João Mota
@@ -128,27 +128,27 @@ public class FenixExceptionHandler extends ExceptionHandler {
 
     private static class ErrorLogger extends Thread {
 
-        private String path;
+        private final String path;
 
-        private String referer;
+        private final String referer;
 
-        private String[] parameters;
+        private final String[] parameters;
 
-        private String queryString;
+        private final String queryString;
 
-        private String user;
+        private final String user;
 
-        private String requestAttributes;
+        private final String requestAttributes;
 
-        private String sessionAttributes;
+        private final String sessionAttributes;
 
-        private String stackTrace;
+        private final String stackTrace;
 
-        private String exceptionType;
+        private final String exceptionType;
 
         private ErrorLog errorLog;
 
-        private Boolean post;
+        private final Boolean post;
 
         public ErrorLogger(String path, String referer, String[] parameters, String queryString, String user,
                 String requestAttributes, String sessionAttributes, String stackTrace, String exceptionType, Boolean post) {
@@ -165,16 +165,12 @@ public class FenixExceptionHandler extends ExceptionHandler {
             this.post = post;
         }
 
+        @Atomic
         @Override
         public void run() {
-            Transaction.withTransaction(new jvstm.TransactionalCommand() {
-                @Override
-                public void doIt() {
-                    errorLog =
-                            RequestLog.registerError(path, referer, parameters, queryString, user, requestAttributes,
-                                    sessionAttributes, stackTrace, exceptionType, post).getErrorLog();
-                }
-            });
+            errorLog =
+                    RequestLog.registerError(path, referer, parameters, queryString, user, requestAttributes, sessionAttributes,
+                            stackTrace, exceptionType, post).getErrorLog();
         }
 
         public ErrorLog getErrorLog() {

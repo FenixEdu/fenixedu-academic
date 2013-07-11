@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.ResearchSiteManagerAuthor
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.UnitSiteLayoutType;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * Changes the layout of a unit site.
@@ -22,7 +22,7 @@ public class ChangeUnitSiteLayout {
 
     private static final ChangeUnitSiteLayout serviceInstance = new ChangeUnitSiteLayout();
 
-    @Service
+    @Atomic
     public static void runChangeUnitSiteLayout(UnitSite site, UnitSiteLayoutType layout) throws NotAuthorizedException {
         ResearchSiteManagerAuthorizationFilter.instance.execute(site);
         serviceInstance.run(site, layout);

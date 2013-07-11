@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.period.MobilityApplicationPeriod;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class MobilityQuota extends MobilityQuota_Base {
 
@@ -61,7 +61,7 @@ public class MobilityQuota extends MobilityQuota_Base {
         }
     }
 
-    @Service
+    @Atomic
     public static MobilityQuota createVacancy(final MobilityApplicationPeriod period, final Degree degree,
             final MobilityProgram mobilityProgram, final UniversityUnit unit, final Integer numberOfOpenings) {
         return new MobilityQuota(period, degree, mobilityProgram, unit, numberOfOpenings);

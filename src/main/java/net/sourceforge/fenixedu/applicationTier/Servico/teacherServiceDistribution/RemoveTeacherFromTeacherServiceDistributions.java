@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDTeacher;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -32,7 +32,7 @@ public class RemoveTeacherFromTeacherServiceDistributions {
     private static final RemoveTeacherFromTeacherServiceDistributions serviceInstance =
             new RemoveTeacherFromTeacherServiceDistributions();
 
-    @Service
+    @Atomic
     public static void runRemoveTeacherFromTeacherServiceDistributions(String tsdId, String tsdTeacherId)
             throws FenixServiceException, NotAuthorizedException {
         try {

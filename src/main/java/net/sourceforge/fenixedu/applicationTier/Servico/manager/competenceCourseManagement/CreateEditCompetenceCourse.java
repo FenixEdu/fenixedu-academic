@@ -14,13 +14,13 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import org.apache.commons.lang.StringUtils;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class CreateEditCompetenceCourse {
 
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-    @Service
+    @Atomic
     public static InfoCompetenceCourse run(String competenceCourseID, String code, String name, String[] departmentIDs)
             throws NonExistingServiceException, InvalidArgumentsServiceException {
         List<Department> departments = new ArrayList<Department>();

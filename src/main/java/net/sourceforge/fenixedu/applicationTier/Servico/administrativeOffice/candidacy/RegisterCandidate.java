@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.util.workflow.StateMachine;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -22,7 +22,7 @@ import pt.ist.fenixWebFramework.services.Service;
 public class RegisterCandidate {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-    @Service
+    @Atomic
     public static void run(RegisterCandidacyBean candidacyBean) {
 
         StateMachine.execute(candidacyBean.getCandidacy().getActiveCandidacySituation(), new StateBean(

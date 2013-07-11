@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class ExternalTeacherAuthorization extends ExternalTeacherAuthorization_Base {
 
@@ -15,7 +15,7 @@ public class ExternalTeacherAuthorization extends ExternalTeacherAuthorization_B
         super();
     }
 
-    @Service
+    @Atomic
     public void revoke() {
         this.setActive(false);
         this.setRevoker(AccessControl.getPerson());

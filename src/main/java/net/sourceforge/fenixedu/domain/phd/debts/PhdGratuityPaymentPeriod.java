@@ -85,11 +85,11 @@ public class PhdGratuityPaymentPeriod extends PhdGratuityPaymentPeriod_Base {
     }
 
     /*
-     * @Service public static final PhdGratuityPaymentPeriod
+     * @Atomic public static final PhdGratuityPaymentPeriod
      * makeNewFirstStandardPeriod() { return new PhdGratuityPaymentPeriod(1, 1,
      * 30, 6, 31, 8); }
      * 
-     * @Service public static final PhdGratuityPaymentPeriod
+     * @Atomic public static final PhdGratuityPaymentPeriod
      * makeNewSecondStandardPeriod() { return new PhdGratuityPaymentPeriod(1, 7,
      * 31, 12, 28, 2); }
      */

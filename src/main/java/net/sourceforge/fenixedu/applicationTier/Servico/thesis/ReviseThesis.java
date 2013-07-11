@@ -2,11 +2,11 @@ package net.sourceforge.fenixedu.applicationTier.Servico.thesis;
 
 
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class ReviseThesis {
 
-    @Service
+    @Atomic
     public static void run(Thesis thesis) {
         thesis.allowRevision();
     }

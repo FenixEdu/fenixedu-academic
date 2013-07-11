@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.domain.personnelSection.contracts;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ContractSituation extends ContractSituation_Base {
@@ -20,7 +20,7 @@ public class ContractSituation extends ContractSituation_Base {
         setMustHaveAssociatedExemption(Boolean.FALSE);
     }
 
-    @Service
+    @Atomic
     public void edit(final MultiLanguageString name, final Boolean endSituation) {
         setName(name);
         setEndSituation(endSituation);

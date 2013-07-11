@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.domain.DegreeOfficialPublication;
 import net.sourceforge.fenixedu.domain.DegreeSpecializationArea;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class DeleteDegreeSpecializationArea {
 
@@ -18,7 +18,7 @@ public class DeleteDegreeSpecializationArea {
      * @throws FenixServiceException
      */
     @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
-    @Service
+    @Atomic
     public static void run(DegreeOfficialPublication degreeOfficialPublication, DegreeSpecializationArea degreeSpecializationArea)
             throws FenixServiceException {
 

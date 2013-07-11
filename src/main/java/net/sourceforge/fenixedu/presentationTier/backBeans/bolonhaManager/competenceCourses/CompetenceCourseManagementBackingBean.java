@@ -55,7 +55,7 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ReverseComparator;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
@@ -1021,7 +1021,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     }
 
     @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
-    @Service
+    @Atomic
     public String transferCompetenceCourse() {
         try {
             if (getCompetenceCourse() == null || readCompetenceCourseGroupUnitToTransferTo() == null

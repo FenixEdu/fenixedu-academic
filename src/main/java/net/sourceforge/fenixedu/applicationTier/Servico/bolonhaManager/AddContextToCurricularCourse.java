@@ -10,12 +10,12 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class AddContextToCurricularCourse {
 
-    @Service
+    @Atomic
     public static void run(CurricularCourse curricularCourse, CourseGroup courseGroup, String beginExecutionPeriodID,
             String endExecutionPeriodID, Integer year, Integer semester) throws FenixServiceException {
 

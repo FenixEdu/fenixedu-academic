@@ -37,7 +37,7 @@ import org.xhtmlrenderer.pdf.ITextRenderer;
 import org.xml.sax.SAXException;
 
 import pt.ist.fenixWebFramework.FenixWebFramework;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.ResponseWrapper;
 import pt.ist.fenixframework.FenixFramework;
 
@@ -121,7 +121,7 @@ public class AnnualTeachingCreditsDocumentFilter implements Filter {
         return request.getContextPath() + urlWithChecksum;
     }
 
-    @Service
+    @Atomic
     private void closeAnnualCreditsState(AnnualCreditsState annualCreditsState,
             Map<AnnualTeachingCredits, ByteArrayOutputStream> documentsWithConfidentionalInformation,
             Map<AnnualTeachingCredits, ByteArrayOutputStream> documentsWithoutConfidentionalInformation) {

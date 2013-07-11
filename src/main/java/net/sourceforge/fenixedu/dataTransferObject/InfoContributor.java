@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -91,7 +91,7 @@ public class InfoContributor extends InfoObject {
         return infoContributor;
     }
 
-    @Service
+    @Atomic
     public void createContributor() throws InvalidArgumentsServiceException {
         if (getContributorType() == ContributorType.EXTERNAL_PERSON) {
             Person.createContributor(getContributorName(), getContributorNumber().toString(), new PhysicalAddressData(
@@ -106,7 +106,7 @@ public class InfoContributor extends InfoObject {
         }
     }
 
-    @Service
+    @Atomic
     public InfoContributor editContributor(Integer contributorNumber, String contributorName, String contributorAddress,
             String areaCode, String areaOfAreaCode, String area, String parishOfResidence, String districtSubdivisionOfResidence,
             String districtOfResidence) throws FenixServiceException {

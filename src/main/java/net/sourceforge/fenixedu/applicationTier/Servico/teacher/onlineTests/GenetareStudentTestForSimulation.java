@@ -24,7 +24,7 @@ import net.sourceforge.fenixedu.util.tests.TestType;
 
 import org.apache.commons.beanutils.BeanComparator;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class GenetareStudentTestForSimulation {
@@ -109,7 +109,7 @@ public class GenetareStudentTestForSimulation {
 
     private static final GenetareStudentTestForSimulation serviceInstance = new GenetareStudentTestForSimulation();
 
-    @Service
+    @Atomic
     public static List runGenetareStudentTestForSimulation(String executionCourseId, String testId, String path,
             TestType testType, CorrectionAvailability correctionAvailability, Boolean imsfeedback, String testInformation)
             throws FenixServiceException, NotAuthorizedException {

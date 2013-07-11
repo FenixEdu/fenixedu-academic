@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCompetenceCourse;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class AddCourseToTeacherServiceDistribution {
@@ -32,7 +32,7 @@ public class AddCourseToTeacherServiceDistribution {
 
     private static final AddCourseToTeacherServiceDistribution serviceInstance = new AddCourseToTeacherServiceDistribution();
 
-    @Service
+    @Atomic
     public static void runAddCourseToTeacherServiceDistribution(String tsdId, String courseId) throws FenixServiceException,
             NotAuthorizedException {
         try {

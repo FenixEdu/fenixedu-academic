@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class CoordinatorExecutionDegreeCoursesReport extends CoordinatorExecutionDegreeCoursesReport_Base {
 
@@ -33,7 +33,7 @@ public class CoordinatorExecutionDegreeCoursesReport extends CoordinatorExecutio
         setExecutionInterval(executionInterval);
     }
 
-    @Service
+    @Atomic
     public static CoordinatorExecutionDegreeCoursesReport makeNew(final ExecutionDegree executionDegree,
             final ExecutionInterval executionInterval) {
         return new CoordinatorExecutionDegreeCoursesReport(executionDegree, executionInterval);

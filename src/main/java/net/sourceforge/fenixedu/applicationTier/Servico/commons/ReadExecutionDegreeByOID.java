@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -17,7 +17,7 @@ import pt.ist.fenixframework.FenixFramework;
  */
 public class ReadExecutionDegreeByOID {
 
-    @Service
+    @Atomic
     public static InfoExecutionDegree run(String oid) {
         final ExecutionDegree executionDegree = FenixFramework.getDomainObject(oid);
         return InfoExecutionDegree.newInfoFromDomain(executionDegree);

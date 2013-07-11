@@ -60,7 +60,7 @@ import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -855,7 +855,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         return mapping.findForward("editShift");
     }
 
-    @Service
+    @Atomic
     public ActionForward insertStudentInShift(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
         PersonBean bean = getRenderedObject("personBean");

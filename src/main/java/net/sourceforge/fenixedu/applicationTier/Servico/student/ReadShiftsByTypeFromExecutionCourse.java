@@ -13,7 +13,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -23,7 +23,7 @@ import pt.ist.fenixframework.FenixFramework;
 public class ReadShiftsByTypeFromExecutionCourse {
 
     @Checked("RolePredicates.STUDENT_PREDICATE")
-    @Service
+    @Atomic
     public static List run(InfoExecutionCourse infoExecutionCourse, ShiftType tipoAula) {
         final ExecutionCourse executionCourse = FenixFramework.getDomainObject(infoExecutionCourse.getExternalId());
         final Set<Shift> shifts = executionCourse.findShiftByType(tipoAula);

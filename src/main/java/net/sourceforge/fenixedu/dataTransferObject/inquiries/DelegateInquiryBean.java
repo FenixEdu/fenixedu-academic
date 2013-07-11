@@ -27,7 +27,7 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class DelegateInquiryBean implements Serializable {
 
@@ -152,7 +152,7 @@ public class DelegateInquiryBean implements Serializable {
         this.yearDelegate = yearDelegate;
     }
 
-    @Service
+    @Atomic
     public void saveChanges(Person person, ResultPersonCategory delegate) {
         saveComments(person, delegate, getCurricularBlockResults());
         for (TeacherShiftTypeResultsBean teacherShiftTypeResultsBean : getTeachersResults()) {

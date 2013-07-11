@@ -13,13 +13,13 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceM
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class DeleteLessons {
 
     @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
-    @Service
+    @Atomic
     public static void run(final List<String> lessonOIDs) throws FenixServiceException {
         final List<DomainException> exceptionList = new ArrayList<DomainException>();
 

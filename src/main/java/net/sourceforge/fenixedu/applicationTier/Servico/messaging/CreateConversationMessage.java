@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.messaging;
 
 import net.sourceforge.fenixedu.dataTransferObject.messaging.CreateConversationMessageBean;
 import net.sourceforge.fenixedu.domain.messaging.ConversationMessage;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class CreateConversationMessage extends ForumService {
 
@@ -23,7 +23,7 @@ public class CreateConversationMessage extends ForumService {
 
     private static final CreateConversationMessage serviceInstance = new CreateConversationMessage();
 
-    @Service
+    @Atomic
     public static void runCreateConversationMessage(CreateConversationMessageBean createConversationMessageBean) {
         serviceInstance.run(createConversationMessageBean);
     }

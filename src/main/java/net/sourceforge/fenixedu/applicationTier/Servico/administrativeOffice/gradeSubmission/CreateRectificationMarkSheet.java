@@ -8,11 +8,11 @@ import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.MarkSheet;
 import net.sourceforge.fenixedu.domain.Person;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class CreateRectificationMarkSheet {
 
-    @Service
+    @Atomic
     public static MarkSheet run(MarkSheet markSheet, EnrolmentEvaluation enrolmentEvaluation, Grade newGrade,
             Date evaluationDate, String reason, Person person) throws InvalidArgumentsServiceException {
         if (markSheet == null) {

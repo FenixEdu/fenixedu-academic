@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.webSiteManager.WebSiteMan
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.UnitSite;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * Adds a new person to the managers of a UnitSite.
@@ -25,7 +25,7 @@ public class AddUnitSiteManager {
 
     private static final AddUnitSiteManager serviceInstance = new AddUnitSiteManager();
 
-    @Service
+    @Atomic
     public static void runAddUnitSiteManager(UnitSite site, Person person) throws NotAuthorizedException {
         try {
             ManagerAuthorizationFilter.instance.execute();
@@ -42,7 +42,7 @@ public class AddUnitSiteManager {
 
     // Service Invokers migrated from Berserk
 
-    @Service
+    @Atomic
     public static void runAddDepartmentSiteManager(UnitSite site, Person person) throws NotAuthorizedException {
         try {
             DepartmentAdministrativeOfficeAuthorizationFilter.instance.execute();

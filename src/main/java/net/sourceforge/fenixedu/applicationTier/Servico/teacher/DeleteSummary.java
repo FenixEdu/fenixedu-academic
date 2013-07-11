@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Summary;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * @author João Mota
@@ -43,7 +43,7 @@ public class DeleteSummary {
 
     private static final DeleteSummary serviceInstance = new DeleteSummary();
 
-    @Service
+    @Atomic
     public static Boolean runDeleteSummary(ExecutionCourse executionCourse, Summary summary, Professorship professorship)
             throws FenixServiceException, NotAuthorizedException {
         try {

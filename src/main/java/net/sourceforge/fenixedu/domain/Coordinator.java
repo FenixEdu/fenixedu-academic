@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import dml.runtime.RelationAdapter;
 
 public class Coordinator extends Coordinator_Base {
@@ -91,7 +91,7 @@ public class Coordinator extends Coordinator_Base {
         return getPerson().getTeacher();
     }
 
-    @Service
+    @Atomic
     public static Coordinator createCoordinator(ExecutionDegree executionDegree, Person person, Boolean responsible) {
 
         CoordinationTeamLog.createLog(executionDegree.getDegree(), executionDegree.getExecutionYear(),
@@ -101,7 +101,7 @@ public class Coordinator extends Coordinator_Base {
         return new Coordinator(executionDegree, person, responsible);
     }
 
-    @Service
+    @Atomic
     public void removeCoordinator() {
         this.delete();
     }
@@ -115,12 +115,12 @@ public class Coordinator extends Coordinator_Base {
 
     }
 
-    @Service
+    @Atomic
     public void setAsResponsible() {
         this.setResponsible(Boolean.valueOf(true));
     }
 
-    @Service
+    @Atomic
     public void setAsNotResponsible() {
         this.setResponsible(Boolean.valueOf(false));
     }

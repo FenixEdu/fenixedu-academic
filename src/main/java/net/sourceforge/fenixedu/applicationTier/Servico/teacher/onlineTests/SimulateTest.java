@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.util.tests.TestType;
 
 import org.apache.commons.beanutils.BeanComparator;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class SimulateTest {
@@ -197,7 +197,7 @@ public class SimulateTest {
 
     private static final SimulateTest serviceInstance = new SimulateTest();
 
-    @Service
+    @Atomic
     public static InfoSiteStudentTestFeedback runSimulateTest(String executionCourseId, String testId, Response[] responses,
             String[] questionCodes, String[] optionShuffle, TestType testType, CorrectionAvailability correctionAvailability,
             Boolean imsfeedback, String testInformation, String path) throws FenixServiceException, NotAuthorizedException {

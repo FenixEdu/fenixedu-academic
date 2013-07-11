@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisFile;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class CreateThesisAbstractFile extends CreateThesisFile {
@@ -36,7 +36,7 @@ public class CreateThesisAbstractFile extends CreateThesisFile {
 
     private static final CreateThesisAbstractFile serviceInstance = new CreateThesisAbstractFile();
 
-    @Service
+    @Atomic
     public static ThesisFile runCreateThesisAbstractFile(Thesis thesis, File fileToUpload, String fileName, String title,
             String subTitle, Language language) throws FenixServiceException, IOException {
         ScientificCouncilOrStudentThesisAuthorizationFilter.instance.execute(thesis);

@@ -6,10 +6,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class PublishAprovedFinalDegreeWorkProposals {
-    @Service
+    @Atomic
     public static void run(ExecutionDegree executionDegree) throws FenixServiceException {
         if (executionDegree != null) {
             Set<Proposal> aprovedFinalDegreeWorkProposals = executionDegree.getScheduling().findApprovedProposals();

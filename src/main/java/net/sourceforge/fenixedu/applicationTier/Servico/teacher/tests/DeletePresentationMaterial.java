@@ -8,20 +8,20 @@ import net.sourceforge.fenixedu.domain.tests.NewPictureMaterial;
 import net.sourceforge.fenixedu.domain.tests.NewStringMaterial;
 import net.sourceforge.fenixedu.domain.tests.PictureMaterialFile;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class DeletePresentationMaterial {
-    @Service
+    @Atomic
     public static void run(NewMathMlMaterial mathMlMaterial) throws FenixServiceException {
         mathMlMaterial.delete();
     }
 
-    @Service
+    @Atomic
     public static void run(NewStringMaterial stringMaterial) throws FenixServiceException {
         stringMaterial.delete();
     }
 
-    @Service
+    @Atomic
     public static void run(NewPictureMaterial pictureMaterial) throws FenixServiceException {
 
         PictureMaterialFile pictureMaterialFile = pictureMaterial.getPictureMaterialFile();

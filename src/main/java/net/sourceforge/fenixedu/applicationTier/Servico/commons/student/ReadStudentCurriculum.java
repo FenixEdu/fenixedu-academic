@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class ReadStudentCurriculum {
@@ -36,7 +36,7 @@ public class ReadStudentCurriculum {
 
     private static final ReadStudentCurriculum serviceInstance = new ReadStudentCurriculum();
 
-    @Service
+    @Atomic
     public static List runReadStudentCurriculum(String executionDegreeCode, String studentCurricularPlanID)
             throws FenixServiceException, NotAuthorizedException {
         try {

@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.ContentManagementLog;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class EditCustomizationOptions {
@@ -33,7 +33,7 @@ public class EditCustomizationOptions {
 
     private static final EditCustomizationOptions serviceInstance = new EditCustomizationOptions();
 
-    @Service
+    @Atomic
     public static Boolean runEditCustomizationOptions(String infoExecutionCourseCode, String alternativeSite, String mail,
             Boolean dynamicMailDistribution, String initialStatement, String introduction) throws FenixServiceException,
             NotAuthorizedException {

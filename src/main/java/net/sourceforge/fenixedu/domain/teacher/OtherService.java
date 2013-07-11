@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.domain.teacher;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.BundleUtil;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class OtherService extends OtherService_Base {
 
@@ -36,7 +36,7 @@ public class OtherService extends OtherService_Base {
     }
 
     @Override
-    @Service
+    @Atomic
     public void delete() {
         new TeacherServiceLog(getTeacherService(), BundleUtil.getStringFromResourceBundle(
                 "resources.TeacherCreditsSheetResources", "label.teacher.otherService.delete", getCredits().toString(),

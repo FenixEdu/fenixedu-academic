@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManag
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.domain.Shift;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -17,7 +17,7 @@ import pt.ist.fenixframework.FenixFramework;
  */
 public class ReadShiftByOID {
 
-    @Service
+    @Atomic
     public static InfoShift run(final String oid) {
         final Shift shift = FenixFramework.getDomainObject(oid);
         return shift == null ? null : InfoShift.newInfoFromDomain(shift);

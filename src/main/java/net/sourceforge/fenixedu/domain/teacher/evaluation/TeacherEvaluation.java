@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public abstract class TeacherEvaluation extends TeacherEvaluation_Base {
 
@@ -52,7 +52,7 @@ public abstract class TeacherEvaluation extends TeacherEvaluation_Base {
         getTeacherEvaluationProcess().setApprovedEvaluationMark(mark);
     }
 
-    @Service
+    @Atomic
     public void lickAutoEvaluationStamp() {
         internalLickingBusiness();
     }
@@ -63,7 +63,7 @@ public abstract class TeacherEvaluation extends TeacherEvaluation_Base {
         setUserWhoLockedAutoEvaluation(who == null ? null : who.getUser());
     }
 
-    @Service
+    @Atomic
     public void lickEvaluationStamp() {
         setEvaluationLock(new DateTime());
         final Person who = AccessControl.getPerson();
@@ -98,12 +98,12 @@ public abstract class TeacherEvaluation extends TeacherEvaluation_Base {
         deleteDomainObject();
     }
 
-    @Service
+    @Atomic
     public void rubAutoEvaluationStamp() {
         setAutoEvaluationLock(null);
     }
 
-    @Service
+    @Atomic
     public void rubEvaluationStamp() {
         setEvaluationLock(null);
     }

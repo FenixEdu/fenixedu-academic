@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /*
@@ -20,7 +20,7 @@ import pt.ist.fenixframework.FenixFramework;
  */
 public class ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYear {
 
-    @Service
+    @Atomic
     public static List run(String executionDegreeId, String executionPeriodId, Integer curricularYearInt)
             throws FenixServiceException {
 

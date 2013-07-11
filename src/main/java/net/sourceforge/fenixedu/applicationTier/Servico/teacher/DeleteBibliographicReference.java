@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.BibliographicReference;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -29,7 +29,7 @@ public class DeleteBibliographicReference {
 
     private static final DeleteBibliographicReference serviceInstance = new DeleteBibliographicReference();
 
-    @Service
+    @Atomic
     public static Boolean runDeleteBibliographicReference(String bibliographicReferenceOID) throws FenixServiceException,
             NotAuthorizedException {
         ExecutionCourseAndBibliographicReferenceLecturingTeacherAuthorizationFilter.instance.execute(bibliographicReferenceOID);

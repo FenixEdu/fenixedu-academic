@@ -33,7 +33,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.tests.TestQuestionChangesType;
 import net.sourceforge.fenixedu.util.tests.TestQuestionStudentsChangesType;
 import net.sourceforge.fenixedu.util.tests.TestType;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -252,7 +252,7 @@ public class ChangeStudentTestQuestion {
 
     private static final ChangeStudentTestQuestion serviceInstance = new ChangeStudentTestQuestion();
 
-    @Service
+    @Atomic
     public static Boolean runChangeStudentTestQuestion(String executionCourseId, String distributedTestId, String oldQuestionId,
             String newMetadataId, String studentId, TestQuestionChangesType changesType, Boolean delete,
             TestQuestionStudentsChangesType studentsType, String path) throws FenixServiceException, NotAuthorizedException {

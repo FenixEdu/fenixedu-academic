@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProce
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityApplicationProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
@@ -151,7 +151,7 @@ public class ErasmusCandidacyProcessReport extends ErasmusCandidacyProcessReport
 
     }
 
-    @Service
+    @Atomic
     public static ErasmusCandidacyProcessReport create(final MobilityApplicationProcess applicationProcess) {
         return new ErasmusCandidacyProcessReport(applicationProcess);
     }

@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.util.BundleUtil;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.Interval;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class FacultyEvaluationProcess extends FacultyEvaluationProcess_Base implements Comparable<FacultyEvaluationProcess> {
@@ -307,7 +307,7 @@ public class FacultyEvaluationProcess extends FacultyEvaluationProcess_Base impl
         return facultyEvaluationProcessYear == null ? new FacultyEvaluationProcessYear(this, year) : facultyEvaluationProcessYear;
     }
 
-    @Service
+    @Atomic
     public void delete() {
         for (final TeacherEvaluationProcess teacherEvaluationProcess : getTeacherEvaluationProcessSet()) {
             teacherEvaluationProcess.delete();

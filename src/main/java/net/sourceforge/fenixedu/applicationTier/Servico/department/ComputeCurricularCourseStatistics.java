@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -28,7 +28,7 @@ import pt.ist.fenixframework.FenixFramework;
  */
 public class ComputeCurricularCourseStatistics {
 
-    @Service
+    @Atomic
     public static String run(String degreeCurricularPlanID, String executionYearID, RegistrationAgreement agreement) {
 
         ExecutionYear executionYear = FenixFramework.getDomainObject(executionYearID);

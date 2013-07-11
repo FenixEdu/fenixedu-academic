@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCourseType;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class SetTSDCourseType {
@@ -26,7 +26,7 @@ public class SetTSDCourseType {
 
     private static final SetTSDCourseType serviceInstance = new SetTSDCourseType();
 
-    @Service
+    @Atomic
     public static void runSetTSDCourseType(String competenceCourseId, String tsdId, String executionPeriodId,
             String courseTSDProcessPhaseTypeString) throws NotAuthorizedException {
         try {

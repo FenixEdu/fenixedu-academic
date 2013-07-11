@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.dataTransferObject.teacherServiceDistribution.TS
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCourse;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.Pair;
 
@@ -57,7 +57,7 @@ public class ReadTSDCoursesFromTSDProcesses {
 
     private static final ReadTSDCoursesFromTSDProcesses serviceInstance = new ReadTSDCoursesFromTSDProcesses();
 
-    @Service
+    @Atomic
     public static List<TSDCourseDTOEntry> runReadTSDCoursesFromTSDProcesses(Map<String, Pair<String, String>> tsdProcessIdMap)
             throws NotAuthorizedException {
         try {

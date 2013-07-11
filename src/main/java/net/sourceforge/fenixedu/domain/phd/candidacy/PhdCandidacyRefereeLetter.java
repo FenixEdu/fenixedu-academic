@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain.phd.candidacy;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class PhdCandidacyRefereeLetter extends PhdCandidacyRefereeLetter_Base {
 
@@ -143,7 +143,7 @@ public class PhdCandidacyRefereeLetter extends PhdCandidacyRefereeLetter_Base {
         super.deleteDomainObject();
     }
 
-    @Service
+    @Atomic
     static public PhdCandidacyRefereeLetter create(PhdCandidacyRefereeLetterBean bean) {
         return new PhdCandidacyRefereeLetter(bean.getCandidacyReferee(), bean);
     }

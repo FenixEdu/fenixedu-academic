@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.CopyTSDProcessPhaseService;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcess;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class CopyTSDProcess {
@@ -39,7 +39,7 @@ public class CopyTSDProcess {
 
     private static final CopyTSDProcess serviceInstance = new CopyTSDProcess();
 
-    @Service
+    @Atomic
     public static TSDProcess runCopyTSDProcess(List<String> executionPeriodIdList, String tsdProcessId, String personId,
             String name) throws NotAuthorizedException {
         try {

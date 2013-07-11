@@ -25,7 +25,7 @@ import org.apache.commons.collections.comparators.ReverseComparator;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
@@ -455,7 +455,7 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
         return actionPath.toString();
     }
 
-    @Service
+    @Atomic
     public FileContent addFileToBoard(String fileName, byte[] content, String creatorName) {
         return new PublicBoardFileContent(fileName, content, creatorName, this);
     }

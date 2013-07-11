@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.util.Money;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import dml.runtime.RelationAdapter;
 
 public class AcademicEventExemption extends AcademicEventExemption_Base {
@@ -74,7 +74,7 @@ public class AcademicEventExemption extends AcademicEventExemption_Base {
         return ((AcademicEventExemptionJustification) getExemptionJustification()).getDispatchDate();
     }
 
-    @Service
+    @Atomic
     static public AcademicEventExemption create(final Person responsible, final AcademicEvent event, final Money value,
             final AcademicEventJustificationType justificationType, final LocalDate dispatchDate, final String reason) {
         return new AcademicEventExemption(responsible, event, value, justificationType, dispatchDate, reason);

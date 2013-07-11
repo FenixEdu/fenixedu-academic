@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.domain.StudentGroup;
 
 import org.apache.commons.beanutils.BeanComparator;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -30,7 +30,7 @@ import pt.ist.fenixframework.FenixFramework;
  */
 public class ReadStudentsAndGroupsWithoutShift {
 
-    @Service
+    @Atomic
     public static InfoSiteStudentsAndGroups run(String groupPropertiesId) throws FenixServiceException {
         InfoSiteStudentsAndGroups infoSiteStudentsAndGroups = new InfoSiteStudentsAndGroups();
 

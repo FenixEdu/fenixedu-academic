@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import org.apache.commons.beanutils.PropertyUtils;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.DomainObject;
 import pt.ist.fenixframework.pstm.IllegalWriteException;
 
@@ -22,7 +22,7 @@ import pt.ist.fenixframework.pstm.IllegalWriteException;
 public class TransferDomainObjectProperty {
 
     @Checked("RolePredicates.MANAGER_PREDICATE")
-    @Service
+    @Atomic
     public static void run(DomainObject srcObject, DomainObject dstObject, String slotName) throws FenixServiceException {
         try {
             Object srcProperty = PropertyUtils.getSimpleProperty(srcObject, slotName);

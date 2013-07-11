@@ -4,12 +4,12 @@ import net.sourceforge.fenixedu.dataTransferObject.accounting.SecondCycleIndivid
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.events.candidacy.SecondCycleIndividualCandidacyExemption;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class CreateSecondCycleIndividualCandidacyExemption {
 
     @Checked("AcademicPredicates.MANAGE_STUDENT_PAYMENTS")
-    @Service
+    @Atomic
     public static void run(final Person responsible, final SecondCycleIndividualCandidacyExemptionBean bean) {
         new SecondCycleIndividualCandidacyExemption(responsible, bean.getEvent(), bean.getJustificationType());
     }

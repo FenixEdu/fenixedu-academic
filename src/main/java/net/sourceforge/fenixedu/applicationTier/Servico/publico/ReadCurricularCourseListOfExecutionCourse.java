@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -18,7 +18,7 @@ import pt.ist.fenixframework.FenixFramework;
  */
 public class ReadCurricularCourseListOfExecutionCourse {
 
-    @Service
+    @Atomic
     public static Object run(InfoExecutionCourse infoExecCourse) {
         final ExecutionSemester executionSemester =
                 FenixFramework.getDomainObject(infoExecCourse.getInfoExecutionPeriod().getExternalId());

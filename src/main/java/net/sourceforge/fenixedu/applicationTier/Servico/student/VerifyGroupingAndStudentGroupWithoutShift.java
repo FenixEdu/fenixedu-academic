@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituat
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -21,7 +21,7 @@ import pt.ist.fenixframework.FenixFramework;
 public class VerifyGroupingAndStudentGroupWithoutShift {
 
     @Checked("RolePredicates.STUDENT_PREDICATE")
-    @Service
+    @Atomic
     public static Integer run(String studentGroupCode, String groupPropertiesCode, String shiftCodeString, String username)
             throws FenixServiceException {
         Grouping groupProperties = FenixFramework.getDomainObject(groupPropertiesCode);

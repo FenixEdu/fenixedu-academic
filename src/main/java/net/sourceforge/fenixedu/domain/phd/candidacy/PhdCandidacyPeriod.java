@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public abstract class PhdCandidacyPeriod extends PhdCandidacyPeriod_Base {
@@ -83,7 +83,7 @@ public abstract class PhdCandidacyPeriod extends PhdCandidacyPeriod_Base {
         }
     }
 
-    @Service
+    @Atomic
     @Override
     public void edit(final DateTime start, final DateTime end) {
         checkOverlapingDates(start, end, getType());

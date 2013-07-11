@@ -36,7 +36,7 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -252,7 +252,7 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
     }
 
     @Checked("RolePredicates.BOLONHA_MANAGER_PREDICATE")
-    @Service
+    @Atomic
     private static void createCompetenceCourseInformationChangeRequest(CompetenceCourseInformationRequestBean bean,
             CompetenceCourseLoadBean loadBean, Person requestor) {
         CompetenceCourse course = bean.getCompetenceCourse();

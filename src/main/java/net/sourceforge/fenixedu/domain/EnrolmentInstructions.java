@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class EnrolmentInstructions extends EnrolmentInstructions_Base {
 
@@ -15,7 +15,7 @@ public class EnrolmentInstructions extends EnrolmentInstructions_Base {
         setInstructions("");
     }
 
-    @Service
+    @Atomic
     public static void createIfNecessary(final ExecutionSemester executionSemester) {
         if (executionSemester.getEnrolmentInstructions() == null) {
             new EnrolmentInstructions(executionSemester);

@@ -27,12 +27,12 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class CreateMarkSheetByTeacher {
 
     @Checked("RolePredicates.TEACHER_PREDICATE")
-    @Service
+    @Atomic
     public static List<EnrolmentEvaluation> run(MarkSheetTeacherGradeSubmissionBean submissionBean)
             throws InvalidArgumentsServiceException {
 

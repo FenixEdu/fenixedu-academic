@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.period.MobilityApplicationPeriod;
 
 import org.apache.commons.lang.StringUtils;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class MobilityEmailTemplate extends MobilityEmailTemplate_Base {
 
@@ -64,12 +64,12 @@ public class MobilityEmailTemplate extends MobilityEmailTemplate_Base {
         deleteDomainObject();
     }
 
-    @Service
+    @Atomic
     public void sendEmailFor(final DegreeOfficePublicCandidacyHashCode hashCode) {
         getType().sendEmailFor(this, hashCode);
     }
 
-    @Service
+    @Atomic
     public void sendMultiEmailFor(final List<MobilityIndividualApplicationProcess> processes) {
         getType().sendMultiEmailFor(this, processes);
     }

@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.util.email.Sender;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -59,13 +59,13 @@ public abstract class PhdEmail extends PhdEmail_Base {
         return true;
     }
 
-    @Service
+    @Atomic
     public void cancel() {
         discard();
     }
 
     @Override
-    @Service
+    @Atomic
     public void fire() {
         super.fire();
     }

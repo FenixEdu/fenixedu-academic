@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.stude
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
@@ -234,7 +234,7 @@ public class TutorshipStudentLowPerformanceQueueJob extends TutorshipStudentLowP
                 && !registration.getDegreeType().isEmpty();
     }
 
-    @Service
+    @Atomic
     public static TutorshipStudentLowPerformanceQueueJob createTutorshipStudentLowPerformanceQueueJob(
             PrescriptionEnum prescriptionEnum, ExecutionYear executionYear) {
         final TutorshipStudentLowPerformanceQueueJob tutorshipStudentLowPerformanceQueueJob =

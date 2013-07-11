@@ -25,7 +25,7 @@ import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import com.google.common.base.Function;
@@ -195,7 +195,7 @@ public class OccupationPeriodBean implements Serializable, Comparable<Occupation
 
     // Actual bean operations
 
-    @Service
+    @Atomic
     public void updateDates(String parameter) {
 
         Iterable<Interval> intervals = extractIntervals(parameter);
@@ -218,7 +218,7 @@ public class OccupationPeriodBean implements Serializable, Comparable<Occupation
 
     }
 
-    @Service
+    @Atomic
     public void updateCourses(String parameter) {
 
         Map<ExecutionDegree, CurricularYearList> degreeMap = extractCourses(parameter);
@@ -257,14 +257,14 @@ public class OccupationPeriodBean implements Serializable, Comparable<Occupation
 
     }
 
-    @Service
+    @Atomic
     public void deletePeriod() {
         for (OccupationPeriodReference ref : getReferences()) {
             ref.delete();
         }
     }
 
-    @Service
+    @Atomic
     public void create(String intervalsStr, String courses) {
 
         Iterable<Interval> intervals = extractIntervals(intervalsStr);
@@ -346,7 +346,7 @@ public class OccupationPeriodBean implements Serializable, Comparable<Occupation
         return degreeMap;
     }
 
-    @Service
+    @Atomic
     public OccupationPeriodBean duplicate(int newId, OccupationPeriodType newPeriodType) {
 
         OccupationPeriodBean newBean = new OccupationPeriodBean(newId);

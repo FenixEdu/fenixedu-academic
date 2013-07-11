@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCourse;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProfessorship;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDTeacher;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDValueType;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class SetTSDProfessorship {
@@ -37,7 +37,7 @@ public class SetTSDProfessorship {
 
     private static final SetTSDProfessorship serviceInstance = new SetTSDProfessorship();
 
-    @Service
+    @Atomic
     public static TSDProfessorship runSetTSDProfessorship(String tsdCourseId, String tsdTeacherId,
             Map<String, Object> tsdCourseParameters) throws NotAuthorizedException {
         try {

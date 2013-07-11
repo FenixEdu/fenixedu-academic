@@ -25,7 +25,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -117,7 +117,7 @@ public class PhdProgram extends PhdProgram_Base {
         return bundle.getString("label.php.program") + " " + bundle.getString("label.in") + " ";
     }
 
-    @Service
+    @Atomic
     public void delete() {
         if (hasAnyIndividualProgramProcesses()) {
             throw new DomainException("error.PhdProgram.cannot.delete.has.individual.php.program.processes");
@@ -172,12 +172,12 @@ public class PhdProgram extends PhdProgram_Base {
         return getCoordinatorsFor(executionYear).contains(person);
     }
 
-    @Service
+    @Atomic
     static public PhdProgram create(final Degree degree, final MultiLanguageString name, final String acronym) {
         return new PhdProgram(degree, name, acronym);
     }
 
-    @Service
+    @Atomic
     static public PhdProgram create(final Degree degree, final MultiLanguageString name, final String acronym, final Unit parent) {
         return new PhdProgram(degree, name, acronym, parent);
     }
@@ -255,7 +255,7 @@ public class PhdProgram extends PhdProgram_Base {
         return mostRecent;
     }
 
-    @Service
+    @Atomic
     public PhdProgramContextPeriod create(PhdProgramContextPeriodBean bean) {
         return PhdProgramContextPeriod.create(bean);
     }

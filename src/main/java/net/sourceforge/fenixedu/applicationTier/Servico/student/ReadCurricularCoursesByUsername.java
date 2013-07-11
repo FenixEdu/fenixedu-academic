@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -52,7 +52,7 @@ public class ReadCurricularCoursesByUsername {
 
     private static final ReadCurricularCoursesByUsername serviceInstance = new ReadCurricularCoursesByUsername();
 
-    @Service
+    @Atomic
     public static List runReadCurricularCoursesByUsername(String username) throws BDException, NonExistingServiceException,
             NotAuthorizedException {
         SeminaryCoordinatorOrStudentFilter.instance.execute();

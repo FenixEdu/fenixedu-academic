@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class PhdNotification extends PhdNotification_Base {
 
@@ -108,7 +108,7 @@ public class PhdNotification extends PhdNotification_Base {
         return getNumber() + "/" + getYear();
     }
 
-    @Service
+    @Atomic
     public void markAsSent() {
         super.setState(PhdNotificationState.SENT);
     }

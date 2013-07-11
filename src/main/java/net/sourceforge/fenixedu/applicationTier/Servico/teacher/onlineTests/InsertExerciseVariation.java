@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.utilTests.ParseQuestionException;
 
 import org.apache.struts.util.LabelValueBean;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixWebFramework.servlets.commons.UploadedFile;
 import pt.ist.fenixframework.FenixFramework;
 
@@ -108,7 +108,7 @@ public class InsertExerciseVariation {
 
     private static final InsertExerciseVariation serviceInstance = new InsertExerciseVariation();
 
-    @Service
+    @Atomic
     public static List runInsertExerciseVariation(String executionCourseId, String metadataId, UploadedFile xmlZipFile,
             String path) throws FenixServiceException, NotExecuteException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);

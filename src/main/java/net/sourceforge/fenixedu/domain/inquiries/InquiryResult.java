@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import jvstm.TransactionalCommand;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -19,9 +18,10 @@ import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.Atomic.TxMode;
 import pt.ist.fenixframework.FenixFramework;
-import pt.ist.fenixframework.pstm.Transaction;
+import pt.ist.fenixframework.core.AbstractDomainObject;
 
 public class InquiryResult extends InquiryResult_Base {
 
@@ -105,27 +105,18 @@ public class InquiryResult extends InquiryResult_Base {
         }
 
         @Override
+        @Atomic(mode = TxMode.READ)
         public void run() {
             try {
-                Transaction.withTransaction(true, new TransactionalCommand() {
-
-                    @Override
-                    public void doIt() {
-                        try {
-                            importRows(rows, resultDate);
-                        } catch (DomainException e) {
-                            domainException = e;
-                            throw e;
-                        }
-                    }
-                });
-            } finally {
-                Transaction.forceFinish();
+                importRows(rows, resultDate);
+            } catch (DomainException e) {
+                domainException = e;
+                throw e;
             }
         }
     }
 
-    @Service
+    @Atomic
     private static void importRows(String[] rows, DateTime resultDate) {
         for (String row : rows) {
             if (row != null) {
@@ -148,7 +139,7 @@ public class InquiryResult extends InquiryResult_Base {
         }
     }
 
-    @Service
+    @Atomic
     public static void updateRows(String rows, DateTime resultDate) {
         String[] allRows = rows.split("\r\n");// \r\n
         for (int iter = 1; iter < allRows.length; iter++) {

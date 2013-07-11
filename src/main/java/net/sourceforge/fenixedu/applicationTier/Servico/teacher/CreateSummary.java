@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.SummaryManagementToTeache
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.SummariesManagementBean;
 import net.sourceforge.fenixedu.domain.Summary;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class CreateSummary {
 
@@ -34,7 +34,7 @@ public class CreateSummary {
 
     private static final CreateSummary serviceInstance = new CreateSummary();
 
-    @Service
+    @Atomic
     public static void runCreateSummary(SummariesManagementBean bean) throws NotAuthorizedException {
         try {
             ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(bean);
@@ -51,7 +51,7 @@ public class CreateSummary {
 
     // Service Invokers migrated from Berserk
 
-    @Service
+    @Atomic
     public static void runEditSummary(SummariesManagementBean bean) throws NotAuthorizedException {
         try {
             SummaryManagementToTeacherAuthorizationFilter.instance.execute(bean.getSummary(), bean.getProfessorshipLogged());

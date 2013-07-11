@@ -12,7 +12,7 @@ import org.apache.struts.util.MessageResources;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class ClosePunctualRoomsOccupationRequest {
 
@@ -20,7 +20,7 @@ public class ClosePunctualRoomsOccupationRequest {
             .getMessageResources("resources/ResourceAllocationManagerResources");
 
     @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
-    @Service
+    @Atomic
     public static void run(PunctualRoomsOccupationRequest request, Person person) {
         if (request != null) {
             request.closeRequestAndAssociateOwnerOnlyForEmployees(new DateTime(), person);

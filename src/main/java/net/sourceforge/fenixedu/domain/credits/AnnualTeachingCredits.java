@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class AnnualTeachingCredits extends AnnualTeachingCredits_Base {
 
@@ -45,7 +45,7 @@ public class AnnualTeachingCredits extends AnnualTeachingCredits_Base {
         return getAnnualCreditsState() != null ? getAnnualCreditsState().getIsCreditsClosed() : false;
     }
 
-    @Service
+    @Atomic
     public void calculateCredits() {
         setMasterDegreeThesesCredits(getTeacher().getMasterDegreeThesesCredits(getAnnualCreditsState().getExecutionYear()));
         setPhdDegreeThesesCredits(getTeacher().getPhdDegreeThesesCredits(getAnnualCreditsState().getExecutionYear()));

@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilte
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcess;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcessPhase;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class CreateTSDProcessPhase {
@@ -20,7 +20,7 @@ public class CreateTSDProcessPhase {
 
     private static final CreateTSDProcessPhase serviceInstance = new CreateTSDProcessPhase();
 
-    @Service
+    @Atomic
     public static TSDProcessPhase runCreateTSDProcessPhase(String tsdProcessId, String name) throws NotAuthorizedException {
         try {
             DepartmentMemberAuthorizationFilter.instance.execute();

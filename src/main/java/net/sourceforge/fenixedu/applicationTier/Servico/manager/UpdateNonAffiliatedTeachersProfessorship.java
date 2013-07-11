@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class UpdateNonAffiliatedTeachersProfessorship {
@@ -39,7 +39,7 @@ public class UpdateNonAffiliatedTeachersProfessorship {
     private static final UpdateNonAffiliatedTeachersProfessorship serviceInstance =
             new UpdateNonAffiliatedTeachersProfessorship();
 
-    @Service
+    @Atomic
     public static void runUpdateNonAffiliatedTeachersProfessorship(List<String> nonAffiliatedTeachersIds, String executionCourseId)
             throws FenixServiceException, NotAuthorizedException {
         try {

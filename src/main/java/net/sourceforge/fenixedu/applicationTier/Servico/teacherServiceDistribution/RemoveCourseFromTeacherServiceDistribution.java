@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCourse;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDVirtualCourseGroup;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class RemoveCourseFromTeacherServiceDistribution {
@@ -34,7 +34,7 @@ public class RemoveCourseFromTeacherServiceDistribution {
     private static final RemoveCourseFromTeacherServiceDistribution serviceInstance =
             new RemoveCourseFromTeacherServiceDistribution();
 
-    @Service
+    @Atomic
     public static void runRemoveCourseFromTeacherServiceDistribution(String tsdId, String courseId) throws FenixServiceException,
             NotAuthorizedException {
         try {

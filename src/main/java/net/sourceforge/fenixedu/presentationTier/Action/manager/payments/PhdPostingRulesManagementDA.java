@@ -25,7 +25,7 @@ import org.joda.time.Interval;
 import org.joda.time.Partial;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -300,7 +300,7 @@ public class PhdPostingRulesManagementDA extends PostingRulesManagementDA {
         return mapping.findForward("addPhdProgramPostingRule");
     }
 
-    @Service
+    @Atomic
     private void makeGratuityPostingRule(CreateGratuityPhdBean bean, PhdProgram phdProgram) {
         if (bean.getPeriods().size() == 0) {
             throw new RuntimeException("error.empty.periods");

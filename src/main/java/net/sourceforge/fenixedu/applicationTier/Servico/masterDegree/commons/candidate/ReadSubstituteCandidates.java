@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.util.SituationName;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -16,7 +16,7 @@ import pt.ist.fenixframework.FenixFramework;
  */
 public class ReadSubstituteCandidates {
 
-    @Service
+    @Atomic
     public static List<InfoMasterDegreeCandidate> run(String[] candidateList, String[] ids) throws FenixServiceException {
 
         List<InfoMasterDegreeCandidate> result = new ArrayList<InfoMasterDegreeCandidate>();

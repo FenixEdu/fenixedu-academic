@@ -4,12 +4,12 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class CreateCourseGroup {
 
-    @Service
+    @Atomic
     public static void run(final String degreeCurricularPlanID, final String parentCourseGroupID, final String name,
             final String nameEn, final String beginExecutionPeriodID, final String endExecutionPeriodID)
             throws FenixServiceException {

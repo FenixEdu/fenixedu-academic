@@ -7,7 +7,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import jvstm.TransactionalCommand;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.util.Email;
@@ -16,7 +15,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixframework.pstm.Transaction;
+import pt.ist.fenixframework.Atomic;
 
 public class Message extends Message_Base {
 
@@ -227,19 +226,11 @@ public class Message extends Message_Base {
             this.recipients = recipients;
         }
 
+        @Atomic
         @Override
         public void run() {
-            try {
-                Transaction.withTransaction(new TransactionalCommand() {
-                    @Override
-                    public void doIt() {
-                        for (final Recipient recipient : recipients) {
-                            recipient.addDestinationEmailAddresses(emailAddresses);
-                        }
-                    }
-                });
-            } finally {
-                Transaction.forceFinish();
+            for (final Recipient recipient : recipients) {
+                recipient.addDestinationEmailAddresses(emailAddresses);
             }
         }
 

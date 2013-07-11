@@ -10,11 +10,11 @@ import net.sourceforge.fenixedu.domain.support.FAQSection;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class ReadFAQSections {
 
-    @Service
+    @Atomic
     public static Collection run() {
         List<FAQSection> faqSections = RootDomainObject.getInstance().getFAQSections();
         return CollectionUtils.collect(faqSections, new Transformer() {

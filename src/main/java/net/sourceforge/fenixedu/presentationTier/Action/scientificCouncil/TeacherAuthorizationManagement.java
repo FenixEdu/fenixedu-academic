@@ -35,7 +35,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -88,7 +88,7 @@ public class TeacherAuthorizationManagement extends FenixDispatchAction {
             return executionSemester;
         }
 
-        @Service
+        @Atomic
         ExternalTeacherAuthorization create() throws FenixActionException {
 
             User user = User.readUserByUserUId(getIstUsername());
@@ -276,7 +276,7 @@ public class TeacherAuthorizationManagement extends FenixDispatchAction {
             return result;
         }
 
-        @Service
+        @Atomic
         public List<String> create() {
             final List<String> messages = new ArrayList<String>();
             for (final TeacherAuthorizationManagementBean bean : getTeacherAuthorizationManagementBeans(messages)) {

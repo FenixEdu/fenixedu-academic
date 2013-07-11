@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.util.Money;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class IndividualCandidacyPaymentCode extends IndividualCandidacyPaymentCode_Base {
 
@@ -135,7 +135,7 @@ public class IndividualCandidacyPaymentCode extends IndividualCandidacyPaymentCo
         super._setPerson(student);
     }
 
-    @Service
+    @Atomic
     public static List<IndividualCandidacyPaymentCode> createPaymentCodes(PaymentCodeType type, LocalDate beginDate,
             LocalDate endDate, Money minimum, Money maximum, Integer numberOfPaymentCodes) {
 

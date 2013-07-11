@@ -3,12 +3,12 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager.loginsManagemen
 
 import net.sourceforge.fenixedu.domain.LoginAlias;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class DeleteLoginAlias {
 
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-    @Service
+    @Atomic
     public static void run(LoginAlias loginAlias) {
         if (loginAlias != null) {
             loginAlias.delete();

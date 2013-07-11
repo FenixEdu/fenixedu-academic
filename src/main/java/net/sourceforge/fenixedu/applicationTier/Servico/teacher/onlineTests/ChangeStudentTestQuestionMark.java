@@ -29,7 +29,7 @@ import net.sourceforge.fenixedu.util.tests.ResponseNUM;
 import net.sourceforge.fenixedu.util.tests.ResponseSTR;
 import net.sourceforge.fenixedu.util.tests.TestQuestionStudentsChangesType;
 import net.sourceforge.fenixedu.util.tests.TestType;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -124,7 +124,7 @@ public class ChangeStudentTestQuestionMark {
 
     private static final ChangeStudentTestQuestionMark serviceInstance = new ChangeStudentTestQuestionMark();
 
-    @Service
+    @Atomic
     public static void runChangeStudentTestQuestionMark(String executionCourseId, String distributedTestId, Double newMark,
             String questionId, String studentId, TestQuestionStudentsChangesType studentsType, String path)
             throws FenixServiceException, NotAuthorizedException {

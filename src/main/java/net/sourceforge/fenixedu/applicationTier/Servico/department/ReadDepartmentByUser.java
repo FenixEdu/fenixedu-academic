@@ -10,14 +10,14 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoDepartment;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Person;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * @author jpvl
  */
 public class ReadDepartmentByUser {
 
-    @Service
+    @Atomic
     public static InfoDepartment run(String username) throws FenixServiceException {
         InfoDepartment infoDepartment = null;
 

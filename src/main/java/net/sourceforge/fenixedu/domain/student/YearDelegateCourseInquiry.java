@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class YearDelegateCourseInquiry extends YearDelegateCourseInquiry_Base {
 
@@ -48,7 +48,7 @@ public class YearDelegateCourseInquiry extends YearDelegateCourseInquiry_Base {
         inquiry.setReportDisclosureAuthorization(answersMap.get("reportDisclosureAuthorization").getValue());
     }
 
-    @Service
+    @Atomic
     public static YearDelegateCourseInquiry makeNew(final YearDelegateCourseInquiryDTO inquiryDTO) {
 
         YearDelegateCourseInquiry inquiry = new YearDelegateCourseInquiry();

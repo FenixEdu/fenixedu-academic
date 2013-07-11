@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.domain.mobility.outbound;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class OutboundMobilityCandidacyPeriodConfirmationOption extends OutboundMobilityCandidacyPeriodConfirmationOption_Base
         implements Comparable<OutboundMobilityCandidacyPeriodConfirmationOption> {
@@ -14,7 +14,7 @@ public class OutboundMobilityCandidacyPeriodConfirmationOption extends OutboundM
         setOutboundMobilityCandidacyPeriod(period);
     }
 
-    @Service
+    @Atomic
     public void delete() {
         setOutboundMobilityCandidacyPeriod(null);
         setRootDomainObject(null);

@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BD
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 public class GetAllSeminaries {
 
@@ -41,7 +41,7 @@ public class GetAllSeminaries {
 
     private static final GetAllSeminaries serviceInstance = new GetAllSeminaries();
 
-    @Service
+    @Atomic
     public static List runGetAllSeminaries(Boolean inEnrollmentPeriod) throws BDException, NotAuthorizedException {
         SeminaryCoordinatorOrStudentFilter.instance.execute();
         return serviceInstance.run(inEnrollmentPeriod);

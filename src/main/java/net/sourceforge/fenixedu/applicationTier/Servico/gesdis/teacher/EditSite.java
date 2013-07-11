@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.dataTransferObject.InfoSite;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -33,7 +33,7 @@ public class EditSite {
 
     private static final EditSite serviceInstance = new EditSite();
 
-    @Service
+    @Atomic
     public static Boolean runEditSite(InfoSite infoSiteOld, String alternativeSite, String mail, String initialStatement,
             String introduction) throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(infoSiteOld.getInfoExecutionCourse().getExternalId());

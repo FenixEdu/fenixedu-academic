@@ -13,7 +13,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 
 public class ApprovedLearningAgreementDocumentFile extends ApprovedLearningAgreementDocumentFile_Base {
@@ -47,18 +47,18 @@ public class ApprovedLearningAgreementDocumentFile extends ApprovedLearningAgree
         init(path, filename, filename, null, contents, null);
     }
 
-    @Service
+    @Atomic
     public static ApprovedLearningAgreementDocumentFile createCandidacyDocument(byte[] contents, String filename,
             String processName, String documentIdNumber) {
         return new ApprovedLearningAgreementDocumentFile(contents, filename, obtainVirtualPath(processName, documentIdNumber));
     }
 
-    @Service
+    @Atomic
     public void markLearningAgreementViewed() {
         new ApprovedLearningAgreementExecutedAction(this, ExecutedActionType.VIEWED_APPROVED_LEARNING_AGREEMENT);
     }
 
-    @Service
+    @Atomic
     public void markLearningAgreementSent() {
         new ApprovedLearningAgreementExecutedAction(this, ExecutedActionType.SENT_APPROVED_LEARNING_AGREEMENT);
     }

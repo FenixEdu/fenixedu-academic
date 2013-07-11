@@ -9,13 +9,13 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class GetEnrolmentList {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-    @Service
+    @Atomic
     public static List<InfoEnrolment> run(String studentCurricularPlanID, EnrollmentState enrollmentState) {
 
         final List<InfoEnrolment> result = new ArrayList<InfoEnrolment>();
@@ -31,7 +31,7 @@ public class GetEnrolmentList {
     }
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-    @Service
+    @Atomic
     public static List<InfoEnrolment> run(String studentCurricularPlanID) {
         final List<InfoEnrolment> result = new ArrayList<InfoEnrolment>();
         for (final Enrolment enrolment : getStudentCurricularPlan(studentCurricularPlanID).getEnrolments()) {
@@ -46,13 +46,13 @@ public class GetEnrolmentList {
     }
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-    @Service
+    @Atomic
     public static List<InfoEnrolment> run(String studentCurricularPlanID, EnrollmentState enrollmentState, Boolean pTypeEnrolments) {
         return run(studentCurricularPlanID, enrollmentState, pTypeEnrolments, Boolean.FALSE);
     }
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-    @Service
+    @Atomic
     public static List<InfoEnrolment> run(String studentCurricularPlanID, EnrollmentState enrollmentState,
             Boolean pTypeEnrolments, Boolean includeExtraCurricular) {
 

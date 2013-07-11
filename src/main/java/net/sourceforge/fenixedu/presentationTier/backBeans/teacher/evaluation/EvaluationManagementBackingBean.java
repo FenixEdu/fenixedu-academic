@@ -77,7 +77,7 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.apache.myfaces.component.html.util.MultipartRequestWrapper;
 import org.apache.struts.util.MessageResources;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
@@ -1429,7 +1429,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         }
     }
 
-    @Service
+    @Atomic
     public String sendEmailRequestRoom() {
         GOPSendMessageService.requestRoom((WrittenTest) getEvaluation());
         return null;
