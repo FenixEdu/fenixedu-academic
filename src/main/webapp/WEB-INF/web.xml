@@ -167,6 +167,10 @@
 	<filter>
 		<filter-name>AnnualTeachingCreditsDocumentFilter</filter-name>
 		<filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.AnnualTeachingCreditsDocumentFilter</filter-class>
+	</filter>
+	<filter>
+		<filter-name>StaticCacheFilter</filter-name>
+		<filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.StaticCacheFilter</filter-class>
 	</filter>	
 	<!-- Filter Mapping -->
 	<filter-mapping>
@@ -184,6 +188,10 @@
     <filter-mapping>
         <filter-name>PathAccessControlFilter</filter-name>
         <url-pattern>/*</url-pattern><!-- generate mappings only for paths that have restrictions configured -->
+    </filter-mapping>
+    <filter-mapping>
+    	<filter-name>StaticCacheFilter</filter-name>
+    	<url-pattern>/*</url-pattern>
     </filter-mapping>
 	<filter-mapping>
 		<filter-name>MultipartFilter</filter-name>
