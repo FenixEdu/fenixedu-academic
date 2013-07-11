@@ -1435,7 +1435,7 @@ public class Thesis extends Thesis_Base {
         if (thesisAbstract == null) {
             setThesisAbstract(new MultiLanguageString(realLanguage, text));
         } else {
-            thesisAbstract.with(realLanguage, text);
+            thesisAbstract = thesisAbstract.with(realLanguage, text);
             setThesisAbstract(thesisAbstract);
         }
 
@@ -1521,7 +1521,7 @@ public class Thesis extends Thesis_Base {
         if (keywords == null) {
             setKeywords(new MultiLanguageString(realLanguage, text));
         } else {
-            keywords.with(realLanguage, text);
+            keywords = keywords.with(realLanguage, text);
             setKeywords(keywords);
         }
     }
