@@ -33,7 +33,7 @@ public class ExtraCurricularActivityType extends ExtraCurricularActivityType_Bas
         if (getName() == null) {
             setName(new MultiLanguageString(Language.pt, name));
         } else {
-            getName().with(Language.pt, name);
+            setName(getName().with(Language.pt, name));
         }
     }
 
@@ -45,7 +45,7 @@ public class ExtraCurricularActivityType extends ExtraCurricularActivityType_Bas
         if (getName() == null) {
             setName(new MultiLanguageString(Language.en, name));
         } else {
-            getName().with(Language.en, name);
+            setName(getName().with(Language.en, name));
         }
     }
 }

@@ -32,11 +32,7 @@ public class CycleCourseGroupInformation extends CycleCourseGroupInformation_Bas
 
         setExecutionYear(executionYear);
         setCycleCourseGroup(cycleCourseGroup);
-        MultiLanguageString graduatedTitleString =
-                new MultiLanguageString(Language.pt, graduatedTitle).with(Language.en, graduatedTitleEn);
-
-        setGraduatedTitle(graduatedTitleString);
-
+        setGraduatedTitle(new MultiLanguageString(Language.pt, graduatedTitle).with(Language.en, graduatedTitleEn));
         checkParameters();
     }
 
@@ -62,9 +58,8 @@ public class CycleCourseGroupInformation extends CycleCourseGroupInformation_Bas
     public void edit(ExecutionYear editExecutionYear, String editGraduatedTitle, String editGraduatedTitleEn) {
         this.setExecutionYear(editExecutionYear);
         MultiLanguageString mls = this.getGraduatedTitle();
-        mls.with(Language.pt, editGraduatedTitle).with(Language.en, editGraduatedTitleEn);
 
-        this.setGraduatedTitle(mls);
+        this.setGraduatedTitle(mls.with(Language.pt, editGraduatedTitle).with(Language.en, editGraduatedTitleEn));
         checkParameters();
     }
 }

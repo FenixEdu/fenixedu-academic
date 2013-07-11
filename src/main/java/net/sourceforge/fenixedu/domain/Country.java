@@ -164,7 +164,7 @@ public class Country extends Country_Base {
 
     @Deprecated
     public void setNationality(final String nationality) {
-        getCountryNationality().with(Language.getDefaultLanguage(), nationality);
+        setCountryNationality(getCountryNationality().with(Language.getDefaultLanguage(), nationality));
     }
 
     public synchronized static Set<Country> getCPLPCountries() {
