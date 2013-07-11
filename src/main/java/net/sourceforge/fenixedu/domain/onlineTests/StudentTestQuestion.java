@@ -85,10 +85,10 @@ public class StudentTestQuestion extends StudentTestQuestion_Base {
     }
 
     public void delete() {
-        removeDistributedTest();
-        removeQuestion();
-        removeStudent();
-        removeRootDomainObject();
+        setDistributedTest(null);
+        setQuestion(null);
+        setStudent(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

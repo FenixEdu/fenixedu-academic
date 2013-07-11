@@ -11,9 +11,9 @@ public class ShiftGroupingProperties extends ShiftGroupingProperties_Base {
     }
 
     public void delete() {
-        removeGrouping();
-        removeShift();
-        removeRootDomainObject();
+        setGrouping(null);
+        setShift(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

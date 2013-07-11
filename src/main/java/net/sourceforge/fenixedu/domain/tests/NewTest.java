@@ -59,7 +59,7 @@ public class NewTest extends NewTest_Base implements Positionable {
 
     @Override
     public void delete() {
-        this.removeTestGroup();
+        this.setTestGroup(null);
 
         for (; this.hasAnyPersons(); this.removePersons(this.getPersons().get(0))) {
             ;

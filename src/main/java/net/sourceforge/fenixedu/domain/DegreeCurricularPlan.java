@@ -364,7 +364,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     public void delete() {
         if (getCanBeDeleted()) {
-            removeDegree();
+            setDegree(null);
             if (hasRoot()) {
                 getRoot().delete();
             }
@@ -373,10 +373,10 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
             }
             if (hasServiceAgreementTemplate()) {
                 DegreeCurricularPlanServiceAgreementTemplate template = getServiceAgreementTemplate();
-                removeServiceAgreementTemplate();
+                setServiceAgreementTemplate(null);
                 template.delete();
             }
-            removeRootDomainObject();
+            setRootDomainObject(null);
             deleteDomainObject();
         } else {
             throw new DomainException("error.degree.curricular.plan.cant.delete");
@@ -1194,7 +1194,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     @Override
     @Checked("DegreeCurricularPlanPredicates.scientificCouncilWritePredicate")
     public void removeDegree() {
-        super.removeDegree();
+        super.setDegree(null);
     }
 
     @Override

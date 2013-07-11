@@ -92,8 +92,8 @@ public class PhdCandidacyReferee extends PhdCandidacyReferee_Base {
             throw new DomainException("error.PhdCandidacyReferee.has.letter");
         }
 
-        removePhdProgramCandidacyProcess();
-        removeRootDomainObject();
+        setPhdProgramCandidacyProcess(null);
+        setRootDomainObject(null);
 
         List<PhdCandidacyRefereeAlert> alerts = new ArrayList<PhdCandidacyRefereeAlert>();
         alerts.addAll(getAlerts());

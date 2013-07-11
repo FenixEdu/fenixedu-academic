@@ -72,8 +72,8 @@ public class ExternalCurricularCourse extends ExternalCurricularCourse_Base {
 
     public void delete() {
         if (canBeDeleted()) {
-            removeRootDomainObject();
-            removeUnit();
+            setRootDomainObject(null);
+            setUnit(null);
             super.deleteDomainObject();
         } else {
             throw new DomainException("error.external.enrolment.cannot.be.deleted");

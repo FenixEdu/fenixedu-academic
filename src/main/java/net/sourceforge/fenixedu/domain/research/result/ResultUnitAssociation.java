@@ -59,7 +59,7 @@ public class ResultUnitAssociation extends ResultUnitAssociation_Base {
      */
     public final void delete() {
         removeReferences();
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

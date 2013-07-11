@@ -55,10 +55,10 @@ abstract public class CurriculumLineLog extends CurriculumLineLog_Base {
     }
 
     protected void disconnect() {
-        removeRootDomainObject();
-        removeStudent();
-        removeDegreeModule();
-        removeExecutionPeriod();
+        setRootDomainObject(null);
+        setStudent(null);
+        setDegreeModule(null);
+        setExecutionPeriod(null);
     }
 
     abstract public String getDescription();

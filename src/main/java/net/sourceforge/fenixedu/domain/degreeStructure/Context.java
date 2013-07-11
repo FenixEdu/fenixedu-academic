@@ -185,18 +185,18 @@ public class Context extends Context_Base implements Comparable<Context> {
     public void delete() {
 
         final DegreeModule degreeModule = getChildDegreeModule();
-        removeChildDegreeModule();
+        setChildDegreeModule(null);
         /*
          * First remove child and then check if all curriculum lines remain
          * valid
          */
         checkCurriculumLines(degreeModule);
 
-        removeCurricularPeriod();
-        removeParentCourseGroup();
-        removeBeginExecutionPeriod();
-        removeEndExecutionPeriod();
-        removeRootDomainObject();
+        setCurricularPeriod(null);
+        setParentCourseGroup(null);
+        setBeginExecutionPeriod(null);
+        setEndExecutionPeriod(null);
+        setRootDomainObject(null);
         getAssociatedWrittenEvaluations().clear();
         super.deleteDomainObject();
     }

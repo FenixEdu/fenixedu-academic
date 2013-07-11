@@ -153,9 +153,9 @@ public abstract class CandidacySituation extends CandidacySituation_Base impleme
     public abstract boolean canExecuteOperationAutomatically();
 
     public void delete() {
-        removeCandidacy();
-        removePerson();
-        removeRootDomainObject();
+        setCandidacy(null);
+        setPerson(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

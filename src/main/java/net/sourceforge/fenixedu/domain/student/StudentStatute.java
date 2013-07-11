@@ -80,10 +80,10 @@ public class StudentStatute extends StudentStatute_Base {
 
     public void delete() {
         checkRules();
-        removeBeginExecutionPeriod();
-        removeEndExecutionPeriod();
-        removeStudent();
-        removeRootDomainObject();
+        setBeginExecutionPeriod(null);
+        setEndExecutionPeriod(null);
+        setStudent(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

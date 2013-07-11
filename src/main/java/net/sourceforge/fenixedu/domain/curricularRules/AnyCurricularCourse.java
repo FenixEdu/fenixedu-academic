@@ -220,8 +220,8 @@ public class AnyCurricularCourse extends AnyCurricularCourse_Base {
 
     @Override
     protected void removeOwnParameters() {
-        removeDegree();
-        removeDepartmentUnit();
+        setDegree(null);
+        setDepartmentUnit(null);
     }
 
     public boolean hasBolonhaDegreeType() {

@@ -59,7 +59,7 @@ public class ExecutionCourseSite extends ExecutionCourseSite_Base {
 
     @Override
     protected void disconnect() {
-        removeSiteExecutionCourse();
+        setSiteExecutionCourse(null);
         super.disconnect();
     }
 

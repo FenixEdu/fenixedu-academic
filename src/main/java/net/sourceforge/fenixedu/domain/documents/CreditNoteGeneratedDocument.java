@@ -27,7 +27,7 @@ public class CreditNoteGeneratedDocument extends CreditNoteGeneratedDocument_Bas
 
     @Override
     public void delete() {
-        removeSource();
+        setSource(null);
         super.delete();
     }
 

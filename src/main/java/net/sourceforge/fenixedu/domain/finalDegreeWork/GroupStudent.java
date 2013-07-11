@@ -41,10 +41,10 @@ public class GroupStudent extends GroupStudent_Base {
     }
 
     public void delete() {
-        removeRootDomainObject();
-        removeFinalDegreeDegreeWorkGroup();
-        removeFinalDegreeWorkProposalConfirmation();
-        removeRegistration();
+        setRootDomainObject(null);
+        setFinalDegreeDegreeWorkGroup(null);
+        setFinalDegreeWorkProposalConfirmation(null);
+        setRegistration(null);
         deleteDomainObject();
     }
 
@@ -63,7 +63,7 @@ public class GroupStudent extends GroupStudent_Base {
     @Override
     @Deprecated
     public void removeStudent() {
-        removeRegistration();
+        setRegistration(null);
     }
 
     @Override
@@ -81,7 +81,7 @@ public class GroupStudent extends GroupStudent_Base {
     }
 
     public void removeRegistration() {
-        super.removeStudent();
+        super.setStudent(null);
     }
 
     public void setRegistration(Registration registration) {

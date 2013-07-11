@@ -368,18 +368,18 @@ public class Thesis extends Thesis_Base {
             throw new DomainException("thesis.delete.notDraft");
         }
 
-        removeRootDomainObject();
+        setRootDomainObject(null);
 
         for (; !getParticipations().isEmpty(); getParticipations().iterator().next().delete()) {
             ;
         }
 
         // Unnecessary, the student could not submit files while in draft
-        // removeDissertation();
-        // removeExtendedAbstract();
+        // setDissertation(null);
+        // setExtendedAbstract(null);
 
-        removeDegree();
-        removeEnrolment();
+        setDegree(null);
+        setEnrolment(null);
 
         deleteDomainObject();
     }

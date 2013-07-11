@@ -71,7 +71,7 @@ public class PhdThesisReportFeedbackDocument extends PhdThesisReportFeedbackDocu
 
     @Override
     protected void disconnect() {
-        removeJuryElement();
+        setJuryElement(null);
         super.disconnect();
     }
 

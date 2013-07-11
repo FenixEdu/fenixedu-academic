@@ -48,7 +48,7 @@ public class PhdThesisProcessState extends PhdThesisProcessState_Base {
 
     @Override
     protected void disconnect() {
-        removeProcess();
+        setProcess(null);
         super.disconnect();
     }
 

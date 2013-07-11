@@ -16,7 +16,7 @@ public class DelegateElectionCandidacyPeriod extends DelegateElectionCandidacyPe
 
     @Override
     public void delete() {
-        removeDelegateElection();
+        setDelegateElection(null);
         super.delete();
     }
 

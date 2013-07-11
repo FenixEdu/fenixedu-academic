@@ -154,10 +154,10 @@ public class OutboundMobilityCandidacyContest extends OutboundMobilityCandidacyC
             candidacy.deleteWithNotification();
         }
         getExecutionDegreeSet().clear();
-        removeMobilityAgreement();
-        removeOutboundMobilityCandidacyContestGroup();
-        removeOutboundMobilityCandidacyPeriod();
-        removeRootDomainObject();
+        setMobilityAgreement(null);
+        setOutboundMobilityCandidacyContestGroup(null);
+        setOutboundMobilityCandidacyPeriod(null);
+        setRootDomainObject(null);
         if (mobilityGroup != null && mobilityGroup.getOutboundMobilityCandidacyContestCount() == 0) {
             mobilityGroup.delete();
         }

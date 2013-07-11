@@ -77,7 +77,7 @@ public class TSDRealTeacher extends TSDRealTeacher_Base {
 
     @Override
     public void delete() {
-        removeTeacher();
+        setTeacher(null);
         super.delete();
     }
 

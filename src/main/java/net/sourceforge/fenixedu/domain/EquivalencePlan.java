@@ -8,7 +8,7 @@ public abstract class EquivalencePlan extends EquivalencePlan_Base {
     }
 
     public void delete() {
-        removeRootDomainObject();
+        setRootDomainObject(null);
         for (; hasAnyEntries(); getEntries().get(0).delete()) {
             ;
         }

@@ -20,7 +20,7 @@ public class CandidacyDocumentFile extends CandidacyDocumentFile_Base {
 
     @Override
     public void delete() {
-        removeCandidacyDocument();
+        setCandidacyDocument(null);
         super.delete();
     }
 

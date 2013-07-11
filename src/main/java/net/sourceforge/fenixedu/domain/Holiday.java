@@ -98,7 +98,7 @@ public class Holiday extends Holiday_Base {
     }
 
     public void delete() {
-        removeLocality();
+        setLocality(null);
         setRootDomainObject(null);
         super.deleteDomainObject();
     }

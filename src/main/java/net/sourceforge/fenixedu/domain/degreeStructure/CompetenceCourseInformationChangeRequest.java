@@ -140,12 +140,12 @@ public class CompetenceCourseInformationChangeRequest extends CompetenceCourseIn
     }
 
     public void delete() {
-        removeCompetenceCourse();
-        removeAnalizedBy();
-        removeRequester();
-        removeExecutionPeriod();
-        removeRootDomainObject();
-        removeCompetenceCourseGroupUnit();
+        setCompetenceCourse(null);
+        setAnalizedBy(null);
+        setRequester(null);
+        setExecutionPeriod(null);
+        setRootDomainObject(null);
+        setCompetenceCourseGroupUnit(null);
         super.deleteDomainObject();
     }
 

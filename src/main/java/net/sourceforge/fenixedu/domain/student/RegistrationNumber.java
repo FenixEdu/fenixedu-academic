@@ -12,8 +12,8 @@ public class RegistrationNumber extends RegistrationNumber_Base {
     }
 
     public void delete() {
-        removeRegistration();
-        removeRootDomainObject();
+        setRegistration(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

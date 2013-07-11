@@ -40,8 +40,8 @@ public class SupportLesson extends SupportLesson_Base implements ICreditsEventOr
 
     public void delete(RoleType roleType) {
         getProfessorship().getExecutionCourse().getExecutionPeriod().checkValidCreditsPeriod(roleType);
-        removeProfessorship();
-        removeRootDomainObject();
+        setProfessorship(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 
@@ -117,8 +117,8 @@ public class SupportLesson extends SupportLesson_Base implements ICreditsEventOr
     }
 
     public void delete() {
-        removeProfessorship();
-        removeRootDomainObject();
+        setProfessorship(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

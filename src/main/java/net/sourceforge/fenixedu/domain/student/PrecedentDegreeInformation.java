@@ -228,22 +228,22 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
     }
 
     public void delete() {
-        removeCountry();
-        removeInstitution();
-        removeSourceInstitution();
+        setCountry(null);
+        setInstitution(null);
+        setSourceInstitution(null);
 
-        removeStudent();
-        removeRegistration();
-        removePhdIndividualProgramProcess();
+        setStudent(null);
+        setRegistration(null);
+        setPhdIndividualProgramProcess(null);
 
-        removeStudentCandidacy();
-        removeIndividualCandidacy();
+        setStudentCandidacy(null);
+        setIndividualCandidacy(null);
 
-        removePrecedentCountry();
-        removePrecedentInstitution();
+        setPrecedentCountry(null);
+        setPrecedentInstitution(null);
 
-        removePersonalIngressionData();
-        removeRootDomainObject();
+        setPersonalIngressionData(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

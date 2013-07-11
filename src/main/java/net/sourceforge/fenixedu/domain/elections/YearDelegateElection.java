@@ -43,7 +43,7 @@ public class YearDelegateElection extends YearDelegateElection_Base {
 
     @Override
     public void delete() {
-        removeCurricularYear();
+        setCurricularYear(null);
         super.delete();
     }
 

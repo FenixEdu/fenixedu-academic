@@ -47,9 +47,9 @@ public class OccupationPeriodReference extends OccupationPeriodReference_Base {
     }
 
     public void delete() {
-        removeOccupationPeriod();
-        removeExecutionDegree();
-        removeRootDomainObject();
+        setOccupationPeriod(null);
+        setExecutionDegree(null);
+        setRootDomainObject(null);
 
         deleteDomainObject();
     }

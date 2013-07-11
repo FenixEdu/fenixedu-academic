@@ -72,11 +72,11 @@ public class PhdCandidacyFeedbackRequestElement extends PhdCandidacyFeedbackRequ
     private void disconnect() {
 
         final PhdParticipant participant = getParticipant();
-        removeParticipant();
+        setParticipant(null);
         participant.tryDelete();
 
-        removeProcess();
-        removeRootDomainObject();
+        setProcess(null);
+        setRootDomainObject(null);
     }
 
     public PhdCandidacyFeedbackRequestDocument getLastFeedbackDocument() {

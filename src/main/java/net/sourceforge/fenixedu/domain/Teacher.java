@@ -1090,7 +1090,7 @@ public class Teacher extends Teacher_Base {
 
     public void delete() {
         super.setPerson(null);
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

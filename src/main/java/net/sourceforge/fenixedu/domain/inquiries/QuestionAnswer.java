@@ -13,9 +13,9 @@ public class QuestionAnswer extends QuestionAnswer_Base {
     }
 
     public void delete() {
-        removeInquiryQuestion();
-        removeInquiryAnswer();
-        removeRootDomainObject();
+        setInquiryQuestion(null);
+        setInquiryAnswer(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 }

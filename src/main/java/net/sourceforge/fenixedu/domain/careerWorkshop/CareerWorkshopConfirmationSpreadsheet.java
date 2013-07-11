@@ -31,7 +31,7 @@ public class CareerWorkshopConfirmationSpreadsheet extends CareerWorkshopConfirm
 
     @Override
     public void delete() {
-        removeCareerWorkshopConfirmationEvent();
+        setCareerWorkshopConfirmationEvent(null);
         super.delete();
     }
 

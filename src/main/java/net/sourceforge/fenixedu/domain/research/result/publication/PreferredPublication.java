@@ -66,9 +66,9 @@ public class PreferredPublication extends PreferredPublication_Base {
     }
 
     public void delete() {
-        removePersonThatPrefers();
-        removePreferredPublication();
-        removeRootDomainObject();
+        setPersonThatPrefers(null);
+        setPreferredPublication(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 }

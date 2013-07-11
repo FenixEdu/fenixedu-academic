@@ -91,11 +91,11 @@ public abstract class DelegateElection extends DelegateElection_Base {
         super.getStudents().clear();
         super.getCandidates().clear();
 
-        removeElectedStudent();
-        removeDegree();
-        removeExecutionYear();
+        setElectedStudent(null);
+        setDegree(null);
+        setExecutionYear(null);
 
-        super.removeRootDomainObject();
+        super.setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
@@ -106,7 +106,7 @@ public abstract class DelegateElection extends DelegateElection_Base {
         }
 
         if (hasElectedStudent()) {
-            removeElectedStudent();
+            setElectedStudent(null);
         }
 
         votingPeriod.getVotingStudents().clear();

@@ -18,10 +18,10 @@ public class FakeShiftEnrollment extends FakeShiftEnrollment_Base {
     }
 
     public void delete() {
-        removePerson();
-        removeFakeShift();
+        setPerson(null);
+        setFakeShift(null);
 
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 }

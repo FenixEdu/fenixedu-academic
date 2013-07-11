@@ -126,10 +126,10 @@ public class TSDProcessPhase extends TSDProcessPhase_Base {
             removeGroupings(tsd);
         }
 
-        removeNextTSDProcessPhase();
-        removePreviousTSDProcessPhase();
-        removeTSDProcess();
-        removeRootDomainObject();
+        setNextTSDProcessPhase(null);
+        setPreviousTSDProcessPhase(null);
+        setTSDProcess(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

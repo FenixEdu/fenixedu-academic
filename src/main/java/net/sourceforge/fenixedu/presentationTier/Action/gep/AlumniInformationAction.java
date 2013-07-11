@@ -302,7 +302,7 @@ public class AlumniInformationAction extends FenixDispatchAction {
     public ActionForward removeRecipients(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         EmailBean emailBean = getRenderedObject("emailBean");
-        emailBean.removeRecipients();
+        emailBean.setRecipients(null);
 
         return manageRecipients(mapping, actionForm, request, response);
     }

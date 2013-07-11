@@ -8,8 +8,8 @@ public class SecretaryEnrolmentStudent extends SecretaryEnrolmentStudent_Base {
     }
 
     public void delete() {
-        removeStudent();
-        removeRootDomainObject();
+        setStudent(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

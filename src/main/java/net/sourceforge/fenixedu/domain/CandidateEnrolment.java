@@ -14,9 +14,9 @@ public class CandidateEnrolment extends CandidateEnrolment_Base {
     }
 
     public void delete() {
-        removeCurricularCourse();
-        removeMasterDegreeCandidate();
-        removeRootDomainObject();
+        setCurricularCourse(null);
+        setMasterDegreeCandidate(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

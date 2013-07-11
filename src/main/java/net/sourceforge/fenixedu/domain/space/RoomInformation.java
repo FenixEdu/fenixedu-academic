@@ -104,7 +104,7 @@ public class RoomInformation extends RoomInformation_Base {
 
     @Override
     public void deleteWithoutCheckNumberOfSpaceInformations() {
-        removeRoomClassification();
+        setRoomClassification(null);
         super.deleteWithoutCheckNumberOfSpaceInformations();
     }
 

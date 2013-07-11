@@ -19,9 +19,9 @@ public class DelegateElectionVote extends DelegateElectionVote_Base {
     }
 
     public void delete() {
-        removeStudent();
-        removeDelegateElection();
-        removeRootDomainObject();
+        setStudent(null);
+        setDelegateElection(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

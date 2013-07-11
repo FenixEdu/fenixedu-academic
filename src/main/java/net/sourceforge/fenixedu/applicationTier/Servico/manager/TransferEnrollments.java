@@ -29,7 +29,7 @@ public class TransferEnrollments {
                 fixEnrolmentCurricularCourse(studentCurricularPlan, enrolment);
 
                 enrolment.setCurriculumGroup(curriculumGroup);
-                enrolment.removeStudentCurricularPlan();
+                enrolment.setStudentCurricularPlan(null);
             }
 
         } else {
@@ -43,7 +43,7 @@ public class TransferEnrollments {
 
                 if (enrollment.getStudentCurricularPlan() != studentCurricularPlan) {
                     enrollment.setStudentCurricularPlan(studentCurricularPlan);
-                    enrollment.removeCurriculumGroup();
+                    enrollment.setCurriculumGroup(null);
                 }
 
             }

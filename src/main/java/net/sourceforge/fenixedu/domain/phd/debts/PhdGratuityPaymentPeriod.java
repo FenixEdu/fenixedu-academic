@@ -95,8 +95,8 @@ public class PhdGratuityPaymentPeriod extends PhdGratuityPaymentPeriod_Base {
      */
 
     public void delete() {
-        removeRootDomainObject();
-        removePostingRule();
+        setRootDomainObject(null);
+        setPostingRule(null);
         super.deleteDomainObject();
     }
 }

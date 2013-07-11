@@ -51,8 +51,8 @@ public class SearchCurricularCourseByDegree implements Serializable {
 
     public void setDegreeBean(DegreeByExecutionYearBean degreeBean) {
         this.degreeBean = degreeBean;
-        removeDegreeCurricularPlan();
-        removeCurricularCourseBean();
+        setDegreeCurricularPlan(null);
+        setCurricularCourseBean(null);
     }
 
     public boolean hasDegreeBean() {
@@ -69,7 +69,7 @@ public class SearchCurricularCourseByDegree implements Serializable {
         } else {
             this.degreeCurricularPlan = null;
         }
-        removeCurricularCourseBean();
+        setCurricularCourseBean(null);
     }
 
     public void removeDegreeCurricularPlan() {

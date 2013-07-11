@@ -83,8 +83,8 @@ public class MasterDegreeThesis extends MasterDegreeThesis_Base {
     public void delete() {
         getMasterDegreeThesisDataVersions().clear();
         getMasterDegreeProofVersions().clear();
-        removeStudentCurricularPlan();
-        removeRootDomainObject();
+        setStudentCurricularPlan(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

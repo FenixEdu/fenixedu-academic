@@ -36,8 +36,8 @@ public abstract class AvailabilityPolicy extends AvailabilityPolicy_Base {
      * Deletes this object from persistent storage.
      */
     public void delete() {
-        removeContent();
-        removeRootDomainObject();
+        setContent(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

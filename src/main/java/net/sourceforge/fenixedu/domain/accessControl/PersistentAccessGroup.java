@@ -35,7 +35,7 @@ public abstract class PersistentAccessGroup extends PersistentAccessGroup_Base {
     protected void copy(PersistentAccessGroup old) {
         super.setOldGroup(old);
         old.setDeletedRootDomainObject(old.getRootDomainObject());
-        old.removeRootDomainObject();
+        old.setRootDomainObject(null);
         getMemberSet().addAll(old.getMemberSet());
     }
 
@@ -66,7 +66,7 @@ public abstract class PersistentAccessGroup extends PersistentAccessGroup_Base {
         PersistentAccessGroup newGroup = instantiate();
         newGroup.copy(this);
         newGroup.setDeletedRootDomainObject(newGroup.getRootDomainObject());
-        newGroup.removeRootDomainObject();
+        newGroup.setRootDomainObject(null);
         return newGroup;
     }
 

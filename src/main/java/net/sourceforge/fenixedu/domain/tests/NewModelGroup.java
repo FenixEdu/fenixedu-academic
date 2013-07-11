@@ -57,7 +57,7 @@ public class NewModelGroup extends NewModelGroup_Base {
     }
 
     public void deleteAsBag() {
-        this.getTestModel().removeBag();
+        this.getTestModel().setBag(null);
 
         while (this.getChildRestrictionsCount() > 0) {
             this.getChildRestrictions().get(0).delete();

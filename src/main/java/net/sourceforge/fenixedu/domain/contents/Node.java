@@ -58,9 +58,9 @@ public abstract class Node extends Node_Base implements MenuEntry, Comparable<No
             child.logDeleteNode();
         }
 
-        removeRootDomainObject();
-        removeParent();
-        removeChild();
+        setRootDomainObject(null);
+        setParent(null);
+        setChild(null);
 
         deleteDomainObject();
     }

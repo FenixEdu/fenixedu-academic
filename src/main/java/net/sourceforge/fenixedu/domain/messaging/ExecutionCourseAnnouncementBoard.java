@@ -95,7 +95,7 @@ public class ExecutionCourseAnnouncementBoard extends ExecutionCourseAnnouncemen
 
     @Override
     protected void disconnect() {
-        removeExecutionCourse();
+        setExecutionCourse(null);
         super.disconnect();
     }
 

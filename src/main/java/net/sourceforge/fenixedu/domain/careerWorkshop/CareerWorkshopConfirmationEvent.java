@@ -49,9 +49,9 @@ public class CareerWorkshopConfirmationEvent extends CareerWorkshopConfirmationE
             throw new DomainException(
                     "error.careerWorkshop.deletingConfirmationPeriod: There are confirmations already associated");
         }
-        removeRootDomainObject();
-        removeConfirmations();
-        removeCareerWorkshopApplicationEvent();
+        setRootDomainObject(null);
+        setConfirmations(null);
+        setCareerWorkshopApplicationEvent(null);
         deleteDomainObject();
     }
 

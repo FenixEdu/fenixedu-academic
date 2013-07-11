@@ -49,8 +49,8 @@ public class RegistrationStateLog extends RegistrationStateLog_Base {
     }
 
     public void delete() {
-        removeRootDomainObject();
-        removeRegistration();
+        setRootDomainObject(null);
+        setRegistration(null);
         super.deleteDomainObject();
     }
 }

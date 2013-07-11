@@ -35,7 +35,7 @@ public class NewChoice extends NewChoice_Base implements Positionable {
             multipleChoiceQuestion.setValidator(null);
         }
 
-        this.removeMultipleChoiceQuestion();
+        this.setMultipleChoiceQuestion(null);
 
         multipleChoiceQuestion.resortChoices();
 

@@ -19,7 +19,7 @@ public class SecondCycleIndividualCandidacySeriesGrade extends SecondCycleIndivi
     public void delete() {
         setIndividualCandidacy(null);
         setDegree(null);
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 }

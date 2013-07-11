@@ -130,10 +130,10 @@ public class Summary extends Summary_Base {
         super.setExecutionCourse(null);
         super.setShift(null);
         super.setLessonInstance(null);
-        removeRoom();
-        removeProfessorship();
-        removeTeacher();
-        removeRootDomainObject();
+        setRoom(null);
+        setProfessorship(null);
+        setTeacher(null);
+        setRootDomainObject(null);
         deleteDomainObject();
 
     }

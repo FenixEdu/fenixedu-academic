@@ -98,13 +98,13 @@ public class InternshipCandidacy extends InternshipCandidacy_Base {
 
     @Service
     public void delete() {
-        removeInternshipCandidacySession();
-        removeCountryOfBirth();
-        removeFirstDestination();
-        removeSecondDestination();
-        removeThirdDestination();
-        removeUniversity();
-        removeRootDomainObject();
+        setInternshipCandidacySession(null);
+        setCountryOfBirth(null);
+        setFirstDestination(null);
+        setSecondDestination(null);
+        setThirdDestination(null);
+        setUniversity(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 }

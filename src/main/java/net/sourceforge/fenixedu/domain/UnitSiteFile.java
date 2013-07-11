@@ -19,7 +19,7 @@ public class UnitSiteFile extends UnitSiteFile_Base {
 
     @Override
     public void delete() {
-        removeUnitSite();
+        setUnitSite(null);
         super.delete();
     }
 

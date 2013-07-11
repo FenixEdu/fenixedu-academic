@@ -35,8 +35,8 @@ public class CronScriptInvocation extends CronScriptInvocation_Base {
     }
 
     public void delete() {
-        removeRootDomainObject();
-        removeCronScriptState();
+        setRootDomainObject(null);
+        setCronScriptState(null);
         deleteDomainObject();
     }
 

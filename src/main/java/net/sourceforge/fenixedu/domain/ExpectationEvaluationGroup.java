@@ -55,7 +55,7 @@ public class ExpectationEvaluationGroup extends ExpectationEvaluationGroup_Base 
         super.setAppraiser(null);
         super.setEvaluated(null);
         super.setExecutionYear(null);
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

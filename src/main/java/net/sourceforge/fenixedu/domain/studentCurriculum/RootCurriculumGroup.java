@@ -294,7 +294,7 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
 
     @Override
     public void delete() {
-        removeParentStudentCurricularPlan();
+        setParentStudentCurricularPlan(null);
         super.delete();
     }
 

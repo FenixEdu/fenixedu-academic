@@ -20,9 +20,9 @@ public class ForumSubscription extends ForumSubscription_Base {
     }
 
     public void delete() {
-        removePerson();
-        removeForum();
-        removeRootDomainObject();
+        setPerson(null);
+        setForum(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

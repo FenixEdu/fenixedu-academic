@@ -80,9 +80,9 @@ public class RegistrationRegime extends RegistrationRegime_Base {
     }
 
     public void delete() {
-        removeRegistration();
-        removeExecutionYear();
-        removeRootDomainObject();
+        setRegistration(null);
+        setExecutionYear(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

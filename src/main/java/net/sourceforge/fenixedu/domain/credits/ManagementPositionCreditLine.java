@@ -14,7 +14,7 @@ public class ManagementPositionCreditLine extends ManagementPositionCreditLine_B
     }
 
     public void delete() {
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

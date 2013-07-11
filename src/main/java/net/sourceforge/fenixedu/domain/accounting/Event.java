@@ -855,7 +855,7 @@ public abstract class Event extends Event_Base {
 
         super.setParty(null);
         super.setResponsibleForCancel(null);
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

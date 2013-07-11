@@ -9,8 +9,8 @@ public class DegreeInfoFuture extends DegreeInfoFuture_Base {
     }
 
     public void delete() {
-        removeDegreeInfo();
-        removeRootDomainObject();
+        setDegreeInfo(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 }

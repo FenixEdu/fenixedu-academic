@@ -74,10 +74,10 @@ public class ErasmusVacancy extends ErasmusVacancy_Base {
             throw new DomainException("error.erasmus.vacancy.is.associated.to.candidacies");
         }
 
-        removeUniversityUnit();
-        removeDegree();
-        removeCandidacyPeriod();
-        removeRootDomainObject();
+        setUniversityUnit(null);
+        setDegree(null);
+        setCandidacyPeriod(null);
+        setRootDomainObject(null);
 
         deleteDomainObject();
     }

@@ -45,7 +45,7 @@ public class EctsDegreeByCurricularYearConversionTable extends EctsDegreeByCurri
 
     @Override
     public void delete() {
-        removeDegree();
+        setDegree(null);
         super.delete();
     }
 

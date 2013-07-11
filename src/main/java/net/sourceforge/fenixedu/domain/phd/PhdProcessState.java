@@ -75,8 +75,8 @@ abstract public class PhdProcessState extends PhdProcessState_Base {
     }
 
     protected void disconnect() {
-        removePerson();
-        removeRootDomainObject();
+        setPerson(null);
+        setRootDomainObject(null);
     }
 
     abstract public PhdProcessStateType getType();

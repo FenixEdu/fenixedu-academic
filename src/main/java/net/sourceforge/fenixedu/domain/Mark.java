@@ -30,9 +30,9 @@ public class Mark extends Mark_Base {
     }
 
     public void delete() {
-        removeAttend();
-        removeEvaluation();
-        removeRootDomainObject();
+        setAttend(null);
+        setEvaluation(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

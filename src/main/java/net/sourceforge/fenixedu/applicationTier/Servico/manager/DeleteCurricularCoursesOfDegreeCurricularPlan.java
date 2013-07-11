@@ -42,7 +42,7 @@ public class DeleteCurricularCoursesOfDegreeCurricularPlan {
 
                 if (curriculum != null) {
                     curricularCourse.removeAssociatedCurriculums(curriculum);
-                    curriculum.removePersonWhoAltered();
+                    curriculum.setPersonWhoAltered(null);
 
                     curriculum.delete();
                 }

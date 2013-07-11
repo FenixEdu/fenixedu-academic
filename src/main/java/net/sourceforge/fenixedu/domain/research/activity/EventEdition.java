@@ -79,8 +79,8 @@ public class EventEdition extends EventEdition_Base implements ParticipationsInt
             ;
         }
 
-        removeEvent();
-        removeRootDomainObject();
+        setEvent(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

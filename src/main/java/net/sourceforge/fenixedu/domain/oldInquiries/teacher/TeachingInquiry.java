@@ -139,8 +139,8 @@ public class TeachingInquiry extends TeachingInquiry_Base {
     }
 
     public void delete() {
-        removeProfessorship();
-        removeRootDomainObject();
+        setProfessorship(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

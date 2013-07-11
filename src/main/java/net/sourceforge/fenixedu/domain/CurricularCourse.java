@@ -261,11 +261,11 @@ public class CurricularCourse extends CurricularCourse_Base {
     @Override
     public void delete() {
         super.delete();
-        removeUniversity();
-        removeScientificArea();
-        removeDegreeCurricularPlan();
-        removeCompetenceCourse();
-        removeRootDomainObject();
+        setUniversity(null);
+        setScientificArea(null);
+        setDegreeCurricularPlan(null);
+        setCompetenceCourse(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

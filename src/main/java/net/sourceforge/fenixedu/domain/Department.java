@@ -363,8 +363,8 @@ public class Department extends Department_Base {
     }
 
     public void delete() {
-        removeDepartmentUnit();
-        removeRootDomainObject();
+        setDepartmentUnit(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

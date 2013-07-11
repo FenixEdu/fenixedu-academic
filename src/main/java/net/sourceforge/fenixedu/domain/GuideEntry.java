@@ -35,10 +35,10 @@ public class GuideEntry extends GuideEntry_Base {
             }
 
             Guide guide = getGuide();
-            removeGuide();
+            setGuide(null);
             guide.updateTotalValue();
 
-            removeRootDomainObject();
+            setRootDomainObject(null);
 
             deleteDomainObject();
         } else {

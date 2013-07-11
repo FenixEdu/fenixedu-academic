@@ -12,10 +12,10 @@ public class CreditsInScientificArea extends CreditsInScientificArea_Base {
     }
 
     public void delete() {
-        removeScientificArea();
-        removeEnrolment();
-        removeStudentCurricularPlan();
-        removeRootDomainObject();
+        setScientificArea(null);
+        setEnrolment(null);
+        setStudentCurricularPlan(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

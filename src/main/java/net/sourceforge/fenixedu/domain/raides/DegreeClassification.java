@@ -27,7 +27,7 @@ public class DegreeClassification extends DegreeClassification_Base {
         for (DegreeDesignation designation : getDegreeDesignations()) {
             removeDegreeDesignations(designation);
         }
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

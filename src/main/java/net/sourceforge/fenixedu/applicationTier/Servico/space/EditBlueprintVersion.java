@@ -17,7 +17,7 @@ public class EditBlueprintVersion extends BlueprintVersionManagmentService {
     protected Blueprint run(Blueprint blueprint, CreateBlueprintSubmissionBean blueprintSubmissionBean)
             throws FenixServiceException, IOException {
 
-        blueprint.removeBlueprintFile();
+        blueprint.setBlueprintFile(null);
 
         final Space space = getSpace(blueprintSubmissionBean);
 

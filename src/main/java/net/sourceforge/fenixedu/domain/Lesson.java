@@ -197,7 +197,7 @@ public class Lesson extends Lesson_Base {
         }
 
         super.setShift(null);
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

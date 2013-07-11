@@ -45,9 +45,9 @@ public class Curriculum extends Curriculum_Base {
     }
 
     public void delete() {
-        removeCurricularCourse();
-        removePersonWhoAltered();
-        removeRootDomainObject();
+        setCurricularCourse(null);
+        setPersonWhoAltered(null);
+        setRootDomainObject(null);
 
         deleteDomainObject();
     }

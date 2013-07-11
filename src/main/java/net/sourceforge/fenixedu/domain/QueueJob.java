@@ -76,7 +76,7 @@ public abstract class QueueJob extends QueueJob_Base {
 
     @Service
     public void cancel() {
-        removeRootDomainObjectQueueUndone();
+        setRootDomainObjectQueueUndone(null);
     }
 
     @Service

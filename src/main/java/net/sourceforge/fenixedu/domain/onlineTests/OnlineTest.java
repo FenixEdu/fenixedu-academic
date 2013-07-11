@@ -36,7 +36,7 @@ public class OnlineTest extends OnlineTest_Base {
     @Override
     public void delete() {
         logRemove();
-        removeDistributedTest();
+        setDistributedTest(null);
         super.delete();
     }
 

@@ -21,7 +21,7 @@ public class ExtraCurricularActivityType extends ExtraCurricularActivityType_Bas
         if (hasAnyExtraCurricularActivity()) {
             throw new DomainException("error.extraCurricularActivityTypes.unableToDeleteUsedType", this.getName().getContent());
         }
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

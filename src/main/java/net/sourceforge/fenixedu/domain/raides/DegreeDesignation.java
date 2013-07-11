@@ -46,8 +46,8 @@ public class DegreeDesignation extends DegreeDesignation_Base {
         for (Unit institution : getInstitutionUnitSet()) {
             removeInstitutionUnit(institution);
         }
-        removeDegreeClassification();
-        removeRootDomainObject();
+        setDegreeClassification(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 }

@@ -288,12 +288,12 @@ public class InquiryResult extends InquiryResult_Base {
                     getExecutionDegree() != null ? getExecutionDegree().getExternalId() : StringUtils.EMPTY,
                     getProfessorship() != null ? getProfessorship().getExternalId() : StringUtils.EMPTY);
         }
-        removeExecutionCourse();
-        removeExecutionDegree();
-        removeExecutionPeriod();
-        removeInquiryQuestion();
-        removeProfessorship();
-        removeRootDomainObject();
+        setExecutionCourse(null);
+        setExecutionDegree(null);
+        setExecutionPeriod(null);
+        setInquiryQuestion(null);
+        setProfessorship(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

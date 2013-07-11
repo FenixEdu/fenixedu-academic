@@ -12,7 +12,7 @@ public abstract class ResourceAllocation extends ResourceAllocation_Base {
 
     public void delete() {
         super.setResource(null);
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

@@ -257,7 +257,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         for (; !getCompetenceCourseInformations().isEmpty(); getCompetenceCourseInformations().get(0).delete()) {
             ;
         }
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

@@ -82,8 +82,8 @@ public class BibliographicReference extends BibliographicReference_Base {
                 "log.executionCourse.curricular.bibliographic.removed", type, blBibliographicReference,
                 executionCourse.getName(), executionCourse.getDegreePresentationString());
 
-        removeExecutionCourse();
-        removeRootDomainObject();
+        setExecutionCourse(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

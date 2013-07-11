@@ -97,9 +97,9 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
     public void delete() {
         checkRulesToDelete();
 
-        removeUnit();
-        removeServiceAgreementTemplate();
-        removeRootDomainObject();
+        setUnit(null);
+        setServiceAgreementTemplate(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

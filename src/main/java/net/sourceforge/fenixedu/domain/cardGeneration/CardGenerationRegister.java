@@ -22,8 +22,8 @@ public class CardGenerationRegister extends CardGenerationRegister_Base {
     }
 
     public void delete() {
-        removePerson();
-        removeRootDomainObject();
+        setPerson(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

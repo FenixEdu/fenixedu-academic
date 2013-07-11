@@ -90,8 +90,8 @@ public class Test extends Test_Base {
         for (; !getTestQuestions().isEmpty(); getTestQuestions().get(0).delete()) {
             ;
         }
-        removeTestScope();
-        removeRootDomainObject();
+        setTestScope(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

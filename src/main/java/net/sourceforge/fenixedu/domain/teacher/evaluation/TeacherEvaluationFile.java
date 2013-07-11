@@ -56,8 +56,8 @@ public class TeacherEvaluationFile extends TeacherEvaluationFile_Base {
 
     @Override
     public void delete() {
-        removeTeacherEvaluation();
-        removeCreatedBy();
+        setTeacherEvaluation(null);
+        setCreatedBy(null);
         super.delete();
     }
 

@@ -277,8 +277,8 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
             ;
         }
 
-        removeRootDomainObject();
-        removeRootDomainObjectForExecutionYear();
+        setRootDomainObject(null);
+        setRootDomainObjectForExecutionYear(null);
         deleteDomainObject();
     }
 

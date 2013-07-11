@@ -11,8 +11,8 @@ public class GratuityValues extends GratuityValues_Base {
     }
 
     public void delete() {
-        removeExecutionDegree();
-        removeRootDomainObject();
+        setExecutionDegree(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

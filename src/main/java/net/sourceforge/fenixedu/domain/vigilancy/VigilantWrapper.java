@@ -275,9 +275,9 @@ public class VigilantWrapper extends VigilantWrapper_Base {
             for (; !this.getVigilancies().isEmpty(); this.getVigilancies().get(0).delete()) {
                 ;
             }
-            removePerson();
-            removeVigilantGroup();
-            removeRootDomainObject();
+            setPerson(null);
+            setVigilantGroup(null);
+            setRootDomainObject(null);
             super.deleteDomainObject();
         } else {
             throw new DomainException("vigilancy.error.cannotDeleteVigilantDueToConvokes");

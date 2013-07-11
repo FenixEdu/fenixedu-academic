@@ -49,7 +49,7 @@ public class DegreeSpecializationArea extends DegreeSpecializationArea_Base {
     }
 
     public void delete() {
-        removeOfficialPublication();
+        setOfficialPublication(null);
         deleteDomainObject();
     }
 

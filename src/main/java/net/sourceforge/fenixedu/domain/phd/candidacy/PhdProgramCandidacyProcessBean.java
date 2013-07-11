@@ -408,7 +408,7 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
 
     public void removeHabilitationCertificateDocumentFiles() {
         for (final PhdProgramDocumentUploadBean bean : getHabilitationCertificateDocuments()) {
-            bean.removeFile();
+            bean.setFile(null);
         }
     }
 
@@ -430,7 +430,7 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
 
     public void removePhdGuidingLetters() {
         for (final PhdProgramDocumentUploadBean bean : getPhdGuidingLetters()) {
-            bean.removeFile();
+            bean.setFile(null);
         }
     }
 

@@ -45,7 +45,7 @@ public class TSDCompetenceCourse extends TSDCompetenceCourse_Base {
 
     @Override
     public void delete() {
-        removeCompetenceCourse();
+        setCompetenceCourse(null);
         super.delete();
     }
 

@@ -63,8 +63,8 @@ public class TutorshipIntention extends TutorshipIntention_Base {
     }
 
     public void delete() {
-        removeDegreeCurricularPlan();
-        removeTeacher();
+        setDegreeCurricularPlan(null);
+        setTeacher(null);
         deleteDomainObject();
     }
 

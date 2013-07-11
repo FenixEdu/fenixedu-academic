@@ -34,10 +34,10 @@ public class EventConferenceArticlesAssociation extends EventConferenceArticlesA
     }
 
     public void delete() {
-        removeConferenceArticle();
-        removePerson();
-        removeEventEdition();
-        removeRootDomainObject();
+        setConferenceArticle(null);
+        setPerson(null);
+        setEventEdition(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

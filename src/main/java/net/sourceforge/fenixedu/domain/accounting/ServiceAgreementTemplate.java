@@ -156,7 +156,7 @@ public abstract class ServiceAgreementTemplate extends ServiceAgreementTemplate_
         if (!getPostingRulesSet().isEmpty()) {
             throw new DomainException("error.accounting.serviceAgreementTemplates.ServiceAgreementTemplate.cannot.be.deleted");
         }
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

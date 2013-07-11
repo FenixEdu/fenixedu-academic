@@ -124,7 +124,7 @@ public class OutboundMobilityCandidacyContestGroup extends OutboundMobilityCandi
         for (final OutboundMobilityCandidacyContest contest : getOutboundMobilityCandidacyContestSet()) {
             contest.delete();
         }
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
 
     }

@@ -121,7 +121,7 @@ public class OutboundMobilityCandidacyDA extends FenixDispatchAction {
         final OutboundMobilityContextBean outboundMobilityContextBean = getRenderedObject();
         final ExecutionDegree executionDegree = getDomainObject(request, "executionDegreeOid");
         outboundMobilityContextBean.setExecutionDegree(executionDegree);
-        outboundMobilityContextBean.removeDegreeFromGroup();
+        outboundMobilityContextBean.setDegreeFromGroup(null);
         RenderUtils.invalidateViewState();
         return prepare(mapping, request, outboundMobilityContextBean);
     }

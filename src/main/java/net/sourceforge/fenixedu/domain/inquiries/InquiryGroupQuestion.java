@@ -86,9 +86,9 @@ public class InquiryGroupQuestion extends InquiryGroupQuestion_Base {
         if (hasResultQuestionHeader()) {
             getResultQuestionHeader().delete();
         }
-        removeInquiryBlock();
-        removeResultQuestion();
-        removeRootDomainObject();
+        setInquiryBlock(null);
+        setResultQuestion(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 }

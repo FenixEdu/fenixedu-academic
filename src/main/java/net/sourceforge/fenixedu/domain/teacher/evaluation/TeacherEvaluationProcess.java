@@ -217,9 +217,9 @@ public class TeacherEvaluationProcess extends TeacherEvaluationProcess_Base {
     }
 
     public void delete() {
-        removeEvaluator();
-        removeEvaluee();
-        removeFacultyEvaluationProcess();
+        setEvaluator(null);
+        setEvaluee(null);
+        setFacultyEvaluationProcess(null);
         for (final TeacherEvaluation teacherEvaluation : getTeacherEvaluationSet()) {
             teacherEvaluation.delete();
         }
@@ -229,7 +229,7 @@ public class TeacherEvaluationProcess extends TeacherEvaluationProcess_Base {
         for (ApprovedTeacherEvaluationProcessMark mark : getApprovedTeacherEvaluationProcessMarkSet()) {
             mark.delete();
         }
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

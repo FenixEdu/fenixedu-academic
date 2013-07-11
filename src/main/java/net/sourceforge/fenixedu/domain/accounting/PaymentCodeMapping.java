@@ -93,10 +93,10 @@ public class PaymentCodeMapping extends PaymentCodeMapping_Base {
 
     @Service
     public void delete() {
-        removeExecutionInterval();
-        removeOldPaymentCode();
-        removeNewPaymentCode();
-        removeRootDomainObject();
+        setExecutionInterval(null);
+        setOldPaymentCode(null);
+        setNewPaymentCode(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

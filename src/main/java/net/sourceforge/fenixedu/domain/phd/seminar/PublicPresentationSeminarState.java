@@ -49,7 +49,7 @@ public class PublicPresentationSeminarState extends PublicPresentationSeminarSta
 
     @Override
     protected void disconnect() {
-        removeProcess();
+        setProcess(null);
         super.disconnect();
     }
 

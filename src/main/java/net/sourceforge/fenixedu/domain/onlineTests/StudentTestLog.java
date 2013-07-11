@@ -42,9 +42,9 @@ public class StudentTestLog extends StudentTestLog_Base {
     }
 
     public void delete() {
-        removeStudent();
-        removeDistributedTest();
-        removeRootDomainObject();
+        setStudent(null);
+        setDistributedTest(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

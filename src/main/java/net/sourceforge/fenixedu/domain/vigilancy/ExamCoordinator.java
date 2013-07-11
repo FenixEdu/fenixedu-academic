@@ -112,10 +112,10 @@ public class ExamCoordinator extends ExamCoordinator_Base {
     }
 
     public void delete() {
-        removeUnit();
-        removeRootDomainObject();
-        removePerson();
-        removeExecutionYear();
+        setUnit(null);
+        setRootDomainObject(null);
+        setPerson(null);
+        setExecutionYear(null);
         super.deleteDomainObject();
     }
 }

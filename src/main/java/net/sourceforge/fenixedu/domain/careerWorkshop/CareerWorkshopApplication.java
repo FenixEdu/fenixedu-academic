@@ -159,10 +159,10 @@ public class CareerWorkshopApplication extends CareerWorkshopApplication_Base {
     }
 
     public void delete() {
-        removeCareerWorkshopConfirmation();
-        removeCareerWorkshopApplicationEvent();
-        removeStudent();
-        removeRootDomainObject();
+        setCareerWorkshopConfirmation(null);
+        setCareerWorkshopApplicationEvent(null);
+        setStudent(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

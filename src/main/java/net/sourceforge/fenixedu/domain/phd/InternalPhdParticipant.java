@@ -146,7 +146,7 @@ public class InternalPhdParticipant extends InternalPhdParticipant_Base {
 
     @Override
     protected void disconnect() {
-        removePerson();
+        setPerson(null);
         super.disconnect();
     }
 

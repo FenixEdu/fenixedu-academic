@@ -10,10 +10,10 @@ public class QuestionCondition extends QuestionCondition_Base {
     }
 
     public void delete() {
-        removeInquiryDependentQuestion();
-        removeInquiryGroupQuestion();
-        removeInquiryQuestion();
-        removeRootDomainObject();
+        setInquiryDependentQuestion(null);
+        setInquiryGroupQuestion(null);
+        setInquiryQuestion(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

@@ -22,7 +22,7 @@ public class InternshipCandidacySession extends InternshipCandidacySession_Base 
         for (; hasAnyInternshipCandidacy(); getInternshipCandidacy().get(0).delete()) {
             ;
         }
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

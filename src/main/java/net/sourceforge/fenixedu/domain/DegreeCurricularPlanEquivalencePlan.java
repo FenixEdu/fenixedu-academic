@@ -45,8 +45,8 @@ public class DegreeCurricularPlanEquivalencePlan extends DegreeCurricularPlanEqu
 
     @Override
     public void delete() {
-        removeDegreeCurricularPlan();
-        removeSourceDegreeCurricularPlan();
+        setDegreeCurricularPlan(null);
+        setSourceDegreeCurricularPlan(null);
         super.delete();
     }
 

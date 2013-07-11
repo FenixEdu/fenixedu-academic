@@ -75,10 +75,10 @@ public class ProjectSubmission extends ProjectSubmission_Base {
 
     public void delete() {
         getProjectSubmissionFile().delete();
-        removeAttends();
-        removeProject();
-        removeStudentGroup();
-        removeRootDomainObject();
+        setAttends(null);
+        setProject(null);
+        setStudentGroup(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
 
     }

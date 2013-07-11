@@ -388,7 +388,7 @@ public class Receipt extends Receipt_Base {
         super.getEntries().clear();
         super.setPerson(null);
 
-        removeRootDomainObject();
+        setRootDomainObject(null);
 
         super.deleteDomainObject();
     }

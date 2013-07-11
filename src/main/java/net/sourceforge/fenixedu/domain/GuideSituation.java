@@ -25,8 +25,8 @@ public class GuideSituation extends GuideSituation_Base {
     }
 
     public void delete() {
-        removeGuide();
-        removeRootDomainObject();
+        setGuide(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

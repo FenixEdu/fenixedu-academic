@@ -30,8 +30,8 @@ public class DomainOperationLog extends DomainOperationLog_Base {
     }
 
     public void delete() {
-        removePerson();
-        removeRootDomainObject();
+        setPerson(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

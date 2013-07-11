@@ -154,13 +154,13 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
     }
 
     public void delete() {
-        removeExecutionPeriod();
-        removeCompetenceCourse();
-        removeCompetenceCourseGroupUnit();
+        setExecutionPeriod(null);
+        setCompetenceCourse(null);
+        setCompetenceCourseGroupUnit(null);
         for (; !getCompetenceCourseLoads().isEmpty(); getCompetenceCourseLoads().get(0).delete()) {
             ;
         }
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

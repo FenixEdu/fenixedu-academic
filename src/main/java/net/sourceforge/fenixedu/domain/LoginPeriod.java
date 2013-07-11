@@ -42,7 +42,7 @@ public class LoginPeriod extends LoginPeriod_Base {
 
     public void delete() {
         super.setLogin(null);
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

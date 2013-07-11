@@ -83,7 +83,7 @@ public class RemoveDelegate {
              */
             DelegateElection election = student.getLastElectedDelegateElection();
             if (election != null && election.getExecutionYear().equals(ExecutionYear.readCurrentExecutionYear())) {
-                election.removeElectedStudent();
+                election.setElectedStudent(null);
             }
         } else {
             degreeUnit.removeActiveDelegatePersonFunctionFromStudentByFunctionType(student, delegateFunctionType);

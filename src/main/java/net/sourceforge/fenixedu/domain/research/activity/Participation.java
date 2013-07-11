@@ -22,7 +22,7 @@ public abstract class Participation extends Participation_Base {
     public void delete() {
         super.setParty(null);
         super.setRole(null);
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

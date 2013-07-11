@@ -22,7 +22,7 @@ public class QueueJobResultFile extends QueueJobResultFile_Base {
 
     @Override
     public void delete() {
-        removeJob();
+        setJob(null);
         super.delete();
     }
 

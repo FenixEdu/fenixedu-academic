@@ -17,10 +17,10 @@ public class ConnectionRule extends ConnectionRule_Base {
     }
 
     public void delete() {
-        removeAccountabilityType();
-        removeAllowedChildPartyType();
-        removeAllowedParentPartyType();
-        removeRootDomainObject();
+        setAccountabilityType(null);
+        setAllowedChildPartyType(null);
+        setAllowedParentPartyType(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 }

@@ -91,8 +91,8 @@ public class Branch extends Branch_Base {
         this.getStudentCurricularPlans().clear();
 
         removeCurricularCourseScopes(commonBranch);
-        removeDegreeCurricularPlan();
-        removeRootDomainObject();
+        setDegreeCurricularPlan(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
@@ -106,7 +106,7 @@ public class Branch extends Branch_Base {
             if (hasCurricularCourseCommonBranchInAnyCurricularCourseScope(curricularCourse, commonBranch)) {
                 // delete the CurricularCourseScope
                 branchCurricularCourseScopesIterator.remove();
-                scope.removeBranch();
+                scope.setBranch(null);
                 scope.delete();
 
             } else {

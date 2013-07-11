@@ -387,9 +387,9 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
     }
 
     public void delete() {
-        removeCardGenerationBatch();
-        removePerson();
-        removeRootDomainObject();
+        setCardGenerationBatch(null);
+        setPerson(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

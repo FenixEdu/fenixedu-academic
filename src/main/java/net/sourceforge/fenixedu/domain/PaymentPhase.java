@@ -40,8 +40,8 @@ public class PaymentPhase extends PaymentPhase_Base {
     }
 
     public void delete() {
-        removeGratuityValues();
-        removeRootDomainObject();
+        setGratuityValues(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

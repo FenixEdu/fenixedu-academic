@@ -52,7 +52,7 @@ public class FakeShift extends FakeShift_Base {
             fakeEnrollment.delete();
         }
 
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

@@ -145,7 +145,7 @@ public class EditExecutionDegreeCoordinationDA extends FenixDispatchAction {
         String backPath = request.getParameter("backPath");
 
         coordinator.makeAction(OperationType.REMOVE, personDeleting);
-        // coordinator.removeCoordinator();
+        // coordinator.setCoordinator(null);
 
         ExecutionDegreeCoordinatorsBean coordsBean = new ExecutionDegreeCoordinatorsBean(executionDegree);
         coordsBean.setEscapedBackPath(backPath);

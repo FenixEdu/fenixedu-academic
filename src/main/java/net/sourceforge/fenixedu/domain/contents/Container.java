@@ -157,7 +157,7 @@ public abstract class Container extends Container_Base {
         }
         final Content content = getInitialContent();
         if (content != null) {
-            removeInitialContent();
+            setInitialContent(null);
             if (!content.hasAnyParents()) {
                 content.delete();
             }

@@ -58,8 +58,8 @@ public class DistributedTest extends DistributedTest_Base {
         }
         deleteQuestions();
 
-        removeTestScope();
-        removeRootDomainObject();
+        setTestScope(null);
+        setRootDomainObject(null);
 
         deleteDomainObject();
     }

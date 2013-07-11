@@ -54,10 +54,10 @@ public class InquiryQuestion extends InquiryQuestion_Base {
         for (InquiryBlock inquiryBlock : getAssociatedResultBlocks()) {
             removeAssociatedResultBlocks(inquiryBlock);
         }
-        removeCheckboxGroupQuestion();
-        removeDependentQuestionCondition();
-        removeInquiryGroupQuestion();
-        removeRootDomainObject();
+        setCheckboxGroupQuestion(null);
+        setDependentQuestionCondition(null);
+        setInquiryGroupQuestion(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

@@ -79,8 +79,8 @@ public class DegreeProjectTutorialService extends DegreeProjectTutorialService_B
                 "resources.TeacherCreditsSheetResources", "label.teacher.degreeProjectTutorialService.delete", getProfessorship()
                         .getExecutionCourse().getName(), getProfessorship().getTeacher().getPerson().getNickname(), getAttend()
                         .getRegistration().getNumber().toString(), getPercentageValue().toString()));
-        removeAttend();
-        removeProfessorship();
+        setAttend(null);
+        setProfessorship(null);
         super.delete();
     }
 

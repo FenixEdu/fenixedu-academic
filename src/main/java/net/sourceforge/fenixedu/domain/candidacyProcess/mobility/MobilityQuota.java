@@ -86,10 +86,10 @@ public class MobilityQuota extends MobilityQuota_Base {
             throw new DomainException("error.mobility.quota.is.associated.with.applications");
         }
 
-        removeMobilityAgreement();
-        removeDegree();
-        removeApplicationPeriod();
-        removeRootDomainObject();
+        setMobilityAgreement(null);
+        setDegree(null);
+        setApplicationPeriod(null);
+        setRootDomainObject(null);
 
         deleteDomainObject();
     }

@@ -18,7 +18,7 @@ public class DegreeChangeIndividualCandidacySeriesGrade extends DegreeChangeIndi
     public void delete() {
         setIndividualCandidacy(null);
         setDegree(null);
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 }

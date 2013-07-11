@@ -119,8 +119,8 @@ public class PhdProgramProcessDocument extends PhdProgramProcessDocument_Base {
 
     @Override
     protected void disconnect() {
-        removeUploader();
-        removePhdProgramProcess();
+        setUploader(null);
+        setPhdProgramProcess(null);
         super.disconnect();
     }
 

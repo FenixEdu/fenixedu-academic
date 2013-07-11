@@ -62,7 +62,7 @@ public abstract class DelegateElectionPeriod extends DelegateElectionPeriod_Base
     }
 
     public void delete() {
-        super.removeRootDomainObject();
+        super.setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

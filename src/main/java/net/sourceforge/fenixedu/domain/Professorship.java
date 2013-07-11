@@ -116,13 +116,13 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
             ProfessorshipManagementLog.createLog(getExecutionCourse(), "resources.MessagingResources",
                     "log.executionCourse.professorship.removed", getPerson().getPresentationName(), getExecutionCourse()
                             .getNome(), getExecutionCourse().getDegreePresentationString());
-            removeExecutionCourse();
-            removePerson();
+            setExecutionCourse(null);
+            setPerson(null);
             if (super.getPermissions() != null) {
                 getPermissions().delete();
             }
-            removeRootDomainObject();
-            removeCreator();
+            setRootDomainObject(null);
+            setCreator(null);
             deleteDomainObject();
         }
     }
@@ -319,7 +319,7 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
     }
 
     public void removeTeacher() {
-        removePerson();
+        setPerson(null);
     }
 
     public String getDegreeSiglas() {

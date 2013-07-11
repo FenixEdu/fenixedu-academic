@@ -215,15 +215,15 @@ public class PersonFunction extends PersonFunction_Base {
     @Service
     public void delete() {
         if (hasCurricularYear()) {
-            removeCurricularYear();
+            setCurricularYear(null);
         }
         if (hasDelegate()) {
-            removeDelegate();
+            setDelegate(null);
         }
         if (hasSender()) {
-            removeSender();
+            setSender(null);
         }
-        removeExecutionInterval();
+        setExecutionInterval(null);
         super.delete();
     }
 

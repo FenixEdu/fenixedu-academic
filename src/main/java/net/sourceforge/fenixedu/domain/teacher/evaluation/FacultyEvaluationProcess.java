@@ -312,7 +312,7 @@ public class FacultyEvaluationProcess extends FacultyEvaluationProcess_Base impl
         for (final TeacherEvaluationProcess teacherEvaluationProcess : getTeacherEvaluationProcessSet()) {
             teacherEvaluationProcess.delete();
         }
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

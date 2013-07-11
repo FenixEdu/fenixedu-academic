@@ -37,11 +37,11 @@ public class NewModelRestriction extends NewModelRestriction_Base implements Pos
     public void delete() {
         NewModelGroup parentGroup = this.getParentGroup();
         if (parentGroup != null) {
-            this.removeParentGroup();
+            this.setParentGroup(null);
             parentGroup.resortChildRestrictions();
         }
 
-        this.removeQuestion();
+        this.setQuestion(null);
 
         super.delete();
     }

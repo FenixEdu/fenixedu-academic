@@ -57,8 +57,8 @@ public class WeeklyWorkLoad extends WeeklyWorkLoad_Base implements Comparable<We
 
     @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
     public void delete() {
-        removeAttends();
-        removeRootDomainObject();
+        setAttends(null);
+        setRootDomainObject(null);
 
         super.deleteDomainObject();
 

@@ -67,7 +67,7 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
         getBasedEntries().clear();
         super.setParentEntry(null);
         super.setTemplateEntry(null);
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

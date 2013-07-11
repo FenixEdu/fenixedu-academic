@@ -39,11 +39,11 @@ abstract public class PhdParticipant extends PhdParticipant_Base {
     }
 
     protected void disconnect() {
-        removeIndividualProcess();
-        removeProcessForGuiding();
-        removeProcessForAssistantGuiding();
-        removeRootDomainObject();
-        removeAcceptanceLetter();
+        setIndividualProcess(null);
+        setProcessForGuiding(null);
+        setProcessForAssistantGuiding(null);
+        setRootDomainObject(null);
+        setAcceptanceLetter(null);
     }
 
     abstract public String getName();

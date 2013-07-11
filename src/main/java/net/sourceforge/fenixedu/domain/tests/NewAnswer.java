@@ -28,9 +28,9 @@ public class NewAnswer extends NewAnswer_Base {
     }
 
     public void delete() {
-        this.removeAtomicQuestion();
-        this.removePerson();
-        this.removeRootDomainObject();
+        this.setAtomicQuestion(null);
+        this.setPerson(null);
+        this.setRootDomainObject(null);
 
         super.deleteDomainObject();
     }

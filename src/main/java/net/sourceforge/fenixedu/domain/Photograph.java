@@ -184,19 +184,19 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
     }
 
     public void delete() {
-        removeRootDomainObject();
+        setRootDomainObject(null);
         if (hasPendingHolder()) {
-            removePendingHolder();
+            setPendingHolder(null);
         }
-        removePerson();
+        setPerson(null);
         Photograph prev = getPrevious();
         if (prev != null) {
-            removePrevious();
+            setPrevious(null);
             prev.delete();
         }
         Photograph next = getNext();
         if (next != null) {
-            removeNext();
+            setNext(null);
         }
         super.deleteDomainObject();
     }

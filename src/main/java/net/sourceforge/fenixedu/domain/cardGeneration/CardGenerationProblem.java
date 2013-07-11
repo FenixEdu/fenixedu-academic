@@ -37,9 +37,9 @@ public class CardGenerationProblem extends CardGenerationProblem_Base {
     }
 
     public void delete() {
-        removePerson();
-        removeCardGenerationBatch();
-        removeRootDomainObject();
+        setPerson(null);
+        setCardGenerationBatch(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

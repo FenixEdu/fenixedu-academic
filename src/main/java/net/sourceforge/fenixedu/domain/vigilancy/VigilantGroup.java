@@ -200,11 +200,11 @@ public class VigilantGroup extends VigilantGroup_Base {
     }
 
     public void delete() {
-        removeExecutionYear();
+        setExecutionYear(null);
         getExecutionCourses().clear();
         getExamCoordinators().clear();
-        removeUnit();
-        removeRootDomainObject();
+        setUnit(null);
+        setRootDomainObject(null);
         for (VigilantWrapper vigilant : this.getVigilantWrappers()) {
             List<Vigilancy> vigilancies = vigilant.getVigilancies();
             for (Vigilancy vigilancy : vigilancies) {

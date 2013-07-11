@@ -210,9 +210,9 @@ public class Credits extends Credits_Base {
             ;
         }
 
-        removeStudentCurricularPlan();
-        removeRootDomainObject();
-        removeExecutionPeriod();
+        setStudentCurricularPlan(null);
+        setRootDomainObject(null);
+        setExecutionPeriod(null);
     }
 
     final public Double getEnrolmentsEcts() {

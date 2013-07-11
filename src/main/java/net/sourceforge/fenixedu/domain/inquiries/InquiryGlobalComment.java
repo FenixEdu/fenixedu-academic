@@ -28,11 +28,11 @@ public class InquiryGlobalComment extends InquiryGlobalComment_Base {
         for (; !getInquiryResultCommentsSet().isEmpty(); getInquiryResultComments().get(0).delete()) {
             ;
         }
-        removeExecutionCourse();
-        removeExecutionDegree();
-        removeExecutionSemester();
-        removeTeacher();
-        removeRootDomainObject();
+        setExecutionCourse(null);
+        setExecutionDegree(null);
+        setExecutionSemester(null);
+        setTeacher(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 }

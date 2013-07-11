@@ -57,7 +57,7 @@ public class PendingRequest extends PendingRequest_Base {
         for (PendingRequestParameter pendingRequestParameter : getPendingRequestParameter()) {
             pendingRequestParameter.delete();
         }
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

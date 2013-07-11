@@ -26,7 +26,7 @@ public class NotRule extends NotRule_Base {
         }
 
         setDegreeModuleToApplyRule(rule.getDegreeModuleToApplyRule());
-        rule.removeDegreeModuleToApplyRule();
+        rule.setDegreeModuleToApplyRule(null);
         setBegin(rule.getBegin());
         setEnd(rule.getEnd());
         setWrappedRule(rule);

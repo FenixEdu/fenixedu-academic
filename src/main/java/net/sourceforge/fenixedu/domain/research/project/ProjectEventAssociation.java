@@ -15,13 +15,13 @@ public class ProjectEventAssociation extends ProjectEventAssociation_Base {
         final EventEdition event = this.getEventEdition();
         final Project project = this.getProject();
 
-        this.removeEventEdition();
+        this.setEventEdition(null);
         event.sweep();
 
-        this.removeProject();
+        this.setProject(null);
         project.sweep();
 
-        this.removeRootDomainObject();
+        this.setRootDomainObject(null);
         deleteDomainObject();
     }
 

@@ -55,7 +55,7 @@ public class RootCourseGroup extends RootCourseGroup_Base {
             throw new DomainException("courseGroup.notEmptyCourseGroupContexts");
         }
         removeChildDegreeModules();
-        removeParentDegreeCurricularPlan();
+        setParentDegreeCurricularPlan(null);
         super.delete();
     }
 

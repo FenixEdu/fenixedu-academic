@@ -35,7 +35,7 @@ public class CreateOldCurricularCourse {
         final CurricularCourse curricularCourse =
                 degreeCurricularPlan.createCurricularCourse(name, code, acronym, Boolean.TRUE, CurricularStage.APPROVED);
         // hack to use dcp method
-        curricularCourse.removeDegreeCurricularPlan();
+        curricularCourse.setDegreeCurricularPlan(null);
 
         curricularCourse.setNameEn(nameEn);
         curricularCourse.setWeigth(weigth);

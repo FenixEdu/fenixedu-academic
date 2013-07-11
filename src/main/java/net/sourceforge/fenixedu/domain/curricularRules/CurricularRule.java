@@ -72,17 +72,17 @@ public abstract class CurricularRule extends CurricularRule_Base implements ICur
     public void delete() {
         removeOwnParameters();
         removeCommonParameters();
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
     protected void removeCommonParameters() {
-        removeDegreeModuleToApplyRule();
-        removeBegin();
-        removeEnd();
-        removeParentCompositeRule();
-        removeContextCourseGroup();
-        removeRootDomainObject();
+        setDegreeModuleToApplyRule(null);
+        setBegin(null);
+        setEnd(null);
+        setParentCompositeRule(null);
+        setContextCourseGroup(null);
+        setRootDomainObject(null);
     }
 
     @Override

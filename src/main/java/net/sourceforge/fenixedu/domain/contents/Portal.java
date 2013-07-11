@@ -38,7 +38,7 @@ public class Portal extends Portal_Base {
 
     @Override
     protected void disconnect() {
-        removePortalRootDomainObject();
+        setPortalRootDomainObject(null);
         super.disconnect();
     }
 

@@ -27,6 +27,6 @@ public abstract class PrecedenceRule extends PrecedenceRule_Base {
 
     @Override
     protected void removeOwnParameters() {
-        removePrecedenceDegreeModule();
+        setPrecedenceDegreeModule(null);
     }
 }

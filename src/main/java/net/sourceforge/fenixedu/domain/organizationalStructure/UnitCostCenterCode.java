@@ -12,8 +12,8 @@ public class UnitCostCenterCode extends UnitCostCenterCode_Base {
     }
 
     public void delete() {
-        removeUnit();
-        removeRootDomainObject();
+        setUnit(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

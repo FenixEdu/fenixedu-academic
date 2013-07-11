@@ -88,12 +88,12 @@ public class Email extends Email_Base {
     }
 
     public void delete() {
-        removeMessage();
+        setMessage(null);
         for (final MessageTransportResult messageTransportResult : getMessageTransportResultSet()) {
             messageTransportResult.delete();
         }
-        removeRootDomainObjectFromEmailQueue();
-        removeRootDomainObject();
+        setRootDomainObjectFromEmailQueue(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
@@ -383,7 +383,7 @@ public class Email extends Email_Base {
 
     public void deliver() {
         if (!hasAnyRecipients() || (hasMessage() && getMessage().getCreated().plusDays(5).isBeforeNow())) {
-            removeRootDomainObjectFromEmailQueue();
+            setRootDomainObjectFromEmailQueue(null);
         } else {
             final EmailAddressList toAddresses = getToAddresses();
             final EmailAddressList ccAddresses = getCcAddresses();
@@ -408,7 +408,7 @@ public class Email extends Email_Base {
             }
 
             if (!hasAnyRecipients()) {
-                removeRootDomainObjectFromEmailQueue();
+                setRootDomainObjectFromEmailQueue(null);
             }
         }
     }

@@ -33,7 +33,7 @@ public class CourseReport extends CourseReport_Base {
 
     public void delete() {
         setExecutionCourse(null);
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

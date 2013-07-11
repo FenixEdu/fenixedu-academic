@@ -44,7 +44,7 @@ public class LessonPlanning extends LessonPlanning_Base {
                 getLessonType().getFullNameTipoAula(), getExecutionCourse().getNome(), getExecutionCourse()
                         .getDegreePresentationString());
         super.setExecutionCourse(null);
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

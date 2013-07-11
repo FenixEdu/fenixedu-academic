@@ -10,11 +10,11 @@ public class InquiryQuestionHeader extends InquiryQuestionHeader_Base {
     }
 
     public void delete() {
-        removeInquiryBlock();
-        removeInquiryGroupQuestion();
-        removeInquiryQuestion();
-        removeResultGroupQuestion();
-        removeRootDomainObject();
+        setInquiryBlock(null);
+        setInquiryGroupQuestion(null);
+        setInquiryQuestion(null);
+        setResultGroupQuestion(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

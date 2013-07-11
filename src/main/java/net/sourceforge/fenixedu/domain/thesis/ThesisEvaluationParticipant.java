@@ -117,9 +117,9 @@ public class ThesisEvaluationParticipant extends ThesisEvaluationParticipant_Bas
     }
 
     public void delete() {
-        removeRootDomainObject();
-        removePerson();
-        removeThesis();
+        setRootDomainObject(null);
+        setPerson(null);
+        setThesis(null);
 
         deleteDomainObject();
     }

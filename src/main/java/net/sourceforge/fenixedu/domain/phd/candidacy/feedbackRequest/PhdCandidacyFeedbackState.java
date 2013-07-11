@@ -56,7 +56,7 @@ public class PhdCandidacyFeedbackState extends PhdCandidacyFeedbackState_Base {
 
     @Override
     protected void disconnect() {
-        removeProcess();
+        setProcess(null);
         super.disconnect();
     }
 

@@ -31,7 +31,7 @@ public class UnitBasedSender extends UnitBasedSender_Base {
 
     @Override
     public void delete() {
-        removeUnit();
+        setUnit(null);
         super.delete();
     }
 

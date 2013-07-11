@@ -36,7 +36,7 @@ public class Guide extends Guide_Base {
 
     public void delete() {
         if (canBeDeleted()) {
-            removeRootDomainObject();
+            setRootDomainObject(null);
             deleteDomainObject();
         } else {
             throw new DomainException("guide.cannot.be.deleted");

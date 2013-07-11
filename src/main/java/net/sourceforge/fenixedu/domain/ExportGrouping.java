@@ -21,12 +21,12 @@ public class ExportGrouping extends ExportGrouping_Base {
     }
 
     public void delete() {
-        removeExecutionCourse();
-        removeGrouping();
-        removeReceiverPerson();
-        removeSenderExecutionCourse();
-        removeSenderPerson();
-        removeRootDomainObject();
+        setExecutionCourse(null);
+        setGrouping(null);
+        setReceiverPerson(null);
+        setSenderExecutionCourse(null);
+        setSenderPerson(null);
+        setRootDomainObject(null);
 
         super.deleteDomainObject();
     }

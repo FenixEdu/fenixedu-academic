@@ -53,7 +53,7 @@ public class Sender extends Sender_Base {
                 removeRecipients(recipient);
             }
         }
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

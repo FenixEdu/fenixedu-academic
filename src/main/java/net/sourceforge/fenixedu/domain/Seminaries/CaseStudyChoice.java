@@ -22,10 +22,10 @@ public class CaseStudyChoice extends CaseStudyChoice_Base {
     }
 
     public void delete() {
-        removeCaseStudy();
-        removeCandidacy();
+        setCaseStudy(null);
+        setCandidacy(null);
 
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

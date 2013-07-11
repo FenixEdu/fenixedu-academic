@@ -923,8 +923,8 @@ public class ParkingRequest extends ParkingRequest_Base {
                 ;
             }
             deleteDriverLicenseDocument();
-            removeParkingParty();
-            removeRootDomainObject();
+            setParkingParty(null);
+            setRootDomainObject(null);
             deleteDomainObject();
         }
     }

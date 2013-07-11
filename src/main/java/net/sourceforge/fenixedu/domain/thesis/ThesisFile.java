@@ -38,8 +38,8 @@ public class ThesisFile extends ThesisFile_Base {
             thesis = getAbstractThesis();
         }
 
-        removeDissertationThesis();
-        removeAbstractThesis();
+        setDissertationThesis(null);
+        setAbstractThesis(null);
 
         super.delete();
     }

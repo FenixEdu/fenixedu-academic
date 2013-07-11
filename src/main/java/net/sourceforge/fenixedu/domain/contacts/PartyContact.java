@@ -242,9 +242,9 @@ public abstract class PartyContact extends PartyContact_Base {
             }
         }
 
-        // removeResearcher();
-        // removeParty();
-        // removeRootDomainObject();
+        // setResearcher(null);
+        // setParty(null);
+        // setRootDomainObject(null);
         // super.deleteDomainObject();
     }
 

@@ -123,11 +123,11 @@ public class Prize extends Prize_Base {
     }
 
     public void delete() {
-        removeResearchResult();
+        setResearchResult(null);
         for (; !getParties().isEmpty(); getParties().get(0).removePrizes(this)) {
             ;
         }
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

@@ -20,9 +20,9 @@ public class MobilityAgreement extends MobilityAgreement_Base {
     }
 
     public void delete() {
-        removeMobilityProgram();
-        removeUniversityUnit();
-        removeRootDomainObject();
+        setMobilityProgram(null);
+        setUniversityUnit(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

@@ -32,7 +32,7 @@ public class DissociateRegistration extends PhdIndividualProgramProcessActivity 
 
     @Override
     protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView, Object object) {
-        process.removeRegistration();
+        process.setRegistration(null);
 
         return process;
     }

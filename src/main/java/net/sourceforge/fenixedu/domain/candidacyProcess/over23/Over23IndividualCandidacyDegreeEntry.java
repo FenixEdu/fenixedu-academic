@@ -56,9 +56,9 @@ public class Over23IndividualCandidacyDegreeEntry extends Over23IndividualCandid
     }
 
     void delete() {
-        removeDegree();
+        setDegree(null);
         removeOver23IndividualCandidacy();
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

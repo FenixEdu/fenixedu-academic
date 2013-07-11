@@ -59,8 +59,8 @@ public class UnitSiteBanner extends UnitSiteBanner_Base {
         if (getBackgroundImage() != null) {
             getBackgroundImage().delete();
         }
-        removeSite();
-        removeRootDomainObject();
+        setSite(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

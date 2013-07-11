@@ -91,9 +91,9 @@ public class Function extends Function_Base {
         if (!canBeDeleted()) {
             throw new DomainException("error.delete.function");
         }
-        removeParentInherentFunction();
+        setParentInherentFunction(null);
         super.setUnit(null);
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 
@@ -144,7 +144,7 @@ public class Function extends Function_Base {
         if (parentInherentFunction.equals(this)) {
             throw new DomainException("error.function.parentInherentFunction.equals.function");
         }
-        removeParentInherentFunction();
+        setParentInherentFunction(null);
         setParentInherentFunction(parentInherentFunction);
     }
 

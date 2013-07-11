@@ -26,7 +26,7 @@ public class Accountability extends Accountability_Base {
         super.setAccountabilityType(null);
         super.setChildParty(null);
         super.setParentParty(null);
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

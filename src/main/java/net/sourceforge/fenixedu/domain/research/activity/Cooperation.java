@@ -43,8 +43,8 @@ public class Cooperation extends Cooperation_Base implements ParticipationsInter
         for (; this.hasAnyParticipations(); getParticipations().get(0).delete()) {
             ;
         }
-        removeUnit();
-        removeRootDomainObject();
+        setUnit(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

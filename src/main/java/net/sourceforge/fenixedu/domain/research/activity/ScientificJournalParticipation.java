@@ -80,7 +80,7 @@ public class ScientificJournalParticipation extends ScientificJournalParticipati
 
     @Override
     public void delete() {
-        removeScientificJournal();
+        setScientificJournal(null);
         super.delete();
     }
 

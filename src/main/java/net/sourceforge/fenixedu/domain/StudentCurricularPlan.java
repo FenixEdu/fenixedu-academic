@@ -279,10 +279,10 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
         checkRulesToDelete();
 
-        removeDegreeCurricularPlan();
-        removeBranch();
-        removeEmployee();
-        removeMasterDegreeThesis();
+        setDegreeCurricularPlan(null);
+        setBranch(null);
+        setEmployee(null);
+        setMasterDegreeThesis(null);
 
         for (; !getEnrolmentsSet().isEmpty(); getEnrolments().get(0).delete()) {
             ;
@@ -295,7 +295,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         for (Iterator<NotNeedToEnrollInCurricularCourse> iter = getNotNeedToEnrollCurricularCoursesIterator(); iter.hasNext();) {
             NotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse = iter.next();
             iter.remove();
-            notNeedToEnrollInCurricularCourse.removeStudentCurricularPlan();
+            notNeedToEnrollInCurricularCourse.setStudentCurricularPlan(null);
             notNeedToEnrollInCurricularCourse.delete();
         }
 
@@ -306,7 +306,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         for (Iterator<CreditsInScientificArea> iter = getCreditsInScientificAreasIterator(); iter.hasNext();) {
             CreditsInScientificArea creditsInScientificArea = iter.next();
             iter.remove();
-            creditsInScientificArea.removeStudentCurricularPlan();
+            creditsInScientificArea.setStudentCurricularPlan(null);
             creditsInScientificArea.delete();
         }
 
@@ -317,8 +317,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
             ;
         }
 
-        removeStudent();
-        removeRootDomainObject();
+        setStudent(null);
+        setRootDomainObject(null);
 
         deleteDomainObject();
     }

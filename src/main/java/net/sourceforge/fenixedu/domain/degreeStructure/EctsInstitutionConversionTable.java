@@ -53,7 +53,7 @@ public class EctsInstitutionConversionTable extends EctsInstitutionConversionTab
 
     @Override
     public void delete() {
-        removeSchool();
+        setSchool(null);
         super.delete();
     }
 

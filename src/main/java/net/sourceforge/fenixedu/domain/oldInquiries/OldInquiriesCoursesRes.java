@@ -18,8 +18,8 @@ public class OldInquiriesCoursesRes extends OldInquiriesCoursesRes_Base {
     }
 
     public void delete() {
-        removeExecutionPeriod();
-        removeDegree();
+        setExecutionPeriod(null);
+        setDegree(null);
         deleteDomainObject();
     }
 

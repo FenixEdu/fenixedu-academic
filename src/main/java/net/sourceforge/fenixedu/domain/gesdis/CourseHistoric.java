@@ -19,8 +19,8 @@ public class CourseHistoric extends CourseHistoric_Base {
     }
 
     public void delete() {
-        removeCurricularCourse();
-        removeRootDomainObject();
+        setCurricularCourse(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

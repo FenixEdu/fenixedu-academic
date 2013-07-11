@@ -34,8 +34,8 @@ public class Discount extends Discount_Base {
 
     @Service
     public void delete() {
-        removeEvent();
-        removeRootDomainObject();
+        setEvent(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

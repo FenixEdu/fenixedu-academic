@@ -32,8 +32,8 @@ public class NewCorrector extends NewCorrector_Base implements Positionable {
             }
         }
 
-        this.removeAtomicQuestion();
-        this.removeRootDomainObject();
+        this.setAtomicQuestion(null);
+        this.setRootDomainObject(null);
 
         atomicQuestion.resortCorrectors();
 

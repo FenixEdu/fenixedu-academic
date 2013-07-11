@@ -27,7 +27,7 @@ abstract public class EnrolmentWrapper extends EnrolmentWrapper_Base {
 
     public void delete() {
         super.setCredits(null);
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

@@ -215,7 +215,7 @@ public class Project extends Project_Base {
         }
 
         logRemove();
-        removeGrouping();
+        setGrouping(null);
         super.delete();
     }
 

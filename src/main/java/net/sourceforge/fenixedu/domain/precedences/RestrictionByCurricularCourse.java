@@ -15,7 +15,7 @@ public abstract class RestrictionByCurricularCourse extends RestrictionByCurricu
 
     @Override
     public void delete() {
-        removePrecedentCurricularCourse();
+        setPrecedentCurricularCourse(null);
         super.delete();
     }
 

@@ -41,8 +41,8 @@ public class OtherService extends OtherService_Base {
         new TeacherServiceLog(getTeacherService(), BundleUtil.getStringFromResourceBundle(
                 "resources.TeacherCreditsSheetResources", "label.teacher.otherService.delete", getCredits().toString(),
                 getReason(), getCorrectedExecutionSemester().getExecutionYear().getQualifiedName()));
-        removeTeacherService();
-        removeCorrectedExecutionSemester();
+        setTeacherService(null);
+        setCorrectedExecutionSemester(null);
         super.delete();
     }
 

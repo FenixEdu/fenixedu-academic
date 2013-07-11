@@ -669,9 +669,9 @@ public class StudentInquiriesTeachingResult extends StudentInquiriesTeachingResu
 
     @Service
     public void delete() {
-        removeExecutionDegree();
-        removeProfessorship();
-        removeRootDomainObject();
+        setExecutionDegree(null);
+        setProfessorship(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

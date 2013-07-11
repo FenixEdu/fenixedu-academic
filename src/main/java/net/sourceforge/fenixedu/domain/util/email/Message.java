@@ -164,10 +164,10 @@ public class Message extends Message_Base {
             email.delete();
         }
 
-        removeSender();
-        removePerson();
-        removeRootDomainObjectFromPendingRelation();
-        removeRootDomainObject();
+        setSender(null);
+        setPerson(null);
+        setRootDomainObjectFromPendingRelation(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 
@@ -303,7 +303,7 @@ public class Message extends Message_Base {
                             Collections.EMPTY_SET, getSubject(), getBody(), getHtmlBody());
             email.setMessage(this);
         }
-        removeRootDomainObjectFromPendingRelation();
+        setRootDomainObjectFromPendingRelation(null);
         setSent(new DateTime());
     }
 

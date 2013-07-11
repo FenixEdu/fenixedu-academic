@@ -39,7 +39,7 @@ public class ResearchEvent extends ResearchEvent_Base implements ParticipationsI
         for (; this.hasAnyEventEditions(); this.getEventEditions().get(0).removeEvent()) {
             ;
         }
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

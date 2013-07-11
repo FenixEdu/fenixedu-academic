@@ -85,7 +85,7 @@ public class LoginAlias extends LoginAlias_Base {
 
     public void delete() {
         super.setLogin(null);
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

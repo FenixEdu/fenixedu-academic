@@ -27,9 +27,9 @@ public class OutboundMobilityCandidacy extends OutboundMobilityCandidacy_Base im
         if (!submission.getOutboundMobilityCandidacyPeriod().isAcceptingCandidacies()) {
             throw new DomainException("error.CandidacyPeriod.closed");
         }
-        removeOutboundMobilityCandidacySubmission();
-        removeOutboundMobilityCandidacyContest();
-        removeRootDomainObject();
+        setOutboundMobilityCandidacySubmission(null);
+        setOutboundMobilityCandidacyContest(null);
+        setRootDomainObject(null);
         deleteDomainObject();
         if (submission.hasAnyOutboundMobilityCandidacy()) {
             int i = 0;
@@ -109,7 +109,7 @@ public class OutboundMobilityCandidacy extends OutboundMobilityCandidacy_Base im
     @Service
     public void unselect() {
         setSelected(Boolean.FALSE);
-        removeSubmissionFromSelectedCandidacy();
+        setSubmissionFromSelectedCandidacy(null);
     }
 
 }

@@ -103,7 +103,7 @@ public class Homepage extends Homepage_Base {
 
     @Override
     protected void disconnect() {
-        removePerson();
+        setPerson(null);
         super.disconnect();
     }
 

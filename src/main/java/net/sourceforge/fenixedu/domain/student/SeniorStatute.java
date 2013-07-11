@@ -40,11 +40,11 @@ public class SeniorStatute extends SeniorStatute_Base {
     @Override
     public void delete() {
         checkRules();
-        removeBeginExecutionPeriod();
-        removeEndExecutionPeriod();
-        removeStudent();
-        removeRegistration();
-        removeRootDomainObject();
+        setBeginExecutionPeriod(null);
+        setEndExecutionPeriod(null);
+        setStudent(null);
+        setRegistration(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

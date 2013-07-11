@@ -16,7 +16,7 @@ public class FAQSection extends FAQSection_Base {
         for (; !getChildSections().isEmpty(); getChildSections().get(0).delete()) {
             ;
         }
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

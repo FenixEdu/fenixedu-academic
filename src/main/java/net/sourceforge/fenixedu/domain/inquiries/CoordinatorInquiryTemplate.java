@@ -42,8 +42,8 @@ public class CoordinatorInquiryTemplate extends CoordinatorInquiryTemplate_Base 
         for (InquiryBlock inquiryBlock : getInquiryBlocksSet()) {
             removeInquiryBlocks(inquiryBlock);
         }
-        removeExecutionPeriod();
-        removeRootDomainObject();
+        setExecutionPeriod(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

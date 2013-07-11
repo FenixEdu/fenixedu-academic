@@ -221,7 +221,7 @@ public abstract class PostingRule extends PostingRule_Base {
     @Checked("AcademicPredicates.MANAGE_PAYMENTS")
     public final void delete() {
         super.setServiceAgreementTemplate(null);
-        removeRootDomainObject();
+        setRootDomainObject(null);
         removeOtherRelations();
         deleteDomainObject();
     }

@@ -86,7 +86,7 @@ public class Account extends Account_Base {
             throw new DomainException("error.accounting.account.cannot.be.deleted");
         }
         super.setParty(null);
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

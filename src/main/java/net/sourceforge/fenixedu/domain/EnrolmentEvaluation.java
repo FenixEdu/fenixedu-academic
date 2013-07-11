@@ -478,18 +478,18 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
     private void deleteObject() {
         checkApprovedEnrolmentPayment();
 
-        removePersonResponsibleForGrade();
-        removePerson();
-        removeEnrolment();
-        removeMarkSheet();
-        removeRectification();
-        removeRectified();
+        setPersonResponsibleForGrade(null);
+        setPerson(null);
+        setEnrolment(null);
+        setMarkSheet(null);
+        setRectification(null);
+        setRectified(null);
         if (hasImprovementOfApprovedEnrolmentEvent()) {
             getImprovementOfApprovedEnrolmentEvent().removeImprovementEnrolmentEvaluations(this);
         }
-        removeExecutionPeriod();
+        setExecutionPeriod(null);
 
-        removeRootDomainObject();
+        setRootDomainObject(null);
 
         super.deleteDomainObject();
     }
@@ -509,7 +509,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         setExamDateYearMonthDay(null);
         setGradeAvailableDateYearMonthDay(null);
 
-        removeMarkSheet();
+        setMarkSheet(null);
     }
 
     public void insertStudentFinalEvaluationForMasterDegree(String gradeValue, Person responsibleFor, Date examDate)

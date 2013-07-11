@@ -51,8 +51,8 @@ public abstract class GeneratedDocument extends GeneratedDocument_Base {
 
     @Override
     public void delete() {
-        removeAddressee();
-        removeOperator();
+        setAddressee(null);
+        setOperator(null);
         super.delete();
     }
 

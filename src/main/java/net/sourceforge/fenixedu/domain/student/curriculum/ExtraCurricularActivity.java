@@ -106,9 +106,9 @@ public class ExtraCurricularActivity extends ExtraCurricularActivity_Base {
         if (!getIsDeletable()) {
             throw new DomainException("information.already.featured.in.official.document");
         }
-        removeType();
-        removeStudent();
-        removeRootDomainObject();
+        setType(null);
+        setStudent(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 }

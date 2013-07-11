@@ -46,7 +46,7 @@ public class EctsCycleGraduationGradeConversionTable extends EctsCycleGraduation
 
     @Override
     public void delete() {
-        removeSchool();
+        setSchool(null);
         super.delete();
     }
 }

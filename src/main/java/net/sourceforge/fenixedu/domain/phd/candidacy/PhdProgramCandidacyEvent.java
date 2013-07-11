@@ -97,7 +97,7 @@ public class PhdProgramCandidacyEvent extends PhdProgramCandidacyEvent_Base {
 
     @Override
     protected void disconnect() {
-        removeCandidacyProcess();
+        setCandidacyProcess(null);
         super.disconnect();
     }
 

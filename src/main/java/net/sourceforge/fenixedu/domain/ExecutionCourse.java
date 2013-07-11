@@ -462,7 +462,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         if (canBeDeleted()) {
 
             if (hasSender()) {
-                removeSender();
+                setSender(null);
             }
 
             if (hasSite()) {
@@ -510,9 +510,9 @@ public class ExecutionCourse extends ExecutionCourse_Base {
             removeFinalEvaluations();
             getAssociatedCurricularCourses().clear();
             getNonAffiliatedTeachers().clear();
-            removeVigilantGroup();
-            removeExecutionPeriod();
-            removeRootDomainObject();
+            setVigilantGroup(null);
+            setExecutionPeriod(null);
+            setRootDomainObject(null);
             super.deleteDomainObject();
 
         } else {

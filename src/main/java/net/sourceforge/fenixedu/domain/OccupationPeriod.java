@@ -248,7 +248,7 @@ public class OccupationPeriod extends OccupationPeriod_Base {
 
         super.setNextPeriod(null);
         super.setPreviousPeriod(null);
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
 
         if (nextPeriod != null) {

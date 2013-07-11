@@ -22,7 +22,7 @@ public class RemoveParentInherentFunction {
             throw new FenixServiceException("error.noFunction");
         }
 
-        function.removeParentInherentFunction();
+        function.setParentInherentFunction(null);
     }
 
 }

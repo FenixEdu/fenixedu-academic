@@ -14,8 +14,8 @@ public class InquiryTeacherAnswer extends InquiryTeacherAnswer_Base {
         if (hasAnyQuestionAnswers()) {
             throw new DomainException("error.inquiryAnswer.questionAnswersAssociated");
         }
-        removeProfessorship();
-        removeRootDomainObject();
+        setProfessorship(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 }

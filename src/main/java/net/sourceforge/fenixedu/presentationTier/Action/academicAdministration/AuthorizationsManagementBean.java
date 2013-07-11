@@ -185,7 +185,7 @@ public class AuthorizationsManagementBean implements Serializable {
         units.add(party);
 
         while (!units.isEmpty()) {
-            Party unit = units.removeFirst();
+            Party unit = units.setFirst(null);
 
             people.addAll(unit.getActiveChildParties(AccountabilityTypeEnum.WORKING_CONTRACT, Person.class));
 

@@ -38,14 +38,14 @@ public abstract class NewTestElement extends NewTestElement_Base {
 
     public void delete() {
         if (this.getSection() != null) {
-            this.removeSection();
+            this.setSection(null);
         }
 
         for (NewPresentationMaterial presentationMaterial : getPresentationMaterials()) {
             presentationMaterial.delete();
         }
 
-        this.removeRootDomainObject();
+        this.setRootDomainObject(null);
 
         this.deleteDomainObject();
     }

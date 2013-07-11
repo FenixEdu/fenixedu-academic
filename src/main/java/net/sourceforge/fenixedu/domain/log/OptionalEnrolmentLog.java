@@ -28,7 +28,7 @@ public class OptionalEnrolmentLog extends OptionalEnrolmentLog_Base {
 
     @Override
     protected void disconnect() {
-        removeOptionalCurricularCourse();
+        setOptionalCurricularCourse(null);
         super.disconnect();
     }
 

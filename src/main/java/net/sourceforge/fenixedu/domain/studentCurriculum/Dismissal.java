@@ -212,7 +212,7 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
         createCurriculumLineLog(EnrolmentAction.UNENROL);
 
         final Credits credits = getCredits();
-        removeCredits();
+        setCredits(null);
         if (credits != null && !credits.hasAnyDismissals()) {
             credits.delete();
         }

@@ -379,7 +379,7 @@ abstract public class PaymentPlan extends PaymentPlan_Base {
         }
 
         removeParameters();
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
 
     }

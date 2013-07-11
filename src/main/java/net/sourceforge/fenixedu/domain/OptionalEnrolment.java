@@ -118,7 +118,7 @@ public class OptionalEnrolment extends OptionalEnrolment_Base {
     @Override
     protected void deleteInformation() {
         super.deleteInformation();
-        removeOptionalCurricularCourse();
+        setOptionalCurricularCourse(null);
     }
 
     @Override

@@ -72,7 +72,7 @@ public class CustomGratuityPaymentPlan extends CustomGratuityPaymentPlan_Base {
         }
         getGratuityEventsWithPaymentPlan().clear();
         removeParameters();
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

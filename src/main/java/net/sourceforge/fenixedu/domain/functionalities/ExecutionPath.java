@@ -19,8 +19,8 @@ public class ExecutionPath extends ExecutionPath_Base {
     }
 
     public void delete() {
-        removeFunctionality();
-        removeRootDomainObject();
+        setFunctionality(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

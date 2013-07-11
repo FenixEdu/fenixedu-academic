@@ -54,8 +54,8 @@ public class PhdGratuityExternalScholarshipExemption extends PhdGratuityExternal
     }
 
     public void doDelete() {
-        removeExternalScholarshipPhdGratuityContribuitionEvent();
-        removeParty();
+        setExternalScholarshipPhdGratuityContribuitionEvent(null);
+        setParty(null);
         super.delete();
     }
 

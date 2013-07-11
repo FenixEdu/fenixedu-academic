@@ -8,8 +8,8 @@ public class TutorshipLog extends TutorshipLog_Base {
     }
 
     public void delete() {
-        removeTutorship();
-        removeRootDomainObject();
+        setTutorship(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 }

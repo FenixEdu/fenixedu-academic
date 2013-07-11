@@ -114,13 +114,13 @@ public abstract class Candidacy extends Candidacy_Base {
 
     public void delete() {
 
-        removePerson();
+        setPerson(null);
 
         for (; !getCandidacySituationsSet().isEmpty(); getCandidacySituationsSet().iterator().next().delete()) {
             ;
         }
 
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

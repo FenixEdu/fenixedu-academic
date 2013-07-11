@@ -102,8 +102,8 @@ public class Metadata extends Metadata_Base {
         for (; !getQuestions().isEmpty(); getQuestions().get(0).delete()) {
             ;
         }
-        removeExecutionCourse();
-        removeRootDomainObject();
+        setExecutionCourse(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

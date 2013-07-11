@@ -66,19 +66,19 @@ public class TSDCurricularCourse extends TSDCurricularCourse_Base {
     @Override
     public void delete() {
         TSDCurricularCourseGroup valuationGroup = getTSDCurricularCourseGroup();
-        removeTSDCurricularCourseGroup();
+        setTSDCurricularCourseGroup(null);
 
         if (valuationGroup != null && valuationGroup.getTSDCurricularCoursesCount() == 0) {
             valuationGroup.delete();
         }
 
-        removeCurricularCourse();
+        setCurricularCourse(null);
         super.delete();
     }
 
     public void deleteTSDCourseOnly() {
-        removeTSDCurricularCourseGroup();
-        removeCurricularCourse();
+        setTSDCurricularCourseGroup(null);
+        setCurricularCourse(null);
         super.delete();
     }
 

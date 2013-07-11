@@ -76,11 +76,11 @@ public class Formation extends Formation_Base {
 
     @Override
     public void delete() {
-        removeEducationArea();
-        removeInstitution();
-        removeBaseInstitution();
-        removeCountryUnit();
-        removeCreator();
+        setEducationArea(null);
+        setInstitution(null);
+        setBaseInstitution(null);
+        setCountryUnit(null);
+        setCreator(null);
         super.delete();
     }
 

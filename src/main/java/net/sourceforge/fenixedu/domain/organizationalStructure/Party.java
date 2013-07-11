@@ -454,9 +454,9 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
             getPartySocialSecurityNumber().delete();
         }
 
-        removeNationality();
-        removePartyType();
-        removeRootDomainObject();
+        setNationality(null);
+        setPartyType(null);
+        setRootDomainObject(null);
 
         deleteDomainObject();
     }

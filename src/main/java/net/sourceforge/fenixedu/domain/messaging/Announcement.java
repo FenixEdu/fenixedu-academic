@@ -382,7 +382,7 @@ public class Announcement extends Announcement_Base {
         for (final AnnouncementCategory category : getCategories()) {
             removeCategories(category);
         }
-        removeCampus();
+        setCampus(null);
         super.disconnectContent();
     }
 

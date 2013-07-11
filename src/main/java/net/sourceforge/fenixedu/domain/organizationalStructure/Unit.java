@@ -209,11 +209,11 @@ public class Unit extends Unit_Base {
         getFunctionalityPrinters().clear();
         getAllowedPeopleToUploadFiles().clear();
 
-        removeRootDomainObjectForEarthUnit();
-        removeRootDomainObjectForExternalInstitutionUnit();
-        removeRootDomainObjectForInstitutionUnit();
-        removeCampus();
-        removeUnitAcronym();
+        setRootDomainObjectForEarthUnit(null);
+        setRootDomainObjectForExternalInstitutionUnit(null);
+        setRootDomainObjectForInstitutionUnit(null);
+        setCampus(null);
+        setUnitAcronym(null);
 
         super.delete();
     }

@@ -165,7 +165,7 @@ public class Shift extends Shift_Base {
             if (getShiftGroupingProperties() != null) {
                 getShiftGroupingProperties().delete();
             }
-            removeRootDomainObject();
+            setRootDomainObject(null);
             super.deleteDomainObject();
 
             executionCourse.setShiftNames();

@@ -24,8 +24,8 @@ public class Question extends Question_Base {
     }
 
     public void delete() {
-        removeMetadata();
-        removeRootDomainObject();
+        setMetadata(null);
+        setRootDomainObject(null);
         getStudentTestsQuestions().clear();
         getTestQuestions().clear();
         super.deleteDomainObject();

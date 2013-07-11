@@ -158,12 +158,12 @@ public class Job extends Job_Base {
     }
 
     public void delete() {
-        removePerson();
-        removeCreator();
-        removeCountry();
-        removeBusinessArea();
-        removeParentBusinessArea();
-        removeRootDomainObject();
+        setPerson(null);
+        setCreator(null);
+        setCountry(null);
+        setBusinessArea(null);
+        setParentBusinessArea(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 }

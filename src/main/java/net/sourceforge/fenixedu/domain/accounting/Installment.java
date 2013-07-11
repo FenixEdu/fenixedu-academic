@@ -144,7 +144,7 @@ public class Installment extends Installment_Base {
 
     public void delete() {
         super.setPaymentPlan(null);
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

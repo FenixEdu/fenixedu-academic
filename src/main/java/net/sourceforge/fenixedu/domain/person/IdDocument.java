@@ -36,9 +36,9 @@ public class IdDocument extends IdDocument_Base {
     }
 
     public void delete() {
-        removePerson();
-        removeIdDocumentType();
-        removeRootDomainObject();
+        setPerson(null);
+        setIdDocumentType(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

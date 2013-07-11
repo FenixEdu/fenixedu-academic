@@ -90,11 +90,11 @@ public abstract class TeacherEvaluation extends TeacherEvaluation_Base {
     }
 
     public void delete() {
-        removeTeacherEvaluationProcess();
+        setTeacherEvaluationProcess(null);
         for (final TeacherEvaluationFile teacherEvaluationFile : getTeacherEvaluationFileSet()) {
             teacherEvaluationFile.delete();
         }
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

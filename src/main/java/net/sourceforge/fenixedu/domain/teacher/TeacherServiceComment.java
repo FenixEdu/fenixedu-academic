@@ -41,7 +41,7 @@ public class TeacherServiceComment extends TeacherServiceComment_Base {
         new TeacherServiceLog(getTeacherService(), BundleUtil.getStringFromResourceBundle(
                 "resources.TeacherCreditsSheetResources", "label.teacher.teacherServiceComment.delete", getContent(),
                 getCreationDate().toString(), getLastModifiedDate().toString("yyyy-MM-dd HH:mm")));
-        removeCreatedBy();
+        setCreatedBy(null);
         super.delete();
     }
 }

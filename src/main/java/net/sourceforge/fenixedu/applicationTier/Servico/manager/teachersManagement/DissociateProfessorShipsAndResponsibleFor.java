@@ -74,7 +74,7 @@ public class DissociateProfessorShipsAndResponsibleFor {
                     List<Summary> summaryList = professorship.getAssociatedSummaries();
                     if (summaryList != null && !summaryList.isEmpty()) {
                         for (Summary summary : summaryList) {
-                            summary.removeProfessorship();
+                            summary.setProfessorship(null);
                         }
                     }
 

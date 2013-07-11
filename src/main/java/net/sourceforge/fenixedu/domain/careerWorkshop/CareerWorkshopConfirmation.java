@@ -31,10 +31,10 @@ public class CareerWorkshopConfirmation extends CareerWorkshopConfirmation_Base 
 
     @Service
     public void delete() {
-        removeStudent();
-        removeCareerWorkshopApplication();
-        removeCareerWorkshopConfirmationEvent();
-        removeRootDomainObject();
+        setStudent(null);
+        setCareerWorkshopApplication(null);
+        setCareerWorkshopConfirmationEvent(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

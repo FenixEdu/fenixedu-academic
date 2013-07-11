@@ -24,8 +24,8 @@ public class CandidateSituation extends CandidateSituation_Base {
     }
 
     public void delete() {
-        removeMasterDegreeCandidate();
-        removeRootDomainObject();
+        setMasterDegreeCandidate(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

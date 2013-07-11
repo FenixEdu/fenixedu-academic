@@ -13,9 +13,9 @@ public class CerimonyInquiryPerson extends CerimonyInquiryPerson_Base {
 
     public void delete() {
         if (!hasCerimonyInquiryAnswer()) {
-            removeCerimonyInquiry();
-            removePerson();
-            removeRootDomainObject();
+            setCerimonyInquiry(null);
+            setPerson(null);
+            setRootDomainObject(null);
             deleteDomainObject();
         }
     }

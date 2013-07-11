@@ -36,9 +36,9 @@ public abstract class Transaction extends Transaction_Base {
     }
 
     public void delete() {
-        removePersonAccount();
-        removeResponsiblePerson();
-        removeRootDomainObject();
+        setPersonAccount(null);
+        setResponsiblePerson(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

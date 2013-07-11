@@ -27,7 +27,7 @@ public class ReceiptGeneratedDocument extends ReceiptGeneratedDocument_Base {
 
     @Override
     public void delete() {
-        removeSource();
+        setSource(null);
         super.delete();
     }
 

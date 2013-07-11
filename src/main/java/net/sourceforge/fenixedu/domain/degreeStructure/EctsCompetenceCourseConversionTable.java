@@ -54,7 +54,7 @@ public class EctsCompetenceCourseConversionTable extends EctsCompetenceCourseCon
 
     @Override
     public void delete() {
-        removeCompetenceCourse();
+        setCompetenceCourse(null);
         super.delete();
     }
 }

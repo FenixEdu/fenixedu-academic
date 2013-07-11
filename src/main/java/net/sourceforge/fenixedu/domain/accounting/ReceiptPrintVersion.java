@@ -57,7 +57,7 @@ public class ReceiptPrintVersion extends ReceiptPrintVersion_Base {
     void delete() {
         super.setPerson(null);
         super.setReceipt(null);
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 }

@@ -42,9 +42,9 @@ public class NonRegularTeachingService extends NonRegularTeachingService_Base {
     }
 
     private void delete() {
-        removeProfessorship();
-        removeShift();
-        removeRootDomainObject();
+        setProfessorship(null);
+        setShift(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

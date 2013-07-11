@@ -308,10 +308,10 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         final Registration registration = getRegistration();
 
         getStudentCurricularPlan().setIsFirstTimeToNull();
-        removeExecutionPeriod();
-        removeStudentCurricularPlan();
-        removeDegreeModule();
-        removeCurriculumGroup();
+        setExecutionPeriod(null);
+        setStudentCurricularPlan(null);
+        setDegreeModule(null);
+        setCurriculumGroup(null);
         getNotNeedToEnrollCurricularCourses().clear();
 
         Iterator<Attends> attendsIter = getAttendsIterator();
@@ -319,7 +319,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
             Attends attends = attendsIter.next();
 
             attendsIter.remove();
-            attends.removeEnrolment();
+            attends.setEnrolment(null);
 
             if (!attends.hasAnyAssociatedMarks() && !attends.hasAnyStudentGroups()) {
                 boolean hasShiftEnrolment = false;

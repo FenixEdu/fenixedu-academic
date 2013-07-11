@@ -42,7 +42,7 @@ public class ExecutionCourseAuditFile extends ExecutionCourseAuditFile_Base {
 
     @Override
     public void delete() {
-        removeExecutionCourseAudit();
+        setExecutionCourseAudit(null);
         super.delete();
     }
 }

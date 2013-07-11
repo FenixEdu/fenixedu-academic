@@ -10,9 +10,9 @@ public class ShiftProfessorship extends ShiftProfessorship_Base implements ICred
     }
 
     public void delete() {
-        removeShift();
-        removeProfessorship();
-        removeRootDomainObject();
+        setShift(null);
+        setProfessorship(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

@@ -38,7 +38,7 @@ public class ScientificJournal extends ScientificJournal_Base implements Partici
         for (; !this.getParticipations().isEmpty(); this.getParticipations().get(0).delete()) {
             ;
         }
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

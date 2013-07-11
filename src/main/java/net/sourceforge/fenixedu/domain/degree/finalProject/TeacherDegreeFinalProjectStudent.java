@@ -29,7 +29,7 @@ public class TeacherDegreeFinalProjectStudent extends TeacherDegreeFinalProjectS
         setTeacher(null);
         setStudent(null);
 
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 }

@@ -58,11 +58,11 @@ public class FileLocalContent extends FileLocalContent_Base {
     }
 
     public void delete() {
-        removeFile();
+        setFile(null);
         for (FileLocalContentMetadata metadata : super.getMetadataSet()) {
             metadata.delete();
         }
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 }

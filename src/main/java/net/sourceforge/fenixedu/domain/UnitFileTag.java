@@ -32,8 +32,8 @@ public class UnitFileTag extends UnitFileTag_Base {
         if (getTaggedFilesCount() > 0) {
             throw new DomainException("error.cannot.delete.tag.with.files");
         }
-        removeUnit();
-        removeRootDomainObject();
+        setUnit(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

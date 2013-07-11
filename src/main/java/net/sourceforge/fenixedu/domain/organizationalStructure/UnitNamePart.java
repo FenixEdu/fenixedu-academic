@@ -84,7 +84,7 @@ public class UnitNamePart extends UnitNamePart_Base {
 
     public void deleteIfEmpty() {
         if (getUnitNameSet().isEmpty()) {
-            removeRootDomainObject();
+            setRootDomainObject(null);
             deleteDomainObject();
         }
     }

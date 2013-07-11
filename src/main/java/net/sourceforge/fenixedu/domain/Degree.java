@@ -280,12 +280,12 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 
         // checkDeletion assures that site is deletable
         if (hasSender()) {
-            removeSender();
+            setSender(null);
         }
 
-        removeUnit();
-        removePhdProgram();
-        removeRootDomainObject();
+        setUnit(null);
+        setPhdProgram(null);
+        setRootDomainObject(null);
 
         deleteDomainObject();
     }

@@ -42,9 +42,9 @@ public class TSDProfessorship extends TSDProfessorship_Base {
     }
 
     public void delete() {
-        removeTSDCourse();
-        removeTSDTeacher();
-        removeRootDomainObject();
+        setTSDCourse(null);
+        setTSDTeacher(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 }

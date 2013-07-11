@@ -159,15 +159,15 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
                 getGratuityValues().delete();
             }
 
-            removeExecutionYear();
-            removeDegreeCurricularPlan();
-            removeCampus();
+            setExecutionYear(null);
+            setDegreeCurricularPlan(null);
+            setCampus(null);
 
             for (OccupationPeriodReference reference : getOccupationPeriodReferences()) {
                 reference.delete();
             }
 
-            removeRootDomainObject();
+            setRootDomainObject(null);
             deleteDomainObject();
 
         } else {

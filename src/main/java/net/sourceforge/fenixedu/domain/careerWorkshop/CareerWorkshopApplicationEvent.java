@@ -52,8 +52,8 @@ public class CareerWorkshopApplicationEvent extends CareerWorkshopApplicationEve
         if (getCareerWorkshopConfirmationEvent() != null) {
             throw new DomainException("error.careerWorkshop.deletingEvent: A confirmation period is already defined.");
         }
-        removeRootDomainObject();
-        removeSpreadsheet();
+        setRootDomainObject(null);
+        setSpreadsheet(null);
         deleteDomainObject();
     }
 

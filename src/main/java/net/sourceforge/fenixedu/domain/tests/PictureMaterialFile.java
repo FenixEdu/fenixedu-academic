@@ -22,7 +22,7 @@ public class PictureMaterialFile extends PictureMaterialFile_Base {
         this.removePictureMaterials(pictureMaterial);
 
         if (this.getPictureMaterialsCount() == 0) {
-            this.removeRootDomainObject();
+            this.setRootDomainObject(null);
 
             super.deleteDomainObject();
         }

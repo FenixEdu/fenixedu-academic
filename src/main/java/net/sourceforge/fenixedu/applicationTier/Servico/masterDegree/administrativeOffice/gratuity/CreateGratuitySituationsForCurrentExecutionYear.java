@@ -55,9 +55,9 @@ public class CreateGratuitySituationsForCurrentExecutionYear {
                 GratuitySituation gratuitySituation = studentCurricularPlan.getGratuitySituationByGratuityValues(gratuityValues);
 
                 if (year.equals("2002/2003") && gratuitySituation.getTransactionListCount() == 0) {
-                    gratuitySituation.removeEmployee();
-                    gratuitySituation.removeGratuityValues();
-                    gratuitySituation.removeStudentCurricularPlan();
+                    gratuitySituation.setEmployee(null);
+                    gratuitySituation.setGratuityValues(null);
+                    gratuitySituation.setStudentCurricularPlan(null);
                     this.gratuitySituationsToDelete.add(gratuitySituation);
                     continue;
                 }
@@ -126,9 +126,9 @@ public class CreateGratuitySituationsForCurrentExecutionYear {
             }
         }
 
-        gratuitySituation.removeEmployee();
-        gratuitySituation.removeGratuityValues();
-        gratuitySituation.removeStudentCurricularPlan();
+        gratuitySituation.setEmployee(null);
+        gratuitySituation.setGratuityValues(null);
+        gratuitySituation.setStudentCurricularPlan(null);
         this.gratuitySituationsToDelete.add(gratuitySituation);
     }
 

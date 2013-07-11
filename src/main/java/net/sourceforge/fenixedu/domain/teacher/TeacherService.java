@@ -45,9 +45,9 @@ public class TeacherService extends TeacherService_Base {
 
     public void delete() {
         if (getServiceItems().isEmpty()) {
-            removeTeacher();
-            removeExecutionPeriod();
-            removeRootDomainObject();
+            setTeacher(null);
+            setExecutionPeriod(null);
+            setRootDomainObject(null);
             deleteDomainObject();
         } else {
             throw new DomainException("There are service items associated to this Teacher Service");

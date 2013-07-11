@@ -25,9 +25,9 @@ public class ApprovedTeacherEvaluationProcessMark extends ApprovedTeacherEvaluat
     }
 
     public void delete() {
-        removeFacultyEvaluationProcessYear();
-        removeTeacherEvaluationProces();
-        removeRootDomainObject();
+        setFacultyEvaluationProcessYear(null);
+        setTeacherEvaluationProces(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 }

@@ -61,7 +61,7 @@ public class CooperationParticipation extends CooperationParticipation_Base {
 
     @Override
     public void delete() {
-        removeCooperation();
+        setCooperation(null);
         super.delete();
     }
 

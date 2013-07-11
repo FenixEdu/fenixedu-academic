@@ -112,8 +112,8 @@ public class PhdProgramContextPeriod extends PhdProgramContextPeriod_Base {
     }
 
     private void delete() {
-        removePhdProgram();
-        removeRootDomainObject();
+        setPhdProgram(null);
+        setRootDomainObject(null);
 
         deleteDomainObject();
     }

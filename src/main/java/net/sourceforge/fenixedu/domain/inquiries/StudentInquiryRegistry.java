@@ -141,12 +141,12 @@ public class StudentInquiryRegistry extends StudentInquiryRegistry_Base {
     }
 
     public void delete() {
-        removeCurricularCourse();
-        removeExecutionCourse();
-        removeExecutionPeriod();
-        removeRegistration();
-        removeStudent();
-        removeRootDomainObject();
+        setCurricularCourse(null);
+        setExecutionCourse(null);
+        setExecutionPeriod(null);
+        setRegistration(null);
+        setStudent(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 }

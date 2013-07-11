@@ -36,9 +36,9 @@ public class Delegate extends Delegate_Base {
 
     public void delete() {
         getDelegateFunction().delete();
-        removeDelegateFunction();
-        removeRegistration();
-        removeRootDomainObject();
+        setDelegateFunction(null);
+        setRegistration(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

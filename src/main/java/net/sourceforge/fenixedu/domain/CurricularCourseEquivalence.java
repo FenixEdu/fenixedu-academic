@@ -73,7 +73,7 @@ public class CurricularCourseEquivalence extends CurricularCourseEquivalence_Bas
         setEquivalentCurricularCourse(null);
         getOldCurricularCourses().clear();
 
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

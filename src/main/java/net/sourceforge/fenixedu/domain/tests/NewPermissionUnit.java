@@ -11,9 +11,9 @@ public class NewPermissionUnit extends NewPermissionUnit_Base {
     }
 
     public void delete() {
-        this.removeParty();
-        this.removeQuestion();
-        this.removeRootDomainObject();
+        this.setParty(null);
+        this.setQuestion(null);
+        this.setRootDomainObject(null);
 
         super.deleteDomainObject();
     }

@@ -21,7 +21,7 @@ public class RemoteHost extends RemoteHost_Base {
     }
 
     public void delete() {
-        removeRemoteSystem();
+        setRemoteSystem(null);
         deleteDomainObject();
     }
 

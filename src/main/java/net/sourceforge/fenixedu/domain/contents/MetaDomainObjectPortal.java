@@ -72,7 +72,7 @@ public class MetaDomainObjectPortal extends MetaDomainObjectPortal_Base {
 
     @Override
     protected void disconnect() {
-        removeMetaDomainObject();
+        setMetaDomainObject(null);
         for (Content content : getPoolSet()) {
             if (!content.hasAnyParents()) {
                 content.delete();

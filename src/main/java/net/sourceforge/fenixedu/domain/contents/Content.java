@@ -163,7 +163,7 @@ public abstract class Content extends Content_Base {
         // always
         // return a value, unless the object has already been disconnected from
         // root.
-        removeRootDomainObject();
+        setRootDomainObject(null);
         disconnect();
         deleteDomainObject();
     }
@@ -218,10 +218,10 @@ public abstract class Content extends Content_Base {
             container.setInitialContent(null);
         }
 
-        removeCreator();
-        removePortal();
+        setCreator(null);
+        setPortal(null);
 
-        removeRootDomainObject();
+        setRootDomainObject(null);
     }
 
     /**

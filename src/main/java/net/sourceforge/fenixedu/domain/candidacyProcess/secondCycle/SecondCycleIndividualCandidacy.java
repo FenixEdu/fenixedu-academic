@@ -262,7 +262,7 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 
         if (bean.getState() == null) {
             setState(IndividualCandidacyState.STAND_BY);
-            removeRegistration();
+            setRegistration(null);
         } else {
             setState(bean.getState());
         }

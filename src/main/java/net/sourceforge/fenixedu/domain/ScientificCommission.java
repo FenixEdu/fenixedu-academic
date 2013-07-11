@@ -49,9 +49,9 @@ public class ScientificCommission extends ScientificCommission_Base {
         ScientificCommissionLog.createLog(getExecutionDegree().getDegree(), getExecutionDegree().getExecutionYear(),
                 "resources.MessagingResources", "log.degree.scientificcomission.removemember", this.getPerson().getName(), this
                         .getPerson().getIstUsername(), this.getExecutionDegree().getDegree().getPresentationName());
-        removePerson();
-        removeExecutionDegree();
-        removeRootDomainObject();
+        setPerson(null);
+        setExecutionDegree(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

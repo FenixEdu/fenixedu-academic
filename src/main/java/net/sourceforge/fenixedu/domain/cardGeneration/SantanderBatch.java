@@ -44,15 +44,15 @@ public class SantanderBatch extends SantanderBatch_Base {
         if (getSantanderBatchSender() != null) {
             getSantanderBatchSender().delete();
         }
-        removeSantanderSequenceNumberGenerator();
+        setSantanderSequenceNumberGenerator(null);
         for (SantanderEntry entry : getSantanderEntries()) {
             entry.delete();
         }
         for (SantanderProblem problem : getSantanderProblems()) {
             problem.delete();
         }
-        removeExecutionYear();
-        removeRootDomainObject();
+        setExecutionYear(null);
+        setRootDomainObject(null);
 
         super.deleteDomainObject();
     }

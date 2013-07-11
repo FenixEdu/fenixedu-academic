@@ -76,15 +76,15 @@ public class TeacherServiceDistribution extends TeacherServiceDistribution_Base 
             }
         }
 
-        removeParent();
-        removeTSDProcessPhase();
+        setParent(null);
+        setTSDProcessPhase(null);
 
         for (TeacherServiceDistribution childTSD : getChilds()) {
             removeChilds(childTSD);
             childTSD.delete();
         }
 
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

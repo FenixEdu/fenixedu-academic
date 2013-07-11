@@ -215,9 +215,9 @@ public abstract class PaymentCode extends PaymentCode_Base {
         for (PaymentCodeMapping mapping : getNewPaymentCodeMappingsSet()) {
             removeNewPaymentCodeMappings(mapping);
         }
-        removeStudentCandidacy();
+        setStudentCandidacy(null);
 
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

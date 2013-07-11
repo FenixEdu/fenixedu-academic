@@ -30,7 +30,7 @@ public class Contributor extends Contributor_Base {
         if (hasAnyGuides()) {
             throw new DomainException("contributor.cannot.be.deleted");
         }
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

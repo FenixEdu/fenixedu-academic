@@ -36,8 +36,8 @@ public class Blueprint extends Blueprint_Base implements Comparable<Blueprint> {
         refreshBlueprintsDates(space);
         super.setSpace(null);
         super.setCreationPerson(null);
-        removeBlueprintFile();
-        removeRootDomainObject();
+        setBlueprintFile(null);
+        setRootDomainObject(null);
         openCurrentSpaceBlueprint(space);
         deleteDomainObject();
     }

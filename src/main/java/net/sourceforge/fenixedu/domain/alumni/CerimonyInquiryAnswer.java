@@ -38,8 +38,8 @@ public class CerimonyInquiryAnswer extends CerimonyInquiryAnswer_Base implements
     @Service
     public void delete() {
         if (!hasAnyCerimonyInquiryPerson()) {
-            removeCerimonyInquiry();
-            removeRootDomainObject();
+            setCerimonyInquiry(null);
+            setRootDomainObject(null);
             deleteDomainObject();
         }
     }

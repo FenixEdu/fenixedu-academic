@@ -17,7 +17,7 @@ public class TeacherInstitutionWorkTime extends TeacherInstitutionWorkTime_Base 
     }
 
     public void delete() {
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

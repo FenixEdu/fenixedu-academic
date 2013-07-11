@@ -16,8 +16,8 @@ public class OutboundMobilityCandidacyPeriodConfirmationOption extends OutboundM
 
     @Service
     public void delete() {
-        removeOutboundMobilityCandidacyPeriod();
-        removeRootDomainObject();
+        setOutboundMobilityCandidacyPeriod(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

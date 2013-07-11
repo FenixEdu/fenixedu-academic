@@ -455,9 +455,9 @@ public class Alumni extends Alumni_Base {
     }
 
     public void delete() {
-        removeStudent();
+        setStudent(null);
         getIdentityRequests().clear();
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

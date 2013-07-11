@@ -108,12 +108,12 @@ public class ThesisJuryElement extends ThesisJuryElement_Base {
     protected void disconnect() {
 
         final PhdParticipant participant = getParticipant();
-        removeParticipant();
+        setParticipant(null);
         participant.tryDelete();
 
-        removeProcess();
-        removeProcessForPresidentJuryElement();
-        removeRootDomainObject();
+        setProcess(null);
+        setProcessForPresidentJuryElement(null);
+        setRootDomainObject(null);
     }
 
     public boolean isInternal() {

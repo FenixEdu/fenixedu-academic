@@ -10,8 +10,8 @@ public abstract class TeacherEvaluationCoEvaluator extends TeacherEvaluationCoEv
     }
 
     public void delete() {
-        removeTeacherEvaluationProcessFromEvaluee();
-        removeRootDomainObject();
+        setTeacherEvaluationProcessFromEvaluee(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

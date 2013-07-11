@@ -560,8 +560,8 @@ public class Student extends Student_Base {
 
         setNumber(null);
 
-        removePerson();
-        removeRootDomainObject();
+        setPerson(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

@@ -149,14 +149,14 @@ public class PersonalIngressionData extends PersonalIngressionData_Base {
 
     public void delete() {
         // TODO: Make this method safe.	
-        removeStudent();
-        removeExecutionYear();
+        setStudent(null);
+        setExecutionYear(null);
         getPrecedentDegreesInformations().clear();
-        removeRootDomainObject();
-        removeCountryOfResidence();
-        removeGrantOwnerProvider();
-        removeDistrictSubdivisionOfResidence();
-        removeSchoolTimeDistrictSubDivisionOfResidence();
+        setRootDomainObject(null);
+        setCountryOfResidence(null);
+        setGrantOwnerProvider(null);
+        setDistrictSubdivisionOfResidence(null);
+        setSchoolTimeDistrictSubDivisionOfResidence(null);
         deleteDomainObject();
     }
 

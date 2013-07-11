@@ -18,13 +18,13 @@ public class RequestLogDay extends RequestLogDay_Base {
         rls.addAll(this.getLogs());
         for (RequestLog rl : rls) {
             this.removeLogs(rl);
-            rl.removeDay();
+            rl.setDay(null);
         }
-        this.removeRootDomainObject();
+        this.setRootDomainObject(null);
         this.getMonth().removeDays(this);
-        this.removeNext();
-        this.removePrevious();
-        this.removeRootDomainObjectRequestLogDay();
+        this.setNext(null);
+        this.setPrevious(null);
+        this.setRootDomainObjectRequestLogDay(null);
         super.deleteDomainObject();
     }
 

@@ -10,7 +10,7 @@ public class FAQEntry extends FAQEntry_Base {
     }
 
     public void delete() {
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

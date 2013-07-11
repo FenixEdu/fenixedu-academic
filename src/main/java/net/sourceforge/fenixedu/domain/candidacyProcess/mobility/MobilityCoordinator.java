@@ -47,10 +47,10 @@ public class MobilityCoordinator extends MobilityCoordinator_Base {
     }
 
     public void delete() {
-        removeDegree();
-        removeMobilityApplicationProcess();
-        removeTeacher();
-        removeRootDomainObject();
+        setDegree(null);
+        setMobilityApplicationProcess(null);
+        setTeacher(null);
+        setRootDomainObject(null);
 
         super.deleteDomainObject();
     }

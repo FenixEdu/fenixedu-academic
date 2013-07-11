@@ -20,7 +20,7 @@ public abstract class PartyAnnouncementBoard extends PartyAnnouncementBoard_Base
 
     @Override
     protected void disconnect() {
-        removeParty();
+        setParty(null);
         super.disconnect();
     }
 

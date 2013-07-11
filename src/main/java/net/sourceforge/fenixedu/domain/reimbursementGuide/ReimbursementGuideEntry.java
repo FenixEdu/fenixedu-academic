@@ -25,10 +25,10 @@ public class ReimbursementGuideEntry extends ReimbursementGuideEntry_Base {
     }
 
     public void delete() {
-        removeGuideEntry();
-        removeReimbursementGuide();
-        removeReimbursementTransaction();
-        removeRootDomainObject();
+        setGuideEntry(null);
+        setReimbursementGuide(null);
+        setReimbursementTransaction(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

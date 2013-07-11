@@ -22,8 +22,8 @@ public class TeacherAdviseService extends TeacherAdviseService_Base {
 
     public void delete(RoleType roleType) {
         getTeacherService().getExecutionPeriod().checkValidCreditsPeriod(roleType);
-        removeAdvise();
-        removeTeacherService();
+        setAdvise(null);
+        setTeacherService(null);
         super.delete();
     }
 

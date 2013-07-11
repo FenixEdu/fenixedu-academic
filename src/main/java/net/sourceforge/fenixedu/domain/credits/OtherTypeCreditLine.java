@@ -24,7 +24,7 @@ public class OtherTypeCreditLine extends OtherTypeCreditLine_Base {
     }
 
     public void delete() {
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

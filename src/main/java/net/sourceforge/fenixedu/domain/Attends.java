@@ -145,11 +145,11 @@ public class Attends extends Attends_Base {
 
             getProjectSubmissionLogsSet().clear();
             getGroupingsSet().clear();
-            removeAluno();
-            removeDisciplinaExecucao();
-            removeEnrolment();
+            setAluno(null);
+            setDisciplinaExecucao(null);
+            setEnrolment(null);
 
-            removeRootDomainObject();
+            setRootDomainObject(null);
             deleteDomainObject();
         }
     }

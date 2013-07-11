@@ -35,9 +35,9 @@ public class ExternalRegistrationData extends ExternalRegistrationData_Base {
     }
 
     public void delete() {
-        removeRootDomainObject();
-        removeInstitution();
-        removeRegistration();
+        setRootDomainObject(null);
+        setInstitution(null);
+        setRegistration(null);
         super.deleteDomainObject();
     }
 }

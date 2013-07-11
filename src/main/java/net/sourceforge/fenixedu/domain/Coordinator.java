@@ -60,12 +60,12 @@ public class Coordinator extends Coordinator_Base {
     public void delete() throws DomainException {
 
         checkRulesToDelete();
-        removeExecutionDegree();
-        removePerson();
+        setExecutionDegree(null);
+        setPerson(null);
         getExecutionDegreeCoursesReports().clear();
         getStudentInquiriesCourseResults().clear();
 
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
@@ -142,7 +142,7 @@ public class Coordinator extends Coordinator_Base {
         } else if (operationType.compareTo(OperationType.REMOVE) == 0) {
             checkRulesToDelete();
             CoordinatorLog.createCoordinatorLog(new DateTime(), OperationType.REMOVE, personMakingAction, this);
-            this.removeCoordinator();
+            this.setCoordinator(null);
         }
     }
 

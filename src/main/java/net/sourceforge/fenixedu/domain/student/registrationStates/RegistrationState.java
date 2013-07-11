@@ -221,9 +221,9 @@ public abstract class RegistrationState extends RegistrationState_Base implement
     public void deleteWithoutCheckRules() {
         final Registration registration = getRegistration();
         try {
-            removeRegistration();
-            removeResponsiblePerson();
-            removeRootDomainObject();
+            setRegistration(null);
+            setResponsiblePerson(null);
+            setRootDomainObject(null);
             super.deleteDomainObject();
         } finally {
             registration.getStudent().updateStudentRole();

@@ -14,8 +14,8 @@ public class MessageTransportResult extends MessageTransportResult_Base {
     }
 
     public void delete() {
-        removeEmail();
-        removeRootDomainObject();
+        setEmail(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

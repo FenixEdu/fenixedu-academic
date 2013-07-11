@@ -56,11 +56,11 @@ public class UnitFile extends UnitFile_Base {
     @Override
     public void delete() {
         if (isEditableByCurrentUser()) {
-            removeUnit();
+            setUnit(null);
             for (; !getUnitFileTags().isEmpty(); getUnitFileTags().get(0).removeTaggedFiles(this)) {
                 ;
             }
-            removeUploader();
+            setUploader(null);
             super.delete();
         } else {
             throw new DomainException("error.cannot.delete.file");

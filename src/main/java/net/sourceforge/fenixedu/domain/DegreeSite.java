@@ -36,7 +36,7 @@ public class DegreeSite extends DegreeSite_Base {
 
     @Override
     protected void disconnect() {
-        removeDegree();
+        setDegree(null);
         super.disconnect();
     }
 

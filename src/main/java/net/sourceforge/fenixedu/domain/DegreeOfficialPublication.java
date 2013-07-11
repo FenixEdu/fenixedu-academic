@@ -41,7 +41,7 @@ public class DegreeOfficialPublication extends DegreeOfficialPublication_Base {
     @Service
     public void delete() {
 
-        removeDegree();
+        setDegree(null);
 
         super.deleteDomainObject();
     }

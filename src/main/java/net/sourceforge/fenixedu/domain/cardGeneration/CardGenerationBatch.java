@@ -94,8 +94,8 @@ public class CardGenerationBatch extends CardGenerationBatch_Base {
     }
 
     public void delete() {
-        removeExecutionYear();
-        removeRootDomainObject();
+        setExecutionYear(null);
+        setRootDomainObject(null);
         for (final CardGenerationProblem cardGenerationProblem : getCardGenerationProblemsSet()) {
             cardGenerationProblem.delete();
         }

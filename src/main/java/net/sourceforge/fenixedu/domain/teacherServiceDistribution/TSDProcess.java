@@ -384,9 +384,9 @@ public class TSDProcess extends TSDProcess_Base {
             removeExecutionPeriods(executionSemester);
         }
 
-        removeCreator();
-        removeDepartment();
-        removeRootDomainObject();
+        setCreator(null);
+        setDepartment(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

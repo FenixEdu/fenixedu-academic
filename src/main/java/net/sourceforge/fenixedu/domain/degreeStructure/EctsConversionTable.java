@@ -33,7 +33,7 @@ public abstract class EctsConversionTable extends EctsConversionTable_Base imple
     }
 
     public void delete() {
-        removeIndex();
+        setIndex(null);
         deleteDomainObject();
     }
 }

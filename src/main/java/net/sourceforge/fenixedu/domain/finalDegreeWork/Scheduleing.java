@@ -165,7 +165,7 @@ public class Scheduleing extends Scheduleing_Base {
     }
 
     public void delete() {
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

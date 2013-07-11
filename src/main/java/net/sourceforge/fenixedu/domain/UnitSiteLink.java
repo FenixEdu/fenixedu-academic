@@ -82,9 +82,9 @@ public class UnitSiteLink extends UnitSiteLink_Base {
     }
 
     public void delete() {
-        removeRootDomainObject();
-        removeTopUnitSite();
-        removeFooterUnitSite();
+        setRootDomainObject(null);
+        setTopUnitSite(null);
+        setFooterUnitSite(null);
 
         deleteDomainObject();
     }

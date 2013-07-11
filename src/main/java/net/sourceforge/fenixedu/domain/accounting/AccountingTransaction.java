@@ -321,7 +321,7 @@ public class AccountingTransaction extends AccountingTransaction_Base {
 
         super.setResponsibleUser(null);
         super.setEvent(null);
-        removeRootDomainObject();
+        setRootDomainObject(null);
 
         super.deleteDomainObject();
     }

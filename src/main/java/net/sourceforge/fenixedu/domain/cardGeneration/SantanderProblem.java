@@ -17,8 +17,8 @@ public class SantanderProblem extends SantanderProblem_Base {
     }
 
     public void delete() {
-        removeSantanderBatch();
-        removeRootDomainObject();
+        setSantanderBatch(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

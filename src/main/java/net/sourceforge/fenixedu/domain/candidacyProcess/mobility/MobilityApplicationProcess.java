@@ -110,7 +110,7 @@ public class MobilityApplicationProcess extends MobilityApplicationProcess_Base 
             throw new DomainException("error.mobiliy.application.proccess.cant.be.deleted.it.has.logs");
         }
         setForSemester(null);
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

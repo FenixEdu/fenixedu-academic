@@ -30,9 +30,9 @@ public class FunctionalityParameter extends FunctionalityParameter_Base {
     }
 
     public void delete() {
-        removeType();
-        removeFunctionality();
-        removeRootDomainObject();
+        setType(null);
+        setFunctionality(null);
+        setRootDomainObject(null);
 
         deleteDomainObject();
     }

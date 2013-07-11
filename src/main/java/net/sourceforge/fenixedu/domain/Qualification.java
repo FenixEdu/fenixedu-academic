@@ -125,16 +125,16 @@ public class Qualification extends Qualification_Base {
     public void delete() {
         super.setPerson(null);
         super.setCreator(null);
-        removeModifiedBy();
-        removeCountry();
-        removeRootDomainObject();
+        setModifiedBy(null);
+        setCountry(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 
     public void edit(InfoQualification infoQualification, Country country) {
         setBasicProperties(infoQualification);
         if (country == null) {
-            removeCountry();
+            setCountry(null);
         } else {
             setCountry(country);
         }

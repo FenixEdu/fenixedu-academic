@@ -33,7 +33,7 @@ public abstract class Evaluation extends Evaluation_Base {
         for (; !getMarks().isEmpty(); getMarks().get(0).delete()) {
             ;
         }
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

@@ -44,9 +44,9 @@ public abstract class Career extends Career_Base {
 
     @Service
     public void delete() {
-        removePerson();
-        removeTeacher();
-        removeRootDomainObject();
+        setPerson(null);
+        setTeacher(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

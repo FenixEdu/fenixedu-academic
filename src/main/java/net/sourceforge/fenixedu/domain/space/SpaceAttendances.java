@@ -27,13 +27,13 @@ public class SpaceAttendances extends SpaceAttendances_Base {
         if (hasOccupiedLibraryPlace()) {
             setResponsibleForExitIstUsername(responsibleUsername);
             setExitTime(new DateTime());
-            removeOccupiedLibraryPlace();
+            setOccupiedLibraryPlace(null);
         }
     }
 
     public void delete() {
-        removeOccupiedLibraryPlace();
-        removeVisitedLibraryPlace();
+        setOccupiedLibraryPlace(null);
+        setVisitedLibraryPlace(null);
         deleteDomainObject();
     }
 }

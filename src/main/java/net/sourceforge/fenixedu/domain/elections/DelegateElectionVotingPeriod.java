@@ -96,7 +96,7 @@ public class DelegateElectionVotingPeriod extends DelegateElectionVotingPeriod_B
 
     @Override
     public void delete() {
-        removeDelegateElection();
+        setDelegateElection(null);
         super.delete();
     }
 

@@ -25,13 +25,13 @@ public class InquiryBlock extends InquiryBlock_Base {
 
     public void delete() {
         for (; !getInquiryGroupsQuestions().isEmpty(); getInquiryGroupsQuestions().get(0).delete()) {
-            removeRootDomainObject();
+            setRootDomainObject(null);
         }
         if (hasInquiryQuestionHeader()) {
             getInquiryQuestionHeader().delete();
         }
-        removeResultQuestion();
-        removeGroupResultQuestion();
+        setResultQuestion(null);
+        setGroupResultQuestion(null);
         for (InquiryTemplate inquiryTemplate : getInquiries()) {
             removeInquiries(inquiryTemplate);
         }

@@ -109,7 +109,7 @@ public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProce
         request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
         if (bean.hasDegreeToAdd() && !bean.containsDegree(bean.getDegreeToAdd())) {
             bean.addDegree(bean.getDegreeToAdd());
-            bean.removeDegreeToAdd();
+            bean.setDegreeToAdd(null);
             RenderUtils.invalidateViewState();
         }
         return mapping.findForward(forward);

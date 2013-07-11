@@ -14,7 +14,7 @@ public abstract class Resource extends Resource_Base {
         if (!canBeDeleted()) {
             throw new DomainException("error.resource.cannot.be.deleted");
         }
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

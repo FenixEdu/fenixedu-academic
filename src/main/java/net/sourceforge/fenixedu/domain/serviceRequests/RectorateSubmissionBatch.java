@@ -156,11 +156,11 @@ public class RectorateSubmissionBatch extends RectorateSubmissionBatch_Base {
         if (hasAnyDocumentRequest()) {
             throw new DomainException("error.rectorateSubmission.cannotDeleteBatchWithDocuments");
         }
-        removeCreator();
-        removeReceptor();
-        removeSubmitter();
-        removeAdministrativeOffice();
-        removeRootDomainObject();
+        setCreator(null);
+        setReceptor(null);
+        setSubmitter(null);
+        setAdministrativeOffice(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

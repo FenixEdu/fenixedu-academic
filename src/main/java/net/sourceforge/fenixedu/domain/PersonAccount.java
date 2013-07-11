@@ -59,8 +59,8 @@ public class PersonAccount extends PersonAccount_Base {
             throw new DomainException("error.person.cannot.be.deleted");
         }
 
-        removeRootDomainObject();
-        removePerson();
+        setRootDomainObject(null);
+        setPerson(null);
         super.deleteDomainObject();
     }
 

@@ -463,7 +463,7 @@ public class Grouping extends Grouping_Base {
             project.delete();
         }
 
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

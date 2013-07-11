@@ -18,8 +18,8 @@ public class OldInquiriesSummary extends OldInquiriesSummary_Base {
     }
 
     public void delete() {
-        removeExecutionPeriod();
-        removeDegree();
+        setExecutionPeriod(null);
+        setDegree(null);
         deleteDomainObject();
     }
 

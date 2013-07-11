@@ -11,8 +11,8 @@ public class PendingRequestParameter extends PendingRequestParameter_Base {
     }
 
     public void delete() {
-        removeRootDomainObject();
-        removePendingRequest();
+        setRootDomainObject(null);
+        setPendingRequest(null);
         deleteDomainObject();
     }
 

@@ -37,8 +37,8 @@ public class PartySocialSecurityNumber extends PartySocialSecurityNumber_Base {
     }
 
     public void delete() {
-        removeParty();
-        removeRootDomainObject();
+        setParty(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

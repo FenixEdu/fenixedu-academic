@@ -18,9 +18,9 @@ public class OldInquiriesTeachersRes extends OldInquiriesTeachersRes_Base {
     }
 
     public void delete() {
-        removeExecutionPeriod();
-        removeDegree();
-        removeTeacher();
+        setExecutionPeriod(null);
+        setDegree(null);
+        setTeacher(null);
         deleteDomainObject();
     }
 

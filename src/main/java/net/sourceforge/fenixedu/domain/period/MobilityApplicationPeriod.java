@@ -51,7 +51,7 @@ public class MobilityApplicationPeriod extends MobilityApplicationPeriod_Base {
         if (getExecutionInterval() != null) {
             throw new DomainException("error.mobility.application.period.cant.be.deleted.it.has.attached.execution.year");
         }
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

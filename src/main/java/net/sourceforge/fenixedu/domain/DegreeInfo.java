@@ -127,9 +127,9 @@ public class DegreeInfo extends DegreeInfo_Base {
         getDegreeInfoCandidacy().delete();
         getDegreeInfoFuture().delete();
 
-        removeRootDomainObject();
-        removeDegree();
-        removeExecutionYear();
+        setRootDomainObject(null);
+        setDegree(null);
+        setExecutionYear(null);
 
         deleteDomainObject();
     }

@@ -188,7 +188,7 @@ public class Country extends Country_Base {
     }
 
     public void delete() {
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 }

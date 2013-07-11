@@ -20,7 +20,7 @@ public abstract class Identification extends Identification_Base {
 
     public void delete() {
         super.setUser(null);
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

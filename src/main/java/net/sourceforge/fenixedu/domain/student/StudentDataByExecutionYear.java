@@ -65,10 +65,10 @@ public class StudentDataByExecutionYear extends StudentDataByExecutionYear_Base 
     }
 
     public void delete() {
-        removeExecutionYear();
-        removeResidenceCandidacy();
-        removeStudent();
-        removeRootDomainObject();
+        setExecutionYear(null);
+        setResidenceCandidacy(null);
+        setStudent(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

@@ -27,9 +27,9 @@ public class OutboundMobilityCandidacySubmissionGrade extends OutboundMobilityCa
     }
 
     public void delete() {
-        removeOutboundMobilityCandidacyContestGroup();
-        removeOutboundMobilityCandidacySubmission();
-        removeRootDomainObject();
+        setOutboundMobilityCandidacyContestGroup(null);
+        setOutboundMobilityCandidacySubmission(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

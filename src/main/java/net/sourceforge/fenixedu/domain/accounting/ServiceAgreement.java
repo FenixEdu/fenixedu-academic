@@ -69,7 +69,7 @@ public abstract class ServiceAgreement extends ServiceAgreement_Base {
 
         super.setPerson(null);
         super.setServiceAgreementTemplate(null);
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

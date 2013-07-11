@@ -17,8 +17,8 @@ public class StudentNumber extends StudentNumber_Base {
     }
 
     public void delete() {
-        removeRootDomainObject();
-        removeStudent();
+        setRootDomainObject(null);
+        setStudent(null);
         super.deleteDomainObject();
     }
 }

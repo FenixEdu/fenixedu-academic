@@ -20,7 +20,7 @@ public class ParkingFile extends ParkingFile_Base {
 
     @Override
     public void delete() {
-        removeNewParkingDocument();
+        setNewParkingDocument(null);
         super.delete();
     }
 }

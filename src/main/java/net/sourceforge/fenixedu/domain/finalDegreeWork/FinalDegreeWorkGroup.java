@@ -114,16 +114,16 @@ public class FinalDegreeWorkGroup extends FinalDegreeWorkGroup_Base {
     }
 
     public void delete() {
-        removeExecutionDegree();
+        setExecutionDegree(null);
         for (final GroupProposal groupProposal : getGroupProposalsSet()) {
             groupProposal.delete();
         }
         for (final GroupStudent groupStudent : getGroupStudentsSet()) {
             groupStudent.delete();
         }
-        removeProposalAttributed();
-        removeProposalAttributedByTeacher();
-        removeRootDomainObject();
+        setProposalAttributed(null);
+        setProposalAttributedByTeacher(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

@@ -50,9 +50,9 @@ public class OutboundMobilityCandidacySubmission extends OutboundMobilityCandida
     }
 
     public void delete() {
-        removeOutboundMobilityCandidacyPeriod();
-        removeRegistration();
-        removeRootDomainObject();
+        setOutboundMobilityCandidacyPeriod(null);
+        setRegistration(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 
@@ -130,7 +130,7 @@ public class OutboundMobilityCandidacySubmission extends OutboundMobilityCandida
     @Service
     public void removeOption(final OutboundMobilityCandidacyPeriodConfirmationOption option) {
         if (getConfirmationOption() == option) {
-            removeConfirmationOption();
+            setConfirmationOption(null);
             setConfirmedPlacement(Boolean.FALSE);
         }
     }

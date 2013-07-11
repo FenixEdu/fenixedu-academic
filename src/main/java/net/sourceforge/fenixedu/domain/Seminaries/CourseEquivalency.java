@@ -22,11 +22,11 @@ public class CourseEquivalency extends CourseEquivalency_Base {
     }
 
     public void delete() {
-        removeCurricularCourse();
-        removeModality();
-        removeSeminary();
+        setCurricularCourse(null);
+        setModality(null);
+        setSeminary(null);
         getThemes().clear();
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

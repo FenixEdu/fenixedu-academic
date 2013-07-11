@@ -130,7 +130,7 @@ public class ExtraExamRequest extends ExtraExamRequest_Base {
         }
 
         if (academicServiceRequestBean.isToCancelOrReject()) {
-            removeEnrolment();
+            setEnrolment(null);
         }
     }
 

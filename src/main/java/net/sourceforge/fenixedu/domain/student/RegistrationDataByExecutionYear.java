@@ -42,9 +42,9 @@ public class RegistrationDataByExecutionYear extends RegistrationDataByExecution
     }
 
     public void delete() {
-        removeExecutionYear();
-        removeRegistration();
-        removeRootDomainObject();
+        setExecutionYear(null);
+        setRegistration(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

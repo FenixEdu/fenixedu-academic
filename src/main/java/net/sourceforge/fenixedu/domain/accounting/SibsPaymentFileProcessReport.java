@@ -137,7 +137,7 @@ public class SibsPaymentFileProcessReport extends SibsPaymentFileProcessReport_B
     }
 
     public void delete() {
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 }

@@ -19,8 +19,8 @@ public class MessageId extends MessageId_Base {
     }
 
     public void delete() {
-        removeMessage();
-        removeRootDomainObject();
+        setMessage(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

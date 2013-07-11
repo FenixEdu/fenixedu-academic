@@ -40,7 +40,7 @@ public class ShiftDistribution extends ShiftDistribution_Base {
         }
         super.setExecutionYear(null);
 
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

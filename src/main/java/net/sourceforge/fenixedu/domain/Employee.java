@@ -45,7 +45,7 @@ public class Employee extends Employee_Base {
 
     public void delete() {
         super.setPerson(null);
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

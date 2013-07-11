@@ -77,7 +77,7 @@ public class CerimonyInquiry extends CerimonyInquiry_Base implements Comparable<
         for (final CerimonyInquiryPerson cerimonyInquiryPerson : getCerimonyInquiryPersonSet()) {
             cerimonyInquiryPerson.delete();
         }
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

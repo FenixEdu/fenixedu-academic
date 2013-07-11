@@ -75,7 +75,7 @@ public class EventParticipation extends EventParticipation_Base {
 
     @Override
     public void delete() {
-        removeEvent();
+        setEvent(null);
         super.delete();
     }
 

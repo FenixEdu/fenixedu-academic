@@ -8,8 +8,8 @@ public class RemoveIncompatiblePerson {
 
     @Service
     public static void run(VigilantWrapper vigilantWrapper) {
-        vigilantWrapper.getPerson().getIncompatibleVigilantPerson().removeIncompatibleVigilantPerson();
-        vigilantWrapper.getPerson().removeIncompatibleVigilantPerson();
+        vigilantWrapper.getPerson().getIncompatibleVigilantPerson().setIncompatibleVigilantPerson(null);
+        vigilantWrapper.getPerson().setIncompatibleVigilantPerson(null);
     }
 
 }

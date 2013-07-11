@@ -111,12 +111,12 @@ public class Tutorship extends Tutorship_Base {
     }
 
     public void delete() {
-        removeStudentCurricularPlan();
-        removeTeacher();
+        setStudentCurricularPlan(null);
+        setTeacher(null);
         if (hasTutorshipLog()) {
             getTutorshipLog().delete();
         }
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

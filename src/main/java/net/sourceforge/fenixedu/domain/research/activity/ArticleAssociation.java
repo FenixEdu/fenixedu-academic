@@ -31,10 +31,10 @@ public class ArticleAssociation extends ArticleAssociation_Base {
     }
 
     public void delete() {
-        removeJournalIssue();
-        removeArticle();
-        removeCreator();
-        removeRootDomainObject();
+        setJournalIssue(null);
+        setArticle(null);
+        setCreator(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

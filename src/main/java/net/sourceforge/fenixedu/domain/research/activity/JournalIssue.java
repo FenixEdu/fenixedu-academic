@@ -84,8 +84,8 @@ public class JournalIssue extends JournalIssue_Base implements ParticipationsInt
         for (; !this.getParticipations().isEmpty(); this.getParticipations().get(0).delete()) {
             ;
         }
-        removeScientificJournal();
-        removeRootDomainObject();
+        setScientificJournal(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

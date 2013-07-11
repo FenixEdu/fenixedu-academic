@@ -29,11 +29,11 @@ public abstract class NewPresentationMaterial extends NewPresentationMaterial_Ba
 
     public void delete() {
         NewTestElement testElement = this.getTestElement();
-        this.removeTestElement();
+        this.setTestElement(null);
 
         testElement.resortPresentationMaterials();
 
-        this.removeRootDomainObject();
+        this.setRootDomainObject(null);
 
         this.deleteDomainObject();
     }

@@ -30,9 +30,9 @@ public class NotNeedToEnrollInCurricularCourse extends NotNeedToEnrollInCurricul
     }
 
     public void delete() {
-        removeStudentCurricularPlan();
-        removeCurricularCourse();
-        removeRootDomainObject();
+        setStudentCurricularPlan(null);
+        setCurricularCourse(null);
+        setRootDomainObject(null);
         getEnrolments().clear();
         getExternalEnrolments().clear();
         super.deleteDomainObject();

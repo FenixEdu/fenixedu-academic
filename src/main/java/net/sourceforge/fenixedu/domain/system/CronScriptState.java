@@ -177,7 +177,7 @@ public class CronScriptState extends CronScriptState_Base {
     }
 
     public void delete() {
-        removeRootDomainObject();
+        setRootDomainObject(null);
         for (final CronScriptInvocation cronScriptInvocation : getCronScriptInvocations()) {
             cronScriptInvocation.delete();
         }

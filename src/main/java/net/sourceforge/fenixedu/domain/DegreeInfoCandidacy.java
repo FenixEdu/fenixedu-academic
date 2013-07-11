@@ -9,8 +9,8 @@ public class DegreeInfoCandidacy extends DegreeInfoCandidacy_Base {
     }
 
     public void delete() {
-        removeDegreeInfo();
-        removeRootDomainObject();
+        setDegreeInfo(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

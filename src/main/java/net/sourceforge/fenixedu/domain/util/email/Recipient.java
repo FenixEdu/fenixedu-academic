@@ -51,7 +51,7 @@ public class Recipient extends Recipient_Base {
         for (final Sender sender : getSendersSet()) {
             removeSenders(sender);
         }
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

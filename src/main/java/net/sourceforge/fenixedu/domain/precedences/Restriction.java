@@ -15,8 +15,8 @@ public abstract class Restriction extends Restriction_Base {
     }
 
     public void delete() {
-        removePrecedence();
-        removeRootDomainObject();
+        setPrecedence(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

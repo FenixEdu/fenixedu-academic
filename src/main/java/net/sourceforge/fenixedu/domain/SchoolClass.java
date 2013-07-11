@@ -73,7 +73,7 @@ public class SchoolClass extends SchoolClass_Base {
         getAssociatedShifts().clear();
         super.setExecutionDegree(null);
         super.setExecutionPeriod(null);
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

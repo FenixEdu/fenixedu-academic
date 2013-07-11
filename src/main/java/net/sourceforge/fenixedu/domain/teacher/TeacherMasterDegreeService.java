@@ -30,8 +30,8 @@ public class TeacherMasterDegreeService extends TeacherMasterDegreeService_Base 
 
     @Override
     public void delete() {
-        removeProfessorship();
-        removeTeacherService();
+        setProfessorship(null);
+        setTeacherService(null);
         super.delete();
     }
 

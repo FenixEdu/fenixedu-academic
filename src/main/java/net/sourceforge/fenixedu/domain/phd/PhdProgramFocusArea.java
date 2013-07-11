@@ -49,7 +49,7 @@ public class PhdProgramFocusArea extends PhdProgramFocusArea_Base {
 
     public void delete() {
         getPhdPrograms().clear();
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

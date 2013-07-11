@@ -27,9 +27,9 @@ public class ShiftEnrolment extends ShiftEnrolment_Base {
     }
 
     public void delete() {
-        removeShift();
-        removeRegistration();
-        removeRootDomainObject();
+        setShift(null);
+        setRegistration(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

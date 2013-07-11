@@ -219,7 +219,7 @@ public class Entry extends Entry_Base {
 
         super.setAccount(null);
         super.setAccountingTransaction(null);
-        removeRootDomainObject();
+        setRootDomainObject(null);
 
         super.deleteDomainObject();
     }

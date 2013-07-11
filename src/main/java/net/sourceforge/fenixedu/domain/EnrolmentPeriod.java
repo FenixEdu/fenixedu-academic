@@ -91,9 +91,9 @@ public abstract class EnrolmentPeriod extends EnrolmentPeriod_Base {
 
     @Service
     public void delete() {
-        removeDegreeCurricularPlan();
-        removeExecutionPeriod();
-        removeRootDomainObject();
+        setDegreeCurricularPlan(null);
+        setExecutionPeriod(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

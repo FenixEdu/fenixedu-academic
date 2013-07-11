@@ -141,9 +141,9 @@ public class NewTestGroup extends NewTestGroup_Base {
             ;
         }
 
-        this.removeCreator();
-        this.removeExecutionCourse();
-        this.removeRootDomainObject();
+        this.setCreator(null);
+        this.setExecutionCourse(null);
+        this.setRootDomainObject(null);
 
         super.deleteDomainObject();
     }

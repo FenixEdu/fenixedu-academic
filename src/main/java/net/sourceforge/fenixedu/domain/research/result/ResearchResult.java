@@ -171,7 +171,7 @@ public abstract class ResearchResult extends ResearchResult_Base {
             ;
         }
         removeAssociations();
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 
@@ -310,7 +310,7 @@ public abstract class ResearchResult extends ResearchResult_Base {
      */
     private void removeAssociations() {
         super.setCountry(null);
-        removeCreator();
+        setCreator(null);
         for (; !getAllResultDocumentFiles().isEmpty(); getAllResultDocumentFiles().get(0).delete()) {
 
         }

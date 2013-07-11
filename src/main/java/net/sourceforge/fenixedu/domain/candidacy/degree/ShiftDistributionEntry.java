@@ -64,7 +64,7 @@ public class ShiftDistributionEntry extends ShiftDistributionEntry_Base {
         super.setExecutionDegree(null);
         super.setShift(null);
 
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

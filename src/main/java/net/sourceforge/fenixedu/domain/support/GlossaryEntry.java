@@ -18,7 +18,7 @@ public class GlossaryEntry extends GlossaryEntry_Base {
     }
 
     public void delete() {
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

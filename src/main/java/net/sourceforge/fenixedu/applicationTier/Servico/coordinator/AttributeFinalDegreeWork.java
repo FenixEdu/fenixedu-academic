@@ -20,7 +20,7 @@ public class AttributeFinalDegreeWork {
                         && otherGroupProposal.getFinalDegreeWorkProposal().getGroupAttributed() != null
                         && (otherGroupProposal.getFinalDegreeWorkProposal().getGroupAttributed() == group)) {
                     Proposal otherProposal = otherGroupProposal.getFinalDegreeWorkProposal();
-                    otherProposal.removeGroupAttributed();
+                    otherProposal.setGroupAttributed(null);
                 }
             }
         }

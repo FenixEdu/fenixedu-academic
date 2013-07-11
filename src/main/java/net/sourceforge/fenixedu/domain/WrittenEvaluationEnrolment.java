@@ -32,7 +32,7 @@ public class WrittenEvaluationEnrolment extends WrittenEvaluationEnrolment_Base 
         this.setWrittenEvaluation(null);
         this.setStudent(null);
 
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

@@ -57,7 +57,7 @@ public class User extends User_Base {
             getLoginRequest().delete();
         }
         super.setPerson(null);
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

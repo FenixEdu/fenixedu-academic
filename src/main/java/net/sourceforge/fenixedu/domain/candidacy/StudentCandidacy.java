@@ -176,14 +176,14 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
 
     @Override
     public void delete() {
-        removeRegistration();
-        removeExecutionDegree();
-        removeSchoolTimeDistrictSubDivisionOfResidence();
-        removeCountryOfResidence();
-        removeDistrictSubdivisionOfResidence();
+        setRegistration(null);
+        setExecutionDegree(null);
+        setSchoolTimeDistrictSubDivisionOfResidence(null);
+        setCountryOfResidence(null);
+        setDistrictSubdivisionOfResidence(null);
 
         if (hasGrantOwnerProvider()) {
-            removeGrantOwnerProvider();
+            setGrantOwnerProvider(null);
         }
 
         if (hasPrecedentDegreeInformation() && !getPrecedentDegreeInformation().hasStudent()) {

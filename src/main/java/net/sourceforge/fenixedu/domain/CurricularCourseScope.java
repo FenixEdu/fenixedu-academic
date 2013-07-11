@@ -110,11 +110,11 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
 
     public void delete() throws DomainException {
         if (canBeDeleted()) {
-            removeCurricularSemester();
-            removeCurricularCourse();
-            removeBranch();
+            setCurricularSemester(null);
+            setCurricularCourse(null);
+            setBranch(null);
 
-            removeRootDomainObject();
+            setRootDomainObject(null);
             super.deleteDomainObject();
         } else {
             throw new DomainException("error.curricular.course.scope.has.written.evaluations");

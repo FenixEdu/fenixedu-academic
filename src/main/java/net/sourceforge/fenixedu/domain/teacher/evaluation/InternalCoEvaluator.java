@@ -15,7 +15,7 @@ public class InternalCoEvaluator extends InternalCoEvaluator_Base {
 
     @Override
     public void delete() {
-        removePerson();
+        setPerson(null);
         super.delete();
     }
 

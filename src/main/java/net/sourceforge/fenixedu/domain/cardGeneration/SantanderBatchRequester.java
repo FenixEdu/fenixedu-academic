@@ -16,9 +16,9 @@ public class SantanderBatchRequester extends SantanderBatchRequester_Base {
     }
 
     public void delete() {
-        removePerson();
-        removeSantanderBatch();
-        removeRootDomainObject();
+        setPerson(null);
+        setSantanderBatch(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

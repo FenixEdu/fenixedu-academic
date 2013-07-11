@@ -122,7 +122,7 @@ public class LessonInstance extends LessonInstance_Base {
 
         super.setCourseLoad(null);
         super.setLesson(null);
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

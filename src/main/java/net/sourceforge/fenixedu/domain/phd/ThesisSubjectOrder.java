@@ -33,12 +33,12 @@ public class ThesisSubjectOrder extends ThesisSubjectOrder_Base {
                     followingSubjectOrder.decreaseSubjectOrder();
                 }
             }
-            removePhdIndividualProgramProcess();
+            setPhdIndividualProgramProcess(null);
         }
 
-        removeThesisSubject();
+        setThesisSubject(null);
 
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

@@ -64,7 +64,7 @@ public class EctsDegreeGraduationGradeConversionTable extends EctsDegreeGraduati
 
     @Override
     public void delete() {
-        removeDegree();
+        setDegree(null);
         super.delete();
     }
 }

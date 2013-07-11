@@ -357,13 +357,13 @@ public class Registration extends Registration_Base {
             getStudentCandidacy().delete();
         }
 
-        removeIndividualCandidacy();
-        removeSourceRegistration();
-        removeRegistrationYear();
-        removeDegree();
-        removeStudent();
-        removeRegistrationProtocol();
-        removeRootDomainObject();
+        setIndividualCandidacy(null);
+        setSourceRegistration(null);
+        setRegistrationYear(null);
+        setDegree(null);
+        setStudent(null);
+        setRegistrationProtocol(null);
+        setRootDomainObject(null);
 
         getDestinyRegistrations().clear();
         getShiftsSet().clear();
@@ -3334,7 +3334,7 @@ public class Registration extends Registration_Base {
 
     @Override
     final public void removeStudentCandidacy() {
-        super.removeStudentCandidacy();
+        super.setStudentCandidacy(null);
     }
 
     final public Boolean getPayedTuition() {

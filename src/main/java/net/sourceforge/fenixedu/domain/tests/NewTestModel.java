@@ -36,7 +36,7 @@ public class NewTestModel extends NewTestModel_Base {
     public void delete() {
         this.getBag().deleteAsBag();
 
-        this.removeCreator();
+        this.setCreator(null);
 
         super.delete();
     }

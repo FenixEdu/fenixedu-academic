@@ -527,11 +527,11 @@ public class MarkSheet extends MarkSheet_Base {
             throw new DomainException("error.markSheet.cannot.be.deleted");
         }
 
-        removeExecutionPeriod();
-        removeCurricularCourse();
-        removeResponsibleTeacher();
-        removeValidator();
-        removeCreator();
+        setExecutionPeriod(null);
+        setCurricularCourse(null);
+        setResponsibleTeacher(null);
+        setValidator(null);
+        setCreator(null);
 
         if (hasMarkSheetState(MarkSheetState.RECTIFICATION_NOT_CONFIRMED)) {
             changeRectifiedEnrolmentEvaluationToPreviowsState();
@@ -544,7 +544,7 @@ public class MarkSheet extends MarkSheet_Base {
             }
         }
 
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 
@@ -671,7 +671,7 @@ public class MarkSheet extends MarkSheet_Base {
         if (isConfirmed()) {
             throw new DomainException("error.markSheet.already.confirmed");
         } else {
-            super.removeCurricularCourse();
+            super.setCurricularCourse(null);
         }
     }
 
@@ -680,7 +680,7 @@ public class MarkSheet extends MarkSheet_Base {
         if (isConfirmed()) {
             throw new DomainException("error.markSheet.already.confirmed");
         } else {
-            super.removeValidator();
+            super.setValidator(null);
         }
     }
 
@@ -689,7 +689,7 @@ public class MarkSheet extends MarkSheet_Base {
         if (isConfirmed()) {
             throw new DomainException("error.markSheet.already.confirmed");
         } else {
-            super.removeCreator();
+            super.setCreator(null);
         }
     }
 
@@ -707,7 +707,7 @@ public class MarkSheet extends MarkSheet_Base {
         if (isConfirmed()) {
             throw new DomainException("error.markSheet.already.confirmed");
         } else {
-            super.removeExecutionPeriod();
+            super.setExecutionPeriod(null);
         }
     }
 
@@ -716,16 +716,16 @@ public class MarkSheet extends MarkSheet_Base {
         if (isConfirmed()) {
             throw new DomainException("error.markSheet.already.confirmed");
         } else {
-            super.removeResponsibleTeacher();
+            super.setResponsibleTeacher(null);
         }
     }
 
     @Override
-    public void removeRootDomainObject() {
+    public void setRootDomainObject(null) {
         if (isConfirmed()) {
             throw new DomainException("error.markSheet.already.confirmed");
         } else {
-            super.removeRootDomainObject();
+            super.setRootDomainObject(null);
         }
     }
 
@@ -920,14 +920,14 @@ public class MarkSheet extends MarkSheet_Base {
 
     private void removeEvaluationFromMarkSheet(EnrolmentEvaluation enrolmentEvaluation) {
         changeEvaluationStateToTemporaryState(enrolmentEvaluation);
-        enrolmentEvaluation.removeMarkSheet();
+        enrolmentEvaluation.setMarkSheet(null);
         enrolmentEvaluation.setGrade(Grade.createEmptyGrade());
         enrolmentEvaluation.setCheckSum(null);
         enrolmentEvaluation.setExamDateYearMonthDay(null);
-        enrolmentEvaluation.removePerson();
+        enrolmentEvaluation.setPerson(null);
         enrolmentEvaluation.setGradeAvailableDateYearMonthDay(null);
-        enrolmentEvaluation.removePersonResponsibleForGrade();
-        enrolmentEvaluation.removeRectified();
+        enrolmentEvaluation.setPersonResponsibleForGrade(null);
+        enrolmentEvaluation.setRectified(null);
     }
 
     private void changeEvaluationStateToTemporaryState(final EnrolmentEvaluation enrolmentEvaluation) {

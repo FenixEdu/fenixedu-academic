@@ -72,9 +72,9 @@ public class StudentGroup extends StudentGroup_Base {
         if (hasAnyProjectSubmissions() && this.getGrouping().isPersonTeacher(AccessControl.getPerson())) {
             this.setValid(false);
         } else if (!hasAnyProjectSubmissions() && !hasAnyAttends()) {
-            removeShift();
-            removeGrouping();
-            removeRootDomainObject();
+            setShift(null);
+            setGrouping(null);
+            setRootDomainObject(null);
             deleteDomainObject();
         } else {
             throw new DomainException("student.group.cannot.be.deleted");

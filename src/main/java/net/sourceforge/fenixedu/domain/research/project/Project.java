@@ -48,7 +48,7 @@ public class Project extends Project_Base {
         for (; this.hasAnyAssociatedEvents(); getAssociatedEvents().get(0).delete()) {
             ;
         }
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

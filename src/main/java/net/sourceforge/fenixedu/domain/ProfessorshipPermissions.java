@@ -55,8 +55,8 @@ public class ProfessorshipPermissions extends ProfessorshipPermissions_Base {
     }
 
     public void delete() {
-        removeRootDomainObject();
-        removeProfessorship();
+        setRootDomainObject(null);
+        setProfessorship(null);
         deleteDomainObject();
     }
 

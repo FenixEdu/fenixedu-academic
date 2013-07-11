@@ -28,7 +28,7 @@ public class Senior extends Senior_Base {
     public void delete() {
         if (isEmpty()) {
             super.setStudent(null);
-            removeRootDomainObject();
+            setRootDomainObject(null);
             deleteDomainObject();
         } else {
             throw new DomainException("error.Senior.not.empty");

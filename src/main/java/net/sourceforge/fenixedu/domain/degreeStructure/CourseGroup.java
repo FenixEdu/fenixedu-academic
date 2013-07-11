@@ -105,7 +105,7 @@ public class CourseGroup extends CourseGroup_Base {
             for (; !getParticipatingContextCurricularRules().isEmpty(); getParticipatingContextCurricularRules().get(0).delete()) {
                 ;
             }
-            removeRootDomainObject();
+            setRootDomainObject(null);
             super.deleteDomainObject();
         } else {
             throw new DomainException("courseGroup.notEmptyCourseGroupContexts");

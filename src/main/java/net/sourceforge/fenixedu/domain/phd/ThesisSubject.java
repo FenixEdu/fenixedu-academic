@@ -75,12 +75,12 @@ public class ThesisSubject extends ThesisSubject_Base {
                 order.delete();
             }
         }
-        removePhdProgramFocusArea();
+        setPhdProgramFocusArea(null);
 
         if (!hasAnyThesisSubjectOrders()) {
-            removeTeacher();
+            setTeacher(null);
 
-            removeRootDomainObject();
+            setRootDomainObject(null);
             deleteDomainObject();
         }
     }

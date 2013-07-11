@@ -33,14 +33,14 @@ public class LibraryCard extends LibraryCard_Base {
     }
 
     public void delete() {
-        removePerson();
+        setPerson(null);
         for (LibraryMissingCardsDocument document : getDocumentSet()) {
             removeDocument(document);
         }
         for (LibraryMissingLettersDocument letter : getLettersSet()) {
             removeLetters(letter);
         }
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

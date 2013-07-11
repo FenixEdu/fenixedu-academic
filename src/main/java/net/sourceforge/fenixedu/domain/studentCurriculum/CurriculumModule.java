@@ -76,9 +76,9 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
     }
 
     public void delete() {
-        removeDegreeModule();
-        removeCurriculumGroup();
-        removeRootDomainObject();
+        setDegreeModule(null);
+        setCurriculumGroup(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

@@ -37,8 +37,8 @@ public abstract class ReplyTo extends ReplyTo_Base {
     }
 
     public void delete() {
-        removeSender();
-        removeRootDomainObject();
+        setSender(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

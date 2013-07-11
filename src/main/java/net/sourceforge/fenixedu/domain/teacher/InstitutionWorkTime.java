@@ -61,7 +61,7 @@ public class InstitutionWorkTime extends InstitutionWorkTime_Base {
     public void delete(RoleType roleType) {
         getTeacherService().getExecutionPeriod().checkValidCreditsPeriod(roleType);
         log("label.teacher.schedule.institutionWorkTime.delete");
-        removeTeacherService();
+        setTeacherService(null);
         super.delete();
     }
 

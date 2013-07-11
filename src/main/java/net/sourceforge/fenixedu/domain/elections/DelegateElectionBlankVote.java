@@ -13,8 +13,8 @@ public class DelegateElectionBlankVote extends DelegateElectionBlankVote_Base {
 
     @Override
     public void delete() {
-        removeDelegateElection();
-        removeRootDomainObject();
+        setDelegateElection(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

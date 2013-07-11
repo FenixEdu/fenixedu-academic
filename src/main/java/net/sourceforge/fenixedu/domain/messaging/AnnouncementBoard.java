@@ -34,7 +34,7 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
 
         private int maxElements = 0;
 
-        private Comparator<Announcement> comparator;
+        private final Comparator<Announcement> comparator;
 
         public AnnouncementPresentationBean(final int maxElements, final Comparator<Announcement> comparator) {
             super(comparator);

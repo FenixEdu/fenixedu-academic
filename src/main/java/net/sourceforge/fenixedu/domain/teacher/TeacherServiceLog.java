@@ -19,9 +19,9 @@ public class TeacherServiceLog extends TeacherServiceLog_Base implements Compara
     }
 
     public void delete() {
-        removeTeacherService();
-        removeRootDomainObject();
-        removeUser();
+        setTeacherService(null);
+        setRootDomainObject(null);
+        setUser(null);
         super.deleteDomainObject();
     }
 

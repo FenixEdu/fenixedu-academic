@@ -831,9 +831,9 @@ public class StudentInquiriesCourseResult extends StudentInquiriesCourseResult_B
         if (hasCoordinatorComment()) {
             throw new DomainException("error.StudentInquiriesCourseResult.cannotDelete.hasCoordinatorComment");
         }
-        removeExecutionCourse();
-        removeExecutionDegree();
-        removeRootDomainObject();
+        setExecutionCourse(null);
+        setExecutionDegree(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

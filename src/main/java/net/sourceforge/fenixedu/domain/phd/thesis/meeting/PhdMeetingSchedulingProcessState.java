@@ -49,7 +49,7 @@ public class PhdMeetingSchedulingProcessState extends PhdMeetingSchedulingProces
 
     @Override
     protected void disconnect() {
-        removeMeetingProcess();
+        setMeetingProcess(null);
         super.disconnect();
     }
 

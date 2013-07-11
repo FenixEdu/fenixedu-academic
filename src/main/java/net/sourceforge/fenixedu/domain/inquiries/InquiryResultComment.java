@@ -28,10 +28,10 @@ public class InquiryResultComment extends InquiryResultComment_Base {
     }
 
     public void delete() {
-        removeInquiryGlobalComment();
-        removeInquiryResult();
-        removePerson();
-        removeRootDomainObject();
+        setInquiryGlobalComment(null);
+        setInquiryResult(null);
+        setPerson(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 }

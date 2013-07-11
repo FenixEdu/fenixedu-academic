@@ -282,7 +282,7 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
         }
 
         bean.setPersonBean(new PersonBean(bean.getChoosePersonBean().getPerson()));
-        bean.removeChoosePersonBean();
+        bean.setChoosePersonBean(null);
         return mapping.findForward("fill-personal-information");
     }
 
@@ -309,7 +309,7 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
         // bean.getPersonBean().setNationality(Country.readByTwoLetterCode("AF"));
         // bean.getPersonBean().setAreaCode("1223-123");
 
-        bean.removeChoosePersonBean();
+        bean.setChoosePersonBean(null);
         return mapping.findForward("fill-personal-information");
     }
 

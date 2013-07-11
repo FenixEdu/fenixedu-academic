@@ -198,7 +198,7 @@ public class ResultParticipation extends ResultParticipation_Base {
 
     public final void delete() {
         removeAssociations();
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

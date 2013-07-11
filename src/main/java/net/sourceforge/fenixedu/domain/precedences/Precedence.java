@@ -64,8 +64,8 @@ public class Precedence extends Precedence_Base {
             restriction.delete();
         }
 
-        removeCurricularCourse();
-        removeRootDomainObject();
+        setCurricularCourse(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

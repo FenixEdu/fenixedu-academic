@@ -75,7 +75,7 @@ public class JournalIssueParticipation extends JournalIssueParticipation_Base {
 
     @Override
     public void delete() {
-        removeJournalIssue();
+        setJournalIssue(null);
         super.delete();
     }
 

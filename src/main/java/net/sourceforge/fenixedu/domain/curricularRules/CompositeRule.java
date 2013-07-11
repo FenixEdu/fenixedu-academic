@@ -49,7 +49,7 @@ public abstract class CompositeRule extends CompositeRule_Base {
         this.setEnd(getEndExecutionPeriod(curricularRules));
 
         for (CurricularRule rule : curricularRules) {
-            rule.removeDegreeModuleToApplyRule();
+            rule.setDegreeModuleToApplyRule(null);
             rule.setParentCompositeRule(this);
         }
     }

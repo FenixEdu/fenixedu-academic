@@ -30,13 +30,13 @@ public class SeminaryCandidacy extends SeminaryCandidacy_Base {
             choice.delete();
         }
 
-        removeCurricularCourse();
-        removeModality();
-        removeSeminary();
-        removeStudent();
-        removeTheme();
+        setCurricularCourse(null);
+        setModality(null);
+        setSeminary(null);
+        setStudent(null);
+        setTheme(null);
 
-        removeRootDomainObject();
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

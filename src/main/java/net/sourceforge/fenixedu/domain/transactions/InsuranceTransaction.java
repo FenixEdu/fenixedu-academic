@@ -73,8 +73,8 @@ public class InsuranceTransaction extends InsuranceTransaction_Base {
 
     @Override
     public void delete() {
-        removeExecutionYear();
-        removeStudent();
+        setExecutionYear(null);
+        setStudent(null);
         super.delete();
     }
 

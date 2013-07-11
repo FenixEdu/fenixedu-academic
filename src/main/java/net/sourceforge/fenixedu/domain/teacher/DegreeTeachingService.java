@@ -66,9 +66,9 @@ public class DegreeTeachingService extends DegreeTeachingService_Base {
         new TeacherServiceLog(getTeacherService(), BundleUtil.getStringFromResourceBundle(
                 "resources.TeacherCreditsSheetResources", "label.teacher.schedule.delete", getTeacherService().getTeacher()
                         .getPerson().getNickname(), getShift().getPresentationName(), getPercentage().toString()));
-        removeTeacherService();
-        removeShift();
-        removeProfessorship();
+        setTeacherService(null);
+        setShift(null);
+        setProfessorship(null);
         super.delete();
     }
 

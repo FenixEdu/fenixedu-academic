@@ -20,7 +20,7 @@ public class DeleteFileRequest extends DeleteFileRequest_Base {
     }
 
     public void delete() {
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 }

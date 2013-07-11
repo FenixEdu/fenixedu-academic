@@ -34,8 +34,8 @@ public class PersistentGroupMembers extends PersistentGroupMembers_Base {
         if (hasUnit()) {
             getUnit().removeGroupFromUnitFiles(this);
         }
-        removeUnit();
-        removeRootDomainObject();
+        setUnit(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 

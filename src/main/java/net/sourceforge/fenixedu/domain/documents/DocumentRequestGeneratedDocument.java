@@ -38,7 +38,7 @@ public class DocumentRequestGeneratedDocument extends DocumentRequestGeneratedDo
 
     @Override
     public void delete() {
-        removeSource();
+        setSource(null);
         super.delete();
     }
 

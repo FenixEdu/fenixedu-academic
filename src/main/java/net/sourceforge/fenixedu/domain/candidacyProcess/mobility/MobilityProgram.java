@@ -34,7 +34,7 @@ public class MobilityProgram extends MobilityProgram_Base implements Comparable<
     }
 
     public void delete() {
-        removeRootDomainObject();
+        setRootDomainObject(null);
         getMobilityAgreements().clear();
         deleteDomainObject();
     }

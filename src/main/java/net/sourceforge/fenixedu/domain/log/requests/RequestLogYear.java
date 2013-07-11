@@ -10,7 +10,7 @@ public class RequestLogYear extends RequestLogYear_Base {
     }
 
     public void delete() {
-        this.removeRootDomainObject();
+        this.setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

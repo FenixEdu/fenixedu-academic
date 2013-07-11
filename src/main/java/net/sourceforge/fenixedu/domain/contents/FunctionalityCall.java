@@ -22,7 +22,7 @@ public class FunctionalityCall extends FunctionalityCall_Base {
 
     @Override
     protected void disconnect() {
-        removeFunctionality();
+        setFunctionality(null);
         super.disconnect();
     }
 

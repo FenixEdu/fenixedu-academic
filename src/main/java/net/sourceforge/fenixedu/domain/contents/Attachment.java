@@ -69,7 +69,7 @@ public class Attachment extends Attachment_Base {
     @Override
     public void delete() {
         logRemoveFile();
-        removeFile();
+        setFile(null);
         super.delete();
     }
 

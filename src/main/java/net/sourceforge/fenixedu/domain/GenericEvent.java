@@ -128,8 +128,8 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
             getGenericEventSpaceOccupations().get(0).delete();
         }
 
-        removePunctualRoomsOccupationRequest();
-        removeRootDomainObject();
+        setPunctualRoomsOccupationRequest(null);
+        setRootDomainObject(null);
         deleteDomainObject();
 
         // Allow GOP to delete stuff in the past!

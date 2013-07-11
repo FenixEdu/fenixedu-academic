@@ -503,8 +503,8 @@ public abstract class TSDCourse extends TSDCourse_Base {
             load.delete();
         }
 
-        removeExecutionPeriod();
-        removeRootDomainObject();
+        setExecutionPeriod(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

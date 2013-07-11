@@ -10,11 +10,11 @@ public class RequestLogMonth extends RequestLogMonth_Base {
     }
 
     public void delete() {
-        this.removeRootDomainObject();
+        this.setRootDomainObject(null);
         if (this.getYear() != null) {
             this.getYear().removeMonths(this);
         }
-        this.removeYear();
+        this.setYear(null);
         super.deleteDomainObject();
 
     }

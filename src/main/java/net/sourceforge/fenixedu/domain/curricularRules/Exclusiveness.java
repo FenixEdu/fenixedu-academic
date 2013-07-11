@@ -85,7 +85,7 @@ public class Exclusiveness extends Exclusiveness_Base {
     @Override
     protected void removeOwnParameters() {
         removeRuleFromCurrentExclusiveDegreeModule(this.getExclusiveDegreeModule().getCurricularRulesIterator());
-        removeExclusiveDegreeModule();
+        setExclusiveDegreeModule(null);
     }
 
     private void removeRuleFromCurrentExclusiveDegreeModule(final Iterator<CurricularRule> curricularRulesIterator) {
@@ -117,8 +117,8 @@ public class Exclusiveness extends Exclusiveness_Base {
                 }
             }
             curricularRulesIterator.remove();
-            exclusiveness.removeExclusiveDegreeModule();
-            exclusiveness.removeCommonParameters();
+            exclusiveness.setExclusiveDegreeModule(null);
+            exclusiveness.setCommonParameters(null);
             exclusiveness.deleteDomainObject();
         }
     }

@@ -41,8 +41,8 @@ public class Researcher extends Researcher_Base {
         for (; hasAnyAvailableContacts(); getAvailableContacts().get(0).delete()) {
             ;
         }
-        removePerson();
-        removeRootDomainObject();
+        setPerson(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

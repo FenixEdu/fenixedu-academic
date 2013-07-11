@@ -31,10 +31,10 @@ public class ResultTeacher extends ResultTeacher_Base {
     }
 
     public void delete() {
-        removeResult();
-        removeTeacher();
+        setResult(null);
+        setTeacher(null);
         setPublicationArea(null);
-        removeRootDomainObject();
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

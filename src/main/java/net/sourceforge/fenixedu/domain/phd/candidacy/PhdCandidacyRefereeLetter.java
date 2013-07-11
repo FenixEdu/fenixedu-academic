@@ -136,10 +136,10 @@ public class PhdCandidacyRefereeLetter extends PhdCandidacyRefereeLetter_Base {
         if (hasFile()) {
             getFile().delete();
         }
-        removeRefereeCountry();
-        removeCandidacyReferee();
-        removePhdProgramCandidacyProcess();
-        removeRootDomainObject();
+        setRefereeCountry(null);
+        setCandidacyReferee(null);
+        setPhdProgramCandidacyProcess(null);
+        setRootDomainObject(null);
         super.deleteDomainObject();
     }
 

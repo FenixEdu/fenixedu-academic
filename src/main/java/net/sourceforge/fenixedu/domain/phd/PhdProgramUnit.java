@@ -29,7 +29,7 @@ public class PhdProgramUnit extends PhdProgramUnit_Base {
 
     @Override
     public void delete() {
-        removePhdProgram();
+        setPhdProgram(null);
         super.delete();
     }
 

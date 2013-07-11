@@ -10,8 +10,8 @@ public abstract class TeacherServiceItem extends TeacherServiceItem_Base {
     }
 
     public void delete() {
-        removeTeacherService();
-        removeRootDomainObject();
+        setTeacherService(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 }

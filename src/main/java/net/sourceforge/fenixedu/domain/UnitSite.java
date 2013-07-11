@@ -140,7 +140,7 @@ public class UnitSite extends UnitSite_Base {
         for (final Person person : getManagersSet()) {
             removeManagers(person);
         }
-        removeUnit();
+        setUnit(null);
         deleteLinks(getFooterLinksSet());
         super.disconnect();
     }

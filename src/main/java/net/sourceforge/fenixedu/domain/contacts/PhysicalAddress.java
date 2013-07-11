@@ -105,14 +105,14 @@ public class PhysicalAddress extends PhysicalAddress_Base {
     @Override
     public void deleteWithoutCheckRules() {
         super.deleteWithoutCheckRules();
-        // removeCountryOfResidence();
+        // setCountryOfResidence(null);
 
     }
 
     @Override
     public void delete() {
         super.delete();
-        // removeCountryOfResidence();
+        // setCountryOfResidence(null);
     }
 
     @Override

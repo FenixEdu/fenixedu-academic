@@ -1412,8 +1412,8 @@ public class Person extends Person_Base {
             ;
         }
 
-        removeNationality();
-        removeCountryOfBirth();
+        setNationality(null);
+        setCountryOfBirth(null);
 
         if (hasResearcher()) {
             getResearcher().delete();

@@ -53,9 +53,9 @@ public class TestQuestion extends TestQuestion_Base {
     }
 
     public void delete() {
-        removeQuestion();
-        removeTest();
-        removeRootDomainObject();
+        setQuestion(null);
+        setTest(null);
+        setRootDomainObject(null);
         deleteDomainObject();
     }
 
