@@ -3,11 +3,12 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
-<%-- TO BE DELETED --%>
-<h2>
-	<bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.edit.executionCourse"/> -
+
+<h2><bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.edit.executionCourse"/></h2>
+<h3>
+	<bean:message bundle="MANAGER_RESOURCES" key="title.manager.executionCourseManagement.manageCurricularSeparation"/> -
 	<bean:message bundle="MANAGER_RESOURCES" key="title.manager.executionCourseManagement.seperate.executionCourse"/>
-</h2>
+</h3>
 
 <logic:messagesPresent message="true" property="success">
 	<p>
@@ -30,54 +31,34 @@
 </logic:messagesPresent>
 
 <logic:present name="infoExecutionCourse">
-	<bean:define id="executionCourseID" name="infoExecutionCourse" property="idInternal"/>
-
-	<bean:message bundle="MANAGER_RESOURCES" key="executionCourse.origin"/>: 
-	<strong><bean:write name="infoExecutionCourse" property="nome"/></strong>
-
-	<br />
-	<br />
+	<bean:define id="executionCourseId" name="infoExecutionCourse" property="idInternal"/>
+	<bean:define id="executionCourseName" name="infoExecutionCourse" property="nome"/>
+	<bean:define id="executionPeriodName" name="infoExecutionCourse" property="infoExecutionPeriod.executionPeriod.qualifiedName"/>
+	<bean:define id="curricularYearName">
+		<bean:message bundle="ENUMERATION_RESOURCES" key="<%= pageContext.findAttribute("curricularYearId") + ".ordinal.short" %>"/>
+		<bean:message bundle="ENUMERATION_RESOURCES" key="YEAR" />
+	</bean:define>
+	
+	<p><bean:write name="executionPeriodName"/> &nbsp;&gt;&nbsp;
+	<logic:present name="originExecutionDegreeName">
+		<logic:notEmpty name="originExecutionDegreeName">
+			<b><bean:write name="originExecutionDegreeName"/></b> &nbsp;&gt;&nbsp;
+			<bean:write name="curricularYearName"/> &nbsp;&gt;&nbsp;
+		</logic:notEmpty>
+	</logic:present>		
+ 	<bean:write name="executionCourseName"/></p>
+	
+	
+	<p class="infoop"><bean:message bundle="MANAGER_RESOURCES" key="message.manager.executionCourseManagement.separate.chooseCurricularCoursesAndShifts"/></p>
+	<br/>
 
 	<html:form action="/seperateExecutionCourse">
-		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="transfer"/>
-		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseId" property="executionCourseId" value="<%= pageContext.findAttribute("executionCourseID").toString() %>"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="separate"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseId" property="executionCourseId" value="<%= pageContext.findAttribute("executionCourseId").toString() %>"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.curricularYearId" property="curricularYearId" value="<%= pageContext.findAttribute("curricularYearId").toString()%>"/>
-		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.originExecutionDegreeID" property="originExecutionDegreeID" value="<%= pageContext.findAttribute("originExecutionDegreeID").toString()%>"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.originExecutionDegreeId" property="originExecutionDegreeId" value="<%= pageContext.findAttribute("originExecutionDegreeId").toString()%>"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionPeriodId" property="executionPeriodId" value="<%= pageContext.findAttribute("executionPeriodId").toString()%>"/>
 
-		<bean:message bundle="MANAGER_RESOURCES" key="executionDegree.destination"/>:<br />
-		<html:select bundle="HTMLALT_RESOURCES" altKey="select.destinationExecutionDegreeId" property="destinationExecutionDegreeId" size="1"
-				onchange="this.form.method.value='changeDestinationContext'; this.form.submit();">
-			<html:options collection="executionDegrees" labelProperty="label" property="value" />
-		</html:select>
-		<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-			<bean:message key="button.submit"/>
-		</html:submit>
-
-		<br />
-		<bean:message bundle="MANAGER_RESOURCES" key="curricularYear.destination"/>:<br />
-		<html:select bundle="HTMLALT_RESOURCES" altKey="select.destinationCurricularYear" property="destinationCurricularYear" size="1"
-				onchange="this.form.method.value='changeDestinationContext'; this.form.submit();">
-			<html:options collection="curricularYear.list" labelProperty="label" property="value" />
-		</html:select>
-		<html:submit styleId="javascriptButtonID2" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-			<bean:message key="button.submit"/>
-		</html:submit>
-
-		<br />
-		<logic:present name="executionCourses">
-			<bean:message bundle="MANAGER_RESOURCES" key="executionCourse.destination"/>:<br />
-			<html:select bundle="HTMLALT_RESOURCES" altKey="select.destinationExecutionCourseID" property="destinationExecutionCourseID" size="1">
-				<html:option value="" />
-				<html:options collection="executionCourses" labelProperty="nome" property="idInternal" />
-			</html:select>
-			<br />
-		</logic:present>
-		<logic:notPresent name="executionCourses">
-			<br />
-		</logic:notPresent>
-
-		<br />
-		<br />
 		<strong><bean:message bundle="MANAGER_RESOURCES" key="curricularCourses.toTransfer"/>:</strong><br />
 		<logic:notEmpty name="infoExecutionCourse" property="associatedInfoCurricularCourses">
 		<table>
@@ -104,7 +85,7 @@
 						<bean:write name="infoCurricularCourse" property="name"/>
 					</td>
 					<td class="listClasses">
-						<bean:write name="infoCurricularCourse" property="code"/>
+						<bean:write name="infoCurricularCourse" property="acronym"/>
 					</td>
 					<td class="listClasses">
 						<bean:write name="infoCurricularCourse" property="infoDegreeCurricularPlan.infoDegree.sigla"/>
@@ -119,7 +100,6 @@
 			<br/>
 		</logic:empty>
 
-		<br />
 		<br />
 		<strong><bean:message bundle="MANAGER_RESOURCES" key="shifts.toTransfer"/>:</strong><br />
 		<logic:notEmpty name="infoExecutionCourse" property="associatedInfoShifts">
@@ -172,16 +152,17 @@
 		</logic:notEmpty>
 		<logic:empty name="infoExecutionCourse" property="associatedInfoShifts">
 			(<bean:message key="message.manager.executionCourseManagement.noShifts.this" bundle="MANAGER_RESOURCES"/>)
-			<br/>
-			<br/>
 		</logic:empty>
 
+		<br/>
 		<bean:define id="splitConfirm">
 			return confirm('<bean:message bundle="MANAGER_RESOURCES" key="message.manager.executionCourseManagement.separate.confirm"/>')
 		</bean:define>
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick="<%= splitConfirm %>">
 			<bean:message bundle="MANAGER_RESOURCES" key="label.split"/>
 		</html:submit>
-
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick="this.form.method.value='manageCurricularSeparation';this.form.submit();">
+			<bean:message bundle="MANAGER_RESOURCES" key="label.cancel"/>
+		</html:submit>
 	</html:form>
 </logic:present>

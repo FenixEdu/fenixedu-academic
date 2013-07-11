@@ -9,7 +9,8 @@
 			<h:selectOneMenu value="#{createCourseReports.executionPeriodID}">
 				<f:selectItems value="#{createCourseReports.executionPeriods}"/>
 			</h:selectOneMenu>
-			<h:commandButton alt="#{htmlAltBundle['commandButton.Criar']}" actionListener="#{createCourseReports.create}" value="Criar" />
+			<h:commandButton alt="#{htmlAltBundle['commandButton.Criar']}" actionListener="#{createCourseReports.create}" value="#{htmlAltBundle['commandButton.Criar']}" />
 		</h:panelGrid>	
 	</h:form>
+	<h:messages infoClass="success0" errorClass="error0" layout="table" globalOnly="true"/>
 </ft:tilesView>

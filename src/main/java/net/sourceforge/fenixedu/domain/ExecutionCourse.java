@@ -503,6 +503,9 @@ public class ExecutionCourse extends ExecutionCourse_Base {
             for (; !getForuns().isEmpty(); getForuns().get(0).delete()) {
                 ;
             }
+            for (; !getExecutionCourseLogs().isEmpty(); getExecutionCourseLogs().get(0).delete()) {
+                ;
+            }
 
             removeFinalEvaluations();
             getAssociatedCurricularCourses().clear();
@@ -2357,6 +2360,13 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         return null;
     }
 
+    public boolean isSplittable() {
+        if (getAssociatedCurricularCoursesCount() < 2) {
+            return false;
+        }
+        return true;
+    }
+
     public boolean isDeletable() {
         try {
             return this.canBeDeleted();
@@ -2673,6 +2683,14 @@ public class ExecutionCourse extends ExecutionCourse_Base {
             result.add(executionDegree.getPeriodLessons(getExecutionPeriod()));
         }
         return result;
+    }
+
+    public boolean getHasAnnouncements() {
+        ExecutionCourseAnnouncementBoard board = getBoard();
+        if (board != null) {
+            return board.getAnnouncements().isEmpty();
+        }
+        return false;
     }
 
 //  TODO in the new version of the framework, this bug (when creating an object the relations come allwats empty) 

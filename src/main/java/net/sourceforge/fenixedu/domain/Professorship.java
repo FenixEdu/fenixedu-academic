@@ -129,40 +129,40 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
 
     public boolean canBeDeleted() {
         if (hasAnyAssociatedSummaries()) {
-            throw new DomainException("error.remove.professorship");
+            throw new DomainException("error.remove.professorship.hasAnyAssociatedSummaries");
         }
         if (hasAnyAssociatedShiftProfessorship()) {
-            throw new DomainException("error.remove.professorship");
+            throw new DomainException("error.remove.professorship.hasAnyAssociatedShiftProfessorship");
         }
         if (hasAnySupportLessons()) {
-            throw new DomainException("error.remove.professorship");
+            throw new DomainException("error.remove.professorship.hasAnySupportLessons");
         }
         if (hasAnyDegreeTeachingServices()) {
-            throw new DomainException("error.remove.professorship");
+            throw new DomainException("error.remove.professorship.hasAnyDegreeTeachingServices");
         }
         if (hasAnyTeacherMasterDegreeServices()) {
-            throw new DomainException("error.remove.professorship");
+            throw new DomainException("error.remove.professorship.hasAnyTeacherMasterDegreeServices");
         }
         if (hasTeachingInquiry()) {
-            throw new DomainException("error.remove.professorship");
+            throw new DomainException("error.remove.professorship.hasTeachingInquiry");
         }
         if (hasAnyStudentInquiriesTeachingResults()) {
-            throw new DomainException("error.remove.professorship");
+            throw new DomainException("error.remove.professorship.hasAnyStudentInquiriesTeachingResults");
+        }
+        if (hasAnyInquiryStudentTeacherAnswers()) {
+            throw new DomainException("error.remove.professorship.hasAnyInquiryStudentTeacherAnswers");
         }
         if (hasAnyInquiryResults()) {
-            throw new DomainException("error.remove.professorship");
-        }
-        if (hasAnyAssociatedShiftProfessorship()) {
-            throw new DomainException("error.remove.professorship");
+            throw new DomainException("error.remove.professorship.hasAnyInquiryResults");
         }
         if (hasInquiryTeacherAnswer()) {
-            throw new DomainException("error.remove.professorship");
+            throw new DomainException("error.remove.professorship.hasInquiryTeacherAnswer");
         }
         if (hasInquiryRegentAnswer()) {
-            throw new DomainException("error.remove.professorship");
+            throw new DomainException("error.remove.professorship.hasInquiryRegentAnswer");
         }
         if (hasAnyDegreeProjectTutorialServices()) {
-            throw new DomainException("error.remove.professorship");
+            throw new DomainException("error.remove.professorship.hasAnyDegreeProjectTutorialServices");
         }
         return true;
     }

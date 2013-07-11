@@ -1082,7 +1082,8 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
                 value.append("[");
                 value.append(curricularCourse.getDegree().getSigla());
                 value.append("] ");
-                value.append(curricularCourse.getNameI18N().getContent());
+                value.append(StringUtils.isEmpty(curricularCourse.getNameI18N().getContent()) ? curricularCourse.getName() : curricularCourse
+                        .getNameI18N().getContent());
                 value.append("; ");
             }
             if (value.length() > 0) {

@@ -308,13 +308,13 @@
                   <form-property type="java.lang.String" name="curricularYear"></form-property>
                   <form-property type="java.lang.String" name="destinationExecutionCourseId"></form-property>
             </form-bean>
-            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="sepeateExecutionCourseForm">
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="separateExecutionCourseForm">
                   <form-property type="java.lang.Integer" name="page"></form-property>
-                  <form-property type="java.lang.Integer" name="originExecutionDegreeID"></form-property>
+                  <form-property type="java.lang.Integer" name="originExecutionDegreeId"></form-property>
                   <form-property type="java.lang.Integer" name="curricularYearId"></form-property>
                   <form-property type="java.lang.String" name="destinationExecutionDegreeId"></form-property>
                   <form-property type="java.lang.String" name="destinationCurricularYear"></form-property>
-                  <form-property type="java.lang.String" name="destinationExecutionCourseID"></form-property>
+                  <form-property type="java.lang.String" name="destinationExecutionCourseId"></form-property>
                   <form-property type="java.lang.String[]" name="shiftIdsToTransfer"></form-property>
                   <form-property type="java.lang.String[]" name="curricularCourseIdsToTransfer"></form-property>
             </form-bean>
@@ -686,6 +686,7 @@
                   <forward path="df.executionCourseManagement.prepareEditExecutionCourse" name="prepareEditExecutionCourse"></forward>
                   <forward path="df.executionCourseManagement.editExecutionCourse" name="editExecutionCourse"></forward>
                   <forward path="df.executionCourseManagement.viewExecutionCourse" name="viewExecutionCourse"></forward>
+                  <forward path="df.executionCourseManagement.listExecutionCourseActions" name="listExecutionCourseActions"></forward>
             </action>
             <!-- ========== PERSON MANAGEMENT ========== -->
             <action input="findPerson" scope="request" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement.PersonManagementAction" path="/personManagement">

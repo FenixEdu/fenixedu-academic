@@ -21,7 +21,7 @@ import pt.ist.fenixWebFramework.services.Service;
 public class ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYear extends FenixService {
 
     @Service
-    public static Object run(Integer executionDegreeId, Integer executionPeriodId, Integer curricularYearInt)
+    public static List run(Integer executionDegreeId, Integer executionPeriodId, Integer curricularYearInt)
             throws FenixServiceException {
 
         if (executionPeriodId == null) {

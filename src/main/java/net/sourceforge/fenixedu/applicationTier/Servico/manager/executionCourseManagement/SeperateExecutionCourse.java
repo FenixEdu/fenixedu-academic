@@ -50,6 +50,10 @@ public class SeperateExecutionCourse {
             ExecutionCourseUtils.copyEvaluationMethod(originExecutionCourse, destinationExecutionCourse);
         }
 
+        if (destinationExecutionCourse.equals(originExecutionCourse)) {
+            throw new DomainException("error.selection.sameSourceDestinationCourse");
+        }
+
         transferCurricularCourses(originExecutionCourse, destinationExecutionCourse, curricularCourseToTransfer);
 
         transferAttends(originExecutionCourse, destinationExecutionCourse);
@@ -203,8 +207,8 @@ public class SeperateExecutionCourse {
     }
 
     @Service
-    public static void run(Integer executionCourseId, Integer destinationExecutionCourseID, Integer[] shiftIdsToTransfer,
-            Integer[] curricularCourseIdsToTransfer) {
+    public static ExecutionCourse run(Integer executionCourseId, Integer destinationExecutionCourseID,
+            Integer[] shiftIdsToTransfer, Integer[] curricularCourseIdsToTransfer) {
 
         ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseId);
         ExecutionCourse destinationExecutionCourse =
@@ -212,7 +216,7 @@ public class SeperateExecutionCourse {
         List<Shift> shiftsToTransfer = readShiftsOIDsToTransfer(shiftIdsToTransfer);
         List<CurricularCourse> curricularCoursesToTransfer = readCurricularCoursesOIDsToTransfer(curricularCourseIdsToTransfer);
 
-        run(executionCourse, destinationExecutionCourse, shiftsToTransfer, curricularCoursesToTransfer);
+        return run(executionCourse, destinationExecutionCourse, shiftsToTransfer, curricularCoursesToTransfer);
     }
 
     private static List<Shift> readShiftsOIDsToTransfer(final Integer[] shiftIdsToTransfer) {
@@ -242,5 +246,4 @@ public class SeperateExecutionCourse {
 
         return result;
     }
-
 }

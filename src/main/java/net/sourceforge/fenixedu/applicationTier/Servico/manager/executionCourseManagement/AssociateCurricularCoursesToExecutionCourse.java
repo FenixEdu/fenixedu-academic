@@ -3,11 +3,11 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager.executionCourse
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
@@ -15,34 +15,37 @@ import pt.ist.fenixWebFramework.services.Service;
  * 
  * @author Fernanda Quitério 29/Dez/2003
  */
-public class AssociateCurricularCoursesToExecutionCourse extends FenixService {
+public class AssociateCurricularCoursesToExecutionCourse {
 
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
-    public static void run(Integer executionCourseId, List curricularCourseIds) throws FenixServiceException {
+    public static void run(Integer executionCourseId, List<Integer> curricularCourseIds) throws FenixServiceException {
         if (executionCourseId == null) {
             throw new FenixServiceException("nullExecutionCourseId");
         }
 
-        if (curricularCourseIds != null) {
-            ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
+        if (curricularCourseIds != null && !curricularCourseIds.isEmpty()) {
+            ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseId);
 
             if (executionCourse == null) {
-                throw new NonExistingServiceException("noExecutionCourse");
+                throw new DomainException("message.nonExisting.executionCourse");
             }
 
-            Iterator iter = curricularCourseIds.iterator();
+            Iterator<Integer> iter = curricularCourseIds.iterator();
             while (iter.hasNext()) {
-                Integer curricularCourseId = (Integer) iter.next();
+                Integer curricularCourseId = iter.next();
 
-                CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseId);
+                CurricularCourse curricularCourse =
+                        (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(curricularCourseId);
                 if (curricularCourse == null) {
-                    throw new NonExistingServiceException("noCurricularCourse");
+                    throw new DomainException("message.nonExistingDegreeCurricularPlan");
                 }
                 if (!curricularCourse.hasAssociatedExecutionCourses(executionCourse)) {
                     curricularCourse.addAssociatedExecutionCourses(executionCourse);
                 }
             }
+        } else {
+            throw new DomainException("error.selection.noCurricularCourse");
         }
     }
 }

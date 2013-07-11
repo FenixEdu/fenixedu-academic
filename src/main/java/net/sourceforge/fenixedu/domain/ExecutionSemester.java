@@ -105,7 +105,7 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
     }
 
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-    public void editPeriod(YearMonthDay begin, YearMonthDay end) {
+    public void editPeriod(YearMonthDay begin, YearMonthDay end) throws DomainException {
         if (begin == null || end == null || end.isBefore(begin)) {
             throw new DomainException("error.ExecutionPeriod.invalid.dates");
         }

@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.gesdis.CreateCourseReports;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -43,9 +44,9 @@ public class CreateCourseReportsForExecutionPeriod extends FenixBackingBean {
     }
 
     public void create(ActionEvent evt) throws FenixFilterException, FenixServiceException {
-
         CreateCourseReports.run(getExecutionPeriodID());
-
+        addInfoMessage(BundleUtil.getStringFromResourceBundle("resources.ManagerResources",
+                "message.manager.createCourseReports.success"));
     }
 
     public Integer getExecutionPeriodID() {

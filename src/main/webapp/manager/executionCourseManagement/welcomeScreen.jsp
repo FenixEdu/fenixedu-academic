@@ -6,7 +6,7 @@
 <table>
 	<tr>
 		<td class="infoop">
-			<bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.welcome"/>		
+			<bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.welcome1.intro"/><br/>					<bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.welcome2.insert"/><br/>			<bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.welcome3.edit"/><br/>			<bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.welcome4.merge"/><br/>			<bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.welcome5.reports"/><br/>			<bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.welcome6.create"/>
 		</td>
 	</tr>
 </table>

@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -62,10 +63,20 @@ public class AnnouncementSwap extends FenixDispatchAction {
 
         ExecutionCourseBean bean = getRenderedObject("executionCourseBean");
 
-        for (Announcement announcement : bean.getAnnouncements()) {
-            announcement.swap(bean.getSourceExecutionCourse().getBoard(), bean.getDestinationExecutionCourse().getBoard());
-        }
+        try {
+            checkPreConditions(bean);
 
+            int numberOfAnnouncementsSwapped = 0;
+            for (Announcement announcement : bean.getAnnouncements()) {
+                announcement.swap(bean.getSourceExecutionCourse().getBoard(), bean.getDestinationExecutionCourse().getBoard());
+                numberOfAnnouncementsSwapped++;
+            }
+            addActionMessage("success", request, "message.manager.executionCourseManagement.announcementsSwap.success",
+                    Integer.toString(numberOfAnnouncementsSwapped));
+
+        } catch (DomainException e) {
+            addActionMessage("error", request, e.getMessage());
+        }
         request.setAttribute("bean", bean);
         RenderUtils.invalidateViewState("executionCourseBean");
 
@@ -82,6 +93,21 @@ public class AnnouncementSwap extends FenixDispatchAction {
 
         return mapping.findForward("chooseExecutionCourse");
 
+    }
+
+    private void checkPreConditions(ExecutionCourseBean bean) {
+        if (bean.getSourceExecutionCourse() == null) {
+            throw new DomainException("error.manager.executionCourseManagement.announcementsSwap.noSource");
+        }
+        if (bean.getDestinationExecutionCourse() == null) {
+            throw new DomainException("error.manager.executionCourseManagement.announcementsSwap.noDestination");
+        }
+        if (bean.getSourceExecutionCourse() == bean.getDestinationExecutionCourse()) {
+            throw new DomainException("error.selection.sameSourceDestinationCourse");
+        }
+        if (bean.getAnnouncements().isEmpty()) {
+            throw new DomainException("error.manager.executionCourseManagement.announcementsSwap.noAnnouncements");
+        }
     }
 
 }

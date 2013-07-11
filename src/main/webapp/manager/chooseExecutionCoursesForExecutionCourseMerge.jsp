@@ -13,9 +13,9 @@
 </p>
 
 <logic:equal name="previousOrEqualSemester" value="true">
-		<div class="error0">
-			<bean:write name="degreeBean" property="academicInterval.pathName"/>
-		</div>
+	<div class="error0">
+		<bean:write name="degreeBean" property="academicInterval.pathName"/>
+	</div>
 </logic:equal>
 <logic:equal name="previousOrEqualSemester" value="false">
 	<bean:write name="degreeBean" property="academicInterval.pathName"/>
@@ -64,7 +64,10 @@
 	(<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mergedegrees.destination"/>)
 	<br/>
 	<br/>
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick="askForConfirmation(); return false;">
+	<bean:define id="deleteConfirm">
+		requestConfirmation('submitForm','<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="message.mergedegrees.mergecourses.confirmation"/>','<bean:message bundle="HTMLALT_RESOURCES" key="submit.confirm"/>');return false;
+	</bean:define>	
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick="<%= deleteConfirm %>">
 		<bean:message bundle="MANAGER_RESOURCES" key="button.save"/>
 	</html:submit>
 </html:form>
@@ -72,9 +75,3 @@
 
 <script src="../javaScript/alertHandlers.js"></script>
 <script src="../javaScript/jquery.alerts.js"></script>
-
-<script type="text/javascript">
-function askForConfirmation()  {
-	  requestConfirmation("submitForm","Tem a certeza que pretende agrupar as duas disciplinas?","Confirmar");
-}
-</script>

@@ -11,7 +11,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Forwards(value = {
         @Forward(name = "returnFromTransfer",
                 path = "/editExecutionCourseChooseExPeriod.do?method=prepareEditECChooseExecutionPeriod"),
-        @Forward(name = "showSeperationPage", path = "df.executionCourseManagement.seperateExecutionCourse") })
+        @Forward(name = "showSeparationPage", path = "df.executionCourseManagement.seperateExecutionCourse") })
 public class SeperateExecutionCourseDispatchActionForOperator extends
         net.sourceforge.fenixedu.presentationTier.Action.manager.executionCourseManagement.SeperateExecutionCourseDispatchAction {
 }

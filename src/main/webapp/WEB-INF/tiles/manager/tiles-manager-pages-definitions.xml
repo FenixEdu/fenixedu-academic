@@ -89,10 +89,6 @@
 		<put name="body" value="/manager/readExecutionPeriods_bd.jsp" />
 		<put name="navLocal" value="/manager/curricularCourseNavLocalManager.jsp" />
 	</definition>
-	<definition name="df.page.read-execution-courses" extends="definition.manager.masterPage" >
-		<put name="body" value="/manager/readExecutionCoursesByExecutionPeriod_bd.jsp" />
-		<put name="navLocal" value="/manager/curricularCourseNavLocalManager.jsp" />
-	</definition>
 	<definition name="df.page.edit-curriculum" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/editCurriculum_bd.jsp" />
 		<put name="navLocal" value="/manager/curricularCourseNavLocalManager.jsp" />
@@ -140,10 +136,6 @@
 	</definition>
 	<definition name="df.page.read-execution-periods-to-choose" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/readExecutionPeriods_bd.jsp" />
-		<put name="navLocal" value="/manager/executionCourseManagement/mainMenu.jsp" />
-	</definition>
-	<definition name="df.page.read-execution-courses-to-choose" extends="definition.manager.masterPage" >
-		<put name="body" value="/manager/readExecutionCoursesByExecutionPeriod_bd.jsp" />
 		<put name="navLocal" value="/manager/executionCourseManagement/mainMenu.jsp" />
 	</definition>
 	
@@ -293,6 +285,9 @@
 	<definition name="df.executionCourseManagement.createExecutionCoursesSuccess" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/executionCourseManagement/createExecutionCoursesSuccess.jsp" />
 	</definition>			
+	<definition name="df.executionCourseManagement.listExecutionCourseActions" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/executionCourseManagement/listExecutionCourseActions.jsp" />
+	</definition>
 
 	<!-- ========== FIND PERSON MANAGEMENT ========== -->
 	<definition name="firstPage" extends="definition.manager.masterPage" >

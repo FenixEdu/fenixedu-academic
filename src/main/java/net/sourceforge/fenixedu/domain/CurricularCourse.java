@@ -2271,4 +2271,17 @@ public class CurricularCourse extends CurricularCourse_Base {
         predicate.evaluate(this);
     }
 
+    @Override
+    public void addAssociatedExecutionCourses(final ExecutionCourse associatedExecutionCourses) {
+        List<ExecutionCourse> executionCourses = getAssociatedExecutionCourses();
+
+        for (ExecutionCourse executionCourse : executionCourses) {
+            if (associatedExecutionCourses != executionCourse
+                    && executionCourse.getExecutionPeriod() == associatedExecutionCourses.getExecutionPeriod()) {
+                throw new DomainException("error.executionCourse.curricularCourse.already.associated");
+            }
+        }
+        super.addAssociatedExecutionCourses(associatedExecutionCourses);
+    }
+
 }

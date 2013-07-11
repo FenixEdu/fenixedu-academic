@@ -29,4 +29,10 @@ public class DomainOperationLog extends DomainOperationLog_Base {
         this.setWhenDateTime(new DateTime());
     }
 
+    public void delete() {
+        removePerson();
+        removeRootDomainObject();
+        super.deleteDomainObject();
+    }
+
 }

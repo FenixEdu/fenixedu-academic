@@ -9,13 +9,6 @@
 <bean:define id="executionPeriodId" name="sessionBean" property="executionPeriod.idInternal" />
 <bean:define id="executionPeriodQName" name="sessionBean" property="executionPeriod.qualifiedName" />
 
-<logic:equal name="transferSucess" value="true">
-    <p>
-        <span class="success0">
-            <bean:message key="message.sucess" bundle="MANAGER_RESOURCES"/>
-        </span>
-    </p>
-</logic:equal>
 <logic:messagesPresent message="true" property="success">
 	<p>
 		<span class="success0">
@@ -38,48 +31,47 @@
 
 <bean:define id="linkGetRequestBigMessage" value="" /> <%-- bean redefined ahead --%>
 <bean:define id="linkGetRequestLilMessage" value="" /> <%-- bean redefined ahead --%>
+<bean:define id="parametersForManageSeparation" value="" /> <%-- bean redefined ahead --%>
 <bean:define id="executionDegreeId" name="sessionBean" /> <%-- bean redefined ahead --%>
 <bean:define id="curricularYearId" name="sessionBean" /> <%-- bean redefined ahead --%>
 <bean:define id="notLinked" name="sessionBean" property="chooseNotLinked"/>
+
 <logic:equal name="sessionBean" property="chooseNotLinked" value="false">
-<%--
-	<bean:define id="executionDegreeType" name="sessionBean" property="executionDegree.degreeType" />
-	<bean:define id="executionDegreeName" name="sessionBean" property="executionDegree.degreeName" />
---%>
 	<bean:define id="executionDegreeId" name="sessionBean" property="executionDegree.idInternal" />
 	<bean:define id="executionDegreePName" name="sessionBean" property="executionDegree.presentationName" />
 	<bean:define id="curricularYear" name="sessionBean" property="curricularYear.year" />
 	<bean:define id="curricularYearId" name="sessionBean" property="curricularYear.idInternal" />
-	<bean:define id="yearTag" value="<%= curricularYear.toString() + "º ano" %>" />
+	<bean:define id="yearTag">
+		<bean:message bundle="ENUMERATION_RESOURCES" key="<%= curricularYear.toString() + ".ordinal.short" %>"/>
+		<bean:message bundle="ENUMERATION_RESOURCES" key="YEAR" />
+	</bean:define>
 	<bean:define id="notLinkedHardCoded" value="&executionCoursesNotLinked=null" />
 
-	<fr:view name="sessionBean" property="executionDegree.degreeType.localizedName" />
-	<fr:view name="sessionBean" property="executionDegree.degreeName" />
-(<b><fr:view name="sessionBean" property="executionDegree.degree.sigla" /></b>) &nbsp;&gt;&nbsp;
-	<fr:view name="yearTag" />
-	<fr:view name="sessionBean" property="executionPeriod.qualifiedName" />
-
-
+	<fr:view name="sessionBean" property="executionPeriod.qualifiedName" /> &nbsp;&gt;&nbsp;
+	<b><bean:write name="executionDegreePName"/></b>  &nbsp;&gt;&nbsp;
+	<bean:write name="yearTag"/>
+	
 	<bean:define id="linkGetRequestBigMessage"
 		value="<%= "&executionPeriod=" + executionPeriodQName.toString() + "~" + executionPeriodId.toString()
-			//+ "&executionDegree=" + ((DegreeType) executionDegreeType).getLocalizedName() + labelInSpaces.toString() + executionDegreeName.toString() + "~" + executionDegreeId.toString()
 			+ "&executionDegree=" + executionDegreePName.toString() + "~" + executionDegreeId.toString()
 			+ "&curYear=" + curricularYear.toString() + "~" + curricularYearId.toString() + notLinkedHardCoded.toString() %>" />
 
 	<bean:define id="linkGetRequestLilMessage"
 		value="<%= "&executionPeriodId=" + executionPeriodId.toString() +
 	"&executionDegreeId=" + executionDegreeId + "&curYearId=" + curricularYearId.toString() + notLinkedHardCoded.toString()%>" />
+	
+	<bean:define id="parametersForManageSeparation"
+		value="<%="&amp;executionPeriodId=" + executionPeriodId.toString()
+				+ "&amp;originExecutionDegreeId="  + executionDegreeId.toString()
+				+ "&amp;curricularYearId=" + curricularYearId.toString()
+				+ notLinkedHardCoded.toString() %>"/> 
 </logic:equal>
-
-
-
 <logic:equal name="sessionBean" property="chooseNotLinked" value="true">
 
 	<p>
-		<fr:view name="sessionBean" property="executionPeriod.qualifiedName" />&nbsp;&gt;&nbsp;
-		<bean:message bundle="MANAGER_RESOURCES" key="label.manager.chooseNotLinked" />
+		<fr:view name="sessionBean" property="executionPeriod.qualifiedName" /> &nbsp;&gt;&nbsp;
+		<b><bean:message bundle="MANAGER_RESOURCES" key="label.manager.chooseNotLinked" /></b>
 	</p>
-
 
 	<bean:define id="linkGetRequestBigMessage"
 		value="<%= "&executionPeriod=" + executionPeriodQName.toString() + "~" + executionPeriodId.toString() +
@@ -88,7 +80,10 @@
 	<bean:define id="linkGetRequestLilMessage"
 		value="<%= "&executionPeriodId=" + executionPeriodId.toString() +
 	"&executionDegreeId=null" + "&curYearId=null~null" + "&executionCoursesNotLinked=" + notLinked %>" />
-
+	
+	<bean:define id="parametersForManageSeparation"
+		value="<%="&amp;executionPeriodId=" + executionPeriodId.toString()
+				+ "&amp;executionCoursesNotLinked=" + notLinked	%>"/>
 </logic:equal>
 
 
@@ -103,18 +98,23 @@
 
 		<fr:property name="linkFormat(swapAnnoun)" value="<%= "/announcementSwap.do?method=prepareSwap&executionCourseId=${idInternal}" + linkGetRequestLilMessage.toString() %>" />
 		<fr:property name="order(swapAnnoun)" value="2" />
+		<fr:property name="visibleIf(swapAnnoun)" value="hasAnnouncements" />
 		<fr:property name="key(swapAnnoun)" value="label.manager.executionCourse.announcementMove" />
 		<fr:property name="bundle(swapAnnoun)" value="MANAGER_RESOURCES" />
 
-		<logic:equal name="notLinked" value="false">
-		<fr:property name="linkFormat(splitCourses)" value="<%="/seperateExecutionCourse.do?method=prepareTransfer&executionCourseId=${idInternal}&originExecutionDegreeID="  + executionDegreeId.toString() + "&curricularYearId=" + curricularYearId.toString() %>"/> 
-		<fr:property name="order(splitCourses)" value="3" />
-		<fr:property name="key(splitCourses)" value="link.manager.seperate.execution_course" />
-		<fr:property name="bundle(splitCourses)" value="MANAGER_RESOURCES" />
-		</logic:equal>
+		<fr:property name="linkFormat(manageCurricularSeparation)"
+					 value="<%="/seperateExecutionCourse.do?method=manageCurricularSeparation"
+					 		+ "&amp;executionCourseId=${idInternal}"
+							+ parametersForManageSeparation.toString() %>"/> 
+		<fr:property name="order(manageCurricularSeparation)" value="3" />
+		<fr:property name="key(manageCurricularSeparation)" value="link.executionCourseManagement.curricular.manageCurricularSeparation" />
+		<fr:property name="bundle(manageCurricularSeparation)" value="MANAGER_RESOURCES" />
 
 
-		<fr:property name="linkFormat(delete)" value="<%="/editExecutionCourse.do?method=deleteExecutionCourse&executionCourseId=${idInternal}" + linkGetRequestBigMessage.toString() %>" />
+		<fr:property name="linkFormat(delete)"
+					 value="<%="/editExecutionCourse.do?method=deleteExecutionCourse"
+					 		+ "&amp;executionCourseId=${idInternal}"
+					 		+ linkGetRequestBigMessage.toString() %>" />
 		<fr:property name="order(delete)" value="4" />
 		<fr:property name="key(delete)" value="label.manager.executionCourseManagement.delete" />
 		<fr:property name="visibleIf(delete)" value="deletable" />
