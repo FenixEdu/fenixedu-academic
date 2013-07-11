@@ -116,4 +116,69 @@ public class MasterDegreeProofVersion extends MasterDegreeProofVersion_Base {
         }
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Teacher> getJuries() {
+        return getJuriesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyJuries() {
+        return !getJuriesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract> getExternalJuries() {
+        return getExternalJuriesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyExternalJuries() {
+        return !getExternalJuriesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasThesisDeliveryDateYearMonthDay() {
+        return getThesisDeliveryDateYearMonthDay() != null;
+    }
+
+    @Deprecated
+    public boolean hasAttachedCopiesNumber() {
+        return getAttachedCopiesNumber() != null;
+    }
+
+    @Deprecated
+    public boolean hasMasterDegreeThesis() {
+        return getMasterDegreeThesis() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasFinalResult() {
+        return getFinalResult() != null;
+    }
+
+    @Deprecated
+    public boolean hasResponsibleEmployee() {
+        return getResponsibleEmployee() != null;
+    }
+
+    @Deprecated
+    public boolean hasLastModificationDateTime() {
+        return getLastModificationDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasCurrentState() {
+        return getCurrentState() != null;
+    }
+
+    @Deprecated
+    public boolean hasProofDateYearMonthDay() {
+        return getProofDateYearMonthDay() != null;
+    }
+
 }

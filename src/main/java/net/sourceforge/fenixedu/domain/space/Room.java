@@ -356,4 +356,14 @@ public class Room extends Room_Base {
         }
         return countAllSeatsForExams;
     }
+    @Deprecated
+    public boolean hasExamCapacity() {
+        return getExamCapacity() != null;
+    }
+
+    @Deprecated
+    public boolean hasNormalCapacity() {
+        return getNormalCapacity() != null;
+    }
+
 }

@@ -105,4 +105,29 @@ public class CardGenerationProblem extends CardGenerationProblem_Base {
         return new CardGenerationBatch("New Batch", executionYear, true);
     }
 
+    @Deprecated
+    public boolean hasCardGenerationBatch() {
+        return getCardGenerationBatch() != null;
+    }
+
+    @Deprecated
+    public boolean hasArg() {
+        return getArg() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasDescriptionKey() {
+        return getDescriptionKey() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
+    }
+
 }

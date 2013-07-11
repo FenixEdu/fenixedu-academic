@@ -37,4 +37,24 @@ public class ShiftEnrolment extends ShiftEnrolment_Base {
         return getRegistration() == registration;
     }
 
+    @Deprecated
+    public boolean hasRegistration() {
+        return getRegistration() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreatedOn() {
+        return getCreatedOn() != null;
+    }
+
+    @Deprecated
+    public boolean hasShift() {
+        return getShift() != null;
+    }
+
 }

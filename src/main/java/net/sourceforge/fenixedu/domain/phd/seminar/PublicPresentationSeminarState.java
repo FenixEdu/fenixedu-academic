@@ -120,4 +120,14 @@ public class PublicPresentationSeminarState extends PublicPresentationSeminarSta
 
         return new PublicPresentationSeminarState(process, type, person, remarks, stateDate);
     }
+    @Deprecated
+    public boolean hasType() {
+        return getType() != null;
+    }
+
+    @Deprecated
+    public boolean hasProcess() {
+        return getProcess() != null;
+    }
+
 }

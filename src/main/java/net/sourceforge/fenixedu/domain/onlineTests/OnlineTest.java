@@ -45,4 +45,9 @@ public class OnlineTest extends OnlineTest_Base {
         return BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.online.test") + " "
                 + getDistributedTest().getEvaluationTitle();
     }
+    @Deprecated
+    public boolean hasDistributedTest() {
+        return getDistributedTest() != null;
+    }
+
 }

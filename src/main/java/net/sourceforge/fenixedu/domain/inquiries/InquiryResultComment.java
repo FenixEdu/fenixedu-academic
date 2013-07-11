@@ -34,4 +34,44 @@ public class InquiryResultComment extends InquiryResultComment_Base {
         setRootDomainObject(null);
         super.deleteDomainObject();
     }
+    @Deprecated
+    public boolean hasInquiryResult() {
+        return getInquiryResult() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasResultOrder() {
+        return getResultOrder() != null;
+    }
+
+    @Deprecated
+    public boolean hasAllowedToView() {
+        return getAllowedToView() != null;
+    }
+
+    @Deprecated
+    public boolean hasComment() {
+        return getComment() != null;
+    }
+
+    @Deprecated
+    public boolean hasInquiryGlobalComment() {
+        return getInquiryGlobalComment() != null;
+    }
+
+    @Deprecated
+    public boolean hasPersonCategory() {
+        return getPersonCategory() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
+    }
+
 }

@@ -97,4 +97,9 @@ public class PhdCandidacyRefereeAlert extends PhdCandidacyRefereeAlert_Base {
     public boolean isSystemAlert() {
         return true;
     }
+    @Deprecated
+    public boolean hasReferee() {
+        return getReferee() != null;
+    }
+
 }

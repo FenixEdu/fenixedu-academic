@@ -111,4 +111,24 @@ public class ResultUnitAssociation extends ResultUnitAssociation_Base {
     public void removeResult() {
         throw new DomainException("error.researcher.ResultUnitAssociation.call", "removeResult");
     }
+    @Deprecated
+    public boolean hasResult() {
+        return getResult() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasRole() {
+        return getRole() != null;
+    }
+
+    @Deprecated
+    public boolean hasUnit() {
+        return getUnit() != null;
+    }
+
 }

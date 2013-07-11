@@ -239,4 +239,24 @@ public class ResourceAllocationRole extends ResourceAllocationRole_Base {
             }
         }
     }
+    @Deprecated
+    public boolean hasSpacesAccessGroup() {
+        return getSpacesAccessGroup() != null;
+    }
+
+    @Deprecated
+    public boolean hasVehiclesAccessGroup() {
+        return getVehiclesAccessGroup() != null;
+    }
+
+    @Deprecated
+    public boolean hasSchedulesAccessGroup() {
+        return getSchedulesAccessGroup() != null;
+    }
+
+    @Deprecated
+    public boolean hasMaterialsAccessGroup() {
+        return getMaterialsAccessGroup() != null;
+    }
+
 }

@@ -428,4 +428,154 @@ public class TSDProcessPhase extends TSDProcessPhase_Base {
         return weight;
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution> getGroupings() {
+        return getGroupingsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyGroupings() {
+        return !getGroupingsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasTSDProcess() {
+        return getTSDProcess() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudentsPerTheoreticalShift() {
+        return getStudentsPerTheoreticalShift() != null;
+    }
+
+    @Deprecated
+    public boolean hasWeightFirstTimeEnrolledStudentsPerSeminaryShift() {
+        return getWeightFirstTimeEnrolledStudentsPerSeminaryShift() != null;
+    }
+
+    @Deprecated
+    public boolean hasWeightFirstTimeEnrolledStudentsPerTrainingShift() {
+        return getWeightFirstTimeEnrolledStudentsPerTrainingShift() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudentsPerFieldWorkShift() {
+        return getStudentsPerFieldWorkShift() != null;
+    }
+
+    @Deprecated
+    public boolean hasWeightSecondTimeEnrolledStudentsPerTrainingShift() {
+        return getWeightSecondTimeEnrolledStudentsPerTrainingShift() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudentsPerTrainingPeriodShift() {
+        return getStudentsPerTrainingPeriodShift() != null;
+    }
+
+    @Deprecated
+    public boolean hasWeightSecondTimeEnrolledStudentsPerTutDirectionShift() {
+        return getWeightSecondTimeEnrolledStudentsPerTutDirectionShift() != null;
+    }
+
+    @Deprecated
+    public boolean hasPreviousTSDProcessPhase() {
+        return getPreviousTSDProcessPhase() != null;
+    }
+
+    @Deprecated
+    public boolean hasWeightSecondTimeEnrolledStudentsPerLabShift() {
+        return getWeightSecondTimeEnrolledStudentsPerLabShift() != null;
+    }
+
+    @Deprecated
+    public boolean hasWeightFirstTimeEnrolledStudentsPerTheoShift() {
+        return getWeightFirstTimeEnrolledStudentsPerTheoShift() != null;
+    }
+
+    @Deprecated
+    public boolean hasWeightSecondTimeEnrolledStudentsPerSeminaryShift() {
+        return getWeightSecondTimeEnrolledStudentsPerSeminaryShift() != null;
+    }
+
+    @Deprecated
+    public boolean hasWeightFirstTimeEnrolledStudentsPerLabShift() {
+        return getWeightFirstTimeEnrolledStudentsPerLabShift() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudentsPerLaboratorialShift() {
+        return getStudentsPerLaboratorialShift() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudentsPerSeminaryShift() {
+        return getStudentsPerSeminaryShift() != null;
+    }
+
+    @Deprecated
+    public boolean hasIsPublished() {
+        return getIsPublished() != null;
+    }
+
+    @Deprecated
+    public boolean hasWeightSecondTimeEnrolledStudentsPerProblemShift() {
+        return getWeightSecondTimeEnrolledStudentsPerProblemShift() != null;
+    }
+
+    @Deprecated
+    public boolean hasWeightSecondTimeEnrolledStudentsPerFieldWorkShift() {
+        return getWeightSecondTimeEnrolledStudentsPerFieldWorkShift() != null;
+    }
+
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasWeightFirstTimeEnrolledStudentsPerFieldWorkShift() {
+        return getWeightFirstTimeEnrolledStudentsPerFieldWorkShift() != null;
+    }
+
+    @Deprecated
+    public boolean hasNextTSDProcessPhase() {
+        return getNextTSDProcessPhase() != null;
+    }
+
+    @Deprecated
+    public boolean hasStatus() {
+        return getStatus() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudentsPerProblemShift() {
+        return getStudentsPerProblemShift() != null;
+    }
+
+    @Deprecated
+    public boolean hasWeightFirstTimeEnrolledStudentsPerTutDirectionShift() {
+        return getWeightFirstTimeEnrolledStudentsPerTutDirectionShift() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudentsPerTutDirectionShift() {
+        return getStudentsPerTutDirectionShift() != null;
+    }
+
+    @Deprecated
+    public boolean hasWeightFirstTimeEnrolledStudentsPerProblemShift() {
+        return getWeightFirstTimeEnrolledStudentsPerProblemShift() != null;
+    }
+
+    @Deprecated
+    public boolean hasWeightSecondTimeEnrolledStudentsPerTheoShift() {
+        return getWeightSecondTimeEnrolledStudentsPerTheoShift() != null;
+    }
+
 }

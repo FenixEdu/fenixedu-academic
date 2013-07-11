@@ -104,4 +104,34 @@ public abstract class Node extends Node_Base implements MenuEntry, Comparable<No
     public Content getReferingContent() {
         return getChild();
     }
+    @Deprecated
+    public boolean hasParent() {
+        return getParent() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasVisible() {
+        return getVisible() != null;
+    }
+
+    @Deprecated
+    public boolean hasContentId() {
+        return getContentId() != null;
+    }
+
+    @Deprecated
+    public boolean hasChild() {
+        return getChild() != null;
+    }
+
+    @Deprecated
+    public boolean hasAscending() {
+        return getAscending() != null;
+    }
+
 }

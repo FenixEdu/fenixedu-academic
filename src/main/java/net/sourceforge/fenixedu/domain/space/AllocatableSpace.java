@@ -550,4 +550,44 @@ public abstract class AllocatableSpace extends AllocatableSpace_Base {
         return getSpaceManagementAccessGroupWithChainOfResponsibility().isMember(person);
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.InquiryRoomAnswer> getInquiryRoomAnswers() {
+        return getInquiryRoomAnswersSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyInquiryRoomAnswers() {
+        return !getInquiryRoomAnswersSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment> getWrittenEvaluationEnrolments() {
+        return getWrittenEvaluationEnrolmentsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyWrittenEvaluationEnrolments() {
+        return !getWrittenEvaluationEnrolmentsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Summary> getAssociatedSummaries() {
+        return getAssociatedSummariesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssociatedSummaries() {
+        return !getAssociatedSummariesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.oldInquiries.InquiriesRoom> getAssociatedInquiriesRooms() {
+        return getAssociatedInquiriesRoomsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssociatedInquiriesRooms() {
+        return !getAssociatedInquiriesRoomsSet().isEmpty();
+    }
+
 }

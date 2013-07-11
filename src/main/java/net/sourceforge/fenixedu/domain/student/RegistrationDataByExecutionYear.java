@@ -48,4 +48,24 @@ public class RegistrationDataByExecutionYear extends RegistrationDataByExecution
         super.deleteDomainObject();
     }
 
+    @Deprecated
+    public boolean hasRegistration() {
+        return getRegistration() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasEnrolmentModel() {
+        return getEnrolmentModel() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionYear() {
+        return getExecutionYear() != null;
+    }
+
 }

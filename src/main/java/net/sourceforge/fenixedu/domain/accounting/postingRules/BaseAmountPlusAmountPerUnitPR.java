@@ -147,4 +147,19 @@ public abstract class BaseAmountPlusAmountPerUnitPR extends BaseAmountPlusAmount
         return this.getMaximumAmount().getAmountAsString();
     }
 
+    @Deprecated
+    public boolean hasBaseAmount() {
+        return getBaseAmount() != null;
+    }
+
+    @Deprecated
+    public boolean hasMaximumAmount() {
+        return getMaximumAmount() != null;
+    }
+
+    @Deprecated
+    public boolean hasAmountPerUnit() {
+        return getAmountPerUnit() != null;
+    }
+
 }

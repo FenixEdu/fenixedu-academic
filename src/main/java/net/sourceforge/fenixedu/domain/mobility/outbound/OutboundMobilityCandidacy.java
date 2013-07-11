@@ -112,4 +112,34 @@ public class OutboundMobilityCandidacy extends OutboundMobilityCandidacy_Base im
         setSubmissionFromSelectedCandidacy(null);
     }
 
+    @Deprecated
+    public boolean hasPreferenceOrder() {
+        return getPreferenceOrder() != null;
+    }
+
+    @Deprecated
+    public boolean hasOutboundMobilityCandidacySubmission() {
+        return getOutboundMobilityCandidacySubmission() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasSubmissionFromSelectedCandidacy() {
+        return getSubmissionFromSelectedCandidacy() != null;
+    }
+
+    @Deprecated
+    public boolean hasOutboundMobilityCandidacyContest() {
+        return getOutboundMobilityCandidacyContest() != null;
+    }
+
+    @Deprecated
+    public boolean hasSelected() {
+        return getSelected() != null;
+    }
+
 }

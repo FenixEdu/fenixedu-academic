@@ -58,4 +58,24 @@ public class ExternalActivity extends ExternalActivity_Base {
         }
     }
 
+    @Deprecated
+    public boolean hasLastModificationDateDateTime() {
+        return getLastModificationDateDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasTeacher() {
+        return getTeacher() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasActivity() {
+        return getActivity() != null;
+    }
+
 }

@@ -178,4 +178,19 @@ public class ApprovedLearningAgreementDocumentFile extends ApprovedLearningAgree
     public boolean isAbleToSendEmailToAcceptStudent() {
         return getProcess().isStudentAccepted() && isMostRecent() && getCandidacyFileActive();
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ApprovedLearningAgreementExecutedAction> getExecutedActions() {
+        return getExecutedActionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyExecutedActions() {
+        return !getExecutedActionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasMobilityIndividualApplication() {
+        return getMobilityIndividualApplication() != null;
+    }
+
 }

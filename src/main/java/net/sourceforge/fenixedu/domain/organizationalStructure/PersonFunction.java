@@ -243,4 +243,29 @@ public class PersonFunction extends PersonFunction_Base {
         }
         return false;
     }
+    @Deprecated
+    public boolean hasSender() {
+        return getSender() != null;
+    }
+
+    @Deprecated
+    public boolean hasCurricularYear() {
+        return getCurricularYear() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionInterval() {
+        return getExecutionInterval() != null;
+    }
+
+    @Deprecated
+    public boolean hasCredits() {
+        return getCredits() != null;
+    }
+
+    @Deprecated
+    public boolean hasDelegate() {
+        return getDelegate() != null;
+    }
+
 }

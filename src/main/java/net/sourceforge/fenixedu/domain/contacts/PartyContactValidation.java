@@ -175,4 +175,44 @@ public abstract class PartyContactValidation extends PartyContactValidation_Base
             triggerValidationProcess();
         }
     }
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasState() {
+        return getState() != null;
+    }
+
+    @Deprecated
+    public boolean hasRequestDate() {
+        return getRequestDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasToBeDefault() {
+        return getToBeDefault() != null;
+    }
+
+    @Deprecated
+    public boolean hasTries() {
+        return getTries() != null;
+    }
+
+    @Deprecated
+    public boolean hasToken() {
+        return getToken() != null;
+    }
+
+    @Deprecated
+    public boolean hasLastChangeDate() {
+        return getLastChangeDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasPartyContact() {
+        return getPartyContact() != null;
+    }
+
 }

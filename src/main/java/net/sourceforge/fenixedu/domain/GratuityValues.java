@@ -122,4 +122,89 @@ public class GratuityValues extends GratuityValues_Base {
         }
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.GratuitySituation> getGratuitySituations() {
+        return getGratuitySituationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyGratuitySituations() {
+        return !getGratuitySituationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.PaymentPhase> getPaymentPhaseList() {
+        return getPaymentPhaseListSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPaymentPhaseList() {
+        return !getPaymentPhaseListSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasEndPaymentYearMonthDay() {
+        return getEndPaymentYearMonthDay() != null;
+    }
+
+    @Deprecated
+    public boolean hasWhenDateTime() {
+        return getWhenDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasAnualValue() {
+        return getAnualValue() != null;
+    }
+
+    @Deprecated
+    public boolean hasProofRequestPayment() {
+        return getProofRequestPayment() != null;
+    }
+
+    @Deprecated
+    public boolean hasCourseValue() {
+        return getCourseValue() != null;
+    }
+
+    @Deprecated
+    public boolean hasScholarShipValue() {
+        return getScholarShipValue() != null;
+    }
+
+    @Deprecated
+    public boolean hasFinalProofValue() {
+        return getFinalProofValue() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionDegree() {
+        return getExecutionDegree() != null;
+    }
+
+    @Deprecated
+    public boolean hasPenaltyApplicable() {
+        return getPenaltyApplicable() != null;
+    }
+
+    @Deprecated
+    public boolean hasEmployee() {
+        return getEmployee() != null;
+    }
+
+    @Deprecated
+    public boolean hasStartPaymentYearMonthDay() {
+        return getStartPaymentYearMonthDay() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreditValue() {
+        return getCreditValue() != null;
+    }
+
 }

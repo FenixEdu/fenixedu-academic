@@ -123,4 +123,44 @@ public class InquiriesRegistry extends InquiriesRegistry_Base {
         //	return getStudent().getStudent().getInquiriesStudentExecutionPeriod(getExecutionPeriod());
     }
 
+    @Deprecated
+    public boolean hasStudent() {
+        return getStudent() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionCourse() {
+        return getExecutionCourse() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudyDaysSpentInExamsSeason() {
+        return getStudyDaysSpentInExamsSeason() != null;
+    }
+
+    @Deprecated
+    public boolean hasState() {
+        return getState() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionPeriod() {
+        return getExecutionPeriod() != null;
+    }
+
+    @Deprecated
+    public boolean hasWeeklyHoursSpentPercentage() {
+        return getWeeklyHoursSpentPercentage() != null;
+    }
+
+    @Deprecated
+    public boolean hasCurricularCourse() {
+        return getCurricularCourse() != null;
+    }
+
 }

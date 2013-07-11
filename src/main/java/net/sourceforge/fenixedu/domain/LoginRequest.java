@@ -46,4 +46,19 @@ public class LoginRequest extends LoginRequest_Base {
         return null;
     }
 
+    @Deprecated
+    public boolean hasUser() {
+        return getUser() != null;
+    }
+
+    @Deprecated
+    public boolean hasHash() {
+        return getHash() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
 }

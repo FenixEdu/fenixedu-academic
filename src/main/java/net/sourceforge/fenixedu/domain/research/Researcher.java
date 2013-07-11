@@ -133,4 +133,54 @@ public class Researcher extends Researcher_Base {
                 .getCurrentPersonContractSituationByCategoryType(CategoryType.RESEARCHER) : null;
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.contacts.PartyContact> getAvailableContacts() {
+        return getAvailableContactsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAvailableContacts() {
+        return !getAvailableContactsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasAllowsContactByMedia() {
+        return getAllowsContactByMedia() != null;
+    }
+
+    @Deprecated
+    public boolean hasAllowsContactByStudents() {
+        return getAllowsContactByStudents() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasKeywordsEn() {
+        return getKeywordsEn() != null;
+    }
+
+    @Deprecated
+    public boolean hasAllowsContactByOtherResearchers() {
+        return getAllowsContactByOtherResearchers() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
+    }
+
+    @Deprecated
+    public boolean hasKeywordsPt() {
+        return getKeywordsPt() != null;
+    }
+
+    @Deprecated
+    public boolean hasAllowsToBeSearched() {
+        return getAllowsToBeSearched() != null;
+    }
+
 }

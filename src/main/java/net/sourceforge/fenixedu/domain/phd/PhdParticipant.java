@@ -195,4 +195,94 @@ abstract public class PhdParticipant extends PhdParticipant_Base {
         return null;
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement> getThesisJuryElements() {
+        return getThesisJuryElementsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyThesisJuryElements() {
+        return !getThesisJuryElementsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestElement> getCandidacyFeedbackRequestElements() {
+        return getCandidacyFeedbackRequestElementsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCandidacyFeedbackRequestElements() {
+        return !getCandidacyFeedbackRequestElementsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasAcceptanceLetter() {
+        return getAcceptanceLetter() != null;
+    }
+
+    @Deprecated
+    public boolean hasIndividualProcess() {
+        return getIndividualProcess() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasWhenCreated() {
+        return getWhenCreated() != null;
+    }
+
+    @Deprecated
+    public boolean hasAccessTypes() {
+        return getAccessTypes() != null;
+    }
+
+    @Deprecated
+    public boolean hasPassword() {
+        return getPassword() != null;
+    }
+
+    @Deprecated
+    public boolean hasProcessForGuiding() {
+        return getProcessForGuiding() != null;
+    }
+
+    @Deprecated
+    public boolean hasInstitution() {
+        return getInstitution() != null;
+    }
+
+    @Deprecated
+    public boolean hasTitle() {
+        return getTitle() != null;
+    }
+
+    @Deprecated
+    public boolean hasCategory() {
+        return getCategory() != null;
+    }
+
+    @Deprecated
+    public boolean hasWorkLocation() {
+        return getWorkLocation() != null;
+    }
+
+    @Deprecated
+    public boolean hasProcessForAssistantGuiding() {
+        return getProcessForAssistantGuiding() != null;
+    }
+
+    @Deprecated
+    public boolean hasAccessHashCode() {
+        return getAccessHashCode() != null;
+    }
+
+    @Deprecated
+    public boolean hasPhdReporterReviewAlert() {
+        return getPhdReporterReviewAlert() != null;
+    }
+
 }

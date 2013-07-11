@@ -33,4 +33,19 @@ public class UTLScholarshipReport extends UTLScholarshipReport_Base {
         return report;
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.student.Student> getStudent() {
+        return getStudentSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyStudent() {
+        return !getStudentSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasUtlScholarshipSource() {
+        return getUtlScholarshipSource() != null;
+    }
+
 }

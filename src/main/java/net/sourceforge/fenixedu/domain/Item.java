@@ -250,4 +250,14 @@ public class Item extends Item_Base {
         site.logEditItemPermission(this);
     }
 
+    @Deprecated
+    public boolean hasEnabled() {
+        return getEnabled() != null;
+    }
+
+    @Deprecated
+    public boolean hasShowName() {
+        return getShowName() != null;
+    }
+
 }

@@ -19,4 +19,29 @@ public class RequestLogMonth extends RequestLogMonth_Base {
 
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.log.requests.RequestLogDay> getDays() {
+        return getDaysSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyDays() {
+        return !getDaysSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasYear() {
+        return getYear() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasMonthOfYear() {
+        return getMonthOfYear() != null;
+    }
+
 }

@@ -120,4 +120,29 @@ public abstract class NewTestElement extends NewTestElement_Base {
         return null;
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.tests.NewPresentationMaterial> getPresentationMaterials() {
+        return getPresentationMaterialsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPresentationMaterials() {
+        return !getPresentationMaterialsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasSection() {
+        return getSection() != null;
+    }
+
+    @Deprecated
+    public boolean hasSectionPosition() {
+        return getSectionPosition() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
 }

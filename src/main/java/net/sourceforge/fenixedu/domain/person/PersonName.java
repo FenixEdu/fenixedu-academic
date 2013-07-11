@@ -191,4 +191,34 @@ public class PersonName extends PersonName_Base implements Comparable<PersonName
         }
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.person.PersonNamePart> getPersonNamePart() {
+        return getPersonNamePartSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPersonNamePart() {
+        return !getPersonNamePartSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasIsExternalPerson() {
+        return getIsExternalPerson() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
+    }
+
 }

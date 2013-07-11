@@ -1163,4 +1163,44 @@ public class Lesson extends Lesson_Base {
         return builder.toString();
     }
 
+    @Deprecated
+    public boolean hasPeriod() {
+        return getPeriod() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndHourMinuteSecond() {
+        return getEndHourMinuteSecond() != null;
+    }
+
+    @Deprecated
+    public boolean hasDiaSemana() {
+        return getDiaSemana() != null;
+    }
+
+    @Deprecated
+    public boolean hasBeginHourMinuteSecond() {
+        return getBeginHourMinuteSecond() != null;
+    }
+
+    @Deprecated
+    public boolean hasShift() {
+        return getShift() != null;
+    }
+
+    @Deprecated
+    public boolean hasFrequency() {
+        return getFrequency() != null;
+    }
+
+    @Deprecated
+    public boolean hasLessonSpaceOccupation() {
+        return getLessonSpaceOccupation() != null;
+    }
+
 }

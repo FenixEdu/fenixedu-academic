@@ -127,4 +127,9 @@ public class ExplicitOrderNode extends ExplicitOrderNode_Base {
         }
     }
 
+    @Deprecated
+    public boolean hasNodeOrder() {
+        return getNodeOrder() != null;
+    }
+
 }

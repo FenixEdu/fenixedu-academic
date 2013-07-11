@@ -280,4 +280,34 @@ public class MobilityApplicationPeriod extends MobilityApplicationPeriod_Base {
         return hasEmailTemplateFor(mobilityProgram, type);
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityEmailTemplate> getEmailTemplates() {
+        return getEmailTemplatesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyEmailTemplates() {
+        return !getEmailTemplatesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusVacancy> getErasmusVacancy() {
+        return getErasmusVacancySet();
+    }
+
+    @Deprecated
+    public boolean hasAnyErasmusVacancy() {
+        return !getErasmusVacancySet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityQuota> getMobilityQuotas() {
+        return getMobilityQuotasSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyMobilityQuotas() {
+        return !getMobilityQuotasSet().isEmpty();
+    }
+
 }

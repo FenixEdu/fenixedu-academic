@@ -17,4 +17,24 @@ public class QuestionCondition extends QuestionCondition_Base {
         super.deleteDomainObject();
     }
 
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasInquiryDependentQuestion() {
+        return getInquiryDependentQuestion() != null;
+    }
+
+    @Deprecated
+    public boolean hasInquiryQuestion() {
+        return getInquiryQuestion() != null;
+    }
+
+    @Deprecated
+    public boolean hasInquiryGroupQuestion() {
+        return getInquiryGroupQuestion() != null;
+    }
+
 }

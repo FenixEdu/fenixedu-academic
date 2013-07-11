@@ -60,4 +60,24 @@ public class ReceiptPrintVersion extends ReceiptPrintVersion_Base {
         setRootDomainObject(null);
         super.deleteDomainObject();
     }
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasWhenCreated() {
+        return getWhenCreated() != null;
+    }
+
+    @Deprecated
+    public boolean hasReceipt() {
+        return getReceipt() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
+    }
+
 }

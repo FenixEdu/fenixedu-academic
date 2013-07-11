@@ -92,4 +92,24 @@ public class ManagementGroups extends ManagementGroups_Base {
             return 0;
         }
     }
+    @Deprecated
+    public boolean hasAssiduousnessManagers() {
+        return getAssiduousnessManagers() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasPayrollSectionStaff() {
+        return getPayrollSectionStaff() != null;
+    }
+
+    @Deprecated
+    public boolean hasAssiduousnessSectionStaff() {
+        return getAssiduousnessSectionStaff() != null;
+    }
+
 }

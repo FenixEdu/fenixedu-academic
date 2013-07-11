@@ -33,4 +33,9 @@ public class QueueJobResultFile extends QueueJobResultFile_Base {
         }
     }
 
+    @Deprecated
+    public boolean hasJob() {
+        return getJob() != null;
+    }
+
 }

@@ -151,4 +151,69 @@ public class JournalIssue extends JournalIssue_Base implements ParticipationsInt
             addParticipations(journalIssueParticipation);
         }
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.research.activity.ArticleAssociation> getArticleAssociations() {
+        return getArticleAssociationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyArticleAssociations() {
+        return !getArticleAssociationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.research.activity.JournalIssueParticipation> getParticipations() {
+        return getParticipationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyParticipations() {
+        return !getParticipationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasYear() {
+        return getYear() != null;
+    }
+
+    @Deprecated
+    public boolean hasSpecialIssueComment() {
+        return getSpecialIssueComment() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasUrl() {
+        return getUrl() != null;
+    }
+
+    @Deprecated
+    public boolean hasVolume() {
+        return getVolume() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumber() {
+        return getNumber() != null;
+    }
+
+    @Deprecated
+    public boolean hasScientificJournal() {
+        return getScientificJournal() != null;
+    }
+
+    @Deprecated
+    public boolean hasSpecialIssue() {
+        return getSpecialIssue() != null;
+    }
+
+    @Deprecated
+    public boolean hasMonth() {
+        return getMonth() != null;
+    }
+
 }

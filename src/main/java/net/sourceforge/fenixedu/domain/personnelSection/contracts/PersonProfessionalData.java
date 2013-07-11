@@ -289,4 +289,19 @@ public class PersonProfessionalData extends PersonProfessionalData_Base {
         return null;
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.personnelSection.contracts.GiafProfessionalData> getGiafProfessionalDatas() {
+        return getGiafProfessionalDatasSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyGiafProfessionalDatas() {
+        return !getGiafProfessionalDatasSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
+    }
+
 }

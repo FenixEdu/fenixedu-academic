@@ -37,4 +37,29 @@ public class DepartmentCreditsPool extends DepartmentCreditsPool_Base {
         }
         return null;
     }
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasOriginalCreditsPool() {
+        return getOriginalCreditsPool() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreditsPool() {
+        return getCreditsPool() != null;
+    }
+
+    @Deprecated
+    public boolean hasDepartment() {
+        return getDepartment() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionYear() {
+        return getExecutionYear() != null;
+    }
+
 }

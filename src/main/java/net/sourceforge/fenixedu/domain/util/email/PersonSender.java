@@ -23,4 +23,9 @@ public class PersonSender extends PersonSender_Base {
     public static PersonSender newInstance(final Person person) {
         return person.hasSender() ? person.getSender() : new PersonSender(person);
     }
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
+    }
+
 }

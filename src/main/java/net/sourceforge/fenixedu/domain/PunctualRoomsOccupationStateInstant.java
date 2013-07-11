@@ -56,4 +56,24 @@ public class PunctualRoomsOccupationStateInstant extends PunctualRoomsOccupation
         }
         super.setInstant(instant);
     }
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasInstant() {
+        return getInstant() != null;
+    }
+
+    @Deprecated
+    public boolean hasRequestState() {
+        return getRequestState() != null;
+    }
+
+    @Deprecated
+    public boolean hasRequest() {
+        return getRequest() != null;
+    }
+
 }

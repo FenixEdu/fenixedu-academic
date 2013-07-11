@@ -45,4 +45,9 @@ public class ExecutionCourseAuditFile extends ExecutionCourseAuditFile_Base {
         setExecutionCourseAudit(null);
         super.delete();
     }
+    @Deprecated
+    public boolean hasExecutionCourseAudit() {
+        return getExecutionCourseAudit() != null;
+    }
+
 }

@@ -70,4 +70,34 @@ public class AccountingTransactionDetail extends AccountingTransactionDetail_Bas
         return getTransaction().getEvent();
     }
 
+    @Deprecated
+    public boolean hasPaymentMode() {
+        return getPaymentMode() != null;
+    }
+
+    @Deprecated
+    public boolean hasWhenProcessed() {
+        return getWhenProcessed() != null;
+    }
+
+    @Deprecated
+    public boolean hasComments() {
+        return getComments() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasTransaction() {
+        return getTransaction() != null;
+    }
+
+    @Deprecated
+    public boolean hasWhenRegistered() {
+        return getWhenRegistered() != null;
+    }
+
 }

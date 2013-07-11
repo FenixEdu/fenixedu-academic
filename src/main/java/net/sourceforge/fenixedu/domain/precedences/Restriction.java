@@ -21,4 +21,14 @@ public abstract class Restriction extends Restriction_Base {
     }
 
     public abstract CurricularCourseEnrollmentType evaluate(PrecedenceContext precedenceContext);
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasPrecedence() {
+        return getPrecedence() != null;
+    }
+
 }

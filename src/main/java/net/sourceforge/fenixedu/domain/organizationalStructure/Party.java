@@ -1662,4 +1662,249 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
 
     public void logRefuseContact(PartyContact contact) {
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.contacts.PartyContact> getPartyContacts() {
+        return getPartyContactsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPartyContacts() {
+        return !getPartyContactsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.resource.VehicleAllocation> getVehicleAllocations() {
+        return getVehicleAllocationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyVehicleAllocations() {
+        return !getVehicleAllocationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.documents.GeneratedDocument> getAddressedDocument() {
+        return getAddressedDocumentSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAddressedDocument() {
+        return !getAddressedDocumentSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.research.project.ProjectParticipation> getProjectParticipations() {
+        return getProjectParticipationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyProjectParticipations() {
+        return !getProjectParticipationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.organizationalStructure.Accountability> getChilds() {
+        return getChildsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyChilds() {
+        return !getChildsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.resource.ResourceResponsibility> getResourceResponsibility() {
+        return getResourceResponsibilitySet();
+    }
+
+    @Deprecated
+    public boolean hasAnyResourceResponsibility() {
+        return !getResourceResponsibilitySet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.Account> getAccounts() {
+        return getAccountsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAccounts() {
+        return !getAccountsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.messaging.PartyAnnouncementBoard> getBoards() {
+        return getBoardsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyBoards() {
+        return !getBoardsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.Event> getEvents() {
+        return getEventsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyEvents() {
+        return !getEventsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.accessControl.PersistentAccessGroup> getPersistentAccessGroup() {
+        return getPersistentAccessGroupSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPersistentAccessGroup() {
+        return !getPersistentAccessGroupSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.research.activity.Participation> getParticipations() {
+        return getParticipationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyParticipations() {
+        return !getParticipationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.phd.debts.PhdGratuityExternalScholarshipExemption> getPhdGratuityExternalScholarshipExemption() {
+        return getPhdGratuityExternalScholarshipExemptionSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPhdGratuityExternalScholarshipExemption() {
+        return !getPhdGratuityExternalScholarshipExemptionSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.organizationalStructure.Invitation> getInvitationAccountabilities() {
+        return getInvitationAccountabilitiesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyInvitationAccountabilities() {
+        return !getInvitationAccountabilitiesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.tests.NewPermissionUnit> getPermissionUnits() {
+        return getPermissionUnitsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPermissionUnits() {
+        return !getPermissionUnitsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.research.ResearchInterest> getResearchInterests() {
+        return getResearchInterestsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyResearchInterests() {
+        return !getResearchInterestsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.research.Prize> getPrizes() {
+        return getPrizesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPrizes() {
+        return !getPrizesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.organizationalStructure.Accountability> getParents() {
+        return getParentsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyParents() {
+        return !getParentsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Guide> getPayedGuides() {
+        return getPayedGuidesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPayedGuides() {
+        return !getPayedGuidesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.Receipt> getPayedReceipts() {
+        return getPayedReceiptsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPayedReceipts() {
+        return !getPayedReceiptsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.parking.ParkingPartyHistory> getParkingPartyHistories() {
+        return getParkingPartyHistoriesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyParkingPartyHistories() {
+        return !getParkingPartyHistoriesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasParkingParty() {
+        return getParkingParty() != null;
+    }
+
+    @Deprecated
+    public boolean hasPartyType() {
+        return getPartyType() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasPartySocialSecurityNumber() {
+        return getPartySocialSecurityNumber() != null;
+    }
+
+    @Deprecated
+    public boolean hasQuestionBank() {
+        return getQuestionBank() != null;
+    }
+
+    @Deprecated
+    public boolean hasPartyName() {
+        return getPartyName() != null;
+    }
+
+    @Deprecated
+    public boolean hasPartyImportRegister() {
+        return getPartyImportRegister() != null;
+    }
+
+    @Deprecated
+    public boolean hasNationality() {
+        return getNationality() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObjectExternalScholarshipProvider() {
+        return getRootDomainObjectExternalScholarshipProvider() != null;
+    }
+
 }

@@ -49,4 +49,9 @@ public class ExecutionCourseLog extends ExecutionCourseLog_Base {
         super.delete();
     }
 
+    @Deprecated
+    public boolean hasExecutionCourse() {
+        return getExecutionCourse() != null;
+    }
+
 }

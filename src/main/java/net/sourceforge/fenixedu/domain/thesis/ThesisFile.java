@@ -63,4 +63,29 @@ public class ThesisFile extends ThesisFile_Base {
         return false;
     }
 
+    @Deprecated
+    public boolean hasAbstractThesis() {
+        return getAbstractThesis() != null;
+    }
+
+    @Deprecated
+    public boolean hasDissertationThesis() {
+        return getDissertationThesis() != null;
+    }
+
+    @Deprecated
+    public boolean hasSubTitle() {
+        return getSubTitle() != null;
+    }
+
+    @Deprecated
+    public boolean hasLanguage() {
+        return getLanguage() != null;
+    }
+
+    @Deprecated
+    public boolean hasTitle() {
+        return getTitle() != null;
+    }
+
 }

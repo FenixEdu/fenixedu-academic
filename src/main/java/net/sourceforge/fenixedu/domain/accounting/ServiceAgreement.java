@@ -92,4 +92,34 @@ public abstract class ServiceAgreement extends ServiceAgreement_Base {
         return getCustomGratuityPaymentPlan(executionYear) != null;
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.ServiceAgreementPaymentPlan> getPaymentPlans() {
+        return getPaymentPlansSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPaymentPlans() {
+        return !getPaymentPlansSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasServiceAgreementTemplate() {
+        return getServiceAgreementTemplate() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreationDate() {
+        return getCreationDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
+    }
+
 }

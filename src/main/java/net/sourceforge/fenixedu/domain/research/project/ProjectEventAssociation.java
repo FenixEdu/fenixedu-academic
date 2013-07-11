@@ -29,4 +29,24 @@ public class ProjectEventAssociation extends ProjectEventAssociation_Base {
         Exhibitor, Participant,
     }
 
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasEventEdition() {
+        return getEventEdition() != null;
+    }
+
+    @Deprecated
+    public boolean hasRole() {
+        return getRole() != null;
+    }
+
+    @Deprecated
+    public boolean hasProject() {
+        return getProject() != null;
+    }
+
 }

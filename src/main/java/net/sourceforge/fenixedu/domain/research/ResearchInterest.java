@@ -144,4 +144,24 @@ public class ResearchInterest extends ResearchInterest_Base {
         super.setInterestOrder(order);
     }
 
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasInterest() {
+        return getInterest() != null;
+    }
+
+    @Deprecated
+    public boolean hasParty() {
+        return getParty() != null;
+    }
+
+    @Deprecated
+    public boolean hasInterestOrder() {
+        return getInterestOrder() != null;
+    }
+
 }

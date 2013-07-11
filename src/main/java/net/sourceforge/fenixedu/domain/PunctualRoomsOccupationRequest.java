@@ -305,4 +305,69 @@ public class PunctualRoomsOccupationRequest extends PunctualRoomsOccupationReque
             }
         }
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.PunctualRoomsOccupationStateInstant> getStateInstants() {
+        return getStateInstantsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyStateInstants() {
+        return !getStateInstantsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.GenericEvent> getGenericEvents() {
+        return getGenericEventsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyGenericEvents() {
+        return !getGenericEventsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.PunctualRoomsOccupationComment> getComments() {
+        return getCommentsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyComments() {
+        return !getCommentsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasOwner() {
+        return getOwner() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasInstant() {
+        return getInstant() != null;
+    }
+
+    @Deprecated
+    public boolean hasEmployeeReadComments() {
+        return getEmployeeReadComments() != null;
+    }
+
+    @Deprecated
+    public boolean hasIdentification() {
+        return getIdentification() != null;
+    }
+
+    @Deprecated
+    public boolean hasRequestor() {
+        return getRequestor() != null;
+    }
+
+    @Deprecated
+    public boolean hasTeacherReadComments() {
+        return getTeacherReadComments() != null;
+    }
+
 }

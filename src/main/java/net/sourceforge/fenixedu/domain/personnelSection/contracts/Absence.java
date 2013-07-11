@@ -35,4 +35,49 @@ public class Absence extends Absence_Base {
         setName(name);
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonAbsence> getPersonAbsences() {
+        return getPersonAbsencesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPersonAbsences() {
+        return !getPersonAbsencesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasIsSabaticalOrEquivalent() {
+        return getIsSabaticalOrEquivalent() != null;
+    }
+
+    @Deprecated
+    public boolean hasGiveCredits() {
+        return getGiveCredits() != null;
+    }
+
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasHasMandatoryCredits() {
+        return getHasMandatoryCredits() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasImportAbsence() {
+        return getImportAbsence() != null;
+    }
+
+    @Deprecated
+    public boolean hasGiafId() {
+        return getGiafId() != null;
+    }
+
 }

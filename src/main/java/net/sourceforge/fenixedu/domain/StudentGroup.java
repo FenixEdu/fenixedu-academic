@@ -97,4 +97,59 @@ public class StudentGroup extends StudentGroup_Base {
         }
         return false;
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.ProjectSubmission> getProjectSubmissions() {
+        return getProjectSubmissionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyProjectSubmissions() {
+        return !getProjectSubmissionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.ProjectSubmissionLog> getProjectSubmissionLogs() {
+        return getProjectSubmissionLogsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyProjectSubmissionLogs() {
+        return !getProjectSubmissionLogsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Attends> getAttends() {
+        return getAttendsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAttends() {
+        return !getAttendsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasGroupNumber() {
+        return getGroupNumber() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasShift() {
+        return getShift() != null;
+    }
+
+    @Deprecated
+    public boolean hasValid() {
+        return getValid() != null;
+    }
+
+    @Deprecated
+    public boolean hasGrouping() {
+        return getGrouping() != null;
+    }
+
 }

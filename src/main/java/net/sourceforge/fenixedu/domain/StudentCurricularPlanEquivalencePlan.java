@@ -150,4 +150,19 @@ public class StudentCurricularPlanEquivalencePlan extends StudentCurricularPlanE
         }
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.EquivalencePlanEntry> getEntriesToRemove() {
+        return getEntriesToRemoveSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyEntriesToRemove() {
+        return !getEntriesToRemoveSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasOldStudentCurricularPlan() {
+        return getOldStudentCurricularPlan() != null;
+    }
+
 }

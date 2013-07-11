@@ -936,4 +936,125 @@ public class ParkingRequest extends ParkingRequest_Base {
     public boolean getHasHistory() {
         return getParkingParty().getParty().getParkingPartyHistories().size() != 0;
     }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.parking.Vehicle> getVehicles() {
+        return getVehiclesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyVehicles() {
+        return !getVehiclesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasParkingRequestType() {
+        return getParkingRequestType() != null;
+    }
+
+    @Deprecated
+    public boolean hasParkingRequestState() {
+        return getParkingRequestState() != null;
+    }
+
+    @Deprecated
+    public boolean hasPhone() {
+        return getPhone() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasFirstCarPropertyRegistryDocumentState() {
+        return getFirstCarPropertyRegistryDocumentState() != null;
+    }
+
+    @Deprecated
+    public boolean hasRequestedAs() {
+        return getRequestedAs() != null;
+    }
+
+    @Deprecated
+    public boolean hasFirstCarOwnerIdDocumentState() {
+        return getFirstCarOwnerIdDocumentState() != null;
+    }
+
+    @Deprecated
+    public boolean hasFirstCarInsuranceDocumentState() {
+        return getFirstCarInsuranceDocumentState() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreationDate() {
+        return getCreationDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasNote() {
+        return getNote() != null;
+    }
+
+    @Deprecated
+    public boolean hasDriverLicenseDeliveryType() {
+        return getDriverLicenseDeliveryType() != null;
+    }
+
+    @Deprecated
+    public boolean hasDriverLicenseDocument() {
+        return getDriverLicenseDocument() != null;
+    }
+
+    @Deprecated
+    public boolean hasSecondCarOwnerIdDocumentState() {
+        return getSecondCarOwnerIdDocumentState() != null;
+    }
+
+    @Deprecated
+    public boolean hasFirstCarDeclarationDocumentState() {
+        return getFirstCarDeclarationDocumentState() != null;
+    }
+
+    @Deprecated
+    public boolean hasParkingParty() {
+        return getParkingParty() != null;
+    }
+
+    @Deprecated
+    public boolean hasSecondCarDeclarationDocumentState() {
+        return getSecondCarDeclarationDocumentState() != null;
+    }
+
+    @Deprecated
+    public boolean hasEmail() {
+        return getEmail() != null;
+    }
+
+    @Deprecated
+    public boolean hasLimitlessAccessCard() {
+        return getLimitlessAccessCard() != null;
+    }
+
+    @Deprecated
+    public boolean hasSecondCarPropertyRegistryDocumentState() {
+        return getSecondCarPropertyRegistryDocumentState() != null;
+    }
+
+    @Deprecated
+    public boolean hasMobile() {
+        return getMobile() != null;
+    }
+
+    @Deprecated
+    public boolean hasSecondCarInsuranceDocumentState() {
+        return getSecondCarInsuranceDocumentState() != null;
+    }
+
+    @Deprecated
+    public boolean hasDriverLicenseDocumentState() {
+        return getDriverLicenseDocumentState() != null;
+    }
+
 }

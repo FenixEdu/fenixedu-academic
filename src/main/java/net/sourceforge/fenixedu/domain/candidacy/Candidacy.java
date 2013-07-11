@@ -229,4 +229,44 @@ public abstract class Candidacy extends Candidacy_Base {
         final CandidacySituationType situationType = getActiveCandidacySituationType();
         return situationType != null && situationType.isActive();
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.candidacy.CandidacyDocument> getCandidacyDocuments() {
+        return getCandidacyDocumentsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCandidacyDocuments() {
+        return !getCandidacyDocumentsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.candidacy.CandidacySituation> getCandidacySituations() {
+        return getCandidacySituationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCandidacySituations() {
+        return !getCandidacySituationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasStartDate() {
+        return getStartDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumber() {
+        return getNumber() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
+    }
+
 }

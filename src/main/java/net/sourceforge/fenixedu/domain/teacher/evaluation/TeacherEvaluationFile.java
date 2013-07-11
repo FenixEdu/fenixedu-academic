@@ -71,4 +71,19 @@ public class TeacherEvaluationFile extends TeacherEvaluationFile_Base {
         return new TeacherEvaluationFile(evaluation, getTeacherEvaluationFileType(), getFilename(), getContents(), getCreatedBy());
     }
 
+    @Deprecated
+    public boolean hasTeacherEvaluation() {
+        return getTeacherEvaluation() != null;
+    }
+
+    @Deprecated
+    public boolean hasTeacherEvaluationFileType() {
+        return getTeacherEvaluationFileType() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreatedBy() {
+        return getCreatedBy() != null;
+    }
+
 }

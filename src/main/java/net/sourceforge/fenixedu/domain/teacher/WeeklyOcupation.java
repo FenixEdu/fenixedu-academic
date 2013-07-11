@@ -59,4 +59,44 @@ public class WeeklyOcupation extends WeeklyOcupation_Base {
         }
     }
 
+    @Deprecated
+    public boolean hasLastModificationDateDateTime() {
+        return getLastModificationDateDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasTeacher() {
+        return getTeacher() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasManagement() {
+        return getManagement() != null;
+    }
+
+    @Deprecated
+    public boolean hasLecture() {
+        return getLecture() != null;
+    }
+
+    @Deprecated
+    public boolean hasSupport() {
+        return getSupport() != null;
+    }
+
+    @Deprecated
+    public boolean hasOther() {
+        return getOther() != null;
+    }
+
+    @Deprecated
+    public boolean hasResearch() {
+        return getResearch() != null;
+    }
+
 }

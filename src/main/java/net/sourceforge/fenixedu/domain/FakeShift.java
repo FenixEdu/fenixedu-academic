@@ -103,4 +103,29 @@ public class FakeShift extends FakeShift_Base {
             fakeShift.delete();
         }
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.FakeShiftEnrollment> getFakeShiftEnrollments() {
+        return getFakeShiftEnrollmentsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyFakeShiftEnrollments() {
+        return !getFakeShiftEnrollmentsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasCapacity() {
+        return getCapacity() != null;
+    }
+
 }

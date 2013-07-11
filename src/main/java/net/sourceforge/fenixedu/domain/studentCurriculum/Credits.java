@@ -202,11 +202,11 @@ public class Credits extends Credits_Base {
     }
 
     protected void disconnect() {
-        for (; hasAnyDismissals(); getDismissals().get(0).delete()) {
+        for (; hasAnyDismissals(); getDismissals().iterator().next().delete()) {
             ;
         }
 
-        for (; hasAnyEnrolments(); getEnrolments().get(0).delete()) {
+        for (; hasAnyEnrolments(); getEnrolments().iterator().next().delete()) {
             ;
         }
 
@@ -291,4 +291,40 @@ public class Credits extends Credits_Base {
 
         return true;
     }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal> getDismissals() {
+        return getDismissalsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyDismissals() {
+        return !getDismissalsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.studentCurriculum.EnrolmentWrapper> getEnrolments() {
+        return getEnrolmentsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyEnrolments() {
+        return !getEnrolmentsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionPeriod() {
+        return getExecutionPeriod() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudentCurricularPlan() {
+        return getStudentCurricularPlan() != null;
+    }
+
 }

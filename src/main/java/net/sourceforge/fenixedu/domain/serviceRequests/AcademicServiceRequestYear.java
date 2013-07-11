@@ -39,4 +39,29 @@ public class AcademicServiceRequestYear extends AcademicServiceRequestYear_Base 
         return getLatestServiceRequestNumber();
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest> getAcademicServiceRequests() {
+        return getAcademicServiceRequestsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAcademicServiceRequests() {
+        return !getAcademicServiceRequestsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasYear() {
+        return getYear() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasLatestServiceRequestNumber() {
+        return getLatestServiceRequestNumber() != null;
+    }
+
 }

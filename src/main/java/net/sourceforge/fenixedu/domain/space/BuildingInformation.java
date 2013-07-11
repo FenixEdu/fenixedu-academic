@@ -78,4 +78,9 @@ public class BuildingInformation extends BuildingInformation_Base {
         // Necessary for Renderers
         return null;
     }
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
 }

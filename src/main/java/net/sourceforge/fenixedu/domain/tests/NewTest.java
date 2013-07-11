@@ -73,4 +73,29 @@ public class NewTest extends NewTest_Base implements Positionable {
         return AccessControl.getPerson();
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Person> getPersons() {
+        return getPersonsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPersons() {
+        return !getPersonsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasPosition() {
+        return getPosition() != null;
+    }
+
+    @Deprecated
+    public boolean hasScale() {
+        return getScale() != null;
+    }
+
+    @Deprecated
+    public boolean hasTestGroup() {
+        return getTestGroup() != null;
+    }
+
 }

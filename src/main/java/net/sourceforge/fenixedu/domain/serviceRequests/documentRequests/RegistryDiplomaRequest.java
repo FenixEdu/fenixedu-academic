@@ -261,4 +261,14 @@ public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base implemen
     public boolean isProgrammeLinkVisible() {
         return getRegistration().isAllowedToManageRegistration();
     }
+    @Deprecated
+    public boolean hasRequestedCycle() {
+        return getRequestedCycle() != null;
+    }
+
+    @Deprecated
+    public boolean hasDiplomaSupplement() {
+        return getDiplomaSupplement() != null;
+    }
+
 }

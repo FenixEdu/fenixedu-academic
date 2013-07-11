@@ -59,4 +59,34 @@ public class TestQuestion extends TestQuestion_Base {
         deleteDomainObject();
     }
 
+    @Deprecated
+    public boolean hasTest() {
+        return getTest() != null;
+    }
+
+    @Deprecated
+    public boolean hasTestQuestionOrder() {
+        return getTestQuestionOrder() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasQuestion() {
+        return getQuestion() != null;
+    }
+
+    @Deprecated
+    public boolean hasTestQuestionValue() {
+        return getTestQuestionValue() != null;
+    }
+
+    @Deprecated
+    public boolean hasCorrectionFormula() {
+        return getCorrectionFormula() != null;
+    }
+
 }

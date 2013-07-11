@@ -23,4 +23,24 @@ public class DeleteFileRequest extends DeleteFileRequest_Base {
         setRootDomainObject(null);
         super.deleteDomainObject();
     }
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasRequestorIstUsername() {
+        return getRequestorIstUsername() != null;
+    }
+
+    @Deprecated
+    public boolean hasExternalStorageIdentification() {
+        return getExternalStorageIdentification() != null;
+    }
+
+    @Deprecated
+    public boolean hasDeleteItem() {
+        return getDeleteItem() != null;
+    }
+
 }

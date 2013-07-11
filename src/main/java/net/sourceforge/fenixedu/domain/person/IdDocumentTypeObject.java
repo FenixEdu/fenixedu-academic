@@ -18,4 +18,24 @@ public class IdDocumentTypeObject extends IdDocumentTypeObject_Base {
         return null;
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.person.IdDocument> getIdDocuments() {
+        return getIdDocumentsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyIdDocuments() {
+        return !getIdDocumentsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasValue() {
+        return getValue() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
 }

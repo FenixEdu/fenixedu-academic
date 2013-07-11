@@ -284,4 +284,34 @@ public class Login extends Login_Base {
         return person.hasEmployee() ? "F" + person.getEmployee().getEmployeeNumber() : null;
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.LoginAlias> getAlias() {
+        return getAliasSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAlias() {
+        return !getAliasSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.LoginPeriod> getLoginPeriods() {
+        return getLoginPeriodsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyLoginPeriods() {
+        return !getLoginPeriodsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasIsPassInKerberos() {
+        return getIsPassInKerberos() != null;
+    }
+
+    @Deprecated
+    public boolean hasPassword() {
+        return getPassword() != null;
+    }
+
 }

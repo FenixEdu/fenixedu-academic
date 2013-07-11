@@ -75,4 +75,29 @@ public class NewAnswer extends NewAnswer_Base {
         return (List<NewChoice>) this.getConcreteAnswer().getAnswer();
     }
 
+    @Deprecated
+    public boolean hasPercentage() {
+        return getPercentage() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasConcreteAnswer() {
+        return getConcreteAnswer() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
+    }
+
+    @Deprecated
+    public boolean hasAtomicQuestion() {
+        return getAtomicQuestion() != null;
+    }
+
 }

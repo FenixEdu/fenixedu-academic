@@ -93,4 +93,19 @@ public class ScientificJournalParticipation extends ScientificJournalParticipati
     public boolean scopeMatches(ScopeType type) {
         return this.getScientificJournal().getLocationType().equals(type);
     }
+    @Deprecated
+    public boolean hasEndDate() {
+        return getEndDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasBeginDate() {
+        return getBeginDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasScientificJournal() {
+        return getScientificJournal() != null;
+    }
+
 }

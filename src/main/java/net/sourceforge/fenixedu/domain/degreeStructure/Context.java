@@ -476,4 +476,49 @@ public class Context extends Context_Base implements Comparable<Context> {
         }
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.WrittenEvaluation> getAssociatedWrittenEvaluations() {
+        return getAssociatedWrittenEvaluationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssociatedWrittenEvaluations() {
+        return !getAssociatedWrittenEvaluationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasCurricularPeriod() {
+        return getCurricularPeriod() != null;
+    }
+
+    @Deprecated
+    public boolean hasParentCourseGroup() {
+        return getParentCourseGroup() != null;
+    }
+
+    @Deprecated
+    public boolean hasBeginExecutionPeriod() {
+        return getBeginExecutionPeriod() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasChildOrder() {
+        return getChildOrder() != null;
+    }
+
+    @Deprecated
+    public boolean hasChildDegreeModule() {
+        return getChildDegreeModule() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndExecutionPeriod() {
+        return getEndExecutionPeriod() != null;
+    }
+
 }

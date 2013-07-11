@@ -123,4 +123,39 @@ public class DelegateElectionVotingPeriod extends DelegateElectionVotingPeriod_B
         return false;
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.student.Student> getCandidatesForNewRoundElections() {
+        return getCandidatesForNewRoundElectionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCandidatesForNewRoundElections() {
+        return !getCandidatesForNewRoundElectionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.elections.DelegateElectionVote> getVotes() {
+        return getVotesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyVotes() {
+        return !getVotesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.student.Student> getVotingStudents() {
+        return getVotingStudentsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyVotingStudents() {
+        return !getVotingStudentsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasDelegateElection() {
+        return getDelegateElection() != null;
+    }
+
 }

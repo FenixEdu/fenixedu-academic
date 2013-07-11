@@ -76,4 +76,14 @@ public class ExternalProgramCertificateRequest extends ExternalProgramCertificat
         super.disconnect();
     }
 
+    @Deprecated
+    public boolean hasNumberOfPrograms() {
+        return getNumberOfPrograms() != null;
+    }
+
+    @Deprecated
+    public boolean hasInstitution() {
+        return getInstitution() != null;
+    }
+
 }

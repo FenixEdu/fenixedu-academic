@@ -548,4 +548,69 @@ public abstract class TSDCourse extends TSDCourse_Base {
 
         return degrees;
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution> getTeacherServiceDistributions() {
+        return getTeacherServiceDistributionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTeacherServiceDistributions() {
+        return !getTeacherServiceDistributionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProfessorship> getTSDProfessorships() {
+        return getTSDProfessorshipsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTSDProfessorships() {
+        return !getTSDProfessorshipsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCurricularLoad> getTSDCurricularLoads() {
+        return getTSDCurricularLoadsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTSDCurricularLoads() {
+        return !getTSDCurricularLoadsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasSecondTimeEnrolledStudentsManual() {
+        return getSecondTimeEnrolledStudentsManual() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasIsActive() {
+        return getIsActive() != null;
+    }
+
+    @Deprecated
+    public boolean hasFirstTimeEnrolledStudentsManual() {
+        return getFirstTimeEnrolledStudentsManual() != null;
+    }
+
+    @Deprecated
+    public boolean hasFirstTimeEnrolledStudentsType() {
+        return getFirstTimeEnrolledStudentsType() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionPeriod() {
+        return getExecutionPeriod() != null;
+    }
+
+    @Deprecated
+    public boolean hasSecondTimeEnrolledStudentsType() {
+        return getSecondTimeEnrolledStudentsType() != null;
+    }
+
 }

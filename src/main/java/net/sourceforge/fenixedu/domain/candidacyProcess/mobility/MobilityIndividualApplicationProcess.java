@@ -1436,4 +1436,49 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
         return getCandidacy().getMobilityProgram();
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusAlert> getAlert() {
+        return getAlertSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAlert() {
+        return !getAlertSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcessExecutedAction> getExecutedActions() {
+        return getExecutedActionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyExecutedActions() {
+        return !getExecutedActionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusCandidacyProcessExecutedAction> getErasmusCandidacyProcessExecutedAction() {
+        return getErasmusCandidacyProcessExecutedActionSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyErasmusCandidacyProcessExecutedAction() {
+        return !getErasmusCandidacyProcessExecutedActionSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasValidatedByMobilityCoordinator() {
+        return getValidatedByMobilityCoordinator() != null;
+    }
+
+    @Deprecated
+    public boolean hasValidatedByGri() {
+        return getValidatedByGri() != null;
+    }
+
+    @Deprecated
+    public boolean hasPersonalFieldsFromStork() {
+        return getPersonalFieldsFromStork() != null;
+    }
+
 }

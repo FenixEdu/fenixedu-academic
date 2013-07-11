@@ -1399,4 +1399,259 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
         return hasPhdProgram() ? getPhdProgram().getAdministrativeOffice() : null;
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation> getPrecedentDegreeInformations() {
+        return getPrecedentDegreeInformationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPrecedentDegreeInformations() {
+        return !getPrecedentDegreeInformationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.phd.PhdProgramProcessState> getStates() {
+        return getStatesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyStates() {
+        return !getStatesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.phd.email.PhdIndividualProgramProcessEmail> getPhdIndividualProgramProcessEmails() {
+        return getPhdIndividualProgramProcessEmailsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPhdIndividualProgramProcessEmails() {
+        return !getPhdIndividualProgramProcessEmailsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.phd.alert.PhdAlert> getAlerts() {
+        return getAlertsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAlerts() {
+        return !getAlertsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.phd.conclusion.PhdConclusionProcess> getPhdConclusionProcesses() {
+        return getPhdConclusionProcessesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPhdConclusionProcesses() {
+        return !getPhdConclusionProcessesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.phd.debts.PhdGratuityEvent> getPhdGratuityEvents() {
+        return getPhdGratuityEventsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPhdGratuityEvents() {
+        return !getPhdGratuityEventsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.phd.PhdParticipant> getParticipants() {
+        return getParticipantsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyParticipants() {
+        return !getParticipantsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.phd.email.PhdProgramEmail> getPhdProgramEmail() {
+        return getPhdProgramEmailSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPhdProgramEmail() {
+        return !getPhdProgramEmailSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.phd.PhdParticipant> getAssistantGuidings() {
+        return getAssistantGuidingsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssistantGuidings() {
+        return !getAssistantGuidingsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.phd.PhdParticipant> getGuidings() {
+        return getGuidingsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyGuidings() {
+        return !getGuidingsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.phd.ThesisSubjectOrder> getThesisSubjectOrders() {
+        return getThesisSubjectOrdersSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyThesisSubjectOrders() {
+        return !getThesisSubjectOrdersSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage> getAlertMessages() {
+        return getAlertMessagesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAlertMessages() {
+        return !getAlertMessagesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequest> getPhdAcademicServiceRequests() {
+        return getPhdAcademicServiceRequestsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPhdAcademicServiceRequests() {
+        return !getPhdAcademicServiceRequestsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasThesisProcess() {
+        return getThesisProcess() != null;
+    }
+
+    @Deprecated
+    public boolean hasRegistration() {
+        return getRegistration() != null;
+    }
+
+    @Deprecated
+    public boolean hasThesisTitleEn() {
+        return getThesisTitleEn() != null;
+    }
+
+    @Deprecated
+    public boolean hasPhdIndividualProcessNumber() {
+        return getPhdIndividualProcessNumber() != null;
+    }
+
+    @Deprecated
+    public boolean hasRegistrationFee() {
+        return getRegistrationFee() != null;
+    }
+
+    @Deprecated
+    public boolean hasPhdConfigurationIndividualProgramProcess() {
+        return getPhdConfigurationIndividualProgramProcess() != null;
+    }
+
+    @Deprecated
+    public boolean hasDestiny() {
+        return getDestiny() != null;
+    }
+
+    @Deprecated
+    public boolean hasWhenFormalizedRegistration() {
+        return getWhenFormalizedRegistration() != null;
+    }
+
+    @Deprecated
+    public boolean hasQualificationExamsPerformed() {
+        return getQualificationExamsPerformed() != null;
+    }
+
+    @Deprecated
+    public boolean hasSeminarProcess() {
+        return getSeminarProcess() != null;
+    }
+
+    @Deprecated
+    public boolean hasQualificationExamsRequired() {
+        return getQualificationExamsRequired() != null;
+    }
+
+    @Deprecated
+    public boolean hasCandidacyProcess() {
+        return getCandidacyProcess() != null;
+    }
+
+    @Deprecated
+    public boolean hasExternalPhdProgram() {
+        return getExternalPhdProgram() != null;
+    }
+
+    @Deprecated
+    public boolean hasThesisTitle() {
+        return getThesisTitle() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionYear() {
+        return getExecutionYear() != null;
+    }
+
+    @Deprecated
+    public boolean hasOtherCollaborationType() {
+        return getOtherCollaborationType() != null;
+    }
+
+    @Deprecated
+    public boolean hasWhenStartedStudies() {
+        return getWhenStartedStudies() != null;
+    }
+
+    @Deprecated
+    public boolean hasCollaborationType() {
+        return getCollaborationType() != null;
+    }
+
+    @Deprecated
+    public boolean hasSource() {
+        return getSource() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudyPlan() {
+        return getStudyPlan() != null;
+    }
+
+    @Deprecated
+    public boolean hasPhdProgramFocusArea() {
+        return getPhdProgramFocusArea() != null;
+    }
+
+    @Deprecated
+    public boolean hasPhdProgram() {
+        return getPhdProgram() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
+    }
+
+    @Deprecated
+    public boolean hasInquiryStudentCycleAnswer() {
+        return getInquiryStudentCycleAnswer() != null;
+    }
+
+    @Deprecated
+    public boolean hasThesisRequestFee() {
+        return getThesisRequestFee() != null;
+    }
+
 }

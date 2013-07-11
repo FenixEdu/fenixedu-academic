@@ -26,4 +26,9 @@ public class NewQuestionBank extends NewQuestionBank_Base {
         super.delete();
     }
 
+    @Deprecated
+    public boolean hasOwner() {
+        return getOwner() != null;
+    }
+
 }

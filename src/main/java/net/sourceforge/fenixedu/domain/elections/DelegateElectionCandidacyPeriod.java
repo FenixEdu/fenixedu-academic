@@ -35,4 +35,9 @@ public class DelegateElectionCandidacyPeriod extends DelegateElectionCandidacyPe
         return false;
     }
 
+    @Deprecated
+    public boolean hasDelegateElection() {
+        return getDelegateElection() != null;
+    }
+
 }

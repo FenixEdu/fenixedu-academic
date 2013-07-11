@@ -21,4 +21,24 @@ public class ShiftProfessorship extends ShiftProfessorship_Base implements ICred
         return this.getProfessorship().getExecutionCourse().getExecutionPeriod().equals(executionSemester);
     }
 
+    @Deprecated
+    public boolean hasPercentage() {
+        return getPercentage() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasProfessorship() {
+        return getProfessorship() != null;
+    }
+
+    @Deprecated
+    public boolean hasShift() {
+        return getShift() != null;
+    }
+
 }

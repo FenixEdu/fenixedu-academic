@@ -160,4 +160,19 @@ public class NewMultipleChoiceQuestion extends NewMultipleChoiceQuestion_Base {
         this.getAnswer().setConcreteAnswer(concreteAnswer);
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.tests.NewChoice> getChoices() {
+        return getChoicesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyChoices() {
+        return !getChoicesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasShuffle() {
+        return getShuffle() != null;
+    }
+
 }

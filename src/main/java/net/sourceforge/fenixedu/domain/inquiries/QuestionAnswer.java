@@ -18,4 +18,24 @@ public class QuestionAnswer extends QuestionAnswer_Base {
         setRootDomainObject(null);
         super.deleteDomainObject();
     }
+    @Deprecated
+    public boolean hasInquiryAnswer() {
+        return getInquiryAnswer() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasAnswer() {
+        return getAnswer() != null;
+    }
+
+    @Deprecated
+    public boolean hasInquiryQuestion() {
+        return getInquiryQuestion() != null;
+    }
+
 }

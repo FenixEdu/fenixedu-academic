@@ -121,4 +121,54 @@ public class DomainObjectActionLog extends DomainObjectActionLog_Base {
         }
         return resultList;
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.DomainObjectActionLogEntry> getDomainObjectActionLogEntries() {
+        return getDomainObjectActionLogEntriesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyDomainObjectActionLogEntries() {
+        return !getDomainObjectActionLogEntriesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasInstant() {
+        return getInstant() != null;
+    }
+
+    @Deprecated
+    public boolean hasAction() {
+        return getAction() != null;
+    }
+
+    @Deprecated
+    public boolean hasKeyDomainObject() {
+        return getKeyDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasDomainObjectExternalId() {
+        return getDomainObjectExternalId() != null;
+    }
+
+    @Deprecated
+    public boolean hasPersonUsername() {
+        return getPersonUsername() != null;
+    }
+
+    @Deprecated
+    public boolean hasDomainObjectClassName() {
+        return getDomainObjectClassName() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
+    }
+
 }

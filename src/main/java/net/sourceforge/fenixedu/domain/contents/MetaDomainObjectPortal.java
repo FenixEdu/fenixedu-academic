@@ -82,4 +82,19 @@ public class MetaDomainObjectPortal extends MetaDomainObjectPortal_Base {
         super.disconnect();
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.contents.Content> getPool() {
+        return getPoolSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPool() {
+        return !getPoolSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasMetaDomainObject() {
+        return getMetaDomainObject() != null;
+    }
+
 }

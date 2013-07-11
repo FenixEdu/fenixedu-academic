@@ -169,4 +169,14 @@ public abstract class Forum extends Forum_Base {
         super.disconnect();
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.messaging.ForumSubscription> getForumSubscriptions() {
+        return getForumSubscriptionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyForumSubscriptions() {
+        return !getForumSubscriptionsSet().isEmpty();
+    }
+
 }

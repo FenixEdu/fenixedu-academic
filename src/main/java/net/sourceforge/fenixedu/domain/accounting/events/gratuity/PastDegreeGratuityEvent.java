@@ -64,4 +64,9 @@ public class PastDegreeGratuityEvent extends PastDegreeGratuityEvent_Base {
         return Collections.singleton(EntryType.GRATUITY_FEE);
     }
 
+    @Deprecated
+    public boolean hasPastDegreeGratuityAmount() {
+        return getPastDegreeGratuityAmount() != null;
+    }
+
 }

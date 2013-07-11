@@ -62,4 +62,9 @@ public class PastAdministrativeOfficeFeeAndInsuranceEvent extends PastAdministra
         return isOpen();
     }
 
+    @Deprecated
+    public boolean hasPastAdministrativeOfficeFeeAndInsuranceAmount() {
+        return getPastAdministrativeOfficeFeeAndInsuranceAmount() != null;
+    }
+
 }

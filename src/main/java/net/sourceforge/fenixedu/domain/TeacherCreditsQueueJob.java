@@ -22,4 +22,9 @@ public class TeacherCreditsQueueJob extends TeacherCreditsQueueJob_Base {
         return new TeacherCreditsQueueJob(executionSemester);
     }
 
+    @Deprecated
+    public boolean hasExecutionSemester() {
+        return getExecutionSemester() != null;
+    }
+
 }

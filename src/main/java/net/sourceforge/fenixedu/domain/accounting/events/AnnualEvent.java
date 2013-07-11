@@ -123,4 +123,9 @@ public abstract class AnnualEvent extends AnnualEvent_Base {
     public boolean isInsuranceEvent() {
         return false;
     }
+    @Deprecated
+    public boolean hasExecutionYear() {
+        return getExecutionYear() != null;
+    }
+
 }

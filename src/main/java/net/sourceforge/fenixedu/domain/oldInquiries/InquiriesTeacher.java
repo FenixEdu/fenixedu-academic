@@ -114,4 +114,149 @@ public class InquiriesTeacher extends InquiriesTeacher_Base {
         inquiriesTeacher.setTeacherOpenToClearDoubts(answersMap.get("teacherOpenToClearDoubts").getValueAsInteger());
         inquiriesTeacher.setTeacherGlobalClassification(answersMap.get("teacherGlobalClassification").getValueAsInteger());
     }
+    @Deprecated
+    public boolean hasTeacherInterestStimulation() {
+        return getTeacherInterestStimulation() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasLowClassesFrequencyReasonTeacher() {
+        return getLowClassesFrequencyReasonTeacher() != null;
+    }
+
+    @Deprecated
+    public boolean hasClassesFrequency() {
+        return getClassesFrequency() != null;
+    }
+
+    @Deprecated
+    public boolean hasTeacherOpenToClearDoubts() {
+        return getTeacherOpenToClearDoubts() != null;
+    }
+
+    @Deprecated
+    public boolean hasLowClassesFrequencyReasonContents() {
+        return getLowClassesFrequencyReasonContents() != null;
+    }
+
+    @Deprecated
+    public boolean hasTeacherPunctuality() {
+        return getTeacherPunctuality() != null;
+    }
+
+    @Deprecated
+    public boolean hasNonAffiliatedTeacher() {
+        return getNonAffiliatedTeacher() != null;
+    }
+
+    @Deprecated
+    public boolean hasTeacherClarity() {
+        return getTeacherClarity() != null;
+    }
+
+    @Deprecated
+    public boolean hasTeacherAssurance() {
+        return getTeacherAssurance() != null;
+    }
+
+    @Deprecated
+    public boolean hasGlobalAppreciation() {
+        return getGlobalAppreciation() != null;
+    }
+
+    @Deprecated
+    public boolean hasInquiriesCourse() {
+        return getInquiriesCourse() != null;
+    }
+
+    @Deprecated
+    public boolean hasLowClassesFrequencyReasonOther() {
+        return getLowClassesFrequencyReasonOther() != null;
+    }
+
+    @Deprecated
+    public boolean hasProfessorship() {
+        return getProfessorship() != null;
+    }
+
+    @Deprecated
+    public boolean hasTeacherReasoningStimulation() {
+        return getTeacherReasoningStimulation() != null;
+    }
+
+    @Deprecated
+    public boolean hasShiftType() {
+        return getShiftType() != null;
+    }
+
+    @Deprecated
+    public boolean hasTeacherStimulatedParticipation() {
+        return getTeacherStimulatedParticipation() != null;
+    }
+
+    @Deprecated
+    public boolean hasTeacherAcomplishedScheduleAndActivities() {
+        return getTeacherAcomplishedScheduleAndActivities() != null;
+    }
+
+    @Deprecated
+    public boolean hasTeacherCommited() {
+        return getTeacherCommited() != null;
+    }
+
+    @Deprecated
+    public boolean hasTeacherAvailability() {
+        return getTeacherAvailability() != null;
+    }
+
+    @Deprecated
+    public boolean hasTeacherAssiduity() {
+        return getTeacherAssiduity() != null;
+    }
+
+    @Deprecated
+    public boolean hasSuitedClassesRythm() {
+        return getSuitedClassesRythm() != null;
+    }
+
+    @Deprecated
+    public boolean hasTeacherExposedContentsAtractively() {
+        return getTeacherExposedContentsAtractively() != null;
+    }
+
+    @Deprecated
+    public boolean hasTeacherExposedContentsClearly() {
+        return getTeacherExposedContentsClearly() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudentAssiduity() {
+        return getStudentAssiduity() != null;
+    }
+
+    @Deprecated
+    public boolean hasTeacherGlobalClassification() {
+        return getTeacherGlobalClassification() != null;
+    }
+
+    @Deprecated
+    public boolean hasTeacherShowedSecurity() {
+        return getTeacherShowedSecurity() != null;
+    }
+
+    @Deprecated
+    public boolean hasLowClassesFrequencyReasonSchedule() {
+        return getLowClassesFrequencyReasonSchedule() != null;
+    }
+
+    @Deprecated
+    public boolean hasLowClassesFrequencyReasonFlunkeeStudent() {
+        return getLowClassesFrequencyReasonFlunkeeStudent() != null;
+    }
+
 }

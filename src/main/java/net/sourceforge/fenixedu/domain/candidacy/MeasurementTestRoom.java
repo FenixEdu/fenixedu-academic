@@ -73,4 +73,39 @@ public class MeasurementTestRoom extends MeasurementTestRoom_Base {
         return getShift().getTest().getCampus();
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.student.Registration> getRegistrations() {
+        return getRegistrationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyRegistrations() {
+        return !getRegistrationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasRoomOrder() {
+        return getRoomOrder() != null;
+    }
+
+    @Deprecated
+    public boolean hasShift() {
+        return getShift() != null;
+    }
+
+    @Deprecated
+    public boolean hasCapacity() {
+        return getCapacity() != null;
+    }
+
 }

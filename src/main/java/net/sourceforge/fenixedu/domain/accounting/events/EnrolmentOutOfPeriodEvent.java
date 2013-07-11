@@ -140,4 +140,19 @@ public class EnrolmentOutOfPeriodEvent extends EnrolmentOutOfPeriodEvent_Base {
         return true;
     }
 
+    @Deprecated
+    public boolean hasNumberOfDelayDays() {
+        return getNumberOfDelayDays() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionPeriod() {
+        return getExecutionPeriod() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudentCurricularPlan() {
+        return getStudentCurricularPlan() != null;
+    }
+
 }

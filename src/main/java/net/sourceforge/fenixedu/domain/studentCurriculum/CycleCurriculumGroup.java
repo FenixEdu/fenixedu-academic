@@ -368,4 +368,9 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
         return getBranchCourseGroup(BranchType.MINOR);
     }
 
+    @Deprecated
+    public boolean hasConclusionProcess() {
+        return getConclusionProcess() != null;
+    }
+
 }

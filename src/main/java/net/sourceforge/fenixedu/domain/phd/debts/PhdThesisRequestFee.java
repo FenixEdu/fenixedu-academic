@@ -61,4 +61,9 @@ public class PhdThesisRequestFee extends PhdThesisRequestFee_Base {
         return true;
     }
 
+    @Deprecated
+    public boolean hasProcess() {
+        return getProcess() != null;
+    }
+
 }

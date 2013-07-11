@@ -164,4 +164,59 @@ public class RoomInformation extends RoomInformation_Base {
     public Room getRoom() {
         return (Room) getSpace();
     }
+    @Deprecated
+    public boolean hasIlluminationQuality() {
+        return getIlluminationQuality() != null;
+    }
+
+    @Deprecated
+    public boolean hasDescription() {
+        return getDescription() != null;
+    }
+
+    @Deprecated
+    public boolean hasDistanceFromSanitaryInstalationsQuality() {
+        return getDistanceFromSanitaryInstalationsQuality() != null;
+    }
+
+    @Deprecated
+    public boolean hasHeightQuality() {
+        return getHeightQuality() != null;
+    }
+
+    @Deprecated
+    public boolean hasDoorNumber() {
+        return getDoorNumber() != null;
+    }
+
+    @Deprecated
+    public boolean hasRoomClassification() {
+        return getRoomClassification() != null;
+    }
+
+    @Deprecated
+    public boolean hasArea() {
+        return getArea() != null;
+    }
+
+    @Deprecated
+    public boolean hasAgeQuality() {
+        return getAgeQuality() != null;
+    }
+
+    @Deprecated
+    public boolean hasObservations() {
+        return getObservations() != null;
+    }
+
+    @Deprecated
+    public boolean hasIdentification() {
+        return getIdentification() != null;
+    }
+
+    @Deprecated
+    public boolean hasSecurityQuality() {
+        return getSecurityQuality() != null;
+    }
+
 }

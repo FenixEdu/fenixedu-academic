@@ -89,4 +89,24 @@ public class UnitNamePart extends UnitNamePart_Base {
         }
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.organizationalStructure.UnitName> getUnitName() {
+        return getUnitNameSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyUnitName() {
+        return !getUnitNameSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasNamePart() {
+        return getNamePart() != null;
+    }
+
 }

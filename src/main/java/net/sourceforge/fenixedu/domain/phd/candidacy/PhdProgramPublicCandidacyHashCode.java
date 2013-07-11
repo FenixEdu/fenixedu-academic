@@ -90,4 +90,19 @@ public class PhdProgramPublicCandidacyHashCode extends PhdProgramPublicCandidacy
         return PhdProperties.getPublicCandidacyAccessLink() + getValue();
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.phd.alert.PublicPhdMissingCandidacyAlert> getAlerts() {
+        return getAlertsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAlerts() {
+        return !getAlertsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasPhdProgramCandidacyProcess() {
+        return getPhdProgramCandidacyProcess() != null;
+    }
+
 }

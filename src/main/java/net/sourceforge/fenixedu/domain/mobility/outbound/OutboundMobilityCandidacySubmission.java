@@ -135,4 +135,54 @@ public class OutboundMobilityCandidacySubmission extends OutboundMobilityCandida
         }
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacySubmissionGrade> getOutboundMobilityCandidacySubmissionGrade() {
+        return getOutboundMobilityCandidacySubmissionGradeSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyOutboundMobilityCandidacySubmissionGrade() {
+        return !getOutboundMobilityCandidacySubmissionGradeSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacy> getOutboundMobilityCandidacy() {
+        return getOutboundMobilityCandidacySet();
+    }
+
+    @Deprecated
+    public boolean hasAnyOutboundMobilityCandidacy() {
+        return !getOutboundMobilityCandidacySet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRegistration() {
+        return getRegistration() != null;
+    }
+
+    @Deprecated
+    public boolean hasConfirmationOption() {
+        return getConfirmationOption() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasSelectedCandidacy() {
+        return getSelectedCandidacy() != null;
+    }
+
+    @Deprecated
+    public boolean hasOutboundMobilityCandidacyPeriod() {
+        return getOutboundMobilityCandidacyPeriod() != null;
+    }
+
+    @Deprecated
+    public boolean hasConfirmedPlacement() {
+        return getConfirmedPlacement() != null;
+    }
+
 }

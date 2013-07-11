@@ -32,4 +32,14 @@ public class PhysicalAddressValidation extends PhysicalAddressValidation_Base {
     public void setFile(String filename, String displayName, byte[] content) {
         new PhysicalAddressValidationFile(this, filename, displayName, content);
     }
+    @Deprecated
+    public boolean hasDescription() {
+        return getDescription() != null;
+    }
+
+    @Deprecated
+    public boolean hasFile() {
+        return getFile() != null;
+    }
+
 }

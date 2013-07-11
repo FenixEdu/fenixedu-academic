@@ -120,4 +120,24 @@ public class RegistryCode extends RegistryCode_Base {
 
         return null;
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest> getDocumentRequest() {
+        return getDocumentRequestSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyDocumentRequest() {
+        return !getDocumentRequestSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRegistryCodeGenerator() {
+        return getRegistryCodeGenerator() != null;
+    }
+
+    @Deprecated
+    public boolean hasCode() {
+        return getCode() != null;
+    }
+
 }

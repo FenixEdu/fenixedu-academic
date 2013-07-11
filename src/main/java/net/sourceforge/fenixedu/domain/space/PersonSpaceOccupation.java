@@ -140,4 +140,20 @@ public class PersonSpaceOccupation extends PersonSpaceOccupation_Base {
         final YearMonthDay end = getEnd();
         return start != null && (end == null || end.isAfter(start));
     }
+
+    @Deprecated
+    public boolean hasEnd() {
+        return getEnd() != null;
+    }
+
+    @Deprecated
+    public boolean hasBegin() {
+        return getBegin() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
+    }
+
 }

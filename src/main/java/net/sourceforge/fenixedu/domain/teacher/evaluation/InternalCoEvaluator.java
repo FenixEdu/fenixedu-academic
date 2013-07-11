@@ -24,4 +24,9 @@ public class InternalCoEvaluator extends InternalCoEvaluator_Base {
         return getPerson().getName() + " (" + getPerson().getMostImportantAlias() + ")";
     }
 
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
+    }
+
 }

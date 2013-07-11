@@ -118,4 +118,39 @@ public class ExamCoordinator extends ExamCoordinator_Base {
         setExecutionYear(null);
         super.deleteDomainObject();
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup> getVigilantGroups() {
+        return getVigilantGroupsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyVigilantGroups() {
+        return !getVigilantGroupsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasAllowedToCreateGroups() {
+        return getAllowedToCreateGroups() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
+    }
+
+    @Deprecated
+    public boolean hasUnit() {
+        return getUnit() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionYear() {
+        return getExecutionYear() != null;
+    }
+
 }

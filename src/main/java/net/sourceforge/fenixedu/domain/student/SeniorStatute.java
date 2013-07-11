@@ -53,4 +53,9 @@ public class SeniorStatute extends SeniorStatute_Base {
         return (this.getRegistration() == registration);
     }
 
+    @Deprecated
+    public boolean hasRegistration() {
+        return getRegistration() != null;
+    }
+
 }

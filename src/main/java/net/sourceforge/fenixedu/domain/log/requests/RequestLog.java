@@ -41,4 +41,59 @@ public class RequestLog extends RequestLog_Base {
         return requestLog;
     }
 
+    @Deprecated
+    public boolean hasRequestAttributes() {
+        return getRequestAttributes() != null;
+    }
+
+    @Deprecated
+    public boolean hasErrorLog() {
+        return getErrorLog() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasRequester() {
+        return getRequester() != null;
+    }
+
+    @Deprecated
+    public boolean hasPost() {
+        return getPost() != null;
+    }
+
+    @Deprecated
+    public boolean hasReferer() {
+        return getReferer() != null;
+    }
+
+    @Deprecated
+    public boolean hasMapping() {
+        return getMapping() != null;
+    }
+
+    @Deprecated
+    public boolean hasDay() {
+        return getDay() != null;
+    }
+
+    @Deprecated
+    public boolean hasQueryString() {
+        return getQueryString() != null;
+    }
+
+    @Deprecated
+    public boolean hasSessionAttributes() {
+        return getSessionAttributes() != null;
+    }
+
+    @Deprecated
+    public boolean hasRequestTime() {
+        return getRequestTime() != null;
+    }
+
 }

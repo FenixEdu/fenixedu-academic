@@ -19,4 +19,9 @@ public abstract class RestrictionByCurricularCourse extends RestrictionByCurricu
         super.delete();
     }
 
+    @Deprecated
+    public boolean hasPrecedentCurricularCourse() {
+        return getPrecedentCurricularCourse() != null;
+    }
+
 }

@@ -124,4 +124,19 @@ public class PhdGratuityEvent extends PhdGratuityEvent_Base {
         return calculateAmountToPay(new DateTime()).lessOrEqualThan(Money.ZERO);
     }
 
+    @Deprecated
+    public boolean hasYear() {
+        return getYear() != null;
+    }
+
+    @Deprecated
+    public boolean hasPhdGratuityDate() {
+        return getPhdGratuityDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasPhdIndividualProgramProcess() {
+        return getPhdIndividualProgramProcess() != null;
+    }
+
 }

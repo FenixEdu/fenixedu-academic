@@ -514,4 +514,79 @@ public abstract class PartyContact extends PartyContact_Base {
             }
         }
     }
+    @Deprecated
+    public boolean hasCurrentPartyContact() {
+        return getCurrentPartyContact() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasType() {
+        return getType() != null;
+    }
+
+    @Deprecated
+    public boolean hasParty() {
+        return getParty() != null;
+    }
+
+    @Deprecated
+    public boolean hasPartyContactValidation() {
+        return getPartyContactValidation() != null;
+    }
+
+    @Deprecated
+    public boolean hasLastModifiedDate() {
+        return getLastModifiedDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasActive() {
+        return getActive() != null;
+    }
+
+    @Deprecated
+    public boolean hasVisibleToPublic() {
+        return getVisibleToPublic() != null;
+    }
+
+    @Deprecated
+    public boolean hasVisibleToEmployees() {
+        return getVisibleToEmployees() != null;
+    }
+
+    @Deprecated
+    public boolean hasVisibleToTeachers() {
+        return getVisibleToTeachers() != null;
+    }
+
+    @Deprecated
+    public boolean hasVisibleToAlumni() {
+        return getVisibleToAlumni() != null;
+    }
+
+    @Deprecated
+    public boolean hasDefaultContact() {
+        return getDefaultContact() != null;
+    }
+
+    @Deprecated
+    public boolean hasVisibleToStudents() {
+        return getVisibleToStudents() != null;
+    }
+
+    @Deprecated
+    public boolean hasResearcher() {
+        return getResearcher() != null;
+    }
+
+    @Deprecated
+    public boolean hasPrevPartyContact() {
+        return getPrevPartyContact() != null;
+    }
+
 }

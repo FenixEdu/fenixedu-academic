@@ -176,4 +176,9 @@ public class InternalPhdParticipant extends InternalPhdParticipant_Base {
         return null;
     }
 
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
+    }
+
 }

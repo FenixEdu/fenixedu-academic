@@ -144,4 +144,44 @@ public class Test extends Test_Base {
         }
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.onlineTests.TestQuestion> getTestQuestions() {
+        return getTestQuestionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTestQuestions() {
+        return !getTestQuestionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasInformation() {
+        return getInformation() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasTestScope() {
+        return getTestScope() != null;
+    }
+
+    @Deprecated
+    public boolean hasLastModifiedDateDateTime() {
+        return getLastModifiedDateDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreationDateDateTime() {
+        return getCreationDateDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasTitle() {
+        return getTitle() != null;
+    }
+
 }

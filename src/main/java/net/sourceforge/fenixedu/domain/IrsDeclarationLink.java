@@ -35,4 +35,24 @@ public class IrsDeclarationLink extends IrsDeclarationLink_Base {
         irsDeclarationLink.setIrsLink(irsLink);
     }
 
+    @Deprecated
+    public boolean hasAvailable() {
+        return getAvailable() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasIrsLink() {
+        return getIrsLink() != null;
+    }
+
+    @Deprecated
+    public boolean hasTitle() {
+        return getTitle() != null;
+    }
+
 }

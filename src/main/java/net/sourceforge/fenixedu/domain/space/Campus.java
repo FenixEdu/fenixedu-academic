@@ -181,4 +181,64 @@ public class Campus extends Campus_Base {
             return new CampusInformation(getSpace(), getName(), getBegin(), getEnd(), getBlueprintNumber());
         }
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.personnelSection.contracts.GiafProfessionalData> getGiafProfessionalDatas() {
+        return getGiafProfessionalDatasSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyGiafProfessionalDatas() {
+        return !getGiafProfessionalDatasSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.student.importation.DgesStudentImportationProcess> getDgesStudentImportationProcess() {
+        return getDgesStudentImportationProcessSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyDgesStudentImportationProcess() {
+        return !getDgesStudentImportationProcessSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.ExecutionDegree> getExecutionDegrees() {
+        return getExecutionDegreesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyExecutionDegrees() {
+        return !getExecutionDegreesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.candidacy.MeasurementTest> getMeasurementTests() {
+        return getMeasurementTestsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyMeasurementTests() {
+        return !getMeasurementTestsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.messaging.Announcement> getAnnouncements() {
+        return getAnnouncementsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAnnouncements() {
+        return !getAnnouncementsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.organizationalStructure.Unit> getUnits() {
+        return getUnitsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyUnits() {
+        return !getUnitsSet().isEmpty();
+    }
+
 }

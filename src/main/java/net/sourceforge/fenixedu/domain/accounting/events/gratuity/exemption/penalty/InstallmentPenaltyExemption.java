@@ -80,4 +80,9 @@ public class InstallmentPenaltyExemption extends InstallmentPenaltyExemption_Bas
         super.delete();
     }
 
+    @Deprecated
+    public boolean hasInstallment() {
+        return getInstallment() != null;
+    }
+
 }

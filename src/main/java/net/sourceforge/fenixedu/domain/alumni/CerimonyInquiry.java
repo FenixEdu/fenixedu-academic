@@ -97,4 +97,54 @@ public class CerimonyInquiry extends CerimonyInquiry_Base implements Comparable<
         setAllowComments(Boolean.valueOf(value));
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.alumni.CerimonyInquiryPerson> getCerimonyInquiryPerson() {
+        return getCerimonyInquiryPersonSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCerimonyInquiryPerson() {
+        return !getCerimonyInquiryPersonSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.alumni.CerimonyInquiryAnswer> getCerimonyInquiryAnswer() {
+        return getCerimonyInquiryAnswerSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCerimonyInquiryAnswer() {
+        return !getCerimonyInquiryAnswerSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasEnd() {
+        return getEnd() != null;
+    }
+
+    @Deprecated
+    public boolean hasText() {
+        return getText() != null;
+    }
+
+    @Deprecated
+    public boolean hasDescription() {
+        return getDescription() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasAllowComments() {
+        return getAllowComments() != null;
+    }
+
+    @Deprecated
+    public boolean hasBegin() {
+        return getBegin() != null;
+    }
+
 }

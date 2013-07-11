@@ -282,4 +282,14 @@ public class WrittenTest extends WrittenTest_Base {
         return BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.written.test") + " "
                 + getDescription();
     }
+    @Deprecated
+    public boolean hasDescription() {
+        return getDescription() != null;
+    }
+
+    @Deprecated
+    public boolean hasRequestRoomSentDate() {
+        return getRequestRoomSentDate() != null;
+    }
+
 }

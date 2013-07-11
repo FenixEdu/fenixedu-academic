@@ -112,4 +112,34 @@ public abstract class Career extends Career_Base {
         }
     }
 
+    @Deprecated
+    public boolean hasLastModificationDateDateTime() {
+        return getLastModificationDateDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasTeacher() {
+        return getTeacher() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasBeginYear() {
+        return getBeginYear() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndYear() {
+        return getEndYear() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
+    }
+
 }

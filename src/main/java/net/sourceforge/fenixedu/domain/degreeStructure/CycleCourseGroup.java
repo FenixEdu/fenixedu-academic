@@ -162,4 +162,44 @@ public class CycleCourseGroup extends CycleCourseGroup_Base {
 
         return new CycleCourseGroupInformation(this, executionYear, graduatedTitle, graduatedTitleEn);
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroupInformation> getCycleCourseGroupInformation() {
+        return getCycleCourseGroupInformationSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCycleCourseGroupInformation() {
+        return !getCycleCourseGroupInformationSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup> getSourceAffinities() {
+        return getSourceAffinitiesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnySourceAffinities() {
+        return !getSourceAffinitiesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup> getDestinationAffinities() {
+        return getDestinationAffinitiesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyDestinationAffinities() {
+        return !getDestinationAffinitiesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasGraduateTitleSuffix() {
+        return getGraduateTitleSuffix() != null;
+    }
+
+    @Deprecated
+    public boolean hasCycleType() {
+        return getCycleType() != null;
+    }
+
 }

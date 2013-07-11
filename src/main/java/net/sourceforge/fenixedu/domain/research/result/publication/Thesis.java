@@ -293,4 +293,44 @@ public class Thesis extends Thesis_Base {
     public YearMonthDay getYearMonth() {
         return new YearMonthDay(getYear(), getMonth().getNumberOfMonth(), 1);
     }
+    @Deprecated
+    public boolean hasThesis() {
+        return getThesis() != null;
+    }
+
+    @Deprecated
+    public boolean hasMonthBegin() {
+        return getMonthBegin() != null;
+    }
+
+    @Deprecated
+    public boolean hasThesisType() {
+        return getThesisType() != null;
+    }
+
+    @Deprecated
+    public boolean hasAddress() {
+        return getAddress() != null;
+    }
+
+    @Deprecated
+    public boolean hasLanguage() {
+        return getLanguage() != null;
+    }
+
+    @Deprecated
+    public boolean hasScientificArea() {
+        return getScientificArea() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumberPages() {
+        return getNumberPages() != null;
+    }
+
+    @Deprecated
+    public boolean hasYearBegin() {
+        return getYearBegin() != null;
+    }
+
 }

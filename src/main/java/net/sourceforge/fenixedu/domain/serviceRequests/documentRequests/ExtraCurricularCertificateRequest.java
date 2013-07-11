@@ -62,4 +62,14 @@ public class ExtraCurricularCertificateRequest extends ExtraCurricularCertificat
         }
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Enrolment> getEnrolments() {
+        return getEnrolmentsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyEnrolments() {
+        return !getEnrolmentsSet().isEmpty();
+    }
+
 }

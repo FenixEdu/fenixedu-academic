@@ -42,4 +42,19 @@ public abstract class AvailabilityPolicy extends AvailabilityPolicy_Base {
     }
 
     public abstract Group getTargetGroup();
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasContentId() {
+        return getContentId() != null;
+    }
+
+    @Deprecated
+    public boolean hasContent() {
+        return getContent() != null;
+    }
+
 }

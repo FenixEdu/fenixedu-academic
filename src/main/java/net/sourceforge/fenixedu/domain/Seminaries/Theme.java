@@ -28,4 +28,54 @@ public class Theme extends Theme_Base {
         return RootDomainObject.getInstance().getThemes();
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Seminaries.CaseStudy> getCaseStudies() {
+        return getCaseStudiesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCaseStudies() {
+        return !getCaseStudiesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy> getAssociatedCandidacies() {
+        return getAssociatedCandidaciesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssociatedCandidacies() {
+        return !getAssociatedCandidaciesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency> getCourseEquivalencies() {
+        return getCourseEquivalenciesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCourseEquivalencies() {
+        return !getCourseEquivalenciesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasDescription() {
+        return getDescription() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasShortName() {
+        return getShortName() != null;
+    }
+
 }

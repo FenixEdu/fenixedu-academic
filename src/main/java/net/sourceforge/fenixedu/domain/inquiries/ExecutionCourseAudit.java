@@ -76,4 +76,59 @@ public class ExecutionCourseAudit extends ExecutionCourseAudit_Base {
         }
         return getAvailableProcess();
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.ExecutionCourseAuditFile> getExecutionCourseAuditFiles() {
+        return getExecutionCourseAuditFilesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyExecutionCourseAuditFiles() {
+        return !getExecutionCourseAuditFilesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasConclusions() {
+        return getConclusions() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionCourse() {
+        return getExecutionCourse() != null;
+    }
+
+    @Deprecated
+    public boolean hasMeasuresToTake() {
+        return getMeasuresToTake() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasApprovedByStudent() {
+        return getApprovedByStudent() != null;
+    }
+
+    @Deprecated
+    public boolean hasAvailableProcess() {
+        return getAvailableProcess() != null;
+    }
+
+    @Deprecated
+    public boolean hasTeacherAuditor() {
+        return getTeacherAuditor() != null;
+    }
+
+    @Deprecated
+    public boolean hasApprovedByTeacher() {
+        return getApprovedByTeacher() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudentAuditor() {
+        return getStudentAuditor() != null;
+    }
+
 }

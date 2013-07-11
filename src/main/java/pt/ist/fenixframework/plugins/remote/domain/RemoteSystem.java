@@ -32,4 +32,14 @@ public class RemoteSystem extends RemoteSystem_Base {
         }
         return instance;
     }
+    @Deprecated
+    public java.util.Set<pt.ist.fenixframework.plugins.remote.domain.RemoteHost> getRemoteHosts() {
+        return getRemoteHostsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyRemoteHosts() {
+        return !getRemoteHostsSet().isEmpty();
+    }
+
 }

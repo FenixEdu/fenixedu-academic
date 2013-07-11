@@ -159,4 +159,14 @@ public class WrittenEvaluationSpaceOccupation extends WrittenEvaluationSpaceOccu
         return String.format("(%s) %s", eval.getEvaluationType(), eval.getName());
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.WrittenEvaluation> getWrittenEvaluations() {
+        return getWrittenEvaluationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyWrittenEvaluations() {
+        return !getWrittenEvaluationsSet().isEmpty();
+    }
+
 }

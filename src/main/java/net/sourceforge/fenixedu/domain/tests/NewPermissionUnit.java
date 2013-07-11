@@ -18,4 +18,24 @@ public class NewPermissionUnit extends NewPermissionUnit_Base {
         super.deleteDomainObject();
     }
 
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasPermission() {
+        return getPermission() != null;
+    }
+
+    @Deprecated
+    public boolean hasParty() {
+        return getParty() != null;
+    }
+
+    @Deprecated
+    public boolean hasQuestion() {
+        return getQuestion() != null;
+    }
+
 }

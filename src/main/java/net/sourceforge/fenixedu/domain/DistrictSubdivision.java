@@ -84,4 +84,84 @@ public class DistrictSubdivision extends DistrictSubdivision_Base {
         return result;
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.student.PersonalIngressionData> getPersonalIngressionsData() {
+        return getPersonalIngressionsDataSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPersonalIngressionsData() {
+        return !getPersonalIngressionsDataSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.student.PersonalIngressionData> getSchoolTimePersonalIngressionsData() {
+        return getSchoolTimePersonalIngressionsDataSet();
+    }
+
+    @Deprecated
+    public boolean hasAnySchoolTimePersonalIngressionsData() {
+        return !getSchoolTimePersonalIngressionsDataSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacy> getSchoolTimeIndividualCandidacies() {
+        return getSchoolTimeIndividualCandidaciesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnySchoolTimeIndividualCandidacies() {
+        return !getSchoolTimeIndividualCandidaciesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy> getSchoolTimeStudentCandidacies() {
+        return getSchoolTimeStudentCandidaciesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnySchoolTimeStudentCandidacies() {
+        return !getSchoolTimeStudentCandidaciesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacy> getIndividualCandidacies() {
+        return getIndividualCandidaciesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyIndividualCandidacies() {
+        return !getIndividualCandidaciesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy> getStudentCandidacies() {
+        return getStudentCandidaciesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyStudentCandidacies() {
+        return !getStudentCandidaciesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasDistrict() {
+        return getDistrict() != null;
+    }
+
+    @Deprecated
+    public boolean hasCode() {
+        return getCode() != null;
+    }
+
 }

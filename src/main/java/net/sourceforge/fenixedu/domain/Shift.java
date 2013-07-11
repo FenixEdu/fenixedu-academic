@@ -640,4 +640,150 @@ public class Shift extends Shift_Base {
         return false;
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.candidacy.degree.ShiftDistributionEntry> getShiftDistributionEntries() {
+        return getShiftDistributionEntriesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyShiftDistributionEntries() {
+        return !getShiftDistributionEntriesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Summary> getAssociatedSummaries() {
+        return getAssociatedSummariesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssociatedSummaries() {
+        return !getAssociatedSummariesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.InquiryCourseAnswer> getInquiryCoursesAnswers() {
+        return getInquiryCoursesAnswersSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyInquiryCoursesAnswers() {
+        return !getInquiryCoursesAnswersSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.StudentGroup> getAssociatedStudentGroups() {
+        return getAssociatedStudentGroupsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssociatedStudentGroups() {
+        return !getAssociatedStudentGroupsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.CourseLoad> getCourseLoads() {
+        return getCourseLoadsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCourseLoads() {
+        return !getCourseLoadsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.ShiftProfessorship> getAssociatedShiftProfessorship() {
+        return getAssociatedShiftProfessorshipSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssociatedShiftProfessorship() {
+        return !getAssociatedShiftProfessorshipSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Lesson> getAssociatedLessons() {
+        return getAssociatedLessonsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssociatedLessons() {
+        return !getAssociatedLessonsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.ShiftEnrolment> getShiftEnrolments() {
+        return getShiftEnrolmentsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyShiftEnrolments() {
+        return !getShiftEnrolmentsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.SchoolClass> getAssociatedClasses() {
+        return getAssociatedClassesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssociatedClasses() {
+        return !getAssociatedClassesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.NonRegularTeachingService> getNonRegularTeachingServices() {
+        return getNonRegularTeachingServicesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyNonRegularTeachingServices() {
+        return !getNonRegularTeachingServicesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService> getDegreeTeachingServices() {
+        return getDegreeTeachingServicesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyDegreeTeachingServices() {
+        return !getDegreeTeachingServicesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.student.Registration> getStudents() {
+        return getStudentsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyStudents() {
+        return !getStudentsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasShiftGroupingProperties() {
+        return getShiftGroupingProperties() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasComment() {
+        return getComment() != null;
+    }
+
+    @Deprecated
+    public boolean hasLotacao() {
+        return getLotacao() != null;
+    }
+
+    @Deprecated
+    public boolean hasNome() {
+        return getNome() != null;
+    }
+
 }
+

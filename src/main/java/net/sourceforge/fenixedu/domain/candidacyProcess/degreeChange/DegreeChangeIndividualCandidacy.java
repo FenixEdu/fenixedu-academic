@@ -375,4 +375,34 @@ public class DegreeChangeIndividualCandidacy extends DegreeChangeIndividualCandi
         getDegreeChangeIndividualCandidacySeriesGrade().setSeriesCandidacyGrade(value);
     }
 
+    @Deprecated
+    public boolean hasApprovedEctsRate() {
+        return getApprovedEctsRate() != null;
+    }
+
+    @Deprecated
+    public boolean hasDegreeNature() {
+        return getDegreeNature() != null;
+    }
+
+    @Deprecated
+    public boolean hasSeriesCandidacyGrade() {
+        return getSeriesCandidacyGrade() != null;
+    }
+
+    @Deprecated
+    public boolean hasGradeRate() {
+        return getGradeRate() != null;
+    }
+
+    @Deprecated
+    public boolean hasSelectedDegree() {
+        return getSelectedDegree() != null;
+    }
+
+    @Deprecated
+    public boolean hasAffinity() {
+        return getAffinity() != null;
+    }
+
 }

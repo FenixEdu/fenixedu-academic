@@ -63,4 +63,9 @@ public class ValueGratuityExemption extends ValueGratuityExemption_Base {
         return true;
     }
 
+    @Deprecated
+    public boolean hasValue() {
+        return getValue() != null;
+    }
+
 }

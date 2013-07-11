@@ -188,4 +188,34 @@ public class Blueprint extends Blueprint_Base implements Comparable<Blueprint> {
             return y;
         }
     }
+    @Deprecated
+    public boolean hasValidFrom() {
+        return getValidFrom() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasBlueprintFile() {
+        return getBlueprintFile() != null;
+    }
+
+    @Deprecated
+    public boolean hasValidUntil() {
+        return getValidUntil() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreationPerson() {
+        return getCreationPerson() != null;
+    }
+
+    @Deprecated
+    public boolean hasSpace() {
+        return getSpace() != null;
+    }
+
 }

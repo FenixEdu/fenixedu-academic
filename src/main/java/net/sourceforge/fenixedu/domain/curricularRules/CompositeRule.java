@@ -144,4 +144,19 @@ public abstract class CompositeRule extends CompositeRule_Base {
     public boolean isLeaf() {
         return false;
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.curricularRules.CurricularRule> getCurricularRules() {
+        return getCurricularRulesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCurricularRules() {
+        return !getCurricularRulesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasCompositeRuleType() {
+        return getCompositeRuleType() != null;
+    }
+
 }

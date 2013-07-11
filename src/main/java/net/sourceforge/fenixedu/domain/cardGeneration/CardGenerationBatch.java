@@ -923,4 +923,59 @@ public class CardGenerationBatch extends CardGenerationBatch_Base {
         }
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationEntry> getCardGenerationEntries() {
+        return getCardGenerationEntriesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCardGenerationEntries() {
+        return !getCardGenerationEntriesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationProblem> getCardGenerationProblems() {
+        return getCardGenerationProblemsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCardGenerationProblems() {
+        return !getCardGenerationProblemsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasUpdated() {
+        return getUpdated() != null;
+    }
+
+    @Deprecated
+    public boolean hasSent() {
+        return getSent() != null;
+    }
+
+    @Deprecated
+    public boolean hasDescription() {
+        return getDescription() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasPeopleForEntryCreation() {
+        return getPeopleForEntryCreation() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreated() {
+        return getCreated() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionYear() {
+        return getExecutionYear() != null;
+    }
+
 }

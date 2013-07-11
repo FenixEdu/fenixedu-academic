@@ -500,4 +500,59 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
         getSecondCycleIndividualCandidacySeriesGrade().setDegreeNature(value);
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Degree> getSelectedDegrees() {
+        return getSelectedDegreesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnySelectedDegrees() {
+        return !getSelectedDegreesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasProfessionalStatus() {
+        return getProfessionalStatus() != null;
+    }
+
+    @Deprecated
+    public boolean hasProfessionalExperience() {
+        return getProfessionalExperience() != null;
+    }
+
+    @Deprecated
+    public boolean hasCandidacyGrade() {
+        return getCandidacyGrade() != null;
+    }
+
+    @Deprecated
+    public boolean hasDegreeNature() {
+        return getDegreeNature() != null;
+    }
+
+    @Deprecated
+    public boolean hasOtherEducation() {
+        return getOtherEducation() != null;
+    }
+
+    @Deprecated
+    public boolean hasSeriesCandidacyGrade() {
+        return getSeriesCandidacyGrade() != null;
+    }
+
+    @Deprecated
+    public boolean hasSelectedDegree() {
+        return getSelectedDegree() != null;
+    }
+
+    @Deprecated
+    public boolean hasInterviewGrade() {
+        return getInterviewGrade() != null;
+    }
+
+    @Deprecated
+    public boolean hasAffinity() {
+        return getAffinity() != null;
+    }
+
 }

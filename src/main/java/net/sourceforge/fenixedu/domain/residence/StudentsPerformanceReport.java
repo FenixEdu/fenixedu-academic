@@ -281,4 +281,19 @@ public class StudentsPerformanceReport extends StudentsPerformanceReport_Base {
         row.setCell(getA(student).add(getB(student)).multiply(BigDecimal.valueOf(100)).intValue());
 
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.student.Student> getStudents() {
+        return getStudentsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyStudents() {
+        return !getStudentsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasExecutionSemester() {
+        return getExecutionSemester() != null;
+    }
+
 }

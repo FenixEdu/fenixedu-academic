@@ -72,4 +72,9 @@ public class RoomSubdivisionInformation extends RoomSubdivisionInformation_Base 
     public RoomClassification getRoomClassification() {
         return getSpace().getSuroundingSpace().getSpaceInformation().getRoomClassification();
     }
+    @Deprecated
+    public boolean hasIdentification() {
+        return getIdentification() != null;
+    }
+
 }

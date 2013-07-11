@@ -76,4 +76,9 @@ public abstract class PaymentTransaction extends PaymentTransaction_Base {
         return getValueBigDecimal().subtract(reimbursedValue);
     }
 
+    @Deprecated
+    public boolean hasGuideEntry() {
+        return getGuideEntry() != null;
+    }
+
 }

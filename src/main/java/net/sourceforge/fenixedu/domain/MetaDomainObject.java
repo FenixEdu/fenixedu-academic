@@ -97,4 +97,34 @@ public class MetaDomainObject extends MetaDomainObject_Base {
     public boolean canBeDeleted() {
         return !hasAnyFunctionalityParameters() && !hasAnyPortals();
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.functionalities.FunctionalityParameter> getFunctionalityParameters() {
+        return getFunctionalityParametersSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyFunctionalityParameters() {
+        return !getFunctionalityParametersSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.contents.MetaDomainObjectPortal> getPortals() {
+        return getPortalsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPortals() {
+        return !getPortalsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasType() {
+        return getType() != null;
+    }
+
 }

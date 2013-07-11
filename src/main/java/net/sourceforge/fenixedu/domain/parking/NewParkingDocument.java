@@ -53,4 +53,34 @@ public class NewParkingDocument extends NewParkingDocument_Base {
         return filePath;
     }
 
+    @Deprecated
+    public boolean hasParkingFile() {
+        return getParkingFile() != null;
+    }
+
+    @Deprecated
+    public boolean hasParkingParty() {
+        return getParkingParty() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasParkingRequest() {
+        return getParkingRequest() != null;
+    }
+
+    @Deprecated
+    public boolean hasParkingDocumentType() {
+        return getParkingDocumentType() != null;
+    }
+
+    @Deprecated
+    public boolean hasVehicle() {
+        return getVehicle() != null;
+    }
+
 }

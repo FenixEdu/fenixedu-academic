@@ -126,4 +126,39 @@ public abstract class SpaceInformation extends SpaceInformation_Base implements 
             }
         }
     }
+    @Deprecated
+    public boolean hasEmails() {
+        return getEmails() != null;
+    }
+
+    @Deprecated
+    public boolean hasValidFrom() {
+        return getValidFrom() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasValidUntil() {
+        return getValidUntil() != null;
+    }
+
+    @Deprecated
+    public boolean hasBlueprintNumber() {
+        return getBlueprintNumber() != null;
+    }
+
+    @Deprecated
+    public boolean hasCapacity() {
+        return getCapacity() != null;
+    }
+
+    @Deprecated
+    public boolean hasSpace() {
+        return getSpace() != null;
+    }
+
 }

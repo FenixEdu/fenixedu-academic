@@ -62,4 +62,54 @@ public class SeminaryCandidacy extends SeminaryCandidacy_Base {
         return RootDomainObject.getInstance().getCandidacys();
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Seminaries.CaseStudyChoice> getCaseStudyChoices() {
+        return getCaseStudyChoicesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCaseStudyChoices() {
+        return !getCaseStudyChoicesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasStudent() {
+        return getStudent() != null;
+    }
+
+    @Deprecated
+    public boolean hasTheme() {
+        return getTheme() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasMotivation() {
+        return getMotivation() != null;
+    }
+
+    @Deprecated
+    public boolean hasApproved() {
+        return getApproved() != null;
+    }
+
+    @Deprecated
+    public boolean hasModality() {
+        return getModality() != null;
+    }
+
+    @Deprecated
+    public boolean hasCurricularCourse() {
+        return getCurricularCourse() != null;
+    }
+
+    @Deprecated
+    public boolean hasSeminary() {
+        return getSeminary() != null;
+    }
+
 }

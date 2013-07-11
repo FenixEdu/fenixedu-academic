@@ -200,4 +200,44 @@ public abstract class CurricularRule extends CurricularRule_Base implements ICur
         }
     }
 
+    @Deprecated
+    public boolean hasEnd() {
+        return getEnd() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasParentCompositeRule() {
+        return getParentCompositeRule() != null;
+    }
+
+    @Deprecated
+    public boolean hasDegreeModuleToApplyRule() {
+        return getDegreeModuleToApplyRule() != null;
+    }
+
+    @Deprecated
+    public boolean hasNotRule() {
+        return getNotRule() != null;
+    }
+
+    @Deprecated
+    public boolean hasBegin() {
+        return getBegin() != null;
+    }
+
+    @Deprecated
+    public boolean hasContextCourseGroup() {
+        return getContextCourseGroup() != null;
+    }
+
+    @Deprecated
+    public boolean hasCurricularRuleType() {
+        return getCurricularRuleType() != null;
+    }
+
 }

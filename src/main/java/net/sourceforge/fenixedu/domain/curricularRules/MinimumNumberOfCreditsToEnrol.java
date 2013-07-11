@@ -69,4 +69,9 @@ public class MinimumNumberOfCreditsToEnrol extends MinimumNumberOfCreditsToEnrol
     public VerifyRuleExecutor createVerifyRuleExecutor() {
         return VerifyRuleExecutor.NULL_VERIFY_EXECUTOR;
     }
+    @Deprecated
+    public boolean hasMinimumCredits() {
+        return getMinimumCredits() != null;
+    }
+
 }

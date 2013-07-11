@@ -480,4 +480,84 @@ public class InquiryResult extends InquiryResult_Base {
         }
 
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.InquiryResultComment> getInquiryResultComments() {
+        return getInquiryResultCommentsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyInquiryResultComments() {
+        return !getInquiryResultCommentsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasExecutionCourse() {
+        return getExecutionCourse() != null;
+    }
+
+    @Deprecated
+    public boolean hasValue() {
+        return getValue() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasProfessorship() {
+        return getProfessorship() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionDegree() {
+        return getExecutionDegree() != null;
+    }
+
+    @Deprecated
+    public boolean hasResultClassification() {
+        return getResultClassification() != null;
+    }
+
+    @Deprecated
+    public boolean hasScaleValue() {
+        return getScaleValue() != null;
+    }
+
+    @Deprecated
+    public boolean hasShiftType() {
+        return getShiftType() != null;
+    }
+
+    @Deprecated
+    public boolean hasLastModifiedDate() {
+        return getLastModifiedDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionPeriod() {
+        return getExecutionPeriod() != null;
+    }
+
+    @Deprecated
+    public boolean hasInquiryQuestion() {
+        return getInquiryQuestion() != null;
+    }
+
+    @Deprecated
+    public boolean hasConnectionType() {
+        return getConnectionType() != null;
+    }
+
+    @Deprecated
+    public boolean hasResultDate() {
+        return getResultDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasResultType() {
+        return getResultType() != null;
+    }
+
 }

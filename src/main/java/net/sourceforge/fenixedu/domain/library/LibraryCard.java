@@ -52,4 +52,74 @@ public class LibraryCard extends LibraryCard_Base {
         }
         return null;
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.documents.LibraryMissingCardsDocument> getDocument() {
+        return getDocumentSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyDocument() {
+        return !getDocumentSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.documents.LibraryMissingLettersDocument> getLetters() {
+        return getLettersSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyLetters() {
+        return !getLettersSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasCardNumber() {
+        return getCardNumber() != null;
+    }
+
+    @Deprecated
+    public boolean hasUnitName() {
+        return getUnitName() != null;
+    }
+
+    @Deprecated
+    public boolean hasPin() {
+        return getPin() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasValidUntil() {
+        return getValidUntil() != null;
+    }
+
+    @Deprecated
+    public boolean hasLetterGenerationDate() {
+        return getLetterGenerationDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasUserName() {
+        return getUserName() != null;
+    }
+
+    @Deprecated
+    public boolean hasPartyClassification() {
+        return getPartyClassification() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
+    }
+
+    @Deprecated
+    public boolean hasCardEmitionDate() {
+        return getCardEmitionDate() != null;
+    }
+
 }

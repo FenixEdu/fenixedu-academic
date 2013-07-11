@@ -24,4 +24,24 @@ public class MessageId extends MessageId_Base {
         deleteDomainObject();
     }
 
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasMessage() {
+        return getMessage() != null;
+    }
+
+    @Deprecated
+    public boolean hasSendTime() {
+        return getSendTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasId() {
+        return getId() != null;
+    }
+
 }

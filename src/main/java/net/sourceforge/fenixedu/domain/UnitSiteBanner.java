@@ -90,4 +90,45 @@ public class UnitSiteBanner extends UnitSiteBanner_Base {
         }
 
     }
+
+    @Deprecated
+    public boolean hasBackgroundImage() {
+        return getBackgroundImage() != null;
+    }
+
+    @Deprecated
+    public boolean hasSite() {
+        return getSite() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasLink() {
+        return getLink() != null;
+    }
+
+    @Deprecated
+    public boolean hasWeight() {
+        return getWeight() != null;
+    }
+
+    @Deprecated
+    public boolean hasMainImage() {
+        return getMainImage() != null;
+    }
+
+    @Deprecated
+    public boolean hasRepeatType() {
+        return getRepeatType() != null;
+    }
+
+    @Deprecated
+    public boolean hasColor() {
+        return getColor() != null;
+    }
+
 }

@@ -42,4 +42,24 @@ public class IdDocument extends IdDocument_Base {
         deleteDomainObject();
     }
 
+    @Deprecated
+    public boolean hasValue() {
+        return getValue() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasIdDocumentType() {
+        return getIdDocumentType() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
+    }
+
 }

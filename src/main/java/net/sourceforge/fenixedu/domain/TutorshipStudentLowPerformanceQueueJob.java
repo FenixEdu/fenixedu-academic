@@ -241,4 +241,9 @@ public class TutorshipStudentLowPerformanceQueueJob extends TutorshipStudentLowP
                 new TutorshipStudentLowPerformanceQueueJob(prescriptionEnum, executionYear);
         return tutorshipStudentLowPerformanceQueueJob;
     }
+    @Deprecated
+    public boolean hasPrescriptionEnum() {
+        return getPrescriptionEnum() != null;
+    }
+
 }

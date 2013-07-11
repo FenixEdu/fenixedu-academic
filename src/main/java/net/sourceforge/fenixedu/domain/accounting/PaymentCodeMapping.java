@@ -114,4 +114,24 @@ public class PaymentCodeMapping extends PaymentCodeMapping_Base {
         return new PaymentCodeMapping(executionInterval, oldCode, newCode);
     }
 
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionInterval() {
+        return getExecutionInterval() != null;
+    }
+
+    @Deprecated
+    public boolean hasOldPaymentCode() {
+        return getOldPaymentCode() != null;
+    }
+
+    @Deprecated
+    public boolean hasNewPaymentCode() {
+        return getNewPaymentCode() != null;
+    }
+
 }

@@ -22,4 +22,19 @@ public class SantanderBatchRequester extends SantanderBatchRequester_Base {
         super.deleteDomainObject();
     }
 
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasSantanderBatch() {
+        return getSantanderBatch() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
+    }
+
 }

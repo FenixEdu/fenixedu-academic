@@ -191,4 +191,29 @@ public class OtherPublication extends OtherPublication_Base {
     public String getSchema() {
         return usedSchema;
     }
+    @Deprecated
+    public boolean hasAddress() {
+        return getAddress() != null;
+    }
+
+    @Deprecated
+    public boolean hasHowPublished() {
+        return getHowPublished() != null;
+    }
+
+    @Deprecated
+    public boolean hasOtherPublicationType() {
+        return getOtherPublicationType() != null;
+    }
+
+    @Deprecated
+    public boolean hasLanguage() {
+        return getLanguage() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumberPages() {
+        return getNumberPages() != null;
+    }
+
 }

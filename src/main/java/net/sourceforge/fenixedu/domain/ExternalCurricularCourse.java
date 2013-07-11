@@ -160,4 +160,34 @@ public class ExternalCurricularCourse extends ExternalCurricularCourse_Base {
         }
         return result;
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment> getExternalEnrolments() {
+        return getExternalEnrolmentsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyExternalEnrolments() {
+        return !getExternalEnrolmentsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasCode() {
+        return getCode() != null;
+    }
+
+    @Deprecated
+    public boolean hasUnit() {
+        return getUnit() != null;
+    }
+
 }

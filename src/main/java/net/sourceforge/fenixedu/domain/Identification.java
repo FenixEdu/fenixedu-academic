@@ -85,4 +85,29 @@ public abstract class Identification extends Identification_Base {
         }
     }
 
+    @Deprecated
+    public boolean hasUser() {
+        return getUser() != null;
+    }
+
+    @Deprecated
+    public boolean hasBeginDateDateTime() {
+        return getBeginDateDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasActive() {
+        return getActive() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndDateDateTime() {
+        return getEndDateDateTime() != null;
+    }
+
 }

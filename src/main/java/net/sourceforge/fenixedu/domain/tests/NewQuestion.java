@@ -331,4 +331,49 @@ public abstract class NewQuestion extends NewQuestion_Base {
 
         return this.getPreCondition().evaluate(this, person);
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.tests.NewGroupElement> getParentElements() {
+        return getParentElementsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyParentElements() {
+        return !getParentElementsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.tests.NewModelRestriction> getModelRestrictions() {
+        return getModelRestrictionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyModelRestrictions() {
+        return !getModelRestrictionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.tests.NewPermissionUnit> getPermissionUnits() {
+        return getPermissionUnitsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPermissionUnits() {
+        return !getPermissionUnitsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasPreCondition() {
+        return getPreCondition() != null;
+    }
+
+    @Deprecated
+    public boolean hasGrade() {
+        return getGrade() != null;
+    }
+
+    @Deprecated
+    public boolean hasTimesUsed() {
+        return getTimesUsed() != null;
+    }
+
 }

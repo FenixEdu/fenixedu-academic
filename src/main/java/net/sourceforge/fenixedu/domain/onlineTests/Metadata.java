@@ -172,4 +172,69 @@ public class Metadata extends Metadata_Base {
         }
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.onlineTests.Question> getQuestions() {
+        return getQuestionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyQuestions() {
+        return !getQuestionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasExecutionCourse() {
+        return getExecutionCourse() != null;
+    }
+
+    @Deprecated
+    public boolean hasSecondarySubject() {
+        return getSecondarySubject() != null;
+    }
+
+    @Deprecated
+    public boolean hasDescription() {
+        return getDescription() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasLearningTimeDateHourMinuteSecond() {
+        return getLearningTimeDateHourMinuteSecond() != null;
+    }
+
+    @Deprecated
+    public boolean hasDifficulty() {
+        return getDifficulty() != null;
+    }
+
+    @Deprecated
+    public boolean hasAuthor() {
+        return getAuthor() != null;
+    }
+
+    @Deprecated
+    public boolean hasMainSubject() {
+        return getMainSubject() != null;
+    }
+
+    @Deprecated
+    public boolean hasVisibility() {
+        return getVisibility() != null;
+    }
+
+    @Deprecated
+    public boolean hasLevel() {
+        return getLevel() != null;
+    }
+
+    @Deprecated
+    public boolean hasMetadataFile() {
+        return getMetadataFile() != null;
+    }
+
 }

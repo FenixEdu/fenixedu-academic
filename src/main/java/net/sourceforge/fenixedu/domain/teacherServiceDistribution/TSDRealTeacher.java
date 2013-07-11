@@ -157,4 +157,9 @@ public class TSDRealTeacher extends TSDRealTeacher_Base {
         return getTeacher().getPerson().getIstUsername();
     }
 
+    @Deprecated
+    public boolean hasTeacher() {
+        return getTeacher() != null;
+    }
+
 }

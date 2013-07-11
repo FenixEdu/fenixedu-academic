@@ -359,4 +359,9 @@ public class YearDelegateElection extends YearDelegateElection_Base {
         });
         return elections;
     }
+    @Deprecated
+    public boolean hasCurricularYear() {
+        return getCurricularYear() != null;
+    }
+
 }

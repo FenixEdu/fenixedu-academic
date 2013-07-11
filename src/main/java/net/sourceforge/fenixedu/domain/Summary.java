@@ -360,4 +360,89 @@ public class Summary extends Summary_Base {
         }
     }
 
+    @Deprecated
+    public boolean hasSummaryHourHourMinuteSecond() {
+        return getSummaryHourHourMinuteSecond() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionCourse() {
+        return getExecutionCourse() != null;
+    }
+
+    @Deprecated
+    public boolean hasSummaryDateYearMonthDay() {
+        return getSummaryDateYearMonthDay() != null;
+    }
+
+    @Deprecated
+    public boolean hasSummaryType() {
+        return getSummaryType() != null;
+    }
+
+    @Deprecated
+    public boolean hasTeacherName() {
+        return getTeacherName() != null;
+    }
+
+    @Deprecated
+    public boolean hasTeacher() {
+        return getTeacher() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasSummaryText() {
+        return getSummaryText() != null;
+    }
+
+    @Deprecated
+    public boolean hasProfessorship() {
+        return getProfessorship() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudentsNumber() {
+        return getStudentsNumber() != null;
+    }
+
+    @Deprecated
+    public boolean hasShift() {
+        return getShift() != null;
+    }
+
+    @Deprecated
+    public boolean hasTitle() {
+        return getTitle() != null;
+    }
+
+    @Deprecated
+    public boolean hasLessonInstance() {
+        return getLessonInstance() != null;
+    }
+
+    @Deprecated
+    public boolean hasIsExtraLesson() {
+        return getIsExtraLesson() != null;
+    }
+
+    @Deprecated
+    public boolean hasRoom() {
+        return getRoom() != null;
+    }
+
+    @Deprecated
+    public boolean hasLastModifiedDateDateTime() {
+        return getLastModifiedDateDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasTaught() {
+        return getTaught() != null;
+    }
+
 }

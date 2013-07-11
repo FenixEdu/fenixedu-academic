@@ -187,4 +187,34 @@ public class ResearchResultPatent extends ResearchResultPatent_Base {
         Partial approvalDate = getApprovalDate();
         return approvalDate.get(DateTimeFieldType.year());
     }
+    @Deprecated
+    public boolean hasPatentNumber() {
+        return getPatentNumber() != null;
+    }
+
+    @Deprecated
+    public boolean hasPatentStatus() {
+        return getPatentStatus() != null;
+    }
+
+    @Deprecated
+    public boolean hasLocal() {
+        return getLocal() != null;
+    }
+
+    @Deprecated
+    public boolean hasRegistrationDate() {
+        return getRegistrationDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasPatentType() {
+        return getPatentType() != null;
+    }
+
+    @Deprecated
+    public boolean hasApprovalDate() {
+        return getApprovalDate() != null;
+    }
+
 }

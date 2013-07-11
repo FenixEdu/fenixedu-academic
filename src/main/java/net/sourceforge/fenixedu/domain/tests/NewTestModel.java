@@ -312,4 +312,24 @@ public class NewTestModel extends NewTestModel_Base {
         return super.findModelRestriction(question);
     }
 
+    @Deprecated
+    public boolean hasBag() {
+        return getBag() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreated() {
+        return getCreated() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreator() {
+        return getCreator() != null;
+    }
+
+    @Deprecated
+    public boolean hasScale() {
+        return getScale() != null;
+    }
+
 }

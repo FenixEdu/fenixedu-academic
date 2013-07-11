@@ -98,4 +98,49 @@ public class CourseLoad extends CourseLoad_Base {
     private boolean isTotalQuantityValid() {
         return getUnitQuantity() == null || getTotalQuantity().compareTo(getUnitQuantity()) != -1;
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.LessonInstance> getLessonInstances() {
+        return getLessonInstancesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyLessonInstances() {
+        return !getLessonInstancesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Shift> getShifts() {
+        return getShiftsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyShifts() {
+        return !getShiftsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasExecutionCourse() {
+        return getExecutionCourse() != null;
+    }
+
+    @Deprecated
+    public boolean hasTotalQuantity() {
+        return getTotalQuantity() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasUnitQuantity() {
+        return getUnitQuantity() != null;
+    }
+
+    @Deprecated
+    public boolean hasType() {
+        return getType() != null;
+    }
+
 }

@@ -17,4 +17,24 @@ public class MandatoryCondition extends MandatoryCondition_Base {
         }
         return result;
     }
+    @Deprecated
+    public boolean hasMinimumNumberOfChars() {
+        return getMinimumNumberOfChars() != null;
+    }
+
+    @Deprecated
+    public boolean hasConditionValues() {
+        return getConditionValues() != null;
+    }
+
+    @Deprecated
+    public boolean hasShowIfConditionIsFalse() {
+        return getShowIfConditionIsFalse() != null;
+    }
+
+    @Deprecated
+    public boolean hasDependsResult() {
+        return getDependsResult() != null;
+    }
+
 }

@@ -167,4 +167,34 @@ public abstract class Material extends Material_Base {
         Collections.sort(result, COMPARATOR_BY_IDENTIFICATION);
         return result;
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.space.MaterialSpaceOccupation> getMaterialSpaceOccupations() {
+        return getMaterialSpaceOccupationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyMaterialSpaceOccupations() {
+        return !getMaterialSpaceOccupationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasAcquisition() {
+        return getAcquisition() != null;
+    }
+
+    @Deprecated
+    public boolean hasBarCodeNumber() {
+        return getBarCodeNumber() != null;
+    }
+
+    @Deprecated
+    public boolean hasIdentification() {
+        return getIdentification() != null;
+    }
+
+    @Deprecated
+    public boolean hasCease() {
+        return getCease() != null;
+    }
+
 }

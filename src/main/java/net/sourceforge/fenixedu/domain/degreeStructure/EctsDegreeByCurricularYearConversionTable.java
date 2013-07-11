@@ -49,4 +49,9 @@ public class EctsDegreeByCurricularYearConversionTable extends EctsDegreeByCurri
         super.delete();
     }
 
+    @Deprecated
+    public boolean hasDegree() {
+        return getDegree() != null;
+    }
+
 }

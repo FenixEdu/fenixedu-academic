@@ -253,4 +253,39 @@ public class LessonInstance extends LessonInstance_Base {
         }
     }
 
+    @Deprecated
+    public boolean hasLessonInstanceSpaceOccupation() {
+        return getLessonInstanceSpaceOccupation() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasCourseLoad() {
+        return getCourseLoad() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndDateTime() {
+        return getEndDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasLesson() {
+        return getLesson() != null;
+    }
+
+    @Deprecated
+    public boolean hasSummary() {
+        return getSummary() != null;
+    }
+
+    @Deprecated
+    public boolean hasBeginDateTime() {
+        return getBeginDateTime() != null;
+    }
+
 }

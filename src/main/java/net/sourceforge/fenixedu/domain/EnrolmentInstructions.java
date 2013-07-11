@@ -22,4 +22,19 @@ public class EnrolmentInstructions extends EnrolmentInstructions_Base {
         }
     }
 
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasInstructions() {
+        return getInstructions() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionSemester() {
+        return getExecutionSemester() != null;
+    }
+
 }

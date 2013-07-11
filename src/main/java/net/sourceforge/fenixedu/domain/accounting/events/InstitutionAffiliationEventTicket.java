@@ -56,4 +56,34 @@ public class InstitutionAffiliationEventTicket extends InstitutionAffiliationEve
         }
     }
 
+    @Deprecated
+    public boolean hasTicket() {
+        return getTicket() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasConsumerEvent() {
+        return getConsumerEvent() != null;
+    }
+
+    @Deprecated
+    public boolean hasInstitutionAffiliationEvent() {
+        return getInstitutionAffiliationEvent() != null;
+    }
+
+    @Deprecated
+    public boolean hasConsumed() {
+        return getConsumed() != null;
+    }
+
+    @Deprecated
+    public boolean hasGenerated() {
+        return getGenerated() != null;
+    }
+
 }

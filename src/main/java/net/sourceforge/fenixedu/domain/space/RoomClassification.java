@@ -261,4 +261,44 @@ public class RoomClassification extends RoomClassification_Base {
             return null;
         }
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.space.RoomClassification> getChildRoomClassifications() {
+        return getChildRoomClassificationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyChildRoomClassifications() {
+        return !getChildRoomClassificationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.space.RoomInformation> getRoomInformations() {
+        return getRoomInformationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyRoomInformations() {
+        return !getRoomInformationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasParentRoomClassification() {
+        return getParentRoomClassification() != null;
+    }
+
+    @Deprecated
+    public boolean hasCode() {
+        return getCode() != null;
+    }
+
 }

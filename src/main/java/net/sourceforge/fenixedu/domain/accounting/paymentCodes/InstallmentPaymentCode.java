@@ -107,4 +107,9 @@ public class InstallmentPaymentCode extends InstallmentPaymentCode_Base {
     public boolean isInstallmentPaymentCode() {
         return true;
     }
+    @Deprecated
+    public boolean hasInstallment() {
+        return getInstallment() != null;
+    }
+
 }

@@ -77,4 +77,19 @@ public class TutorshipIntention extends TutorshipIntention_Base {
         }
         return null;
     }
+    @Deprecated
+    public boolean hasDegreeCurricularPlan() {
+        return getDegreeCurricularPlan() != null;
+    }
+
+    @Deprecated
+    public boolean hasTeacher() {
+        return getTeacher() != null;
+    }
+
+    @Deprecated
+    public boolean hasAcademicInterval() {
+        return getAcademicInterval() != null;
+    }
+
 }

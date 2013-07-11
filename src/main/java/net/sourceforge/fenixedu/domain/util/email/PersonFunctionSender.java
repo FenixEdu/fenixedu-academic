@@ -76,4 +76,9 @@ public class PersonFunctionSender extends PersonFunctionSender_Base {
         PersonFunctionSender sender = personFunction.getSender();
         return sender == null ? new PersonFunctionSender(personFunction) : sender;
     }
+    @Deprecated
+    public boolean hasPersonFunction() {
+        return getPersonFunction() != null;
+    }
+
 }

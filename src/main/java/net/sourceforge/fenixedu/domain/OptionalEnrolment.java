@@ -186,4 +186,9 @@ public class OptionalEnrolment extends OptionalEnrolment_Base {
             throw new DomainException("error.OptionalEnrolment.invalid.optional.curricularCourse");
         }
     }
+    @Deprecated
+    public boolean hasOptionalCurricularCourse() {
+        return getOptionalCurricularCourse() != null;
+    }
+
 }

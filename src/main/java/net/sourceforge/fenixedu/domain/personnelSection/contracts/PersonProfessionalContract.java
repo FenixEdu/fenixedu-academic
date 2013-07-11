@@ -26,4 +26,54 @@ public class PersonProfessionalContract extends PersonProfessionalContract_Base 
         return getContractSituation() != null && getBeginDate() != null
                 && (getEndDate() == null || !getBeginDate().isAfter(getEndDate()));
     }
+    @Deprecated
+    public boolean hasModifiedDate() {
+        return getModifiedDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasContractSituation() {
+        return getContractSituation() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndDate() {
+        return getEndDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasBeginDate() {
+        return getBeginDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasAnulationDate() {
+        return getAnulationDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasImportationDate() {
+        return getImportationDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreationDate() {
+        return getCreationDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasContractSituationGiafId() {
+        return getContractSituationGiafId() != null;
+    }
+
+    @Deprecated
+    public boolean hasGiafProfessionalData() {
+        return getGiafProfessionalData() != null;
+    }
+
 }

@@ -71,4 +71,24 @@ public class PreferredPublication extends PreferredPublication_Base {
         setRootDomainObject(null);
         deleteDomainObject();
     }
+    @Deprecated
+    public boolean hasPreferredPublication() {
+        return getPreferredPublication() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasPersonThatPrefers() {
+        return getPersonThatPrefers() != null;
+    }
+
+    @Deprecated
+    public boolean hasPriority() {
+        return getPriority() != null;
+    }
+
 }

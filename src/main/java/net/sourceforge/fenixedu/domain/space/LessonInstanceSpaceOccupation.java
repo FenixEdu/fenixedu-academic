@@ -163,4 +163,14 @@ public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation
         }
         return getClass().getName();
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.LessonInstance> getLessonInstances() {
+        return getLessonInstancesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyLessonInstances() {
+        return !getLessonInstancesSet().isEmpty();
+    }
+
 }

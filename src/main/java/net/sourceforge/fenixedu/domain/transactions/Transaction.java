@@ -57,4 +57,49 @@ public abstract class Transaction extends Transaction_Base {
         }
     }
 
+    @Deprecated
+    public boolean hasPaymentType() {
+        return getPaymentType() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasValueBigDecimal() {
+        return getValueBigDecimal() != null;
+    }
+
+    @Deprecated
+    public boolean hasWasInternalBalance() {
+        return getWasInternalBalance() != null;
+    }
+
+    @Deprecated
+    public boolean hasPersonAccount() {
+        return getPersonAccount() != null;
+    }
+
+    @Deprecated
+    public boolean hasRemarks() {
+        return getRemarks() != null;
+    }
+
+    @Deprecated
+    public boolean hasResponsiblePerson() {
+        return getResponsiblePerson() != null;
+    }
+
+    @Deprecated
+    public boolean hasTransactionType() {
+        return getTransactionType() != null;
+    }
+
+    @Deprecated
+    public boolean hasTransactionDateDateTime() {
+        return getTransactionDateDateTime() != null;
+    }
+
 }

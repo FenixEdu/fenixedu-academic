@@ -575,4 +575,94 @@ public class Attends extends Attends_Base {
         }
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.DegreeProjectTutorialService> getDegreeProjectTutorialServices() {
+        return getDegreeProjectTutorialServicesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyDegreeProjectTutorialServices() {
+        return !getDegreeProjectTutorialServicesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Grouping> getGroupings() {
+        return getGroupingsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyGroupings() {
+        return !getGroupingsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Mark> getAssociatedMarks() {
+        return getAssociatedMarksSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssociatedMarks() {
+        return !getAssociatedMarksSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.ProjectSubmissionLog> getProjectSubmissionLogs() {
+        return getProjectSubmissionLogsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyProjectSubmissionLogs() {
+        return !getProjectSubmissionLogsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad> getWeeklyWorkLoads() {
+        return getWeeklyWorkLoadsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyWeeklyWorkLoads() {
+        return !getWeeklyWorkLoadsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.ProjectSubmission> getProjectSubmissions() {
+        return getProjectSubmissionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyProjectSubmissions() {
+        return !getProjectSubmissionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.StudentGroup> getStudentGroups() {
+        return getStudentGroupsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyStudentGroups() {
+        return !getStudentGroupsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasAluno() {
+        return getAluno() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasEnrolment() {
+        return getEnrolment() != null;
+    }
+
+    @Deprecated
+    public boolean hasDisciplinaExecucao() {
+        return getDisciplinaExecucao() != null;
+    }
+
 }

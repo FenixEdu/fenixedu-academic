@@ -148,4 +148,34 @@ public class Vehicle extends Vehicle_Base {
         }
         return result;
     }
+    @Deprecated
+    public boolean hasAcquisition() {
+        return getAcquisition() != null;
+    }
+
+    @Deprecated
+    public boolean hasModel() {
+        return getModel() != null;
+    }
+
+    @Deprecated
+    public boolean hasAllocationCostMultiplier() {
+        return getAllocationCostMultiplier() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumberPlate() {
+        return getNumberPlate() != null;
+    }
+
+    @Deprecated
+    public boolean hasCease() {
+        return getCease() != null;
+    }
+
+    @Deprecated
+    public boolean hasMake() {
+        return getMake() != null;
+    }
+
 }

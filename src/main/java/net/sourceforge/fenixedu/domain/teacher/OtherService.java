@@ -54,4 +54,19 @@ public class OtherService extends OtherService_Base {
     private Double round(double n) {
         return Math.round((n * 100.0)) / 100.0;
     }
+    @Deprecated
+    public boolean hasCorrectedExecutionSemester() {
+        return getCorrectedExecutionSemester() != null;
+    }
+
+    @Deprecated
+    public boolean hasCredits() {
+        return getCredits() != null;
+    }
+
+    @Deprecated
+    public boolean hasReason() {
+        return getReason() != null;
+    }
+
 }

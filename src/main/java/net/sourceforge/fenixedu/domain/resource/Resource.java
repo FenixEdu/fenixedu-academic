@@ -65,4 +65,29 @@ public abstract class Resource extends Resource_Base {
     public boolean isAllocatableSpace() {
         return false;
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.resource.ResourceResponsibility> getResourceResponsibility() {
+        return getResourceResponsibilitySet();
+    }
+
+    @Deprecated
+    public boolean hasAnyResourceResponsibility() {
+        return !getResourceResponsibilitySet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.resource.ResourceAllocation> getResourceAllocations() {
+        return getResourceAllocationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyResourceAllocations() {
+        return !getResourceAllocationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
 }

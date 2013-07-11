@@ -49,4 +49,9 @@ public class EctsCycleGraduationGradeConversionTable extends EctsCycleGraduation
         setSchool(null);
         super.delete();
     }
+    @Deprecated
+    public boolean hasSchool() {
+        return getSchool() != null;
+    }
+
 }

@@ -84,4 +84,9 @@ public class AcademicEventExemption extends AcademicEventExemption_Base {
     public boolean isAcademicEventExemption() {
         return true;
     }
+    @Deprecated
+    public boolean hasValue() {
+        return getValue() != null;
+    }
+
 }

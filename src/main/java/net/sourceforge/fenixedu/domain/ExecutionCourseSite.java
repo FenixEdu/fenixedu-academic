@@ -333,4 +333,34 @@ public class ExecutionCourseSite extends ExecutionCourseSite_Base {
             super.setLessonPlanningAvailable(lessonPlanningAvailable);
         }
     }
+    @Deprecated
+    public boolean hasIntroduction() {
+        return getIntroduction() != null;
+    }
+
+    @Deprecated
+    public boolean hasSiteExecutionCourse() {
+        return getSiteExecutionCourse() != null;
+    }
+
+    @Deprecated
+    public boolean hasLessonPlanningAvailable() {
+        return getLessonPlanningAvailable() != null;
+    }
+
+    @Deprecated
+    public boolean hasMail() {
+        return getMail() != null;
+    }
+
+    @Deprecated
+    public boolean hasDynamicMailDistribution() {
+        return getDynamicMailDistribution() != null;
+    }
+
+    @Deprecated
+    public boolean hasInitialStatement() {
+        return getInitialStatement() != null;
+    }
+
 }

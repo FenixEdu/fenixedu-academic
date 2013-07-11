@@ -299,4 +299,29 @@ public abstract class NewAtomicQuestion extends NewAtomicQuestion_Base {
         return new TestsGrade(0, this.getTest().getScale());
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.tests.NewAnswer> getAnswers() {
+        return getAnswersSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAnswers() {
+        return !getAnswersSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.tests.NewCorrector> getCorrectors() {
+        return getCorrectorsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCorrectors() {
+        return !getCorrectorsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasValidator() {
+        return getValidator() != null;
+    }
+
 }

@@ -163,4 +163,14 @@ public class CountryUnit extends CountryUnit_Base {
 
         return null;
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Formation> getAssociatedCountryUnitFormations() {
+        return getAssociatedCountryUnitFormationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssociatedCountryUnitFormations() {
+        return !getAssociatedCountryUnitFormationsSet().isEmpty();
+    }
+
 }

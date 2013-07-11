@@ -199,4 +199,29 @@ public class EctsTableIndex extends EctsTableIndex_Base {
         }
         throw new NoEctsComparabilityTableFound(year, cycleType);
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.EctsConversionTable> getTable() {
+        return getTableSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTable() {
+        return !getTableSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasYear() {
+        return getYear() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasProcessingDate() {
+        return getProcessingDate() != null;
+    }
+
 }

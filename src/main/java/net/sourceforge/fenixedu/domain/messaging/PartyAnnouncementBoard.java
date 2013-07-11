@@ -24,4 +24,9 @@ public abstract class PartyAnnouncementBoard extends PartyAnnouncementBoard_Base
         super.disconnect();
     }
 
+    @Deprecated
+    public boolean hasParty() {
+        return getParty() != null;
+    }
+
 }

@@ -92,4 +92,29 @@ public class CurricularCourseEquivalence extends CurricularCourseEquivalence_Bas
     public boolean isFrom(DegreeCurricularPlan degreeCurricularPlan) {
         return getDegreeCurricularPlan() == degreeCurricularPlan;
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.CurricularCourse> getOldCurricularCourses() {
+        return getOldCurricularCoursesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyOldCurricularCourses() {
+        return !getOldCurricularCoursesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasDegreeCurricularPlan() {
+        return getDegreeCurricularPlan() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasEquivalentCurricularCourse() {
+        return getEquivalentCurricularCourse() != null;
+    }
+
 }

@@ -780,4 +780,59 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
         }
         return count;
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry> getBasedEntries() {
+        return getBasedEntriesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyBasedEntries() {
+        return !getBasedEntriesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry> getChildEntries() {
+        return getChildEntriesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyChildEntries() {
+        return !getChildEntriesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasParentEntry() {
+        return getParentEntry() != null;
+    }
+
+    @Deprecated
+    public boolean hasEnd() {
+        return getEnd() != null;
+    }
+
+    @Deprecated
+    public boolean hasDescription() {
+        return getDescription() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasTemplateEntry() {
+        return getTemplateEntry() != null;
+    }
+
+    @Deprecated
+    public boolean hasBegin() {
+        return getBegin() != null;
+    }
+
+    @Deprecated
+    public boolean hasTitle() {
+        return getTitle() != null;
+    }
+
 }

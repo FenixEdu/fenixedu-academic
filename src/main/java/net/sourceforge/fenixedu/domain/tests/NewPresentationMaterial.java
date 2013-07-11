@@ -76,4 +76,24 @@ public abstract class NewPresentationMaterial extends NewPresentationMaterial_Ba
 
     public abstract NewPresentationMaterial copy();
 
+    @Deprecated
+    public boolean hasInline() {
+        return getInline() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasTestElement() {
+        return getTestElement() != null;
+    }
+
+    @Deprecated
+    public boolean hasPosition() {
+        return getPosition() != null;
+    }
+
 }

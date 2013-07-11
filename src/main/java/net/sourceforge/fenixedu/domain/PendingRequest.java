@@ -70,4 +70,39 @@ public class PendingRequest extends PendingRequest_Base {
         return null;
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.PendingRequestParameter> getPendingRequestParameter() {
+        return getPendingRequestParameterSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPendingRequestParameter() {
+        return !getPendingRequestParameterSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasUrl() {
+        return getUrl() != null;
+    }
+
+    @Deprecated
+    public boolean hasPost() {
+        return getPost() != null;
+    }
+
+    @Deprecated
+    public boolean hasGenerationDate() {
+        return getGenerationDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasBuildVersion() {
+        return getBuildVersion() != null;
+    }
+
 }

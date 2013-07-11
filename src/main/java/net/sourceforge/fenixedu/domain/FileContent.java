@@ -91,4 +91,9 @@ public class FileContent extends FileContent_Base {
             attachment.logItemFilePermittedGroup();
         }
     }
+    @Deprecated
+    public boolean hasAttachment() {
+        return getAttachment() != null;
+    }
+
 }

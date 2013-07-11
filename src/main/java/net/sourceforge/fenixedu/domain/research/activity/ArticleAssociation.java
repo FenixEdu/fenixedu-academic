@@ -38,4 +38,24 @@ public class ArticleAssociation extends ArticleAssociation_Base {
         super.deleteDomainObject();
     }
 
+    @Deprecated
+    public boolean hasJournalIssue() {
+        return getJournalIssue() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreator() {
+        return getCreator() != null;
+    }
+
+    @Deprecated
+    public boolean hasArticle() {
+        return getArticle() != null;
+    }
+
 }

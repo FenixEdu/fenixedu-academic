@@ -45,4 +45,34 @@ public class GuideSituation extends GuideSituation_Base {
         }
     }
 
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasState() {
+        return getState() != null;
+    }
+
+    @Deprecated
+    public boolean hasGuide() {
+        return getGuide() != null;
+    }
+
+    @Deprecated
+    public boolean hasRemarks() {
+        return getRemarks() != null;
+    }
+
+    @Deprecated
+    public boolean hasDateYearMonthDay() {
+        return getDateYearMonthDay() != null;
+    }
+
+    @Deprecated
+    public boolean hasSituation() {
+        return getSituation() != null;
+    }
+
 }

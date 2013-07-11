@@ -251,4 +251,24 @@ public class Inproceedings extends Inproceedings_Base {
     public Boolean getIsPossibleSelectPersonRole() {
         return true;
     }
+    @Deprecated
+    public boolean hasFirstPage() {
+        return getFirstPage() != null;
+    }
+
+    @Deprecated
+    public boolean hasAddress() {
+        return getAddress() != null;
+    }
+
+    @Deprecated
+    public boolean hasLastPage() {
+        return getLastPage() != null;
+    }
+
+    @Deprecated
+    public boolean hasLanguage() {
+        return getLanguage() != null;
+    }
+
 }

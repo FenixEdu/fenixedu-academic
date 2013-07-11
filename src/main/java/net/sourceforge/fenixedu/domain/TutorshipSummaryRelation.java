@@ -44,4 +44,54 @@ public class TutorshipSummaryRelation extends TutorshipSummaryRelation_Base {
         return tutorshipSummaryRelation;
     }
 
+    @Deprecated
+    public boolean hasTutorship() {
+        return getTutorship() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasLowPerformance() {
+        return getLowPerformance() != null;
+    }
+
+    @Deprecated
+    public boolean hasOutOfTouch() {
+        return getOutOfTouch() != null;
+    }
+
+    @Deprecated
+    public boolean hasHighPerformance() {
+        return getHighPerformance() != null;
+    }
+
+    @Deprecated
+    public boolean hasWithoutEnrolments() {
+        return getWithoutEnrolments() != null;
+    }
+
+    @Deprecated
+    public boolean hasTutorshipSummary() {
+        return getTutorshipSummary() != null;
+    }
+
+    @Deprecated
+    public boolean hasParticipationRegularly() {
+        return getParticipationRegularly() != null;
+    }
+
+    @Deprecated
+    public boolean hasParticipationType() {
+        return getParticipationType() != null;
+    }
+
+    @Deprecated
+    public boolean hasParticipationNone() {
+        return getParticipationNone() != null;
+    }
+
 }

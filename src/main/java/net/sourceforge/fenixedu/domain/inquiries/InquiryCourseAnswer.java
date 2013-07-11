@@ -59,4 +59,104 @@ public class InquiryCourseAnswer extends InquiryCourseAnswer_Base {
         final int numberOfEnrolments = studentCurricularPlan.getEnrolments(inquiryRegistry.getCurricularCourse()).size();
         return numberOfEnrolments;
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Shift> getEnrolledShifts() {
+        return getEnrolledShiftsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyEnrolledShifts() {
+        return !getEnrolledShiftsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.InquiryStudentTeacherAnswer> getAssociatedInquiryStudentTeacherAnswers() {
+        return getAssociatedInquiryStudentTeacherAnswersSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssociatedInquiryStudentTeacherAnswers() {
+        return !getAssociatedInquiryStudentTeacherAnswersSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasCommittedFraud() {
+        return getCommittedFraud() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionCourse() {
+        return getExecutionCourse() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudyDaysSpentInExamsSeason() {
+        return getStudyDaysSpentInExamsSeason() != null;
+    }
+
+    @Deprecated
+    public boolean hasNotAnsweredJustification() {
+        return getNotAnsweredJustification() != null;
+    }
+
+    @Deprecated
+    public boolean hasAnswerDuration() {
+        return getAnswerDuration() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionPeriod() {
+        return getExecutionPeriod() != null;
+    }
+
+    @Deprecated
+    public boolean hasWeeklyHoursSpentPercentage() {
+        return getWeeklyHoursSpentPercentage() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudentType() {
+        return getStudentType() != null;
+    }
+
+    @Deprecated
+    public boolean hasEntryGrade() {
+        return getEntryGrade() != null;
+    }
+
+    @Deprecated
+    public boolean hasWeeklyHoursSpentInAutonomousWork() {
+        return getWeeklyHoursSpentInAutonomousWork() != null;
+    }
+
+    @Deprecated
+    public boolean hasGrade() {
+        return getGrade() != null;
+    }
+
+    @Deprecated
+    public boolean hasNotAnsweredOtherJustification() {
+        return getNotAnsweredOtherJustification() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionDegreeStudent() {
+        return getExecutionDegreeStudent() != null;
+    }
+
+    @Deprecated
+    public boolean hasAttendenceClassesPercentage() {
+        return getAttendenceClassesPercentage() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionDegreeCourse() {
+        return getExecutionDegreeCourse() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumberOfEnrolments() {
+        return getNumberOfEnrolments() != null;
+    }
+
 }

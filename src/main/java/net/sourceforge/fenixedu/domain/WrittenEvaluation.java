@@ -1014,4 +1014,94 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
         }
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.CurricularCourseScope> getAssociatedCurricularCourseScope() {
+        return getAssociatedCurricularCourseScopeSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssociatedCurricularCourseScope() {
+        return !getAssociatedCurricularCourseScopeSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.Context> getAssociatedContexts() {
+        return getAssociatedContextsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssociatedContexts() {
+        return !getAssociatedContextsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.vigilancy.Vigilancy> getVigilancies() {
+        return getVigilanciesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyVigilancies() {
+        return !getVigilanciesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation> getWrittenEvaluationSpaceOccupations() {
+        return getWrittenEvaluationSpaceOccupationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyWrittenEvaluationSpaceOccupations() {
+        return !getWrittenEvaluationSpaceOccupationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment> getWrittenEvaluationEnrolments() {
+        return getWrittenEvaluationEnrolmentsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyWrittenEvaluationEnrolments() {
+        return !getWrittenEvaluationEnrolmentsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasEnrollmentEndTimeDateHourMinuteSecond() {
+        return getEnrollmentEndTimeDateHourMinuteSecond() != null;
+    }
+
+    @Deprecated
+    public boolean hasEnrollmentBeginTimeDateHourMinuteSecond() {
+        return getEnrollmentBeginTimeDateHourMinuteSecond() != null;
+    }
+
+    @Deprecated
+    public boolean hasEnrollmentEndDayDateYearMonthDay() {
+        return getEnrollmentEndDayDateYearMonthDay() != null;
+    }
+
+    @Deprecated
+    public boolean hasEnrollmentBeginDayDateYearMonthDay() {
+        return getEnrollmentBeginDayDateYearMonthDay() != null;
+    }
+
+    @Deprecated
+    public boolean hasDayDateYearMonthDay() {
+        return getDayDateYearMonthDay() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndDateHourMinuteSecond() {
+        return getEndDateHourMinuteSecond() != null;
+    }
+
+    @Deprecated
+    public boolean hasBeginningDateHourMinuteSecond() {
+        return getBeginningDateHourMinuteSecond() != null;
+    }
+
+    @Deprecated
+    public boolean hasVigilantsReport() {
+        return getVigilantsReport() != null;
+    }
+
 }

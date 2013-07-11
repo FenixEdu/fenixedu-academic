@@ -13,4 +13,24 @@ public class FirstYearShiftsCapacityToggleLog extends FirstYearShiftsCapacityTog
         setCreator(creator);
         setCreationDate(new DateTime());
     }
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreator() {
+        return getCreator() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreationDate() {
+        return getCreationDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionSemester() {
+        return getExecutionSemester() != null;
+    }
+
 }

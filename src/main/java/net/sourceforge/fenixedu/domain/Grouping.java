@@ -608,4 +608,119 @@ public class Grouping extends Grouping_Base {
         }
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.ExportGrouping> getExportGroupings() {
+        return getExportGroupingsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyExportGroupings() {
+        return !getExportGroupingsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Attends> getAttends() {
+        return getAttendsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAttends() {
+        return !getAttendsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.StudentGroup> getStudentGroups() {
+        return getStudentGroupsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyStudentGroups() {
+        return !getStudentGroupsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Project> getProjects() {
+        return getProjectsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyProjects() {
+        return !getProjectsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.ShiftGroupingProperties> getShiftGroupingProperties() {
+        return getShiftGroupingPropertiesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyShiftGroupingProperties() {
+        return !getShiftGroupingPropertiesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasProjectDescription() {
+        return getProjectDescription() != null;
+    }
+
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasEnrolmentPolicy() {
+        return getEnrolmentPolicy() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasIdealCapacity() {
+        return getIdealCapacity() != null;
+    }
+
+    @Deprecated
+    public boolean hasShiftType() {
+        return getShiftType() != null;
+    }
+
+    @Deprecated
+    public boolean hasMaximumCapacity() {
+        return getMaximumCapacity() != null;
+    }
+
+    @Deprecated
+    public boolean hasDifferentiatedCapacity() {
+        return getDifferentiatedCapacity() != null;
+    }
+
+    @Deprecated
+    public boolean hasMinimumCapacity() {
+        return getMinimumCapacity() != null;
+    }
+
+    @Deprecated
+    public boolean hasEnrolmentEndDayDateDateTime() {
+        return getEnrolmentEndDayDateDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasAutomaticEnrolment() {
+        return getAutomaticEnrolment() != null;
+    }
+
+    @Deprecated
+    public boolean hasEnrolmentBeginDayDateDateTime() {
+        return getEnrolmentBeginDayDateDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasGroupMaximumNumber() {
+        return getGroupMaximumNumber() != null;
+    }
+
 }

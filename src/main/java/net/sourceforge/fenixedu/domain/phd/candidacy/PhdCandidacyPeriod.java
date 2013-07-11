@@ -114,4 +114,19 @@ public abstract class PhdCandidacyPeriod extends PhdCandidacyPeriod_Base {
 
         return getEnd().toString("dd/MM/yyyy");
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess> getPhdProgramCandidacyProcesses() {
+        return getPhdProgramCandidacyProcessesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPhdProgramCandidacyProcesses() {
+        return !getPhdProgramCandidacyProcessesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasType() {
+        return getType() != null;
+    }
+
 }

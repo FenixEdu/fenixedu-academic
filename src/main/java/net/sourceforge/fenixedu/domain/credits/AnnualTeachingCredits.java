@@ -156,4 +156,104 @@ public class AnnualTeachingCredits extends AnnualTeachingCredits_Base {
         }
         return lastAnnualTeachingCreditsDocument;
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.credits.AnnualTeachingCreditsDocument> getAnnualTeachingCreditsDocument() {
+        return getAnnualTeachingCreditsDocumentSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAnnualTeachingCreditsDocument() {
+        return !getAnnualTeachingCreditsDocumentSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasAnnualTeachingLoad() {
+        return getAnnualTeachingLoad() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreditsReduction() {
+        return getCreditsReduction() != null;
+    }
+
+    @Deprecated
+    public boolean hasTeacher() {
+        return getTeacher() != null;
+    }
+
+    @Deprecated
+    public boolean hasMasterDegreeThesesCredits() {
+        return getMasterDegreeThesesCredits() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasServiceExemptionCredits() {
+        return getServiceExemptionCredits() != null;
+    }
+
+    @Deprecated
+    public boolean hasPhdDegreeThesesCredits() {
+        return getPhdDegreeThesesCredits() != null;
+    }
+
+    @Deprecated
+    public boolean hasAnnualCreditsState() {
+        return getAnnualCreditsState() != null;
+    }
+
+    @Deprecated
+    public boolean hasProjectsTutorialsCredits() {
+        return getProjectsTutorialsCredits() != null;
+    }
+
+    @Deprecated
+    public boolean hasLastModifiedDate() {
+        return getLastModifiedDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasManagementFunctionCredits() {
+        return getManagementFunctionCredits() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreationDate() {
+        return getCreationDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasOthersCredits() {
+        return getOthersCredits() != null;
+    }
+
+    @Deprecated
+    public boolean hasHasAnyLimitation() {
+        return getHasAnyLimitation() != null;
+    }
+
+    @Deprecated
+    public boolean hasYearCredits() {
+        return getYearCredits() != null;
+    }
+
+    @Deprecated
+    public boolean hasTeachingCredits() {
+        return getTeachingCredits() != null;
+    }
+
+    @Deprecated
+    public boolean hasFinalCredits() {
+        return getFinalCredits() != null;
+    }
+
+    @Deprecated
+    public boolean hasAccumulatedCredits() {
+        return getAccumulatedCredits() != null;
+    }
+
 }

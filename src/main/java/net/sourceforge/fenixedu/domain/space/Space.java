@@ -1219,4 +1219,104 @@ public abstract class Space extends Space_Base {
         }
         return occupants;
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.space.SpaceAttendances> getCurrentAttendance() {
+        return getCurrentAttendanceSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCurrentAttendance() {
+        return !getCurrentAttendanceSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.space.SpaceAttendances> getPastAttendances() {
+        return getPastAttendancesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPastAttendances() {
+        return !getPastAttendancesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.space.SpaceInformation> getSpaceInformations() {
+        return getSpaceInformationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnySpaceInformations() {
+        return !getSpaceInformationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.space.Blueprint> getBlueprints() {
+        return getBlueprintsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyBlueprints() {
+        return !getBlueprintsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.space.Space> getContainedSpaces() {
+        return getContainedSpacesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyContainedSpaces() {
+        return !getContainedSpacesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasSuroundingSpace() {
+        return getSuroundingSpace() != null;
+    }
+
+    @Deprecated
+    public boolean hasSpaceManagementAccessGroup() {
+        return getSpaceManagementAccessGroup() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreatedOn() {
+        return getCreatedOn() != null;
+    }
+
+    @Deprecated
+    public boolean hasPersonOccupationsAccessGroup() {
+        return getPersonOccupationsAccessGroup() != null;
+    }
+
+    @Deprecated
+    public boolean hasLessonOccupationsAccessGroup() {
+        return getLessonOccupationsAccessGroup() != null;
+    }
+
+    @Deprecated
+    public boolean hasExtensionOccupationsAccessGroup() {
+        return getExtensionOccupationsAccessGroup() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObjectForLibrary() {
+        return getRootDomainObjectForLibrary() != null;
+    }
+
+    @Deprecated
+    public boolean hasUnitOccupationsAccessGroup() {
+        return getUnitOccupationsAccessGroup() != null;
+    }
+
+    @Deprecated
+    public boolean hasGenericEventOccupationsAccessGroup() {
+        return getGenericEventOccupationsAccessGroup() != null;
+    }
+
+    @Deprecated
+    public boolean hasWrittenEvaluationOccupationsAccessGroup() {
+        return getWrittenEvaluationOccupationsAccessGroup() != null;
+    }
+
 }

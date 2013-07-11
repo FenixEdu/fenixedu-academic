@@ -433,4 +433,174 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
         return lessonNumber;
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.InquiryStudentTeacherAnswer> getInquiryStudentTeacherAnswers() {
+        return getInquiryStudentTeacherAnswersSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyInquiryStudentTeacherAnswers() {
+        return !getInquiryStudentTeacherAnswersSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.NonRegularTeachingService> getNonRegularTeachingServices() {
+        return getNonRegularTeachingServicesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyNonRegularTeachingServices() {
+        return !getNonRegularTeachingServicesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.DegreeProjectTutorialService> getDegreeProjectTutorialServices() {
+        return getDegreeProjectTutorialServicesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyDegreeProjectTutorialServices() {
+        return !getDegreeProjectTutorialServicesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.DegreeTeachingServiceCorrection> getDegreeTeachingServiceCorrections() {
+        return getDegreeTeachingServiceCorrectionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyDegreeTeachingServiceCorrections() {
+        return !getDegreeTeachingServiceCorrectionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Summary> getAssociatedSummaries() {
+        return getAssociatedSummariesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssociatedSummaries() {
+        return !getAssociatedSummariesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.TeacherMasterDegreeService> getTeacherMasterDegreeServices() {
+        return getTeacherMasterDegreeServicesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTeacherMasterDegreeServices() {
+        return !getTeacherMasterDegreeServicesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.InquiryResult> getInquiryResults() {
+        return getInquiryResultsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyInquiryResults() {
+        return !getInquiryResultsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.oldInquiries.StudentInquiriesTeachingResult> getStudentInquiriesTeachingResults() {
+        return getStudentInquiriesTeachingResultsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyStudentInquiriesTeachingResults() {
+        return !getStudentInquiriesTeachingResultsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.ShiftProfessorship> getAssociatedShiftProfessorship() {
+        return getAssociatedShiftProfessorshipSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssociatedShiftProfessorship() {
+        return !getAssociatedShiftProfessorshipSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.oldInquiries.InquiriesTeacher> getAssociatedInquiriesTeacher() {
+        return getAssociatedInquiriesTeacherSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssociatedInquiriesTeacher() {
+        return !getAssociatedInquiriesTeacherSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.SupportLesson> getSupportLessons() {
+        return getSupportLessonsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnySupportLessons() {
+        return !getSupportLessonsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService> getDegreeTeachingServices() {
+        return getDegreeTeachingServicesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyDegreeTeachingServices() {
+        return !getDegreeTeachingServicesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasInquiryRegentAnswer() {
+        return getInquiryRegentAnswer() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionCourse() {
+        return getExecutionCourse() != null;
+    }
+
+    @Deprecated
+    public boolean hasInquiryTeacherAnswer() {
+        return getInquiryTeacherAnswer() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreator() {
+        return getCreator() != null;
+    }
+
+    @Deprecated
+    public boolean hasHours() {
+        return getHours() != null;
+    }
+
+    @Deprecated
+    public boolean hasTeachingInquiry() {
+        return getTeachingInquiry() != null;
+    }
+
+    @Deprecated
+    public boolean hasResponsibleFor() {
+        return getResponsibleFor() != null;
+    }
+
+    @Deprecated
+    public boolean hasPermissions() {
+        return getPermissions() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
+    }
+
 }

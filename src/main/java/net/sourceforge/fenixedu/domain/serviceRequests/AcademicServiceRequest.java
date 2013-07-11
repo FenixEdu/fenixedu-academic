@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -290,7 +289,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 
         }
 
-        final Sender sender = getAdministrativeOffice().getUnit().getUnitBasedSender().get(0);
+        final Sender sender = getAdministrativeOffice().getUnit().getUnitBasedSender().iterator().next();
         final Recipient recipient = new Recipient(new PersonGroup(getPerson()));
         new Message(sender, sender.getReplyTos(), recipient.asCollection(), getDescription(), body, "");
     }
@@ -355,18 +354,8 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     }
 
     @Override
-    final public List<AcademicServiceRequestSituation> getAcademicServiceRequestSituations() {
-        return Collections.unmodifiableList(super.getAcademicServiceRequestSituations());
-    }
-
-    @Override
     final public Set<AcademicServiceRequestSituation> getAcademicServiceRequestSituationsSet() {
         return Collections.unmodifiableSet(super.getAcademicServiceRequestSituationsSet());
-    }
-
-    @Override
-    final public Iterator<AcademicServiceRequestSituation> getAcademicServiceRequestSituationsIterator() {
-        return getAcademicServiceRequestSituationsSet().iterator();
     }
 
     @Override
@@ -774,4 +763,84 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     }
 
     public abstract AcademicProgram getAcademicProgram();
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation> getAcademicServiceRequestSituations() {
+        return getAcademicServiceRequestSituationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAcademicServiceRequestSituations() {
+        return !getAcademicServiceRequestSituationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.documents.DocumentRequestGeneratedDocument> getDocument() {
+        return getDocumentSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyDocument() {
+        return !getDocumentSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasAcademicServiceRequestYear() {
+        return getAcademicServiceRequestYear() != null;
+    }
+
+    @Deprecated
+    public boolean hasRequestDate() {
+        return getRequestDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasEvent() {
+        return getEvent() != null;
+    }
+
+    @Deprecated
+    public boolean hasAdministrativeOffice() {
+        return getAdministrativeOffice() != null;
+    }
+
+    @Deprecated
+    public boolean hasRegistryCode() {
+        return getRegistryCode() != null;
+    }
+
+    @Deprecated
+    public boolean hasRectorateSubmissionBatch() {
+        return getRectorateSubmissionBatch() != null;
+    }
+
+    @Deprecated
+    public boolean hasLanguage() {
+        return getLanguage() != null;
+    }
+
+    @Deprecated
+    public boolean hasUrgentRequest() {
+        return getUrgentRequest() != null;
+    }
+
+    @Deprecated
+    public boolean hasServiceRequestNumber() {
+        return getServiceRequestNumber() != null;
+    }
+
+    @Deprecated
+    public boolean hasFreeProcessed() {
+        return getFreeProcessed() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionYear() {
+        return getExecutionYear() != null;
+    }
+
 }

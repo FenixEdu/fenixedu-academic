@@ -82,4 +82,24 @@ public class Precedence extends Precedence_Base {
 
         sourcePrecedence.delete();
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.precedences.Restriction> getRestrictions() {
+        return getRestrictionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyRestrictions() {
+        return !getRestrictionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasCurricularCourse() {
+        return getCurricularCourse() != null;
+    }
+
 }

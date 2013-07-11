@@ -218,4 +218,14 @@ public abstract class IndividualCandidacyPersonalDetails extends IndividualCandi
 
     public abstract String getEidentifier();
 
+    @Deprecated
+    public boolean hasCandidacy() {
+        return getCandidacy() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
+    }
+
 }

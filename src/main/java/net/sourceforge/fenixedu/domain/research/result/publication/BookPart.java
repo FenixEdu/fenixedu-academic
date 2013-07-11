@@ -274,4 +274,44 @@ public class BookPart extends BookPart_Base {
     public Boolean getIsPossibleSelectPersonRole() {
         return true;
     }
+    @Deprecated
+    public boolean hasChapter() {
+        return getChapter() != null;
+    }
+
+    @Deprecated
+    public boolean hasFirstPage() {
+        return getFirstPage() != null;
+    }
+
+    @Deprecated
+    public boolean hasBookTitle() {
+        return getBookTitle() != null;
+    }
+
+    @Deprecated
+    public boolean hasEdition() {
+        return getEdition() != null;
+    }
+
+    @Deprecated
+    public boolean hasVolume() {
+        return getVolume() != null;
+    }
+
+    @Deprecated
+    public boolean hasAddress() {
+        return getAddress() != null;
+    }
+
+    @Deprecated
+    public boolean hasSeries() {
+        return getSeries() != null;
+    }
+
+    @Deprecated
+    public boolean hasLastPage() {
+        return getLastPage() != null;
+    }
+
 }

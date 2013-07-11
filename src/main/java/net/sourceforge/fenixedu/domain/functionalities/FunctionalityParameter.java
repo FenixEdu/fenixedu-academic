@@ -37,4 +37,24 @@ public class FunctionalityParameter extends FunctionalityParameter_Base {
         deleteDomainObject();
     }
 
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasType() {
+        return getType() != null;
+    }
+
+    @Deprecated
+    public boolean hasFunctionality() {
+        return getFunctionality() != null;
+    }
+
 }

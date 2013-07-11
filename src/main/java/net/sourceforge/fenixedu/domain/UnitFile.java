@@ -108,4 +108,29 @@ public class UnitFile extends UnitFile_Base {
         return getUnitFileTags().containsAll(tags);
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.UnitFileTag> getUnitFileTags() {
+        return getUnitFileTagsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyUnitFileTags() {
+        return !getUnitFileTagsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasDescription() {
+        return getDescription() != null;
+    }
+
+    @Deprecated
+    public boolean hasUploader() {
+        return getUploader() != null;
+    }
+
+    @Deprecated
+    public boolean hasUnit() {
+        return getUnit() != null;
+    }
+
 }

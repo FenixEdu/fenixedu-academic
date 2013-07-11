@@ -53,4 +53,24 @@ public class PublicRelationsStudentListQueueJob extends PublicRelationsStudentLi
         return queueJobResult;
     }
 
+    @Deprecated
+    public boolean hasActive() {
+        return getActive() != null;
+    }
+
+    @Deprecated
+    public boolean hasConcluded() {
+        return getConcluded() != null;
+    }
+
+    @Deprecated
+    public boolean hasDegreeType() {
+        return getDegreeType() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionYear() {
+        return getExecutionYear() != null;
+    }
+
 }

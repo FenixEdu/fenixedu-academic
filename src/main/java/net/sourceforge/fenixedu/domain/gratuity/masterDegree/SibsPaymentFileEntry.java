@@ -84,4 +84,44 @@ public class SibsPaymentFileEntry extends SibsPaymentFileEntry_Base {
         }
     }
 
+    @Deprecated
+    public boolean hasYear() {
+        return getYear() != null;
+    }
+
+    @Deprecated
+    public boolean hasPaymentType() {
+        return getPaymentType() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudentNumber() {
+        return getStudentNumber() != null;
+    }
+
+    @Deprecated
+    public boolean hasSibsPaymentFile() {
+        return getSibsPaymentFile() != null;
+    }
+
+    @Deprecated
+    public boolean hasPayedValue() {
+        return getPayedValue() != null;
+    }
+
+    @Deprecated
+    public boolean hasTransactionDateDateTime() {
+        return getTransactionDateDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasPaymentStatus() {
+        return getPaymentStatus() != null;
+    }
+
 }

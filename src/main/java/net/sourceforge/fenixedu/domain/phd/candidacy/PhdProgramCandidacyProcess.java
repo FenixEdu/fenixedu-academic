@@ -578,4 +578,89 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
         return null;
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.phd.notification.PhdNotification> getNotifications() {
+        return getNotificationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyNotifications() {
+        return !getNotificationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter> getRefereeLetters() {
+        return getRefereeLettersSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyRefereeLetters() {
+        return !getRefereeLettersSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyReferee> getCandidacyReferees() {
+        return getCandidacyRefereesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCandidacyReferees() {
+        return !getCandidacyRefereesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.phd.PhdCandidacyProcessState> getStates() {
+        return getStatesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyStates() {
+        return !getStatesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasWhenRatified() {
+        return getWhenRatified() != null;
+    }
+
+    @Deprecated
+    public boolean hasCandidacy() {
+        return getCandidacy() != null;
+    }
+
+    @Deprecated
+    public boolean hasCandidacyDate() {
+        return getCandidacyDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasEvent() {
+        return getEvent() != null;
+    }
+
+    @Deprecated
+    public boolean hasPublicPhdCandidacyPeriod() {
+        return getPublicPhdCandidacyPeriod() != null;
+    }
+
+    @Deprecated
+    public boolean hasFeedbackRequest() {
+        return getFeedbackRequest() != null;
+    }
+
+    @Deprecated
+    public boolean hasCandidacyHashCode() {
+        return getCandidacyHashCode() != null;
+    }
+
+    @Deprecated
+    public boolean hasValidatedByCandidate() {
+        return getValidatedByCandidate() != null;
+    }
+
+    @Deprecated
+    public boolean hasIndividualProgramProcess() {
+        return getIndividualProgramProcess() != null;
+    }
+
 }

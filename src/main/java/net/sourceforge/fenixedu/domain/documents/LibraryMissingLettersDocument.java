@@ -46,4 +46,19 @@ public class LibraryMissingLettersDocument extends LibraryMissingLettersDocument
         }
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.library.LibraryCard> getSource() {
+        return getSourceSet();
+    }
+
+    @Deprecated
+    public boolean hasAnySource() {
+        return !getSourceSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasLibraryDocument() {
+        return getLibraryDocument() != null;
+    }
+
 }

@@ -60,4 +60,24 @@ public class LoginPeriod extends LoginPeriod_Base {
         final YearMonthDay end = getEndDate();
         return start != null && (end == null || !start.isAfter(end));
     }
+    @Deprecated
+    public boolean hasLogin() {
+        return getLogin() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndDate() {
+        return getEndDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasBeginDate() {
+        return getBeginDate() != null;
+    }
+
 }

@@ -127,4 +127,9 @@ public class Exclusiveness extends Exclusiveness_Base {
     public VerifyRuleExecutor createVerifyRuleExecutor() {
         return new ExclusivenessVerifier();
     }
+    @Deprecated
+    public boolean hasExclusiveDegreeModule() {
+        return getExclusiveDegreeModule() != null;
+    }
+
 }

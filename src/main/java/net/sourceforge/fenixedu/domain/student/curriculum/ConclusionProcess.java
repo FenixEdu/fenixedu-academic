@@ -114,4 +114,29 @@ abstract public class ConclusionProcess extends ConclusionProcess_Base {
         return getDegree().getDegreeType();
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.student.curriculum.ConclusionProcessVersion> getVersions() {
+        return getVersionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyVersions() {
+        return !getVersionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasLastVersion() {
+        return getLastVersion() != null;
+    }
+
+    @Deprecated
+    public boolean hasConclusionYear() {
+        return getConclusionYear() != null;
+    }
+
 }

@@ -390,4 +390,9 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
         }
         return result;
     }
+    @Deprecated
+    public boolean hasParentStudentCurricularPlan() {
+        return getParentStudentCurricularPlan() != null;
+    }
+
 }

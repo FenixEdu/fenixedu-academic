@@ -131,4 +131,29 @@ public abstract class EnrolmentPeriod extends EnrolmentPeriod_Base {
         return new Interval(getStartDateDateTime(), getEndDateDateTime());
     }
 
+    @Deprecated
+    public boolean hasDegreeCurricularPlan() {
+        return getDegreeCurricularPlan() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasStartDateDateTime() {
+        return getStartDateDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndDateDateTime() {
+        return getEndDateDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionPeriod() {
+        return getExecutionPeriod() != null;
+    }
+
 }

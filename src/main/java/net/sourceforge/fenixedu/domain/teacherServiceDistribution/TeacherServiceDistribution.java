@@ -549,4 +549,74 @@ public class TeacherServiceDistribution extends TeacherServiceDistribution_Base 
         return tsdCoursesList;
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCourse> getTSDCourses() {
+        return getTSDCoursesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTSDCourses() {
+        return !getTSDCoursesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution> getChilds() {
+        return getChildsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyChilds() {
+        return !getChildsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDTeacher> getTSDTeachers() {
+        return getTSDTeachersSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTSDTeachers() {
+        return !getTSDTeachersSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasTeachersValuationManagers() {
+        return getTeachersValuationManagers() != null;
+    }
+
+    @Deprecated
+    public boolean hasParent() {
+        return getParent() != null;
+    }
+
+    @Deprecated
+    public boolean hasCoursesValuationManagers() {
+        return getCoursesValuationManagers() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasTeachersManagementGroup() {
+        return getTeachersManagementGroup() != null;
+    }
+
+    @Deprecated
+    public boolean hasCoursesManagementGroup() {
+        return getCoursesManagementGroup() != null;
+    }
+
+    @Deprecated
+    public boolean hasTSDProcessPhase() {
+        return getTSDProcessPhase() != null;
+    }
+
 }

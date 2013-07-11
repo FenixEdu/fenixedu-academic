@@ -30,4 +30,24 @@ public class ApprovedTeacherEvaluationProcessMark extends ApprovedTeacherEvaluat
         setRootDomainObject(null);
         deleteDomainObject();
     }
+    @Deprecated
+    public boolean hasTeacherEvaluationProces() {
+        return getTeacherEvaluationProces() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasFacultyEvaluationProcessYear() {
+        return getFacultyEvaluationProcessYear() != null;
+    }
+
+    @Deprecated
+    public boolean hasApprovedEvaluationMark() {
+        return getApprovedEvaluationMark() != null;
+    }
+
 }

@@ -107,4 +107,9 @@ public class GenericEventSpaceOccupation extends GenericEventSpaceOccupation_Bas
     public String getPresentationString() {
         return getGenericEvent().getGanttDiagramEventName().getContent();
     }
+    @Deprecated
+    public boolean hasGenericEvent() {
+        return getGenericEvent() != null;
+    }
+
 }

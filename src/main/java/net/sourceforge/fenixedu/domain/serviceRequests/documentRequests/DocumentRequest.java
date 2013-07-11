@@ -175,4 +175,19 @@ public abstract class DocumentRequest extends DocumentRequest_Base implements ID
                 .getReportFileName();
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.administrativeOffice.curriculumValidation.DocumentPrintRequest> getRequest() {
+        return getRequestSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyRequest() {
+        return !getRequestSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasNumberOfPages() {
+        return getNumberOfPages() != null;
+    }
+
 }

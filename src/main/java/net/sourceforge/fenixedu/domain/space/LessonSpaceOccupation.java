@@ -180,4 +180,9 @@ public class LessonSpaceOccupation extends LessonSpaceOccupation_Base {
         return getLesson().getShift().getExecutionCourse().getSigla();
     }
 
+    @Deprecated
+    public boolean hasLesson() {
+        return getLesson() != null;
+    }
+
 }

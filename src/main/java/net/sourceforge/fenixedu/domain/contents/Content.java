@@ -512,4 +512,89 @@ public abstract class Content extends Content_Base {
     public void logSectionInsertFile(Content childContent, Section section) {
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.contents.Node> getParents() {
+        return getParentsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyParents() {
+        return !getParentsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.support.SupportRequest> getSupportRequests() {
+        return getSupportRequestsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnySupportRequests() {
+        return !getSupportRequestsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.contents.Container> getInitialContainer() {
+        return getInitialContainerSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyInitialContainer() {
+        return !getInitialContainerSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasDescription() {
+        return getDescription() != null;
+    }
+
+    @Deprecated
+    public boolean hasBody() {
+        return getBody() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreator() {
+        return getCreator() != null;
+    }
+
+    @Deprecated
+    public boolean hasAvailabilityPolicy() {
+        return getAvailabilityPolicy() != null;
+    }
+
+    @Deprecated
+    public boolean hasPortal() {
+        return getPortal() != null;
+    }
+
+    @Deprecated
+    public boolean hasContentId() {
+        return getContentId() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreationDate() {
+        return getCreationDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasNormalizedName() {
+        return getNormalizedName() != null;
+    }
+
+    @Deprecated
+    public boolean hasTitle() {
+        return getTitle() != null;
+    }
+
 }

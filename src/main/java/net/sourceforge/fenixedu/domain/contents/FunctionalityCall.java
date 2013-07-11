@@ -35,4 +35,9 @@ public class FunctionalityCall extends FunctionalityCall_Base {
         super.logDeleteNode();
     }
 
+    @Deprecated
+    public boolean hasFunctionality() {
+        return getFunctionality() != null;
+    }
+
 }

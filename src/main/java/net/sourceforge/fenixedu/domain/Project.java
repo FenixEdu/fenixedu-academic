@@ -360,4 +360,69 @@ public class Project extends Project_Base {
     public String getPresentationName() {
         return BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.project") + " " + getName();
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Department> getDeparments() {
+        return getDeparmentsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyDeparments() {
+        return !getDeparmentsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.ProjectSubmission> getProjectSubmissions() {
+        return getProjectSubmissionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyProjectSubmissions() {
+        return !getProjectSubmissionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.ProjectSubmissionLog> getProjectSubmissionLogs() {
+        return getProjectSubmissionLogsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyProjectSubmissionLogs() {
+        return !getProjectSubmissionLogsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasOnlineSubmissionsAllowed() {
+        return getOnlineSubmissionsAllowed() != null;
+    }
+
+    @Deprecated
+    public boolean hasDescription() {
+        return getDescription() != null;
+    }
+
+    @Deprecated
+    public boolean hasProjectBeginDateTime() {
+        return getProjectBeginDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasMaxSubmissionsToKeep() {
+        return getMaxSubmissionsToKeep() != null;
+    }
+
+    @Deprecated
+    public boolean hasProjectEndDateTime() {
+        return getProjectEndDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasGrouping() {
+        return getGrouping() != null;
+    }
+
 }

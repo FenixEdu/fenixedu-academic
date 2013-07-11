@@ -114,4 +114,9 @@ public class DFAGratuityByAmountPerEctsPR extends DFAGratuityByAmountPerEctsPR_B
 
     }
 
+    @Deprecated
+    public boolean hasDfaAmountPerEctsCredit() {
+        return getDfaAmountPerEctsCredit() != null;
+    }
+
 }

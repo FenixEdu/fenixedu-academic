@@ -34,4 +34,9 @@ public class ThesisLibraryPendingOperation extends ThesisLibraryPendingOperation
     public String getLibraryReference() {
         return null;
     }
+    @Deprecated
+    public boolean hasPendingComment() {
+        return getPendingComment() != null;
+    }
+
 }

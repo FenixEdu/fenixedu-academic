@@ -205,4 +205,14 @@ public class AcademicCalendarRootEntry extends AcademicCalendarRootEntry_Base {
     protected boolean associatedWithDomainEntities() {
         return false;
     }
+    @Deprecated
+    public boolean hasRootDomainObjectForRootEntries() {
+        return getRootDomainObjectForRootEntries() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObjectForDefaultRootEntry() {
+        return getRootDomainObjectForDefaultRootEntry() != null;
+    }
+
 }

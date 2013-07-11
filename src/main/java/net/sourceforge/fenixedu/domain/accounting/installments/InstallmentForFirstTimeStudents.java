@@ -127,4 +127,9 @@ public class InstallmentForFirstTimeStudents extends InstallmentForFirstTimeStud
         super.edit(bean);
     }
 
+    @Deprecated
+    public boolean hasNumberOfDaysToStartApplyingPenalty() {
+        return getNumberOfDaysToStartApplyingPenalty() != null;
+    }
+
 }

@@ -62,4 +62,9 @@ public class CoordinatorInquiryTemplate extends CoordinatorInquiryTemplate_Base 
         }
 
     }
+    @Deprecated
+    public boolean hasShared() {
+        return getShared() != null;
+    }
+
 }

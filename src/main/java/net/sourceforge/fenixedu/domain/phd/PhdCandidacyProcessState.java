@@ -178,4 +178,14 @@ public class PhdCandidacyProcessState extends PhdCandidacyProcessState_Base {
 
         return new PhdCandidacyProcessState(process, type, person, remarks, stateDate);
     }
+    @Deprecated
+    public boolean hasType() {
+        return getType() != null;
+    }
+
+    @Deprecated
+    public boolean hasProcess() {
+        return getProcess() != null;
+    }
+
 }

@@ -105,4 +105,9 @@ public class TSDCompetenceCourse extends TSDCompetenceCourse_Base {
         }
     }
 
+    @Deprecated
+    public boolean hasCompetenceCourse() {
+        return getCompetenceCourse() != null;
+    }
+
 }

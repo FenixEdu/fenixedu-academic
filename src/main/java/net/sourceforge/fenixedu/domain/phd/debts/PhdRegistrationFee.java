@@ -80,4 +80,9 @@ public class PhdRegistrationFee extends PhdRegistrationFee_Base {
     public PhdIndividualProgramProcess getPhdIndividualProgramProcess() {
         return getProcess();
     }
+    @Deprecated
+    public boolean hasProcess() {
+        return getProcess() != null;
+    }
+
 }

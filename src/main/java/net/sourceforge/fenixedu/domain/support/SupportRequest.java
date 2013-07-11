@@ -50,4 +50,44 @@ public abstract class SupportRequest extends SupportRequest_Base {
         throw new DomainException("error.domain.support.SupportRequest.requestTime.cannot.be.changed");
     }
 
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasRequester() {
+        return getRequester() != null;
+    }
+
+    @Deprecated
+    public boolean hasMessage() {
+        return getMessage() != null;
+    }
+
+    @Deprecated
+    public boolean hasSubject() {
+        return getSubject() != null;
+    }
+
+    @Deprecated
+    public boolean hasRequestPriority() {
+        return getRequestPriority() != null;
+    }
+
+    @Deprecated
+    public boolean hasRequestContext() {
+        return getRequestContext() != null;
+    }
+
+    @Deprecated
+    public boolean hasResponseEmail() {
+        return getResponseEmail() != null;
+    }
+
+    @Deprecated
+    public boolean hasRequestTime() {
+        return getRequestTime() != null;
+    }
+
 }

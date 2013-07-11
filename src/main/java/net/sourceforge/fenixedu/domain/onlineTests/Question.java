@@ -67,4 +67,49 @@ public class Question extends Question_Base {
     // return null;
     // }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.onlineTests.TestQuestion> getTestQuestions() {
+        return getTestQuestionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTestQuestions() {
+        return !getTestQuestionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion> getStudentTestsQuestions() {
+        return getStudentTestsQuestionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyStudentTestsQuestions() {
+        return !getStudentTestsQuestionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasXmlFile() {
+        return getXmlFile() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasXmlFileName() {
+        return getXmlFileName() != null;
+    }
+
+    @Deprecated
+    public boolean hasVisibility() {
+        return getVisibility() != null;
+    }
+
+    @Deprecated
+    public boolean hasMetadata() {
+        return getMetadata() != null;
+    }
+
 }

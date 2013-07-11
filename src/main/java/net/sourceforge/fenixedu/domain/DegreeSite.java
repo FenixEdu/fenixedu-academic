@@ -70,4 +70,9 @@ public class DegreeSite extends DegreeSite_Base {
         setUnit(unit);
     }
 
+    @Deprecated
+    public boolean hasDegree() {
+        return getDegree() != null;
+    }
+
 }

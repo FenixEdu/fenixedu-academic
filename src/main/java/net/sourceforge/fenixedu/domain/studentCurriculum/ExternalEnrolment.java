@@ -306,4 +306,74 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
         }
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse> getNotNeedToEnrollCurricularCourses() {
+        return getNotNeedToEnrollCurricularCoursesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyNotNeedToEnrollCurricularCourses() {
+        return !getNotNeedToEnrollCurricularCoursesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolmentWrapper> getEnrolmentWrappers() {
+        return getEnrolmentWrappersSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyEnrolmentWrappers() {
+        return !getEnrolmentWrappersSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRegistration() {
+        return getRegistration() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasRegime() {
+        return getRegime() != null;
+    }
+
+    @Deprecated
+    public boolean hasGrade() {
+        return getGrade() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreationDateDateTime() {
+        return getCreationDateDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasExternalCurricularCourse() {
+        return getExternalCurricularCourse() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreatedBy() {
+        return getCreatedBy() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionPeriod() {
+        return getExecutionPeriod() != null;
+    }
+
+    @Deprecated
+    public boolean hasEctsCredits() {
+        return getEctsCredits() != null;
+    }
+
+    @Deprecated
+    public boolean hasEvaluationDate() {
+        return getEvaluationDate() != null;
+    }
+
 }

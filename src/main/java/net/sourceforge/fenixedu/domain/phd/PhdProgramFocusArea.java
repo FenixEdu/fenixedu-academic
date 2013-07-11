@@ -89,4 +89,59 @@ public class PhdProgramFocusArea extends PhdProgramFocusArea_Base {
 
                 });
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.phd.PhdProgram> getPhdPrograms() {
+        return getPhdProgramsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPhdPrograms() {
+        return !getPhdProgramsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.phd.ExternalPhdProgram> getExternalPhdPrograms() {
+        return getExternalPhdProgramsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyExternalPhdPrograms() {
+        return !getExternalPhdProgramsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.phd.ThesisSubject> getThesisSubjects() {
+        return getThesisSubjectsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyThesisSubjects() {
+        return !getThesisSubjectsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess> getIndividualProgramProcesses() {
+        return getIndividualProgramProcessesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyIndividualProgramProcesses() {
+        return !getIndividualProgramProcessesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasWhenCreated() {
+        return getWhenCreated() != null;
+    }
+
 }

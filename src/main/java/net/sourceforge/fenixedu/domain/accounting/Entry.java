@@ -232,4 +232,54 @@ public class Entry extends Entry_Base {
         return getAccountingTransaction().getTransactionDetail().getPaymentMode();
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.CreditNoteEntry> getCreditNoteEntries() {
+        return getCreditNoteEntriesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCreditNoteEntries() {
+        return !getCreditNoteEntriesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.Receipt> getReceipts() {
+        return getReceiptsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyReceipts() {
+        return !getReceiptsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasOriginalAmount() {
+        return getOriginalAmount() != null;
+    }
+
+    @Deprecated
+    public boolean hasEntryType() {
+        return getEntryType() != null;
+    }
+
+    @Deprecated
+    public boolean hasAdjustmentCreditNoteEntry() {
+        return getAdjustmentCreditNoteEntry() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasAccountingTransaction() {
+        return getAccountingTransaction() != null;
+    }
+
+    @Deprecated
+    public boolean hasAccount() {
+        return getAccount() != null;
+    }
+
 }

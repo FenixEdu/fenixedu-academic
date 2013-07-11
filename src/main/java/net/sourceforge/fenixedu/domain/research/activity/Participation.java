@@ -157,4 +157,24 @@ public abstract class Participation extends Participation_Base {
         }
     }
 
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasParty() {
+        return getParty() != null;
+    }
+
+    @Deprecated
+    public boolean hasRoleMessage() {
+        return getRoleMessage() != null;
+    }
+
+    @Deprecated
+    public boolean hasRole() {
+        return getRole() != null;
+    }
+
 }

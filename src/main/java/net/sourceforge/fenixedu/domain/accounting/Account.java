@@ -110,4 +110,34 @@ public class Account extends Account_Base {
         return getAccountType() == AccountType.EXTERNAL;
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.Entry> getEntries() {
+        return getEntriesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyEntries() {
+        return !getEntriesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasParty() {
+        return getParty() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreationDate() {
+        return getCreationDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasAccountType() {
+        return getAccountType() != null;
+    }
+
 }

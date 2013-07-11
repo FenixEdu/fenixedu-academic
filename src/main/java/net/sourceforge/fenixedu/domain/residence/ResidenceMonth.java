@@ -80,4 +80,29 @@ public class ResidenceMonth extends ResidenceMonth_Base {
     public boolean isFor(int year) {
         return getYear().isFor(year);
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.ResidenceEvent> getEvents() {
+        return getEventsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyEvents() {
+        return !getEventsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasYear() {
+        return getYear() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasMonth() {
+        return getMonth() != null;
+    }
+
 }

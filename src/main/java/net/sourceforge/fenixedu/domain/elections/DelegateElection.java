@@ -248,4 +248,64 @@ public abstract class DelegateElection extends DelegateElection_Base {
 
     public abstract void deleteVotingPeriod(DelegateElectionVotingPeriod votingPeriod, boolean removeElection);
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.elections.DelegateElectionVotingPeriod> getVotingPeriod() {
+        return getVotingPeriodSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyVotingPeriod() {
+        return !getVotingPeriodSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.student.Student> getStudents() {
+        return getStudentsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyStudents() {
+        return !getStudentsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.student.Student> getCandidates() {
+        return getCandidatesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCandidates() {
+        return !getCandidatesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasElectedStudent() {
+        return getElectedStudent() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasSentResultsToCandidates() {
+        return getSentResultsToCandidates() != null;
+    }
+
+    @Deprecated
+    public boolean hasDegree() {
+        return getDegree() != null;
+    }
+
+    @Deprecated
+    public boolean hasCandidacyPeriod() {
+        return getCandidacyPeriod() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionYear() {
+        return getExecutionYear() != null;
+    }
+
 }

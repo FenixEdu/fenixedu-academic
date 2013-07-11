@@ -110,4 +110,44 @@ public abstract class PersistentAccessGroup extends PersistentAccessGroup_Base {
     public final boolean hasRootLink() {
         return super.getRootDomainObject() != null || super.getDeletedRootDomainObject() != null || super.getNewGroup() != null;
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.organizationalStructure.Party> getMember() {
+        return getMemberSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyMember() {
+        return !getMemberSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreated() {
+        return getCreated() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreator() {
+        return getCreator() != null;
+    }
+
+    @Deprecated
+    public boolean hasOldGroup() {
+        return getOldGroup() != null;
+    }
+
+    @Deprecated
+    public boolean hasNewGroup() {
+        return getNewGroup() != null;
+    }
+
+    @Deprecated
+    public boolean hasDeletedRootDomainObject() {
+        return getDeletedRootDomainObject() != null;
+    }
+
 }

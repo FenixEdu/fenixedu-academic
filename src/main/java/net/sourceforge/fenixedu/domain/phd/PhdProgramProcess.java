@@ -222,4 +222,24 @@ abstract public class PhdProgramProcess extends PhdProgramProcess_Base {
         return false;
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.phd.log.PhdLogEntry> getLogEntries() {
+        return getLogEntriesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyLogEntries() {
+        return !getLogEntriesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument> getDocuments() {
+        return getDocumentsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyDocuments() {
+        return !getDocumentsSet().isEmpty();
+    }
+
 }

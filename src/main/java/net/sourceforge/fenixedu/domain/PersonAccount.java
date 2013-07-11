@@ -64,4 +64,29 @@ public class PersonAccount extends PersonAccount_Base {
         super.deleteDomainObject();
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.transactions.Transaction> getTransactions() {
+        return getTransactionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTransactions() {
+        return !getTransactionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasBalance() {
+        return getBalance() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
+    }
+
 }

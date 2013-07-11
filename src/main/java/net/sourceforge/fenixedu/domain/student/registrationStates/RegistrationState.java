@@ -349,4 +349,29 @@ public abstract class RegistrationState extends RegistrationState_Base implement
         return false;
     }
 
+    @Deprecated
+    public boolean hasRegistration() {
+        return getRegistration() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasStateDate() {
+        return getStateDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasRemarks() {
+        return getRemarks() != null;
+    }
+
+    @Deprecated
+    public boolean hasResponsiblePerson() {
+        return getResponsiblePerson() != null;
+    }
+
 }

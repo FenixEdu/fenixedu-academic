@@ -53,4 +53,19 @@ public abstract class MaterialSpaceOccupation extends MaterialSpaceOccupation_Ba
     public boolean isMaterialSpaceOccupation() {
         return true;
     }
+    @Deprecated
+    public boolean hasEnd() {
+        return getEnd() != null;
+    }
+
+    @Deprecated
+    public boolean hasMaterial() {
+        return getMaterial() != null;
+    }
+
+    @Deprecated
+    public boolean hasBegin() {
+        return getBegin() != null;
+    }
+
 }

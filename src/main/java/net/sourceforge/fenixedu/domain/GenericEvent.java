@@ -442,4 +442,69 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
         }
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.space.GenericEventSpaceOccupation> getGenericEventSpaceOccupations() {
+        return getGenericEventSpaceOccupationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyGenericEventSpaceOccupations() {
+        return !getGenericEventSpaceOccupationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasStartTimeDateHourMinuteSecond() {
+        return getStartTimeDateHourMinuteSecond() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndTimeDateHourMinuteSecond() {
+        return getEndTimeDateHourMinuteSecond() != null;
+    }
+
+    @Deprecated
+    public boolean hasDescription() {
+        return getDescription() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndDate() {
+        return getEndDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasBeginDate() {
+        return getBeginDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasDailyFrequencyMarkSunday() {
+        return getDailyFrequencyMarkSunday() != null;
+    }
+
+    @Deprecated
+    public boolean hasPunctualRoomsOccupationRequest() {
+        return getPunctualRoomsOccupationRequest() != null;
+    }
+
+    @Deprecated
+    public boolean hasDailyFrequencyMarkSaturday() {
+        return getDailyFrequencyMarkSaturday() != null;
+    }
+
+    @Deprecated
+    public boolean hasFrequency() {
+        return getFrequency() != null;
+    }
+
+    @Deprecated
+    public boolean hasTitle() {
+        return getTitle() != null;
+    }
+
 }

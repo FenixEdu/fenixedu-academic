@@ -35,4 +35,24 @@ public class DomainOperationLog extends DomainOperationLog_Base {
         super.deleteDomainObject();
     }
 
+    @Deprecated
+    public boolean hasWhenDateTime() {
+        return getWhenDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasDescription() {
+        return getDescription() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
+    }
+
 }

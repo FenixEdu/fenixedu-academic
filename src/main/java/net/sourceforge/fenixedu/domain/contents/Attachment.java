@@ -104,4 +104,9 @@ public class Attachment extends Attachment_Base {
         }
 
     }
+    @Deprecated
+    public boolean hasFile() {
+        return getFile() != null;
+    }
+
 }

@@ -75,4 +75,9 @@ public class CooperationParticipation extends CooperationParticipation_Base {
         return false;
     }
 
+    @Deprecated
+    public boolean hasCooperation() {
+        return getCooperation() != null;
+    }
+
 }

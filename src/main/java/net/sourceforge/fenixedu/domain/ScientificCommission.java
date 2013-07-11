@@ -105,4 +105,24 @@ public class ScientificCommission extends ScientificCommission_Base {
                 "resources.MessagingResources", "log.degree.scientificcomission.editmember", this.getPerson()
                         .getPresentationName(), this.getExecutionDegree().getDegree().getPresentationName());
     }
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionDegree() {
+        return getExecutionDegree() != null;
+    }
+
+    @Deprecated
+    public boolean hasContact() {
+        return getContact() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
+    }
+
 }

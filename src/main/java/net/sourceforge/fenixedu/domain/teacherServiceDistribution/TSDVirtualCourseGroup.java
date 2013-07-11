@@ -61,4 +61,19 @@ public class TSDVirtualCourseGroup extends TSDVirtualCourseGroup_Base {
         return lecturedShiftTypes;
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.DegreeCurricularPlan> getDegreeCurricularPlans() {
+        return getDegreeCurricularPlansSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyDegreeCurricularPlans() {
+        return !getDegreeCurricularPlansSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
 }

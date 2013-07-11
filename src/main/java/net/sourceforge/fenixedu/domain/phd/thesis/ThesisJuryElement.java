@@ -231,4 +231,54 @@ public class ThesisJuryElement extends ThesisJuryElement_Base {
         return hasProcessForPresidentJuryElement();
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.phd.PhdThesisReportFeedbackDocument> getFeedbackDocuments() {
+        return getFeedbackDocumentsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyFeedbackDocuments() {
+        return !getFeedbackDocumentsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasProcessForPresidentJuryElement() {
+        return getProcessForPresidentJuryElement() != null;
+    }
+
+    @Deprecated
+    public boolean hasExpert() {
+        return getExpert() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasProcess() {
+        return getProcess() != null;
+    }
+
+    @Deprecated
+    public boolean hasParticipant() {
+        return getParticipant() != null;
+    }
+
+    @Deprecated
+    public boolean hasElementOrder() {
+        return getElementOrder() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreationDate() {
+        return getCreationDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasReporter() {
+        return getReporter() != null;
+    }
+
 }

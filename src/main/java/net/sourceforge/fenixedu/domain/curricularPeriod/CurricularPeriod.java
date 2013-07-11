@@ -316,4 +316,49 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
     public boolean hasChildOrderValue(final Integer order) {
         return hasChildOrder() && getChildOrder().equals(order);
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.Context> getContexts() {
+        return getContextsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyContexts() {
+        return !getContextsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod> getChilds() {
+        return getChildsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyChilds() {
+        return !getChildsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasParent() {
+        return getParent() != null;
+    }
+
+    @Deprecated
+    public boolean hasDegreeCurricularPlan() {
+        return getDegreeCurricularPlan() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasChildOrder() {
+        return getChildOrder() != null;
+    }
+
+    @Deprecated
+    public boolean hasAcademicPeriod() {
+        return getAcademicPeriod() != null;
+    }
+
 }

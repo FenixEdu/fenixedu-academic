@@ -22,4 +22,24 @@ public class SecondCycleIndividualCandidacySeriesGrade extends SecondCycleIndivi
         setRootDomainObject(null);
         deleteDomainObject();
     }
+    @Deprecated
+    public boolean hasProfessionalExperience() {
+        return getProfessionalExperience() != null;
+    }
+
+    @Deprecated
+    public boolean hasCandidacyGrade() {
+        return getCandidacyGrade() != null;
+    }
+
+    @Deprecated
+    public boolean hasSeriesCandidacyGrade() {
+        return getSeriesCandidacyGrade() != null;
+    }
+
+    @Deprecated
+    public boolean hasInterviewGrade() {
+        return getInterviewGrade() != null;
+    }
+
 }

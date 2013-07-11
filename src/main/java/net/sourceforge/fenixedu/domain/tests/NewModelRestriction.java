@@ -128,4 +128,29 @@ public class NewModelRestriction extends NewModelRestriction_Base implements Pos
         return null;
     }
 
+    @Deprecated
+    public boolean hasValue() {
+        return getValue() != null;
+    }
+
+    @Deprecated
+    public boolean hasCount() {
+        return getCount() != null;
+    }
+
+    @Deprecated
+    public boolean hasQuestion() {
+        return getQuestion() != null;
+    }
+
+    @Deprecated
+    public boolean hasPosition() {
+        return getPosition() != null;
+    }
+
+    @Deprecated
+    public boolean hasParentGroup() {
+        return getParentGroup() != null;
+    }
+
 }

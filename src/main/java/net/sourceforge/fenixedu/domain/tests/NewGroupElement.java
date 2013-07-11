@@ -45,4 +45,24 @@ public class NewGroupElement extends NewGroupElement_Base {
 
     public static final Comparator<NewGroupElement> POSITION_COMPARATOR = new PositionComparator();
 
+    @Deprecated
+    public boolean hasParent() {
+        return getParent() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasPosition() {
+        return getPosition() != null;
+    }
+
+    @Deprecated
+    public boolean hasChild() {
+        return getChild() != null;
+    }
+
 }

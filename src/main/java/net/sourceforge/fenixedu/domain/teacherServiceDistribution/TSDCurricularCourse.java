@@ -94,4 +94,14 @@ public class TSDCurricularCourse extends TSDCurricularCourse_Base {
 
         return degree.getNameFor(getExecutionPeriod().getExecutionYear()) + " (" + degree.getSigla() + ")";
     }
+    @Deprecated
+    public boolean hasTSDCurricularCourseGroup() {
+        return getTSDCurricularCourseGroup() != null;
+    }
+
+    @Deprecated
+    public boolean hasCurricularCourse() {
+        return getCurricularCourse() != null;
+    }
+
 }

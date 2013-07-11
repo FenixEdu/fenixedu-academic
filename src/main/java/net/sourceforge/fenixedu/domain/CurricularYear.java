@@ -59,4 +59,54 @@ public class CurricularYear extends CurricularYear_Base implements Comparable<Cu
         return null;
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.CurricularSemester> getCurricularSemesters() {
+        return getCurricularSemestersSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCurricularSemesters() {
+        return !getCurricularSemestersSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction> getPersonFunctions() {
+        return getPersonFunctionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPersonFunctions() {
+        return !getPersonFunctionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.elections.YearDelegateElection> getYearDelegateElections() {
+        return getYearDelegateElectionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyYearDelegateElections() {
+        return !getYearDelegateElectionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.EctsCurricularYearConversionTable> getEctsConversionTables() {
+        return getEctsConversionTablesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyEctsConversionTables() {
+        return !getEctsConversionTablesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasYear() {
+        return getYear() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
 }

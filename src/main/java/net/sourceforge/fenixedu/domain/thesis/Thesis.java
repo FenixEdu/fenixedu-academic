@@ -1749,4 +1749,164 @@ public class Thesis extends Thesis_Base {
         return thesisFile != null && thesisFile.areThesisFilesReadable();
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant> getParticipations() {
+        return getParticipationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyParticipations() {
+        return !getParticipationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasConfirmation() {
+        return getConfirmation() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasEnrolment() {
+        return getEnrolment() != null;
+    }
+
+    @Deprecated
+    public boolean hasSubmission() {
+        return getSubmission() != null;
+    }
+
+    @Deprecated
+    public boolean hasDeclarationAcceptedTime() {
+        return getDeclarationAcceptedTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasDeclarationAccepted() {
+        return getDeclarationAccepted() != null;
+    }
+
+    @Deprecated
+    public boolean hasEvaluation() {
+        return getEvaluation() != null;
+    }
+
+    @Deprecated
+    public boolean hasExtendedAbstract() {
+        return getExtendedAbstract() != null;
+    }
+
+    @Deprecated
+    public boolean hasMark() {
+        return getMark() != null;
+    }
+
+    @Deprecated
+    public boolean hasDocumentsAvailableAfter() {
+        return getDocumentsAvailableAfter() != null;
+    }
+
+    @Deprecated
+    public boolean hasKeywords() {
+        return getKeywords() != null;
+    }
+
+    @Deprecated
+    public boolean hasThesisAbstract() {
+        return getThesisAbstract() != null;
+    }
+
+    @Deprecated
+    public boolean hasRejectionComment() {
+        return getRejectionComment() != null;
+    }
+
+    @Deprecated
+    public boolean hasDiscussed() {
+        return getDiscussed() != null;
+    }
+
+    @Deprecated
+    public boolean hasSite() {
+        return getSite() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreation() {
+        return getCreation() != null;
+    }
+
+    @Deprecated
+    public boolean hasConfirmmedDocuments() {
+        return getConfirmmedDocuments() != null;
+    }
+
+    @Deprecated
+    public boolean hasProposedPlace() {
+        return getProposedPlace() != null;
+    }
+
+    @Deprecated
+    public boolean hasComment() {
+        return getComment() != null;
+    }
+
+    @Deprecated
+    public boolean hasLastLibraryOperation() {
+        return getLastLibraryOperation() != null;
+    }
+
+    @Deprecated
+    public boolean hasTitle() {
+        return getTitle() != null;
+    }
+
+    @Deprecated
+    public boolean hasState() {
+        return getState() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObjectFromPendingPublication() {
+        return getRootDomainObjectFromPendingPublication() != null;
+    }
+
+    @Deprecated
+    public boolean hasPublication() {
+        return getPublication() != null;
+    }
+
+    @Deprecated
+    public boolean hasDegree() {
+        return getDegree() != null;
+    }
+
+    @Deprecated
+    public boolean hasProposedDiscussed() {
+        return getProposedDiscussed() != null;
+    }
+
+    @Deprecated
+    public boolean hasApproval() {
+        return getApproval() != null;
+    }
+
+    @Deprecated
+    public boolean hasVisibility() {
+        return getVisibility() != null;
+    }
+
+    @Deprecated
+    public boolean hasOrientatorCreditsDistribution() {
+        return getOrientatorCreditsDistribution() != null;
+    }
+
+    @Deprecated
+    public boolean hasDissertation() {
+        return getDissertation() != null;
+    }
+
 }

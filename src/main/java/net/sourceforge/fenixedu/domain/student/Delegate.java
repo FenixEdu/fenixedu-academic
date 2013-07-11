@@ -42,4 +42,19 @@ public class Delegate extends Delegate_Base {
         deleteDomainObject();
     }
 
+    @Deprecated
+    public boolean hasRegistration() {
+        return getRegistration() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasDelegateFunction() {
+        return getDelegateFunction() != null;
+    }
+
 }

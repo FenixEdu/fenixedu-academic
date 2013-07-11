@@ -67,4 +67,9 @@ public class EctsDegreeGraduationGradeConversionTable extends EctsDegreeGraduati
         setDegree(null);
         super.delete();
     }
+    @Deprecated
+    public boolean hasDegree() {
+        return getDegree() != null;
+    }
+
 }

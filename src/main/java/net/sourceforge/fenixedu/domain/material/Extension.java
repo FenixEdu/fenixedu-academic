@@ -73,4 +73,14 @@ public class Extension extends Extension_Base {
         }
         return null;
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.material.PersonExtension> getPersons() {
+        return getPersonsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPersons() {
+        return !getPersonsSet().isEmpty();
+    }
+
 }

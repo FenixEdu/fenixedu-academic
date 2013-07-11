@@ -310,4 +310,44 @@ public class MobilityIndividualApplication extends MobilityIndividualApplication
         return selectedOpening.getMobilityAgreement().getMobilityProgram();
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ApprovedLearningAgreementDocumentFile> getApprovedLearningAgreements() {
+        return getApprovedLearningAgreementsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyApprovedLearningAgreements() {
+        return !getApprovedLearningAgreementsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.CurricularCourse> getCurricularCourses() {
+        return getCurricularCoursesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCurricularCourses() {
+        return !getCurricularCoursesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasIdCardAvoidanceOtherReason() {
+        return getIdCardAvoidanceOtherReason() != null;
+    }
+
+    @Deprecated
+    public boolean hasNationalIdCardAvoidanceQuestion() {
+        return getNationalIdCardAvoidanceQuestion() != null;
+    }
+
+    @Deprecated
+    public boolean hasMobilityStudentData() {
+        return getMobilityStudentData() != null;
+    }
+
+    @Deprecated
+    public boolean hasNationalIdCardAvoidanceAnswerDate() {
+        return getNationalIdCardAvoidanceAnswerDate() != null;
+    }
+
 }

@@ -189,4 +189,44 @@ public abstract class ServiceAgreementTemplate extends ServiceAgreementTemplate_
         return result;
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.ServiceAgreement> getServiceAgreements() {
+        return getServiceAgreementsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyServiceAgreements() {
+        return !getServiceAgreementsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplatePaymentPlan> getPaymentPlans() {
+        return getPaymentPlansSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPaymentPlans() {
+        return !getPaymentPlansSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.PostingRule> getPostingRules() {
+        return getPostingRulesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPostingRules() {
+        return !getPostingRulesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreationDate() {
+        return getCreationDate() != null;
+    }
+
 }

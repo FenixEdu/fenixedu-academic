@@ -247,4 +247,44 @@ public class PhdStudyPlan extends PhdStudyPlan_Base {
         return enrolment.getCurricularCourse().getCompetenceCourse().equals(competenceCourse);
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.phd.PhdStudyPlanEntry> getEntries() {
+        return getEntriesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyEntries() {
+        return !getEntriesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasWhenCreated() {
+        return getWhenCreated() != null;
+    }
+
+    @Deprecated
+    public boolean hasProcess() {
+        return getProcess() != null;
+    }
+
+    @Deprecated
+    public boolean hasDegree() {
+        return getDegree() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreatedBy() {
+        return getCreatedBy() != null;
+    }
+
+    @Deprecated
+    public boolean hasExempted() {
+        return getExempted() != null;
+    }
+
 }

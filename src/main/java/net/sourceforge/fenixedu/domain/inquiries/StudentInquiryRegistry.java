@@ -149,4 +149,59 @@ public class StudentInquiryRegistry extends StudentInquiryRegistry_Base {
         setRootDomainObject(null);
         super.deleteDomainObject();
     }
+    @Deprecated
+    public boolean hasStudent() {
+        return getStudent() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionCourse() {
+        return getExecutionCourse() != null;
+    }
+
+    @Deprecated
+    public boolean hasEstimatedECTS() {
+        return getEstimatedECTS() != null;
+    }
+
+    @Deprecated
+    public boolean hasRegistration() {
+        return getRegistration() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudyDaysSpentInExamsSeason() {
+        return getStudyDaysSpentInExamsSeason() != null;
+    }
+
+    @Deprecated
+    public boolean hasState() {
+        return getState() != null;
+    }
+
+    @Deprecated
+    public boolean hasAttendenceClassesPercentage() {
+        return getAttendenceClassesPercentage() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionPeriod() {
+        return getExecutionPeriod() != null;
+    }
+
+    @Deprecated
+    public boolean hasWeeklyHoursSpentPercentage() {
+        return getWeeklyHoursSpentPercentage() != null;
+    }
+
+    @Deprecated
+    public boolean hasCurricularCourse() {
+        return getCurricularCourse() != null;
+    }
+
 }

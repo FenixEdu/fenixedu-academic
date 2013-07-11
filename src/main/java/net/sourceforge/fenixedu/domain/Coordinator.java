@@ -161,4 +161,54 @@ public class Coordinator extends Coordinator_Base {
         }
         return null;
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.CoordinatorExecutionDegreeCoursesReport> getExecutionDegreeCoursesReports() {
+        return getExecutionDegreeCoursesReportsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyExecutionDegreeCoursesReports() {
+        return !getExecutionDegreeCoursesReportsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.oldInquiries.StudentInquiriesCourseResult> getStudentInquiriesCourseResults() {
+        return getStudentInquiriesCourseResultsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyStudentInquiriesCourseResults() {
+        return !getStudentInquiriesCourseResultsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.InquiryCoordinatorAnswer> getInquiryCoordinatorAnswers() {
+        return getInquiryCoordinatorAnswersSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyInquiryCoordinatorAnswers() {
+        return !getInquiryCoordinatorAnswersSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasResponsible() {
+        return getResponsible() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionDegree() {
+        return getExecutionDegree() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
+    }
+
 }

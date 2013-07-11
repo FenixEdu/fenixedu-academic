@@ -167,4 +167,24 @@ public class ExecutionCourseAnnouncementBoard extends ExecutionCourseAnnouncemen
                 getExecutionCourse().getDegreePresentationString());
     }
 
+    @Deprecated
+    public boolean hasExecutionCoursePermittedManagementGroupType() {
+        return getExecutionCoursePermittedManagementGroupType() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionCourse() {
+        return getExecutionCourse() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionCoursePermittedWriteGroupType() {
+        return getExecutionCoursePermittedWriteGroupType() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionCoursePermittedReadGroupType() {
+        return getExecutionCoursePermittedReadGroupType() != null;
+    }
+
 }

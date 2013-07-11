@@ -20,4 +20,19 @@ public class FirstTimeCandidacyLogEntry extends FirstTimeCandidacyLogEntry_Base 
     protected RootDomainObject getRootDomainObject() {
         return RootDomainObject.getInstance();
     }
+    @Deprecated
+    public boolean hasFirstTimeCandidacyLog() {
+        return getFirstTimeCandidacyLog() != null;
+    }
+
+    @Deprecated
+    public boolean hasEntryDate() {
+        return getEntryDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasStage() {
+        return getStage() != null;
+    }
+
 }

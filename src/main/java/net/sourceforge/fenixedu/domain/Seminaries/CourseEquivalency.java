@@ -30,4 +30,34 @@ public class CourseEquivalency extends CourseEquivalency_Base {
         super.deleteDomainObject();
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Seminaries.Theme> getThemes() {
+        return getThemesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyThemes() {
+        return !getThemesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasModality() {
+        return getModality() != null;
+    }
+
+    @Deprecated
+    public boolean hasCurricularCourse() {
+        return getCurricularCourse() != null;
+    }
+
+    @Deprecated
+    public boolean hasSeminary() {
+        return getSeminary() != null;
+    }
+
 }

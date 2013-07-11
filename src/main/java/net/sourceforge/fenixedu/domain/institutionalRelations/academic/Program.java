@@ -10,4 +10,14 @@ public class Program extends Program_Base {
         return false;
     }
 
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasRegistrationAgreement() {
+        return getRegistrationAgreement() != null;
+    }
+
 }

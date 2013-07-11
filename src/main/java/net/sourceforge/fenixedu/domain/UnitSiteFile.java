@@ -23,4 +23,9 @@ public class UnitSiteFile extends UnitSiteFile_Base {
         super.delete();
     }
 
+    @Deprecated
+    public boolean hasUnitSite() {
+        return getUnitSite() != null;
+    }
+
 }

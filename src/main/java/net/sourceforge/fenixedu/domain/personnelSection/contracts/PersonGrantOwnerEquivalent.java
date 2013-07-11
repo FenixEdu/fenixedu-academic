@@ -49,4 +49,34 @@ public class PersonGrantOwnerEquivalent extends PersonGrantOwnerEquivalent_Base 
         return getGrantOwnerEquivalent().getGiveCredits();
     }
 
+    @Deprecated
+    public boolean hasLocal() {
+        return getLocal() != null;
+    }
+
+    @Deprecated
+    public boolean hasGiafCountryName() {
+        return getGiafCountryName() != null;
+    }
+
+    @Deprecated
+    public boolean hasGrantOwnerEquivalentGiafId() {
+        return getGrantOwnerEquivalentGiafId() != null;
+    }
+
+    @Deprecated
+    public boolean hasCountry() {
+        return getCountry() != null;
+    }
+
+    @Deprecated
+    public boolean hasMotive() {
+        return getMotive() != null;
+    }
+
+    @Deprecated
+    public boolean hasGrantOwnerEquivalent() {
+        return getGrantOwnerEquivalent() != null;
+    }
+
 }

@@ -471,4 +471,109 @@ public class Receipt extends Receipt_Base {
         return null;
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.CreditNote> getCreditNotes() {
+        return getCreditNotesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCreditNotes() {
+        return !getCreditNotesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.ReceiptPrintVersion> getReceiptsVersions() {
+        return getReceiptsVersionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyReceiptsVersions() {
+        return !getReceiptsVersionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.Entry> getEntries() {
+        return getEntriesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyEntries() {
+        return !getEntriesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.documents.ReceiptGeneratedDocument> getDocument() {
+        return getDocumentSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyDocument() {
+        return !getDocumentSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasResponsible() {
+        return getResponsible() != null;
+    }
+
+    @Deprecated
+    public boolean hasYear() {
+        return getYear() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasWhenUpdated() {
+        return getWhenUpdated() != null;
+    }
+
+    @Deprecated
+    public boolean hasReceiptDate() {
+        return getReceiptDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasState() {
+        return getState() != null;
+    }
+
+    @Deprecated
+    public boolean hasContributorName() {
+        return getContributorName() != null;
+    }
+
+    @Deprecated
+    public boolean hasWhenCreated() {
+        return getWhenCreated() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumber() {
+        return getNumber() != null;
+    }
+
+    @Deprecated
+    public boolean hasContributorParty() {
+        return getContributorParty() != null;
+    }
+
+    @Deprecated
+    public boolean hasOwnerUnit() {
+        return getOwnerUnit() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumberSeries() {
+        return getNumberSeries() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
+    }
+
 }

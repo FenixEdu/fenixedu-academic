@@ -29,4 +29,19 @@ public abstract class PrecedenceRule extends PrecedenceRule_Base {
     protected void removeOwnParameters() {
         setPrecedenceDegreeModule(null);
     }
+    @Deprecated
+    public boolean hasPrecedenceDegreeModule() {
+        return getPrecedenceDegreeModule() != null;
+    }
+
+    @Deprecated
+    public boolean hasAcademicPeriod() {
+        return getAcademicPeriod() != null;
+    }
+
+    @Deprecated
+    public boolean hasCurricularPeriodOrder() {
+        return getCurricularPeriodOrder() != null;
+    }
+
 }

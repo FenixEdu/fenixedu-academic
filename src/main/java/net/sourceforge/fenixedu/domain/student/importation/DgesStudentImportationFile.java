@@ -51,4 +51,9 @@ public class DgesStudentImportationFile extends DgesStudentImportationFile_Base 
         return new DgesStudentImportationFile(contents, filename, obtainVirtualPath(executionYear, campus, entryPhase));
     }
 
+    @Deprecated
+    public boolean hasDgesStudentImportationProcess() {
+        return getDgesStudentImportationProcess() != null;
+    }
+
 }

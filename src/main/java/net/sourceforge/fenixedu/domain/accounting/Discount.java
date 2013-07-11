@@ -39,4 +39,29 @@ public class Discount extends Discount_Base {
         super.deleteDomainObject();
     }
 
+    @Deprecated
+    public boolean hasAmount() {
+        return getAmount() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasEvent() {
+        return getEvent() != null;
+    }
+
+    @Deprecated
+    public boolean hasWhenCreated() {
+        return getWhenCreated() != null;
+    }
+
+    @Deprecated
+    public boolean hasUsername() {
+        return getUsername() != null;
+    }
+
 }

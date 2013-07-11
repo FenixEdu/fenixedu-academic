@@ -84,4 +84,44 @@ public abstract class QueueJob extends QueueJob_Base {
         setRootDomainObjectQueueUndone(RootDomainObject.getInstance());
     }
 
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasFailedCounter() {
+        return getFailedCounter() != null;
+    }
+
+    @Deprecated
+    public boolean hasRequestDate() {
+        return getRequestDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasJobEndTime() {
+        return getJobEndTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasDone() {
+        return getDone() != null;
+    }
+
+    @Deprecated
+    public boolean hasJobStartTime() {
+        return getJobStartTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObjectQueueUndone() {
+        return getRootDomainObjectQueueUndone() != null;
+    }
+
 }

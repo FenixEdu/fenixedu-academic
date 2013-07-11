@@ -88,4 +88,19 @@ public class PhdProgramEmail extends PhdProgramEmail_Base {
 
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess> getPhdIndividualProgramProcesses() {
+        return getPhdIndividualProgramProcessesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPhdIndividualProgramProcesses() {
+        return !getPhdIndividualProgramProcessesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasPhdProgram() {
+        return getPhdProgram() != null;
+    }
+
 }

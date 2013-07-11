@@ -199,4 +199,24 @@ public class NewModelGroup extends NewModelGroup_Base {
         return true;
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.tests.NewModelRestriction> getChildRestrictions() {
+        return getChildRestrictionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyChildRestrictions() {
+        return !getChildRestrictionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasBagModel() {
+        return getBagModel() != null;
+    }
+
 }

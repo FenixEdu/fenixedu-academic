@@ -71,4 +71,24 @@ public class IndividualCandidacyDocumentFile extends IndividualCandidacyDocument
         return new IndividualCandidacyDocumentFile(type, contents, filename, obtainVirtualPath(processName, documentIdNumber));
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacy> getIndividualCandidacy() {
+        return getIndividualCandidacySet();
+    }
+
+    @Deprecated
+    public boolean hasAnyIndividualCandidacy() {
+        return !getIndividualCandidacySet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasCandidacyFileType() {
+        return getCandidacyFileType() != null;
+    }
+
+    @Deprecated
+    public boolean hasCandidacyFileActive() {
+        return getCandidacyFileActive() != null;
+    }
+
 }

@@ -189,4 +189,59 @@ public class Vehicle extends Vehicle_Base {
         setRootDomainObject(null);
         deleteDomainObject();
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.parking.NewParkingDocument> getNewParkingDocuments() {
+        return getNewParkingDocumentsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyNewParkingDocuments() {
+        return !getNewParkingDocumentsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasParkingParty() {
+        return getParkingParty() != null;
+    }
+
+    @Deprecated
+    public boolean hasVehicleMake() {
+        return getVehicleMake() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasOwnerIdDeliveryType() {
+        return getOwnerIdDeliveryType() != null;
+    }
+
+    @Deprecated
+    public boolean hasPlateNumber() {
+        return getPlateNumber() != null;
+    }
+
+    @Deprecated
+    public boolean hasInsuranceDeliveryType() {
+        return getInsuranceDeliveryType() != null;
+    }
+
+    @Deprecated
+    public boolean hasPropertyRegistryDeliveryType() {
+        return getPropertyRegistryDeliveryType() != null;
+    }
+
+    @Deprecated
+    public boolean hasParkingRequest() {
+        return getParkingRequest() != null;
+    }
+
+    @Deprecated
+    public boolean hasAuthorizationDeclarationDeliveryType() {
+        return getAuthorizationDeclarationDeliveryType() != null;
+    }
+
 }

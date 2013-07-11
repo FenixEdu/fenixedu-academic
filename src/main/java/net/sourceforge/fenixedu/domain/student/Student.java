@@ -2106,4 +2106,229 @@ public class Student extends Student_Base {
         }
         return false;
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.student.Registration> getRegistrations() {
+        return getRegistrationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyRegistrations() {
+        return !getRegistrationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.StudentInquiryExecutionPeriod> getStudentsInquiriesExecutionPeriods() {
+        return getStudentsInquiriesExecutionPeriodsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyStudentsInquiriesExecutionPeriods() {
+        return !getStudentsInquiriesExecutionPeriodsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.elections.DelegateElection> getDelegateElections() {
+        return getDelegateElectionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyDelegateElections() {
+        return !getDelegateElectionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.ExecutionCourseAudit> getExecutionCourseAudits() {
+        return getExecutionCourseAuditsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyExecutionCourseAudits() {
+        return !getExecutionCourseAuditsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.elections.DelegateElectionVote> getVotes() {
+        return getVotesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyVotes() {
+        return !getVotesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.student.StudentDataByExecutionYear> getStudentDataByExecutionYear() {
+        return getStudentDataByExecutionYearSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyStudentDataByExecutionYear() {
+        return !getStudentDataByExecutionYearSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.student.StudentDataShareAuthorization> getStudentDataShareAuthorization() {
+        return getStudentDataShareAuthorizationSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyStudentDataShareAuthorization() {
+        return !getStudentDataShareAuthorizationSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.elections.DelegateElectionVotingPeriod> getVotingPeriodForNewRoundElections() {
+        return getVotingPeriodForNewRoundElectionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyVotingPeriodForNewRoundElections() {
+        return !getVotingPeriodForNewRoundElectionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.oldInquiries.InquiriesStudentExecutionPeriod> getInquiriesStudentExecutionPeriods() {
+        return getInquiriesStudentExecutionPeriodsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyInquiriesStudentExecutionPeriods() {
+        return !getInquiriesStudentExecutionPeriodsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.student.scholarship.report.UTLScholarshipReport> getUtlScholarshipReport() {
+        return getUtlScholarshipReportSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyUtlScholarshipReport() {
+        return !getUtlScholarshipReportSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.elections.DelegateElection> getElectedElections() {
+        return getElectedElectionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyElectedElections() {
+        return !getElectedElectionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.student.StudentStatute> getStudentStatutes() {
+        return getStudentStatutesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyStudentStatutes() {
+        return !getStudentStatutesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.student.PersonalIngressionData> getPersonalIngressionsData() {
+        return getPersonalIngressionsDataSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPersonalIngressionsData() {
+        return !getPersonalIngressionsDataSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.StudentInquiryRegistry> getStudentsInquiryRegistries() {
+        return getStudentsInquiryRegistriesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyStudentsInquiryRegistries() {
+        return !getStudentsInquiryRegistriesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.residence.StudentsPerformanceReport> getReports() {
+        return getReportsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyReports() {
+        return !getReportsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopApplication> getCareerWorkshopApplications() {
+        return getCareerWorkshopApplicationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCareerWorkshopApplications() {
+        return !getCareerWorkshopApplicationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopConfirmation> getCareerWorkshopConfirmations() {
+        return getCareerWorkshopConfirmationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCareerWorkshopConfirmations() {
+        return !getCareerWorkshopConfirmationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.student.curriculum.ExtraCurricularActivity> getExtraCurricularActivity() {
+        return getExtraCurricularActivitySet();
+    }
+
+    @Deprecated
+    public boolean hasAnyExtraCurricularActivity() {
+        return !getExtraCurricularActivitySet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.elections.DelegateElection> getElectionsWithStudentCandidacies() {
+        return getElectionsWithStudentCandidaciesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyElectionsWithStudentCandidacies() {
+        return !getElectionsWithStudentCandidaciesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.elections.DelegateElectionVotingPeriod> getElectionsWithVotingStudents() {
+        return getElectionsWithVotingStudentsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyElectionsWithVotingStudents() {
+        return !getElectionsWithVotingStudentsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumber() {
+        return getNumber() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudentNumber() {
+        return getStudentNumber() != null;
+    }
+
+    @Deprecated
+    public boolean hasAlumni() {
+        return getAlumni() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
+    }
+
 }

@@ -92,4 +92,29 @@ public class CreditNoteEntry extends CreditNoteEntry_Base {
 
     }
 
+    @Deprecated
+    public boolean hasCreditNote() {
+        return getCreditNote() != null;
+    }
+
+    @Deprecated
+    public boolean hasAdjustmentAccountingEntry() {
+        return getAdjustmentAccountingEntry() != null;
+    }
+
+    @Deprecated
+    public boolean hasAmount() {
+        return getAmount() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasAccountingEntry() {
+        return getAccountingEntry() != null;
+    }
+
 }

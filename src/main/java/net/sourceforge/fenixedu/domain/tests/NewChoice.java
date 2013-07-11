@@ -92,4 +92,14 @@ public class NewChoice extends NewChoice_Base implements Positionable {
         // Left blank on purpose
     }
 
+    @Deprecated
+    public boolean hasMultipleChoiceQuestion() {
+        return getMultipleChoiceQuestion() != null;
+    }
+
+    @Deprecated
+    public boolean hasPosition() {
+        return getPosition() != null;
+    }
+
 }

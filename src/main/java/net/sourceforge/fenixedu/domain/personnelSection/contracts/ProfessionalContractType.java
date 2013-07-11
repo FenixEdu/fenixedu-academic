@@ -30,4 +30,29 @@ public class ProfessionalContractType extends ProfessionalContractType_Base {
         }
         setName(name);
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.personnelSection.contracts.GiafProfessionalData> getGiafProfessionalData() {
+        return getGiafProfessionalDataSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyGiafProfessionalData() {
+        return !getGiafProfessionalDataSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasGiafId() {
+        return getGiafId() != null;
+    }
+
 }

@@ -44,4 +44,24 @@ public class TeacherServiceComment extends TeacherServiceComment_Base {
         setCreatedBy(null);
         super.delete();
     }
+    @Deprecated
+    public boolean hasCreatedBy() {
+        return getCreatedBy() != null;
+    }
+
+    @Deprecated
+    public boolean hasLastModifiedDate() {
+        return getLastModifiedDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreationDate() {
+        return getCreationDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasContent() {
+        return getContent() != null;
+    }
+
 }

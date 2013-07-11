@@ -480,4 +480,99 @@ public abstract class ResearchResult extends ResearchResult_Base {
 
     public abstract String getSchema();
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.research.result.ResultParticipation> getResultParticipations() {
+        return getResultParticipationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyResultParticipations() {
+        return !getResultParticipationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation> getResultUnitAssociations() {
+        return getResultUnitAssociationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyResultUnitAssociations() {
+        return !getResultUnitAssociationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.research.Prize> getPrizes() {
+        return getPrizesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPrizes() {
+        return !getPrizesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.research.result.ResearchResultDocumentFile> getResultDocumentFiles() {
+        return getResultDocumentFilesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyResultDocumentFiles() {
+        return !getResultDocumentFilesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.research.result.ResultTeacher> getResultTeachers() {
+        return getResultTeachersSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyResultTeachers() {
+        return !getResultTeachersSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasUrl() {
+        return getUrl() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreator() {
+        return getCreator() != null;
+    }
+
+    @Deprecated
+    public boolean hasModifiedBy() {
+        return getModifiedBy() != null;
+    }
+
+    @Deprecated
+    public boolean hasLastModificationDate() {
+        return getLastModificationDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasNote() {
+        return getNote() != null;
+    }
+
+    @Deprecated
+    public boolean hasCountry() {
+        return getCountry() != null;
+    }
+
+    @Deprecated
+    public boolean hasUniqueStorageId() {
+        return getUniqueStorageId() != null;
+    }
+
+    @Deprecated
+    public boolean hasTitle() {
+        return getTitle() != null;
+    }
+
 }

@@ -93,4 +93,9 @@ public class EventEditionParticipation extends EventEditionParticipation_Base {
         return this.getEventEdition().getEvent().getLocationType().equals(type);
     }
 
+    @Deprecated
+    public boolean hasEventEdition() {
+        return getEventEdition() != null;
+    }
+
 }

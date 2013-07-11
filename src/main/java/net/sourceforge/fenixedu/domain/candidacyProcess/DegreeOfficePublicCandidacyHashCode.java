@@ -229,4 +229,9 @@ public class DegreeOfficePublicCandidacyHashCode extends DegreeOfficePublicCandi
         return null;
     }
 
+    @Deprecated
+    public boolean hasIndividualCandidacyProcess() {
+        return getIndividualCandidacyProcess() != null;
+    }
+
 }

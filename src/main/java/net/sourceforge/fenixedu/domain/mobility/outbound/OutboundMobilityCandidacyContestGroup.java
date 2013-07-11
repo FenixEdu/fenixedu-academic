@@ -429,4 +429,69 @@ public class OutboundMobilityCandidacyContestGroup extends OutboundMobilityCandi
     public void revertConcludeCandidateNotification(final OutboundMobilityCandidacyPeriod period) {
         removeCandidatesNotifiedOfSelectionResultsForPeriod(period);
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.ExecutionDegree> getExecutionDegree() {
+        return getExecutionDegreeSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyExecutionDegree() {
+        return !getExecutionDegreeSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Person> getMobilityCoordinator() {
+        return getMobilityCoordinatorSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyMobilityCoordinator() {
+        return !getMobilityCoordinatorSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacySubmissionGrade> getOutboundMobilityCandidacySubmissionGrade() {
+        return getOutboundMobilityCandidacySubmissionGradeSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyOutboundMobilityCandidacySubmissionGrade() {
+        return !getOutboundMobilityCandidacySubmissionGradeSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyPeriod> getCandidatesNotifiedOfSelectionResultsForPeriod() {
+        return getCandidatesNotifiedOfSelectionResultsForPeriodSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCandidatesNotifiedOfSelectionResultsForPeriod() {
+        return !getCandidatesNotifiedOfSelectionResultsForPeriodSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyPeriod> getConcludedCandidateSelectionForPeriod() {
+        return getConcludedCandidateSelectionForPeriodSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyConcludedCandidateSelectionForPeriod() {
+        return !getConcludedCandidateSelectionForPeriodSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyContest> getOutboundMobilityCandidacyContest() {
+        return getOutboundMobilityCandidacyContestSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyOutboundMobilityCandidacyContest() {
+        return !getOutboundMobilityCandidacyContestSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
 }

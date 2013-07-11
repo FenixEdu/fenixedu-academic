@@ -197,4 +197,59 @@ public abstract class File extends File_Base {
         }
     }
 
+    @Deprecated
+    public boolean hasChecksum() {
+        return getChecksum() != null;
+    }
+
+    @Deprecated
+    public boolean hasPermittedGroup() {
+        return getPermittedGroup() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasUploadTime() {
+        return getUploadTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasMimeType() {
+        return getMimeType() != null;
+    }
+
+    @Deprecated
+    public boolean hasExternalStorageIdentification() {
+        return getExternalStorageIdentification() != null;
+    }
+
+    @Deprecated
+    public boolean hasChecksumAlgorithm() {
+        return getChecksumAlgorithm() != null;
+    }
+
+    @Deprecated
+    public boolean hasDisplayName() {
+        return getDisplayName() != null;
+    }
+
+    @Deprecated
+    public boolean hasLocalContent() {
+        return getLocalContent() != null;
+    }
+
+    @Deprecated
+    public boolean hasFilename() {
+        return getFilename() != null;
+    }
+
+    @Deprecated
+    public boolean hasSize() {
+        return getSize() != null;
+    }
+
 }

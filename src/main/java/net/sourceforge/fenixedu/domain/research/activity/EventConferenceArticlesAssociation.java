@@ -41,4 +41,24 @@ public class EventConferenceArticlesAssociation extends EventConferenceArticlesA
         super.deleteDomainObject();
     }
 
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasEventEdition() {
+        return getEventEdition() != null;
+    }
+
+    @Deprecated
+    public boolean hasConferenceArticle() {
+        return getConferenceArticle() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
+    }
+
 }

@@ -52,4 +52,59 @@ public class BusinessArea extends BusinessArea_Base {
         }
         return childAreas;
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Job> getParentJobs() {
+        return getParentJobsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyParentJobs() {
+        return !getParentJobsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.BusinessArea> getChildAreas() {
+        return getChildAreasSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyChildAreas() {
+        return !getChildAreasSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Job> getJobs() {
+        return getJobsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyJobs() {
+        return !getJobsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasDescription() {
+        return getDescription() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasParentArea() {
+        return getParentArea() != null;
+    }
+
+    @Deprecated
+    public boolean hasLevel() {
+        return getLevel() != null;
+    }
+
+    @Deprecated
+    public boolean hasCode() {
+        return getCode() != null;
+    }
+
 }

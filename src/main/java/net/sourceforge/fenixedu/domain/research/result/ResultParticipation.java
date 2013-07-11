@@ -259,4 +259,29 @@ public class ResultParticipation extends ResultParticipation_Base {
         }
         return text.toString();
     }
+    @Deprecated
+    public boolean hasResult() {
+        return getResult() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasRole() {
+        return getRole() != null;
+    }
+
+    @Deprecated
+    public boolean hasPersonOrder() {
+        return getPersonOrder() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
+    }
+
 }

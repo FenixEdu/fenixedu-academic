@@ -6,4 +6,9 @@ public class InquiryRadioGroupQuestion extends InquiryRadioGroupQuestion_Base {
         super();
     }
 
+    @Deprecated
+    public boolean hasIsMatrix() {
+        return getIsMatrix() != null;
+    }
+
 }

@@ -163,4 +163,34 @@ abstract public class CandidacyProcess extends CandidacyProcess_Base {
     public boolean isMobility() {
         return false;
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Degree> getDegree() {
+        return getDegreeSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyDegree() {
+        return !getDegreeSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess> getChildProcesses() {
+        return getChildProcessesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyChildProcesses() {
+        return !getChildProcessesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasState() {
+        return getState() != null;
+    }
+
+    @Deprecated
+    public boolean hasCandidacyPeriod() {
+        return getCandidacyPeriod() != null;
+    }
+
 }

@@ -175,4 +175,49 @@ public class SchoolClass extends SchoolClass_Base {
         return getExecutionPeriod().getAcademicInterval();
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.oldInquiries.InquiriesCourse> getAssociatedInquiriesCourses() {
+        return getAssociatedInquiriesCoursesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssociatedInquiriesCourses() {
+        return !getAssociatedInquiriesCoursesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Shift> getAssociatedShifts() {
+        return getAssociatedShiftsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssociatedShifts() {
+        return !getAssociatedShiftsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionDegree() {
+        return getExecutionDegree() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionPeriod() {
+        return getExecutionPeriod() != null;
+    }
+
+    @Deprecated
+    public boolean hasNome() {
+        return getNome() != null;
+    }
+
+    @Deprecated
+    public boolean hasAnoCurricular() {
+        return getAnoCurricular() != null;
+    }
+
 }

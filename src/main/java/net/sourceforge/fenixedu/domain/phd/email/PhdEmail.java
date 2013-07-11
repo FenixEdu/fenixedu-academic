@@ -78,4 +78,19 @@ public abstract class PhdEmail extends PhdEmail_Base {
 
     protected abstract String getBccs();
 
+    @Deprecated
+    public boolean hasAdditionalBcc() {
+        return getAdditionalBcc() != null;
+    }
+
+    @Deprecated
+    public boolean hasAdditionalTo() {
+        return getAdditionalTo() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
+    }
+
 }

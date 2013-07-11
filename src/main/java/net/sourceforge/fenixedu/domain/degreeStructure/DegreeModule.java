@@ -632,4 +632,109 @@ abstract public class DegreeModule extends DegreeModule_Base {
 
     abstract public void applyToCurricularCourses(final ExecutionYear executionYear, final Predicate predicate);
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.curricularRules.Exclusiveness> getParticipatingExclusivenessCurricularRules() {
+        return getParticipatingExclusivenessCurricularRulesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyParticipatingExclusivenessCurricularRules() {
+        return !getParticipatingExclusivenessCurricularRulesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.curricularRules.PrecedenceRule> getParticipatingPrecedenceCurricularRules() {
+        return getParticipatingPrecedenceCurricularRulesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyParticipatingPrecedenceCurricularRules() {
+        return !getParticipatingPrecedenceCurricularRulesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.curricularRules.CurricularRule> getCurricularRules() {
+        return getCurricularRulesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCurricularRules() {
+        return !getCurricularRulesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.EquivalencePlanEntry> getOldEquivalencePlanEntries() {
+        return getOldEquivalencePlanEntriesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyOldEquivalencePlanEntries() {
+        return !getOldEquivalencePlanEntriesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.Context> getParentContexts() {
+        return getParentContextsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyParentContexts() {
+        return !getParentContextsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.EquivalencePlanEntry> getNewEquivalencePlanEntries() {
+        return getNewEquivalencePlanEntriesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyNewEquivalencePlanEntries() {
+        return !getNewEquivalencePlanEntriesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.log.CurriculumLineLog> getCurriculumLineLogs() {
+        return getCurriculumLineLogsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCurriculumLineLogs() {
+        return !getCurriculumLineLogsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule> getCurriculumModules() {
+        return getCurriculumModulesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCurriculumModules() {
+        return !getCurriculumModulesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasNameEn() {
+        return getNameEn() != null;
+    }
+
+    @Deprecated
+    public boolean hasAcronym() {
+        return getAcronym() != null;
+    }
+
+    @Deprecated
+    public boolean hasCode() {
+        return getCode() != null;
+    }
+
 }

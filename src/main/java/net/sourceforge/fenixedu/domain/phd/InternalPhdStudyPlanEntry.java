@@ -63,4 +63,9 @@ public class InternalPhdStudyPlanEntry extends InternalPhdStudyPlanEntry_Base {
         super.delete();
     }
 
+    @Deprecated
+    public boolean hasCompetenceCourse() {
+        return getCompetenceCourse() != null;
+    }
+
 }

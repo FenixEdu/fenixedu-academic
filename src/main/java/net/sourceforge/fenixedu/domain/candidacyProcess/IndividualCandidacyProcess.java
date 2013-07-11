@@ -404,4 +404,49 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
 
     }
 
+    @Deprecated
+    public boolean hasCandidacy() {
+        return getCandidacy() != null;
+    }
+
+    @Deprecated
+    public boolean hasOriginalIndividualCandidacyProcess() {
+        return getOriginalIndividualCandidacyProcess() != null;
+    }
+
+    @Deprecated
+    public boolean hasAccessHash() {
+        return getAccessHash() != null;
+    }
+
+    @Deprecated
+    public boolean hasPaymentChecked() {
+        return getPaymentChecked() != null;
+    }
+
+    @Deprecated
+    public boolean hasCandidacyProcess() {
+        return getCandidacyProcess() != null;
+    }
+
+    @Deprecated
+    public boolean hasCopyIndividualCandidacyProcess() {
+        return getCopyIndividualCandidacyProcess() != null;
+    }
+
+    @Deprecated
+    public boolean hasCandidacyHashCode() {
+        return getCandidacyHashCode() != null;
+    }
+
+    @Deprecated
+    public boolean hasProcessCode() {
+        return getProcessCode() != null;
+    }
+
+    @Deprecated
+    public boolean hasProcessChecked() {
+        return getProcessChecked() != null;
+    }
+
 }

@@ -520,4 +520,9 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
     public boolean isProgrammeLinkVisible() {
         return getRegistration().isAllowedToManageRegistration();
     }
+    @Deprecated
+    public boolean hasRequestedCycle() {
+        return getRequestedCycle() != null;
+    }
+
 }

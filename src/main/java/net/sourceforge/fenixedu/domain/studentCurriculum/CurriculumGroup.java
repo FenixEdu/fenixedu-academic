@@ -1109,4 +1109,14 @@ public class CurriculumGroup extends CurriculumGroup_Base {
         return result;
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule> getCurriculumModules() {
+        return getCurriculumModulesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCurriculumModules() {
+        return !getCurriculumModulesSet().isEmpty();
+    }
+
 }

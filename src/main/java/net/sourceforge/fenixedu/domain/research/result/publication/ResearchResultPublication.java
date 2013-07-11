@@ -279,4 +279,39 @@ public abstract class ResearchResultPublication extends ResearchResultPublicatio
             }
         }
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.research.result.publication.PreferredPublication> getPersonThatPrefers() {
+        return getPersonThatPrefersSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPersonThatPrefers() {
+        return !getPersonThatPrefersSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasPublisher() {
+        return getPublisher() != null;
+    }
+
+    @Deprecated
+    public boolean hasYear() {
+        return getYear() != null;
+    }
+
+    @Deprecated
+    public boolean hasOrganization() {
+        return getOrganization() != null;
+    }
+
+    @Deprecated
+    public boolean hasMonth() {
+        return getMonth() != null;
+    }
+
+    @Deprecated
+    public boolean hasKeywords() {
+        return getKeywords() != null;
+    }
+
 }

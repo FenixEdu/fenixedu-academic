@@ -81,4 +81,34 @@ public class RegistrationProtocol extends RegistrationProtocol_Base {
     public boolean equals(RegistrationAgreement myOtherSoul) {
         return this.getRegistrationAgreement().name().equals(myOtherSoul.name());
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Person> getSupervisors() {
+        return getSupervisorsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnySupervisors() {
+        return !getSupervisorsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.student.Registration> getRegistrations() {
+        return getRegistrationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyRegistrations() {
+        return !getRegistrationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasRegistrationAgreement() {
+        return getRegistrationAgreement() != null;
+    }
+
 }

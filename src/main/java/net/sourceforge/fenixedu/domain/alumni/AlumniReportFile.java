@@ -368,4 +368,19 @@ public class AlumniReportFile extends AlumniReportFile_Base {
     public static Boolean canRequestReport() {
         return readPendingJobs().isEmpty();
     }
+    @Deprecated
+    public boolean hasOnlyRegisteredAlumni() {
+        return getOnlyRegisteredAlumni() != null;
+    }
+
+    @Deprecated
+    public boolean hasFullReport() {
+        return getFullReport() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionYear() {
+        return getExecutionYear() != null;
+    }
+
 }

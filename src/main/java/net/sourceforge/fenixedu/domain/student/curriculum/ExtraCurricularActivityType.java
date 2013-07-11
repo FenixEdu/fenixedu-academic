@@ -48,4 +48,24 @@ public class ExtraCurricularActivityType extends ExtraCurricularActivityType_Bas
             setName(getName().with(Language.en, name));
         }
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.student.curriculum.ExtraCurricularActivity> getExtraCurricularActivity() {
+        return getExtraCurricularActivitySet();
+    }
+
+    @Deprecated
+    public boolean hasAnyExtraCurricularActivity() {
+        return !getExtraCurricularActivitySet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
 }

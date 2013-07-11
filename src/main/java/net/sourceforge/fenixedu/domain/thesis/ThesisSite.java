@@ -28,4 +28,9 @@ public class ThesisSite extends ThesisSite_Base {
         super.disconnect();
 
     }
+    @Deprecated
+    public boolean hasThesis() {
+        return getThesis() != null;
+    }
+
 }

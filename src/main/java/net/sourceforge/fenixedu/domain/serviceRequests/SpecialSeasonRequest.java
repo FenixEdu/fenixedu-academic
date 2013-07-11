@@ -114,4 +114,19 @@ public class SpecialSeasonRequest extends SpecialSeasonRequest_Base {
         return false;
     }
 
+    @Deprecated
+    public boolean hasBeginExecutionPeriod() {
+        return getBeginExecutionPeriod() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndExecutionPeriod() {
+        return getEndExecutionPeriod() != null;
+    }
+
+    @Deprecated
+    public boolean hasDeferred() {
+        return getDeferred() != null;
+    }
+
 }

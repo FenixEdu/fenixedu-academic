@@ -90,4 +90,44 @@ public class BibliographicReference extends BibliographicReference_Base {
     public boolean isOptional() {
         return getOptional() == null || getOptional();
     }
+    @Deprecated
+    public boolean hasExecutionCourse() {
+        return getExecutionCourse() != null;
+    }
+
+    @Deprecated
+    public boolean hasYear() {
+        return getYear() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasReference() {
+        return getReference() != null;
+    }
+
+    @Deprecated
+    public boolean hasAuthors() {
+        return getAuthors() != null;
+    }
+
+    @Deprecated
+    public boolean hasReferenceOrder() {
+        return getReferenceOrder() != null;
+    }
+
+    @Deprecated
+    public boolean hasTitle() {
+        return getTitle() != null;
+    }
+
+    @Deprecated
+    public boolean hasOptional() {
+        return getOptional() != null;
+    }
+
 }

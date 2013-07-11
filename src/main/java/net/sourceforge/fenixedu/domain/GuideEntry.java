@@ -73,4 +73,54 @@ public class GuideEntry extends GuideEntry_Base {
 
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry> getReimbursementGuideEntries() {
+        return getReimbursementGuideEntriesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyReimbursementGuideEntries() {
+        return !getReimbursementGuideEntriesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasPriceBigDecimal() {
+        return getPriceBigDecimal() != null;
+    }
+
+    @Deprecated
+    public boolean hasPaymentTransaction() {
+        return getPaymentTransaction() != null;
+    }
+
+    @Deprecated
+    public boolean hasDescription() {
+        return getDescription() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasQuantity() {
+        return getQuantity() != null;
+    }
+
+    @Deprecated
+    public boolean hasGuide() {
+        return getGuide() != null;
+    }
+
+    @Deprecated
+    public boolean hasDocumentType() {
+        return getDocumentType() != null;
+    }
+
+    @Deprecated
+    public boolean hasGraduationType() {
+        return getGraduationType() != null;
+    }
+
 }

@@ -220,4 +220,34 @@ public class PhdProgramProcessDocument extends PhdProgramProcessDocument_Base {
         }
     }
 
+    @Deprecated
+    public boolean hasPhdProgramProcess() {
+        return getPhdProgramProcess() != null;
+    }
+
+    @Deprecated
+    public boolean hasDocumentAccepted() {
+        return getDocumentAccepted() != null;
+    }
+
+    @Deprecated
+    public boolean hasRemarks() {
+        return getRemarks() != null;
+    }
+
+    @Deprecated
+    public boolean hasDocumentType() {
+        return getDocumentType() != null;
+    }
+
+    @Deprecated
+    public boolean hasDocumentVersion() {
+        return getDocumentVersion() != null;
+    }
+
+    @Deprecated
+    public boolean hasUploader() {
+        return getUploader() != null;
+    }
+
 }

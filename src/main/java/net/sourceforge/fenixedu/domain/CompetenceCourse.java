@@ -1320,4 +1320,104 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         }
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.EctsCompetenceCourseConversionTable> getEctsConversionTables() {
+        return getEctsConversionTablesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyEctsConversionTables() {
+        return !getEctsConversionTablesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformationChangeRequest> getCompetenceCourseInformationChangeRequests() {
+        return getCompetenceCourseInformationChangeRequestsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCompetenceCourseInformationChangeRequests() {
+        return !getCompetenceCourseInformationChangeRequestsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Department> getDepartments() {
+        return getDepartmentsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyDepartments() {
+        return !getDepartmentsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation> getCompetenceCourseInformations() {
+        return getCompetenceCourseInformationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCompetenceCourseInformations() {
+        return !getCompetenceCourseInformationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.phd.InternalPhdStudyPlanEntry> getPhdStudyPlanEntries() {
+        return getPhdStudyPlanEntriesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPhdStudyPlanEntries() {
+        return !getPhdStudyPlanEntriesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCompetenceCourse> getTSDCompetenceCourses() {
+        return getTSDCompetenceCoursesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTSDCompetenceCourses() {
+        return !getTSDCompetenceCoursesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.CurricularCourse> getAssociatedCurricularCourses() {
+        return getAssociatedCurricularCoursesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssociatedCurricularCourses() {
+        return !getAssociatedCurricularCoursesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasType() {
+        return getType() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreationDateYearMonthDay() {
+        return getCreationDateYearMonthDay() != null;
+    }
+
+    @Deprecated
+    public boolean hasCode() {
+        return getCode() != null;
+    }
+
+    @Deprecated
+    public boolean hasCurricularStage() {
+        return getCurricularStage() != null;
+    }
+
 }

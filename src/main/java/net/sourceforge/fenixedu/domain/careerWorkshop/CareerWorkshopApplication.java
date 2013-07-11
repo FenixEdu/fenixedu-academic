@@ -166,4 +166,39 @@ public class CareerWorkshopApplication extends CareerWorkshopApplication_Base {
         deleteDomainObject();
     }
 
+    @Deprecated
+    public boolean hasStudent() {
+        return getStudent() != null;
+    }
+
+    @Deprecated
+    public boolean hasSessions() {
+        return getSessions() != null;
+    }
+
+    @Deprecated
+    public boolean hasThemes() {
+        return getThemes() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasCareerWorkshopApplicationEvent() {
+        return getCareerWorkshopApplicationEvent() != null;
+    }
+
+    @Deprecated
+    public boolean hasSealStamp() {
+        return getSealStamp() != null;
+    }
+
+    @Deprecated
+    public boolean hasCareerWorkshopConfirmation() {
+        return getCareerWorkshopConfirmation() != null;
+    }
+
 }

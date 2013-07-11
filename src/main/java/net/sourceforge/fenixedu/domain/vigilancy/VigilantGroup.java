@@ -264,4 +264,129 @@ public class VigilantGroup extends VigilantGroup_Base {
         }
         return null;
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator> getExamCoordinators() {
+        return getExamCoordinatorsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyExamCoordinators() {
+        return !getExamCoordinatorsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper> getVigilantWrappers() {
+        return getVigilantWrappersSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyVigilantWrappers() {
+        return !getVigilantWrappersSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.ExecutionCourse> getExecutionCourses() {
+        return getExecutionCoursesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyExecutionCourses() {
+        return !getExecutionCoursesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasPointsForTeacher() {
+        return getPointsForTeacher() != null;
+    }
+
+    @Deprecated
+    public boolean hasPointsForDismissed() {
+        return getPointsForDismissed() != null;
+    }
+
+    @Deprecated
+    public boolean hasContactEmail() {
+        return getContactEmail() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndOfSecondPeriodForUnavailablePeriods() {
+        return getEndOfSecondPeriodForUnavailablePeriods() != null;
+    }
+
+    @Deprecated
+    public boolean hasConvokeStrategy() {
+        return getConvokeStrategy() != null;
+    }
+
+    @Deprecated
+    public boolean hasUnit() {
+        return getUnit() != null;
+    }
+
+    @Deprecated
+    public boolean hasPointsForDismissedTeacher() {
+        return getPointsForDismissedTeacher() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndOfFirstPeriodForUnavailablePeriods() {
+        return getEndOfFirstPeriodForUnavailablePeriods() != null;
+    }
+
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasPointsForMissing() {
+        return getPointsForMissing() != null;
+    }
+
+    @Deprecated
+    public boolean hasEmailSubjectPrefix() {
+        return getEmailSubjectPrefix() != null;
+    }
+
+    @Deprecated
+    public boolean hasBeginOfSecondPeriodForUnavailablePeriods() {
+        return getBeginOfSecondPeriodForUnavailablePeriods() != null;
+    }
+
+    @Deprecated
+    public boolean hasPointsForMissingTeacher() {
+        return getPointsForMissingTeacher() != null;
+    }
+
+    @Deprecated
+    public boolean hasPointsForConvoked() {
+        return getPointsForConvoked() != null;
+    }
+
+    @Deprecated
+    public boolean hasBeginOfFirstPeriodForUnavailablePeriods() {
+        return getBeginOfFirstPeriodForUnavailablePeriods() != null;
+    }
+
+    @Deprecated
+    public boolean hasRulesLink() {
+        return getRulesLink() != null;
+    }
+
+    @Deprecated
+    public boolean hasPointsForDisconvoked() {
+        return getPointsForDisconvoked() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionYear() {
+        return getExecutionYear() != null;
+    }
+
 }

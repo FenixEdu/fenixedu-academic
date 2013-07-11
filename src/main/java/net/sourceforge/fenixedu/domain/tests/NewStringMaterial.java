@@ -24,4 +24,9 @@ public class NewStringMaterial extends NewStringMaterial_Base {
         return new NewStringMaterial(this.getTestElement(), this.getInline(), this.getText());
     }
 
+    @Deprecated
+    public boolean hasText() {
+        return getText() != null;
+    }
+
 }

@@ -50,4 +50,24 @@ public abstract class ReplyTo extends ReplyTo_Base {
         return Collections.singletonList(this);
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.util.email.Message> getMessages() {
+        return getMessagesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyMessages() {
+        return !getMessagesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasSender() {
+        return getSender() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
 }

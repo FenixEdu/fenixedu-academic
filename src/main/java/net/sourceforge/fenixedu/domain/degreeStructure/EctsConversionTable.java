@@ -36,4 +36,19 @@ public abstract class EctsConversionTable extends EctsConversionTable_Base imple
         setIndex(null);
         deleteDomainObject();
     }
+    @Deprecated
+    public boolean hasYear() {
+        return getYear() != null;
+    }
+
+    @Deprecated
+    public boolean hasEctsTable() {
+        return getEctsTable() != null;
+    }
+
+    @Deprecated
+    public boolean hasIndex() {
+        return getIndex() != null;
+    }
+
 }

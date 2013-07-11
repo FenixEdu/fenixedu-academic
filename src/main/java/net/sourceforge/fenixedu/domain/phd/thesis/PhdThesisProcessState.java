@@ -145,4 +145,14 @@ public class PhdThesisProcessState extends PhdThesisProcessState_Base {
         return new PhdThesisProcessState(process, type, person, remarks, stateDate);
     }
 
+    @Deprecated
+    public boolean hasType() {
+        return getType() != null;
+    }
+
+    @Deprecated
+    public boolean hasProcess() {
+        return getProcess() != null;
+    }
+
 }

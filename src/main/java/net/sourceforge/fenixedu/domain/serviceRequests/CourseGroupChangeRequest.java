@@ -138,4 +138,14 @@ public class CourseGroupChangeRequest extends CourseGroupChangeRequest_Base {
         return false;
     }
 
+    @Deprecated
+    public boolean hasOldCourseGroup() {
+        return getOldCourseGroup() != null;
+    }
+
+    @Deprecated
+    public boolean hasNewCourseGroup() {
+        return getNewCourseGroup() != null;
+    }
+
 }

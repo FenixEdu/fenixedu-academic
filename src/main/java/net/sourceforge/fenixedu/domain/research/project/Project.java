@@ -113,4 +113,64 @@ public class Project extends Project_Base {
         return result;
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.research.project.ProjectParticipation> getProjectParticipations() {
+        return getProjectParticipationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyProjectParticipations() {
+        return !getProjectParticipationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.research.project.ProjectEventAssociation> getAssociatedEvents() {
+        return getAssociatedEventsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssociatedEvents() {
+        return !getAssociatedEventsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasProjectType() {
+        return getProjectType() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasProjectAbstract() {
+        return getProjectAbstract() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndDate() {
+        return getEndDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasStartDate() {
+        return getStartDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumber() {
+        return getNumber() != null;
+    }
+
+    @Deprecated
+    public boolean hasAcronym() {
+        return getAcronym() != null;
+    }
+
+    @Deprecated
+    public boolean hasTitle() {
+        return getTitle() != null;
+    }
+
 }

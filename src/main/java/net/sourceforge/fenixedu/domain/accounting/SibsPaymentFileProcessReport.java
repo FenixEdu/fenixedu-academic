@@ -140,4 +140,149 @@ public class SibsPaymentFileProcessReport extends SibsPaymentFileProcessReport_B
         setRootDomainObject(null);
         super.deleteDomainObject();
     }
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasDegreeGratuityTotalAmount() {
+        return getDegreeGratuityTotalAmount() != null;
+    }
+
+    @Deprecated
+    public boolean hasTotalCost() {
+        return getTotalCost() != null;
+    }
+
+    @Deprecated
+    public boolean hasIntegratedBolonhaMasterDegreeGratuityTotalAmount() {
+        return getIntegratedBolonhaMasterDegreeGratuityTotalAmount() != null;
+    }
+
+    @Deprecated
+    public boolean hasFileVersion() {
+        return getFileVersion() != null;
+    }
+
+    @Deprecated
+    public boolean hasFilename() {
+        return getFilename() != null;
+    }
+
+    @Deprecated
+    public boolean hasRectorateAmount() {
+        return getRectorateAmount() != null;
+    }
+
+    @Deprecated
+    public boolean hasAfterGraduationInsuranceTotalAmount() {
+        return getAfterGraduationInsuranceTotalAmount() != null;
+    }
+
+    @Deprecated
+    public boolean hasDfaGratuityTotalAmount() {
+        return getDfaGratuityTotalAmount() != null;
+    }
+
+    @Deprecated
+    public boolean hasSecondCycleIndividualCandidacyAmount() {
+        return getSecondCycleIndividualCandidacyAmount() != null;
+    }
+
+    @Deprecated
+    public boolean hasGraduationInsuranceTotalAmount() {
+        return getGraduationInsuranceTotalAmount() != null;
+    }
+
+    @Deprecated
+    public boolean hasPhdProgramCandidacyEventAmount() {
+        return getPhdProgramCandidacyEventAmount() != null;
+    }
+
+    @Deprecated
+    public boolean hasOver23IndividualCandidacyEventAmount() {
+        return getOver23IndividualCandidacyEventAmount() != null;
+    }
+
+    @Deprecated
+    public boolean hasResidencePayment() {
+        return getResidencePayment() != null;
+    }
+
+    @Deprecated
+    public boolean hasTransactionsTotalAmount() {
+        return getTransactionsTotalAmount() != null;
+    }
+
+    @Deprecated
+    public boolean hasDegreeCandidacyForGraduatedPersonAmount() {
+        return getDegreeCandidacyForGraduatedPersonAmount() != null;
+    }
+
+    @Deprecated
+    public boolean hasWhenProcessedBySibs() {
+        return getWhenProcessedBySibs() != null;
+    }
+
+    @Deprecated
+    public boolean hasDegreeTransferIndividualCandidacyAmount() {
+        return getDegreeTransferIndividualCandidacyAmount() != null;
+    }
+
+    @Deprecated
+    public boolean hasBolonhaDegreeGratuityTotalAmount() {
+        return getBolonhaDegreeGratuityTotalAmount() != null;
+    }
+
+    @Deprecated
+    public boolean hasWhenProcessed() {
+        return getWhenProcessed() != null;
+    }
+
+    @Deprecated
+    public boolean hasInstitutionAffiliationEventAmount() {
+        return getInstitutionAffiliationEventAmount() != null;
+    }
+
+    @Deprecated
+    public boolean hasSpecializationGratuityTotalAmount() {
+        return getSpecializationGratuityTotalAmount() != null;
+    }
+
+    @Deprecated
+    public boolean hasAdministrativeOfficeTaxTotalAmount() {
+        return getAdministrativeOfficeTaxTotalAmount() != null;
+    }
+
+    @Deprecated
+    public boolean hasMasterDegreeGratuityTotalAmount() {
+        return getMasterDegreeGratuityTotalAmount() != null;
+    }
+
+    @Deprecated
+    public boolean hasPhdGratuityTotalAmount() {
+        return getPhdGratuityTotalAmount() != null;
+    }
+
+    @Deprecated
+    public boolean hasStandaloneEnrolmentGratuityEventAmount() {
+        return getStandaloneEnrolmentGratuityEventAmount() != null;
+    }
+
+    @Deprecated
+    public boolean hasDegreeChangeIndividualCandidacyAmount() {
+        return getDegreeChangeIndividualCandidacyAmount() != null;
+    }
+
+    @Deprecated
+    public boolean hasIntegratedMasterDegreeGratuityTotalAmount() {
+        return getIntegratedMasterDegreeGratuityTotalAmount() != null;
+    }
+
+    @Deprecated
+    public boolean hasBolonhaMasterDegreeGratuityTotalAmount() {
+        return getBolonhaMasterDegreeGratuityTotalAmount() != null;
+    }
+
 }

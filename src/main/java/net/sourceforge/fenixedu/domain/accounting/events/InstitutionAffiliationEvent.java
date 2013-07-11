@@ -169,4 +169,39 @@ public class InstitutionAffiliationEvent extends InstitutionAffiliationEvent_Bas
         }
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.events.InstitutionAffiliationEventTicket> getGeneratedTicket() {
+        return getGeneratedTicketSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyGeneratedTicket() {
+        return !getGeneratedTicketSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.events.MicroPaymentEvent> getMicroPaymentEvent() {
+        return getMicroPaymentEventSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyMicroPaymentEvent() {
+        return !getMicroPaymentEventSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasAcceptedTermsAndConditions() {
+        return getAcceptedTermsAndConditions() != null;
+    }
+
+    @Deprecated
+    public boolean hasInstitutionWhereOpen() {
+        return getInstitutionWhereOpen() != null;
+    }
+
+    @Deprecated
+    public boolean hasInstitution() {
+        return getInstitution() != null;
+    }
+
 }

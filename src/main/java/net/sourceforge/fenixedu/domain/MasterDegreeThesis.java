@@ -88,4 +88,44 @@ public class MasterDegreeThesis extends MasterDegreeThesis_Base {
         super.deleteDomainObject();
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion> getMasterDegreeThesisDataVersions() {
+        return getMasterDegreeThesisDataVersionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyMasterDegreeThesisDataVersions() {
+        return !getMasterDegreeThesisDataVersionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.MasterDegreeProofVersion> getMasterDegreeProofVersions() {
+        return getMasterDegreeProofVersionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyMasterDegreeProofVersions() {
+        return !getMasterDegreeProofVersionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.student.curriculum.ConclusionProcessVersion> getConclusionProcessVersions() {
+        return getConclusionProcessVersionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyConclusionProcessVersions() {
+        return !getConclusionProcessVersionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudentCurricularPlan() {
+        return getStudentCurricularPlan() != null;
+    }
+
 }

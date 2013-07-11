@@ -390,4 +390,64 @@ public class TSDProcess extends TSDProcess_Base {
         super.deleteDomainObject();
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcessPhase> getTSDProcessPhases() {
+        return getTSDProcessPhasesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTSDProcessPhases() {
+        return !getTSDProcessPhasesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.ExecutionSemester> getExecutionPeriods() {
+        return getExecutionPeriodsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyExecutionPeriods() {
+        return !getExecutionPeriodsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasTsdCoursesAndTeachersManagementGroup() {
+        return getTsdCoursesAndTeachersManagementGroup() != null;
+    }
+
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreator() {
+        return getCreator() != null;
+    }
+
+    @Deprecated
+    public boolean hasOmissionConfigurationGroup() {
+        return getOmissionConfigurationGroup() != null;
+    }
+
+    @Deprecated
+    public boolean hasPhasesManagementGroup() {
+        return getPhasesManagementGroup() != null;
+    }
+
+    @Deprecated
+    public boolean hasDepartment() {
+        return getDepartment() != null;
+    }
+
+    @Deprecated
+    public boolean hasAutomaticValuationGroup() {
+        return getAutomaticValuationGroup() != null;
+    }
+
 }

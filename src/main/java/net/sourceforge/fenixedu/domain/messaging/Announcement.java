@@ -494,4 +494,104 @@ public class Announcement extends Announcement_Base {
         }
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.messaging.AnnouncementCategory> getCategories() {
+        return getCategoriesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCategories() {
+        return !getCategoriesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasSticky() {
+        return getSticky() != null;
+    }
+
+    @Deprecated
+    public boolean hasPlace() {
+        return getPlace() != null;
+    }
+
+    @Deprecated
+    public boolean hasReferedSubjectBegin() {
+        return getReferedSubjectBegin() != null;
+    }
+
+    @Deprecated
+    public boolean hasReferedSubjectEnd() {
+        return getReferedSubjectEnd() != null;
+    }
+
+    @Deprecated
+    public boolean hasVisible() {
+        return getVisible() != null;
+    }
+
+    @Deprecated
+    public boolean hasSubject() {
+        return getSubject() != null;
+    }
+
+    @Deprecated
+    public boolean hasApproved() {
+        return getApproved() != null;
+    }
+
+    @Deprecated
+    public boolean hasExcerpt() {
+        return getExcerpt() != null;
+    }
+
+    @Deprecated
+    public boolean hasAuthor() {
+        return getAuthor() != null;
+    }
+
+    @Deprecated
+    public boolean hasCampus() {
+        return getCampus() != null;
+    }
+
+    @Deprecated
+    public boolean hasPressRelease() {
+        return getPressRelease() != null;
+    }
+
+    @Deprecated
+    public boolean hasEditorNotes() {
+        return getEditorNotes() != null;
+    }
+
+    @Deprecated
+    public boolean hasPriority() {
+        return getPriority() != null;
+    }
+
+    @Deprecated
+    public boolean hasAuthorEmail() {
+        return getAuthorEmail() != null;
+    }
+
+    @Deprecated
+    public boolean hasPublication() {
+        return getPublication() != null;
+    }
+
+    @Deprecated
+    public boolean hasLastModification() {
+        return getLastModification() != null;
+    }
+
+    @Deprecated
+    public boolean hasPhotoUrl() {
+        return getPhotoUrl() != null;
+    }
+
+    @Deprecated
+    public boolean hasKeywords() {
+        return getKeywords() != null;
+    }
+
 }

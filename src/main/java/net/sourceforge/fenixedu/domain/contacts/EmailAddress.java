@@ -168,4 +168,5 @@ public class EmailAddress extends EmailAddress_Base {
     public void logRefuse(Person person) {
         logRefuseAux(person, "label.partyContacts.EmailAddress");
     }
+
 }

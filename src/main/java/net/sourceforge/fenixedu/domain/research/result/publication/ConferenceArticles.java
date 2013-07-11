@@ -42,4 +42,19 @@ public abstract class ConferenceArticles extends ConferenceArticles_Base {
     @Override
     public abstract String getResume();
 
+    @Deprecated
+    public boolean hasEventConferenceArticlesAssociation() {
+        return getEventConferenceArticlesAssociation() != null;
+    }
+
+    @Deprecated
+    public boolean hasConference() {
+        return getConference() != null;
+    }
+
+    @Deprecated
+    public boolean hasScope() {
+        return getScope() != null;
+    }
+
 }

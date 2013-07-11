@@ -53,4 +53,74 @@ public class EnrolmentEvaluationLog extends EnrolmentEvaluationLog_Base {
         return AccessControl.getUserView() != null ? AccessControl.getUserView().getUtilizador() : null;
     }
 
+    @Deprecated
+    public boolean hasBook() {
+        return getBook() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasGradeScale() {
+        return getGradeScale() != null;
+    }
+
+    @Deprecated
+    public boolean hasExamDate() {
+        return getExamDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasEnrolmentEvaluationType() {
+        return getEnrolmentEvaluationType() != null;
+    }
+
+    @Deprecated
+    public boolean hasActionDate() {
+        return getActionDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasGradeValue() {
+        return getGradeValue() != null;
+    }
+
+    @Deprecated
+    public boolean hasAction() {
+        return getAction() != null;
+    }
+
+    @Deprecated
+    public boolean hasWho() {
+        return getWho() != null;
+    }
+
+    @Deprecated
+    public boolean hasPage() {
+        return getPage() != null;
+    }
+
+    @Deprecated
+    public boolean hasEnrolmentEvaluationState() {
+        return getEnrolmentEvaluationState() != null;
+    }
+
+    @Deprecated
+    public boolean hasEnrolmentEvaluationResponsible() {
+        return getEnrolmentEvaluationResponsible() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionSemester() {
+        return getExecutionSemester() != null;
+    }
+
+    @Deprecated
+    public boolean hasCurricularCourse() {
+        return getCurricularCourse() != null;
+    }
+
 }

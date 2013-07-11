@@ -53,4 +53,39 @@ public class RegistrationStateLog extends RegistrationStateLog_Base {
         setRegistration(null);
         super.deleteDomainObject();
     }
+    @Deprecated
+    public boolean hasRegistration() {
+        return getRegistration() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasStateDate() {
+        return getStateDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasWho() {
+        return getWho() != null;
+    }
+
+    @Deprecated
+    public boolean hasAction() {
+        return getAction() != null;
+    }
+
+    @Deprecated
+    public boolean hasWhenCreated() {
+        return getWhenCreated() != null;
+    }
+
+    @Deprecated
+    public boolean hasStateType() {
+        return getStateType() != null;
+    }
+
 }

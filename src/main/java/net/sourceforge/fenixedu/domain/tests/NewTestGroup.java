@@ -200,4 +200,49 @@ public class NewTestGroup extends NewTestGroup_Base {
         return this.getTest().getFinalGrade();
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.tests.NewTest> getTests() {
+        return getTestsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTests() {
+        return !getTestsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionCourse() {
+        return getExecutionCourse() != null;
+    }
+
+    @Deprecated
+    public boolean hasStatus() {
+        return getStatus() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasBeginDate() {
+        return getBeginDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreator() {
+        return getCreator() != null;
+    }
+
+    @Deprecated
+    public boolean hasFinalDate() {
+        return getFinalDate() != null;
+    }
+
 }

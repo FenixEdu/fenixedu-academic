@@ -392,4 +392,19 @@ public abstract class Site extends Site_Base {
     public void logSectionInsertInstitutional(Content childContent, Section section) {
     }
 
+    @Deprecated
+    public boolean hasStyle() {
+        return getStyle() != null;
+    }
+
+    @Deprecated
+    public boolean hasAlternativeSite() {
+        return getAlternativeSite() != null;
+    }
+
+    @Deprecated
+    public boolean hasJumpPoint() {
+        return getJumpPoint() != null;
+    }
+
 }

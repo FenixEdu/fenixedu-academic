@@ -91,4 +91,64 @@ public class InquiryGroupQuestion extends InquiryGroupQuestion_Base {
         setRootDomainObject(null);
         super.deleteDomainObject();
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.InquiryQuestion> getInquiryQuestions() {
+        return getInquiryQuestionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyInquiryQuestions() {
+        return !getInquiryQuestionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.QuestionCondition> getQuestionConditions() {
+        return getQuestionConditionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyQuestionConditions() {
+        return !getQuestionConditionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasGroupResultType() {
+        return getGroupResultType() != null;
+    }
+
+    @Deprecated
+    public boolean hasRequired() {
+        return getRequired() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasResultQuestion() {
+        return getResultQuestion() != null;
+    }
+
+    @Deprecated
+    public boolean hasInquiryBlock() {
+        return getInquiryBlock() != null;
+    }
+
+    @Deprecated
+    public boolean hasInquiryQuestionHeader() {
+        return getInquiryQuestionHeader() != null;
+    }
+
+    @Deprecated
+    public boolean hasResultQuestionHeader() {
+        return getResultQuestionHeader() != null;
+    }
+
+    @Deprecated
+    public boolean hasGroupOrder() {
+        return getGroupOrder() != null;
+    }
+
 }

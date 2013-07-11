@@ -819,4 +819,34 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
         return stringBuilder.toString();
     }
 
+    @Deprecated
+    public boolean hasCardGenerationBatch() {
+        return getCardGenerationBatch() != null;
+    }
+
+    @Deprecated
+    public boolean hasDocumentID() {
+        return getDocumentID() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreated() {
+        return getCreated() != null;
+    }
+
+    @Deprecated
+    public boolean hasLine() {
+        return getLine() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
+    }
+
 }

@@ -89,4 +89,44 @@ public class ReimbursementGuide extends ReimbursementGuide_Base {
         }
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry> getReimbursementGuideEntries() {
+        return getReimbursementGuideEntriesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyReimbursementGuideEntries() {
+        return !getReimbursementGuideEntriesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideSituation> getReimbursementGuideSituations() {
+        return getReimbursementGuideSituationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyReimbursementGuideSituations() {
+        return !getReimbursementGuideSituationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasCreationYearMonthDay() {
+        return getCreationYearMonthDay() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumber() {
+        return getNumber() != null;
+    }
+
+    @Deprecated
+    public boolean hasGuide() {
+        return getGuide() != null;
+    }
+
 }

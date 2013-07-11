@@ -28,4 +28,34 @@ public class CoordinatorLog extends CoordinatorLog_Base {
         return new CoordinatorLog(time, operation, coordinator.getPerson(), coordinator.getExecutionDegree(), personActing);
     }
 
+    @Deprecated
+    public boolean hasOperation() {
+        return getOperation() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasDate() {
+        return getDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasPersonWho() {
+        return getPersonWho() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionDegree() {
+        return getExecutionDegree() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
+    }
+
 }

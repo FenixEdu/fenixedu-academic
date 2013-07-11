@@ -195,4 +195,19 @@ public abstract class GepReportFile extends GepReportFile_Base {
         }
         return null;
     }
+    @Deprecated
+    public boolean hasType() {
+        return getType() != null;
+    }
+
+    @Deprecated
+    public boolean hasDegreeType() {
+        return getDegreeType() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionYear() {
+        return getExecutionYear() != null;
+    }
+
 }

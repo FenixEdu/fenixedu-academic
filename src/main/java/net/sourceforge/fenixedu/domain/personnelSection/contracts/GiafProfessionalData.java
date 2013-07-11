@@ -128,4 +128,194 @@ public class GiafProfessionalData extends GiafProfessionalData_Base {
                 getContractSituationDate())));
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalExemption> getPersonProfessionalExemptions() {
+        return getPersonProfessionalExemptionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPersonProfessionalExemptions() {
+        return !getPersonProfessionalExemptionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalRelation> getPersonProfessionalRelations() {
+        return getPersonProfessionalRelationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPersonProfessionalRelations() {
+        return !getPersonProfessionalRelationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContractSituation> getPersonContractSituations() {
+        return getPersonContractSituationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPersonContractSituations() {
+        return !getPersonContractSituationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalContract> getPersonProfessionalContracts() {
+        return getPersonProfessionalContractsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPersonProfessionalContracts() {
+        return !getPersonProfessionalContractsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalRegime> getPersonProfessionalRegimes() {
+        return getPersonProfessionalRegimesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPersonProfessionalRegimes() {
+        return !getPersonProfessionalRegimesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalCategory> getPersonProfessionalCategories() {
+        return getPersonProfessionalCategoriesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPersonProfessionalCategories() {
+        return !getPersonProfessionalCategoriesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonFunctionsAccumulation> getPersonFunctionsAccumulations() {
+        return getPersonFunctionsAccumulationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPersonFunctionsAccumulations() {
+        return !getPersonFunctionsAccumulationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasContractSituation() {
+        return getContractSituation() != null;
+    }
+
+    @Deprecated
+    public boolean hasInstitutionEntryDate() {
+        return getInstitutionEntryDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasProfessionalRegimeGiafId() {
+        return getProfessionalRegimeGiafId() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasProfessionalContractTypeGiafId() {
+        return getProfessionalContractTypeGiafId() != null;
+    }
+
+    @Deprecated
+    public boolean hasAnulationDate() {
+        return getAnulationDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasProfessionalCategoryGiafId() {
+        return getProfessionalCategoryGiafId() != null;
+    }
+
+    @Deprecated
+    public boolean hasProfessionalRelationGiafId() {
+        return getProfessionalRelationGiafId() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreationDate() {
+        return getCreationDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasProfessionalCategory() {
+        return getProfessionalCategory() != null;
+    }
+
+    @Deprecated
+    public boolean hasContractSituationGiafId() {
+        return getContractSituationGiafId() != null;
+    }
+
+    @Deprecated
+    public boolean hasContractSituationDate() {
+        return getContractSituationDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasCampus() {
+        return getCampus() != null;
+    }
+
+    @Deprecated
+    public boolean hasGiafPersonIdentification() {
+        return getGiafPersonIdentification() != null;
+    }
+
+    @Deprecated
+    public boolean hasTerminationSituationDate() {
+        return getTerminationSituationDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasProfessionalRegimeDate() {
+        return getProfessionalRegimeDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasModifiedDate() {
+        return getModifiedDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasProfessionalRelation() {
+        return getProfessionalRelation() != null;
+    }
+
+    @Deprecated
+    public boolean hasProfessionalRegime() {
+        return getProfessionalRegime() != null;
+    }
+
+    @Deprecated
+    public boolean hasImportationDate() {
+        return getImportationDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasProfessionalContractType() {
+        return getProfessionalContractType() != null;
+    }
+
+    @Deprecated
+    public boolean hasProfessionalCategoryDate() {
+        return getProfessionalCategoryDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasProfessionalRelationDate() {
+        return getProfessionalRelationDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasPersonProfessionalData() {
+        return getPersonProfessionalData() != null;
+    }
+
 }

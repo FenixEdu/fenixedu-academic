@@ -150,4 +150,39 @@ public class Prize extends Prize_Base {
     public boolean isLastParticipation() {
         return getPeople().size() == 1;
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.organizationalStructure.Party> getParties() {
+        return getPartiesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyParties() {
+        return !getPartiesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasYear() {
+        return getYear() != null;
+    }
+
+    @Deprecated
+    public boolean hasDescription() {
+        return getDescription() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasResearchResult() {
+        return getResearchResult() != null;
+    }
+
 }

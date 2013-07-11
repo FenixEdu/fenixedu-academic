@@ -488,4 +488,94 @@ public class DistributedTest extends DistributedTest_Base {
         }
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog> getStudentsLogs() {
+        return getStudentsLogsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyStudentsLogs() {
+        return !getStudentsLogsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion> getDistributedTestQuestions() {
+        return getDistributedTestQuestionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyDistributedTestQuestions() {
+        return !getDistributedTestQuestionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasBeginDateDateYearMonthDay() {
+        return getBeginDateDateYearMonthDay() != null;
+    }
+
+    @Deprecated
+    public boolean hasCorrectionAvailability() {
+        return getCorrectionAvailability() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasBeginHourDateHourMinuteSecond() {
+        return getBeginHourDateHourMinuteSecond() != null;
+    }
+
+    @Deprecated
+    public boolean hasOnlineTest() {
+        return getOnlineTest() != null;
+    }
+
+    @Deprecated
+    public boolean hasTitle() {
+        return getTitle() != null;
+    }
+
+    @Deprecated
+    public boolean hasTestScope() {
+        return getTestScope() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumberOfQuestions() {
+        return getNumberOfQuestions() != null;
+    }
+
+    @Deprecated
+    public boolean hasEvaluationTitle() {
+        return getEvaluationTitle() != null;
+    }
+
+    @Deprecated
+    public boolean hasImsFeedback() {
+        return getImsFeedback() != null;
+    }
+
+    @Deprecated
+    public boolean hasTestType() {
+        return getTestType() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndDateDateYearMonthDay() {
+        return getEndDateDateYearMonthDay() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndHourDateHourMinuteSecond() {
+        return getEndHourDateHourMinuteSecond() != null;
+    }
+
+    @Deprecated
+    public boolean hasTestInformation() {
+        return getTestInformation() != null;
+    }
+
 }

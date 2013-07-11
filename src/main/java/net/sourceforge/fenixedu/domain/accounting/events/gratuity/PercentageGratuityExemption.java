@@ -65,4 +65,9 @@ public class PercentageGratuityExemption extends PercentageGratuityExemption_Bas
         return true;
     }
 
+    @Deprecated
+    public boolean hasPercentage() {
+        return getPercentage() != null;
+    }
+
 }

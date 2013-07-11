@@ -1014,4 +1014,94 @@ public class MarkSheet extends MarkSheet_Base {
         return (dt == null) ? null : new java.util.Date(dt.getMillis());
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.EnrolmentEvaluation> getEnrolmentEvaluations() {
+        return getEnrolmentEvaluationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyEnrolmentEvaluations() {
+        return !getEnrolmentEvaluationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasResponsibleTeacher() {
+        return getResponsibleTeacher() != null;
+    }
+
+    @Deprecated
+    public boolean hasMarkSheetType() {
+        return getMarkSheetType() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreationDateDateTime() {
+        return getCreationDateDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreator() {
+        return getCreator() != null;
+    }
+
+    @Deprecated
+    public boolean hasEvaluationDateDateTime() {
+        return getEvaluationDateDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasValidator() {
+        return getValidator() != null;
+    }
+
+    @Deprecated
+    public boolean hasConfirmationDateDateTime() {
+        return getConfirmationDateDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasArchiveInformation() {
+        return getArchiveInformation() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionPeriod() {
+        return getExecutionPeriod() != null;
+    }
+
+    @Deprecated
+    public boolean hasCheckSum() {
+        return getCheckSum() != null;
+    }
+
+    @Deprecated
+    public boolean hasPrinted() {
+        return getPrinted() != null;
+    }
+
+    @Deprecated
+    public boolean hasMarkSheetState() {
+        return getMarkSheetState() != null;
+    }
+
+    @Deprecated
+    public boolean hasCurricularCourse() {
+        return getCurricularCourse() != null;
+    }
+
+    @Deprecated
+    public boolean hasSubmittedByTeacher() {
+        return getSubmittedByTeacher() != null;
+    }
+
+    @Deprecated
+    public boolean hasReason() {
+        return getReason() != null;
+    }
+
 }

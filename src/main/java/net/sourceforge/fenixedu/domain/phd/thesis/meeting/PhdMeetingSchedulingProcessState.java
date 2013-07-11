@@ -106,4 +106,14 @@ public class PhdMeetingSchedulingProcessState extends PhdMeetingSchedulingProces
         return getMeetingProcess();
     }
 
+    @Deprecated
+    public boolean hasType() {
+        return getType() != null;
+    }
+
+    @Deprecated
+    public boolean hasMeetingProcess() {
+        return getMeetingProcess() != null;
+    }
+
 }

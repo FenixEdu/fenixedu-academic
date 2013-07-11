@@ -58,4 +58,24 @@ public class ThesisSubjectOrder extends ThesisSubjectOrder_Base {
         return hasPhdIndividualProgramProcess();
     }
 
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasThesisSubject() {
+        return getThesisSubject() != null;
+    }
+
+    @Deprecated
+    public boolean hasPhdIndividualProgramProcess() {
+        return getPhdIndividualProgramProcess() != null;
+    }
+
+    @Deprecated
+    public boolean hasSubjectOrder() {
+        return getSubjectOrder() != null;
+    }
+
 }

@@ -41,4 +41,24 @@ public class GroupProposal extends GroupProposal_Base {
         }
     }
 
+    @Deprecated
+    public boolean hasFinalDegreeWorkProposal() {
+        return getFinalDegreeWorkProposal() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasFinalDegreeDegreeWorkGroup() {
+        return getFinalDegreeDegreeWorkGroup() != null;
+    }
+
+    @Deprecated
+    public boolean hasOrderOfPreference() {
+        return getOrderOfPreference() != null;
+    }
+
 }

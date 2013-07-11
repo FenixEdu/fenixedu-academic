@@ -261,4 +261,19 @@ public class NewSection extends NewSection_Base {
         return grade;
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.tests.NewTestElement> getTestElements() {
+        return getTestElementsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTestElements() {
+        return !getTestElementsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasPreCondition() {
+        return getPreCondition() != null;
+    }
+
 }

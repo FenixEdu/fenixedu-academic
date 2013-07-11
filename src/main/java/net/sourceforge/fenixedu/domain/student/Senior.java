@@ -163,4 +163,59 @@ public class Senior extends Senior_Base {
         }
     }
 
+    @Deprecated
+    public boolean hasStudent() {
+        return getStudent() != null;
+    }
+
+    @Deprecated
+    public boolean hasLastModificationDateDateTime() {
+        return getLastModificationDateDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasProfessionalExperience() {
+        return getProfessionalExperience() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasInformaticsSkills() {
+        return getInformaticsSkills() != null;
+    }
+
+    @Deprecated
+    public boolean hasSpecialtyField() {
+        return getSpecialtyField() != null;
+    }
+
+    @Deprecated
+    public boolean hasProfessionalInterests() {
+        return getProfessionalInterests() != null;
+    }
+
+    @Deprecated
+    public boolean hasExtracurricularActivities() {
+        return getExtracurricularActivities() != null;
+    }
+
+    @Deprecated
+    public boolean hasLanguageSkills() {
+        return getLanguageSkills() != null;
+    }
+
+    @Deprecated
+    public boolean hasExpectedDegreeAverageGrade() {
+        return getExpectedDegreeAverageGrade() != null;
+    }
+
+    @Deprecated
+    public boolean hasExpectedDegreeTerminationDateTime() {
+        return getExpectedDegreeTerminationDateTime() != null;
+    }
+
 }

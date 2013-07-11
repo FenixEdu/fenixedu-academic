@@ -76,4 +76,19 @@ public class LibraryCardSystem extends LibraryCardSystem_Base {
         }
 
     }
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasMilleniumCodeCounter() {
+        return getMilleniumCodeCounter() != null;
+    }
+
+    @Deprecated
+    public boolean hasHigherClearenceGroup() {
+        return getHigherClearenceGroup() != null;
+    }
+
 }

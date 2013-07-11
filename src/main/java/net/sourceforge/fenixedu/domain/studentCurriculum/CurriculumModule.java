@@ -532,4 +532,24 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
         }
     }
 
+    @Deprecated
+    public boolean hasCurriculumGroup() {
+        return getCurriculumGroup() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreationDateDateTime() {
+        return getCreationDateDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasDegreeModule() {
+        return getDegreeModule() != null;
+    }
+
 }

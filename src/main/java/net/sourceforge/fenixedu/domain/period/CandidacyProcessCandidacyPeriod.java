@@ -38,4 +38,14 @@ abstract public class CandidacyProcessCandidacyPeriod extends CandidacyProcessCa
         }
         return result;
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess> getCandidacyProcesses() {
+        return getCandidacyProcessesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCandidacyProcesses() {
+        return !getCandidacyProcessesSet().isEmpty();
+    }
+
 }

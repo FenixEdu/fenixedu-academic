@@ -137,4 +137,19 @@ public class InstitutionWorkTime extends InstitutionWorkTime_Base {
         }
     }
 
+    @Deprecated
+    public boolean hasEndTimeHourMinuteSecond() {
+        return getEndTimeHourMinuteSecond() != null;
+    }
+
+    @Deprecated
+    public boolean hasStartTimeHourMinuteSecond() {
+        return getStartTimeHourMinuteSecond() != null;
+    }
+
+    @Deprecated
+    public boolean hasWeekDay() {
+        return getWeekDay() != null;
+    }
+
 }

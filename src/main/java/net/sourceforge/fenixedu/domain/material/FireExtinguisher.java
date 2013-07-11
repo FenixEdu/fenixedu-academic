@@ -81,4 +81,19 @@ public class FireExtinguisher extends FireExtinguisher_Base {
     public boolean isFireExtinguisher() {
         return true;
     }
+    @Deprecated
+    public boolean hasDelivererEnterprise() {
+        return getDelivererEnterprise() != null;
+    }
+
+    @Deprecated
+    public boolean hasToBeInspectedDate() {
+        return getToBeInspectedDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasLoadedDate() {
+        return getLoadedDate() != null;
+    }
+
 }

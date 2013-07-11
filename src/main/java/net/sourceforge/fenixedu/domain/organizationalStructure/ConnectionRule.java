@@ -23,4 +23,24 @@ public class ConnectionRule extends ConnectionRule_Base {
         setRootDomainObject(null);
         deleteDomainObject();
     }
+    @Deprecated
+    public boolean hasAccountabilityType() {
+        return getAccountabilityType() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasAllowedParentPartyType() {
+        return getAllowedParentPartyType() != null;
+    }
+
+    @Deprecated
+    public boolean hasAllowedChildPartyType() {
+        return getAllowedChildPartyType() != null;
+    }
+
 }

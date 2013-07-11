@@ -371,4 +371,104 @@ public class UnitSite extends UnitSite_Base {
 
         return groups;
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.UnitSiteBanner> getBanners() {
+        return getBannersSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyBanners() {
+        return !getBannersSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.UnitSiteLink> getTopLinks() {
+        return getTopLinksSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTopLinks() {
+        return !getTopLinksSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Person> getManagers() {
+        return getManagersSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyManagers() {
+        return !getManagersSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.UnitSiteLink> getFooterLinks() {
+        return getFooterLinksSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyFooterLinks() {
+        return !getFooterLinksSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasGoogleAnalyticsCode() {
+        return getGoogleAnalyticsCode() != null;
+    }
+
+    @Deprecated
+    public boolean hasShowFlags() {
+        return getShowFlags() != null;
+    }
+
+    @Deprecated
+    public boolean hasShowBanner() {
+        return getShowBanner() != null;
+    }
+
+    @Deprecated
+    public boolean hasLayout() {
+        return getLayout() != null;
+    }
+
+    @Deprecated
+    public boolean hasShowEvents() {
+        return getShowEvents() != null;
+    }
+
+    @Deprecated
+    public boolean hasLogo() {
+        return getLogo() != null;
+    }
+
+    @Deprecated
+    public boolean hasShowInstitutionLogo() {
+        return getShowInstitutionLogo() != null;
+    }
+
+    @Deprecated
+    public boolean hasShowIntroduction() {
+        return getShowIntroduction() != null;
+    }
+
+    @Deprecated
+    public boolean hasPersonalizedLogo() {
+        return getPersonalizedLogo() != null;
+    }
+
+    @Deprecated
+    public boolean hasSideBanner() {
+        return getSideBanner() != null;
+    }
+
+    @Deprecated
+    public boolean hasShowAnnouncements() {
+        return getShowAnnouncements() != null;
+    }
+
+    @Deprecated
+    public boolean hasUnit() {
+        return getUnit() != null;
+    }
+
 }

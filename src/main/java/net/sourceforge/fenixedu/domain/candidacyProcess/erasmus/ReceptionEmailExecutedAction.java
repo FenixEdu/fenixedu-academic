@@ -61,4 +61,29 @@ public class ReceptionEmailExecutedAction extends ReceptionEmailExecutedAction_B
                         MobilityEmailTemplateType.IST_RECEPTION);
         return createAction(bean.getMobilityApplicationProcess(), bean.getSubjectProcesses(), receptionTemplate);
     }
+    @Deprecated
+    public boolean hasBody() {
+        return getBody() != null;
+    }
+
+    @Deprecated
+    public boolean hasMobilityEmailTemplate() {
+        return getMobilityEmailTemplate() != null;
+    }
+
+    @Deprecated
+    public boolean hasBeginIntervalOfAcceptedStudents() {
+        return getBeginIntervalOfAcceptedStudents() != null;
+    }
+
+    @Deprecated
+    public boolean hasSubject() {
+        return getSubject() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndIntervalOfAcceptedStudents() {
+        return getEndIntervalOfAcceptedStudents() != null;
+    }
+
 }

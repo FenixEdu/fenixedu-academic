@@ -159,4 +159,44 @@ public class Advise extends Advise_Base {
             }
         }
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.TeacherAdviseService> getTeacherAdviseServices() {
+        return getTeacherAdviseServicesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTeacherAdviseServices() {
+        return !getTeacherAdviseServicesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasStudent() {
+        return getStudent() != null;
+    }
+
+    @Deprecated
+    public boolean hasTeacher() {
+        return getTeacher() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndExecutionPeriod() {
+        return getEndExecutionPeriod() != null;
+    }
+
+    @Deprecated
+    public boolean hasAdviseType() {
+        return getAdviseType() != null;
+    }
+
+    @Deprecated
+    public boolean hasStartExecutionPeriod() {
+        return getStartExecutionPeriod() != null;
+    }
+
 }

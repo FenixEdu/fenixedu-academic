@@ -168,4 +168,39 @@ public class ThesisEvaluationParticipant extends ThesisEvaluationParticipant_Bas
 
     }
 
+    @Deprecated
+    public boolean hasThesis() {
+        return getThesis() != null;
+    }
+
+    @Deprecated
+    public boolean hasAffiliation() {
+        return getAffiliation() != null;
+    }
+
+    @Deprecated
+    public boolean hasCategory() {
+        return getCategory() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasPersonName() {
+        return getPersonName() != null;
+    }
+
+    @Deprecated
+    public boolean hasType() {
+        return getType() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
+    }
+
 }

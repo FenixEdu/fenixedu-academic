@@ -25,4 +25,14 @@ public class UnitSiteBannerFile extends UnitSiteBannerFile_Base {
         super.delete();
     }
 
+    @Deprecated
+    public boolean hasMainBanner() {
+        return getMainBanner() != null;
+    }
+
+    @Deprecated
+    public boolean hasBackgroundBanner() {
+        return getBackgroundBanner() != null;
+    }
+
 }

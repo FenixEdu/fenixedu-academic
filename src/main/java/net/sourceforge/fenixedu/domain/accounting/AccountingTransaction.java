@@ -350,4 +350,49 @@ public class AccountingTransaction extends AccountingTransaction_Base {
         return getToAccountEntry().getOriginalAmount();
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.AccountingTransaction> getAdjustmentTransactions() {
+        return getAdjustmentTransactionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAdjustmentTransactions() {
+        return !getAdjustmentTransactionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.Entry> getEntries() {
+        return getEntriesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyEntries() {
+        return !getEntriesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasTransactionDetail() {
+        return getTransactionDetail() != null;
+    }
+
+    @Deprecated
+    public boolean hasAdjustedTransaction() {
+        return getAdjustedTransaction() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasEvent() {
+        return getEvent() != null;
+    }
+
+    @Deprecated
+    public boolean hasResponsibleUser() {
+        return getResponsibleUser() != null;
+    }
+
 }

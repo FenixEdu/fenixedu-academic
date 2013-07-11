@@ -105,4 +105,19 @@ public class MicroPaymentEvent extends MicroPaymentEvent_Base {
         return getDestinationUnit();
     }
 
+    @Deprecated
+    public boolean hasAmount() {
+        return getAmount() != null;
+    }
+
+    @Deprecated
+    public boolean hasDestinationUnit() {
+        return getDestinationUnit() != null;
+    }
+
+    @Deprecated
+    public boolean hasAffiliationEvent() {
+        return getAffiliationEvent() != null;
+    }
+
 }

@@ -28,4 +28,39 @@ public class Modality extends Modality_Base {
         return RootDomainObject.getInstance().getModalitys();
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency> getCourseEquivalencies() {
+        return getCourseEquivalenciesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCourseEquivalencies() {
+        return !getCourseEquivalenciesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy> getAssociatedModalities() {
+        return getAssociatedModalitiesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssociatedModalities() {
+        return !getAssociatedModalitiesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasDescription() {
+        return getDescription() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
 }

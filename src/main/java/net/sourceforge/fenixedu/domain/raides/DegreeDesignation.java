@@ -50,4 +50,34 @@ public class DegreeDesignation extends DegreeDesignation_Base {
         setRootDomainObject(null);
         deleteDomainObject();
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.organizationalStructure.Unit> getInstitutionUnit() {
+        return getInstitutionUnitSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyInstitutionUnit() {
+        return !getInstitutionUnitSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasDescription() {
+        return getDescription() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasDegreeClassification() {
+        return getDegreeClassification() != null;
+    }
+
+    @Deprecated
+    public boolean hasCode() {
+        return getCode() != null;
+    }
+
 }

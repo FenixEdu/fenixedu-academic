@@ -79,4 +79,24 @@ public class ExpectationEvaluationGroup extends ExpectationEvaluationGroup_Base 
             throw new DomainException("error.ExpectationEvaluationGroup.invalid.departments");
         }
     }
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasEvaluated() {
+        return getEvaluated() != null;
+    }
+
+    @Deprecated
+    public boolean hasAppraiser() {
+        return getAppraiser() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionYear() {
+        return getExecutionYear() != null;
+    }
+
 }

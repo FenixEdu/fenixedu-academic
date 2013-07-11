@@ -91,4 +91,19 @@ public class DegreeProjectTutorialService extends DegreeProjectTutorialService_B
         }
         return BigDecimal.ZERO;
     }
+    @Deprecated
+    public boolean hasProfessorship() {
+        return getProfessorship() != null;
+    }
+
+    @Deprecated
+    public boolean hasAttend() {
+        return getAttend() != null;
+    }
+
+    @Deprecated
+    public boolean hasPercentageValue() {
+        return getPercentageValue() != null;
+    }
+
 }

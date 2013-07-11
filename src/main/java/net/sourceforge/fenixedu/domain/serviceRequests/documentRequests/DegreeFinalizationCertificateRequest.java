@@ -346,4 +346,64 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
     protected void createCertificateRequestEvent() {
         new DegreeFinalizationCertificateRequestEvent(getAdministrativeOffice(), getRegistration().getPerson(), this);
     }
+    @Deprecated
+    public boolean hasDetailed() {
+        return getDetailed() != null;
+    }
+
+    @Deprecated
+    public boolean hasRequestedCycle() {
+        return getRequestedCycle() != null;
+    }
+
+    @Deprecated
+    public boolean hasIgnoreExternalEntries() {
+        return getIgnoreExternalEntries() != null;
+    }
+
+    @Deprecated
+    public boolean hasBranch() {
+        return getBranch() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudyPlan() {
+        return getStudyPlan() != null;
+    }
+
+    @Deprecated
+    public boolean hasInternshipAbolished() {
+        return getInternshipAbolished() != null;
+    }
+
+    @Deprecated
+    public boolean hasIgnoreCurriculumInAdvance() {
+        return getIgnoreCurriculumInAdvance() != null;
+    }
+
+    @Deprecated
+    public boolean hasExceptionalConclusionDate() {
+        return getExceptionalConclusionDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasAverage() {
+        return getAverage() != null;
+    }
+
+    @Deprecated
+    public boolean hasMobilityProgram() {
+        return getMobilityProgram() != null;
+    }
+
+    @Deprecated
+    public boolean hasInternshipApproved() {
+        return getInternshipApproved() != null;
+    }
+
+    @Deprecated
+    public boolean hasTechnicalEngineer() {
+        return getTechnicalEngineer() != null;
+    }
+
 }

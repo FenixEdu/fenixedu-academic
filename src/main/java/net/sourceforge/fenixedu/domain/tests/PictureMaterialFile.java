@@ -28,4 +28,14 @@ public class PictureMaterialFile extends PictureMaterialFile_Base {
         }
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.tests.NewPictureMaterial> getPictureMaterials() {
+        return getPictureMaterialsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPictureMaterials() {
+        return !getPictureMaterialsSet().isEmpty();
+    }
+
 }

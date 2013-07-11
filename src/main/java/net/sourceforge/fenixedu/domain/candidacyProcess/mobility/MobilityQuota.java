@@ -102,4 +102,39 @@ public class MobilityQuota extends MobilityQuota_Base {
         return !getStudentApplicationProcesses().isEmpty();
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityStudentData> getApplications() {
+        return getApplicationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyApplications() {
+        return !getApplicationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasNumberOfOpenings() {
+        return getNumberOfOpenings() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasApplicationPeriod() {
+        return getApplicationPeriod() != null;
+    }
+
+    @Deprecated
+    public boolean hasMobilityAgreement() {
+        return getMobilityAgreement() != null;
+    }
+
+    @Deprecated
+    public boolean hasDegree() {
+        return getDegree() != null;
+    }
+
 }

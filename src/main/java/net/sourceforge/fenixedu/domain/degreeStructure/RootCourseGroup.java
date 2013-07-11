@@ -133,4 +133,9 @@ public class RootCourseGroup extends RootCourseGroup_Base {
         return Collections.emptySet();
     }
 
+    @Deprecated
+    public boolean hasParentDegreeCurricularPlan() {
+        return getParentDegreeCurricularPlan() != null;
+    }
+
 }

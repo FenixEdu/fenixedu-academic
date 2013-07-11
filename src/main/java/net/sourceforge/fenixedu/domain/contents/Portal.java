@@ -46,4 +46,9 @@ public class Portal extends Portal_Base {
     public void addContentJump(Site site, MultiLanguageString jumpName) {
         this.addChild(new ContentJump(jumpName, site));
     }
+    @Deprecated
+    public boolean hasPortalRootDomainObject() {
+        return getPortalRootDomainObject() != null;
+    }
+
 }

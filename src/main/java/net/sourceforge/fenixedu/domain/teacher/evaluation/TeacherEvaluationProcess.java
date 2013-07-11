@@ -283,4 +283,59 @@ public class TeacherEvaluationProcess extends TeacherEvaluationProcess_Base {
         return facultyEvaluationProcess.getAreApprovedMarksPublished() ? getApprovedEvaluationMarkAsStringForCCAD() : null;
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluation> getTeacherEvaluation() {
+        return getTeacherEvaluationSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTeacherEvaluation() {
+        return !getTeacherEvaluationSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationCoEvaluator> getTeacherEvaluationCoEvaluator() {
+        return getTeacherEvaluationCoEvaluatorSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTeacherEvaluationCoEvaluator() {
+        return !getTeacherEvaluationCoEvaluatorSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.evaluation.ApprovedTeacherEvaluationProcessMark> getApprovedTeacherEvaluationProcessMark() {
+        return getApprovedTeacherEvaluationProcessMarkSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyApprovedTeacherEvaluationProcessMark() {
+        return !getApprovedTeacherEvaluationProcessMarkSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasEvaluator() {
+        return getEvaluator() != null;
+    }
+
+    @Deprecated
+    public boolean hasEvaluee() {
+        return getEvaluee() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasApprovedEvaluationMark() {
+        return getApprovedEvaluationMark() != null;
+    }
+
+    @Deprecated
+    public boolean hasFacultyEvaluationProcess() {
+        return getFacultyEvaluationProcess() != null;
+    }
+
 }

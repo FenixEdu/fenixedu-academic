@@ -357,4 +357,9 @@ public class DegreeUnit extends DegreeUnit_Base {
         }
         return null;
     }
+    @Deprecated
+    public boolean hasDegree() {
+        return getDegree() != null;
+    }
+
 }

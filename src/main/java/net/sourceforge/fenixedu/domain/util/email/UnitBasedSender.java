@@ -161,4 +161,10 @@ public class UnitBasedSender extends UnitBasedSender_Base {
     public static UnitBasedSender newInstance(Unit unit) {
         return new UnitBasedSender(unit, Sender.getNoreplyMail(), new UnitMembersGroup(unit));
     }
+
+    @Deprecated
+    public boolean hasUnit() {
+        return getUnit() != null;
+    }
+
 }

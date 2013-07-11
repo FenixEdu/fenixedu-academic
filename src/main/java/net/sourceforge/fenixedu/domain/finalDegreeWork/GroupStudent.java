@@ -88,4 +88,24 @@ public class GroupStudent extends GroupStudent_Base {
         super.setStudent(registration);
     }
 
+    @Deprecated
+    public boolean hasStudent() {
+        return getStudent() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasFinalDegreeWorkProposalConfirmation() {
+        return getFinalDegreeWorkProposalConfirmation() != null;
+    }
+
+    @Deprecated
+    public boolean hasFinalDegreeDegreeWorkGroup() {
+        return getFinalDegreeDegreeWorkGroup() != null;
+    }
+
 }

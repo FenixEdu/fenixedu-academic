@@ -117,4 +117,9 @@ abstract public class RegistrationAcademicServiceRequest extends RegistrationAca
 
     abstract public boolean isAvailableForTransitedRegistrations();
 
+    @Deprecated
+    public boolean hasRegistration() {
+        return getRegistration() != null;
+    }
+
 }

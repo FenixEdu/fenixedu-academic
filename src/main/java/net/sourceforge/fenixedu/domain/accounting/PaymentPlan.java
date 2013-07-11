@@ -396,4 +396,44 @@ abstract public class PaymentPlan extends PaymentPlan_Base {
         return getInstallmentsCount() == 1;
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan> getGratuityEventsWithPaymentPlan() {
+        return getGratuityEventsWithPaymentPlanSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyGratuityEventsWithPaymentPlan() {
+        return !getGratuityEventsWithPaymentPlanSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.Installment> getInstallments() {
+        return getInstallmentsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyInstallments() {
+        return !getInstallmentsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasWhenCreated() {
+        return getWhenCreated() != null;
+    }
+
+    @Deprecated
+    public boolean hasDefaultPlan() {
+        return getDefaultPlan() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionYear() {
+        return getExecutionYear() != null;
+    }
+
 }

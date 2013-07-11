@@ -207,4 +207,14 @@ public class InstitutionPhdCandidacyPeriod extends InstitutionPhdCandidacyPeriod
         return null;
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.phd.PhdProgram> getPhdPrograms() {
+        return getPhdProgramsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPhdPrograms() {
+        return !getPhdProgramsSet().isEmpty();
+    }
+
 }

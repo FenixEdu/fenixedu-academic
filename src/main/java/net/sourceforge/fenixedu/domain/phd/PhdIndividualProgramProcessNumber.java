@@ -147,4 +147,29 @@ public class PhdIndividualProgramProcessNumber extends PhdIndividualProgramProce
     public boolean belongsTo(final ExecutionYear year) {
         return year.belongsToCivilYear(getYear());
     }
+    @Deprecated
+    public boolean hasYear() {
+        return getYear() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumber() {
+        return getNumber() != null;
+    }
+
+    @Deprecated
+    public boolean hasProcess() {
+        return getProcess() != null;
+    }
+
+    @Deprecated
+    public boolean hasPhdStudentNumber() {
+        return getPhdStudentNumber() != null;
+    }
+
 }

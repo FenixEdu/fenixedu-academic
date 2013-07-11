@@ -141,4 +141,29 @@ public abstract class Exemption extends Exemption_Base {
     public boolean isSecondCycleIndividualCandidacyExemption() {
         return false;
     }
+    @Deprecated
+    public boolean hasResponsible() {
+        return getResponsible() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasEvent() {
+        return getEvent() != null;
+    }
+
+    @Deprecated
+    public boolean hasWhenCreated() {
+        return getWhenCreated() != null;
+    }
+
+    @Deprecated
+    public boolean hasExemptionJustification() {
+        return getExemptionJustification() != null;
+    }
+
 }

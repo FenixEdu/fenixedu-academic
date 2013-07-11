@@ -75,4 +75,14 @@ public class CampusInformation extends CampusInformation_Base {
         return null;
     }
 
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasLocality() {
+        return getLocality() != null;
+    }
+
 }

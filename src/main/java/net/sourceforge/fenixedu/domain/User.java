@@ -145,4 +145,124 @@ public class User extends User_Base {
         }
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.log.FirstYearShiftsCapacityToggleLog> getFirstYearShiftsCapacityToggleLog() {
+        return getFirstYearShiftsCapacityToggleLogSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyFirstYearShiftsCapacityToggleLog() {
+        return !getFirstYearShiftsCapacityToggleLogSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.AccountingTransaction> getAccountingTransactions() {
+        return getAccountingTransactionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAccountingTransactions() {
+        return !getAccountingTransactionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.TeacherServiceLog> getTeacherServiceLog() {
+        return getTeacherServiceLogSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTeacherServiceLog() {
+        return !getTeacherServiceLogSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluation> getLockedTeacherAutoEvaluations() {
+        return getLockedTeacherAutoEvaluationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyLockedTeacherAutoEvaluations() {
+        return !getLockedTeacherAutoEvaluationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluation> getLockedTeacherEvaluations() {
+        return getLockedTeacherEvaluationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyLockedTeacherEvaluations() {
+        return !getLockedTeacherEvaluationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Identification> getIdentifications() {
+        return getIdentificationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyIdentifications() {
+        return !getIdentificationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasPrivateKeyValidity() {
+        return getPrivateKeyValidity() != null;
+    }
+
+    @Deprecated
+    public boolean hasPrivateKeyCreation() {
+        return getPrivateKeyCreation() != null;
+    }
+
+    @Deprecated
+    public boolean hasLastLoginHost() {
+        return getLastLoginHost() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasCurrentLoginDateTimeDateTime() {
+        return getCurrentLoginDateTimeDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasLogoutDateTime() {
+        return getLogoutDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasCurrentLoginHost() {
+        return getCurrentLoginHost() != null;
+    }
+
+    @Deprecated
+    public boolean hasLoginRequest() {
+        return getLoginRequest() != null;
+    }
+
+    @Deprecated
+    public boolean hasUserUId() {
+        return getUserUId() != null;
+    }
+
+    @Deprecated
+    public boolean hasPrivateKey() {
+        return getPrivateKey() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
+    }
+
+    @Deprecated
+    public boolean hasLastLoginDateTimeDateTime() {
+        return getLastLoginDateTimeDateTime() != null;
+    }
+
 }

@@ -262,4 +262,64 @@ public class CreditNote extends CreditNote_Base {
         return totalAmount;
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.documents.CreditNoteGeneratedDocument> getDocument() {
+        return getDocumentSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyDocument() {
+        return !getDocumentSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.CreditNoteEntry> getCreditNoteEntries() {
+        return getCreditNoteEntriesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCreditNoteEntries() {
+        return !getCreditNoteEntriesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasResponsible() {
+        return getResponsible() != null;
+    }
+
+    @Deprecated
+    public boolean hasYear() {
+        return getYear() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasWhenUpdated() {
+        return getWhenUpdated() != null;
+    }
+
+    @Deprecated
+    public boolean hasState() {
+        return getState() != null;
+    }
+
+    @Deprecated
+    public boolean hasWhenCreated() {
+        return getWhenCreated() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumber() {
+        return getNumber() != null;
+    }
+
+    @Deprecated
+    public boolean hasReceipt() {
+        return getReceipt() != null;
+    }
+
 }

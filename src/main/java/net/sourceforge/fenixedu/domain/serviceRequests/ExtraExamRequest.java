@@ -163,4 +163,9 @@ public class ExtraExamRequest extends ExtraExamRequest_Base {
     public boolean hasPersonalInfo() {
         return false;
     }
+    @Deprecated
+    public boolean hasEnrolment() {
+        return getEnrolment() != null;
+    }
+
 }

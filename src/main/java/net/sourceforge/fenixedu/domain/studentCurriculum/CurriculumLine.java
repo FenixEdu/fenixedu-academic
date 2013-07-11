@@ -308,4 +308,14 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
 
     abstract public String getModuleTypeName();
 
+    @Deprecated
+    public boolean hasUsedInSeparationCycle() {
+        return getUsedInSeparationCycle() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreatedBy() {
+        return getCreatedBy() != null;
+    }
+
 }

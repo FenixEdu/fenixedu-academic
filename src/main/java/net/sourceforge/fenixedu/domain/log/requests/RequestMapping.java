@@ -36,4 +36,29 @@ public class RequestMapping extends RequestMapping_Base {
         return new RequestMapping(path, parameters);
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.log.requests.RequestLog> getLogs() {
+        return getLogsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyLogs() {
+        return !getLogsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasParameters() {
+        return getParameters() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasPath() {
+        return getPath() != null;
+    }
+
 }

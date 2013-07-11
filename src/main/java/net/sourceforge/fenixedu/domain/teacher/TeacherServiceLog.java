@@ -34,4 +34,29 @@ public class TeacherServiceLog extends TeacherServiceLog_Base implements Compara
         return compareTo == 0 ? getExternalId().compareTo(o.getExternalId()) : compareTo;
     }
 
+    @Deprecated
+    public boolean hasUser() {
+        return getUser() != null;
+    }
+
+    @Deprecated
+    public boolean hasTeacherService() {
+        return getTeacherService() != null;
+    }
+
+    @Deprecated
+    public boolean hasDescription() {
+        return getDescription() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasModificationDate() {
+        return getModificationDate() != null;
+    }
+
 }

@@ -145,4 +145,59 @@ public class StudentTestQuestion extends StudentTestQuestion_Base {
             getStudentSubQuestions().set(i, newSubQuestion);
         }
     }
+    @Deprecated
+    public boolean hasStudent() {
+        return getStudent() != null;
+    }
+
+    @Deprecated
+    public boolean hasTestQuestionOrder() {
+        return getTestQuestionOrder() != null;
+    }
+
+    @Deprecated
+    public boolean hasItemId() {
+        return getItemId() != null;
+    }
+
+    @Deprecated
+    public boolean hasDistributedTest() {
+        return getDistributedTest() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasQuestion() {
+        return getQuestion() != null;
+    }
+
+    @Deprecated
+    public boolean hasTestQuestionMark() {
+        return getTestQuestionMark() != null;
+    }
+
+    @Deprecated
+    public boolean hasResponse() {
+        return getResponse() != null;
+    }
+
+    @Deprecated
+    public boolean hasTestQuestionValue() {
+        return getTestQuestionValue() != null;
+    }
+
+    @Deprecated
+    public boolean hasCorrectionFormula() {
+        return getCorrectionFormula() != null;
+    }
+
+    @Deprecated
+    public boolean hasOptionShuffle() {
+        return getOptionShuffle() != null;
+    }
+
 }

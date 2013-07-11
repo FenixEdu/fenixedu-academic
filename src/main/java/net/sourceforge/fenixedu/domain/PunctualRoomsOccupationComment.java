@@ -106,4 +106,35 @@ public class PunctualRoomsOccupationComment extends PunctualRoomsOccupationComme
             }
         }
     }
+
+    @Deprecated
+    public boolean hasOwner() {
+        return getOwner() != null;
+    }
+
+    @Deprecated
+    public boolean hasDescription() {
+        return getDescription() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasInstant() {
+        return getInstant() != null;
+    }
+
+    @Deprecated
+    public boolean hasSubject() {
+        return getSubject() != null;
+    }
+
+    @Deprecated
+    public boolean hasRequest() {
+        return getRequest() != null;
+    }
+
 }

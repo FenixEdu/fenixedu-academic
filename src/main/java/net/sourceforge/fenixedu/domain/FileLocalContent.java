@@ -65,4 +65,34 @@ public class FileLocalContent extends FileLocalContent_Base {
         setRootDomainObject(null);
         deleteDomainObject();
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.FileLocalContentMetadata> getMetadata() {
+        return getMetadataSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyMetadata() {
+        return !getMetadataSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasFile() {
+        return getFile() != null;
+    }
+
+    @Deprecated
+    public boolean hasContent() {
+        return getContent() != null;
+    }
+
+    @Deprecated
+    public boolean hasPath() {
+        return getPath() != null;
+    }
+
 }

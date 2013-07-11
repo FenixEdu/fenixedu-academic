@@ -35,4 +35,9 @@ public class CareerWorkshopSpreadsheet extends CareerWorkshopSpreadsheet_Base {
         super.delete();
     }
 
+    @Deprecated
+    public boolean hasCareerWorkshopApplicationEvent() {
+        return getCareerWorkshopApplicationEvent() != null;
+    }
+
 }

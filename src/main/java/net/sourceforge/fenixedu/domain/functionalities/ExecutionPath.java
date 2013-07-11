@@ -24,4 +24,24 @@ public class ExecutionPath extends ExecutionPath_Base {
         super.deleteDomainObject();
     }
 
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasContentId() {
+        return getContentId() != null;
+    }
+
+    @Deprecated
+    public boolean hasFunctionality() {
+        return getFunctionality() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionPath() {
+        return getExecutionPath() != null;
+    }
+
 }

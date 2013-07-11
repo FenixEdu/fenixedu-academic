@@ -136,4 +136,9 @@ public class AccountingEventPaymentCode extends AccountingEventPaymentCode_Base 
     public boolean isAccountingEventPaymentCode() {
         return true;
     }
+    @Deprecated
+    public boolean hasAccountingEvent() {
+        return getAccountingEvent() != null;
+    }
+
 }

@@ -39,4 +39,24 @@ public class CaseStudyChoice extends CaseStudyChoice_Base {
         super.setPreferenceOrder(order);
     }
 
+    @Deprecated
+    public boolean hasPreferenceOrder() {
+        return getPreferenceOrder() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasCandidacy() {
+        return getCandidacy() != null;
+    }
+
+    @Deprecated
+    public boolean hasCaseStudy() {
+        return getCaseStudy() != null;
+    }
+
 }

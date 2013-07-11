@@ -175,4 +175,44 @@ public class CareerWorkshopConfirmationEvent extends CareerWorkshopConfirmationE
         return super.getConfirmations();
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopConfirmation> getCareerWorkshopConfirmations() {
+        return getCareerWorkshopConfirmationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCareerWorkshopConfirmations() {
+        return !getCareerWorkshopConfirmationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasConfirmations() {
+        return getConfirmations() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndDate() {
+        return getEndDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasBeginDate() {
+        return getBeginDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasLastUpdate() {
+        return getLastUpdate() != null;
+    }
+
+    @Deprecated
+    public boolean hasCareerWorkshopApplicationEvent() {
+        return getCareerWorkshopApplicationEvent() != null;
+    }
+
 }

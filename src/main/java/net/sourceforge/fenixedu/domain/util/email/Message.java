@@ -382,4 +382,114 @@ public class Message extends Message_Base {
         return count;
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.util.email.Recipient> getTos() {
+        return getTosSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTos() {
+        return !getTosSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.util.Email> getEmails() {
+        return getEmailsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyEmails() {
+        return !getEmailsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.util.email.Recipient> getCcs() {
+        return getCcsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCcs() {
+        return !getCcsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.util.email.MessageId> getMessageIds() {
+        return getMessageIdsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyMessageIds() {
+        return !getMessageIdsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.util.email.ReplyTo> getReplyTos() {
+        return getReplyTosSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyReplyTos() {
+        return !getReplyTosSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.util.email.Recipient> getRecipients() {
+        return getRecipientsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyRecipients() {
+        return !getRecipientsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasSent() {
+        return getSent() != null;
+    }
+
+    @Deprecated
+    public boolean hasSender() {
+        return getSender() != null;
+    }
+
+    @Deprecated
+    public boolean hasBody() {
+        return getBody() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreated() {
+        return getCreated() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObjectFromPendingRelation() {
+        return getRootDomainObjectFromPendingRelation() != null;
+    }
+
+    @Deprecated
+    public boolean hasSubject() {
+        return getSubject() != null;
+    }
+
+    @Deprecated
+    public boolean hasHtmlBody() {
+        return getHtmlBody() != null;
+    }
+
+    @Deprecated
+    public boolean hasBccs() {
+        return getBccs() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
+    }
+
 }

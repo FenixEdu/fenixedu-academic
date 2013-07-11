@@ -646,4 +646,49 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
         ExecuteProcessActivity.run(individualProcess, CancelPhdProgramProcess.class.getSimpleName(), processBean);
     }
 
+    @Deprecated
+    public boolean hasMigrationDate() {
+        return getMigrationDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasMigrationParseLog() {
+        return getMigrationParseLog() != null;
+    }
+
+    @Deprecated
+    public boolean hasData() {
+        return getData() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasMigrationStatus() {
+        return getMigrationStatus() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumber() {
+        return getNumber() != null;
+    }
+
+    @Deprecated
+    public boolean hasPhdMigrationIndividualPersonalData() {
+        return getPhdMigrationIndividualPersonalData() != null;
+    }
+
+    @Deprecated
+    public boolean hasPhdMigrationProcess() {
+        return getPhdMigrationProcess() != null;
+    }
+
+    @Deprecated
+    public boolean hasParseLog() {
+        return getParseLog() != null;
+    }
+
 }

@@ -72,4 +72,29 @@ public class StudentDataByExecutionYear extends StudentDataByExecutionYear_Base 
         deleteDomainObject();
     }
 
+    @Deprecated
+    public boolean hasStudent() {
+        return getStudent() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasWorkingStudent() {
+        return getWorkingStudent() != null;
+    }
+
+    @Deprecated
+    public boolean hasResidenceCandidacy() {
+        return getResidenceCandidacy() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionYear() {
+        return getExecutionYear() != null;
+    }
+
 }

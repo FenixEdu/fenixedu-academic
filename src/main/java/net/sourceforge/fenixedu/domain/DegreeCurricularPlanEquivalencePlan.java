@@ -53,4 +53,14 @@ public class DegreeCurricularPlanEquivalencePlan extends DegreeCurricularPlanEqu
     public Degree getSourceDegree() {
         return getSourceDegreeCurricularPlan().getDegree();
     }
+    @Deprecated
+    public boolean hasDegreeCurricularPlan() {
+        return getDegreeCurricularPlan() != null;
+    }
+
+    @Deprecated
+    public boolean hasSourceDegreeCurricularPlan() {
+        return getSourceDegreeCurricularPlan() != null;
+    }
+
 }

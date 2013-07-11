@@ -435,4 +435,134 @@ public class Scheduleing extends Scheduleing_Base {
         }
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal> getProposals() {
+        return getProposalsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyProposals() {
+        return !getProposalsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.ExecutionDegree> getExecutionDegrees() {
+        return getExecutionDegreesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyExecutionDegrees() {
+        return !getExecutionDegreesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasMinimumCompletedCurricularYear() {
+        return getMinimumCompletedCurricularYear() != null;
+    }
+
+    @Deprecated
+    public boolean hasAttributionByTeachers() {
+        return getAttributionByTeachers() != null;
+    }
+
+    @Deprecated
+    public boolean hasMinimumCompletedCreditsSecondCycle() {
+        return getMinimumCompletedCreditsSecondCycle() != null;
+    }
+
+    @Deprecated
+    public boolean hasCurrentProposalNumber() {
+        return getCurrentProposalNumber() != null;
+    }
+
+    @Deprecated
+    public boolean hasMaximumNumberOfProposalCandidaciesPerGroup() {
+        return getMaximumNumberOfProposalCandidaciesPerGroup() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasMinimumCompletedCreditsFirstCycle() {
+        return getMinimumCompletedCreditsFirstCycle() != null;
+    }
+
+    @Deprecated
+    public boolean hasMaximumCurricularYearToCountCompletedCourses() {
+        return getMaximumCurricularYearToCountCompletedCourses() != null;
+    }
+
+    @Deprecated
+    public boolean hasStartOfCandidacyPeriodDateYearMonthDay() {
+        return getStartOfCandidacyPeriodDateYearMonthDay() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndOfCandidacyPeriodTimeHourMinuteSecond() {
+        return getEndOfCandidacyPeriodTimeHourMinuteSecond() != null;
+    }
+
+    @Deprecated
+    public boolean hasMinimumNumberOfCompletedCourses() {
+        return getMinimumNumberOfCompletedCourses() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndOfCandidacyPeriodDateYearMonthDay() {
+        return getEndOfCandidacyPeriodDateYearMonthDay() != null;
+    }
+
+    @Deprecated
+    public boolean hasMinimumNumberOfStudents() {
+        return getMinimumNumberOfStudents() != null;
+    }
+
+    @Deprecated
+    public boolean hasStartOfCandidacyPeriodTimeHourMinuteSecond() {
+        return getStartOfCandidacyPeriodTimeHourMinuteSecond() != null;
+    }
+
+    @Deprecated
+    public boolean hasMaximumNumberOfProposalsPerPerson() {
+        return getMaximumNumberOfProposalsPerPerson() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndOfProposalPeriodTimeHourMinuteSecond() {
+        return getEndOfProposalPeriodTimeHourMinuteSecond() != null;
+    }
+
+    @Deprecated
+    public boolean hasMaximumNumberOfStudents() {
+        return getMaximumNumberOfStudents() != null;
+    }
+
+    @Deprecated
+    public boolean hasStartOfProposalPeriodTimeHourMinuteSecond() {
+        return getStartOfProposalPeriodTimeHourMinuteSecond() != null;
+    }
+
+    @Deprecated
+    public boolean hasAllowCandaciesOnlyForStudentsWithADissertationEnrolment() {
+        return getAllowCandaciesOnlyForStudentsWithADissertationEnrolment() != null;
+    }
+
+    @Deprecated
+    public boolean hasStartOfProposalPeriodDateYearMonthDay() {
+        return getStartOfProposalPeriodDateYearMonthDay() != null;
+    }
+
+    @Deprecated
+    public boolean hasAllowSimultaneousCoorientationAndCompanion() {
+        return getAllowSimultaneousCoorientationAndCompanion() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndOfProposalPeriodDateYearMonthDay() {
+        return getEndOfProposalPeriodDateYearMonthDay() != null;
+    }
+
 }

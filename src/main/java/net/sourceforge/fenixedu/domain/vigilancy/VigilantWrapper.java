@@ -460,4 +460,49 @@ public class VigilantWrapper extends VigilantWrapper_Base {
         return getPerson().getUnavailablePeriodsForGivenYear(getExecutionYear());
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.vigilancy.Vigilancy> getVigilancies() {
+        return getVigilanciesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyVigilancies() {
+        return !getVigilanciesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasJustification() {
+        return getJustification() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasConvokable() {
+        return getConvokable() != null;
+    }
+
+    @Deprecated
+    public boolean hasPointsWeight() {
+        return getPointsWeight() != null;
+    }
+
+    @Deprecated
+    public boolean hasStartPoints() {
+        return getStartPoints() != null;
+    }
+
+    @Deprecated
+    public boolean hasVigilantGroup() {
+        return getVigilantGroup() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
+    }
+
 }

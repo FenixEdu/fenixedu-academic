@@ -244,4 +244,44 @@ public class Book extends Book_Base {
     public Boolean getIsPossibleSelectPersonRole() {
         return true;
     }
+    @Deprecated
+    public boolean hasEdition() {
+        return getEdition() != null;
+    }
+
+    @Deprecated
+    public boolean hasVolume() {
+        return getVolume() != null;
+    }
+
+    @Deprecated
+    public boolean hasAddress() {
+        return getAddress() != null;
+    }
+
+    @Deprecated
+    public boolean hasSeries() {
+        return getSeries() != null;
+    }
+
+    @Deprecated
+    public boolean hasLanguage() {
+        return getLanguage() != null;
+    }
+
+    @Deprecated
+    public boolean hasIsbn() {
+        return getIsbn() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumberPages() {
+        return getNumberPages() != null;
+    }
+
+    @Deprecated
+    public boolean hasScope() {
+        return getScope() != null;
+    }
+
 }

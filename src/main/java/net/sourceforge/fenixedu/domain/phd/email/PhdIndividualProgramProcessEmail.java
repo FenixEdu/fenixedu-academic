@@ -81,4 +81,9 @@ public class PhdIndividualProgramProcessEmail extends PhdIndividualProgramProces
         return null;
     }
 
+    @Deprecated
+    public boolean hasPhdIndividualProgramProcess() {
+        return getPhdIndividualProgramProcess() != null;
+    }
+
 }

@@ -66,4 +66,14 @@ public class StandaloneEnrolmentCertificateRequest extends StandaloneEnrolmentCe
         }
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Enrolment> getEnrolments() {
+        return getEnrolmentsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyEnrolments() {
+        return !getEnrolmentsSet().isEmpty();
+    }
+
 }

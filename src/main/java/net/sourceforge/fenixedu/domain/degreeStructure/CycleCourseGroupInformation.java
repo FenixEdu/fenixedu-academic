@@ -62,4 +62,24 @@ public class CycleCourseGroupInformation extends CycleCourseGroupInformation_Bas
         this.setGraduatedTitle(mls.with(Language.pt, editGraduatedTitle).with(Language.en, editGraduatedTitleEn));
         checkParameters();
     }
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasCycleCourseGroup() {
+        return getCycleCourseGroup() != null;
+    }
+
+    @Deprecated
+    public boolean hasGraduatedTitle() {
+        return getGraduatedTitle() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionYear() {
+        return getExecutionYear() != null;
+    }
+
 }

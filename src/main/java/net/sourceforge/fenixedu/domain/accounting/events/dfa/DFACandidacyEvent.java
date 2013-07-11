@@ -137,4 +137,9 @@ public class DFACandidacyEvent extends DFACandidacyEvent_Base {
         return true;
     }
 
+    @Deprecated
+    public boolean hasCandidacy() {
+        return getCandidacy() != null;
+    }
+
 }

@@ -68,4 +68,49 @@ public class CoordinatorExecutionDegreeCoursesReport extends CoordinatorExecutio
         setLastEditionDate(new DateTime());
         super.setTeachingBestPracticesDevelopedByTeachers(teachingBestPracticesDevelopedByTeachers);
     }
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasBolonhaProcessImplementationReflection() {
+        return getBolonhaProcessImplementationReflection() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionInterval() {
+        return getExecutionInterval() != null;
+    }
+
+    @Deprecated
+    public boolean hasLastEditionDate() {
+        return getLastEditionDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasStepsToImproveResults() {
+        return getStepsToImproveResults() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionDegree() {
+        return getExecutionDegree() != null;
+    }
+
+    @Deprecated
+    public boolean hasGlobalComment() {
+        return getGlobalComment() != null;
+    }
+
+    @Deprecated
+    public boolean hasTeachingBestPracticesDevelopedByTeachers() {
+        return getTeachingBestPracticesDevelopedByTeachers() != null;
+    }
+
+    @Deprecated
+    public boolean hasCoordinator() {
+        return getCoordinator() != null;
+    }
+
 }

@@ -89,4 +89,34 @@ public class UnitSiteLink extends UnitSiteLink_Base {
         deleteDomainObject();
     }
 
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasUrl() {
+        return getUrl() != null;
+    }
+
+    @Deprecated
+    public boolean hasFooterUnitSite() {
+        return getFooterUnitSite() != null;
+    }
+
+    @Deprecated
+    public boolean hasLabel() {
+        return getLabel() != null;
+    }
+
+    @Deprecated
+    public boolean hasLinkOrder() {
+        return getLinkOrder() != null;
+    }
+
+    @Deprecated
+    public boolean hasTopUnitSite() {
+        return getTopUnitSite() != null;
+    }
+
 }

@@ -131,4 +131,109 @@ public class TeacherCredits extends TeacherCredits_Base {
         return lastTeacherCreditsDocument;
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.TeacherCreditsDocument> getTeacherCreditsDocument() {
+        return getTeacherCreditsDocumentSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTeacherCreditsDocument() {
+        return !getTeacherCreditsDocumentSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasOtherCredits() {
+        return getOtherCredits() != null;
+    }
+
+    @Deprecated
+    public boolean hasTeacher() {
+        return getTeacher() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasServiceExemptionCredits() {
+        return getServiceExemptionCredits() != null;
+    }
+
+    @Deprecated
+    public boolean hasManagementCredits() {
+        return getManagementCredits() != null;
+    }
+
+    @Deprecated
+    public boolean hasLastModifiedDate() {
+        return getLastModifiedDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasProfessionalCategory() {
+        return getProfessionalCategory() != null;
+    }
+
+    @Deprecated
+    public boolean hasTotalCredits() {
+        return getTotalCredits() != null;
+    }
+
+    @Deprecated
+    public boolean hasSupportLessonHours() {
+        return getSupportLessonHours() != null;
+    }
+
+    @Deprecated
+    public boolean hasMasterDegreeCredits() {
+        return getMasterDegreeCredits() != null;
+    }
+
+    @Deprecated
+    public boolean hasTfcAdviseCredits() {
+        return getTfcAdviseCredits() != null;
+    }
+
+    @Deprecated
+    public boolean hasPastServiceCredits() {
+        return getPastServiceCredits() != null;
+    }
+
+    @Deprecated
+    public boolean hasTeachingDegreeCredits() {
+        return getTeachingDegreeCredits() != null;
+    }
+
+    @Deprecated
+    public boolean hasThesesCredits() {
+        return getThesesCredits() != null;
+    }
+
+    @Deprecated
+    public boolean hasMandatoryLessonHours() {
+        return getMandatoryLessonHours() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
+    }
+
+    @Deprecated
+    public boolean hasTeacherCreditsState() {
+        return getTeacherCreditsState() != null;
+    }
+
+    @Deprecated
+    public boolean hasBalanceOfCredits() {
+        return getBalanceOfCredits() != null;
+    }
+
+    @Deprecated
+    public boolean hasInstitutionWorkingHours() {
+        return getInstitutionWorkingHours() != null;
+    }
+
 }

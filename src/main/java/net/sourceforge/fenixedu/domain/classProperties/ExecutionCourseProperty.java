@@ -19,4 +19,9 @@ public class ExecutionCourseProperty extends ExecutionCourseProperty_Base {
         super.deleteDomainObject();
     }
 
+    @Deprecated
+    public boolean hasExecutionCourse() {
+        return getExecutionCourse() != null;
+    }
+
 }

@@ -43,4 +43,34 @@ public class Contributor extends Contributor_Base {
         return null;
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Guide> getGuides() {
+        return getGuidesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyGuides() {
+        return !getGuidesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasContributorAddress() {
+        return getContributorAddress() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasContributorName() {
+        return getContributorName() != null;
+    }
+
+    @Deprecated
+    public boolean hasContributorNumber() {
+        return getContributorNumber() != null;
+    }
+
 }

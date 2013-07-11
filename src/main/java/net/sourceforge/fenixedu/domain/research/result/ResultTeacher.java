@@ -51,4 +51,24 @@ public class ResultTeacher extends ResultTeacher_Base {
         }
     }
 
+    @Deprecated
+    public boolean hasResult() {
+        return getResult() != null;
+    }
+
+    @Deprecated
+    public boolean hasTeacher() {
+        return getTeacher() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasPublicationArea() {
+        return getPublicationArea() != null;
+    }
+
 }

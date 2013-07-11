@@ -214,4 +214,49 @@ public abstract class TSDTeacher extends TSDTeacher_Base {
         return getTotalHoursLectured(executionPeriodList)
                 + (getUsingExtraCredits() ? getExtraCreditsValue(executionPeriodList) : 0d);
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProfessorship> getTSDProfessorships() {
+        return getTSDProfessorshipsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTSDProfessorships() {
+        return !getTSDProfessorshipsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution> getTeacherServiceDistributions() {
+        return getTeacherServiceDistributionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTeacherServiceDistributions() {
+        return !getTeacherServiceDistributionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasUsingExtraCredits() {
+        return getUsingExtraCredits() != null;
+    }
+
+    @Deprecated
+    public boolean hasProfessionalCategory() {
+        return getProfessionalCategory() != null;
+    }
+
+    @Deprecated
+    public boolean hasExtraCreditsName() {
+        return getExtraCreditsName() != null;
+    }
+
+    @Deprecated
+    public boolean hasExtraCreditsValue() {
+        return getExtraCreditsValue() != null;
+    }
+
 }

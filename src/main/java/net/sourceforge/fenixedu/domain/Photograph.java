@@ -317,4 +317,74 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
         final String personViewed = PersonInformationLog.getPersonNameForLogDescription(getPerson());
         PersonInformationLog.createLog(getPerson(), "resources.MessagingResources", keyLabel, personViewed);
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.PhotographContent> getContent() {
+        return getContentSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyContent() {
+        return !getContentSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasNext() {
+        return getNext() != null;
+    }
+
+    @Deprecated
+    public boolean hasPendingHolder() {
+        return getPendingHolder() != null;
+    }
+
+    @Deprecated
+    public boolean hasRejector() {
+        return getRejector() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasStateChange() {
+        return getStateChange() != null;
+    }
+
+    @Deprecated
+    public boolean hasState() {
+        return getState() != null;
+    }
+
+    @Deprecated
+    public boolean hasPrevious() {
+        return getPrevious() != null;
+    }
+
+    @Deprecated
+    public boolean hasApprover() {
+        return getApprover() != null;
+    }
+
+    @Deprecated
+    public boolean hasSubmission() {
+        return getSubmission() != null;
+    }
+
+    @Deprecated
+    public boolean hasPhotoType() {
+        return getPhotoType() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
+    }
+
+    @Deprecated
+    public boolean hasContentType() {
+        return getContentType() != null;
+    }
+
 }

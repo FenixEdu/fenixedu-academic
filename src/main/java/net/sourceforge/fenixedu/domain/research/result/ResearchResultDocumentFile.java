@@ -120,4 +120,19 @@ public class ResearchResultDocumentFile extends ResearchResultDocumentFile_Base 
         throw new DomainException("error.researcher.ResultDocumentFile.call", "removeResult");
     }
 
+    @Deprecated
+    public boolean hasResult() {
+        return getResult() != null;
+    }
+
+    @Deprecated
+    public boolean hasVisible() {
+        return getVisible() != null;
+    }
+
+    @Deprecated
+    public boolean hasFileResultPermittedGroupType() {
+        return getFileResultPermittedGroupType() != null;
+    }
+
 }

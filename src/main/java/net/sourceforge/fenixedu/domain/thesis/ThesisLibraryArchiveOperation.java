@@ -34,4 +34,9 @@ public class ThesisLibraryArchiveOperation extends ThesisLibraryArchiveOperation
     public String getPendingComment() {
         return null;
     }
+    @Deprecated
+    public boolean hasLibraryReference() {
+        return getLibraryReference() != null;
+    }
+
 }

@@ -57,4 +57,9 @@ public class EctsCompetenceCourseConversionTable extends EctsCompetenceCourseCon
         setCompetenceCourse(null);
         super.delete();
     }
+    @Deprecated
+    public boolean hasCompetenceCourse() {
+        return getCompetenceCourse() != null;
+    }
+
 }

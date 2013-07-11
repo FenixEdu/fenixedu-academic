@@ -358,4 +358,44 @@ public class TeacherService extends TeacherService_Base {
                 "label.teacher.unlockTeacherCredits", getExecutionPeriod().getQualifiedName()));
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.TeacherServiceItem> getServiceItems() {
+        return getServiceItemsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyServiceItems() {
+        return !getServiceItemsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.teacher.TeacherServiceLog> getTeacherServiceLog() {
+        return getTeacherServiceLogSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTeacherServiceLog() {
+        return !getTeacherServiceLogSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasTeacher() {
+        return getTeacher() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionPeriod() {
+        return getExecutionPeriod() != null;
+    }
+
+    @Deprecated
+    public boolean hasTeacherServiceLock() {
+        return getTeacherServiceLock() != null;
+    }
+
 }

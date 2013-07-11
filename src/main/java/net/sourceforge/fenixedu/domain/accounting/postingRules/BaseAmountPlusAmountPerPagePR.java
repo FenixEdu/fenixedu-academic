@@ -118,4 +118,14 @@ abstract public class BaseAmountPlusAmountPerPagePR extends BaseAmountPlusAmount
     abstract protected boolean isUrgent(final Event event);
 
     abstract protected Money getAmountForPages(final Event event);
+    @Deprecated
+    public boolean hasBaseAmount() {
+        return getBaseAmount() != null;
+    }
+
+    @Deprecated
+    public boolean hasAmountPerPage() {
+        return getAmountPerPage() != null;
+    }
+
 }

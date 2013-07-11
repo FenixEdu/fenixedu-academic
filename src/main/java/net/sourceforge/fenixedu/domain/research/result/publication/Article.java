@@ -247,4 +247,34 @@ public class Article extends Article_Base {
     public String getNumber() {
         return this.getJournalIssue().getNumber();
     }
+    @Deprecated
+    public boolean hasFirstPage() {
+        return getFirstPage() != null;
+    }
+
+    @Deprecated
+    public boolean hasArticleAssociation() {
+        return getArticleAssociation() != null;
+    }
+
+    @Deprecated
+    public boolean hasJournal() {
+        return getJournal() != null;
+    }
+
+    @Deprecated
+    public boolean hasIssn() {
+        return getIssn() != null;
+    }
+
+    @Deprecated
+    public boolean hasLastPage() {
+        return getLastPage() != null;
+    }
+
+    @Deprecated
+    public boolean hasLanguage() {
+        return getLanguage() != null;
+    }
+
 }

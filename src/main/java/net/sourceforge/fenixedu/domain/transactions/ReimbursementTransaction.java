@@ -41,4 +41,9 @@ public class ReimbursementTransaction extends ReimbursementTransaction_Base {
         setPersonAccount(personAccount);
         setReimbursementGuideEntry(reimbursementGuideEntry);
     }
+    @Deprecated
+    public boolean hasReimbursementGuideEntry() {
+        return getReimbursementGuideEntry() != null;
+    }
+
 }

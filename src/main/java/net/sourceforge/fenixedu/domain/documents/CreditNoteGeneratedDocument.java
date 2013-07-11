@@ -37,4 +37,9 @@ public class CreditNoteGeneratedDocument extends CreditNoteGeneratedDocument_Bas
             new CreditNoteGeneratedDocument(source, source.getReceipt().getPerson(), AccessControl.getPerson(), filename, content);
         }
     }
+    @Deprecated
+    public boolean hasSource() {
+        return getSource() != null;
+    }
+
 }

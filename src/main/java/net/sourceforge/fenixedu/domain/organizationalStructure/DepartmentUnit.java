@@ -271,4 +271,19 @@ public class DepartmentUnit extends DepartmentUnit_Base {
         return null;
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.curricularRules.AnyCurricularCourse> getParticipatingAnyCurricularCourseCurricularRules() {
+        return getParticipatingAnyCurricularCourseCurricularRulesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyParticipatingAnyCurricularCourseCurricularRules() {
+        return !getParticipatingAnyCurricularCourseCurricularRulesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasDepartment() {
+        return getDepartment() != null;
+    }
+
 }

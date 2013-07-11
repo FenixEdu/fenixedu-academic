@@ -468,4 +468,124 @@ public class Department extends Department_Base {
         Collections.sort(departments, Department.COMPARATOR_BY_NAME);
         return departments;
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Project> getProjects() {
+        return getProjectsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyProjects() {
+        return !getProjectsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.ExternalTeacherAuthorization> getTeacherAuthorizationsAuthorized() {
+        return getTeacherAuthorizationsAuthorizedSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTeacherAuthorizationsAuthorized() {
+        return !getTeacherAuthorizationsAuthorizedSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.CompetenceCourse> getCompetenceCourses() {
+        return getCompetenceCoursesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCompetenceCourses() {
+        return !getCompetenceCoursesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.DepartmentCreditsPool> getDepartmentCreditsPools() {
+        return getDepartmentCreditsPoolsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyDepartmentCreditsPools() {
+        return !getDepartmentCreditsPoolsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcess> getTSDProcesses() {
+        return getTSDProcessesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTSDProcesses() {
+        return !getTSDProcessesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.TeacherPersonalExpectationPeriod> getTeacherPersonalExpectationPeriods() {
+        return getTeacherPersonalExpectationPeriodsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTeacherPersonalExpectationPeriods() {
+        return !getTeacherPersonalExpectationPeriodsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Degree> getDegrees() {
+        return getDegreesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyDegrees() {
+        return !getDegreesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Person> getAssociatedPersons() {
+        return getAssociatedPersonsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAssociatedPersons() {
+        return !getAssociatedPersonsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasActive() {
+        return getActive() != null;
+    }
+
+    @Deprecated
+    public boolean hasDepartmentUnit() {
+        return getDepartmentUnit() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasRealNameEn() {
+        return getRealNameEn() != null;
+    }
+
+    @Deprecated
+    public boolean hasRealName() {
+        return getRealName() != null;
+    }
+
+    @Deprecated
+    public boolean hasCode() {
+        return getCode() != null;
+    }
+
+    @Deprecated
+    public boolean hasCompetenceCourseMembersGroup() {
+        return getCompetenceCourseMembersGroup() != null;
+    }
+
 }

@@ -186,4 +186,19 @@ public class DegreeTeachingService extends DegreeTeachingService_Base {
         return getEfectiveLoad() * getProfessorship().getExecutionCourse().getUnitCreditValue().doubleValue();
     }
 
+    @Deprecated
+    public boolean hasPercentage() {
+        return getPercentage() != null;
+    }
+
+    @Deprecated
+    public boolean hasProfessorship() {
+        return getProfessorship() != null;
+    }
+
+    @Deprecated
+    public boolean hasShift() {
+        return getShift() != null;
+    }
+
 }

@@ -148,4 +148,99 @@ public class PhdCandidacyRefereeLetter extends PhdCandidacyRefereeLetter_Base {
         return new PhdCandidacyRefereeLetter(bean.getCandidacyReferee(), bean);
     }
 
+    @Deprecated
+    public boolean hasComments() {
+        return getComments() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasCandidacyReferee() {
+        return getCandidacyReferee() != null;
+    }
+
+    @Deprecated
+    public boolean hasFile() {
+        return getFile() != null;
+    }
+
+    @Deprecated
+    public boolean hasRefereePosition() {
+        return getRefereePosition() != null;
+    }
+
+    @Deprecated
+    public boolean hasComparisonGroup() {
+        return getComparisonGroup() != null;
+    }
+
+    @Deprecated
+    public boolean hasRefereeAddress() {
+        return getRefereeAddress() != null;
+    }
+
+    @Deprecated
+    public boolean hasRefereeCountry() {
+        return getRefereeCountry() != null;
+    }
+
+    @Deprecated
+    public boolean hasHowLongKnownApplicant() {
+        return getHowLongKnownApplicant() != null;
+    }
+
+    @Deprecated
+    public boolean hasPotencialToExcelPhd() {
+        return getPotencialToExcelPhd() != null;
+    }
+
+    @Deprecated
+    public boolean hasSocialAndCommunicationSkills() {
+        return getSocialAndCommunicationSkills() != null;
+    }
+
+    @Deprecated
+    public boolean hasRefereeZipCode() {
+        return getRefereeZipCode() != null;
+    }
+
+    @Deprecated
+    public boolean hasRankInClass() {
+        return getRankInClass() != null;
+    }
+
+    @Deprecated
+    public boolean hasAcademicPerformance() {
+        return getAcademicPerformance() != null;
+    }
+
+    @Deprecated
+    public boolean hasRefereeName() {
+        return getRefereeName() != null;
+    }
+
+    @Deprecated
+    public boolean hasRefereeCity() {
+        return getRefereeCity() != null;
+    }
+
+    @Deprecated
+    public boolean hasCapacity() {
+        return getCapacity() != null;
+    }
+
+    @Deprecated
+    public boolean hasPhdProgramCandidacyProcess() {
+        return getPhdProgramCandidacyProcess() != null;
+    }
+
+    @Deprecated
+    public boolean hasRefereeInstitution() {
+        return getRefereeInstitution() != null;
+    }
+
 }

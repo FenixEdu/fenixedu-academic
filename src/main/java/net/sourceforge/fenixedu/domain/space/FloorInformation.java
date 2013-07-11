@@ -89,4 +89,9 @@ public class FloorInformation extends FloorInformation_Base {
         // Necessary for Renderers
         return null;
     }
+    @Deprecated
+    public boolean hasLevel() {
+        return getLevel() != null;
+    }
+
 }

@@ -244,4 +244,49 @@ public class AnyCurricularCourse extends AnyCurricularCourse_Base {
     public VerifyRuleExecutor createVerifyRuleExecutor() {
         return VerifyRuleExecutor.NULL_VERIFY_EXECUTOR;
     }
+    @Deprecated
+    public boolean hasMaximumYear() {
+        return getMaximumYear() != null;
+    }
+
+    @Deprecated
+    public boolean hasDepartmentUnit() {
+        return getDepartmentUnit() != null;
+    }
+
+    @Deprecated
+    public boolean hasMinimumYear() {
+        return getMinimumYear() != null;
+    }
+
+    @Deprecated
+    public boolean hasCredits() {
+        return getCredits() != null;
+    }
+
+    @Deprecated
+    public boolean hasMaximumCredits() {
+        return getMaximumCredits() != null;
+    }
+
+    @Deprecated
+    public boolean hasDegree() {
+        return getDegree() != null;
+    }
+
+    @Deprecated
+    public boolean hasMinimumCredits() {
+        return getMinimumCredits() != null;
+    }
+
+    @Deprecated
+    public boolean hasCurricularPeriodOrder() {
+        return getCurricularPeriodOrder() != null;
+    }
+
+    @Deprecated
+    public boolean hasBolonhaDegreeType() {
+        return getBolonhaDegreeType() != null;
+    }
+
 }

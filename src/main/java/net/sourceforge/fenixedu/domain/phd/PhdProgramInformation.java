@@ -94,4 +94,49 @@ public class PhdProgramInformation extends PhdProgramInformation_Base {
         return new PhdProgramInformation(bean);
     }
 
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumberOfYears() {
+        return getNumberOfYears() != null;
+    }
+
+    @Deprecated
+    public boolean hasMaxStudyPlanEctsCredits() {
+        return getMaxStudyPlanEctsCredits() != null;
+    }
+
+    @Deprecated
+    public boolean hasBeginDate() {
+        return getBeginDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumberOfSemesters() {
+        return getNumberOfSemesters() != null;
+    }
+
+    @Deprecated
+    public boolean hasPhdProgram() {
+        return getPhdProgram() != null;
+    }
+
+    @Deprecated
+    public boolean hasMinThesisEctsCredits() {
+        return getMinThesisEctsCredits() != null;
+    }
+
+    @Deprecated
+    public boolean hasMinStudyPlanEctsCredits() {
+        return getMinStudyPlanEctsCredits() != null;
+    }
+
+    @Deprecated
+    public boolean hasMaxThesisEctsCredits() {
+        return getMaxThesisEctsCredits() != null;
+    }
+
 }

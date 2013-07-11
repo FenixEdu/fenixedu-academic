@@ -441,4 +441,69 @@ public class EquivalencePlanEntry extends EquivalencePlanEntry_Base {
         return isApprovedInAll;
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule> getOldDegreeModules() {
+        return getOldDegreeModulesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyOldDegreeModules() {
+        return !getOldDegreeModulesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.StudentCurricularPlanEquivalencePlan> getEquivalencePlans() {
+        return getEquivalencePlansSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyEquivalencePlans() {
+        return !getEquivalencePlansSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule> getNewDegreeModules() {
+        return getNewDegreeModulesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyNewDegreeModules() {
+        return !getNewDegreeModulesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasEquivalencePlan() {
+        return getEquivalencePlan() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasTransitiveSource() {
+        return getTransitiveSource() != null;
+    }
+
+    @Deprecated
+    public boolean hasPreviousCourseGroupForNewDegreeModules() {
+        return getPreviousCourseGroupForNewDegreeModules() != null;
+    }
+
+    @Deprecated
+    public boolean hasNewDegreeModulesOperator() {
+        return getNewDegreeModulesOperator() != null;
+    }
+
+    @Deprecated
+    public boolean hasEctsCredits() {
+        return getEctsCredits() != null;
+    }
+
+    @Deprecated
+    public boolean hasSourceDegreeModulesOperator() {
+        return getSourceDegreeModulesOperator() != null;
+    }
+
 }

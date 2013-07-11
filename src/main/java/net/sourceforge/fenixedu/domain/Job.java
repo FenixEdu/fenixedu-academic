@@ -166,4 +166,84 @@ public class Job extends Job_Base {
         setRootDomainObject(null);
         deleteDomainObject();
     }
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasBeginDate() {
+        return getBeginDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasContractType() {
+        return getContractType() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreator() {
+        return getCreator() != null;
+    }
+
+    @Deprecated
+    public boolean hasSalaryType() {
+        return getSalaryType() != null;
+    }
+
+    @Deprecated
+    public boolean hasParentBusinessArea() {
+        return getParentBusinessArea() != null;
+    }
+
+    @Deprecated
+    public boolean hasLastModifiedDate() {
+        return getLastModifiedDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasCountry() {
+        return getCountry() != null;
+    }
+
+    @Deprecated
+    public boolean hasCity() {
+        return getCity() != null;
+    }
+
+    @Deprecated
+    public boolean hasJobApplicationType() {
+        return getJobApplicationType() != null;
+    }
+
+    @Deprecated
+    public boolean hasEmployerName() {
+        return getEmployerName() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndDate() {
+        return getEndDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasBusinessArea() {
+        return getBusinessArea() != null;
+    }
+
+    @Deprecated
+    public boolean hasPosition() {
+        return getPosition() != null;
+    }
+
+    @Deprecated
+    public boolean hasSalary() {
+        return getSalary() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
+    }
+
 }

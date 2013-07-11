@@ -28,4 +28,19 @@ public class UnitCostCenterCode extends UnitCostCenterCode_Base {
         return null;
     }
 
+    @Deprecated
+    public boolean hasCostCenterCode() {
+        return getCostCenterCode() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasUnit() {
+        return getUnit() != null;
+    }
+
 }

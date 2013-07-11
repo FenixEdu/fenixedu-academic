@@ -2105,4 +2105,219 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
         return result;
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Branch> getAreas() {
+        return getAreasSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAreas() {
+        return !getAreasSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.TutorshipIntention> getTutorshipIntention() {
+        return getTutorshipIntentionSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTutorshipIntention() {
+        return !getTutorshipIntentionSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.ExecutionDegree> getExecutionDegrees() {
+        return getExecutionDegreesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyExecutionDegrees() {
+        return !getExecutionDegreesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDVirtualCourseGroup> getTSDVirtualCourseGroups() {
+        return getTSDVirtualCourseGroupsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTSDVirtualCourseGroups() {
+        return !getTSDVirtualCourseGroupsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.DegreeContext> getDegreeContexts() {
+        return getDegreeContextsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyDegreeContexts() {
+        return !getDegreeContextsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.DegreeCurricularPlanEquivalencePlan> getTargetEquivalencePlans() {
+        return getTargetEquivalencePlansSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTargetEquivalencePlans() {
+        return !getTargetEquivalencePlansSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.CurricularCourse> getCurricularCourses() {
+        return getCurricularCoursesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCurricularCourses() {
+        return !getCurricularCoursesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.StudentCurricularPlan> getStudentCurricularPlans() {
+        return getStudentCurricularPlansSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyStudentCurricularPlans() {
+        return !getStudentCurricularPlansSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.EnrolmentPeriod> getEnrolmentPeriods() {
+        return getEnrolmentPeriodsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyEnrolmentPeriods() {
+        return !getEnrolmentPeriodsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.CurricularCourseEquivalence> getCurricularCourseEquivalences() {
+        return getCurricularCourseEquivalencesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCurricularCourseEquivalences() {
+        return !getCurricularCourseEquivalencesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasDegreeStructure() {
+        return getDegreeStructure() != null;
+    }
+
+    @Deprecated
+    public boolean hasDescription() {
+        return getDescription() != null;
+    }
+
+    @Deprecated
+    public boolean hasMinimalYearForOptionalCourses() {
+        return getMinimalYearForOptionalCourses() != null;
+    }
+
+    @Deprecated
+    public boolean hasServiceAgreementTemplate() {
+        return getServiceAgreementTemplate() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumerusClausus() {
+        return getNumerusClausus() != null;
+    }
+
+    @Deprecated
+    public boolean hasApplyPreviousYearsEnrolmentRule() {
+        return getApplyPreviousYearsEnrolmentRule() != null;
+    }
+
+    @Deprecated
+    public boolean hasAnotation() {
+        return getAnotation() != null;
+    }
+
+    @Deprecated
+    public boolean hasGradeScale() {
+        return getGradeScale() != null;
+    }
+
+    @Deprecated
+    public boolean hasShift() {
+        return getShift() != null;
+    }
+
+    @Deprecated
+    public boolean hasInitialDateYearMonthDay() {
+        return getInitialDateYearMonthDay() != null;
+    }
+
+    @Deprecated
+    public boolean hasDescriptionEn() {
+        return getDescriptionEn() != null;
+    }
+
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasCurricularPlanMembersGroup() {
+        return getCurricularPlanMembersGroup() != null;
+    }
+
+    @Deprecated
+    public boolean hasEquivalencePlan() {
+        return getEquivalencePlan() != null;
+    }
+
+    @Deprecated
+    public boolean hasNeededCredits() {
+        return getNeededCredits() != null;
+    }
+
+    @Deprecated
+    public boolean hasState() {
+        return getState() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndDateYearMonthDay() {
+        return getEndDateYearMonthDay() != null;
+    }
+
+    @Deprecated
+    public boolean hasMarkType() {
+        return getMarkType() != null;
+    }
+
+    @Deprecated
+    public boolean hasRoot() {
+        return getRoot() != null;
+    }
+
+    @Deprecated
+    public boolean hasDegree() {
+        return getDegree() != null;
+    }
+
+    @Deprecated
+    public boolean hasDegreeDuration() {
+        return getDegreeDuration() != null;
+    }
+
+    @Deprecated
+    public boolean hasCurricularStage() {
+        return getCurricularStage() != null;
+    }
+
 }

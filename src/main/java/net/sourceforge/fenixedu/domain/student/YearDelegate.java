@@ -205,4 +205,24 @@ public class YearDelegate extends YearDelegate_Base {
     public Degree getDegree() {
         return super.getDegree();
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.student.YearDelegateCourseInquiry> getYearDelegateCourseInquiries() {
+        return getYearDelegateCourseInquiriesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyYearDelegateCourseInquiries() {
+        return !getYearDelegateCourseInquiriesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.InquiryDelegateAnswer> getInquiryDelegateAnswers() {
+        return getInquiryDelegateAnswersSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyInquiryDelegateAnswers() {
+        return !getInquiryDelegateAnswersSet().isEmpty();
+    }
+
 }

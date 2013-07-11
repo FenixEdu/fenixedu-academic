@@ -163,4 +163,14 @@ public class Manual extends Manual_Base {
     public String getSchema() {
         return usedSchema;
     }
+    @Deprecated
+    public boolean hasEdition() {
+        return getEdition() != null;
+    }
+
+    @Deprecated
+    public boolean hasAddress() {
+        return getAddress() != null;
+    }
+
 }

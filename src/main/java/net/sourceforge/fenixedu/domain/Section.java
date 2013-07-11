@@ -410,4 +410,19 @@ public class Section extends Section_Base {
         getSite().logEditSectionPermission(this);
     }
 
+    @Deprecated
+    public boolean hasEnabled() {
+        return getEnabled() != null;
+    }
+
+    @Deprecated
+    public boolean hasShowSubSections() {
+        return getShowSubSections() != null;
+    }
+
+    @Deprecated
+    public boolean hasModificationDate() {
+        return getModificationDate() != null;
+    }
+
 }

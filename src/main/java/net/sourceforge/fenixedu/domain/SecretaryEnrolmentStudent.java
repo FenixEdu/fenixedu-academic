@@ -13,4 +13,24 @@ public class SecretaryEnrolmentStudent extends SecretaryEnrolmentStudent_Base {
         super.deleteDomainObject();
     }
 
+    @Deprecated
+    public boolean hasStudent() {
+        return getStudent() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasReasonType() {
+        return getReasonType() != null;
+    }
+
+    @Deprecated
+    public boolean hasReasonDescription() {
+        return getReasonDescription() != null;
+    }
+
 }

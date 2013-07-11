@@ -77,4 +77,9 @@ public class StudentHighPerformanceQueueJob extends StudentHighPerformanceQueueJ
     public String getFilename() {
         return "Students_" + new DateTime().toString("yyyy-MM-dd") + ".xls";
     }
+    @Deprecated
+    public boolean hasExecutionInterval() {
+        return getExecutionInterval() != null;
+    }
+
 }

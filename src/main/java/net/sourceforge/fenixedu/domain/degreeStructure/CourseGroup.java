@@ -819,4 +819,54 @@ public class CourseGroup extends CourseGroup_Base {
         }
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.EquivalencePlanEntry> getPreviousEquivalencePlanEntries() {
+        return getPreviousEquivalencePlanEntriesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPreviousEquivalencePlanEntries() {
+        return !getPreviousEquivalencePlanEntriesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.Context> getChildContexts() {
+        return getChildContextsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyChildContexts() {
+        return !getChildContextsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.curricularRules.CurricularRule> getParticipatingContextCurricularRules() {
+        return getParticipatingContextCurricularRulesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyParticipatingContextCurricularRules() {
+        return !getParticipatingContextCurricularRulesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.CourseGroupChangeRequest> getOldCourseGroupChangeRequests() {
+        return getOldCourseGroupChangeRequestsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyOldCourseGroupChangeRequests() {
+        return !getOldCourseGroupChangeRequestsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.CourseGroupChangeRequest> getNewCourseGroupChangeRequests() {
+        return getNewCourseGroupChangeRequestsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyNewCourseGroupChangeRequests() {
+        return !getNewCourseGroupChangeRequestsSet().isEmpty();
+    }
+
 }

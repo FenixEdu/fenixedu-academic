@@ -199,4 +199,29 @@ public class TechnicalReport extends TechnicalReport_Base {
     public String getSchema() {
         return usedSchema;
     }
+    @Deprecated
+    public boolean hasNumber() {
+        return getNumber() != null;
+    }
+
+    @Deprecated
+    public boolean hasTechnicalReportType() {
+        return getTechnicalReportType() != null;
+    }
+
+    @Deprecated
+    public boolean hasAddress() {
+        return getAddress() != null;
+    }
+
+    @Deprecated
+    public boolean hasLanguage() {
+        return getLanguage() != null;
+    }
+
+    @Deprecated
+    public boolean hasNumberPages() {
+        return getNumberPages() != null;
+    }
+
 }

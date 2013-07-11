@@ -81,4 +81,9 @@ public class GratuitySituationPaymentCode extends GratuitySituationPaymentCode_B
         throw new DomainException("error.net.sourceforge.fenixedu.domain.accounting.PaymentCode.cannot.modify.person");
     }
 
+    @Deprecated
+    public boolean hasGratuitySituation() {
+        return getGratuitySituation() != null;
+    }
+
 }

@@ -856,4 +856,49 @@ public class MobilityApplicationProcess extends MobilityApplicationProcess_Base 
         return results;
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusCandidacyProcessExecutedAction> getErasmusCandidacyProcessExecutedAction() {
+        return getErasmusCandidacyProcessExecutedActionSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyErasmusCandidacyProcessExecutedAction() {
+        return !getErasmusCandidacyProcessExecutedActionSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.reports.ErasmusCandidacyProcessReport> getErasmusCandidacyProcessReports() {
+        return getErasmusCandidacyProcessReportsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyErasmusCandidacyProcessReports() {
+        return !getErasmusCandidacyProcessReportsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityCoordinator> getCoordinators() {
+        return getCoordinatorsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCoordinators() {
+        return !getCoordinatorsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasForSemester() {
+        return getForSemester() != null;
+    }
+
+    @Deprecated
+    public boolean hasReceptionEmailSubject() {
+        return getReceptionEmailSubject() != null;
+    }
+
+    @Deprecated
+    public boolean hasReceptionEmailBody() {
+        return getReceptionEmailBody() != null;
+    }
+
 }

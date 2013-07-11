@@ -38,4 +38,34 @@ public class RemoteHost extends RemoteHost_Base {
         return getUrl().contains(host) && username.equalsIgnoreCase(getUsername()) && password.equals(getPassword());
     }
 
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasUrl() {
+        return getUrl() != null;
+    }
+
+    @Deprecated
+    public boolean hasPassword() {
+        return getPassword() != null;
+    }
+
+    @Deprecated
+    public boolean hasUsername() {
+        return getUsername() != null;
+    }
+
+    @Deprecated
+    public boolean hasRemoteSystem() {
+        return getRemoteSystem() != null;
+    }
+
+    @Deprecated
+    public boolean hasAllowInvocationAccess() {
+        return getAllowInvocationAccess() != null;
+    }
+
 }

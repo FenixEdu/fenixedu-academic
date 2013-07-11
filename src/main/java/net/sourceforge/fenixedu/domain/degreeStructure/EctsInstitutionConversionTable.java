@@ -57,4 +57,9 @@ public class EctsInstitutionConversionTable extends EctsInstitutionConversionTab
         super.delete();
     }
 
+    @Deprecated
+    public boolean hasSchool() {
+        return getSchool() != null;
+    }
+
 }

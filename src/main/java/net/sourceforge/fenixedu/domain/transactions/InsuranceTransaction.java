@@ -78,4 +78,14 @@ public class InsuranceTransaction extends InsuranceTransaction_Base {
         super.delete();
     }
 
+    @Deprecated
+    public boolean hasStudent() {
+        return getStudent() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionYear() {
+        return getExecutionYear() != null;
+    }
+
 }

@@ -739,4 +739,119 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
         }
     }
 
+    @Deprecated
+    public boolean hasGradeAvailableDateYearMonthDay() {
+        return getGradeAvailableDateYearMonthDay() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasImprovementOfApprovedEnrolmentEvent() {
+        return getImprovementOfApprovedEnrolmentEvent() != null;
+    }
+
+    @Deprecated
+    public boolean hasEnrolment() {
+        return getEnrolment() != null;
+    }
+
+    @Deprecated
+    public boolean hasRectified() {
+        return getRectified() != null;
+    }
+
+    @Deprecated
+    public boolean hasGradeScale() {
+        return getGradeScale() != null;
+    }
+
+    @Deprecated
+    public boolean hasCurriculumValidationEvaluationPhase() {
+        return getCurriculumValidationEvaluationPhase() != null;
+    }
+
+    @Deprecated
+    public boolean hasMarkSheet() {
+        return getMarkSheet() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionPeriod() {
+        return getExecutionPeriod() != null;
+    }
+
+    @Deprecated
+    public boolean hasObservation() {
+        return getObservation() != null;
+    }
+
+    @Deprecated
+    public boolean hasPersonResponsibleForGrade() {
+        return getPersonResponsibleForGrade() != null;
+    }
+
+    @Deprecated
+    public boolean hasEnrolmentEvaluationType() {
+        return getEnrolmentEvaluationType() != null;
+    }
+
+    @Deprecated
+    public boolean hasGradeValue() {
+        return getGradeValue() != null;
+    }
+
+    @Deprecated
+    public boolean hasWhenDateTime() {
+        return getWhenDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasGrade() {
+        return getGrade() != null;
+    }
+
+    @Deprecated
+    public boolean hasContext() {
+        return getContext() != null;
+    }
+
+    @Deprecated
+    public boolean hasBookReference() {
+        return getBookReference() != null;
+    }
+
+    @Deprecated
+    public boolean hasPage() {
+        return getPage() != null;
+    }
+
+    @Deprecated
+    public boolean hasEnrolmentEvaluationState() {
+        return getEnrolmentEvaluationState() != null;
+    }
+
+    @Deprecated
+    public boolean hasExamDateYearMonthDay() {
+        return getExamDateYearMonthDay() != null;
+    }
+
+    @Deprecated
+    public boolean hasRectification() {
+        return getRectification() != null;
+    }
+
+    @Deprecated
+    public boolean hasCheckSum() {
+        return getCheckSum() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
+    }
+
 }

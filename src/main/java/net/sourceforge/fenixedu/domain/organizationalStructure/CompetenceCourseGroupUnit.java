@@ -187,4 +187,24 @@ public class CompetenceCourseGroupUnit extends CompetenceCourseGroupUnit_Base {
             }
         }
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformationChangeRequest> getCompetenceCourseInformationChangeRequests() {
+        return getCompetenceCourseInformationChangeRequestsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCompetenceCourseInformationChangeRequests() {
+        return !getCompetenceCourseInformationChangeRequestsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation> getCompetenceCourseInformations() {
+        return getCompetenceCourseInformationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCompetenceCourseInformations() {
+        return !getCompetenceCourseInformationsSet().isEmpty();
+    }
+
 }

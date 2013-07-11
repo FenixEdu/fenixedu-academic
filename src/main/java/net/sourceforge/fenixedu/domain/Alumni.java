@@ -487,4 +487,44 @@ public class Alumni extends Alumni_Base {
             }
         }
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.AlumniIdentityCheckRequest> getIdentityRequests() {
+        return getIdentityRequestsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyIdentityRequests() {
+        return !getIdentityRequestsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasStudent() {
+        return getStudent() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasRegistered() {
+        return getRegistered() != null;
+    }
+
+    @Deprecated
+    public boolean hasIsEmployed() {
+        return getIsEmployed() != null;
+    }
+
+    @Deprecated
+    public boolean hasRegisteredWhen() {
+        return getRegisteredWhen() != null;
+    }
+
+    @Deprecated
+    public boolean hasUrlRequestToken() {
+        return getUrlRequestToken() != null;
+    }
+
 }

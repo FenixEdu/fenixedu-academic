@@ -76,4 +76,139 @@ public class YearDelegateCourseInquiry extends YearDelegateCourseInquiry_Base {
         }
     }
 
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasFinalCommentsAndImproovements() {
+        return getFinalCommentsAndImproovements() != null;
+    }
+
+    @Deprecated
+    public boolean hasExplicitEvaluationMethods() {
+        return getExplicitEvaluationMethods() != null;
+    }
+
+    @Deprecated
+    public boolean hasClearOnlineCUInformation() {
+        return getClearOnlineCUInformation() != null;
+    }
+
+    @Deprecated
+    public boolean hasEvaluationDatesScheduleActiveParticipation() {
+        return getEvaluationDatesScheduleActiveParticipation() != null;
+    }
+
+    @Deprecated
+    public boolean hasPreviousKnowlegdeArticulation() {
+        return getPreviousKnowlegdeArticulation() != null;
+    }
+
+    @Deprecated
+    public boolean hasSuggestedBestPractices() {
+        return getSuggestedBestPractices() != null;
+    }
+
+    @Deprecated
+    public boolean hasEnoughOnlineCUInformation() {
+        return getEnoughOnlineCUInformation() != null;
+    }
+
+    @Deprecated
+    public boolean hasResponseDateTime() {
+        return getResponseDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasStrongAndWeakPointsOfCUTeachingProcess() {
+        return getStrongAndWeakPointsOfCUTeachingProcess() != null;
+    }
+
+    @Deprecated
+    public boolean hasReportDisclosureAuthorization() {
+        return getReportDisclosureAuthorization() != null;
+    }
+
+    @Deprecated
+    public boolean hasEvaluationMethodsWellAppliedReasons() {
+        return getEvaluationMethodsWellAppliedReasons() != null;
+    }
+
+    @Deprecated
+    public boolean hasEvaluationMethodsDisclosedToWorkingStudents() {
+        return getEvaluationMethodsDisclosedToWorkingStudents() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionCourse() {
+        return getExecutionCourse() != null;
+    }
+
+    @Deprecated
+    public boolean hasSupportMaterialAvailableOnTime() {
+        return getSupportMaterialAvailableOnTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasDelegate() {
+        return getDelegate() != null;
+    }
+
+    @Deprecated
+    public boolean hasAnswerDuration() {
+        return getAnswerDuration() != null;
+    }
+
+    @Deprecated
+    public boolean hasWorkLoadClassificationReasons() {
+        return getWorkLoadClassificationReasons() != null;
+    }
+
+    @Deprecated
+    public boolean hasPreviousKnowlegdeArticulationReasons() {
+        return getPreviousKnowlegdeArticulationReasons() != null;
+    }
+
+    @Deprecated
+    public boolean hasEvaluationMethodsWellApplied() {
+        return getEvaluationMethodsWellApplied() != null;
+    }
+
+    @Deprecated
+    public boolean hasEnoughOnlineCUInformationReasons() {
+        return getEnoughOnlineCUInformationReasons() != null;
+    }
+
+    @Deprecated
+    public boolean hasEvaluationDatesScheduleActiveParticipationReasons() {
+        return getEvaluationDatesScheduleActiveParticipationReasons() != null;
+    }
+
+    @Deprecated
+    public boolean hasWorkLoadClassification() {
+        return getWorkLoadClassification() != null;
+    }
+
+    @Deprecated
+    public boolean hasSupportMaterialAvailableOnTimeReasons() {
+        return getSupportMaterialAvailableOnTimeReasons() != null;
+    }
+
+    @Deprecated
+    public boolean hasExplicitEvaluationMethodsReasons() {
+        return getExplicitEvaluationMethodsReasons() != null;
+    }
+
+    @Deprecated
+    public boolean hasClearOnlineCUInformationReasons() {
+        return getClearOnlineCUInformationReasons() != null;
+    }
+
+    @Deprecated
+    public boolean hasEvaluationMethodsDisclosedToSpecialSeasonStudents() {
+        return getEvaluationMethodsDisclosedToSpecialSeasonStudents() != null;
+    }
+
 }

@@ -120,4 +120,39 @@ public class PhdCandidacyFeedbackRequestElement extends PhdCandidacyFeedbackRequ
         return new PhdCandidacyFeedbackRequestElement().init(process, participant, bean);
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestDocument> getFeedbackDocuments() {
+        return getFeedbackDocumentsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyFeedbackDocuments() {
+        return !getFeedbackDocumentsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasMailBody() {
+        return getMailBody() != null;
+    }
+
+    @Deprecated
+    public boolean hasProcess() {
+        return getProcess() != null;
+    }
+
+    @Deprecated
+    public boolean hasParticipant() {
+        return getParticipant() != null;
+    }
+
+    @Deprecated
+    public boolean hasMailSubject() {
+        return getMailSubject() != null;
+    }
+
 }

@@ -277,4 +277,24 @@ public class DegreeCandidacyForGraduatedPerson extends DegreeCandidacyForGraduat
         getDegreeCandidacyForGraduatedPersonSeriesGade().setCandidacyGrade(value);
     }
 
+    @Deprecated
+    public boolean hasCandidacyGrade() {
+        return getCandidacyGrade() != null;
+    }
+
+    @Deprecated
+    public boolean hasDegreeNature() {
+        return getDegreeNature() != null;
+    }
+
+    @Deprecated
+    public boolean hasSelectedDegree() {
+        return getSelectedDegree() != null;
+    }
+
+    @Deprecated
+    public boolean hasAffinity() {
+        return getAffinity() != null;
+    }
+
 }

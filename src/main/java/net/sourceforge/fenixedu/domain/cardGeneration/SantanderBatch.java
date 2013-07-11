@@ -152,4 +152,69 @@ public class SantanderBatch extends SantanderBatch_Base {
         return String.format(format, number);
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.cardGeneration.SantanderProblem> getSantanderProblems() {
+        return getSantanderProblemsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnySantanderProblems() {
+        return !getSantanderProblemsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.cardGeneration.SantanderEntry> getSantanderEntries() {
+        return getSantanderEntriesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnySantanderEntries() {
+        return !getSantanderEntriesSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasSent() {
+        return getSent() != null;
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreated() {
+        return getCreated() != null;
+    }
+
+    @Deprecated
+    public boolean hasSantanderBatchSender() {
+        return getSantanderBatchSender() != null;
+    }
+
+    @Deprecated
+    public boolean hasSantanderSequenceNumberGenerator() {
+        return getSantanderSequenceNumberGenerator() != null;
+    }
+
+    @Deprecated
+    public boolean hasSantanderBatchRequester() {
+        return getSantanderBatchRequester() != null;
+    }
+
+    @Deprecated
+    public boolean hasSequenceNumber() {
+        return getSequenceNumber() != null;
+    }
+
+    @Deprecated
+    public boolean hasGenerated() {
+        return getGenerated() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionYear() {
+        return getExecutionYear() != null;
+    }
+
 }

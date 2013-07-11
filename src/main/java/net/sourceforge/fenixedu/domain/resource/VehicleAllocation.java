@@ -289,4 +289,34 @@ public class VehicleAllocation extends VehicleAllocation_Base {
         }
     }
 
+    @Deprecated
+    public boolean hasDistance() {
+        return getDistance() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndDateTime() {
+        return getEndDateTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasAmountCharged() {
+        return getAmountCharged() != null;
+    }
+
+    @Deprecated
+    public boolean hasRequestor() {
+        return getRequestor() != null;
+    }
+
+    @Deprecated
+    public boolean hasReason() {
+        return getReason() != null;
+    }
+
+    @Deprecated
+    public boolean hasBeginDateTime() {
+        return getBeginDateTime() != null;
+    }
+
 }

@@ -138,4 +138,14 @@ public class CreditsDismissal extends CreditsDismissal_Base {
     public Grade getEctsGrade(DateTime processingDate) {
         return EctsTableIndex.convertGradeToEcts(getStudentCurricularPlan().getDegree(), this, getGrade(), processingDate);
     }
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.CurricularCourse> getNoEnrolCurricularCourses() {
+        return getNoEnrolCurricularCoursesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyNoEnrolCurricularCourses() {
+        return !getNoEnrolCurricularCoursesSet().isEmpty();
+    }
+
 }

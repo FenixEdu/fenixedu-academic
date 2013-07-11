@@ -88,4 +88,9 @@ public class PhdThesisReportFeedbackDocument extends PhdThesisReportFeedbackDocu
     public PhdProgramProcessDocument getLastVersion() {
         return getJuryElement().getLastFeedbackDocument();
     }
+    @Deprecated
+    public boolean hasJuryElement() {
+        return getJuryElement() != null;
+    }
+
 }

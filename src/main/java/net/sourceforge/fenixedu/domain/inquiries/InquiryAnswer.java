@@ -61,4 +61,24 @@ public class InquiryAnswer extends InquiryAnswer_Base {
         }
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.QuestionAnswer> getQuestionAnswers() {
+        return getQuestionAnswersSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyQuestionAnswers() {
+        return !getQuestionAnswersSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasRootDomainObject() {
+        return getRootDomainObject() != null;
+    }
+
+    @Deprecated
+    public boolean hasResponseDateTime() {
+        return getResponseDateTime() != null;
+    }
+
 }

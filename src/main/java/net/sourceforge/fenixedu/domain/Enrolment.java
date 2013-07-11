@@ -1767,4 +1767,184 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         return enumerationResources.getString(this.getClass().getName());
     }
 
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.StandaloneEnrolmentCertificateRequest> getStandaloneEnrolmentRequests() {
+        return getStandaloneEnrolmentRequestsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyStandaloneEnrolmentRequests() {
+        return !getStandaloneEnrolmentRequestsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.thesis.Thesis> getTheses() {
+        return getThesesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyTheses() {
+        return !getThesesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.ExtraExamRequest> getExtraExamRequests() {
+        return getExtraExamRequestsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyExtraExamRequests() {
+        return !getExtraExamRequestsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ExtraCurricularCertificateRequest> getExtraCurricularRequests() {
+        return getExtraCurricularRequestsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyExtraCurricularRequests() {
+        return !getExtraCurricularRequestsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ProgramCertificateRequest> getProgramCertificateRequests() {
+        return getProgramCertificateRequestsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyProgramCertificateRequests() {
+        return !getProgramCertificateRequestsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.Attends> getAttends() {
+        return getAttendsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyAttends() {
+        return !getAttendsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.studentCurriculum.InternalEnrolmentWrapper> getEnrolmentWrappers() {
+        return getEnrolmentWrappersSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyEnrolmentWrappers() {
+        return !getEnrolmentWrappersSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse> getNotNeedToEnrollCurricularCourses() {
+        return getNotNeedToEnrollCurricularCoursesSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyNotNeedToEnrollCurricularCourses() {
+        return !getNotNeedToEnrollCurricularCoursesSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.student.curriculum.ConclusionProcessVersion> getConclusionProcessVersions() {
+        return getConclusionProcessVersionsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyConclusionProcessVersions() {
+        return !getConclusionProcessVersionsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.CreditsInAnySecundaryArea> getCreditsInAnySecundaryAreas() {
+        return getCreditsInAnySecundaryAreasSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCreditsInAnySecundaryAreas() {
+        return !getCreditsInAnySecundaryAreasSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.EnrolmentEvaluation> getEvaluations() {
+        return getEvaluationsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyEvaluations() {
+        return !getEvaluationsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CourseLoadRequest> getCourseLoadRequests() {
+        return getCourseLoadRequestsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCourseLoadRequests() {
+        return !getCourseLoadRequestsSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.CreditsInScientificArea> getCreditsInScientificAreas() {
+        return getCreditsInScientificAreasSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCreditsInScientificAreas() {
+        return !getCreditsInScientificAreasSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ExamDateCertificateRequest> getExamDateCertificateRequests() {
+        return getExamDateCertificateRequestsSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyExamDateCertificateRequests() {
+        return !getExamDateCertificateRequestsSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasIsFirstTime() {
+        return getIsFirstTime() != null;
+    }
+
+    @Deprecated
+    public boolean hasEnrollmentState() {
+        return getEnrollmentState() != null;
+    }
+
+    @Deprecated
+    public boolean hasIsExtraCurricular() {
+        return getIsExtraCurricular() != null;
+    }
+
+    @Deprecated
+    public boolean hasWeigth() {
+        return getWeigth() != null;
+    }
+
+    @Deprecated
+    public boolean hasExecutionPeriod() {
+        return getExecutionPeriod() != null;
+    }
+
+    @Deprecated
+    public boolean hasStudentCurricularPlan() {
+        return getStudentCurricularPlan() != null;
+    }
+
+    @Deprecated
+    public boolean hasEnrolmentEvaluationType() {
+        return getEnrolmentEvaluationType() != null;
+    }
+
+    @Deprecated
+    public boolean hasEnrolmentCondition() {
+        return getEnrolmentCondition() != null;
+    }
+
 }
