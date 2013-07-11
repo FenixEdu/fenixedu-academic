@@ -139,7 +139,7 @@
 				<td class="dissertations-table-short-cell">
 					<bean:define id="dissertationState" name="orientatorProposal"/>
 					<bean:define id="dissertationStateValue" name="dissertationState"/>
-					<bean:write name="<%= ((net.sourceforge.fenixedu.domain.dissertation.Dissertation) orientatorProposal).getDissertationState().getValue().getContent() %>"/>
+					<bean:write name="<%= ((net.sourceforge.fenixedu.domain.dissertation.Dissertation) orientatorProposal).getDissertationState().getDissertationStateValueDescription().getContent(pt.utl.ist.fenix.tools.util.i18n.Language.pt) %>"/>
 				</td>
 			</tr>
 		</logic:iterate>

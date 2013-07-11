@@ -97,7 +97,6 @@ enum net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage            
 enum net.sourceforge.fenixedu.domain.degreeStructure.CycleType                                                            as CycleType;
 enum net.sourceforge.fenixedu.domain.degreeStructure.RegimeType                                                           as degreeStructure.RegimeType;
 enum net.sourceforge.fenixedu.domain.dissertation.DissertationParticipationType                                           as DissertationParticipationType;
-enum net.sourceforge.fenixedu.domain.dissertation.DissertationStateValue                                     as DissertationStateValue;
 enum net.sourceforge.fenixedu.domain.dissertation.DissertationVisibilityType                                              as DissertationVisibilityType;
 enum net.sourceforge.fenixedu.domain.documents.GeneratedDocumentType                                                      as GeneratedDocumentType;
 enum net.sourceforge.fenixedu.domain.gratuity.ExemptionGratuityType                                                       as ExemptionGratuityType;
@@ -3219,7 +3218,7 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
 	
 	class dissertation.DissertationState {
 		DateTime dissertationStateDate;
-		DissertationStateValue dissertationStateValue;
+		MultiLanguageString dissertationStateValueDescription;
 	}
 	
 	class dissertation.Location {
@@ -20711,7 +20710,7 @@ relation RootDomainObjectDissertationState {
 }
 
 relation PreviousDissertationState {
-	dissertation.DissertationState playsRole nextDissertationState;
+	dissertation.DissertationState playsRole dissertationState;
 	dissertation.DissertationState playsRole previousDissertationState;
 }
 

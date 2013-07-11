@@ -5,47 +5,50 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class DissertationState extends DissertationState_Base {
 
-	public  DissertationState() {
-        super();
+	public  DissertationState(DissertationStateValue dissertationStateValue) {
+		super();
+		setDissertationStateValueDescription(dissertationStateValue);
 	}
 	
 	public enum DissertationStateValue {
 	    DRAFT, SUBMITTED, APPROVED, CONFIRMED, REVISION, EVALUATED, PROPOSAL_PUBLISHED, PROPOSAL_FOR_PUBLICATION;
 	}
+
+	MultiLanguageString dissertationStateValueDescription = new MultiLanguageString();
 	
-	DissertationStateValue dissertationStateValue;
-	
-	public MultiLanguageString getValue() {
-		MultiLanguageString result = new MultiLanguageString();
+	public void setDissertationStateValueDescription(DissertationStateValue dissertationStateValue) {
 		switch(dissertationStateValue) {
-		case DRAFT:						result.with(Language.pt, "Rascunho");
-										result.with(Language.en, "Draft");
+		case DRAFT:						dissertationStateValueDescription = dissertationStateValueDescription.with(Language.pt, "Rascunho");
+										dissertationStateValueDescription = dissertationStateValueDescription.with(Language.en, "Draft");
 										break;
-		case SUBMITTED:					result.with(Language.pt, "Documentos submetidos pelo aluno");
-										result.with(Language.en, "Submitted");
+		case SUBMITTED:					dissertationStateValueDescription = dissertationStateValueDescription.with(Language.pt, "Documentos submetidos pelo aluno");
+										dissertationStateValueDescription = dissertationStateValueDescription.with(Language.en, "Submitted");
 										break;
-		case APPROVED:					result.with(Language.pt, "Aprovada");
-										result.with(Language.en, "Approved");
+		case APPROVED:					dissertationStateValueDescription = dissertationStateValueDescription.with(Language.pt, "Aprovada");
+										dissertationStateValueDescription = dissertationStateValueDescription.with(Language.en, "Approved");
 										break;
-		case CONFIRMED:					result.with(Language.pt, "Confirmada");
-										result.with(Language.en, "Confirmed");
+		case CONFIRMED:					dissertationStateValueDescription = dissertationStateValueDescription.with(Language.pt, "Confirmada");
+										dissertationStateValueDescription = dissertationStateValueDescription.with(Language.en, "Confirmed");
 										break;
-		case REVISION:					result.with(Language.pt, "Revista");
-										result.with(Language.en, "Revision");
+		case REVISION:					dissertationStateValueDescription = dissertationStateValueDescription.with(Language.pt, "Revista");
+										dissertationStateValueDescription = dissertationStateValueDescription.with(Language.en, "Revision");
 										break;
-		case EVALUATED:					result.with(Language.pt, "Avaliada");
-										result.with(Language.en, "Evaluated");
+		case EVALUATED:					dissertationStateValueDescription = dissertationStateValueDescription.with(Language.pt, "Avaliada");
+										dissertationStateValueDescription = dissertationStateValueDescription.with(Language.en, "Evaluated");
 										break;
-		case PROPOSAL_PUBLISHED:		result.with(Language.pt, "Propota Publicada");
-										result.with(Language.en, "Proposal Published");
+		case PROPOSAL_PUBLISHED:		dissertationStateValueDescription = dissertationStateValueDescription.with(Language.pt, "Propota Publicada");
+										dissertationStateValueDescription = dissertationStateValueDescription.with(Language.en, "Proposal Published");
 										break;
-		case PROPOSAL_FOR_PUBLICATION:	result.with(Language.pt, "Proposta para Publicação");
-										result.with(Language.en, "Proposal for Publication");
+		case PROPOSAL_FOR_PUBLICATION:	dissertationStateValueDescription.with(Language.pt, "Proposta para Publicação");
+										dissertationStateValueDescription = dissertationStateValueDescription.with(Language.en, "Proposal for Publication");
 										break;
-		default:						result.with(Language.pt, "Dissertação sem Estado");
-										result.with(Language.en, "Dissertation Without State");
+		default:						dissertationStateValueDescription.with(Language.pt, "Dissertação sem Estado");
+										dissertationStateValueDescription = dissertationStateValueDescription.with(Language.en, "Dissertation Without State");
 										break;
 		}
-		return result;
+	}
+	
+	public MultiLanguageString getDissertationStateValueDescription() {
+		return dissertationStateValueDescription;
 	}
 }
