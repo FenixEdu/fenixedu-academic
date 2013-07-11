@@ -244,7 +244,7 @@ public class ViewHomepageDA extends SiteVisualizationDA {
         String emailId = request.getParameter("email");
         EmailAddress email = (EmailAddress) AbstractDomainObject.fromExternalId(emailId);
         if (email != null && StringUtils.isNotEmpty(email.getValue())) {
-            final byte[] pngFile = TextPngCreator.createPng("arial", 12, "000000", email.getValue());
+            final byte[] pngFile = TextPngCreator.createPng("Arial", 12, "000000", email.getValue());
             response.setContentType("image/png");
             response.getOutputStream().write(pngFile);
             response.getOutputStream().close();
