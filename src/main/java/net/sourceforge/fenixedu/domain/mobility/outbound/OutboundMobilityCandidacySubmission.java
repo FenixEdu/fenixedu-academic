@@ -180,9 +180,4 @@ public class OutboundMobilityCandidacySubmission extends OutboundMobilityCandida
         return getOutboundMobilityCandidacyPeriod() != null;
     }
 
-    @Deprecated
-    public boolean hasConfirmedPlacement() {
-        return getConfirmedPlacement() != null;
-    }
-
 }

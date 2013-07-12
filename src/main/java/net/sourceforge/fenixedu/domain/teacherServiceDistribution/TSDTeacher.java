@@ -206,14 +206,15 @@ public abstract class TSDTeacher extends TSDTeacher_Base {
 
     public Double getExtraCreditsValue(List<ExecutionSemester> executionPeriodList) {
         return getExtraCreditsValue()
-                * (executionPeriodList.size() / getTeacherServiceDistributions().iterator().next().getTSDProcessPhase().getTSDProcess()
-                        .getExecutionPeriodsCount());
+                * (executionPeriodList.size() / getTeacherServiceDistributions().iterator().next().getTSDProcessPhase()
+                        .getTSDProcess().getExecutionPeriodsSet().size());
     }
 
     public Double getTotalHoursLecturedPlusExtraCredits(List<ExecutionSemester> executionPeriodList) {
         return getTotalHoursLectured(executionPeriodList)
                 + (getUsingExtraCredits() ? getExtraCreditsValue(executionPeriodList) : 0d);
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProfessorship> getTSDProfessorships() {
         return getTSDProfessorshipsSet();

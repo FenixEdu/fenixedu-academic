@@ -5,6 +5,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
@@ -36,7 +37,7 @@ public class VerifyIfCanEnrollStudentGroupsInShift {
             return false;
         }
 
-        final List studentGroups = grouping.getStudentGroups();
+        final Collection studentGroups = grouping.getStudentGroupsSet();
         List studentGroupsAux = getStudentGroupsByShift(grouping, shift);
 
         if (studentGroups.size() == studentGroupsAux.size()) {

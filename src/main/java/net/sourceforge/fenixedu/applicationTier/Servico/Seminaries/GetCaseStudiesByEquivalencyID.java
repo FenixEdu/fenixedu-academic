@@ -5,6 +5,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.Seminaries;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -32,7 +33,7 @@ public class GetCaseStudiesByEquivalencyID {
 
         CourseEquivalency equivalency = FenixFramework.getDomainObject(equivalencyID);
         List<CaseStudy> cases = new LinkedList<CaseStudy>();
-        List themes = equivalency.getThemes();
+        Collection themes = equivalency.getThemes();
 
         for (Iterator iterator = themes.iterator(); iterator.hasNext();) {
             Theme theme = (Theme) iterator.next();

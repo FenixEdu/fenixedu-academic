@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -17,7 +18,7 @@ public class ReadExecutionDegreesByDegreeCurricularPlan {
     }
 
     public static List<InfoExecutionDegree> getExecutionCourses(final DegreeCurricularPlan degreeCurricularPlan) {
-        final List<ExecutionDegree> executionDegrees = degreeCurricularPlan.getExecutionDegrees();
+        final Collection<ExecutionDegree> executionDegrees = degreeCurricularPlan.getExecutionDegrees();
 
         final List<InfoExecutionDegree> result = new ArrayList<InfoExecutionDegree>(executionDegrees.size());
         for (final ExecutionDegree executionDegree : executionDegrees) {

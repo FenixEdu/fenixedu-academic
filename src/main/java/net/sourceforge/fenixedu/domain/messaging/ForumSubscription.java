@@ -26,12 +26,10 @@ public class ForumSubscription extends ForumSubscription_Base {
         deleteDomainObject();
     }
 
-    @Override
     public void removePerson() {
         super.setPerson(null);
     }
 
-    @Override
     public void removeForum() {
         super.setForum(null);
     }

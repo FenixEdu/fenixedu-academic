@@ -48,8 +48,8 @@ public class OutboundMobilityCandidacyContestGroup extends OutboundMobilityCandi
         //        When the relation is initialized but never traversed, the consistency predicate always
         //        fails. Forcing a traversal will resolve this issue. The bug has already been solved in
         //        the framework, but the framework has not yet been updated on this project.
-        getOutboundMobilityCandidacyContestCount();
-        getExecutionDegreeCount();
+        getOutboundMobilityCandidacyContestSet().size();
+        getExecutionDegreeSet().size();
     }
 
     public OutboundMobilityCandidacyContestGroup(final Set<ExecutionDegree> executionDegrees) {
@@ -63,8 +63,8 @@ public class OutboundMobilityCandidacyContestGroup extends OutboundMobilityCandi
         //        When the relation is initialized but never traversed, the consistency predicate always
         //        fails. Forcing a traversal will resolve this issue. The bug has already been solved in
         //        the framework, but the framework has not yet been updated on this project.
-        getOutboundMobilityCandidacyContestCount();
-        getExecutionDegreeCount();
+        getOutboundMobilityCandidacyContestSet().size();
+        getExecutionDegreeSet().size();
     }
 
     @Override
@@ -111,7 +111,7 @@ public class OutboundMobilityCandidacyContestGroup extends OutboundMobilityCandi
     public static OutboundMobilityCandidacyContestGroup findOrCreateGroup(final ExecutionDegree executionDegree) {
         for (final OutboundMobilityCandidacyContestGroup mobilityGroup : executionDegree
                 .getOutboundMobilityCandidacyContestGroupSet()) {
-            if (mobilityGroup.getExecutionDegreeCount() == 1) {
+            if (mobilityGroup.getExecutionDegreeSet().size() == 1) {
                 return mobilityGroup;
             }
         }
@@ -429,6 +429,7 @@ public class OutboundMobilityCandidacyContestGroup extends OutboundMobilityCandi
     public void revertConcludeCandidateNotification(final OutboundMobilityCandidacyPeriod period) {
         removeCandidatesNotifiedOfSelectionResultsForPeriod(period);
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.ExecutionDegree> getExecutionDegree() {
         return getExecutionDegreeSet();

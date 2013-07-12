@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
@@ -33,7 +34,6 @@ import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
@@ -70,7 +70,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
     }
 
     public String getName() {
-        List<ExecutionCourse> courses = this.getAssociatedExecutionCourses();
+        Collection<ExecutionCourse> courses = this.getAssociatedExecutionCourses();
         String name = "";
         int i = 0;
         for (ExecutionCourse course : courses) {
@@ -84,7 +84,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
     }
 
     public String getFullName() {
-        List<ExecutionCourse> courses = this.getAssociatedExecutionCourses();
+        Collection<ExecutionCourse> courses = this.getAssociatedExecutionCourses();
         String fullName = "";
         int i = 0;
         for (ExecutionCourse course : courses) {
@@ -661,7 +661,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
     }
 
     public Integer getCountVacancies() {
-        final int writtenEvaluationEnrolmentsCount = getWrittenEvaluationEnrolmentsCount();
+        final int writtenEvaluationEnrolmentsCount = getWrittenEvaluationEnrolmentsSet().size();
         final int countNumberReservedSeats = getCountNumberReservedSeats().intValue();
         return Integer.valueOf(countNumberReservedSeats - writtenEvaluationEnrolmentsCount);
     }

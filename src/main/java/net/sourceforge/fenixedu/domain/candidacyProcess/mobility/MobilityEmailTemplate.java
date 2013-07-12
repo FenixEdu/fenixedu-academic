@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess.mobility;
 
-import java.util.List;
+import java.util.Collection;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCode;
@@ -70,7 +70,7 @@ public class MobilityEmailTemplate extends MobilityEmailTemplate_Base {
     }
 
     @Atomic
-    public void sendMultiEmailFor(final List<MobilityIndividualApplicationProcess> processes) {
+    public void sendMultiEmailFor(final Collection<MobilityIndividualApplicationProcess> processes) {
         getType().sendMultiEmailFor(this, processes);
     }
 

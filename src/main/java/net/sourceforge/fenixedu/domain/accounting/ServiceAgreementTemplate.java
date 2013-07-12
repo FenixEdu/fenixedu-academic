@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.domain.accounting;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -23,16 +22,6 @@ public abstract class ServiceAgreementTemplate extends ServiceAgreementTemplate_
         super();
         super.setRootDomainObject(RootDomainObject.getInstance());
         super.setCreationDate(new DateTime());
-    }
-
-    @Override
-    public List<PostingRule> getPostingRules() {
-        return Collections.unmodifiableList(super.getPostingRules());
-    }
-
-    @Override
-    public Iterator<PostingRule> getPostingRulesIterator() {
-        return getPostingRulesSet().iterator();
     }
 
     @Override

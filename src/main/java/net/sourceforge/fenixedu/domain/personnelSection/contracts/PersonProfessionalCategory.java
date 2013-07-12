@@ -90,6 +90,7 @@ public class PersonProfessionalCategory extends PersonProfessionalCategory_Base 
         }
         return false;
     }
+
     @Deprecated
     public boolean hasStep() {
         return getStep() != null;
@@ -143,11 +144,6 @@ public class PersonProfessionalCategory extends PersonProfessionalCategory_Base 
     @Deprecated
     public boolean hasModifiedDate() {
         return getModifiedDate() != null;
-    }
-
-    @Deprecated
-    public boolean hasEndDate() {
-        return getEndDate() != null;
     }
 
     @Deprecated

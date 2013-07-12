@@ -244,7 +244,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
     }
 
     public boolean isFirstYear() {
-        final List<ExecutionDegree> executionDegrees = this.getDegreeCurricularPlan().getExecutionDegrees();
+        final Collection<ExecutionDegree> executionDegrees = this.getDegreeCurricularPlan().getExecutionDegrees();
         return this == Collections.min(executionDegrees, EXECUTION_DEGREE_COMPARATORY_BY_YEAR);
     }
 

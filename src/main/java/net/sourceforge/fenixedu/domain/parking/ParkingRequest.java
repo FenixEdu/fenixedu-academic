@@ -5,6 +5,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.util.Iterator;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.PartyClassification;
@@ -701,7 +702,7 @@ public class ParkingRequest extends ParkingRequest_Base {
 
         public ParkingRequestFactoryCreator(ParkingParty parkingParty) {
             super(parkingParty);
-            if ((!getParkingParty().hasAnyParkingRequests()) && parkingParty.getParty().getParkingPartyHistoriesCount() != 0) {
+            if ((!getParkingParty().hasAnyParkingRequests()) && parkingParty.getParty().getParkingPartyHistoriesSet().size() != 0) {
                 Vehicle firstVehicle = parkingParty.getFirstVehicle();
                 if (firstVehicle != null) {
                     setFirstCarPlateNumber(firstVehicle.getPlateNumber());
@@ -797,7 +798,9 @@ public class ParkingRequest extends ParkingRequest_Base {
             }
 
             if (parkingRequest.getVehicles().size() > 1) {
-                Vehicle secondVehicle = parkingRequest.getVehicles().get(1);
+                Iterator<Vehicle> vehicles = parkingRequest.getVehiclesSet().iterator();
+                vehicles.next();
+                Vehicle secondVehicle = vehicles.next();
                 setSecondVechicleID(secondVehicle.getExternalId());
                 setSecondCarMake(secondVehicle.getVehicleMake());
                 setSecondCarPlateNumber(secondVehicle.getPlateNumber());

@@ -185,9 +185,4 @@ public abstract class DocumentRequest extends DocumentRequest_Base implements ID
         return !getRequestSet().isEmpty();
     }
 
-    @Deprecated
-    public boolean hasNumberOfPages() {
-        return getNumberOfPages() != null;
-    }
-
 }

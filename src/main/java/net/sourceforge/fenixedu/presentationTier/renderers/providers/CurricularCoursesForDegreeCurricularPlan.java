@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.providers;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -28,7 +29,8 @@ public class CurricularCoursesForDegreeCurricularPlan implements DataProvider {
         if (markSheetManagementBean.hasDegree() && markSheetManagementBean.hasDegreeCurricularPlan()
                 && markSheetManagementBean.hasExecutionPeriod()) {
 
-            if (markSheetManagementBean.getDegree().hasDegreeCurricularPlans(markSheetManagementBean.getDegreeCurricularPlan())) {
+            if (markSheetManagementBean.getDegree().getDegreeCurricularPlansSet()
+                    .contains(markSheetManagementBean.getDegreeCurricularPlan())) {
                 if (markSheetManagementBean.getDegree().isBolonhaDegree()) {
                     addCurricularCourses(
                             result,
@@ -49,8 +51,8 @@ public class CurricularCoursesForDegreeCurricularPlan implements DataProvider {
         return result;
     }
 
-    private void addCurricularCourses(final List<CurricularCourseMarksheetManagementBean> result,
-            final List<? extends DegreeModule> dcpDegreeModules, final ExecutionSemester executionSemester) {
+    private void addCurricularCourses(final Collection<CurricularCourseMarksheetManagementBean> result,
+            final Collection<? extends DegreeModule> dcpDegreeModules, final ExecutionSemester executionSemester) {
 
         for (final DegreeModule degreeModule : dcpDegreeModules) {
             result.add(new CurricularCourseMarksheetManagementBean((CurricularCourse) degreeModule, executionSemester));
@@ -70,10 +72,8 @@ public class CurricularCoursesForDegreeCurricularPlan implements DataProvider {
                 }
                 final String[] values = str.split(":");
 
-                final CurricularCourse course =
-                        (CurricularCourse) AbstractDomainObject.fromOID(Long.valueOf(values[0]).longValue());
-                final ExecutionSemester semester =
-                        (ExecutionSemester) AbstractDomainObject.fromOID(Long.valueOf(values[1]).longValue());
+                final CurricularCourse course = FenixFramework.getDomainObject(values[0]);
+                final ExecutionSemester semester = FenixFramework.getDomainObject(values[1]);
 
                 return new CurricularCourseMarksheetManagementBean(course, semester);
             }

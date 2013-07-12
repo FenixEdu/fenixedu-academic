@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -139,7 +138,7 @@ public abstract class Vigilancy extends Vigilancy_Base {
         return date;
     }
 
-    public List<ExecutionCourse> getAssociatedExecutionCourses() {
+    public Collection<ExecutionCourse> getAssociatedExecutionCourses() {
 
         return this.getWrittenEvaluation().getAssociatedExecutionCourses();
 
@@ -248,6 +247,7 @@ public abstract class Vigilancy extends Vigilancy_Base {
     public abstract int getPoints();
 
     public abstract int getEstimatedPoints();
+
     @Deprecated
     public boolean hasWrittenEvaluation() {
         return getWrittenEvaluation() != null;

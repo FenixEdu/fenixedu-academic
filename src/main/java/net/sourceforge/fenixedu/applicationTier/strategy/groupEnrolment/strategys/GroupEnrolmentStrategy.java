@@ -108,7 +108,7 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy 
         final Attends studentAttend = grouping.getStudentAttend(studentUsername);
 
         if (studentAttend != null) {
-            List<StudentGroup> groupingStudentGroups = grouping.getStudentGroups();
+            Collection<StudentGroup> groupingStudentGroups = grouping.getStudentGroupsSet();
             for (final StudentGroup studentGroup : groupingStudentGroups) {
                 Collection<Attends> studentGroupAttends = studentGroup.getAttends();
                 for (final Attends attend : studentGroupAttends) {
@@ -140,7 +140,7 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy 
     @Override
     public boolean checkPossibleToEnrolInExistingGroup(Grouping grouping, StudentGroup studentGroup) {
 
-        final int numberOfElements = studentGroup.getAttendsCount();
+        final int numberOfElements = studentGroup.getAttends().size();
         final Integer maximumCapacity = grouping.getMaximumCapacity();
         if (maximumCapacity == null) {
             return true;

@@ -7,7 +7,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.util.StringFormatter;
 
 import org.apache.commons.beanutils.PropertyUtils;
@@ -27,7 +27,7 @@ public class DomainObjectStringPropertyFormatter {
     public static void run(Class clazz, String slotName) throws FenixServiceException {
 
         try {
-            Collection<DomainObject> domainObjects = RootDomainObject.getInstance().readAllDomainObjects(clazz);
+            Collection<DomainObject> domainObjects = DomainObjectUtil.readAllDomainObjects(clazz);
             for (DomainObject domainObject : domainObjects) {
 
                 Object propertyToFormat = PropertyUtils.getSimpleProperty(domainObject, slotName);

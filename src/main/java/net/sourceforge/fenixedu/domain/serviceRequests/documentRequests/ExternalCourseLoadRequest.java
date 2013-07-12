@@ -1,8 +1,6 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
 import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean;
@@ -36,18 +34,8 @@ public class ExternalCourseLoadRequest extends ExternalCourseLoadRequest_Base {
     }
 
     @Override
-    public List<Enrolment> getEnrolments() {
-        return Collections.unmodifiableList(super.getEnrolments());
-    }
-
-    @Override
     public Set<Enrolment> getEnrolmentsSet() {
         return Collections.unmodifiableSet(super.getEnrolmentsSet());
-    }
-
-    @Override
-    public Iterator<Enrolment> getEnrolmentsIterator() {
-        return getEnrolmentsSet().iterator();
     }
 
     @Override

@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.accounting;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -47,7 +46,7 @@ public class SearchPaymentCodesByExecutionYear implements AutoCompleteProvider<P
             return result;
         }
 
-        List<IndividualCandidacyProcess> childProcesses = candidacyProcessByExecutionInterval.getChildProcesses();
+        Collection<IndividualCandidacyProcess> childProcesses = candidacyProcessByExecutionInterval.getChildProcesses();
         for (IndividualCandidacyProcess individualCandidacyProcess : childProcesses) {
             if (!individualCandidacyProcess.getCandidacy().hasEvent()) {
                 continue;
@@ -80,7 +79,7 @@ public class SearchPaymentCodesByExecutionYear implements AutoCompleteProvider<P
     }
 
     private ExecutionYear getExecutionYear(final String oid) {
-        return (ExecutionYear) AbstractDomainObject.fromOID(Long.valueOf(oid).longValue());
+        return FenixFramework.getDomainObject(oid);
     }
 
 }

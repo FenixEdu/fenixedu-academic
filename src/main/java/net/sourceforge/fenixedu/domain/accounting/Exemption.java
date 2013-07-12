@@ -84,12 +84,10 @@ public abstract class Exemption extends Exemption_Base {
         super.deleteDomainObject();
     }
 
-    @Override
     public void removeResponsible() {
         super.setResponsible(null);
     }
 
-    @Override
     public void removeEvent() {
         super.setEvent(null);
     }
@@ -141,6 +139,7 @@ public abstract class Exemption extends Exemption_Base {
     public boolean isSecondCycleIndividualCandidacyExemption() {
         return false;
     }
+
     @Deprecated
     public boolean hasResponsible() {
         return getResponsible() != null;

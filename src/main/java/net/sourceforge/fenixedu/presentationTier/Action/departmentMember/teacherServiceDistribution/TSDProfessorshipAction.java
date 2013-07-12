@@ -164,7 +164,8 @@ public class TSDProfessorshipAction extends FenixDispatchAction {
                 TeacherServiceDistributionDTOEntry.getTeacherServiceDistributionOptionEntriesForPerson(currentTSDProcessPhase,
                         userView.getPerson(), false, true);
         TeacherServiceDistribution selectedTeacherServiceDistribution =
-                getSelectedTeacherServiceDistribution(userView, dynaForm, tsdDTOEntryList.iterator().next().getTeacherServiceDistribution());
+                getSelectedTeacherServiceDistribution(userView, dynaForm, tsdDTOEntryList.iterator().next()
+                        .getTeacherServiceDistribution());
 
         List<ExecutionSemester> executionPeriodList = new ArrayList<ExecutionSemester>(tsdProcess.getExecutionPeriods());
         Collections.sort(executionPeriodList, new BeanComparator("semester"));
@@ -222,8 +223,8 @@ public class TSDProfessorshipAction extends FenixDispatchAction {
 
         request.setAttribute("tsdTeacherList", tsdTeacherList);
         request.setAttribute("selectedTSDTeacher",
-                new TSDTeacherDTOEntry(getSelectedTSDTeacher(userView, dynaForm, tsdTeacherList),
-                        selectedTeacherServiceDistribution.getTSDProcessPhase().getTSDProcess().getExecutionPeriods()));
+                new TSDTeacherDTOEntry(getSelectedTSDTeacher(userView, dynaForm, tsdTeacherList), new ArrayList<>(
+                        selectedTeacherServiceDistribution.getTSDProcessPhase().getTSDProcess().getExecutionPeriods())));
 
         request.setAttribute("tsdProcess", tsdProcess);
         request.setAttribute("tsdOptionEntryList", tsdDTOEntryList);
@@ -257,8 +258,8 @@ public class TSDProfessorshipAction extends FenixDispatchAction {
         List<ExecutionSemester> executionPeriodList = new ArrayList<ExecutionSemester>();
         executionPeriodList.add(executionSemester);
 
-        request.setAttribute("selectedTSDTeacher", new TSDTeacherDTOEntry(selectedTSDTeacher, selectedTeacherServiceDistribution
-                .getTSDProcessPhase().getTSDProcess().getExecutionPeriods()));
+        request.setAttribute("selectedTSDTeacher", new TSDTeacherDTOEntry(selectedTSDTeacher, new ArrayList<>(
+                selectedTeacherServiceDistribution.getTSDProcessPhase().getTSDProcess().getExecutionPeriods())));
 
         dynaForm.set("competenceCourse", selectedTSDCompetenceCourse.getExternalId());
 
@@ -516,7 +517,7 @@ public class TSDProfessorshipAction extends FenixDispatchAction {
 
     private ShiftType getSelectedShiftType(DynaActionForm dynaForm, TSDCourse course) {
         if (dynaForm.get("shiftType") == null || dynaForm.get("shiftType").equals("")) {
-            if (course.getTSDCurricularLoadsCount() > 0) {
+            if (course.getTSDCurricularLoadsSet().size() > 0) {
                 return course.getTSDCurricularLoads().iterator().next().getType();
             } else {
                 return null;

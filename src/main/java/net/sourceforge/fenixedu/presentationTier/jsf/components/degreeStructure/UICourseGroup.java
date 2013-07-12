@@ -18,7 +18,7 @@ public class UICourseGroup extends UIDegreeModule {
     public static final String COMPONENT_FAMILY =
             "net.sourceforge.fenixedu.presentationTier.jsf.components.degreeStructure.UICourseGroup";
 
-    private CourseGroup courseGroup;
+    private final CourseGroup courseGroup;
     private Boolean onlyStructure;
     private Boolean toOrder;
     private Boolean hideCourses;
@@ -271,7 +271,7 @@ public class UICourseGroup extends UIDegreeModule {
             writer.append("(");
 
             encodeOrderOption(0, "top", false);
-            encodeOrderOption(this.previousContext.getParentCourseGroup().getChildContextsCount() - 1, "end", false);
+            encodeOrderOption(this.previousContext.getParentCourseGroup().getChildContextsSet().size() - 1, "end", false);
             encodeOrderOption(this.previousContext.getChildOrder() - 1, "up", false);
             encodeOrderOption(this.previousContext.getChildOrder() + 1, "down", true);
 

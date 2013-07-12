@@ -105,9 +105,11 @@ public class MobilityIndividualApplication extends MobilityIndividualApplication
         getMobilityStudentData().setSelectedOpening(bean.determineMobilityQuota());
 
         for (CurricularCourse curricularCourse : setOne) {
-            if (hasCurricularCourses(curricularCourse) && !bean.getSelectedCurricularCourses().contains(curricularCourse)) {
+            if (getCurricularCoursesSet().contains(curricularCourse)
+                    && !bean.getSelectedCurricularCourses().contains(curricularCourse)) {
                 removeCurricularCourses(curricularCourse);
-            } else if (!hasCurricularCourses(curricularCourse) && bean.getSelectedCurricularCourses().contains(curricularCourse)) {
+            } else if (!getCurricularCoursesSet().contains(curricularCourse)
+                    && bean.getSelectedCurricularCourses().contains(curricularCourse)) {
                 addCurricularCourses(curricularCourse);
             }
         }

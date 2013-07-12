@@ -220,9 +220,9 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
         final Person person = studentCurricularPlan.getPerson();
         final int numberOfCards;
         if (getPerson() == null) {
-            numberOfCards = person.getCardGenerationEntriesCount();
+            numberOfCards = person.getCardGenerationEntriesSet().size();
         } else {
-            numberOfCards = person.getCardGenerationEntriesCount() - 1;
+            numberOfCards = person.getCardGenerationEntriesSet().size() - 1;
         }
         return numberOfCards > 9 ? Integer.toString(numberOfCards) : "0" + numberOfCards;
     }

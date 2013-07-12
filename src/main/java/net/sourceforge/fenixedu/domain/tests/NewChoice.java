@@ -18,7 +18,7 @@ public class NewChoice extends NewChoice_Base implements Positionable {
     }
 
     protected Integer getNewPosition() {
-        return this.getMultipleChoiceQuestion().getChoicesCount();
+        return this.getMultipleChoiceQuestion().getChoicesSet().size();
     }
 
     @Override
@@ -49,7 +49,7 @@ public class NewChoice extends NewChoice_Base implements Positionable {
 
     @Override
     public boolean isLast() {
-        return this.getPosition() == this.getMultipleChoiceQuestion().getChoicesCount();
+        return this.getPosition() == this.getMultipleChoiceQuestion().getChoicesSet().size();
     }
 
     @Override

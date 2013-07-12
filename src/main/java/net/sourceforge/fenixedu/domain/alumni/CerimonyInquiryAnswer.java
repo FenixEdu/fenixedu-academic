@@ -23,7 +23,7 @@ public class CerimonyInquiryAnswer extends CerimonyInquiryAnswer_Base implements
         if (cerimonyInquiry == null) {
             setOrder(Integer.valueOf(0));
         } else {
-            setOrder(Integer.valueOf(cerimonyInquiry.getCerimonyInquiryAnswerCount()));
+            setOrder(Integer.valueOf(cerimonyInquiry.getCerimonyInquiryAnswerSet().size()));
         }
     }
 

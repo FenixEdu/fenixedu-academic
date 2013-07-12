@@ -161,7 +161,6 @@ public class GratuitySituation extends GratuitySituation_Base {
         throw new DomainException("error.GratuitySituation.paymentCode.cannot.be.accessed.directly");
     }
 
-    @Override
     public boolean hasPaymentCode() {
         return (super.getPaymentCode() != null);
     }
@@ -388,11 +387,6 @@ public class GratuitySituation extends GratuitySituation_Base {
     @Deprecated
     public boolean hasHasPenaltyExemption() {
         return getHasPenaltyExemption() != null;
-    }
-
-    @Deprecated
-    public boolean hasPaymentCode() {
-        return getPaymentCode() != null;
     }
 
     @Deprecated

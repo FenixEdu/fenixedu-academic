@@ -85,7 +85,7 @@ public class CreateTutorshipsDA extends TutorManagementDispatchAction {
         if (student.hasActiveRegistrationFor(executionDegree.getDegree())) {
             if (registration.getActiveTutorship() == null) {
                 for (StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlans()) {
-                    if (studentCurricularPlan.getTutorshipsCount() == 0) {
+                    if (studentCurricularPlan.getTutorshipsSet().size() == 0) {
                         return true;
                     }
                 }

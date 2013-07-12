@@ -3,9 +3,9 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.CompetenceCourse;

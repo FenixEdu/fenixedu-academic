@@ -1,9 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.thesis;
 
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -124,7 +124,7 @@ public class ChangeMasterDegreeProofDispatchAction extends FenixDispatchAction {
 
     private void checkGratuityIsPayed(ActionMapping mapping, StudentCurricularPlan studentCurricularPlan)
             throws GratuitySituationNotRegularizedActionException {
-        List<GratuitySituation> gratuitySituations = studentCurricularPlan.getGratuitySituations();
+        Collection<GratuitySituation> gratuitySituations = studentCurricularPlan.getGratuitySituations();
         for (final GratuitySituation situation : gratuitySituations) {
             if (situation.getRemainingValue().doubleValue() > 0) {
                 throw new GratuitySituationNotRegularizedActionException("error.exception.masterDegree.gratuityNotRegularized",

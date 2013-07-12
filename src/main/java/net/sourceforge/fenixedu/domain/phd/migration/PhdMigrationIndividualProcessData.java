@@ -467,7 +467,7 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
         candidacyBean.setPhdStudentNumber(getPhdMigrationIndividualPersonalData().getNumber());
         candidacyBean.setCollaborationType(PhdIndividualProgramCollaborationType.NONE);
         candidacyBean.setExecutionYear(getExecutionYear());
-        candidacyBean.setFocusArea((getProcessBean().getPhdProgram().getPhdProgramFocusAreasCount() == 1) ? getProcessBean()
+        candidacyBean.setFocusArea((getProcessBean().getPhdProgram().getPhdProgramFocusAreasSet().size() == 1) ? getProcessBean()
                 .getPhdProgram().getPhdProgramFocusAreas().iterator().next() : null);
 
         final PhdIndividualProgramProcess individualProcess =
@@ -649,11 +649,6 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
     @Deprecated
     public boolean hasMigrationDate() {
         return getMigrationDate() != null;
-    }
-
-    @Deprecated
-    public boolean hasMigrationParseLog() {
-        return getMigrationParseLog() != null;
     }
 
     @Deprecated

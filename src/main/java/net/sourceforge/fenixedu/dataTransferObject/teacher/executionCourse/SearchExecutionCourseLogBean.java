@@ -148,7 +148,7 @@ public class SearchExecutionCourseLogBean implements Serializable {
             });
         }
 
-        if (professorships.size() < getExecutionCourse().getProfessorshipsCount()) {
+        if (professorships.size() < getExecutionCourse().getProfessorships().size()) {
             filters.add(new InlinePredicate<ExecutionCourseLog, Collection<Professorship>>(getProfessorships()) {
 
                 @Override

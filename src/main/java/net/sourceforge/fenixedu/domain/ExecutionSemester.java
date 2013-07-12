@@ -511,7 +511,7 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
     public int getNumberOfProfessorships(CurricularCourse curricularCourse) {
         int count = 0;
         for (ExecutionCourse executionCourse : curricularCourse.getExecutionCoursesByExecutionPeriod(this)) {
-            count += executionCourse.getProfessorshipsCount();
+            count += executionCourse.getProfessorshipsSet().size();
         }
         return count;
     }

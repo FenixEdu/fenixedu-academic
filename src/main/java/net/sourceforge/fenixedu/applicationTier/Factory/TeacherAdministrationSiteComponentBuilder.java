@@ -417,10 +417,10 @@ public class TeacherAdministrationSiteComponentBuilder {
             final Exam exam = (Exam) evaluation;
             exam.checkIfCanDistributeStudentsByRooms();
             final InfoExam infoExam = InfoExamWithRoomOccupations.newInfoFromDomain(exam);
-            infoExam.setEnrolledStudents(exam.getWrittenEvaluationEnrolmentsCount());
+            infoExam.setEnrolledStudents(exam.getWrittenEvaluationEnrolments().size());
 
             final List<InfoExecutionCourse> infoExecutionCourses =
-                    new ArrayList<InfoExecutionCourse>(exam.getAssociatedExecutionCoursesCount());
+                    new ArrayList<InfoExecutionCourse>(exam.getAssociatedExecutionCourses().size());
             for (final ExecutionCourse executionCourse : exam.getAssociatedExecutionCourses()) {
                 infoExecutionCourses.add(InfoExecutionCourse.newInfoFromDomain(executionCourse));
             }
@@ -823,7 +823,7 @@ public class TeacherAdministrationSiteComponentBuilder {
         component.setInfoStudentGroup(InfoStudentGroupWithAttendsAndGroupingAndShift.newInfoFromDomain(studentGroup));
 
         if (studentGroup.getGrouping().getMaximumCapacity() != null) {
-            int freeGroups = studentGroup.getGrouping().getMaximumCapacity() - studentGroup.getAttendsCount();
+            int freeGroups = studentGroup.getGrouping().getMaximumCapacity() - studentGroup.getAttends().size();
             component.setNrOfElements(Integer.valueOf(freeGroups));
         } else {
             component.setNrOfElements("Sem limite");
@@ -917,7 +917,7 @@ public class TeacherAdministrationSiteComponentBuilder {
             }
         }
         List<StudentGroup> allStudentGroups = new ArrayList<StudentGroup>();
-        allStudentGroups.addAll(groupProperties.getStudentGroups());
+        allStudentGroups.addAll(groupProperties.getStudentGroupsSet());
 
         Iterator iterAux = aux.iterator();
         while (iterAux.hasNext()) {

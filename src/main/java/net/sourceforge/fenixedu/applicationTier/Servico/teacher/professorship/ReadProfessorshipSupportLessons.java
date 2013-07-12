@@ -36,7 +36,7 @@ public class ReadProfessorshipSupportLessons {
         professorshipSupportLessonsDTO.setInfoProfessorship(InfoProfessorship.newInfoFromDomain(professorship));
 
         final List<InfoSupportLesson> infoSupportLessons =
-                new ArrayList<InfoSupportLesson>(professorship.getSupportLessonsCount());
+                new ArrayList<InfoSupportLesson>(professorship.getSupportLessons().size());
         for (final SupportLesson supportLesson : professorship.getSupportLessonsSet()) {
             infoSupportLessons.add(InfoSupportLesson.newInfoFromDomain(supportLesson));
         }

@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.enrolment.withoutRules;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.EnrollmentWithoutRulesAuthorizationFilter;
@@ -26,7 +27,7 @@ public class ReadCurricularCoursesToEnroll {
 
     private static final int MAX_CURRICULAR_SEMESTERS = 2;
 
-    protected List<CurricularCourse> findCurricularCourses(final List<CurricularCourse> curricularCourses,
+    protected List<CurricularCourse> findCurricularCourses(final Collection<CurricularCourse> curricularCourses,
             final StudentCurricularPlan studentCurricularPlan, final ExecutionSemester executionSemester) {
 
         final List<CurricularCourse> result = new ArrayList<CurricularCourse>();

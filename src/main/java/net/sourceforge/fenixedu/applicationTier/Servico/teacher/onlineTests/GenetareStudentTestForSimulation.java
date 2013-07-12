@@ -56,7 +56,7 @@ public class GenetareStudentTestForSimulation {
         infoDistributedTest.setImsFeedback(imsfeedback);
         infoDistributedTest.setTitle(test.getTitle());
         infoDistributedTest.setTestInformation(testInformation);
-        infoDistributedTest.setNumberOfQuestions(test.getTestQuestionsCount());
+        infoDistributedTest.setNumberOfQuestions(test.getTestQuestionsSet().size());
 
         List<TestQuestion> testQuestionList = new ArrayList<TestQuestion>(test.getTestQuestions());
         Collections.sort(testQuestionList, new BeanComparator("testQuestionOrder"));

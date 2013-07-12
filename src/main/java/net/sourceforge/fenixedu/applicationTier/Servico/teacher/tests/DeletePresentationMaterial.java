@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests;
 
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DeleteFileRequest;
 import net.sourceforge.fenixedu.domain.tests.NewMathMlMaterial;
@@ -26,7 +25,7 @@ public class DeletePresentationMaterial {
 
         PictureMaterialFile pictureMaterialFile = pictureMaterial.getPictureMaterialFile();
 
-        if (pictureMaterialFile.getPictureMaterialsCount() == 1) {
+        if (pictureMaterialFile.getPictureMaterials().size() == 1) {
             new DeleteFileRequest(AccessControl.getPerson(), pictureMaterialFile.getExternalStorageIdentification());
         }
 

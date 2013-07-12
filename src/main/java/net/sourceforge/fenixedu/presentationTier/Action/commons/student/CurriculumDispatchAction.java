@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.commons.student;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -138,7 +139,7 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
                 DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanId);
                 registration = student.readRegistrationByDegreeCurricularPlan(degreeCurricularPlan);
             } else {
-                final List<Registration> registrations = student.getRegistrations();
+                final Collection<Registration> registrations = student.getRegistrations();
                 if (!registrations.isEmpty()) {
                     registration = registrations.iterator().next();
                 }
@@ -269,7 +270,7 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
         return null;
     }
 
-    private List<LabelValueBean> getSCPsLabelValueBeanList(List<StudentCurricularPlan> studentCurricularPlans) {
+    private List<LabelValueBean> getSCPsLabelValueBeanList(Collection<StudentCurricularPlan> studentCurricularPlans) {
         final List<LabelValueBean> result = new ArrayList<LabelValueBean>();
 
         result.add(new LabelValueBean(StudentCurricularPlanIDDomainType.NEWEST_STRING, StudentCurricularPlanIDDomainType.NEWEST

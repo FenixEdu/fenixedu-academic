@@ -26,7 +26,7 @@ public class RegistrationProtocol extends RegistrationProtocol_Base {
             @Override
             public void afterRemove(Person o1, RegistrationProtocol o2) {
                 if (o1 != null && o2 != null) {
-                    if (o1.getRegistrationProtocolsCount() == 0) {
+                    if (o1.getRegistrationProtocolsSet().size() == 0) {
                         o1.removeRoleByType(RoleType.EXTERNAL_SUPERVISOR);
                     }
                 }

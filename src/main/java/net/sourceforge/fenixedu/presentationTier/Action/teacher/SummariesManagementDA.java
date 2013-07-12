@@ -202,7 +202,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
         bean.setLessonType(null);
 
         Lesson lesson = bean.getLesson();
-        if (lesson != null && lesson.getShift().getCourseLoadsCount() == 1) {
+        if (lesson != null && lesson.getShift().getCourseLoadsSet().size() == 1) {
             bean.setLessonType(lesson.getShift().getCourseLoads().iterator().next().getType());
         }
 
@@ -458,7 +458,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
                         loggedProfessorship, nextPossibleLessonsDates);
 
         Shift shift = nextSummaryDateBean.getLesson().getShift();
-        if (shift.getCourseLoadsCount() != 1) {
+        if (shift.getCourseLoadsSet().size() != 1) {
             request.setAttribute("notShowLessonPlanningsAndSummaries", Boolean.TRUE);
         } else {
             nextSummaryDateBean.setLessonType(shift.getCourseLoads().iterator().next().getType());
@@ -513,14 +513,14 @@ public class SummariesManagementDA extends FenixDispatchAction {
 
                 NextPossibleSummaryLessonsAndDatesBean nextLesson =
                         NextPossibleSummaryLessonsAndDatesBean.getNewInstance(lessonRepresentation);
-                if (nextLesson.getLesson().getShift().getCourseLoadsCount() == 1) {
+                if (nextLesson.getLesson().getShift().getCourseLoadsSet().size() == 1) {
                     nextLesson.setLessonType(nextLesson.getLesson().getShift().getCourseLoads().iterator().next().getType());
                 }
 
                 nextPossibleLessonsDates.add(nextLesson);
 
                 ShiftType lessonType = null;
-                if (nextLesson.getLesson().getShift().getCourseLoadsCount() == 1) {
+                if (nextLesson.getLesson().getShift().getCourseLoadsSet().size() == 1) {
                     lessonType = nextLesson.getLesson().getShift().getCourseLoads().iterator().next().getType();
                     if (shiftType == null) {
                         shiftType = lessonType;

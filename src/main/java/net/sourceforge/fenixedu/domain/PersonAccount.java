@@ -55,7 +55,7 @@ public class PersonAccount extends PersonAccount_Base {
 
     public void delete() {
 
-        if (getTransactionsCount() > 0) {
+        if (getTransactionsSet().size() > 0) {
             throw new DomainException("error.person.cannot.be.deleted");
         }
 

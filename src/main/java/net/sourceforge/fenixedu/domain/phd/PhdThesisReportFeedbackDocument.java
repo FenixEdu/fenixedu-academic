@@ -46,7 +46,7 @@ public class PhdThesisReportFeedbackDocument extends PhdThesisReportFeedbackDocu
                 super.setDocumentVersion(process.getLastVersionNumber(documentType) + 1);
 
             } else {
-                super.setDocumentVersion(getJuryElement().getFeedbackDocumentsCount() + 1);
+                super.setDocumentVersion(getJuryElement().getFeedbackDocumentsSet().size() + 1);
             }
         } else {
             super.setDocumentVersion(1);
@@ -88,6 +88,7 @@ public class PhdThesisReportFeedbackDocument extends PhdThesisReportFeedbackDocu
     public PhdProgramProcessDocument getLastVersion() {
         return getJuryElement().getLastFeedbackDocument();
     }
+
     @Deprecated
     public boolean hasJuryElement() {
         return getJuryElement() != null;

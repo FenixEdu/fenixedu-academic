@@ -2,8 +2,6 @@ package net.sourceforge.fenixedu.domain.accounting;
 
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -92,16 +90,6 @@ public class AccountingTransaction extends AccountingTransaction_Base {
     }
 
     @Override
-    public List<Entry> getEntries() {
-        return Collections.unmodifiableList(super.getEntries());
-    }
-
-    @Override
-    public Iterator<Entry> getEntriesIterator() {
-        return getEntriesSet().iterator();
-    }
-
-    @Override
     public Set<Entry> getEntriesSet() {
         return Collections.unmodifiableSet(super.getEntriesSet());
     }
@@ -138,18 +126,8 @@ public class AccountingTransaction extends AccountingTransaction_Base {
     }
 
     @Override
-    public List<AccountingTransaction> getAdjustmentTransactions() {
-        return Collections.unmodifiableList(super.getAdjustmentTransactions());
-    }
-
-    @Override
     public Set<AccountingTransaction> getAdjustmentTransactionsSet() {
         return Collections.unmodifiableSet(super.getAdjustmentTransactionsSet());
-    }
-
-    @Override
-    public Iterator<AccountingTransaction> getAdjustmentTransactionsIterator() {
-        return getAdjustmentTransactionsSet().iterator();
     }
 
     @Override

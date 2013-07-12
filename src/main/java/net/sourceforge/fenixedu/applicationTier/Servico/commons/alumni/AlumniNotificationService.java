@@ -76,8 +76,7 @@ public class AlumniNotificationService {
             case PASSWORD_REQUEST:
                 body +=
                         MessageFormat.format(getManagerBundle().getString("alumni.identity.request.password.request"), request
-                                .getAlumni().getLoginUsername(), String.valueOf(request.getOID()), request.getRequestToken()
-                                .toString());
+                                .getAlumni().getLoginUsername(), request.getExternalId(), request.getRequestToken().toString());
                 break;
             case STUDENT_NUMBER_RECOVERY:
                 body +=

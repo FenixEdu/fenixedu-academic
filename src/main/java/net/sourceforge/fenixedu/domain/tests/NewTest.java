@@ -15,7 +15,7 @@ public class NewTest extends NewTest_Base implements Positionable {
 
         this.setTestGroup(testGroup);
         this.setScale(scale);
-        this.setPosition(testGroup.getTestsCount());
+        this.setPosition(testGroup.getTestsSet().size());
     }
 
     @Override
@@ -30,7 +30,7 @@ public class NewTest extends NewTest_Base implements Positionable {
 
     @Override
     public boolean isLast() {
-        return this.getPosition() == this.getTestGroup().getTestsCount();
+        return this.getPosition() == this.getTestGroup().getTestsSet().size();
     }
 
     @Override

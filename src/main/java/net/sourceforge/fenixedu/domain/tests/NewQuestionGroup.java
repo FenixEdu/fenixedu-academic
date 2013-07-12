@@ -112,7 +112,7 @@ public class NewQuestionGroup extends NewQuestionGroup_Base {
             this.removeChildElements(childElement);
             childElement.deleteDown();
 
-            if (child.getParentElementsCount() == 0) {
+            if (child.getParentElementsSet().size() == 0) {
                 child.delete();
             }
         }

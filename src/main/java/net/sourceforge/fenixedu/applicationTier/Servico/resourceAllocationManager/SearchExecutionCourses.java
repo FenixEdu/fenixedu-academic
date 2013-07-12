@@ -60,8 +60,7 @@ public class SearchExecutionCourses {
 
         List<InfoExecutionCourse> result = null;
 
-        final ExecutionSemester executionSemester =
-                FenixFramework.getDomainObject(infoExecutionPeriod.getExternalId());
+        final ExecutionSemester executionSemester = FenixFramework.getDomainObject(infoExecutionPeriod.getExternalId());
 
         ExecutionDegree executionDegree = null;
         if (infoExecutionDegree != null) {
@@ -231,7 +230,7 @@ public class SearchExecutionCourses {
                     infoExecutionCourse.setOccupancy(Double.valueOf(-1));
                 } else {
                     infoExecutionCourse.setOccupancy(NumberUtils.formatNumber(
-                            Double.valueOf((Double.valueOf(executionCourse.getAttendsCount()).floatValue() * 100 / total)), 1));
+                            Double.valueOf((Double.valueOf(executionCourse.getAttends().size()).floatValue() * 100 / total)), 1));
                 }
                 return infoExecutionCourse;
             }

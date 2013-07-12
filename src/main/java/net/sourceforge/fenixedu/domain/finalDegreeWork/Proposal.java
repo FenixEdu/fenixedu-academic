@@ -236,7 +236,7 @@ public class Proposal extends Proposal_Base {
     }
 
     public int getNumberOfCandidates() {
-        return getGroupProposalsCount();
+        return getGroupProposalsSet().size();
     }
 
     public List<Person> getOrientators() {

@@ -170,7 +170,7 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
         if (individualCandidacyEvent != null && individualCandidacyEvent.getAmountToPay().isPositive() && getEvent().isClosed()) {
             individualCandidacyEvent.open();
 
-            List<AccountingEventPaymentCode> paymentCodes = individualCandidacyEvent.getAllPaymentCodes();
+            Collection<AccountingEventPaymentCode> paymentCodes = individualCandidacyEvent.getAllPaymentCodes();
 
             for (AccountingEventPaymentCode accountingEventPaymentCode : paymentCodes) {
                 accountingEventPaymentCode.setState(PaymentCodeState.NEW);
@@ -217,7 +217,7 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
         if (individualCandidacyEvent != null && individualCandidacyEvent.getAmountToPay().isPositive() && getEvent().isClosed()) {
             individualCandidacyEvent.open();
 
-            List<AccountingEventPaymentCode> paymentCodes = individualCandidacyEvent.getAllPaymentCodes();
+            Collection<AccountingEventPaymentCode> paymentCodes = individualCandidacyEvent.getAllPaymentCodes();
 
             for (AccountingEventPaymentCode accountingEventPaymentCode : paymentCodes) {
                 accountingEventPaymentCode.setState(PaymentCodeState.NEW);
@@ -370,7 +370,6 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
         return result;
     }
 
-    @Override
     public boolean hasSelectedDegree() {
         throw new DomainException("error.second.cycle.individual.candidacy.relation.with.degree.obsolete");
     }
@@ -380,7 +379,6 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
         throw new DomainException("error.second.cycle.individual.candidacy.relation.with.degree.obsolete");
     }
 
-    @Override
     public void removeSelectedDegree() {
         throw new DomainException("error.second.cycle.individual.candidacy.relation.with.degree.obsolete");
     }
@@ -406,10 +404,10 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
     }
 
     public SecondCycleIndividualCandidacySeriesGrade getSecondCycleIndividualCandidacySeriesGrade() {
-        if (getIndividualCandidacySeriesGradeCount() == 0) {
+        if (getIndividualCandidacySeriesGradeSet().size() == 0) {
             return null;
         } else {
-            if (getIndividualCandidacySeriesGradeCount() == 1) {
+            if (getIndividualCandidacySeriesGradeSet().size() == 1) {
                 return getSecondCycleIndividualCandidacySeriesGradeForDegree(getSelectedDegrees().iterator().next());
             } else {
                 return getSecondCycleIndividualCandidacySeriesGradeForDegree(getSelectedDegree());
@@ -538,11 +536,6 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
     @Deprecated
     public boolean hasSeriesCandidacyGrade() {
         return getSeriesCandidacyGrade() != null;
-    }
-
-    @Deprecated
-    public boolean hasSelectedDegree() {
-        return getSelectedDegree() != null;
     }
 
     @Deprecated

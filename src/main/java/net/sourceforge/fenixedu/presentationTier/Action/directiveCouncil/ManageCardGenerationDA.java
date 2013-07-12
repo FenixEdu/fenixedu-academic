@@ -394,7 +394,7 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
 
     protected Boolean anyCategoryHasAnyProblem() {
         for (final ProfessionalCategory professionalCategory : rootDomainObject.getProfessionalCategoriesSet()) {
-            if (professionalCategory.getGiafProfessionalDataCount() > 0
+            if (professionalCategory.getGiafProfessionalDataSet().size() > 0
                     && professionalCategory.getIdentificationCardLabel() == null) {
                 return Boolean.TRUE;
             }

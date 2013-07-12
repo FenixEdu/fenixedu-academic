@@ -95,7 +95,8 @@ public class ISTConnectDA extends ExternalInterfaceDispatchAction {
             final JSONArray extIdsJSONArray = (JSONArray) parser.parse(externalIds);
             final JSONArray jsonArrayResult = new JSONArray();
             for (Object externalId : extIdsJSONArray) {
-                jsonArrayResult.add(DomainObjectJSONSerializer.getDomainObject((AbstractDomainObject) FenixFramework.getDomainObject((String) externalId)));
+                jsonArrayResult.add(DomainObjectJSONSerializer.getDomainObject(FenixFramework
+                        .getDomainObject((String) externalId)));
             }
             writeJSONObject(response, jsonArrayResult);
         } else {

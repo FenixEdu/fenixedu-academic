@@ -28,6 +28,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
@@ -95,15 +96,15 @@ public class InternshipCandidacyDA extends FenixDispatchAction {
 
     public ActionForward candidateView(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
-        long oid = Long.parseLong(request.getParameter("candidacy.OID"));
-        request.setAttribute("candidacy", new InternshipCandidacyBean((InternshipCandidacy) InternshipCandidacy.fromOID(oid)));
+        String oid = request.getParameter("candidacy.OID");
+        request.setAttribute("candidacy", new InternshipCandidacyBean((InternshipCandidacy) FenixFramework.getDomainObject(oid)));
         return mapping.findForward("view");
     }
 
     public ActionForward prepareCandidacyEdit(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
-        long oid = Long.parseLong(request.getParameter("candidacy.OID"));
-        request.setAttribute("candidacy", new InternshipCandidacyBean((InternshipCandidacy) InternshipCandidacy.fromOID(oid)));
+        String oid = request.getParameter("candidacy.OID");
+        request.setAttribute("candidacy", new InternshipCandidacyBean((InternshipCandidacy) FenixFramework.getDomainObject(oid)));
         return mapping.findForward("edit");
     }
 
@@ -122,8 +123,8 @@ public class InternshipCandidacyDA extends FenixDispatchAction {
 
     public ActionForward prepareCandidacyDelete(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
-        long oid = Long.parseLong(request.getParameter("candidacy.OID"));
-        request.setAttribute("candidacy", new InternshipCandidacyBean((InternshipCandidacy) InternshipCandidacy.fromOID(oid)));
+        String oid = request.getParameter("candidacy.OID");
+        request.setAttribute("candidacy", new InternshipCandidacyBean((InternshipCandidacy) FenixFramework.getDomainObject(oid)));
         return mapping.findForward("delete");
     }
 

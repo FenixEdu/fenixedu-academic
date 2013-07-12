@@ -165,7 +165,7 @@ import org.joda.time.YearMonthDay;
 import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixframework.Atomic;
-import pt.ist.fenixframework.core.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 import pt.utl.ist.fenix.tools.smtp.EmailSender;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
@@ -1540,7 +1540,7 @@ public class Person extends Person_Base {
 
             case EMPLOYEE:
                 addRoleIfNotPresent(person, RoleType.PERSON);
-                if (person.getCoordinatorsCount() != 0) {
+                if (person.getCoordinatorsSet().size() != 0) {
                     addRoleIfNotPresent(person, RoleType.COORDINATOR);
                 }
                 break;
@@ -2526,8 +2526,8 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
-    public List<Registration> getStudents() {
-        return hasStudent() ? getStudent().getRegistrations() : Collections.EMPTY_LIST;
+    public Set<Registration> getStudents() {
+        return hasStudent() ? getStudent().getRegistrationsSet() : Collections.<Registration> emptySet();
     }
 
     @Deprecated
@@ -2537,7 +2537,7 @@ public class Person extends Person_Base {
 
     @Deprecated
     public int getStudentsCount() {
-        return hasStudent() ? getStudent().getRegistrationsCount() : 0;
+        return hasStudent() ? getStudent().getRegistrationsSet().size() : 0;
     }
 
     @Deprecated
@@ -2915,7 +2915,7 @@ public class Person extends Person_Base {
 
     private List<String> getImportantRoles(final List<String> mainRoles) {
 
-        if (getPersonRolesCount() != 0) {
+        if (getPersonRolesSet().size() != 0) {
             boolean teacher = false, employee = false, researcher = false;
 
             final List<Role> roles = new ArrayList<Role>(getPersonRolesSet());
@@ -3070,16 +3070,16 @@ public class Person extends Person_Base {
     }
 
     @Override
-    public List<TSDProcess> getTSDProcesses() {
+    public Set<TSDProcess> getTSDProcessesSet() {
         final Department department = hasTeacher() ? getTeacher().getCurrentWorkingDepartment() : null;
-        return department == null ? Collections.EMPTY_LIST : (List<TSDProcess>) CollectionUtils.select(
+        return department == null ? Collections.<TSDProcess> emptySet() : new HashSet<TSDProcess>(CollectionUtils.select(
                 department.getTSDProcesses(), new Predicate() {
                     @Override
                     public boolean evaluate(final Object arg0) {
                         final TSDProcess tsd = (TSDProcess) arg0;
                         return tsd.hasAnyPermission(Person.this);
                     }
-                });
+                }));
     }
 
     public List<TSDProcess> getTSDProcesses(final ExecutionSemester period) {
@@ -3715,7 +3715,7 @@ public class Person extends Person_Base {
     }
 
     public RegistrationProtocol getOnlyRegistrationProtocol() {
-        if (getRegistrationProtocolsCount() == 1) {
+        if (getRegistrationProtocolsSet().size() == 1) {
             return getRegistrationProtocols().iterator().next();
         }
         return null;
@@ -3899,7 +3899,7 @@ public class Person extends Person_Base {
         return professorships;
     }
 
-    public boolean teachesAny(final List<ExecutionCourse> executionCourses) {
+    public boolean teachesAny(final Collection<ExecutionCourse> executionCourses) {
         for (final Professorship professorship : getProfessorshipsSet()) {
             if (executionCourses.contains(professorship.getExecutionCourse())) {
                 return true;
@@ -3909,7 +3909,7 @@ public class Person extends Person_Base {
     }
 
     public boolean isTeacherEvaluationCoordinatorCouncilMember() {
-        final Content content = AbstractDomainObject.fromOID(2482491971449l);
+        final Content content = FenixFramework.getDomainObject("2482491971449");
         if (content != null) {
             final UnitSite site = (UnitSite) content;
             return site.getManagersSet().contains(AccessControl.getPerson());

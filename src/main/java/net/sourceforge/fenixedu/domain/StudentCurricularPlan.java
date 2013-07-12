@@ -284,7 +284,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         setEmployee(null);
         setMasterDegreeThesis(null);
 
-        for (; !getEnrolmentsSet().isEmpty(); getEnrolments().iterator().next().delete()) {
+        for (; !getEnrolmentsSet().isEmpty(); getEnrolmentsSet().iterator().next().delete()) {
             ;
         }
 
@@ -292,7 +292,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
             getRoot().delete();
         }
 
-        for (Iterator<NotNeedToEnrollInCurricularCourse> iter = getNotNeedToEnrollCurricularCoursesIterator(); iter.hasNext();) {
+        for (Iterator<NotNeedToEnrollInCurricularCourse> iter = getNotNeedToEnrollCurricularCoursesSet().iterator(); iter
+                .hasNext();) {
             NotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse = iter.next();
             iter.remove();
             notNeedToEnrollInCurricularCourse.setStudentCurricularPlan(null);
@@ -303,7 +304,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
             ;
         }
 
-        for (Iterator<CreditsInScientificArea> iter = getCreditsInScientificAreasIterator(); iter.hasNext();) {
+        for (Iterator<CreditsInScientificArea> iter = getCreditsInScientificAreasSet().iterator(); iter.hasNext();) {
             CreditsInScientificArea creditsInScientificArea = iter.next();
             iter.remove();
             creditsInScientificArea.setStudentCurricularPlan(null);
@@ -520,7 +521,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public void setRegistration(final Registration registration) {
         if (registration != null) {
             if (registration.hasDegree()) {
-                if (!registration.getDegree().hasDegreeCurricularPlans(getDegreeCurricularPlan())) {
+                if (!registration.getDegree().getDegreeCurricularPlansSet().contains(getDegreeCurricularPlan())) {
                     throw new DomainException("error.StudentCurricularPlan.setting.registration.with.different.degree");
                 }
             } else {
@@ -532,7 +533,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     public boolean hasRegistration() {
-        return super.hasStudent();
+        return super.getStudent() != null;
     }
 
     public Set<CurriculumLine> getAllCurriculumLines() {
@@ -548,18 +549,12 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     @Override
-    final public List<Enrolment> getEnrolments() {
-        return hasRoot() ? getRoot().getEnrolments() : super.getEnrolments();
-    }
-
-    @Override
     final public Set<Enrolment> getEnrolmentsSet() {
         return hasRoot() ? getRoot().getEnrolmentsSet() : super.getEnrolmentsSet();
     }
 
-    @Override
     final public boolean hasAnyEnrolments() {
-        return hasRoot() ? getRoot().hasAnyEnrolments() : super.hasAnyEnrolments();
+        return hasRoot() ? getRoot().hasAnyEnrolments() : !getEnrolmentsSet().isEmpty();
     }
 
     final public boolean hasAnyCurriculumLines() {
@@ -590,9 +585,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return hasEnrolments(executionSemester);
     }
 
-    @Override
     final public boolean hasEnrolments(final Enrolment enrolment) {
-        return hasRoot() ? getRoot().hasCurriculumModule(enrolment) : super.hasEnrolments(enrolment);
+        return hasRoot() ? getRoot().hasCurriculumModule(enrolment) : getEnrolmentsSet().contains(enrolment);
     }
 
     final public boolean hasEnrolments(final ExecutionYear executionYear) {
@@ -622,9 +616,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return false;
     }
 
-    @Override
     final public int getEnrolmentsCount() {
-        return hasRoot() ? getEnrolmentsSet().size() : super.getEnrolmentsCount();
+        return hasRoot() ? getEnrolmentsSet().size() : super.getEnrolmentsSet().size();
     }
 
     final public int countCurrentEnrolments() {
@@ -1159,16 +1152,16 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     public List<Enrolment> getAllEnrollments() {
         List<Enrolment> allEnrollments = new ArrayList<Enrolment>();
-        addNonInvisibleEnrolments(allEnrollments, getEnrolments());
+        addNonInvisibleEnrolments(allEnrollments, getEnrolmentsSet());
 
         for (final StudentCurricularPlan studentCurricularPlan : getRegistration().getStudentCurricularPlans()) {
-            addNonInvisibleEnrolments(allEnrollments, studentCurricularPlan.getEnrolments());
+            addNonInvisibleEnrolments(allEnrollments, studentCurricularPlan.getEnrolmentsSet());
         }
 
         return allEnrollments;
     }
 
-    private void addNonInvisibleEnrolments(List<Enrolment> allEnrollments, List<Enrolment> enrollmentsToAdd) {
+    private void addNonInvisibleEnrolments(Collection<Enrolment> allEnrollments, Collection<Enrolment> enrollmentsToAdd) {
         for (Enrolment enrolment : enrollmentsToAdd) {
             if (!enrolment.isInvisible()) {
                 allEnrollments.add(enrolment);
@@ -1253,8 +1246,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         int counter = 0;
 
         int size = getDegreeCurricularPlan().getCurricularCourses().size();
-        for (int i = 0; i < size; i++) {
-            CurricularCourse curricularCourse = getDegreeCurricularPlan().getCurricularCourses().get(i);
+        for (CurricularCourse curricularCourse : getDegreeCurricularPlan().getCurricularCoursesSet()) {
             if (isCurricularCourseApproved(curricularCourse)) {
                 counter++;
             }
@@ -2478,7 +2470,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
                         return candidate;
                     }
                 }
-            } else if (this.getPerson().getMasterDegreeCandidatesCount() == 1) {
+            } else if (this.getPerson().getMasterDegreeCandidatesSet().size() == 1) {
                 return this.getPerson().getMasterDegreeCandidates().iterator().next();
             }
         }
@@ -2838,10 +2830,10 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     @Override
-    public List<EnrolmentOutOfPeriodEvent> getEnrolmentOutOfPeriodEvents() {
-        final List<EnrolmentOutOfPeriodEvent> result = new ArrayList<EnrolmentOutOfPeriodEvent>();
+    public Set<EnrolmentOutOfPeriodEvent> getEnrolmentOutOfPeriodEventsSet() {
+        final Set<EnrolmentOutOfPeriodEvent> result = new HashSet<EnrolmentOutOfPeriodEvent>();
 
-        for (final EnrolmentOutOfPeriodEvent each : super.getEnrolmentOutOfPeriodEvents()) {
+        for (final EnrolmentOutOfPeriodEvent each : super.getEnrolmentOutOfPeriodEventsSet()) {
             if (!each.isCancelled()) {
                 result.add(each);
             }
@@ -3143,16 +3135,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.Enrolment> getEnrolments() {
-        return getEnrolmentsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyEnrolments() {
-        return !getEnrolmentsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.CreditsInScientificArea> getCreditsInScientificAreas() {
         return getCreditsInScientificAreasSet();
     }
@@ -3250,16 +3232,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     @Deprecated
     public boolean hasEquivalencePlan() {
         return getEquivalencePlan() != null;
-    }
-
-    @Deprecated
-    public boolean hasClassification() {
-        return getClassification() != null;
-    }
-
-    @Deprecated
-    public boolean hasGivenCredits() {
-        return getGivenCredits() != null;
     }
 
     @Deprecated

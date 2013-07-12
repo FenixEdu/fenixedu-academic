@@ -287,7 +287,7 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
 
                     executionCoursesMap.put(executionSemester, executionPeriodMap);
 
-                    int profCounter = executionCourse.getProfessorshipsCount();
+                    int profCounter = executionCourse.getProfessorshipsSet().size();
                     if (profCounter == 0) {
                         profCounter = 1;
                     }

@@ -11,24 +11,25 @@ import org.json.JSONException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import pt.ist.fenixWebFramework.FenixWebFramework;
+import pt.ist.fenixframework.DomainObject;
 import pt.ist.fenixframework.FenixFramework;
-import dml.DomainClass;
-import dml.DomainModel;
-import dml.Role;
-import dml.Slot;
+import pt.ist.fenixframework.core.AbstractDomainObject;
+import pt.ist.fenixframework.dml.DomainClass;
+import pt.ist.fenixframework.dml.DomainModel;
+import pt.ist.fenixframework.dml.Role;
+import pt.ist.fenixframework.dml.Slot;
 
 public class DomainObjectJSONSerializer {
     private static DomainModel model;
 
     static {
-        model = FenixWebFramework.getDomainModel();
+        model = FenixFramework.getDomainModel();
     }
 
-    public static JSONObject getDomainObject(AbstractDomainObject obj) throws SecurityException, NoSuchMethodException,
+    public static JSONObject getDomainObject(DomainObject obj) throws SecurityException, NoSuchMethodException,
             IllegalArgumentException, IllegalAccessException, InvocationTargetException, JSONException {
         final JSONObject jsonObject = new JSONObject();
-        final Class<? extends AbstractDomainObject> clazz = obj.getClass();
+        final Class<? extends DomainObject> clazz = obj.getClass();
         final String objClassName = clazz.getName();
 
         jsonObject.put("externalId", obj.getExternalId());

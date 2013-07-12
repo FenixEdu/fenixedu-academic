@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.publico;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -62,7 +63,7 @@ public class ViewCourseInquiryPublicResults extends ViewInquiryPublicResults {
         boolean hasNotRelevantData = executionCourse.hasNotRelevantDataFor(executionDegree);
 
         ResultsInquiryTemplate resultsInquiryTemplate = ResultsInquiryTemplate.getTemplateByExecutionPeriod(executionPeriod);
-        List<InquiryBlock> resultBlocks = resultsInquiryTemplate.getInquiryBlocks();
+        Collection<InquiryBlock> resultBlocks = resultsInquiryTemplate.getInquiryBlocks();
 
         GroupResultsSummaryBean ucGroupResultsSummaryBean =
                 getGeneralResults(results, resultBlocks, GroupResultType.COURSE_RESULTS);
@@ -95,7 +96,8 @@ public class ViewCourseInquiryPublicResults extends ViewInquiryPublicResults {
 
         InquiryQuestion totalAnswersQuestion = getInquiryQuestion(results, InquiryResultType.COURSE_TOTAL_ANSWERS);
         request.setAttribute("totalAnswers",
-                new QuestionResultsSummaryBean(totalAnswersQuestion, getResultsForQuestion(results, totalAnswersQuestion).iterator().next()));
+                new QuestionResultsSummaryBean(totalAnswersQuestion, getResultsForQuestion(results, totalAnswersQuestion)
+                        .iterator().next()));
 
         List<TeacherShiftTypeGeneralResultBean> teachersSummaryBeans = getTeachersShiftsResults(executionCourse);
         Collections.sort(teachersSummaryBeans, new BeanComparator("professorship.person.name"));
@@ -154,7 +156,7 @@ public class ViewCourseInquiryPublicResults extends ViewInquiryPublicResults {
         return questionResults;
     }
 
-    private static InquiryQuestion getEstimatedEvaluationsQuestion(List<InquiryBlock> inquiryBlocks) {
+    private static InquiryQuestion getEstimatedEvaluationsQuestion(Collection<InquiryBlock> inquiryBlocks) {
         for (InquiryBlock inquiryBlock : inquiryBlocks) {
             for (InquiryGroupQuestion inquiryGroupQuestion : inquiryBlock.getInquiryGroupsQuestions()) {
                 for (InquiryQuestion inquiryQuestion : inquiryGroupQuestion.getInquiryQuestions()) {

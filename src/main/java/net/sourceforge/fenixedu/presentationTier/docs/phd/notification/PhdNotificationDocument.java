@@ -1,7 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.docs.phd.notification;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -100,8 +102,9 @@ public class PhdNotificationDocument extends FenixReport {
 
     private String buildGuidingsInformation(final Collection<PhdParticipant> guidings) {
         final StringBuilder result = new StringBuilder();
-        for (int i = 0; i < guidings.size(); i++) {
-            final PhdParticipant guiding = guidings.get(i);
+        List<PhdParticipant> guidingsList = new ArrayList<>(guidings);
+        for (int i = 0; i < guidingsList.size(); i++) {
+            final PhdParticipant guiding = guidingsList.get(i);
             result.append(guiding.getNameWithTitle());
             if (i == guidings.size() - 2) {
                 result.append(" ").append(getMessageFromResource("label.and")).append(" ");

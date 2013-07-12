@@ -80,7 +80,7 @@ abstract public class ViewInquiriesResultsDA extends FenixDispatchAction {
             return prepare(actionMapping, actionForm, request, response);
         }
 
-        resultPageDTO.setExecutionDegreeID(executionDegree.getOid());
+        resultPageDTO.setExecutionDegreeID(executionDegree.getExternalId());
 
         Collection<StudentInquiriesCourseResult> otherExecutionCourses = new ArrayList<StudentInquiriesCourseResult>();
         Collection<StudentInquiriesCourseResult> executionCoursesToImproove = new ArrayList<StudentInquiriesCourseResult>();
@@ -183,10 +183,10 @@ abstract public class ViewInquiriesResultsDA extends FenixDispatchAction {
         StudentInquiriesCourseResult courseResult = getRenderedObject();
 
         final ExecutionCourse executionCourse =
-                courseResult == null ? (ExecutionCourse) AbstractDomainObject.fromOID(getLongFromRequest(request,
+                courseResult == null ? (ExecutionCourse) FenixFramework.getDomainObject(getStringFromRequest(request,
                         "executionCourseID")) : courseResult.getExecutionCourse();
         final ExecutionDegree executionDegree =
-                courseResult == null ? (ExecutionDegree) AbstractDomainObject.fromOID(getLongFromRequest(request,
+                courseResult == null ? (ExecutionDegree) FenixFramework.getDomainObject(getStringFromRequest(request,
                         "executionDegreeID")) : courseResult.getExecutionDegree();
 
         request.setAttribute("canComment", coordinatorCanComment(executionDegree, executionCourse.getExecutionPeriod()));
@@ -198,8 +198,8 @@ abstract public class ViewInquiriesResultsDA extends FenixDispatchAction {
                 request.setAttribute("courseResultsCoordinatorCommentEdit", true);
             }
 
-            ((ViewInquiriesResultPageDTO) actionForm).setExecutionCourseID(executionCourse.getOid());
-            ((ViewInquiriesResultPageDTO) actionForm).setExecutionDegreeID(executionDegree.getOid());
+            ((ViewInquiriesResultPageDTO) actionForm).setExecutionCourseID(executionCourse.getExternalId());
+            ((ViewInquiriesResultPageDTO) actionForm).setExecutionDegreeID(executionDegree.getExternalId());
             // ((ViewInquiriesResultPageDTO)
             // actionForm).setDegreeCurricularPlanID(executionDegree.getDegreeCurricularPlan().getExternalId());
 

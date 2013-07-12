@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.renderers.degreeStructure;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class DegreeCurricularPlanRendererConfig implements Serializable {
 
     private boolean curricularCourseLinkable = false;
     private String viewCurricularCourseUrl = null;
-    private List<Pair<String, String>> viewCurricularCourseUrlParameters = new ArrayList<Pair<String, String>>();
+    private final List<Pair<String, String>> viewCurricularCourseUrlParameters = new ArrayList<Pair<String, String>>();
 
     public DegreeCurricularPlanRendererConfig() {
     }
@@ -86,7 +87,7 @@ public class DegreeCurricularPlanRendererConfig implements Serializable {
         return getDegreeCurricularPlan().hasAnyExecutionDegrees();
     }
 
-    private List<ExecutionDegree> getExecutionDegrees() {
+    private Collection<ExecutionDegree> getExecutionDegrees() {
         return getDegreeCurricularPlan().getExecutionDegrees();
     }
 

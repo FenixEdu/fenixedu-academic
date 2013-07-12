@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.space;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -39,7 +40,7 @@ public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation
     @Checked("SpacePredicates.checkPermissionsToManageLessonInstanceSpaceOccupationsWithTeacherCheck")
     public void edit(LessonInstance lessonInstance) {
 
-        if (hasLessonInstances(lessonInstance)) {
+        if (getLessonInstancesSet().contains(lessonInstance)) {
             removeLessonInstances(lessonInstance);
         }
 
@@ -83,7 +84,7 @@ public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation
     public List<Interval> getEventSpaceOccupationIntervals(YearMonthDay startDateToSearch, YearMonthDay endDateToSearch) {
 
         List<Interval> result = new ArrayList<Interval>();
-        List<LessonInstance> lessonInstances = getLessonInstances();
+        Collection<LessonInstance> lessonInstances = getLessonInstances();
 
         DateTime startDateTime = startDateToSearch != null ? startDateToSearch.toDateTimeAtMidnight() : null;
         DateTime endDateTime = endDateToSearch != null ? endDateToSearch.toDateTime(new TimeOfDay(23, 59, 59)) : null;
@@ -163,6 +164,7 @@ public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation
         }
         return getClass().getName();
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.LessonInstance> getLessonInstances() {
         return getLessonInstancesSet();

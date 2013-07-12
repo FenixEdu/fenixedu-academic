@@ -185,11 +185,6 @@ abstract public class CandidacyProcess extends CandidacyProcess_Base {
     }
 
     @Deprecated
-    public boolean hasState() {
-        return getState() != null;
-    }
-
-    @Deprecated
     public boolean hasCandidacyPeriod() {
         return getCandidacyPeriod() != null;
     }

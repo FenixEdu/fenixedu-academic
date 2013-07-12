@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.enrolment.withoutRules;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.DegreeAdministrativeOfficeSuperUserAuthorizationFilter;
@@ -16,7 +17,7 @@ import pt.ist.fenixframework.Atomic;
 public class ReadCurricularCoursesToEnrollSuperUser extends ReadCurricularCoursesToEnroll {
 
     @Override
-    protected List<CurricularCourse> findCurricularCourses(final List<CurricularCourse> curricularCourses,
+    protected List<CurricularCourse> findCurricularCourses(final Collection<CurricularCourse> curricularCourses,
             final StudentCurricularPlan studentCurricularPlan, final ExecutionSemester executionSemester) {
 
         final List<CurricularCourse> result = new ArrayList<CurricularCourse>();

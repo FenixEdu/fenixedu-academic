@@ -70,7 +70,8 @@ public class WrittenEvaluationRoomDistribution {
     }
 
     private List<Registration> readEnroledStudentsInWrittenEvaluation(WrittenEvaluation writtenEvaluation) {
-        final List<Registration> result = new ArrayList<Registration>(writtenEvaluation.getWrittenEvaluationEnrolmentsCount());
+        final List<Registration> result =
+                new ArrayList<Registration>(writtenEvaluation.getWrittenEvaluationEnrolmentsSet().size());
         for (final WrittenEvaluationEnrolment writtenEvaluationEnrolment : writtenEvaluation.getWrittenEvaluationEnrolments()) {
             result.add(writtenEvaluationEnrolment.getStudent());
         }

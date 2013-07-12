@@ -32,8 +32,7 @@ public class TeacherAttributeFinalDegreeWork {
 
                 if (proposal.getGroupAttributedByTeacher() == null || proposal.getGroupAttributedByTeacher() != group) {
                     proposal.setGroupAttributedByTeacher(group);
-                    for (int i = 0; i < group.getGroupProposals().size(); i++) {
-                        GroupProposal otherGroupProposal = group.getGroupProposals().get(i);
+                    for (GroupProposal otherGroupProposal : group.getGroupProposalsSet()) {
                         Proposal otherProposal = otherGroupProposal.getFinalDegreeWorkProposal();
                         if (otherProposal != proposal && group == otherProposal.getGroupAttributedByTeacher()) {
                             otherProposal.setGroupAttributedByTeacher(null);

@@ -20,8 +20,8 @@ public class Researcher extends Researcher_Base {
 
         @Override
         public int compare(Researcher r1, Researcher r2) {
-            Integer resultParticipationsCount = r1.getPerson().getResultParticipationsCount();
-            Integer resultParticipationsCount2 = r2.getPerson().getResultParticipationsCount();
+            Integer resultParticipationsCount = r1.getPerson().getResultParticipationsSet().size();
+            Integer resultParticipationsCount2 = r2.getPerson().getResultParticipationsSet().size();
             return resultParticipationsCount.compareTo(resultParticipationsCount2);
         }
 

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -91,7 +92,7 @@ public class Shift extends Shift_Base {
             throw new DomainException("error.Shift.with.this.name.already.exists");
         }
 
-        if (newCapacity != null && getStudentsCount() > newCapacity.intValue()) {
+        if (newCapacity != null && getStudentsSet().size() > newCapacity.intValue()) {
             throw new DomainException("errors.exception.invalid.finalAvailability");
         }
 
@@ -111,37 +112,14 @@ public class Shift extends Shift_Base {
     }
 
     @Override
-    public List<StudentGroup> getAssociatedStudentGroups() {
-        List<StudentGroup> result = new ArrayList<StudentGroup>();
-        for (StudentGroup sg : super.getAssociatedStudentGroups()) {
+    public Set<StudentGroup> getAssociatedStudentGroupsSet() {
+        Set<StudentGroup> result = new HashSet<StudentGroup>();
+        for (StudentGroup sg : super.getAssociatedStudentGroupsSet()) {
             if (sg.getValid()) {
                 result.add(sg);
             }
         }
-        return Collections.unmodifiableList(result);
-    }
-
-    @Override
-    public int getAssociatedStudentGroupsCount() {
-        return this.getAssociatedStudentGroups().size();
-    }
-
-    @Override
-    public Iterator<StudentGroup> getAssociatedStudentGroupsIterator() {
-        // TODO Auto-generated method stub
-        return this.getAssociatedStudentGroups().iterator();
-    }
-
-    @Override
-    public Set<StudentGroup> getAssociatedStudentGroupsSet() {
-        // TODO Auto-generated method stub
-        return new TreeSet<StudentGroup>(this.getAssociatedStudentGroups());
-    }
-
-    @Override
-    public boolean hasAssociatedStudentGroups(StudentGroup associatedStudentGroups) {
-        // TODO Auto-generated method stub
-        return this.getAssociatedStudentGroups().contains(associatedStudentGroups);
+        return Collections.unmodifiableSet(result);
     }
 
     @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageShifts")
@@ -254,7 +232,7 @@ public class Shift extends Shift_Base {
     }
 
     public BigDecimal getTotalHours() {
-        List<Lesson> lessons = getAssociatedLessons();
+        Collection<Lesson> lessons = getAssociatedLessons();
         BigDecimal lessonTotalHours = BigDecimal.ZERO;
         for (Lesson lesson : lessons) {
             lessonTotalHours = lessonTotalHours.add(lesson.getTotalHours());
@@ -264,7 +242,7 @@ public class Shift extends Shift_Base {
 
     public Duration getTotalDuration() {
         Duration duration = Duration.ZERO;
-        List<Lesson> lessons = getAssociatedLessons();
+        Collection<Lesson> lessons = getAssociatedLessons();
         for (Lesson lesson : lessons) {
             duration = duration.plus(lesson.getTotalDuration());
         }
@@ -284,9 +262,8 @@ public class Shift extends Shift_Base {
 
     public BigDecimal getUnitHours() {
         BigDecimal hours = BigDecimal.ZERO;
-        List<Lesson> lessons = getAssociatedLessons();
-        for (int i = 0; i < lessons.size(); i++) {
-            Lesson lesson = lessons.get(i);
+        Collection<Lesson> lessons = getAssociatedLessons();
+        for (Lesson lesson : lessons) {
             hours = hours.add(lesson.getUnitHours());
         }
         return hours;
@@ -294,9 +271,8 @@ public class Shift extends Shift_Base {
 
     public double getHoursOnSaturdaysOrNightHours(int nightHour) {
         double hours = 0;
-        List<Lesson> lessons = this.getAssociatedLessons();
-        for (int i = 0; i < lessons.size(); i++) {
-            Lesson lesson = lessons.get(i);
+        Collection<Lesson> lessons = this.getAssociatedLessons();
+        for (Lesson lesson : lessons) {
             if (lesson.getDiaSemana().equals(new DiaSemana(DiaSemana.SABADO))) {
                 hours += lesson.getUnitHours().doubleValue();
             } else {
@@ -307,7 +283,7 @@ public class Shift extends Shift_Base {
     }
 
     public int getNumberOfLessonInstances() {
-        List<Lesson> lessons = getAssociatedLessons();
+        Collection<Lesson> lessons = getAssociatedLessons();
         int totalLessonsDates = 0;
         for (Lesson lesson : lessons) {
             totalLessonsDates += lesson.getFinalNumberOfLessonInstances();
@@ -352,7 +328,7 @@ public class Shift extends Shift_Base {
         }
         for (NonRegularTeachingService nonRegularTeachingService : getNonRegularTeachingServices()) {
             if (nonRegularTeachingService.getProfessorship() != professorship
-                    && (getCourseLoadsCount() != 1 || !containsType(ShiftType.LABORATORIAL))) {
+                    && (getCourseLoadsSet().size() != 1 || !containsType(ShiftType.LABORATORIAL))) {
                 availablePercentage -= nonRegularTeachingService.getPercentage();
             }
         }
@@ -384,7 +360,7 @@ public class Shift extends Shift_Base {
     }
 
     public boolean reserveForStudent(final Registration registration) {
-        final boolean result = getLotacao().intValue() > getStudentsCount();
+        final boolean result = getLotacao().intValue() > getStudentsSet().size();
         if (result || isResourceAllocationManager()) {
             GroupsAndShiftsManagementLog.createLog(getExecutionCourse(), "resources.MessagingResources",
                     "log.executionCourse.groupAndShifts.shifts.attends.added", registration.getNumber().toString(), getNome(),
@@ -411,7 +387,7 @@ public class Shift extends Shift_Base {
         for (SchoolClass schoolClass : getAssociatedClasses()) {
             builder.append(schoolClass.getNome());
             index++;
-            if (index < getAssociatedClassesCount()) {
+            if (index < getAssociatedClassesSet().size()) {
                 builder.append(", ");
             }
         }
@@ -565,7 +541,7 @@ public class Shift extends Shift_Base {
 
     public boolean hasAnyStudentsInAssociatedStudentGroups() {
         for (final StudentGroup studentGroup : getAssociatedStudentGroupsSet()) {
-            if (studentGroup.getAttendsCount() > 0) {
+            if (studentGroup.getAttendsSet().size() > 0) {
                 return true;
             }
         }
@@ -577,7 +553,7 @@ public class Shift extends Shift_Base {
         if (this.hasAnyAssociatedLessons()) {
             stringBuilder.append(" ( ");
 
-            for (Iterator<Lesson> iterator = this.getAssociatedLessonsIterator(); iterator.hasNext();) {
+            for (Iterator<Lesson> iterator = this.getAssociatedLessonsSet().iterator(); iterator.hasNext();) {
                 Lesson lesson = iterator.next();
                 stringBuilder.append(WeekDay.getWeekDay(lesson.getDiaSemana()).getLabelShort());
                 stringBuilder.append(" ");
@@ -600,7 +576,7 @@ public class Shift extends Shift_Base {
     public String getLessonPresentationString() {
         StringBuilder stringBuilder = new StringBuilder(this.getNome());
         if (this.hasAnyAssociatedLessons()) {
-            for (Iterator<Lesson> iterator = this.getAssociatedLessonsIterator(); iterator.hasNext();) {
+            for (Iterator<Lesson> iterator = this.getAssociatedLessonsSet().iterator(); iterator.hasNext();) {
                 Lesson lesson = iterator.next();
                 stringBuilder.append(" ");
                 stringBuilder.append(WeekDay.getWeekDay(lesson.getDiaSemana()).getLabelShort());

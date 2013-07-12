@@ -58,7 +58,7 @@ public class FinalDegreeWorkGroup extends FinalDegreeWorkGroup_Base {
             if (object instanceof FinalDegreeWorkGroup) {
                 FinalDegreeWorkGroup group = (FinalDegreeWorkGroup) object;
                 if (group.isAttributed() && group.hasAnyGroupStudents()) {
-                    final Student student = group.getGroupStudentsIterator().next().getRegistration().getStudent();
+                    final Student student = group.getGroupStudentsSet().iterator().next().getRegistration().getStudent();
                     final Degree degree = group.getExecutionDegree().getDegree();
                     ExecutionYear nextExecutionYear = group.getExecutionDegree().getExecutionYear().getNextExecutionYear();
                     for (final Registration registration : student.getRegistrationsSet()) {

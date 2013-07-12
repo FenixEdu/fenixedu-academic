@@ -132,7 +132,7 @@ public class ExecutionCourseProcessor extends PathProcessor {
 
         @Override
         public List<ExecutionCourse> getExecutionCourses() {
-            return getCurricularCourse().getAssociatedExecutionCourses();
+            return new ArrayList<>(getCurricularCourse().getAssociatedExecutionCourses());
         }
 
         @Override

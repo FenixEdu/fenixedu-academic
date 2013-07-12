@@ -52,7 +52,7 @@ public abstract class NewQuestion extends NewQuestion_Base {
     }
 
     public static class AtomicQuestionComparator implements Comparator<NewQuestion> {
-        private NewQuestionGroup questionGroup;
+        private final NewQuestionGroup questionGroup;
 
         public AtomicQuestionComparator(NewQuestionGroup questionGroup) {
             super();
@@ -94,7 +94,7 @@ public abstract class NewQuestion extends NewQuestion_Base {
     }
 
     public Party getOwner() {
-        if (this.getParentElementsCount() == 0) {
+        if (this.getParentElementsSet().size() == 0) {
             return null;
         }
 
@@ -331,6 +331,7 @@ public abstract class NewQuestion extends NewQuestion_Base {
 
         return this.getPreCondition().evaluate(this, person);
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.tests.NewGroupElement> getParentElements() {
         return getParentElementsSet();

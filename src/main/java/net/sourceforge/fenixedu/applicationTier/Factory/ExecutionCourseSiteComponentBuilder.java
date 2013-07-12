@@ -215,7 +215,7 @@ public class ExecutionCourseSiteComponentBuilder {
 
         Set<Shift> shifts = executionCourse.getAssociatedShifts();
         for (Shift shift : shifts) {
-            List aulasTemp = shift.getAssociatedLessons();
+            Collection aulasTemp = shift.getAssociatedLessons();
             aulas.addAll(aulasTemp);
         }
 
@@ -307,13 +307,11 @@ public class ExecutionCourseSiteComponentBuilder {
     private List<InfoCurricularCourse> readCurricularCourses(ExecutionCourse executionCourse) {
         List<InfoCurricularCourseScope> infoCurricularCourseScopeList;
         List<InfoCurricularCourse> infoCurricularCourseList = new ArrayList<InfoCurricularCourse>();
-        if (executionCourse.getAssociatedCurricularCourses() != null) {
-            for (int i = 0; i < executionCourse.getAssociatedCurricularCourses().size(); i++) {
-                CurricularCourse curricularCourse = executionCourse.getAssociatedCurricularCourses().get(i);
+        if (executionCourse.getAssociatedCurricularCoursesSet() != null) {
+            for (CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
                 InfoCurricularCourse infoCurricularCourse = copyFromDomain(curricularCourse);
                 infoCurricularCourseScopeList = new ArrayList<InfoCurricularCourseScope>();
-                for (int j = 0; j < curricularCourse.getScopes().size(); j++) {
-                    CurricularCourseScope curricularCourseScope = curricularCourse.getScopes().get(j);
+                for (CurricularCourseScope curricularCourseScope : curricularCourse.getScopesSet()) {
                     InfoCurricularCourseScope infoCurricularCourseScope = copyFromDomain(curricularCourseScope);
                     infoCurricularCourseScopeList.add(infoCurricularCourseScope);
                 }

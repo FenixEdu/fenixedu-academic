@@ -230,21 +230,21 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 
         checkDeletion();
 
-        Iterator<OldInquiriesCoursesRes> oicrIterator = getAssociatedOldInquiriesCoursesResIterator();
+        Iterator<OldInquiriesCoursesRes> oicrIterator = getAssociatedOldInquiriesCoursesResSet().iterator();
         while (oicrIterator.hasNext()) {
             OldInquiriesCoursesRes oicr = oicrIterator.next();
             oicrIterator.remove();
             oicr.delete();
         }
 
-        Iterator<OldInquiriesTeachersRes> oitrIterator = getAssociatedOldInquiriesTeachersResIterator();
+        Iterator<OldInquiriesTeachersRes> oitrIterator = getAssociatedOldInquiriesTeachersResSet().iterator();
         while (oitrIterator.hasNext()) {
             OldInquiriesTeachersRes oitr = oitrIterator.next();
             oitrIterator.remove();
             oitr.delete();
         }
 
-        Iterator<OldInquiriesSummary> oisIterator = getAssociatedOldInquiriesSummariesIterator();
+        Iterator<OldInquiriesSummary> oisIterator = getAssociatedOldInquiriesSummariesSet().iterator();
         while (oisIterator.hasNext()) {
             OldInquiriesSummary ois = oisIterator.next();
             oisIterator.remove();
@@ -258,7 +258,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         // delegate.delete();
         // }
 
-        Iterator<DegreeInfo> degreeInfosIterator = getDegreeInfosIterator();
+        Iterator<DegreeInfo> degreeInfosIterator = getDegreeInfosSet().iterator();
         while (degreeInfosIterator.hasNext()) {
             DegreeInfo degreeInfo = degreeInfosIterator.next();
             degreeInfosIterator.remove();
@@ -1976,16 +1976,6 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     @Deprecated
     public boolean hasIdCardName() {
         return getIdCardName() != null;
-    }
-
-    @Deprecated
-    public boolean hasEctsCredits() {
-        return getEctsCredits() != null;
-    }
-
-    @Deprecated
-    public boolean hasMinistryCode() {
-        return getMinistryCode() != null;
     }
 
     @Deprecated

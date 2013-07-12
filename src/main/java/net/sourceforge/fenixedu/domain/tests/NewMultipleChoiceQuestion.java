@@ -45,14 +45,14 @@ public class NewMultipleChoiceQuestion extends NewMultipleChoiceQuestion_Base {
         Person person = AccessControl.getPerson();
         Random random = new Random(person.getExternalId().hashCode());
 
-        int[] indexes = new int[this.getChoicesCount()];
-        int[] shuffledIndexes = new int[this.getChoicesCount()];
+        int[] indexes = new int[this.getChoicesSet().size()];
+        int[] shuffledIndexes = new int[this.getChoicesSet().size()];
 
-        for (int i = 0; i < this.getChoicesCount(); i++) {
+        for (int i = 0; i < this.getChoicesSet().size(); i++) {
             indexes[i] = i;
         }
 
-        for (int i = 0, j = this.getChoicesCount(); i < this.getChoicesCount(); i++, j--) {
+        for (int i = 0, j = this.getChoicesSet().size(); i < this.getChoicesSet().size(); i++, j--) {
             int randomPosition = random.nextInt(j);
             shuffledIndexes[i] = indexes[randomPosition];
             indexes[randomPosition] = indexes[indexes[j - 1]];
@@ -64,7 +64,7 @@ public class NewMultipleChoiceQuestion extends NewMultipleChoiceQuestion_Base {
 
         List<NewChoice> randomlyOrderedChoices = new ArrayList<NewChoice>();
 
-        for (int i = 0; i < this.getChoicesCount(); i++) {
+        for (int i = 0; i < this.getChoicesSet().size(); i++) {
             randomlyOrderedChoices.add(choices.get(shuffledIndexes[i]));
         }
 

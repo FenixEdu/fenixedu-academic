@@ -1,6 +1,5 @@
 package pt.utl.ist.codeGenerator.database;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.District;
@@ -24,7 +23,6 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.FenixWebFramework;
 import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -33,14 +31,7 @@ public class DataInitializer {
 
     public static void main(String[] args) {
 
-        try {
-            Class.forName(FenixFrameworkInitializer.class.getName());
-        } catch (ClassNotFoundException e) {
-        }
-
-        FenixWebFramework.initialize(PropertiesManager.getFenixFrameworkConfig());
-
-        RootDomainObject.init();
+        initialize();
 
         System.out.println("Initialization complete.");
         System.exit(0);

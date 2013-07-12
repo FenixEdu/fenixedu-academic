@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.coordinator.tutor;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -163,7 +164,8 @@ public class ChangeTutorshipDispatchAction extends TutorManagementDispatchAction
      * Returns a list of ChangeTutorshipByEntryYearBean for each entry year of
      * students associated with the tutor
      */
-    protected List<ChangeTutorshipByEntryYearBean> getChangeTutorshipByEntryYearBean(Teacher teacher, List<Tutorship> tutorships) {
+    protected List<ChangeTutorshipByEntryYearBean> getChangeTutorshipByEntryYearBean(Teacher teacher,
+            Collection<Tutorship> tutorships) {
         Map<ExecutionYear, ChangeTutorshipByEntryYearBean> changeTutorshipByEntryYearBeans =
                 new HashMap<ExecutionYear, ChangeTutorshipByEntryYearBean>();
 

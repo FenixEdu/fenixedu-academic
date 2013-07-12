@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain;
 
 import java.text.Collator;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 
@@ -108,8 +109,8 @@ public abstract class DegreeModuleScope {
         return getDegreeModuleScopes(curricularCourse.getScopes(), curricularCourse.getParentContexts());
     }
 
-    private static List<DegreeModuleScope> getDegreeModuleScopes(List<CurricularCourseScope> curricularCourseScopes,
-            List<Context> contexts) {
+    private static List<DegreeModuleScope> getDegreeModuleScopes(Collection<CurricularCourseScope> curricularCourseScopes,
+            Collection<Context> contexts) {
         List<DegreeModuleScope> degreeModuleScopes = new ArrayList<DegreeModuleScope>();
         for (CurricularCourseScope curricularCourseScope : curricularCourseScopes) {
             degreeModuleScopes.add(curricularCourseScope.getDegreeModuleScopeCurricularCourseScope());

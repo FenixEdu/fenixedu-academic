@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.teacherServiceDistribution;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Department;
@@ -39,7 +40,7 @@ public class TSDRealTeacher extends TSDRealTeacher_Base {
 
     @Override
     public Department getDepartment() {
-        List<ExecutionSemester> executionSemesters =
+        Collection<ExecutionSemester> executionSemesters =
                 getTeacherServiceDistributions().iterator().next().getTSDProcessPhase().getTSDProcess().getExecutionPeriods();
 
         for (ExecutionSemester period : executionSemesters) {

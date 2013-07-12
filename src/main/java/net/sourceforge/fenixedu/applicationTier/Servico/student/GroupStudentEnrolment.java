@@ -5,7 +5,7 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
-import java.util.List;
+import java.util.Collection;
 
 import net.sourceforge.fenixedu.applicationTier.ServiceMonitoring;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -67,7 +67,7 @@ public class GroupStudentEnrolment {
             throw new InvalidArgumentsServiceException();
         }
 
-        checkIfStudentIsNotEnrolledInOtherGroups(grouping.getStudentGroups(), studentGroup, studentAttend);
+        checkIfStudentIsNotEnrolledInOtherGroups(grouping.getStudentGroupsSet(), studentGroup, studentAttend);
 
         studentGroup.addAttends(studentAttend);
 
@@ -87,7 +87,7 @@ public class GroupStudentEnrolment {
         }
     }
 
-    private static void checkIfStudentIsNotEnrolledInOtherGroups(final List<StudentGroup> studentGroups,
+    private static void checkIfStudentIsNotEnrolledInOtherGroups(final Collection<StudentGroup> studentGroups,
             final StudentGroup studentGroupEnrolled, final Attends studentAttend) throws InvalidSituationServiceException {
 
         for (final StudentGroup studentGroup : studentGroups) {

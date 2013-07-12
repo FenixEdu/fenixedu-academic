@@ -55,9 +55,9 @@ public class PunctualRoomsOccupationRequest extends PunctualRoomsOccupationReque
 
     public Integer getNumberOfNewComments(Person person) {
         if (person.equals(getOwner())) {
-            return getCommentsCount() - getEmployeeReadComments();
+            return getCommentsSet().size() - getEmployeeReadComments();
         } else if (person.equals(getRequestor())) {
-            return getCommentsCount() - getTeacherReadComments();
+            return getCommentsSet().size() - getTeacherReadComments();
         }
         return Integer.valueOf(0);
     }
@@ -81,24 +81,24 @@ public class PunctualRoomsOccupationRequest extends PunctualRoomsOccupationReque
     public void createNewTeacherOrEmployeeComment(MultiLanguageString description, Person commentOwner, DateTime instant) {
         new PunctualRoomsOccupationComment(this, getCommentSubject(), description, commentOwner, instant);
         if (commentOwner.equals(getRequestor())) {
-            setTeacherReadComments(getCommentsCount());
+            setTeacherReadComments(getCommentsSet().size());
         } else {
             setOwner(commentOwner);
-            setEmployeeReadComments(getCommentsCount());
+            setEmployeeReadComments(getCommentsSet().size());
         }
     }
 
     public void createNewTeacherCommentAndOpenRequest(MultiLanguageString description, Person commentOwner, DateTime instant) {
         openRequestWithoutAssociateOwner(instant);
         new PunctualRoomsOccupationComment(this, getCommentSubject(), description, commentOwner, instant);
-        setTeacherReadComments(getCommentsCount());
+        setTeacherReadComments(getCommentsSet().size());
     }
 
     public void createNewEmployeeCommentAndCloseRequest(MultiLanguageString description, Person commentOwner, DateTime instant) {
         new PunctualRoomsOccupationComment(this, getCommentSubject(), description, commentOwner, instant);
         closeRequestWithoutAssociateOwner(instant);
         setOwner(commentOwner);
-        setEmployeeReadComments(getCommentsCount());
+        setEmployeeReadComments(getCommentsSet().size());
     }
 
     public void closeRequestAndAssociateOwnerOnlyForEmployees(DateTime instant, Person person) {

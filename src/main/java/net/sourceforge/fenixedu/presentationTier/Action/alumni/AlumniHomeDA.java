@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.alumni;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -137,7 +138,7 @@ public class AlumniHomeDA extends FenixDispatchAction {
         return totalCompletionPercentage;
     }
 
-    private double getJobsPercentage(List<Job> jobs) {
+    private double getJobsPercentage(Collection<Job> jobs) {
         double completionPercentage = 0;
         int totalNumber = 11;
         for (Job job : jobs) {

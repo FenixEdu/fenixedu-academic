@@ -81,7 +81,7 @@ public class ViewInquiriesResultsForCoordinatorDA extends ViewInquiriesResultsDA
         if (executionPeriod != null) {
             ((ViewInquiriesResultPageDTO) actionForm).setDegreeCurricularPlanID(getStringFromRequest(request,
                     "degreeCurricularPlanID"));
-            ((ViewInquiriesResultPageDTO) actionForm).setExecutionSemesterID(executionPeriod.getOid());
+            ((ViewInquiriesResultPageDTO) actionForm).setExecutionSemesterID(executionPeriod.getExternalId());
             return selectexecutionSemester(actionMapping, actionForm, request, response);
         }
 

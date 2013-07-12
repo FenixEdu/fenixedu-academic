@@ -57,11 +57,11 @@ public class EditGrouping {
         if (grouping.getMaximumCapacity() == null && grouping.getMinimumCapacity() == null) {
             return result;
         }
-        for (final StudentGroup studentGroup : grouping.getStudentGroups()) {
-            if (grouping.getMaximumCapacity() != null && studentGroup.getAttendsCount() > grouping.getMaximumCapacity()) {
+        for (final StudentGroup studentGroup : grouping.getStudentGroupsSet()) {
+            if (grouping.getMaximumCapacity() != null && studentGroup.getAttendsSet().size() > grouping.getMaximumCapacity()) {
                 errors[0] = -2;
             }
-            if (grouping.getMinimumCapacity() != null && studentGroup.getAttendsCount() < grouping.getMinimumCapacity()) {
+            if (grouping.getMinimumCapacity() != null && studentGroup.getAttendsSet().size() < grouping.getMinimumCapacity()) {
                 errors[1] = -3;
             }
             if (errors[0] != 0 && errors[1] != 0) {
@@ -79,7 +79,7 @@ public class EditGrouping {
 
     private Integer testGroupMaximumNumber(final Grouping grouping) {
         if (grouping.getGroupMaximumNumber() != null) {
-            for (final StudentGroup studentGroup : grouping.getStudentGroups()) {
+            for (final StudentGroup studentGroup : grouping.getStudentGroupsSet()) {
                 Integer groupCapacity;
                 if (studentGroup.getShift() != null) {
                     if (grouping.getDifferentiatedCapacity()) {
@@ -91,7 +91,7 @@ public class EditGrouping {
                         return -1;
                     }
                 } else if (!grouping.getDifferentiatedCapacity()
-                        && grouping.getStudentGroupsCount() > grouping.getGroupMaximumNumber()) {
+                        && grouping.getStudentGroupsSet().size() > grouping.getGroupMaximumNumber()) {
                     return -1;
                 }
             }

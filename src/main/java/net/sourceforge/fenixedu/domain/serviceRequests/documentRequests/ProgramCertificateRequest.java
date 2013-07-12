@@ -25,7 +25,7 @@ public class ProgramCertificateRequest extends ProgramCertificateRequest_Base {
         super.init(bean);
 
         checkParameters(bean);
-        super.getEnrolments().addAll(bean.getEnrolments());
+        super.getEnrolmentsSet().addAll(bean.getEnrolments());
         super.setRequestedCycle(bean.getRequestedCycle());
     }
 
@@ -47,7 +47,7 @@ public class ProgramCertificateRequest extends ProgramCertificateRequest_Base {
 
     @Override
     public Integer getNumberOfUnits() {
-        return getEnrolmentsCount();
+        return getEnrolmentsSet().size();
     }
 
     @Override
@@ -89,6 +89,7 @@ public class ProgramCertificateRequest extends ProgramCertificateRequest_Base {
         }
         return super.isFree();
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Enrolment> getEnrolments() {
         return getEnrolmentsSet();

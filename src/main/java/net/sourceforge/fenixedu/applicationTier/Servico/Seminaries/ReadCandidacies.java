@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.Seminaries;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -125,7 +126,7 @@ public class ReadCandidacies {
             Registration registration = candidacy.getStudent();
             StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
             if (studentCurricularPlan != null) {
-                List enrollments = studentCurricularPlan.getEnrolments();
+                Collection enrollments = studentCurricularPlan.getEnrolmentsSet();
 
                 InfoCandidacyDetails candidacyDTO = new InfoCandidacyDetails();
                 candidacyDTO.setCurricularCourse(InfoCurricularCourse.newInfoFromDomain(candidacy.getCurricularCourse()));
@@ -158,7 +159,7 @@ public class ReadCandidacies {
      * @param enrolments
      * @param infoClassification
      */
-    private InfoClassification getInfoClassification(List<Enrolment> enrolments) {
+    private InfoClassification getInfoClassification(Collection<Enrolment> enrolments) {
         InfoClassification infoClassification = new InfoClassification();
         int auxInt = 0;
         float acc = 0;

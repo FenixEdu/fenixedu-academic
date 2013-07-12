@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.coordinator.candidacy.s
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map.Entry;
@@ -303,7 +304,7 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
 
     @Override
     protected List<IndividualCandidacyProcess> getChildProcesses(final CandidacyProcess process, HttpServletRequest request) {
-        List<IndividualCandidacyProcess> processes = process.getChildProcesses();
+        Collection<IndividualCandidacyProcess> processes = process.getChildProcesses();
         List<IndividualCandidacyProcess> selectedDegreesIndividualCandidacyProcesses =
                 new ArrayList<IndividualCandidacyProcess>();
         DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);

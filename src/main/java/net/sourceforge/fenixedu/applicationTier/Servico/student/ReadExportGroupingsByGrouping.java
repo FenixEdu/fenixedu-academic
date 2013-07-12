@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
@@ -15,7 +16,7 @@ public class ReadExportGroupingsByGrouping {
     @Atomic
     public static List<InfoExportGrouping> run(String groupingOID) {
         final Grouping grouping = FenixFramework.getDomainObject(groupingOID);
-        final List<ExportGrouping> exportGroupings = grouping.getExportGroupings();
+        final Collection<ExportGrouping> exportGroupings = grouping.getExportGroupings();
 
         final List<InfoExportGrouping> infoExportGroupings = new ArrayList<InfoExportGrouping>(exportGroupings.size());
         for (final ExportGrouping exportGrouping : exportGroupings) {

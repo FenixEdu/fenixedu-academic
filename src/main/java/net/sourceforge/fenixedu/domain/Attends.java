@@ -8,10 +8,10 @@ package net.sourceforge.fenixedu.domain;
 
 import java.text.Collator;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -47,11 +47,11 @@ public class Attends extends Attends_Base {
             public void afterAdd(ExecutionCourse executionCourse, Attends attends) {
                 if (executionCourse != null && attends != null) {
                     for (Grouping grouping : executionCourse.getGroupings()) {
-                        if (grouping.getAutomaticEnrolment() && !grouping.getStudentGroups().isEmpty()) {
+                        if (grouping.getAutomaticEnrolment() && !grouping.getStudentGroupsSet().isEmpty()) {
                             grouping.addAttends(attends);
 
                             int groupNumber = 1;
-                            final List<StudentGroup> studentGroups = new ArrayList<StudentGroup>(grouping.getStudentGroups());
+                            final List<StudentGroup> studentGroups = new ArrayList<StudentGroup>(grouping.getStudentGroupsSet());
                             Collections.sort(studentGroups, StudentGroup.COMPARATOR_BY_GROUP_NUMBER);
 
                             for (final StudentGroup studentGroup : studentGroups) {
@@ -61,7 +61,7 @@ public class Attends extends Attends_Base {
                                 groupNumber = studentGroup.getGroupNumber() + 1;
                             }
 
-                            grouping.setGroupMaximumNumber(grouping.getStudentGroupsCount() + 1);
+                            grouping.setGroupMaximumNumber(grouping.getStudentGroupsSet().size() + 1);
                             try {
                                 GroupEnrolment.enrole(grouping.getExternalId(), null, groupNumber, new ArrayList<String>(),
                                         attends.getRegistration().getStudent().getPerson().getUsername());
@@ -153,14 +153,13 @@ public class Attends extends Attends_Base {
         }
     }
 
-    public List<StudentGroup> getAllStudentGroups() {
-        return super.getStudentGroups();
+    public Collection<StudentGroup> getAllStudentGroups() {
+        return super.getStudentGroupsSet();
     }
 
-    @Override
-    public List<StudentGroup> getStudentGroups() {
+    private List<StudentGroup> getStudentGroups() {
         List<StudentGroup> result = new ArrayList<StudentGroup>();
-        for (StudentGroup sg : super.getStudentGroups()) {
+        for (StudentGroup sg : super.getStudentGroupsSet()) {
             if (sg.getValid()) {
                 result.add(sg);
             }
@@ -169,26 +168,8 @@ public class Attends extends Attends_Base {
     }
 
     @Override
-    public int getStudentGroupsCount() {
-        return this.getStudentGroups().size();
-    }
-
-    @Override
-    public Iterator<StudentGroup> getStudentGroupsIterator() {
-        // TODO Auto-generated method stub
-        return this.getStudentGroups().iterator();
-    }
-
-    @Override
     public Set<StudentGroup> getStudentGroupsSet() {
-        // TODO Auto-generated method stub
         return new TreeSet<StudentGroup>(this.getStudentGroups());
-    }
-
-    @Override
-    public boolean hasStudentGroups(StudentGroup studentGroups) {
-        // TODO Auto-generated method stub
-        return this.getStudentGroups().contains(studentGroups);
     }
 
     private boolean canDelete() {
@@ -632,11 +613,6 @@ public class Attends extends Attends_Base {
     @Deprecated
     public boolean hasAnyProjectSubmissions() {
         return !getProjectSubmissionsSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.StudentGroup> getStudentGroups() {
-        return getStudentGroupsSet();
     }
 
     @Deprecated

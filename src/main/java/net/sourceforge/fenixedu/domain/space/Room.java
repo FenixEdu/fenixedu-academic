@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.space;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -70,7 +71,7 @@ public class Room extends Room_Base {
     }
 
     @Override
-    public List<ResourceAllocation> getResourceAllocationsForCheck() {
+    public Collection<ResourceAllocation> getResourceAllocationsForCheck() {
         List<RoomSubdivision> roomSubdivisions = getRoomSubdivisions();
         if (roomSubdivisions.isEmpty()) {
             return getResourceAllocations();
@@ -356,6 +357,7 @@ public class Room extends Room_Base {
         }
         return countAllSeatsForExams;
     }
+
     @Deprecated
     public boolean hasExamCapacity() {
         return getExamCapacity() != null;

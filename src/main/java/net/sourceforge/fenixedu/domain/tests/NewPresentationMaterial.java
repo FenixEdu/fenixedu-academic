@@ -24,7 +24,7 @@ public abstract class NewPresentationMaterial extends NewPresentationMaterial_Ba
     }
 
     private Integer getNewPosition() {
-        return this.getTestElement().getPresentationMaterialsCount();
+        return this.getTestElement().getPresentationMaterialsSet().size();
     }
 
     public void delete() {
@@ -45,7 +45,7 @@ public abstract class NewPresentationMaterial extends NewPresentationMaterial_Ba
 
     @Override
     public boolean isLast() {
-        return this.getPosition() == this.getTestElement().getPresentationMaterialsCount();
+        return this.getPosition() == this.getTestElement().getPresentationMaterialsSet().size();
     }
 
     @Override

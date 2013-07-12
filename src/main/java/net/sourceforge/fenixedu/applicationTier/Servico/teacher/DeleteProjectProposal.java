@@ -5,6 +5,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -53,7 +54,7 @@ public class DeleteProjectProposal {
         // List teachers to advise
         List group = new ArrayList();
 
-        List groupPropertiesExecutionCourseList = groupProperties.getExportGroupings();
+        Collection groupPropertiesExecutionCourseList = groupProperties.getExportGroupings();
         Iterator iterGroupPropertiesExecutionCourseList = groupPropertiesExecutionCourseList.iterator();
 
         while (iterGroupPropertiesExecutionCourseList.hasNext()) {
@@ -62,7 +63,7 @@ public class DeleteProjectProposal {
             if (groupPropertiesExecutionCourseAux.getProposalState().getState().intValue() == 1
                     || groupPropertiesExecutionCourseAux.getProposalState().getState().intValue() == 2) {
 
-                List professorships = groupPropertiesExecutionCourseAux.getExecutionCourse().getProfessorships();
+                Collection professorships = groupPropertiesExecutionCourseAux.getExecutionCourse().getProfessorships();
 
                 Iterator iterProfessorship = professorships.iterator();
                 while (iterProfessorship.hasNext()) {
@@ -76,7 +77,7 @@ public class DeleteProjectProposal {
             }
         }
 
-        List professorshipsAux = executionCourse.getProfessorships();
+        Collection professorshipsAux = executionCourse.getProfessorships();
 
         Iterator iterProfessorshipsAux = professorshipsAux.iterator();
         while (iterProfessorshipsAux.hasNext()) {

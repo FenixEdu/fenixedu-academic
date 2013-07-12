@@ -180,7 +180,7 @@ public class NewTestGroup extends NewTestGroup_Base {
         NewTest candidate = this.getTests().iterator().next();
 
         for (NewTest test : this.getTests()) {
-            if (test.getPersonsCount() < candidate.getPersonsCount()) {
+            if (test.getPersonsSet().size() < candidate.getPersonsSet().size()) {
                 candidate = test;
             }
         }

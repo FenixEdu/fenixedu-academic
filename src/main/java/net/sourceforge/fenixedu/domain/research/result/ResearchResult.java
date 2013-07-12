@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -46,7 +45,7 @@ public abstract class ResearchResult extends ResearchResult_Base {
         for (ResultParticipation participation : getOrderedResultParticipations()) {
             resume = resume + participation.getPerson().getName();
             i++;
-            if (i < getResultParticipationsCount()) {
+            if (i < getResultParticipationsSet().size()) {
                 resume = resume + ", ";
             } else {
                 resume = resume + " - ";
@@ -78,13 +77,13 @@ public abstract class ResearchResult extends ResearchResult_Base {
 
     @Checked("ResultPredicates.createPredicate")
     public ResultParticipation setCreatorParticipation(Person participator, ResultParticipationRole role) {
-        return new ResultParticipation(this, participator, role, this.getResultParticipationsCount());
+        return new ResultParticipation(this, participator, role, this.getResultParticipationsSet().size());
     }
 
     @Checked("ResultPredicates.writePredicate")
     public ResultParticipation addParticipation(Person participator, ResultParticipationRole role) {
         final ResultParticipation participation =
-                new ResultParticipation(this, participator, role, this.getResultParticipationsCount());
+                new ResultParticipation(this, participator, role, this.getResultParticipationsSet().size());
         updateModifiedByAndDate();
         return participation;
     }
@@ -188,7 +187,7 @@ public abstract class ResearchResult extends ResearchResult_Base {
      * Returns participations list ordered.
      */
     public List<ResultParticipation> getOrderedResultParticipations() {
-        return Collections.unmodifiableList(sort(super.getResultParticipations()));
+        return Collections.unmodifiableList(sort(super.getResultParticipationsSet()));
     }
 
     private List<ResultParticipation> filterResultParticipationsByRole(ResultParticipationRole role) {
@@ -246,7 +245,7 @@ public abstract class ResearchResult extends ResearchResult_Base {
      */
     public boolean hasAssociationWithUnitRole(Unit unit, ResultUnitAssociationRole role) {
         if (unit != null && role != null && this.hasAnyResultUnitAssociations()) {
-            final List<ResultUnitAssociation> list = this.getResultUnitAssociations();
+            final Collection<ResultUnitAssociation> list = this.getResultUnitAssociations();
 
             for (ResultUnitAssociation association : list) {
                 if (association.getUnit() != null && association.getUnit().equals(unit) && association.getRole().equals(role)) {
@@ -299,9 +298,7 @@ public abstract class ResearchResult extends ResearchResult_Base {
     private void reOrderParticipations(List<ResultParticipation> newParticipationsOrder) {
         int order = 0;
         for (ResultParticipation participation : newParticipationsOrder) {
-            int index = this.getResultParticipations().indexOf(participation);
-            ResultParticipation aux = this.getResultParticipations().get(index);
-            aux.setPersonOrder(order++);
+            participation.setPersonOrder(order++);
         }
     }
 
@@ -344,11 +341,6 @@ public abstract class ResearchResult extends ResearchResult_Base {
         throw new DomainException("error.researcher.Result.call", "setLastModificationDate");
     }
 
-    @Override
-    public void removeCountry() {
-        throw new DomainException("error.researcher.Result.call", "removeCountry");
-    }
-
     /**
      * Block operations on relation lists.
      */
@@ -360,16 +352,6 @@ public abstract class ResearchResult extends ResearchResult_Base {
     @Override
     public void removeResultParticipations(ResultParticipation resultParticipations) {
         throw new DomainException("error.researcher.Result.call", "removeResultParticipations");
-    }
-
-    @Override
-    public List<ResultParticipation> getResultParticipations() {
-        return Collections.unmodifiableList(super.getResultParticipations());
-    }
-
-    @Override
-    public Iterator<ResultParticipation> getResultParticipationsIterator() {
-        return getResultParticipationsSet().iterator();
     }
 
     @Override
@@ -388,28 +370,8 @@ public abstract class ResearchResult extends ResearchResult_Base {
     }
 
     @Override
-    public List<ResultUnitAssociation> getResultUnitAssociations() {
-        return Collections.unmodifiableList(super.getResultUnitAssociations());
-    }
-
-    @Override
-    public Iterator<ResultUnitAssociation> getResultUnitAssociationsIterator() {
-        return getResultUnitAssociationsSet().iterator();
-    }
-
-    @Override
     public Set<ResultUnitAssociation> getResultUnitAssociationsSet() {
         return Collections.unmodifiableSet(super.getResultUnitAssociationsSet());
-    }
-
-    @Override
-    public List<ResearchResultDocumentFile> getResultDocumentFiles() {
-        return Collections.unmodifiableList(getVisibleResultDocumentFiles());
-    }
-
-    @Override
-    public Iterator<ResearchResultDocumentFile> getResultDocumentFilesIterator() {
-        return getResultDocumentFilesSet().iterator();
     }
 
     @Override
@@ -417,8 +379,8 @@ public abstract class ResearchResult extends ResearchResult_Base {
         return Collections.unmodifiableSet(getVisibleResultDocumentFilesSet());
     }
 
-    public List<ResearchResultDocumentFile> getAllResultDocumentFiles() {
-        return Collections.unmodifiableList(super.getResultDocumentFiles());
+    public Set<ResearchResultDocumentFile> getAllResultDocumentFiles() {
+        return Collections.unmodifiableSet(super.getResultDocumentFilesSet());
     }
 
     private List<ResearchResultDocumentFile> getVisibleResultDocumentFiles() {
@@ -443,7 +405,7 @@ public abstract class ResearchResult extends ResearchResult_Base {
     }
 
     private List<ResearchResultDocumentFile> getVisibleFiles() {
-        List<ResearchResultDocumentFile> files = super.getResultDocumentFiles();
+        Set<ResearchResultDocumentFile> files = super.getResultDocumentFilesSet();
         List<ResearchResultDocumentFile> visibleDocuments = new ArrayList<ResearchResultDocumentFile>();
         for (ResearchResultDocumentFile file : files) {
             if (file.getVisible()) {

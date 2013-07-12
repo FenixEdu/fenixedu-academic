@@ -137,9 +137,5 @@ public class Phone extends Phone_Base {
     public void logRefuse(Person person) {
         logRefuseAux(person, "label.partyContacts.Phone");
     }
-    @Deprecated
-    public boolean hasNumber() {
-        return getNumber() != null;
-    }
 
 }

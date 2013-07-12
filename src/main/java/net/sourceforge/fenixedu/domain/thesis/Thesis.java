@@ -525,7 +525,6 @@ public class Thesis extends Thesis_Base {
         super.setEnrolment(enrolment);
     }
 
-    @Override
     public void removeEnrolment() {
         super.setEnrolment(null);
     }

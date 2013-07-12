@@ -335,7 +335,7 @@ public class ExportUserInfoForKoha extends ExternalInterfaceDispatchAction {
         CardGenerationEntry result = null;
         for (final CardGenerationEntry entry : person.getCardGenerationEntriesSet()) {
             final CardGenerationBatch batch = entry.getCardGenerationBatch();
-            if (batch.getSent() != null && batch.getCardGenerationProblemsCount() == 0) {
+            if (batch.getSent() != null && batch.getCardGenerationProblemsSet().size() == 0) {
                 if (result == null || result.getCardGenerationBatch().getSent().isBefore(batch.getSent())) {
                     result = entry;
                 }

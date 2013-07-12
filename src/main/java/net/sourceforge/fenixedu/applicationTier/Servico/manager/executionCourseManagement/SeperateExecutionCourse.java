@@ -27,7 +27,6 @@ import org.apache.commons.collections.Transformer;
 
 import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixframework.FenixFramework;
-import pt.ist.fenixframework.core.AbstractDomainObject;
 
 public class SeperateExecutionCourse {
 
@@ -71,7 +70,7 @@ public class SeperateExecutionCourse {
     private static void transferCurricularCourses(final ExecutionCourse originExecutionCourse,
             final ExecutionCourse destinationExecutionCourse, final List<CurricularCourse> curricularCoursesToTransfer) {
         // The last curricular course must not be removed.
-        if (originExecutionCourse.getAssociatedCurricularCoursesCount() - curricularCoursesToTransfer.size() < 1) {
+        if (originExecutionCourse.getAssociatedCurricularCourses().size() - curricularCoursesToTransfer.size() < 1) {
             throw new DomainException("error.manager.executionCourseManagement.lastCurricularCourse");
         }
 
@@ -84,12 +83,11 @@ public class SeperateExecutionCourse {
     private static void transferAttends(final ExecutionCourse originExecutionCourse,
             final ExecutionCourse destinationExecutionCourse) {
         final Collection<CurricularCourse> curricularCourses = destinationExecutionCourse.getAssociatedCurricularCourses();
-        for (int i = 0; i < originExecutionCourse.getAttends().size(); i++) {
-            final Attends attends = originExecutionCourse.getAttends().get(i);
+        List<Attends> allAttends = new ArrayList<>(originExecutionCourse.getAttendsSet());
+        for (Attends attends : allAttends) {
             final Enrolment enrolment = attends.getEnrolment();
             if (enrolment != null && curricularCourses.contains(enrolment.getCurricularCourse())) {
                 attends.setDisciplinaExecucao(destinationExecutionCourse);
-                i--;
             }
         }
     }
@@ -117,8 +115,7 @@ public class SeperateExecutionCourse {
 
     private static void fixStudentShiftEnrolements(final ExecutionCourse executionCourse) {
         for (final Shift shift : executionCourse.getAssociatedShifts()) {
-            for (int i = 0; i < shift.getStudents().size(); i++) {
-                final Registration registration = shift.getStudents().get(i);
+            for (Registration registration : shift.getStudentsSet()) {
                 if (!registration.attends(executionCourse)) {
                     shift.removeStudents(registration);
                 }
@@ -129,7 +126,7 @@ public class SeperateExecutionCourse {
     private static void associateGroupings(final ExecutionCourse originExecutionCourse,
             final ExecutionCourse destinationExecutionCourse) {
         for (final Grouping grouping : originExecutionCourse.getGroupings()) {
-            for (final StudentGroup studentGroup : grouping.getStudentGroups()) {
+            for (final StudentGroup studentGroup : grouping.getStudentGroupsSet()) {
                 studentGroup.getAttends().clear();
                 studentGroup.delete();
             }
@@ -186,7 +183,7 @@ public class SeperateExecutionCourse {
     }
 
     private static Set<String> getExecutionCourseCodes(ExecutionSemester executionSemester) {
-        List<ExecutionCourse> executionCourses = executionSemester.getAssociatedExecutionCourses();
+        Collection<ExecutionCourse> executionCourses = executionSemester.getAssociatedExecutionCourses();
         return new HashSet<String>(CollectionUtils.collect(executionCourses, new Transformer() {
             @Override
             public Object transform(Object arg0) {

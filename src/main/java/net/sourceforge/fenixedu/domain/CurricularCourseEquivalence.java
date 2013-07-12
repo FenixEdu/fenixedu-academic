@@ -59,7 +59,7 @@ public class CurricularCourseEquivalence extends CurricularCourseEquivalence_Bas
             Collection<CurricularCourse> oldCurricularCourses) {
         int size = oldCurricularCourses.size();
         for (final CurricularCourseEquivalence curricularCourseEquivalence : curricularCourse.getCurricularCourseEquivalences()) {
-            int sizeOld = curricularCourseEquivalence.getOldCurricularCoursesCount();
+            int sizeOld = curricularCourseEquivalence.getOldCurricularCoursesSet().size();
             if ((size == sizeOld)
                     && CollectionUtils.intersection(oldCurricularCourses,
                             curricularCourseEquivalence.getOldCurricularCoursesSet()).size() == size) {
@@ -92,6 +92,7 @@ public class CurricularCourseEquivalence extends CurricularCourseEquivalence_Bas
     public boolean isFrom(DegreeCurricularPlan degreeCurricularPlan) {
         return getDegreeCurricularPlan() == degreeCurricularPlan;
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.CurricularCourse> getOldCurricularCourses() {
         return getOldCurricularCoursesSet();

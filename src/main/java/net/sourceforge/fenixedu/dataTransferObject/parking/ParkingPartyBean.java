@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.dataTransferObject.parking;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Person;
@@ -132,7 +133,7 @@ public class ParkingPartyBean implements FactoryExecutor, Serializable {
         return vehicles;
     }
 
-    public void setVehicles(List<Vehicle> vehicles) {
+    public void setVehicles(Collection<Vehicle> vehicles) {
         if (vehicles != null) {
             List<VehicleBean> vehicleBeanList = new ArrayList<VehicleBean>();
             for (Vehicle vehicle : vehicles) {

@@ -6,7 +6,6 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
-import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -88,7 +87,7 @@ public class EditReimbursementGuide {
 
         // REIMBURSEMENT TRANSACTIONS
         if (newState.equals(ReimbursementGuideState.PAYED)) {
-            List reimbursementGuideEntries = reimbursementGuide.getReimbursementGuideEntries();
+            Collection reimbursementGuideEntries = reimbursementGuide.getReimbursementGuideEntries();
             Iterator iterator = reimbursementGuideEntries.iterator();
             ReimbursementGuideEntry reimbursementGuideEntry = null;
             ReimbursementTransaction reimbursementTransaction = null;

@@ -3,6 +3,7 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -68,7 +69,7 @@ public class AssociateExecutionCourseToCurricularCourseDA extends FenixDispatchA
 
         List infoExecutionCoursesList = null;
         try {
-            infoExecutionCoursesList = ReadExecutionCoursesByExecutionPeriod.run(executionPeriodId);
+            infoExecutionCoursesList = new ArrayList(ReadExecutionCoursesByExecutionPeriod.run(executionPeriodId));
 
         } catch (NonExistingServiceException e) {
             throw new NonExistingActionException(e.getMessage(), mapping.findForward("readAvailableExecutionPeriods"));

@@ -147,7 +147,7 @@ public abstract class Forum extends Forum_Base {
     }
 
     public int getConversationThreadsCount() {
-        return getChildrenCount();
+        return getChildrenSet().size();
     }
 
     @Override

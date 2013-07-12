@@ -64,11 +64,6 @@ abstract public class CandidacyPrecedentDegreeInformation extends CandidacyPrece
     }
 
     @Deprecated
-    public boolean hasSchoolLevel() {
-        return getSchoolLevel() != null;
-    }
-
-    @Deprecated
     public boolean hasCandidacy() {
         return getCandidacy() != null;
     }
@@ -76,11 +71,6 @@ abstract public class CandidacyPrecedentDegreeInformation extends CandidacyPrece
     @Deprecated
     public boolean hasRootDomainObject() {
         return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasOtherSchoolLevel() {
-        return getOtherSchoolLevel() != null;
     }
 
     @Deprecated

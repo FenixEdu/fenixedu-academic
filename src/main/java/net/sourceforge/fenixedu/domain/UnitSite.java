@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Random;
@@ -194,7 +195,7 @@ public class UnitSite extends UnitSite_Base {
     }
 
     public UnitSiteBanner getCurrentBanner() {
-        Collection<UnitSiteBanner> banners = getBanners();
+        List<UnitSiteBanner> banners = new ArrayList<>(getBanners());
 
         if (banners.isEmpty()) {
             return null;

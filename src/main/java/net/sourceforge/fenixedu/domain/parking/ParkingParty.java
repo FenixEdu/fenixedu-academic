@@ -521,7 +521,7 @@ public class ParkingParty extends ParkingParty_Base {
         return 0;
     }
 
-    public static List<ParkingParty> getAll() {
+    public static Collection<ParkingParty> getAll() {
         return RootDomainObject.getInstance().getParkingParties();
     }
 

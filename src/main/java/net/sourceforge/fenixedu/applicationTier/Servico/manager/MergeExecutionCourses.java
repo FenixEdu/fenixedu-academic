@@ -252,7 +252,8 @@ public class MergeExecutionCourses {
 
     private void copyBibliographicReference(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo) {
         for (; !executionCourseFrom.getAssociatedBibliographicReferences().isEmpty(); executionCourseTo
-                .getAssociatedBibliographicReferences().add(executionCourseFrom.getAssociatedBibliographicReferences().iterator().next())) {
+                .getAssociatedBibliographicReferences().add(
+                        executionCourseFrom.getAssociatedBibliographicReferences().iterator().next())) {
             ;
         }
     }
@@ -307,19 +308,19 @@ public class MergeExecutionCourses {
                     throw new FenixServiceException("Unable to merge execution courses. Registration "
                             + attends.getRegistration().getNumber() + " has an enrolment in both.");
                 }
-                for (; !attends.getAssociatedMarks().isEmpty(); otherAttends.addAssociatedMarks(attends.getAssociatedMarks().get(
-                        0))) {
+                for (; !attends.getAssociatedMarks().isEmpty(); otherAttends.addAssociatedMarks(attends.getAssociatedMarks()
+                        .iterator().next())) {
                     ;
                 }
-                for (; !attends.getAllStudentGroups().isEmpty(); otherAttends.addStudentGroups(attends.getAllStudentGroups().get(
-                        0))) {
+                for (; !attends.getAllStudentGroups().isEmpty(); otherAttends.addStudentGroups(attends.getAllStudentGroups()
+                        .iterator().next())) {
                     ;
                 }
                 attends.delete();
             }
         }
 
-        final Iterator<Attends> associatedAttendsFromDestination = executionCourseTo.getAttendsIterator();
+        final Iterator<Attends> associatedAttendsFromDestination = executionCourseTo.getAttends().iterator();
         final Map<String, Attends> alreadyAttendingDestination = new HashMap<String, Attends>();
         while (associatedAttendsFromDestination.hasNext()) {
             Attends attend = associatedAttendsFromDestination.next();

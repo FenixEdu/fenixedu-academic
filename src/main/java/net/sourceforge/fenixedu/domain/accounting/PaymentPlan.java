@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -69,11 +68,11 @@ abstract public class PaymentPlan extends PaymentPlan_Base {
     }
 
     public Installment getLastInstallment() {
-        return (getInstallmentsCount() == 0) ? null : Collections.max(getInstallmentsSet(), Installment.COMPARATOR_BY_ORDER);
+        return (getInstallmentsSet().size() == 0) ? null : Collections.max(getInstallmentsSet(), Installment.COMPARATOR_BY_ORDER);
     }
 
     public Installment getFirstInstallment() {
-        return (getInstallmentsCount() == 0) ? null : Collections.min(getInstallmentsSet(), Installment.COMPARATOR_BY_ORDER);
+        return (getInstallmentsSet().size() == 0) ? null : Collections.min(getInstallmentsSet(), Installment.COMPARATOR_BY_ORDER);
     }
 
     public int getLastInstallmentOrder() {
@@ -87,18 +86,8 @@ abstract public class PaymentPlan extends PaymentPlan_Base {
     }
 
     @Override
-    public List<Installment> getInstallments() {
-        return Collections.unmodifiableList(super.getInstallments());
-    }
-
-    @Override
     public Set<Installment> getInstallmentsSet() {
         return Collections.unmodifiableSet(super.getInstallmentsSet());
-    }
-
-    @Override
-    public Iterator<Installment> getInstallmentsIterator() {
-        return getInstallmentsSet().iterator();
     }
 
     @Override
@@ -393,7 +382,7 @@ abstract public class PaymentPlan extends PaymentPlan_Base {
     }
 
     public boolean hasSingleInstallment() {
-        return getInstallmentsCount() == 1;
+        return getInstallmentsSet().size() == 1;
     }
 
     @Deprecated

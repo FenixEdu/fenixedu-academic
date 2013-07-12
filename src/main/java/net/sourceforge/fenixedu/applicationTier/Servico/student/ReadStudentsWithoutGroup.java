@@ -46,7 +46,7 @@ public class ReadStudentsWithoutGroup {
             throw new ExistingServiceException();
         }
 
-        final List allStudentsGroups = grouping.getStudentGroups();
+        final Collection allStudentsGroups = grouping.getStudentGroupsSet();
 
         final Integer groupNumber = grouping.findMaxGroupNumber() + 1;
 

@@ -73,7 +73,7 @@ public class CopyTSDProcessPhaseService {
     }
 
     private Map<ExecutionSemester, ExecutionSemester> getExecutionPeriodTranslationMap(
-            List<ExecutionSemester> oldExecutionPeriodList, List<ExecutionSemester> newExecutionPeriodList) {
+            Collection<ExecutionSemester> oldExecutionPeriodList, Collection<ExecutionSemester> newExecutionPeriodList) {
         Map<ExecutionSemester, ExecutionSemester> translationMap = new HashMap<ExecutionSemester, ExecutionSemester>();
 
         for (ExecutionSemester oldExecutionPeriod : oldExecutionPeriodList) {
@@ -294,7 +294,7 @@ public class CopyTSDProcessPhaseService {
         return newTeacherServiceDistribution;
     }
 
-    private List<TSDTeacher> getNewTSDTeacherListFromMap(List<TSDTeacher> tsdTeachers,
+    private List<TSDTeacher> getNewTSDTeacherListFromMap(Collection<TSDTeacher> tsdTeachers,
             Map<TSDTeacher, TSDTeacher> oldAndNewTSDTeacherMap) {
         List<TSDTeacher> newTSDTeacherList = new ArrayList<TSDTeacher>();
 

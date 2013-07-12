@@ -27,12 +27,9 @@ public class ReadPrecedencesFromDegreeCurricularPlan {
 
         DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
 
-        List curricularCourses = degreeCurricularPlan.getCurricularCourses();
+        Collection<CurricularCourse> curricularCourses = degreeCurricularPlan.getCurricularCourses();
 
-        int size = curricularCourses.size();
-
-        for (int i = 0; i < size; i++) {
-            CurricularCourse curricularCourse = (CurricularCourse) curricularCourses.get(i);
+        for (CurricularCourse curricularCourse : curricularCourses) {
             Collection precedences = curricularCourse.getPrecedences();
             putInMap(finalListOfInfoPrecedences, curricularCourse, precedences);
         }
@@ -45,20 +42,17 @@ public class ReadPrecedencesFromDegreeCurricularPlan {
         if (!precedences.isEmpty()) {
             InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
 
-            List infoPrecedences = clone(precedences);
+            List<InfoPrecedence> infoPrecedences = clone(precedences);
 
             finalListOfInfoPrecedences.put(infoCurricularCourse, infoPrecedences);
         }
     }
 
-    private static List clone(Collection precedences) {
+    private static List<InfoPrecedence> clone(Collection<Precedence> precedences) {
 
-        List result = new ArrayList();
+        List<InfoPrecedence> result = new ArrayList<InfoPrecedence>();
 
-        int size = precedences.size();
-
-        for (int i = 0; i < size; i++) {
-            Precedence precedence = (Precedence) precedences.get(i);
+        for (Precedence precedence : precedences) {
             InfoPrecedence infoPrecedence = InfoPrecedenceWithRestrictions.newInfoFromDomain(precedence);
             result.add(infoPrecedence);
         }

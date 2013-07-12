@@ -72,7 +72,7 @@ public class ImprovementOfApprovedEnrolmentPR extends ImprovementOfApprovedEnrol
         final boolean hasPenalty = hasPenalty(event, when);
 
         Money result = Money.ZERO;
-        for (int i = 0; i < improvementOfApprovedEnrolmentEvent.getImprovementEnrolmentEvaluationsCount(); i++) {
+        for (int i = 0; i < improvementOfApprovedEnrolmentEvent.getImprovementEnrolmentEvaluationsSet().size(); i++) {
             result = result.add(hasPenalty ? getFixedAmountPenalty() : getFixedAmount());
         }
 

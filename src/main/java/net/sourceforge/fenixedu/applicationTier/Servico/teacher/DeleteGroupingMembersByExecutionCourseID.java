@@ -66,7 +66,7 @@ public class DeleteGroupingMembersByExecutionCourseID {
                 }
 
                 boolean found = false;
-                Iterator iterStudentsGroups = grouping.getStudentGroups().iterator();
+                Iterator iterStudentsGroups = grouping.getStudentGroupsSet().iterator();
                 while (iterStudentsGroups.hasNext() && !found) {
                     final StudentGroup studentGroup = (StudentGroup) iterStudentsGroups.next();
                     if (studentGroup != null) {

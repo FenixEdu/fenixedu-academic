@@ -58,7 +58,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
     protected PhdIndividualProgramProcess getProcess(HttpServletRequest request) {
         final Person person = getLoggedPerson(request);
         PhdIndividualProgramProcess process = super.getProcess(request);
-        if ((process == null) && (person.getPhdIndividualProgramProcessesCount() == 1)) {
+        if ((process == null) && (person.getPhdIndividualProgramProcessesSet().size() == 1)) {
             process = person.getPhdIndividualProgramProcesses().iterator().next();
         }
         return process;

@@ -115,11 +115,6 @@ public class ResearchResultDocumentFile extends ResearchResultDocumentFile_Base 
         throw new DomainException("error.researcher.ResultDocumentFile.call", "setResult");
     }
 
-    @Override
-    public void removeResult() {
-        throw new DomainException("error.researcher.ResultDocumentFile.call", "removeResult");
-    }
-
     @Deprecated
     public boolean hasResult() {
         return getResult() != null;

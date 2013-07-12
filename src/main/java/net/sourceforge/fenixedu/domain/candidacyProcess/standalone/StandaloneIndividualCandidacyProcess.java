@@ -85,7 +85,7 @@ public class StandaloneIndividualCandidacyProcess extends StandaloneIndividualCa
 
     public List<CurricularCourseByExecutionSemesterBean> getCurricularCourseBeans() {
         final List<CurricularCourseByExecutionSemesterBean> result =
-                new ArrayList<CurricularCourseByExecutionSemesterBean>(getCandidacy().getCurricularCoursesCount());
+                new ArrayList<CurricularCourseByExecutionSemesterBean>(getCandidacy().getCurricularCoursesSet().size());
         for (final CurricularCourse curricularCourse : getCandidacy().getCurricularCoursesSet()) {
             result.add(new CurricularCourseByExecutionSemesterBean(curricularCourse, getCandidacyExecutionInterval()));
         }

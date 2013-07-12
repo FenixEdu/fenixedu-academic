@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.departmentMember;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -214,7 +215,7 @@ public abstract class ViewQUCResultsDA extends FenixDispatchAction {
             for (Professorship professorship : teacher.getProfessorships(executionSemester)) {
                 if (professorship.hasAnyInquiryResults()) {
                     if (allTeachers || professorship.hasResultsToImprove()) {
-                        List<InquiryResult> professorshipResults = professorship.getInquiryResults();
+                        Collection<InquiryResult> professorshipResults = professorship.getInquiryResults();
                         if (!professorshipResults.isEmpty()) {
                             for (ShiftType shiftType : getShiftTypes(professorshipResults)) {
                                 List<InquiryResult> teacherShiftResults = professorship.getInquiryResults(shiftType);
@@ -267,7 +268,7 @@ public abstract class ViewQUCResultsDA extends FenixDispatchAction {
         return executionSemester;
     }
 
-    private Set<ShiftType> getShiftTypes(List<InquiryResult> professorshipResults) {
+    private Set<ShiftType> getShiftTypes(Collection<InquiryResult> professorshipResults) {
         Set<ShiftType> shiftTypes = new HashSet<ShiftType>();
         for (InquiryResult inquiryResult : professorshipResults) {
             shiftTypes.add(inquiryResult.getShiftType());

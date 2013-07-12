@@ -217,7 +217,7 @@ public class Department extends Department_Base {
     }
 
     @SuppressWarnings("unchecked")
-    public List<TSDProcess> getTSDProcessesByExecutionPeriods(final List<ExecutionSemester> executionPeriodList) {
+    public List<TSDProcess> getTSDProcessesByExecutionPeriods(final Collection<ExecutionSemester> executionPeriodList) {
         return (List<TSDProcess>) CollectionUtils.select(getTSDProcesses(), new Predicate() {
             @Override
             public boolean evaluate(Object arg0) {
@@ -383,7 +383,7 @@ public class Department extends Department_Base {
     public Integer getCompetenceCourseInformationChangeRequestsCount() {
         int count = 0;
         for (CompetenceCourse course : getDepartmentUnit().getCompetenceCourses()) {
-            count += course.getCompetenceCourseInformationChangeRequestsCount();
+            count += course.getCompetenceCourseInformationChangeRequestsSet().size();
         }
 
         return count;
@@ -418,7 +418,7 @@ public class Department extends Department_Base {
         return null;
     }
 
-    private DepartmentForum getForumFromNodes(List<Node> siteNodes) {
+    private DepartmentForum getForumFromNodes(Collection<Node> siteNodes) {
         for (Node node : siteNodes) {
             if (node.getChild() instanceof DepartmentForum) {
                 return (DepartmentForum) node.getChild();

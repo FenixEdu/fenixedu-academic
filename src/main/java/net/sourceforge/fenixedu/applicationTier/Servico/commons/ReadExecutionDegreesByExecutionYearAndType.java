@@ -5,6 +5,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -37,7 +38,7 @@ public class ReadExecutionDegreesByExecutionYearAndType {
     public static List run(final DegreeType typeOfCourse) {
 
         final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
-        final List<ExecutionDegree> executionDegrees = executionYear.getExecutionDegrees();
+        final Collection<ExecutionDegree> executionDegrees = executionYear.getExecutionDegrees();
         final List<InfoExecutionDegree> infoExecutionDegrees = new ArrayList<InfoExecutionDegree>();
         for (final ExecutionDegree executionDegree : executionDegrees) {
             final Degree degree = executionDegree.getDegreeCurricularPlan().getDegree();

@@ -34,8 +34,8 @@ public class PersonProfessionalData extends PersonProfessionalData_Base {
     }
 
     public GiafProfessionalData getGiafProfessionalData() {
-        if (getGiafProfessionalDatasCount() == 1) {
-            return getGiafProfessionalDatasIterator().next();
+        if (getGiafProfessionalDatasSet().size() == 1) {
+            return getGiafProfessionalDatasSet().iterator().next();
         }
         throw new DomainException("more.than.one.GiafProfessionalData");
     }

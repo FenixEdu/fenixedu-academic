@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.teacherServiceDistribution;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -60,8 +61,8 @@ public class TSDProcess extends TSDProcess_Base {
         return new TSDProcessPhase(this, tsdProcessPhaseName, getLastTSDProcessPhase(), null, TSDProcessPhaseStatus.OPEN);
     }
 
-    public Set<CompetenceCourse> getCompetenceCoursesByExecutionPeriodsAndDepartment(List<ExecutionSemester> executionSemesters,
-            Department department) {
+    public Set<CompetenceCourse> getCompetenceCoursesByExecutionPeriodsAndDepartment(
+            Collection<ExecutionSemester> executionSemesters, Department department) {
         Set<CompetenceCourse> returnCompetenceCourseSet = new HashSet<CompetenceCourse>();
         Set<CompetenceCourse> competenceCourseSet = new HashSet<CompetenceCourse>(department.getCompetenceCourses());
 
@@ -79,7 +80,7 @@ public class TSDProcess extends TSDProcess_Base {
         return returnCompetenceCourseSet;
     }
 
-    public Set<CompetenceCourse> getCompetenceCoursesByExecutionPeriods(List<ExecutionSemester> executionSemesters) {
+    public Set<CompetenceCourse> getCompetenceCoursesByExecutionPeriods(Collection<ExecutionSemester> executionSemesters) {
         return getCompetenceCoursesByExecutionPeriodsAndDepartment(executionSemesters, getDepartment());
     }
 

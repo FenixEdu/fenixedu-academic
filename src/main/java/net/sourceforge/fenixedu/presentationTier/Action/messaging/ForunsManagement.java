@@ -95,7 +95,7 @@ public abstract class ForunsManagement extends FenixDispatchAction {
         request.setAttribute("thread", thread);
 
         request.setAttribute("pageNumber", pageNumber);
-        request.setAttribute("pageNumbers", computeNumberOfPages(DEFAULT_PAGE_SIZE, thread.getChildrenCount()));
+        request.setAttribute("pageNumbers", computeNumberOfPages(DEFAULT_PAGE_SIZE, thread.getChildrenSet().size()));
         request.setAttribute("messages", getContentToDisplay(thread.getChildren(), pageNumber, DEFAULT_PAGE_SIZE));
 
         Person loggedPerson = getLoggedPerson(request);
@@ -236,7 +236,7 @@ public abstract class ForunsManagement extends FenixDispatchAction {
 
         request.setAttribute("conversationThreads", getContentToDisplay(forum.getChildren(), pageNumber, DEFAULT_PAGE_SIZE));
 
-        request.setAttribute("pageNumbers", computeNumberOfPages(DEFAULT_PAGE_SIZE, forum.getChildrenCount()));
+        request.setAttribute("pageNumbers", computeNumberOfPages(DEFAULT_PAGE_SIZE, forum.getChildrenSet().size()));
         Person loggedPerson = getLoggedPerson(request);
         request.setAttribute("receivingMessagesByEmail", forum.isPersonReceivingMessagesByEmail(loggedPerson));
 

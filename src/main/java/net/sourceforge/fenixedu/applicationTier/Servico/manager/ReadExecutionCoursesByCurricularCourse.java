@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -20,7 +21,7 @@ public class ReadExecutionCoursesByCurricularCourse {
             throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
         }
 
-        List<ExecutionCourse> executionCourses = curricularCourse.getAssociatedExecutionCourses();
+        Collection<ExecutionCourse> executionCourses = curricularCourse.getAssociatedExecutionCourses();
 
         List<InfoExecutionCourse> result = new ArrayList<InfoExecutionCourse>(executionCourses.size());
         for (ExecutionCourse executionCourse : executionCourses) {

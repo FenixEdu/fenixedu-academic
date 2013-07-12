@@ -67,7 +67,7 @@ public class AlumniInformationAction extends FenixDispatchAction {
 
         Map<Long, Integer> registrationsByDay = new TreeMap<Long, Integer>();
 
-        int totalAlumniCount = RootDomainObject.getInstance().getAlumnisCount();
+        int totalAlumniCount = RootDomainObject.getInstance().getAlumnisSet().size();
 
         int newAlumniCount = 0;
         int registeredAlumniCount = 0;
@@ -88,7 +88,7 @@ public class AlumniInformationAction extends FenixDispatchAction {
             }
         }
 
-        int jobCount = RootDomainObject.getInstance().getJobsCount();
+        int jobCount = RootDomainObject.getInstance().getJobsSet().size();
 
         int formationCount = 0;
         for (Qualification q : RootDomainObject.getInstance().getQualifications()) {
@@ -98,7 +98,7 @@ public class AlumniInformationAction extends FenixDispatchAction {
         }
 
         request.setAttribute("chartData", createJsonArray(registrationsByDay));
-        request.setAttribute("statistics1", Role.getRoleByRoleType(RoleType.ALUMNI).getAssociatedPersonsCount());
+        request.setAttribute("statistics1", Role.getRoleByRoleType(RoleType.ALUMNI).getAssociatedPersonsSet().size());
         request.setAttribute("statistics2", totalAlumniCount);
         request.setAttribute("statistics3", newAlumniCount);
         request.setAttribute("statistics4", registeredAlumniCount);
@@ -368,7 +368,7 @@ public class AlumniInformationAction extends FenixDispatchAction {
     }
 
     public static class AlumniSearchResultItemBean implements java.io.Serializable {
-        private Registration registration;
+        private final Registration registration;
 
         public AlumniSearchResultItemBean(final Registration registration) {
             this.registration = registration;

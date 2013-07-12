@@ -387,10 +387,6 @@ public class SIBSOutgoingPaymentFile extends SIBSOutgoingPaymentFile_Base {
                                 continue;
                             }
 
-                            if (paymentCode.isDeleted()) {
-                                continue;
-                            }
-
                             if (paymentCode.isInvalid()) {
                                 continue;
                             }

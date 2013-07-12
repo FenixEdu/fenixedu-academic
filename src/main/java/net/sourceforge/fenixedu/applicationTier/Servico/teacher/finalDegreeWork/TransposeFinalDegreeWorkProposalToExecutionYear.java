@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.finalDegreeWork;
 
+import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * Service that transposes the given proposal to another execution year.
@@ -44,15 +45,7 @@ public class TransposeFinalDegreeWorkProposalToExecutionYear {
     @Atomic
     public static Proposal run(String originalProposalOID, ExecutionYear targetExecutionYear) throws FenixServiceException {
 
-        Long originalProposalOIDLong;
-
-        try {
-            originalProposalOIDLong = Long.parseLong(originalProposalOID);
-        } catch (NumberFormatException e) {
-            throw new FenixServiceException("Invalid OID");
-        }
-
-        Proposal originalProposal = Proposal.fromOID(originalProposalOIDLong);
+        Proposal originalProposal = FenixFramework.getDomainObject(originalProposalOID);
 
         if (originalProposal == null || targetExecutionYear == null) {
             throw new FenixServiceException("The arguments provided were invalid!");
@@ -101,21 +94,18 @@ public class TransposeFinalDegreeWorkProposalToExecutionYear {
         // TODO Get information by other means, instead of just returning an
         // error...
 
-        if (originalScheduleing.getExecutionDegreesCount() != newScheduleing.getExecutionDegreesCount()) {
+        if (originalScheduleing.getExecutionDegrees().size() != newScheduleing.getExecutionDegrees().size()) {
             throw new FenixServiceException("The target Scheduling is not compatible with the source Scheduling");
         }
 
-        List<ExecutionDegree> newDegrees = newScheduleing.getExecutionDegrees();
+        Collection<ExecutionDegree> newDegrees = newScheduleing.getExecutionDegrees();
 
-        for (Iterator<ExecutionDegree> originalIterator = originalScheduleing.getExecutionDegreesIterator(); originalIterator
-                .hasNext();) {
-
-            ExecutionDegree originalDegree = originalIterator.next();
+        for (ExecutionDegree originalDegree : originalScheduleing.getExecutionDegrees()) {
 
             boolean found = false;
 
-            for (int i = 0; i < newDegrees.size(); i++) {
-                if (newDegrees.get(i).getDegreeCurricularPlan().equals(originalDegree.getDegreeCurricularPlan())) {
+            for (ExecutionDegree newDegree : newDegrees) {
+                if (newDegree.getDegreeCurricularPlan().equals(originalDegree.getDegreeCurricularPlan())) {
                     found = true;
                     break;
                 }
@@ -215,9 +205,7 @@ public class TransposeFinalDegreeWorkProposalToExecutionYear {
         newWorkGroup.setExecutionDegree(ExecutionDegree.getByDegreeCurricularPlanAndExecutionYear(originalGroup
                 .getExecutionDegree().getDegreeCurricularPlan(), targetExecutionYear));
 
-        for (Iterator<GroupProposal> proposalIterator = originalGroup.getGroupProposalsIterator(); proposalIterator.hasNext();) {
-            GroupProposal proposal = proposalIterator.next();
-
+        for (GroupProposal proposal : originalGroup.getGroupProposalsSet()) {
             if (proposal.getFinalDegreeWorkProposal() == originalProposal) {
 
                 GroupProposal newGroupProposal = new GroupProposal();
@@ -228,9 +216,7 @@ public class TransposeFinalDegreeWorkProposalToExecutionYear {
             }
         }
 
-        for (Iterator<GroupStudent> studentsIterator = originalGroup.getGroupStudentsIterator(); studentsIterator.hasNext();) {
-            GroupStudent groupStudent = studentsIterator.next();
-
+        for (GroupStudent groupStudent : originalGroup.getGroupStudentsSet()) {
             if (groupStudent.getFinalDegreeWorkProposalConfirmation() == originalProposal) {
 
                 GroupStudent newStudent = new GroupStudent();

@@ -49,7 +49,7 @@ public class NewModelGroup extends NewModelGroup_Base {
             testModel.unselectRestriction(atomicRestriction);
         }
 
-        while (this.getChildRestrictionsCount() > 0) {
+        while (this.getChildRestrictionsSet().size() > 0) {
             this.getChildRestrictions().iterator().next().delete();
         }
 
@@ -59,7 +59,7 @@ public class NewModelGroup extends NewModelGroup_Base {
     public void deleteAsBag() {
         this.getTestModel().setBag(null);
 
-        while (this.getChildRestrictionsCount() > 0) {
+        while (this.getChildRestrictionsSet().size() > 0) {
             this.getChildRestrictions().iterator().next().delete();
         }
 

@@ -283,7 +283,7 @@ public class AlumniReportFile extends AlumniReportFile_Base {
         // "DATA_FIM", "FORMA_COLOCACAO", "TIPO_CONTRATO", "SALARIO",
         // "TIPO_SALARIO", "DATA_ALTERACAO", "DATA_REGISTO"
         final Row row = sheet.addRow();
-        row.setCell(String.valueOf(job.getOID()));
+        row.setCell(job.getExternalId());
         row.setCell(alumniName);
         row.setCell(studentNumber);
         row.setCell(job.getEmployerName());
@@ -310,7 +310,7 @@ public class AlumniReportFile extends AlumniReportFile_Base {
         // "AREA_EDUCATIVA", "INICIO", "CONCLUSAO", "CREDITOS_ECTS",
         // "NUMERO_HORAS", "DATA_ALTERACAO", "DATA_REGISTO"
         final Row row = sheet.addRow();
-        row.setCell(String.valueOf(formation.getOID()));
+        row.setCell(formation.getExternalId());
         row.setCell(alumniName);
         row.setCell(studentNumber);
         row.setCell(formation.getFormationType() != null ? eBundle.getString(formation.getFormationType().getQualifiedName()) : NOT_AVAILABLE);
@@ -367,16 +367,6 @@ public class AlumniReportFile extends AlumniReportFile_Base {
 
     public static Boolean canRequestReport() {
         return readPendingJobs().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasOnlyRegisteredAlumni() {
-        return getOnlyRegisteredAlumni() != null;
-    }
-
-    @Deprecated
-    public boolean hasFullReport() {
-        return getFullReport() != null;
     }
 
     @Deprecated

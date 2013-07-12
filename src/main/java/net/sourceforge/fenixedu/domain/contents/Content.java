@@ -90,11 +90,11 @@ public abstract class Content extends Content_Base {
      * This graph is used as a simple tree, anyway.
      */
     public Node getUniqueParentNode() {
-        if (getParentsCount() > 1) {
+        if (getParentsSet().size() > 1) {
             logger.warn("requesting unique parent from content with more than one parent: " + this);
         }
 
-        return hasAnyParents() ? getParentsIterator().next() : null;
+        return hasAnyParents() ? getParentsSet().iterator().next() : null;
     }
 
     public Container getUniqueParentContainer() {

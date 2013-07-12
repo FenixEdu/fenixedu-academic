@@ -5,6 +5,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -39,7 +40,7 @@ public class PrepareCreateStudentGroup {
             throw new ExistingServiceException();
         }
 
-        final List<StudentGroup> allStudentsGroups = grouping.getStudentGroups();
+        final Collection<StudentGroup> allStudentsGroups = grouping.getStudentGroupsSet();
         final List<Attends> attendsGrouping = new ArrayList(grouping.getAttends());
         for (final StudentGroup studentGroup : allStudentsGroups) {
             for (Attends attend : studentGroup.getAttends()) {

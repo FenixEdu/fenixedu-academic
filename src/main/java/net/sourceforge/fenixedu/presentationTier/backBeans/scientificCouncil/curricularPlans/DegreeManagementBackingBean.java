@@ -452,7 +452,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
         }
 
         // test if the list is already filled, return if so
-        if (this.officialPublicationsBeanPrettyPrints.size() == degree.getOfficialPublicationCount()) {
+        if (this.officialPublicationsBeanPrettyPrints.size() == degree.getOfficialPublicationSet().size()) {
             return this.officialPublicationsBeanPrettyPrints;
         }
 
@@ -681,7 +681,8 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
 
         public DegreeOfficialPublication getDegreeOfficialPublication() {
             this.degreeOfficialPublication =
-                    (this.getOfficialPubId() == null ? null : (DegreeOfficialPublication) FenixFramework.getDomainObject(getOfficialPubId()));
+                    (this.getOfficialPubId() == null ? null : (DegreeOfficialPublication) FenixFramework
+                            .getDomainObject(getOfficialPubId()));
 
             return this.degreeOfficialPublication;
         }
@@ -731,7 +732,8 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
 
         public DegreeSpecializationArea getSpecializationAreaToDelete() {
             this.specializationAreaToDelete =
-                    (DegreeSpecializationArea) (getSpecializationIdToDelete() == null ? null : FenixFramework.getDomainObject(getSpecializationIdToDelete()));
+                    (DegreeSpecializationArea) (getSpecializationIdToDelete() == null ? null : FenixFramework
+                            .getDomainObject(getSpecializationIdToDelete()));
 
             if (getDegreeOfficialPublicationGoBack() == null && this.specializationAreaToDelete != null) {
                 setDegreeOfficialPublicationGoBack(this.specializationAreaToDelete.getOfficialPublication());

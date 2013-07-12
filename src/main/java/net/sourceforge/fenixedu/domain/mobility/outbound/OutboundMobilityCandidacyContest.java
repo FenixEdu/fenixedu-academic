@@ -144,7 +144,7 @@ public class OutboundMobilityCandidacyContest extends OutboundMobilityCandidacyC
         //        When the relation is initialized but never traversed, the consistency predicate always
         //        fails. Forcing a traversal will resolve this issue. The bug has already been solved in
         //        the framework, but the framework has not yet been updated on this project.
-        getExecutionDegreeCount();
+        getExecutionDegreeSet().size();
     }
 
     @Atomic
@@ -158,7 +158,7 @@ public class OutboundMobilityCandidacyContest extends OutboundMobilityCandidacyC
         setOutboundMobilityCandidacyContestGroup(null);
         setOutboundMobilityCandidacyPeriod(null);
         setRootDomainObject(null);
-        if (mobilityGroup != null && mobilityGroup.getOutboundMobilityCandidacyContestCount() == 0) {
+        if (mobilityGroup != null && mobilityGroup.getOutboundMobilityCandidacyContestSet().size() == 0) {
             mobilityGroup.delete();
         }
         deleteDomainObject();

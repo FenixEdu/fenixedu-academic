@@ -3,6 +3,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.commons.curriculumHistoric;
 
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.AcademicCurriculumsViewAuthorization;
@@ -35,7 +36,7 @@ public class ReadActiveDegreeCurricularPlansByExecutionYear {
     protected List run(String executionYearID) throws FenixServiceException {
         ExecutionYear executionYear = FenixFramework.getDomainObject(executionYearID);
 
-        List executionDegrees = null;
+        Collection executionDegrees = null;
         if (executionYear != null) {
             executionDegrees = executionYear.getExecutionDegrees();
         }

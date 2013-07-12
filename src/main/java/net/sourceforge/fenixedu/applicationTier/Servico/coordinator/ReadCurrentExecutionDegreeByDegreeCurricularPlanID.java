@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 
-import java.util.List;
+import java.util.Collection;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.CoordinatorAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ManagerAuthorizationFilter;
@@ -22,7 +22,7 @@ public class ReadCurrentExecutionDegreeByDegreeCurricularPlanID {
 
         final DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
 
-        final List executionDegrees = degreeCurricularPlan.getExecutionDegrees();
+        final Collection executionDegrees = degreeCurricularPlan.getExecutionDegrees();
         final ExecutionDegree executionDegree = (ExecutionDegree) CollectionUtils.find(executionDegrees, new Predicate() {
             @Override
             public boolean evaluate(Object arg0) {

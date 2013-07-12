@@ -3,7 +3,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
-import java.util.List;
+import java.util.Collection;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
@@ -40,10 +40,9 @@ public class ConfirmAttributionOfFinalDegreeWork {
                     throw new NoAttributionToConfirmException();
                 }
 
-                List groupStudents = group.getGroupStudents();
+                Collection<GroupStudent> groupStudents = group.getGroupStudents();
                 if (groupStudents != null && !groupStudents.isEmpty()) {
-                    for (int i = 0; i < groupStudents.size(); i++) {
-                        GroupStudent groupStudent = (GroupStudent) groupStudents.get(i);
+                    for (GroupStudent groupStudent : groupStudents) {
                         if (groupStudent != null && groupStudent.getRegistration().getPerson().hasUsername(username)) {
                             groupStudent.setFinalDegreeWorkProposalConfirmation(groupProposal.getFinalDegreeWorkProposal());
                         }

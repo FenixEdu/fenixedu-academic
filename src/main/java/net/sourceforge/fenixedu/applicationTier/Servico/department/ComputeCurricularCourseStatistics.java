@@ -33,7 +33,7 @@ public class ComputeCurricularCourseStatistics {
 
         ExecutionYear executionYear = FenixFramework.getDomainObject(executionYearID);
         DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
-        List<CurricularCourse> curricularCourses = degreeCurricularPlan.getCurricularCourses();
+        Collection<CurricularCourse> curricularCourses = degreeCurricularPlan.getCurricularCourses();
 
         Formatter result = new Formatter();
 

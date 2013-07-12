@@ -37,16 +37,16 @@ public class MobilityApplicationPeriod extends MobilityApplicationPeriod_Base {
     }
 
     public void delete() {
-        if (getMobilityQuotasCount() > 0) {
+        if (getMobilityQuotas().size() > 0) {
             throw new DomainException("error.mobility.application.period.cant.be.deleted.it.has.defined.quotas");
         }
-        if (getCandidacyProcessesCount() > 0) {
+        if (getCandidacyProcesses().size() > 0) {
             throw new DomainException("error.mobility.application.period.cant.be.deleted.it.has.attached.process");
         }
-        if (getEmailTemplatesCount() > 0) {
+        if (getEmailTemplates().size() > 0) {
             throw new DomainException("error.mobility.application.period.cant.be.deleted.it.has.attached.email.templates");
         }
-        if (getErasmusVacancyCount() > 0) {
+        if (getErasmusVacancy().size() > 0) {
             throw new DomainException("error.mobility.application.period.cant.be.deleted.it.has.attached.erasmus.vacancies");
         }
         if (getExecutionInterval() != null) {
@@ -211,7 +211,7 @@ public class MobilityApplicationPeriod extends MobilityApplicationPeriod_Base {
     public Set<MobilityProgram> getMobilityPrograms() {
         Set<MobilityProgram> programs = new HashSet<MobilityProgram>();
 
-        List<MobilityQuota> mobilityQuotas = getMobilityQuotas();
+        Collection<MobilityQuota> mobilityQuotas = getMobilityQuotas();
 
         for (MobilityQuota mobilityQuota : mobilityQuotas) {
             programs.add(mobilityQuota.getMobilityAgreement().getMobilityProgram());

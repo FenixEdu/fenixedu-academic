@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.teacherServiceDistribution;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -24,7 +25,7 @@ public class TSDVirtualCourseGroup extends TSDVirtualCourseGroup_Base {
     }
 
     public TSDVirtualCourseGroup(TeacherServiceDistribution tsd, String name, ExecutionSemester executionSemester,
-            List<ShiftType> lecturedShiftTypes, List<DegreeCurricularPlan> plansList) {
+            List<ShiftType> lecturedShiftTypes, Collection<DegreeCurricularPlan> plansList) {
         this(tsd, name, executionSemester);
 
         if (plansList != null) {

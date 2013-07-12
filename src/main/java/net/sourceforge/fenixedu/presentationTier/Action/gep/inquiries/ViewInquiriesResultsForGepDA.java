@@ -81,7 +81,7 @@ public class ViewInquiriesResultsForGepDA extends ViewInquiriesResultsDA {
 
     public ActionForward showOthersTeacherCourses(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        Professorship professorship = AbstractDomainObject.fromOID(getLongFromRequest(request, "professorshipID"));
+        Professorship professorship = FenixFramework.getDomainObject(getStringFromRequest(request, "professorshipID"));
         Set<ExecutionCourse> executionCourses = new HashSet<ExecutionCourse>();
         ExecutionSemester executionSemester = professorship.getExecutionCourse().getExecutionPeriod();
         for (Professorship anotherProfessorship : professorship.getPerson().getProfessorships(executionSemester)) {

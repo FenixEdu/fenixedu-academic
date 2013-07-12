@@ -265,7 +265,7 @@ public class Message extends Message_Base {
     }
 
     protected String[] getReplyToAddresses(final Person person) {
-        final String[] replyToAddresses = new String[getReplyTosCount()];
+        final String[] replyToAddresses = new String[getReplyTosSet().size()];
         int i = 0;
         for (final ReplyTo replyTo : getReplyTosSet()) {
             replyToAddresses[i++] = replyTo.getReplyToAddress(person);

@@ -50,7 +50,7 @@ public class ExplicitOrderNode extends ExplicitOrderNode_Base {
     }
 
     protected Integer getOrderFor(Container parent) {
-        Node max = parent.getChildrenCount() == 0 ? null : Collections.max(parent.getChildren());
+        Node max = parent.getChildrenSet().size() == 0 ? null : Collections.max(parent.getChildren());
 
         return max == null ? 0 : ((ExplicitOrderNode) max).getNodeOrder() + 1;
     }

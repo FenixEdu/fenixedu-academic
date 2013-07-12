@@ -190,7 +190,7 @@ public class SummariesControlAction extends FenixDispatchAction {
     }
 
     private List<DetailSummaryElement> getExecutionCourseResume(final ExecutionSemester executionSemester,
-            List<Professorship> professorships) {
+            Collection<Professorship> professorships) {
         List<DetailSummaryElement> allListElements = new ArrayList<DetailSummaryElement>();
         LocalDate today = new LocalDate();
         LocalDate oneWeekBeforeToday = today.minusDays(8);
@@ -242,7 +242,7 @@ public class SummariesControlAction extends FenixDispatchAction {
     }
 
     private void setAllDepartmentsSummaryResume(HttpServletRequest request, String executionPeriodOID)
-            throws  FenixServiceException {
+            throws FenixServiceException {
 
         final ExecutionSemester executionSemester = FenixFramework.getDomainObject(executionPeriodOID);
 
@@ -471,7 +471,7 @@ public class SummariesControlAction extends FenixDispatchAction {
         return departments;
     }
 
-    protected void readAndSaveAllDepartments(HttpServletRequest request) throws  FenixServiceException {
+    protected void readAndSaveAllDepartments(HttpServletRequest request) throws FenixServiceException {
         Collection<Department> allDepartments = rootDomainObject.getDepartments();
         List<LabelValueBean> departments = getAllDepartments(allDepartments);
         request.setAttribute("allDepartments", allDepartments);

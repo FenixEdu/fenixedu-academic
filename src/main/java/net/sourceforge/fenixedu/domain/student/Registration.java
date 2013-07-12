@@ -373,7 +373,7 @@ public class Registration extends Registration_Base {
     }
 
     private void checkRulesToDelete() {
-        if (getDfaRegistrationEventsCount() > 0) {
+        if (getDfaRegistrationEventsSet().size() > 0) {
             throw new DomainException("error.student.Registration.cannot.delete.because.is.associated.to.dfa.registration.event");
         }
     }
@@ -398,14 +398,14 @@ public class Registration extends Registration_Base {
 
     public List<StudentCurricularPlan> getSortedStudentCurricularPlans() {
         final ArrayList<StudentCurricularPlan> sortedStudentCurricularPlans =
-                new ArrayList<StudentCurricularPlan>(super.getStudentCurricularPlans());
+                new ArrayList<StudentCurricularPlan>(super.getStudentCurricularPlansSet());
         Collections.sort(sortedStudentCurricularPlans, StudentCurricularPlan.STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_START_DATE);
         return sortedStudentCurricularPlans;
     }
 
     final public List<StudentCurricularPlan> getStudentCurricularPlansExceptPast() {
         List<StudentCurricularPlan> result = new ArrayList<StudentCurricularPlan>();
-        for (StudentCurricularPlan studentCurricularPlan : super.getStudentCurricularPlans()) {
+        for (StudentCurricularPlan studentCurricularPlan : super.getStudentCurricularPlansSet()) {
             if (!studentCurricularPlan.isPast()) {
                 result.add(studentCurricularPlan);
             }
@@ -533,7 +533,7 @@ public class Registration extends Registration_Base {
         ExecutionYear previousExecutionYear = currentExecutionYear.getPreviousExecutionYear();
 
         for (StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlans()) {
-            for (Enrolment enrolment : studentCurricularPlan.getEnrolments()) {
+            for (Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
                 if (enrolment.getEnrolmentCondition() == EnrollmentCondition.INVISIBLE) {
                     continue;
                 }
@@ -1205,7 +1205,7 @@ public class Registration extends Registration_Base {
             }
 
         } else {
-            List<Registration> registrations = getStudent().getRegistrations();
+            Collection<Registration> registrations = getStudent().getRegistrations();
             for (Registration registration : registrations) {
                 if (registration != this && !registration.isBolonha()) {
                     if (!registration.isConcluded()) {
@@ -1911,7 +1911,7 @@ public class Registration extends Registration_Base {
     }
 
     public PrecedentDegreeInformation getPrecedentDegreeInformation(final SchoolLevelType levelType) {
-        return (super.hasPrecedentDegreeInformation() && super.getPrecedentDegreeInformation().getSchoolLevel() == levelType) ? super
+        return (super.getPrecedentDegreeInformation() != null && super.getPrecedentDegreeInformation().getSchoolLevel() == levelType) ? super
                 .getPrecedentDegreeInformation() : null;
     }
 
@@ -3333,7 +3333,6 @@ public class Registration extends Registration_Base {
         super.setStudentCandidacy(studentCandidacy);
     }
 
-    @Override
     final public void removeStudentCandidacy() {
         super.setStudentCandidacy(null);
     }
@@ -4004,7 +4003,7 @@ public class Registration extends Registration_Base {
                 String number = Integer.toString(registration.getNumber());
                 // String number =
                 // Integer.toString(registration.getStudent().getNumber());
-                String degreeRemoteOid = Long.toString(registration.getDegree().getOID());
+                String degreeRemoteOid = registration.getDegree().getExternalId();
                 String username = registration.getPerson().getUsername();
                 JSONObject studentInfo = new JSONObject();
                 studentInfo.put("username", username);

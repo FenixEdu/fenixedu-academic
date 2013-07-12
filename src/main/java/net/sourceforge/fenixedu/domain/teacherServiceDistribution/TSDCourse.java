@@ -49,7 +49,7 @@ public abstract class TSDCourse extends TSDCourse_Base {
     }
 
     public TSDCurricularLoad getTSDCurricularLoadByShiftType(ShiftType type) {
-        for (TSDCurricularLoad curricularLoad : super.getTSDCurricularLoads()) {
+        for (TSDCurricularLoad curricularLoad : super.getTSDCurricularLoadsSet()) {
             if (curricularLoad.getType().equals(type)) {
                 return curricularLoad;
             }
@@ -535,7 +535,7 @@ public abstract class TSDCourse extends TSDCourse_Base {
     }
 
     public List<TSDCurricularLoad> getSortedTSDCurricularLoads() {
-        List<TSDCurricularLoad> loads = new ArrayList<TSDCurricularLoad>(super.getTSDCurricularLoads());
+        List<TSDCurricularLoad> loads = new ArrayList<TSDCurricularLoad>(super.getTSDCurricularLoadsSet());
         Collections.sort(loads, new BeanComparator("type"));
         return loads;
     }
@@ -548,6 +548,7 @@ public abstract class TSDCourse extends TSDCourse_Base {
 
         return degrees;
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution> getTeacherServiceDistributions() {
         return getTeacherServiceDistributionsSet();

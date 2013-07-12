@@ -244,11 +244,6 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
     }
 
     @Deprecated
-    public boolean hasEntryPhase() {
-        return getEntryPhase() != null;
-    }
-
-    @Deprecated
     public boolean hasRegistration() {
         return getRegistration() != null;
     }
@@ -291,11 +286,6 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
     @Deprecated
     public boolean hasFirstTimeCandidacy() {
         return getFirstTimeCandidacy() != null;
-    }
-
-    @Deprecated
-    public boolean hasApplyForResidence() {
-        return getApplyForResidence() != null;
     }
 
     @Deprecated

@@ -184,7 +184,8 @@ public class CurricularCourse extends CurricularCourse_Base {
     @Override
     public DegreeCurricularPlan getParentDegreeCurricularPlan() {
         if (isBoxStructure()) {
-            return hasAnyParentContexts() ? getParentContexts().iterator().next().getParentCourseGroup().getParentDegreeCurricularPlan() : null;
+            return hasAnyParentContexts() ? getParentContexts().iterator().next().getParentCourseGroup()
+                    .getParentDegreeCurricularPlan() : null;
         } else {
             return super.getDegreeCurricularPlan();
         }
@@ -1586,8 +1587,9 @@ public class CurricularCourse extends CurricularCourse_Base {
             return new MultiLanguageString(Language.pt, getCompetenceCourse().getEvaluationMethod(period)).with(Language.en,
                     getCompetenceCourse().getEvaluationMethodEn(period));
         }
-        return new MultiLanguageString(Language.pt, getExecutionCoursesByExecutionPeriod(period).iterator().next().getEvaluationMethodText())
-                .with(Language.en, getExecutionCoursesByExecutionPeriod(period).iterator().next().getEvaluationMethodTextEn());
+        return new MultiLanguageString(Language.pt, getExecutionCoursesByExecutionPeriod(period).iterator().next()
+                .getEvaluationMethodText()).with(Language.en, getExecutionCoursesByExecutionPeriod(period).iterator().next()
+                .getEvaluationMethodTextEn());
     }
 
     public RegimeType getRegime(final ExecutionSemester period) {
@@ -1672,7 +1674,8 @@ public class CurricularCourse extends CurricularCourse_Base {
 
     public boolean isEquivalent(CurricularCourse oldCurricularCourse) {
         return equals(oldCurricularCourse)
-                || (hasCompetenceCourse() && getCompetenceCourse().hasAssociatedCurricularCourses(oldCurricularCourse));
+                || (hasCompetenceCourse() && getCompetenceCourse().getAssociatedCurricularCoursesSet().contains(
+                        oldCurricularCourse));
     }
 
     public boolean hasScopeForCurricularYear(final Integer curricularYear, final ExecutionSemester executionSemester) {
@@ -1842,7 +1845,7 @@ public class CurricularCourse extends CurricularCourse_Base {
             throw new DomainException("error.markSheet.invalid.arguments");
         }
 
-        if (!markSheet.hasEnrolmentEvaluations(enrolmentEvaluation)) {
+        if (!markSheet.getEnrolmentEvaluationsSet().contains(enrolmentEvaluation)) {
             throw new DomainException("error.no.student.in.markSheet");
         }
 
@@ -2015,7 +2018,7 @@ public class CurricularCourse extends CurricularCourse_Base {
                     StudentCurricularPlan studentCurricularPlanEntry = enrolmentsEntry.getStudentCurricularPlan();
                     int numberOfEnrolmentsForThatCurricularCourseAndExecutionPeriod = 0;
 
-                    for (Enrolment enrolmentsFromStudentCPEntry : studentCurricularPlanEntry.getEnrolments()) {
+                    for (Enrolment enrolmentsFromStudentCPEntry : studentCurricularPlanEntry.getEnrolmentsSet()) {
                         if (enrolmentsFromStudentCPEntry.getCurricularCourse() == this
                                 && (enrolmentsFromStudentCPEntry.getExecutionPeriod().compareTo(executionSemester) <= 0)) {
                             ++numberOfEnrolmentsForThatCurricularCourseAndExecutionPeriod;

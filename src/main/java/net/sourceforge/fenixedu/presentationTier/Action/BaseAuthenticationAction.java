@@ -48,7 +48,6 @@ import pt.ist.fenixWebFramework.servlets.filters.I18NFilter;
 import pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter;
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
 import pt.ist.fenixframework.FenixFramework;
-import pt.ist.fenixframework.pstm.VersionNotAvailableException;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public abstract class BaseAuthenticationAction extends FenixAction {
@@ -241,7 +240,7 @@ public abstract class BaseAuthenticationAction extends FenixAction {
     }
 
     protected abstract IUserView doAuthentication(ActionForm form, HttpServletRequest request, String remoteHostName)
-            throws  FenixServiceException;
+            throws FenixServiceException;
 
     protected abstract ActionForward getAuthenticationFailedForward(final ActionMapping mapping,
             final HttpServletRequest request, final String actionKey, final String messageKey);
@@ -385,7 +384,7 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 
             final String requestChecksumParameter = pendingRequest.getRequestChecksumParameter();
             return GenericChecksumRewriter.calculateChecksum(url).equals(requestChecksumParameter);
-        } catch (VersionNotAvailableException ex) {
+        } catch (Exception ex) {
             return false;
         }
     }

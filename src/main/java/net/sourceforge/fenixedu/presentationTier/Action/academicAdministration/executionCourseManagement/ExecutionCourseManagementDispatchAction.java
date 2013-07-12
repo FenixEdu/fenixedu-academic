@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.executionCourseManagement;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -401,9 +402,9 @@ public class ExecutionCourseManagementDispatchAction extends FenixDispatchAction
         return result;
     }
 
-    private List<ExecutionCourse> resultsForSearchBean(final ExecutionCourseSearchBean searchBean) {
+    private Collection<ExecutionCourse> resultsForSearchBean(final ExecutionCourseSearchBean searchBean) {
 
-        List<ExecutionCourse> semesterResult = new ArrayList<ExecutionCourse>();
+        Collection<ExecutionCourse> semesterResult = new ArrayList<ExecutionCourse>();
 
         if (searchBean.getSemester() == null) {
             return semesterResult;

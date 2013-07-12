@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -117,18 +116,8 @@ public class CreditNote extends CreditNote_Base {
     }
 
     @Override
-    public List<CreditNoteEntry> getCreditNoteEntries() {
-        return Collections.unmodifiableList(super.getCreditNoteEntries());
-    }
-
-    @Override
     public Set<CreditNoteEntry> getCreditNoteEntriesSet() {
         return Collections.unmodifiableSet(super.getCreditNoteEntriesSet());
-    }
-
-    @Override
-    public Iterator<CreditNoteEntry> getCreditNoteEntriesIterator() {
-        return getCreditNoteEntriesSet().iterator();
     }
 
     @Override

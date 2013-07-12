@@ -56,7 +56,7 @@ public class DelegateElectionVotingPeriod extends DelegateElectionVotingPeriod_B
     public int getTotalPercentageElection(Student student) {
 
         int votesNumberStudent = getNrVotesByStudent(student);
-        double relativePercentage = ((double) votesNumberStudent / (double) getVotesCount());
+        double relativePercentage = ((double) votesNumberStudent / (double) getVotesSet().size());
         return (int) (((int) (relativePercentage * 100) / 100.0) * 100);
     }
 
@@ -68,7 +68,7 @@ public class DelegateElectionVotingPeriod extends DelegateElectionVotingPeriod_B
         int totalVoteCount = 0;
         int studentVotesCount = 0;
         DelegateElection election = getDelegateElection();
-        int totalStudentsCount = election.getCandidatesCount() + election.getStudentsCount();
+        int totalStudentsCount = election.getCandidatesSet().size() + election.getStudentsSet().size();
 
         for (DelegateElectionVote vote : getVotes()) {
             totalVoteCount++;
@@ -117,7 +117,7 @@ public class DelegateElectionVotingPeriod extends DelegateElectionVotingPeriod_B
     }
 
     private boolean isRoundElections(int votingPeriod) {
-        if (getDelegateElection().getVotingPeriodCount() == votingPeriod) {
+        if (getDelegateElection().getVotingPeriodSet().size() == votingPeriod) {
             return true;
         }
         return false;

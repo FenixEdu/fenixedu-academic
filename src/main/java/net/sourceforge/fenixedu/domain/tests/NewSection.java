@@ -20,7 +20,7 @@ public class NewSection extends NewSection_Base {
         this();
 
         this.setSection(parentSection);
-        this.setSectionPosition(parentSection.getTestElementsCount());
+        this.setSectionPosition(parentSection.getTestElementsSet().size());
     }
 
     @Override

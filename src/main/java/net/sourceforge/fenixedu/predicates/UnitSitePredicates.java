@@ -15,8 +15,8 @@ public class UnitSitePredicates {
         public boolean evaluate(UnitSite site) {
             Person person = AccessControl.getPerson();
             return person != null
-                    && (person.hasRole(RoleType.MANAGER) || person.hasRole(RoleType.SCIENTIFIC_COUNCIL) || site
-                            .hasManagers(person));
+                    && (person.hasRole(RoleType.MANAGER) || person.hasRole(RoleType.SCIENTIFIC_COUNCIL) || site.getManagersSet()
+                            .contains(person));
         }
 
     };

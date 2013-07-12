@@ -60,7 +60,7 @@ public class YearDelegateManagementDispatchAction extends FenixDispatchAction {
                 request.setAttribute("candidatedYearDelegate", Collections.singletonList(personDelegateElection));
             }
 
-            final List<Student> candidates = new ArrayList<Student>(yearDelegateElection.getCandidates());
+            final List<Student> candidates = new ArrayList<Student>(yearDelegateElection.getCandidatesSet());
             Collections.sort(candidates, Student.NAME_COMPARATOR);
             request.setAttribute("candidates", candidates);
         }
@@ -72,7 +72,7 @@ public class YearDelegateManagementDispatchAction extends FenixDispatchAction {
                 request.setAttribute("votedYearDelegate", yearDelegateElection);
             } else {
                 // aluno ainda nao votou: pode votar
-                final Collection<Student> candidatesList = yearDelegateElection.getCandidates();
+                final Collection<Student> candidatesList = yearDelegateElection.getCandidatesSet();
 
                 List<StudentVoteBean> candidatesBeanList = new ArrayList<StudentVoteBean>();
                 for (final Student student : candidatesList) {

@@ -5,6 +5,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.Seminaries;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -27,7 +28,7 @@ import pt.ist.fenixframework.FenixFramework;
 public class GetCaseStudiesByThemeID {
 
     protected List run(String themeID) {
-        List cases = FenixFramework.<Theme> getDomainObject(themeID).getCaseStudies();
+        Collection cases = FenixFramework.<Theme> getDomainObject(themeID).getCaseStudies();
 
         List infoCases = new LinkedList();
         for (Iterator iterator = cases.iterator(); iterator.hasNext();) {

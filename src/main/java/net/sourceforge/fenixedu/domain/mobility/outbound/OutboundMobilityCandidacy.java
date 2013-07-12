@@ -17,7 +17,7 @@ public class OutboundMobilityCandidacy extends OutboundMobilityCandidacy_Base im
         setRootDomainObject(RootDomainObject.getInstance());
         setOutboundMobilityCandidacyContest(outboundMobilityCandidacyContest);
         setOutboundMobilityCandidacySubmission(outboundMobilityCandidacySubmission);
-        setPreferenceOrder(outboundMobilityCandidacySubmission.getOutboundMobilityCandidacyCount());
+        setPreferenceOrder(outboundMobilityCandidacySubmission.getOutboundMobilityCandidacySet().size());
         setSelected(Boolean.FALSE);
     }
 
@@ -93,7 +93,8 @@ public class OutboundMobilityCandidacy extends OutboundMobilityCandidacy_Base im
         final OutboundMobilityCandidacySubmission submission = getOutboundMobilityCandidacySubmission();
         if (submission.getSelectedCandidacy() != this) {
             if (submission.getSelectedCandidacy() != null) {
-                throw new DomainException("error.message.cannot.select.multiple.candidacies", submission.getRegistration().getPerson().getUsername());
+                throw new DomainException("error.message.cannot.select.multiple.candidacies", submission.getRegistration()
+                        .getPerson().getUsername());
             }
 
             final OutboundMobilityCandidacyContest contest = getOutboundMobilityCandidacyContest();

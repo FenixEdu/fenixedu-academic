@@ -68,7 +68,7 @@ public class TSDCurricularCourse extends TSDCurricularCourse_Base {
         TSDCurricularCourseGroup valuationGroup = getTSDCurricularCourseGroup();
         setTSDCurricularCourseGroup(null);
 
-        if (valuationGroup != null && valuationGroup.getTSDCurricularCoursesCount() == 0) {
+        if (valuationGroup != null && valuationGroup.getTSDCurricularCoursesSet().size() == 0) {
             valuationGroup.delete();
         }
 
@@ -94,6 +94,7 @@ public class TSDCurricularCourse extends TSDCurricularCourse_Base {
 
         return degree.getNameFor(getExecutionPeriod().getExecutionYear()) + " (" + degree.getSigla() + ")";
     }
+
     @Deprecated
     public boolean hasTSDCurricularCourseGroup() {
         return getTSDCurricularCourseGroup() != null;

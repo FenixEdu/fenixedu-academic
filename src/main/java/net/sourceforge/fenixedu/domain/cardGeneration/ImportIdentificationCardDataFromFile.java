@@ -237,7 +237,7 @@ public class ImportIdentificationCardDataFromFile {
 //	    checkDuplicateLine(person, line);
         final CardGenerationEntry cardGenerationEntry = createEntry(cardGenerationBatch, identificationId, line);
         cardGenerationEntry.setPerson(person);
-        if (person.getCardGenerationEntriesCount() > 1) {
+        if (person.getCardGenerationEntriesSet().size() > 1) {
             incrementVersionNumber(cardGenerationEntry);
         }
         return cardGenerationEntry;

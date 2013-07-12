@@ -79,14 +79,6 @@ public class FinalDegreeWorkProposalHeader extends InfoObject {
     }
 
     /**
-     * @return Returns the OID.
-     */
-
-    public Long getProposalOID() {
-        return getProposal().getOID();
-    }
-
-    /**
      * @return Returns the status.
      */
     public FinalDegreeWorkProposalStatus getStatus() {

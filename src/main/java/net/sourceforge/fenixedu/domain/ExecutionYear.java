@@ -353,7 +353,7 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
     private static class ExecutionPeriodExecutionYearListener extends RelationAdapter<ExecutionYear, ExecutionSemester> {
         @Override
         public void beforeAdd(ExecutionYear executionYear, ExecutionSemester executionSemester) {
-            if (executionYear != null && executionSemester != null && executionYear.getExecutionPeriodsCount() == 2) {
+            if (executionYear != null && executionSemester != null && executionYear.getExecutionPeriodsSet().size() == 2) {
                 throw new DomainException("error.ExecutionYear.exceeded.number.of.executionPeriods", executionYear.getYear());
             }
         }

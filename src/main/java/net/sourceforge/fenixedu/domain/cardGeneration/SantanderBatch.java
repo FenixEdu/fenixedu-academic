@@ -116,7 +116,7 @@ public class SantanderBatch extends SantanderBatch_Base {
     private StringBuilder buildTrailer(StringBuilder stringBuilder) throws Exception {
         String recordType = "9";
 
-        String numberOfEntries = makeZeroPaddedNumber(getSantanderEntriesCount(), 5);
+        String numberOfEntries = makeZeroPaddedNumber(getSantanderEntriesSet().size(), 5);
 
         String filler = makeStringBlock("", 1493);
 

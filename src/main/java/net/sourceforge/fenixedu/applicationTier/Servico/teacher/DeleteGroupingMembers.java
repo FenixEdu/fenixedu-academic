@@ -75,7 +75,7 @@ public class DeleteGroupingMembers {
 
     private void removeAttendFromStudentGroups(final Grouping grouping, Attends attend) {
         if (attend != null) {
-            for (final StudentGroup studentGroup : grouping.getStudentGroups()) {
+            for (final StudentGroup studentGroup : grouping.getStudentGroupsSet()) {
                 studentGroup.removeAttends(attend);
             }
         }

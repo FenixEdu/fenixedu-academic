@@ -155,7 +155,7 @@ public class ElectionsPeriodsManagementDispatchAction extends FenixDispatchActio
 
         final YearDelegateElection yearDelegateElection =
                 (YearDelegateElection) FenixFramework.getDomainObject(request.getParameter("selectedCandidacyPeriod"));
-        Collection<Student> candidates = yearDelegateElection.getCandidates();
+        Collection<Student> candidates = yearDelegateElection.getCandidatesSet();
 
         final ExecutionYear executionYear = yearDelegateElection.getExecutionYear();
 

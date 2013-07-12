@@ -89,7 +89,7 @@ public abstract class BaseAmountPlusAmountPerUnitPR extends BaseAmountPlusAmount
     @Override
     protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
         if (event.hasAnyExemptions()) {
-            List<Exemption> exemptions = event.getExemptions();
+            Collection<Exemption> exemptions = event.getExemptions();
 
             for (Exemption exemption : exemptions) {
                 AcademicEventExemption academicEventExemption = (AcademicEventExemption) exemption;

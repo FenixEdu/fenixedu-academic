@@ -5,6 +5,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.publico;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -51,7 +52,7 @@ public class ReadStudentsAndGroupsByShiftID {
         Iterator iterStudentGroups = studentGroups.iterator();
         while (iterStudentGroups.hasNext()) {
 
-            List studentGroupAttendList = new ArrayList();
+            Collection studentGroupAttendList;
             StudentGroup studentGroup = (StudentGroup) iterStudentGroups.next();
 
             studentGroupAttendList = studentGroup.getAttends();

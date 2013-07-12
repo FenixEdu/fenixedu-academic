@@ -810,11 +810,6 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
     }
 
     @Deprecated
-    public boolean hasGrade() {
-        return getGrade() != null;
-    }
-
-    @Deprecated
     public boolean hasContext() {
         return getContext() != null;
     }
@@ -832,11 +827,6 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
     @Deprecated
     public boolean hasEnrolmentEvaluationState() {
         return getEnrolmentEvaluationState() != null;
-    }
-
-    @Deprecated
-    public boolean hasExamDateYearMonthDay() {
-        return getExamDateYearMonthDay() != null;
     }
 
     @Deprecated

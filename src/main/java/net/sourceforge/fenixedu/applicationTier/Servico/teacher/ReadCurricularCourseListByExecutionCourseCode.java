@@ -40,9 +40,7 @@ public class ReadCurricularCourseListByExecutionCourseCode {
         ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseCode);
 
         if (executionCourse != null && executionCourse.getAssociatedCurricularCourses() != null) {
-            for (int i = 0; i < executionCourse.getAssociatedCurricularCourses().size(); i++) {
-                CurricularCourse curricularCourse = executionCourse.getAssociatedCurricularCourses().get(i);
-
+            for (CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
                 InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
                 infoCurricularCourse.setInfoScopes((List) CollectionUtils.collect(curricularCourse.getScopes(),
                         new Transformer() {

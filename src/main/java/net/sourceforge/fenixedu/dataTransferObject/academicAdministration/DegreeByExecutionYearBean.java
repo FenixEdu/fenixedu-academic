@@ -86,7 +86,7 @@ public class DegreeByExecutionYearBean implements Serializable, Comparable<Degre
     }
 
     public String getKey() {
-        return getDegree().getOID() + ":" + getExecutionYear().getOID();
+        return getDegree().getExternalId() + ":" + getExecutionYear().getExternalId();
     }
 
     @Override

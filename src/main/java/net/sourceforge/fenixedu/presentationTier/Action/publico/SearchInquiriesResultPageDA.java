@@ -46,7 +46,7 @@ public class SearchInquiriesResultPageDA extends FenixDispatchAction {
             if (executionSemester != null) {
                 final ExecutionSemester previous = executionSemester.getPreviousExecutionPeriod();
                 if (previous != null) {
-                    searchPageDTO.setExecutionSemesterID(previous.getOid());
+                    searchPageDTO.setExecutionSemesterID(previous.getExternalId());
                 }
             }
         }

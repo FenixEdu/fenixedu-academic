@@ -219,7 +219,7 @@ public class Unit extends Unit_Base {
     }
 
     private boolean canBeDeleted() {
-        return (!hasAnyParents() || (getParentsCount() == 1 && getParentUnits().size() == 1)) && !hasAnyChilds()
+        return (!hasAnyParents() || (getParentsSet().size() == 1 && getParentUnits().size() == 1)) && !hasAnyChilds()
                 && !hasAnyFunctions() && !hasAnyVigilantGroups() && !hasAnyAssociatedNonAffiliatedTeachers()
                 && !hasAnyPayedGuides() && !hasAnyPayedReceipts() && !hasAnyExternalCurricularCourses()
                 && !hasAnyResultUnitAssociations() && !hasUnitServiceAgreementTemplate() && !hasAnyResearchInterests()
@@ -1323,9 +1323,9 @@ public class Unit extends Unit_Base {
     }
 
     @Override
-    public List<Function> getFunctions() {
-        List<Function> result = new ArrayList<Function>();
-        for (Function function : super.getFunctions()) {
+    public Set<Function> getFunctionsSet() {
+        Set<Function> result = new HashSet<Function>();
+        for (Function function : super.getFunctionsSet()) {
             if (function.getType().equals(AccountabilityTypeEnum.MANAGEMENT_FUNCTION)) {
                 result.add(function);
             }
@@ -1706,6 +1706,7 @@ public class Unit extends Unit_Base {
     public boolean isAdministrativeOfficeUnit() {
         return getAdministrativeOffice() != null;
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.util.email.UnitBasedSender> getUnitBasedSender() {
         return getUnitBasedSenderSet();
@@ -2081,6 +2082,7 @@ public class Unit extends Unit_Base {
         return getRegistryCodeGenerator() != null;
     }
 
+    @Override
     @Deprecated
     public boolean hasAdministrativeOffice() {
         return getAdministrativeOffice() != null;

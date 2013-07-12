@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
-
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PunctualRoomsOccupationRequest;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -16,9 +15,9 @@ public class MarkPunctualRoomsOccupationCommentsAsRead {
                 || person.hasAnyProfessorships()) {
             if (request != null) {
                 if (forTeacher) {
-                    request.setTeacherReadComments(request.getCommentsCount());
+                    request.setTeacherReadComments(request.getComments().size());
                 } else {
-                    request.setEmployeeReadComments(request.getCommentsCount());
+                    request.setEmployeeReadComments(request.getComments().size());
                 }
             }
         }

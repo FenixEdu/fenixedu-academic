@@ -276,7 +276,7 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
                 result.add(new CompetenceCourseLoadBean(competenceCourseLoad));
             }
 
-            if (getCompetenceCourseLoadsCount() == 1) { // hack
+            if (getCompetenceCourseLoadsSet().size() == 1) { // hack
                 final CompetenceCourseLoad courseLoad = getCompetenceCourseLoads().iterator().next();
                 final CompetenceCourseLoadBean courseLoadBean = new CompetenceCourseLoadBean(courseLoad);
                 courseLoadBean.setLoadOrder(courseLoad.getLoadOrder() + 1);

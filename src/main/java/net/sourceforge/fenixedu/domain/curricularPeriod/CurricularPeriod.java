@@ -215,7 +215,7 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
             // re-order childs
             Integer order = child.getChildOrder();
             if (order == null) {
-                child.setChildOrder(parent.getChildsCount() + 1);
+                child.setChildOrder(parent.getChildsSet().size() + 1);
             } else {
                 if (parent.getChildByOrder(order) != null) {
                     throw new DomainException("error.childAlreadyExists");
@@ -285,7 +285,7 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
         } else {
             final CurricularPeriod parentCurricularPeriod = getParent();
             final int absoluteOrderOfParent = parentCurricularPeriod.getAbsoluteOrderOfChild();
-            final int numberOfBrothersAndSisters = parentCurricularPeriod.getChildsCount();
+            final int numberOfBrothersAndSisters = parentCurricularPeriod.getChildsSet().size();
             return (absoluteOrderOfParent - 1) * numberOfBrothersAndSisters + getChildOrder().intValue();
         }
     }
@@ -350,11 +350,6 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
     @Deprecated
     public boolean hasRootDomainObject() {
         return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasChildOrder() {
-        return getChildOrder() != null;
     }
 
     @Deprecated

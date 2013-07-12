@@ -85,7 +85,7 @@ public class AcceptNewProjectProposal {
             if (groupPropertiesExecutionCourseAux.getProposalState().getState().intValue() == 1
                     || groupPropertiesExecutionCourseAux.getProposalState().getState().intValue() == 2) {
                 ExecutionCourse personExecutionCourse = groupPropertiesExecutionCourseAux.getExecutionCourse();
-                List professorships = groupPropertiesExecutionCourseAux.getExecutionCourse().getProfessorships();
+                Collection professorships = groupPropertiesExecutionCourseAux.getExecutionCourse().getProfessorships();
                 Iterator iterProfessorship = professorships.iterator();
                 while (iterProfessorship.hasNext()) {
                     Professorship professorship = (Professorship) iterProfessorship.next();

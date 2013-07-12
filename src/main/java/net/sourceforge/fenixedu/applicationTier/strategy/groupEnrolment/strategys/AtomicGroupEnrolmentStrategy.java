@@ -55,7 +55,7 @@ public class AtomicGroupEnrolmentStrategy extends GroupEnrolmentStrategy impleme
         if (minimumCapacity == null) {
             result = true;
         } else {
-            final int numberOfGroupElements = studentGroup.getAttendsCount();
+            final int numberOfGroupElements = studentGroup.getAttends().size();
             if (numberOfGroupElements > minimumCapacity.intValue()) {
                 result = true;
             }

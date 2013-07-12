@@ -94,7 +94,7 @@ public class ReadExamsByDate {
     }
 
     private static List<InfoExecutionCourse> readInfoExecutionCourses(final Exam exam) {
-        final List<InfoExecutionCourse> result = new ArrayList<InfoExecutionCourse>(exam.getAssociatedExecutionCoursesCount());
+        final List<InfoExecutionCourse> result = new ArrayList<InfoExecutionCourse>(exam.getAssociatedExecutionCourses().size());
         for (final ExecutionCourse executionCourse : exam.getAssociatedExecutionCourses()) {
             result.add(InfoExecutionCourse.newInfoFromDomain(executionCourse));
         }

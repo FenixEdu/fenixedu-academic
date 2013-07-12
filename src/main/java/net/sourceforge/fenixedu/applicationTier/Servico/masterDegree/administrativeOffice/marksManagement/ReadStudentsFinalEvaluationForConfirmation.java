@@ -42,13 +42,14 @@ public class ReadStudentsFinalEvaluationForConfirmation {
 
         final List<EnrolmentEvaluation> enrolmentEvaluations = new ArrayList<EnrolmentEvaluation>();
         for (final Enrolment enrolment : enrolments) {
-            enrolmentEvaluations.add(enrolment.getEvaluations().get(enrolment.getEvaluationsCount() - 1));
+            enrolmentEvaluations.add(enrolment.getLatestEnrolmentEvaluation());
         }
 
         if (!enrolmentEvaluations.isEmpty()) {
 
             List temporaryEnrolmentEvaluations = checkForInvalidSituations(enrolmentEvaluations);
-            Person person = ((EnrolmentEvaluation) temporaryEnrolmentEvaluations.iterator().next()).getPersonResponsibleForGrade();
+            Person person =
+                    ((EnrolmentEvaluation) temporaryEnrolmentEvaluations.iterator().next()).getPersonResponsibleForGrade();
             Teacher teacher = Teacher.readTeacherByUsername(person.getUsername());
             infoTeacher = InfoTeacher.newInfoFromDomain(teacher);
 

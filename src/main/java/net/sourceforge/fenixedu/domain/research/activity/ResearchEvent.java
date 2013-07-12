@@ -36,7 +36,7 @@ public class ResearchEvent extends ResearchEvent_Base implements ParticipationsI
         for (; this.hasAnyParticipations(); getParticipations().iterator().next().delete()) {
             ;
         }
-        for (; this.hasAnyEventEditions(); this.getEventEditions().iterator().next().removeEvent()) {
+        for (; this.hasAnyEventEditions(); this.getEventEditions().iterator().next().setEvent(null)) {
             ;
         }
         setRootDomainObject(null);
@@ -106,6 +106,8 @@ public class ResearchEvent extends ResearchEvent_Base implements ParticipationsI
         }
 
     }
+
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.research.activity.EventParticipation> getParticipations() {
         return getParticipationsSet();

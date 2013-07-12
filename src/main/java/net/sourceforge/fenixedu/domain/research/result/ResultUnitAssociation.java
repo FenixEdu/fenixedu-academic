@@ -102,15 +102,6 @@ public class ResultUnitAssociation extends ResultUnitAssociation_Base {
         throw new DomainException("error.researcher.ResultUnitAssociation.call", "setUnit");
     }
 
-    @Override
-    public void removeUnit() {
-        throw new DomainException("error.researcher.ResultUnitAssociation.call", "removeUnit");
-    }
-
-    @Override
-    public void removeResult() {
-        throw new DomainException("error.researcher.ResultUnitAssociation.call", "removeResult");
-    }
     @Deprecated
     public boolean hasResult() {
         return getResult() != null;

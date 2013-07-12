@@ -77,8 +77,8 @@ public class TutorshipSummaryDA extends ViewStudentsByTutorDispatchAction {
                 addCell("Semestre", summary.getSemester().getSemester() + " - "
                         + summary.getSemester().getExecutionYear().getYear());
                 addCell("Curso", summary.getDegree().getSigla());
-                addCell(bundle.getString("label.tutorshipSummary.form.relationsSize"),
-                        summary.getTutorshipSummaryRelationsCount());
+                addCell(bundle.getString("label.tutorshipSummary.form.relationsSize"), summary.getTutorshipSummaryRelationsSet()
+                        .size());
                 addCell(bundle.getString("label.tutorshipSummary.form.howManyReunionsGroup"), summary.getHowManyReunionsGroup());
                 addCell(bundle.getString("label.tutorshipSummary.form.howManyReunionsIndividual"),
                         summary.getHowManyReunionsIndividual());

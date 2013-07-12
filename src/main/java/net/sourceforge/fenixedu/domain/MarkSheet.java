@@ -79,7 +79,7 @@ public class MarkSheet extends MarkSheet_Base {
         final public int compare(MarkSheet o1, MarkSheet o2) {
             final ComparatorChain comparatorChain = new ComparatorChain();
             comparatorChain.addComparator(MarkSheet.COMPARATOR_BY_EVALUATION_DATE);
-            comparatorChain.addComparator(MarkSheet.COMPARATOR_BY_ID);
+            comparatorChain.addComparator(DomainObjectUtil.COMPARATOR_BY_ID);
 
             return comparatorChain.compare(o1, o2);
         }
@@ -92,7 +92,7 @@ public class MarkSheet extends MarkSheet_Base {
                     final ComparatorChain comparatorChain = new ComparatorChain();
                     comparatorChain.addComparator(MarkSheet.COMPARATOR_BY_EVALUATION_DATE);
                     comparatorChain.addComparator(MarkSheet.COMPARATOR_BY_CREATION_DATE);
-                    comparatorChain.addComparator(MarkSheet.COMPARATOR_BY_ID);
+                    comparatorChain.addComparator(DomainObjectUtil.COMPARATOR_BY_ID);
 
                     return comparatorChain.compare(o1, o2);
                 }
@@ -432,7 +432,7 @@ public class MarkSheet extends MarkSheet_Base {
     private void checkIfEnrolmentEvaluationsNumberIsValid(Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeansToAppend,
             Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeansToRemove) {
 
-        if (evaluationBeansToAppend.size() == 0 && evaluationBeansToRemove.size() == getEnrolmentEvaluationsCount()) {
+        if (evaluationBeansToAppend.size() == 0 && evaluationBeansToRemove.size() == getEnrolmentEvaluationsSet().size()) {
             throw new DomainException("error.markSheet.edit.with.invalid.enrolmentEvaluations.number");
         }
     }
@@ -666,7 +666,6 @@ public class MarkSheet extends MarkSheet_Base {
         }
     }
 
-    @Override
     public void removeCurricularCourse() {
         if (isConfirmed()) {
             throw new DomainException("error.markSheet.already.confirmed");
@@ -675,7 +674,6 @@ public class MarkSheet extends MarkSheet_Base {
         }
     }
 
-    @Override
     public void removeValidator() {
         if (isConfirmed()) {
             throw new DomainException("error.markSheet.already.confirmed");
@@ -684,7 +682,6 @@ public class MarkSheet extends MarkSheet_Base {
         }
     }
 
-    @Override
     public void removeCreator() {
         if (isConfirmed()) {
             throw new DomainException("error.markSheet.already.confirmed");
@@ -702,7 +699,6 @@ public class MarkSheet extends MarkSheet_Base {
         }
     }
 
-    @Override
     public void removeExecutionPeriod() {
         if (isConfirmed()) {
             throw new DomainException("error.markSheet.already.confirmed");
@@ -711,7 +707,6 @@ public class MarkSheet extends MarkSheet_Base {
         }
     }
 
-    @Override
     public void removeResponsibleTeacher() {
         if (isConfirmed()) {
             throw new DomainException("error.markSheet.already.confirmed");
@@ -720,8 +715,7 @@ public class MarkSheet extends MarkSheet_Base {
         }
     }
 
-    @Override
-    public void setRootDomainObject(null) {
+    public void removeRootDomainObject() {
         if (isConfirmed()) {
             throw new DomainException("error.markSheet.already.confirmed");
         } else {

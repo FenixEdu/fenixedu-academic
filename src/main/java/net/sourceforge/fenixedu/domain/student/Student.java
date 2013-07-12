@@ -7,7 +7,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -264,7 +263,7 @@ public class Student extends Student_Base {
     }
 
     public Registration getLastRegistration() {
-        List<Registration> activeRegistrations = getRegistrations();
+        Collection<Registration> activeRegistrations = getRegistrationsSet();
         return activeRegistrations.isEmpty() ? null : (Registration) Collections.max(activeRegistrations,
                 Registration.COMPARATOR_BY_START_DATE);
     }
@@ -1131,24 +1130,8 @@ public class Student extends Student_Base {
         return false;
     }
 
-    /**
-     * -> Temporary overrides due migrations - Filter 'InTransition'
-     * registrations -> Do not use this method to add new registrations directly
-     * (use {@link addRegistrations} method)
-     */
-    @Override
-    public List<Registration> getRegistrations() {
-        final List<Registration> result = new ArrayList<Registration>();
-        for (final Registration registration : super.getRegistrations()) {
-            if (!registration.isTransition()) {
-                result.add(registration);
-            }
-        }
-        return Collections.unmodifiableList(result);
-    }
-
     public Collection<Registration> getAllRegistrations() {
-        return Collections.unmodifiableCollection(super.getRegistrations());
+        return Collections.unmodifiableCollection(super.getRegistrationsSet());
     }
 
     /**
@@ -1167,18 +1150,8 @@ public class Student extends Student_Base {
         return Collections.unmodifiableSet(result);
     }
 
-    @Override
-    public Iterator<Registration> getRegistrationsIterator() {
-        return getRegistrationsSet().iterator();
-    }
-
-    @Override
-    public int getRegistrationsCount() {
-        return getRegistrations().size();
-    }
-
     public boolean hasTransitionRegistrations() {
-        for (final Registration registration : super.getRegistrations()) {
+        for (final Registration registration : super.getRegistrationsSet()) {
             if (registration.isTransition()) {
                 return true;
             }
@@ -1190,7 +1163,7 @@ public class Student extends Student_Base {
     @Checked("StudentPredicates.checkIfLoggedPersonIsStudentOwnerOrManager")
     public List<Registration> getTransitionRegistrations() {
         final List<Registration> result = new ArrayList<Registration>();
-        for (final Registration registration : super.getRegistrations()) {
+        for (final Registration registration : super.getRegistrationsSet()) {
             if (registration.isTransition()) {
                 result.add(registration);
             }
@@ -1201,7 +1174,7 @@ public class Student extends Student_Base {
     @Checked("StudentPredicates.checkIfLoggedPersonIsCoordinator")
     public List<Registration> getTransitionRegistrationsForDegreeCurricularPlansManagedByCoordinator(final Person coordinator) {
         final List<Registration> result = new ArrayList<Registration>();
-        for (final Registration registration : super.getRegistrations()) {
+        for (final Registration registration : super.getRegistrationsSet()) {
             if (registration.isTransition()
                     && coordinator.isCoordinatorFor(registration.getLastDegreeCurricularPlan(),
                             ExecutionYear.readCurrentExecutionYear())) {
@@ -1214,7 +1187,7 @@ public class Student extends Student_Base {
     @Checked("StudentPredicates.checkIfLoggedPersonIsStudentOwnerOrManager")
     public List<Registration> getTransitedRegistrations() {
         List<Registration> result = new ArrayList<Registration>();
-        for (Registration registration : super.getRegistrations()) {
+        for (Registration registration : super.getRegistrationsSet()) {
             if (registration.isTransited()) {
                 result.add(registration);
             }
@@ -1223,7 +1196,7 @@ public class Student extends Student_Base {
     }
 
     private boolean isAnyTuitionInDebt(final ExecutionYear executionYear) {
-        for (final Registration registration : super.getRegistrations()) {
+        for (final Registration registration : super.getRegistrationsSet()) {
             if (registration.hasAnyNotPayedGratuityEventsForPreviousYears(executionYear)) {
                 return true;
             }
@@ -1264,7 +1237,7 @@ public class Student extends Student_Base {
 
     public List<Registration> getRegistrationsFor(final DegreeCurricularPlan degreeCurricularPlan) {
         final List<Registration> result = new ArrayList<Registration>();
-        for (final Registration registration : super.getRegistrations()) {
+        for (final Registration registration : super.getRegistrationsSet()) {
             for (final DegreeCurricularPlan degreeCurricularPlanToTest : registration.getDegreeCurricularPlans()) {
                 if (degreeCurricularPlanToTest.equals(degreeCurricularPlan)) {
                     result.add(registration);
@@ -1286,7 +1259,7 @@ public class Student extends Student_Base {
 
     public List<Registration> getRegistrationsFor(final Degree degree) {
         final List<Registration> result = new ArrayList<Registration>();
-        for (final Registration registration : super.getRegistrations()) {
+        for (final Registration registration : super.getRegistrationsSet()) {
             if (registration.getDegree() == degree) {
                 result.add(registration);
             }
@@ -1832,8 +1805,8 @@ public class Student extends Student_Base {
     }
 
     @Atomic
-    public void acceptRegistrationsFromOtherStudent(java.util.List<Registration> otherRegistrations) {
-        List<Registration> registrations = super.getRegistrations();
+    public void acceptRegistrationsFromOtherStudent(java.util.Collection<Registration> otherRegistrations) {
+        Collection<Registration> registrations = super.getRegistrationsSet();
         registrations.addAll(otherRegistrations);
     }
 
@@ -2106,6 +2079,7 @@ public class Student extends Student_Base {
         }
         return false;
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.student.Registration> getRegistrations() {
         return getRegistrationsSet();

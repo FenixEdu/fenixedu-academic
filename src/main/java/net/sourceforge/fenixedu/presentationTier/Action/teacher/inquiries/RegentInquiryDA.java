@@ -4,6 +4,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.teacher.inquiries;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -105,7 +106,7 @@ public class RegentInquiryDA extends FenixDispatchAction {
 
         List<Professorship> teachersWithNoResults = new ArrayList<Professorship>();
         for (Professorship teacherProfessorship : executionCourse.getProfessorships()) {
-            List<InquiryResult> professorshipResults = teacherProfessorship.getInquiryResults();
+            Collection<InquiryResult> professorshipResults = teacherProfessorship.getInquiryResults();
             if (!professorshipResults.isEmpty()) {
                 for (ShiftType shiftType : getShiftTypes(professorshipResults)) {
                     List<InquiryResult> teacherShiftResults = teacherProfessorship.getInquiryResults(shiftType);
@@ -173,7 +174,7 @@ public class RegentInquiryDA extends FenixDispatchAction {
         return finalState;
     }
 
-    private Set<ShiftType> getShiftTypes(List<InquiryResult> professorshipResults) {
+    private Set<ShiftType> getShiftTypes(Collection<InquiryResult> professorshipResults) {
         Set<ShiftType> shiftTypes = new HashSet<ShiftType>();
         for (InquiryResult inquiryResult : professorshipResults) {
             shiftTypes.add(inquiryResult.getShiftType());

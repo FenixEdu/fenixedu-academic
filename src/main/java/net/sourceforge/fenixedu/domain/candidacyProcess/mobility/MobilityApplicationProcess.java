@@ -91,22 +91,22 @@ public class MobilityApplicationProcess extends MobilityApplicationProcess_Base 
     }
 
     public void delete() {
-        if (getChildProcessesCount() > 0) {
+        if (getChildProcessesSet().size() > 0) {
             throw new DomainException("error.mobiliy.application.proccess.cant.be.deleted.it.has.individual.application");
         }
-        if (getCoordinatorsCount() > 0) {
+        if (getCoordinatorsSet().size() > 0) {
             throw new DomainException("error.mobiliy.application.proccess.cant.be.deleted.it.has.coordinators");
         }
         if (getCandidacyPeriod() != null) {
             throw new DomainException("error.mobiliy.application.proccess.cant.be.deleted.it.defined.period");
         }
-        if (getErasmusCandidacyProcessExecutedActionCount() > 0) {
+        if (getErasmusCandidacyProcessExecutedActionSet().size() > 0) {
             throw new DomainException("error.mobiliy.application.proccess.cant.be.deleted.it.has.executed.actions");
         }
-        if (getErasmusCandidacyProcessReportsCount() > 0) {
+        if (getErasmusCandidacyProcessReportsSet().size() > 0) {
             throw new DomainException("error.mobiliy.application.proccess.cant.be.deleted.it.has.reports");
         }
-        if (getProcessLogsCount() > 0) {
+        if (getProcessLogsSet().size() > 0) {
             throw new DomainException("error.mobiliy.application.proccess.cant.be.deleted.it.has.logs");
         }
         setForSemester(null);
@@ -115,7 +115,7 @@ public class MobilityApplicationProcess extends MobilityApplicationProcess_Base 
     }
 
     public void resetConfigurations() {
-        if (getChildProcessesCount() > 0) {
+        if (getChildProcessesSet().size() > 0) {
             throw new DomainException("error.mobility.application.process.cant.delete.configurations.it.has.applications");
         }
         for (MobilityQuota quota : getCandidacyPeriod().getMobilityQuotasSet()) {

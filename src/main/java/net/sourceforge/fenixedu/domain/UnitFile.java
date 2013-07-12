@@ -24,7 +24,7 @@ public class UnitFile extends UnitFile_Base {
             @Override
             public void afterRemove(UnitFileTag tag, UnitFile file) {
                 super.afterRemove(tag, file);
-                if (file != null && tag != null && tag.getTaggedFilesCount() == 0) {
+                if (file != null && tag != null && tag.getTaggedFilesSet().size() == 0) {
                     tag.delete();
                 }
             }

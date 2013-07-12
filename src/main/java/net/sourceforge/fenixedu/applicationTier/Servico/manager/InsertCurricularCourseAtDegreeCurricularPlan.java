@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-import java.util.List;
+import java.util.Collection;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
@@ -33,7 +33,7 @@ public class InsertCurricularCourseAtDegreeCurricularPlan {
         String code = infoCurricularCourse.getCode();
         final String acronym = infoCurricularCourse.getAcronym();
 
-        List curricularCourses = null;
+        Collection curricularCourses = null;
         curricularCourses = degreeCurricularPlan.getCurricularCourses();
 
         CurricularCourse cCourse = (CurricularCourse) CollectionUtils.find(curricularCourses, new Predicate() {

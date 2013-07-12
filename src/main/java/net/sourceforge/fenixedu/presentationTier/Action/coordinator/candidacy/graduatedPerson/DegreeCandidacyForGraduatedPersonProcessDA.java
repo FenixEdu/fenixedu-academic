@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.coordinator.candidacy.graduatedPerson;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -85,7 +86,7 @@ public class DegreeCandidacyForGraduatedPersonProcessDA extends
 
     @Override
     protected List<IndividualCandidacyProcess> getChildProcesses(final CandidacyProcess process, HttpServletRequest request) {
-        List<IndividualCandidacyProcess> processes = process.getChildProcesses();
+        Collection<IndividualCandidacyProcess> processes = process.getChildProcesses();
         List<IndividualCandidacyProcess> selectedDegreesIndividualCandidacyProcesses =
                 new ArrayList<IndividualCandidacyProcess>();
         DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);

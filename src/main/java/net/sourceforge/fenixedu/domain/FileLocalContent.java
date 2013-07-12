@@ -2,8 +2,6 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.util.ByteArray;
@@ -27,7 +25,7 @@ public class FileLocalContent extends FileLocalContent_Base {
 
     public Collection<FileSetMetaData> createMetadata() {
         Set<FileSetMetaData> metadata = new HashSet<FileSetMetaData>();
-        for (FileLocalContentMetadata entry : super.getMetadata()) {
+        for (FileLocalContentMetadata entry : super.getMetadataSet()) {
             metadata.add(entry.getEntry());
         }
         return metadata;
@@ -37,23 +35,7 @@ public class FileLocalContent extends FileLocalContent_Base {
      * @use {@link #createMetadata()})
      */
     @Override
-    public List<FileLocalContentMetadata> getMetadata() {
-        throw new UnsupportedOperationException();
-    }
-
-    /**
-     * @use {@link #createMetadata()})
-     */
-    @Override
     public Set<FileLocalContentMetadata> getMetadataSet() {
-        throw new UnsupportedOperationException();
-    }
-
-    /**
-     * @use {@link #createMetadata()})
-     */
-    @Override
-    public Iterator<FileLocalContentMetadata> getMetadataIterator() {
         throw new UnsupportedOperationException();
     }
 
@@ -65,6 +47,7 @@ public class FileLocalContent extends FileLocalContent_Base {
         setRootDomainObject(null);
         deleteDomainObject();
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.FileLocalContentMetadata> getMetadata() {
         return getMetadataSet();

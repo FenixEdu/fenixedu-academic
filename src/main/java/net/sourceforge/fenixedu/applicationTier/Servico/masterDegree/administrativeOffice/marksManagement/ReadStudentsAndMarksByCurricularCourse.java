@@ -48,7 +48,7 @@ public class ReadStudentsAndMarksByCurricularCourse {
         final List<EnrolmentEvaluation> enrolmentEvaluations = new ArrayList<EnrolmentEvaluation>();
         for (final Enrolment enrolment : enrolments) {
             if (enrolment.getDegreeCurricularPlanOfStudent().getDegreeType() == DegreeType.MASTER_DEGREE) {
-                enrolmentEvaluations.add(enrolment.getEvaluations().get(enrolment.getEvaluationsCount() - 1));
+                enrolmentEvaluations.add(enrolment.getLatestEnrolmentEvaluation());
             }
         }
 
@@ -118,9 +118,9 @@ public class ReadStudentsAndMarksByCurricularCourse {
     private static Date getLastEvaluationDate(String yearString, CurricularCourse curricularCourse) {
 
         Date lastEvaluationDate = null;
-        Iterator iterator = curricularCourse.getAssociatedExecutionCourses().listIterator();
+        Iterator<ExecutionCourse> iterator = curricularCourse.getAssociatedExecutionCoursesSet().iterator();
         while (iterator.hasNext()) {
-            ExecutionCourse executionCourse = (ExecutionCourse) iterator.next();
+            ExecutionCourse executionCourse = iterator.next();
             if (executionCourse.getExecutionPeriod().getExecutionYear().getYear().equals(yearString)) {
 
                 if (executionCourse.getAssociatedEvaluations() != null && executionCourse.getAssociatedEvaluations().size() > 0) {

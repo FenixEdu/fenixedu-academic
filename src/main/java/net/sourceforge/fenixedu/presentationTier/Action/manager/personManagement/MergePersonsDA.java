@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteObjectByOI
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.TransferDomainObjectProperty;
 import net.sourceforge.fenixedu.dataTransferObject.MergeSlotDTO;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -35,9 +34,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.DomainObject;
 import pt.ist.fenixframework.FenixFramework;
-import dml.DomainClass;
-import dml.Role;
-import dml.Slot;
+import pt.ist.fenixframework.dml.DomainClass;
+import pt.ist.fenixframework.dml.Role;
+import pt.ist.fenixframework.dml.Slot;
 
 @Mapping(path = "/mergePersons", module = "manager")
 @Forwards({
@@ -177,9 +176,9 @@ public class MergePersonsDA extends FenixDispatchAction {
                     // collection
                     mergeSlot.setType("Collection");
 
-                    fillDtoWithCollectionProperty(mergeSlot, property1, MergeSlotDTO.VALUE1, domainObject1.getOID(),
+                    fillDtoWithCollectionProperty(mergeSlot, property1, MergeSlotDTO.VALUE1, domainObject1.getExternalId(),
                             Person.class.getName());
-                    fillDtoWithCollectionProperty(mergeSlot, property2, MergeSlotDTO.VALUE2, domainObject2.getOID(),
+                    fillDtoWithCollectionProperty(mergeSlot, property2, MergeSlotDTO.VALUE2, domainObject2.getExternalId(),
                             Person.class.getName());
                 }
 
@@ -207,7 +206,7 @@ public class MergePersonsDA extends FenixDispatchAction {
         return bean;
     }
 
-    private void fillDtoWithCollectionProperty(MergeSlotDTO mergeSlot, Object collection, String order, long oid,
+    private void fillDtoWithCollectionProperty(MergeSlotDTO mergeSlot, Object collection, String order, String oid,
             String domainClass) {
         if (collection != null) {
             mergeSlot.setValueProperty(order, "Size: " + ((Collection) collection).size());
@@ -221,7 +220,7 @@ public class MergePersonsDA extends FenixDispatchAction {
     private void fillDtoWithSimpleProperty(Role roleSlot, MergeSlotDTO mergeSlot, Object reference, String order) {
         if (reference != null) {
             if (roleSlot.getType() instanceof DomainClass) {
-                final long externalId = ((DomainObject) reference).getOID();
+                final String externalId = ((DomainObject) reference).getExternalId();
                 mergeSlot.setValueProperty(order, "OID: " + externalId);
                 mergeSlot.setValueLinkProperty(order, "/domainbrowser/showObj?OID=" + externalId);
             } else {

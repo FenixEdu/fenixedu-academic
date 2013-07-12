@@ -273,10 +273,6 @@ public class LibraryAttendance implements Serializable {
                 .getPersonProfessionalData().getGiafProfessionalDatas();
     }
 
-    public GiafProfessionalData getGiafProfessionalDatas(int index) {
-        return getPerson().getPersonProfessionalData() == null ? null : getPerson().getPersonProfessionalData()
-                .getGiafProfessionalDatas().get(index);
-    }
 
     public Registration getStudentRegistration() {
         return studentRegistration;

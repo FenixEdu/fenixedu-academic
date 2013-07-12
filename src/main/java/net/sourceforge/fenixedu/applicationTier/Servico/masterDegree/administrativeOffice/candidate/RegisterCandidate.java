@@ -90,7 +90,7 @@ public class RegisterCandidate {
         infoCandidateRegistration
                 .setInfoStudentCurricularPlan(InfoStudentCurricularPlan.newInfoFromDomain(studentCurricularPlan));
         infoCandidateRegistration.setEnrolments(new ArrayList<InfoEnrolment>());
-        Iterator<Enrolment> iteratorSCPs = studentCurricularPlan.getEnrolments().iterator();
+        Iterator<Enrolment> iteratorSCPs = studentCurricularPlan.getEnrolmentsSet().iterator();
         while (iteratorSCPs.hasNext()) {
             Enrolment enrolment = iteratorSCPs.next();
             infoCandidateRegistration.getEnrolments().add(InfoEnrolment.newInfoFromDomain(enrolment));

@@ -18,7 +18,7 @@ public class NewCorrector extends NewCorrector_Base implements Positionable {
         this.setAtomicQuestion(atomicQuestion);
         this.setPredicate(predicate);
         this.setPercentage(percentage);
-        this.setPosition(atomicQuestion.getCorrectorsCount());
+        this.setPosition(atomicQuestion.getCorrectorsSet().size());
     }
 
     public void delete() {
@@ -47,7 +47,7 @@ public class NewCorrector extends NewCorrector_Base implements Positionable {
 
     @Override
     public boolean isLast() {
-        return this.getPosition() == this.getAtomicQuestion().getCorrectorsCount();
+        return this.getPosition() == this.getAtomicQuestion().getCorrectorsSet().size();
     }
 
     @Override

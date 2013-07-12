@@ -40,6 +40,7 @@ import org.apache.commons.collections.Predicate;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
+import pt.ist.bennu.backend.util.ConnectionManager;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
 import pt.ist.fenixframework.FenixFramework;
@@ -182,8 +183,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 
     private List<String> getAllEventsExternalIds() {
         try {
-            Connection connection =
-                    Transaction.currentFenixTransaction().getOJBBroker().serviceConnectionManager().getConnection();
+            Connection connection = ConnectionManager.getCurrentSQLConnection();
 
             PreparedStatement prepareStatement = connection.prepareStatement("SELECT OID FROM EVENT");
             ResultSet executeQuery = prepareStatement.executeQuery();
@@ -849,6 +849,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
     public boolean isBrokenInThree() {
         return hasDebts();
     }
+
     @Deprecated
     public boolean hasExportIndividualCandidacyEvents() {
         return getExportIndividualCandidacyEvents() != null;

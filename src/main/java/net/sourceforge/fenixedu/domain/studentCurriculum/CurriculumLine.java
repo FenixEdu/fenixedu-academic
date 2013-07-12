@@ -314,9 +314,4 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
         return getUsedInSeparationCycle() != null;
     }
 
-    @Deprecated
-    public boolean hasCreatedBy() {
-        return getCreatedBy() != null;
-    }
-
 }

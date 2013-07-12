@@ -11,7 +11,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -250,7 +249,7 @@ public class Grouping extends Grouping_Base {
         checkIfGroupingAlreadyExists(goupingName);
 
         if (getDifferentiatedCapacity() && !differentiatedCapacity) {
-            if (!super.getStudentGroups().isEmpty()) {
+            if (!super.getStudentGroupsSet().isEmpty()) {
                 throw new DomainException(this.getClass().getName(), "error.groupProperties.edit.attendsSet.withGroups");
             }
 
@@ -259,7 +258,7 @@ public class Grouping extends Grouping_Base {
                 shiftGP.delete();
             }
         } else if (getDifferentiatedCapacity() && differentiatedCapacity && isShiftTypeDifferent(shiftType)) {
-            if (!super.getStudentGroups().isEmpty()) {
+            if (!super.getStudentGroupsSet().isEmpty()) {
                 throw new DomainException(this.getClass().getName(), "error.groupProperties.edit.attendsSet.withGroups");
             }
 
@@ -336,7 +335,7 @@ public class Grouping extends Grouping_Base {
 
     private Integer getMaxStudentGroupsCount() {
         final Map<Object, Integer> shiftCountMap = new HashMap<Object, Integer>();
-        for (final StudentGroup studentGroup : super.getStudentGroups()) {
+        for (final StudentGroup studentGroup : super.getStudentGroupsSet()) {
             if (!studentGroup.wasDeleted()) {
                 final Shift shift = studentGroup.getShift();
                 final int count = shiftCountMap.containsKey(shift) ? shiftCountMap.get(shift) + 1 : 1;
@@ -429,7 +428,7 @@ public class Grouping extends Grouping_Base {
 
     public void delete() {
 
-        if (!super.getStudentGroups().isEmpty()) {
+        if (!super.getStudentGroupsSet().isEmpty()) {
             throw new DomainException(this.getClass().getName(), "");
         }
 
@@ -470,7 +469,7 @@ public class Grouping extends Grouping_Base {
 
     public int findMaxGroupNumber() {
         int max = 0;
-        for (final StudentGroup studentGroup : super.getStudentGroups()) {
+        for (final StudentGroup studentGroup : super.getStudentGroupsSet()) {
             max = Math.max(max, studentGroup.getGroupNumber().intValue());
         }
         return max;
@@ -535,10 +534,9 @@ public class Grouping extends Grouping_Base {
         return false;
     }
 
-    @Override
-    public List<StudentGroup> getStudentGroups() {
+    private List<StudentGroup> getStudentGroups() {
         List<StudentGroup> result = new ArrayList<StudentGroup>();
-        for (StudentGroup sg : super.getStudentGroups()) {
+        for (StudentGroup sg : super.getStudentGroupsSet()) {
             if (!sg.wasDeleted()) {
                 result.add(sg);
             }
@@ -548,7 +546,7 @@ public class Grouping extends Grouping_Base {
 
     public List<StudentGroup> getDeletedStudentGroups() {
         List<StudentGroup> result = new ArrayList<StudentGroup>();
-        for (StudentGroup sg : super.getStudentGroups()) {
+        for (StudentGroup sg : super.getStudentGroupsSet()) {
             if (!sg.getValid()) {
                 result.add(sg);
             }
@@ -557,26 +555,8 @@ public class Grouping extends Grouping_Base {
     }
 
     @Override
-    public int getStudentGroupsCount() {
-        return this.getStudentGroups().size();
-    }
-
-    @Override
-    public Iterator<StudentGroup> getStudentGroupsIterator() {
-        // TODO Auto-generated method stub
-        return this.getStudentGroups().iterator();
-    }
-
-    @Override
     public Set<StudentGroup> getStudentGroupsSet() {
-        // TODO Auto-generated method stub
         return new TreeSet<StudentGroup>(this.getStudentGroups());
-    }
-
-    @Override
-    public boolean hasStudentGroups(StudentGroup studentGroups) {
-        // TODO Auto-generated method stub
-        return this.getStudentGroups().contains(studentGroups);
     }
 
     @Deprecated
@@ -627,11 +607,6 @@ public class Grouping extends Grouping_Base {
     @Deprecated
     public boolean hasAnyAttends() {
         return !getAttendsSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.StudentGroup> getStudentGroups() {
-        return getStudentGroupsSet();
     }
 
     @Deprecated

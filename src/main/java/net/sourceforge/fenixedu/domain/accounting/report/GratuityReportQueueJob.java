@@ -332,7 +332,7 @@ public class GratuityReportQueueJob extends GratuityReportQueueJob_Base {
         }
 
         public boolean hasReceipts() {
-            return transaction.getToAccountEntry().getReceiptsCount() > 0;
+            return transaction.getToAccountEntry().getReceiptsSet().size() > 0;
         }
 
         public String[] getReceiptContributorsNameForOtherParties() {

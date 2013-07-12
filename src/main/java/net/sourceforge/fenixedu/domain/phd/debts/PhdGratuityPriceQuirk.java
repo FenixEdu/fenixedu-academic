@@ -14,11 +14,6 @@ public class PhdGratuityPriceQuirk extends PhdGratuityPriceQuirk_Base {
     }
 
     @Deprecated
-    public boolean hasYear() {
-        return getYear() != null;
-    }
-
-    @Deprecated
     public boolean hasRootDomainObject() {
         return getRootDomainObject() != null;
     }

@@ -220,7 +220,7 @@ public class TSDTeachersGroupAction extends FenixDispatchAction {
         for (DegreeCurricularPlan plan : DegreeCurricularPlan.readBolonhaDegreeCurricularPlans()) {
             Degree degree = plan.getDegree();
 
-            if (plan.getCurricularCoursesWithExecutionIn(year).size() > 0 && degree.getDepartmentsCount() > 0) {
+            if (plan.getCurricularCoursesWithExecutionIn(year).size() > 0 && degree.getDepartmentsSet().size() > 0) {
                 if (degree.getDepartments().contains(department)) {
                     departmentPlansList.add(plan);
                 }

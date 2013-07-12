@@ -54,16 +54,9 @@ public class GroupStudent extends GroupStudent_Base {
         return getRegistration();
     }
 
-    @Override
     @Deprecated
     public boolean hasStudent() {
         return hasRegistration();
-    }
-
-    @Override
-    @Deprecated
-    public void removeStudent() {
-        setRegistration(null);
     }
 
     @Override
@@ -77,7 +70,7 @@ public class GroupStudent extends GroupStudent_Base {
     }
 
     public boolean hasRegistration() {
-        return super.hasStudent();
+        return super.getStudent() != null;
     }
 
     public void removeRegistration() {
@@ -86,11 +79,6 @@ public class GroupStudent extends GroupStudent_Base {
 
     public void setRegistration(Registration registration) {
         super.setStudent(registration);
-    }
-
-    @Deprecated
-    public boolean hasStudent() {
-        return getStudent() != null;
     }
 
     @Deprecated

@@ -115,11 +115,11 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
     }
 
     private String numberOfPrograms() {
-        return NumberToWordsConverter.convert(getDocumentRequest().getEnrolmentsCount(), getLocale());
+        return NumberToWordsConverter.convert(getDocumentRequest().getEnrolmentsSet().size(), getLocale());
     }
 
     private String getProgramsDescription() {
-        if (getDocumentRequest().getEnrolmentsCount() == 1) {
+        if (getDocumentRequest().getEnrolmentsSet().size() == 1) {
             return getResourceBundle().getString("label.program.certificate.program");
         } else {
             return MessageFormat.format(getResourceBundle().getString("label.program.certificate.programs"), numberOfPrograms());

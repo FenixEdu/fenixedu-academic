@@ -57,7 +57,7 @@ public class DeleteExerciseVariation {
             Metadata metadata = question.getMetadata();
             if (question.getStudentTestsQuestions() == null || question.getStudentTestsQuestions().size() == 0) {
                 question.delete();
-                if (metadata.getQuestionsCount() <= 1) {
+                if (metadata.getQuestionsSet().size() <= 1) {
                     metadata.delete();
                 } else if (metadata.getVisibleQuestions().size() == 0) {
                     metadata.setVisibility(Boolean.FALSE);

@@ -784,7 +784,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
             new SecondCycleIndividualCandidacyExemption(userView.getPerson(), event,
                     CandidacyExemptionJustificationType.TRANSFERED_APPLICATION);
 
-            List<IndividualCandidacyDocumentFile> documents = process.getCandidacy().getDocuments();
+            Collection<IndividualCandidacyDocumentFile> documents = process.getCandidacy().getDocuments();
 
             for (IndividualCandidacyDocumentFile individualCandidacyDocumentFile : documents) {
                 individualCandidacyDocumentFile.addIndividualCandidacy(newProcess.getCandidacy());

@@ -222,7 +222,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     public boolean hasProposals() {
         boolean result = false;
         boolean found = false;
-        List<ExportGrouping> groupPropertiesExecutionCourseList = getExportGroupings();
+        Collection<ExportGrouping> groupPropertiesExecutionCourseList = getExportGroupings();
         Iterator<ExportGrouping> iter = groupPropertiesExecutionCourseList.iterator();
         while (iter.hasNext() && !found) {
             ExportGrouping groupPropertiesExecutionCourseAux = iter.next();
@@ -521,7 +521,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     private void removeFinalEvaluations() {
-        final Iterator<Evaluation> iterator = getAssociatedEvaluationsIterator();
+        final Iterator<Evaluation> iterator = getAssociatedEvaluationsSet().iterator();
         while (iterator.hasNext()) {
             final Evaluation evaluation = iterator.next();
             if (evaluation.isFinal()) {
@@ -634,7 +634,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
                     StudentCurricularPlan studentCurricularPlanEntry = enrolment.getStudentCurricularPlan();
                     int numberOfEnrolmentsForThatExecutionCourse = 0;
 
-                    for (Enrolment enrolmentsFromStudentCPEntry : studentCurricularPlanEntry.getEnrolments()) {
+                    for (Enrolment enrolmentsFromStudentCPEntry : studentCurricularPlanEntry.getEnrolmentsSet()) {
                         if (enrolmentsFromStudentCPEntry.getCurricularCourse() == curricularCourseFromExecutionCourseEntry
                                 && (enrolmentsFromStudentCPEntry.getExecutionPeriod().compareTo(courseExecutionPeriod) <= 0)) {
                             ++numberOfEnrolmentsForThatExecutionCourse;
@@ -1729,7 +1729,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     public Registration getRegistration(Person person) {
         for (Registration registration : person.getStudents()) {
             for (StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlans()) {
-                for (Enrolment enrolment : studentCurricularPlan.getEnrolments()) {
+                for (Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
                     for (ExecutionCourse course : enrolment.getExecutionCourses()) {
                         if (course.equals(this)) {
                             return registration;
@@ -2361,7 +2361,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     public boolean isSplittable() {
-        if (getAssociatedCurricularCoursesCount() < 2) {
+        if (getAssociatedCurricularCoursesSet().size() < 2) {
             return false;
         }
         return true;

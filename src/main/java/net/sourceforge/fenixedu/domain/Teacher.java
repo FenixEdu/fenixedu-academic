@@ -515,7 +515,7 @@ public class Teacher extends Teacher_Base {
 
             if (masterDegreeThesisDataVersion.getCurrentState().getState() == State.ACTIVE) {
 
-                List<ExecutionDegree> executionDegrees =
+                Collection<ExecutionDegree> executionDegrees =
                         masterDegreeThesisDataVersion.getMasterDegreeThesis().getStudentCurricularPlan()
                                 .getDegreeCurricularPlan().getExecutionDegrees();
 
@@ -587,8 +587,8 @@ public class Teacher extends Teacher_Base {
                     } else if (internalPhdParticipant.getProcessForAssistantGuiding() != null) {
                         assistantGuidedTheses =
                                 assistantGuidedTheses
-                                        + (0.5 / internalPhdParticipant.getProcessForAssistantGuiding()
-                                                .getAssistantGuidingsCount());
+                                        + (0.5 / internalPhdParticipant.getProcessForAssistantGuiding().getAssistantGuidingsSet()
+                                                .size());
                     }
 
                 }
@@ -1084,7 +1084,7 @@ public class Teacher extends Teacher_Base {
         return false;
     }
 
-    public boolean teachesAny(final List<ExecutionCourse> executionCourses) {
+    public boolean teachesAny(final Collection<ExecutionCourse> executionCourses) {
         return getPerson().teachesAny(executionCourses);
     }
 
@@ -1103,7 +1103,7 @@ public class Teacher extends Teacher_Base {
         for (Professorship professorship : getProfessorships(executionYear)) {
             Set<Shift> associatedShifts = professorship.getExecutionCourse().getAssociatedShifts();
             for (Shift shift : associatedShifts) {
-                List<Lesson> associatedLessons = shift.getAssociatedLessons();
+                Collection<Lesson> associatedLessons = shift.getAssociatedLessons();
                 for (Lesson lesson : associatedLessons) {
                     if (lesson.contains(interval)) {
                         return true;
@@ -1296,18 +1296,6 @@ public class Teacher extends Teacher_Base {
             }
         }
         return false;
-    }
-
-    public int getProfessorshipsCount() {
-        return getPerson().getProfessorshipsCount();
-    }
-
-    public boolean hasAnyProfessorships() {
-        return getPerson().hasAnyProfessorships();
-    }
-
-    public boolean hasProfessorship(Professorship professorship) {
-        return getPerson().hasProfessorships(professorship);
     }
 
     public Set<Professorship> getProfessorshipsSet() {

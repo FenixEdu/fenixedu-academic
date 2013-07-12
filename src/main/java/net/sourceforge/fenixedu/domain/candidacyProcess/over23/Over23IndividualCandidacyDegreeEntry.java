@@ -40,7 +40,7 @@ public class Over23IndividualCandidacyDegreeEntry extends Over23IndividualCandid
     }
 
     private void checkOrder(final Over23IndividualCandidacy candidacy, final Degree degree, int order) {
-        for (final Over23IndividualCandidacyDegreeEntry entry : candidacy.getOver23IndividualCandidacyDegreeEntries()) {
+        for (final Over23IndividualCandidacyDegreeEntry entry : candidacy.getOver23IndividualCandidacyDegreeEntriesSet()) {
             if (entry.isFor(degree) && entry.hasDegreeOrder(order)) {
                 throw new DomainException("error.Over23IndividualCandidacyDegreeEntry.found.duplicated.order");
             }
@@ -57,7 +57,7 @@ public class Over23IndividualCandidacyDegreeEntry extends Over23IndividualCandid
 
     void delete() {
         setDegree(null);
-        removeOver23IndividualCandidacy();
+        setOver23IndividualCandidacy(null);
         setRootDomainObject(null);
         super.deleteDomainObject();
     }

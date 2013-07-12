@@ -5,6 +5,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.Seminaries;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -28,7 +29,7 @@ public class GetAllCasesStudy {
     protected List run() throws BDException {
         List infoCases = new LinkedList();
 
-        List cases = CaseStudy.getAllCaseStudies();
+        Collection cases = CaseStudy.getAllCaseStudies();
 
         for (Iterator iterator = cases.iterator(); iterator.hasNext();) {
             CaseStudy caseStudy = (CaseStudy) iterator.next();

@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -89,8 +90,8 @@ public abstract class DelegateElection extends DelegateElection_Base {
                 deleteVotingPeriod(votingPeriod);
             }
         }
-        super.getStudents().clear();
-        super.getCandidates().clear();
+        super.getStudentsSet().clear();
+        super.getCandidatesSet().clear();
 
         setElectedStudent(null);
         setDegree(null);
@@ -151,7 +152,7 @@ public abstract class DelegateElection extends DelegateElection_Base {
 
     public List<Student> getCandidaciesHadVoted(DelegateElectionVotingPeriod votingPeriod) {
         List<Student> candidateshadVoted = new ArrayList<Student>();
-        for (Student student : getCandidates()) {
+        for (Student student : getCandidatesSet()) {
             if (votingPeriod.hasVotedStudent(student)) {
                 candidateshadVoted.add(student);
             }
@@ -184,7 +185,7 @@ public abstract class DelegateElection extends DelegateElection_Base {
     }
 
     public boolean hasLastVotingPeriod() {
-        return getVotingPeriodCount() > 0;
+        return getVotingPeriodSet().size() > 0;
     }
 
     public boolean hasVotingPeriod(YearMonthDay startDate, YearMonthDay endDate) {
@@ -214,9 +215,9 @@ public abstract class DelegateElection extends DelegateElection_Base {
     }
 
     @Override
-    public Collection<Student> getCandidates() {
+    public Set<Student> getCandidatesSet() {
         if (!hasLastVotingPeriod() || getLastVotingPeriod().isFirstRoundElections()) {
-            return super.getCandidates();
+            return super.getCandidatesSet();
         }
         return getLastVotingPeriod().getCandidatesForNewRoundElections();
 
@@ -231,8 +232,8 @@ public abstract class DelegateElection extends DelegateElection_Base {
     }
 
     private Collection<Student> getNotCandidates() {
-        List<Student> result = new ArrayList<Student>(super.getStudents());
-        result.removeAll(getCandidates());
+        List<Student> result = new ArrayList<Student>(super.getStudentsSet());
+        result.removeAll(getCandidatesSet());
         return result;
     }
 
@@ -267,11 +268,6 @@ public abstract class DelegateElection extends DelegateElection_Base {
     @Deprecated
     public boolean hasAnyStudents() {
         return !getStudentsSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.student.Student> getCandidates() {
-        return getCandidatesSet();
     }
 
     @Deprecated

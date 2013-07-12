@@ -43,7 +43,7 @@ public class WrittenEvaluationSpaceOccupation extends WrittenEvaluationSpaceOccu
     // )
     public void edit(WrittenEvaluation writtenEvaluation) {
 
-        if (hasWrittenEvaluations(writtenEvaluation)) {
+        if (getWrittenEvaluationsSet().contains(writtenEvaluation)) {
             removeWrittenEvaluations(writtenEvaluation);
         }
 

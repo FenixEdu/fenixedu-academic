@@ -366,7 +366,7 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
 
             Map<Professorship, Set<ShiftType>> professorships = new HashMap<Professorship, Set<ShiftType>>();
             for (Professorship professorship : executionCourse.getProfessorships()) {
-                List<InquiryResult> professorshipResults = professorship.getInquiryResults();
+                Collection<InquiryResult> professorshipResults = professorship.getInquiryResults();
                 if (!professorshipResults.isEmpty()) {
                     professorships.put(professorship, getShiftTypes(professorshipResults));
                 }
@@ -380,7 +380,7 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
         }
     }
 
-    private Set<ShiftType> getShiftTypes(List<InquiryResult> professorshipResults) {
+    private Set<ShiftType> getShiftTypes(Collection<InquiryResult> professorshipResults) {
         Set<ShiftType> shiftTypes = new HashSet<ShiftType>();
         for (InquiryResult inquiryResult : professorshipResults) {
             shiftTypes.add(inquiryResult.getShiftType());

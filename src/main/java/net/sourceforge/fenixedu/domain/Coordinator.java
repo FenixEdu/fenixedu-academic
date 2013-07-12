@@ -26,7 +26,7 @@ public class Coordinator extends Coordinator_Base {
             @Override
             public void afterRemove(Person o1, Coordinator o2) {
                 if (o1 != null && o2 != null) {
-                    if (o1.getCoordinatorsCount() == 0 && !o1.hasAnyScientificCommissions()) {
+                    if (o1.getCoordinatorsSet().size() == 0 && !o1.hasAnyScientificCommissions()) {
                         o1.removeRoleByType(RoleType.COORDINATOR);
                     }
                 }
@@ -142,7 +142,7 @@ public class Coordinator extends Coordinator_Base {
         } else if (operationType.compareTo(OperationType.REMOVE) == 0) {
             checkRulesToDelete();
             CoordinatorLog.createCoordinatorLog(new DateTime(), OperationType.REMOVE, personMakingAction, this);
-            this.setCoordinator(null);
+            this.removeCoordinator();
         }
     }
 

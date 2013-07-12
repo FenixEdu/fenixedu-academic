@@ -47,7 +47,7 @@ public class SelectCandidaciesService {
             candidacyDTO.setName(registration.getPerson().getName());
             candidacyDTO.setUsername(registration.getPerson().getUsername());
             candidacyDTO.setEmail(registration.getPerson().getName());
-            candidacyDTO.setInfoClassification(getInfoClassification(studentCurricularPlan.getEnrolments()));
+            candidacyDTO.setInfoClassification(getInfoClassification(studentCurricularPlan.getEnrolmentsSet()));
             candidacyDTO.setCandidacyId(candidacy.getExternalId());
             if (candidacy.getApproved() != null) {
                 candidacyDTO.setApproved(candidacy.getApproved());
@@ -61,7 +61,7 @@ public class SelectCandidaciesService {
         return result;
     }
 
-    private InfoClassification getInfoClassification(List<Enrolment> enrollments) {
+    private InfoClassification getInfoClassification(Collection<Enrolment> enrollments) {
         InfoClassification infoClassification = new InfoClassification();
         int auxInt = 0;
         float acc = 0;

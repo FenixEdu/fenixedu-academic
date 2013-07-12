@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.delegate;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -171,7 +172,7 @@ public class ViewStudentsDispatchAction extends FenixDispatchAction {
         return delegateFunction;
     }
 
-    private Set<CurricularCourse> getDegreesCurricularCoursesFromCoordinatorRoles(List<Coordinator> coordinators,
+    private Set<CurricularCourse> getDegreesCurricularCoursesFromCoordinatorRoles(Collection<Coordinator> coordinators,
             ExecutionYear executionYear) {
         Set<CurricularCourse> curricularCourses = new HashSet<CurricularCourse>();
         for (Coordinator coordinator : coordinators) {

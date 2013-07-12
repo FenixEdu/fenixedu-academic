@@ -5,6 +5,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.Seminaries;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -28,7 +29,7 @@ public class GetAllModalities {
     protected List run() throws BDException {
         List infoCases = new LinkedList();
 
-        List cases = Modality.getAllModalities();
+        Collection cases = Modality.getAllModalities();
 
         for (Iterator iterator = cases.iterator(); iterator.hasNext();) {
             Modality modality = (Modality) iterator.next();
@@ -44,7 +45,7 @@ public class GetAllModalities {
     private static final GetAllModalities serviceInstance = new GetAllModalities();
 
     @Atomic
-    public static List runGetAllModalities() throws BDException  , NotAuthorizedException {
+    public static List runGetAllModalities() throws BDException, NotAuthorizedException {
         SeminaryCoordinatorOrStudentFilter.instance.execute();
         return serviceInstance.run();
     }

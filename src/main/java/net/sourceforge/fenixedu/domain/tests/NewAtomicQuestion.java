@@ -238,7 +238,7 @@ public abstract class NewAtomicQuestion extends NewAtomicQuestion_Base {
 
     @Override
     public boolean isCorrectable(Person person) {
-        return this.isAnswered(person) && this.isVisible(person) && this.getCorrectorsCount() == 0;
+        return this.isAnswered(person) && this.isVisible(person) && this.getCorrectorsSet().size() == 0;
     }
 
     public boolean isCorrectable() {
@@ -256,7 +256,7 @@ public abstract class NewAtomicQuestion extends NewAtomicQuestion_Base {
 
     @Override
     public void publishGrades() {
-        if (this.getCorrectorsCount() == 0) {
+        if (this.getCorrectorsSet().size() == 0) {
             for (NewAnswer answer : this.getAnswers()) {
                 if (answer.getPercentage() == null) {
                     answer.setPercentage(new Double(0));
@@ -276,7 +276,7 @@ public abstract class NewAtomicQuestion extends NewAtomicQuestion_Base {
             return new TestsGrade(0, this.getTest().getScale());
         }
 
-        if (this.getCorrectorsCount() > 0) {
+        if (this.getCorrectorsSet().size() > 0) {
             return this.getFinalGradeByCorrector(person);
         }
 

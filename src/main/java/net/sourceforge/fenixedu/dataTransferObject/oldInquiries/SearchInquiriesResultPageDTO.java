@@ -15,19 +15,19 @@ public class SearchInquiriesResultPageDTO extends ActionForm {
 
     private String method;
 
-    private Long executionSemesterID;
+    private String executionSemesterID;
 
     private ExecutionSemester executionSemester;
 
-    private Long executionDegreeID;
+    private String executionDegreeID;
 
     private ExecutionDegree executionDegree;
 
-    private Long executionCourseID;
+    private String executionCourseID;
 
     private ExecutionCourse executionCourse;
 
-    public Long getExecutionSemesterID() {
+    public String getExecutionSemesterID() {
         return executionSemesterID;
     }
 
@@ -35,34 +35,35 @@ public class SearchInquiriesResultPageDTO extends ActionForm {
         return isNullOrZero(executionSemesterID);
     }
 
-    public void setExecutionSemesterID(Long executionSemesterID) {
+    public void setExecutionSemesterID(String executionSemesterID) {
         this.executionSemesterID = executionSemesterID;
         this.executionSemester =
-                isNullOrZero(executionSemesterID) ? null : (ExecutionSemester) AbstractDomainObject.fromOID(executionSemesterID);
+                isNullOrZero(executionSemesterID) ? null : (ExecutionSemester) FenixFramework
+                        .getDomainObject(executionSemesterID);
     }
 
-    private boolean isNullOrZero(Long id) {
-        return id == null || id.intValue() == 0;
+    private boolean isNullOrZero(String id) {
+        return id == null;
     }
 
-    public Long getExecutionDegreeID() {
+    public String getExecutionDegreeID() {
         return executionDegreeID;
     }
 
-    public void setExecutionDegreeID(Long executionDegreeID) {
+    public void setExecutionDegreeID(String executionDegreeID) {
         this.executionDegreeID = executionDegreeID;
         this.executionDegree =
-                isNullOrZero(executionDegreeID) ? null : (ExecutionDegree) AbstractDomainObject.fromOID(executionDegreeID);
+                isNullOrZero(executionDegreeID) ? null : (ExecutionDegree) FenixFramework.getDomainObject(executionDegreeID);
     }
 
-    public Long getExecutionCourseID() {
+    public String getExecutionCourseID() {
         return executionCourseID;
     }
 
-    public void setExecutionCourseID(Long executionCourseID) {
+    public void setExecutionCourseID(String executionCourseID) {
         this.executionCourseID = executionCourseID;
         this.executionCourse =
-                isNullOrZero(executionCourseID) ? null : (ExecutionCourse) AbstractDomainObject.fromOID(executionCourseID);
+                isNullOrZero(executionCourseID) ? null : (ExecutionCourse) FenixFramework.getDomainObject(executionCourseID);
     }
 
     public ExecutionSemester getExecutionSemester() {

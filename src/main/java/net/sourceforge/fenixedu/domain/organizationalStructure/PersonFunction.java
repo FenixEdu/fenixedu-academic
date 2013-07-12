@@ -260,11 +260,6 @@ public class PersonFunction extends PersonFunction_Base {
     }
 
     @Deprecated
-    public boolean hasCredits() {
-        return getCredits() != null;
-    }
-
-    @Deprecated
     public boolean hasDelegate() {
         return getDelegate() != null;
     }

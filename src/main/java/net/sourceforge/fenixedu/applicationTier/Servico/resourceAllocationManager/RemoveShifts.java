@@ -14,16 +14,13 @@ public class RemoveShifts {
 
     @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
     @Atomic
-    public static Boolean run(final InfoClass infoClass, final List shiftOIDs) {
+    public static Boolean run(final InfoClass infoClass, final List<String> shiftOIDs) {
         final SchoolClass schoolClass = FenixFramework.getDomainObject(infoClass.getExternalId());
-        final Collection<Shift> shifts = schoolClass.getAssociatedShifts();
+        final Collection<Shift> shifts = schoolClass.getAssociatedShiftsSet();
 
-        for (int i = 0; i < shifts.size(); i++) {
-            final Shift shift = shifts.get(i);
-            if (shiftOIDs.contains(shift.getExternalId())) {
-                shifts.remove(shift);
-                i--;
-            }
+        for (String externalId : shiftOIDs) {
+            Shift shift = FenixFramework.getDomainObject(externalId);
+            shifts.remove(shift);
         }
 
         return Boolean.TRUE;

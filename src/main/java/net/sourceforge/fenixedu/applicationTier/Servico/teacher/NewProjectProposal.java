@@ -132,7 +132,7 @@ public class NewProjectProposal {
                 groupingStudentNumbers.add(attend.getRegistration().getNumber());
             }
 
-            Iterator iterAttends2 = goalExecutionCourse.getAttendsIterator();
+            Iterator iterAttends2 = goalExecutionCourse.getAttendsSet().iterator();
             while (iterAttends2.hasNext()) {
                 Attends attend = (Attends) iterAttends2.next();
                 if (!groupingStudentNumbers.contains(attend.getRegistration().getNumber())) {

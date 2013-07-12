@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.RoomsPunctualSchedulingBean;
@@ -27,7 +28,7 @@ public class EditRoomsPunctualScheduling {
 
         if (genericEvent != null && !roomsToInsert.isEmpty()) {
 
-            List<GenericEventSpaceOccupation> eventRoomOccupations = genericEvent.getGenericEventSpaceOccupations();
+            Collection<GenericEventSpaceOccupation> eventRoomOccupations = genericEvent.getGenericEventSpaceOccupations();
             List<GenericEventSpaceOccupation> roomOccupationsToDelete = new ArrayList<GenericEventSpaceOccupation>();
 
             for (GenericEventSpaceOccupation occupation : eventRoomOccupations) {

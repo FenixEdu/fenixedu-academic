@@ -5,6 +5,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
@@ -33,7 +34,7 @@ public class PrepareEditStudentGroupMembers {
         final List<Attends> groupingAttends = new ArrayList<Attends>();
         groupingAttends.addAll(studentGroup.getGrouping().getAttends());;
 
-        final List<StudentGroup> studentsGroups = studentGroup.getGrouping().getStudentGroups();
+        final Collection<StudentGroup> studentsGroups = studentGroup.getGrouping().getStudentGroupsSet();
         for (final StudentGroup studentGroupIter : studentsGroups) {
             for (final Attends attend : studentGroupIter.getAttends()) {
                 groupingAttends.remove(attend);

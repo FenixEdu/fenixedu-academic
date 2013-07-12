@@ -59,7 +59,7 @@ public class MeasurementTestRoom extends MeasurementTestRoom_Base {
                     "error.net.sourceforge.fenixedu.domain.candidacy.MeasurementTestRoom.capacity.cannot.be.null", args1);
         }
 
-        setRoomOrder(shift.getRoomsCount() + 1);
+        setRoomOrder(shift.getRoomsSet().size() + 1);
         setShift(shift);
         setName(name);
         setCapacity(capacity);
@@ -67,7 +67,7 @@ public class MeasurementTestRoom extends MeasurementTestRoom_Base {
     }
 
     public boolean isAvailable() {
-        return getCapacity().intValue() - getRegistrationsCount() > 0;
+        return getCapacity().intValue() - getRegistrationsSet().size() > 0;
     }
 
     public Campus getCampus() {

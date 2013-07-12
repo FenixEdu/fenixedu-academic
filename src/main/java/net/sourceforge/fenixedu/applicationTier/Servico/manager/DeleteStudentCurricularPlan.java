@@ -27,7 +27,7 @@ public class DeleteStudentCurricularPlan {
 
         if (studentCurricularPlan != null) {
 
-            for (Enrolment enrolment : studentCurricularPlan.getEnrolments()) {
+            for (Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
                 for (EnrolmentEvaluation evaluation : enrolment.getEvaluations()) {
                     evaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
                 }

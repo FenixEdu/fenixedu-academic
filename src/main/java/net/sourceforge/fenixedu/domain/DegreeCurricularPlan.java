@@ -527,7 +527,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     public Set<ExecutionCourse> getExecutionCoursesByExecutionPeriod(ExecutionSemester executionSemester) {
         final Set<ExecutionCourse> result = new HashSet<ExecutionCourse>();
-        for (final CurricularCourse curricularCourse : super.getCurricularCourses()) {
+        for (final CurricularCourse curricularCourse : super.getCurricularCoursesSet()) {
             for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCourses()) {
                 if (executionCourse.getExecutionPeriod() == executionSemester) {
                     result.add(executionCourse);
@@ -917,20 +917,10 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return null;
     }
 
-    /**
-     * Method to get an unfiltered list of a dcp's curricular courses
-     * 
-     * @return All curricular courses that were or still are present in the dcp
-     */
-    @Override
-    public List<CurricularCourse> getCurricularCourses() {
-        return isBoxStructure() ? getCurricularCourses((ExecutionYear) null) : super.getCurricularCourses();
-    }
-
     @Override
     public Set<CurricularCourse> getCurricularCoursesSet() {
         if (isBoxStructure()) {
-            return new HashSet<CurricularCourse>(this.getCurricularCourses((ExecutionYear) null));
+            return this.getCurricularCourses((ExecutionYear) null);
         } else {
             return super.getCurricularCoursesSet();
         }
@@ -966,8 +956,8 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
      * 
      * @return All curricular courses that are present in the dcp
      */
-    private List<CurricularCourse> getCurricularCourses(final ExecutionYear executionYear) {
-        final List<CurricularCourse> result = new ArrayList<CurricularCourse>();
+    private Set<CurricularCourse> getCurricularCourses(final ExecutionYear executionYear) {
+        final Set<CurricularCourse> result = new HashSet<CurricularCourse>();
         if (isBoxStructure()) {
             for (final DegreeModule degreeModule : getDcpDegreeModules(CurricularCourse.class, executionYear)) {
                 result.add((CurricularCourse) degreeModule);
@@ -988,7 +978,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
                 getRoot().applyToCurricularCourses(executionYear, predicate);
             }
         } else {
-            for (final CurricularCourse curricularCourse : super.getCurricularCourses()) {
+            for (final CurricularCourse curricularCourse : super.getCurricularCoursesSet()) {
                 if (curricularCourse.hasAnyActiveDegreModuleScope(executionYear)) {
                     curricularCourse.applyToCurricularCourses(executionYear, predicate);
                 }
@@ -1186,15 +1176,9 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
             return false;
         }
 
-        final List<ExecutionDegree> executionDegrees = getExecutionDegrees();
+        final Collection<ExecutionDegree> executionDegrees = getExecutionDegrees();
         return executionDegrees.size() > 1 ? false : executionDegrees.isEmpty()
                 || executionDegrees.iterator().next().getExecutionYear().isCurrent();
-    }
-
-    @Override
-    @Checked("DegreeCurricularPlanPredicates.scientificCouncilWritePredicate")
-    public void removeDegree() {
-        super.setDegree(null);
     }
 
     @Override

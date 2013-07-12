@@ -34,7 +34,7 @@ public class GetEnrolmentList {
     @Atomic
     public static List<InfoEnrolment> run(String studentCurricularPlanID) {
         final List<InfoEnrolment> result = new ArrayList<InfoEnrolment>();
-        for (final Enrolment enrolment : getStudentCurricularPlan(studentCurricularPlanID).getEnrolments()) {
+        for (final Enrolment enrolment : getStudentCurricularPlan(studentCurricularPlanID).getEnrolmentsSet()) {
             if (enrolment.isExtraCurricular()) {
                 continue;
             }

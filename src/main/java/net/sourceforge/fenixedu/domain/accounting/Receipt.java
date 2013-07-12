@@ -1,11 +1,11 @@
 package net.sourceforge.fenixedu.domain.accounting;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -178,16 +178,6 @@ public class Receipt extends Receipt_Base {
     }
 
     @Override
-    public List<Entry> getEntries() {
-        return Collections.unmodifiableList(super.getEntries());
-    }
-
-    @Override
-    public Iterator<Entry> getEntriesIterator() {
-        return getEntriesSet().iterator();
-    }
-
-    @Override
     public Set<Entry> getEntriesSet() {
         return Collections.unmodifiableSet(super.getEntriesSet());
     }
@@ -238,18 +228,8 @@ public class Receipt extends Receipt_Base {
     }
 
     @Override
-    public List<CreditNote> getCreditNotes() {
-        return Collections.unmodifiableList(super.getCreditNotes());
-    }
-
-    @Override
     public Set<CreditNote> getCreditNotesSet() {
         return Collections.unmodifiableSet(super.getCreditNotesSet());
-    }
-
-    @Override
-    public Iterator<CreditNote> getCreditNotesIterator() {
-        return getCreditNotesSet().iterator();
     }
 
     @Override
@@ -336,7 +316,7 @@ public class Receipt extends Receipt_Base {
     }
 
     private boolean hasAnyActiveCreditNotes() {
-        List<CreditNote> creditNotes = getCreditNotes();
+        Collection<CreditNote> creditNotes = getCreditNotesSet();
 
         for (CreditNote creditNote : creditNotes) {
             if (!creditNote.isAnnulled()) {
@@ -385,7 +365,7 @@ public class Receipt extends Receipt_Base {
 
         super.setContributorParty(null);
         super.setResponsible(null);
-        super.getEntries().clear();
+        super.getEntriesSet().clear();
         super.setPerson(null);
 
         setRootDomainObject(null);
@@ -422,7 +402,7 @@ public class Receipt extends Receipt_Base {
 
     public List<CreditNote> getEmittedCreditNotes() {
         final List<CreditNote> result = new ArrayList<CreditNote>();
-        for (final CreditNote creditNote : super.getCreditNotes()) {
+        for (final CreditNote creditNote : super.getCreditNotesSet()) {
             if (creditNote.isEmitted()) {
                 result.add(creditNote);
             }
@@ -454,7 +434,7 @@ public class Receipt extends Receipt_Base {
     }
 
     public boolean isSecondPrintVersion() {
-        return getReceiptsVersionsCount() >= 1;
+        return getReceiptsVersionsSet().size() >= 1;
     }
 
     static public Receipt readByYearAndNumber(final Integer year, final Integer number, final String series) {

@@ -159,7 +159,7 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 
     static InquiryResponseState getFilledState(Professorship professorship, TeacherInquiryTemplate inquiryTemplate,
             List<TeacherShiftTypeGroupsResumeResult> teacherResults) {
-        List<InquiryResult> professorshipResults = professorship.getInquiryResults();
+        Collection<InquiryResult> professorshipResults = professorship.getInquiryResults();
         InquiryResponseState finalState = InquiryResponseState.COMPLETE;
         if (professorship.hasInquiryTeacherAnswer()
                 && professorship.getInquiryTeacherAnswer().hasRequiredQuestionsToAnswer(inquiryTemplate)) {
@@ -185,7 +185,7 @@ public class TeachingInquiryDA extends FenixDispatchAction {
         return finalState;
     }
 
-    private static Set<ShiftType> getShiftTypes(List<InquiryResult> professorshipResults) {
+    private static Set<ShiftType> getShiftTypes(Collection<InquiryResult> professorshipResults) {
         Set<ShiftType> shiftTypes = new HashSet<ShiftType>();
         for (InquiryResult inquiryResult : professorshipResults) {
             shiftTypes.add(inquiryResult.getShiftType());

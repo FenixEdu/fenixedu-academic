@@ -464,8 +464,8 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
                 if ((person.getTeacher() != null && (person.getTeacher().getTeacherAuthorization(executionSemester) != null || person
                         .hasRole(RoleType.TEACHER))) || slappedInTheFaceOneTooManyTimes(executionSemester)) {
                     Professorship professorship =
-                            Professorship.create(false, FenixFramework.<ExecutionCourse> getDomainObject(objectCode),
-                                    person, 0.0);
+                            Professorship
+                                    .create(false, FenixFramework.<ExecutionCourse> getDomainObject(objectCode), person, 0.0);
                     request.setAttribute("teacherOID", professorship.getExternalId());
                 } else if (person.getTeacher() == null || person.getTeacher().getCategoryByPeriod(executionSemester) == null) {
                     final ActionErrors actionErrors = new ActionErrors();
@@ -1092,7 +1092,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
                 infoGroupProperties.setMaximumCapacity(1);
                 infoGroupProperties.setMinimumCapacity(1);
                 infoGroupProperties.setIdealCapacity(1);
-                infoGroupProperties.setGroupMaximumNumber(executionCourse.getAttendsCount());
+                infoGroupProperties.setGroupMaximumNumber(executionCourse.getAttendsSet().size());
                 infoGroupProperties.setShiftType(null);
                 infoGroupProperties.setEnrolmentPolicy(new EnrolmentGroupPolicyType(2));
                 infoGroupProperties.setAutomaticEnrolment(Boolean.TRUE);
@@ -1101,7 +1101,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             groupPropertiesForm.set("maximumCapacity", "1");
             groupPropertiesForm.set("minimumCapacity", "1");
             groupPropertiesForm.set("idealCapacity", "1");
-            groupPropertiesForm.set("groupMaximumNumber", String.valueOf(executionCourse.getAttendsCount()));
+            groupPropertiesForm.set("groupMaximumNumber", String.valueOf(executionCourse.getAttendsSet().size()));
             groupPropertiesForm.set("shiftType", "SEM TURNO");
             groupPropertiesForm.set("enrolmentPolicy", "false");
             request.setAttribute("automaticEnrolment", "true");
@@ -1372,10 +1372,10 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             request.setAttribute("differentiatedCapacityDisable", "true");
         }
 
-        if (!grouping.getStudentGroups().isEmpty() && !grouping.getAutomaticEnrolment()) {
+        if (!grouping.getStudentGroupsSet().isEmpty() && !grouping.getAutomaticEnrolment()) {
             request.setAttribute("automaticEnrolmentDisable", "true");
         }
-        if (!grouping.getStudentGroups().isEmpty() && !grouping.getDifferentiatedCapacity()) {
+        if (!grouping.getStudentGroupsSet().isEmpty() && !grouping.getDifferentiatedCapacity()) {
             request.setAttribute("differentiatedCapacityDisable", "true");
         }
         if (grouping.hasAnyStudentGroups() && grouping.getAutomaticEnrolment() && !infoGroupProperties.getAutomaticEnrolment()) {

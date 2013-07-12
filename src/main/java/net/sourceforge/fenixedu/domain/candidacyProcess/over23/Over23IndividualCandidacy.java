@@ -123,8 +123,8 @@ public class Over23IndividualCandidacy extends Over23IndividualCandidacy_Base {
     }
 
     private void removeExistingDegreeEntries() {
-        while (hasAnyOver23IndividualCandidacyDegreeEntries()) {
-            getOver23IndividualCandidacyDegreeEntries().iterator().next().delete();
+        while (!getOver23IndividualCandidacyDegreeEntriesSet().isEmpty()) {
+            getOver23IndividualCandidacyDegreeEntriesSet().iterator().next().delete();
         }
     }
 
@@ -161,8 +161,8 @@ public class Over23IndividualCandidacy extends Over23IndividualCandidacy_Base {
     }
 
     List<Degree> getSelectedDegrees() {
-        final List<Degree> result = new ArrayList<Degree>(getOver23IndividualCandidacyDegreeEntriesCount());
-        for (final Over23IndividualCandidacyDegreeEntry entry : getOver23IndividualCandidacyDegreeEntries()) {
+        final List<Degree> result = new ArrayList<Degree>(getOver23IndividualCandidacyDegreeEntriesSet().size());
+        for (final Over23IndividualCandidacyDegreeEntry entry : getOver23IndividualCandidacyDegreeEntriesSet()) {
             result.add(entry.getDegree());
         }
         return result;
@@ -171,7 +171,7 @@ public class Over23IndividualCandidacy extends Over23IndividualCandidacy_Base {
     List<Degree> getSelectedDegreesSortedByOrder() {
         final Set<Over23IndividualCandidacyDegreeEntry> entries =
                 new TreeSet<Over23IndividualCandidacyDegreeEntry>(Over23IndividualCandidacyDegreeEntry.COMPARATOR_BY_ORDER);
-        entries.addAll(getOver23IndividualCandidacyDegreeEntries());
+        entries.addAll(getOver23IndividualCandidacyDegreeEntriesSet());
 
         final List<Degree> result = new ArrayList<Degree>(entries.size());
         for (final Over23IndividualCandidacyDegreeEntry entry : entries) {
@@ -237,7 +237,8 @@ public class Over23IndividualCandidacy extends Over23IndividualCandidacy_Base {
 
     @Override
     public String getDescription() {
-        return getCandidacyProcess().getDisplayName() + (hasAcceptedDegree() ? ": " + getAcceptedDegree().getNameI18N() : "");
+        return getCandidacyProcess().getDisplayName()
+                + (getAcceptedDegree() != null ? ": " + getAcceptedDegree().getNameI18N() : "");
     }
 
     @Override

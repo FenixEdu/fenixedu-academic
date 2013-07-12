@@ -44,7 +44,7 @@ public class GratuityValues extends GratuityValues_Base {
             // calculate using value per course
             double valuePerCourse = this.getCourseValue();
 
-            for (Enrolment enrolment : studentCurricularPlan.getEnrolments()) {
+            for (Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
                 if (enrolment.getExecutionPeriod().getExecutionYear().equals(executionYear)) {
                     totalValue += valuePerCourse;
                 }
@@ -56,7 +56,7 @@ public class GratuityValues extends GratuityValues_Base {
             double valuePerCredit = this.getCreditValue().doubleValue();
             double totalCredits = 0;
 
-            for (Enrolment enrolment : studentCurricularPlan.getEnrolments()) {
+            for (Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
                 if (enrolment.getExecutionPeriod().getExecutionYear().equals(executionYear)) {
                     totalCredits += enrolment.getCurricularCourse().getCredits();
                 }

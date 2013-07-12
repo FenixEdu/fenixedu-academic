@@ -811,8 +811,8 @@ public abstract class Event extends Event_Base {
     }
 
     protected void disconnect() {
-        while (!super.getPaymentCodes().isEmpty()) {
-            super.getPaymentCodes().iterator().next().delete();
+        while (!super.getPaymentCodesSet().isEmpty()) {
+            super.getPaymentCodesSet().iterator().next().delete();
         }
 
         while (!getExemptions().isEmpty()) {

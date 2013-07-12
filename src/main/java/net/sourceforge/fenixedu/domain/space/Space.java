@@ -461,7 +461,8 @@ public abstract class Space extends Space_Base {
         for (; !getBlueprints().isEmpty(); getBlueprints().iterator().next().delete()) {
             ;
         }
-        for (; !getSpaceInformations().isEmpty(); getSpaceInformations().iterator().next().deleteWithoutCheckNumberOfSpaceInformations()) {
+        for (; !getSpaceInformations().isEmpty(); getSpaceInformations().iterator().next()
+                .deleteWithoutCheckNumberOfSpaceInformations()) {
             ;
         }
         for (SpaceAttendances attendance : getPastAttendancesSet()) {
@@ -568,7 +569,7 @@ public abstract class Space extends Space_Base {
 
     public List<AllocatableSpace> getAllActiveSubRoomsForEducation() {
         List<AllocatableSpace> result = new ArrayList<AllocatableSpace>();
-        List<Space> containedSpaces = getContainedSpaces();
+        Collection<Space> containedSpaces = getContainedSpaces();
         for (Space space : containedSpaces) {
             if (space.isAllocatableSpace() && space.isActive() && ((AllocatableSpace) space).isForEducation()) {
                 result.add((AllocatableSpace) space);
@@ -1213,12 +1214,13 @@ public abstract class Space extends Space_Base {
     }
 
     public int currentAttendaceCount() {
-        int occupants = getCurrentAttendanceCount();
+        int occupants = getCurrentAttendanceSet().size();
         for (Space space : getActiveContainedSpaces()) {
             occupants += space.currentAttendaceCount();
         }
         return occupants;
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.space.SpaceAttendances> getCurrentAttendance() {
         return getCurrentAttendanceSet();

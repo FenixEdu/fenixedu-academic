@@ -717,7 +717,7 @@ public class Lesson extends Lesson_Base {
     }
 
     public int getFinalNumberOfLessonInstances() {
-        int count = getLessonInstancesCount();
+        int count = getLessonInstancesSet().size();
         if (!wasFinished()) {
             YearMonthDay startDateToSearch = getLessonStartDay();
             YearMonthDay endDateToSearch = getLessonEndDay();

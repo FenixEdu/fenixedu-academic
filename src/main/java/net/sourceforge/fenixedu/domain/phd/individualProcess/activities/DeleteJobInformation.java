@@ -21,7 +21,7 @@ public class DeleteJobInformation extends PhdIndividualProgramProcessActivity {
     @Override
     protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView, Object object) {
         final Job job = (Job) object;
-        if (process.getPerson().hasJobs(job)) {
+        if (process.getPerson().getJobsSet().contains(job)) {
             if (!canDelete(job, userView.getPerson())) {
                 throw new DomainException("error.PhdIndividualProgramProcess.DeleteJobInformation.not.authorized");
             }

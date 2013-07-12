@@ -21,7 +21,7 @@ public class PictureMaterialFile extends PictureMaterialFile_Base {
     public void delete(NewPictureMaterial pictureMaterial) {
         this.removePictureMaterials(pictureMaterial);
 
-        if (this.getPictureMaterialsCount() == 0) {
+        if (this.getPictureMaterialsSet().size() == 0) {
             this.setRootDomainObject(null);
 
             super.deleteDomainObject();

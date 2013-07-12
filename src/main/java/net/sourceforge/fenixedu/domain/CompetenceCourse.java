@@ -7,7 +7,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -190,7 +189,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
             }
         }
         for (final Department department : departments) {
-            if (!hasDepartments(department)) {
+            if (!getDepartmentsSet().contains(department)) {
                 super.addDepartments(department);
             }
         }
@@ -485,7 +484,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 
     public int getCompetenceCourseLoadsCount(final ExecutionSemester period) {
         final CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
-        return information != null ? information.getCompetenceCourseLoadsCount() : 0;
+        return information != null ? information.getCompetenceCourseLoadsSet().size() : 0;
     }
 
     public int getCompetenceCourseLoadsCount() {
@@ -1171,7 +1170,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 
     public boolean hasOneCourseLoad(final ExecutionYear executionYear) {
         final CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionYear(executionYear);
-        return information != null && information.getCompetenceCourseLoadsCount() == 1;
+        return information != null && information.getCompetenceCourseLoadsSet().size() == 1;
     }
 
     public boolean matchesName(String name) {
@@ -1254,43 +1253,6 @@ public class CompetenceCourse extends CompetenceCourse_Base {
             }
         }
         return result;
-    }
-
-    @Override
-    @Deprecated
-    /**
-     * 
-     * This direct association between CompetenceCourses and Departments should no longer be used.
-     * Instead, obtain the ScientificAreaUnit, the DepartmentUnit, and then the Department.
-     * 
-     * @see #getDepartmentUnit(ExecutionSemester)
-     * 
-     */
-    public List<Department> getDepartments() {
-        // TODO Auto-generated method stub
-        return super.getDepartments();
-    }
-
-    @Override
-    @Deprecated
-    /**
-     * 
-     * @see #getDepartments()
-     */
-    public int getDepartmentsCount() {
-        // TODO Auto-generated method stub
-        return super.getDepartmentsCount();
-    }
-
-    @Override
-    @Deprecated
-    /**
-     * 
-     * @see #getDepartments()
-     */
-    public Iterator<Department> getDepartmentsIterator() {
-        // TODO Auto-generated method stub
-        return super.getDepartmentsIterator();
     }
 
     @Override

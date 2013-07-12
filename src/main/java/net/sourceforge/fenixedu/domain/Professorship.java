@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain;
 
 import java.text.Collator;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
@@ -349,7 +350,7 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
     }
 
     public boolean hasMandatoryCommentsToMake() {
-        List<InquiryResult> inquiryResults = getInquiryResults();
+        Collection<InquiryResult> inquiryResults = getInquiryResults();
         for (InquiryResult inquiryResult : inquiryResults) {
             if (inquiryResult.getResultClassification() != null) {
                 if (inquiryResult.getResultClassification().isMandatoryComment()
@@ -367,7 +368,7 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
 
     public boolean hasMandatoryCommentsToMakeAsResponsible() {
         for (Professorship professorship : getExecutionCourse().getProfessorships()) {
-            List<InquiryResult> inquiryResults = professorship.getInquiryResults();
+            Collection<InquiryResult> inquiryResults = professorship.getInquiryResults();
             for (InquiryResult inquiryResult : inquiryResults) {
                 if (inquiryResult.getResultClassification() != null) {
                     if (inquiryResult.getResultClassification().isMandatoryComment()
@@ -423,13 +424,13 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
     public int getDegreeTeachingServiceLessonRows() {
         int lessonNumber = 0;
         for (DegreeTeachingService degreeTeachingService : getDegreeTeachingServicesSet()) {
-            int associatedLessonsCount = degreeTeachingService.getShift().getAssociatedLessonsCount();
+            int associatedLessonsCount = degreeTeachingService.getShift().getAssociatedLessonsSet().size();
             if (associatedLessonsCount == 0) {
                 lessonNumber += 1;
             }
             lessonNumber += associatedLessonsCount;
         }
-        lessonNumber += getSupportLessonsCount();
+        lessonNumber += getSupportLessonsSet().size();
         return lessonNumber;
     }
 

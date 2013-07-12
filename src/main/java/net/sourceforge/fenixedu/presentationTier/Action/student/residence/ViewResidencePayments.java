@@ -39,8 +39,8 @@ public class ViewResidencePayments extends FenixDispatchAction {
     public ActionForward showEventDetails(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        long eventOID = Long.parseLong(request.getParameter("event"));
-        ResidenceEvent residenceEvent = (ResidenceEvent) AbstractDomainObject.fromOID(eventOID);
+        String eventOID = request.getParameter("event");
+        ResidenceEvent residenceEvent = FenixFramework.getDomainObject(eventOID);
 
         request.setAttribute("person", getLoggedPerson(request));
         request.setAttribute("event", residenceEvent);

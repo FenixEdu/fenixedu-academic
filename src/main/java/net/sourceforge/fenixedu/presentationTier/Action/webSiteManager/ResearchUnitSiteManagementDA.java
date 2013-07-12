@@ -104,7 +104,7 @@ public class ResearchUnitSiteManagementDA extends CustomUnitSiteManagementDA {
     public ActionForward prepareAddNewPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException {
         IViewState viewState = RenderUtils.getViewState();
-        if (viewState != null && getSite(request).hasManagers(getLoggedPerson(request))) {
+        if (viewState != null && getSite(request).getManagersSet().contains(getLoggedPerson(request))) {
             ResearchContractBean bean = (ResearchContractBean) viewState.getMetaObject().getObject();
             Person person = bean.getPerson();
             if (person != null) {
@@ -120,7 +120,7 @@ public class ResearchUnitSiteManagementDA extends CustomUnitSiteManagementDA {
     public ActionForward addNewPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException {
         IViewState viewState = RenderUtils.getViewState("extraInfo");
-        if (viewState != null && getSite(request).hasManagers(getLoggedPerson(request))) {
+        if (viewState != null && getSite(request).getManagersSet().contains(getLoggedPerson(request))) {
             ResearchContractBean bean = (ResearchContractBean) viewState.getMetaObject().getObject();
             try {
                 CreateResearchContract.run(bean, getLoggedPerson(request), LoginRequestManagement.getRequestURL(request));
@@ -139,7 +139,7 @@ public class ResearchUnitSiteManagementDA extends CustomUnitSiteManagementDA {
             HttpServletResponse response) throws FenixServiceException {
 
         IViewState viewState = RenderUtils.getViewState("createPersonContract");
-        if (viewState != null && getSite(request).hasManagers(getLoggedPerson(request))) {
+        if (viewState != null && getSite(request).getManagersSet().contains(getLoggedPerson(request))) {
             ResearchContractBean bean = (ResearchContractBean) viewState.getMetaObject().getObject();
             if (bean.getPerson() == null) {
                 return managePeoplePostBack(mapping, actionForm, request, response);

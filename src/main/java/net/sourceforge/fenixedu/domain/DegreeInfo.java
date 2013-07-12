@@ -284,7 +284,7 @@ public class DegreeInfo extends DegreeInfo_Base {
                     JSONObject obj = new JSONObject();
                     String degreeType = JSONObject.escape(degreeInfo.getDegree().getDegreeType().toString());
                     String degreeName = JSONObject.escape(degreeInfo.getName().getContent());
-                    String degreeOid = Long.toString(degreeInfo.getDegree().getOID());
+                    String degreeOid = degreeInfo.getDegree().getExternalId();
                     System.out.printf("with info : %s %s %s\n", degreeOid, degreeType, degreeName);
                     obj.put("degreeOid", degreeOid);
                     obj.put("degreeType", degreeType);
@@ -294,7 +294,7 @@ public class DegreeInfo extends DegreeInfo_Base {
                 }
             } else {
                 JSONObject obj = new JSONObject();
-                String degreeOid = Long.toString(degree.getOID());
+                String degreeOid = degree.getExternalId();
                 String degreeType = JSONObject.escape(degree.getDegreeType().toString());
                 String degreeName = JSONObject.escape(degree.getNome());
                 System.out.printf("no info : %s %s %s\n", degreeOid, degreeType, degreeName);
@@ -356,11 +356,6 @@ public class DegreeInfo extends DegreeInfo_Base {
     @Deprecated
     public boolean hasSchoolCalendar() {
         return getSchoolCalendar() != null;
-    }
-
-    @Deprecated
-    public boolean hasName() {
-        return getName() != null;
     }
 
     @Deprecated

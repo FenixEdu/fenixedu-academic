@@ -38,28 +38,26 @@ public class ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod {
         ExecutionCourse executionCourse = executionSemester.getExecutionCourseByInitials(executionCourseInitials);
 
         List<Exam> associatedExams = new ArrayList();
-        Collection<Evaluation> associatedEvaluations = executionCourse.getAssociatedEvaluations();
+        Collection<Evaluation> associatedEvaluations = executionCourse.getAssociatedEvaluationsSet();
         for (Evaluation evaluation : associatedEvaluations) {
             if (evaluation instanceof Exam) {
                 associatedExams.add((Exam) evaluation);
             }
         }
-        for (int i = 0; i < associatedExams.size(); i++) {
-            Exam exam = associatedExams.get(i);
+        for (Exam exam : associatedExams) {
             if (exam.getSeason().equals(season)) {
                 infoViewExamByDayAndShift.setInfoExam(InfoExam.newInfoFromDomain(exam));
 
                 List infoExecutionCourses = new ArrayList();
                 List infoDegrees = new ArrayList();
-                for (int j = 0; j < exam.getAssociatedExecutionCourses().size(); j++) {
-                    ExecutionCourse tempExecutionCourse = exam.getAssociatedExecutionCourses().get(j);
+                for (ExecutionCourse tempExecutionCourse : exam.getAssociatedExecutionCoursesSet()) {
                     infoExecutionCourses.add(InfoExecutionCourse.newInfoFromDomain(tempExecutionCourse));
 
                     // prepare degrees associated with exam
-                    Collection tempAssociatedCurricularCourses = executionCourse.getAssociatedCurricularCourses();
-                    for (int k = 0; k < tempAssociatedCurricularCourses.size(); k++) {
-                        Degree tempDegree =
-                                ((CurricularCourse) tempAssociatedCurricularCourses.get(k)).getDegreeCurricularPlan().getDegree();
+                    Collection<CurricularCourse> tempAssociatedCurricularCourses =
+                            executionCourse.getAssociatedCurricularCoursesSet();
+                    for (CurricularCourse curricularCourse : tempAssociatedCurricularCourses) {
+                        Degree tempDegree = curricularCourse.getDegreeCurricularPlan().getDegree();
                         infoDegrees.add(InfoDegree.newInfoFromDomain(tempDegree));
                     }
                 }

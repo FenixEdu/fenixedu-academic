@@ -4,6 +4,7 @@
 package net.sourceforge.fenixedu.presentationTier.backBeans.bolonhaManager.curricularPlans;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -53,7 +54,6 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
 
 import pt.ist.fenixframework.FenixFramework;
-import pt.ist.fenixframework.core.AbstractDomainObject;
 
 public class CurricularCourseManagementBackingBean extends FenixBackingBean {
 
@@ -381,7 +381,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
 
     public boolean isToDelete() {
         if (getCurricularCourse() != null) {
-            toDelete = getCurricularCourse().getParentContextsCount() == 1; // Last context?
+            toDelete = getCurricularCourse().getParentContextsSet().size() == 1; // Last context?
         }
         return toDelete;
     }
@@ -750,7 +750,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     protected List<SelectItem> readExecutionYearItems() {
         final List<SelectItem> result = new ArrayList<SelectItem>();
 
-        final List<ExecutionDegree> executionDegrees = getDegreeCurricularPlan().getExecutionDegrees();
+        final Collection<ExecutionDegree> executionDegrees = getDegreeCurricularPlan().getExecutionDegrees();
 
         if (executionDegrees.isEmpty()) {
             final ExecutionYear executionYear =
@@ -788,6 +788,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     }
 
     public ExecutionSemester getEndExecutionPeriod() {
-        return getEndExecutionPeriodID() == null ? null : FenixFramework.<ExecutionSemester> getDomainObject(getEndExecutionPeriodID());
+        return getEndExecutionPeriodID() == null ? null : FenixFramework
+                .<ExecutionSemester> getDomainObject(getEndExecutionPeriodID());
     }
 }

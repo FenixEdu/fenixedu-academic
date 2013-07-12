@@ -47,8 +47,8 @@ public class AuthorizationGroupBean implements Serializable, Comparable<Authoriz
         setGroup(group);
     }
 
-    public long getId() {
-        return group == null ? -1 : group.getOid();
+    public String getId() {
+        return group == null ? "-1" : group.getExternalId();
     }
 
     public PersistentAcademicAuthorizationGroup getGroup() {

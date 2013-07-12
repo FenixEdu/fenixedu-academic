@@ -64,7 +64,7 @@ public class PhdGratuityPR extends PhdGratuityPR_Base {
 
     public Money getGratuityByProcess(PhdIndividualProgramProcess process) {
         ArrayList<PhdProgramProcessState> states = new ArrayList<PhdProgramProcessState>(process.getStates());
-        if (states.size() > 0 && getPhdGratuityPriceQuirksCount() > 0) {
+        if (states.size() > 0 && getPhdGratuityPriceQuirksSet().size() > 0) {
             int years = 0;
 
             for (PhdGratuityEvent event : process.getPhdGratuityEvents()) {
@@ -123,7 +123,7 @@ public class PhdGratuityPR extends PhdGratuityPR_Base {
     }
 
     private Money adjustGratuityWithExmptions(PhdGratuityEvent phdGratuityEvent, Money gratuity) {
-        if (phdGratuityEvent.getExemptionsCount() > 0) {
+        if (phdGratuityEvent.getExemptionsSet().size() > 0) {
             for (Exemption exemption : phdGratuityEvent.getExemptions()) {
                 if (exemption instanceof PhdEventExemption && !(exemption instanceof PhdGratuityFineExemption)) {
                     gratuity = gratuity.subtract(((PhdEventExemption) exemption).getValue());
@@ -175,6 +175,7 @@ public class PhdGratuityPR extends PhdGratuityPR_Base {
         }
         getPhdGratuityPaymentPeriods().clear();
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.phd.debts.PhdGratuityPaymentPeriod> getPhdGratuityPaymentPeriods() {
         return getPhdGratuityPaymentPeriodsSet();

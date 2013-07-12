@@ -19,8 +19,7 @@ public class RemoveProposalFromFinalDegreeWorkStudentGroup {
                 throw new GroupProposalAttributedByTeacherException();
             }
 
-            for (int i = 0; i < group.getGroupProposals().size(); i++) {
-                final GroupProposal otherGroupProposal = group.getGroupProposals().get(i);
+            for (GroupProposal otherGroupProposal : group.getGroupProposalsSet()) {
                 if (!groupProposal.equals(otherGroupProposal)
                         && groupProposal.getOrderOfPreference().intValue() < otherGroupProposal.getOrderOfPreference().intValue()) {
                     otherGroupProposal

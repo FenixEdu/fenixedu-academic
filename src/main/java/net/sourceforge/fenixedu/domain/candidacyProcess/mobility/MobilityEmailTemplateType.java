@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess.mobility;
 
+import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -42,7 +42,7 @@ public enum MobilityEmailTemplateType {
 
         @Override
         public void sendMultiEmailFor(MobilityEmailTemplate mobilityEmailTemplate,
-                List<MobilityIndividualApplicationProcess> processes) {
+                Collection<MobilityIndividualApplicationProcess> processes) {
             throw new DomainException("template.meant.for.single.recipient.only");
         }
 
@@ -87,7 +87,7 @@ public enum MobilityEmailTemplateType {
 
         @Override
         public void sendMultiEmailFor(MobilityEmailTemplate mobilityEmailTemplate,
-                List<MobilityIndividualApplicationProcess> processes) {
+                Collection<MobilityIndividualApplicationProcess> processes) {
             throw new DomainException("template.meant.for.single.recipient.only");
         }
 
@@ -128,7 +128,7 @@ public enum MobilityEmailTemplateType {
 
         @Override
         public void sendMultiEmailFor(MobilityEmailTemplate mobilityEmailTemplate,
-                List<MobilityIndividualApplicationProcess> processes) {
+                Collection<MobilityIndividualApplicationProcess> processes) {
             for (MobilityIndividualApplicationProcess process : processes) {
                 sendEmailFor(mobilityEmailTemplate, process.getCandidacyHashCode());
             }
@@ -161,7 +161,7 @@ public enum MobilityEmailTemplateType {
 
         @Override
         public void sendMultiEmailFor(MobilityEmailTemplate mobilityEmailTemplate,
-                List<MobilityIndividualApplicationProcess> processes) {
+                Collection<MobilityIndividualApplicationProcess> processes) {
             throw new DomainException("template.meant.for.single.recipient.only");
         }
 
@@ -176,7 +176,7 @@ public enum MobilityEmailTemplateType {
 
         @Override
         public void sendMultiEmailFor(MobilityEmailTemplate mobilityEmailTemplate,
-                List<MobilityIndividualApplicationProcess> processes) {
+                Collection<MobilityIndividualApplicationProcess> processes) {
             String bccs = "";
             String subject = mobilityEmailTemplate.getSubject();
             String body = mobilityEmailTemplate.getBody();
@@ -218,6 +218,6 @@ public enum MobilityEmailTemplateType {
             final DegreeOfficePublicCandidacyHashCode hashCode);
 
     abstract public void sendMultiEmailFor(final MobilityEmailTemplate mobilityEmailTemplate,
-            final List<MobilityIndividualApplicationProcess> processes);
+            final Collection<MobilityIndividualApplicationProcess> processes);
 
 }

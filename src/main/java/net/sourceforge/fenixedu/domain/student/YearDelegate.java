@@ -58,7 +58,7 @@ public class YearDelegate extends YearDelegate_Base {
     }
 
     public boolean hasMandatoryCommentsToMake(ExecutionCourse executionCourse, ExecutionDegree executionDegree) {
-        List<InquiryResult> inquiryResults = executionCourse.getInquiryResults();
+        Collection<InquiryResult> inquiryResults = executionCourse.getInquiryResults();
         for (InquiryResult inquiryResult : inquiryResults) {
             if (inquiryResult.getResultClassification() != null
                     && (inquiryResult.getExecutionDegree() == executionDegree || inquiryResult.getExecutionDegree() == null)) {
@@ -205,6 +205,7 @@ public class YearDelegate extends YearDelegate_Base {
     public Degree getDegree() {
         return super.getDegree();
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.student.YearDelegateCourseInquiry> getYearDelegateCourseInquiries() {
         return getYearDelegateCourseInquiriesSet();

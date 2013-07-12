@@ -3,7 +3,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-import java.util.List;
+import java.util.Collection;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
@@ -44,7 +44,7 @@ public class EditCurricularCourse {
             throw new NonExistingServiceException();
         }
 
-        List curricularCourses = null;
+        Collection<CurricularCourse> curricularCourses = null;
         curricularCourses = oldCurricularCourse.getDegreeCurricularPlan().getCurricularCourses();
 
         CurricularCourse cCourse = (CurricularCourse) CollectionUtils.find(curricularCourses, new Predicate() {

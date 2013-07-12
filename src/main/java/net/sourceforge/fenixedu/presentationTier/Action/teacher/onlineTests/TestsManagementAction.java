@@ -349,7 +349,7 @@ public class TestsManagementAction extends FenixDispatchAction {
         final TestScope testScope = executionCourse.getTestScope();
         List<Test> testList = new ArrayList<Test>();
         if (testScope != null) {
-            testList = testScope.getTests();
+            testList = new ArrayList<>(testScope.getTests());
         }
         request.setAttribute("testList", testList);
         request.setAttribute("objectCode", executionCourseId);
@@ -682,7 +682,7 @@ public class TestsManagementAction extends FenixDispatchAction {
         final TestScope testScope = executionCourse.getTestScope();
         List<DistributedTest> distributedTestList = new ArrayList<DistributedTest>();
         if (testScope != null) {
-            distributedTestList = testScope.getDistributedTests();
+            distributedTestList = new ArrayList<>(testScope.getDistributedTests());
         }
         request.setAttribute("distributedTests", distributedTestList);
         request.setAttribute("objectCode", objectCode);

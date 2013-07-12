@@ -2,8 +2,6 @@ package net.sourceforge.fenixedu.domain.phd;
 
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 
@@ -97,18 +95,8 @@ public class PhdStudyPlan extends PhdStudyPlan_Base {
     }
 
     @Override
-    public List<PhdStudyPlanEntry> getEntries() {
-        return Collections.unmodifiableList(super.getEntries());
-    }
-
-    @Override
     public Set<PhdStudyPlanEntry> getEntriesSet() {
         return Collections.unmodifiableSet(super.getEntriesSet());
-    }
-
-    @Override
-    public Iterator<PhdStudyPlanEntry> getEntriesIterator() {
-        return getEntries().iterator();
     }
 
     @Override

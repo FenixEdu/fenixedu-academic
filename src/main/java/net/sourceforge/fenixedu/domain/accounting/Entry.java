@@ -2,8 +2,6 @@ package net.sourceforge.fenixedu.domain.accounting;
 
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
@@ -66,16 +64,6 @@ public class Entry extends Entry_Base {
     }
 
     @Override
-    public void removeAccount() {
-        throw new DomainException("error.accounting.entry.cannot.remove.account");
-    }
-
-    @Override
-    public void removeAccountingTransaction() {
-        throw new DomainException("error.accounting.entry.cannot.remove.accountingTransaction");
-    }
-
-    @Override
     public void setAccount(Account account) {
         throw new DomainException("error.accounting.entry.cannot.modify.account");
     }
@@ -109,18 +97,8 @@ public class Entry extends Entry_Base {
     }
 
     @Override
-    public List<Receipt> getReceipts() {
-        return Collections.unmodifiableList(super.getReceipts());
-    }
-
-    @Override
     public Set<Receipt> getReceiptsSet() {
         return Collections.unmodifiableSet(super.getReceiptsSet());
-    }
-
-    @Override
-    public Iterator<Receipt> getReceiptsIterator() {
-        return getReceiptsSet().iterator();
     }
 
     @Override

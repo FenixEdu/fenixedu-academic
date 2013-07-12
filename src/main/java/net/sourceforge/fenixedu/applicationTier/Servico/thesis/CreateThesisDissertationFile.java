@@ -51,7 +51,8 @@ public class CreateThesisDissertationFile extends CreateThesisFile {
 
         final net.sourceforge.fenixedu.domain.research.result.publication.Thesis publication = thesis.getPublication();
         if (publication != null) {
-            final ResearchResultDocumentFile researchResultDocumentFile = publication.getResultDocumentFilesIterator().next();
+            final ResearchResultDocumentFile researchResultDocumentFile =
+                    publication.getResultDocumentFilesSet().iterator().next();
 
             final FileResultPermittedGroupType permittedGroupType = researchResultDocumentFile.getFileResultPermittedGroupType();
             final Group permittedGroup = researchResultDocumentFile.getPermittedGroup();

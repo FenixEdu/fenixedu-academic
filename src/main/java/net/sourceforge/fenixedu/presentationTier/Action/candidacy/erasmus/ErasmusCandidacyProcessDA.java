@@ -30,10 +30,10 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
-import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 
@@ -89,8 +89,8 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
         request.setAttribute("candidacyProcessBean", bean);
         if (map.hasAnyChildProcesses()) {
             request.setAttribute("preLoadLevel", "Error");
-        } else if (map.hasAnyCoordinators() || map.getCandidacyPeriod().getMobilityQuotasCount() > 0
-                || map.getCandidacyPeriod().getEmailTemplatesCount() > 0) {
+        } else if (map.hasAnyCoordinators() || map.getCandidacyPeriod().getMobilityQuotasSet().size() > 0
+                || map.getCandidacyPeriod().getEmailTemplatesSet().size() > 0) {
             request.setAttribute("preLoadLevel", "Warn");
         } else {
             request.setAttribute("preLoadLevel", "Ok");

@@ -37,7 +37,7 @@ public class AssociateCurricularCoursesToExecutionCourse {
                 if (curricularCourse == null) {
                     throw new DomainException("message.nonExistingDegreeCurricularPlan");
                 }
-                if (!curricularCourse.hasAssociatedExecutionCourses(executionCourse)) {
+                if (!curricularCourse.getAssociatedExecutionCoursesSet().contains(executionCourse)) {
                     curricularCourse.addAssociatedExecutionCourses(executionCourse);
                 }
             }

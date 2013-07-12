@@ -20,7 +20,7 @@ public abstract class SpaceInformation extends SpaceInformation_Base implements 
     }
 
     public void delete() {
-        if (getSpace().getSpaceInformationsCount() == 1) {
+        if (getSpace().getSpaceInformationsSet().size() == 1) {
             throw new DomainException("space.must.have.at.least.one.space.information");
         }
         deleteWithoutCheckNumberOfSpaceInformations();
@@ -126,6 +126,7 @@ public abstract class SpaceInformation extends SpaceInformation_Base implements 
             }
         }
     }
+
     @Deprecated
     public boolean hasEmails() {
         return getEmails() != null;

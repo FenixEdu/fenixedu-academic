@@ -295,7 +295,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     protected void deleteInformation() {
 
-        final Iterator<Thesis> theses = getThesesIterator();
+        final Iterator<Thesis> theses = getThesesSet().iterator();
         while (theses.hasNext()) {
             final Thesis thesis = theses.next();
             if (!thesis.canBeDeleted()) {
@@ -313,7 +313,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         setCurriculumGroup(null);
         getNotNeedToEnrollCurricularCourses().clear();
 
-        Iterator<Attends> attendsIter = getAttendsIterator();
+        Iterator<Attends> attendsIter = getAttendsSet().iterator();
         while (attendsIter.hasNext()) {
             Attends attends = attendsIter.next();
 
@@ -323,7 +323,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
             if (!attends.hasAnyAssociatedMarks() && !attends.hasAnyStudentGroups()) {
                 boolean hasShiftEnrolment = false;
                 for (Shift shift : attends.getExecutionCourse().getAssociatedShifts()) {
-                    if (shift.hasStudents(registration)) {
+                    if (shift.getStudentsSet().contains(registration)) {
                         hasShiftEnrolment = true;
                         break;
                     }
@@ -335,14 +335,14 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
             }
         }
 
-        Iterator<EnrolmentEvaluation> evalsIter = getEvaluationsIterator();
+        Iterator<EnrolmentEvaluation> evalsIter = getEvaluationsSet().iterator();
         while (evalsIter.hasNext()) {
             EnrolmentEvaluation eval = evalsIter.next();
             evalsIter.remove();
             eval.delete();
         }
 
-        Iterator<CreditsInAnySecundaryArea> creditsInAnysecundaryAreaIterator = getCreditsInAnySecundaryAreasIterator();
+        Iterator<CreditsInAnySecundaryArea> creditsInAnysecundaryAreaIterator = getCreditsInAnySecundaryAreasSet().iterator();
 
         while (creditsInAnysecundaryAreaIterator.hasNext()) {
             CreditsInAnySecundaryArea credits = creditsInAnysecundaryAreaIterator.next();
@@ -350,7 +350,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
             credits.delete();
         }
 
-        Iterator<CreditsInScientificArea> creditsInScientificAreaIterator = getCreditsInScientificAreasIterator();
+        Iterator<CreditsInScientificArea> creditsInScientificAreaIterator = getCreditsInScientificAreasSet().iterator();
 
         while (creditsInScientificAreaIterator.hasNext()) {
             CreditsInScientificArea credits = creditsInScientificAreaIterator.next();
@@ -585,7 +585,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     final public boolean isImprovementForExecutionCourse(ExecutionCourse executionCourse) {
-        return getCurricularCourse().hasAssociatedExecutionCourses(executionCourse)
+        return getCurricularCourse().getAssociatedExecutionCoursesSet().contains(executionCourse)
                 && getExecutionPeriod() != executionCourse.getExecutionPeriod();
     }
 
@@ -782,7 +782,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     @Override
     public Grade getEctsGrade(StudentCurricularPlan scp, DateTime processingDate) {
         Grade grade = getGrade();
-        if (getEnrolmentWrappersCount() > 0) {
+        if (getEnrolmentWrappersSet().size() > 0) {
             Set<Dismissal> dismissals = new HashSet<Dismissal>();
             for (EnrolmentWrapper wrapper : getEnrolmentWrappersSet()) {
                 if (wrapper.getCredits().getStudentCurricularPlan().isBolonhaDegree()) {
@@ -1211,7 +1211,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         return isEnroledInExecutionPeriod(curricularCourse, executionSemester) && isEnroled();
     }
 
-    final public List<ExecutionCourse> getExecutionCourses() {
+    final public Collection<ExecutionCourse> getExecutionCourses() {
         return this.getCurricularCourse().getAssociatedExecutionCourses();
     }
 
@@ -1337,11 +1337,11 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     private boolean isStudentFromDegree(final Degree degree, final DegreeCurricularPlan degreeCurricularPlanOfStudent) {
-        return degree.hasDegreeCurricularPlans(degreeCurricularPlanOfStudent);
+        return degree.getDegreeCurricularPlansSet().contains(degreeCurricularPlanOfStudent);
     }
 
     private boolean isDegreeModuleFromDegree(final Degree degree, DegreeCurricularPlan degreeCurricularPlanOfDegreeModule) {
-        return degree.hasDegreeCurricularPlans(degreeCurricularPlanOfDegreeModule);
+        return degree.getDegreeCurricularPlansSet().contains(degreeCurricularPlanOfDegreeModule);
     }
 
     /**
@@ -1487,7 +1487,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
      */
     @Override
     final public Thesis getThesis() {
-        List<Thesis> theses = getTheses();
+        Collection<Thesis> theses = getTheses();
 
         switch (theses.size()) {
         case 0:

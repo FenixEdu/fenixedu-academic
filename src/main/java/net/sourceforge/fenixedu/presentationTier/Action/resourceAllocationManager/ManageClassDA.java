@@ -154,9 +154,9 @@ public class ManageClassDA extends FenixClassAndExecutionDegreeAndCurricularYear
             return mapping.getInputForward();
 
         }
-        List<Integer> shiftOIDs = new ArrayList<Integer>();
+        List<String> shiftOIDs = new ArrayList<String>();
         for (String selectedShift : selectedShifts) {
-            shiftOIDs.add(new Integer(selectedShift));
+            shiftOIDs.add(selectedShift);
         }
 
         InfoClass infoClass = (InfoClass) request.getAttribute(PresentationConstants.CLASS_VIEW);

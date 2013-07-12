@@ -45,12 +45,12 @@ public abstract class ExemptionJustification extends ExemptionJustification_Base
         super.deleteDomainObject();
     }
 
-    @Override
     public void removeExemption() {
         super.setExemption(null);
     }
 
     abstract public LabelFormatter getDescription();
+
     @Deprecated
     public boolean hasRootDomainObject() {
         return getRootDomainObject() != null;

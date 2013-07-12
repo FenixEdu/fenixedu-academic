@@ -6,6 +6,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -197,7 +198,7 @@ public class GeneratePaymentLettersFileByExecutionYearID {
 
             DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
 
-            List studentCurricularPlanList = degreeCurricularPlan.getStudentCurricularPlans();
+            Collection studentCurricularPlanList = degreeCurricularPlan.getStudentCurricularPlans();
 
             GratuityValues gratuityValues = executionDegree.getGratuityValues();
 

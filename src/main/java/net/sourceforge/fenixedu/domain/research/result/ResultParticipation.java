@@ -103,7 +103,7 @@ public class ResultParticipation extends ResultParticipation_Base {
     }
 
     public boolean getIsLastParticipation() {
-        return (this.getResult().getResultParticipationsCount() == 1);
+        return (this.getResult().getResultParticipationsSet().size() == 1);
     }
 
     public boolean getCanBeRemoved() {
@@ -139,7 +139,7 @@ public class ResultParticipation extends ResultParticipation_Base {
         if (result.hasPersonParticipationWithRole(participator, role)) {
             throw new DomainException("error.researcher.ResultParticipation.participation.exists");
         }
-        if (order == 0 && result.getResultParticipationsCount() > 1) {
+        if (order == 0 && result.getResultParticipationsSet().size() > 1) {
             throw new DomainException("error.researcher.ResultParticipation.invalid.order");
         }
     }
@@ -220,16 +220,6 @@ public class ResultParticipation extends ResultParticipation_Base {
     @Override
     public void setPerson(Person Person) {
         throw new DomainException("error.researcher.ResultParticipation.call", "setPerson");
-    }
-
-    @Override
-    public void removePerson() {
-        throw new DomainException("error.researcher.ResultParticipation.call", "removePerson");
-    }
-
-    @Override
-    public void removeResult() {
-        throw new DomainException("error.researcher.ResultParticipation.call", "removeResult");
     }
 
     /**

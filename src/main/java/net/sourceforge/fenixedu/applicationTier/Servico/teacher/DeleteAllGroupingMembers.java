@@ -49,7 +49,7 @@ public class DeleteAllGroupingMembers {
             }
 
             boolean found = false;
-            Iterator iterStudentsGroups = grouping.getStudentGroups().iterator();
+            Iterator iterStudentsGroups = grouping.getStudentGroupsSet().iterator();
             while (iterStudentsGroups.hasNext() && !found) {
 
                 StudentGroup studentGroup = (StudentGroup) iterStudentsGroups.next();

@@ -4,6 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
@@ -32,7 +33,7 @@ public class ReadExternalActivities {
         Teacher teacher = Teacher.readTeacherByUsername(user);
         InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(teacher);
 
-        List<ExternalActivity> externalActivities = teacher.getAssociatedExternalActivities();
+        Collection<ExternalActivity> externalActivities = teacher.getAssociatedExternalActivities();
 
         List result = (List) CollectionUtils.collect(externalActivities, new Transformer() {
             @Override

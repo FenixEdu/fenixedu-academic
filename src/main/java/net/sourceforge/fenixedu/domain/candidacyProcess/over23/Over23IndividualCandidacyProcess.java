@@ -513,7 +513,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
     }
 
     private boolean isCandidacyInformationComplete() {
-        return this.getCandidacy().hasAnyOver23IndividualCandidacyDegreeEntries();
+        return !this.getCandidacy().getOver23IndividualCandidacyDegreeEntriesSet().isEmpty();
     }
 
     private boolean isCandidacyPersonalInformationComplete() {

@@ -1070,7 +1070,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         }
         ExecutionSemester currentSemester = ExecutionSemester.readActualExecutionSemester();
         if ((executionSemesterID == null) && (getCompetenceCourse() != null)) {
-            if (getCompetenceCourse().getCompetenceCourseInformationsCount() == 1) {
+            if (getCompetenceCourse().getCompetenceCourseInformationsSet().size() == 1) {
                 executionSemesterID =
                         getCompetenceCourse().getCompetenceCourseInformationsSet().iterator().next().getExecutionPeriod()
                                 .getExternalId();

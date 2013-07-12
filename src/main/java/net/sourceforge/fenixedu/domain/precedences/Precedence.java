@@ -41,12 +41,9 @@ public class Precedence extends Precedence_Base {
     public CurricularCourseEnrollmentType evaluate(PrecedenceContext precedenceContext) {
         Collection<Restriction> restrictions = getRestrictions();
 
-        int size = restrictions.size();
+        CurricularCourseEnrollmentType evaluate = restrictions.iterator().next().evaluate(precedenceContext);
 
-        CurricularCourseEnrollmentType evaluate = ((Restriction) restrictions.iterator().next()).evaluate(precedenceContext);
-
-        for (int i = 1; i < size; i++) {
-            Restriction restriction = (Restriction) restrictions.get(i);
+        for (Restriction restriction : restrictions) {
             evaluate = evaluate.and(restriction.evaluate(precedenceContext));
         }
 
@@ -71,7 +68,7 @@ public class Precedence extends Precedence_Base {
 
     public void mergePrecedences(Precedence sourcePrecedence) {
 
-        Iterator<Restriction> restrictionsIterator = sourcePrecedence.getRestrictionsIterator();
+        Iterator<Restriction> restrictionsIterator = sourcePrecedence.getRestrictions().iterator();
 
         while (restrictionsIterator.hasNext()) {
             Restriction restriction = restrictionsIterator.next();

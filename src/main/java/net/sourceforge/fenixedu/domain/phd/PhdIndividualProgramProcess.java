@@ -310,7 +310,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public void removeLastState() {
-        if (getStatesCount() == 1) {
+        if (getStatesSet().size() == 1) {
             throw new DomainException("error.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.has.only.one.state");
         }
 
@@ -397,7 +397,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public PhdIndividualProgramProcess deleteGuiding(final PhdParticipant guiding) {
-        if (hasGuidings(guiding)) {
+        if (getGuidingsSet().contains(guiding)) {
             removeGuidings(guiding);
             guiding.tryDelete();
         }
@@ -415,7 +415,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public PhdIndividualProgramProcess deleteAssistantGuiding(final PhdParticipant assistant) {
-        if (hasAssistantGuidings(assistant)) {
+        if (getAssistantGuidingsSet().contains(assistant)) {
             removeAssistantGuidings(assistant);
             assistant.tryDelete();
         }
@@ -725,7 +725,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public boolean isGuider(PhdParticipant participant) {
-        return hasGuidings(participant);
+        return getGuidingsSet().contains(participant);
     }
 
     public boolean isAssistantGuider(Person person) {
@@ -739,7 +739,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public boolean isAssistantGuider(PhdParticipant participant) {
-        return hasAssistantGuidings(participant);
+        return getAssistantGuidingsSet().contains(participant);
     }
 
     public boolean isRegistrationAvailable() {

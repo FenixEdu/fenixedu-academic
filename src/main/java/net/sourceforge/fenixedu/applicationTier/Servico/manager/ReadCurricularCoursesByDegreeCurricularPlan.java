@@ -4,6 +4,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -23,7 +24,7 @@ public class ReadCurricularCoursesByDegreeCurricularPlan {
     public static List run(final String idDegreeCurricularPlan) throws FenixServiceException {
         final DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(idDegreeCurricularPlan);
 
-        final List<CurricularCourse> curricularCourses = degreeCurricularPlan.getCurricularCourses();
+        final Collection<CurricularCourse> curricularCourses = degreeCurricularPlan.getCurricularCourses();
         final List<InfoCurricularCourse> infoCurricularCourses = new ArrayList<InfoCurricularCourse>(curricularCourses.size());
         for (final CurricularCourse curricularCourse : curricularCourses) {
             infoCurricularCourses.add(InfoCurricularCourse.newInfoFromDomain(curricularCourse));

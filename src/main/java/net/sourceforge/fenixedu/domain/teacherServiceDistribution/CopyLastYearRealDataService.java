@@ -76,7 +76,7 @@ public class CopyLastYearRealDataService {
                                 CurricularCourse curricularCourse = (CurricularCourse) arg0;
 
                                 if (curricularCourse.getCompetenceCourse() == null
-                                        || !curricularCourse.getCompetenceCourse().hasDepartments(tsdDepartment)) {
+                                        || !curricularCourse.getCompetenceCourse().getDepartmentsSet().contains(tsdDepartment)) {
                                     return false;
                                 }
                                 if (!curricularCourse.hasActiveScopesInExecutionPeriod(executionSemester)) {

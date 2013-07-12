@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.residenceManagement;
 
-import java.util.List;
+import java.util.Collection;
 
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
 import net.sourceforge.fenixedu.domain.accounting.ResidenceEvent;
@@ -10,7 +10,7 @@ import pt.ist.fenixframework.Atomic;
 public class CreateResidencePaymentCodes {
 
     @Atomic
-    public static void run(List<ResidenceEvent> events) {
+    public static void run(Collection<ResidenceEvent> events) {
         for (ResidenceEvent event : events) {
             AccountingEventPaymentCode
                     .create(PaymentCodeType.RESIDENCE_FEE, event.getPaymentStartDate().toYearMonthDay(), event

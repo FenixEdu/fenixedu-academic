@@ -99,7 +99,7 @@ public class DepartmentCreditsDA extends FenixDispatchAction {
 
     private boolean hasPersonPermissionCredits(Person person, Department department) {
         return person.hasRole(RoleType.DEPARTMENT_CREDITS_MANAGER) && person.hasRole(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE)
-                && person.hasManageableDepartmentCredits(department);
+                && person.getManageableDepartmentCreditsSet().contains(department);
     }
 
 }

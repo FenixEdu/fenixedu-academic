@@ -79,7 +79,7 @@ public class WrittenEvaluationReportFile extends WrittenEvaluationReportFile_Bas
                         if (writtenEvaluation.getEnrollmentBeginDayDateYearMonthDay() == null) {
                             row.setCell(" ");
                         } else {
-                            final int enrolmentCount = writtenEvaluation.getWrittenEvaluationEnrolmentsCount();
+                            final int enrolmentCount = writtenEvaluation.getWrittenEvaluationEnrolmentsSet().size();
                             row.setCell(enrolmentCount);
                         }
                     }

@@ -48,7 +48,7 @@ public class Sender extends Sender_Base {
             message.delete();
         }
         for (final Recipient recipient : getRecipientsSet()) {
-            if (recipient.getSendersCount() == 1) {
+            if (recipient.getSendersSet().size() == 1) {
                 recipient.delete();
             } else {
                 removeRecipients(recipient);

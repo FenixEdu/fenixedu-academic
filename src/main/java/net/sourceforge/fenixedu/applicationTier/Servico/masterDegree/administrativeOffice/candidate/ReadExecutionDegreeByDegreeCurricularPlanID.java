@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -37,7 +38,7 @@ public class ReadExecutionDegreeByDegreeCurricularPlanID {
 
     protected InfoExecutionDegree run(String degreeCurricularPlanID, Integer executionDegreeIndex) {
         List infoExecutionDegreeList = null;
-        List executionDegrees = null;
+        Collection executionDegrees = null;
 
         DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
 

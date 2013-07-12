@@ -407,7 +407,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
     }
 
     public List<SelectItem> getExecutionPeriods() throws FenixServiceException {
-        List<ExecutionYear> allExecutionYears = rootDomainObject.getExecutionYears();
+        Collection<ExecutionYear> allExecutionYears = rootDomainObject.getExecutionYears();
         List<SelectItem> list = new ArrayList<SelectItem>();
         String[] year = null;
 

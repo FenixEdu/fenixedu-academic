@@ -73,16 +73,16 @@ public class ResidenceEventManagementDispatchAction extends FenixDispatchAction 
 
     private ResidenceMonth getResidenceMonth(HttpServletRequest request) {
         String oid = request.getParameter("monthOID");
-        return oid == null ? null : (ResidenceMonth) AbstractDomainObject.fromOID(Long.valueOf(oid));
+        return oid == null ? null : (ResidenceMonth) FenixFramework.getDomainObject(oid);
     }
 
     public ActionForward viewPersonResidenceEvents(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
 
         ResidenceMonth month = getResidenceMonth(request);
-        long personOID = Long.parseLong(request.getParameter("person"));
+        String personOID = request.getParameter("person");
 
-        Person person = (Person) AbstractDomainObject.fromOID(personOID);
+        Person person = FenixFramework.getDomainObject(personOID);
         Set<Event> events = person.getNotPayedEventsPayableOn(null, ResidenceEvent.class, false);
         events.addAll(person.getNotPayedEventsPayableOn(null, ResidenceEvent.class, true));
         events.addAll(person.getPayedEvents(ResidenceEvent.class));
@@ -94,9 +94,8 @@ public class ResidenceEventManagementDispatchAction extends FenixDispatchAction 
     }
 
     public ActionForward cancelResidenceEvent(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
-        ResidenceEvent residenceEvent =
-                (ResidenceEvent) AbstractDomainObject.fromOID(Long.parseLong(request.getParameter("event")));
+            HttpServletResponse response) throws FenixServiceException {
+        ResidenceEvent residenceEvent = FenixFramework.getDomainObject(request.getParameter("event"));
 
         try {
             CancelResidenceEvent.run(residenceEvent, AccessControl.getPerson());
@@ -108,10 +107,9 @@ public class ResidenceEventManagementDispatchAction extends FenixDispatchAction 
     }
 
     public ActionForward preparePayResidenceEvent(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
-        ResidenceEvent residenceEvent =
-                (ResidenceEvent) AbstractDomainObject.fromOID(Long.parseLong(request.getParameter("event")));
+        ResidenceEvent residenceEvent = FenixFramework.getDomainObject(request.getParameter("event"));
         VariantBean bean = new VariantBean();
         bean.setYearMonthDay(new YearMonthDay());
         ResidenceMonth month = getResidenceMonth(request);
@@ -124,10 +122,9 @@ public class ResidenceEventManagementDispatchAction extends FenixDispatchAction 
     }
 
     public ActionForward payResidenceEvent(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
-        ResidenceEvent residenceEvent =
-                (ResidenceEvent) AbstractDomainObject.fromOID(Long.parseLong(request.getParameter("event")));
+        ResidenceEvent residenceEvent = (ResidenceEvent) FenixFramework.getDomainObject(request.getParameter("event"));
         YearMonthDay date = getRenderedObject("date");
 
         try {

@@ -121,7 +121,7 @@ public abstract class GlobalCommentsResultsBean implements Serializable {
                     getInquiryResultComment().setComment(getComment());
                 } else {
                     new InquiryResultComment(getInquiryGlobalComment(), getPerson(), getPersonCategory(),
-                            getInquiryGlobalComment().getInquiryResultCommentsCount() + 1, getComment());
+                            getInquiryGlobalComment().getInquiryResultComments().size() + 1, getComment());
                 }
             } else {
                 InquiryGlobalComment inquiryGlobalComment = createGlobalComment();

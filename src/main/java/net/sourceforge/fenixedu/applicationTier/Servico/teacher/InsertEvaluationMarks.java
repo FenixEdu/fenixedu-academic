@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 import net.sourceforge.fenixedu.applicationTier.Factory.TeacherAdministrationSiteComponentBuilder;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
@@ -55,10 +54,10 @@ public class InsertEvaluationMarks {
         evaluation = FenixFramework.getDomainObject(evaluationCode);
 
         // Attend List
-        attendList = executionCourse.getAttends();
+        attendList = new ArrayList(executionCourse.getAttends());
 
         marksErrorsInvalidMark = new ArrayList<InfoMarkEditor>();
-        ListIterator iterAttends = attendList.listIterator();
+        Iterator iterAttends = attendList.iterator();
 
         while (iterAttends.hasNext()) {
             Attends attend = (Attends) iterAttends.next();

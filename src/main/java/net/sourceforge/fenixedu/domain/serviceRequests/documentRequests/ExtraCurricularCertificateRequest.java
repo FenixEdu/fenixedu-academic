@@ -16,7 +16,7 @@ public class ExtraCurricularCertificateRequest extends ExtraCurricularCertificat
         this();
         super.init(bean);
         checkParameters(bean);
-        super.getEnrolments().addAll(bean.getEnrolments());
+        super.getEnrolmentsSet().addAll(bean.getEnrolments());
     }
 
     @Override
@@ -28,7 +28,7 @@ public class ExtraCurricularCertificateRequest extends ExtraCurricularCertificat
 
     @Override
     public Integer getNumberOfUnits() {
-        return super.getEnrolmentsCount();
+        return super.getEnrolmentsSet().size();
     }
 
     @Override

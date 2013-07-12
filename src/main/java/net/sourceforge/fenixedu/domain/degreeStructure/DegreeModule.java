@@ -143,7 +143,7 @@ abstract public class DegreeModule extends DegreeModule_Base {
         if (isRoot()) {
             result.append(selfName);
         } else {
-            List<Context> parentContextsByExecutionPeriod = getParentContextsByExecutionSemester(executionSemester);
+            Collection<Context> parentContextsByExecutionPeriod = getParentContextsByExecutionSemester(executionSemester);
             if (parentContextsByExecutionPeriod.isEmpty()) {
                 // if not existing, just return all (as previous implementation
                 // of method
@@ -198,12 +198,12 @@ abstract public class DegreeModule extends DegreeModule_Base {
             for (; !getCurricularRules().isEmpty(); getCurricularRules().iterator().next().delete()) {
                 ;
             }
-            for (; !getParticipatingPrecedenceCurricularRules().isEmpty(); getParticipatingPrecedenceCurricularRules().iterator().next()
-                    .delete()) {
+            for (; !getParticipatingPrecedenceCurricularRules().isEmpty(); getParticipatingPrecedenceCurricularRules().iterator()
+                    .next().delete()) {
                 ;
             }
-            for (; !getParticipatingExclusivenessCurricularRules().isEmpty(); getParticipatingExclusivenessCurricularRules().get(
-                    0).delete()) {
+            for (; !getParticipatingExclusivenessCurricularRules().isEmpty(); getParticipatingExclusivenessCurricularRules()
+                    .iterator().next().delete()) {
                 ;
             }
         } else {
@@ -216,7 +216,7 @@ abstract public class DegreeModule extends DegreeModule_Base {
     }
 
     public void deleteContext(Context context) {
-        if (hasParentContexts(context)) {
+        if (getParentContextsSet().contains(context)) {
             context.delete();
         }
         if (!hasAnyParentContexts()) {

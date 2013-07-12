@@ -54,7 +54,7 @@ public class InternalSubstitutionDismissalBean extends DismissalBean {
      * check that.
      */
     private boolean isApproved(final StudentCurricularPlan studentCurricularPlan, final CurricularCourse curricularCourse) {
-        for (final Enrolment enrolment : studentCurricularPlan.getEnrolments()) {
+        for (final Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
             if (enrolment.getCurricularCourse().isEquivalent(curricularCourse) && enrolment.isApproved()) {
                 return true;
             }

@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.externalSupervision.con
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -146,7 +147,7 @@ public class ExternalSupervisorViewsBean implements Serializable, HasExecutionYe
     }
 
     public boolean supervisorHasPermission() {
-        List<Registration> allRegistrations = student.getStudent().getRegistrations();
+        Collection<Registration> allRegistrations = student.getStudent().getRegistrations();
         for (Registration iterator : allRegistrations) {
             if (iterator.getRegistrationProtocol() == protocol) {
                 return true;
@@ -157,7 +158,7 @@ public class ExternalSupervisorViewsBean implements Serializable, HasExecutionYe
 
     public boolean supervisorHasPermission(boolean isOmnipotent, Set<RegistrationProtocol> jurisdictions) {
         if (isOmnipotent) {
-            List<Registration> allRegistrations = student.getStudent().getRegistrations();
+            Collection<Registration> allRegistrations = student.getStudent().getRegistrations();
             for (Registration regIter : allRegistrations) {
                 for (RegistrationProtocol protIter : jurisdictions) {
                     if (regIter.getRegistrationProtocol() == protIter) {
@@ -176,7 +177,7 @@ public class ExternalSupervisorViewsBean implements Serializable, HasExecutionYe
         if (student.getStudent().getLastActiveRegistration() != null) {
             return false;
         }
-        List<Registration> registrations = student.getStudent().getRegistrations();
+        Collection<Registration> registrations = student.getStudent().getRegistrations();
         for (Registration iterator : registrations) {
             if (iterator.getNumberOfCurriculumEntries() > 0) {
                 return false;

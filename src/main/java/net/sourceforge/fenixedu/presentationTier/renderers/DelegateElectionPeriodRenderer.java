@@ -237,10 +237,11 @@ public class DelegateElectionPeriodRenderer extends OutputRenderer {
                 String longResume = null;
                 if (electionPeriod instanceof DelegateElectionCandidacyPeriod) {
                     longResume =
-                            "(" + ((DelegateElectionCandidacyPeriod) electionPeriod).getDelegateElection().getCandidatesCount()
-                                    + postLabel + ")";
+                            "("
+                                    + ((DelegateElectionCandidacyPeriod) electionPeriod).getDelegateElection().getCandidatesSet()
+                                            .size() + postLabel + ")";
                 } else {
-                    longResume = "(" + ((DelegateElectionVotingPeriod) electionPeriod).getVotesCount() + postLabel + ")";
+                    longResume = "(" + ((DelegateElectionVotingPeriod) electionPeriod).getVotesSet().size() + postLabel + ")";
                 }
 
                 return (isLongResume ? shortResume + "<br/>" + longResume : shortResume);

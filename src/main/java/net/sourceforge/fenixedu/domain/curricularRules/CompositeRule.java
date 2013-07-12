@@ -93,7 +93,7 @@ public abstract class CompositeRule extends CompositeRule_Base {
     public List<GenericPair<Object, Boolean>> getLabel(final String operator) {
         final List<GenericPair<Object, Boolean>> labelList = new ArrayList<GenericPair<Object, Boolean>>();
         labelList.add(new GenericPair<Object, Boolean>("( ", false));
-        final Iterator<CurricularRule> curricularRulesIterator = getCurricularRules().listIterator();
+        final Iterator<CurricularRule> curricularRulesIterator = getCurricularRules().iterator();
         while (curricularRulesIterator.hasNext()) {
             labelList.addAll(curricularRulesIterator.next().getLabel());
             if (curricularRulesIterator.hasNext()) {

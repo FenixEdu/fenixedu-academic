@@ -172,8 +172,9 @@ public class PersonalIngressionData extends PersonalIngressionData_Base {
 
     @ConsistencyPredicate
     public boolean checkMultiplicityOfPrecedentDegreesInformations() {
-        return getPrecedentDegreesInformationsCount() > 0;
+        return getPrecedentDegreesInformationsSet().size() > 0;
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation> getPrecedentDegreesInformations() {
         return getPrecedentDegreesInformationsSet();

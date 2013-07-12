@@ -330,6 +330,7 @@ public class FacultyEvaluationProcess extends FacultyEvaluationProcess_Base impl
     public int compareTo(FacultyEvaluationProcess o) {
         return COMPARATOR_BY_INTERVAL.compare(this, o);
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationProcess> getTeacherEvaluationProcess() {
         return getTeacherEvaluationProcessSet();
@@ -351,11 +352,6 @@ public class FacultyEvaluationProcess extends FacultyEvaluationProcess_Base impl
     }
 
     @Deprecated
-    public boolean hasAreApprovedMarksPublished() {
-        return getAreApprovedMarksPublished() != null;
-    }
-
-    @Deprecated
     public boolean hasRootDomainObject() {
         return getRootDomainObject() != null;
     }
@@ -373,11 +369,6 @@ public class FacultyEvaluationProcess extends FacultyEvaluationProcess_Base impl
     @Deprecated
     public boolean hasEvaluationInterval() {
         return getEvaluationInterval() != null;
-    }
-
-    @Deprecated
-    public boolean hasAllowNoEval() {
-        return getAllowNoEval() != null;
     }
 
     @Deprecated

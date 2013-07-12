@@ -67,7 +67,7 @@ public class GlobalTSDProcessValuationAction extends FenixDispatchAction {
         } else if (selectedExecutionYear != null) {
             tsdProcessList = selectedDepartment.getTSDProcessesByExecutionYear(selectedExecutionYear);
         } else {
-            tsdProcessList = selectedDepartment.getTSDProcesses();
+            tsdProcessList = new ArrayList<>(selectedDepartment.getTSDProcesses());
         }
 
         tsdProcessList = selectOnlyTSDProcesssWithPublishedPhases(tsdProcessList);

@@ -337,9 +337,4 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
         return getCurricularCourse() != null;
     }
 
-    @Deprecated
-    public boolean hasEndYearMonthDay() {
-        return getEndYearMonthDay() != null;
-    }
-
 }

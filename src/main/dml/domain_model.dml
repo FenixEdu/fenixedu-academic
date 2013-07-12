@@ -20806,3 +20806,8 @@ relation RemoteSystemRemoteHost {
         multiplicity *;
     }
 }
+
+relation RemoteSystemDomainRoot {
+    RemoteSystem playsRole remoteSystem;
+    .pt.ist.fenixframework.DomainRoot playsRole domainRoot;
+}

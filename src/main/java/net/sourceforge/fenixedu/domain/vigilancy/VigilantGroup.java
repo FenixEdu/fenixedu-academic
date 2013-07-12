@@ -207,7 +207,7 @@ public class VigilantGroup extends VigilantGroup_Base {
         setUnit(null);
         setRootDomainObject(null);
         for (VigilantWrapper vigilant : this.getVigilantWrappers()) {
-            List<Vigilancy> vigilancies = vigilant.getVigilancies();
+            Collection<Vigilancy> vigilancies = vigilant.getVigilancies();
             for (Vigilancy vigilancy : vigilancies) {
                 if (vigilancy.isActive()) {
                     throw new DomainException("label.vigilancy.error.cannotDeleteGroupWithVigilants");
@@ -219,7 +219,7 @@ public class VigilantGroup extends VigilantGroup_Base {
     }
 
     public List<WrittenEvaluation> getAllAssociatedWrittenEvaluations() {
-        List<ExecutionCourse> courses = this.getExecutionCourses();
+        Collection<ExecutionCourse> courses = this.getExecutionCourses();
         Set<WrittenEvaluation> evaluations = new HashSet<WrittenEvaluation>();
         for (ExecutionCourse course : courses) {
             evaluations.addAll(course.getWrittenEvaluations());

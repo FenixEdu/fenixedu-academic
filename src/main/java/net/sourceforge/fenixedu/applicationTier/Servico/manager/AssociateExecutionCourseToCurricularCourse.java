@@ -41,7 +41,7 @@ public class AssociateExecutionCourseToCurricularCourse {
             throw new NonExistingServiceException("message.nonExisting.executionCourse", null);
         }
 
-        if (!curricularCourse.hasAssociatedExecutionCourses(executionCourse)) {
+        if (!curricularCourse.getAssociatedExecutionCoursesSet().contains(executionCourse)) {
             curricularCourse.addAssociatedExecutionCourses(executionCourse);
         }
     }

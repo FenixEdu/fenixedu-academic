@@ -151,7 +151,7 @@ public class InsertDistributedTest {
             distributedTest.setTestType(testType);
             distributedTest.setCorrectionAvailability(correctionAvaiability);
             distributedTest.setImsFeedback(imsFeedback);
-            distributedTest.setNumberOfQuestions(test.getTestQuestionsCount());
+            distributedTest.setNumberOfQuestions(test.getTestQuestionsSet().size());
 
             TestScope testScope = executionCourse.getTestScope();
 
@@ -237,7 +237,7 @@ public class InsertDistributedTest {
         private List<Question> getQuestions(final TestQuestion testQuestion, final int numberOfStudents) {
             final List<Question> questions = new ArrayList<Question>();
             final Metadata metadata = testQuestion.getQuestion().getMetadata();
-            while (metadata.getQuestionsCount() > 0 && questions.size() < numberOfStudents) {
+            while (metadata.getQuestionsSet().size() > 0 && questions.size() < numberOfStudents) {
                 for (final Question question : metadata.getQuestionsSet()) {
                     if (question.getVisibility()) {
                         questions.add(question);

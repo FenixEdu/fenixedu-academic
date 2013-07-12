@@ -29,7 +29,6 @@ import net.sourceforge.fenixedu.domain.contents.Portal;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.functionalities.Functionality;
 import net.sourceforge.fenixedu.domain.functionalities.Module;
-import net.sourceforge.fenixedu.persistenceTier.statementInterceptors.FenixStatementInterceptor;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.functionalities.ExpressionBean;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.functionalities.ParserReport;
@@ -82,17 +81,11 @@ public class ContentManagement extends FenixDispatchAction {
     public ActionForward activateLogging(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 
-        if (!FenixStatementInterceptor.isLogging()) {
-            FenixStatementInterceptor.startLogging();
-        }
         return viewContainer(mapping, form, request, response);
     }
 
     public ActionForward deactivateLogging(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
-        if (FenixStatementInterceptor.isLogging()) {
-            FenixStatementInterceptor.stopLogging();
-        }
 
         return viewContainer(mapping, form, request, response);
     }

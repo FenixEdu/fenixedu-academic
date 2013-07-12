@@ -77,7 +77,7 @@ public class ReadShiftsByExecutionCourseIDAuthorizationFilter extends Filtro {
                 // Read All Execution Degrees for this Degree Curricular
                 // Plan
 
-                List executionDegrees = curricularCourse.getDegreeCurricularPlan().getExecutionDegrees();
+                Collection executionDegrees = curricularCourse.getDegreeCurricularPlan().getExecutionDegrees();
 
                 // Check if the Coordinator is the logged one
                 Iterator executionDegreesIterator = executionDegrees.iterator();

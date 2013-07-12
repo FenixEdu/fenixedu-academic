@@ -29,7 +29,7 @@ public class Project extends Project_Base {
             @Override
             public void afterAdd(Project project, Grouping grouping) {
                 if (project != null && grouping != null) {
-                    if (grouping.getAutomaticEnrolment() && grouping.getStudentGroups().isEmpty()) {
+                    if (grouping.getAutomaticEnrolment() && grouping.getStudentGroupsSet().isEmpty()) {
                         int groupCount = 0;
                         for (final ExecutionCourse executionCourse : project.getAssociatedExecutionCoursesSet()) {
                             for (Attends attend : executionCourse.getAttendsSet()) {

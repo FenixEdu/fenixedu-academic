@@ -179,7 +179,7 @@ public class ThesisJuryElement extends ThesisJuryElement_Base {
     }
 
     public boolean isBottomElement() {
-        return getElementOrder().intValue() == getProcess().getThesisJuryElementsCount();
+        return getElementOrder().intValue() == getProcess().getThesisJuryElementsSet().size();
     }
 
     static public ThesisJuryElement create(final PhdThesisProcess process, final PhdThesisJuryElementBean bean) {

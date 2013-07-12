@@ -35,10 +35,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.DomainObject;
 import pt.ist.fenixframework.FenixFramework;
-import pt.ist.fenixframework.FenixFramework;
-import dml.DomainClass;
-import dml.Role;
-import dml.Slot;
+import pt.ist.fenixframework.dml.DomainClass;
+import pt.ist.fenixframework.dml.Role;
+import pt.ist.fenixframework.dml.Slot;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -149,8 +148,10 @@ public class MergeObjectsDispatchAction extends FenixDispatchAction {
                     // collection
                     mergeSlot.setType("Collection");
 
-                    fillDtoWithCollectionProperty(mergeSlot, property1, MergeSlotDTO.VALUE1, domainObject1.getOID(), classToMerge);
-                    fillDtoWithCollectionProperty(mergeSlot, property2, MergeSlotDTO.VALUE2, domainObject2.getOID(), classToMerge);
+                    fillDtoWithCollectionProperty(mergeSlot, property1, MergeSlotDTO.VALUE1, domainObject1.getExternalId(),
+                            classToMerge);
+                    fillDtoWithCollectionProperty(mergeSlot, property2, MergeSlotDTO.VALUE2, domainObject2.getExternalId(),
+                            classToMerge);
                 }
 
                 results.add(mergeSlot);
@@ -166,7 +167,7 @@ public class MergeObjectsDispatchAction extends FenixDispatchAction {
         return mapping.findForward("displayObjects");
     }
 
-    private void fillDtoWithCollectionProperty(MergeSlotDTO mergeSlot, Object collection, String order, long oid,
+    private void fillDtoWithCollectionProperty(MergeSlotDTO mergeSlot, Object collection, String order, String oid,
             String domainClass) {
         if (collection != null) {
             mergeSlot.setValueProperty(order, "Size: " + ((Collection) collection).size());
@@ -180,7 +181,7 @@ public class MergeObjectsDispatchAction extends FenixDispatchAction {
     private void fillDtoWithSimpleProperty(Role roleSlot, MergeSlotDTO mergeSlot, Object reference, String order) {
         if (reference != null) {
             if (roleSlot.getType() instanceof DomainClass) {
-                final long externalId = ((DomainObject) reference).getOID();
+                final String externalId = ((DomainObject) reference).getExternalId();
                 mergeSlot.setValueProperty(order, "OID: " + externalId);
                 mergeSlot.setValueLinkProperty(order, "/domainbrowser/showObj?OID=" + externalId);
             } else {

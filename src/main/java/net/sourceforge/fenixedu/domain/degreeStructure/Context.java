@@ -373,7 +373,6 @@ public class Context extends Context_Base implements Comparable<Context> {
         super.setBeginExecutionPeriod(beginExecutionPeriod);
     }
 
-    @Override
     public void removeBeginExecutionPeriod() {
         super.setBeginExecutionPeriod(null);
     }

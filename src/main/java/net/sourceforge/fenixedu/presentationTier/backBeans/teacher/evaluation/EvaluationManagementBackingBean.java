@@ -928,7 +928,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 
     public List<SelectItem> getNames() throws FenixServiceException {
         final List<SelectItem> result =
-                new ArrayList<SelectItem>(((WrittenEvaluation) getEvaluation()).getWrittenEvaluationSpaceOccupationsCount());
+                new ArrayList<SelectItem>(((WrittenEvaluation) getEvaluation()).getWrittenEvaluationSpaceOccupationsSet().size());
         for (final WrittenEvaluationSpaceOccupation roomOccupation : ((WrittenEvaluation) getEvaluation())
                 .getWrittenEvaluationSpaceOccupations()) {
             result.add(new SelectItem(roomOccupation.getRoom().getExternalId(), (roomOccupation.getRoom()).getIdentification()));
@@ -990,7 +990,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     public int getNumberOfAttendingStudents() throws FenixServiceException {
         int numberOfAttendingStudents = 0;
         for (final ExecutionCourse executionCourse : getEvaluation().getAssociatedExecutionCourses()) {
-            numberOfAttendingStudents += executionCourse.getAttendsCount();
+            numberOfAttendingStudents += executionCourse.getAttendsSet().size();
         }
         return numberOfAttendingStudents;
     }

@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import java.util.Collection;
-import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.support.InfoFAQSection;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -16,7 +15,7 @@ public class ReadFAQSections {
 
     @Atomic
     public static Collection run() {
-        List<FAQSection> faqSections = RootDomainObject.getInstance().getFAQSections();
+        Collection<FAQSection> faqSections = RootDomainObject.getInstance().getFAQSections();
         return CollectionUtils.collect(faqSections, new Transformer() {
             @Override
             public Object transform(Object arg0) {

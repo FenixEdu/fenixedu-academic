@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.backBeans.departmentMember;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -123,7 +124,7 @@ public class CourseStatistics extends FenixBackingBean {
             List<InfoExecutionYear> executionYearsList = ReadNotClosedExecutionYears.run();
             List<SelectItem> result = new ArrayList<SelectItem>();
             for (InfoExecutionYear executionYear : executionYearsList) {
-                List<ExecutionSemester> executionSemesters =
+                Collection<ExecutionSemester> executionSemesters =
                         FenixFramework.<ExecutionYear> getDomainObject(executionYear.getExternalId()).getExecutionPeriods();
                 for (ExecutionSemester executionSemester : executionSemesters) {
                     result.add(new SelectItem(executionSemester.getExternalId(), executionSemester.getExecutionYear().getYear()

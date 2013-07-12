@@ -30,7 +30,7 @@ public class NewModelRestriction extends NewModelRestriction_Base implements Pos
 
     protected void init(NewModelGroup parentGroup) {
         this.setParentGroup(parentGroup);
-        this.setPosition(parentGroup.getChildRestrictionsCount());
+        this.setPosition(parentGroup.getChildRestrictionsSet().size());
     }
 
     @Override
@@ -83,7 +83,7 @@ public class NewModelRestriction extends NewModelRestriction_Base implements Pos
 
     @Override
     public boolean isLast() {
-        return this.getPosition() == this.getParentGroup().getChildRestrictionsCount();
+        return this.getPosition() == this.getParentGroup().getChildRestrictionsSet().size();
     }
 
     @Override

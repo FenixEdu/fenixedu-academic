@@ -117,9 +117,8 @@ public class AuthorizationsManagementBean implements Serializable {
     }
 
     private AuthorizationGroupBean getBeanByOid(String parameter) {
-        Long oid = Long.parseLong(parameter);
         for (AuthorizationGroupBean bean : getGroups()) {
-            if (bean.getId() == oid) {
+            if (bean.getId().equals(parameter)) {
                 return bean;
             }
         }

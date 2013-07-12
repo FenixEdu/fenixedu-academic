@@ -382,11 +382,6 @@ public abstract class PostingRule extends PostingRule_Base {
     }
 
     @Deprecated
-    public boolean hasEndDate() {
-        return getEndDate() != null;
-    }
-
-    @Deprecated
     public boolean hasStartDate() {
         return getStartDate() != null;
     }

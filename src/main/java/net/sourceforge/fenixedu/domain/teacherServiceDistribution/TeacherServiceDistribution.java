@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.teacherServiceDistribution;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -61,7 +62,7 @@ public class TeacherServiceDistribution extends TeacherServiceDistribution_Base 
 
     public void delete() {
         for (TSDCourse tsdCourse : getTSDCourses()) {
-            if (tsdCourse.getTeacherServiceDistributionsCount() == 1) {
+            if (tsdCourse.getTeacherServiceDistributionsSet().size() == 1) {
                 tsdCourse.delete();
             } else {
                 removeTSDCourses(tsdCourse);
@@ -69,7 +70,7 @@ public class TeacherServiceDistribution extends TeacherServiceDistribution_Base 
         }
 
         for (TSDTeacher teacher : getTSDTeachers()) {
-            if (teacher.getTeacherServiceDistributionsCount() == 1) {
+            if (teacher.getTeacherServiceDistributionsSet().size() == 1) {
                 teacher.delete();
             } else {
                 removeTSDTeachers(teacher);
@@ -112,7 +113,7 @@ public class TeacherServiceDistribution extends TeacherServiceDistribution_Base 
         return getTSDCompetenceAndVirtualCoursesByExecutionPeriod(periods);
     }
 
-    private List<TSDCourse> getTSDCompetenceAndVirtualCoursesByExecutionPeriod(List<ExecutionSemester> periods) {
+    private List<TSDCourse> getTSDCompetenceAndVirtualCoursesByExecutionPeriod(Collection<ExecutionSemester> periods) {
         Set<TSDCourse> courseList = new HashSet<TSDCourse>();
         Set<CompetenceCourse> competenceCourseSet = new HashSet<CompetenceCourse>();
 

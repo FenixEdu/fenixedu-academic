@@ -561,7 +561,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
     }
 
     public void deleteLastState() {
-        if (getStatesCount() <= 1) {
+        if (getStatesSet().size() <= 1) {
             throw new DomainException("error.phd.candidacy.PhdProgramCandidacyProcess.cannot.delete.the.only.state");
         }
 

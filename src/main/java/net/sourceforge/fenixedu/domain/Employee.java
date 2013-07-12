@@ -339,7 +339,7 @@ public class Employee extends Employee_Base {
         int count = 0;
         final int several = 2;
         for (Department department : departments) {
-            if (department.hasAssociatedPersons(getPerson())) {
+            if (department.getAssociatedPersonsSet().contains(getPerson())) {
                 count++;
             }
         }

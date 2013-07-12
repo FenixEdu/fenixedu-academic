@@ -1,8 +1,6 @@
 package net.sourceforge.fenixedu.domain.accounting;
 
 import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -47,16 +45,6 @@ public class Account extends Account_Base {
     }
 
     @Override
-    public List<Entry> getEntries() {
-        return Collections.unmodifiableList(super.getEntries());
-    }
-
-    @Override
-    public Iterator<Entry> getEntriesIterator() {
-        return getEntriesSet().iterator();
-    }
-
-    @Override
     public Set<Entry> getEntriesSet() {
         return Collections.unmodifiableSet(super.getEntriesSet());
     }
@@ -91,7 +79,7 @@ public class Account extends Account_Base {
     }
 
     private boolean canBeDeleted() {
-        return getEntriesCount() == 0;
+        return getEntriesSet().size() == 0;
     }
 
     public void transferEntry(Entry entry) {

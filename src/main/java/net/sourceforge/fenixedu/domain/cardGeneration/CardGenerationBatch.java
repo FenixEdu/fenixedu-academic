@@ -353,7 +353,7 @@ public class CardGenerationBatch extends CardGenerationBatch_Base {
             final CardGenerationEntry cardGenerationEntry =
                     createCardGenerationEntries(record.getLine(), record.getIdentificationId());
             cardGenerationEntry.setPerson(person);
-            if (person.getCardGenerationEntriesCount() > 1) {
+            if (person.getCardGenerationEntriesSet().size() > 1) {
                 cardGenerationEntry.incrementVersionNumber();
             }
             return cardGenerationEntry;

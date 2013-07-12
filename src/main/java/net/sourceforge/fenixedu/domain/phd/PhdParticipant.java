@@ -276,11 +276,6 @@ abstract public class PhdParticipant extends PhdParticipant_Base {
     }
 
     @Deprecated
-    public boolean hasAccessHashCode() {
-        return getAccessHashCode() != null;
-    }
-
-    @Deprecated
     public boolean hasPhdReporterReviewAlert() {
         return getPhdReporterReviewAlert() != null;
     }

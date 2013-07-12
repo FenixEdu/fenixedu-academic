@@ -166,7 +166,7 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
     }
 
     public void swapJuryElementsOrder(ThesisJuryElement e1, ThesisJuryElement e2) {
-        if (hasThesisJuryElements(e1) && hasThesisJuryElements(e2)) {
+        if (getThesisJuryElementsSet().contains(e1) && getThesisJuryElementsSet().contains(e2)) {
             final Integer order1 = e1.getElementOrder();
             final Integer order2 = e2.getElementOrder();
             e1.setElementOrder(order2);
@@ -175,7 +175,7 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
     }
 
     public void deleteJuryElement(ThesisJuryElement element) {
-        if (hasThesisJuryElements(element)) {
+        if (getThesisJuryElementsSet().contains(element)) {
             final Integer elementOrder = element.getElementOrder();
             element.delete();
             reorderJuryElements(elementOrder);
@@ -517,7 +517,7 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
     }
 
     public void removeLastState() {
-        if (getStatesCount() <= 1) {
+        if (getStatesSet().size() <= 1) {
             throw new DomainException("phd.thesis.PhdThesisProcess.cannot.remove.state");
         }
 
@@ -555,11 +555,13 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
         new PhdThesisRequestFee(getIndividualProgramProcess());
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessState> getStates() {
         return getStatesSet();
     }
 
+    @Override
     @Deprecated
     public boolean hasAnyStates() {
         return !getStatesSet().isEmpty();

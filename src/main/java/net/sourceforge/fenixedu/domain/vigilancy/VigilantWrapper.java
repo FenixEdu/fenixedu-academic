@@ -106,7 +106,7 @@ public class VigilantWrapper extends VigilantWrapper_Base {
         double points = this.getStartPoints().doubleValue();
         BigDecimal weight = this.getPointsWeight();
 
-        List<Vigilancy> vigilancies = getVigilancies();
+        Collection<Vigilancy> vigilancies = getVigilancies();
 
         for (Vigilancy vigilancy : vigilancies) {
             points += weight.doubleValue() * vigilancy.getPoints();
@@ -232,7 +232,7 @@ public class VigilantWrapper extends VigilantWrapper_Base {
 
     public List<Interval> getConvokePeriods() {
         List<Interval> convokingPeriods = new ArrayList<Interval>();
-        List<Vigilancy> convokes = this.getVigilancies();
+        Collection<Vigilancy> convokes = this.getVigilancies();
         for (Vigilancy convoke : convokes) {
             convokingPeriods.add(new Interval(convoke.getBeginDate(), convoke.getEndDate()));
         }
@@ -256,7 +256,7 @@ public class VigilantWrapper extends VigilantWrapper_Base {
     }
 
     public boolean hasNoEvaluationsOnDate(DateTime beginOfExam, DateTime endOfExam) {
-        List<Vigilancy> convokes = this.getVigilancies();
+        Collection<Vigilancy> convokes = this.getVigilancies();
         Interval requestedInterval = new Interval(beginOfExam, endOfExam);
         for (Vigilancy convoke : convokes) {
             DateTime begin = convoke.getBeginDateTime();
@@ -329,7 +329,7 @@ public class VigilantWrapper extends VigilantWrapper_Base {
         return getActiveVigilanciesInList(getOwnCourseVigilancies());
     }
 
-    private List<Vigilancy> getActiveVigilanciesInList(List<Vigilancy> vigilancies) {
+    private List<Vigilancy> getActiveVigilanciesInList(Collection<Vigilancy> vigilancies) {
         List<Vigilancy> activeVigilancies = new ArrayList<Vigilancy>();
         for (Vigilancy vigilancy : vigilancies) {
             if (vigilancy.isActive()) {
@@ -349,13 +349,12 @@ public class VigilantWrapper extends VigilantWrapper_Base {
         return null;
     }
 
-    @Override
-    public List<Vigilancy> getVigilancies() {
+    public Collection<Vigilancy> getVigilancies() {
         return this.getVigilantGroup().getVigilancies(this);
     }
 
     public boolean hasBeenConvokedForEvaluation(WrittenEvaluation writtenEvaluation) {
-        List<Vigilancy> convokes = this.getVigilancies();
+        Collection<Vigilancy> convokes = this.getVigilancies();
         for (Vigilancy convoke : convokes) {
             if (convoke.getWrittenEvaluation().equals(writtenEvaluation)) {
                 return true;
@@ -459,11 +458,6 @@ public class VigilantWrapper extends VigilantWrapper_Base {
 
     public List<UnavailablePeriod> getUnavailablePeriods() {
         return getPerson().getUnavailablePeriodsForGivenYear(getExecutionYear());
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.vigilancy.Vigilancy> getVigilancies() {
-        return getVigilanciesSet();
     }
 
     @Deprecated

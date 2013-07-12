@@ -6,6 +6,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -38,7 +39,7 @@ public class ReadStudentGroupInformation {
         InfoSiteStudentGroup infoSiteStudentGroup = new InfoSiteStudentGroup();
         StudentGroup studentGroup = null;
         Grouping grouping = null;
-        List groupAttendsList = null;
+        Collection groupAttendsList = null;
 
         studentGroup = FenixFramework.getDomainObject(studentGroupCode);
 

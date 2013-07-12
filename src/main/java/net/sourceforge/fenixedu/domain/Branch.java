@@ -43,9 +43,9 @@ public class Branch extends Branch_Base {
     }
 
     private Boolean canDeleteAllEligibleCurricularCourseScopes(final Branch commonBranch) {
-        Iterator branchCurricularCourseScopesIterator = getScopesIterator();
+        Iterator<CurricularCourseScope> branchCurricularCourseScopesIterator = getScopesSet().iterator();
         while (branchCurricularCourseScopesIterator.hasNext()) {
-            CurricularCourseScope scope = (CurricularCourseScope) branchCurricularCourseScopesIterator.next();
+            CurricularCourseScope scope = branchCurricularCourseScopesIterator.next();
             CurricularCourse curricularCourse = scope.getCurricularCourse();
 
             // if CurricularCourse already has a common Branch
@@ -97,9 +97,9 @@ public class Branch extends Branch_Base {
     }
 
     private void removeCurricularCourseScopes(final Branch commonBranch) throws DomainException {
-        Iterator branchCurricularCourseScopesIterator = getScopesIterator();
+        Iterator<CurricularCourseScope> branchCurricularCourseScopesIterator = getScopesSet().iterator();
         while (branchCurricularCourseScopesIterator.hasNext()) {
-            CurricularCourseScope scope = (CurricularCourseScope) branchCurricularCourseScopesIterator.next();
+            CurricularCourseScope scope = branchCurricularCourseScopesIterator.next();
             CurricularCourse curricularCourse = scope.getCurricularCourse();
 
             // if CurricularCourse already has a common Branch

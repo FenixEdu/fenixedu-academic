@@ -51,7 +51,7 @@ public class EditPosGradStudentCurricularPlanStateAndCredits {
         scp.setBranch(branch);
         scp.setSpecialization(Specialization.valueOf(specialization));
 
-        for (final Enrolment enrolment : scp.getEnrolments()) {
+        for (final Enrolment enrolment : scp.getEnrolmentsSet()) {
             if (extraCurricularOIDs.contains(enrolment.getExternalId())) {
                 if (enrolment.isExtraCurricular()) {
                     enrolment.setIsExtraCurricular(false);

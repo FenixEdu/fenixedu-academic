@@ -21,8 +21,8 @@ import net.sourceforge.fenixedu.util.ByteArray;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.joda.time.DateTime;
 
+import pt.ist.bennu.backend.util.ConnectionManager;
 import pt.ist.fenixframework.FenixFramework;
-import pt.ist.fenixframework.pstm.Transaction;
 import pt.utl.ist.fenix.tools.file.FileDescriptor;
 import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 import pt.utl.ist.fenix.tools.file.FileSetMetaData;
@@ -164,13 +164,13 @@ public abstract class File extends File_Base {
         // For performance reasons...
         PreparedStatement stmt = null;
         try {
-            final Connection connection = Transaction.getCurrentJdbcConnection();
+            final Connection connection = ConnectionManager.getCurrentSQLConnection();
             stmt = connection.prepareStatement("SELECT OID FROM FILE WHERE EXTERNAL_STORAGE_IDENTIFICATION = ?");
 
             stmt.setString(1, externalStorageIdentification);
             final ResultSet resultSet = stmt.executeQuery();
             if (resultSet.next()) {
-                return AbstractDomainObject.fromOID(resultSet.getLong(1));
+                return FenixFramework.getDomainObject(resultSet.getString(1));
             }
 
             return null;

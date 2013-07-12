@@ -6,6 +6,7 @@
 package net.sourceforge.fenixedu.applicationTier.Factory;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -116,7 +117,7 @@ public class ScientificCouncilComponentBuilder {
             throw new InvalidArgumentsServiceException();
         }
 
-        List<CurricularCourse> curricularCourses = degreeCurricularPlan.getCurricularCourses();
+        Collection<CurricularCourse> curricularCourses = degreeCurricularPlan.getCurricularCourses();
 
         Iterator iter = curricularCourses.iterator();
         List<InfoCurricularCourse> infoCurricularCourses = new ArrayList<InfoCurricularCourse>();

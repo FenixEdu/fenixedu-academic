@@ -346,6 +346,7 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
     protected void createCertificateRequestEvent() {
         new DegreeFinalizationCertificateRequestEvent(getAdministrativeOffice(), getRegistration().getPerson(), this);
     }
+
     @Deprecated
     public boolean hasDetailed() {
         return getDetailed() != null;
@@ -379,11 +380,6 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
     @Deprecated
     public boolean hasIgnoreCurriculumInAdvance() {
         return getIgnoreCurriculumInAdvance() != null;
-    }
-
-    @Deprecated
-    public boolean hasExceptionalConclusionDate() {
-        return getExceptionalConclusionDate() != null;
     }
 
     @Deprecated

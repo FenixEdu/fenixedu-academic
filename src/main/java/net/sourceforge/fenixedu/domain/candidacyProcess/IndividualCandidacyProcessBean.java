@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.candidacyProcess;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
@@ -249,7 +250,7 @@ abstract public class IndividualCandidacyProcessBean implements Serializable {
         this.formationNonConcludedBeanList.remove(index);
     }
 
-    protected void initializeFormation(List<Formation> formations) {
+    protected void initializeFormation(Collection<Formation> formations) {
         this.formationConcludedBeanList = new ArrayList<FormationBean>();
         this.formationNonConcludedBeanList = new ArrayList<FormationBean>();
 

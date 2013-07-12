@@ -29,7 +29,7 @@ public class FakeShift extends FakeShift_Base {
     }
 
     public int getVacancies() {
-        return getCapacity() - getFakeShiftEnrollmentsCount();
+        return getCapacity() - getFakeShiftEnrollmentsSet().size();
     }
 
     public Collection<FakeShiftEnrollment> getFakeShiftEnrollmentsForCurrentUser() {
@@ -103,6 +103,7 @@ public class FakeShift extends FakeShift_Base {
             fakeShift.delete();
         }
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.FakeShiftEnrollment> getFakeShiftEnrollments() {
         return getFakeShiftEnrollmentsSet();

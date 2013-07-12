@@ -169,7 +169,7 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
             if (!getRegistration().getDegreeType().equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA)) {
                 RegistryCode code = getRegistryCode();
                 if (code != null) {
-                    if (!code.hasDocumentRequest(this)) {
+                    if (!code.getDocumentRequestSet().contains(this)) {
                         code.addDocumentRequest(this);
                         getAdministrativeOffice().getCurrentRectorateSubmissionBatch().addDocumentRequest(this);
                     }
@@ -520,6 +520,7 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
     public boolean isProgrammeLinkVisible() {
         return getRegistration().isAllowedToManageRegistration();
     }
+
     @Deprecated
     public boolean hasRequestedCycle() {
         return getRequestedCycle() != null;

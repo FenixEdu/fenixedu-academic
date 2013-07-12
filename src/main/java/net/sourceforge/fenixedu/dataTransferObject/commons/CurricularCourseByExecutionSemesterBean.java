@@ -59,7 +59,7 @@ public class CurricularCourseByExecutionSemesterBean implements Serializable, Co
     }
 
     public String getKey() {
-        return getCurricularCourse().getOID() + ":" + getExecutionSemester().getOID();
+        return getCurricularCourse().getExternalId() + ":" + getExecutionSemester().getExternalId();
     }
 
     public String getAcronym() {
@@ -123,8 +123,8 @@ public class CurricularCourseByExecutionSemesterBean implements Serializable, Co
             return null;
         }
         final String[] values = key.split(":");
-        final CurricularCourse course = (CurricularCourse) AbstractDomainObject.fromOID(Long.valueOf(values[0]).longValue());
-        final ExecutionSemester semester = (ExecutionSemester) AbstractDomainObject.fromOID(Long.valueOf(values[1]).longValue());
+        final CurricularCourse course = FenixFramework.getDomainObject(values[0]);
+        final ExecutionSemester semester = FenixFramework.getDomainObject(values[1]);
         return new CurricularCourseByExecutionSemesterBean(course, semester);
     }
 }

@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.coordinator.degreeCurricularPlanManagement;
 
-import java.util.List;
+import java.util.Collection;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
@@ -26,7 +26,7 @@ public class ReadDegreeCurricularPlanHistoryByDegreeCurricularPlanID {
         DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
 
         if (degreeCurricularPlan != null) {
-            List<CurricularCourse> allCurricularCourses = degreeCurricularPlan.getCurricularCourses();
+            Collection<CurricularCourse> allCurricularCourses = degreeCurricularPlan.getCurricularCourses();
 
             if (allCurricularCourses != null && !allCurricularCourses.isEmpty()) {
                 infoDegreeCurricularPlan = createInfoDegreeCurricularPlan(degreeCurricularPlan, allCurricularCourses);
@@ -37,7 +37,7 @@ public class ReadDegreeCurricularPlanHistoryByDegreeCurricularPlanID {
     }
 
     private static InfoDegreeCurricularPlan createInfoDegreeCurricularPlan(DegreeCurricularPlan degreeCurricularPlan,
-            List allCurricularCourses) {
+            Collection allCurricularCourses) {
         return InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan);
     }
 

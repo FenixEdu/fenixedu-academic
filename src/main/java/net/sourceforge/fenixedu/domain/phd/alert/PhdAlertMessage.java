@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -54,7 +53,7 @@ public class PhdAlertMessage extends PhdAlertMessage_Base {
             MultiLanguageString body) {
         checkParameters(process, persons, subject, body);
         super.setProcess(process);
-        super.getPersons().addAll(persons);
+        super.getPersonsSet().addAll(persons);
         super.setSubject(subject);
         super.setBody(body);
         super.setReaded(Boolean.FALSE);
@@ -92,18 +91,8 @@ public class PhdAlertMessage extends PhdAlertMessage_Base {
     }
 
     @Override
-    public List<Person> getPersons() {
-        return Collections.unmodifiableList(super.getPersons());
-    }
-
-    @Override
     public Set<Person> getPersonsSet() {
         return Collections.unmodifiableSet(super.getPersonsSet());
-    }
-
-    @Override
-    public Iterator<Person> getPersonsIterator() {
-        return getPersonsSet().iterator();
     }
 
     @Override

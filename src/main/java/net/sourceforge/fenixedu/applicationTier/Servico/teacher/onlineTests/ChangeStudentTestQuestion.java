@@ -165,7 +165,7 @@ public class ChangeStudentTestQuestion {
 
             if (canDelete) {
                 oldQuestion.delete();
-                if (metadata.getQuestionsCount() <= 1) {
+                if (metadata.getQuestionsSet().size() <= 1) {
                     metadata.delete();
                 }
             } else {

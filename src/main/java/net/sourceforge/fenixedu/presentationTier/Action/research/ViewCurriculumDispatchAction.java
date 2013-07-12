@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.research;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -92,7 +93,7 @@ public class ViewCurriculumDispatchAction extends FenixAction {
 
         putInformationOnRequestForGivenExecutionYear(firstExecutionYear, finalExecutionYear, person, request);
 
-        final List<ResearchInterest> researchInterests = person.getResearchInterests();
+        final Collection<ResearchInterest> researchInterests = person.getResearchInterests();
         request.setAttribute("researchInterests", researchInterests);
 
         return mapping.findForward("Success");
