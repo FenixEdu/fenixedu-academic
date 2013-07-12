@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.domain.CurricularSemester;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
-import pt.ist.fenixframework.pstm.IllegalWriteException;
+import pt.ist.fenixframework.core.WriteOnReadError;
 
 /**
  * @author lmac1
@@ -49,7 +49,7 @@ public class InsertCurricularCourseScopeAtCurricularCourse {
 
             new CurricularCourseScope(branch, curricularCourse, curricularSemester, infoCurricularCourseScope.getBeginDate(),
                     infoCurricularCourseScope.getEndDate(), infoCurricularCourseScope.getAnotation());
-        } catch (IllegalWriteException iwe) {
+        } catch (WriteOnReadError iwe) {
             throw iwe;
         } catch (RuntimeException e) {
             throw new ExistingServiceException("O âmbito pertencente ao ramo " + branch.getCode() + ", no "

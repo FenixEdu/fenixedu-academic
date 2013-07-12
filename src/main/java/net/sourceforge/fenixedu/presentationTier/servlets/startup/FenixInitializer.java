@@ -33,28 +33,23 @@ import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.FenixWebFramework;
 import pt.ist.fenixframework.Atomic;
-import pt.ist.fenixframework.FenixFrameworkInitializer;
+import pt.ist.fenixframework.Atomic.TxMode;
 import pt.ist.fenixframework.plugins.remote.domain.RemoteSystem;
 import pt.ist.fenixframework.plugins.scheduler.Scheduler;
 import pt.ist.fenixframework.plugins.scheduler.domain.SchedulerSystem;
-import pt.ist.fenixframework.pstm.Transaction;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 
 @WebListener
-public class StartupServlet implements ServletContextListener {
+public class FenixInitializer implements ServletContextListener {
 
-    private static final Logger LOG = LoggerFactory.getLogger(StartupServlet.class);
+    private static final Logger logger = LoggerFactory.getLogger(FenixInitializer.class);
 
     @Override
+    @Atomic(mode = TxMode.READ)
     public void contextInitialized(ServletContextEvent event) {
-        try {
-            Class.forName(FenixFrameworkInitializer.class.getName());
-        } catch (ClassNotFoundException e) {
-        }
 
-        LOG.debug("Initializing FenixFramework");
-        FenixWebFramework.initialize(PropertiesManager.getFenixFrameworkConfig());
-        LOG.debug("FenixFramework Initialized");
+        logger.info("Initializing Fenix");
+        FenixWebFramework.initialize(PropertiesManager.getFenixWebFrameworkConfig());
 
         try {
             final InputStream inputStream = Authenticate.class.getResourceAsStream("/build.version");
@@ -64,52 +59,50 @@ public class StartupServlet implements ServletContextListener {
             throw new Error("Unable to load build version file");
         }
 
-        RootDomainObject.init();
+        RootDomainObject.ensureRootDomainObject();
+        RootDomainObject.initialize();
         RemoteSystem.init();
 
         try {
-            try {
-                InfoExecutionPeriod infoExecutionPeriod = ReadCurrentExecutionPeriod.run();
-                event.getServletContext().setAttribute(PresentationConstants.INFO_EXECUTION_PERIOD_KEY, infoExecutionPeriod);
+            InfoExecutionPeriod infoExecutionPeriod = ReadCurrentExecutionPeriod.run();
+            event.getServletContext().setAttribute(PresentationConstants.INFO_EXECUTION_PERIOD_KEY, infoExecutionPeriod);
 
-                setScheduleForGratuitySituationCreation();
+            setScheduleForGratuitySituationCreation();
 
-            } catch (Throwable e) {
-                throw new Error("Error reading actual execution period!", e);
-            }
-
-            try {
-                long start = System.currentTimeMillis();
-                CreateMetaDomainObectTypes.run();
-                long end = System.currentTimeMillis();
-                System.out.println("CreateMetaDomainObectTypes: " + (end - start) + "ms.");
-            } catch (Throwable throwable) {
-                throw new Error("Error creating MetaDomainObject!", throwable);
-            }
-
-            try {
-                final Boolean result = CheckIsAliveService.run();
-
-                if (result != null && result.booleanValue()) {
-                    System.out.println("Check is alive is working.");
-                } else {
-                    System.out.println("Check is alive is not working.");
-                }
-            } catch (Exception ex) {
-                System.out.println("Check is alive is not working. Caught excpetion.");
-                ex.printStackTrace();
-            }
-            //FenixReport.setRealPath(getServletContext().getRealPath("/"));
-
-            loadLogins();
-            loadPersonNames();
-            loadUnitNames();
-            loadRoles();
-            startContactValidationServices();
-            initScheduler();
-        } finally {
-            Transaction.forceFinish();
+        } catch (Throwable e) {
+            throw new Error("Error reading actual execution period!", e);
         }
+
+        try {
+            long start = System.currentTimeMillis();
+            CreateMetaDomainObectTypes.run();
+            long end = System.currentTimeMillis();
+            logger.info("CreateMetaDomainObectTypes: " + (end - start) + "ms.");
+        } catch (Throwable throwable) {
+            throw new Error("Error creating MetaDomainObject!", throwable);
+        }
+
+        try {
+            final Boolean result = CheckIsAliveService.run();
+
+            if (result != null && result.booleanValue()) {
+                logger.info("Check is alive is working.");
+            } else {
+                logger.info("Check is alive is not working.");
+            }
+        } catch (Exception ex) {
+            logger.info("Check is alive is not working. Caught excpetion.");
+            ex.printStackTrace();
+        }
+
+        loadLogins();
+        loadPersonNames();
+        loadUnitNames();
+        loadRoles();
+        startContactValidationServices();
+        initScheduler();
+
+        logger.info("Fenix initialized successfully");
     }
 
     @Override
@@ -135,35 +128,35 @@ public class StartupServlet implements ServletContextListener {
         long start = System.currentTimeMillis();
         Login.readLoginByUsername("...PlaceANonExistingLoginHere...");
         long end = System.currentTimeMillis();
-        System.out.println("Load of all logins took: " + (end - start) + "ms.");
+        logger.info("Load of all logins took: " + (end - start) + "ms.");
     }
 
     private void loadPersonNames() {
         long start = System.currentTimeMillis();
         PersonNamePart.find("...PlaceANonExistingPersonNameHere...");
         long end = System.currentTimeMillis();
-        System.out.println("Load of all person names took: " + (end - start) + "ms.");
+        logger.info("Load of all person names took: " + (end - start) + "ms.");
     }
 
     private void loadUnitNames() {
         long start = System.currentTimeMillis();
         UnitNamePart.find("...PlaceANonExistingUnitNameHere...");
         long end = System.currentTimeMillis();
-        System.out.println("Load of all unit names took: " + (end - start) + "ms.");
+        logger.info("Load of all unit names took: " + (end - start) + "ms.");
 
         start = System.currentTimeMillis();
         for (final UnitName unitName : RootDomainObject.getInstance().getUnitNameSet()) {
             unitName.getName();
         }
         end = System.currentTimeMillis();
-        System.out.println("Load of all units took: " + (end - start) + "ms.");
+        logger.info("Load of all units took: " + (end - start) + "ms.");
     }
 
     private void loadRoles() {
         long start = System.currentTimeMillis();
         Role.getRoleByRoleType(null);
         long end = System.currentTimeMillis();
-        System.out.println("Load of all roles took: " + (end - start) + "ms.");
+        logger.info("Load of all roles took: " + (end - start) + "ms.");
     }
 
     private void setScheduleForGratuitySituationCreation() {
@@ -173,19 +166,15 @@ public class StartupServlet implements ServletContextListener {
             @Override
             public void run() {
                 try {
-                    try {
-                        CreateGratuitySituationsForCurrentExecutionYear.runCreateGratuitySituationsForCurrentExecutionYear("");
-                    } catch (Exception e) {
-                    }
+                    CreateGratuitySituationsForCurrentExecutionYear.runCreateGratuitySituationsForCurrentExecutionYear("");
+                } catch (Exception e) {
+                }
 
-                    // temporary
-                    try {
-                        CreateGratuitySituationsForCurrentExecutionYear
-                                .runCreateGratuitySituationsForCurrentExecutionYear("2003/2004");
-                    } catch (Exception e) {
-                    }
-                } finally {
-                    Transaction.forceFinish();
+                // temporary
+                try {
+                    CreateGratuitySituationsForCurrentExecutionYear
+                            .runCreateGratuitySituationsForCurrentExecutionYear("2003/2004");
+                } catch (Exception e) {
                 }
             }
         };

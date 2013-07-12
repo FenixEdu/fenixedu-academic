@@ -1774,6 +1774,11 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
 
     class RootDomainObject  {
     }
+    
+    relation RootDomainObjectDomainRoot {
+        .pt.ist.fenixframework.DomainRoot playsRole domainRoot;
+        RootDomainObject playsRole rootDomainObject;
+    }
 
     class SchoolClass  {
         Integer anoCurricular;

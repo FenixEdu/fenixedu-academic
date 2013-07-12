@@ -1,27 +1,27 @@
 package net.sourceforge.fenixedu.domain;
 
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.Atomic.TxMode;
 import pt.ist.fenixframework.FenixFramework;
 
 public class RootDomainObject extends RootDomainObject_Base {
 
-    private volatile static RootDomainObject instance = null;
+    private static RootDomainObject instance = null;
 
-    public static synchronized void init() {
-        if (instance == null) {
-            Transaction.withTransaction(new jvstm.TransactionalCommand() {
-                @Override
-                public void doIt() {
-                    instance = FenixFramework.getRoot();
-                }
-            });
-        }
+    @Atomic(mode = TxMode.READ)
+    public static void initialize() {
+        instance = FenixFramework.getDomainRoot().getRootDomainObject();
     }
 
     public static RootDomainObject getInstance() {
-        if (instance == null) {
-            init();
-        }
         return instance;
+    }
+
+    @Atomic
+    public static void ensureRootDomainObject() {
+        if (FenixFramework.getDomainRoot().getRootDomainObject() == null) {
+            FenixFramework.getDomainRoot().setRootDomainObject(new RootDomainObject());
+        }
     }
 
     public RootDomainObject() {
@@ -29,17 +29,10 @@ public class RootDomainObject extends RootDomainObject_Base {
     }
 
     private void checkIfIsSingleton() {
-        if (FenixFramework.getRoot() != null && FenixFramework.getRoot() != this) {
-            throw new Error("There can only be one! (instance of MyOrg)");
+        RootDomainObject currentRoot = FenixFramework.getDomainRoot().getRootDomainObject();
+        if (currentRoot != null && currentRoot != this) {
+            throw new Error("There can only be one! (instance of RootDomainObject)");
         }
-    }
-
-    public static void initTests() {
-        instance = new RootDomainObject();
-    }
-
-    protected RootDomainObject getRootDomainObject() {
-        return this;
     }
 
     @Deprecated

@@ -174,7 +174,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization {
             result.put(Integer.valueOf(0), infoGratuitySituationList);
             result.put(Integer.valueOf(1), new Double(totalPayedValue));
             result.put(Integer.valueOf(2), new Double(totalRemaingValue));
-        } catch (pt.ist.fenixframework.pstm.IllegalWriteException e) {
+        } catch (pt.ist.fenixframework.pstm.WriteOnReadError e) {
             throw e;
         } catch (Exception e) {
 

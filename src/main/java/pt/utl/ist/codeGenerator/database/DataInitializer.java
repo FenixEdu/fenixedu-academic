@@ -48,6 +48,9 @@ public class DataInitializer {
 
     @Atomic
     private static void initialize() {
+        RootDomainObject.ensureRootDomainObject();
+        RootDomainObject.initialize();
+
         createRoles();
         createCurricularYearsAndSemesters();
         createEmptyDegreeAndEmptyDegreeCurricularPlan();

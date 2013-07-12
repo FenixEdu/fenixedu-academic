@@ -12,7 +12,7 @@ import org.apache.commons.beanutils.MethodUtils;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
-import pt.ist.fenixframework.pstm.IllegalWriteException;
+import pt.ist.fenixframework.core.WriteOnReadError;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -27,8 +27,8 @@ public class DeleteObjectByOID {
             MethodUtils.invokeMethod(FenixFramework.getDomainObject(externalId), "delete", null);
         } catch (InvocationTargetException e) {
             if (e.getTargetException() != null) {
-                if (e.getTargetException() instanceof IllegalWriteException) {
-                    throw ((IllegalWriteException) e.getTargetException());
+                if (e.getTargetException() instanceof WriteOnReadError) {
+                    throw ((WriteOnReadError) e.getTargetException());
                 }
                 throw new FenixServiceException(e.getTargetException());
             }
