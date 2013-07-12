@@ -251,14 +251,14 @@ public class SIBSOutgoingPaymentFile extends SIBSOutgoingPaymentFile_Base {
         }
 
         Collections.sort(files, Collections.reverseOrder(SUCCESSFUL_SENT_DATE_TIME_COMPARATOR));
-        return files.get(0);
+        return files.iterator().next();
     }
 
     public static SIBSOutgoingPaymentFile readLastGeneratedPaymentFile() {
         List<SIBSOutgoingPaymentFile> files = readGeneratedPaymentFiles();
         Collections.sort(files, Collections.reverseOrder(CREATION_DATE_TIME_COMPARATOR));
 
-        return files.get(0);
+        return files.iterator().next();
     }
 
     public static SIBSOutgoingPaymentFile readPreviousOfLastGeneratedPaymentFile() {

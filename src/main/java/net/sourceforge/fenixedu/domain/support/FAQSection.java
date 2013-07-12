@@ -10,10 +10,10 @@ public class FAQSection extends FAQSection_Base {
     }
 
     public void delete() {
-        for (; !getChildEntries().isEmpty(); getChildEntries().get(0).delete()) {
+        for (; !getChildEntries().isEmpty(); getChildEntries().iterator().next().delete()) {
             ;
         }
-        for (; !getChildSections().isEmpty(); getChildSections().get(0).delete()) {
+        for (; !getChildSections().isEmpty(); getChildSections().iterator().next().delete()) {
             ;
         }
         setRootDomainObject(null);

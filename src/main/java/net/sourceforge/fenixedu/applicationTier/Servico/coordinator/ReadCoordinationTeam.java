@@ -5,6 +5,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class ReadCoordinationTeam {
         if (executionDegree == null) {
             throw new FenixServiceException("errors.invalid.execution.degree");
         }
-        List<Coordinator> coordinators = executionDegree.getCoordinatorsList();
+        Collection<Coordinator> coordinators = executionDegree.getCoordinatorsList();
         Iterator iterator = coordinators.iterator();
         List infoCoordinators = new ArrayList();
         while (iterator.hasNext()) {

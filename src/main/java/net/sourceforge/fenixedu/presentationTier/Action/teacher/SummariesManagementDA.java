@@ -203,7 +203,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 
         Lesson lesson = bean.getLesson();
         if (lesson != null && lesson.getShift().getCourseLoadsCount() == 1) {
-            bean.setLessonType(lesson.getShift().getCourseLoads().get(0).getType());
+            bean.setLessonType(lesson.getShift().getCourseLoads().iterator().next().getType());
         }
 
         return goToSummaryManagementPageAgain(mapping, request, (DynaActionForm) form, bean);
@@ -461,7 +461,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
         if (shift.getCourseLoadsCount() != 1) {
             request.setAttribute("notShowLessonPlanningsAndSummaries", Boolean.TRUE);
         } else {
-            nextSummaryDateBean.setLessonType(shift.getCourseLoads().get(0).getType());
+            nextSummaryDateBean.setLessonType(shift.getCourseLoads().iterator().next().getType());
             bean.setLessonType(nextSummaryDateBean.getLessonType());
         }
 
@@ -514,14 +514,14 @@ public class SummariesManagementDA extends FenixDispatchAction {
                 NextPossibleSummaryLessonsAndDatesBean nextLesson =
                         NextPossibleSummaryLessonsAndDatesBean.getNewInstance(lessonRepresentation);
                 if (nextLesson.getLesson().getShift().getCourseLoadsCount() == 1) {
-                    nextLesson.setLessonType(nextLesson.getLesson().getShift().getCourseLoads().get(0).getType());
+                    nextLesson.setLessonType(nextLesson.getLesson().getShift().getCourseLoads().iterator().next().getType());
                 }
 
                 nextPossibleLessonsDates.add(nextLesson);
 
                 ShiftType lessonType = null;
                 if (nextLesson.getLesson().getShift().getCourseLoadsCount() == 1) {
-                    lessonType = nextLesson.getLesson().getShift().getCourseLoads().get(0).getType();
+                    lessonType = nextLesson.getLesson().getShift().getCourseLoads().iterator().next().getType();
                     if (shiftType == null) {
                         shiftType = lessonType;
                     } else if (!shiftType.equals(lessonType)) {

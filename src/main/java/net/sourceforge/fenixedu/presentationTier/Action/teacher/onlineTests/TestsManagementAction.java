@@ -10,6 +10,7 @@ import java.text.DecimalFormat;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -198,7 +199,7 @@ public class TestsManagementAction extends FenixDispatchAction {
         final Metadata metadata = FenixFramework.getDomainObject(metadataCode);
         Question question = null;
         if (exerciseCode == null || exerciseCode.equals(new Integer(-1))) {
-            question = metadata.getVisibleQuestions().get(0);
+            question = metadata.getVisibleQuestions().iterator().next();
         } else {
             for (Question visibleQuestion : metadata.getVisibleQuestions()) {
                 if (visibleQuestion.getExternalId().equals(exerciseCode)) {
@@ -765,7 +766,7 @@ public class TestsManagementAction extends FenixDispatchAction {
         final Set<Shift> associatedShifts = executionCourse.getAssociatedShifts();
         List<Shift> shiftList = new ArrayList<Shift>();
         for (Shift shift : associatedShifts) {
-            List<Registration> shiftStudents = shift.getStudents();
+            Collection<Registration> shiftStudents = shift.getStudents();
             if (!students.containsAll(shiftStudents)) {
                 shiftList.add(shift);
             }
@@ -783,7 +784,7 @@ public class TestsManagementAction extends FenixDispatchAction {
         final String distributedTestCode = getStringFromRequest(request, "distributedTestCode");
         final List<Registration> studentList = new ArrayList<Registration>();
         final ExecutionCourse executionCourse = FenixFramework.getDomainObject(objectCode);
-        final List<Attends> attendList = executionCourse.getAttends();
+        final Collection<Attends> attendList = executionCourse.getAttends();
         final DistributedTest distributedTest = FenixFramework.getDomainObject(distributedTestCode);
         final Set<Registration> students = distributedTest.findStudents();
         for (Attends attend : attendList) {
@@ -1440,7 +1441,7 @@ public class TestsManagementAction extends FenixDispatchAction {
                         request.setAttribute("question" + i, ((ResponseLID) infoStudentTestQuestion.getResponse()).getResponse());
                     }
                 }
-                if (((InfoStudentTestQuestion) infoSiteStudentTestFeedback.getStudentTestQuestionList().get(0))
+                if (((InfoStudentTestQuestion) infoSiteStudentTestFeedback.getStudentTestQuestionList().iterator().next())
                         .getDistributedTest().getCorrectionAvailability().getAvailability().intValue() == CorrectionAvailability.ALWAYS) {
                     request.setAttribute("infoStudentTestQuestionList", infoSiteStudentTestFeedback.getStudentTestQuestionList());
                 }

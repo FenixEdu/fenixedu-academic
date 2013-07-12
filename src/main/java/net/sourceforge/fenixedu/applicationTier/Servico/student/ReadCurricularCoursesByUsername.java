@@ -5,6 +5,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class ReadCurricularCoursesByUsername {
         if (registration == null) {
             throw new NonExistingServiceException();
         }
-        List<StudentCurricularPlan> curricularPlans = registration.getStudentCurricularPlans();
+        Collection<StudentCurricularPlan> curricularPlans = registration.getStudentCurricularPlans();
         for (Object element : curricularPlans) {
             StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) element;
             for (Object element2 : studentCurricularPlan.getDegreeCurricularPlan().getCurricularCourses()) {

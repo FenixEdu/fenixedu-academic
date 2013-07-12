@@ -140,7 +140,7 @@ public class ManageSantanderCardGenerationDA extends FenixDispatchAction {
         if (batches.isEmpty()) {
             return true;
         }
-        SantanderBatch lastCreatedBatch = batches.get(0);
+        SantanderBatch lastCreatedBatch = batches.iterator().next();
         return (lastCreatedBatch != null && lastCreatedBatch.getSent() != null);
     }
 

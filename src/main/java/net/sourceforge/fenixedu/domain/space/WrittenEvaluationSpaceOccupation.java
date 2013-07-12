@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.space;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -69,7 +70,7 @@ public class WrittenEvaluationSpaceOccupation extends WrittenEvaluationSpaceOccu
     public List<Interval> getEventSpaceOccupationIntervals(YearMonthDay startDateToSearch, YearMonthDay endDateToSearch) {
 
         List<Interval> result = new ArrayList<Interval>();
-        List<WrittenEvaluation> writtenEvaluations = getWrittenEvaluations();
+        Collection<WrittenEvaluation> writtenEvaluations = getWrittenEvaluationsSet();
 
         for (WrittenEvaluation writtenEvaluation : writtenEvaluations) {
             YearMonthDay writtenEvaluationDay = writtenEvaluation.getDayDateYearMonthDay();
@@ -155,7 +156,7 @@ public class WrittenEvaluationSpaceOccupation extends WrittenEvaluationSpaceOccu
         if (!hasAnyWrittenEvaluations()) {
             return StringUtils.EMPTY;
         }
-        final WrittenEvaluation eval = getWrittenEvaluations().get(0);
+        final WrittenEvaluation eval = getWrittenEvaluations().iterator().next();
         return String.format("(%s) %s", eval.getEvaluationType(), eval.getName());
     }
 

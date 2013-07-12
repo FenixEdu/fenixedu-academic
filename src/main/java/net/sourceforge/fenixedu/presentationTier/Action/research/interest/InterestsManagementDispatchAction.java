@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.research.interest;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -166,7 +167,7 @@ public class InterestsManagementDispatchAction extends FenixDispatchAction {
 
     private List<ResearchInterest> getOrderedInterests(HttpServletRequest request) throws FenixServiceException {
 
-        List<ResearchInterest> researchInterests = getUserView(request).getPerson().getResearchInterests();
+        Collection<ResearchInterest> researchInterests = getUserView(request).getPerson().getResearchInterests();
 
         List<ResearchInterest> orderedInterests = new ArrayList<ResearchInterest>(researchInterests);
         Collections.sort(orderedInterests, new Comparator<ResearchInterest>() {

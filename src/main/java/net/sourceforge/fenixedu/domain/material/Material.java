@@ -1,11 +1,13 @@
 package net.sourceforge.fenixedu.domain.material;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -17,8 +19,6 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
-
-import pt.ist.fenixframework.FenixFramework;
 
 public abstract class Material extends Material_Base {
 
@@ -68,7 +68,7 @@ public abstract class Material extends Material_Base {
     }
 
     public Unit getOwner() {
-        List<ResourceResponsibility> list = getResourceResponsibility();
+        Collection<ResourceResponsibility> list = getResourceResponsibility();
         for (ResourceResponsibility resourceResponsibility : list) {
             if (resourceResponsibility.isMaterialResponsibility()) {
                 return (Unit) resourceResponsibility.getParty();
@@ -78,7 +78,7 @@ public abstract class Material extends Material_Base {
     }
 
     private void deleteOwner() {
-        List<ResourceResponsibility> list = getResourceResponsibility();
+        Collection<ResourceResponsibility> list = getResourceResponsibility();
         for (Iterator<ResourceResponsibility> iter = list.iterator(); iter.hasNext();) {
             ResourceResponsibility responsibility = iter.next();
             if (responsibility.isMaterialResponsibility()) {
@@ -167,6 +167,7 @@ public abstract class Material extends Material_Base {
         Collections.sort(result, COMPARATOR_BY_IDENTIFICATION);
         return result;
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.space.MaterialSpaceOccupation> getMaterialSpaceOccupations() {
         return getMaterialSpaceOccupationsSet();

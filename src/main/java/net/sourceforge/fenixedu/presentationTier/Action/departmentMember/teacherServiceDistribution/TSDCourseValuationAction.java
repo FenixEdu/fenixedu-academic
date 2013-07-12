@@ -166,7 +166,7 @@ public class TSDCourseValuationAction extends FenixDispatchAction {
     private ShiftType getSelectedShiftType(DynaActionForm dynaForm, TSDCourse course) {
         if (dynaForm.get("shiftType") == null || dynaForm.get("shiftType").equals("")) {
             if (course.getTSDCurricularLoadsCount() > 0) {
-                return course.getTSDCurricularLoads().get(0).getType();
+                return course.getTSDCurricularLoads().iterator().next().getType();
             } else {
                 return null;
             }

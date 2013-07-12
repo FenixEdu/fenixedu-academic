@@ -387,8 +387,8 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
             } else {
                 final List<StudentCurricularPlan> scps = bean.getPrecedentStudentCurricularPlans();
                 if (scps.size() == 1) {
-                    createCandidacyPrecedentDegreeInformation(bean, scps.get(0));
-                    bean.setPrecedentStudentCurricularPlan(scps.get(0));
+                    createCandidacyPrecedentDegreeInformation(bean, scps.iterator().next());
+                    bean.setPrecedentStudentCurricularPlan(scps.iterator().next());
                 }
             }
         }

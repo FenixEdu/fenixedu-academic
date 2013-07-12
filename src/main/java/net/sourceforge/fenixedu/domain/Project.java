@@ -109,7 +109,7 @@ public class Project extends Project_Base {
         }
 
         setOnlineSubmissionProperties(onlineSubmissionsAllowed, maxSubmissionsToKeep, grouping);
-        final List<Department> departmentsList = getDeparments();
+        final Collection<Department> departmentsList = getDeparments();
         departmentsList.clear();
         departmentsList.addAll(departments);
 

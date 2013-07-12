@@ -76,7 +76,7 @@ public class WriteMarks {
         }
 
         if (activeAttends.size() == 1) {
-            return activeAttends.get(0);
+            return activeAttends.iterator().next();
         }
 
         if (activeAttends.isEmpty()) {

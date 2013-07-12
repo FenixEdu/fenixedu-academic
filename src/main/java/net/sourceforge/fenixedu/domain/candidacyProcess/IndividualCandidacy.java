@@ -237,7 +237,7 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
         Degree degree = registration.getDegree();
         ExecutionYear startExecutionYear = registration.getStartExecutionYear();
         ExecutionDegree executionDegree =
-                ExecutionDegree.getAllByDegreeAndExecutionYear(degree, startExecutionYear.getName()).get(0);
+                ExecutionDegree.getAllByDegreeAndExecutionYear(degree, startExecutionYear.getName()).iterator().next();
         StudentCandidacy studentCandidacy = null;
 
         if (registration.getDegree().getDegreeType().isIntegratedMasterDegree()) {
@@ -298,7 +298,7 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
             return false;
         }
 
-        if ((registrationsFor.size() == 1) && registrationsFor.get(0) == getRegistration()) {
+        if ((registrationsFor.size() == 1) && registrationsFor.iterator().next() == getRegistration()) {
             return false;
         }
 

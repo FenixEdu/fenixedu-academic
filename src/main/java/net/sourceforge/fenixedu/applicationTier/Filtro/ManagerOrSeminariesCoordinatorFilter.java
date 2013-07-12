@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Filtro;
 
-import java.util.List;
+import java.util.Collection;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -31,7 +31,7 @@ public class ManagerOrSeminariesCoordinatorFilter {
     public boolean doesThisSCPBelongToASeminaryCandidate(String SCPIDInternal) {
         StudentCurricularPlan scp = FenixFramework.getDomainObject(SCPIDInternal);
         if (scp != null) {
-            List<SeminaryCandidacy> candidacies = scp.getRegistration().getAssociatedCandidancies();
+            Collection<SeminaryCandidacy> candidacies = scp.getRegistration().getAssociatedCandidancies();
             return !candidacies.isEmpty();
         }
 

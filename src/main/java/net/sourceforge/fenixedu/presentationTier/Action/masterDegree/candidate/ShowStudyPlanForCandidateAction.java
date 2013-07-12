@@ -46,12 +46,12 @@ public class ShowStudyPlanForCandidateAction extends FenixAction {
         }
 
         if (candidates.size() == 1) {
-            request.setAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE, candidates.get(0));
+            request.setAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE, candidates.iterator().next());
         } else {
             request.setAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE_LIST, candidates);
         }
 
-        return (InfoMasterDegreeCandidate) candidates.get(0);
+        return (InfoMasterDegreeCandidate) candidates.iterator().next();
     }
 
     private ArrayList getCandidateStudyPlanByCandidateID(String candidateID, IUserView userView) {

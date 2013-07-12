@@ -100,7 +100,7 @@ public class ParkingParty extends ParkingParty_Base {
     public ParkingRequest getFirstRequest() {
         List<ParkingRequest> requests = getOrderedParkingRequests();
         if (requests.size() != 0) {
-            return requests.get(0);
+            return requests.iterator().next();
         }
         return null;
     }
@@ -430,10 +430,10 @@ public class ParkingParty extends ParkingParty_Base {
             setParty(null);
             setParkingGroup(null);
             deleteDriverLicenseDocument();
-            for (; getVehicles().size() != 0; getVehicles().get(0).delete()) {
+            for (; getVehicles().size() != 0; getVehicles().iterator().next().delete()) {
                 ;
             }
-            for (; getParkingRequests().size() != 0; getParkingRequests().get(0).delete()) {
+            for (; getParkingRequests().size() != 0; getParkingRequests().iterator().next().delete()) {
                 ;
             }
             setRootDomainObject(null);
@@ -788,7 +788,7 @@ public class ParkingParty extends ParkingParty_Base {
     public Vehicle getFirstVehicle() {
         List<Vehicle> vehicles = new ArrayList<Vehicle>(getVehicles());
         Collections.sort(vehicles, new BeanComparator("plateNumber"));
-        return vehicles.size() > 0 ? vehicles.get(0) : null;
+        return vehicles.size() > 0 ? vehicles.iterator().next() : null;
     }
 
     public Vehicle getSecondVehicle() {

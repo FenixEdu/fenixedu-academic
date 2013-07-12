@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,7 +26,7 @@ public class UndoneQueueJobsDA extends FenixDispatchAction {
     public ActionForward prepareUndoneQueueJobList(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
 
-        List<QueueJob> allJobs = rootDomainObject.getQueueJob();
+        Collection<QueueJob> allJobs = rootDomainObject.getQueueJob();
         List<QueueJob> queueJobs = new ArrayList<QueueJob>();
 
         for (QueueJob job : allJobs) {

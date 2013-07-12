@@ -8,6 +8,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Enumeration;
@@ -393,7 +394,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         List<SelectItem> list = new ArrayList<SelectItem>();
         SelectItem selectItem = null;
 
-        List<Department> allDepartments = rootDomainObject.getDepartments();
+        Collection<Department> allDepartments = rootDomainObject.getDepartments();
 
         for (Department department : allDepartments) {
             selectItem = new SelectItem();
@@ -412,7 +413,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         List<SelectItem> list = new ArrayList<SelectItem>();
         SelectItem selectItem = null;
 
-        List<AdministrativeOffice> allAdministrativeOffices = rootDomainObject.getAdministrativeOffices();
+        Collection<AdministrativeOffice> allAdministrativeOffices = rootDomainObject.getAdministrativeOffices();
         ResourceBundle bundle = getResourceBundle("resources/EnumerationResources");
 
         for (AdministrativeOffice administrativeOffice : allAdministrativeOffices) {

@@ -63,7 +63,7 @@ public class InquiryRegentTeachersResumeRenderer extends InquiryTeacherShiftType
     protected void createHeader(Object object, final HtmlTableRow headerRow) {
         List<RegentTeacherResultsResume> regentTeacherResultsResumeList = (List<RegentTeacherResultsResume>) object;
         if (!regentTeacherResultsResumeList.isEmpty()) {
-            RegentTeacherResultsResume regentTeacherResultsResume = regentTeacherResultsResumeList.get(0);
+            RegentTeacherResultsResume regentTeacherResultsResume = regentTeacherResultsResumeList.iterator().next();
 
             final HtmlTableCell firstHeaderCell = headerRow.createCell(CellType.HEADER);
             firstHeaderCell.setBody(new HtmlText("Docente"));

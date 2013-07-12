@@ -59,10 +59,10 @@ public class SpecializationDegreeGratuityEvent extends SpecializationDegreeGratu
 
     @Override
     protected List<AccountingEventPaymentCode> updatePaymentCodes() {
-        final EntryDTO entryDTO = calculateEntries(new DateTime()).get(0);
+        final EntryDTO entryDTO = calculateEntries(new DateTime()).iterator().next();
 
         if (!getNonProcessedPaymentCodes().isEmpty()) {
-            getNonProcessedPaymentCodes().get(0).update(new YearMonthDay(), calculatePaymentCodeEndDate(),
+            getNonProcessedPaymentCodes().iterator().next().update(new YearMonthDay(), calculatePaymentCodeEndDate(),
                     entryDTO.getAmountToPay(), entryDTO.getAmountToPay());
         }
 
@@ -71,7 +71,7 @@ public class SpecializationDegreeGratuityEvent extends SpecializationDegreeGratu
 
     @Override
     protected List<AccountingEventPaymentCode> createPaymentCodes() {
-        final EntryDTO entryDTO = calculateEntries(new DateTime()).get(0);
+        final EntryDTO entryDTO = calculateEntries(new DateTime()).iterator().next();
 
         return Collections.singletonList(AccountingEventPaymentCode.create(PaymentCodeType.TOTAL_GRATUITY, new YearMonthDay(),
                 calculatePaymentCodeEndDate(), this, entryDTO.getAmountToPay(), entryDTO.getAmountToPay(), getStudent()

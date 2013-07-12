@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
 import java.text.MessageFormat;
-import java.util.List;
+import java.util.Collection;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
@@ -26,7 +26,7 @@ public class InsertTestAsNewTest {
         String title = MessageFormat.format(bundle.getString("label.testTitle.duplicated"), new Object[] { oldTest.getTitle() });
         Test test = new Test(title, oldTest.getInformation(), oldTest.getTestScope());
 
-        List<TestQuestion> testQuestionList = oldTest.getTestQuestions();
+        Collection<TestQuestion> testQuestionList = oldTest.getTestQuestions();
 
         for (TestQuestion testQuestion : testQuestionList) {
             TestQuestion newTestQuestion = new TestQuestion();

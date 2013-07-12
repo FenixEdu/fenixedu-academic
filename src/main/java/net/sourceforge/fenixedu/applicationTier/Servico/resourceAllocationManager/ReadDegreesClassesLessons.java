@@ -39,7 +39,7 @@ public class ReadDegreesClassesLessons {
         for (int i = 0; i < infoExecutionDegrees.size(); i++) {
             InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) infoExecutionDegrees.get(i);
             ExecutionDegree executionDegree = FenixFramework.getDomainObject(infoExecutionDegree.getExternalId());
-            List degreeClasses = executionDegree.getSchoolClasses();
+            Collection degreeClasses = executionDegree.getSchoolClasses();
             for (Iterator iterator = degreeClasses.iterator(); iterator.hasNext();) {
                 SchoolClass klass = (SchoolClass) iterator.next();
                 if (klass.getAcademicInterval().equals(academicInterval)) {
@@ -53,11 +53,11 @@ public class ReadDegreesClassesLessons {
             SchoolClass turma = (SchoolClass) classes.get(i);
 
             // read class lessons
-            List shiftList = turma.getAssociatedShifts();
-            Iterator iterator = shiftList.iterator();
+            Collection<Shift> shiftList = turma.getAssociatedShifts();
+            Iterator<Shift> iterator = shiftList.iterator();
             List infoLessonList = new ArrayList();
             while (iterator.hasNext()) {
-                Shift shift = (Shift) iterator.next();
+                Shift shift = iterator.next();
 
                 final Collection lessons = shift.getAssociatedLessons();
                 for (final Iterator iterator2 = lessons.iterator(); iterator2.hasNext();) {

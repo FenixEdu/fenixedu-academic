@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
@@ -16,7 +17,7 @@ public class LerAulasDeTurma {
     public static List<InfoLessonInstanceAggregation> run(InfoClass infoClass) {
         final SchoolClass schoolClass = AbstractDomainObject.fromExternalId(infoClass.getExternalId());
 
-        final List<Shift> shiftList = schoolClass.getAssociatedShifts();
+        final Collection<Shift> shiftList = schoolClass.getAssociatedShifts();
 
         final List<InfoLessonInstanceAggregation> infoLessonList = new ArrayList<InfoLessonInstanceAggregation>();
         for (final Shift shift : shiftList) {

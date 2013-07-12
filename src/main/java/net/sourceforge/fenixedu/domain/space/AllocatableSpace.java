@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.space;
 
 import java.text.Collator;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 
@@ -490,7 +491,7 @@ public abstract class AllocatableSpace extends AllocatableSpace_Base {
 
     public ResourceAllocation getFirstOccurrenceOfResourceAllocationByClass(Class<? extends ResourceAllocation> clazz) {
         if (clazz != null) {
-            List<ResourceAllocation> resourceAllocations = getResourceAllocations();
+            Collection<ResourceAllocation> resourceAllocations = getResourceAllocations();
             for (ResourceAllocation resourceAllocation : resourceAllocations) {
                 if (resourceAllocation.getClass().equals(clazz)) {
                     return resourceAllocation;

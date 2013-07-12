@@ -2,10 +2,10 @@ package net.sourceforge.fenixedu.presentationTier.Action.externalServices;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -273,7 +273,7 @@ public class ExportUserInfoForKoha extends ExternalInterfaceDispatchAction {
         return event != null && event.isClosed() ? findPhd(person.getPhdIndividualProgramProcesses()) : null;
     }
 
-    private PhdIndividualProgramProcess findPhd(final List<PhdIndividualProgramProcess> phdIndividualProgramProcesses) {
+    private PhdIndividualProgramProcess findPhd(final Collection<PhdIndividualProgramProcess> phdIndividualProgramProcesses) {
         PhdIndividualProgramProcess result = null;
         for (final PhdIndividualProgramProcess process : phdIndividualProgramProcesses) {
             if (process.getActiveState() == PhdIndividualProgramProcessState.WORK_DEVELOPMENT) {

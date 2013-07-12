@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManag
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -50,11 +51,11 @@ public class ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom {
         final YearMonthDay weekEndYearMonthDay =
                 day.toDateTimeAtMidnight().withDayOfWeek(ViewEventSpaceOccupationsBean.SATURDAY_IN_JODA_TIME).toYearMonthDay();
 
-        for (final ResourceAllocation roomOccupation : room.getResourceAllocations()) {
+        for (final ResourceAllocation roomOccupation : room.getResourceAllocationsSet()) {
 
             if (roomOccupation.isWrittenEvaluationSpaceOccupation()) {
-                List<WrittenEvaluation> writtenEvaluations =
-                        ((WrittenEvaluationSpaceOccupation) roomOccupation).getWrittenEvaluations();
+                Collection<WrittenEvaluation> writtenEvaluations =
+                        ((WrittenEvaluationSpaceOccupation) roomOccupation).getWrittenEvaluationsSet();
                 getWrittenEvaluationRoomOccupations(infoShowOccupations, weekStartYearMonthDay, weekEndYearMonthDay,
                         writtenEvaluations);
             }
@@ -70,7 +71,8 @@ public class ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom {
             }
 
             if (roomOccupation.isLessonInstanceSpaceOccupation()) {
-                List<LessonInstance> lessonInstances = ((LessonInstanceSpaceOccupation) roomOccupation).getLessonInstances();
+                Collection<LessonInstance> lessonInstances =
+                        ((LessonInstanceSpaceOccupation) roomOccupation).getLessonInstancesSet();
                 getLessonInstanceOccupations(infoShowOccupations, weekStartYearMonthDay, weekEndYearMonthDay, lessonInstances);
             }
         }
@@ -90,7 +92,7 @@ public class ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom {
     }
 
     private static void getLessonInstanceOccupations(List<InfoObject> infoShowOccupations, YearMonthDay weekStartYearMonthDay,
-            YearMonthDay weekEndYearMonthDay, List<LessonInstance> lessonInstances) {
+            YearMonthDay weekEndYearMonthDay, Collection<LessonInstance> lessonInstances) {
 
         if (lessonInstances != null) {
             for (LessonInstance lessonInstance : lessonInstances) {
@@ -105,7 +107,7 @@ public class ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom {
 
     private static void getWrittenEvaluationRoomOccupations(List<InfoObject> infoShowOccupations,
             final YearMonthDay weekStartYearMonthDay, final YearMonthDay weekEndYearMonthDay,
-            final List<WrittenEvaluation> writtenEvaluations) {
+            final Collection<WrittenEvaluation> writtenEvaluations) {
 
         if (writtenEvaluations != null) {
 

@@ -115,7 +115,7 @@ public class SendAcademicServiceRequestToExternalEntity {
             logger.debug(studentData.toString());
             logger.debug(studentGrades.toString());
 
-            List<IndividualCandidacyDocumentFile> candidacyDocuments =
+            Collection<IndividualCandidacyDocumentFile> candidacyDocuments =
                     individualCandidacy != null ? individualCandidacy.getDocuments() : Collections.EMPTY_LIST;
             final ByteArrayOutputStream resultStream =
                     buildDocumentsStream(candidacyDocuments, studentData.toString(), studentGrades.toString(), registration,

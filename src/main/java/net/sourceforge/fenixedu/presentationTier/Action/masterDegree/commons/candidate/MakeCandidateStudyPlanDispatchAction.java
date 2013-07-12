@@ -306,7 +306,7 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
         InfoCandidateEnrolment infoCandidateEnrolment = null;
 
         if ((candidateEnrolments != null) && (candidateEnrolments.size() != 0)) {
-            infoCandidateEnrolment = (InfoCandidateEnrolment) candidateEnrolments.get(0);
+            infoCandidateEnrolment = (InfoCandidateEnrolment) candidateEnrolments.iterator().next();
 
             if ((infoCandidateEnrolment.getInfoMasterDegreeCandidate().getGivenCredits() == null)
                     || (infoCandidateEnrolment.getInfoMasterDegreeCandidate().getGivenCredits().equals(new Double(0)))) {

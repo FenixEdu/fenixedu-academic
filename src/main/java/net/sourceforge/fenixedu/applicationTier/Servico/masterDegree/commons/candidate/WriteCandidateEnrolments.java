@@ -37,7 +37,7 @@ public class WriteCandidateEnrolments {
             masterDegreeCandidate.setGivenCreditsRemarks(givenCreditsRemarks);
         }
 
-        List<CandidateEnrolment> candidateEnrolments = masterDegreeCandidate.getCandidateEnrolments();
+        Collection<CandidateEnrolment> candidateEnrolments = masterDegreeCandidate.getCandidateEnrolments();
         List<String> candidateEnrolmentsCurricularCoursesIDs =
                 (List<String>) CollectionUtils.collect(candidateEnrolments, new Transformer() {
                     @Override
@@ -81,8 +81,7 @@ public class WriteCandidateEnrolments {
         Iterator<String> iterCurricularCourseIds = curricularCoursesToEnroll.iterator();
         while (iterCurricularCourseIds.hasNext()) {
 
-            CurricularCourse curricularCourse =
-                    (CurricularCourse) FenixFramework.getDomainObject(iterCurricularCourseIds.next());
+            CurricularCourse curricularCourse = (CurricularCourse) FenixFramework.getDomainObject(iterCurricularCourseIds.next());
 
             if (curricularCourse == null) {
                 throw new NonExistingServiceException();

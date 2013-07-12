@@ -184,7 +184,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     @Override
     public DegreeCurricularPlan getParentDegreeCurricularPlan() {
         if (isBoxStructure()) {
-            return hasAnyParentContexts() ? getParentContexts().get(0).getParentCourseGroup().getParentDegreeCurricularPlan() : null;
+            return hasAnyParentContexts() ? getParentContexts().iterator().next().getParentCourseGroup().getParentDegreeCurricularPlan() : null;
         } else {
             return super.getDegreeCurricularPlan();
         }
@@ -490,7 +490,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public boolean hasActiveScopeInGivenSemesterForGivenBranch(final CurricularSemester curricularSemester, final Branch branch) {
-        final List<CurricularCourseScope> scopes = getScopes();
+        final Collection<CurricularCourseScope> scopes = getScopes();
         for (final CurricularCourseScope curricularCourseScope : scopes) {
             if (curricularCourseScope.getCurricularSemester().equals(curricularSemester) && curricularCourseScope.isActive()
                     && curricularCourseScope.getBranch().equals(branch)) {
@@ -501,7 +501,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public boolean hasActiveScopeInGivenSemesterForGivenBranch(final Integer semester, final Branch branch) {
-        final List<CurricularCourseScope> scopes = getScopes();
+        final Collection<CurricularCourseScope> scopes = getScopes();
         for (final CurricularCourseScope curricularCourseScope : scopes) {
             if (curricularCourseScope.getCurricularSemester().getSemester().equals(semester) && curricularCourseScope.isActive()
                     && curricularCourseScope.getBranch().equals(branch)) {
@@ -514,7 +514,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     @SuppressWarnings("unchecked")
     public boolean hasActiveScopeInGivenSemesterForCommonAndGivenBranch(final Integer semester, final Branch branch) {
 
-        List<CurricularCourseScope> scopes = getScopes();
+        Collection<CurricularCourseScope> scopes = getScopes();
 
         List<CurricularCourseScope> result = (List<CurricularCourseScope>) CollectionUtils.select(scopes, new Predicate() {
             @Override
@@ -1550,7 +1550,7 @@ public class CurricularCourse extends CurricularCourse_Base {
             return getCompetenceCourse().getEvaluationMethod(period);
         }
         if (hasAnyExecutionCourseIn(period)) {
-            return getExecutionCoursesByExecutionPeriod(period).get(0).getEvaluationMethodText();
+            return getExecutionCoursesByExecutionPeriod(period).iterator().next().getEvaluationMethodText();
         } else {
             return null;
         }
@@ -1568,7 +1568,7 @@ public class CurricularCourse extends CurricularCourse_Base {
             return getCompetenceCourse().getEvaluationMethodEn(period);
         }
         if (hasAnyExecutionCourseIn(period)) {
-            return getExecutionCoursesByExecutionPeriod(period).get(0).getEvaluationMethodTextEn();
+            return getExecutionCoursesByExecutionPeriod(period).iterator().next().getEvaluationMethodTextEn();
         } else {
             return null;
         }
@@ -1586,8 +1586,8 @@ public class CurricularCourse extends CurricularCourse_Base {
             return new MultiLanguageString(Language.pt, getCompetenceCourse().getEvaluationMethod(period)).with(Language.en,
                     getCompetenceCourse().getEvaluationMethodEn(period));
         }
-        return new MultiLanguageString(Language.pt, getExecutionCoursesByExecutionPeriod(period).get(0).getEvaluationMethodText())
-                .with(Language.en, getExecutionCoursesByExecutionPeriod(period).get(0).getEvaluationMethodTextEn());
+        return new MultiLanguageString(Language.pt, getExecutionCoursesByExecutionPeriod(period).iterator().next().getEvaluationMethodText())
+                .with(Language.en, getExecutionCoursesByExecutionPeriod(period).iterator().next().getEvaluationMethodTextEn());
     }
 
     public RegimeType getRegime(final ExecutionSemester period) {
@@ -1864,7 +1864,7 @@ public class CurricularCourse extends CurricularCourse_Base {
                         new MarkSheetEnrolmentEvaluationBean(enrolmentEvaluation.getEnrolment(), evaluationDate, grade), person);
 
         // Rectification MarkSheet MUST have only ONE EnrolmentEvaluation
-        rectificationMarkSheet.getEnrolmentEvaluations().get(0).setRectified(enrolmentEvaluation);
+        rectificationMarkSheet.getEnrolmentEvaluations().iterator().next().setRectified(enrolmentEvaluation);
         return rectificationMarkSheet;
     }
 
@@ -1889,7 +1889,7 @@ public class CurricularCourse extends CurricularCourse_Base {
                         person);
 
         // Rectification MarkSheet MUST have only ONE EnrolmentEvaluation
-        rectificationMarkSheet.getEnrolmentEvaluations().get(0).setRectified(enrolmentEvaluation);
+        rectificationMarkSheet.getEnrolmentEvaluations().iterator().next().setRectified(enrolmentEvaluation);
         return rectificationMarkSheet;
 
     }
@@ -2131,7 +2131,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     public DegreeModuleScope getOldestDegreeModuleScope() {
         List<DegreeModuleScope> scopes = new ArrayList<DegreeModuleScope>(getDegreeModuleScopes());
         Collections.sort(scopes, DegreeModuleScope.COMPARATOR_BY_CURRICULAR_YEAR_AND_SEMESTER_AND_CURRICULAR_COURSE_NAME);
-        return scopes.get(0);
+        return scopes.iterator().next();
     }
 
     @Override
@@ -2273,7 +2273,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 
     @Override
     public void addAssociatedExecutionCourses(final ExecutionCourse associatedExecutionCourses) {
-        List<ExecutionCourse> executionCourses = getAssociatedExecutionCourses();
+        Collection<ExecutionCourse> executionCourses = getAssociatedExecutionCourses();
 
         for (ExecutionCourse executionCourse : executionCourses) {
             if (associatedExecutionCourses != executionCourse

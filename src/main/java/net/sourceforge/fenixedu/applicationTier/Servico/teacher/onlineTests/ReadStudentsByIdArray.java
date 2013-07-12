@@ -5,6 +5,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -69,7 +70,7 @@ public class ReadStudentsByIdArray {
         for (LabelValueBean lvb : (ArrayList<LabelValueBean>) lavelValueBeanList) {
             if (!lvb.getLabel().equals(" (Ficha Fechada)")) {
                 Integer number = Integer.parseInt(lvb.getValue());
-                studentList.add(InfoStudent.newInfoFromDomain(Registration.readAllStudentsBetweenNumbers(number, number).get(0)));
+                studentList.add(InfoStudent.newInfoFromDomain(Registration.readAllStudentsBetweenNumbers(number, number).iterator().next()));
             }
         }
 
@@ -85,7 +86,7 @@ public class ReadStudentsByIdArray {
                 continue;
             }
             Shift shift = FenixFramework.getDomainObject(shift2);
-            List<Registration> studentList = shift.getStudents();
+            Collection<Registration> studentList = shift.getStudents();
             for (Registration registration : studentList) {
                 InfoStudent infoStudent = InfoStudent.newInfoFromDomain(registration);
                 if (!infoStudentList.contains(infoStudent)
@@ -107,7 +108,7 @@ public class ReadStudentsByIdArray {
 
         for (String student : students) {
             if (student.equals(bundle.getString("label.allStudents"))) {
-                List<Attends> attendList = executionCourse.getAttends();
+                Collection<Attends> attendList = executionCourse.getAttends();
                 for (Attends attend : attendList) {
                     InfoStudent infoStudent = InfoStudent.newInfoFromDomain(attend.getRegistration());
                     if (!studentsList.contains(infoStudent)

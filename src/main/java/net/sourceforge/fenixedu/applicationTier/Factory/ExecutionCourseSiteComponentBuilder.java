@@ -6,6 +6,7 @@
 package net.sourceforge.fenixedu.applicationTier.Factory;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -93,7 +94,7 @@ public class ExecutionCourseSiteComponentBuilder {
 
     private ISiteComponent getInfoSiteEvaluations(InfoSiteEvaluations component, ExecutionCourseSite site) {
         ExecutionCourse executionCourse = site.getExecutionCourse();
-        List<Evaluation> evaluations = executionCourse.getAssociatedEvaluations();
+        Collection<Evaluation> evaluations = executionCourse.getAssociatedEvaluations();
         component.setEvaluations(evaluations);
         return component;
     }
@@ -102,7 +103,7 @@ public class ExecutionCourseSiteComponentBuilder {
         final Integer evaluationID = component.getEvaluationID();
 
         final ExecutionCourse executionCourse = site.getExecutionCourse();
-        final List<Evaluation> evaluations = executionCourse.getAssociatedEvaluations();
+        final Collection<Evaluation> evaluations = executionCourse.getAssociatedEvaluations();
         for (final Evaluation evaluation : evaluations) {
             if (evaluationID.equals(evaluation.getExternalId())) {
                 component.setEvaluation(evaluation);
@@ -177,9 +178,9 @@ public class ExecutionCourseSiteComponentBuilder {
         Set<Shift> shifts = disciplinaExecucao.getAssociatedShifts();
 
         for (final Shift shift : shifts) {
-            List<Lesson> lessons = shift.getAssociatedLessons();
+            Collection<Lesson> lessons = shift.getAssociatedLessons();
             List<InfoLesson> infoLessons = new ArrayList<InfoLesson>(lessons.size());
-            List<SchoolClass> classesShifts = shift.getAssociatedClasses();
+            Collection<SchoolClass> classesShifts = shift.getAssociatedClasses();
             List<InfoClass> infoClasses = new ArrayList<InfoClass>(classesShifts.size());
 
             for (final Lesson lesson : lessons) {
@@ -269,7 +270,7 @@ public class ExecutionCourseSiteComponentBuilder {
     }
 
     private List<InfoTeacher> readLecturingTeachers(ExecutionCourse executionCourse) {
-        List domainLecturingTeachersList = executionCourse.getProfessorships();
+        Collection domainLecturingTeachersList = executionCourse.getProfessorships();
 
         List<InfoTeacher> lecturingInfoTeachersList = new ArrayList<InfoTeacher>();
         if (domainLecturingTeachersList != null) {
@@ -330,7 +331,7 @@ public class ExecutionCourseSiteComponentBuilder {
      * first page).
      */
     private List<InfoCurricularCourse> readCurricularCoursesOrganizedByDegree(ExecutionCourse executionCourse) {
-        final List curricularCourses = executionCourse.getAssociatedCurricularCourses();
+        final Collection curricularCourses = executionCourse.getAssociatedCurricularCourses();
         final int estimatedResultSize = curricularCourses.size();
 
         final List<InfoCurricularCourse> infoCurricularCourses = new ArrayList<InfoCurricularCourse>(estimatedResultSize);
@@ -391,7 +392,7 @@ public class ExecutionCourseSiteComponentBuilder {
         // String sigla = ((InfoDegree) ((InfoDegreeCurricularPlan)
         // ((InfoCurricularCourse)
         // ((List)
-        // infoCurricularCourseList.get(k)).get(0)).getInfoDegreeCurricularPlan()
+        // infoCurricularCourseList.get(k)).iterator().next()).getInfoDegreeCurricularPlan()
         // ).getInfoDegree()).getSigla();
         // if (sigla.equals(currentSigla)) {
         // ((List)infoCurricularCourseList.get(k)).add(infoCurricularCourse);

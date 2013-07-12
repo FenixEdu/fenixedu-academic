@@ -89,7 +89,7 @@ public class GuideListingDispatchAction extends FenixDispatchAction {
 
         request.setAttribute(PresentationConstants.GUIDE_LIST, result);
         if (result.size() == 1) {
-            request.setAttribute(PresentationConstants.GUIDE, result.get(0));
+            request.setAttribute(PresentationConstants.GUIDE, result.iterator().next());
             return mapping.findForward("ActionReady");
         }
 

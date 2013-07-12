@@ -369,7 +369,7 @@ public class Receipt extends Receipt_Base {
 
     @Checked("RolePredicates.MANAGER_PREDICATE")
     public void deleteReceiptPrintVersions() {
-        for (; hasAnyReceiptsVersions(); getReceiptsVersions().get(0).delete()) {
+        for (; hasAnyReceiptsVersions(); getReceiptsVersions().iterator().next().delete()) {
             ;
         }
     }

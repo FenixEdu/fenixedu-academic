@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.publico;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.VariantBean;
 import net.sourceforge.fenixedu.domain.LoginRequest;
@@ -14,7 +13,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.services.ServiceManager;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -43,7 +41,7 @@ public class LoginRequestManagement extends FenixDispatchAction {
         String requestID = request.getParameter("oid");
         LoginRequest loginRequest = (LoginRequest) FenixFramework.getDomainObject(requestID);
 
-        if (documentID.equalsIgnoreCase(loginRequest.getUser().getPerson().getIdDocuments().get(0).getValue())) {
+        if (documentID.equalsIgnoreCase(loginRequest.getUser().getPerson().getIdDocuments().iterator().next().getValue())) {
             request.setAttribute("loginBean", new LoginRequestBean(loginRequest));
         } else {
             addActionMessage(request, "invalid.document.id");
@@ -70,15 +68,16 @@ public class LoginRequestManagement extends FenixDispatchAction {
             return cycleLoginScreen(mapping, actionForm, request, response);
         }
         try {
-            ServiceManager.invokeServiceByName(PropertiesManager.getProperty("enableExternalLoginService"), "run",
-                    new Object[] { bean });
+            throw new UnsupportedOperationException();
+            //ServiceManager.invokeServiceByName(PropertiesManager.getProperty("enableExternalLoginService"), "run",
+            //        new Object[] { bean });
             // executeService(PropertiesManager.getProperty(
             // "enableExternalLoginService"), new Object[] { bean });
         } catch (Exception e) {
             addActionMessage(request, e.getMessage());
             return mapping.findForward("startRequestLoginProcess");
         }
-        return mapping.findForward("requestLoginFinished");
+        // return mapping.findForward("requestLoginFinished");
     }
 
     public static String getRequestURL(HttpServletRequest request) {

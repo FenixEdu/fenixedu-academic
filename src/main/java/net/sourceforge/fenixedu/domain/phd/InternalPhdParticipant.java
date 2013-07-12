@@ -103,7 +103,7 @@ public class InternalPhdParticipant extends InternalPhdParticipant_Base {
 
     @Override
     public String getInstitution() {
-        return UnitAcronym.readUnitAcronymByAcronym("utl").getUnits().get(0).getName();
+        return UnitAcronym.readUnitAcronymByAcronym("utl").getUnits().iterator().next().getName();
     }
 
     @Override

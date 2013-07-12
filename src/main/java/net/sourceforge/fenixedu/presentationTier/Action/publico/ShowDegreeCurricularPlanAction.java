@@ -61,7 +61,7 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction {
 
             if (!infoExecutionDegreeList.isEmpty()) {
                 List<LabelValueBean> executionPeriodsLabelValueList = new ArrayList<LabelValueBean>();
-                infoExecutionDegree1 = infoExecutionDegreeList.get(0);
+                infoExecutionDegree1 = infoExecutionDegreeList.iterator().next();
                 executionPeriodsLabelValueList.add(new LabelValueBean(infoExecutionDegree1.getInfoExecutionYear().getYear(), ""
                         + infoExecutionDegree1.getInfoExecutionYear().getExternalId()));
 

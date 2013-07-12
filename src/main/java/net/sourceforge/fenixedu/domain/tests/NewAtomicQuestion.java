@@ -28,7 +28,7 @@ public abstract class NewAtomicQuestion extends NewAtomicQuestion_Base {
 
     @Override
     public List<NewQuestionGroup> getAssociableParents() {
-        if (!this.getParentQuestionGroups().get(0).isComposite()) {
+        if (!this.getParentQuestionGroups().iterator().next().isComposite()) {
             return new ArrayList<NewQuestionGroup>();
         }
 
@@ -57,11 +57,11 @@ public abstract class NewAtomicQuestion extends NewAtomicQuestion_Base {
 
     @Override
     public void delete() {
-        for (; this.hasAnyCorrectors(); this.getCorrectors().get(0).delete()) {
+        for (; this.hasAnyCorrectors(); this.getCorrectors().iterator().next().delete()) {
             ;
         }
 
-        for (; this.hasAnyAnswers(); this.getAnswers().get(0).delete()) {
+        for (; this.hasAnyAnswers(); this.getAnswers().iterator().next().delete()) {
             ;
         }
 

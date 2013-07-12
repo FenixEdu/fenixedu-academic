@@ -213,7 +213,7 @@ public class TSDTeachersGroupAction extends FenixDispatchAction {
         TeacherServiceDistribution selectedTeacherServiceDistribution = getSelectedTeacherServiceDistribution(dynaForm);
         TSDProcess process = selectedTeacherServiceDistribution.getTSDProcessPhase().getTSDProcess();
         Department department = process.getDepartment();
-        ExecutionYear year = process.getExecutionPeriods().get(0).getExecutionYear();
+        ExecutionYear year = process.getExecutionPeriods().iterator().next().getExecutionYear();
 
         List<DegreeCurricularPlan> departmentPlansList = new ArrayList<DegreeCurricularPlan>();
 

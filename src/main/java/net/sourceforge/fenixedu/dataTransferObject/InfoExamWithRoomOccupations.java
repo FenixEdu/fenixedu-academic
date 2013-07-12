@@ -5,6 +5,7 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Exam;
@@ -26,7 +27,7 @@ public class InfoExamWithRoomOccupations extends InfoExam {
     }
 
     private List<InfoRoomOccupation> copyIRoomOccupation2InfoRoomOccupation(
-            List<WrittenEvaluationSpaceOccupation> associatedRoomOccupation) {
+            Collection<WrittenEvaluationSpaceOccupation> associatedRoomOccupation) {
         final List<InfoRoomOccupation> infoRoomOccupations = new ArrayList<InfoRoomOccupation>(associatedRoomOccupation.size());
         for (WrittenEvaluationSpaceOccupation roomOccupation : associatedRoomOccupation) {
             final InfoRoomOccupation infoRoomOccupation = InfoRoomOccupation.newInfoFromDomain(roomOccupation);

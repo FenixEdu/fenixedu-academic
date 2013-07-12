@@ -212,7 +212,7 @@ public class Scheduleing extends Scheduleing_Base {
     }
 
     public ExecutionYear getExecutionYearOfOneExecutionDegree() {
-        return getExecutionDegrees().get(0).getExecutionYear();
+        return getExecutionDegrees().iterator().next().getExecutionYear();
     }
 
     public Set<FinalDegreeWorkGroup> getAssociatedFinalDegreeWorkGroups() {

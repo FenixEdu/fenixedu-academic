@@ -160,13 +160,13 @@ public class PeriodsManagementBean implements Serializable {
     }
 
     public void removeNewBean() {
-        if (periods.get(0).getNewObject()) {
+        if (periods.iterator().next().getNewObject()) {
             periods.remove(0);
         }
     }
 
     public boolean getHasNewObject() {
-        return !periods.isEmpty() && periods.get(0).getNewObject();
+        return !periods.isEmpty() && periods.iterator().next().getNewObject();
     }
 
 }

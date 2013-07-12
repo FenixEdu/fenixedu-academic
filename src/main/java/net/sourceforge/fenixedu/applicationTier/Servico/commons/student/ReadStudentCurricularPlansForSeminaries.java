@@ -8,6 +8,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.commons.student;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class ReadStudentCurricularPlansForSeminaries {
     @Atomic
     public static List run(IUserView userView) throws ExcepcaoInexistente, FenixServiceException {
         Registration registration = Registration.readByUsername(userView.getUtilizador());
-        List<StudentCurricularPlan> studentCurricularPlans = null;
+        Collection<StudentCurricularPlan> studentCurricularPlans = null;
         if (registration != null) {
             studentCurricularPlans = registration.getStudentCurricularPlans();
         }

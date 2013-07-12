@@ -508,7 +508,7 @@ public abstract class DelegatesManagementDispatchAction extends FenixDispatchAct
         final List<PersonFunction> delegates =
                 degree.getUnit().getAllActiveDelegatePersonFunctionsByFunctionType(functionType, delegateBean.getExecutionYear());
         if (!delegates.isEmpty()) {
-            PersonFunction delegateFunction = delegates.get(0);
+            PersonFunction delegateFunction = delegates.iterator().next();
             delegateBean.setPersonFunction(delegateFunction);
             delegateBean.setDelegate(delegateFunction != null ? delegateFunction.getPerson().getStudent() : null);
         }

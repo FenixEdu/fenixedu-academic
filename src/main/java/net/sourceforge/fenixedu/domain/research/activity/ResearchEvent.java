@@ -33,10 +33,10 @@ public class ResearchEvent extends ResearchEvent_Base implements ParticipationsI
     }
 
     public void delete() {
-        for (; this.hasAnyParticipations(); getParticipations().get(0).delete()) {
+        for (; this.hasAnyParticipations(); getParticipations().iterator().next().delete()) {
             ;
         }
-        for (; this.hasAnyEventEditions(); this.getEventEditions().get(0).removeEvent()) {
+        for (; this.hasAnyEventEditions(); this.getEventEditions().iterator().next().removeEvent()) {
             ;
         }
         setRootDomainObject(null);

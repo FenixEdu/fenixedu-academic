@@ -189,7 +189,7 @@ public class MarkSheetTeacherManagementDispatchAction extends ManageExecutionCou
         return enrolmentsNotInAnyMarkSheet;
     }
 
-    private boolean checkIfCanSubmitMarksToAnyCurricularCourse(List<CurricularCourse> curricularCourses,
+    private boolean checkIfCanSubmitMarksToAnyCurricularCourse(Collection<CurricularCourse> curricularCourses,
             ExecutionSemester executionSemester, HttpServletRequest request, ActionMessages actionMessages) {
         boolean result = true;
         String dateFormat = "dd/MM/yyyy";

@@ -38,7 +38,7 @@ public class InsertTestQuestion {
             }
             Question question = null;
             if (metadata.getVisibleQuestions() != null && metadata.getVisibleQuestions().size() != 0) {
-                question = metadata.getVisibleQuestions().get(0);
+                question = metadata.getVisibleQuestions().iterator().next();
             } else {
                 throw new InvalidArgumentsServiceException();
             }

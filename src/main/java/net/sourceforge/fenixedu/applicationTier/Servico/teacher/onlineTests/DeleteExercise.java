@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -27,10 +28,10 @@ public class DeleteExercise {
             throw new InvalidArgumentsServiceException();
         }
 
-        List<Question> questionList = metadata.getQuestions();
+        Collection<Question> questionList = metadata.getQuestions();
         boolean delete = true;
         for (Question question : questionList) {
-            List<TestQuestion> testQuestionList = question.getTestQuestions();
+            Collection<TestQuestion> testQuestionList = question.getTestQuestions();
             for (TestQuestion testQuestion : testQuestionList) {
                 removeTestQuestionFromTest(testQuestion);
             }

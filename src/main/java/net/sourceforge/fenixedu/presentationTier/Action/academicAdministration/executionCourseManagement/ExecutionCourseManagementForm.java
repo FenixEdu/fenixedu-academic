@@ -8,6 +8,8 @@ import net.sourceforge.fenixedu.domain.Shift;
 
 import org.apache.struts.action.ActionForm;
 
+import pt.ist.fenixframework.FenixFramework;
+
 public class ExecutionCourseManagementForm extends ActionForm {
 
     private static final long serialVersionUID = 1L;

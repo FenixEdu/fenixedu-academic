@@ -450,7 +450,7 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
             for (Unit unit : creditsByUnit.keySet()) {
                 List<TeacherCreditsReportDTO> teachersCreditReportDTOs = creditsByUnit.get(unit);
                 if (executionSemesters == null) {
-                    executionSemesters = teachersCreditReportDTOs.get(0).getCreditsByExecutionPeriod().keySet();
+                    executionSemesters = teachersCreditReportDTOs.iterator().next().getCreditsByExecutionPeriod().keySet();
                 }
                 spreadsheet.addRow();
                 final Row row = spreadsheet.addRow();

@@ -266,11 +266,11 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         }
 
         for (; !getParticipatingAnyCurricularCourseCurricularRules().isEmpty(); getParticipatingAnyCurricularCourseCurricularRules()
-                .get(0).delete()) {
+                .iterator().next().delete()) {
             ;
         }
 
-        for (; hasAnyDelegateElections(); getDelegateElections().get(0).delete()) {
+        for (; hasAnyDelegateElections(); getDelegateElections().iterator().next().delete()) {
             ;
         }
 
@@ -790,7 +790,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
             return null;
         }
 
-        DegreeCurricularPlan firstDCP = getDegreeCurricularPlans().get(0);
+        DegreeCurricularPlan firstDCP = getDegreeCurricularPlans().iterator().next();
         for (final DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlans()) {
             if (degreeCurricularPlan.getInitialDateYearMonthDay() == null) {
                 continue;

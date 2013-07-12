@@ -254,7 +254,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
             throw new DomainException("competenceCourse.approved");
         }
         getDepartments().clear();
-        for (; !getCompetenceCourseInformations().isEmpty(); getCompetenceCourseInformations().get(0).delete()) {
+        for (; !getCompetenceCourseInformations().isEmpty(); getCompetenceCourseInformations().iterator().next().delete()) {
             ;
         }
         setRootDomainObject(null);
@@ -474,12 +474,12 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         return getCompetenceCourseLevel(null);
     }
 
-    public List<CompetenceCourseLoad> getCompetenceCourseLoads(final ExecutionSemester period) {
+    public Collection<CompetenceCourseLoad> getCompetenceCourseLoads(final ExecutionSemester period) {
         final CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionPeriod(period);
         return information != null ? information.getCompetenceCourseLoads() : null;
     }
 
-    public List<CompetenceCourseLoad> getCompetenceCourseLoads() {
+    public Collection<CompetenceCourseLoad> getCompetenceCourseLoads() {
         return getCompetenceCourseLoads(null);
     }
 
@@ -838,8 +838,8 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     public Boolean hasActiveScopesInExecutionYear(ExecutionYear executionYear) {
-        List<ExecutionSemester> executionSemesters = executionYear.getExecutionPeriods();
-        List<CurricularCourse> curricularCourses = this.getAssociatedCurricularCourses();
+        Collection<ExecutionSemester> executionSemesters = executionYear.getExecutionPeriods();
+        Collection<CurricularCourse> curricularCourses = this.getAssociatedCurricularCourses();
         for (ExecutionSemester executionSemester : executionSemesters) {
             for (CurricularCourse curricularCourse : curricularCourses) {
                 if (curricularCourse.getActiveDegreeModuleScopesInAcademicInterval(executionSemester.getAcademicInterval())
@@ -852,7 +852,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     public boolean hasActiveScopesInExecutionPeriod(ExecutionSemester executionSemester) {
-        List<CurricularCourse> curricularCourses = this.getAssociatedCurricularCourses();
+        Collection<CurricularCourse> curricularCourses = this.getAssociatedCurricularCourses();
         for (CurricularCourse curricularCourse : curricularCourses) {
             if (curricularCourse.getActiveDegreeModuleScopesInAcademicInterval(executionSemester.getAcademicInterval()).size() > 0) {
                 return true;

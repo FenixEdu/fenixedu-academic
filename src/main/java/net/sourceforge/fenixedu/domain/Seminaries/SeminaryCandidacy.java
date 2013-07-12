@@ -6,6 +6,7 @@
 package net.sourceforge.fenixedu.domain.Seminaries;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -58,7 +59,7 @@ public class SeminaryCandidacy extends SeminaryCandidacy_Base {
         return candidacies;
     }
 
-    public static List<SeminaryCandidacy> getAllCandidacies() {
+    public static Collection<SeminaryCandidacy> getAllCandidacies() {
         return RootDomainObject.getInstance().getCandidacys();
     }
 

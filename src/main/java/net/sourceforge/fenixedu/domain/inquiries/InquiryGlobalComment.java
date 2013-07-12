@@ -25,7 +25,7 @@ public class InquiryGlobalComment extends InquiryGlobalComment_Base {
     }
 
     public void delete() {
-        for (; !getInquiryResultCommentsSet().isEmpty(); getInquiryResultComments().get(0).delete()) {
+        for (; !getInquiryResultCommentsSet().isEmpty(); getInquiryResultComments().iterator().next().delete()) {
             ;
         }
         setExecutionCourse(null);

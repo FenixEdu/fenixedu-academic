@@ -76,7 +76,7 @@ public class ShowTeachersBodyDispatchAction extends FenixDispatchAction {
             if (executionDegrees != null && executionDegrees.size() > 0) {
                 // put execution year in the form
                 if (StringUtils.isEmpty(executionYearId)) {
-                    executionYearId = ((InfoExecutionDegree) executionDegrees.get(0)).getInfoExecutionYear().getExternalId();
+                    executionYearId = ((InfoExecutionDegree) executionDegrees.iterator().next()).getInfoExecutionYear().getExternalId();
 
                     executionYearForm.set("executionYearId", executionYearId);
                 }
@@ -144,8 +144,8 @@ public class ShowTeachersBodyDispatchAction extends FenixDispatchAction {
 
                         List list1 = (List) o1;
                         List list2 = (List) o2;
-                        DetailedProfessorship dt1 = (DetailedProfessorship) list1.get(0);
-                        DetailedProfessorship dt2 = (DetailedProfessorship) list2.get(0);
+                        DetailedProfessorship dt1 = (DetailedProfessorship) list1.iterator().next();
+                        DetailedProfessorship dt2 = (DetailedProfessorship) list2.iterator().next();
 
                         return Collator.getInstance().compare(dt1.getInfoProfessorship().getInfoExecutionCourse().getNome(),
                                 dt2.getInfoProfessorship().getInfoExecutionCourse().getNome());
@@ -199,8 +199,8 @@ public class ShowTeachersBodyDispatchAction extends FenixDispatchAction {
 
                         List list1 = (List) o1;
                         List list2 = (List) o2;
-                        DetailedProfessorship dt1 = (DetailedProfessorship) list1.get(0);
-                        DetailedProfessorship dt2 = (DetailedProfessorship) list2.get(0);
+                        DetailedProfessorship dt1 = (DetailedProfessorship) list1.iterator().next();
+                        DetailedProfessorship dt2 = (DetailedProfessorship) list2.iterator().next();
 
                         return Collator.getInstance().compare(dt1.getInfoProfessorship().getInfoExecutionCourse().getNome(),
                                 dt2.getInfoProfessorship().getInfoExecutionCourse().getNome());

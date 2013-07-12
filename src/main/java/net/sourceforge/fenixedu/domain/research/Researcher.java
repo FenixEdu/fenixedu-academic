@@ -38,7 +38,7 @@ public class Researcher extends Researcher_Base {
     }
 
     public void delete() {
-        for (; hasAnyAvailableContacts(); getAvailableContacts().get(0).delete()) {
+        for (; hasAnyAvailableContacts(); getAvailableContacts().iterator().next().delete()) {
             ;
         }
         setPerson(null);

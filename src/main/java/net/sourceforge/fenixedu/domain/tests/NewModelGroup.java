@@ -50,7 +50,7 @@ public class NewModelGroup extends NewModelGroup_Base {
         }
 
         while (this.getChildRestrictionsCount() > 0) {
-            this.getChildRestrictions().get(0).delete();
+            this.getChildRestrictions().iterator().next().delete();
         }
 
         super.delete();
@@ -60,7 +60,7 @@ public class NewModelGroup extends NewModelGroup_Base {
         this.getTestModel().setBag(null);
 
         while (this.getChildRestrictionsCount() > 0) {
-            this.getChildRestrictions().get(0).delete();
+            this.getChildRestrictions().iterator().next().delete();
         }
 
         super.delete();

@@ -6,6 +6,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -59,7 +60,7 @@ public class NewProjectProposal {
             throw new InvalidArgumentsServiceException("error.noPerson");
         }
 
-        List listaRelation = groupProperties.getExportGroupings();
+        Collection listaRelation = groupProperties.getExportGroupings();
         Iterator iterRelation = listaRelation.iterator();
         while (iterRelation.hasNext()) {
             ExportGrouping groupPropertiesExecutionCourse = (ExportGrouping) iterRelation.next();
@@ -89,7 +90,7 @@ public class NewProjectProposal {
         List group = new ArrayList();
         List allOtherProfessors = new ArrayList();
 
-        List professorships = goalExecutionCourse.getProfessorships();
+        Collection professorships = goalExecutionCourse.getProfessorships();
         Iterator iterProfessorship = professorships.iterator();
         while (iterProfessorship.hasNext()) {
             Professorship professorship = (Professorship) iterProfessorship.next();
@@ -104,7 +105,7 @@ public class NewProjectProposal {
 
         List groupAux = new ArrayList();
 
-        List professorshipsAux = startExecutionCourse.getProfessorships();
+        Collection professorshipsAux = startExecutionCourse.getProfessorships();
         Iterator iterProfessorshipAux = professorshipsAux.iterator();
         while (iterProfessorshipAux.hasNext()) {
             Professorship professorshipAux = (Professorship) iterProfessorshipAux.next();

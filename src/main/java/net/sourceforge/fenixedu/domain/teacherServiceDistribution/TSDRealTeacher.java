@@ -40,7 +40,7 @@ public class TSDRealTeacher extends TSDRealTeacher_Base {
     @Override
     public Department getDepartment() {
         List<ExecutionSemester> executionSemesters =
-                getTeacherServiceDistributions().get(0).getTSDProcessPhase().getTSDProcess().getExecutionPeriods();
+                getTeacherServiceDistributions().iterator().next().getTSDProcessPhase().getTSDProcess().getExecutionPeriods();
 
         for (ExecutionSemester period : executionSemesters) {
             Department department =

@@ -257,7 +257,7 @@ public abstract class PartyContact extends PartyContact_Base {
             final List<PartyContact> contacts = (List<PartyContact>) getParty().getPartyContacts(getClass());
             if (!contacts.isEmpty() && contacts.size() > 1) {
                 contacts.remove(this);
-                contacts.get(0).setDefaultContact(Boolean.TRUE);
+                contacts.iterator().next().setDefaultContact(Boolean.TRUE);
             }
         }
     }

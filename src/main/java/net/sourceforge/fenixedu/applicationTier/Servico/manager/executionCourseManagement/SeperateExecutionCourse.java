@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.executionCourseManagement;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -26,6 +27,7 @@ import org.apache.commons.collections.Transformer;
 
 import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixframework.FenixFramework;
+import pt.ist.fenixframework.core.AbstractDomainObject;
 
 public class SeperateExecutionCourse {
 
@@ -81,7 +83,7 @@ public class SeperateExecutionCourse {
 
     private static void transferAttends(final ExecutionCourse originExecutionCourse,
             final ExecutionCourse destinationExecutionCourse) {
-        final List<CurricularCourse> curricularCourses = destinationExecutionCourse.getAssociatedCurricularCourses();
+        final Collection<CurricularCourse> curricularCourses = destinationExecutionCourse.getAssociatedCurricularCourses();
         for (int i = 0; i < originExecutionCourse.getAttends().size(); i++) {
             final Attends attends = originExecutionCourse.getAttends().get(i);
             final Enrolment enrolment = attends.getEnrolment();
@@ -96,7 +98,7 @@ public class SeperateExecutionCourse {
             final ExecutionCourse destinationExecutionCourse, final List<Shift> shiftsToTransfer) {
         for (final Shift shift : shiftsToTransfer) {
 
-            List<CourseLoad> courseLoads = shift.getCourseLoads();
+            Collection<CourseLoad> courseLoads = shift.getCourseLoads();
             for (Iterator<CourseLoad> iter = courseLoads.iterator(); iter.hasNext();) {
                 CourseLoad courseLoad = iter.next();
                 CourseLoad newCourseLoad = destinationExecutionCourse.getCourseLoadByShiftType(courseLoad.getType());

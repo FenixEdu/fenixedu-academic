@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.person;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.Collection;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -38,6 +38,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "person", path = "/partyContacts", scope = "request", parameter = "method")
 @Forwards(value = {
@@ -161,7 +162,7 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward createPartyContact(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         if (getRenderedObject("edit-contact") instanceof PartyContactBean) {
             PartyContactBean contact = getRenderedObject("edit-contact");
             PartyContact newPartyContact = null;
@@ -225,7 +226,7 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward editPartyContact(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         if (getRenderedObject("edit-contact") instanceof PartyContactBean) {
             PartyContactBean contact = getRenderedObject("edit-contact");
             Boolean wasValidated = false;
@@ -297,7 +298,7 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward deletePartyContact(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         try {
             final PartyContact partyContact = getPartyContact(request);
             deleteContact(partyContact);
@@ -341,7 +342,7 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
 
         Person person = AccessControl.getPerson();
 
-        List<PersonInformationLog> logsList = person.getPersonInformationLogs();
+        Collection<PersonInformationLog> logsList = person.getPersonInformationLogs();
         request.setAttribute("person", person);
         request.setAttribute("logsList", logsList);
         return mapping.findForward("viewStudentLogChanges");

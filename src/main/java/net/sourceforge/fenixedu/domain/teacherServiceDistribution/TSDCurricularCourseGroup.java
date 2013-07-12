@@ -22,7 +22,7 @@ public class TSDCurricularCourseGroup extends TSDCurricularCourseGroup_Base {
             throw new DomainException("TSDCurricularCourse.required");
         }
 
-        TSDCurricularCourse tsdCurricularCourse = tsdCurricularCourseList.get(0);
+        TSDCurricularCourse tsdCurricularCourse = tsdCurricularCourseList.iterator().next();
 
         if (tsdCurricularCourse == null) {
             throw new DomainException("TSDCurricularCourse.required");
@@ -63,7 +63,7 @@ public class TSDCurricularCourseGroup extends TSDCurricularCourseGroup_Base {
 
     @Override
     public TSDProcessPhase getTSDProcessPhase() {
-        return getTSDCurricularCourses().get(0).getTSDProcessPhase();
+        return getTSDCurricularCourses().iterator().next().getTSDProcessPhase();
     }
 
     @Override
@@ -75,7 +75,7 @@ public class TSDCurricularCourseGroup extends TSDCurricularCourseGroup_Base {
     }
 
     private String getGroupName() {
-        return getAssociatedCurricularCourses().get(0).getCompetenceCourse().getName() + " ("
+        return getAssociatedCurricularCourses().iterator().next().getCompetenceCourse().getName() + " ("
                 + getAssociatedCurricularCoursesDescription() + ")";
     }
 

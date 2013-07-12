@@ -7,6 +7,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
@@ -37,7 +38,7 @@ public class ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod {
         ExecutionCourse executionCourse = executionSemester.getExecutionCourseByInitials(executionCourseInitials);
 
         List<Exam> associatedExams = new ArrayList();
-        List<Evaluation> associatedEvaluations = executionCourse.getAssociatedEvaluations();
+        Collection<Evaluation> associatedEvaluations = executionCourse.getAssociatedEvaluations();
         for (Evaluation evaluation : associatedEvaluations) {
             if (evaluation instanceof Exam) {
                 associatedExams.add((Exam) evaluation);
@@ -55,7 +56,7 @@ public class ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod {
                     infoExecutionCourses.add(InfoExecutionCourse.newInfoFromDomain(tempExecutionCourse));
 
                     // prepare degrees associated with exam
-                    List tempAssociatedCurricularCourses = executionCourse.getAssociatedCurricularCourses();
+                    Collection tempAssociatedCurricularCourses = executionCourse.getAssociatedCurricularCourses();
                     for (int k = 0; k < tempAssociatedCurricularCourses.size(); k++) {
                         Degree tempDegree =
                                 ((CurricularCourse) tempAssociatedCurricularCourses.get(k)).getDegreeCurricularPlan().getDegree();

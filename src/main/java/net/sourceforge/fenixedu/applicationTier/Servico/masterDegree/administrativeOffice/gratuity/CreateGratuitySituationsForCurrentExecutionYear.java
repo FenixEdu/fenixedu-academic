@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -48,7 +47,7 @@ public class CreateGratuitySituationsForCurrentExecutionYear {
 
             this.firstYear = executionDegree.isFirstYear();
 
-            List<StudentCurricularPlan> studentCurricularPlans =
+            Collection<StudentCurricularPlan> studentCurricularPlans =
                     executionDegree.getDegreeCurricularPlan().getStudentCurricularPlans();
             for (StudentCurricularPlan studentCurricularPlan : studentCurricularPlans) {
 
@@ -149,7 +148,8 @@ public class CreateGratuitySituationsForCurrentExecutionYear {
 
     // Service Invokers migrated from Berserk
 
-    private static final CreateGratuitySituationsForCurrentExecutionYear serviceInstance = new CreateGratuitySituationsForCurrentExecutionYear();
+    private static final CreateGratuitySituationsForCurrentExecutionYear serviceInstance =
+            new CreateGratuitySituationsForCurrentExecutionYear();
 
     @Atomic
     public static void runCreateGratuitySituationsForCurrentExecutionYear(String year) {

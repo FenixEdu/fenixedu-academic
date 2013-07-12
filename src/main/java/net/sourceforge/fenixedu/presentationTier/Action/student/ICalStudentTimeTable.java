@@ -55,7 +55,7 @@ public class ICalStudentTimeTable extends FenixDispatchAction {
             throws Exception {
         List<Registration> registrations = getUserView(request).getPerson().getStudent().getActiveRegistrations();
         if (registrations.size() == 1) {
-            return forwardToShow(registrations.get(0), mapping, request);
+            return forwardToShow(registrations.iterator().next(), mapping, request);
         } else {
             RegistrationsBean bean = new RegistrationsBean();
             bean.setRegistrations(registrations);

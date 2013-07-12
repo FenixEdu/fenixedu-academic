@@ -375,7 +375,7 @@ abstract public class PaymentPlan extends PaymentPlan_Base {
         }
 
         while (hasAnyInstallments()) {
-            getInstallments().get(0).delete();
+            getInstallments().iterator().next().delete();
         }
 
         removeParameters();

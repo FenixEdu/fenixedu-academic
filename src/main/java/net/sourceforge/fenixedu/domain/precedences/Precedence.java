@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.domain.precedences;
 
 import java.lang.reflect.Constructor;
+import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -39,11 +39,11 @@ public class Precedence extends Precedence_Base {
     }
 
     public CurricularCourseEnrollmentType evaluate(PrecedenceContext precedenceContext) {
-        List restrictions = getRestrictions();
+        Collection<Restriction> restrictions = getRestrictions();
 
         int size = restrictions.size();
 
-        CurricularCourseEnrollmentType evaluate = ((Restriction) restrictions.get(0)).evaluate(precedenceContext);
+        CurricularCourseEnrollmentType evaluate = ((Restriction) restrictions.iterator().next()).evaluate(precedenceContext);
 
         for (int i = 1; i < size; i++) {
             Restriction restriction = (Restriction) restrictions.get(i);
@@ -55,7 +55,7 @@ public class Precedence extends Precedence_Base {
 
     public void delete() {
 
-        Iterator<Restriction> restrictionIterator = getRestrictionsIterator();
+        Iterator<Restriction> restrictionIterator = getRestrictions().iterator();
 
         while (restrictionIterator.hasNext()) {
             Restriction restriction = restrictionIterator.next();
@@ -82,6 +82,7 @@ public class Precedence extends Precedence_Base {
 
         sourcePrecedence.delete();
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.precedences.Restriction> getRestrictions() {
         return getRestrictionsSet();

@@ -76,7 +76,7 @@ public class ChangeMarkDispatchAction extends FenixDispatchAction {
             return mapping.findForward("NoStudents");
         }
 
-        InfoEnrolment infoEnrolment = (InfoEnrolment) listEnrolmentEvaluation.get(0);
+        InfoEnrolment infoEnrolment = (InfoEnrolment) listEnrolmentEvaluation.iterator().next();
         request.setAttribute("oneInfoEnrollment", infoEnrolment);
 
         return mapping.findForward("editStudentNumber");
@@ -124,7 +124,7 @@ public class ChangeMarkDispatchAction extends FenixDispatchAction {
             return prepareChangeMark(mapping, form, request, response);
         }
 
-        if (((InfoSiteEnrolmentEvaluation) infoSiteEnrolmentEvaluations.get(0)).getEnrolmentEvaluations().size() == 0) {
+        if (((InfoSiteEnrolmentEvaluation) infoSiteEnrolmentEvaluations.iterator().next()).getEnrolmentEvaluations().size() == 0) {
             addErrorMessage(request, "StudentNotEnroled", "error.student.Mark.NotAvailable", String.valueOf(studentNumber));
             if (showMarks != null) {
                 return mapping.findForward("chooseCurricularCourse");
@@ -133,8 +133,8 @@ public class ChangeMarkDispatchAction extends FenixDispatchAction {
         }
 
         InfoEnrolment infoEnrolmentTemp =
-                ((InfoEnrolmentEvaluation) ((InfoSiteEnrolmentEvaluation) infoSiteEnrolmentEvaluations.get(0))
-                        .getEnrolmentEvaluations().get(0)).getInfoEnrolment();
+                ((InfoEnrolmentEvaluation) ((InfoSiteEnrolmentEvaluation) infoSiteEnrolmentEvaluations.iterator().next())
+                        .getEnrolmentEvaluations().iterator().next()).getInfoEnrolment();
 
         InfoEnrolmentEvaluation newEnrolmentEvaluation = null;
         try {

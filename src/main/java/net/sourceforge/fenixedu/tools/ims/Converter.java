@@ -172,7 +172,7 @@ public class Converter {
             }
             predicate = andPredicate;
         } else {
-            predicate = predicates.get(0);
+            predicate = predicates.iterator().next();
         }
 
         Element setVar = respCondition.getChild("setvar");

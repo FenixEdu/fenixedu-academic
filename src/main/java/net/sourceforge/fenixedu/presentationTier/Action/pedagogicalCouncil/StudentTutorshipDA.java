@@ -156,7 +156,7 @@ public class StudentTutorshipDA extends StudentsPerformanceGridDispatchAction {
         } else {
             final Student student = Student.readStudentByNumber(bean.getNumber());
             if (student.getRegistrations().size() == 1) {
-                registration = student.getRegistrations().get(0);
+                registration = student.getRegistrations().iterator().next();
             } else {
                 request.setAttribute("student", student);
                 return mapping.findForward("chooseRegistration");

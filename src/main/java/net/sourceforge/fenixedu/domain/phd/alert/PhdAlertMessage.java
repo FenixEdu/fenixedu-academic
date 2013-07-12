@@ -154,7 +154,7 @@ public class PhdAlertMessage extends PhdAlertMessage_Base {
 
     public List<PhdAlert> getAlertsPossibleResponsibleForMessageGeneration() {
         List<PhdAlert> result = new ArrayList<PhdAlert>();
-        List<PhdAlert> alerts = getProcess().getAlerts();
+        Collection<PhdAlert> alerts = getProcess().getAlerts();
 
         for (PhdAlert phdAlert : alerts) {
             if (getSubject().getContent().contentEquals(phdAlert.getFormattedSubject().getContent())) {
@@ -175,7 +175,7 @@ public class PhdAlertMessage extends PhdAlertMessage_Base {
 
         UnitBasedSender sender = getSender();
 
-        List<Message> messages = sender.getMessages();
+        Collection<Message> messages = sender.getMessages();
 
         for (Message message : messages) {
             if (getSubject().getContent().contentEquals(message.getSubject())) {

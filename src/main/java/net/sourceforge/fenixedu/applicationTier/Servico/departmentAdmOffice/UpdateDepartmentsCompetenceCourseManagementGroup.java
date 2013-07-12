@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Degree;
@@ -73,7 +74,7 @@ public class UpdateDepartmentsCompetenceCourseManagementGroup {
     }
 
     private static boolean belongsToOtherGroupsWithSameRole(Department departmentWhoAsks, Person person) {
-        List<Department> departments = RootDomainObject.getInstance().getDepartments();
+        Collection<Department> departments = RootDomainObject.getInstance().getDepartments();
         for (Department department : departments) {
             if (department != departmentWhoAsks) {
                 Group group = department.getCompetenceCourseMembersGroup();

@@ -201,7 +201,7 @@ public class PhdProgram extends PhdProgram_Base {
             return null;
         }
 
-        return periods.get(0);
+        return periods.iterator().next();
     }
 
     public boolean isActiveNow() {

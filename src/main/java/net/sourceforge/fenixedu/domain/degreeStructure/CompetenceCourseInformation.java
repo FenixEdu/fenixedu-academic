@@ -157,7 +157,7 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
         setExecutionPeriod(null);
         setCompetenceCourse(null);
         setCompetenceCourseGroupUnit(null);
-        for (; !getCompetenceCourseLoads().isEmpty(); getCompetenceCourseLoads().get(0).delete()) {
+        for (; !getCompetenceCourseLoads().isEmpty(); getCompetenceCourseLoads().iterator().next().delete()) {
             ;
         }
         setRootDomainObject(null);
@@ -266,7 +266,7 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
     private List<CompetenceCourseLoadBean> getCompetenceCourseLoadBeans(final Integer order) {
 
         if (isSemestrial()) {
-            return Collections.singletonList(new CompetenceCourseLoadBean(getCompetenceCourseLoads().get(0)));
+            return Collections.singletonList(new CompetenceCourseLoadBean(getCompetenceCourseLoads().iterator().next()));
         }
 
         if (isAnual()) {
@@ -277,7 +277,7 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
             }
 
             if (getCompetenceCourseLoadsCount() == 1) { // hack
-                final CompetenceCourseLoad courseLoad = getCompetenceCourseLoads().get(0);
+                final CompetenceCourseLoad courseLoad = getCompetenceCourseLoads().iterator().next();
                 final CompetenceCourseLoadBean courseLoadBean = new CompetenceCourseLoadBean(courseLoad);
                 courseLoadBean.setLoadOrder(courseLoad.getLoadOrder() + 1);
                 result.add(courseLoadBean);

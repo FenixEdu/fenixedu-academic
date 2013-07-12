@@ -80,7 +80,7 @@ public class RoomClassification extends RoomClassification_Base {
     public void delete() {
         if (getChildRoomClassificationsSet().isEmpty()) {
             while (hasAnyRoomInformations()) {
-                getRoomInformations().get(0).setRoomClassification(null);
+                getRoomInformations().iterator().next().setRoomClassification(null);
             }
             super.setParentRoomClassification(null);
             setRootDomainObject(null);

@@ -7,6 +7,7 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.commons.student;
 
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.StudentListByDegreeAuthorizationFilter;
@@ -31,7 +32,7 @@ public class ReadStudentsFromDegreeCurricularPlan {
         // Read the Students
         DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
 
-        List students = degreeCurricularPlan.getStudentCurricularPlans();
+        Collection students = degreeCurricularPlan.getStudentCurricularPlans();
 
         if ((students == null) || (students.isEmpty())) {
             throw new NonExistingServiceException();

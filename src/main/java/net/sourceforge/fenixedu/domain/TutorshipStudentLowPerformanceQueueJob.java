@@ -115,7 +115,7 @@ public class TutorshipStudentLowPerformanceQueueJob extends TutorshipStudentLowP
             studentState += parcialStudent(registration);
             studentState += flunkedStudent(fullRegistrationPath);
             return new StudentLowPerformanceBean(student, sumEcts, registration.getDegree(), numberOfEntriesStudentInSecretary,
-                    student.getPerson().getDefaultEmailAddressValue(), studentState, fullRegistrationPath.get(0).getStartDate()
+                    student.getPerson().getDefaultEmailAddressValue(), studentState, fullRegistrationPath.iterator().next().getStartDate()
                             .toString("yyyy-MM-dd"));
         }
         return null;

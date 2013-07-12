@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Filtro.credits;
 
-import java.util.List;
+import java.util.Collection;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
@@ -40,7 +40,7 @@ public abstract class AbstractTeacherDepartmentAuthorization<T> extends Filtro {
 
             Department teacherDepartment = teacher.getCurrentWorkingDepartment();
 
-            List departmentsWithAccessGranted = requesterPerson.getManageableDepartmentCredits();
+            Collection departmentsWithAccessGranted = requesterPerson.getManageableDepartmentCredits();
 
             if (!departmentsWithAccessGranted.contains(teacherDepartment)) {
                 throw new NotAuthorizedException();

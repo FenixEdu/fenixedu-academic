@@ -92,12 +92,12 @@ public class ResidenceEvent extends ResidenceEvent_Base {
     }
 
     public DateTime getPaymentDate() {
-        return getNonAdjustingTransactions().isEmpty() ? null : getNonAdjustingTransactions().get(0).getTransactionDetail()
+        return getNonAdjustingTransactions().isEmpty() ? null : getNonAdjustingTransactions().iterator().next().getTransactionDetail()
                 .getWhenRegistered();
     }
 
     public PaymentMode getPaymentMode() {
-        return getNonAdjustingTransactions().isEmpty() ? null : getNonAdjustingTransactions().get(0).getTransactionDetail()
+        return getNonAdjustingTransactions().isEmpty() ? null : getNonAdjustingTransactions().iterator().next().getTransactionDetail()
                 .getPaymentMode();
     }
 
@@ -108,7 +108,7 @@ public class ResidenceEvent extends ResidenceEvent_Base {
 
     @Override
     protected List<AccountingEventPaymentCode> createPaymentCodes() {
-        final EntryDTO entryDTO = calculateEntries(new DateTime()).get(0);
+        final EntryDTO entryDTO = calculateEntries(new DateTime()).iterator().next();
 
         return Collections.singletonList(AccountingEventPaymentCode.create(PaymentCodeType.RESIDENCE_FEE, new YearMonthDay(),
                 getPaymentLimitDate().toYearMonthDay(), this, entryDTO.getAmountToPay(), entryDTO.getAmountToPay(), getPerson()));
@@ -116,8 +116,8 @@ public class ResidenceEvent extends ResidenceEvent_Base {
 
     @Override
     protected List<AccountingEventPaymentCode> updatePaymentCodes() {
-        final EntryDTO entryDTO = calculateEntries(new DateTime()).get(0);
-        getNonProcessedPaymentCodes().get(0).update(new YearMonthDay(), getPaymentLimitDate().toYearMonthDay(),
+        final EntryDTO entryDTO = calculateEntries(new DateTime()).iterator().next();
+        getNonProcessedPaymentCodes().iterator().next().update(new YearMonthDay(), getPaymentLimitDate().toYearMonthDay(),
                 entryDTO.getAmountToPay(), entryDTO.getAmountToPay());
 
         return getNonProcessedPaymentCodes();

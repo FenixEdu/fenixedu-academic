@@ -193,7 +193,7 @@ public class Lesson extends Lesson_Base {
         }
 
         while (hasAnyLessonInstances()) {
-            getLessonInstances().get(0).delete();
+            getLessonInstances().iterator().next().delete();
         }
 
         super.setShift(null);
@@ -392,7 +392,7 @@ public class Lesson extends Lesson_Base {
         result.put(Boolean.FALSE, new ArrayList<LessonInstance>());
 
         if (day != null) {
-            List<LessonInstance> lessonInstances = getLessonInstances();
+            Collection<LessonInstance> lessonInstances = getLessonInstances();
             for (LessonInstance lessonInstance : lessonInstances) {
                 if (lessonInstance.hasSummary() && !lessonInstance.getDay().isBefore(day)) {
                     List<LessonInstance> list = result.get(Boolean.TRUE);
@@ -557,7 +557,7 @@ public class Lesson extends Lesson_Base {
 
     public List<Summary> getAssociatedSummaries() {
         List<Summary> result = new ArrayList<Summary>();
-        List<LessonInstance> lessonInstances = getLessonInstances();
+        Collection<LessonInstance> lessonInstances = getLessonInstances();
         for (LessonInstance lessonInstance : lessonInstances) {
             if (lessonInstance.hasSummary()) {
                 result.add(lessonInstance.getSummary());
@@ -842,7 +842,7 @@ public class Lesson extends Lesson_Base {
     }
 
     public LessonInstance getLessonInstanceFor(YearMonthDay date) {
-        List<LessonInstance> lessonInstances = getLessonInstances();
+        Collection<LessonInstance> lessonInstances = getLessonInstances();
         for (LessonInstance lessonInstance : lessonInstances) {
             if (lessonInstance.getDay().isEqual(date)) {
                 return lessonInstance;
@@ -930,7 +930,7 @@ public class Lesson extends Lesson_Base {
 
             if (courseLoads.size() == 1) {
 
-                CourseLoad courseLoad = courseLoads.get(0);
+                CourseLoad courseLoad = courseLoads.iterator().next();
 
                 if (courseLoad.getUnitQuantity() != null && getUnitHours().compareTo(courseLoad.getUnitQuantity()) != 0) {
                     throw new DomainException("error.Lesson.shift.load.unit.quantity.exceeded", getUnitHours().toString(),

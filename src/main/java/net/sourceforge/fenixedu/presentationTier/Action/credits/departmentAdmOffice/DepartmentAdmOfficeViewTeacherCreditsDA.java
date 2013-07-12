@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.credits.departmentAdmOffice;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -63,7 +64,7 @@ public class DepartmentAdmOfficeViewTeacherCreditsDA extends ViewTeacherCreditsD
     private boolean isTeacherOfManageableDepartments(Teacher teacher) {
         IUserView userView = UserView.getUser();
         ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
-        List<Department> manageableDepartments = userView.getPerson().getManageableDepartmentCredits();
+        Collection<Department> manageableDepartments = userView.getPerson().getManageableDepartmentCredits();
         List<Unit> workingPlacesByPeriod =
                 teacher.getWorkingPlacesByPeriod(executionSemester.getBeginDateYearMonthDay(),
                         executionSemester.getEndDateYearMonthDay());

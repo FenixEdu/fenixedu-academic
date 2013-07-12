@@ -3,7 +3,7 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.credits;
 
-import java.util.List;
+import java.util.Collection;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -62,7 +62,7 @@ public class DepartmentAdmOfficeManageTeacherAdviseServiceDispatchAction extends
         final ExecutionSemester executionSemester = getDomainObject(dynaForm, "executionPeriodId");
 
         Teacher teacher = FenixFramework.getDomainObject(dynaForm.getString("teacherId"));
-        List<Department> manageableDepartments = userView.getPerson().getManageableDepartmentCredits();
+        Collection<Department> manageableDepartments = userView.getPerson().getManageableDepartmentCredits();
 
         if (teacher == null || teacher.getCurrentWorkingDepartment() == null
                 || !manageableDepartments.contains(teacher.getCurrentWorkingDepartment())) {

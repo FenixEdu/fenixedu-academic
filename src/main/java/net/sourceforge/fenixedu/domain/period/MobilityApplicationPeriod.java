@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.period;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -79,7 +80,7 @@ public class MobilityApplicationPeriod extends MobilityApplicationPeriod_Base {
     }
 
     public MobilityApplicationProcess getMobilityApplicationProcess() {
-        return (MobilityApplicationProcess) (hasAnyCandidacyProcesses() ? getCandidacyProcesses().get(0) : null);
+        return (MobilityApplicationProcess) (hasAnyCandidacyProcesses() ? getCandidacyProcesses().iterator().next() : null);
     }
 
     @Override
@@ -242,7 +243,7 @@ public class MobilityApplicationPeriod extends MobilityApplicationPeriod_Base {
     public List<MobilityQuota> getMobilityQuotasByProgram(final MobilityProgram program) {
         List<MobilityQuota> result = new ArrayList<MobilityQuota>();
 
-        List<MobilityQuota> mobilityQuotas = getMobilityQuotas();
+        Collection<MobilityQuota> mobilityQuotas = getMobilityQuotas();
 
         for (MobilityQuota mobilityQuota : mobilityQuotas) {
             if (mobilityQuota.isFor(program)) {

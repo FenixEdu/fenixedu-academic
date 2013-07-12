@@ -40,7 +40,7 @@ public class Cooperation extends Cooperation_Base implements ParticipationsInter
      * references, particularly Participations
      */
     public void delete() {
-        for (; this.hasAnyParticipations(); getParticipations().get(0).delete()) {
+        for (; this.hasAnyParticipations(); getParticipations().iterator().next().delete()) {
             ;
         }
         setUnit(null);

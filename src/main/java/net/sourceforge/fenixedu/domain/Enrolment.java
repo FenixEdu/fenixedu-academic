@@ -484,7 +484,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
                 }
             }
         } else if (executionCourses.size() == 1) {
-            executionCourse = executionCourses.get(0);
+            executionCourse = executionCourses.iterator().next();
         }
 
         if (executionCourse != null) {
@@ -544,7 +544,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
                 });
 
         if (currentExecutionCourse != null) {
-            List attends = currentExecutionCourse.getAttends();
+            Collection attends = currentExecutionCourse.getAttends();
             Attends attend = (Attends) CollectionUtils.find(attends, new Predicate() {
 
                 @Override
@@ -1638,7 +1638,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     static public Enrolment getEnrolmentWithLastExecutionPeriod(List<Enrolment> enrolments) {
         Collections.sort(enrolments, Enrolment.REVERSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_ID);
-        return enrolments.get(0);
+        return enrolments.iterator().next();
     }
 
     /**

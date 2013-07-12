@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 
 import java.sql.Timestamp;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
@@ -209,7 +210,7 @@ public class EditReimbursementGuide {
         Double guideEntryValue = new Double(guideEntry.getPrice().doubleValue() * guideEntry.getQuantity().intValue());
         Double sum = reimbursementGuideEntry.getValue();
 
-        List reimbursementGuideEntries = guideEntry.getReimbursementGuideEntries();
+        Collection<ReimbursementGuideEntry> reimbursementGuideEntries = guideEntry.getReimbursementGuideEntries();
 
         if (reimbursementGuideEntries == null) {
             return isGreaterThan(guideEntryValue, sum);

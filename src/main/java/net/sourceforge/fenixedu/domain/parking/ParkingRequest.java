@@ -55,7 +55,7 @@ public class ParkingRequest extends ParkingRequest_Base {
         }
 
         setRequestedAs(creator.getRequestAs() != null ? creator.getRequestAs() : creator.getParkingParty().getSubmitAsRoles()
-                .get(0));
+                .iterator().next());
         boolean limitlessAccessCard = creator.isLimitlessAccessCard();
         if (limitlessAccessCard == false
                 && (creator.getParkingParty().getParty().getPartyClassification().equals(PartyClassification.TEACHER) || creator
@@ -782,7 +782,7 @@ public class ParkingRequest extends ParkingRequest_Base {
             setDriverLicenseDeliveryType(parkingRequest.getDriverLicenseDeliveryType());
 
             if (!parkingRequest.getVehicles().isEmpty()) {
-                Vehicle firstVehicle = parkingRequest.getVehicles().get(0);
+                Vehicle firstVehicle = parkingRequest.getVehicles().iterator().next();
                 setFirstVechicleID(firstVehicle.getExternalId());
                 setFirstCarMake(firstVehicle.getVehicleMake());
                 setFirstCarPlateNumber(firstVehicle.getPlateNumber());
@@ -919,7 +919,7 @@ public class ParkingRequest extends ParkingRequest_Base {
 
     public void delete() {
         if (canBeDeleted()) {
-            for (; getVehicles().size() != 0; getVehicles().get(0).delete()) {
+            for (; getVehicles().size() != 0; getVehicles().iterator().next().delete()) {
                 ;
             }
             deleteDriverLicenseDocument();

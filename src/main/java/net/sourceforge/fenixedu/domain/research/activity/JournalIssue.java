@@ -78,7 +78,7 @@ public class JournalIssue extends JournalIssue_Base implements ParticipationsInt
     }
 
     public void delete() {
-        for (; !this.getArticleAssociations().isEmpty(); this.getArticleAssociations().get(0).delete()) {
+        for (; !this.getArticleAssociations().isEmpty(); this.getArticleAssociations().iterator().next().delete()) {
             ;
         }
         for (; !this.getParticipations().isEmpty(); this.getParticipations().get(0).delete()) {

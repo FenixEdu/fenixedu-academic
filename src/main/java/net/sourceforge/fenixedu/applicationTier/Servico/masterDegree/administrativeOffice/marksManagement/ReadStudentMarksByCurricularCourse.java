@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.marksManagement;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -43,8 +44,8 @@ public class ReadStudentMarksByCurricularCourse {
         List<InfoSiteEnrolmentEvaluation> infoSiteEnrolmentEvaluations = new ArrayList<InfoSiteEnrolmentEvaluation>();
 
         Enrolment enrolment =
-                enrolmentId != null ? (Enrolment) FenixFramework.getDomainObject(enrolmentId) : getEnrolment(
-                        curricularCourseID, studentNumber, executionYear);
+                enrolmentId != null ? (Enrolment) FenixFramework.getDomainObject(enrolmentId) : getEnrolment(curricularCourseID,
+                        studentNumber, executionYear);
 
         if (enrolment != null) {
 
@@ -52,7 +53,7 @@ public class ReadStudentMarksByCurricularCourse {
             enrolmentEvaluations = enrolment.getEnrolmentEvaluationsByEnrolmentEvaluationState(enrolmentEvaluationState);
 
             if (enrolmentEvaluations != null && enrolmentEvaluations.size() > 0) {
-                Person person = ((EnrolmentEvaluation) enrolmentEvaluations.get(0)).getPersonResponsibleForGrade();
+                Person person = ((EnrolmentEvaluation) enrolmentEvaluations.iterator().next()).getPersonResponsibleForGrade();
                 if (person != null) {
                     Teacher teacher = Teacher.readTeacherByUsername(person.getUsername());
                     infoTeacher = InfoTeacher.newInfoFromDomain(teacher);
@@ -97,7 +98,7 @@ public class ReadStudentMarksByCurricularCourse {
         // in case student has school part concluded his curricular plan is
         // not in active state
 
-        List<StudentCurricularPlan> studentCurricularPlans = null;
+        Collection<StudentCurricularPlan> studentCurricularPlans = null;
         Registration registration =
                 Registration.readByNumberAndDegreeCurricularPlan(studentNumber, curricularCourse.getDegreeCurricularPlan());
         if (registration == null) {
@@ -153,7 +154,7 @@ public class ReadStudentMarksByCurricularCourse {
             if (enrollments.isEmpty()) {
                 throw new ExistingServiceException();
             }
-            enrolment = enrollments.get(0);
+            enrolment = enrollments.iterator().next();
         }
         return enrolment;
     }

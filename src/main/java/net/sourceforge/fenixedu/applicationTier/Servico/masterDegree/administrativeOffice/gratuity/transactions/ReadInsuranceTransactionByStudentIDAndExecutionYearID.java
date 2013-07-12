@@ -49,7 +49,7 @@ public class ReadInsuranceTransactionByStudentIDAndExecutionYearID {
 
         if (insuranceTransactionList.size() == 1) {
             infoInsuranceTransaction =
-                    InfoInsuranceTransaction.newInfoFromDomain((InsuranceTransaction) insuranceTransactionList.get(0));
+                    InfoInsuranceTransaction.newInfoFromDomain((InsuranceTransaction) insuranceTransactionList.iterator().next());
         }
 
         return infoInsuranceTransaction;

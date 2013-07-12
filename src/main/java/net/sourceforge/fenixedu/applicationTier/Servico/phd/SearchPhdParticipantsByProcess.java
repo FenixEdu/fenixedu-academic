@@ -6,6 +6,7 @@ import java.util.Map;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
 import net.sourceforge.fenixedu.presentationTier.renderers.providers.AutoCompleteProvider;
+import pt.ist.fenixframework.FenixFramework;
 
 public class SearchPhdParticipantsByProcess implements AutoCompleteProvider<PhdParticipant> {
 

@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-import java.util.List;
+import java.util.Collection;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -42,7 +42,7 @@ public class DeleteProfessorshipWithPerson extends AbstractModifyProfessorshipWi
 
         Professorship professorshipToDelete = person.getProfessorshipByExecutionCourse(executionCourse);
 
-        List shiftProfessorshipList = professorshipToDelete.getAssociatedShiftProfessorship();
+        Collection shiftProfessorshipList = professorshipToDelete.getAssociatedShiftProfessorship();
 
         boolean hasCredits = false;
 

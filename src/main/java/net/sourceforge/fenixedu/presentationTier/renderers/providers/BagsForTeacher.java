@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.providers;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
@@ -18,7 +19,7 @@ public class BagsForTeacher implements DataProvider {
     public Object provide(Object source, Object currentValue) {
         IUserView userView = AccessControl.getUserView();
         Teacher teacher = userView.getPerson().getTeacher();
-        List<NewTestModel> testModels = teacher.getTestModels();
+        Collection<NewTestModel> testModels = teacher.getTestModels();
         List<NewModelGroup> modelGroups = new ArrayList<NewModelGroup>();
         for (NewTestModel testModel : testModels) {
             modelGroups.add(testModel.getBag());

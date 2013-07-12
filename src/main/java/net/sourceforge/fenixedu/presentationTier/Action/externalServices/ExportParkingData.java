@@ -42,7 +42,7 @@ public class ExportParkingData extends FenixAction {
 
     private ParkingDataReportFile getLastParkingDataReportJob() {
         List<QueueJob> allJobsForClassOrSubClass = QueueJob.getAllJobsForClassOrSubClass(ParkingDataReportFile.class, 1);
-        return allJobsForClassOrSubClass.size() > 0 ? (ParkingDataReportFile) allJobsForClassOrSubClass.get(0) : null;
+        return allJobsForClassOrSubClass.size() > 0 ? (ParkingDataReportFile) allJobsForClassOrSubClass.iterator().next() : null;
     }
 
     private void checkPermissions(String username, String password) throws NotAuthorizedException {

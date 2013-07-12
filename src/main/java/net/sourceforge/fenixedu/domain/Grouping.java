@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -213,7 +214,7 @@ public class Grouping extends Grouping_Base {
         return grouping;
     }
 
-    private static void addGroupingToAttends(final Grouping grouping, final List<Attends> attends) {
+    private static void addGroupingToAttends(final Grouping grouping, final Collection<Attends> attends) {
         for (final Attends attend : attends) {
             attend.addGroupings(grouping);
         }
@@ -253,7 +254,7 @@ public class Grouping extends Grouping_Base {
                 throw new DomainException(this.getClass().getName(), "error.groupProperties.edit.attendsSet.withGroups");
             }
 
-            List<ShiftGroupingProperties> shiftGroupingProperties = this.getShiftGroupingProperties();
+            Collection<ShiftGroupingProperties> shiftGroupingProperties = this.getShiftGroupingProperties();
             for (ShiftGroupingProperties shiftGP : shiftGroupingProperties) {
                 shiftGP.delete();
             }
@@ -262,7 +263,7 @@ public class Grouping extends Grouping_Base {
                 throw new DomainException(this.getClass().getName(), "error.groupProperties.edit.attendsSet.withGroups");
             }
 
-            List<ShiftGroupingProperties> shiftGroupingProperties = this.getShiftGroupingProperties();
+            Collection<ShiftGroupingProperties> shiftGroupingProperties = this.getShiftGroupingProperties();
             for (ShiftGroupingProperties shiftGP : shiftGroupingProperties) {
                 shiftGP.delete();
             }
@@ -306,7 +307,7 @@ public class Grouping extends Grouping_Base {
         if (differentiatedCapacity) {
             createOrEditShiftGroupingProperties(infoShifts);
         } else {
-            List<ShiftGroupingProperties> shiftGroupingProperties = this.getShiftGroupingProperties();
+            Collection<ShiftGroupingProperties> shiftGroupingProperties = this.getShiftGroupingProperties();
             for (ShiftGroupingProperties shiftGP : shiftGroupingProperties) {
                 shiftGP.delete();
             }
@@ -439,14 +440,14 @@ public class Grouping extends Grouping_Base {
                     ec.getDegreePresentationString());
         }
 
-        List<Attends> attends = this.getAttends();
+        Collection<Attends> attends = this.getAttends();
         List<Attends> attendsAux = new ArrayList<Attends>();
         attendsAux.addAll(attends);
         for (Attends attend : attendsAux) {
             attend.removeGroupings(this);
         }
 
-        List<ExportGrouping> exportGroupings = this.getExportGroupings();
+        Collection<ExportGrouping> exportGroupings = this.getExportGroupings();
         List<ExportGrouping> exportGroupingsAux = new ArrayList<ExportGrouping>();
         exportGroupingsAux.addAll(exportGroupings);
         for (ExportGrouping exportGrouping : exportGroupingsAux) {

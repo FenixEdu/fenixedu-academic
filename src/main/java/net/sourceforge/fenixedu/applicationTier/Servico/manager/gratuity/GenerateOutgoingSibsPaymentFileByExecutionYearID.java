@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -70,7 +71,7 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID {
 
             DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
 
-            List studentCurricularPlanList = degreeCurricularPlan.getStudentCurricularPlans();
+            Collection studentCurricularPlanList = degreeCurricularPlan.getStudentCurricularPlans();
 
             // add insurance lines
             for (Iterator iterator = studentCurricularPlanList.iterator(); iterator.hasNext();) {

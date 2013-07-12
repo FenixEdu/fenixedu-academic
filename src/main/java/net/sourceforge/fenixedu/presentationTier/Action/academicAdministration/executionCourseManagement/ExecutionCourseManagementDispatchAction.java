@@ -29,6 +29,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/executionCourseManagement", module = "academicAdministration",
         formBeanClass = ExecutionCourseManagementForm.class)

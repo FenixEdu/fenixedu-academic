@@ -62,7 +62,7 @@ public class PrecedentDegreeInformationForIndividualCandidacyFactory {
         if (!over23Bean.getFormationConcludedBeanList().isEmpty()) {
             PrecedentDegreeInformation pid = new PrecedentDegreeInformation();
             pid.setCandidacyInternal(false);
-            FormationBean formationBean = over23Bean.getFormationConcludedBeanList().get(0);
+            FormationBean formationBean = over23Bean.getFormationConcludedBeanList().iterator().next();
 
             pid.setDegreeDesignation(formationBean.getDesignation());
             pid.setInstitution(getOrCreateInstitution(formationBean.getInstitutionName()));
@@ -72,7 +72,7 @@ public class PrecedentDegreeInformationForIndividualCandidacyFactory {
         } else if (!over23Bean.getFormationNonConcludedBeanList().isEmpty()) {
             PrecedentDegreeInformation pdi = new PrecedentDegreeInformation();
             pdi.setCandidacyInternal(false);
-            FormationBean formationBean = over23Bean.getFormationNonConcludedBeanList().get(0);
+            FormationBean formationBean = over23Bean.getFormationNonConcludedBeanList().iterator().next();
 
             pdi.setDegreeDesignation(formationBean.getDesignation());
             pdi.setInstitution(getOrCreateInstitution(formationBean.getInstitutionName()));
@@ -195,13 +195,13 @@ public class PrecedentDegreeInformationForIndividualCandidacyFactory {
         PrecedentDegreeInformation pid = candidacy.getRefactoredPrecedentDegreeInformation();
 
         if (!over23Bean.getFormationConcludedBeanList().isEmpty()) {
-            FormationBean formationBean = over23Bean.getFormationConcludedBeanList().get(0);
+            FormationBean formationBean = over23Bean.getFormationConcludedBeanList().iterator().next();
 
             pid.setDegreeDesignation(formationBean.getDesignation());
             pid.setInstitution(getOrCreateInstitution(formationBean.getInstitutionName()));
             pid.setConclusionYear(formationBean.getConclusionExecutionYear().getEndCivilYear());
         } else if (over23Bean.getFormationNonConcludedBeanList().isEmpty()) {
-            FormationBean formationBean = over23Bean.getFormationNonConcludedBeanList().get(0);
+            FormationBean formationBean = over23Bean.getFormationNonConcludedBeanList().iterator().next();
 
             pid.setDegreeDesignation(formationBean.getDesignation());
             pid.setInstitution(getOrCreateInstitution(formationBean.getInstitutionName()));

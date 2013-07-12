@@ -43,7 +43,7 @@ public class StandaloneCandidacyPeriod extends StandaloneCandidacyPeriod_Base {
     }
 
     public StandaloneCandidacyProcess getStandaloneCandidacyProcess() {
-        return (StandaloneCandidacyProcess) (hasAnyCandidacyProcesses() ? getCandidacyProcesses().get(0) : null);
+        return (StandaloneCandidacyProcess) (hasAnyCandidacyProcesses() ? getCandidacyProcesses().iterator().next() : null);
     }
 
     @Override

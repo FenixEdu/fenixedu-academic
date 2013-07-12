@@ -187,11 +187,11 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
             final List<ExecutionInterval> executionIntervals = getExecutionIntervalsWithCandidacyPeriod();
 
             if (executionIntervals.size() == 1) {
-                final ExecutionInterval executionInterval = executionIntervals.get(0);
+                final ExecutionInterval executionInterval = executionIntervals.iterator().next();
                 final List<MobilityApplicationProcess> candidacyProcesses = getCandidacyProcesses(executionInterval);
 
                 if (candidacyProcesses.size() == 1) {
-                    setCandidacyProcessInformation(request, candidacyProcesses.get(0));
+                    setCandidacyProcessInformation(request, candidacyProcesses.iterator().next());
                     setCandidacyProcessInformation(actionForm, getProcess(request));
                     request.setAttribute("candidacyProcesses", candidacyProcesses);
                     return;
@@ -212,7 +212,7 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
                 final List<MobilityApplicationProcess> candidacyProcesses = getCandidacyProcesses(executionInterval);
 
                 if (candidacyProcesses.size() == 1) {
-                    setCandidacyProcessInformation(request, candidacyProcesses.get(0));
+                    setCandidacyProcessInformation(request, candidacyProcesses.iterator().next());
                     setCandidacyProcessInformation(actionForm, getProcess(request));
                     request.setAttribute("candidacyProcesses", candidacyProcesses);
                     return;

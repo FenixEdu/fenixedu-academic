@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.vigilancy;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -468,9 +469,9 @@ public class VigilantGroupManagement extends FenixDispatchAction {
         bean.setSelectedVigilantWrapper(vigilantWrapper);
         bean.setSelectedVigilantGroup(group);
 
-        List<VigilantWrapper> vigilantWrappers = new ArrayList<VigilantWrapper>(group.getVigilantWrappers());
+        List<VigilantWrapper> vigilantWrappers = new ArrayList<VigilantWrapper>(group.getVigilantWrappersSet());
         vigilantWrappers.remove(vigilantWrapper);
-        List<VigilantWrapper> incompatibleVigilantWrappers = person.getVigilantWrappers();
+        Collection<VigilantWrapper> incompatibleVigilantWrappers = person.getVigilantWrappersSet();
 
         for (VigilantWrapper incompatibleVigilantWrapper : incompatibleVigilantWrappers) {
             if (incompatibleVigilantWrapper.getVigilantGroup().equals(group)) {
@@ -581,7 +582,7 @@ public class VigilantGroupManagement extends FenixDispatchAction {
         List<Employee> employees =
                 department.getAllWorkingEmployees(currentYear.getBeginDateYearMonthDay(), currentYear.getEndDateYearMonthDay());
 
-        List<VigilantGroup> groups = coordinator.getVigilantGroups();
+        Collection<VigilantGroup> groups = coordinator.getVigilantGroupsSet();
 
         List<VigilantBoundBean> bounds = new ArrayList<VigilantBoundBean>();
 

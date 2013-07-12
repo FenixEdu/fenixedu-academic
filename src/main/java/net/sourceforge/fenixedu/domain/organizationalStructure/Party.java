@@ -444,10 +444,10 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
             throw new DomainException("error.party.cannot.be.deleted");
         }
 
-        for (; !getAccounts().isEmpty(); getAccounts().get(0).delete()) {
+        for (; !getAccounts().isEmpty(); getAccounts().iterator().next().delete()) {
             ;
         }
-        for (; hasAnyPartyContacts(); getPartyContacts().get(0).deleteWithoutCheckRules()) {
+        for (; hasAnyPartyContacts(); getPartyContacts().iterator().next().deleteWithoutCheckRules()) {
             ;
         }
 
@@ -924,7 +924,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     public PartyContact getInstitutionalPartyContact(final Class<? extends PartyContact> clazz) {
         List<EmailAddress> institutionals =
                 (List<EmailAddress>) getPartyContacts(EmailAddress.class, PartyContactType.INSTITUTIONAL);
-        return institutionals.isEmpty() ? null : institutionals.get(0);
+        return institutionals.isEmpty() ? null : institutionals.iterator().next();
     }
 
     public boolean hasInstitutionalPartyContact(final Class<? extends PartyContact> clazz) {
@@ -1029,7 +1029,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     @Deprecated
     public void setWorkPhoneNumber(final String number) {
         if (hasAnyPartyContact(Phone.class, PartyContactType.WORK)) {
-            ((Phone) getPartyContacts(Phone.class, PartyContactType.WORK).get(0)).edit(number);
+            ((Phone) getPartyContacts(Phone.class, PartyContactType.WORK).iterator().next()).edit(number);
         } else {
             Phone.createPhone(this, number, PartyContactType.WORK, false);
         }
@@ -1057,7 +1057,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     public Phone getPersonWorkPhone() {
         final List<Phone> partyContacts = (List<Phone>) getPartyContacts(Phone.class, PartyContactType.WORK);
         // actually exists only one
-        return partyContacts.isEmpty() ? null : (Phone) partyContacts.get(0);
+        return partyContacts.isEmpty() ? null : (Phone) partyContacts.iterator().next();
     }
 
     @Deprecated

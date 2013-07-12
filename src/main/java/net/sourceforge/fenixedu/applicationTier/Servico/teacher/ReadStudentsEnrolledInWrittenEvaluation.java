@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Factory.TeacherAdministrationSiteComponentBuilder;
@@ -41,8 +42,8 @@ public class ReadStudentsEnrolledInWrittenEvaluation {
             throw new FenixServiceException("error.noSite");
         }
 
-        final List<WrittenEvaluationEnrolment> writtenEvaluationEnrolmentList =
-                writtenEvaluation.getWrittenEvaluationEnrolments();
+        final Collection<WrittenEvaluationEnrolment> writtenEvaluationEnrolmentList =
+                writtenEvaluation.getWrittenEvaluationEnrolmentsSet();
 
         final List<InfoStudent> infoStudents = new ArrayList<InfoStudent>(writtenEvaluationEnrolmentList.size());
         final List<InfoWrittenEvaluationEnrolment> infoWrittenEvaluationEnrolments =

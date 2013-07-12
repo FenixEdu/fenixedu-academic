@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.dataTransferObject.inquiries;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -59,7 +60,7 @@ public abstract class GlobalCommentsResultsBean implements Serializable {
         }
     }
 
-    public List<InquiryResultComment> getOtherInquiryResultComments() {
+    public Collection<InquiryResultComment> getOtherInquiryResultComments() {
         if (getInquiryGlobalComment() == null) {
             return getInquiryGlobalComment().getInquiryResultComments();
         }
@@ -79,7 +80,7 @@ public abstract class GlobalCommentsResultsBean implements Serializable {
         setTeachersResultsMap(new HashMap<Professorship, List<TeacherShiftTypeResultsBean>>());
         for (Professorship teacherProfessorship : getProfessorships()) {
             ArrayList<TeacherShiftTypeResultsBean> teachersResults = new ArrayList<TeacherShiftTypeResultsBean>();
-            List<InquiryResult> professorshipResults = teacherProfessorship.getInquiryResults();
+            Collection<InquiryResult> professorshipResults = teacherProfessorship.getInquiryResults();
             if (!professorshipResults.isEmpty()) {
                 for (ShiftType shiftType : getShiftTypes(professorshipResults)) {
                     List<InquiryResult> teacherShiftResults = teacherProfessorship.getInquiryResults(shiftType);
@@ -95,7 +96,7 @@ public abstract class GlobalCommentsResultsBean implements Serializable {
         }
     }
 
-    protected Set<ShiftType> getShiftTypes(List<InquiryResult> professorshipResults) {
+    protected Set<ShiftType> getShiftTypes(Collection<InquiryResult> professorshipResults) {
         Set<ShiftType> shiftTypes = new HashSet<ShiftType>();
         for (InquiryResult inquiryResult : professorshipResults) {
             shiftTypes.add(inquiryResult.getShiftType());
@@ -103,7 +104,7 @@ public abstract class GlobalCommentsResultsBean implements Serializable {
         return shiftTypes;
     }
 
-    protected List<Professorship> getProfessorships() {
+    protected Collection<Professorship> getProfessorships() {
         return getExecutionCourse().getProfessorships();
     }
 

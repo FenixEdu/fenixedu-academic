@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.time.calendarStructure;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -70,7 +71,7 @@ public class AcademicCalendarRootEntry extends AcademicCalendarRootEntry_Base {
     public DateTime getBegin() {
 
         DateTime begin = null;
-        List<AcademicCalendarEntry> result = null;
+        Collection<AcademicCalendarEntry> result = null;
 
         if (!hasTemplateEntry()) {
             result = getChildEntries();

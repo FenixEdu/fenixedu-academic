@@ -179,7 +179,7 @@ public class PhdStudyPlan extends PhdStudyPlan_Base {
 
     public void delete() {
 
-        for (; hasAnyEntries(); getEntries().get(0).delete()) {
+        for (; hasAnyEntries(); getEntries().iterator().next().delete()) {
             ;
         }
 

@@ -5,6 +5,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.Seminaries;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -28,7 +29,7 @@ public class GetAllThemes {
     protected List run() throws BDException {
         List seminariesInfo = new LinkedList();
 
-        List themes = Theme.getAllThemes();
+        Collection themes = Theme.getAllThemes();
         for (Iterator iterator = themes.iterator(); iterator.hasNext();) {
 
             InfoTheme infoTheme = InfoTheme.newInfoFromDomain((Theme) iterator.next());
@@ -44,7 +45,7 @@ public class GetAllThemes {
     private static final GetAllThemes serviceInstance = new GetAllThemes();
 
     @Atomic
-    public static List runGetAllThemes() throws BDException  , NotAuthorizedException {
+    public static List runGetAllThemes() throws BDException, NotAuthorizedException {
         SeminaryCoordinatorOrStudentFilter.instance.execute();
         return serviceInstance.run();
     }

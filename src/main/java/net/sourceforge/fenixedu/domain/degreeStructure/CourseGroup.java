@@ -102,7 +102,7 @@ public class CourseGroup extends CourseGroup_Base {
     public void delete() {
         if (getCanBeDeleted()) {
             super.delete();
-            for (; !getParticipatingContextCurricularRules().isEmpty(); getParticipatingContextCurricularRules().get(0).delete()) {
+            for (; !getParticipatingContextCurricularRules().isEmpty(); getParticipatingContextCurricularRules().iterator().next().delete()) {
                 ;
             }
             setRootDomainObject(null);
@@ -133,7 +133,7 @@ public class CourseGroup extends CourseGroup_Base {
 
     @Override
     public DegreeCurricularPlan getParentDegreeCurricularPlan() {
-        return hasAnyParentContexts() ? getParentContexts().get(0).getParentCourseGroup().getParentDegreeCurricularPlan() : null;
+        return hasAnyParentContexts() ? getParentContexts().iterator().next().getParentCourseGroup().getParentDegreeCurricularPlan() : null;
     }
 
     public List<Context> getChildContexts(Class<? extends DegreeModule> clazz) {
@@ -505,7 +505,7 @@ public class CourseGroup extends CourseGroup_Base {
                     return creditsLimit.getMaximumCredits();
                 }
             }
-            return creditsLimitRules.get(0).getMaximumCredits();
+            return creditsLimitRules.iterator().next().getMaximumCredits();
         }
 
         final Collection<DegreeModule> modulesByExecutionPeriod = getOpenChildDegreeModulesByExecutionPeriod(executionSemester);
@@ -538,7 +538,7 @@ public class CourseGroup extends CourseGroup_Base {
                     return creditsLimit.getMinimumCredits();
                 }
             }
-            return creditsLimitRules.get(0).getMinimumCredits();
+            return creditsLimitRules.iterator().next().getMinimumCredits();
         }
 
         final Collection<DegreeModule> modulesByExecutionPeriod = getOpenChildDegreeModulesByExecutionPeriod(executionSemester);

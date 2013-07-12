@@ -125,7 +125,7 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
         // if (getFirstInstant().isAfterNow()) {
 
         while (hasAnyGenericEventSpaceOccupations()) {
-            getGenericEventSpaceOccupations().get(0).delete();
+            getGenericEventSpaceOccupations().iterator().next().delete();
         }
 
         setPunctualRoomsOccupationRequest(null);
@@ -223,7 +223,7 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
 
     public List<Interval> getGenericEventIntervals(YearMonthDay begin, YearMonthDay end) {
         if (!getGenericEventSpaceOccupations().isEmpty()) {
-            GenericEventSpaceOccupation occupation = getGenericEventSpaceOccupations().get(0);
+            GenericEventSpaceOccupation occupation = getGenericEventSpaceOccupations().iterator().next();
             return occupation.getEventSpaceOccupationIntervals(begin, end);
         }
         return Collections.emptyList();
@@ -234,11 +234,11 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
     }
 
     public DateTime getLastInstant() {
-        return (!getGenericEventSpaceOccupations().isEmpty()) ? getGenericEventSpaceOccupations().get(0).getLastInstant() : null;
+        return (!getGenericEventSpaceOccupations().isEmpty()) ? getGenericEventSpaceOccupations().iterator().next().getLastInstant() : null;
     }
 
     public DateTime getFirstInstant() {
-        return (!getGenericEventSpaceOccupations().isEmpty()) ? getGenericEventSpaceOccupations().get(0).getFirstInstant() : null;
+        return (!getGenericEventSpaceOccupations().isEmpty()) ? getGenericEventSpaceOccupations().iterator().next().getFirstInstant() : null;
     }
 
     public Calendar getBeginTimeCalendar() {
@@ -298,7 +298,7 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
     @Override
     public List<Interval> getGanttDiagramEventSortedIntervals() {
         if (!getGenericEventSpaceOccupations().isEmpty()) {
-            return getGenericEventSpaceOccupations().get(0).getEventSpaceOccupationIntervals((YearMonthDay) null,
+            return getGenericEventSpaceOccupations().iterator().next().getEventSpaceOccupationIntervals((YearMonthDay) null,
                     (YearMonthDay) null);
         }
         return Collections.emptyList();
@@ -332,7 +332,7 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
     public String getPeriodPrettyPrint() {
         String prettyPrint = new String();
         if (!getGenericEventSpaceOccupations().isEmpty()) {
-            prettyPrint = getGenericEventSpaceOccupations().get(0).getPrettyPrint();
+            prettyPrint = getGenericEventSpaceOccupations().iterator().next().getPrettyPrint();
         }
         return prettyPrint;
     }
@@ -340,7 +340,7 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
     @Override
     public String getGanttDiagramEventPeriod() {
         if (!getGenericEventSpaceOccupations().isEmpty()) {
-            String prettyPrint = getGenericEventSpaceOccupations().get(0).getPrettyPrint();
+            String prettyPrint = getGenericEventSpaceOccupations().iterator().next().getPrettyPrint();
             if (getFrequency() != null) {
                 String saturday = "", sunday = "", marker = "";
                 if (getFrequency().equals(FrequencyType.DAILY)) {

@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.phd;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.TreeSet;
@@ -128,10 +129,10 @@ abstract public class CommonPhdIndividualProgramProcessDA extends PhdProcessDA {
             return forwardToManageProcesses(mapping, request, searchBean);
         }
         if (processes.size() == 1) {
-            request.setAttribute("process", processes.get(0));
-            loadProcessAlertMessagesToNotify(request, processes.get(0));
-            List<PhdParticipant> guidingsList = processes.get(0).getGuidings();
-            List<PhdParticipant> assistantGuidingsList = processes.get(0).getAssistantGuidings();
+            request.setAttribute("process", processes.iterator().next());
+            loadProcessAlertMessagesToNotify(request, processes.iterator().next());
+            Collection<PhdParticipant> guidingsList = processes.iterator().next().getGuidings();
+            Collection<PhdParticipant> assistantGuidingsList = processes.iterator().next().getAssistantGuidings();
             request.setAttribute("guidingsList", guidingsList);
             request.setAttribute("assistantGuidingsList", assistantGuidingsList);
             return mapping.findForward("viewProcess");
@@ -149,8 +150,8 @@ abstract public class CommonPhdIndividualProgramProcessDA extends PhdProcessDA {
         if (process != null && process.hasRegistration()) {
             request.setAttribute("registrationConclusionBean", new PhdRegistrationConclusionBean(process.getRegistration()));
         }
-        List<PhdParticipant> guidingsList = process.getGuidings();
-        List<PhdParticipant> assistantGuidingsList = process.getAssistantGuidings();
+        Collection<PhdParticipant> guidingsList = process.getGuidings();
+        Collection<PhdParticipant> assistantGuidingsList = process.getAssistantGuidings();
         request.setAttribute("guidingsList", guidingsList);
         request.setAttribute("assistantGuidingsList", assistantGuidingsList);
         return forwardToViewProcess(mapping, request);

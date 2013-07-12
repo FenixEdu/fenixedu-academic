@@ -5,6 +5,7 @@
 package net.sourceforge.fenixedu.domain.teacher;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 
@@ -75,7 +76,7 @@ public abstract class Career extends Career_Base {
         super.setEndYear(endYear);
     }
 
-    public static List<Career> readAllByTeacherIdAndCareerType(Person person, CareerType careerType) {
+    public static Collection<Career> readAllByTeacherIdAndCareerType(Person person, CareerType careerType) {
         if (careerType == null) {
             return person.getAssociatedCareers();
         }

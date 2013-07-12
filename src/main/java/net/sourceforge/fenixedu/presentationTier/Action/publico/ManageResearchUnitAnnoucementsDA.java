@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.publico;
 
-import java.util.List;
+import java.util.Collection;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -53,7 +53,7 @@ public class ManageResearchUnitAnnoucementsDA extends UnitSiteBoardsDA {
     public ActionForward editAnnouncementBoards(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         ResearchUnitSite site = getSite(request);
-        List<PartyAnnouncementBoard> boards = site.getUnit().getBoards();
+        Collection<PartyAnnouncementBoard> boards = site.getUnit().getBoards();
         request.setAttribute("announcementBoards", boards);
         return mapping.findForward(boards.isEmpty() ? "noBoards" : "listAnnouncementBoards");
     }

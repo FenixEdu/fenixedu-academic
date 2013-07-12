@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.Seminaries;
 
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -16,7 +17,7 @@ public class GetAllEquivalencies {
     public List<InfoEquivalency> run() {
         List<InfoEquivalency> result = new LinkedList<InfoEquivalency>();
 
-        List<CourseEquivalency> courseEquivalencies = RootDomainObject.getInstance().getCourseEquivalencys();
+        Collection<CourseEquivalency> courseEquivalencies = RootDomainObject.getInstance().getCourseEquivalencys();
         for (CourseEquivalency courseEquivalency : courseEquivalencies) {
             result.add(InfoEquivalencyWithCurricularCourse.newInfoFromDomain(courseEquivalency));
         }

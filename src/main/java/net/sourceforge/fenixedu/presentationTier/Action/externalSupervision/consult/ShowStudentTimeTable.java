@@ -39,7 +39,7 @@ public class ShowStudentTimeTable extends ViewStudentTimeTable {
         if (registrations.size() == 0) {
             return forwardToShowTimeTableForSupervisor(person.getStudent().getLastRegistration(), mapping, request);
         } else if (registrations.size() == 1) {
-            return forwardToShowTimeTableForSupervisor(registrations.get(0), mapping, request);
+            return forwardToShowTimeTableForSupervisor(registrations.iterator().next(), mapping, request);
         } else {
             request.setAttribute("registrations", registrations);
             return mapping.findForward("chooseRegistration");

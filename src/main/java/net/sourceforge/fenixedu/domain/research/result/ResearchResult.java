@@ -167,7 +167,7 @@ public abstract class ResearchResult extends ResearchResult_Base {
             throw new DomainException("error.researcher.Result.onlyParticipantsCanDelete");
         }
 
-        for (; !getResultTeachers().isEmpty(); getResultTeachers().get(0).delete()) {
+        for (; !getResultTeachers().isEmpty(); getResultTeachers().iterator().next().delete()) {
             ;
         }
         removeAssociations();
@@ -311,24 +311,24 @@ public abstract class ResearchResult extends ResearchResult_Base {
     private void removeAssociations() {
         super.setCountry(null);
         setCreator(null);
-        for (; !getAllResultDocumentFiles().isEmpty(); getAllResultDocumentFiles().get(0).delete()) {
+        for (; !getAllResultDocumentFiles().isEmpty(); getAllResultDocumentFiles().iterator().next().delete()) {
 
         }
 
-        for (; !getPrizes().isEmpty(); getPrizes().get(0).delete()) {
+        for (; !getPrizes().isEmpty(); getPrizes().iterator().next().delete()) {
 
         }
 
-        for (; !getResultUnitAssociations().isEmpty(); getResultUnitAssociations().get(0).delete()) {
+        for (; !getResultUnitAssociations().isEmpty(); getResultUnitAssociations().iterator().next().delete()) {
 
         }
 
-        for (; !getResultTeachers().isEmpty(); getResultTeachers().get(0).delete()) {
+        for (; !getResultTeachers().isEmpty(); getResultTeachers().iterator().next().delete()) {
 
         }
         // These should be the last to remove, because of access control
         // verifications.
-        for (; !getResultParticipations().isEmpty(); getResultParticipations().get(0).delete()) {
+        for (; !getResultParticipations().isEmpty(); getResultParticipations().iterator().next().delete()) {
 
         }
     }

@@ -70,7 +70,7 @@ public class ReadAllCurricularCourseScopesAction extends FenixAction {
             Collections.sort(curricularCourseScopes, comparatorChain);
 
             InfoCurricularCourse infoCurricularCourse =
-                    ((InfoCurricularCourseScope) curricularCourseScopes.get(0)).getInfoCurricularCourse();
+                    ((InfoCurricularCourseScope) curricularCourseScopes.iterator().next()).getInfoCurricularCourse();
             request.setAttribute("infoCurricularCourse", infoCurricularCourse);
         }
 

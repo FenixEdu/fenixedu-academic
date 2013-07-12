@@ -7,7 +7,8 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryQuestion;
-import pt.ist.fenixframework.pstm.MissingObjectException;
+import pt.ist.fenixframework.FenixFramework;
+import pt.ist.fenixframework.core.exception.MissingObjectException;
 
 public class DeleteProfessorshipResultsBean implements Serializable {
 

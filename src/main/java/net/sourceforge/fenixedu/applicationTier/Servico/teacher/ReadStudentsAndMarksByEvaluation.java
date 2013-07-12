@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -51,10 +52,10 @@ public class ReadStudentsAndMarksByEvaluation {
         infoEvaluation = InfoEvaluation.newInfoFromDomain(evaluation);
 
         // Attends
-        List attendList = executionCourse.getAttends();
+        Collection attendList = executionCourse.getAttends();
 
         // Marks
-        List<Mark> marksList = evaluation.getMarks();
+        Collection<Mark> marksList = evaluation.getMarks();
 
         List infoAttendList = (List) CollectionUtils.collect(attendList, new Transformer() {
             @Override

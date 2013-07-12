@@ -332,13 +332,13 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
         List<ErasmusAlert> alerts = new ArrayList<ErasmusAlert>(getAlert());
         Collections.sort(alerts, Collections.reverseOrder(ErasmusAlert.WHEN_CREATED_COMPARATOR));
 
-        return alerts.get(0);
+        return alerts.iterator().next();
     }
 
     public boolean isProcessWithMostRecentAlertMessageNotViewed() {
         List<ErasmusAlert> alertsNotViewed = getAlertsNotViewed();
 
-        return !alertsNotViewed.isEmpty() && alertsNotViewed.get(0) == getMostRecentAlert();
+        return !alertsNotViewed.isEmpty() && alertsNotViewed.iterator().next() == getMostRecentAlert();
     }
 
     public boolean isStudentAccepted() {
@@ -381,7 +381,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
     public DateTime getLastReceptionEmailSent() {
         List<ReceptionEmailExecutedAction> list = getAllReceptionEmailNotifications();
-        return list.isEmpty() ? null : list.get(0).getWhenOccured();
+        return list.isEmpty() ? null : list.iterator().next().getWhenOccured();
     }
 
     public String getErasmusCandidacyStateDescription() {

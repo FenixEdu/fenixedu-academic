@@ -153,7 +153,7 @@ public class ReadTeacherServiceDistributionByTeachers {
         ExecutionSemester endPeriod = null;
 
         if (!executionPeriodList.isEmpty() && startPeriod != null) {
-            endPeriod = executionPeriodList.get(0);
+            endPeriod = executionPeriodList.iterator().next();
 
             for (ExecutionSemester executionPeriodEntry : executionPeriodList) {
                 if (executionPeriodEntry.compareTo(endPeriod) < 0) {

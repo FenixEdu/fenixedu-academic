@@ -4,6 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
@@ -31,7 +32,7 @@ public class ExecutionCourseWaitingAnswer {
 
         List<Grouping> groupings = executionCourse.getGroupings();
         for (final Grouping grouping : groupings) {
-            final List<ExportGrouping> groupingExecutionCourses = grouping.getExportGroupings();
+            final Collection<ExportGrouping> groupingExecutionCourses = grouping.getExportGroupings();
             for (final ExportGrouping groupingExecutionCourse : groupingExecutionCourses) {
                 if (groupingExecutionCourse.getProposalState().getState().intValue() == ProposalState.EM_ESPERA) {
                     return true;

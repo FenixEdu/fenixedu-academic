@@ -100,14 +100,14 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
     public Campus getCampus() {
         List<AllocatableSpace> rooms = getAssociatedRooms();
         if (rooms.size() > 0) {
-            return rooms.get(0).getSpaceCampus();
+            return rooms.iterator().next().getSpaceCampus();
         } else {
             return null;
         }
     }
 
     public ExecutionYear getExecutionYear() {
-        return this.getAssociatedExecutionCourses().get(0).getExecutionYear();
+        return this.getAssociatedExecutionCourses().iterator().next().getExecutionYear();
     }
 
     public ExecutionDegree getExecutionDegree() {
@@ -377,7 +377,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 
     private void deleteAllRoomOccupations() {
         while (hasAnyWrittenEvaluationSpaceOccupations()) {
-            WrittenEvaluationSpaceOccupation occupation = getWrittenEvaluationSpaceOccupations().get(0);
+            WrittenEvaluationSpaceOccupation occupation = getWrittenEvaluationSpaceOccupations().iterator().next();
             occupation.removeWrittenEvaluations(this);
             occupation.delete();
         }
@@ -458,7 +458,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
     }
 
     private void deleteAllVigilanciesAssociated() {
-        for (; !this.getVigilancies().isEmpty(); this.getVigilancies().get(0).delete()) {
+        for (; !this.getVigilancies().isEmpty(); this.getVigilancies().iterator().next().delete()) {
             ;
         }
     }
@@ -844,8 +844,8 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
                 }
             }
         } else {
-            courseName = this.getAttendingExecutionCoursesFor(registration).get(0).getNome();
-            executionCourse = this.getAttendingExecutionCoursesFor(registration).get(0);
+            courseName = this.getAttendingExecutionCoursesFor(registration).iterator().next().getNome();
+            executionCourse = this.getAttendingExecutionCoursesFor(registration).iterator().next();
         }
 
         if (this.getEnrollmentBeginDayDateYearMonthDay() != null) {

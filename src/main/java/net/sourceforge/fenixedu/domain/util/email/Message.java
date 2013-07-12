@@ -4,7 +4,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
@@ -208,7 +207,7 @@ public class Message extends Message_Base {
     public String getRecipientsGroupMembersInText() {
         StringBuilder builder = new StringBuilder();
 
-        List<Recipient> recipients = getRecipients();
+        Collection<Recipient> recipients = getRecipients();
         for (Recipient recipient : recipients) {
             builder.append(recipient.getMembersEmailInText());
         }
@@ -321,9 +320,9 @@ public class Message extends Message_Base {
     // email.getFailedAddresses().isEmpty()) {
     // if (email.getMessageTransportResult().size() == 1
     // &&
-    // email.getMessageTransportResult().get(0).getDescription().trim().isEmpty()
+    // email.getMessageTransportResult().iterator().next().getDescription().trim().isEmpty()
     // &&
-    // "No recipient addresses".equals(email.getMessageTransportResult().get(0).getDescription()))
+    // "No recipient addresses".equals(email.getMessageTransportResult().iterator().next().getDescription()))
     // {
     // continue;
     // } else {

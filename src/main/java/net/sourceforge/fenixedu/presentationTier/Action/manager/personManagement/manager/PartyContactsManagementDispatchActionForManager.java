@@ -16,6 +16,7 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "manager", path = "/partyContacts", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "visualizePersonalInformation", path = "/manager/personManagement/viewPerson.jsp"),

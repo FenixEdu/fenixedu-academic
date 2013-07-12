@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.teacherServiceDistribution;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -242,7 +243,7 @@ public class CopyTSDProcessPhaseService {
     }
 
     private Map<TSDTeacher, TSDTeacher> createAndCopyFromTSDTeacherList(TSDProcessPhase processPhase,
-            List<TSDTeacher> tsdTeacherList) {
+            Collection<TSDTeacher> tsdTeacherList) {
         Map<TSDTeacher, TSDTeacher> oldAndNewTSDTeacherMap = new HashMap<TSDTeacher, TSDTeacher>();
 
         Department thisDepartment = processPhase.getTSDProcess().getDepartment();

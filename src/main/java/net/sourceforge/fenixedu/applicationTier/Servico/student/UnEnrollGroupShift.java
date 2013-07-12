@@ -4,8 +4,8 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
+import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -78,7 +78,7 @@ public class UnEnrollGroupShift {
     private static boolean checkStudentInStudentGroup(Registration registration, StudentGroup studentGroup) {
         boolean found = false;
 
-        List studentGroupAttends = studentGroup.getAttends();
+        Collection studentGroupAttends = studentGroup.getAttends();
         Attends attend = null;
         Iterator iterStudentGroupAttends = studentGroupAttends.iterator();
         while (iterStudentGroupAttends.hasNext() && !found) {

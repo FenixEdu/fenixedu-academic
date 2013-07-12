@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.phd.candidacy;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -182,7 +183,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
     }
 
     public static boolean hasOnlineApplicationForPeriod(final Person person, PhdCandidacyPeriod phdCandidacyPeriod) {
-        List<PhdIndividualProgramProcess> phdIndividualProgramProcesses = person.getPhdIndividualProgramProcesses();
+        Collection<PhdIndividualProgramProcess> phdIndividualProgramProcesses = person.getPhdIndividualProgramProcesses();
 
         for (PhdIndividualProgramProcess phdIndividualProgramProcess : phdIndividualProgramProcesses) {
             if (phdCandidacyPeriod == phdIndividualProgramProcess.getCandidacyProcess().getPublicPhdCandidacyPeriod()) {
@@ -568,7 +569,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
     }
 
     public PhdCandidacyReferee getCandidacyRefereeByEmail(final String email) {
-        List<PhdCandidacyReferee> candidacyReferees = getCandidacyReferees();
+        Collection<PhdCandidacyReferee> candidacyReferees = getCandidacyReferees();
 
         for (PhdCandidacyReferee phdCandidacyReferee : candidacyReferees) {
             if (phdCandidacyReferee.getEmail().trim().equals(email.trim())) {
@@ -578,6 +579,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
         return null;
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.phd.notification.PhdNotification> getNotifications() {
         return getNotificationsSet();
@@ -608,11 +610,13 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
         return !getCandidacyRefereesSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.phd.PhdCandidacyProcessState> getStates() {
         return getStatesSet();
     }
 
+    @Override
     @Deprecated
     public boolean hasAnyStates() {
         return !getStatesSet().isEmpty();

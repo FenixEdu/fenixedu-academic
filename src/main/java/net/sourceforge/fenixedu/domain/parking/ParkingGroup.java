@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.parking;
 
-import java.util.List;
+import java.util.Collection;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
@@ -12,9 +12,10 @@ public class ParkingGroup extends ParkingGroup_Base {
         setGroupName(groupName);
     }
 
-    public static List<ParkingGroup> getAll() {
+    public static Collection<ParkingGroup> getAll() {
         return RootDomainObject.getInstance().getParkingGroups();
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.parking.ParkingParty> getParkingParties() {
         return getParkingPartiesSet();

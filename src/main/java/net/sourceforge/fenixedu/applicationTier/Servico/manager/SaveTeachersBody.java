@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.ManagerAuthorizationFilter;
@@ -22,7 +23,7 @@ public class SaveTeachersBody {
 
         final List<String> auxProfessorshipTeacherIDs = new ArrayList<String>(professorShipTeachersIds);
 
-        final List<Professorship> professorships = executionCourse.getProfessorships();
+        final Collection<Professorship> professorships = executionCourse.getProfessorships();
         for (int i = 0; i < professorships.size(); i++) {
             final Professorship professorship = professorships.get(i);
             final Teacher teacher = professorship.getTeacher();

@@ -48,7 +48,7 @@ public class MetaDomainObject extends MetaDomainObject_Base {
     }
 
     public Portal getAssociatedPortal() {
-        return getPortals().get(0);
+        return getPortals().iterator().next();
     }
 
     /**

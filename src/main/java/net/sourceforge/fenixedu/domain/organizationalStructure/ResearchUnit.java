@@ -212,7 +212,7 @@ public class ResearchUnit extends ResearchUnit_Base {
     @Atomic
     public UnitBasedSender getOneUnitBasedSender() {
         if (hasAnyUnitBasedSender()) {
-            return getUnitBasedSender().get(0);
+            return getUnitBasedSender().iterator().next();
         } else {
             return ResearchUnitBasedSender.newInstance(this);
         }

@@ -5,6 +5,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -40,7 +41,7 @@ public class ReadShiftsByDistributedTest {
 
         List<InfoShift> result = new ArrayList<InfoShift>();
         for (Shift shift : shiftList) {
-            List<Registration> shiftStudents = shift.getStudents();
+            Collection<Registration> shiftStudents = shift.getStudents();
             if (!students.containsAll(shiftStudents)) {
                 result.add(InfoShift.newInfoFromDomain(shift));
             }

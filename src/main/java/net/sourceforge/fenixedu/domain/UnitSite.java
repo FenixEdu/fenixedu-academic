@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
@@ -14,9 +15,9 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
-import dml.runtime.RelationAdapter;
 
 public class UnitSite extends UnitSite_Base {
 
@@ -176,7 +177,7 @@ public class UnitSite extends UnitSite_Base {
     public boolean isBannerAvailable() {
         Integer sum = null;
 
-        List<UnitSiteBanner> banners = getBanners();
+        Collection<UnitSiteBanner> banners = getBanners();
         for (UnitSiteBanner banner : banners) {
             Integer weight = banner.getWeight();
 
@@ -193,7 +194,7 @@ public class UnitSite extends UnitSite_Base {
     }
 
     public UnitSiteBanner getCurrentBanner() {
-        List<UnitSiteBanner> banners = getBanners();
+        Collection<UnitSiteBanner> banners = getBanners();
 
         if (banners.isEmpty()) {
             return null;
@@ -371,6 +372,7 @@ public class UnitSite extends UnitSite_Base {
 
         return groups;
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.UnitSiteBanner> getBanners() {
         return getBannersSet();

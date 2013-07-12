@@ -148,10 +148,10 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 
         if (canBeDeleted()) {
 
-            for (; hasAnyCoordinatorsList(); getCoordinatorsList().get(0).delete()) {
+            for (; hasAnyCoordinatorsList(); getCoordinatorsList().iterator().next().delete()) {
                 ;
             }
-            for (; hasAnyScientificCommissionMembers(); getScientificCommissionMembers().get(0).delete()) {
+            for (; hasAnyScientificCommissionMembers(); getScientificCommissionMembers().iterator().next().delete()) {
                 ;
             }
 
@@ -896,7 +896,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
      * tutors of a student from the given execution degree
      */
     public List<Teacher> getPossibleTutorsFromExecutionDegreeDepartments() {
-        List<Department> departments = this.getDegree().getDepartments();
+        Collection<Department> departments = this.getDegree().getDepartments();
 
         ArrayList<Teacher> possibleTeachers = new ArrayList<Teacher>();
         for (Department department : departments) {

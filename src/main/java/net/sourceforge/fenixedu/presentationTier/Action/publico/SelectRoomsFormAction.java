@@ -59,7 +59,7 @@ public class SelectRoomsFormAction extends FenixContextAction {
             errors.add("not.found.rooms", new ActionError("message.public.notfound.rooms"));
             saveErrors(request, errors);
         } else if (infoRooms.size() == 1) {
-            InfoRoom infoRoom = (InfoRoom) infoRooms.get(0);
+            InfoRoom infoRoom = (InfoRoom) infoRooms.iterator().next();
             request.setAttribute("objectCode", infoExecutionPeriod.getExternalId().toString());
             request.setAttribute("roomName", infoRoom.getNome());
 

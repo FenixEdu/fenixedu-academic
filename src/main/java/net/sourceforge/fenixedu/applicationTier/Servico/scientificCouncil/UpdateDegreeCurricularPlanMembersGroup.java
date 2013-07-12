@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Degree;
@@ -85,7 +86,7 @@ public class UpdateDegreeCurricularPlanMembersGroup {
             }
         }
 
-        List<Department> departments = RootDomainObject.getInstance().getDepartments();
+        Collection<Department> departments = RootDomainObject.getInstance().getDepartments();
         for (Department department : departments) {
             Group group = department.getCompetenceCourseMembersGroup();
             if (group != null && group.isMember(person)) {

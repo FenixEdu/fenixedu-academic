@@ -124,7 +124,7 @@ public class Over23IndividualCandidacy extends Over23IndividualCandidacy_Base {
 
     private void removeExistingDegreeEntries() {
         while (hasAnyOver23IndividualCandidacyDegreeEntries()) {
-            getOver23IndividualCandidacyDegreeEntries().get(0).delete();
+            getOver23IndividualCandidacyDegreeEntries().iterator().next().delete();
         }
     }
 

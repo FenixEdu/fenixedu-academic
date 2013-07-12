@@ -545,13 +545,13 @@ public class Student extends Student_Base {
 
     public void delete() {
 
-        for (; hasAnyStudentDataByExecutionYear(); getStudentDataByExecutionYear().get(0).delete()) {
+        for (; hasAnyStudentDataByExecutionYear(); getStudentDataByExecutionYear().iterator().next().delete()) {
             ;
         }
-        for (; !getRegistrations().isEmpty(); getRegistrations().get(0).delete()) {
+        for (; !getRegistrations().isEmpty(); getRegistrations().iterator().next().delete()) {
             ;
         }
-        for (; hasAnyVotes(); getVotes().get(0).delete()) {
+        for (; hasAnyVotes(); getVotes().iterator().next().delete()) {
             ;
         }
 

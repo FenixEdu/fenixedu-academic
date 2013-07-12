@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.student.tutor;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,7 +40,7 @@ public class TutorInfoDispatchAction extends FenixDispatchAction {
         List<Registration> registrations = person.getStudent().getRegistrations();
 
         for (Registration registration : registrations) {
-            List<StudentCurricularPlan> studentCurricularPlans = registration.getStudentCurricularPlans();
+            Collection<StudentCurricularPlan> studentCurricularPlans = registration.getStudentCurricularPlans();
             for (StudentCurricularPlan studentCurricularPlan : studentCurricularPlans) {
                 for (Tutorship tutorship : studentCurricularPlan.getTutorships()) {
                     if (tutorship.isActive()) {

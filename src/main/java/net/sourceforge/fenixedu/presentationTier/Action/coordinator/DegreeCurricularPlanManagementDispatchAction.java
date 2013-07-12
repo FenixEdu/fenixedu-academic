@@ -161,7 +161,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
 
                 List<InfoCurricularCourseScope> equalCurricularCourseScopes = null;
                 if (lastKey != null) {
-                    InfoCurricularCourseScope lastIntroduced = curricularCourseScopesHashMap.get(lastKey).get(0);
+                    InfoCurricularCourseScope lastIntroduced = curricularCourseScopesHashMap.get(lastKey).iterator().next();
 
                     if (scopesAreEqual(curricularCourseScope, lastIntroduced)) {
                         equalCurricularCourseScopes = curricularCourseScopesHashMap.get(lastKey);

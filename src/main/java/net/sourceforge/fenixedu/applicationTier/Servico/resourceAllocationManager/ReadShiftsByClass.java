@@ -6,7 +6,7 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
-import java.util.List;
+import java.util.Collection;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
@@ -27,7 +27,7 @@ public class ReadShiftsByClass {
     public static Object run(InfoClass infoClass) {
         SchoolClass schoolClass = FenixFramework.getDomainObject(infoClass.getExternalId());
 
-        List<Shift> shifts = schoolClass.getAssociatedShifts();
+        Collection<Shift> shifts = schoolClass.getAssociatedShifts();
 
         return CollectionUtils.collect(shifts, new Transformer() {
             @Override

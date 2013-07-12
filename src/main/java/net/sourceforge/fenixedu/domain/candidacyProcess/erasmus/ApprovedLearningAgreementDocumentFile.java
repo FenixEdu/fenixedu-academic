@@ -92,7 +92,7 @@ public class ApprovedLearningAgreementDocumentFile extends ApprovedLearningAgree
     public ApprovedLearningAgreementExecutedAction getMostRecentSentLearningAgreementAction() {
         List<ApprovedLearningAgreementExecutedAction> executedActionList = getSentLearningAgreementActions();
 
-        return executedActionList.isEmpty() ? null : executedActionList.get(0);
+        return executedActionList.isEmpty() ? null : executedActionList.iterator().next();
     }
 
     public DateTime getMostRecentSentLearningAgreementActionWhenOccured() {
@@ -124,7 +124,7 @@ public class ApprovedLearningAgreementDocumentFile extends ApprovedLearningAgree
     public ApprovedLearningAgreementExecutedAction getMostRecentViewedLearningAgreementAction() {
         List<ApprovedLearningAgreementExecutedAction> executedActionList = getViewedLearningAgreementActions();
 
-        return executedActionList.isEmpty() ? null : executedActionList.get(0);
+        return executedActionList.isEmpty() ? null : executedActionList.iterator().next();
     }
 
     public DateTime getMostRecentViewedLearningAgreementActionWhenOccured() {
@@ -156,7 +156,7 @@ public class ApprovedLearningAgreementDocumentFile extends ApprovedLearningAgree
     public ApprovedLearningAgreementExecutedAction getMostRecentSentEmailAcceptedStudentAction() {
         List<ApprovedLearningAgreementExecutedAction> executedActionList = getSentEmailAcceptedStudentActions();
 
-        return executedActionList.isEmpty() ? null : executedActionList.get(0);
+        return executedActionList.isEmpty() ? null : executedActionList.iterator().next();
     }
 
     public DateTime getMostRecentSentEmailAcceptedStudentActionWhenOccured() {

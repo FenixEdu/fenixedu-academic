@@ -139,7 +139,7 @@ public class Attends extends Attends_Base {
     public void delete() throws DomainException {
         if (canDelete()) {
 
-            for (; hasAnyWeeklyWorkLoads(); getWeeklyWorkLoads().get(0).delete()) {
+            for (; hasAnyWeeklyWorkLoads(); getWeeklyWorkLoads().iterator().next().delete()) {
                 ;
             }
 

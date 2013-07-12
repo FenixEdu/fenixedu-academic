@@ -14,6 +14,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "personnelSection", path = "/partyContacts", scope = "request", parameter = "method")
 @Forwards(value = {

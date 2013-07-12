@@ -65,7 +65,7 @@ public class OptionalCurricularCourse extends OptionalCurricularCourse_Base {
         final List<AnyCurricularCourse> result =
                 (List<AnyCurricularCourse>) getCurricularRules(CurricularRuleType.ANY_CURRICULAR_COURSE, executionSemester);
         // must have only one
-        return result.isEmpty() ? null : (AnyCurricularCourse) result.get(0);
+        return result.isEmpty() ? null : (AnyCurricularCourse) result.iterator().next();
     }
 
     @Deprecated

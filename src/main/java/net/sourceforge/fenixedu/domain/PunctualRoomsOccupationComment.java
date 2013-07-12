@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.util.Collection;
 import java.util.Comparator;
-import java.util.List;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
@@ -10,7 +10,6 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class PunctualRoomsOccupationComment extends PunctualRoomsOccupationComment_Base {
@@ -99,7 +98,7 @@ public class PunctualRoomsOccupationComment extends PunctualRoomsOccupationComme
     }
 
     private void checkIfCommentAlreadyExists(Person owner, MultiLanguageString subject, MultiLanguageString description) {
-        List<PunctualRoomsOccupationComment> comments = owner.getPunctualRoomsOccupationComments();
+        Collection<PunctualRoomsOccupationComment> comments = owner.getPunctualRoomsOccupationComments();
         for (PunctualRoomsOccupationComment comment : comments) {
             if (comment.getDescription().compareTo(description) == 0) {
                 throw new DomainException("error.PunctualRoomsOccupationComment.comment.already.exists");

@@ -381,7 +381,7 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
     public IndividualCandidacyPaymentCode getAssociatedPaymentCode() {
         if (getCandidacy().getEvent() != null) {
             return (IndividualCandidacyPaymentCode) (getCandidacy().getEvent().getAllPaymentCodes().isEmpty() ? null : getCandidacy()
-                    .getEvent().getAllPaymentCodes().get(0));
+                    .getEvent().getAllPaymentCodes().iterator().next());
         }
 
         return null;

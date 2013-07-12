@@ -119,7 +119,7 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
             final List<ExecutionInterval> executionIntervals = getExecutionIntervalsWithCandidacyPeriod();
 
             if (executionIntervals.size() == 1) {
-                final ExecutionInterval executionInterval = executionIntervals.get(0);
+                final ExecutionInterval executionInterval = executionIntervals.iterator().next();
                 final List<SecondCycleCandidacyProcess> candidacyProcesses = getCandidacyProcesses(executionInterval);
 
                 if (candidacyProcesses.size() == 1) {

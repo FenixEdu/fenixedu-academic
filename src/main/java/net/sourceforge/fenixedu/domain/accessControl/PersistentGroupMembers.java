@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.accessControl;
 
-import java.util.List;
+import java.util.Collection;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -75,7 +75,7 @@ public class PersistentGroupMembers extends PersistentGroupMembers_Base {
     }
 
     private void checkIfPersistenGroupAlreadyExists(String name, PersistentGroupMembersType type) {
-        List<PersistentGroupMembers> persistentGroupMembers = RootDomainObject.getInstance().getPersistentGroupMembers();
+        Collection<PersistentGroupMembers> persistentGroupMembers = RootDomainObject.getInstance().getPersistentGroupMembers();
         for (PersistentGroupMembers persistentGroup : persistentGroupMembers) {
             if (!persistentGroup.equals(this) && persistentGroup.getName().equalsIgnoreCase(name)
                     && persistentGroup.getType().equals(type)) {
@@ -83,6 +83,7 @@ public class PersistentGroupMembers extends PersistentGroupMembers_Base {
             }
         }
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Person> getPersons() {
         return getPersonsSet();

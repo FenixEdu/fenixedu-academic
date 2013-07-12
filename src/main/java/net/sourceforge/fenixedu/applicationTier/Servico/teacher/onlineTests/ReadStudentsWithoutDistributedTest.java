@@ -5,6 +5,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -27,7 +28,7 @@ public class ReadStudentsWithoutDistributedTest {
     protected List run(String executionCourseId, String distributedTestId) throws FenixServiceException {
         final List<InfoStudent> infoStudentList = new ArrayList<InfoStudent>();
         final ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseId);
-        final List<Attends> attendList = executionCourse.getAttends();
+        final Collection<Attends> attendList = executionCourse.getAttends();
         final DistributedTest distributedTest = FenixFramework.getDomainObject(distributedTestId);
         final Set<Registration> students = distributedTest.findStudents();
         for (Attends attend : attendList) {

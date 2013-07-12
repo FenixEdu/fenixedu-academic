@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.teacherServiceDistribution;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -32,7 +33,7 @@ public class CopyLastYearRealDataService {
 
     public void copyLastYearRealDataToTSDProcessPhase(TSDProcessPhase tsdProcessPhase) {
 
-        List<ExecutionSemester> executionSemesters = tsdProcessPhase.getTSDProcess().getExecutionPeriods();
+        Collection<ExecutionSemester> executionSemesters = tsdProcessPhase.getTSDProcess().getExecutionPeriods();
         TeacherServiceDistribution rootTSD = tsdProcessPhase.getRootTSD();
         Set<ExecutionCourse> executionCourses = null;
         ExecutionSemester lastYearPeriod = null;

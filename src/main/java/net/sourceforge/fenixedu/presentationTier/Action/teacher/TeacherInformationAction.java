@@ -5,6 +5,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.teacher;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -43,7 +44,7 @@ import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.FenixFramework;
+import pt.ist.fenixframework.core.AbstractDomainObject;
 
 /**
  * @author Leonor Almeida
@@ -387,7 +388,7 @@ public class TeacherInformationAction extends FenixDispatchAction {
         setInfoSiteTeacherInformationToRequest(request, infoSiteTeacherInformation, mapping);
         request.setAttribute("providerRegimeTypeList", ProviderRegimeType.getEnumList());
 
-        List<ResultTeacher> teacherResults = getUserView(request).getPerson().getTeacher().getTeacherResults();
+        Collection<ResultTeacher> teacherResults = getUserView(request).getPerson().getTeacher().getTeacherResults();
         List<ResearchResult> didaticResults = new ArrayList<ResearchResult>();
         List<ResearchResult> cientificResults = new ArrayList<ResearchResult>();
         for (ResultTeacher resultTeacher : teacherResults) {

@@ -307,7 +307,7 @@ public class AccountingTransaction extends AccountingTransaction_Base {
     public void delete() {
 
         super.setAdjustedTransaction(null);
-        for (; !getAdjustmentTransactions().isEmpty(); getAdjustmentTransactions().get(0).delete()) {
+        for (; !getAdjustmentTransactions().isEmpty(); getAdjustmentTransactions().iterator().next().delete()) {
             ;
         }
 
@@ -315,7 +315,7 @@ public class AccountingTransaction extends AccountingTransaction_Base {
             getTransactionDetail().delete();
         }
 
-        for (; !getEntries().isEmpty(); getEntries().get(0).delete()) {
+        for (; !getEntries().isEmpty(); getEntries().iterator().next().delete()) {
             ;
         }
 

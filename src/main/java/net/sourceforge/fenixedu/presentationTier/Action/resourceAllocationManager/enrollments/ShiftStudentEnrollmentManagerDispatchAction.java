@@ -80,7 +80,7 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
 
         final List<Registration> toEnrol = student.getRegistrationsToEnrolInShiftByStudent();
         if (toEnrol.size() == 1) {
-            request.setAttribute("registrationOID", toEnrol.get(0).getExternalId());
+            request.setAttribute("registrationOID", toEnrol.iterator().next().getExternalId());
             return prepareStartViewWarning(mapping, form, request, response);
         } else {
             request.setAttribute("toEnrol", toEnrol);

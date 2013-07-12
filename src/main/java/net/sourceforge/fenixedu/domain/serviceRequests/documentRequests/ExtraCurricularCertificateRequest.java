@@ -57,7 +57,7 @@ public class ExtraCurricularCertificateRequest extends ExtraCurricularCertificat
 
         if (academicServiceRequestBean.isToCancelOrReject()) {
             for (; hasAnyEnrolments();) {
-                removeEnrolments(getEnrolments().get(0));
+                removeEnrolments(getEnrolments().iterator().next());
             }
         }
     }

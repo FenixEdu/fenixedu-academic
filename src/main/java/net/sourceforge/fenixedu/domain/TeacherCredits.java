@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain;
 
 import java.math.BigDecimal;
 import java.text.ParseException;
-import java.util.List;
+import java.util.Collection;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
@@ -34,7 +34,7 @@ public class TeacherCredits extends TeacherCredits_Base {
 
     @Atomic
     public static void closeAllTeacherCredits(ExecutionSemester executionSemester) throws ParseException {
-        List<Teacher> teachers = RootDomainObject.getInstance().getTeachers();
+        Collection<Teacher> teachers = RootDomainObject.getInstance().getTeachers();
         TeacherCreditsState teacherCreditsState = TeacherCreditsState.getTeacherCreditsState(executionSemester);
         if (teacherCreditsState == null) {
             teacherCreditsState = new TeacherCreditsState(executionSemester);

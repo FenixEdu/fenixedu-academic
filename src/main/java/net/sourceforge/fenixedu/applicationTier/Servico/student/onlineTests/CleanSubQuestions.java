@@ -38,7 +38,7 @@ public class CleanSubQuestions {
                 } catch (Exception e) {
                     throw new FenixServiceException(e);
                 }
-                SubQuestion subQuestion = studentTestQuestion.getStudentSubQuestions().get(0);
+                SubQuestion subQuestion = studentTestQuestion.getStudentSubQuestions().iterator().next();
                 if (subQuestion.getItemId().equals(studentTestQuestion.getItemId())) {
                     // e a 1ª
                     studentTestQuestion.setResponse(null);

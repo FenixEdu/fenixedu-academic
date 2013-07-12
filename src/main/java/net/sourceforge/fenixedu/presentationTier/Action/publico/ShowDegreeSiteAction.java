@@ -138,7 +138,7 @@ public class ShowDegreeSiteAction extends FenixDispatchAction {
             if (whenDegreeIsExecuted.isEmpty()) {
                 return currentExecutionYear;
             } else {
-                final ExecutionYear firstExecutionYear = whenDegreeIsExecuted.get(0);
+                final ExecutionYear firstExecutionYear = whenDegreeIsExecuted.iterator().next();
                 final ExecutionYear lastExecutionYear = whenDegreeIsExecuted.get(whenDegreeIsExecuted.size() - 1);
 
                 if (whenDegreeIsExecuted.contains(currentExecutionYear)) {
@@ -240,7 +240,7 @@ public class ShowDegreeSiteAction extends FenixDispatchAction {
         Boolean inEnglish = FenixContextDispatchAction.getFromRequestBoolean("inEnglish", request);
         request.setAttribute("inEnglish", inEnglish);
 
-        List<InfoOldInquiriesSummary> allSummariesDegree = ReadOldIquiriesSummaryByDegreeID.run(degree.getExternalId());
+        Collection<InfoOldInquiriesSummary> allSummariesDegree = ReadOldIquiriesSummaryByDegreeID.run(degree.getExternalId());
 
         List<InfoExecutionPeriod> infoExecutionPeriods = ReadExecutionPeriods.run();
         List<InfoExecutionPeriod> executionPeriodList = new ArrayList<InfoExecutionPeriod>(infoExecutionPeriods);
@@ -391,7 +391,7 @@ public class ShowDegreeSiteAction extends FenixDispatchAction {
                 }
             }
         } else {
-            InfoDegreeCurricularPlan infoDegreeCurricularPlan = infoDegreeCurricularPlanList.get(0);
+            InfoDegreeCurricularPlan infoDegreeCurricularPlan = infoDegreeCurricularPlanList.iterator().next();
             request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlan);
             return infoDegreeCurricularPlan;
         }

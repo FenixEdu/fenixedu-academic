@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strateg
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Attends;
@@ -109,7 +110,7 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy 
         if (studentAttend != null) {
             List<StudentGroup> groupingStudentGroups = grouping.getStudentGroups();
             for (final StudentGroup studentGroup : groupingStudentGroups) {
-                List<Attends> studentGroupAttends = studentGroup.getAttends();
+                Collection<Attends> studentGroupAttends = studentGroup.getAttends();
                 for (final Attends attend : studentGroupAttends) {
                     if (attend == studentAttend) {
                         return true;
@@ -126,7 +127,7 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy 
         final Attends studentAttend = grouping.getStudentAttend(studentUsername);
 
         if (studentAttend != null) {
-            List<Attends> studentGroupAttends = studentGroup.getAttends();
+            Collection<Attends> studentGroupAttends = studentGroup.getAttends();
             for (final Attends attend : studentGroupAttends) {
                 if (attend == studentAttend) {
                     return false;
@@ -154,7 +155,7 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy 
     @Override
     public boolean checkIfStudentGroupIsEmpty(Attends attend, StudentGroup studentGroup) {
 
-        final List allStudentGroupAttends = studentGroup.getAttends();
+        final Collection allStudentGroupAttends = studentGroup.getAttends();
         if (allStudentGroupAttends.size() == 1 && allStudentGroupAttends.contains(attend)) {
             return true;
         }

@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.teachersManagement;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,13 +66,13 @@ public class DissociateProfessorShipsAndResponsibleFor {
             // everything is ok for removal, but first check
             // professorships with support lessons and shifts
             for (Professorship professorship : newProfessorships) {
-                List<SupportLesson> supportLessons = professorship.getSupportLessons();
-                List<ShiftProfessorship> shiftProfessorships = professorship.getAssociatedShiftProfessorship();
+                Collection<SupportLesson> supportLessons = professorship.getSupportLessons();
+                Collection<ShiftProfessorship> shiftProfessorships = professorship.getAssociatedShiftProfessorship();
 
                 if ((shiftProfessorships == null || shiftProfessorships.isEmpty())
                         && (supportLessons == null || supportLessons.isEmpty())) {
 
-                    List<Summary> summaryList = professorship.getAssociatedSummaries();
+                    Collection<Summary> summaryList = professorship.getAssociatedSummaries();
                     if (summaryList != null && !summaryList.isEmpty()) {
                         for (Summary summary : summaryList) {
                             summary.setProfessorship(null);

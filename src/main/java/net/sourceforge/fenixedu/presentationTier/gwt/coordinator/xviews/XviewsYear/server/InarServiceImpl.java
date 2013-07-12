@@ -285,7 +285,7 @@ public class InarServiceImpl extends RemoteServiceServlet implements InarService
         ExecutionCourse executionCourse = FenixFramework.getDomainObject(ecId);
         int[] results;
         int padding;
-        switch (executionCourse.getActiveEnrollments().get(0).getGradeScale()) {
+        switch (executionCourse.getActiveEnrollments().iterator().next().getGradeScale()) {
         case TYPE20:
             results = new int[11];
             padding = 10;

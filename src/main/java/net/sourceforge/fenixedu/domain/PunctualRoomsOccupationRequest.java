@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -15,7 +15,6 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class PunctualRoomsOccupationRequest extends PunctualRoomsOccupationRequest_Base {
@@ -276,7 +275,7 @@ public class PunctualRoomsOccupationRequest extends PunctualRoomsOccupationReque
     private Integer getNextRequestIdentification() {
         SortedSet<PunctualRoomsOccupationRequest> result =
                 new TreeSet<PunctualRoomsOccupationRequest>(PunctualRoomsOccupationRequest.COMPARATOR_BY_IDENTIFICATION);
-        List<PunctualRoomsOccupationRequest> requests = RootDomainObject.getInstance().getPunctualRoomsOccupationRequests();
+        Collection<PunctualRoomsOccupationRequest> requests = RootDomainObject.getInstance().getPunctualRoomsOccupationRequests();
         for (PunctualRoomsOccupationRequest request : requests) {
             if (!request.equals(this)) {
                 result.add(request);
@@ -305,6 +304,7 @@ public class PunctualRoomsOccupationRequest extends PunctualRoomsOccupationReque
             }
         }
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.PunctualRoomsOccupationStateInstant> getStateInstants() {
         return getStateInstantsSet();

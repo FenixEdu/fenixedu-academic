@@ -4,6 +4,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.reimbursementGuide;
 
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -126,7 +127,7 @@ public class CreateReimbursementGuide {
         Double guideEntryValue = new Double(guideEntry.getPrice().doubleValue() * guideEntry.getQuantity().intValue());
         Double sum = new Double(newReimbursementGuideEntry.getValue().doubleValue());
 
-        List reimbursementGuideEntries = guideEntry.getReimbursementGuideEntries();
+        Collection reimbursementGuideEntries = guideEntry.getReimbursementGuideEntries();
 
         if (reimbursementGuideEntries == null) {
             return isGreaterThan(guideEntryValue, sum);

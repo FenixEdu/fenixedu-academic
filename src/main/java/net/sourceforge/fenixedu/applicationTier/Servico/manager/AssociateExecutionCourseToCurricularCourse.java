@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-import java.util.List;
+import java.util.Collection;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -29,7 +29,7 @@ public class AssociateExecutionCourseToCurricularCourse {
             throw new NonExistingServiceException("message.nonExistingExecutionPeriod", null);
         }
 
-        List<ExecutionCourse> executionCourses = curricularCourse.getAssociatedExecutionCourses();
+        Collection<ExecutionCourse> executionCourses = curricularCourse.getAssociatedExecutionCourses();
         for (ExecutionCourse executionCourse : executionCourses) {
             if (executionCourse.getExecutionPeriod() == executionSemester) {
                 throw new ExistingServiceException("message.unavailable.execution.period", null);

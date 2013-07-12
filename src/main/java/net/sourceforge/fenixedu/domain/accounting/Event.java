@@ -782,7 +782,7 @@ public abstract class Event extends Event_Base {
     @Checked("AcademicPredicates.MANAGE_PAYMENTS")
     public void rollbackCompletly() {
         while (!getNonAdjustingTransactions().isEmpty()) {
-            getNonAdjustingTransactions().get(0).delete();
+            getNonAdjustingTransactions().iterator().next().delete();
         }
 
         changeState(EventState.OPEN, new DateTime());
@@ -812,11 +812,11 @@ public abstract class Event extends Event_Base {
 
     protected void disconnect() {
         while (!super.getPaymentCodes().isEmpty()) {
-            super.getPaymentCodes().get(0).delete();
+            super.getPaymentCodes().iterator().next().delete();
         }
 
         while (!getExemptions().isEmpty()) {
-            getExemptions().get(0).delete(false);
+            getExemptions().iterator().next().delete(false);
         }
 
         super.setParty(null);

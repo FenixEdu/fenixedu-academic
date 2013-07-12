@@ -166,7 +166,7 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
         }
 
         Registration registration =
-                getPerson().getStudent().getActiveRegistrationsIn(getExecutionYear().getFirstExecutionPeriod()).get(0);
+                getPerson().getStudent().getActiveRegistrationsIn(getExecutionYear().getFirstExecutionPeriod()).iterator().next();
         StudentCandidacy studentCandidacy = getActiveDgesCandidacy(getPerson());
 
         if (studentCandidacy == null) {
@@ -241,11 +241,11 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
     }
 
     private AccountingEventPaymentCode getCancelledPaymentCode() {
-        return (getCancelledPaymentCodes().isEmpty() ? null : getCancelledPaymentCodes().get(0));
+        return (getCancelledPaymentCodes().isEmpty() ? null : getCancelledPaymentCodes().iterator().next());
     }
 
     private AccountingEventPaymentCode getNonProcessedPaymentCode() {
-        return (getNonProcessedPaymentCodes().isEmpty() ? null : getNonProcessedPaymentCodes().get(0));
+        return (getNonProcessedPaymentCodes().isEmpty() ? null : getNonProcessedPaymentCodes().iterator().next());
     }
 
     private YearMonthDay calculatePaymentCodeEndDate() {

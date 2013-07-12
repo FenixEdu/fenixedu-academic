@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.space;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 
@@ -90,7 +91,7 @@ public class Building extends Building_Base {
     }
 
     public Floor readFloorByLevel(Integer floorNumber) {
-        List<Space> containedSpaces = getContainedSpaces();
+        Collection<Space> containedSpaces = getContainedSpaces();
         for (Space space : containedSpaces) {
             if (space.isFloor() && ((Floor) space).getSpaceInformation().getLevel().equals(floorNumber)) {
                 return (Floor) space;

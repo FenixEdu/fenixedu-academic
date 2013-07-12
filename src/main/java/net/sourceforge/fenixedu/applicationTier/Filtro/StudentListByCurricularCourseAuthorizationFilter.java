@@ -80,14 +80,14 @@ public class StudentListByCurricularCourseAuthorizationFilter extends Filtro {
         }
 
         if (id.hasRoleType(RoleType.COORDINATOR)) {
-            List executionDegrees = curricularCourse.getDegreeCurricularPlan().getExecutionDegrees();
+            Collection executionDegrees = curricularCourse.getDegreeCurricularPlan().getExecutionDegrees();
             if (executionDegrees == null || executionDegrees.isEmpty()) {
                 return false;
             }
             // IMPORTANT: It's assumed that the coordinator for a Degree is
             // ALWAYS the same
             // modified by Tânia Pousão
-            List<Coordinator> coodinatorsList = ((ExecutionDegree) executionDegrees.get(0)).getCoordinatorsList();
+            Collection<Coordinator> coodinatorsList = ((ExecutionDegree) executionDegrees.iterator().next()).getCoordinatorsList();
             if (coodinatorsList == null) {
                 return false;
             }

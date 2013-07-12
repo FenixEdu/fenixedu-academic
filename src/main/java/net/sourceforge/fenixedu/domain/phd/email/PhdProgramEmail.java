@@ -36,12 +36,12 @@ public class PhdProgramEmail extends PhdProgramEmail_Base {
 
     @Override
     protected Collection<? extends ReplyTo> getReplyTos() {
-        return getPhdProgram().getPhdProgramUnit().getUnitBasedSender().get(0).getReplyTos();
+        return getPhdProgram().getPhdProgramUnit().getUnitBasedSender().iterator().next().getReplyTos();
     }
 
     @Override
     protected Sender getSender() {
-        return getPhdProgram().getPhdProgramUnit().getUnitBasedSender().get(0);
+        return getPhdProgram().getPhdProgramUnit().getUnitBasedSender().iterator().next();
     }
 
     @Override

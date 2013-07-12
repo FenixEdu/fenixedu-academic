@@ -11,14 +11,15 @@ import net.sourceforge.fenixedu.domain.MetaDomainObject;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
-import dml.DomainClass;
+import pt.ist.fenixframework.dml.DomainClass;
 
 public class CreateMetaDomainObectTypes {
 
     @Atomic
     public static void run() throws FenixServiceException {
         List<DomainClass> domainClasses = new ArrayList<DomainClass>(FenixFramework.getDomainModel().getDomainClasses());
-        Set<MetaDomainObject> metaDomainObjectsSet = new HashSet<MetaDomainObject>(RootDomainObject.getInstance().getMetaDomainObjectsSet());
+        Set<MetaDomainObject> metaDomainObjectsSet =
+                new HashSet<MetaDomainObject>(RootDomainObject.getInstance().getMetaDomainObjectsSet());
 
         for (DomainClass domainClass : domainClasses) {
             MetaDomainObject metaDomainObject = getMetaDomainObject(metaDomainObjectsSet, domainClass.getFullName());

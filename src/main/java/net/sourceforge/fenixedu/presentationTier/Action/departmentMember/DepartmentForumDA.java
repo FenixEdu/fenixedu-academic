@@ -48,7 +48,7 @@ public class DepartmentForumDA extends ForunsManagement {
         }
 
         if (foruns.size() == 1) {
-            request.setAttribute("forum", foruns.get(0));
+            request.setAttribute("forum", foruns.iterator().next());
             return viewForum(mapping, form, request, response);
         }
 

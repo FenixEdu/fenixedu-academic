@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTyp
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
+import pt.ist.fenixframework.FenixFramework;
 
 import com.google.common.base.Splitter;
 
@@ -185,7 +186,7 @@ public class AuthorizationsManagementBean implements Serializable {
         units.add(party);
 
         while (!units.isEmpty()) {
-            Party unit = units.setFirst(null);
+            Party unit = units.removeFirst();
 
             people.addAll(unit.getActiveChildParties(AccountabilityTypeEnum.WORKING_CONTRACT, Person.class));
 

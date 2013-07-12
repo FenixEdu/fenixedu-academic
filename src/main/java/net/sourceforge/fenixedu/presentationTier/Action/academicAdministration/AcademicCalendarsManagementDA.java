@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.academicAdministration;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -62,7 +63,7 @@ public class AcademicCalendarsManagementDA extends FenixDispatchAction {
     public ActionForward prepareChooseCalendar(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        List<AcademicCalendarRootEntry> academicCalendars = rootDomainObject.getAcademicCalendars();
+        Collection<AcademicCalendarRootEntry> academicCalendars = rootDomainObject.getAcademicCalendars();
         request.setAttribute("academicCalendars", academicCalendars);
 
         return mapping.findForward("prepareChooseCalendar");

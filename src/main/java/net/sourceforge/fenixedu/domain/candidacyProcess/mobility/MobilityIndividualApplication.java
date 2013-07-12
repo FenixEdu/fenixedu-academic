@@ -149,7 +149,7 @@ public class MobilityIndividualApplication extends MobilityIndividualApplication
         Collections.sort(approvedLearningAgreement,
                 Collections.reverseOrder(ApprovedLearningAgreementDocumentFile.SUBMISSION_DATE_COMPARATOR));
 
-        return approvedLearningAgreement.get(0);
+        return approvedLearningAgreement.iterator().next();
     }
 
     public boolean isMostRecentApprovedLearningAgreementNotViewed() {
@@ -270,7 +270,7 @@ public class MobilityIndividualApplication extends MobilityIndividualApplication
                 continue;
             }
 
-            Context selectedContext = contextList.get(0); // WTF?.. /facepalm
+            Context selectedContext = contextList.iterator().next(); // WTF?.. /facepalm
 
             CurriculumGroup curriculumGroup = null;
             if (selectedCurricularCourse.getDegreeCurricularPlan().equals(degreeCurricularPlan)) {

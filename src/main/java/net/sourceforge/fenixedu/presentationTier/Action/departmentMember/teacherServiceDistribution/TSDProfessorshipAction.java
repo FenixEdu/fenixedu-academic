@@ -164,7 +164,7 @@ public class TSDProfessorshipAction extends FenixDispatchAction {
                 TeacherServiceDistributionDTOEntry.getTeacherServiceDistributionOptionEntriesForPerson(currentTSDProcessPhase,
                         userView.getPerson(), false, true);
         TeacherServiceDistribution selectedTeacherServiceDistribution =
-                getSelectedTeacherServiceDistribution(userView, dynaForm, tsdDTOEntryList.get(0).getTeacherServiceDistribution());
+                getSelectedTeacherServiceDistribution(userView, dynaForm, tsdDTOEntryList.iterator().next().getTeacherServiceDistribution());
 
         List<ExecutionSemester> executionPeriodList = new ArrayList<ExecutionSemester>(tsdProcess.getExecutionPeriods());
         Collections.sort(executionPeriodList, new BeanComparator("semester"));
@@ -381,7 +381,7 @@ public class TSDProfessorshipAction extends FenixDispatchAction {
 
         if (selectedTSDCourse == null) {
             if (competenceCourseList != null && !competenceCourseList.isEmpty()) {
-                return competenceCourseList.get(0);
+                return competenceCourseList.iterator().next();
             } else {
                 return null;
             }
@@ -397,7 +397,7 @@ public class TSDProfessorshipAction extends FenixDispatchAction {
 
         if (selectedTSDCurricularCourse == null) {
             if (tsdCurricularCourseList != null && !tsdCurricularCourseList.isEmpty()) {
-                return tsdCurricularCourseList.get(0);
+                return tsdCurricularCourseList.iterator().next();
             } else {
                 return null;
             }
@@ -413,7 +413,7 @@ public class TSDProfessorshipAction extends FenixDispatchAction {
 
         if (selectedTSDCurricularCourseGroup == null) {
             if (tsdCurricularCourseGroupList != null && !tsdCurricularCourseGroupList.isEmpty()) {
-                return tsdCurricularCourseGroupList.get(0);
+                return tsdCurricularCourseGroupList.iterator().next();
             } else {
                 return null;
             }
@@ -428,7 +428,7 @@ public class TSDProfessorshipAction extends FenixDispatchAction {
 
         if (selectedTSDTeacher == null) {
             if (!tsdTeacherList.isEmpty()) {
-                return tsdTeacherList.get(0);
+                return tsdTeacherList.iterator().next();
             } else {
                 return null;
             }
@@ -505,7 +505,7 @@ public class TSDProfessorshipAction extends FenixDispatchAction {
 
         if (selectedExecutionPeriod == null) {
             if (executionPeriodList != null && executionPeriodList.size() > 0) {
-                return executionPeriodList.get(0);
+                return executionPeriodList.iterator().next();
             } else {
                 return null;
             }
@@ -517,7 +517,7 @@ public class TSDProfessorshipAction extends FenixDispatchAction {
     private ShiftType getSelectedShiftType(DynaActionForm dynaForm, TSDCourse course) {
         if (dynaForm.get("shiftType") == null || dynaForm.get("shiftType").equals("")) {
             if (course.getTSDCurricularLoadsCount() > 0) {
-                return course.getTSDCurricularLoads().get(0).getType();
+                return course.getTSDCurricularLoads().iterator().next().getType();
             } else {
                 return null;
             }

@@ -99,14 +99,14 @@ abstract public class DegreeModule extends DegreeModule_Base {
         if (isRoot()) {
             result.append(selfName);
         } else {
-            List<Context> parentContextsByExecutionPeriod = getParentContextsByExecutionSemester(executionSemester);
+            Collection<Context> parentContextsByExecutionPeriod = getParentContextsByExecutionSemester(executionSemester);
             if (parentContextsByExecutionPeriod.isEmpty()) {
                 // if not existing, just return all (as previous implementation
                 // of method
                 parentContextsByExecutionPeriod = getParentContexts();
             }
 
-            final CourseGroup parentCourseGroup = parentContextsByExecutionPeriod.get(0).getParentCourseGroup();
+            final CourseGroup parentCourseGroup = parentContextsByExecutionPeriod.iterator().next().getParentCourseGroup();
 
             parentCourseGroup.getOneFullName(result, executionSemester);
             result.append(FULL_NAME_SEPARATOR);
@@ -150,7 +150,7 @@ abstract public class DegreeModule extends DegreeModule_Base {
                 parentContextsByExecutionPeriod = getParentContexts();
             }
 
-            final CourseGroup parentCourseGroup = parentContextsByExecutionPeriod.get(0).getParentCourseGroup();
+            final CourseGroup parentCourseGroup = parentContextsByExecutionPeriod.iterator().next().getParentCourseGroup();
 
             parentCourseGroup.getOneFullNameI18N(result, executionSemester, language);
             result.append(FULL_NAME_SEPARATOR);
@@ -192,13 +192,13 @@ abstract public class DegreeModule extends DegreeModule_Base {
 
     public void delete() {
         if (getCanBeDeleted()) {
-            for (; !getParentContexts().isEmpty(); getParentContexts().get(0).delete()) {
+            for (; !getParentContexts().isEmpty(); getParentContexts().iterator().next().delete()) {
                 ;
             }
-            for (; !getCurricularRules().isEmpty(); getCurricularRules().get(0).delete()) {
+            for (; !getCurricularRules().isEmpty(); getCurricularRules().iterator().next().delete()) {
                 ;
             }
-            for (; !getParticipatingPrecedenceCurricularRules().isEmpty(); getParticipatingPrecedenceCurricularRules().get(0)
+            for (; !getParticipatingPrecedenceCurricularRules().isEmpty(); getParticipatingPrecedenceCurricularRules().iterator().next()
                     .delete()) {
                 ;
             }
@@ -568,12 +568,12 @@ abstract public class DegreeModule extends DegreeModule_Base {
         final List<DegreeModulesSelectionLimit> result =
                 (List<DegreeModulesSelectionLimit>) getCurricularRules(CurricularRuleType.DEGREE_MODULES_SELECTION_LIMIT,
                         executionSemester);
-        return result.isEmpty() ? null : (DegreeModulesSelectionLimit) result.get(0);
+        return result.isEmpty() ? null : (DegreeModulesSelectionLimit) result.iterator().next();
     }
 
     public CreditsLimit getCreditsLimitRule(final ExecutionSemester executionSemester) {
         final List<? extends ICurricularRule> result = getCurricularRules(CurricularRuleType.CREDITS_LIMIT, executionSemester);
-        return result.isEmpty() ? null : (CreditsLimit) result.get(0);
+        return result.isEmpty() ? null : (CreditsLimit) result.iterator().next();
     }
 
     public List<Exclusiveness> getExclusivenessRules(final ExecutionSemester executionSemester) {

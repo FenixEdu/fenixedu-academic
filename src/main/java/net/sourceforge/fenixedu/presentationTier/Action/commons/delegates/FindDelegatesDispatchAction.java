@@ -279,7 +279,7 @@ public class FindDelegatesDispatchAction extends FenixDispatchAction {
 
     private Degree getDefaultDegreeGivenDegreeType(DegreeType degreeType) {
         List<Degree> degrees = Degree.readAllByDegreeType(degreeType);
-        return degrees.get(0);
+        return degrees.iterator().next();
     }
 
     /* Delegates from given degree (not year delegates) */
@@ -291,7 +291,7 @@ public class FindDelegatesDispatchAction extends FenixDispatchAction {
             delegates.addAll(bean.getDegree()
                     .getAllDelegatesByExecutionYearAndFunctionType(bean.getExecutionYear(), functionType));
         }
-        return (delegates.isEmpty() ? null : new DelegateSearchBean(delegates.get(0).getPerson(), functionType,
+        return (delegates.isEmpty() ? null : new DelegateSearchBean(delegates.iterator().next().getPerson(), functionType,
                 bean.getExecutionYear()));
     }
 

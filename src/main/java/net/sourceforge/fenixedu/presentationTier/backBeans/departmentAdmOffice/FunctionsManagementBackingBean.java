@@ -866,7 +866,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
     }
 
     private String getCurrentExecutionPeriodID() throws FenixServiceException {
-        List<ExecutionSemester> allExecutionPeriods = rootDomainObject.getExecutionPeriods();
+        Collection<ExecutionSemester> allExecutionPeriods = rootDomainObject.getExecutionPeriods();
         for (ExecutionSemester period : allExecutionPeriods) {
             if (period.getState().equals(PeriodState.CURRENT)) {
                 return period.getExternalId();

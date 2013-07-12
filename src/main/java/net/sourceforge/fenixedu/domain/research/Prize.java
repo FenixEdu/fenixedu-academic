@@ -124,7 +124,7 @@ public class Prize extends Prize_Base {
 
     public void delete() {
         setResearchResult(null);
-        for (; !getParties().isEmpty(); getParties().get(0).removePrizes(this)) {
+        for (; !getParties().isEmpty(); getParties().iterator().next().removePrizes(this)) {
             ;
         }
         setRootDomainObject(null);

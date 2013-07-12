@@ -167,7 +167,7 @@ public class TutorStudentsPerformanceGridDA extends ViewStudentsPerformanceGridD
                     DegreeCurricularPlan.DEGREE_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_EXECUTION_DEGREE_AND_DEGREE_CODE);
 
             List<StudentCurricularPlan> students =
-                    plans.get(0).getStudentsCurricularPlanGivenEntryYear(bean.getStudentsEntryYear());
+                    plans.iterator().next().getStudentsCurricularPlanGivenEntryYear(bean.getStudentsEntryYear());
 
             putAllStudentsStatisticsInTheRequest(request, students, bean.getCurrentMonitoringYear());
 

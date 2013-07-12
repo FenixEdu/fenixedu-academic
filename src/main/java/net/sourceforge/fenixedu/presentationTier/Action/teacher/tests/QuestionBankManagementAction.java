@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.teacher.tests;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -112,7 +113,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
 
         request.setAttribute("questionBank", questionBank);
 
-        List<NewPermissionUnit> permissionUnits = getUserView(request).getPerson().getPermissionUnits();
+        Collection<NewPermissionUnit> permissionUnits = getUserView(request).getPerson().getPermissionUnits();
         Set<NewQuestionBank> questionBanks = new HashSet<NewQuestionBank>();
         questionBanks.add(getOwnedQuestionBank(request));
         for (NewPermissionUnit permissionUnit : permissionUnits) {
@@ -597,7 +598,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
         if (parentQuestionGroupId != null) {
             request.setAttribute("oid", parentQuestionGroupId);
         } else if (parentQuestionGroups.size() == 1) {
-            request.setAttribute("oid", parentQuestionGroups.get(0).getExternalId());
+            request.setAttribute("oid", parentQuestionGroups.iterator().next().getExternalId());
             return editTestElement(mapping, form, request, response);
         } else {
             request.setAttribute("oid", questionBank.getExternalId());

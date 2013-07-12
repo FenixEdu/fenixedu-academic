@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.finalDegreeWork;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -281,7 +282,7 @@ public class Proposal extends Proposal_Base {
         return CandidacyAttributionType.NOT_ATTRIBUTED;
     }
 
-    public List<GroupStudent> getAttributionGroup() {
+    public Collection<GroupStudent> getAttributionGroup() {
         if (hasGroupAttributed()) {
             return getGroupAttributed().getGroupStudents();
         }
@@ -377,6 +378,7 @@ public class Proposal extends Proposal_Base {
             }
         }
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent> getAssociatedGroupStudents() {
         return getAssociatedGroupStudentsSet();

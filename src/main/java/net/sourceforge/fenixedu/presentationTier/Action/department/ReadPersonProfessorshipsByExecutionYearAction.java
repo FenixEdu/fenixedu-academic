@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.department;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -146,7 +147,7 @@ public class ReadPersonProfessorshipsByExecutionYearAction extends Action {
     List getDetailedProfessorships(IUserView userView, String personId, DynaActionForm actionForm, HttpServletRequest request)
             throws FenixServiceException {
 
-        List<Professorship> professorshipList = ((Person) FenixFramework.getDomainObject(personId)).getProfessorships();
+        Collection<Professorship> professorshipList = ((Person) FenixFramework.getDomainObject(personId)).getProfessorships();
 
         String executionYearID = (String) actionForm.get("executionYearId");
         ExecutionYear executionYear =
@@ -229,7 +230,7 @@ public class ReadPersonProfessorshipsByExecutionYearAction extends Action {
             Department department = person.getTeacher().getCurrentWorkingDepartment();
             teacherDepartment = InfoDepartment.newInfoFromDomain(department);
             if (userView == null || !userView.hasRoleType(RoleType.CREDITS_MANAGER)) {
-                final List<Department> departmentList = userView.getPerson().getManageableDepartmentCredits();
+                final Collection<Department> departmentList = userView.getPerson().getManageableDepartmentCredits();
                 request.setAttribute("isDepartmentManager", (departmentList.contains(department) || department == null));
             } else {
                 request.setAttribute("isDepartmentManager", Boolean.FALSE);

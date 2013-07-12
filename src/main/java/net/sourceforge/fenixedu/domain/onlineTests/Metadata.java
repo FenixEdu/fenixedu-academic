@@ -99,7 +99,7 @@ public class Metadata extends Metadata_Base {
     }
 
     public void delete() {
-        for (; !getQuestions().isEmpty(); getQuestions().get(0).delete()) {
+        for (; !getQuestions().isEmpty(); getQuestions().iterator().next().delete()) {
             ;
         }
         setExecutionCourse(null);

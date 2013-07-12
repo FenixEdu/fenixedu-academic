@@ -53,7 +53,7 @@ public class SeniorInformationAction extends FenixDispatchAction {
             registration = FenixFramework.getDomainObject(registrationOID);
         } else if (loggedStudent != null) {
             if (loggedStudent.getRegistrations().size() == 1) {
-                registration = loggedStudent.getRegistrations().get(0);
+                registration = loggedStudent.getRegistrations().iterator().next();
             } else {
                 request.setAttribute("student", loggedStudent);
                 return mapping.findForward("chooseRegistration");

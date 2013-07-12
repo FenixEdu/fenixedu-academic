@@ -117,7 +117,7 @@ public class TSDProcessPhase extends TSDProcessPhase_Base {
     }
 
     public TeacherServiceDistribution getRootTSD() {
-        return getGroupings().get(0).getRootTSD();
+        return getGroupings().iterator().next().getRootTSD();
     }
 
     @Checked("TSDProcessPhasePredicates.writePredicate")

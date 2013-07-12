@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.vigilancy.strategies;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -33,7 +34,7 @@ public class ConvokeByPoints extends Strategy {
             incompatiblePersons.addAll(getIncompatiblePersons(writtenEvaluation));
         }
 
-        final List<ExecutionCourse> executionCourses = writtenEvaluation.getAssociatedExecutionCourses();
+        final Collection<ExecutionCourse> executionCourses = writtenEvaluation.getAssociatedExecutionCourses();
 
         for (VigilantWrapper vigilant : vigilants) {
 
@@ -85,7 +86,7 @@ public class ConvokeByPoints extends Strategy {
     }
 
     private List<Person> getIncompatiblePersons(WrittenEvaluation writtenEvaluation) {
-        List<Vigilancy> convokes = writtenEvaluation.getVigilancies();
+        Collection<Vigilancy> convokes = writtenEvaluation.getVigilancies();
         List<Person> people = new ArrayList<Person>();
         for (Vigilancy convoke : convokes) {
             VigilantWrapper vigilant = convoke.getVigilantWrapper();

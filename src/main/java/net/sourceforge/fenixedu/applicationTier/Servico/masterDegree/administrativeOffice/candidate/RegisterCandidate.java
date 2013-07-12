@@ -2,8 +2,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
@@ -145,7 +145,7 @@ public class RegisterCandidate {
 
     private static void createEnrolments(IUserView userView, MasterDegreeCandidate masterDegreeCandidate,
             StudentCurricularPlan studentCurricularPlan) {
-        List<CandidateEnrolment> candidateEnrolments = masterDegreeCandidate.getCandidateEnrolments();
+        Collection<CandidateEnrolment> candidateEnrolments = masterDegreeCandidate.getCandidateEnrolments();
         ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
         for (CandidateEnrolment candidateEnrolment : candidateEnrolments) {
             new Enrolment(studentCurricularPlan, candidateEnrolment.getCurricularCourse(), executionSemester,

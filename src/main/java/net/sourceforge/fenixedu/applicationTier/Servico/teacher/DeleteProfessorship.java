@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-import java.util.List;
+import java.util.Collection;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.DeleteProfessorshipAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -32,7 +32,7 @@ public class DeleteProfessorship {
             professorshipToDelete = teacher.getProfessorshipByExecutionCourse(executionCourse);
         }
 
-        List shiftProfessorshipList = professorshipToDelete.getAssociatedShiftProfessorship();
+        Collection shiftProfessorshipList = professorshipToDelete.getAssociatedShiftProfessorship();
 
         boolean hasCredits = false;
 

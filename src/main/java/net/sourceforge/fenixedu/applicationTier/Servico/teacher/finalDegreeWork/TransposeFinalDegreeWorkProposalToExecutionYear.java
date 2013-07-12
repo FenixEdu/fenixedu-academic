@@ -64,7 +64,7 @@ public class TransposeFinalDegreeWorkProposalToExecutionYear {
 
         Scheduleing originalScheduleing = originalProposal.getScheduleing();
 
-        ExecutionDegree oneExecutionDegree = originalScheduleing.getExecutionDegrees().get(0);
+        ExecutionDegree oneExecutionDegree = originalScheduleing.getExecutionDegrees().iterator().next();
 
         ExecutionDegree executionDegree =
                 ExecutionDegree.getByDegreeCurricularPlanAndExecutionYear(oneExecutionDegree.getDegreeCurricularPlan(),

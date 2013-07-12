@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
@@ -15,7 +16,7 @@ public class RemoveShifts {
     @Atomic
     public static Boolean run(final InfoClass infoClass, final List shiftOIDs) {
         final SchoolClass schoolClass = FenixFramework.getDomainObject(infoClass.getExternalId());
-        final List<Shift> shifts = schoolClass.getAssociatedShifts();
+        final Collection<Shift> shifts = schoolClass.getAssociatedShifts();
 
         for (int i = 0; i < shifts.size(); i++) {
             final Shift shift = shifts.get(i);

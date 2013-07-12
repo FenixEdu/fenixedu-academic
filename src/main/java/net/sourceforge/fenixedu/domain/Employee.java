@@ -269,7 +269,7 @@ public class Employee extends Employee_Base {
         if (roleLoginAlias.isEmpty() || roleLoginAlias.size() > 1) {
             return "F" + getEmployeeNumber();
         } else {
-            return roleLoginAlias.get(0).getAlias();
+            return roleLoginAlias.iterator().next().getAlias();
         }
     }
 
@@ -335,7 +335,7 @@ public class Employee extends Employee_Base {
     }
 
     public boolean hasMultipleDepartments() {
-        List<Department> departments = RootDomainObject.getInstance().getDepartments();
+        Collection<Department> departments = RootDomainObject.getInstance().getDepartments();
         int count = 0;
         final int several = 2;
         for (Department department : departments) {

@@ -3,6 +3,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.services;
 
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentAdministrativeOfficeAuthorizationFilter;
@@ -38,7 +39,7 @@ public class EditTeacherAdviseService {
 
         ExecutionSemester executionSemester = FenixFramework.getDomainObject(executionPeriodID);
 
-        List<Registration> students = RootDomainObject.getInstance().getRegistrations();
+        Collection<Registration> students = RootDomainObject.getInstance().getRegistrations();
         Registration registration = (Registration) CollectionUtils.find(students, new Predicate() {
             @Override
             public boolean evaluate(Object arg0) {

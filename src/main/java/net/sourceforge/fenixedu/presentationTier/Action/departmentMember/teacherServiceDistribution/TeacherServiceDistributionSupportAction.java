@@ -64,7 +64,7 @@ public class TeacherServiceDistributionSupportAction extends FenixDispatchAction
                 TeacherServiceDistributionDTOEntry.getTeacherServiceDistributionOptionEntriesForPerson(
                         tsdProcess.getCurrentTSDProcessPhase(), userView.getPerson(), true, false);
         TeacherServiceDistribution selectedTeacherServiceDistribution =
-                getSelectedTeacherServiceDistribution(dynaForm, tsdOptionEntryList.get(0).getTeacherServiceDistribution());
+                getSelectedTeacherServiceDistribution(dynaForm, tsdOptionEntryList.iterator().next().getTeacherServiceDistribution());
 
         List<TSDTeacher> tsdTeacherList = new ArrayList<TSDTeacher>();
         List<TSDCourse> tsdCourseList = new ArrayList<TSDCourse>();
@@ -112,7 +112,7 @@ public class TeacherServiceDistributionSupportAction extends FenixDispatchAction
 
             List<TeacherServiceDistributionDTOEntry> mergeGroupingOptionEntryList =
                     new ArrayList<TeacherServiceDistributionDTOEntry>(tsdOptionEntryList);
-            if (mergeGroupingOptionEntryList.get(0).getExternalId()
+            if (mergeGroupingOptionEntryList.iterator().next().getExternalId()
                     .equals(selectedTeacherServiceDistribution.getRootTSD().getExternalId())) {
                 mergeGroupingOptionEntryList.remove(0);
             }

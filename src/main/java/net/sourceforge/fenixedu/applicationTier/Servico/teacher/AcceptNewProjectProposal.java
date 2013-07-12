@@ -5,6 +5,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -59,14 +60,14 @@ public class AcceptNewProjectProposal {
         }
 
         List attendsStudentNumbers = new ArrayList();
-        List attends = groupPropertiesExecutionCourse.getGrouping().getAttends();
+        Collection<Attends> attends = groupPropertiesExecutionCourse.getGrouping().getAttends();
         Iterator iterAttendsInAttendsSet = attends.iterator();
         while (iterAttendsInAttendsSet.hasNext()) {
             Attends attend = (Attends) iterAttendsInAttendsSet.next();
             attendsStudentNumbers.add(attend.getRegistration().getNumber());
         }
 
-        List attendsAux = executionCourse.getAttends();
+        Collection<Attends> attendsAux = executionCourse.getAttends();
         Iterator iterAttends = attendsAux.iterator();
         while (iterAttends.hasNext()) {
             Attends attend = (Attends) iterAttends.next();
@@ -76,7 +77,7 @@ public class AcceptNewProjectProposal {
         }
 
         Person senderPerson = groupPropertiesExecutionCourse.getSenderPerson();
-        List groupPropertiesExecutionCourseList = grouping.getExportGroupings();
+        Collection groupPropertiesExecutionCourseList = grouping.getExportGroupings();
         Iterator iterGroupPropertiesExecutionCourseList = groupPropertiesExecutionCourseList.iterator();
         List groupTeachers = new ArrayList();
         while (iterGroupPropertiesExecutionCourseList.hasNext()) {
@@ -97,7 +98,7 @@ public class AcceptNewProjectProposal {
         }
 
         List groupAux = new ArrayList();
-        List professorshipsAux = executionCourse.getProfessorships();
+        Collection<Professorship> professorshipsAux = executionCourse.getProfessorships();
 
         Iterator iterProfessorshipsAux = professorshipsAux.iterator();
         while (iterProfessorshipsAux.hasNext()) {

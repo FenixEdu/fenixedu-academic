@@ -5,6 +5,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.messaging;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -191,7 +192,7 @@ public abstract class ForunsManagement extends FenixDispatchAction {
         return (Forum) FenixFramework.getDomainObject(request.getParameter("forumId"));
     }
 
-    private List<Content> getContentToDisplay(List<Node> nodes, Integer pageNumber, Integer pageSize) {
+    private List<Content> getContentToDisplay(Collection<Node> nodes, Integer pageNumber, Integer pageSize) {
         List<Node> nodeCopy = new ArrayList<Node>(nodes);
         Collections.sort(nodeCopy);
         List<Content> contents = new ArrayList<Content>();

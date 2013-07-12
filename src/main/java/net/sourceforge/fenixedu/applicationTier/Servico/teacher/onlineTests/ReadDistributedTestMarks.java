@@ -60,7 +60,7 @@ public class ReadDistributedTestMarks {
                     throw new FenixServiceException(e);
                 }
                 if (studentTestQuestion.getItemId() != null
-                        && !studentTestQuestion.getItemId().equals(question.getSubQuestions().get(0).getItemId())) {
+                        && !studentTestQuestion.getItemId().equals(question.getSubQuestions().iterator().next().getItemId())) {
                     infoStudentTestQuestionMark.addTestQuestionMark(
                             infoStudentTestQuestionMark.getTestQuestionMarks().size() - 1,
                             studentTestQuestion.getTestQuestionMark());

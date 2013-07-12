@@ -5,6 +5,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -43,7 +44,7 @@ public class DeleteGroupingMembersByExecutionCourseID {
         }
 
         List executionCourseStudentNumbers = new ArrayList();
-        final List<Attends> attends = executionCourse.getAttends();
+        final Collection<Attends> attends = executionCourse.getAttends();
         for (final Attends attend : attends) {
             final Registration registration = attend.getRegistration();
             executionCourseStudentNumbers.add(registration.getNumber());

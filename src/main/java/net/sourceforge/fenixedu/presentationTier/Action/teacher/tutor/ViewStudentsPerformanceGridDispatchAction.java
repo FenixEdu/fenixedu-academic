@@ -64,8 +64,8 @@ public class ViewStudentsPerformanceGridDispatchAction extends StudentsPerforman
             HttpServletResponse response) throws Exception {
         StudentsPerformanceInfoBean bean = getRenderedObject("performanceGridFiltersBean");
         if (bean != null && bean.getDegree() != null) {
-            bean.setStudentsEntryYear(TutorshipEntryExecutionYearProvider.getExecutionYears(bean).get(0));
-            bean.setCurrentMonitoringYear(TutorshipMonitoringExecutionYearProvider.getExecutionYears(bean).get(0));
+            bean.setStudentsEntryYear(TutorshipEntryExecutionYearProvider.getExecutionYears(bean).iterator().next());
+            bean.setCurrentMonitoringYear(TutorshipMonitoringExecutionYearProvider.getExecutionYears(bean).iterator().next());
             request.setAttribute("performanceGridFiltersBean", bean);
         }
         return prepare(mapping, actionForm, request, response);
@@ -128,7 +128,7 @@ public class ViewStudentsPerformanceGridDispatchAction extends StudentsPerforman
                     DegreeCurricularPlan.DEGREE_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_EXECUTION_DEGREE_AND_DEGREE_CODE);
 
             List<StudentCurricularPlan> students =
-                    plans.get(0).getStudentsCurricularPlanGivenEntryYear(bean.getStudentsEntryYear());
+                    plans.iterator().next().getStudentsCurricularPlanGivenEntryYear(bean.getStudentsEntryYear());
 
             putAllStudentsStatisticsInTheRequest(request, students, bean.getCurrentMonitoringYear());
 

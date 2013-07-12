@@ -75,7 +75,7 @@ public class SearchDegreeLogAction extends FenixDispatchAction {
         /*
          * request.getSession().setAttribute(SetUserViewFilter.
          * USER_SESSION_ATTRIBUTE,
-         * degree.getCoordinators().get(0).getTeacher().getPerson());
+         * degree.getCoordinators().iterator().next().getTeacher().getPerson());
          */
 
         return mapping.findForward("search");

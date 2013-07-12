@@ -40,13 +40,13 @@ public class LoadTestingAction extends FenixDispatchAction {
         ArrayList<Degree> allDegreesShuffled = new ArrayList<Degree>(Degree.readBolonhaDegrees());
         Collections.shuffle(allDegreesShuffled);
 
-        Degree randomDegree = allDegreesShuffled.get(0);
+        Degree randomDegree = allDegreesShuffled.iterator().next();
 
         ExecutionSemester lastSemester = ExecutionSemester.readActualExecutionSemester().getPreviousExecutionPeriod();
 
         request.setAttribute("degreeID", randomDegree.getExternalId());
         request.setAttribute("degreeOID", randomDegree.getExternalId());
-        request.setAttribute("degreeCurricularPlanID", randomDegree.getActiveDegreeCurricularPlans().get(0).getExternalId());
+        request.setAttribute("degreeCurricularPlanID", randomDegree.getActiveDegreeCurricularPlans().iterator().next().getExternalId());
         request.setAttribute("executionPeriodOID", lastSemester.getExternalId());
 
         return mapping.findForward("loadTesting");

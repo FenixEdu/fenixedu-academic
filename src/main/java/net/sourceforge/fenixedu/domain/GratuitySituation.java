@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.domain;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
@@ -102,7 +103,7 @@ public class GratuitySituation extends GratuitySituation_Base {
     }
 
     public double calculatePayedValue(final YearMonthDay date) {
-        final List<GratuityTransaction> transactions = (date == null ? getTransactionList() : getTransactionsUntil(date));
+        final Collection<GratuityTransaction> transactions = (date == null ? getTransactionList() : getTransactionsUntil(date));
         BigDecimal result = BigDecimal.ZERO;
         for (final GratuityTransaction transaction : transactions) {
             result = result.add(transaction.getValueWithAdjustment());

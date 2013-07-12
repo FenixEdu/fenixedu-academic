@@ -93,7 +93,7 @@ public class TSDProcess extends TSDProcess_Base {
 
     public TSDProcessPhase getCurrentTSDProcessPhase() {
         if (getTSDProcessPhases().size() > 0) {
-            return getTSDProcessPhases().get(0).getCurrentTSDProcessPhase();
+            return getTSDProcessPhases().iterator().next().getCurrentTSDProcessPhase();
         } else {
             return null;
         }
@@ -101,7 +101,7 @@ public class TSDProcess extends TSDProcess_Base {
 
     public TSDProcessPhase getFirstTSDProcessPhase() {
         if (getTSDProcessPhases().size() > 0) {
-            return getTSDProcessPhases().get(0).getFirstTSDProcessPhase();
+            return getTSDProcessPhases().iterator().next().getFirstTSDProcessPhase();
         } else {
             return null;
         }
@@ -109,7 +109,7 @@ public class TSDProcess extends TSDProcess_Base {
 
     public TSDProcessPhase getLastTSDProcessPhase() {
         if (getTSDProcessPhases().size() > 0) {
-            return getTSDProcessPhases().get(0).getLastTSDProcessPhase();
+            return getTSDProcessPhases().iterator().next().getLastTSDProcessPhase();
         } else {
             return null;
         }
@@ -127,7 +127,7 @@ public class TSDProcess extends TSDProcess_Base {
     }
 
     public ExecutionYear getPreviousExecutionYear() {
-        return getExecutionPeriods().get(0).getExecutionYear().getPreviousExecutionYear();
+        return getExecutionPeriods().iterator().next().getExecutionYear().getPreviousExecutionYear();
     }
 
     public List<TSDProcessPhase> getOrderedPublishedTSDProcessPhases() {
@@ -150,7 +150,7 @@ public class TSDProcess extends TSDProcess_Base {
     }
 
     public ExecutionSemester getFirstExecutionPeriod() {
-        ExecutionSemester firstExecutionPeriod = getExecutionPeriods().get(0);
+        ExecutionSemester firstExecutionPeriod = getExecutionPeriods().iterator().next();
 
         for (ExecutionSemester executionSemester : getExecutionPeriods()) {
             if (executionSemester.isBefore(firstExecutionPeriod)) {
@@ -162,7 +162,7 @@ public class TSDProcess extends TSDProcess_Base {
     }
 
     public ExecutionSemester getLastExecutionPeriod() {
-        ExecutionSemester lastExecutionPeriod = getExecutionPeriods().get(0);
+        ExecutionSemester lastExecutionPeriod = getExecutionPeriods().iterator().next();
 
         for (ExecutionSemester executionSemester : getExecutionPeriods()) {
             if (executionSemester.isAfter(lastExecutionPeriod)) {
@@ -174,7 +174,7 @@ public class TSDProcess extends TSDProcess_Base {
     }
 
     public ExecutionYear getExecutionYear() {
-        return getExecutionPeriods().get(0).getExecutionYear();
+        return getExecutionPeriods().iterator().next().getExecutionYear();
     }
 
     public Boolean getIsMemberOfPhasesManagementGroup(Person person) {

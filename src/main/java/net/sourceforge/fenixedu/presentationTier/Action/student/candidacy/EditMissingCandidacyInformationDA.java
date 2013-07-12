@@ -102,7 +102,7 @@ public class EditMissingCandidacyInformationDA extends FenixDispatchAction {
         final List<PersonalInformationBean> list = getPersonalInformationsWithMissingInfo();
 
         request.setAttribute("personalInformationsWithMissingInformation", list);
-        request.setAttribute("personalInformationBean", list.get(0));
+        request.setAttribute("personalInformationBean", list.iterator().next());
 
         return mapping.findForward("editMissingPersonalInformation");
     }

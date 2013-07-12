@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.util.Collection;
 import java.util.Comparator;
-import java.util.List;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
@@ -278,7 +278,7 @@ public class DegreeInfo extends DegreeInfo_Base {
     public static String readAllDegreeInfos() {
         JSONArray infos = new JSONArray();
         for (Degree degree : RootDomainObject.getInstance().getDegrees()) {
-            List<DegreeInfo> degreeInfos = degree.getDegreeInfos();
+            Collection<DegreeInfo> degreeInfos = degree.getDegreeInfos();
             if (!degreeInfos.isEmpty()) {
                 for (DegreeInfo degreeInfo : degreeInfos) {
                     JSONObject obj = new JSONObject();

@@ -23,7 +23,7 @@ public class DeleteTemplatedContent {
         }
 
         for (; !nodesToDelete.isEmpty();) {
-            final Node node = nodesToDelete.get(0);
+            final Node node = nodesToDelete.iterator().next();
             final Content child = node.getChild();
             if (child.getParentsSet().isEmpty()) {
                 child.delete();

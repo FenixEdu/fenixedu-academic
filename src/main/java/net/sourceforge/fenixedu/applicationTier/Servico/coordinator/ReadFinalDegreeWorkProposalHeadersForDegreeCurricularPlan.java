@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.coordinator.ExecutionDegreeCoordinatorOrScientificCouncilmemberAuthorizationFilter;
@@ -17,7 +18,7 @@ public class ReadFinalDegreeWorkProposalHeadersForDegreeCurricularPlan {
         final List<FinalDegreeWorkProposalHeader> result = new ArrayList<FinalDegreeWorkProposalHeader>();
 
         if (executionDegree.hasScheduling()) {
-            final List<Proposal> finalDegreeWorkProposals = executionDegree.getScheduling().getProposals();
+            final Collection<Proposal> finalDegreeWorkProposals = executionDegree.getScheduling().getProposals();
 
             for (final Proposal proposal : finalDegreeWorkProposals) {
                 result.add(FinalDegreeWorkProposalHeader.newInfoFromDomain(proposal, executionDegree));

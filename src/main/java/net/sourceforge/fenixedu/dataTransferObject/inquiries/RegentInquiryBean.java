@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.dataTransferObject.inquiries;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -75,7 +76,7 @@ public class RegentInquiryBean implements Serializable {
         setTeachersResultsMap(new HashMap<Professorship, List<TeacherShiftTypeResultsBean>>());
         for (Professorship teacherProfessorship : professorship.getExecutionCourse().getProfessorships()) {
             ArrayList<TeacherShiftTypeResultsBean> teachersResults = new ArrayList<TeacherShiftTypeResultsBean>();
-            List<InquiryResult> professorshipResults = teacherProfessorship.getInquiryResults();
+            Collection<InquiryResult> professorshipResults = teacherProfessorship.getInquiryResults();
             if (!professorshipResults.isEmpty()) {
                 for (ShiftType shiftType : getShiftTypes(professorshipResults)) {
                     List<InquiryResult> teacherShiftResults = teacherProfessorship.getInquiryResults(shiftType);
@@ -92,7 +93,7 @@ public class RegentInquiryBean implements Serializable {
         }
     }
 
-    private Set<ShiftType> getShiftTypes(List<InquiryResult> professorshipResults) {
+    private Set<ShiftType> getShiftTypes(Collection<InquiryResult> professorshipResults) {
         Set<ShiftType> shiftTypes = new HashSet<ShiftType>();
         for (InquiryResult inquiryResult : professorshipResults) {
             shiftTypes.add(inquiryResult.getShiftType());

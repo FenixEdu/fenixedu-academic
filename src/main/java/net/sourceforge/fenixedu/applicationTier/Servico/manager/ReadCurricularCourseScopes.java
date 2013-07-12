@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -16,7 +17,7 @@ public class ReadCurricularCourseScopes {
     public static List<InfoCurricularCourseScope> run(String curricularCourseId) throws FenixServiceException {
         CurricularCourse curricularCourse = (CurricularCourse) FenixFramework.getDomainObject(curricularCourseId);
 
-        List<CurricularCourseScope> curricularCourseScopes = curricularCourse.getScopes();
+        Collection<CurricularCourseScope> curricularCourseScopes = curricularCourse.getScopes();
         if (curricularCourseScopes == null || curricularCourseScopes.isEmpty()) {
             return new ArrayList<InfoCurricularCourseScope>();
         }

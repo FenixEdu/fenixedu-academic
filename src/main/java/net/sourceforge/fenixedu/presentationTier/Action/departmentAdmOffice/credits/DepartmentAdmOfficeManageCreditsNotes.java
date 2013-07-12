@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.credits;
 
-import java.util.List;
+import java.util.Collection;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -63,7 +63,7 @@ public class DepartmentAdmOfficeManageCreditsNotes extends ManageCreditsNotes {
     private Boolean getTeacherOfManageableDepartments(Teacher teacher, ExecutionSemester executionSemester,
             HttpServletRequest request) {
         IUserView userView = UserView.getUser();
-        List<Department> manageableDepartments = userView.getPerson().getManageableDepartmentCredits();
+        Collection<Department> manageableDepartments = userView.getPerson().getManageableDepartmentCredits();
         Department teacherWorkingDepartment = teacher.getCurrentWorkingDepartment();
         if (teacherWorkingDepartment != null) {
             return manageableDepartments.contains(teacherWorkingDepartment);

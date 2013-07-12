@@ -5,6 +5,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -52,7 +53,7 @@ public class ReadStudentsWithoutGroup {
         infoSiteStudentsWithoutGroup.setGroupNumber(groupNumber);
         infoSiteStudentsWithoutGroup.setInfoGrouping(InfoGrouping.newInfoFromDomain(grouping));
 
-        final List<Attends> attends = grouping.getAttends();
+        final Collection<Attends> attends = grouping.getAttends();
 
         Registration userStudent = null;
         for (Object element : attends) {
@@ -75,7 +76,7 @@ public class ReadStudentsWithoutGroup {
         for (final Iterator iterator = allStudentsGroups.iterator(); iterator.hasNext();) {
             final StudentGroup studentGroup = (StudentGroup) iterator.next();
 
-            final List allStudentGroupsAttends = studentGroup.getAttends();
+            final Collection allStudentGroupsAttends = studentGroup.getAttends();
 
             for (final Iterator iterator2 = allStudentGroupsAttends.iterator(); iterator2.hasNext();) {
                 final Attends studentGroupAttend = (Attends) iterator2.next();

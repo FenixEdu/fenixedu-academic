@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -26,7 +27,7 @@ public class DissociateExecutionCourse {
         }
 
         List<ExecutionCourse> executionCourses = curricularCourse.getAssociatedExecutionCourses();
-        List<CurricularCourse> curricularCourses = executionCourse.getAssociatedCurricularCourses();
+        Collection<CurricularCourse> curricularCourses = executionCourse.getAssociatedCurricularCourses();
 
         if (!executionCourses.isEmpty() && !curricularCourses.isEmpty()) {
             executionCourses.remove(executionCourse);

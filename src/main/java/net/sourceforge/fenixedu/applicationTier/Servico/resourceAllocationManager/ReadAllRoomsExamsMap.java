@@ -82,7 +82,7 @@ public class ReadAllRoomsExamsMap {
                     InfoExamWithRoomOccupationsAndScopesWithCurricularCoursesWithDegreeAndSemesterAndYear
                             .newInfoFromDomain((Exam) exam);
             infoExam.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(((Exam) exam).getAssociatedExecutionCourses()
-                    .get(0)));
+                    .iterator().next()));
             return infoExam;
         }
     };

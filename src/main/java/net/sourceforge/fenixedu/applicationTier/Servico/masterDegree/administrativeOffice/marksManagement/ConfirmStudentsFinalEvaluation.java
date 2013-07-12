@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.marksManagement;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
@@ -22,7 +23,7 @@ public class ConfirmStudentsFinalEvaluation {
 
         final List<EnrolmentEvaluation> enrolmentEvaluations = new ArrayList<EnrolmentEvaluation>();
         for (final Enrolment enrolment : enrolments) {
-            final List<EnrolmentEvaluation> allEnrolmentEvaluations = enrolment.getEvaluations();
+            final Collection<EnrolmentEvaluation> allEnrolmentEvaluations = enrolment.getEvaluations();
             enrolmentEvaluations.add(allEnrolmentEvaluations.get(allEnrolmentEvaluations.size() - 1));
         }
 

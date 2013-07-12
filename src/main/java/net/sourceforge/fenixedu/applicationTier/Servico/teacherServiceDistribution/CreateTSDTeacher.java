@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution;
 
-import java.util.List;
+import java.util.Collection;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.EmployeeAuthorizationFilter;
@@ -33,7 +33,7 @@ public class CreateTSDTeacher {
         return true;
     }
 
-    private boolean existsVirtualTeacherWithSameName(List<TSDTeacher> tsdTeachers, final String teacherName) {
+    private boolean existsVirtualTeacherWithSameName(Collection<TSDTeacher> tsdTeachers, final String teacherName) {
         return CollectionUtils.exists(tsdTeachers, new Predicate() {
             @Override
             public boolean evaluate(Object arg) {

@@ -37,7 +37,7 @@ public class ReadTeachersInformation {
             List<ExecutionDegree> executionDegrees = ExecutionDegree.getAllByExecutionYear(executionYear.getYear());
             List<DegreeCurricularPlan> degreeCurricularPlans = getDegreeCurricularPlans(executionDegrees);
             ExecutionYear executionDegressExecutionYear =
-                    (!degreeCurricularPlans.isEmpty()) ? executionDegrees.get(0).getExecutionYear() : null;
+                    (!degreeCurricularPlans.isEmpty()) ? executionDegrees.iterator().next().getExecutionYear() : null;
 
             if (basic == null) {
                 professorships =

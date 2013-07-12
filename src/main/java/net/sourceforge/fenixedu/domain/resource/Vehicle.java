@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.resource;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -107,7 +108,7 @@ public class Vehicle extends Vehicle_Base {
     }
 
     private void checksIfVehicleAlreadyExists(String numberPlate) {
-        List<Resource> resources = RootDomainObject.getInstance().getResources();
+        Collection<Resource> resources = RootDomainObject.getInstance().getResources();
         for (Resource resource : resources) {
             if (resource.isVehicle() && !resource.equals(this)
                     && ((Vehicle) resource).getNumberPlate().equalsIgnoreCase(numberPlate)) {
@@ -117,7 +118,7 @@ public class Vehicle extends Vehicle_Base {
     }
 
     public static Vehicle getVehicleByNumberPlate(String numberPlate) {
-        List<Resource> resources = RootDomainObject.getInstance().getResources();
+        Collection<Resource> resources = RootDomainObject.getInstance().getResources();
         for (Resource resource : resources) {
             if (resource.isVehicle() && ((Vehicle) resource).getNumberPlate().equalsIgnoreCase(numberPlate)) {
                 return (Vehicle) resource;
@@ -129,7 +130,7 @@ public class Vehicle extends Vehicle_Base {
     public static List<Vehicle> getAllActiveVehicles() {
         List<Vehicle> result = new ArrayList<Vehicle>();
         YearMonthDay currentDate = new YearMonthDay();
-        List<Resource> resources = RootDomainObject.getInstance().getResources();
+        Collection<Resource> resources = RootDomainObject.getInstance().getResources();
         for (Resource resource : resources) {
             if (resource.isVehicle() && ((Vehicle) resource).isActive(currentDate)) {
                 result.add((Vehicle) resource);
@@ -140,7 +141,7 @@ public class Vehicle extends Vehicle_Base {
 
     public static List<Vehicle> getAllVehicles() {
         List<Vehicle> result = new ArrayList<Vehicle>();
-        List<Resource> resources = RootDomainObject.getInstance().getResources();
+        Collection<Resource> resources = RootDomainObject.getInstance().getResources();
         for (Resource resource : resources) {
             if (resource.isVehicle()) {
                 result.add((Vehicle) resource);

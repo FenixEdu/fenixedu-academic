@@ -7,6 +7,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
@@ -24,11 +25,10 @@ public class LerAlunosDeTurno {
     @Atomic
     public static List<InfoStudent> run(ShiftKey keyTurno) {
 
-        final ExecutionCourse executionCourse =
-                FenixFramework.getDomainObject(keyTurno.getInfoExecutionCourse().getExternalId());
+        final ExecutionCourse executionCourse = FenixFramework.getDomainObject(keyTurno.getInfoExecutionCourse().getExternalId());
         final Shift shift = executionCourse.findShiftByName(keyTurno.getShiftName());
 
-        List<Registration> alunos = shift.getStudents();
+        Collection<Registration> alunos = shift.getStudents();
 
         List<InfoStudent> infoAlunos = new ArrayList<InfoStudent>(alunos.size());
         for (Registration elem : alunos) {

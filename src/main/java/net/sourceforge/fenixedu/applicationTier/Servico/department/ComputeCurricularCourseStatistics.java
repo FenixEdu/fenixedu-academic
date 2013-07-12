@@ -39,7 +39,7 @@ public class ComputeCurricularCourseStatistics {
 
         for (CurricularCourse curricularCourse : curricularCourses) {
 
-            List<ExecutionSemester> executionSemesters = executionYear.getExecutionPeriods();
+            Collection<ExecutionSemester> executionSemesters = executionYear.getExecutionPeriods();
             for (ExecutionSemester executionSemester : executionSemesters) {
 
                 // Get Scopes
@@ -79,7 +79,7 @@ public class ComputeCurricularCourseStatistics {
                 // // Houston, we have a problem...!!
                 // continue;
                 // }
-                // ExecutionCourse executionCourse = executionCourses.get(0);
+                // ExecutionCourse executionCourse = executionCourses.iterator().next();
 
                 if (executionCourses.size() == 1) {
                     // Organize enrolments by DegreeCurricularPlans

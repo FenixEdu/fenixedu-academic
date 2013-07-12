@@ -127,12 +127,12 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
             load = (CompetenceCourseLoadBean) viewStateLoad.getMetaObject().getObject();
         } else {
             if (information != null && information.getCompetenceCourseLoadsCount() > 0) {
-                load = new CompetenceCourseLoadBean(information.getCompetenceCourseLoads().get(0));
+                load = new CompetenceCourseLoadBean(information.getCompetenceCourseLoads().iterator().next());
             } else if (period != null
                     && course.findCompetenceCourseInformationForExecutionPeriod(period).getCompetenceCourseLoadsCount() > 0) {
                 load =
                         new CompetenceCourseLoadBean(course.findCompetenceCourseInformationForExecutionPeriod(period)
-                                .getCompetenceCourseLoads().get(0));
+                                .getCompetenceCourseLoads().iterator().next());
             } else {
                 load = new CompetenceCourseLoadBean();
             }

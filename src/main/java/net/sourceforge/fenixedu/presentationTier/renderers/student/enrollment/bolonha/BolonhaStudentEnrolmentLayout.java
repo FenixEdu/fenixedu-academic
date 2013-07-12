@@ -531,22 +531,22 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
         while (!courseGroupsToEnrol.isEmpty() || !curriculumGroups.isEmpty()) {
 
             if (!curriculumGroups.isEmpty() && courseGroupsToEnrol.isEmpty()) {
-                generateGroup(blockContainer, studentCurricularPlan, curriculumGroups.get(0), executionSemester, depth
+                generateGroup(blockContainer, studentCurricularPlan, curriculumGroups.iterator().next(), executionSemester, depth
                         + getRenderer().getWidthDecreasePerLevel());
                 curriculumGroups.remove(0);
             } else if (curriculumGroups.isEmpty() && !courseGroupsToEnrol.isEmpty()) {
-                generateCourseGroupToEnroll(blockContainer, courseGroupsToEnrol.get(0), studentCurricularPlan, depth
+                generateCourseGroupToEnroll(blockContainer, courseGroupsToEnrol.iterator().next(), studentCurricularPlan, depth
                         + getRenderer().getWidthDecreasePerLevel());
                 courseGroupsToEnrol.remove(0);
             } else {
-                Context context = courseGroupsToEnrol.get(0).getContext();
-                CurriculumGroup curriculumGroup = curriculumGroups.get(0).getCurriculumModule();
+                Context context = courseGroupsToEnrol.iterator().next().getContext();
+                CurriculumGroup curriculumGroup = curriculumGroups.iterator().next().getCurriculumModule();
                 if (curriculumGroup.getChildOrder(executionSemester) <= context.getChildOrder()) {
-                    generateGroup(blockContainer, studentCurricularPlan, curriculumGroups.get(0), executionSemester, depth
+                    generateGroup(blockContainer, studentCurricularPlan, curriculumGroups.iterator().next(), executionSemester, depth
                             + getRenderer().getWidthDecreasePerLevel());
                     curriculumGroups.remove(0);
                 } else {
-                    generateCourseGroupToEnroll(blockContainer, courseGroupsToEnrol.get(0), studentCurricularPlan, depth
+                    generateCourseGroupToEnroll(blockContainer, courseGroupsToEnrol.iterator().next(), studentCurricularPlan, depth
                             + getRenderer().getWidthDecreasePerLevel());
                     courseGroupsToEnrol.remove(0);
                 }
@@ -614,7 +614,7 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
     protected IDegreeModuleToEvaluate buildDegreeModuleToEnrolForCycle(StudentCurricularPlan scp, CycleType cycleType,
             ExecutionSemester semester) {
         final CycleCourseGroup cycleCourseGroup = scp.getCycleCourseGroup(cycleType);
-        final Context context = cycleCourseGroup.getParentContextsByExecutionSemester(semester).get(0);
+        final Context context = cycleCourseGroup.getParentContextsByExecutionSemester(semester).iterator().next();
         return new DegreeModuleToEnrol(scp.getRoot(), context, semester);
     }
 

@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.teacherServiceDistribution;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -159,7 +160,7 @@ public class TSDFactory {
 
     private List<TSDCourse> createTSDCompetenceCourses(TSDProcess tsdProcess) {
         List<TSDCourse> courseList = new ArrayList<TSDCourse>();
-        List<ExecutionSemester> periods = tsdProcess.getExecutionPeriods();
+        Collection<ExecutionSemester> periods = tsdProcess.getExecutionPeriods();
 
         for (CompetenceCourse competenceCourse : tsdProcess.getAllCompetenceCourses()) {
             courseList.addAll(createTSDCompetenceCourses(competenceCourse, periods));
@@ -168,7 +169,7 @@ public class TSDFactory {
         return courseList;
     }
 
-    private List<TSDCourse> createTSDCompetenceCourses(CompetenceCourse course, List<ExecutionSemester> periods) {
+    private List<TSDCourse> createTSDCompetenceCourses(CompetenceCourse course, Collection<ExecutionSemester> periods) {
         List<TSDCourse> courseList = new ArrayList<TSDCourse>();
 
         for (ExecutionSemester period : periods) {
@@ -180,7 +181,7 @@ public class TSDFactory {
         return courseList;
     }
 
-    private List<TSDTeacher> createTSDTeacher(Department department, List<ExecutionSemester> executionPeriodList) {
+    private List<TSDTeacher> createTSDTeacher(Department department, Collection<ExecutionSemester> executionPeriodList) {
 
         List<TSDTeacher> tsdTeacherList = new ArrayList<TSDTeacher>();
         Set<Teacher> teacherSet = new HashSet<Teacher>();

@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.time.calendarStructure;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.time.chronologies.AcademicChronology;
@@ -19,7 +21,6 @@ import net.sourceforge.fenixedu.util.renderer.GanttDiagramEvent;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
-import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -161,7 +162,7 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
 
     private AcademicCalendarEntry getVirtualOrRedefinedEntryIn(AcademicCalendarRootEntry rootEntry) {
         if (rootEntry != null) {
-            List<AcademicCalendarEntry> basedEntries = getBasedEntries();
+            Collection<AcademicCalendarEntry> basedEntries = getBasedEntries();
             for (AcademicCalendarEntry entry : basedEntries) {
                 if (entry.getRootEntry().equals(rootEntry)) {
                     return entry;
@@ -405,7 +406,7 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
             result.add(new AcademicInterval(this, rootEntry));
         }
 
-        List<AcademicCalendarEntry> childEntries =
+        Collection<AcademicCalendarEntry> childEntries =
                 getTemplateEntry() != null ? getChildEntriesWithTemplateEntries() : getChildEntries();
         for (AcademicCalendarEntry child : childEntries) {
             child.getChildFullPathInDeep(result, rootEntry);
@@ -424,7 +425,9 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
     public MultiLanguageString getType() {
         MultiLanguageString type = new MultiLanguageString();
         String key = "label." + getClass().getSimpleName() + ".type";
-        type =type.with(Language.pt,ResourceBundle.getBundle("resources/ManagerResources", new Locale("pt", "PT")).getString(key));
+        type =
+                type.with(Language.pt,
+                        ResourceBundle.getBundle("resources/ManagerResources", new Locale("pt", "PT")).getString(key));
         return type;
     }
 
@@ -780,6 +783,7 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
         }
         return count;
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry> getBasedEntries() {
         return getBasedEntriesSet();

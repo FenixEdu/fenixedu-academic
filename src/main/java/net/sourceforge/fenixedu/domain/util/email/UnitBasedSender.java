@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.domain.util.email;
 
-import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.accessControl.Group;
@@ -42,7 +40,7 @@ public class UnitBasedSender extends UnitBasedSender_Base {
     }
 
     @Override
-    public List<ReplyTo> getReplyTos() {
+    public Set<ReplyTo> getReplyTos() {
         if (!hasAnyReplyTos()) {
             addReplyTos(new CurrentUserReplyTo());
         }
@@ -113,27 +111,9 @@ public class UnitBasedSender extends UnitBasedSender_Base {
     }
 
     @Override
-    public List<Recipient> getRecipients() {
-        updateRecipients();
-        return super.getRecipients();
-    }
-
-    @Override
     public Set<Recipient> getRecipientsSet() {
         updateRecipients();
         return super.getRecipientsSet();
-    }
-
-    @Override
-    public int getRecipientsCount() {
-        updateRecipients();
-        return super.getRecipientsCount();
-    }
-
-    @Override
-    public Iterator<Recipient> getRecipientsIterator() {
-        updateRecipients();
-        return super.getRecipientsIterator();
     }
 
     @Atomic

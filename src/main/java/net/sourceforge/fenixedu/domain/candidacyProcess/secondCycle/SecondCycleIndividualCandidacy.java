@@ -410,7 +410,7 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
             return null;
         } else {
             if (getIndividualCandidacySeriesGradeCount() == 1) {
-                return getSecondCycleIndividualCandidacySeriesGradeForDegree(getSelectedDegrees().get(0));
+                return getSecondCycleIndividualCandidacySeriesGradeForDegree(getSelectedDegrees().iterator().next());
             } else {
                 return getSecondCycleIndividualCandidacySeriesGradeForDegree(getSelectedDegree());
             }

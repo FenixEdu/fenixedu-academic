@@ -48,7 +48,7 @@ public class ReadStudentsFinalEvaluationForConfirmation {
         if (!enrolmentEvaluations.isEmpty()) {
 
             List temporaryEnrolmentEvaluations = checkForInvalidSituations(enrolmentEvaluations);
-            Person person = ((EnrolmentEvaluation) temporaryEnrolmentEvaluations.get(0)).getPersonResponsibleForGrade();
+            Person person = ((EnrolmentEvaluation) temporaryEnrolmentEvaluations.iterator().next()).getPersonResponsibleForGrade();
             Teacher teacher = Teacher.readTeacherByUsername(person.getUsername());
             infoTeacher = InfoTeacher.newInfoFromDomain(teacher);
 
@@ -72,7 +72,7 @@ public class ReadStudentsFinalEvaluationForConfirmation {
         InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = new InfoSiteEnrolmentEvaluation();
         infoSiteEnrolmentEvaluation.setEnrolmentEvaluations(infoEnrolmentEvaluations);
         infoSiteEnrolmentEvaluation.setInfoTeacher(infoTeacher);
-        Date evaluationDate = ((InfoEnrolmentEvaluation) infoEnrolmentEvaluations.get(0)).getGradeAvailableDate();
+        Date evaluationDate = ((InfoEnrolmentEvaluation) infoEnrolmentEvaluations.iterator().next()).getGradeAvailableDate();
         infoSiteEnrolmentEvaluation.setLastEvaluationDate(evaluationDate);
         infoSiteEnrolmentEvaluation.setInfoExecutionPeriod(infoExecutionPeriod);
 

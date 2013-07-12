@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.vigilancy;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -306,10 +307,10 @@ public class ConvokeManagement extends FenixDispatchAction {
         bean.setExamCoordinator(coordinator);
         bean.setWrittenEvaluation(writtenEvaluation);
 
-        List<VigilantGroup> allGroups = coordinator.getVigilantGroups();
+        Collection<VigilantGroup> allGroups = coordinator.getVigilantGroups();
 
         bean.setVigilantGroups(allGroups);
-        VigilantGroup group = writtenEvaluation.getAssociatedExecutionCourses().get(0).getVigilantGroup();
+        VigilantGroup group = writtenEvaluation.getAssociatedExecutionCourses().iterator().next().getVigilantGroup();
         StrategySugestion sugestion = group.sugestVigilantsToConvoke(writtenEvaluation);
 
         bean.setVigilantsSugestion(sugestion.getVigilantSugestion());

@@ -151,7 +151,7 @@ public class Department extends Department_Base {
      * 
      */
     public List<CompetenceCourse> getCompetenceCoursesByExecutionYear(ExecutionYear executionYear) {
-        List<CompetenceCourse> competenceCourses = this.getCompetenceCourses();
+        Collection<CompetenceCourse> competenceCourses = this.getCompetenceCourses();
         List<CompetenceCourse> competenceCoursesByExecutionYear = new ArrayList<CompetenceCourse>();
         for (CompetenceCourse competenceCourse : competenceCourses) {
             if (competenceCourse.hasActiveScopesInExecutionYear(executionYear)) {
@@ -468,6 +468,7 @@ public class Department extends Department_Base {
         Collections.sort(departments, Department.COMPARATOR_BY_NAME);
         return departments;
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Project> getProjects() {
         return getProjectsSet();

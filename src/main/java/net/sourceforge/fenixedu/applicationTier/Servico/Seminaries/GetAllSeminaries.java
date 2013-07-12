@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.Seminaries;
 
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class GetAllSeminaries {
     protected List run(Boolean inEnrollmentPeriod) throws BDException {
         List<InfoSeminary> result = new LinkedList<InfoSeminary>();
 
-        List<Seminary> seminaries = RootDomainObject.getInstance().getSeminarys();
+        Collection<Seminary> seminaries = RootDomainObject.getInstance().getSeminarys();
         for (Seminary seminary : seminaries) {
 
             if (!inEnrollmentPeriod) {

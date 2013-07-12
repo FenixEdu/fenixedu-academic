@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Factory;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -181,7 +182,7 @@ public class TeacherAdministrationSiteComponentBuilder {
         final InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(executionCourse);
         component.setExecutionCourse(infoExecutionCourse);
 
-        final List<CurricularCourse> curricularCourses = executionCourse.getAssociatedCurricularCourses();
+        final Collection<CurricularCourse> curricularCourses = executionCourse.getAssociatedCurricularCourses();
         final List<InfoCurricularCourse> infoCurricularCourses = new ArrayList<InfoCurricularCourse>(curricularCourses.size());
         for (final CurricularCourse curricularCourse : curricularCourses) {
             infoCurricularCourses.add(InfoCurricularCourse.newInfoFromDomain(curricularCourse));
@@ -221,7 +222,7 @@ public class TeacherAdministrationSiteComponentBuilder {
             throws FenixServiceException {
 
         ExecutionCourse executionCourse = site.getExecutionCourse();
-        List curricularCourses = executionCourse.getAssociatedCurricularCourses();
+        Collection curricularCourses = executionCourse.getAssociatedCurricularCourses();
         Iterator iter = curricularCourses.iterator();
         List<InfoCurriculum> infoCurriculums = new ArrayList<InfoCurriculum>();
 
@@ -248,7 +249,7 @@ public class TeacherAdministrationSiteComponentBuilder {
      */
     private ISiteComponent getInfoSitePrograms(InfoSitePrograms component, ExecutionCourseSite site) throws FenixServiceException {
         ExecutionCourse executionCourse = site.getExecutionCourse();
-        List curricularCourses = executionCourse.getAssociatedCurricularCourses();
+        Collection curricularCourses = executionCourse.getAssociatedCurricularCourses();
         Iterator iter = curricularCourses.iterator();
         List<InfoCurriculum> infoCurriculums = new ArrayList<InfoCurriculum>();
 
@@ -299,7 +300,7 @@ public class TeacherAdministrationSiteComponentBuilder {
             throws FenixServiceException {
 
         ExecutionCourse executionCourse = site.getExecutionCourse();
-        List teachers = executionCourse.getProfessorships();
+        Collection teachers = executionCourse.getProfessorships();
         List<InfoTeacher> infoTeachers = new ArrayList<InfoTeacher>();
         if (teachers != null) {
 
@@ -353,7 +354,7 @@ public class TeacherAdministrationSiteComponentBuilder {
     private ISiteComponent getInfoSiteEvaluation(InfoSiteEvaluation component, ExecutionCourseSite site) {
         ExecutionCourse executionCourse = site.getExecutionCourse();
 
-        List evaluations = executionCourse.getAssociatedEvaluations();
+        Collection evaluations = executionCourse.getAssociatedEvaluations();
         Iterator iter = evaluations.iterator();
 
         // boolean hasFinalEvaluation = false;
@@ -388,7 +389,7 @@ public class TeacherAdministrationSiteComponentBuilder {
      */
     private ISiteComponent getInfoSiteExam(InfoSiteExam component, ExecutionCourseSite site) {
         ExecutionCourse executionCourse = site.getExecutionCourse();
-        List<Evaluation> associatedEvaluations = executionCourse.getAssociatedEvaluations();
+        Collection<Evaluation> associatedEvaluations = executionCourse.getAssociatedEvaluations();
         List<Exam> exams = new ArrayList<Exam>();
         for (Evaluation evaluation : associatedEvaluations) {
             if (evaluation instanceof Exam) {
@@ -594,7 +595,7 @@ public class TeacherAdministrationSiteComponentBuilder {
     private List readInfoCurricularCourses(ExecutionCourseSite site) {
 
         ExecutionCourse executionCourse = site.getExecutionCourse();
-        List curricularCourses = executionCourse.getAssociatedCurricularCourses();
+        Collection curricularCourses = executionCourse.getAssociatedCurricularCourses();
         Iterator iter = curricularCourses.iterator();
         List<InfoCurricularCourse> infoCurricularCourses = new ArrayList<InfoCurricularCourse>();
         while (iter.hasNext()) {
@@ -627,7 +628,7 @@ public class TeacherAdministrationSiteComponentBuilder {
         ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseCode);
 
         List<Grouping> executionCourseProjects = new ArrayList<Grouping>();
-        List groupPropertiesExecutionCourseList = executionCourse.getExportGroupings();
+        Collection groupPropertiesExecutionCourseList = executionCourse.getExportGroupings();
         Iterator iterGroupPropertiesExecutionCourse = groupPropertiesExecutionCourseList.iterator();
         while (iterGroupPropertiesExecutionCourse.hasNext()) {
             ExportGrouping groupPropertiesExecutionCourse = (ExportGrouping) iterGroupPropertiesExecutionCourse.next();
@@ -676,7 +677,7 @@ public class TeacherAdministrationSiteComponentBuilder {
         ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseCode);
 
         List<Grouping> executionCourseProjects = new ArrayList<Grouping>();
-        List groupPropertiesExecutionCourseList = executionCourse.getExportGroupings();
+        Collection groupPropertiesExecutionCourseList = executionCourse.getExportGroupings();
         Iterator iterGroupPropertiesExecutionCourse = groupPropertiesExecutionCourseList.iterator();
         while (iterGroupPropertiesExecutionCourse.hasNext()) {
             ExportGrouping groupPropertiesExecutionCourse = (ExportGrouping) iterGroupPropertiesExecutionCourse.next();
@@ -729,7 +730,7 @@ public class TeacherAdministrationSiteComponentBuilder {
         while (iterGroupPropertiesList.hasNext()) {
             boolean found = false;
             Grouping groupProperties = (Grouping) iterGroupPropertiesList.next();
-            List groupPropertiesExecutionCourseList = groupProperties.getExportGroupings();
+            Collection groupPropertiesExecutionCourseList = groupProperties.getExportGroupings();
             Iterator iterGroupPropertiesExecutionCourseList = groupPropertiesExecutionCourseList.iterator();
             while (iterGroupPropertiesExecutionCourseList.hasNext() && !found) {
                 ExportGrouping groupPropertiesExecutionCourse = (ExportGrouping) iterGroupPropertiesExecutionCourseList.next();
@@ -934,7 +935,7 @@ public class TeacherAdministrationSiteComponentBuilder {
             infoSiteStudentsAndShiftByStudentGroup.setInfoStudentGroup(InfoStudentGroup.newInfoFromDomain(studentGroup));
             infoSiteStudentsAndShiftByStudentGroup.setInfoShift(InfoShift.newInfoFromDomain(turno));
 
-            List attendsList = studentGroup.getAttends();
+            Collection attendsList = studentGroup.getAttends();
 
             List<InfoSiteStudentInformation> studentGroupAttendInformationList = new ArrayList<InfoSiteStudentInformation>();
             Iterator iterAttendsList = attendsList.iterator();

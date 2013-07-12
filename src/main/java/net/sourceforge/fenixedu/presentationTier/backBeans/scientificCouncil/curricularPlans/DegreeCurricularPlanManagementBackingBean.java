@@ -207,7 +207,7 @@ public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean 
                     new ArrayList<ExecutionYear>(dcp.getRoot().getBeginContextExecutionYears());
             Collections.sort(executionYears, ExecutionYear.COMPARATOR_BY_YEAR);
             if (!executionYears.isEmpty()) {
-                setExecutionYearID(executionYears.get(0).getExternalId());
+                setExecutionYearID(executionYears.iterator().next().getExternalId());
             }
         }
     }

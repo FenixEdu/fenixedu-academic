@@ -28,7 +28,7 @@ public class SearchPublicationsDA extends SearchPublicationsAction {
         SearchDSpaceBean bean = createNewBean();
         bean.addSearchElement();
 
-        SearchElement searchElement = bean.getSearchElements().get(0);
+        SearchElement searchElement = bean.getSearchElements().iterator().next();
         searchElement.setSearchField(SearchField.ANY);
 
         request.setAttribute("bean", bean);

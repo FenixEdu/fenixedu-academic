@@ -458,10 +458,10 @@ public abstract class Space extends Space_Base {
             throw new DomainException("error.space.cannot.be.deleted");
         }
 
-        for (; !getBlueprints().isEmpty(); getBlueprints().get(0).delete()) {
+        for (; !getBlueprints().isEmpty(); getBlueprints().iterator().next().delete()) {
             ;
         }
-        for (; !getSpaceInformations().isEmpty(); getSpaceInformations().get(0).deleteWithoutCheckNumberOfSpaceInformations()) {
+        for (; !getSpaceInformations().isEmpty(); getSpaceInformations().iterator().next().deleteWithoutCheckNumberOfSpaceInformations()) {
             ;
         }
         for (SpaceAttendances attendance : getPastAttendancesSet()) {
@@ -895,7 +895,7 @@ public abstract class Space extends Space_Base {
                 }
             }
         }
-        return (Group) (existentGroups.isEmpty() ? null : existentGroups.size() == 1 ? existentGroups.get(0) : new GroupUnion(
+        return (Group) (existentGroups.isEmpty() ? null : existentGroups.size() == 1 ? existentGroups.iterator().next() : new GroupUnion(
                 existentGroups));
     }
 

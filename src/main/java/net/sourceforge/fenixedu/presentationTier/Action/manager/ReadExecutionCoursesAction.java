@@ -47,7 +47,7 @@ public class ReadExecutionCoursesAction extends FenixAction {
             if (executionCourses != null && executionCourses.size() > 0) {
                 Collections.sort(executionCourses, new BeanComparator("nome"));
                 InfoExecutionPeriod infoExecutionPeriod =
-                        ((InfoExecutionCourse) executionCourses.get(0)).getInfoExecutionPeriod();
+                        ((InfoExecutionCourse) executionCourses.iterator().next()).getInfoExecutionPeriod();
 
                 String executionPeriodNameAndYear =
                         new String(infoExecutionPeriod.getName() + "-" + infoExecutionPeriod.getInfoExecutionYear().getYear());

@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.providers;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -44,7 +45,7 @@ public class EmployeesForGivenUnit implements DataProvider {
 
         VigilantGroup group = bean.getSelectedVigilantGroup();
         if (group != null) {
-            List<VigilantWrapper> vigilants = group.getVigilants();
+            Collection<VigilantWrapper> vigilants = group.getVigilants();
             for (VigilantWrapper vigilant : vigilants) {
                 Employee employee = vigilant.getPerson().getEmployee();
                 if (employee != null) {

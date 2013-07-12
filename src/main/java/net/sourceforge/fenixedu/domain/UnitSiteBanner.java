@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
-import java.util.List;
+import java.util.Collection;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.predicates.UnitSitePredicates;
@@ -66,7 +66,7 @@ public class UnitSiteBanner extends UnitSiteBanner_Base {
 
     public float getWeightPercentage() {
         Integer weight = getWeight();
-        List<UnitSiteBanner> banners = getSite().getBanners();
+        Collection<UnitSiteBanner> banners = getSite().getBanners();
 
         if (weight == null) {
             for (UnitSiteBanner banner : banners) {

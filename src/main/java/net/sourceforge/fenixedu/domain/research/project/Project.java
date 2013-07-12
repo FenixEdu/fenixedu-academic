@@ -42,10 +42,10 @@ public class Project extends Project_Base {
      * project and in the end it deletes the object.
      */
     public void delete() {
-        for (; this.hasAnyProjectParticipations(); getProjectParticipations().get(0).delete()) {
+        for (; this.hasAnyProjectParticipations(); getProjectParticipations().iterator().next().delete()) {
             ;
         }
-        for (; this.hasAnyAssociatedEvents(); getAssociatedEvents().get(0).delete()) {
+        for (; this.hasAnyAssociatedEvents(); getAssociatedEvents().iterator().next().delete()) {
             ;
         }
         setRootDomainObject(null);

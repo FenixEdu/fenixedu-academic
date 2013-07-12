@@ -2,11 +2,12 @@ package net.sourceforge.fenixedu.domain.resource;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Collection;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -19,7 +20,6 @@ import org.joda.time.DateTime;
 import org.joda.time.Minutes;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixframework.FenixFramework;
 
 public class VehicleAllocation extends VehicleAllocation_Base {
 
@@ -220,7 +220,7 @@ public class VehicleAllocation extends VehicleAllocation_Base {
     }
 
     public static Set<VehicleAllocation> getActiveVehicleAllocations() {
-        List<ResourceAllocation> resourceAllocations = RootDomainObject.getInstance().getResourceAllocations();
+        Collection<ResourceAllocation> resourceAllocations = RootDomainObject.getInstance().getResourceAllocations();
         Set<VehicleAllocation> result = new TreeSet<VehicleAllocation>(COMPARATOR_BY_VEHICLE_NUMBER_PLATE);
         DateTime currentDateTime = new DateTime();
         for (ResourceAllocation resourceAllocation : resourceAllocations) {
@@ -232,7 +232,7 @@ public class VehicleAllocation extends VehicleAllocation_Base {
     }
 
     public static Set<VehicleAllocation> getFutureVehicleAllocations() {
-        List<ResourceAllocation> resourceAllocations = RootDomainObject.getInstance().getResourceAllocations();
+        Collection<ResourceAllocation> resourceAllocations = RootDomainObject.getInstance().getResourceAllocations();
         Set<VehicleAllocation> result = new TreeSet<VehicleAllocation>(COMPARATOR_BY_VEHICLE_NUMBER_PLATE);
         DateTime currentDateTime = new DateTime();
         for (ResourceAllocation resourceAllocation : resourceAllocations) {
@@ -245,7 +245,7 @@ public class VehicleAllocation extends VehicleAllocation_Base {
     }
 
     public static Set<VehicleAllocation> getPastVehicleAllocations(DateTime begin, DateTime end, Vehicle vehicle) {
-        List<ResourceAllocation> resourceAllocations = RootDomainObject.getInstance().getResourceAllocations();
+        Collection<ResourceAllocation> resourceAllocations = RootDomainObject.getInstance().getResourceAllocations();
         Set<VehicleAllocation> result = new TreeSet<VehicleAllocation>(COMPARATOR_BY_VEHICLE_NUMBER_PLATE);
         DateTime currentDateTime = new DateTime();
         for (ResourceAllocation resourceAllocation : resourceAllocations) {

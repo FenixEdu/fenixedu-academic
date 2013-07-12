@@ -70,7 +70,7 @@ abstract public class ExecutionInterval extends ExecutionInterval_Base {
     public Over23CandidacyPeriod getOver23CandidacyPeriod() {
         final List<Over23CandidacyPeriod> candidacyPeriods =
                 (List<Over23CandidacyPeriod>) getCandidacyPeriods(Over23CandidacyPeriod.class);
-        return candidacyPeriods.isEmpty() ? null : candidacyPeriods.get(0);
+        return candidacyPeriods.isEmpty() ? null : candidacyPeriods.iterator().next();
     }
 
     public boolean hasOver23CandidacyPeriod() {
@@ -92,7 +92,7 @@ abstract public class ExecutionInterval extends ExecutionInterval_Base {
     public DegreeCandidacyForGraduatedPersonCandidacyPeriod getDegreeCandidacyForGraduatedPersonCandidacyPeriod() {
         final List<DegreeCandidacyForGraduatedPersonCandidacyPeriod> candidacyPeriods =
                 (List<DegreeCandidacyForGraduatedPersonCandidacyPeriod>) getCandidacyPeriods(DegreeCandidacyForGraduatedPersonCandidacyPeriod.class);
-        return candidacyPeriods.isEmpty() ? null : candidacyPeriods.get(0);
+        return candidacyPeriods.isEmpty() ? null : candidacyPeriods.iterator().next();
     }
 
     public boolean hasDegreeCandidacyForGraduatedPersonCandidacyPeriod() {
@@ -102,7 +102,7 @@ abstract public class ExecutionInterval extends ExecutionInterval_Base {
     public DegreeChangeCandidacyPeriod getDegreeChangeCandidacyPeriod() {
         final List<DegreeChangeCandidacyPeriod> candidacyPeriods =
                 (List<DegreeChangeCandidacyPeriod>) getCandidacyPeriods(DegreeChangeCandidacyPeriod.class);
-        return candidacyPeriods.isEmpty() ? null : candidacyPeriods.get(0);
+        return candidacyPeriods.isEmpty() ? null : candidacyPeriods.iterator().next();
     }
 
     public boolean hasDegreeChangeCandidacyPeriod() {
@@ -112,7 +112,7 @@ abstract public class ExecutionInterval extends ExecutionInterval_Base {
     public DegreeTransferCandidacyPeriod getDegreeTransferCandidacyPeriod() {
         final List<DegreeTransferCandidacyPeriod> candidacyPeriods =
                 (List<DegreeTransferCandidacyPeriod>) getCandidacyPeriods(DegreeTransferCandidacyPeriod.class);
-        return candidacyPeriods.isEmpty() ? null : candidacyPeriods.get(0);
+        return candidacyPeriods.isEmpty() ? null : candidacyPeriods.iterator().next();
     }
 
     public boolean hasDegreeTransferCandidacyPeriod() {

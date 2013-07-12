@@ -14,6 +14,7 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "external", path = "/partyContactValidation", scope = "request", parameter = "method")
 @Forwards({ @Forward(name = "emailValidation", path = "emailValidation"),

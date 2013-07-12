@@ -79,7 +79,7 @@ public class UnitUtils {
         final YearMonthDay now = new YearMonthDay();
         PartyType partyType = PartyType.readPartyTypeByType(type);
         if (partyType != null) {
-            List<Party> parties = partyType.getParties();
+            Collection<Party> parties = partyType.getParties();
             for (Party party : parties) {
                 if (party.isUnit()) {
                     Unit unit = (Unit) party;

@@ -198,7 +198,7 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
 
         final SchoolClass schoolClass =
                 (classIdSelected != null) ? searchSchoolClassFrom(schoolClassesToEnrol, classIdSelected) : schoolClassesToEnrol
-                        .get(0);
+                        .iterator().next();
         request.setAttribute("selectedSchoolClass", schoolClass);
 
         return schoolClass;

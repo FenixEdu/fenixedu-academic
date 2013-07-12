@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.gesdis;
 
+import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Evaluation;
@@ -24,7 +24,7 @@ public class CreateCourseReports {
         Set<String> courseReportsExecutionCoursesIDs = new HashSet<String>();
 
         final ExecutionSemester executionSemester = FenixFramework.getDomainObject(executionPeriodID);
-        List<ExecutionCourse> executionCourses = executionSemester.getAssociatedExecutionCourses();
+        Collection<ExecutionCourse> executionCourses = executionSemester.getAssociatedExecutionCourses();
 
         for (ExecutionCourse executionCourse : executionCourses) {
             if (executionCourse.getCourseReport() == null) {

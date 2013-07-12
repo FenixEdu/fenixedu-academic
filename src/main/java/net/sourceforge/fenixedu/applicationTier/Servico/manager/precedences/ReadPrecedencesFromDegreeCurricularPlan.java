@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.precedences;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,14 +33,14 @@ public class ReadPrecedencesFromDegreeCurricularPlan {
 
         for (int i = 0; i < size; i++) {
             CurricularCourse curricularCourse = (CurricularCourse) curricularCourses.get(i);
-            List precedences = curricularCourse.getPrecedences();
+            Collection precedences = curricularCourse.getPrecedences();
             putInMap(finalListOfInfoPrecedences, curricularCourse, precedences);
         }
 
         return finalListOfInfoPrecedences;
     }
 
-    private static void putInMap(Map finalListOfInfoPrecedences, CurricularCourse curricularCourse, List precedences) {
+    private static void putInMap(Map finalListOfInfoPrecedences, CurricularCourse curricularCourse, Collection precedences) {
 
         if (!precedences.isEmpty()) {
             InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
@@ -50,7 +51,7 @@ public class ReadPrecedencesFromDegreeCurricularPlan {
         }
     }
 
-    private static List clone(List precedences) {
+    private static List clone(Collection precedences) {
 
         List result = new ArrayList();
 

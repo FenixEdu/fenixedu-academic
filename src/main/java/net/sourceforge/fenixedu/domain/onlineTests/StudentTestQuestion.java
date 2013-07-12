@@ -78,7 +78,7 @@ public class StudentTestQuestion extends StudentTestQuestion_Base {
     }
 
     public boolean isSubQuestion() {
-        if (getItemId() != null && (!getQuestion().getSubQuestions().get(0).getItemId().equals(getItemId()))) {
+        if (getItemId() != null && (!getQuestion().getSubQuestions().iterator().next().getItemId().equals(getItemId()))) {
             return true;
         }
         return false;

@@ -57,9 +57,9 @@ import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
-import dml.runtime.RelationAdapter;
 
 public class Thesis extends Thesis_Base {
 
@@ -74,7 +74,7 @@ public class Thesis extends Thesis_Base {
                     return;
                 }
 
-                List<Thesis> theses = enrolment.getTheses();
+                Collection<Thesis> theses = enrolment.getTheses();
 
                 String number = enrolment.getStudentCurricularPlan().getRegistration().getNumber().toString();
                 switch (theses.size()) {
@@ -536,7 +536,7 @@ public class Thesis extends Thesis_Base {
             return competenceCourse.getDepartmentUnit().getDepartment().getRealName();
         }
         if (competenceCourse.hasAnyDepartments()) {
-            return competenceCourse.getDepartments().get(0).getRealName();
+            return competenceCourse.getDepartments().iterator().next().getRealName();
         }
         return null;
     }
@@ -667,7 +667,7 @@ public class Thesis extends Thesis_Base {
         final String body = getMessage("message.thesis.reject.submission.email.body", studentNumber, title, rejectionComment);
 
         //
-        final Sender sender = ScientificCouncilUnit.getScientificCouncilUnit().getUnitBasedSender().get(0);
+        final Sender sender = ScientificCouncilUnit.getScientificCouncilUnit().getUnitBasedSender().iterator().next();
 
         new Message(sender, sender.getConcreteReplyTos(), recipient.asCollection(), subject, body, "");
     }
@@ -1732,7 +1732,7 @@ public class Thesis extends Thesis_Base {
             if (language == Language.pt) {
                 result.add(0, language);
             } else if (language == Language.en) {
-                if (result.size() > 0 && result.get(0) == Language.pt) {
+                if (result.size() > 0 && result.iterator().next() == Language.pt) {
                     result.add(1, language);
                 } else if (result.size() > 0) {
                     result.add(0, language);

@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.manager;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,7 +35,7 @@ import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixframework.FenixFramework;
+import pt.ist.fenixframework.core.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 /**
@@ -79,7 +78,7 @@ public class ManageRolesDA extends FenixDispatchAction {
         final String username = (String) rolesForm.get("username");
         final Person person = getPerson(rolesForm);
 
-        final List<Role> roles;
+        final Collection<Role> roles;
         if (person == null) {
             roles = null;
             return showError(request, mapping, errors, "noUsername", new ActionError("error.noUsername", username));

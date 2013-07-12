@@ -5,9 +5,9 @@
 package net.sourceforge.fenixedu.domain.reimbursementGuide;
 
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.util.State;
@@ -64,7 +64,7 @@ public class ReimbursementGuide extends ReimbursementGuide_Base {
     }
 
     public static Integer generateReimbursementGuideNumber() {
-        List<ReimbursementGuide> reimbursementGuides = RootDomainObject.getInstance().getReimbursementGuides();
+        Collection<ReimbursementGuide> reimbursementGuides = RootDomainObject.getInstance().getReimbursementGuides();
 
         return (reimbursementGuides.isEmpty()) ? Integer.valueOf(1) : Collections.max(reimbursementGuides, NUMBER_COMPARATOR)
                 .getNumber() + 1;

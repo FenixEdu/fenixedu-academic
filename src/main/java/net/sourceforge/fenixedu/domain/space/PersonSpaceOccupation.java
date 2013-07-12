@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.domain.space;
 
 import java.text.Collator;
+import java.util.Collection;
 import java.util.Comparator;
-import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
@@ -112,7 +112,7 @@ public class PersonSpaceOccupation extends PersonSpaceOccupation_Base {
             Space space) {
 
         checkBeginDateAndEndDate(begin, end);
-        List<PersonSpaceOccupation> personSpaceOccupations = person.getPersonSpaceOccupations();
+        Collection<PersonSpaceOccupation> personSpaceOccupations = person.getPersonSpaceOccupations();
         for (PersonSpaceOccupation personSpaceOccupation : personSpaceOccupations) {
             if (!personSpaceOccupation.equals(this) && personSpaceOccupation.getSpace().equals(space)
                     && personSpaceOccupation.occupationsIntersection(begin, end)) {

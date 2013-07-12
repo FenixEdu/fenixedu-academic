@@ -19,7 +19,7 @@ public class InternshipCandidacySession extends InternshipCandidacySession_Base 
      */
     @Atomic
     public void delete() {
-        for (; hasAnyInternshipCandidacy(); getInternshipCandidacy().get(0).delete()) {
+        for (; hasAnyInternshipCandidacy(); getInternshipCandidacy().iterator().next().delete()) {
             ;
         }
         setRootDomainObject(null);

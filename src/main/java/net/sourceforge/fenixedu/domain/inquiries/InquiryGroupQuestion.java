@@ -74,10 +74,10 @@ public class InquiryGroupQuestion extends InquiryGroupQuestion_Base {
     }
 
     public void delete() {
-        for (; !getInquiryQuestions().isEmpty(); getInquiryQuestions().get(0).delete()) {
+        for (; !getInquiryQuestions().isEmpty(); getInquiryQuestions().iterator().next().delete()) {
             ;
         }
-        for (; !getQuestionConditions().isEmpty(); getQuestionConditions().get(0).delete()) {
+        for (; !getQuestionConditions().isEmpty(); getQuestionConditions().iterator().next().delete()) {
             ;
         }
         if (hasInquiryQuestionHeader()) {

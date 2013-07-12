@@ -60,7 +60,7 @@ public class TSDCurricularLoad extends TSDCurricularLoad_Base {
             BigDecimal shiftHours = null;
 
             if (courseList != null && !courseList.isEmpty()) {
-                shiftHours = courseList.get(0).getTotalHoursByShiftType(getType(), course.getExecutionPeriod());
+                shiftHours = courseList.iterator().next().getTotalHoursByShiftType(getType(), course.getExecutionPeriod());
             }
             return shiftHours == null ? 0d : shiftHours.doubleValue() / CompetenceCourseLoad.NUMBER_OF_WEEKS;
         }

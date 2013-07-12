@@ -3,8 +3,8 @@
  */
 package net.sourceforge.fenixedu.domain.onlineTests;
 
+import java.util.Collection;
 import java.util.Comparator;
-import java.util.List;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.util.tests.CorrectionFormula;
@@ -31,7 +31,7 @@ public class TestQuestion extends TestQuestion_Base {
     }
 
     private void organizeTestQuestionsOrder(Integer newOrder, Integer oldOrder) {
-        List<TestQuestion> testQuestions = getTest().getTestQuestions();
+        Collection<TestQuestion> testQuestions = getTest().getTestQuestions();
         int diffOrder = newOrder.intValue() - oldOrder.intValue();
         if (diffOrder != 0) {
             if (diffOrder > 0) {

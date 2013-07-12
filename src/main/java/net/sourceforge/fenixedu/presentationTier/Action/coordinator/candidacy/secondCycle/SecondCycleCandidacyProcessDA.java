@@ -122,11 +122,11 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
             request.setAttribute("executionIntervals", executionIntervals);
 
             if (executionIntervals.size() == 1) {
-                final ExecutionInterval executionInterval = executionIntervals.get(0);
+                final ExecutionInterval executionInterval = executionIntervals.iterator().next();
                 final List<SecondCycleCandidacyProcess> candidacyProcesses = getCandidacyProcesses(executionInterval);
 
                 if (candidacyProcesses.size() == 1) {
-                    setCandidacyProcessInformation(request, candidacyProcesses.get(0));
+                    setCandidacyProcessInformation(request, candidacyProcesses.iterator().next());
                     setCandidacyProcessInformation(actionForm, getProcess(request));
                     request.setAttribute("candidacyProcesses", candidacyProcesses);
                     return;
@@ -147,7 +147,7 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
                 final List<SecondCycleCandidacyProcess> candidacyProcesses = getCandidacyProcesses(executionInterval);
 
                 if (candidacyProcesses.size() == 1) {
-                    setCandidacyProcessInformation(request, candidacyProcesses.get(0));
+                    setCandidacyProcessInformation(request, candidacyProcesses.iterator().next());
                     setCandidacyProcessInformation(actionForm, getProcess(request));
                     request.setAttribute("candidacyProcesses", candidacyProcesses);
                     return;

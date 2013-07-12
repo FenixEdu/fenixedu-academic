@@ -54,7 +54,7 @@ public class ExternalSupervisionEntryPointAction extends FenixDispatchAction {
         if(registrationProtocol != null){
             registrationAgreement = registrationProtocol.getRegistrationAgreement();
         } else {
-            registrationAgreement = supervisor.getRegistrationProtocols().get(0).getRegistrationAgreement();
+            registrationAgreement = supervisor.getRegistrationProtocols().iterator().next().getRegistrationAgreement();
         }*/
 
         final IUserView userView = UserView.getUser();

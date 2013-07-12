@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.elections;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
@@ -101,7 +102,7 @@ public abstract class DelegateElection extends DelegateElection_Base {
 
     protected void deleteVotingPeriod(DelegateElectionVotingPeriod votingPeriod) {
 
-        for (; votingPeriod.hasAnyVotes(); votingPeriod.getVotes().get(0).delete()) {
+        for (; votingPeriod.hasAnyVotes(); votingPeriod.getVotes().iterator().next().delete()) {
             ;
         }
 
@@ -213,7 +214,7 @@ public abstract class DelegateElection extends DelegateElection_Base {
     }
 
     @Override
-    public List<Student> getCandidates() {
+    public Collection<Student> getCandidates() {
         if (!hasLastVotingPeriod() || getLastVotingPeriod().isFirstRoundElections()) {
             return super.getCandidates();
         }
@@ -221,7 +222,7 @@ public abstract class DelegateElection extends DelegateElection_Base {
 
     }
 
-    public List<Student> getNotCandidatedStudents() {
+    public Collection<Student> getNotCandidatedStudents() {
         if (!hasLastVotingPeriod() || getLastVotingPeriod().isFirstRoundElections()) {
             return getNotCandidates();
         }
@@ -229,7 +230,7 @@ public abstract class DelegateElection extends DelegateElection_Base {
         return new LinkedList<Student>();
     }
 
-    private List<Student> getNotCandidates() {
+    private Collection<Student> getNotCandidates() {
         List<Student> result = new ArrayList<Student>(super.getStudents());
         result.removeAll(getCandidates());
         return result;

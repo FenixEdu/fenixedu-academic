@@ -42,7 +42,7 @@ public class InquiryQuestion extends InquiryQuestion_Base {
         if (!getQuestionAnswers().isEmpty()) {
             throw new DomainException("error.inquiryQuestion.can.not.delete.hasAssociatedAnswers");
         }
-        for (; !getQuestionConditions().isEmpty(); getQuestionConditions().get(0).delete()) {
+        for (; !getQuestionConditions().isEmpty(); getQuestionConditions().iterator().next().delete()) {
             ;
         }
         if (hasInquiryQuestionHeader()) {

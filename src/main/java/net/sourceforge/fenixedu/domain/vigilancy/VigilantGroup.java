@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.vigilancy;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -55,7 +56,7 @@ public class VigilantGroup extends VigilantGroup_Base {
 
     }
 
-    private List<VigilantWrapper> findTeachersThatAreInGroupFor(List<ExecutionCourse> executionCourses) {
+    private List<VigilantWrapper> findTeachersThatAreInGroupFor(Collection<ExecutionCourse> executionCourses) {
         List<VigilantWrapper> teachers = new ArrayList<VigilantWrapper>();
         for (VigilantWrapper vigilantWrapper : this.getVigilantWrappersThatCantBeConvoked()) {
             Teacher teacher = vigilantWrapper.getTeacher();
@@ -71,7 +72,7 @@ public class VigilantGroup extends VigilantGroup_Base {
         for (VigilantWrapper vigilant : vigilants) {
             if (!vigilant.hasBeenConvokedForEvaluation(writtenEvaluation)) {
                 Teacher teacher = vigilant.getTeacher();
-                if (teacher != null && teacher.teachesAny(writtenEvaluation.getAssociatedExecutionCourses())) {
+                if (teacher != null && teacher.teachesAny(writtenEvaluation.getAssociatedExecutionCoursesSet())) {
                     vigilant.addVigilancies(new OwnCourseVigilancy(writtenEvaluation));
                 } else {
                     vigilant.addVigilancies(new OtherCourseVigilancy(writtenEvaluation));
@@ -85,8 +86,8 @@ public class VigilantGroup extends VigilantGroup_Base {
         }
     }
 
-    public List<VigilantWrapper> getVigilants() {
-        return this.getVigilantWrappers();
+    public Collection<VigilantWrapper> getVigilants() {
+        return this.getVigilantWrappersSet();
     }
 
     public int getVigilantsCount() {
@@ -115,7 +116,7 @@ public class VigilantGroup extends VigilantGroup_Base {
 
     public List<Person> getPersons() {
         List<Person> persons = new ArrayList<Person>();
-        List<VigilantWrapper> vigilantWrappers = this.getVigilantWrappers();
+        Collection<VigilantWrapper> vigilantWrappers = this.getVigilantWrappersSet();
         for (VigilantWrapper vigilantWrapper : vigilantWrappers) {
             persons.add(vigilantWrapper.getPerson());
         }
@@ -264,6 +265,7 @@ public class VigilantGroup extends VigilantGroup_Base {
         }
         return null;
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator> getExamCoordinators() {
         return getExamCoordinatorsSet();

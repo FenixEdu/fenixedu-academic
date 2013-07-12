@@ -154,7 +154,7 @@ public class ExecutionCourseProcessor extends PathProcessor {
         ExecutionSemester currentPeriod = ExecutionSemester.readActualExecutionSemester();
         ExecutionSemester period = executionCourse.getExecutionPeriod();
 
-        CurricularCourse course = executionCourse.getAssociatedCurricularCourses().get(0);
+        CurricularCourse course = executionCourse.getAssociatedCurricularCourses().iterator().next();
         Degree degree = course.getDegree();
 
         DegreeCurricularPlan mostRecent = degree.getMostRecentDegreeCurricularPlan();

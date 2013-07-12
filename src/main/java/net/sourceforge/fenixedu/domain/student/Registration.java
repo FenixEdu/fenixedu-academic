@@ -317,31 +317,31 @@ public class Registration extends Registration_Base {
 
         checkRulesToDelete();
 
-        for (; hasAnyRegistrationStates(); getRegistrationStates().get(0).delete()) {
+        for (; hasAnyRegistrationStates(); getRegistrationStates().iterator().next().delete()) {
             ;
         }
-        for (; hasAnyStudentCurricularPlans(); getStudentCurricularPlans().get(0).delete()) {
+        for (; hasAnyStudentCurricularPlans(); getStudentCurricularPlans().iterator().next().delete()) {
             ;
         }
-        for (; hasAnyAssociatedAttends(); getAssociatedAttends().get(0).delete()) {
+        for (; hasAnyAssociatedAttends(); getAssociatedAttends().iterator().next().delete()) {
             ;
         }
-        for (; hasAnyExternalEnrolments(); getExternalEnrolments().get(0).delete()) {
+        for (; hasAnyExternalEnrolments(); getExternalEnrolments().iterator().next().delete()) {
             ;
         }
-        for (; hasAnyRegistrationDataByExecutionYear(); getRegistrationDataByExecutionYear().get(0).delete()) {
+        for (; hasAnyRegistrationDataByExecutionYear(); getRegistrationDataByExecutionYear().iterator().next().delete()) {
             ;
         }
-        for (; hasAnyAcademicServiceRequests(); getAcademicServiceRequests().get(0).delete()) {
+        for (; hasAnyAcademicServiceRequests(); getAcademicServiceRequests().iterator().next().delete()) {
             ;
         }
-        for (; hasAnyRegistrationRegimes(); getRegistrationRegimes().get(0).delete()) {
+        for (; hasAnyRegistrationRegimes(); getRegistrationRegimes().iterator().next().delete()) {
             ;
         }
-        for (; hasAnyCurriculumLineLogs(); getCurriculumLineLogs().get(0).delete()) {
+        for (; hasAnyCurriculumLineLogs(); getCurriculumLineLogs().iterator().next().delete()) {
             ;
         }
-        for (; hasAnyRegistrationStateLogs(); getRegistrationStateLogs().get(0).delete()) {
+        for (; hasAnyRegistrationStateLogs(); getRegistrationStateLogs().iterator().next().delete()) {
             ;
         }
 

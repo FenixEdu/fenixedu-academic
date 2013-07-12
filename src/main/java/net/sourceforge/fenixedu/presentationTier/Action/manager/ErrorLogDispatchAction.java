@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -30,6 +31,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/errorReport", module = "manager")
 @Forwards({ @Forward(name = "selectDay", path = "/manager/selectDay.jsp"),
@@ -135,7 +137,7 @@ public class ErrorLogDispatchAction extends FenixDispatchAction {
     }
 
     private void getErrors(HttpServletRequest request, RequestLogDay requestLogDay) {
-        List<RequestLog> requestLogsOriginal = requestLogDay.getLogs();
+        Collection<RequestLog> requestLogsOriginal = requestLogDay.getLogs();
         List<RequestLog> requestLogs = new ArrayList<RequestLog>(requestLogsOriginal);
 
         Collections.sort(requestLogs, new Comparator<RequestLog>() {

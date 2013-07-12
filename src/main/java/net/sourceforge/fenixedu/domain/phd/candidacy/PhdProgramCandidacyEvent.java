@@ -106,7 +106,7 @@ public class PhdProgramCandidacyEvent extends PhdProgramCandidacyEvent_Base {
             return null;
         }
 
-        return (IndividualCandidacyPaymentCode) super.getAllPaymentCodes().get(0);
+        return (IndividualCandidacyPaymentCode) super.getAllPaymentCodes().iterator().next();
     }
 
     @Override

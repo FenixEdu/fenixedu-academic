@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.providers;
 
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -20,7 +21,8 @@ public class VigilantGroupsForPoints implements DataProvider {
 
         ExamCoordinator coordinator = bean.getExamCoordinator();
 
-        List<VigilantGroup> vigilantGroups = (coordinator == null) ? bean.getVigilantGroups() : coordinator.getVigilantGroups();
+        Collection<VigilantGroup> vigilantGroups =
+                (coordinator == null) ? bean.getVigilantGroups() : coordinator.getVigilantGroups();
 
         List<VigilantGroup> previousVigilantGroups = null;
         if (coordinator != null) {

@@ -74,7 +74,7 @@ public class EventEdition extends EventEdition_Base implements ParticipationsInt
      * This method is responsible for deleting the object and all its references
      */
     public void delete() {
-        for (; !this.getEventConferenceArticlesAssociations().isEmpty(); this.getEventConferenceArticlesAssociations().get(0)
+        for (; !this.getEventConferenceArticlesAssociations().isEmpty(); this.getEventConferenceArticlesAssociations().iterator().next()
                 .delete()) {
             ;
         }

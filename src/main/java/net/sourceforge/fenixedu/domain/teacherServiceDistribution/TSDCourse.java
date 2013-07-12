@@ -147,7 +147,7 @@ public abstract class TSDCourse extends TSDCourse_Base {
     }
 
     public TSDProcessPhase getTSDProcessPhase() {
-        return getTeacherServiceDistributions().get(0).getTSDProcessPhase();
+        return getTeacherServiceDistributions().iterator().next().getTSDProcessPhase();
     }
 
     public Double getHours(ShiftType type) {
@@ -480,7 +480,7 @@ public abstract class TSDCourse extends TSDCourse_Base {
 
     public CompetenceCourse getCompetenceCourse() {
         if (getAssociatedCurricularCourses().size() > 0) {
-            return getAssociatedCurricularCourses().get(0).getCompetenceCourse();
+            return getAssociatedCurricularCourses().iterator().next().getCompetenceCourse();
         } else {
             return null;
         }
@@ -512,7 +512,7 @@ public abstract class TSDCourse extends TSDCourse_Base {
 
         CurricularCourse curricularCourse = null;
         if (getAssociatedCurricularCourses().size() > 0) {
-            curricularCourse = getAssociatedCurricularCourses().get(0);
+            curricularCourse = getAssociatedCurricularCourses().iterator().next();
         }
 
         if (curricularCourse != null) {

@@ -66,7 +66,7 @@ public class ReadExamsByDate {
         final Set<String> curricularCourseIDs = new HashSet<String>();
 
         // Select an ExecutionPeriod from any ExecutionCourses
-        final ExecutionSemester executionSemester = exam.getAssociatedExecutionCourses().get(0).getExecutionPeriod();
+        final ExecutionSemester executionSemester = exam.getAssociatedExecutionCourses().iterator().next().getExecutionPeriod();
         int numberStudentes = 0;
 
         for (final DegreeModuleScope degreeModuleScope : exam.getDegreeModuleScopes()) {

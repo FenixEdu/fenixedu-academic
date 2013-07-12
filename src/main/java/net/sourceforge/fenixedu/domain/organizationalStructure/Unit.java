@@ -194,14 +194,14 @@ public class Unit extends Unit_Base {
         }
 
         if (hasAnyParentUnits()) {
-            getParents().get(0).delete();
+            getParents().iterator().next().delete();
         }
 
         if (hasSite()) {
             getSite().delete();
         }
 
-        for (; !getUnitFileTagsSet().isEmpty(); getUnitFileTags().get(0).delete()) {
+        for (; !getUnitFileTagsSet().isEmpty(); getUnitFileTags().iterator().next().delete()) {
             ;
         }
 
@@ -712,7 +712,7 @@ public class Unit extends Unit_Base {
      */
     public UnitBasedSender getOneUnitBasedSender() {
         if (hasAnyUnitBasedSender()) {
-            return getUnitBasedSender().get(0);
+            return getUnitBasedSender().iterator().next();
         } else {
             return UnitBasedSender.newInstance(this);
         }

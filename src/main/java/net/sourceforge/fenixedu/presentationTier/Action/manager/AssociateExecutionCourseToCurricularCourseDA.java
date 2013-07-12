@@ -79,7 +79,7 @@ public class AssociateExecutionCourseToCurricularCourseDA extends FenixDispatchA
         Collections.sort(infoExecutionCoursesList, new BeanComparator("nome"));
 
         InfoExecutionPeriod infoExecutionPeriod =
-                ((InfoExecutionCourse) infoExecutionCoursesList.get(0)).getInfoExecutionPeriod();
+                ((InfoExecutionCourse) infoExecutionCoursesList.iterator().next()).getInfoExecutionPeriod();
 
         String ExecutionPeriodNameAndYear =
                 new String(infoExecutionPeriod.getName() + "-" + infoExecutionPeriod.getInfoExecutionYear().getYear());

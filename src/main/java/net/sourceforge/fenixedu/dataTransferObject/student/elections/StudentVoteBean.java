@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.dataTransferObject.student.elections;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -53,7 +54,7 @@ public class StudentVoteBean implements Serializable {
 
         final DelegateElectionPeriod currentPeriod =
                 (yearDelegateElection != null ? yearDelegateElection.getCurrentElectionPeriod() : null);
-        List<Student> otherStudentsList = new ArrayList<Student>();
+        Collection<Student> otherStudentsList = new ArrayList<Student>();
 
         if (currentPeriod != null && currentPeriod.isVotingPeriod()) {
             if (studentType.equals("notCandidate")) {
@@ -89,14 +90,14 @@ public class StudentVoteBean implements Serializable {
         return null;
     }
 
-    private List<Student> getCandidates(YearDelegateElection yearDelegateElection) {
+    private Collection<Student> getCandidates(YearDelegateElection yearDelegateElection) {
         if (yearDelegateElection.getLastVotingPeriod().isSecondRoundElections()) {
             return yearDelegateElection.getLastVotingPeriod().getCandidatesForNewRoundElections();
         }
         return yearDelegateElection.getCandidates();
     }
 
-    private List<Student> getNotCandidatedStudents(YearDelegateElection yearDelegateElection) {
+    private Collection<Student> getNotCandidatedStudents(YearDelegateElection yearDelegateElection) {
         if (yearDelegateElection.getLastVotingPeriod().isSecondRoundElections()) {
             return new LinkedList<Student>();
         }

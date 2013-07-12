@@ -135,7 +135,7 @@ public abstract class CompositeRule extends CompositeRule_Base {
 
     @Override
     protected void removeOwnParameters() {
-        for (; !getCurricularRules().isEmpty(); getCurricularRules().get(0).delete()) {
+        for (; !getCurricularRules().isEmpty(); getCurricularRules().iterator().next().delete()) {
             ;
         }
     }

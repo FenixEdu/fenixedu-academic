@@ -297,7 +297,7 @@ public class DegreeChangeIndividualCandidacy extends DegreeChangeIndividualCandi
         if (getIndividualCandidacySeriesGrade().size() == 0) {
             return null;
         } else {
-            return (DegreeChangeIndividualCandidacySeriesGrade) getIndividualCandidacySeriesGrade().get(0);
+            return (DegreeChangeIndividualCandidacySeriesGrade) getIndividualCandidacySeriesGrade().iterator().next();
         }
     }
 

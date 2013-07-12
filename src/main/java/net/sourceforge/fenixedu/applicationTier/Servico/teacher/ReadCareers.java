@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -42,7 +43,7 @@ public class ReadCareers {
         final List<InfoCareer> oldestCareers = new ArrayList();
         final List<InfoCareer> newestCareers = new ArrayList();
 
-        final List<Career> careers = teacher.getAssociatedCareers();
+        final Collection<Career> careers = teacher.getAssociatedCareers();
         for (final Career career : careers) {
             boolean addCareer = false;
             if (careerType == null

@@ -284,7 +284,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         setEmployee(null);
         setMasterDegreeThesis(null);
 
-        for (; !getEnrolmentsSet().isEmpty(); getEnrolments().get(0).delete()) {
+        for (; !getEnrolmentsSet().isEmpty(); getEnrolments().iterator().next().delete()) {
             ;
         }
 
@@ -299,7 +299,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
             notNeedToEnrollInCurricularCourse.delete();
         }
 
-        for (; !getCreditsInAnySecundaryAreas().isEmpty(); getCreditsInAnySecundaryAreas().get(0).delete()) {
+        for (; !getCreditsInAnySecundaryAreas().isEmpty(); getCreditsInAnySecundaryAreas().iterator().next().delete()) {
             ;
         }
 
@@ -310,10 +310,10 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
             creditsInScientificArea.delete();
         }
 
-        for (; hasAnyCredits(); getCredits().get(0).delete()) {
+        for (; hasAnyCredits(); getCredits().iterator().next().delete()) {
             ;
         }
-        for (; hasAnyTutorships(); getTutorships().get(0).delete()) {
+        for (; hasAnyTutorships(); getTutorships().iterator().next().delete()) {
             ;
         }
 
@@ -1330,7 +1330,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         }
     }
 
-    private boolean allNotNeedToEnroll(List<CurricularCourse> oldCurricularCourses) {
+    private boolean allNotNeedToEnroll(Collection<CurricularCourse> oldCurricularCourses) {
         for (CurricularCourse course : oldCurricularCourses) {
             if (!notNeedToEnroll(course)) {
                 return false;
@@ -1357,7 +1357,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return false;
     }
 
-    private boolean allCurricularCoursesInTheList(List<CurricularCourse> oldCurricularCourses, List<CurricularCourse> otherCourses) {
+    private boolean allCurricularCoursesInTheList(Collection<CurricularCourse> oldCurricularCourses,
+            List<CurricularCourse> otherCourses) {
         for (CurricularCourse oldCurricularCourse : oldCurricularCourses) {
             if (!isThisCurricularCoursesInTheList(oldCurricularCourse, otherCourses)
                     && !hasEquivalenceInNotNeedToEnroll(oldCurricularCourse)) {
@@ -2557,7 +2558,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     public Tutorship getActiveTutorship() {
-        List<Tutorship> tutorships = getTutorships();
+        Collection<Tutorship> tutorships = getTutorships();
         if (!tutorships.isEmpty() && getLastTutorship().isActive()) {
             return getLastTutorship();
         }
@@ -2966,8 +2967,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
             List<MarkSheetEnrolmentEvaluationBean> enrolmentEvaluationsBeanList) {
 
         if (enrolmentEvaluationsBeanList.size() > 0) {
-            Enrolment enrolmentForWeightSet = enrolmentEvaluationsBeanList.get(0).getEnrolment();
-            enrolmentForWeightSet.setWeigth(enrolmentEvaluationsBeanList.get(0).getWeight());
+            Enrolment enrolmentForWeightSet = enrolmentEvaluationsBeanList.iterator().next().getEnrolment();
+            enrolmentForWeightSet.setWeigth(enrolmentEvaluationsBeanList.iterator().next().getWeight());
         }
 
         for (MarkSheetEnrolmentEvaluationBean enrolmentEvaluationBean : enrolmentEvaluationsBeanList) {

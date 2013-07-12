@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -18,7 +19,7 @@ public class ReadBranchesByDegreeCurricularPlan {
             throw new NonExistingServiceException();
         }
 
-        List<Branch> allBranches = degreeCurricularPlan.getAreas();
+        Collection<Branch> allBranches = degreeCurricularPlan.getAreas();
         if (allBranches == null || allBranches.isEmpty()) {
             return null;
         }

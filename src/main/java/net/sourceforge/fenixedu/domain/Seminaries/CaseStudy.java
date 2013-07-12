@@ -5,7 +5,7 @@
  */
 package net.sourceforge.fenixedu.domain.Seminaries;
 
-import java.util.List;
+import java.util.Collection;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
@@ -31,7 +31,7 @@ public class CaseStudy extends CaseStudy_Base {
         this.setCode(code);
     }
 
-    public static List<CaseStudy> getAllCaseStudies() {
+    public static Collection<CaseStudy> getAllCaseStudies() {
         return RootDomainObject.getInstance().getCaseStudys();
     }
 

@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.coordinator.degreeCurricularPlanManagement;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -56,7 +57,7 @@ public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName {
         if (curriculumExecutionYear != null) {
             List allCurricularCourseScopes = new ArrayList();
             List allExecutionCourses = new ArrayList();
-            List executionPeriods = executionYear.getExecutionPeriods();
+            Collection executionPeriods = executionYear.getExecutionPeriods();
             Iterator iterExecutionPeriods = executionPeriods.iterator();
             while (iterExecutionPeriods.hasNext()) {
                 ExecutionSemester executionSemester = (ExecutionSemester) iterExecutionPeriods.next();
@@ -73,7 +74,7 @@ public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName {
                             (List) CollectionUtils.union(disjunctionCurricularCourseScopes, intersectionCurricularCourseScopes);
                 }
                 List associatedExecutionCourses = new ArrayList();
-                List<ExecutionCourse> executionCourses = curricularCourse.getAssociatedExecutionCourses();
+                Collection<ExecutionCourse> executionCourses = curricularCourse.getAssociatedExecutionCourses();
                 for (ExecutionCourse executionCourse : executionCourses) {
                     if (executionCourse.getExecutionPeriod().equals(executionSemester)) {
                         associatedExecutionCourses.add(executionCourse);

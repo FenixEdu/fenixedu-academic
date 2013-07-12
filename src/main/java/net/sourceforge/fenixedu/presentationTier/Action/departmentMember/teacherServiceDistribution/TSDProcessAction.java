@@ -248,7 +248,7 @@ public class TSDProcessAction extends FenixDispatchAction {
 
         if (tsdProcessList.size() > 0) {
             Collections.sort(tsdProcessList, new BeanComparator("name"));
-            dynaForm.set("tsdProcess", tsdProcessList.get(0).getExternalId());
+            dynaForm.set("tsdProcess", tsdProcessList.iterator().next().getExternalId());
         }
 
         request.setAttribute("departmentName", userView.getPerson().getEmployee().getCurrentDepartmentWorkingPlace()

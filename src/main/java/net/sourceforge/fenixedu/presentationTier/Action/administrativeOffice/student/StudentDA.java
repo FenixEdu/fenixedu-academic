@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student;
 
-import java.util.List;
+import java.util.Collection;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -90,7 +90,7 @@ public class StudentDA extends StudentRegistrationDA {
         final Student student = getAndSetStudent(request);
 
         Person person = student.getPerson();
-        List<PersonInformationLog> logsList = person.getPersonInformationLogs();
+        Collection<PersonInformationLog> logsList = person.getPersonInformationLogs();
         request.setAttribute("person", person);
         request.setAttribute("logsList", logsList);
         return mapping.findForward("viewStudentLogChanges");

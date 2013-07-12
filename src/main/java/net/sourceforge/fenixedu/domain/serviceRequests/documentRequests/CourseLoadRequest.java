@@ -71,7 +71,7 @@ public class CourseLoadRequest extends CourseLoadRequest_Base {
 
         if (academicServiceRequestBean.isToCancelOrReject()) {
             for (; hasAnyEnrolments();) {
-                removeEnrolments(getEnrolments().get(0));
+                removeEnrolments(getEnrolments().iterator().next());
             }
         }
     }

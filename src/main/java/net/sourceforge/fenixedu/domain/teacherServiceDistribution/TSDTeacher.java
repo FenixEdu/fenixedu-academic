@@ -145,7 +145,7 @@ public abstract class TSDTeacher extends TSDTeacher_Base {
     }
 
     public Department getDepartment() {
-        return getTeacherServiceDistributions().get(0).getTSDProcessPhase().getTSDProcess().getDepartment();
+        return getTeacherServiceDistributions().iterator().next().getTSDProcessPhase().getTSDProcess().getDepartment();
     }
 
     public Double getTotalHoursLectured(List<ExecutionSemester> executionPeriodList) {
@@ -206,7 +206,7 @@ public abstract class TSDTeacher extends TSDTeacher_Base {
 
     public Double getExtraCreditsValue(List<ExecutionSemester> executionPeriodList) {
         return getExtraCreditsValue()
-                * (executionPeriodList.size() / getTeacherServiceDistributions().get(0).getTSDProcessPhase().getTSDProcess()
+                * (executionPeriodList.size() / getTeacherServiceDistributions().iterator().next().getTSDProcessPhase().getTSDProcess()
                         .getExecutionPeriodsCount());
     }
 

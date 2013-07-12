@@ -54,7 +54,7 @@ public abstract class ResearchResultPublication extends ResearchResultPublicatio
     private void removeAssociations() {
         super.setPublisher(null);
         super.setOrganization(null);
-        for (; hasAnyPersonThatPrefers(); getPersonThatPrefers().get(0).delete()) {
+        for (; hasAnyPersonThatPrefers(); getPersonThatPrefers().iterator().next().delete()) {
             ;
         }
     }
@@ -90,7 +90,7 @@ public abstract class ResearchResultPublication extends ResearchResultPublicatio
 
     protected String generateBibtexKey() {
         String key = "";
-        ResultParticipation participation = getOrderedResultParticipations().get(0);
+        ResultParticipation participation = getOrderedResultParticipations().iterator().next();
         key = participation.getPerson().getNickname();
         key = key.replace(" ", "");
         if ((getYear() != null) && (getYear() > 0)) {

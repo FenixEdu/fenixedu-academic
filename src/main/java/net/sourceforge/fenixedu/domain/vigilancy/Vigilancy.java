@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.vigilancy;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
@@ -60,7 +61,7 @@ public abstract class Vigilancy extends Vigilancy_Base {
                 return group;
             }
         }
-        return new ArrayList<VigilantGroup>(groups).get(0);
+        return new ArrayList<VigilantGroup>(groups).iterator().next();
     }
 
     @Override
@@ -171,7 +172,7 @@ public abstract class Vigilancy extends Vigilancy_Base {
     }
 
     public boolean hasPointsAttributed() {
-        List<Vigilancy> vigilancies = this.getWrittenEvaluation().getVigilancies();
+        Collection<Vigilancy> vigilancies = this.getWrittenEvaluation().getVigilancies();
         for (Vigilancy vigilancy : vigilancies) {
             if (vigilancy.isAttended()) {
                 return true;

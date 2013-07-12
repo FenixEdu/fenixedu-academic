@@ -111,7 +111,7 @@ public class ViewTeacherService extends FenixBackingBean {
         } else {
             if (this.selectedExecutionYearID == null) {
                 List<SelectItem> executionYearItems = (List<SelectItem>) this.getExecutionYearItems().getValue();
-                this.selectedExecutionYearID = (String) executionYearItems.get(0).getValue();
+                this.selectedExecutionYearID = (String) executionYearItems.iterator().next().getValue();
             }
 
         }
@@ -248,7 +248,7 @@ public class ViewTeacherService extends FenixBackingBean {
 
         Collections.sort(executionPeriods, new BeanComparator("beginDate"));
 
-        InfoExecutionPeriod previousExecutionPeriod = ReadPreviousExecutionPeriod.run(executionPeriods.get(0).getExternalId());
+        InfoExecutionPeriod previousExecutionPeriod = ReadPreviousExecutionPeriod.run(executionPeriods.iterator().next().getExternalId());
 
         if (previousExecutionPeriod != null) {
             previousExecutionYear = previousExecutionPeriod.getInfoExecutionYear();
@@ -267,7 +267,7 @@ public class ViewTeacherService extends FenixBackingBean {
 
         if ((periodID != BOTH_SEMESTERS_ID) && (periodsIDsList.size() > 1)) {
             if (periodID == FIRST_SEMESTER_ID) {
-                returnList.add(periodsIDsList.get(0));
+                returnList.add(periodsIDsList.iterator().next());
             } else {
                 returnList.add(periodsIDsList.get(periodsIDsList.size() - 1));
             }

@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.publico.teachersBody;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -106,8 +107,8 @@ public class ReadProfessorshipsAndResponsibilitiesByExecutionDegreeAndExecutionP
     private static List getResponsibleForsByDegree(ExecutionDegree executionDegree) {
         List responsibleFors = new ArrayList();
 
-        List<ExecutionCourse> executionCourses = new ArrayList();
-        List<ExecutionSemester> executionSemesters = executionDegree.getExecutionYear().getExecutionPeriods();
+        Collection<ExecutionCourse> executionCourses = new ArrayList();
+        Collection<ExecutionSemester> executionSemesters = executionDegree.getExecutionYear().getExecutionPeriods();
 
         for (ExecutionSemester executionSemester : executionSemesters) {
             executionCourses = executionSemester.getAssociatedExecutionCourses();

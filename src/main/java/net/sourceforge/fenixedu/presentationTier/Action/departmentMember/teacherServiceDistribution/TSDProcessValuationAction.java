@@ -534,7 +534,7 @@ public class TSDProcessValuationAction extends FenixDispatchAction {
 
         if (selectedExecutionPeriod == null) {
             if (executionPeriodList != null && executionPeriodList.size() > 0) {
-                return executionPeriodList.get(0);
+                return executionPeriodList.iterator().next();
             } else {
                 return null;
             }

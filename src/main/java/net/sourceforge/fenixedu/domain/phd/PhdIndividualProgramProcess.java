@@ -482,11 +482,11 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
         return getActiveState() == PhdIndividualProgramProcessState.CANCELLED;
     }
 
-    public List<PhdCandidacyReferee> getPhdCandidacyReferees() {
+    public Collection<PhdCandidacyReferee> getPhdCandidacyReferees() {
         return getCandidacyProcess().getCandidacyReferees();
     }
 
-    public List<Qualification> getQualifications() {
+    public Collection<Qualification> getQualifications() {
         return getPerson().getAssociatedQualifications();
     }
 
@@ -1116,7 +1116,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
     }
 
-    public static List<PhdMigrationProcess> getMigrationProcesses() {
+    public static Collection<PhdMigrationProcess> getMigrationProcesses() {
         return RootDomainObject.getInstance().getPhdMigrationProcesses();
     }
 
@@ -1409,11 +1409,13 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
         return !getPrecedentDegreeInformationsSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.phd.PhdProgramProcessState> getStates() {
         return getStatesSet();
     }
 
+    @Override
     @Deprecated
     public boolean hasAnyStates() {
         return !getStatesSet().isEmpty();

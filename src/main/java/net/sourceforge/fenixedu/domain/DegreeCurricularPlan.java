@@ -746,7 +746,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         }
         if (!result.isEmpty()) {
             Collections.sort(result, EnrolmentPeriodInCurricularCourses.COMPARATOR_BY_START);
-            return result.get(0);
+            return result.iterator().next();
         }
         return null;
     }
@@ -763,7 +763,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         }
         if (!result.isEmpty()) {
             Collections.sort(result, EnrolmentPeriodInCurricularCoursesSpecialSeason.COMPARATOR_BY_START);
-            return result.get(0);
+            return result.iterator().next();
         }
         return null;
     }
@@ -780,7 +780,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         }
         if (!result.isEmpty()) {
             Collections.sort(result, EnrolmentPeriodInCurricularCoursesFlunkedSeason.COMPARATOR_BY_START);
-            return result.get(0);
+            return result.iterator().next();
         }
         return null;
     }
@@ -1188,7 +1188,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
         final List<ExecutionDegree> executionDegrees = getExecutionDegrees();
         return executionDegrees.size() > 1 ? false : executionDegrees.isEmpty()
-                || executionDegrees.get(0).getExecutionYear().isCurrent();
+                || executionDegrees.iterator().next().getExecutionYear().isCurrent();
     }
 
     @Override
@@ -1984,7 +1984,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
         Collections.sort(beginContextExecutionYears, ExecutionYear.COMPARATOR_BY_YEAR);
 
-        return beginContextExecutionYears.isEmpty() ? null : beginContextExecutionYears.get(0);
+        return beginContextExecutionYears.isEmpty() ? null : beginContextExecutionYears.iterator().next();
     }
 
     public MultiLanguageString getDescriptionI18N() {
@@ -2000,7 +2000,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return result;
     }
 
-    public List<CycleCourseGroup> getDestinationAffinities(final CycleType sourceCycleType) {
+    public Collection<CycleCourseGroup> getDestinationAffinities(final CycleType sourceCycleType) {
         if (hasRoot()) {
             final CycleCourseGroup cycleCourseGroup = getRoot().getCycleCourseGroup(sourceCycleType);
             if (cycleCourseGroup != null) {
@@ -2105,6 +2105,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
         return result;
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Branch> getAreas() {
         return getAreasSet();

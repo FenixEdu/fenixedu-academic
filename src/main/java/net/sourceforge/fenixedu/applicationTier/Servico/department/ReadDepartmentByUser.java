@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.department;
 
-import java.util.List;
+import java.util.Collection;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDepartment;
@@ -22,9 +22,9 @@ public class ReadDepartmentByUser {
         InfoDepartment infoDepartment = null;
 
         final Person person = Person.readPersonByUsername(username);
-        final List<Department> departmentList = person.getManageableDepartmentCredits();
+        final Collection<Department> departmentList = person.getManageableDepartmentCredits();
         if (!departmentList.isEmpty()) {
-            infoDepartment = InfoDepartment.newInfoFromDomain(departmentList.get(0));
+            infoDepartment = InfoDepartment.newInfoFromDomain(departmentList.iterator().next());
         }
         return infoDepartment;
     }

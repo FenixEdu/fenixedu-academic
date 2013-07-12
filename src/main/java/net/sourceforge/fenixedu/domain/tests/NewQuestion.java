@@ -98,7 +98,7 @@ public abstract class NewQuestion extends NewQuestion_Base {
             return null;
         }
 
-        return this.getParentElements().get(0).getParent().getOwner();
+        return this.getParentElements().iterator().next().getParent().getOwner();
     }
 
     public List<NewPermissionUnit> getPermissionUnit(Party party) {
@@ -136,7 +136,7 @@ public abstract class NewQuestion extends NewQuestion_Base {
             return false;
         }
 
-        return !this.getParentQuestionGroups().get(0).isComposite();
+        return !this.getParentQuestionGroups().iterator().next().isComposite();
     }
 
     /**
@@ -201,7 +201,7 @@ public abstract class NewQuestion extends NewQuestion_Base {
     public abstract Integer getNewPosition(NewQuestionGroup parentQuestionGroup);
 
     public NewQuestionBank getQuestionBank() {
-        return this.getParentQuestionGroups().get(0).getQuestionBank();
+        return this.getParentQuestionGroups().iterator().next().getQuestionBank();
     }
 
     public List<NewQuestionGroup> getAssociableParents() {
@@ -267,7 +267,7 @@ public abstract class NewQuestion extends NewQuestion_Base {
     }
 
     protected NewAllGroup getParentAllGroup() {
-        return (NewAllGroup) this.getParentQuestionGroups().get(0);
+        return (NewAllGroup) this.getParentQuestionGroups().iterator().next();
     }
 
     @Override

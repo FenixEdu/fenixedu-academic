@@ -24,7 +24,7 @@ public class InquiryBlock extends InquiryBlock_Base {
     }
 
     public void delete() {
-        for (; !getInquiryGroupsQuestions().isEmpty(); getInquiryGroupsQuestions().get(0).delete()) {
+        for (; !getInquiryGroupsQuestions().isEmpty(); getInquiryGroupsQuestions().iterator().next().delete()) {
             setRootDomainObject(null);
         }
         if (hasInquiryQuestionHeader()) {

@@ -8,7 +8,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.ServiceMonitoring;
@@ -99,7 +98,7 @@ public class EditGroupShift {
     private static boolean checkStudentInStudentGroup(Registration registration, StudentGroup studentGroup)
             throws FenixServiceException {
         boolean found = false;
-        List studentGroupAttends = studentGroup.getAttends();
+        Collection studentGroupAttends = studentGroup.getAttends();
         Attends attend = null;
         Iterator iterStudentGroupAttends = studentGroupAttends.iterator();
         while (iterStudentGroupAttends.hasNext() && !found) {

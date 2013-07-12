@@ -139,7 +139,7 @@ public class StudentsPerformanceReport extends StudentsPerformanceReport_Base {
 
         Collections.sort(pendingReports, Collections.reverseOrder(COMPARE_BY_REQUEST_DATE));
 
-        return pendingReports.get(0);
+        return pendingReports.iterator().next();
     }
 
     public static boolean hasPendingReports(final ExecutionSemester executionSemester) {
@@ -243,7 +243,7 @@ public class StudentsPerformanceReport extends StudentsPerformanceReport_Base {
             throw new DomainException("student.has.more.than.one.active.registration");
         }
 
-        Registration registration = registrations.get(0);
+        Registration registration = registrations.iterator().next();
         final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
         if (!studentCurricularPlan.isBolonhaDegree()) {
 

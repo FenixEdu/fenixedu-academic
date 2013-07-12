@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.vigilancy;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
@@ -162,7 +163,7 @@ public class VigilantWrapper extends VigilantWrapper_Base {
     }
 
     public Boolean isAvailableOnDate(DateTime begin, DateTime end) {
-        List<UnavailablePeriod> unavailablePeriods = this.getPerson().getUnavailablePeriods();
+        Collection<UnavailablePeriod> unavailablePeriods = this.getPerson().getUnavailablePeriods();
         for (UnavailablePeriod period : unavailablePeriods) {
             if (period.containsInterval(begin, end)) {
                 return Boolean.FALSE;
@@ -242,7 +243,7 @@ public class VigilantWrapper extends VigilantWrapper_Base {
         DateTime beginOfExam = writtenEvaluation.getBeginningDateTime();
         DateTime endOfExam = writtenEvaluation.getEndDateTime();
 
-        boolean isInExamPeriod = writtenEvaluation.getAssociatedExecutionCourses().get(0).isInExamPeriod();
+        boolean isInExamPeriod = writtenEvaluation.getAssociatedExecutionCourses().iterator().next().isInExamPeriod();
         return this.isAvailableOnDate(beginOfExam, endOfExam)
                 && this.hasNoEvaluationsOnDate(beginOfExam, endOfExam)
                 && (isInExamPeriod || (!isInExamPeriod && ((this.getTeacher() != null && this.getTeacher().teachesAny(
@@ -272,7 +273,7 @@ public class VigilantWrapper extends VigilantWrapper_Base {
     public void delete() {
 
         if (this.getActiveVigilanciesInList(this.getVigilancies()).size() == 0) {
-            for (; !this.getVigilancies().isEmpty(); this.getVigilancies().get(0).delete()) {
+            for (; !this.getVigilancies().isEmpty(); this.getVigilancies().iterator().next().delete()) {
                 ;
             }
             setPerson(null);
@@ -411,7 +412,7 @@ public class VigilantWrapper extends VigilantWrapper_Base {
 
         Person person = this.getPerson().getIncompatibleVigilantPerson();
         if (person != null) {
-            List<Vigilancy> convokes = writtenEvaluation.getVigilancies();
+            Collection<Vigilancy> convokes = writtenEvaluation.getVigilancies();
             for (Vigilancy convoke : convokes) {
                 if (convoke.getVigilantWrapper().getPerson().equals(person)) {
                     return UnavailableTypes.INCOMPATIBLE_PERSON;

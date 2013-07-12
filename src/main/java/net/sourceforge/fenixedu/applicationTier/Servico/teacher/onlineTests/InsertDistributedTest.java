@@ -352,8 +352,8 @@ public class InsertDistributedTest {
                 if (question == null) {
                     throw new Error();
                 }
-                if (question.getSubQuestions().size() >= 1 && question.getSubQuestions().get(0).getItemId() != null) {
-                    studentTestQuestion.setItemId(question.getSubQuestions().get(0).getItemId());
+                if (question.getSubQuestions().size() >= 1 && question.getSubQuestions().iterator().next().getItemId() != null) {
+                    studentTestQuestion.setItemId(question.getSubQuestions().iterator().next().getItemId());
                 }
                 studentTestQuestion.setQuestion(question);
                 questionList.remove(question);

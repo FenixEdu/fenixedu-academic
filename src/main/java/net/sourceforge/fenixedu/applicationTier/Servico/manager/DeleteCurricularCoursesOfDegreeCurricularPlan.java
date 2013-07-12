@@ -4,6 +4,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -48,7 +49,7 @@ public class DeleteCurricularCoursesOfDegreeCurricularPlan {
                 }
 
                 if (!curricularCourse.hasAnyAssociatedExecutionCourses()) {
-                    List scopes = curricularCourse.getScopes();
+                    Collection scopes = curricularCourse.getScopes();
                     if (canAllCurricularCourseScopesBeDeleted(scopes)) {
 
                         Iterator iterator = scopes.iterator();
@@ -80,7 +81,7 @@ public class DeleteCurricularCoursesOfDegreeCurricularPlan {
         return undeletedCurricularCourses;
     }
 
-    private static Boolean canAllCurricularCourseScopesBeDeleted(List<CurricularCourseScope> scopes) {
+    private static Boolean canAllCurricularCourseScopesBeDeleted(Collection<CurricularCourseScope> scopes) {
         List nonDeletableScopes = (List) CollectionUtils.select(scopes, new Predicate() {
             @Override
             public boolean evaluate(Object o) {

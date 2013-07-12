@@ -150,13 +150,13 @@ public class Shift extends Shift_Base {
 
             final ExecutionCourse executionCourse = getExecutionCourse();
 
-            for (; hasAnyAssociatedLessons(); getAssociatedLessons().get(0).delete()) {
+            for (; hasAnyAssociatedLessons(); getAssociatedLessons().iterator().next().delete()) {
                 ;
             }
-            for (; hasAnyAssociatedShiftProfessorship(); getAssociatedShiftProfessorship().get(0).delete()) {
+            for (; hasAnyAssociatedShiftProfessorship(); getAssociatedShiftProfessorship().iterator().next().delete()) {
                 ;
             }
-            for (; hasAnyShiftDistributionEntries(); getShiftDistributionEntries().get(0).delete()) {
+            for (; hasAnyShiftDistributionEntries(); getShiftDistributionEntries().iterator().next().delete()) {
                 ;
             }
 
@@ -186,7 +186,7 @@ public class Shift extends Shift_Base {
     }
 
     public ExecutionCourse getExecutionCourse() {
-        CourseLoad courseLoad = getCourseLoads().get(0);
+        CourseLoad courseLoad = getCourseLoads().iterator().next();
         if (courseLoad != null) {
             return courseLoad.getExecutionCourse();
         } else {

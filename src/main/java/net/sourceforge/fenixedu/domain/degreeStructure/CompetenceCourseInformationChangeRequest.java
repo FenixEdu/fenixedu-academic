@@ -186,7 +186,7 @@ public class CompetenceCourseInformationChangeRequest extends CompetenceCourseIn
 
             information.setBibliographicReferences(getBibliographicReferences());
 
-            for (; !information.getCompetenceCourseLoads().isEmpty(); information.getCompetenceCourseLoads().get(0).delete()) {
+            for (; !information.getCompetenceCourseLoads().isEmpty(); information.getCompetenceCourseLoads().iterator().next().delete()) {
                 ;
             }
             createLoads(information);

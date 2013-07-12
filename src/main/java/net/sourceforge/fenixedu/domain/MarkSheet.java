@@ -535,11 +535,11 @@ public class MarkSheet extends MarkSheet_Base {
 
         if (hasMarkSheetState(MarkSheetState.RECTIFICATION_NOT_CONFIRMED)) {
             changeRectifiedEnrolmentEvaluationToPreviowsState();
-            for (; !getEnrolmentEvaluations().isEmpty(); getEnrolmentEvaluations().get(0).delete()) {
+            for (; !getEnrolmentEvaluations().isEmpty(); getEnrolmentEvaluations().iterator().next().delete()) {
                 ;
             }
         } else {
-            for (; !getEnrolmentEvaluations().isEmpty(); getEnrolmentEvaluations().get(0).removeFromMarkSheet()) {
+            for (; !getEnrolmentEvaluations().isEmpty(); getEnrolmentEvaluations().iterator().next().removeFromMarkSheet()) {
                 ;
             }
         }
@@ -558,7 +558,7 @@ public class MarkSheet extends MarkSheet_Base {
             return;
         }
 
-        EnrolmentEvaluation enrolmentEvaluation = this.getEnrolmentEvaluations().get(0).getRectified();
+        EnrolmentEvaluation enrolmentEvaluation = this.getEnrolmentEvaluations().iterator().next().getRectified();
         enrolmentEvaluation
                 .setEnrolmentEvaluationState((enrolmentEvaluation.getMarkSheet().getMarkSheetState() == MarkSheetState.RECTIFICATION) ? EnrolmentEvaluationState.RECTIFICATION_OBJ : EnrolmentEvaluationState.FINAL_OBJ);
     }

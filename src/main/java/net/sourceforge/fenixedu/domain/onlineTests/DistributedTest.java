@@ -47,10 +47,10 @@ public class DistributedTest extends DistributedTest_Base {
                 "log.executionCourse.evaluation.tests.distribution.removed", getEvaluationTitle(), getBeginDateTimeFormatted(),
                 ec.getName(), ec.getDegreePresentationString());
 
-        for (; hasAnyDistributedTestQuestions(); getDistributedTestQuestions().get(0).delete()) {
+        for (; hasAnyDistributedTestQuestions(); getDistributedTestQuestions().iterator().next().delete()) {
             ;
         }
-        for (; hasAnyStudentsLogs(); getStudentsLogs().get(0).delete()) {
+        for (; hasAnyStudentsLogs(); getStudentsLogs().iterator().next().delete()) {
             ;
         }
         if (getTestType().getType().intValue() == TestType.EVALUATION) {

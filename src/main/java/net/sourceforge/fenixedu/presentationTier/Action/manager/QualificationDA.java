@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
-import java.util.List;
+import java.util.Collection;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,10 +14,10 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/qualification", module = "manager")
@@ -87,7 +87,7 @@ public class QualificationDA extends FenixDispatchAction {
             HttpServletResponse response) {
         Person person = getPersonSelectedFromParameter(request);
 
-        List<PersonInformationLog> logsList = person.getPersonInformationLogs();
+        Collection<PersonInformationLog> logsList = person.getPersonInformationLogs();
         request.setAttribute("person", person);
         request.setAttribute("logsList", logsList);
         return mapping.findForward("viewStudentLogChanges");

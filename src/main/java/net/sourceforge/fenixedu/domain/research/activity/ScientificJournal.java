@@ -32,10 +32,10 @@ public class ScientificJournal extends ScientificJournal_Base implements Partici
     }
 
     public void delete() {
-        for (; !this.getJournalIssues().isEmpty(); this.getJournalIssues().get(0).delete()) {
+        for (; !this.getJournalIssues().isEmpty(); this.getJournalIssues().iterator().next().delete()) {
             ;
         }
-        for (; !this.getParticipations().isEmpty(); this.getParticipations().get(0).delete()) {
+        for (; !this.getParticipations().isEmpty(); this.getParticipations().iterator().next().delete()) {
             ;
         }
         setRootDomainObject(null);

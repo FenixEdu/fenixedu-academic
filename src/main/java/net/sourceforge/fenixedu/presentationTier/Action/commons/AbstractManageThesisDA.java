@@ -20,6 +20,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixframework.FenixFramework;
 
 public abstract class AbstractManageThesisDA extends FenixDispatchAction {
 

@@ -316,7 +316,7 @@ public class TSDCourseAction extends FenixDispatchAction {
 
         if (selectedTSDCurricularCourseGroup == null) {
             if (tsdCurricularCourseGroupList != null && !tsdCurricularCourseGroupList.isEmpty()) {
-                return tsdCurricularCourseGroupList.get(0);
+                return tsdCurricularCourseGroupList.iterator().next();
             } else {
                 return null;
             }
@@ -332,7 +332,7 @@ public class TSDCourseAction extends FenixDispatchAction {
 
         if (selectedTSDCurricularCourse == null) {
             if (tsdCurricularCourseList != null && !tsdCurricularCourseList.isEmpty()) {
-                return tsdCurricularCourseList.get(0);
+                return tsdCurricularCourseList.iterator().next();
             } else {
                 return null;
             }
@@ -347,7 +347,7 @@ public class TSDCourseAction extends FenixDispatchAction {
 
         if (selectedTSDCourse == null) {
             if (competenceCourseList != null && !competenceCourseList.isEmpty()) {
-                return competenceCourseList.get(0);
+                return competenceCourseList.iterator().next();
             } else {
                 return null;
             }
@@ -372,7 +372,7 @@ public class TSDCourseAction extends FenixDispatchAction {
                 TeacherServiceDistributionDTOEntry
                         .getTeacherServiceDistributionOptionEntriesForPerson(phase, person, false, true);
 
-        dynaForm.set("tsd", tsdOptionEntryList.get(0).getTeacherServiceDistribution().getExternalId());
+        dynaForm.set("tsd", tsdOptionEntryList.iterator().next().getTeacherServiceDistribution().getExternalId());
         dynaForm.set("tsdCourseType", TSDCourseType.NOT_DETERMINED.toString());
         dynaForm.set("competenceCourse", null);
         dynaForm.set("tsdCurricularCourse", null);
@@ -399,7 +399,7 @@ public class TSDCourseAction extends FenixDispatchAction {
 
         if (selectedExecutionPeriod == null) {
             if (executionPeriodList != null && executionPeriodList.size() > 0) {
-                return executionPeriodList.get(0);
+                return executionPeriodList.iterator().next();
             } else {
                 return null;
             }

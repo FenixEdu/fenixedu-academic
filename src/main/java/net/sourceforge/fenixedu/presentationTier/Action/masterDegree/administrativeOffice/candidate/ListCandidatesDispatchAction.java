@@ -161,13 +161,13 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
             throw new Exception(e);
         }
         if (result.size() != 0) {
-            InfoMasterDegreeCandidate infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) result.get(0);
+            InfoMasterDegreeCandidate infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) result.iterator().next();
             degreeName =
                     infoMasterDegreeCandidate.getInfoExecutionDegree().getInfoDegreeCurricularPlan().getInfoDegree().getNome()
                             + "-" + infoMasterDegreeCandidate.getInfoExecutionDegree().getInfoDegreeCurricularPlan().getName();
         }
         if (result.size() == 1) {
-            InfoMasterDegreeCandidate infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) result.get(0);
+            InfoMasterDegreeCandidate infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) result.iterator().next();
             request.setAttribute("candidateID", infoMasterDegreeCandidate.getExternalId());
             request.setAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE_LIST, result);
             return mapping.findForward("ActionReady");

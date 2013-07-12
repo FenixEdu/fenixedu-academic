@@ -93,7 +93,7 @@ public class StandaloneEnrolmentGratuityEvent extends StandaloneEnrolmentGratuit
 
     @Override
     protected List<AccountingEventPaymentCode> createPaymentCodes() {
-        final EntryDTO entryDTO = calculateEntries(new DateTime()).get(0);
+        final EntryDTO entryDTO = calculateEntries(new DateTime()).iterator().next();
         return Collections.singletonList(createPaymentCode(entryDTO));
     }
 
@@ -104,10 +104,10 @@ public class StandaloneEnrolmentGratuityEvent extends StandaloneEnrolmentGratuit
 
     @Override
     protected List<AccountingEventPaymentCode> updatePaymentCodes() {
-        final EntryDTO entryDTO = calculateEntries(new DateTime()).get(0);
+        final EntryDTO entryDTO = calculateEntries(new DateTime()).iterator().next();
 
         if (!getNonProcessedPaymentCodes().isEmpty()) {
-            getNonProcessedPaymentCodes().get(0).update(new YearMonthDay(), calculatePaymentCodeEndDate(),
+            getNonProcessedPaymentCodes().iterator().next().update(new YearMonthDay(), calculatePaymentCodeEndDate(),
                     entryDTO.getAmountToPay(), entryDTO.getAmountToPay());
         } else {
             createPaymentCode(entryDTO);

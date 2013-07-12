@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -27,6 +28,7 @@ import org.apache.commons.collections.Predicate;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
+import pt.ist.fenixframework.core.WriteOnReadError;
 
 /**
  * 
@@ -106,7 +108,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization {
                     continue;
                 }
 
-                List allStudentCurricularPlans = executionDegree.getDegreeCurricularPlan().getStudentCurricularPlans();
+                Collection allStudentCurricularPlans = executionDegree.getDegreeCurricularPlan().getStudentCurricularPlans();
                 List filteredStudentCurricularPlans = (List) CollectionUtils.select(allStudentCurricularPlans, new Predicate() {
 
                     @Override
@@ -174,7 +176,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization {
             result.put(Integer.valueOf(0), infoGratuitySituationList);
             result.put(Integer.valueOf(1), new Double(totalPayedValue));
             result.put(Integer.valueOf(2), new Double(totalRemaingValue));
-        } catch (pt.ist.fenixframework.pstm.WriteOnReadError e) {
+        } catch (WriteOnReadError e) {
             throw e;
         } catch (Exception e) {
 

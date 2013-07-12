@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager.gratuity;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -66,7 +67,7 @@ public class ProcessSibsPaymentFile {
 
     private static void buildTransactionsAndStoreFile(SibsPaymentFile sibsPaymentFile, IUserView userView) {
 
-        List<SibsPaymentFileEntry> sibsPaymentFileEntries = sibsPaymentFile.getSibsPaymentFileEntries();
+        Collection<SibsPaymentFileEntry> sibsPaymentFileEntries = sibsPaymentFile.getSibsPaymentFileEntries();
 
         int totalPaymentEntries = sibsPaymentFileEntries.size();
 
@@ -147,7 +148,7 @@ public class ProcessSibsPaymentFile {
 
             // DegreeType should be changed in future to meet Degree gratuity
             // requirements
-            List<StudentCurricularPlan> studentCurricularPlanList = registration.getStudentCurricularPlans();
+            Collection<StudentCurricularPlan> studentCurricularPlanList = registration.getStudentCurricularPlans();
 
             List<ExecutionDegree> executionDegrees = new ArrayList<ExecutionDegree>();
             List<StudentCurricularPlan> studentCurricularPlans = new ArrayList<StudentCurricularPlan>();
@@ -181,8 +182,8 @@ public class ProcessSibsPaymentFile {
                 continue;
             }
 
-            ExecutionDegree executionDegree = executionDegrees.get(0);
-            StudentCurricularPlan studentCurricularPlan = studentCurricularPlans.get(0);
+            ExecutionDegree executionDegree = executionDegrees.iterator().next();
+            StudentCurricularPlan studentCurricularPlan = studentCurricularPlans.iterator().next();
 
             GratuityValues gratuityValues = executionDegree.getGratuityValues();
             GratuitySituation gratuitySituation = studentCurricularPlan.getGratuitySituationByGratuityValues(gratuityValues);
@@ -205,7 +206,7 @@ public class ProcessSibsPaymentFile {
 
     }
 
-    private static void findDuplicatesAndMarkThem(List<SibsPaymentFileEntry> sibsPaymentFileEntries, int totalPaymentEntries) {
+    private static void findDuplicatesAndMarkThem(Collection<SibsPaymentFileEntry> sibsPaymentFileEntries, int totalPaymentEntries) {
         for (int i = 0; i < totalPaymentEntries; i++) {
 
             SibsPaymentFileEntry sibsPaymentFileEntry = sibsPaymentFileEntries.get(i);

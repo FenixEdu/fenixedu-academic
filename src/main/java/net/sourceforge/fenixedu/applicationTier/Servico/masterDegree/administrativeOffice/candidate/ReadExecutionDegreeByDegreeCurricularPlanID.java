@@ -75,7 +75,7 @@ public class ReadExecutionDegreeByDegreeCurricularPlanID {
         DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
 
         if (executionYear.equals("")) {
-            return InfoExecutionDegree.newInfoFromDomain(degreeCurricularPlan.getExecutionDegrees().get(0));
+            return InfoExecutionDegree.newInfoFromDomain(degreeCurricularPlan.getExecutionDegrees().iterator().next());
         }
 
         ExecutionDegree executionDegree =

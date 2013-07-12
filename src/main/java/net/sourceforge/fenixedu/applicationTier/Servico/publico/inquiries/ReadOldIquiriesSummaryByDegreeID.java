@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.publico.inquiries;
 
-import java.util.List;
+import java.util.Collection;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.InfoOldInquiriesSummary;
@@ -24,14 +24,14 @@ import pt.ist.fenixframework.FenixFramework;
 public class ReadOldIquiriesSummaryByDegreeID {
 
     @Atomic
-    public static List run(String degreeID) throws FenixServiceException {
+    public static Collection run(String degreeID) throws FenixServiceException {
         Degree degree = FenixFramework.getDomainObject(degreeID);
 
         if (degree == null) {
             throw new FenixServiceException("nullDegreeId");
         }
 
-        List<OldInquiriesSummary> oldInquiriesSummaryList = degree.getAssociatedOldInquiriesSummaries();
+        Collection<OldInquiriesSummary> oldInquiriesSummaryList = degree.getAssociatedOldInquiriesSummaries();
 
         CollectionUtils.transform(oldInquiriesSummaryList, new Transformer() {
 

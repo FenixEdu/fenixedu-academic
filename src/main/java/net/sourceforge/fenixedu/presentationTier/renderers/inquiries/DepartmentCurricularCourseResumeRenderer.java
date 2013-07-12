@@ -39,7 +39,7 @@ public class DepartmentCurricularCourseResumeRenderer extends InquiryCoordinator
     protected void createHeader(Object object, final HtmlTableRow headerRow) {
         List<CompetenceCourseResultsResume> competenceCourseResultsResumeList = (List<CompetenceCourseResultsResume>) object;
         if (!competenceCourseResultsResumeList.isEmpty()) {
-            CompetenceCourseResultsResume competenceCourseResultsResume = competenceCourseResultsResumeList.get(0);
+            CompetenceCourseResultsResume competenceCourseResultsResume = competenceCourseResultsResumeList.iterator().next();
 
             final HtmlTableCell firstHeaderCell = headerRow.createCell(CellType.HEADER);
             firstHeaderCell.setBody(new HtmlText("Competência"));

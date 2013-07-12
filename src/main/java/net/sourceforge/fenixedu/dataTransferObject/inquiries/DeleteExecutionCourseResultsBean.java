@@ -6,7 +6,8 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryQuestion;
-import pt.ist.fenixframework.pstm.MissingObjectException;
+import pt.ist.fenixframework.FenixFramework;
+import pt.ist.fenixframework.core.exception.MissingObjectException;
 
 public class DeleteExecutionCourseResultsBean implements Serializable {
 

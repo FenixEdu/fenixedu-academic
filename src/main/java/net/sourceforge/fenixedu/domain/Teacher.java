@@ -368,7 +368,7 @@ public class Teacher extends Teacher_Base {
 
     public TeacherPersonalExpectation getTeacherPersonalExpectationByExecutionYear(ExecutionYear executionYear) {
         TeacherPersonalExpectation result = null;
-        List<TeacherPersonalExpectation> teacherPersonalExpectations = this.getTeacherPersonalExpectations();
+        Collection<TeacherPersonalExpectation> teacherPersonalExpectations = this.getTeacherPersonalExpectations();
         for (TeacherPersonalExpectation teacherPersonalExpectation : teacherPersonalExpectations) {
             if (teacherPersonalExpectation.getExecutionYear().equals(executionYear)) {
                 result = teacherPersonalExpectation;
@@ -1075,7 +1075,7 @@ public class Teacher extends Teacher_Base {
         return returnValue;
     }
 
-    public boolean teachesAny(final List<ExecutionCourse> executionCourses, ExecutionYear executionYear) {
+    public boolean teachesAny(final Collection<ExecutionCourse> executionCourses, ExecutionYear executionYear) {
         for (final Professorship professorship : getProfessorships(executionYear)) {
             if (executionCourses.contains(professorship.getExecutionCourse())) {
                 return true;
@@ -1284,7 +1284,7 @@ public class Teacher extends Teacher_Base {
         if (roleLoginAlias.isEmpty() || roleLoginAlias.size() > 1) {
             return "D" + getPerson().getEmployee().getEmployeeNumber();
         } else {
-            return roleLoginAlias.get(0).getAlias();
+            return roleLoginAlias.iterator().next().getAlias();
         }
     }
 
@@ -1322,12 +1322,12 @@ public class Teacher extends Teacher_Base {
         getPerson().removeProfessorships(professorship);
     }
 
-    public List<Professorship> getProfessorships() {
+    public Collection<Professorship> getProfessorships() {
         return getPerson().getProfessorships();
     }
 
     public Iterator<Professorship> getProfessorshipsIterator() {
-        return getPerson().getProfessorshipsIterator();
+        return getPerson().getProfessorships().iterator();
     }
 
     public TeacherCredits getTeacherCredits(ExecutionSemester executionSemester) {
@@ -1407,6 +1407,7 @@ public class Teacher extends Teacher_Base {
         }
         return result;
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.TutorshipIntention> getTutorshipIntention() {
         return getTutorshipIntentionSet();

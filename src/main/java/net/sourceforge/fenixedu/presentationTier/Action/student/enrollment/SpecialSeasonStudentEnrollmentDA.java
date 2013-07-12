@@ -68,7 +68,7 @@ public class SpecialSeasonStudentEnrollmentDA extends AcademicAdminOfficeSpecial
         final List<StudentCurricularPlan> scps = generateSCPList(student);
 
         if (scps.size() == 1) {
-            bean.setScp(scps.get(0));
+            bean.setScp(scps.iterator().next());
         } else {
             request.setAttribute("scps", scps);
         }
@@ -145,7 +145,7 @@ public class SpecialSeasonStudentEnrollmentDA extends AcademicAdminOfficeSpecial
          * getLastExecutionPeriod())); result = result && eval; } return result;
          */
 
-        final StudentCurricularPlan scp = scps.get(0);
+        final StudentCurricularPlan scp = scps.iterator().next();
         scps.remove(0);
         // Any SpecialSeason enrollment period opened for this/last year will
         // count.

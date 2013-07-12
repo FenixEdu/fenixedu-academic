@@ -4,6 +4,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -32,7 +33,7 @@ public class ReadExecutionCourseTeachers {
 
     protected List<InfoTeacher> run(String executionCourseId) throws FenixServiceException {
 
-        List professorShips = null;
+        Collection professorShips = null;
         ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseId);
         professorShips = executionCourse.getProfessorships();
 

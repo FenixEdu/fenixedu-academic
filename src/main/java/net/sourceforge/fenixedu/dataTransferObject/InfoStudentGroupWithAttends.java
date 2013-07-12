@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Attends;
@@ -13,7 +14,7 @@ public class InfoStudentGroupWithAttends extends InfoStudentGroup {
         super.copyFromDomain(studentGroup);
 
         if (studentGroup != null) {
-            final List<Attends> attends = studentGroup.getAttends();
+            final Collection<Attends> attends = studentGroup.getAttends();
             final List<InfoFrequenta> infoAttends = new ArrayList<InfoFrequenta>(attends.size());
             setInfoAttends(infoAttends);
             for (final Attends attend : attends) {

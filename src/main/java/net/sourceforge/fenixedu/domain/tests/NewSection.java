@@ -96,7 +96,7 @@ public class NewSection extends NewSection_Base {
 
     @Override
     public void delete() {
-        for (; this.hasAnyTestElements(); this.getTestElements().get(0).delete()) {
+        for (; this.hasAnyTestElements(); this.getTestElements().iterator().next().delete()) {
             ;
         }
 

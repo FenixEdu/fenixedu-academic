@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.backBeans.departmentMember;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -241,7 +242,7 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
     private String computeDegreeAcronyms(ExecutionCourse executionCourse) {
         StringBuilder degreeAcronyms = new StringBuilder();
 
-        List<CurricularCourse> curricularCourses = executionCourse.getAssociatedCurricularCourses();
+        Collection<CurricularCourse> curricularCourses = executionCourse.getAssociatedCurricularCourses();
         Set<String> processedAcronyns = new HashSet<String>();
 
         for (CurricularCourse curricularCourse : curricularCourses) {

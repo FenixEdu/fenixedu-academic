@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -17,8 +18,8 @@ public class ReadExecutionCoursesByExecutionPeriod {
 
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Atomic
-    public static List run(String executionPeriodId) throws FenixServiceException {
-        List allExecutionCoursesFromExecutionPeriod = null;
+    public static Collection run(String executionPeriodId) throws FenixServiceException {
+        Collection allExecutionCoursesFromExecutionPeriod = null;
         List<InfoExecutionCourse> allExecutionCourses = null;
 
         ExecutionSemester executionSemester = FenixFramework.getDomainObject(executionPeriodId);

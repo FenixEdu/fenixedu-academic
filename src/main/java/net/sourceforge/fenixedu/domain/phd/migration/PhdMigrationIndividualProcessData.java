@@ -270,7 +270,7 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
         final Person student = personalData.getPerson();
 
         if (student.hasAnyPhdIndividualProgramProcesses()) {
-            return student.getPhdIndividualProgramProcesses().get(0);
+            return student.getPhdIndividualProgramProcesses().iterator().next();
         }
 
         return null;
@@ -468,7 +468,7 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
         candidacyBean.setCollaborationType(PhdIndividualProgramCollaborationType.NONE);
         candidacyBean.setExecutionYear(getExecutionYear());
         candidacyBean.setFocusArea((getProcessBean().getPhdProgram().getPhdProgramFocusAreasCount() == 1) ? getProcessBean()
-                .getPhdProgram().getPhdProgramFocusAreas().get(0) : null);
+                .getPhdProgram().getPhdProgramFocusAreas().iterator().next() : null);
 
         final PhdIndividualProgramProcess individualProcess =
                 (PhdIndividualProgramProcess) CreateNewProcess.run(PhdIndividualProgramProcess.class, candidacyBean);

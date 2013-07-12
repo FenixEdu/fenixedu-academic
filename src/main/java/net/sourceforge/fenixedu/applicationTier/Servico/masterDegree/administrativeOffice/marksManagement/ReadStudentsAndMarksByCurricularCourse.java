@@ -79,7 +79,7 @@ public class ReadStudentsAndMarksByCurricularCourse {
                     });
 
             if (enrolmentEvaluationsWithResponsiblePerson.size() > 0) {
-                Person person = enrolmentEvaluationsWithResponsiblePerson.get(0).getPersonResponsibleForGrade();
+                Person person = enrolmentEvaluationsWithResponsiblePerson.iterator().next().getPersonResponsibleForGrade();
                 Teacher teacher = Teacher.readTeacherByUsername(person.getUsername());
                 infoTeacher = InfoTeacher.newInfoFromDomain(teacher);
             }
@@ -102,10 +102,10 @@ public class ReadStudentsAndMarksByCurricularCourse {
         }
 
         // get last evaluation date to show in interface
-        if (((InfoEnrolmentEvaluation) infoEnrolmentEvaluations.get(0)).getExamDate() == null) {
+        if (((InfoEnrolmentEvaluation) infoEnrolmentEvaluations.iterator().next()).getExamDate() == null) {
             lastEvaluationDate = getLastEvaluationDate(yearString, curricularCourse);
         } else {
-            lastEvaluationDate = ((InfoEnrolmentEvaluation) infoEnrolmentEvaluations.get(0)).getExamDate();
+            lastEvaluationDate = ((InfoEnrolmentEvaluation) infoEnrolmentEvaluations.iterator().next()).getExamDate();
         }
 
         InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = new InfoSiteEnrolmentEvaluation();

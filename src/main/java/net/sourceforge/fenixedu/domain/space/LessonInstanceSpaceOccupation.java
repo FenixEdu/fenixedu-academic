@@ -159,7 +159,7 @@ public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation
     @Override
     public String getPresentationString() {
         if (hasAnyLessonInstances()) {
-            return getLessonInstances().get(0).getLesson().getShift().getExecutionCourse().getSigla();
+            return getLessonInstances().iterator().next().getLesson().getShift().getExecutionCourse().getSigla();
         }
         return getClass().getName();
     }

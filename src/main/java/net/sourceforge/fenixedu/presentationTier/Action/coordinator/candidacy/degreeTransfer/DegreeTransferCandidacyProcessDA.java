@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.coordinator.candidacy.degreeTransfer;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -72,7 +73,7 @@ public class DegreeTransferCandidacyProcessDA extends
         if (!hasExecutionInterval(request)) {
             final List<ExecutionInterval> executionIntervals = readExecutionIntervalFilteredByCoordinatorTeam(request);
             if (executionIntervals.size() == 1) {
-                setCandidacyProcessInformation(request, getCandidacyProcess(request, executionIntervals.get(0)));
+                setCandidacyProcessInformation(request, getCandidacyProcess(request, executionIntervals.iterator().next()));
             } else {
                 request.setAttribute("canCreateProcess", canCreateProcess(getProcessType().getName()));
                 request.setAttribute("executionIntervals", executionIntervals);
@@ -84,7 +85,7 @@ public class DegreeTransferCandidacyProcessDA extends
 
     @Override
     protected List<IndividualCandidacyProcess> getChildProcesses(final CandidacyProcess process, HttpServletRequest request) {
-        List<IndividualCandidacyProcess> processes = process.getChildProcesses();
+        Collection<IndividualCandidacyProcess> processes = process.getChildProcesses();
         List<IndividualCandidacyProcess> selectedDegreesIndividualCandidacyProcesses =
                 new ArrayList<IndividualCandidacyProcess>();
         DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);

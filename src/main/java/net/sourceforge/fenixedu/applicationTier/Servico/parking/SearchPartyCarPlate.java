@@ -4,6 +4,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.parking;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -28,7 +29,7 @@ public class SearchPartyCarPlate {
     public static List<Party> run(String nameSearch, String carPlateNumber, Long parkingCardNumber) {
         List<Party> result = new ArrayList<Party>();
         if (!StringUtils.isEmpty(carPlateNumber) || !StringUtils.isEmpty(nameSearch) || parkingCardNumber != null) {
-            List<ParkingParty> parkingParties = RootDomainObject.getInstance().getParkingParties();
+            Collection<ParkingParty> parkingParties = RootDomainObject.getInstance().getParkingParties();
             for (ParkingParty parkingParty : parkingParties) {
                 if (parkingParty.getParty() != null) {
                     if (satisfiedParkingCardNumber(parkingParty, parkingCardNumber)

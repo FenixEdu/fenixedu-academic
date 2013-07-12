@@ -74,7 +74,6 @@ import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixframework.Atomic;
-import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.predicates.Predicate;
 import pt.utl.ist.fenix.tools.util.CollectionUtils;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
@@ -473,37 +472,37 @@ public class ExecutionCourse extends ExecutionCourse_Base {
                 getBoard().delete();
             }
 
-            for (; !getMetadatas().isEmpty(); getMetadatas().get(0).delete()) {
+            for (; !getMetadatas().isEmpty(); getMetadatas().iterator().next().delete()) {
                 ;
             }
-            for (; !getTestGroups().isEmpty(); getTestGroups().get(0).delete()) {
+            for (; !getTestGroups().isEmpty(); getTestGroups().iterator().next().delete()) {
                 ;
             }
-            for (; !getExportGroupings().isEmpty(); getExportGroupings().get(0).delete()) {
+            for (; !getExportGroupings().isEmpty(); getExportGroupings().iterator().next().delete()) {
                 ;
             }
-            for (; !getGroupingSenderExecutionCourse().isEmpty(); getGroupingSenderExecutionCourse().get(0).delete()) {
+            for (; !getGroupingSenderExecutionCourse().isEmpty(); getGroupingSenderExecutionCourse().iterator().next().delete()) {
                 ;
             }
-            for (; !getCourseLoads().isEmpty(); getCourseLoads().get(0).delete()) {
+            for (; !getCourseLoads().isEmpty(); getCourseLoads().iterator().next().delete()) {
                 ;
             }
-            for (; !getProfessorships().isEmpty(); getProfessorships().get(0).delete()) {
+            for (; !getProfessorships().isEmpty(); getProfessorships().iterator().next().delete()) {
                 ;
             }
-            for (; !getLessonPlannings().isEmpty(); getLessonPlannings().get(0).delete()) {
+            for (; !getLessonPlannings().isEmpty(); getLessonPlannings().iterator().next().delete()) {
                 ;
             }
-            for (; !getExecutionCourseProperties().isEmpty(); getExecutionCourseProperties().get(0).delete()) {
+            for (; !getExecutionCourseProperties().isEmpty(); getExecutionCourseProperties().iterator().next().delete()) {
                 ;
             }
-            for (; !getAttends().isEmpty(); getAttends().get(0).delete()) {
+            for (; !getAttends().isEmpty(); getAttends().iterator().next().delete()) {
                 ;
             }
-            for (; !getForuns().isEmpty(); getForuns().get(0).delete()) {
+            for (; !getForuns().isEmpty(); getForuns().iterator().next().delete()) {
                 ;
             }
-            for (; !getExecutionCourseLogs().isEmpty(); getExecutionCourseLogs().get(0).delete()) {
+            for (; !getExecutionCourseLogs().isEmpty(); getExecutionCourseLogs().iterator().next().delete()) {
                 ;
             }
 
@@ -792,7 +791,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
                 evaluationComparisonDate = writtenEvaluation.getDayDate();
             } else if (evaluation instanceof FinalEvaluation) {
                 evaluationTypeDistinguisher = "4";
-                final ExecutionCourse executionCourse = evaluation.getAssociatedExecutionCourses().get(0);
+                final ExecutionCourse executionCourse = evaluation.getAssociatedExecutionCourses().iterator().next();
                 evaluationComparisonDate = executionCourse.getExecutionPeriod().getEndDate();
             } else {
                 throw new DomainException("unknown.evaluation.type", evaluation.getClass().getName());
@@ -1651,7 +1650,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
             }
 
             boolean unique = true;
-            final String nameEn = getAssociatedCurricularCourses().get(0).getNameEn();
+            final String nameEn = getAssociatedCurricularCourses().iterator().next().getNameEn();
 
             for (final CurricularCourse curricularCourse : getAssociatedCurricularCourses()) {
                 if (curricularCourse.getNameEn() == null || !curricularCourse.getNameEn().equals(nameEn)) {
@@ -2017,7 +2016,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     public Map<ShiftType, CourseLoad> getCourseLoadsMap() {
         Map<ShiftType, CourseLoad> result = new HashMap<ShiftType, CourseLoad>();
-        List<CourseLoad> courseLoads = getCourseLoads();
+        Collection<CourseLoad> courseLoads = getCourseLoads();
         for (CourseLoad courseLoad : courseLoads) {
             result.put(courseLoad.getType(), courseLoad);
         }
@@ -2305,12 +2304,13 @@ public class ExecutionCourse extends ExecutionCourse_Base {
                         curricularYear, name);
     }
 
-    public static List<ExecutionCourse> filterByAcademicInterval(AcademicInterval academicInterval) {
+    public static Collection<ExecutionCourse> filterByAcademicInterval(AcademicInterval academicInterval) {
         // FIXME (PERIODS) must be changed when ExecutionCourse is linked to
         // ExecutionInterval
         ExecutionSemester executionSemester = (ExecutionSemester) ExecutionInterval.getExecutionInterval(academicInterval);
 
-        return executionSemester == null ? Collections.EMPTY_LIST : executionSemester.getAssociatedExecutionCourses();
+        return executionSemester == null ? Collections.<ExecutionCourse> emptyList() : executionSemester
+                .getAssociatedExecutionCoursesSet();
     }
 
     public static ExecutionCourse getExecutionCourseByInitials(AcademicInterval academicInterval, String courseInitials) {
@@ -2422,7 +2422,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         }
 
         boolean unique = true;
-        final String nameEn = getAssociatedCurricularCourses().get(0).getNameEn();
+        final String nameEn = getAssociatedCurricularCourses().iterator().next().getNameEn();
 
         for (final CurricularCourse curricularCourse : getAssociatedCurricularCourses()) {
             if (curricularCourse.getNameEn() == null || !curricularCourse.getNameEn().equals(nameEn)) {
@@ -2613,7 +2613,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     @Override
     public void addAssociatedCurricularCourses(final CurricularCourse curricularCourse) {
-        List<ExecutionCourse> executionCourses = curricularCourse.getAssociatedExecutionCourses();
+        Collection<ExecutionCourse> executionCourses = curricularCourse.getAssociatedExecutionCourses();
 
         for (ExecutionCourse executionCourse : executionCourses) {
             if (this != executionCourse && executionCourse.getExecutionPeriod() == getExecutionPeriod()) {

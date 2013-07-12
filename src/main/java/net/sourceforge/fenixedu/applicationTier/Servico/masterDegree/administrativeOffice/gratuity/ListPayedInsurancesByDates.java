@@ -4,6 +4,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -26,7 +27,7 @@ public class ListPayedInsurancesByDates {
 
         List<InsuranceTransaction> insuranceTransactions = new ArrayList<InsuranceTransaction>();
 
-        List<Transaction> transactions = RootDomainObject.getInstance().getTransactions();
+        Collection<Transaction> transactions = RootDomainObject.getInstance().getTransactions();
         for (Transaction transaction : transactions) {
             if (transaction instanceof InsuranceTransaction) {
                 InsuranceTransaction insuranceTransaction = (InsuranceTransaction) transaction;

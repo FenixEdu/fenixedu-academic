@@ -32,7 +32,7 @@ public class FinalDegreeWorkProposalHeader extends InfoObject {
 
     public FinalDegreeWorkProposalHeader(final Proposal proposal) {
         proposalDomainReference = proposal;
-        executionDegreeDomainReference = proposal.getScheduleing().getExecutionDegrees().get(0);
+        executionDegreeDomainReference = proposal.getScheduleing().getExecutionDegrees().iterator().next();
     }
 
     public FinalDegreeWorkProposalHeader(final Proposal proposal, final ExecutionDegree executionDegree) {

@@ -714,7 +714,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
                         predicate);
         String reportName = "";
         if (selectedJobs.size() > 0) {
-            reportName = selectedJobs.get(0).getJobName();
+            reportName = selectedJobs.iterator().next().getJobName();
         }
 
         request.setAttribute("degreeType", degreeType);

@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -20,7 +21,7 @@ public class GetBranchListByCandidateID {
         List<InfoBranch> result = new ArrayList<InfoBranch>();
 
         MasterDegreeCandidate masterDegreeCandidate = FenixFramework.getDomainObject(candidateID);
-        List<Branch> branches = masterDegreeCandidate.getExecutionDegree().getDegreeCurricularPlan().getAreas();
+        Collection<Branch> branches = masterDegreeCandidate.getExecutionDegree().getDegreeCurricularPlan().getAreas();
         if (branches == null) {
             InfoBranchEditor infoBranch = new InfoBranchEditor();
             infoBranch.setName("Tronco Comum");

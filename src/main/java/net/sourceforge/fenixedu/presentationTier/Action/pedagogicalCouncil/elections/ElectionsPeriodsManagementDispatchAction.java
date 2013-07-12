@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.elec
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -154,7 +155,7 @@ public class ElectionsPeriodsManagementDispatchAction extends FenixDispatchActio
 
         final YearDelegateElection yearDelegateElection =
                 (YearDelegateElection) FenixFramework.getDomainObject(request.getParameter("selectedCandidacyPeriod"));
-        List<Student> candidates = yearDelegateElection.getCandidates();
+        Collection<Student> candidates = yearDelegateElection.getCandidates();
 
         final ExecutionYear executionYear = yearDelegateElection.getExecutionYear();
 
@@ -183,8 +184,7 @@ public class ElectionsPeriodsManagementDispatchAction extends FenixDispatchActio
         final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
 
         final YearDelegateElection yearDelegateElection =
-                (YearDelegateElection) FenixFramework.getDomainObject((String) getFromRequest(request,
-                        "selectedVotingPeriod"));
+                (YearDelegateElection) FenixFramework.getDomainObject((String) getFromRequest(request, "selectedVotingPeriod"));
 
         final ExecutionYear executionYear = yearDelegateElection.getExecutionYear();
 

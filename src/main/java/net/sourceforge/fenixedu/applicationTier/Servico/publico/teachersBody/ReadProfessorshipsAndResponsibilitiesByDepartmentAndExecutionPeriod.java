@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.publico.teachersBody;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -53,7 +54,7 @@ public class ReadProfessorshipsAndResponsibilitiesByDepartmentAndExecutionPeriod
         List responsibleFors = new ArrayList();
         while (iter.hasNext()) {
             Teacher teacher = (Teacher) iter.next();
-            List teacherProfessorships = null;
+            Collection teacherProfessorships = null;
             if (executionYear == null) {
                 teacherProfessorships = teacher.getProfessorships();
             } else {

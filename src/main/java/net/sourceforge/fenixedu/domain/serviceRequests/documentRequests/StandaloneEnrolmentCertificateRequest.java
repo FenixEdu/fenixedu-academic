@@ -61,7 +61,7 @@ public class StandaloneEnrolmentCertificateRequest extends StandaloneEnrolmentCe
 
         if (academicServiceRequestBean.isToCancelOrReject()) {
             for (; hasAnyEnrolments();) {
-                removeEnrolments(getEnrolments().get(0));
+                removeEnrolments(getEnrolments().iterator().next());
             }
         }
     }

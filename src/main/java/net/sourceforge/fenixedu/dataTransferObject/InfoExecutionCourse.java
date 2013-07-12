@@ -255,7 +255,7 @@ public class InfoExecutionCourse extends InfoObject {
         }
     }
 
-    public List<CourseLoad> getCourseLoads() {
+    public Collection<CourseLoad> getCourseLoads() {
         return getExecutionCourse().getCourseLoads();
     }
 

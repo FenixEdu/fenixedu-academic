@@ -96,7 +96,7 @@ public class ImprovementOfApprovedEnrolmentPR extends ImprovementOfApprovedEnrol
         final ImprovementOfApprovedEnrolmentEvent improvementOfApprovedEnrolmentEvent =
                 (ImprovementOfApprovedEnrolmentEvent) event;
         final EnrolmentEvaluation enrolmentEvaluation =
-                improvementOfApprovedEnrolmentEvent.getImprovementEnrolmentEvaluations().get(0);
+                improvementOfApprovedEnrolmentEvent.getImprovementEnrolmentEvaluations().iterator().next();
         final DegreeCurricularPlan degreeCurricularPlan = enrolmentEvaluation.getDegreeCurricularPlan();
 
         final EnrolmentPeriod enrolmentPeriodInImprovementOfApprovedEnrolment =

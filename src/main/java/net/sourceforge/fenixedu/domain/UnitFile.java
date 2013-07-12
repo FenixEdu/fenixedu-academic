@@ -57,7 +57,7 @@ public class UnitFile extends UnitFile_Base {
     public void delete() {
         if (isEditableByCurrentUser()) {
             setUnit(null);
-            for (; !getUnitFileTags().isEmpty(); getUnitFileTags().get(0).removeTaggedFiles(this)) {
+            for (; !getUnitFileTags().isEmpty(); getUnitFileTags().iterator().next().removeTaggedFiles(this)) {
                 ;
             }
             setUploader(null);

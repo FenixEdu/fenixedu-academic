@@ -95,7 +95,7 @@ public class ViewCourseInquiryPublicResults extends ViewInquiryPublicResults {
 
         InquiryQuestion totalAnswersQuestion = getInquiryQuestion(results, InquiryResultType.COURSE_TOTAL_ANSWERS);
         request.setAttribute("totalAnswers",
-                new QuestionResultsSummaryBean(totalAnswersQuestion, getResultsForQuestion(results, totalAnswersQuestion).get(0)));
+                new QuestionResultsSummaryBean(totalAnswersQuestion, getResultsForQuestion(results, totalAnswersQuestion).iterator().next()));
 
         List<TeacherShiftTypeGeneralResultBean> teachersSummaryBeans = getTeachersShiftsResults(executionCourse);
         Collections.sort(teachersSummaryBeans, new BeanComparator("professorship.person.name"));
@@ -128,7 +128,7 @@ public class ViewCourseInquiryPublicResults extends ViewInquiryPublicResults {
         request.setAttribute("executionCourse", executionCourse);
         request.setAttribute("executionPeriod", executionPeriod);
         request.setAttribute("executionDegree", executionDegree);
-        request.setAttribute("resultsDate", results.get(0).getResultDate());
+        request.setAttribute("resultsDate", results.iterator().next().getResultDate());
         request.setAttribute("blockResultsSummaryBeans", blockResultsSummaryBeans);
 
         request.setAttribute("publicContext", true);

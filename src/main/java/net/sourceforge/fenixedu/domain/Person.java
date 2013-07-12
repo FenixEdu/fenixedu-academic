@@ -165,7 +165,7 @@ import org.joda.time.YearMonthDay;
 import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixframework.Atomic;
-import pt.ist.fenixframework.FenixFramework;
+import pt.ist.fenixframework.core.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.smtp.EmailSender;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
@@ -914,7 +914,7 @@ public class Person extends Person_Base {
     }
 
     public ExamCoordinator getExamCoordinatorForGivenExecutionYear(final ExecutionYear executionYear) {
-        final List<ExamCoordinator> examCoordinators = this.getExamCoordinators();
+        final Collection<ExamCoordinator> examCoordinators = this.getExamCoordinators();
         for (final ExamCoordinator examCoordinator : examCoordinators) {
             if (examCoordinator.getExecutionYear().equals(executionYear)) {
                 return examCoordinator;
@@ -946,7 +946,7 @@ public class Person extends Person_Base {
     }
 
     public double getTotalVigilancyPoints() {
-        final List<VigilantWrapper> vigilants = this.getVigilantWrappers();
+        final Collection<VigilantWrapper> vigilants = this.getVigilantWrappersSet();
 
         double points = 0;
         for (final VigilantWrapper vigilant : vigilants) {
@@ -3547,7 +3547,7 @@ public class Person extends Person_Base {
     }
 
     public List<UnavailablePeriod> getUnavailablePeriodsForGivenYear(final ExecutionYear executionYear) {
-        final List<UnavailablePeriod> unavailablePeriods = this.getUnavailablePeriods();
+        final Collection<UnavailablePeriod> unavailablePeriods = this.getUnavailablePeriods();
         final List<UnavailablePeriod> unavailablePeriodsForGivenYear = new ArrayList<UnavailablePeriod>();
         for (final UnavailablePeriod unavailablePeriod : unavailablePeriods) {
             if (unavailablePeriod.getBeginDate().getYear() == executionYear.getBeginCivilYear()
@@ -3715,7 +3715,7 @@ public class Person extends Person_Base {
 
     public RegistrationProtocol getOnlyRegistrationProtocol() {
         if (getRegistrationProtocolsCount() == 1) {
-            return getRegistrationProtocols().get(0);
+            return getRegistrationProtocols().iterator().next();
         }
         return null;
     }
@@ -3855,7 +3855,7 @@ public class Person extends Person_Base {
     }
 
     public boolean hasMandatoryCommentsToMakeAsRegentInUC(final ExecutionCourse executionCourse) {
-        final List<InquiryResult> inquiryResults = executionCourse.getInquiryResults();
+        final Collection<InquiryResult> inquiryResults = executionCourse.getInquiryResults();
         for (final InquiryResult inquiryResult : inquiryResults) {
             if (inquiryResult.getResultClassification() != null && inquiryResult.getProfessorship() == null) {
                 if (inquiryResult.getResultClassification().isMandatoryComment()
@@ -6114,6 +6114,10 @@ public class Person extends Person_Base {
     @Deprecated
     public boolean hasEidentifier() {
         return getEidentifier() != null;
+    }
+
+    public boolean hasPersonRoles(Role role) {
+        return getPersonRolesSet().contains(role);
     }
 
 }

@@ -84,7 +84,7 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
              * kept commented only for legacy purpose.
              */
             // if (loggedStudent.getRegistrations().size() == 1) {
-            // registration = loggedStudent.getRegistrations().get(0);
+            // registration = loggedStudent.getRegistrations().iterator().next();
             // } else {
             request.setAttribute("student", loggedStudent);
 

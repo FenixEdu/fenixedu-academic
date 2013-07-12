@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.vigilancy;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -80,7 +81,7 @@ public class UnavailablePeriodManagement extends FenixDispatchAction {
         String id = request.getParameter("oid");
         UnavailablePeriod unavailablePeriod = (UnavailablePeriod) FenixFramework.getDomainObject(id);
 
-        VigilantWrapper vigilant = unavailablePeriod.getPerson().getVigilantWrappers().get(0);
+        VigilantWrapper vigilant = unavailablePeriod.getPerson().getVigilantWrappers().iterator().next();
         deletePeriod(request);
         putRequestVigilantManagementCompliant(request, vigilant);
         return mapping.findForward("deleteUnavailablePeriod");
@@ -235,7 +236,7 @@ public class UnavailablePeriodManagement extends FenixDispatchAction {
         bean.setBeginDate(unavailablePeriod.getBeginDate());
         bean.setEndDate(unavailablePeriod.getEndDate());
         bean.setJustification(unavailablePeriod.getJustification());
-        bean.setVigilantWrapper(unavailablePeriod.getPerson().getVigilantWrappers().get(0));
+        bean.setVigilantWrapper(unavailablePeriod.getPerson().getVigilantWrappers().iterator().next());
 
         request.setAttribute("bean", bean);
     }
@@ -268,7 +269,7 @@ public class UnavailablePeriodManagement extends FenixDispatchAction {
         VigilantGroup group = getGroupInRequestOrFirstGroupFromVigilant(request, vigilantWrapper);
         bean.setSelectedVigilantGroup(group);
         List<VigilantGroup> groups = new ArrayList<VigilantGroup>();
-        List<VigilantWrapper> vigilantWrappersFromPerson = vigilantWrapper.getPerson().getVigilantWrappers();
+        Collection<VigilantWrapper> vigilantWrappersFromPerson = vigilantWrapper.getPerson().getVigilantWrappersSet();
         for (VigilantWrapper vigilantWrapperFromPerson : vigilantWrappersFromPerson) {
             groups.add(vigilantWrapperFromPerson.getVigilantGroup());
         }

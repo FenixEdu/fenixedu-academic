@@ -219,7 +219,7 @@ public class ResourceAllocationRole extends ResourceAllocationRole_Base {
             }
         }
 
-        return (Group) (existentGroups.isEmpty() ? null : existentGroups.size() == 1 ? existentGroups.get(0) : new GroupUnion(
+        return (Group) (existentGroups.isEmpty() ? null : existentGroups.size() == 1 ? existentGroups.iterator().next() : new GroupUnion(
                 existentGroups));
     }
 

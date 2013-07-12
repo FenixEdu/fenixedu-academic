@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.credits.departmentAdmOffice;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -63,7 +64,7 @@ public class DepartmentAdmOfficeManageDegreeTeachingServicesDispatchAction exten
             HttpServletRequest request) {
 
         IUserView userView = UserView.getUser();
-        List<Department> manageableDepartments = userView.getPerson().getManageableDepartmentCredits();
+        Collection<Department> manageableDepartments = userView.getPerson().getManageableDepartmentCredits();
 
         List<Unit> workingPlacesByPeriod =
                 teacher.getWorkingPlacesByPeriod(executionSemester.getBeginDateYearMonthDay(),

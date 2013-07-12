@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.commons.candidate;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class ReadCandidateEnrolmentsByCandidateID {
             throw new NonExistingServiceException();
         }
 
-        List candidateEnrolments = masterDegreeCandidate.getCandidateEnrolments();
+        Collection candidateEnrolments = masterDegreeCandidate.getCandidateEnrolments();
 
         if (candidateEnrolments == null) {
             throw new NonExistingServiceException();

@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.vigilancy;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -69,7 +70,7 @@ public class VigilantManagement extends FenixDispatchAction {
         bean.setVigilantGroups(vigilancy.getVigilantWrapper().getPerson().getVisibleVigilantGroups(executionYear));
 
         List<Vigilancy> activeOtherCourseVigilancies = new ArrayList<Vigilancy>();
-        List<VigilantWrapper> vigilantWrappers = vigilancy.getVigilantWrapper().getPerson().getVigilantWrappers();
+        Collection<VigilantWrapper> vigilantWrappers = vigilancy.getVigilantWrapper().getPerson().getVigilantWrappersSet();
         for (VigilantWrapper vigilantWrapper : vigilantWrappers) {
             activeOtherCourseVigilancies.addAll(vigilantWrapper.getActiveOtherCourseVigilancies());
         }
@@ -92,12 +93,12 @@ public class VigilantManagement extends FenixDispatchAction {
 
     private void prepareBean(VigilantBean bean, HttpServletRequest request, ExecutionYear executionYear)
             throws FenixServiceException {
-        List<VigilantWrapper> vigilantWrappers = getVigilantWrappersForPerson(request);
+        Collection<VigilantWrapper> vigilantWrappers = getVigilantWrappersForPerson(request);
 
         bean.setExecutionYear(executionYear);
         VigilantGroup selectedVigilantGroup = bean.getSelectedVigilantGroup();
 
-        VigilantWrapper vigilant = vigilantWrappers.get(0);
+        VigilantWrapper vigilant = vigilantWrappers.iterator().next();
         if (selectedVigilantGroup != null) {
             for (VigilantWrapper vigilantWrapper : vigilantWrappers) {
                 if (vigilantWrapper.getVigilantGroup().equals(selectedVigilantGroup)) {
@@ -115,7 +116,7 @@ public class VigilantManagement extends FenixDispatchAction {
 
             bean.setVigilantGroups(groups);
             if (groups.size() == 1) {
-                VigilantGroup group = groups.get(0);
+                VigilantGroup group = groups.iterator().next();
                 bean.setSelectedVigilantGroup(group);
             }
         } else {
@@ -132,9 +133,9 @@ public class VigilantManagement extends FenixDispatchAction {
         request.setAttribute("bean", bean);
     }
 
-    private List<VigilantWrapper> getVigilantWrappersForPerson(HttpServletRequest request) throws FenixServiceException {
+    private Collection<VigilantWrapper> getVigilantWrappersForPerson(HttpServletRequest request) throws FenixServiceException {
         Person person = getLoggedPerson(request);
-        List<VigilantWrapper> vigilantWrappers = person.getVigilantWrappers();
+        Collection<VigilantWrapper> vigilantWrappers = person.getVigilantWrappersSet();
         return vigilantWrappers;
     }
 

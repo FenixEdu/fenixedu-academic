@@ -216,7 +216,7 @@ public class ChangeStudentTestQuestion {
     }
 
     private void removeOldTestQuestion(Question oldQuestion) {
-        List<TestQuestion> testQuestionOldList = oldQuestion.getTestQuestions();
+        Collection<TestQuestion> testQuestionOldList = oldQuestion.getTestQuestions();
         List<Question> availableQuestions = new ArrayList<Question>();
         availableQuestions.addAll(oldQuestion.getMetadata().getVisibleQuestions());
         availableQuestions.remove(oldQuestion);

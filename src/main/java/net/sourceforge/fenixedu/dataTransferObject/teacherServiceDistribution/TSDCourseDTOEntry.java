@@ -70,7 +70,7 @@ public class TSDCourseDTOEntry extends DataTranferObject {
     public String getAcronym() {
         CurricularCourse tsdCurricularCourse = null;
         if (!tsdCourse.getAssociatedCurricularCourses().isEmpty()) {
-            tsdCurricularCourse = tsdCourse.getAssociatedCurricularCourses().get(0);
+            tsdCurricularCourse = tsdCourse.getAssociatedCurricularCourses().iterator().next();
         }
 
         if (tsdCurricularCourse != null) {

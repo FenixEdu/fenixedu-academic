@@ -305,7 +305,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
             List<ExecutionDegree> intersection =
                     (List<ExecutionDegree>) CollectionUtils.intersection(executionDegrees, studentCurricularPlan
                             .getDegreeCurricularPlan().getExecutionDegreesSet());
-            form.set("executionDegree", intersection.get(0).getExternalId().toString());
+            form.set("executionDegree", intersection.iterator().next().getExternalId().toString());
         }
     }
 

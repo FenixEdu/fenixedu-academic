@@ -175,7 +175,7 @@ public class Vehicle extends Vehicle_Base {
     }
 
     public void delete() {
-        for (; getNewParkingDocuments().size() != 0; getNewParkingDocuments().get(0).delete()) {
+        for (; getNewParkingDocuments().size() != 0; getNewParkingDocuments().iterator().next().delete()) {
             ;
         }
         setVehicleMake(null);
