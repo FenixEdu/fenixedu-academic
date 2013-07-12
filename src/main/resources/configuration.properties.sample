@@ -116,12 +116,11 @@ manager.url=http://localhost:8080/manager
 #   db.assiduousness.alias: 
 #   db.assiduousness.validationQuery: 
 #
-default.persistenceSupport=net.sourceforge.fenixedu.persistenceTier.SuportePersistenteOJB
 
 db.name=ciapl
 db.user=root
 db.pass=
-db.alias=//localhost:3306/ciapl?useUnicode=true&characterEncoding=utf8&clobCharacterEncoding=utf8&zeroDateTimeBehavior=convertToNull&statementInterceptors=net.sourceforge.fenixedu.persistenceTier.statementInterceptors.FenixStatementInterceptor
+db.alias=//localhost:3306/ciapl?useUnicode=true&characterEncoding=utf8&clobCharacterEncoding=utf8&zeroDateTimeBehavior=convertToNull
 
 db.assiduousness.name=AssiduidadeOracleTeste
 db.assiduousness.platform=MySQL
