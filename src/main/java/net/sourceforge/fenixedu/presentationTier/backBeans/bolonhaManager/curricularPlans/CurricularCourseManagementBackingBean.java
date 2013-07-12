@@ -12,6 +12,7 @@ import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.AddContextToCurricularCourse;
 import net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.CreateCurricularCourse;
 import net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.DeleteContextFromDegreeModule;
@@ -25,9 +26,11 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
@@ -192,6 +195,10 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
 
     public List<SelectItem> getDepartmentUnits() {
         return (departmentUnits == null) ? (departmentUnits = readDepartmentUnits()) : departmentUnits;
+    }
+
+    public List<SelectItem> getAllowedDepartmentUnits() {
+        return (departmentUnits == null) ? (departmentUnits = readAllowedDepartmentUnits()) : departmentUnits;
     }
 
     public List<SelectItem> getCompetenceCourses() {
@@ -665,13 +672,40 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
 
     private List<SelectItem> readDepartmentUnits() {
         final List<SelectItem> result = new ArrayList<SelectItem>();
-        for (final Object departmentObject : RootDomainObject.readAllDomainObjects(Department.class)) {
+        for (final Object departmentObject : RootDomainObject.getInstance().getDepartments()) {
             DepartmentUnit departmentUnit = ((Department) departmentObject).getDepartmentUnit();
             result.add(new SelectItem(departmentUnit.getIdInternal(), departmentUnit.getName()));
         }
         Collections.sort(result, new BeanComparator("label"));
         result.add(0, new SelectItem(this.NO_SELECTION, bolonhaBundle.getString("choose")));
         return result;
+    }
+
+    private List<SelectItem> readAllowedDepartmentUnits() {
+        final List<SelectItem> result = new ArrayList<SelectItem>();
+        for (final Department department : RootDomainObject.getInstance().getDepartments()) {
+            if (department.getCompetenceCourseMembersGroup() != null
+                    && department.getCompetenceCourseMembersGroup().isMember(getUserView().getPerson())) {
+                DepartmentUnit departmentUnit = department.getDepartmentUnit();
+                result.add(new SelectItem(departmentUnit.getIdInternal(), departmentUnit.getName()));
+            }
+        }
+        Collections.sort(result, new BeanComparator("label"));
+        if (result.size() == 1) {
+            Department personDepartment = getPersonDepartment();
+            if (personDepartment != null
+                    && !result.get(0).getValue().equals(personDepartment.getDepartmentUnit().getIdInternal())) {
+                result.add(0, new SelectItem(personDepartment.getDepartmentUnit().getIdInternal(), personDepartment.getName()));
+            }
+        }
+        return result;
+    }
+
+    private Department getPersonDepartment() {
+        final IUserView userView = getUserView();
+        final Person person = userView == null ? null : userView.getPerson();
+        final Employee employee = person == null ? null : person.getEmployee();
+        return employee == null ? null : employee.getCurrentDepartmentWorkingPlace();
     }
 
     private List<SelectItem> readCompetenceCourses() {

@@ -8,8 +8,16 @@
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 
 	<h:outputText rendered="#{!empty CompetenceCourseManagement.scientificAreaUnits}" value="<em>#{bolonhaBundle['bolonhaManager']}</em>" escape="false"/>
-	<h:outputText value="<h2>#{CompetenceCourseManagement.personDepartment.realName}</h2>" escape="false"/>
+	<h:outputText value="<h2>#{CompetenceCourseManagement.departmentToDisplay.realName}</h2>" escape="false"/>
 
+<h:form>
+	<h:panelGrid columns="2" style="infocell" columnClasses="infocell">
+		<fc:selectOneMenu value="#{CompetenceCourseManagement.selectedDepartmentUnitID}" onchange="submit()">
+			<f:selectItems value="#{CurricularCourseManagement.allowedDepartmentUnits}"/>
+		</fc:selectOneMenu>
+		<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
+	</h:panelGrid>
+		
 	<h:panelGroup rendered="#{!empty CompetenceCourseManagement.groupMembersLabels}">
 		<h:outputText value="<p class='mtop15 mbottom05'><b id='members' class='highlight1'>#{bolonhaBundle['groupMembers']}</b> #{bolonhaBundle['label.group.members.explanation']}:</p>" escape="false" />
 		<h:outputText value="<ul>" escape="false"/>
@@ -24,7 +32,7 @@
 
 	<h:panelGroup rendered="#{!empty CompetenceCourseManagement.personDepartment}">
 		<h:panelGroup rendered="#{CompetenceCourseManagement.canView}">
-			<h:form>
+			
 				<h:messages infoClass="success0" errorClass="error0" layout="table"/>
 				<h:panelGroup rendered="#{empty CompetenceCourseManagement.scientificAreaUnits}">
 					<h:outputText  value="<i>#{bolonhaBundle['noScientificAreaUnits']}<i><br/>" escape="false"/>
@@ -100,7 +108,7 @@
 						</h:panelGroup>
 					</fc:dataRepeater>
 				</h:panelGroup>
-			</h:form>
+			
 		</h:panelGroup>		
 	
 		<h:panelGroup rendered="#{!CompetenceCourseManagement.canView}">
@@ -112,6 +120,7 @@
 		<h:outputText value="<a href='#{CompetenceCourseManagement.contextPath}/bolonhaManager/competenceCourses/manageVersions.do?method=exportCompetenceCourseExecutionToExcel'>#{bolonhaBundle['course.group.studies.plan']}</a>" escape="false"/>
 
 	</h:panelGroup>
+</h:form>	
 	<h:panelGroup rendered="#{empty CompetenceCourseManagement.personDepartment}">
 		<h:outputText value="<i>#{bolonhaBundle['no.current.department.working.place']}</i><br/>" escape="false"/>
 	</h:panelGroup>

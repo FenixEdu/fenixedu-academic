@@ -111,8 +111,14 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     }
 
     public Boolean getCanView() {
-        return (this.getPersonDepartment() != null && this.getPersonDepartment().getCompetenceCourseMembersGroup() != null) ? this
-                .getPersonDepartment().getCompetenceCourseMembersGroup().isMember(this.getUserView().getPerson()) : false;
+        DepartmentUnit selectedDepartmentUnit = getSelectedDepartmentUnit();
+        if (selectedDepartmentUnit == null) {
+            return (this.getPersonDepartment() != null && this.getPersonDepartment().getCompetenceCourseMembersGroup() != null) ? this
+                    .getPersonDepartment().getCompetenceCourseMembersGroup().isMember(this.getUserView().getPerson()) : false;
+        } else {
+            return selectedDepartmentUnit.getDepartment().getCompetenceCourseMembersGroup() != null ? selectedDepartmentUnit
+                    .getDepartment().getCompetenceCourseMembersGroup().isMember(getUserView().getPerson()) : false;
+        }
     }
 
     public Department getPersonDepartment() {
@@ -120,6 +126,14 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         final Person person = userView == null ? null : userView.getPerson();
         final Employee employee = person == null ? null : person.getEmployee();
         return employee == null ? null : employee.getCurrentDepartmentWorkingPlace();
+    }
+
+    public Department getDepartmentToDisplay() {
+        if (getSelectedDepartmentUnit() != null) {
+            return getSelectedDepartmentUnit().getDepartment();
+        } else {
+            return getPersonDepartment();
+        }
     }
 
     public DepartmentUnit getSelectedDepartmentUnit() {
