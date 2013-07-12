@@ -34,7 +34,7 @@ import org.joda.time.LocalDate;
 import org.joda.time.Partial;
 import org.joda.time.YearMonthDay;
 
-import dml.runtime.RelationAdapter;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 /**
  * Created on 11/Fev/2003
@@ -45,7 +45,7 @@ import dml.runtime.RelationAdapter;
 public class ExecutionYear extends ExecutionYear_Base implements Comparable<ExecutionYear> {
 
     static {
-        ExecutionPeriodExecutionYear.addListener(new ExecutionPeriodExecutionYearListener());
+        getRelationExecutionPeriodExecutionYear().addListener(new ExecutionPeriodExecutionYearListener());
     }
 
     static final public Comparator<ExecutionYear> COMPARATOR_BY_YEAR = new Comparator<ExecutionYear>() {
@@ -479,7 +479,7 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
                 }
                 result = map.get(year);
             }
-            
+
             return result;
         }
 

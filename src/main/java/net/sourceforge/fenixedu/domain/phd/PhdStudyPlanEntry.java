@@ -6,14 +6,14 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.DateTime;
 
-import dml.runtime.RelationAdapter;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 abstract public class PhdStudyPlanEntry extends PhdStudyPlanEntry_Base {
 
     static {
-        PhdStudyPlanPhdStudyPlanEntry.addListener(new RelationAdapter<PhdStudyPlanEntry, PhdStudyPlan>() {
+        getRelationPhdStudyPlanPhdStudyPlanEntry().addListener(new RelationAdapter<PhdStudyPlan, PhdStudyPlanEntry>() {
             @Override
-            public void beforeAdd(PhdStudyPlanEntry entry, PhdStudyPlan studyPlan) {
+            public void beforeAdd(PhdStudyPlan studyPlan, PhdStudyPlanEntry entry) {
                 if (entry != null && studyPlan != null) {
                     if (studyPlan.hasSimilarEntry(entry)) {
                         throw new DomainException("error.phd.PhdStudyPlanEntry.found.similar.entry");

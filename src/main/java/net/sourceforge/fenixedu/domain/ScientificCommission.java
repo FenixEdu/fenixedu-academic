@@ -2,12 +2,12 @@ package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import dml.runtime.RelationAdapter;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 public class ScientificCommission extends ScientificCommission_Base {
 
     static {
-        ScientificCommissionPerson.addListener(new ManageCoordinatorRole());
+        getRelationScientificCommissionPerson().addListener(new ManageCoordinatorRole());
     }
 
     public ScientificCommission(ExecutionDegree executionDegree, Person person) {

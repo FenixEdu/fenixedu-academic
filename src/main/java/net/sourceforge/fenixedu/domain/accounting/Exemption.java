@@ -7,13 +7,13 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.joda.time.DateTime;
 
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
-import dml.runtime.RelationAdapter;
 
 public abstract class Exemption extends Exemption_Base {
 
     static {
-        ExemptionEvent.addListener(new RelationAdapter<Exemption, Event>() {
+        getRelationExemptionEvent().addListener(new RelationAdapter<Exemption, Event>() {
 
             @Override
             public void beforeAdd(Exemption exemption, Event event) {

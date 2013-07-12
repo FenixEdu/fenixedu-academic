@@ -6,7 +6,8 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import dml.runtime.RelationAdapter;
+import pt.ist.fenixframework.DomainObject;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 /**
  * This adapter when added to a direct relation manages the order of all the
@@ -15,11 +16,12 @@ import dml.runtime.RelationAdapter;
  * 
  * @author cfgi
  */
-public class OrderedRelationAdapter<HolderType, ObjectType> extends RelationAdapter<HolderType, ObjectType> {
+public class OrderedRelationAdapter<HolderType extends DomainObject, ObjectType extends DomainObject> extends
+        RelationAdapter<HolderType, ObjectType> {
 
     private class OrderComparator implements Comparator<ObjectType> {
 
-        private ObjectType element;
+        private final ObjectType element;
 
         public OrderComparator(ObjectType element) {
             this.element = element;

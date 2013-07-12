@@ -20,8 +20,8 @@ import net.sourceforge.fenixedu.util.Money;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
-import dml.runtime.RelationAdapter;
 
 public abstract class PostingRule extends PostingRule_Base {
 
@@ -60,25 +60,26 @@ public abstract class PostingRule extends PostingRule_Base {
     };
 
     static {
-        ServiceAgreementTemplatePostingRule.addListener(new RelationAdapter<PostingRule, ServiceAgreementTemplate>() {
-            @Override
-            public void beforeAdd(PostingRule postingRule, ServiceAgreementTemplate serviceAgreementTemplate) {
-                checkIfPostingRuleOverlapsExisting(serviceAgreementTemplate, postingRule);
-            }
+        getRelationServiceAgreementTemplatePostingRule().addListener(
+                new RelationAdapter<ServiceAgreementTemplate, PostingRule>() {
+                    @Override
+                    public void beforeAdd(ServiceAgreementTemplate serviceAgreementTemplate, PostingRule postingRule) {
+                        checkIfPostingRuleOverlapsExisting(serviceAgreementTemplate, postingRule);
+                    }
 
-            private void checkIfPostingRuleOverlapsExisting(ServiceAgreementTemplate serviceAgreementTemplate,
-                    PostingRule postingRule) {
-                if (serviceAgreementTemplate != null) {
-                    for (final PostingRule existingPostingRule : serviceAgreementTemplate.getPostingRules()) {
-                        if (postingRule.overlaps(existingPostingRule)) {
-                            throw new DomainException(
-                                    "error.accounting.agreement.ServiceAgreementTemplate.postingRule.overlaps.existing.one");
+                    private void checkIfPostingRuleOverlapsExisting(ServiceAgreementTemplate serviceAgreementTemplate,
+                            PostingRule postingRule) {
+                        if (serviceAgreementTemplate != null) {
+                            for (final PostingRule existingPostingRule : serviceAgreementTemplate.getPostingRules()) {
+                                if (postingRule.overlaps(existingPostingRule)) {
+                                    throw new DomainException(
+                                            "error.accounting.agreement.ServiceAgreementTemplate.postingRule.overlaps.existing.one");
+                                }
+                            }
                         }
                     }
-                }
-            }
 
-        });
+                });
     }
 
     protected PostingRule() {

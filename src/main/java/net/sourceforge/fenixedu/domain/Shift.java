@@ -32,7 +32,7 @@ import org.joda.time.Duration;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixframework.Atomic;
-import pt.ist.fenixframework.FenixFramework;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 public class Shift extends Shift_Base {
 
@@ -64,7 +64,7 @@ public class Shift extends Shift_Base {
     };
 
     static {
-        Registration.ShiftStudent.addListener(new ShiftStudentListener());
+        Registration.getRelationShiftStudent().addListener(new ShiftStudentListener());
     }
 
     @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageShifts")
@@ -471,7 +471,7 @@ public class Shift extends Shift_Base {
         return result;
     }
 
-    private static class ShiftStudentListener extends dml.runtime.RelationAdapter<Registration, Shift> {
+    private static class ShiftStudentListener extends RelationAdapter<Registration, Shift> {
 
         @Override
         public void afterAdd(Registration registration, Shift shift) {

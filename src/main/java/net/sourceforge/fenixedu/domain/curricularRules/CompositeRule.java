@@ -15,12 +15,12 @@ import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import dml.runtime.RelationAdapter;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 public abstract class CompositeRule extends CompositeRule_Base {
 
     static {
-        CurricularRuleCompositeRule.addListener(new RelationAdapter<CompositeRule, CurricularRule>() {
+        getRelationCurricularRuleCompositeRule().addListener(new RelationAdapter<CompositeRule, CurricularRule>() {
             @Override
             public void beforeAdd(CompositeRule compositeRule, CurricularRule curricularRule) {
                 if (curricularRule.getNotRule() != null) {
@@ -144,6 +144,7 @@ public abstract class CompositeRule extends CompositeRule_Base {
     public boolean isLeaf() {
         return false;
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.curricularRules.CurricularRule> getCurricularRules() {
         return getCurricularRulesSet();

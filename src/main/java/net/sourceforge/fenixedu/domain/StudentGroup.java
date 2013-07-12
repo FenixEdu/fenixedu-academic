@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.commons.beanutils.BeanComparator;
 
-import dml.runtime.RelationAdapter;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 /**
  * @author asnr and scpo
@@ -21,7 +21,7 @@ public class StudentGroup extends StudentGroup_Base {
 
     public static final Comparator<StudentGroup> COMPARATOR_BY_GROUP_NUMBER = new BeanComparator("groupNumber");
     static {
-        StudentGroupAttend.addListener(new StudentGroupAttendListener());
+        getRelationStudentGroupAttend().addListener(new StudentGroupAttendListener());
     }
 
     private static class StudentGroupAttendListener extends RelationAdapter<StudentGroup, Attends> {
@@ -97,6 +97,7 @@ public class StudentGroup extends StudentGroup_Base {
         }
         return false;
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.ProjectSubmission> getProjectSubmissions() {
         return getProjectSubmissionsSet();

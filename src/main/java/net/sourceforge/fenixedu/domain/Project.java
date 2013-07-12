@@ -20,12 +20,12 @@ import net.sourceforge.fenixedu.util.EvaluationType;
 
 import org.joda.time.DateTime;
 
-import dml.runtime.RelationAdapter;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 public class Project extends Project_Base {
 
     static {
-        ProjectGrouping.addListener(new RelationAdapter<Project, Grouping>() {
+        getRelationProjectGrouping().addListener(new RelationAdapter<Project, Grouping>() {
             @Override
             public void afterAdd(Project project, Grouping grouping) {
                 if (project != null && grouping != null) {
@@ -360,6 +360,7 @@ public class Project extends Project_Base {
     public String getPresentationName() {
         return BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.project") + " " + getName();
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Department> getDeparments() {
         return getDeparmentsSet();

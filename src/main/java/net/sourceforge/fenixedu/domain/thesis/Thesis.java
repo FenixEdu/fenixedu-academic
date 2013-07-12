@@ -64,7 +64,7 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 public class Thesis extends Thesis_Base {
 
     static {
-        ThesisEnrolment.addListener(new RelationAdapter<Thesis, Enrolment>() {
+        getRelationThesisEnrolment().addListener(new RelationAdapter<Thesis, Enrolment>() {
 
             @Override
             public void beforeAdd(Thesis thesis, Enrolment enrolment) {

@@ -7,6 +7,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -17,7 +18,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import dml.runtime.RelationAdapter;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 public class Context extends Context_Base implements Comparable<Context> {
 
@@ -28,7 +29,7 @@ public class Context extends Context_Base implements Comparable<Context> {
             final DegreeModule d1 = o1.getChildDegreeModule();
             final DegreeModule d2 = o2.getChildDegreeModule();
             final int c = Collator.getInstance().compare(d1.getName(), d2.getName());
-            return c == 0 ? COMPARATOR_BY_ID.compare(d1, d2) : c;
+            return c == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(d1, d2) : c;
         }
 
     };
@@ -42,10 +43,10 @@ public class Context extends Context_Base implements Comparable<Context> {
     };
 
     static {
-        CourseGroupContext.addListener(new RelationAdapter<Context, CourseGroup>() {
+        getRelationCourseGroupContext().addListener(new RelationAdapter<CourseGroup, Context>() {
 
             @Override
-            public void beforeAdd(Context context, CourseGroup courseGroup) {
+            public void beforeAdd(CourseGroup courseGroup, Context context) {
                 if (context != null && courseGroup != null) {
                     if (context.getChildDegreeModule() != null && context.getChildDegreeModule().isCycleCourseGroup()) {
                         validateCycleCourseGroupParent(context, courseGroup);
@@ -71,7 +72,7 @@ public class Context extends Context_Base implements Comparable<Context> {
 
         });
 
-        DegreeModuleContext.addListener(new RelationAdapter<Context, DegreeModule>() {
+        getRelationDegreeModuleContext().addListener(new RelationAdapter<Context, DegreeModule>() {
             @Override
             public void beforeAdd(Context context, DegreeModule degreeModule) {
                 if (context != null && degreeModule != null) {

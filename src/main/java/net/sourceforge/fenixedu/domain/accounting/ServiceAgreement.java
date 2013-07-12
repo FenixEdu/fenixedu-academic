@@ -8,12 +8,12 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.joda.time.DateTime;
 
-import dml.runtime.RelationAdapter;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 public abstract class ServiceAgreement extends ServiceAgreement_Base {
 
     static {
-        ServiceAgreementPerson.addListener(new RelationAdapter<ServiceAgreement, Person>() {
+        getRelationServiceAgreementPerson().addListener(new RelationAdapter<ServiceAgreement, Person>() {
             @Override
             public void beforeAdd(ServiceAgreement serviceAgreementToAdd, Person person) {
                 if (serviceAgreementToAdd != null && person != null) {

@@ -11,10 +11,12 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
+
 public class Advise extends Advise_Base {
 
     static {
-        TeacherAdviseService.AdviseTeacherAdviseService.addListener(new AdviseTeacherAdviseServiceListener());
+        TeacherAdviseService.getRelationAdviseTeacherAdviseService().addListener(new AdviseTeacherAdviseServiceListener());
     }
 
     public Advise(Teacher teacher, Registration registration, AdviseType adviseType, ExecutionSemester startPeriod,
@@ -129,7 +131,7 @@ public class Advise extends Advise_Base {
         }
     }
 
-    private static class AdviseTeacherAdviseServiceListener extends dml.runtime.RelationAdapter<TeacherAdviseService, Advise> {
+    private static class AdviseTeacherAdviseServiceListener extends RelationAdapter<TeacherAdviseService, Advise> {
         @Override
         public void afterAdd(TeacherAdviseService teacherAdviseServices, Advise advise) {
             if (advise != null) {
@@ -159,6 +161,7 @@ public class Advise extends Advise_Base {
             }
         }
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.teacher.TeacherAdviseService> getTeacherAdviseServices() {
         return getTeacherAdviseServicesSet();

@@ -3,15 +3,15 @@ package net.sourceforge.fenixedu.domain.organizationalStructure;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import dml.runtime.RelationAdapter;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 public class UnitAcronym extends UnitAcronym_Base {
 
     static {
-        UnitUnitAcronym.addListener(new RelationAdapter<UnitAcronym, Unit>() {
+        getRelationUnitUnitAcronym().addListener(new RelationAdapter<Unit, UnitAcronym>() {
 
             @Override
-            public void afterRemove(UnitAcronym unitAcronym, Unit unit) {
+            public void afterRemove(Unit unit, UnitAcronym unitAcronym) {
                 if (unitAcronym != null) {
                     if (!unitAcronym.hasAnyUnits()) {
                         unitAcronym.delete();
@@ -64,6 +64,7 @@ public class UnitAcronym extends UnitAcronym_Base {
         }
         return null;
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.organizationalStructure.Unit> getUnits() {
         return getUnitsSet();

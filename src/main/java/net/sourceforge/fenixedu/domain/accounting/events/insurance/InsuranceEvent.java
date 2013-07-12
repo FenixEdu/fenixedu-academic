@@ -29,15 +29,15 @@ import net.sourceforge.fenixedu.util.Money;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
-import dml.runtime.RelationAdapter;
 
 public class InsuranceEvent extends InsuranceEvent_Base implements IInsuranceEvent {
 
     static {
-        PersonAccountingEvent.addListener(new RelationAdapter<Event, Party>() {
+        getRelationPersonAccountingEvent().addListener(new RelationAdapter<Party, Event>() {
             @Override
-            public void beforeAdd(Event event, Party party) {
+            public void beforeAdd(Party party, Event event) {
                 if (event instanceof InsuranceEvent) {
                     Person person = (Person) party;
                     final InsuranceEvent insuranceEvent = ((InsuranceEvent) event);

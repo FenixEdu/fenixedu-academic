@@ -12,16 +12,16 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.research.result.publication.Article;
 import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import dml.runtime.RelationAdapter;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 public class JournalIssue extends JournalIssue_Base implements ParticipationsInterface {
 
     static {
-        JournalIssueScientificJournal.addListener(new RelationAdapter<JournalIssue, ScientificJournal>() {
+        getRelationJournalIssueScientificJournal().addListener(new RelationAdapter<ScientificJournal, JournalIssue>() {
 
             @Override
-            public void afterRemove(JournalIssue issue, ScientificJournal journal) {
-                super.afterRemove(issue, journal);
+            public void afterRemove(ScientificJournal journal, JournalIssue issue) {
+                super.afterRemove(journal, issue);
                 if (issue != null && journal != null && !journal.hasAnyParticipations() && !journal.hasAnyJournalIssues()) {
                     journal.delete();
                 }
@@ -151,6 +151,7 @@ public class JournalIssue extends JournalIssue_Base implements ParticipationsInt
             addParticipations(journalIssueParticipation);
         }
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.research.activity.ArticleAssociation> getArticleAssociations() {
         return getArticleAssociationsSet();
@@ -161,6 +162,7 @@ public class JournalIssue extends JournalIssue_Base implements ParticipationsInt
         return !getArticleAssociationsSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.research.activity.JournalIssueParticipation> getParticipations() {
         return getParticipationsSet();

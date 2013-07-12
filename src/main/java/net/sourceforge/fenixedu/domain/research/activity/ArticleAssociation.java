@@ -3,16 +3,16 @@ package net.sourceforge.fenixedu.domain.research.activity;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.research.result.publication.Article;
-import dml.runtime.RelationAdapter;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 public class ArticleAssociation extends ArticleAssociation_Base {
 
     static {
-        JournalIssueArticleAssociation.addListener(new RelationAdapter<ArticleAssociation, JournalIssue>() {
+        getRelationJournalIssueArticleAssociation().addListener(new RelationAdapter<JournalIssue, ArticleAssociation>() {
 
             @Override
-            public void afterRemove(ArticleAssociation association, JournalIssue issue) {
-                super.afterRemove(association, issue);
+            public void afterRemove(JournalIssue issue, ArticleAssociation association) {
+                super.afterRemove(issue, association);
 
                 if (issue != null && association != null && !issue.hasAnyArticleAssociations() && !issue.hasAnyParticipations()) {
                     issue.delete();

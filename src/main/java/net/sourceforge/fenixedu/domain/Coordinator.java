@@ -7,12 +7,12 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
-import dml.runtime.RelationAdapter;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 public class Coordinator extends Coordinator_Base {
 
     static {
-        Person.CoordinatorTeacher.addListener(new RelationAdapter<Person, Coordinator>() {
+        Person.getRelationCoordinatorTeacher().addListener(new RelationAdapter<Person, Coordinator>() {
 
             @Override
             public void afterAdd(Person o1, Coordinator o2) {
@@ -161,6 +161,7 @@ public class Coordinator extends Coordinator_Base {
         }
         return null;
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.CoordinatorExecutionDegreeCoursesReport> getExecutionDegreeCoursesReports() {
         return getExecutionDegreeCoursesReportsSet();

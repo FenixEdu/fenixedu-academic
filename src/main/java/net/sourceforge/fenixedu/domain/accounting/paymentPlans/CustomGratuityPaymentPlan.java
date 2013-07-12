@@ -11,15 +11,15 @@ import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventW
 import net.sourceforge.fenixedu.domain.accounting.paymentPlanRules.PaymentPlanRule;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreements.DegreeCurricularPlanServiceAgreement;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import dml.runtime.RelationAdapter;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 public class CustomGratuityPaymentPlan extends CustomGratuityPaymentPlan_Base {
 
     static {
-        ServiceAgreementServiceAgreementPaymentPlan
-                .addListener(new RelationAdapter<ServiceAgreementPaymentPlan, ServiceAgreement>() {
+        getRelationServiceAgreementServiceAgreementPaymentPlan().addListener(
+                new RelationAdapter<ServiceAgreement, ServiceAgreementPaymentPlan>() {
                     @Override
-                    public void beforeAdd(ServiceAgreementPaymentPlan paymentPlanToAdd, ServiceAgreement serviceAgreement) {
+                    public void beforeAdd(ServiceAgreement serviceAgreement, ServiceAgreementPaymentPlan paymentPlanToAdd) {
 
                         if (paymentPlanToAdd != null) {
                             if (paymentPlanToAdd.isCustomGratuityPaymentPlan()
@@ -32,8 +32,8 @@ public class CustomGratuityPaymentPlan extends CustomGratuityPaymentPlan_Base {
                     }
                 });
 
-        GratuityPaymentPlanGratuityEventWithPaymentPlan
-                .addListener(new RelationAdapter<PaymentPlan, GratuityEventWithPaymentPlan>() {
+        getRelationGratuityPaymentPlanGratuityEventWithPaymentPlan().addListener(
+                new RelationAdapter<PaymentPlan, GratuityEventWithPaymentPlan>() {
                     @Override
                     public void beforeAdd(PaymentPlan paymentPlan, GratuityEventWithPaymentPlan event) {
                         if (paymentPlan != null && event != null) {

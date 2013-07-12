@@ -74,6 +74,7 @@ import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 import pt.utl.ist.fenix.tools.predicates.Predicate;
 import pt.utl.ist.fenix.tools.util.CollectionUtils;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
@@ -133,12 +134,12 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     public static final List<String> THIRD_CYCLE_AVAILABLE_INQUIRY_DEGREES = new ArrayList<String>();
 
     static {
-        CurricularCourseExecutionCourse.addListener(new CurricularCourseExecutionCourseListener());
+        getRelationCurricularCourseExecutionCourse().addListener(new CurricularCourseExecutionCourseListener());
 
         BIBLIOGRAPHIC_REFERENCE_ORDER_ADAPTER =
                 new OrderedRelationAdapter<ExecutionCourse, BibliographicReference>("associatedBibliographicReferences",
                         "referenceOrder");
-        ExecutionCourseBibliographicReference.addListener(BIBLIOGRAPHIC_REFERENCE_ORDER_ADAPTER);
+        getRelationExecutionCourseBibliographicReference().addListener(BIBLIOGRAPHIC_REFERENCE_ORDER_ADAPTER);
 
         THIRD_CYCLE_AVAILABLE_INQUIRY_DEGREES.add("deamb");
         THIRD_CYCLE_AVAILABLE_INQUIRY_DEGREES.add("dec");
@@ -814,8 +815,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         return orderedAttends;
     }
 
-    private static class CurricularCourseExecutionCourseListener extends
-            dml.runtime.RelationAdapter<ExecutionCourse, CurricularCourse> {
+    private static class CurricularCourseExecutionCourseListener extends RelationAdapter<ExecutionCourse, CurricularCourse> {
 
         @Override
         public void afterAdd(ExecutionCourse execution, CurricularCourse curricular) {

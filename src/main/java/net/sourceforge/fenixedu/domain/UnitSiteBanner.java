@@ -4,14 +4,14 @@ import java.util.Collection;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.predicates.UnitSitePredicates;
-import dml.runtime.RelationAdapter;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 public class UnitSiteBanner extends UnitSiteBanner_Base {
 
-    private static final class CheckBannerAuthorization extends RelationAdapter<UnitSiteBanner, UnitSite> {
+    private static final class CheckBannerAuthorization extends RelationAdapter<UnitSite, UnitSiteBanner> {
         @Override
-        public void beforeAdd(UnitSiteBanner banner, UnitSite site) {
-            super.beforeAdd(banner, site);
+        public void beforeAdd(UnitSite site, UnitSiteBanner banner) {
+            super.beforeAdd(site, banner);
 
             if (banner != null && site != null) {
                 if (!UnitSitePredicates.managers.evaluate(site)) {
@@ -22,7 +22,7 @@ public class UnitSiteBanner extends UnitSiteBanner_Base {
     }
 
     static {
-        UnitSiteHasBanners.addListener(new CheckBannerAuthorization());
+        getRelationUnitSiteHasBanners().addListener(new CheckBannerAuthorization());
     }
 
     protected UnitSiteBanner() {

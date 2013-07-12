@@ -28,7 +28,7 @@ public class UnitSite extends UnitSite_Base {
             Language.en, "Side");
 
     static {
-        UnitSiteManagers.addListener(new ManageWebsiteManagerRole());
+        getRelationUnitSiteManagers().addListener(new ManageWebsiteManagerRole());
     }
 
     protected UnitSite() {

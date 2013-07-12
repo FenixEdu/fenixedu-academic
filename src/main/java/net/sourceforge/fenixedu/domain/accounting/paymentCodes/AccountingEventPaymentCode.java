@@ -14,14 +14,14 @@ import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
-import dml.runtime.RelationAdapter;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 public class AccountingEventPaymentCode extends AccountingEventPaymentCode_Base {
 
     private static final Logger logger = Logger.getLogger(AccountingEventPaymentCode.class);
 
     static {
-        PaymentCodeAccountingEvent.addListener(new RelationAdapter<AccountingEventPaymentCode, Event>() {
+        getRelationPaymentCodeAccountingEvent().addListener(new RelationAdapter<AccountingEventPaymentCode, Event>() {
             @Override
             public void beforeAdd(AccountingEventPaymentCode accountingEventPaymentCode, Event event) {
                 if (event instanceof InsuranceEvent) {

@@ -3,17 +3,17 @@ package net.sourceforge.fenixedu.domain.research.activity;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.research.result.publication.ConferenceArticles;
-import dml.runtime.RelationAdapter;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 public class EventConferenceArticlesAssociation extends EventConferenceArticlesAssociation_Base {
 
     static {
-        EventEditionEventConferenceArticlesAssociation
-                .addListener(new RelationAdapter<EventConferenceArticlesAssociation, EventEdition>() {
+        getRelationEventEditionEventConferenceArticlesAssociation().addListener(
+                new RelationAdapter<EventEdition, EventConferenceArticlesAssociation>() {
 
                     @Override
-                    public void afterRemove(EventConferenceArticlesAssociation association, EventEdition eventEdition) {
-                        super.afterRemove(association, eventEdition);
+                    public void afterRemove(EventEdition eventEdition, EventConferenceArticlesAssociation association) {
+                        super.afterRemove(eventEdition, association);
 
                         if (eventEdition != null && association != null
                                 && !eventEdition.hasAnyEventConferenceArticlesAssociations()

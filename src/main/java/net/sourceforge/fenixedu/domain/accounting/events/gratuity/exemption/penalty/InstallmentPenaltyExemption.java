@@ -11,12 +11,12 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import dml.runtime.RelationAdapter;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 public class InstallmentPenaltyExemption extends InstallmentPenaltyExemption_Base {
 
     static {
-        ExemptionEvent.addListener(new RelationAdapter<Exemption, Event>() {
+        getRelationExemptionEvent().addListener(new RelationAdapter<Exemption, Event>() {
             @Override
             public void beforeAdd(Exemption exemption, Event event) {
                 if (exemption != null && event != null) {

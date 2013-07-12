@@ -17,25 +17,26 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.DateTime;
 
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
-import dml.runtime.RelationAdapter;
 
 public class PhdStudyPlan extends PhdStudyPlan_Base {
 
     static {
-        PhdStudyPlanPhdIndividualProgramProcess.addListener(new RelationAdapter<PhdStudyPlan, PhdIndividualProgramProcess>() {
-            @Override
-            public void beforeAdd(PhdStudyPlan studyPlan, PhdIndividualProgramProcess process) {
+        getRelationPhdStudyPlanPhdIndividualProgramProcess().addListener(
+                new RelationAdapter<PhdStudyPlan, PhdIndividualProgramProcess>() {
+                    @Override
+                    public void beforeAdd(PhdStudyPlan studyPlan, PhdIndividualProgramProcess process) {
 
-                if (studyPlan != null && process != null) {
-                    if (process.hasStudyPlan()) {
-                        throw new DomainException(
-                                "error.net.sourceforge.fenixedu.domain.phd.PhdStudyPlan.process.already.has.study.play");
+                        if (studyPlan != null && process != null) {
+                            if (process.hasStudyPlan()) {
+                                throw new DomainException(
+                                        "error.net.sourceforge.fenixedu.domain.phd.PhdStudyPlan.process.already.has.study.play");
+                            }
+                        }
+
                     }
-                }
-
-            }
-        });
+                });
     }
 
     protected PhdStudyPlan() {

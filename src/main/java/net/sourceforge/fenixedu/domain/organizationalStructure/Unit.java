@@ -77,7 +77,7 @@ public class Unit extends Unit_Base {
     public static OrderedRelationAdapter<Unit, Function> FUNCTION_ORDERED_ADAPTER;
     static {
         FUNCTION_ORDERED_ADAPTER = new OrderedRelationAdapter<Unit, Function>("activeFunctions", "functionOrder");
-        UnitFunction.addListener(FUNCTION_ORDERED_ADAPTER);
+        getRelationUnitFunction().addListener(FUNCTION_ORDERED_ADAPTER);
     }
 
     protected Unit() {

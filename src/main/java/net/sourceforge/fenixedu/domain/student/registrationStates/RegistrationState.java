@@ -28,8 +28,8 @@ import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixframework.FenixFramework;
-import dml.runtime.RelationAdapter;
+import pt.ist.fenixframework.core.AbstractDomainObject;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 /**
  * 
@@ -39,7 +39,7 @@ import dml.runtime.RelationAdapter;
 public abstract class RegistrationState extends RegistrationState_Base implements IState {
 
     static {
-        RegistrationStateRegistration.addListener(new RelationAdapter<RegistrationState, Registration>() {
+        getRelationRegistrationStateRegistration().addListener(new RelationAdapter<RegistrationState, Registration>() {
 
             @Override
             public void afterAdd(RegistrationState state, Registration registration) {

@@ -33,8 +33,7 @@ import org.joda.time.PeriodType;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;
-import pt.ist.fenixframework.FenixFramework;
-import dml.runtime.RelationAdapter;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 /**
  * 
@@ -43,9 +42,9 @@ import dml.runtime.RelationAdapter;
 public class Attends extends Attends_Base {
 
     static {
-        ExecutionCourseAttends.addListener(new RelationAdapter<Attends, ExecutionCourse>() {
+        getRelationExecutionCourseAttends().addListener(new RelationAdapter<ExecutionCourse, Attends>() {
             @Override
-            public void afterAdd(Attends attends, ExecutionCourse executionCourse) {
+            public void afterAdd(ExecutionCourse executionCourse, Attends attends) {
                 if (executionCourse != null && attends != null) {
                     for (Grouping grouping : executionCourse.getGroupings()) {
                         if (grouping.getAutomaticEnrolment() && !grouping.getStudentGroups().isEmpty()) {
@@ -83,7 +82,7 @@ public class Attends extends Attends_Base {
             final Integer n1 = attends1.getRegistration().getStudent().getNumber();
             final Integer n2 = attends2.getRegistration().getStudent().getNumber();
             int res = n1.compareTo(n2);
-            return res != 0 ? res : COMPARATOR_BY_ID.compare(attends1, attends2);
+            return res != 0 ? res : DomainObjectUtil.COMPARATOR_BY_ID.compare(attends1, attends2);
         }
     };
 

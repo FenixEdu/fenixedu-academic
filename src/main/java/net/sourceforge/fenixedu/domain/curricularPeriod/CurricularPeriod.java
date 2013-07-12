@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 import net.sourceforge.fenixedu.util.CurricularPeriodLabelFormatter;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 /**
  * 
@@ -27,7 +28,7 @@ import net.sourceforge.fenixedu.util.CurricularPeriodLabelFormatter;
 public class CurricularPeriod extends CurricularPeriod_Base implements Comparable<CurricularPeriod> {
 
     static {
-        CurricularPeriodParentChilds.addListener(new CurricularPeriodParentChildsListener());
+        getRelationCurricularPeriodParentChilds().addListener(new CurricularPeriodParentChildsListener());
     }
 
     public CurricularPeriod(AcademicPeriod academicPeriod) {
@@ -191,8 +192,7 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
         return result;
     }
 
-    private static class CurricularPeriodParentChildsListener extends
-            dml.runtime.RelationAdapter<CurricularPeriod, CurricularPeriod> {
+    private static class CurricularPeriodParentChildsListener extends RelationAdapter<CurricularPeriod, CurricularPeriod> {
         @Override
         public void beforeAdd(CurricularPeriod parent, CurricularPeriod child) {
             if (parent == null) {
@@ -316,6 +316,7 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
     public boolean hasChildOrderValue(final Integer order) {
         return hasChildOrder() && getChildOrder().equals(order);
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.Context> getContexts() {
         return getContextsSet();

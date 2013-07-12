@@ -23,16 +23,16 @@ import net.sourceforge.fenixedu.util.Money;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
-import dml.runtime.RelationAdapter;
 
 public abstract class GratuityEvent extends GratuityEvent_Base {
 
     static {
 
-        GratuityEventStudentCurricularPlan.addListener(new RelationAdapter<GratuityEvent, StudentCurricularPlan>() {
+        getRelationGratuityEventStudentCurricularPlan().addListener(new RelationAdapter<StudentCurricularPlan, GratuityEvent>() {
             @Override
-            public void beforeAdd(GratuityEvent gratuityEvent, StudentCurricularPlan studentCurricularPlan) {
+            public void beforeAdd(StudentCurricularPlan studentCurricularPlan, GratuityEvent gratuityEvent) {
                 if (gratuityEvent != null
                         && studentCurricularPlan != null
                         && studentCurricularPlan.getRegistration().hasGratuityEvent(gratuityEvent.getExecutionYear(),
@@ -261,4 +261,10 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
     public boolean isDfaGratuityEvent() {
         return false;
     }
+
+    @Deprecated
+    public boolean hasStudentCurricularPlan() {
+        return getStudentCurricularPlan() != null;
+    }
+
 }

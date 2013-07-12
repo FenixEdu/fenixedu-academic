@@ -11,12 +11,12 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.research.result.publication.ConferenceArticles;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import dml.runtime.RelationAdapter;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 public class EventEdition extends EventEdition_Base implements ParticipationsInterface {
 
     static {
-        EventEventEdition.addListener(new RelationAdapter<EventEdition, ResearchEvent>() {
+        getRelationEventEventEdition().addListener(new RelationAdapter<EventEdition, ResearchEvent>() {
 
             @Override
             public void afterRemove(EventEdition edition, ResearchEvent event) {
@@ -169,6 +169,7 @@ public class EventEdition extends EventEdition_Base implements ParticipationsInt
         return !getAssociatedProjectsSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.research.activity.EventEditionParticipation> getParticipations() {
         return getParticipationsSet();

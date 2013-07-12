@@ -27,25 +27,27 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 
 import org.joda.time.DateTime;
 
-import com.google.common.collect.Sets;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
-import dml.runtime.RelationAdapter;
+import com.google.common.collect.Sets;
 
 public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
 
     static {
-        CandidacyPeriodCandidacyProcess.addListener(new RelationAdapter<CandidacyProcess, CandidacyProcessCandidacyPeriod>() {
-            @Override
-            public void beforeAdd(CandidacyProcess candidacyProcess, CandidacyProcessCandidacyPeriod candidacyPeriod) {
-                super.beforeAdd(candidacyProcess, candidacyPeriod);
+        getRelationCandidacyPeriodCandidacyProcess().addListener(
+                new RelationAdapter<CandidacyProcess, CandidacyProcessCandidacyPeriod>() {
+                    @Override
+                    public void beforeAdd(CandidacyProcess candidacyProcess, CandidacyProcessCandidacyPeriod candidacyPeriod) {
+                        super.beforeAdd(candidacyProcess, candidacyPeriod);
 
-                if (candidacyProcess != null && candidacyPeriod != null && candidacyPeriod instanceof Over23CandidacyPeriod) {
-                    if (candidacyPeriod.hasAnyCandidacyProcesses()) {
-                        throw new DomainException("error.Over23CandidacyProcess.candidacy.period.already.has.process");
+                        if (candidacyProcess != null && candidacyPeriod != null
+                                && candidacyPeriod instanceof Over23CandidacyPeriod) {
+                            if (candidacyPeriod.hasAnyCandidacyProcesses()) {
+                                throw new DomainException("error.Over23CandidacyProcess.candidacy.period.already.has.process");
+                            }
+                        }
                     }
-                }
-            }
-        });
+                });
     }
 
     static private List<Activity> activities = new ArrayList<Activity>();

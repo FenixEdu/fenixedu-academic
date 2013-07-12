@@ -9,12 +9,12 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
-import dml.runtime.RelationAdapter;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 public class ProjectSubmission extends ProjectSubmission_Base {
 
     static {
-        ProjectSubmissionProject.addListener(new ProjectSubmissionProjectListener());
+        getRelationProjectSubmissionProject().addListener(new ProjectSubmissionProjectListener());
     }
 
     private static class ProjectSubmissionProjectListener extends RelationAdapter<ProjectSubmission, Project> {

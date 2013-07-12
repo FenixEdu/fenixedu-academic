@@ -166,6 +166,7 @@ import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.core.AbstractDomainObject;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 import pt.utl.ist.fenix.tools.smtp.EmailSender;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
@@ -178,8 +179,8 @@ public class Person extends Person_Base {
     private static final Integer MAX_VALIDATION_REQUESTS = 5;
 
     static {
-        Role.PersonRole.addListener(new PersonRoleListener());
-        Role.PersonRole.addListener(new EmailOptOutRoleListener());
+        Role.getRelationPersonRole().addListener(new PersonRoleListener());
+        Role.getRelationPersonRole().addListener(new EmailOptOutRoleListener());
     }
 
     public static Set<Role> getOptOutRoles() {
@@ -1477,7 +1478,7 @@ public class Person extends Person_Base {
         return getExternalResearchContract() != null;
     }
 
-    private static class PersonRoleListener extends dml.runtime.RelationAdapter<Role, Person> {
+    private static class PersonRoleListener extends RelationAdapter<Role, Person> {
 
         @Override
         public void beforeAdd(final Role newRole, final Person person) {
@@ -1662,7 +1663,7 @@ public class Person extends Person_Base {
 
     }
 
-    public static class EmailOptOutRoleListener extends dml.runtime.RelationAdapter<Role, Person> {
+    public static class EmailOptOutRoleListener extends RelationAdapter<Role, Person> {
         @Override
         public void beforeAdd(final Role newRole, final Person person) {
         }

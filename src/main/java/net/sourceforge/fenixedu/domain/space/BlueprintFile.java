@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 import pt.utl.ist.fenix.tools.file.FileSetMetaData;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
@@ -11,7 +12,7 @@ import pt.utl.ist.fenix.tools.file.VirtualPath;
 public class BlueprintFile extends BlueprintFile_Base {
 
     static {
-        BlueprintBlueprintFile.addListener(new BlueprintBlueprintFileListener());
+        getRelationBlueprintBlueprintFile().addListener(new BlueprintBlueprintFileListener());
     }
 
     public BlueprintFile(VirtualPath path, Blueprint blueprint, String filename, String displayName, Group permittedGroup,
@@ -41,7 +42,7 @@ public class BlueprintFile extends BlueprintFile_Base {
                 .formatDownloadUrl(getExternalStorageIdentification(), getDisplayName());
     }
 
-    private static class BlueprintBlueprintFileListener extends dml.runtime.RelationAdapter<BlueprintFile, Blueprint> {
+    private static class BlueprintBlueprintFileListener extends RelationAdapter<BlueprintFile, Blueprint> {
         @Override
         public void afterRemove(BlueprintFile blueprintFile, Blueprint blueprint) {
             if (blueprintFile != null && blueprint != null) {
@@ -49,4 +50,15 @@ public class BlueprintFile extends BlueprintFile_Base {
             }
         }
     }
+
+    @Deprecated
+    public boolean hasBlueprint() {
+        return getBlueprint() != null;
+    }
+
+    @Deprecated
+    public boolean hasContent() {
+        return getContent() != null;
+    }
+
 }

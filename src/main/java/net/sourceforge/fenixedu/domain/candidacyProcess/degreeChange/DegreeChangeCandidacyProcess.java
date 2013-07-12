@@ -31,24 +31,27 @@ import net.sourceforge.fenixedu.domain.period.DegreeChangeCandidacyPeriod;
 
 import org.joda.time.DateTime;
 
-import com.google.common.collect.Sets;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
-import dml.runtime.RelationAdapter;
+import com.google.common.collect.Sets;
 
 public class DegreeChangeCandidacyProcess extends DegreeChangeCandidacyProcess_Base {
 
     static {
-        CandidacyPeriodCandidacyProcess.addListener(new RelationAdapter<CandidacyProcess, CandidacyProcessCandidacyPeriod>() {
-            @Override
-            public void beforeAdd(CandidacyProcess candidacyProcess, CandidacyProcessCandidacyPeriod candidacyPeriod) {
-                super.beforeAdd(candidacyProcess, candidacyPeriod);
-                if (candidacyProcess != null && candidacyPeriod != null && candidacyPeriod instanceof DegreeChangeCandidacyPeriod) {
-                    if (candidacyPeriod.hasAnyCandidacyProcesses()) {
-                        throw new DomainException("error.DegreeChangeCandidacyProcess.candidacy.period.already.has.process");
+        getRelationCandidacyPeriodCandidacyProcess().addListener(
+                new RelationAdapter<CandidacyProcess, CandidacyProcessCandidacyPeriod>() {
+                    @Override
+                    public void beforeAdd(CandidacyProcess candidacyProcess, CandidacyProcessCandidacyPeriod candidacyPeriod) {
+                        super.beforeAdd(candidacyProcess, candidacyPeriod);
+                        if (candidacyProcess != null && candidacyPeriod != null
+                                && candidacyPeriod instanceof DegreeChangeCandidacyPeriod) {
+                            if (candidacyPeriod.hasAnyCandidacyProcesses()) {
+                                throw new DomainException(
+                                        "error.DegreeChangeCandidacyProcess.candidacy.period.already.has.process");
+                            }
+                        }
                     }
-                }
-            }
-        });
+                });
     }
 
     static private List<Activity> activities = new ArrayList<Activity>();

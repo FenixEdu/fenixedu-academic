@@ -13,12 +13,12 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 import pt.ist.fenixframework.Atomic;
-import dml.runtime.RelationAdapter;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 public class AcademicEventExemption extends AcademicEventExemption_Base {
 
     static {
-        ExemptionEvent.addListener(new RelationAdapter<Exemption, Event>() {
+        getRelationExemptionEvent().addListener(new RelationAdapter<Exemption, Event>() {
             @Override
             public void beforeAdd(Exemption exemption, Event event) {
                 if (exemption != null && event != null) {

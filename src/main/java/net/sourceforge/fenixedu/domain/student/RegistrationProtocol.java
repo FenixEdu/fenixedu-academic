@@ -7,12 +7,12 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import pt.ist.fenixframework.Atomic;
-import dml.runtime.RelationAdapter;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 public class RegistrationProtocol extends RegistrationProtocol_Base {
 
     static {
-        Person.RegistrationProtocolPerson.addListener(new RelationAdapter<Person, RegistrationProtocol>() {
+        Person.getRelationRegistrationProtocolPerson().addListener(new RelationAdapter<Person, RegistrationProtocol>() {
 
             @Override
             public void afterAdd(Person o1, RegistrationProtocol o2) {
@@ -81,6 +81,7 @@ public class RegistrationProtocol extends RegistrationProtocol_Base {
     public boolean equals(RegistrationAgreement myOtherSoul) {
         return this.getRegistrationAgreement().name().equals(myOtherSoul.name());
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Person> getSupervisors() {
         return getSupervisorsSet();

@@ -13,13 +13,13 @@ import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
 import net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPatent;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
-import dml.runtime.RelationAdapter;
 
 public class Prize extends Prize_Base {
 
     static {
-        PrizeWinners.addListener(new RelationAdapter<Prize, Party>() {
+        getRelationPrizeWinners().addListener(new RelationAdapter<Prize, Party>() {
             @Override
             public void afterRemove(Prize prize, Party party) {
                 if (prize != null && party != null) {
@@ -150,6 +150,7 @@ public class Prize extends Prize_Base {
     public boolean isLastParticipation() {
         return getPeople().size() == 1;
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.organizationalStructure.Party> getParties() {
         return getPartiesSet();

@@ -4,22 +4,21 @@ import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.predicates.UnitSitePredicates;
-import net.sourceforge.fenixedu.util.domain.InverseOrderedRelationAdapter;
+import net.sourceforge.fenixedu.util.domain.OrderedRelationAdapter;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixframework.FenixFramework;
+import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
-import dml.runtime.RelationAdapter;
 
 public class UnitSiteLink extends UnitSiteLink_Base {
 
-    private static final class CheckLinkAuthorization extends RelationAdapter<UnitSiteLink, UnitSite> {
+    private static final class CheckLinkAuthorization extends RelationAdapter<UnitSite, UnitSiteLink> {
         @Override
-        public void beforeAdd(UnitSiteLink link, UnitSite site) {
-            super.beforeAdd(link, site);
+        public void beforeAdd(UnitSite site, UnitSiteLink link) {
+            super.beforeAdd(site, link);
 
             if (link != null && site != null) {
                 if (!UnitSitePredicates.managers.evaluate(site)) {
@@ -30,8 +29,8 @@ public class UnitSiteLink extends UnitSiteLink_Base {
     }
 
     static {
-        UnitSiteTopLinks.addListener(new CheckLinkAuthorization());
-        UnitSiteFooterLinks.addListener(new CheckLinkAuthorization());
+        getRelationUnitSiteTopLinks().addListener(new CheckLinkAuthorization());
+        getRelationUnitSiteFooterLinks().addListener(new CheckLinkAuthorization());
     }
 
     public static Comparator<UnitSiteLink> COMPARATOR_BY_ORDER = new Comparator<UnitSiteLink>() {
@@ -52,15 +51,15 @@ public class UnitSiteLink extends UnitSiteLink_Base {
 
     };
 
-    public static InverseOrderedRelationAdapter<UnitSiteLink, UnitSite> TOP_ORDER_ADAPTER;
-    public static InverseOrderedRelationAdapter<UnitSiteLink, UnitSite> FOOTER_ORDER_ADAPTER;
+    public static OrderedRelationAdapter<UnitSite, UnitSiteLink> TOP_ORDER_ADAPTER;
+    public static OrderedRelationAdapter<UnitSite, UnitSiteLink> FOOTER_ORDER_ADAPTER;
 
     static {
-        TOP_ORDER_ADAPTER = new InverseOrderedRelationAdapter<UnitSiteLink, UnitSite>("linkOrder", "topLinks");
-        FOOTER_ORDER_ADAPTER = new InverseOrderedRelationAdapter<UnitSiteLink, UnitSite>("linkOrder", "footerLinks");
+        TOP_ORDER_ADAPTER = new OrderedRelationAdapter<UnitSite, UnitSiteLink>("linkOrder", "topLinks");
+        FOOTER_ORDER_ADAPTER = new OrderedRelationAdapter<UnitSite, UnitSiteLink>("linkOrder", "footerLinks");
 
-        UnitSiteTopLinks.addListener(TOP_ORDER_ADAPTER);
-        UnitSiteFooterLinks.addListener(FOOTER_ORDER_ADAPTER);
+        getRelationUnitSiteTopLinks().addListener(TOP_ORDER_ADAPTER);
+        getRelationUnitSiteFooterLinks().addListener(FOOTER_ORDER_ADAPTER);
     }
 
     public UnitSiteLink() {
