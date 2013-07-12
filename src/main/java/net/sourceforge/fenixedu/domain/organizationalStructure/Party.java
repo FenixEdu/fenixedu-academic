@@ -16,6 +16,7 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Country;
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.PartyClassification;
 import net.sourceforge.fenixedu.domain.Person;
@@ -98,7 +99,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
         public int compare(final Party o1, final Party o2) {
             final ComparatorChain comparatorChain = new ComparatorChain();
             comparatorChain.addComparator(Party.COMPARATOR_BY_NAME);
-            comparatorChain.addComparator(Party.COMPARATOR_BY_ID);
+            comparatorChain.addComparator(DomainObjectUtil.COMPARATOR_BY_ID);
 
             return comparatorChain.compare(o1, o2);
         }
@@ -110,7 +111,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
             final ComparatorChain comparatorChain = new ComparatorChain();
             comparatorChain.addComparator(Party.COMPARATOR_BY_SUBPARTY);
             comparatorChain.addComparator(Party.COMPARATOR_BY_NAME);
-            comparatorChain.addComparator(Party.COMPARATOR_BY_ID);
+            comparatorChain.addComparator(DomainObjectUtil.COMPARATOR_BY_ID);
             return comparatorChain.compare(o1, o2);
         }
     };
@@ -1662,6 +1663,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
 
     public void logRefuseContact(PartyContact contact) {
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.contacts.PartyContact> getPartyContacts() {
         return getPartyContactsSet();

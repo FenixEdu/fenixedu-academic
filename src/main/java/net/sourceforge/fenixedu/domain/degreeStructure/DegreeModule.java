@@ -15,6 +15,7 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.EquivalencePlan;
 import net.sourceforge.fenixedu.domain.EquivalencePlanEntry;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -52,7 +53,7 @@ abstract public class DegreeModule extends DegreeModule_Base {
             }
 
             final int c = Collator.getInstance().compare(name1, name2);
-            return c == 0 ? COMPARATOR_BY_ID.compare(o1, o2) : c;
+            return c == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2) : c;
         }
 
     };

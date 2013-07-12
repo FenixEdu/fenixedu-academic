@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.space;
 import java.text.Collator;
 import java.util.Comparator;
 
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -15,7 +16,6 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixframework.FenixFramework;
 
 public class SpaceResponsibility extends SpaceResponsibility_Base {
 
@@ -25,8 +25,7 @@ public class SpaceResponsibility extends SpaceResponsibility_Base {
         ((ComparatorChain) COMPARATOR_BY_UNIT_NAME_AND_RESPONSIBILITY_INTERVAL).addComparator(new BeanComparator("begin"));
         ((ComparatorChain) COMPARATOR_BY_UNIT_NAME_AND_RESPONSIBILITY_INTERVAL).addComparator(new BeanComparator("unit.name",
                 Collator.getInstance()));
-        ((ComparatorChain) COMPARATOR_BY_UNIT_NAME_AND_RESPONSIBILITY_INTERVAL)
-                .addComparator(AbstractDomainObject.COMPARATOR_BY_ID);
+        ((ComparatorChain) COMPARATOR_BY_UNIT_NAME_AND_RESPONSIBILITY_INTERVAL).addComparator(DomainObjectUtil.COMPARATOR_BY_ID);
     }
 
     @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageResponsabilityUnits")

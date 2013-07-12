@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
@@ -128,7 +129,7 @@ public class ExternalSupervisorViewsBean implements Serializable, HasExecutionYe
                 students.add(iterator.getPerson());
             }
         }
-        Collections.sort(students, Person.COMPARATOR_BY_ID);
+        Collections.sort(students, DomainObjectUtil.COMPARATOR_BY_ID);
     }
 
     public void generateStudentsFromDegree() {
@@ -141,7 +142,7 @@ public class ExternalSupervisorViewsBean implements Serializable, HasExecutionYe
                 students.add(iterator.getPerson());
             }
         }
-        Collections.sort(students, Person.COMPARATOR_BY_ID);
+        Collections.sort(students, DomainObjectUtil.COMPARATOR_BY_ID);
     }
 
     public boolean supervisorHasPermission() {

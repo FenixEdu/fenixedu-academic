@@ -38,7 +38,6 @@ import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CreditsDismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
-import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.EnrolmentWrapper;
 import net.sourceforge.fenixedu.domain.studentCurriculum.InternalCreditsSourceCurriculumGroup;
@@ -86,7 +85,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         final public int compare(Enrolment o1, Enrolment o2) {
             final ComparatorChain comparatorChain = new ComparatorChain();
             comparatorChain.addComparator(Enrolment.COMPARATOR_BY_LATEST_ENROLMENT_EVALUATION);
-            comparatorChain.addComparator(CurriculumLine.COMPARATOR_BY_ID);
+            comparatorChain.addComparator(DomainObjectUtil.COMPARATOR_BY_ID);
 
             return comparatorChain.compare(o1, o2);
         }
@@ -1927,6 +1926,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         return getWeigth() != null;
     }
 
+    @Override
     @Deprecated
     public boolean hasExecutionPeriod() {
         return getExecutionPeriod() != null;

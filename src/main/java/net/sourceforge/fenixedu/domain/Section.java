@@ -40,7 +40,7 @@ public class Section extends Section_Base {
                 return co;
             }
             final int cn = o1.getName().compareTo(o2.getName());
-            return cn == 0 ? AbstractDomainObject.COMPARATOR_BY_ID.compare(o1, o2) : cn;
+            return cn == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2) : cn;
         }
 
     };

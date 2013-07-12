@@ -110,7 +110,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         @Override
         public int compare(ExecutionCourse o1, ExecutionCourse o2) {
             final int c = Collator.getInstance().compare(o1.getNome(), o2.getNome());
-            return c == 0 ? AbstractDomainObject.COMPARATOR_BY_ID.compare(o1, o2) : c;
+            return c == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2) : c;
         }
 
     };
@@ -125,7 +125,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
                         return cep;
                     }
                     final int c = Collator.getInstance().compare(o1.getNome(), o2.getNome());
-                    return c == 0 ? AbstractDomainObject.COMPARATOR_BY_ID.compare(o1, o2) : c;
+                    return c == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2) : c;
                 }
 
             };

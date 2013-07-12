@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.UploadStudentInquiriesCourseResultsBean;
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Professorship;
@@ -35,7 +36,7 @@ public class StudentInquiriesCourseResult extends StudentInquiriesCourseResult_B
                 public int compare(StudentInquiriesCourseResult o1, StudentInquiriesCourseResult o2) {
                     final int c =
                             Collator.getInstance().compare(o1.getExecutionCourse().getNome(), o2.getExecutionCourse().getNome());
-                    return c == 0 ? AbstractDomainObject.COMPARATOR_BY_ID.compare(o1, o2) : c;
+                    return c == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2) : c;
                 }
 
             };

@@ -66,7 +66,7 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
             final AcademicInterval ai1 = o1.getAcademicInterval();
             final AcademicInterval ai2 = o2.getAcademicInterval();
             final int c = ai1.getStartDateTimeWithoutChronology().compareTo(ai2.getStartDateTimeWithoutChronology());
-            return c == 0 ? COMPARATOR_BY_ID.compare(o1, o2) : c;
+            return c == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2) : c;
         }
 
     };
@@ -794,6 +794,7 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
         }
         return resultComments;
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.ExecutionCourse> getAssociatedExecutionCourses() {
         return getAssociatedExecutionCoursesSet();

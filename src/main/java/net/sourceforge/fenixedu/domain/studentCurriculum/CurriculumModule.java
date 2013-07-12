@@ -12,6 +12,7 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -31,7 +32,6 @@ import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.predicates.Predicate;
 import pt.utl.ist.fenix.tools.predicates.ResultCollection;
 import pt.utl.ist.fenix.tools.util.StringAppender;
@@ -44,7 +44,7 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
         @Override
         public int compare(CurriculumModule o1, CurriculumModule o2) {
             int result = o1.getName().compareTo(o2.getName());
-            return (result == 0) ? AbstractDomainObject.COMPARATOR_BY_ID.compare(o1, o2) : result;
+            return (result == 0) ? DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2) : result;
         }
     };
 
@@ -52,7 +52,7 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
         @Override
         public int compare(CurriculumModule o1, CurriculumModule o2) {
             int result = o1.getFullPath().compareTo(o2.getFullPath());
-            return (result == 0) ? AbstractDomainObject.COMPARATOR_BY_ID.compare(o1, o2) : result;
+            return (result == 0) ? DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2) : result;
         }
     };
 

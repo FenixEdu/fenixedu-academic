@@ -24,7 +24,7 @@ public class DegreeInfo extends DegreeInfo_Base {
             if (result != 0) {
                 return result;
             }
-            return COMPARATOR_BY_ID.compare(info1, info2);
+            return DomainObjectUtil.COMPARATOR_BY_ID.compare(info1, info2);
         }
     };
 

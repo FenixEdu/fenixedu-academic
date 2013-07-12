@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accounting.Event;
@@ -97,7 +98,7 @@ public class IndividualCandidacyPaymentCode extends IndividualCandidacyPaymentCo
 
     protected static IndividualCandidacyPaymentCode getAvailablePaymentCodeForReuse() {
         Set<IndividualCandidacyPaymentCode> individualCandidacyPaymentCodes =
-                RootDomainObject.readAllDomainObjects(IndividualCandidacyPaymentCode.class);
+                DomainObjectUtil.readAllDomainObjects(IndividualCandidacyPaymentCode.class);
 
         for (IndividualCandidacyPaymentCode paymentCode : individualCandidacyPaymentCodes) {
             if (paymentCode.isAvailableForReuse()) {

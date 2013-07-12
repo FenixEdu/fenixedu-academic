@@ -13,6 +13,7 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.AccountingTransactionDetailDTO;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.SibsTransactionDetailDTO;
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.User;
@@ -39,7 +40,7 @@ public abstract class Event extends Event_Base {
         @Override
         public int compare(final Event e1, final Event e2) {
             final int i = e1.getWhenOccured().compareTo(e2.getWhenOccured());
-            return i == 0 ? COMPARATOR_BY_ID.compare(e1, e2) : i;
+            return i == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(e1, e2) : i;
         }
     };
 

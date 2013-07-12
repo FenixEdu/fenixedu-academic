@@ -11,6 +11,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.regex.Pattern;
 
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
@@ -32,7 +33,6 @@ import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;
-import pt.ist.fenixframework.FenixFramework;
 
 public class CardGenerationBatch extends CardGenerationBatch_Base {
 
@@ -41,7 +41,7 @@ public class CardGenerationBatch extends CardGenerationBatch_Base {
         @Override
         public int compare(CardGenerationBatch o1, CardGenerationBatch o2) {
             final int c = o1.getCreated().compareTo(o2.getCreated());
-            return c == 0 ? AbstractDomainObject.COMPARATOR_BY_ID.compare(o1, o2) : c;
+            return c == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2) : c;
         }
 
     };
@@ -300,7 +300,7 @@ public class CardGenerationBatch extends CardGenerationBatch_Base {
                     final YearMonthDay yearMonthDay1 = o1.getStartDateYearMonthDay();
                     final YearMonthDay yearMonthDay2 = o2.getStartDateYearMonthDay();
                     final int c = yearMonthDay1.compareTo(yearMonthDay2);
-                    return c == 0 ? AbstractDomainObject.COMPARATOR_BY_ID.compare(o1, o2) : c;
+                    return c == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2) : c;
                 } else {
                     return degreeType1.compareTo(degreeType2);
                 }
@@ -671,10 +671,10 @@ public class CardGenerationBatch extends CardGenerationBatch_Base {
         private static Pattern workplacePattern = Pattern.compile("[&,_/:\\.]");
         private static Pattern lineRemainderPattern = Pattern.compile("[,\\.]");
 
-        private String record;
-        private String identificationId;
-        private String line;
-        private String name;
+        private final String record;
+        private final String identificationId;
+        private final String line;
+        private final String name;
 
         private Set<Integer> numbers;
 
@@ -756,7 +756,7 @@ public class CardGenerationBatch extends CardGenerationBatch_Base {
 	 */
         private static final long serialVersionUID = 1L;
 
-        private String key;
+        private final String key;
         public java.util.List<Person> duplicatedPersons;
         public Set<Integer> numbers;
         public Boolean created;
@@ -824,12 +824,12 @@ public class CardGenerationBatch extends CardGenerationBatch_Base {
         private static final long serialVersionUID = 1L;
 
         private int matches;
-        private java.util.List<ReportEntry> duplicatedPersonsByName;
-        private java.util.List<ReportEntry> duplicatedPersonsById;
-        private java.util.List<ReportEntry> unmatchedEntries;
-        private StringBuilder duplicatedLinesBuilder;
-        private java.util.List<ReportEntry> matchedEntriesWithId;
-        private java.util.List<ReportEntry> matchedEntriesWithName;
+        private final java.util.List<ReportEntry> duplicatedPersonsByName;
+        private final java.util.List<ReportEntry> duplicatedPersonsById;
+        private final java.util.List<ReportEntry> unmatchedEntries;
+        private final StringBuilder duplicatedLinesBuilder;
+        private final java.util.List<ReportEntry> matchedEntriesWithId;
+        private final java.util.List<ReportEntry> matchedEntriesWithName;
 
         public ImportationReport() {
             this.duplicatedPersonsById = new java.util.ArrayList<ReportEntry>();

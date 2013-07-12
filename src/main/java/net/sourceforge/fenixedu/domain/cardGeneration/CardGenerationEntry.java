@@ -70,7 +70,7 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
         @Override
         public int compare(CardGenerationEntry o1, CardGenerationEntry o2) {
             final int c = o1.getCreated().compareTo(o2.getCreated());
-            return c == 0 ? AbstractDomainObject.COMPARATOR_BY_ID.compare(o1, o2) : c;
+            return c == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2) : c;
         }
 
     };

@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.Comparator;
 
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.MasterDegreeThesis;
@@ -34,7 +35,7 @@ public class ConclusionProcessVersion extends ConclusionProcessVersion_Base {
                 final public int compare(ConclusionProcessVersion o1, ConclusionProcessVersion o2) {
                     final ComparatorChain chain = new ComparatorChain();
                     chain.addComparator(ConclusionProcessVersion.COMPARATOR_BY_CREATION_DATE_TIME);
-                    chain.addComparator(ConclusionProcessVersion.COMPARATOR_BY_ID);
+                    chain.addComparator(DomainObjectUtil.COMPARATOR_BY_ID);
                     return chain.compare(o1, o2);
                 }
             };

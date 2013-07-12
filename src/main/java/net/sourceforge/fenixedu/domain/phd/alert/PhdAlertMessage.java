@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
@@ -27,7 +28,7 @@ public class PhdAlertMessage extends PhdAlertMessage_Base {
         @Override
         public int compare(PhdAlertMessage m1, PhdAlertMessage m2) {
             int comp = m1.getWhenCreated().compareTo(m2.getWhenCreated());
-            return (comp != 0) ? comp : COMPARATOR_BY_ID.compare(m1, m2);
+            return (comp != 0) ? comp : DomainObjectUtil.COMPARATOR_BY_ID.compare(m1, m2);
         }
     };
 

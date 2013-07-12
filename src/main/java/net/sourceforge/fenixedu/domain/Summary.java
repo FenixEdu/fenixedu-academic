@@ -36,7 +36,7 @@ public class Summary extends Summary_Base {
             final int c1 = o2.getSummaryDateYearMonthDay().compareTo(o1.getSummaryDateYearMonthDay());
             if (c1 == 0) {
                 final int c2 = o2.getSummaryHourHourMinuteSecond().compareTo(o1.getSummaryHourHourMinuteSecond());
-                return c2 == 0 ? AbstractDomainObject.COMPARATOR_BY_ID.compare(o1, o2) : c2;
+                return c2 == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2) : c2;
             } else {
                 return c1;
             }
@@ -49,7 +49,7 @@ public class Summary extends Summary_Base {
             final int c1 = o2.getSummaryDateYearMonthDay().compareTo(o1.getSummaryDateYearMonthDay());
             if (c1 == 0) {
                 final int c2 = o2.getSummaryHourHourMinuteSecond().compareTo(o1.getSummaryHourHourMinuteSecond());
-                return -1 * (c2 == 0 ? AbstractDomainObject.COMPARATOR_BY_ID.compare(o1, o2) : c2);
+                return -1 * (c2 == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2) : c2);
             } else {
                 return -1 * c1;
             }

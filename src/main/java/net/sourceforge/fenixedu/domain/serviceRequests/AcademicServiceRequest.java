@@ -11,6 +11,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestCreateBean;
 import net.sourceforge.fenixedu.domain.AcademicProgram;
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -69,7 +70,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
                 public int compare(AcademicServiceRequest o1, AcademicServiceRequest o2) {
                     final ComparatorChain comparatorChain = new ComparatorChain();
                     comparatorChain.addComparator(EXECUTION_YEAR_COMPARATOR);
-                    comparatorChain.addComparator(COMPARATOR_BY_ID);
+                    comparatorChain.addComparator(DomainObjectUtil.COMPARATOR_BY_ID);
 
                     return comparatorChain.compare(o1, o2);
                 }
@@ -763,6 +764,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     }
 
     public abstract AcademicProgram getAcademicProgram();
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation> getAcademicServiceRequestSituations() {
         return getAcademicServiceRequestSituationsSet();

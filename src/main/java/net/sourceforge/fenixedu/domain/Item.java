@@ -34,7 +34,7 @@ public class Item extends Item_Base {
             if (cn != 0) {
                 return cn;
             }
-            return AbstractDomainObject.COMPARATOR_BY_ID.compare(o1, o2);
+            return DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2);
         }
     };
 

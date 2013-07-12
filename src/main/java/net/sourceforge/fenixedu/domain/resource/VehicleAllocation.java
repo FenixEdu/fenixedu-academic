@@ -26,7 +26,7 @@ public class VehicleAllocation extends VehicleAllocation_Base {
     public final static Comparator<VehicleAllocation> COMPARATOR_BY_VEHICLE_NUMBER_PLATE = new ComparatorChain();
     static {
         ((ComparatorChain) COMPARATOR_BY_VEHICLE_NUMBER_PLATE).addComparator(new BeanComparator("vehicle.numberPlate"));
-        ((ComparatorChain) COMPARATOR_BY_VEHICLE_NUMBER_PLATE).addComparator(AbstractDomainObject.COMPARATOR_BY_ID);
+        ((ComparatorChain) COMPARATOR_BY_VEHICLE_NUMBER_PLATE).addComparator(DomainObjectUtil.COMPARATOR_BY_ID);
     }
 
     @Checked("ResourceAllocationPredicates.checkPermissionsToManageVehicleAllocations")

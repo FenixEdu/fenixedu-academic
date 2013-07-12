@@ -31,7 +31,7 @@ public class Function extends Function_Base {
                 chain.addComparator(new BeanComparator("functionOrder", new NullComparator()));
                 chain.addComparator(new BeanComparator("functionType", new NullComparator()));
                 chain.addComparator(new BeanComparator("name"));
-                chain.addComparator(AbstractDomainObject.COMPARATOR_BY_ID);
+                chain.addComparator(DomainObjectUtil.COMPARATOR_BY_ID);
             }
             return chain.compare(one, other);
         }

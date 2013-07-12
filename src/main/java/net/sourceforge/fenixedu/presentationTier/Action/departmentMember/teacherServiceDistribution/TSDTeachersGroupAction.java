@@ -209,7 +209,7 @@ public class TSDTeachersGroupAction extends FenixDispatchAction {
 
         // List<CurricularYear> curricularyearsList = new
         // ArrayList<CurricularYear
-        // >(rootDomainObject.readAllDomainObjects(CurricularYear.class));
+        // >(DomainObjectUtil.readAllDomainObjects(CurricularYear.class));
         TeacherServiceDistribution selectedTeacherServiceDistribution = getSelectedTeacherServiceDistribution(dynaForm);
         TSDProcess process = selectedTeacherServiceDistribution.getTSDProcessPhase().getTSDProcess();
         Department department = process.getDepartment();

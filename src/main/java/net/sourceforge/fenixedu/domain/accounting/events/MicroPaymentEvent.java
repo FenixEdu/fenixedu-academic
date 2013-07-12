@@ -4,6 +4,7 @@ import java.util.Comparator;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.accounting.AccountingTransactionDetailDTO;
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.accounting.Account;
@@ -29,7 +30,7 @@ public class MicroPaymentEvent extends MicroPaymentEvent_Base {
         @Override
         public int compare(final MicroPaymentEvent e1, final MicroPaymentEvent e2) {
             final int i = e1.getWhenOccured().compareTo(e1.getWhenOccured());
-            return i == 0 ? COMPARATOR_BY_ID.compare(e1, e2) : i;
+            return i == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(e1, e2) : i;
         }
 
     };

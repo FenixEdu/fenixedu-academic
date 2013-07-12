@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.util.StringUtils;
 
@@ -74,7 +74,7 @@ abstract public class CandidacyProcess extends CandidacyProcess_Base {
     }
 
     public static <T extends CandidacyProcess> T getCandidacyProcessByDate(Class<T> clazz, final DateTime date) {
-        Set<T> candidacyProcessList = RootDomainObject.readAllDomainObjects(clazz);
+        Set<T> candidacyProcessList = DomainObjectUtil.readAllDomainObjects(clazz);
 
         for (T process : candidacyProcessList) {
             if (process.hasCandidacyPeriod() && process.getCandidacyPeriod().isOpen(date)) {
@@ -87,7 +87,7 @@ abstract public class CandidacyProcess extends CandidacyProcess_Base {
 
     public static <T extends CandidacyProcess> T getCandidacyProcessByExecutionInterval(Class<T> clazz,
             final ExecutionInterval executionInterval) {
-        Set<T> candidacyProcessList = RootDomainObject.readAllDomainObjects(clazz);
+        Set<T> candidacyProcessList = DomainObjectUtil.readAllDomainObjects(clazz);
 
         for (T process : candidacyProcessList) {
             if (process.hasCandidacyPeriod() && executionInterval.equals(process.getCandidacyPeriod().getExecutionInterval())) {
@@ -163,6 +163,7 @@ abstract public class CandidacyProcess extends CandidacyProcess_Base {
     public boolean isMobility() {
         return false;
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Degree> getDegree() {
         return getDegreeSet();

@@ -16,7 +16,7 @@ public class PunctualRoomsOccupationStateInstant extends PunctualRoomsOccupation
     public static final Comparator<PunctualRoomsOccupationStateInstant> COMPARATOR_BY_INSTANT = new ComparatorChain();
     static {
         ((ComparatorChain) COMPARATOR_BY_INSTANT).addComparator(new BeanComparator("instant"));
-        ((ComparatorChain) COMPARATOR_BY_INSTANT).addComparator(AbstractDomainObject.COMPARATOR_BY_ID);
+        ((ComparatorChain) COMPARATOR_BY_INSTANT).addComparator(DomainObjectUtil.COMPARATOR_BY_ID);
     }
 
     @Checked("ResourceAllocationRolePredicates.checkPermissionsToManagePunctualRoomsOccupationStateInstants")

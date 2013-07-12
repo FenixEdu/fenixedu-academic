@@ -47,7 +47,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
                 return c1;
             }
             final int c2 = o1.getBeginningDateHourMinuteSecond().compareTo(o2.getBeginningDateHourMinuteSecond());
-            return c2 == 0 ? AbstractDomainObject.COMPARATOR_BY_ID.compare(o1, o2) : c2;
+            return c2 == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2) : c2;
         }
 
     };

@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
@@ -22,7 +23,7 @@ public class Recipient extends Recipient_Base {
         @Override
         public int compare(Recipient r1, Recipient r2) {
             final int c = r1.getToName().compareTo(r2.getToName());
-            return c == 0 ? COMPARATOR_BY_ID.compare(r1, r2) : c;
+            return c == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(r1, r2) : c;
         }
 
     };

@@ -50,7 +50,7 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
         @Override
         public int compare(final AcademicCalendarEntry o1, final AcademicCalendarEntry o2) {
             int c1 = o1.getBegin().compareTo(o2.getBegin());
-            return c1 == 0 ? AbstractDomainObject.COMPARATOR_BY_ID.compare(o1, o2) : c1;
+            return c1 == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2) : c1;
         }
 
     };

@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlanEquivalencePlan;
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.Evaluation;
@@ -149,7 +150,7 @@ public class Registration extends Registration_Base {
     static public final ComparatorChain COMPARATOR_BY_NUMBER_AND_ID = new ComparatorChain();
     static {
         COMPARATOR_BY_NUMBER_AND_ID.addComparator(NUMBER_COMPARATOR);
-        COMPARATOR_BY_NUMBER_AND_ID.addComparator(COMPARATOR_BY_ID);
+        COMPARATOR_BY_NUMBER_AND_ID.addComparator(DomainObjectUtil.COMPARATOR_BY_ID);
     }
 
     private static final List<RegistrationAgreement> RAIDES_MOBILITY = Arrays.asList(RegistrationAgreement.ALMEIDA_GARRETT,
@@ -4105,6 +4106,7 @@ public class Registration extends Registration_Base {
     public boolean isValidForRAIDES() {
         return isActive() && isBolonha() && !getDegreeType().isEmpty() && !RAIDES_MOBILITY.contains(getRegistrationAgreement());
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.StudentInquiryRegistry> getStudentsInquiryRegistries() {
         return getStudentsInquiryRegistriesSet();

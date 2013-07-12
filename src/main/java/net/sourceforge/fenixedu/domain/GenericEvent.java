@@ -37,7 +37,7 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
         ((ComparatorChain) COMPARATOR_BY_DATE_AND_TIME).addComparator(new BeanComparator("endTimeDateHourMinuteSecond"));
         ((ComparatorChain) COMPARATOR_BY_DATE_AND_TIME).addComparator(new BeanComparator("beginDate"));
         ((ComparatorChain) COMPARATOR_BY_DATE_AND_TIME).addComparator(new BeanComparator("startTimeDateHourMinuteSecond"));
-        ((ComparatorChain) COMPARATOR_BY_DATE_AND_TIME).addComparator(AbstractDomainObject.COMPARATOR_BY_ID);
+        ((ComparatorChain) COMPARATOR_BY_DATE_AND_TIME).addComparator(DomainObjectUtil.COMPARATOR_BY_ID);
     }
 
     public GenericEvent(MultiLanguageString title, MultiLanguageString description, List<AllocatableSpace> allocatableSpaces,

@@ -26,11 +26,11 @@ import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CompetenceCourseType;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.DepartmentSite;
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReference;
@@ -924,7 +924,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
 
     private List<SelectItem> readDepartmentUnitLabels() {
         final List<SelectItem> result = new ArrayList<SelectItem>();
-        for (final Object departmentObject : RootDomainObject.readAllDomainObjects(Department.class)) {
+        for (final Object departmentObject : DomainObjectUtil.readAllDomainObjects(Department.class)) {
             DepartmentUnit departmentUnit = ((Department) departmentObject).getDepartmentUnit();
             if (departmentUnit.isActive(getExecutionSemester().getBeginDateYearMonthDay())) {
                 result.add(new SelectItem(departmentUnit.getExternalId(), departmentUnit.getName()));

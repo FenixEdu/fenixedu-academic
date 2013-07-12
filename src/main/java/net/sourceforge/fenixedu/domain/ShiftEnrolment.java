@@ -14,7 +14,7 @@ public class ShiftEnrolment extends ShiftEnrolment_Base {
         @Override
         public int compare(ShiftEnrolment o1, ShiftEnrolment o2) {
             final int c = o1.getCreatedOn().compareTo(o2.getCreatedOn());
-            return c == 0 ? AbstractDomainObject.COMPARATOR_BY_ID.compare(o1, o2) : c;
+            return c == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2) : c;
         }
     };
 

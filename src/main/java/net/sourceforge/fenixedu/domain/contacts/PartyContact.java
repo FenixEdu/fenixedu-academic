@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PersonInformationLog;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -17,7 +18,6 @@ import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixframework.Atomic;
-import pt.ist.fenixframework.FenixFramework;
 
 public abstract class PartyContact extends PartyContact_Base {
 
@@ -25,7 +25,7 @@ public abstract class PartyContact extends PartyContact_Base {
         @Override
         public int compare(PartyContact contact, PartyContact otherContact) {
             int result = contact.getType().compareTo(otherContact.getType());
-            return (result == 0) ? AbstractDomainObject.COMPARATOR_BY_ID.compare(contact, otherContact) : result;
+            return (result == 0) ? DomainObjectUtil.COMPARATOR_BY_ID.compare(contact, otherContact) : result;
         }
     };
 
@@ -270,7 +270,7 @@ public abstract class PartyContact extends PartyContact_Base {
         Set<PartyContact> contacts = new HashSet<PartyContact>();
 
         for (Class<? extends PartyContact> clazz : contactClasses) {
-            contacts.addAll(RootDomainObject.readAllDomainObjects(clazz));
+            contacts.addAll(DomainObjectUtil.readAllDomainObjects(clazz));
         }
 
         return contacts;
@@ -514,6 +514,7 @@ public abstract class PartyContact extends PartyContact_Base {
             }
         }
     }
+
     @Deprecated
     public boolean hasCurrentPartyContact() {
         return getCurrentPartyContact() != null;

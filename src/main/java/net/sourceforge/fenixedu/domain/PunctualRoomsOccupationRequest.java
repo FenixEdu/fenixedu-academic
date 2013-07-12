@@ -28,10 +28,10 @@ public class PunctualRoomsOccupationRequest extends PunctualRoomsOccupationReque
     static {
         ((ComparatorChain) COMPARATOR_BY_MORE_RECENT_COMMENT_INSTANT).addComparator(
                 new BeanComparator("moreRecentCommentInstant"), true);
-        ((ComparatorChain) COMPARATOR_BY_MORE_RECENT_COMMENT_INSTANT).addComparator(AbstractDomainObject.COMPARATOR_BY_ID);
+        ((ComparatorChain) COMPARATOR_BY_MORE_RECENT_COMMENT_INSTANT).addComparator(DomainObjectUtil.COMPARATOR_BY_ID);
 
         ((ComparatorChain) COMPARATOR_BY_INSTANT).addComparator(new BeanComparator("instant"), true);
-        ((ComparatorChain) COMPARATOR_BY_INSTANT).addComparator(AbstractDomainObject.COMPARATOR_BY_ID);
+        ((ComparatorChain) COMPARATOR_BY_INSTANT).addComparator(DomainObjectUtil.COMPARATOR_BY_ID);
     }
 
     @Checked("ResourceAllocationRolePredicates.checkPermissionsToManagePunctualRoomsOccupationRequests")

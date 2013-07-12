@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.space;
 import java.io.Serializable;
 import java.util.Comparator;
 
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.injectionCode.FenixDomainObjectActionLogAnnotation;
@@ -13,7 +14,6 @@ import org.apache.commons.collections.comparators.ReverseComparator;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixframework.FenixFramework;
 
 public class Floor extends Floor_Base {
 
@@ -21,7 +21,7 @@ public class Floor extends Floor_Base {
     static {
         ((ComparatorChain) FLOOR_COMPARATOR_BY_LEVEL).addComparator(new ReverseComparator(new BeanComparator(
                 "spaceInformation.level")));
-        ((ComparatorChain) FLOOR_COMPARATOR_BY_LEVEL).addComparator(AbstractDomainObject.COMPARATOR_BY_ID);
+        ((ComparatorChain) FLOOR_COMPARATOR_BY_LEVEL).addComparator(DomainObjectUtil.COMPARATOR_BY_ID);
     }
 
     public Floor(Space suroundingSpace, Integer level, YearMonthDay begin, YearMonthDay end, String blueprintNumber) {

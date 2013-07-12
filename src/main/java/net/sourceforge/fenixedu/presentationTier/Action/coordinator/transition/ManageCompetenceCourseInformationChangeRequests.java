@@ -10,9 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformationChangeRequest;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -27,6 +27,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.FenixFramework;
+import pt.ist.fenixframework.core.AbstractDomainObject;
 
 @Mapping(module = "scientificCouncil", path = "/competenceCourses/manageVersions", scope = "session", parameter = "method")
 @Forwards(value = {
@@ -41,7 +42,7 @@ public class ManageCompetenceCourseInformationChangeRequests extends FenixDispat
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        Set<Department> departments = RootDomainObject.readAllDomainObjects(Department.class);
+        Set<Department> departments = DomainObjectUtil.readAllDomainObjects(Department.class);
         request.setAttribute("departments", departments);
 
         return mapping.findForward("manageVersions");

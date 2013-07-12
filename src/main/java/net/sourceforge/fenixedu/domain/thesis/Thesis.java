@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -96,7 +97,7 @@ public class Thesis extends Thesis_Base {
         @Override
         public int compare(Thesis t1, Thesis t2) {
             final int n = Student.NUMBER_COMPARATOR.compare(t1.getStudent(), t2.getStudent());
-            return n == 0 ? COMPARATOR_BY_ID.compare(t1, t2) : n;
+            return n == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(t1, t2) : n;
         }
     };
 

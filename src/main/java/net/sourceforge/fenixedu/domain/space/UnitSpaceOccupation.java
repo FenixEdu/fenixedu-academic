@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.space;
 
 import java.util.Comparator;
 
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -12,7 +13,6 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixframework.FenixFramework;
 
 public class UnitSpaceOccupation extends UnitSpaceOccupation_Base {
 
@@ -20,7 +20,7 @@ public class UnitSpaceOccupation extends UnitSpaceOccupation_Base {
     static {
         ((ComparatorChain) COMPARATOR_BY_OCCUPATION_INTERVAL_AND_UNIT).addComparator(new BeanComparator("begin"));
         ((ComparatorChain) COMPARATOR_BY_OCCUPATION_INTERVAL_AND_UNIT).addComparator(new BeanComparator("unit.name"));
-        ((ComparatorChain) COMPARATOR_BY_OCCUPATION_INTERVAL_AND_UNIT).addComparator(AbstractDomainObject.COMPARATOR_BY_ID);
+        ((ComparatorChain) COMPARATOR_BY_OCCUPATION_INTERVAL_AND_UNIT).addComparator(DomainObjectUtil.COMPARATOR_BY_ID);
     }
 
     @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageUnitSpaceOccupations")
@@ -115,6 +115,7 @@ public class UnitSpaceOccupation extends UnitSpaceOccupation_Base {
         final YearMonthDay end = getEnd();
         return start != null && (end == null || end.isAfter(start));
     }
+
     @Deprecated
     public boolean hasEnd() {
         return getEnd() != null;

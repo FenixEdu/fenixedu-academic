@@ -8,9 +8,9 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.IndividualCandidacyPaymentCode;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.CandidacyPeriod;
@@ -266,7 +266,7 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
             return null;
         }
 
-        Set<IndividualCandidacyProcess> candidacies = RootDomainObject.readAllDomainObjects(individualCandidacyProcessClass);
+        Set<IndividualCandidacyProcess> candidacies = DomainObjectUtil.readAllDomainObjects(individualCandidacyProcessClass);
 
         for (IndividualCandidacyProcess individualCandidacyProcess : candidacies) {
             if (email.equals(individualCandidacyProcess.getPersonalDetails().getEmail())
@@ -280,7 +280,7 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
 
     public static <T extends IndividualCandidacyProcess> T findIndividualCandidacyProcessByCode(
             Class<T> individualCandidacyProcessClass, final String processCode) {
-        Set<IndividualCandidacyProcess> candidacies = RootDomainObject.readAllDomainObjects(individualCandidacyProcessClass);
+        Set<IndividualCandidacyProcess> candidacies = DomainObjectUtil.readAllDomainObjects(individualCandidacyProcessClass);
 
         for (IndividualCandidacyProcess process : candidacies) {
             if (processCode.equals(process.getProcessCode())) {

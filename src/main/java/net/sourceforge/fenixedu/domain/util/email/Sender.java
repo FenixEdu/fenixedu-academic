@@ -8,6 +8,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
@@ -25,7 +26,7 @@ public class Sender extends Sender_Base {
         @Override
         public int compare(final Sender sender1, final Sender sender2) {
             final int c = sender1.getFromName().compareTo(sender2.getFromName());
-            return c == 0 ? COMPARATOR_BY_ID.compare(sender1, sender2) : c;
+            return c == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(sender1, sender2) : c;
         }
 
     };

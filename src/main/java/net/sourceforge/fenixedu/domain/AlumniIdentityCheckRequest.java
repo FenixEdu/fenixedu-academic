@@ -70,7 +70,7 @@ public class AlumniIdentityCheckRequest extends AlumniIdentityCheckRequest_Base 
 
     public static Collection<AlumniIdentityCheckRequest> readPendingRequests() {
         Collection<AlumniIdentityCheckRequest> pendingRequests = new ArrayList<AlumniIdentityCheckRequest>();
-        Set<AlumniIdentityCheckRequest> requests = RootDomainObject.readAllDomainObjects(AlumniIdentityCheckRequest.class);
+        Set<AlumniIdentityCheckRequest> requests = DomainObjectUtil.readAllDomainObjects(AlumniIdentityCheckRequest.class);
 
         AlumniIdentityCheckRequest request;
         Iterator iter = requests.iterator();
@@ -85,7 +85,7 @@ public class AlumniIdentityCheckRequest extends AlumniIdentityCheckRequest_Base 
 
     public static Object readClosedRequests() {
         Collection<AlumniIdentityCheckRequest> pendingRequests = new ArrayList<AlumniIdentityCheckRequest>();
-        Set<AlumniIdentityCheckRequest> requests = RootDomainObject.readAllDomainObjects(AlumniIdentityCheckRequest.class);
+        Set<AlumniIdentityCheckRequest> requests = DomainObjectUtil.readAllDomainObjects(AlumniIdentityCheckRequest.class);
 
         AlumniIdentityCheckRequest request;
         Iterator iter = requests.iterator();

@@ -12,6 +12,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
@@ -26,7 +27,6 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 import pt.ist.fenixframework.Atomic;
-import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -36,7 +36,7 @@ public class PhdProgram extends PhdProgram_Base {
         @Override
         public int compare(final PhdProgram p1, final PhdProgram p2) {
             int res = p1.getName().compareTo(p2.getName());
-            return res != 0 ? res : AbstractDomainObject.COMPARATOR_BY_ID.compare(p1, p2);
+            return res != 0 ? res : DomainObjectUtil.COMPARATOR_BY_ID.compare(p1, p2);
         }
     };
 

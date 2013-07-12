@@ -26,11 +26,11 @@ public abstract class Material extends Material_Base {
     public final static Comparator<Material> COMPARATOR_BY_CLASS_NAME = new ComparatorChain();
     static {
         ((ComparatorChain) COMPARATOR_BY_IDENTIFICATION).addComparator(new BeanComparator("identification"));
-        ((ComparatorChain) COMPARATOR_BY_IDENTIFICATION).addComparator(AbstractDomainObject.COMPARATOR_BY_ID);
+        ((ComparatorChain) COMPARATOR_BY_IDENTIFICATION).addComparator(DomainObjectUtil.COMPARATOR_BY_ID);
 
         ((ComparatorChain) COMPARATOR_BY_CLASS_NAME).addComparator(new BeanComparator("class.simpleName"));
         ((ComparatorChain) COMPARATOR_BY_CLASS_NAME).addComparator(new BeanComparator("acquisition"));
-        ((ComparatorChain) COMPARATOR_BY_CLASS_NAME).addComparator(AbstractDomainObject.COMPARATOR_BY_ID);
+        ((ComparatorChain) COMPARATOR_BY_CLASS_NAME).addComparator(DomainObjectUtil.COMPARATOR_BY_ID);
     }
 
     public abstract String getMaterialSpaceOccupationSlotName();

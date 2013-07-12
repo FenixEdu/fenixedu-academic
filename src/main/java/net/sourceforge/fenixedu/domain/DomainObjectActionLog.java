@@ -21,7 +21,7 @@ public class DomainObjectActionLog extends DomainObjectActionLog_Base {
     public final static Comparator<DomainObjectActionLog> COMPARATOR_BY_INSTANT = new ComparatorChain();
     static {
         ((ComparatorChain) COMPARATOR_BY_INSTANT).addComparator(new ReverseComparator(new BeanComparator("instant")));
-        ((ComparatorChain) COMPARATOR_BY_INSTANT).addComparator(AbstractDomainObject.COMPARATOR_BY_ID);
+        ((ComparatorChain) COMPARATOR_BY_INSTANT).addComparator(DomainObjectUtil.COMPARATOR_BY_ID);
     }
 
     public DomainObjectActionLog(Person person, DomainObject domainObject, String action, Map<String, Object> parameters) {

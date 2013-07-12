@@ -44,7 +44,7 @@ public class UnitSiteLink extends UnitSiteLink_Base {
 
                 chain.addComparator(new BeanComparator("linkOrder"));
                 chain.addComparator(new BeanComparator("label.content"));
-                chain.addComparator(AbstractDomainObject.COMPARATOR_BY_ID);
+                chain.addComparator(DomainObjectUtil.COMPARATOR_BY_ID);
             }
 
             return chain.compare(o1, o2);

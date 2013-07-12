@@ -58,7 +58,7 @@ public class Shift extends Shift_Base {
                 return cs;
             }
             final int cl = o1.getLessonsStringComparator().compareTo(o2.getLessonsStringComparator());
-            return cl == 0 ? AbstractDomainObject.COMPARATOR_BY_ID.compare(o1, o2) : cl;
+            return cl == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2) : cl;
         }
 
     };

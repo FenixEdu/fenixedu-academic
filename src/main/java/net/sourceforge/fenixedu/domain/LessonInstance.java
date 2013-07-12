@@ -24,7 +24,7 @@ public class LessonInstance extends LessonInstance_Base {
         @Override
         public int compare(LessonInstance o1, LessonInstance o2) {
             final int c = o1.getBeginDateTime().compareTo(o2.getBeginDateTime());
-            return c == 0 ? AbstractDomainObject.COMPARATOR_BY_ID.compare(o1, o2) : c;
+            return c == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2) : c;
         }
 
     };

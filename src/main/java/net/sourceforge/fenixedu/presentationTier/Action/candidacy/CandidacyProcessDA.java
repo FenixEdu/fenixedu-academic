@@ -13,10 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessSelectDegreesBean;
@@ -223,7 +223,7 @@ abstract public class CandidacyProcessDA extends CaseHandlingDispatchAction {
     private List<PublicCandidacyHashCode> getIndividualCandidacyHashCodesNotBounded() {
         List<PublicCandidacyHashCode> publicCandidacyHashCodeList =
                 new ArrayList<PublicCandidacyHashCode>(CollectionUtils.select(
-                        RootDomainObject.readAllDomainObjects(PublicCandidacyHashCode.class),
+                        DomainObjectUtil.readAllDomainObjects(PublicCandidacyHashCode.class),
                         new org.apache.commons.collections.Predicate() {
 
                             @Override

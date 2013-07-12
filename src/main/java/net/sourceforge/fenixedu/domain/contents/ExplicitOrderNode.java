@@ -3,8 +3,8 @@ package net.sourceforge.fenixedu.domain.contents;
 import java.util.Collections;
 import java.util.Comparator;
 
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import pt.ist.fenixframework.FenixFramework;
 
 public class ExplicitOrderNode extends ExplicitOrderNode_Base {
 
@@ -16,7 +16,7 @@ public class ExplicitOrderNode extends ExplicitOrderNode_Base {
             if (order == 0) {
                 order = o1.getName().compareTo(o2.getName());
                 if (order == 0) {
-                    order = AbstractDomainObject.COMPARATOR_BY_ID.compare(o1, o2);
+                    order = DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2);
                 }
             }
             return order;

@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.serviceRequests;
 import java.util.Comparator;
 
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -27,8 +28,8 @@ public class AcademicServiceRequestSituation extends AcademicServiceRequestSitua
                     }
 
                     int comparationResult = leftDate.compareTo(rightDate);
-                    return -((comparationResult == 0) ? COMPARATOR_BY_ID.compare(leftAcademicServiceRequestSituation,
-                            rightAcademicServiceRequestSituation) : comparationResult);
+                    return -((comparationResult == 0) ? DomainObjectUtil.COMPARATOR_BY_ID.compare(
+                            leftAcademicServiceRequestSituation, rightAcademicServiceRequestSituation) : comparationResult);
                 }
             };
 
@@ -182,6 +183,7 @@ public class AcademicServiceRequestSituation extends AcademicServiceRequestSitua
             return new AcademicServiceRequestSituation(academicServiceRequest, academicServiceRequestBean);
         }
     }
+
     @Deprecated
     public boolean hasAcademicServiceRequestSituationType() {
         return getAcademicServiceRequestSituationType() != null;

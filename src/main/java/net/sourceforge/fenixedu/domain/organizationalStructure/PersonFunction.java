@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.CurricularYear;
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
@@ -17,7 +18,6 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;
-import pt.ist.fenixframework.FenixFramework;
 
 public class PersonFunction extends PersonFunction_Base {
 
@@ -27,10 +27,10 @@ public class PersonFunction extends PersonFunction_Base {
 
     static {
         ((ComparatorChain) COMPARATOR_BY_BEGIN_DATE).addComparator(new BeanComparator("beginDate"));
-        ((ComparatorChain) COMPARATOR_BY_BEGIN_DATE).addComparator(AbstractDomainObject.COMPARATOR_BY_ID);
+        ((ComparatorChain) COMPARATOR_BY_BEGIN_DATE).addComparator(DomainObjectUtil.COMPARATOR_BY_ID);
 
         ((ComparatorChain) COMPARATOR_BY_PERSON_NAME).addComparator(new BeanComparator("person.name"));
-        ((ComparatorChain) COMPARATOR_BY_PERSON_NAME).addComparator(AbstractDomainObject.COMPARATOR_BY_ID);
+        ((ComparatorChain) COMPARATOR_BY_PERSON_NAME).addComparator(DomainObjectUtil.COMPARATOR_BY_ID);
     }
 
     public PersonFunction(Party parentParty, Party childParty, Function function, YearMonthDay begin, YearMonthDay end,
@@ -243,6 +243,7 @@ public class PersonFunction extends PersonFunction_Base {
         }
         return false;
     }
+
     @Deprecated
     public boolean hasSender() {
         return getSender() != null;

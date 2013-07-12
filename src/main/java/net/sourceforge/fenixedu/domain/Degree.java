@@ -82,7 +82,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         @Override
         public int compare(final Degree o1, final Degree o2) {
             final int nameResult = COMPARATOR_BY_NAME.compare(o1, o2);
-            return nameResult == 0 ? COMPARATOR_BY_ID.compare(o1, o2) : nameResult;
+            return nameResult == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2) : nameResult;
         }
     };
 
@@ -109,7 +109,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
             ExecutionSemester semester1 = degree1.getFirstDegreeCurricularPlan().getFirstExecutionPeriodEnrolments();
             ExecutionSemester semester2 = degree2.getFirstDegreeCurricularPlan().getFirstExecutionPeriodEnrolments();
             final int result = semester1.compareTo(semester2);
-            return result == 0 ? COMPARATOR_BY_ID.compare(degree1, degree2) : result;
+            return result == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(degree1, degree2) : result;
         }
     };
 
@@ -1672,6 +1672,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     public String getDegreeTypeName() {
         return getDegreeType().getName();
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyDegreeEntry> getOver23IndividualCandidacyDegreeEntries() {
         return getOver23IndividualCandidacyDegreeEntriesSet();

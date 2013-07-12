@@ -52,7 +52,7 @@ public class Department extends Department_Base {
     public static final Comparator<Department> COMPARATOR_BY_NAME = new ComparatorChain();
     static {
         ((ComparatorChain) COMPARATOR_BY_NAME).addComparator(new BeanComparator("name", Collator.getInstance()));
-        ((ComparatorChain) COMPARATOR_BY_NAME).addComparator(COMPARATOR_BY_ID);
+        ((ComparatorChain) COMPARATOR_BY_NAME).addComparator(DomainObjectUtil.COMPARATOR_BY_ID);
     }
 
     public Department() {

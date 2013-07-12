@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.messaging;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -10,7 +10,7 @@ public enum AnnouncementCategoryType {
     FUNDING, INFORMATION, AWARD, PROJECTS, SPECIAL_EDITIONS, NEWSLETTER;
 
     public static AnnouncementCategory getAnnouncementCategoryByType(final AnnouncementCategoryType type) {
-        return (AnnouncementCategory) CollectionUtils.find(RootDomainObject.readAllDomainObjects(AnnouncementCategory.class),
+        return (AnnouncementCategory) CollectionUtils.find(DomainObjectUtil.readAllDomainObjects(AnnouncementCategory.class),
                 new Predicate() {
 
                     @Override

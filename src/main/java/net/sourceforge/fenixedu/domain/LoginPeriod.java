@@ -15,7 +15,7 @@ public class LoginPeriod extends LoginPeriod_Base {
         @Override
         public int compare(LoginPeriod o1, LoginPeriod o2) {
             final int c = o1.getBeginDate().compareTo(o2.getBeginDate());
-            return c == 0 ? AbstractDomainObject.COMPARATOR_BY_ID.compare(o1, o2) : c;
+            return c == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2) : c;
         }
 
     };

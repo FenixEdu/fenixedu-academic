@@ -53,6 +53,7 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
 
 import pt.ist.fenixframework.FenixFramework;
+import pt.ist.fenixframework.core.AbstractDomainObject;
 
 public class CurricularCourseManagementBackingBean extends FenixBackingBean {
 

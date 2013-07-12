@@ -58,7 +58,7 @@ public class Lesson extends Lesson_Base {
             if (cb != 0) {
                 return cb;
             }
-            return AbstractDomainObject.COMPARATOR_BY_ID.compare(o1, o2);
+            return DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2);
         }
 
     };

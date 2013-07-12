@@ -84,7 +84,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
                 @Override
                 public int compare(DegreeCurricularPlan o1, DegreeCurricularPlan o2) {
                     final int c = o1.getPresentationName().compareTo(o2.getPresentationName());
-                    return c == 0 ? COMPARATOR_BY_ID.compare(o1, o2) : c;
+                    return c == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2) : c;
                 }
 
             };

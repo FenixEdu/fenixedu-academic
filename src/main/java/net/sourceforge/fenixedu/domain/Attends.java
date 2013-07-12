@@ -115,7 +115,7 @@ public class Attends extends Attends_Base {
             final ExecutionCourse executionCourse1 = o1.getExecutionCourse();
             final ExecutionCourse executionCourse2 = o2.getExecutionCourse();
             final int c = Collator.getInstance().compare(executionCourse1.getNome(), executionCourse2.getNome());
-            return c == 0 ? AbstractDomainObject.COMPARATOR_BY_ID.compare(o1, o2) : c;
+            return c == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2) : c;
         }
 
     };
