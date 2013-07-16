@@ -232,10 +232,10 @@ public class MobilityIndividualApplication extends MobilityIndividualApplication
         setRegistration(registration);
 
         createRaidesInformation(registration);
-        ExecutionYear applicationYear = (ExecutionYear) getCandidacyExecutionInterval();
-        PersonalIngressionData pid = getStudent().getPersonalIngressionDataByExecutionYear(applicationYear);
+        ExecutionYear candidacyExecutionYear = ExecutionYear.readByDateTime(getCandidacyProcess().getWhenCreated());
+        PersonalIngressionData pid = getStudent().getPersonalIngressionDataByExecutionYear(candidacyExecutionYear);
         pid.setCountryOfResidence(getPersonalDetails().getCountryOfResidence());
-        PrecedentDegreeInformation pdi = registration.getPrecedentDegreeInformation(applicationYear);
+        PrecedentDegreeInformation pdi = registration.getPrecedentDegreeInformation(candidacyExecutionYear);
         pdi.setSchoolLevel(getMobilityStudentData().getSchoolLevel());
         pdi.setOtherSchoolLevel(getMobilityStudentData().getOtherSchoolLevel());
 
