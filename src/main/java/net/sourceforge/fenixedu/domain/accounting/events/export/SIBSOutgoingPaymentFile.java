@@ -131,7 +131,7 @@ public class SIBSOutgoingPaymentFile extends SIBSOutgoingPaymentFile_Base {
     private void invalidateOldPaymentCodes(SibsOutgoingPaymentFile sibsOutgoingPaymentFile, StringBuilder errorsBuilder) {
         SIBSOutgoingPaymentFile previous = readPreviousOfLastGeneratedPaymentFile();
         PrintedPaymentCodes currentSet = this.getPrintedPaymentCodes();
-        PrintedPaymentCodes previousSet = previous.getPrintedPaymentCodes();
+        PrintedPaymentCodes previousSet = previous == null ? null : previous.getPrintedPaymentCodes();
 
         if (previousSet != null && previousSet.getPaymentCodes() != null) {
             Collection<String> oldPaymentCodes =
