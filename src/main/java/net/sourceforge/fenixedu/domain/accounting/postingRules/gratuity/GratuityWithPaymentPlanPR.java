@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.accounting.accountingTransactions.InstallmentAccountingTransaction;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
 import net.sourceforge.fenixedu.util.Money;
 
@@ -59,8 +60,11 @@ public class GratuityWithPaymentPlanPR extends GratuityWithPaymentPlanPR_Base im
     }
 
     public BigDecimal getDiscountPercentage(final Event event) {
-        return ((GratuityEventWithPaymentPlan) event).calculateDiscountPercentage(getPaymentPlan(event)
-                .calculateBaseAmount(event));
+        PaymentPlan paymentPlan = getPaymentPlan(event);
+        if (paymentPlan == null) {
+            throw new DomainException("error.event.not.associated.paymentPlan", event.getClass().getName());
+        }
+        return ((GratuityEventWithPaymentPlan) event).calculateDiscountPercentage(paymentPlan.calculateBaseAmount(event));
     }
 
     @Override
