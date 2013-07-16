@@ -84,7 +84,9 @@
 
 <p> <bean:message key="message.phd.institution.application.incomplete.missing.documents" bundle="PHD_RESOURCES" /></p>
 
-
+<div class="simpleblock1">
+	<p><bean:message key="message.phd.institution.application.need.original.documents" bundle="PHD_RESOURCES" /></p>
+</div>
 
 <div class="infoop2">
 	<bean:define id="processLink" name="processLink" type="String"/> 
