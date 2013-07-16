@@ -44,7 +44,6 @@ public class ShowProfessorshipsDA extends FenixDispatchAction {
         final ExecutionSemester selectedExecutionPeriod;
         if (executionPeriodIDString == null) {
             selectedExecutionPeriod = ExecutionSemester.readActualExecutionSemester();
-            executionSemesters.add(selectedExecutionPeriod);
             dynaActionForm.set("executionPeriodID", selectedExecutionPeriod.getIdInternal().toString());
         } else if (executionPeriodIDString.length() > 0) {
             selectedExecutionPeriod = rootDomainObject.readExecutionSemesterByOID(Integer.valueOf(executionPeriodIDString));
@@ -71,6 +70,7 @@ public class ShowProfessorshipsDA extends FenixDispatchAction {
                 }
             }
         }
+        executionSemesters.add(ExecutionSemester.readActualExecutionSemester());
         Collections.sort(executionCourses, ExecutionCourse.EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME);
 
         request.setAttribute("executionPeriodLabelValueBeans",
