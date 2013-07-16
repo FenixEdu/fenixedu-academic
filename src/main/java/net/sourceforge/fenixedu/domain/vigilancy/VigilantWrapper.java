@@ -349,7 +349,8 @@ public class VigilantWrapper extends VigilantWrapper_Base {
         return null;
     }
 
-    public Collection<Vigilancy> getVigilancies() {
+    @Override
+    public Set<Vigilancy> getVigilanciesSet() {
         return this.getVigilantGroup().getVigilancies(this);
     }
 

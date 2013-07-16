@@ -157,19 +157,15 @@ public class Attends extends Attends_Base {
         return super.getStudentGroupsSet();
     }
 
-    private List<StudentGroup> getStudentGroups() {
-        List<StudentGroup> result = new ArrayList<StudentGroup>();
+    @Override
+    public Set<StudentGroup> getStudentGroupsSet() {
+        Set<StudentGroup> result = new TreeSet<StudentGroup>();
         for (StudentGroup sg : super.getStudentGroupsSet()) {
             if (sg.getValid()) {
                 result.add(sg);
             }
         }
-        return Collections.unmodifiableList(result);
-    }
-
-    @Override
-    public Set<StudentGroup> getStudentGroupsSet() {
-        return new TreeSet<StudentGroup>(this.getStudentGroups());
+        return Collections.unmodifiableSet(result);
     }
 
     private boolean canDelete() {
@@ -555,6 +551,7 @@ public class Attends extends Attends_Base {
         }
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.teacher.DegreeProjectTutorialService> getDegreeProjectTutorialServices() {
         return getDegreeProjectTutorialServicesSet();
@@ -565,6 +562,7 @@ public class Attends extends Attends_Base {
         return !getDegreeProjectTutorialServicesSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Grouping> getGroupings() {
         return getGroupingsSet();
@@ -575,6 +573,7 @@ public class Attends extends Attends_Base {
         return !getGroupingsSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Mark> getAssociatedMarks() {
         return getAssociatedMarksSet();
@@ -585,6 +584,7 @@ public class Attends extends Attends_Base {
         return !getAssociatedMarksSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.ProjectSubmissionLog> getProjectSubmissionLogs() {
         return getProjectSubmissionLogsSet();
@@ -595,6 +595,7 @@ public class Attends extends Attends_Base {
         return !getProjectSubmissionLogsSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad> getWeeklyWorkLoads() {
         return getWeeklyWorkLoadsSet();
@@ -605,6 +606,7 @@ public class Attends extends Attends_Base {
         return !getWeeklyWorkLoadsSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.ProjectSubmission> getProjectSubmissions() {
         return getProjectSubmissionsSet();

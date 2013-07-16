@@ -22,6 +22,9 @@
 		<skipTests>true</skipTests>
 		<version.pt.ist.fenix.framework>2.2.0</version.pt.ist.fenix.framework>
 		<version.pt.ist.ff.maven.plugin>2.2.0</version.pt.ist.ff.maven.plugin>
+
+		<fenix.framework.codeGeneratorClassName>pt.ist.fenixframework.backend.jvstmojb.codeGenerator.FenixCodeGeneratorOneBoxPerObject</fenix.framework.codeGeneratorClassName>
+		<fenix.framework.backend>jvstm-ojb</fenix.framework.backend>
 	</properties>
 
 	<build>
@@ -195,6 +198,20 @@
 					</scanTargets>
 					<war>${project.build.directory}/${project.build.finalName}</war>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>pt.ist</groupId>
+				<artifactId>ff-maven-plugin</artifactId>
+				<configuration>
+					<codeGeneratorClassName>${fenix.framework.codeGeneratorClassName}</codeGeneratorClassName>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>pt.ist</groupId>
+						<artifactId>fenix-framework-backend-${fenix.framework.backend}-code-generator</artifactId>
+						<version>${version.pt.ist.fenix.framework}</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 		</plugins>
 	</build>
@@ -565,6 +582,11 @@
 			<artifactId>jsp-api</artifactId>
 			<version>2.1</version>
 			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>pt.ist</groupId>
+			<artifactId>fenix-framework-backend-${fenix.framework.backend}-runtime</artifactId>
+			<version>${version.pt.ist.fenix.framework}</version>
 		</dependency>
 	</dependencies>
 

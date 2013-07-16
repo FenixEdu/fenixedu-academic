@@ -154,8 +154,8 @@ public class VigilantGroup extends VigilantGroup_Base {
         return convokesToReturn;
     }
 
-    public List<Vigilancy> getVigilancies(VigilantWrapper vigilantWrapper) {
-        List<Vigilancy> vigilantConvokes = new ArrayList<Vigilancy>();
+    public Set<Vigilancy> getVigilancies(VigilantWrapper vigilantWrapper) {
+        Set<Vigilancy> vigilantConvokes = new HashSet<Vigilancy>();
         for (Vigilancy convoke : this.getVigilancies()) {
             if (vigilantWrapper == convoke.getVigilantWrapper()) {
                 vigilantConvokes.add(convoke);
@@ -266,6 +266,7 @@ public class VigilantGroup extends VigilantGroup_Base {
         return null;
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator> getExamCoordinators() {
         return getExamCoordinatorsSet();
@@ -276,6 +277,7 @@ public class VigilantGroup extends VigilantGroup_Base {
         return !getExamCoordinatorsSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper> getVigilantWrappers() {
         return getVigilantWrappersSet();
@@ -286,6 +288,7 @@ public class VigilantGroup extends VigilantGroup_Base {
         return !getVigilantWrappersSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.ExecutionCourse> getExecutionCourses() {
         return getExecutionCoursesSet();

@@ -361,7 +361,7 @@ public class Grouping extends Grouping_Base {
         }
     }
 
-    private void unEnrollStudentGroups(List<StudentGroup> studentGroups) {
+    private void unEnrollStudentGroups(Collection<StudentGroup> studentGroups) {
         for (final StudentGroup studentGroup : studentGroups) {
             studentGroup.setShift(null);
         }
@@ -534,14 +534,15 @@ public class Grouping extends Grouping_Base {
         return false;
     }
 
-    private List<StudentGroup> getStudentGroups() {
-        List<StudentGroup> result = new ArrayList<StudentGroup>();
+    @Override
+    public Set<StudentGroup> getStudentGroupsSet() {
+        Set<StudentGroup> result = new TreeSet<StudentGroup>();
         for (StudentGroup sg : super.getStudentGroupsSet()) {
             if (!sg.wasDeleted()) {
                 result.add(sg);
             }
         }
-        return Collections.unmodifiableList(result);
+        return Collections.unmodifiableSet(result);
     }
 
     public List<StudentGroup> getDeletedStudentGroups() {
@@ -552,11 +553,6 @@ public class Grouping extends Grouping_Base {
             }
         }
         return result;
-    }
-
-    @Override
-    public Set<StudentGroup> getStudentGroupsSet() {
-        return new TreeSet<StudentGroup>(this.getStudentGroups());
     }
 
     @Deprecated
@@ -589,6 +585,7 @@ public class Grouping extends Grouping_Base {
         }
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.ExportGrouping> getExportGroupings() {
         return getExportGroupingsSet();
@@ -599,6 +596,7 @@ public class Grouping extends Grouping_Base {
         return !getExportGroupingsSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Attends> getAttends() {
         return getAttendsSet();
@@ -614,6 +612,7 @@ public class Grouping extends Grouping_Base {
         return !getStudentGroupsSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Project> getProjects() {
         return getProjectsSet();
@@ -624,6 +623,7 @@ public class Grouping extends Grouping_Base {
         return !getProjectsSet().isEmpty();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.ShiftGroupingProperties> getShiftGroupingProperties() {
         return getShiftGroupingPropertiesSet();
