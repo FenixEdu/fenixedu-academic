@@ -22,7 +22,6 @@
     <!ENTITY parking SYSTEM "schemas/parking-schemas.xml"> 
 	<!ENTITY vigilancy SYSTEM "schemas/vigilancy-schemas.xml">
 	<!ENTITY academicAdminOffice SYSTEM "schemas/academicAdminOffice-schemas.xml">	
-	<!ENTITY system SYSTEM "schemas/system-schemas.xml">
 	<!ENTITY tsdProcess SYSTEM "schemas/teacherServiceDistribution-schemas.xml">
 	<!ENTITY tests SYSTEM "schemas/tests-schemas.xml">
     <!ENTITY site SYSTEM "schemas/site-schemas.xml">
@@ -750,7 +749,6 @@
     &parking;
 	&vigilancy;
 	&academicAdminOffice;
-	&system;
 	&tsdProcess;
 	&tests;
     &site;
