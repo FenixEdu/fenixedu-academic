@@ -31,10 +31,11 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
  */
 public class MergeExecutionCourseDispatchionAction extends FenixDispatchAction {
 
-    private Boolean previousOrEqualSemester = false;
-
     public ActionForward chooseDegreesAndExecutionPeriod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException {
+
+        Boolean previousOrEqualSemester = false;
+
         DegreesMergeBean degreeBean = getRenderedObject("degreeBean");
         request.setAttribute("degreeBean", degreeBean);
         RenderUtils.invalidateViewState();
