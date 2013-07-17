@@ -19,26 +19,15 @@ public class Dissertation extends Dissertation_Base {
     
     public  Dissertation() {
         super();
+        setRootDomainObject(getRootDomainObject());
     }    
 
-    private Person orientator = null;
-    private Person coorientator = null;
-    private Integer orientatorCredits = null;
-    private Integer coorientatorCredits = null;
+    private Person orientator;
+    private Person coorientator;
+    private Integer orientatorCredits;
+    private Integer coorientatorCredits;
     
-    private List<DissertationCandidacy> dissertationCandidacies = null;
-    private List<Enrolment> enrolments = null;
-	private List<Comment> comments = null;
-	private List<Log> logs = null;
-	private DissertationState dissertationState = null;
-	private List<DissertationFile> dissertationFiles = null;
-	private List<DissertationEvaluationParticipant> dissertationEvaluationParticipants = null;
-	private List<Location> locations = null;
-	private List<Scheduling> schedulings = null;
-	
 	private List<ExecutionDegree> executionDegrees = null;
-	  
-	private final static double CREDITS = 1;
 	   
 	public Person getOrientator() {
 		return orientator;
@@ -51,60 +40,6 @@ public class Dissertation extends Dissertation_Base {
 	}
 	public void setCoorientator(Person coorientator) {
 		this.coorientator = coorientator;
-	}
-	public List<DissertationCandidacy> getDissertationCandidacies() {
-		return dissertationCandidacies;
-	}
-	public void setCandidacies(List<DissertationCandidacy> dissertationCandidacies) {
-		this.dissertationCandidacies = dissertationCandidacies;
-	}
-	public List<Enrolment> getEnrolments() {
-		return enrolments;
-	}
-	public void setEnrolments(List<Enrolment> enrolments) {
-		this.enrolments = enrolments;
-	}
-	public List<Comment> getComments() {
-		return comments;
-	}
-	public void setComments(List<Comment> comments) {
-		this.comments = comments;
-	}
-	public List<Log> getLogs() {
-		return logs;
-	}
-	public void setLogs(List<Log> logs) {
-		this.logs = logs;
-	}
-	public DissertationState getDissertationState() {
-		return dissertationState;
-	}
-	public void setDissertationStates(DissertationState dissertationState) {
-		this.dissertationState = dissertationState;
-	}
-	public List<DissertationFile> getDissertationFiles() {
-		return dissertationFiles;
-	}
-	public void setDissertationFiles(List<DissertationFile> dissertationFiles) {
-		this.dissertationFiles = dissertationFiles;
-	}
-	public List<DissertationEvaluationParticipant> getDissertationEvaluationParticipants() {
-		return dissertationEvaluationParticipants;
-	}
-	public void setDissertationEvaluationParticipants(List<DissertationEvaluationParticipant> dissertationEvaluationParticipants) {
-		this.dissertationEvaluationParticipants = dissertationEvaluationParticipants;
-	}
-	public List<Location> getLocations() {
-		return locations;
-	}
-	public void setLocations(List<Location> locations) {
-		this.locations = locations;
-	}
-	public List<Scheduling> getSchedulings() {
-		return schedulings;
-	}
-	public void setSchedulings(List<Scheduling> schedulings) {
-		this.schedulings = schedulings;
 	}
 	
 	public void setOrientatorCreditsDistribution(Integer percent) {
@@ -149,8 +84,20 @@ public class Dissertation extends Dissertation_Base {
 	    
 	// the credits calculation always depends on the current credits' value for
 	// the thesis (no history)
-	public static double getCredits() {
-	    return CREDITS;
+	public Integer getOrientatorCredits() {
+	    return getOrientatorCredits();
+	}
+	
+	public Integer getCoorientatorCredits() {
+	    return getCoorientatorCredits();
+	}
+	
+	public void setOrientatorCredits(Integer orientatorCredits) {
+	    this.orientatorCredits = orientatorCredits;
+	}
+	
+	public void setCoorientatorCredits(Integer coorientatorCredits) {
+	    this.coorientatorCredits = coorientatorCredits;
 	}
 	
 	public Boolean hasOrientator() {

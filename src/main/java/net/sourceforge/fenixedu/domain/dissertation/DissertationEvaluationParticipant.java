@@ -92,10 +92,6 @@ public class DissertationEvaluationParticipant extends DissertationEvaluationPar
         }
     }
 
-    public double getParticipationCredits() {
-        return Dissertation.getCredits() * getCreditsDistribution() / 100;
-    }
-
     public double getCreditsDistribution() {
         Dissertation dissertation = getDissertation();
 

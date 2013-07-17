@@ -20724,12 +20724,8 @@ relation DissertationLocation {
 }
 
 relation RootDomainObjectLocation {
-	RootDomainObject playsRole rootDomainObject {
-		multiplicity 1..1;
-	}
-	dissertation.Location playsRole location {
-		multiplicity *;
-	}
+	RootDomainObject playsRole rootDomainObject;
+	dissertation.Location playsRole location;
 }
 	
 relation DissertationScheduling {
@@ -20751,12 +20747,8 @@ relation SchedulingExecutionYear {
 }
 
 relation RootDomainObjectScheduling {
-	RootDomainObject playsRole rootDomainObject {
-		multiplicity 1..1;
-	}
-	dissertation.Scheduling playsRole schedulings {
-		multiplicity *;
-	}
+	RootDomainObject playsRole rootDomainObject;
+	dissertation.Scheduling playsRole schedulings;
 }
 	
 relation DissertationCandidacyRegistration {

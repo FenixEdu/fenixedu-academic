@@ -16,11 +16,10 @@ public class DissertationFile extends DissertationFile_Base {
         super();
     }
     
-    private DissertationFile previousDissertationFile = null;
-    
     public DissertationFile(VirtualPath path, String filename, String displayName, Collection<FileSetMetaData> metadata,
             byte[] content, Group group) {
         super();
+        setRootDomainObject(getRootDomainObject());
         init(path, filename, displayName, metadata, content, group);
     }
     
@@ -42,13 +41,4 @@ public class DissertationFile extends DissertationFile_Base {
         }
         return false;
     }
-
-	public DissertationFile getPreviousDissertationFile() {
-		return previousDissertationFile;
-	}
-
-	public void setPreviousDissertationFile(
-			DissertationFile previousDissertationFile) {
-		this.previousDissertationFile = previousDissertationFile;
-	}
 }

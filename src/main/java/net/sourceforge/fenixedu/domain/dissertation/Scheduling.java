@@ -19,6 +19,7 @@ public class Scheduling extends Scheduling_Base {
         setCurrentProposalNumber(1);
         setMinimumNumberOfStudents(Integer.valueOf(1));
         setMaximumNumberOfStudents(Integer.valueOf(1));
+        setRootDomainObject(getRootDomainObject());
     }
 
 	private List<DissertationCandidacy> dissertationCandidacies = null;

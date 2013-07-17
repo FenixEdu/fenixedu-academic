@@ -31,167 +31,185 @@
 <bean:message bundle="APPLICATION_RESOURCES" key="link.manage.finalWork"/>
 </h2>
 
-<h3 id="table-header1">
-	<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.orientatorDissertations"/>
-</h3>
+<fr:form id="searchForm" action="/dissertationManagement.do?method=chooseExecutionYear">
+	<fr:edit id="sessionBean" name="sessionBean">
+		<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.curricularPlans.ExecutionDegreeCoordinatorsBean" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
+			<fr:slot name="executionYear" layout="menu-select-postback" key="label.executionYear" required="true">
+				<fr:property name="format" value="${qualifiedName}"/>
+				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider"/>
+				<fr:property name="saveOptions" value="true"/>
+			</fr:slot>
+		</fr:schema>
+		<fr:destination name="postBack" path="/dissertationManagement.do?method=listDissertations"/>
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle5 thmiddle thright thlight"/>
+			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+		</fr:layout>
+	</fr:edit>
+</fr:form>
 
-<logic:notEmpty name="orientatorDissertations">
-	<bean:define id="executionYear" name="executionYear"/>
-	<bean:define id="executionYearId" name="executionYearId"/>
-	<table class="tstyle2 mtop15 tdcenter inobullet" id="table1">
-		<tr>
-			<th class="listClasses-header dissertations-table-short-cell" >
-				<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.student"/>
-			</th>
-			<th class="listClasses-header dissertations-table-long-cell" >
-				<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.title"/>
-			</th>
-			<th class="listClasses-header dissertations-table-short-cell" >
-				<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.state"/>
-			</th>
-		</tr>
-		<tr>
-		<logic:iterate id="orientatorDissertation" name="orientatorDissertations">
-			<tr>
-				<td class="dissertations-table-short-cell">
-					<bean:define id="student" name="orientatorDissertation" property="student"/>
-					<bean:write name="student" property="name"/>
-				</td>
-				<td class="dissertations-table-long-cell">
-					
-						<bean:write name="orientatorDissertation" property="title"/>
-					
-				</td>
-				<td class="dissertations-table-short-cell">
-					<bean:write name="orientatorDissertation" property="state"/>
-				</td>
-			</tr>
-		</logic:iterate>
-	</table>
-</logic:notEmpty>
-
-
-<logic:empty name="orientatorDissertations">
-	<span class="error"><!-- Error messages go here --><bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.noDissertations"/></span>
-</logic:empty>
-
-<h3 id="table-header2">
-	<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.coorientatorDissertations"/>
-</h3>
-
-<logic:notEmpty name="coorientatorDissertations">
-	<bean:define id="dissertation" name="coorientatorDissertations"/>
-	<table class="tstyle2 mtop15 tdcenter inobullet" id="table2">
-		<tr>
-			<th class="listClasses-header dissertations-table-short-cell" >
-				<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.student"/>
-			</th>
-			<th class="listClasses-header dissertations-table-long-cell" >
-				<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.title"/>
-			</th>
-			<th class="listClasses-header dissertations-table-short-cell" >
-				<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.state"/>
-			</th>
-		</tr>
-		<tr>
-		<logic:iterate id="coorientatorDissertation" name="coorientatorDissertations">
-			<tr>
-				<td class="dissertations-table-short-cell">
-					<bean:define id="student" name="coorientatorDissertation" property="student"/>
-					<bean:write name="student" property="name"/>
-				</td>
-				<td class="dissertations-table-long-cell">
-					<bean:write name="coorientatorDissertation" property="title"/>
-				</td>
-				<td class="dissertations-table-short-cell">
-					<bean:write name="coorientatorDissertation" property="state"/>
-				</td>
-			</tr>
-		</logic:iterate>
-	</table>
-</logic:notEmpty>
-
-<logic:empty name="coorientatorDissertations">
-	<span class="error"><!-- Error messages go here --><bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.noDissertations"/></span>
-</logic:empty>
-
-<h3 id="table-header3">
-	<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.submitedOrientatorProposal"/>
-</h3>
-
-<logic:notEmpty name="orientatorProposals">
-	<bean:define id="proposal" name="orientatorProposals"/>
-	<table class="tstyle2 mtop15 tdcenter inobullet" id="table3">
-		<tr>
-			<th class="listClasses-header dissertations-table-long-cell">
-				<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.title"/>
-			</th>
-			<th class="listClasses-header dissertations-table-short-cell">
-				<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.state"/>
-			</th>
-		</tr>
-		<tr>
-		<logic:iterate id="orientatorProposal" name="orientatorProposals">
-			<tr>
-				<td class="dissertations-table-long-cell">
-					<bean:write name="orientatorProposal" property="title.content"/>
-				</td>
-				<td class="dissertations-table-short-cell">
-					<bean:define id="dissertationState" name="orientatorProposal"/>
-					<bean:define id="dissertationStateValue" name="dissertationState"/>
-					<bean:write name="<%= ((net.sourceforge.fenixedu.domain.dissertation.Dissertation) orientatorProposal).getDissertationState().getDissertationStateValueDescription().getContent(pt.utl.ist.fenix.tools.util.i18n.Language.pt) %>"/>
-				</td>
-			</tr>
-		</logic:iterate>
-	</table>
-</logic:notEmpty>
-
-<logic:empty name="orientatorProposals">
-	<span class="error"><!-- Error messages go here --><bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.noProposals"/></span>
-</logic:empty>
-
-<h3 id="table-header4">
-	<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.submitedCoorientatorProposal"/>
-</h3>
+<logic:equal name="hasYearSelected" value="true">
+	<h3 id="table-header1">
+		<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.orientatorDissertations"/>
+	</h3>
 	
-<logic:notEmpty name="coorientatorProposals">
-	<bean:define id="coorientatorProposals" name="coorientatorProposals"/>
-	<bean:define id="proposal" name="coorientatorProposals"/>
-	<table class="tstyle2 mtop15 tdcenter inobullet" id="table4">
-		<tr>
-			<th class="listClasses-header dissertations-table-short-cell">
-				<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.proposal"/>
-			</th>
-			<th class="listClasses-header dissertations-table-long-cell">
-				<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.title"/>
-			</th>
-			<th class="listClasses-header dissertations-table-short-cell">
-				<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.state"/>
-			</th>
-		</tr>
-		<tr>
-		<logic:iterate id="coorientatorProposal" name="coorientatorProposals">
+	<logic:notEmpty name="orientatorDissertations">
+		<bean:define id="executionYear" name="executionYear"/>
+		<bean:define id="executionYearId" name="executionYearId"/>
+		<table class="tstyle2 mtop15 tdcenter inobullet" id="table1">
 			<tr>
-				<td class="dissertations-table-short-cell">
-					<bean:write name="coorientatorProposal" property="proposalNumber"/>
-				</td>
-				<td class="dissertations-table-long-cell">
-					
-						<bean:write name="coorientatorProposal" property="title"/>
-					
-				</td>
-				<td class="dissertations-table-short-cell">
-					<bean:define id="status" name="coorientatorProposal" property="status"/>
-					<bean:write name="status" property="key"/>
-				</td>
+				<th class="listClasses-header dissertations-table-short-cell" >
+					<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.student"/>
+				</th>
+				<th class="listClasses-header dissertations-table-long-cell" >
+					<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.title"/>
+				</th>
+				<th class="listClasses-header dissertations-table-short-cell" >
+					<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.state"/>
+				</th>
 			</tr>
-		</logic:iterate>
-	</table></logic:notEmpty>
-
-<logic:empty name="coorientatorProposals">
-	<span class="error"><!-- Error messages go here --><bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.noProposals"/></span>
-</logic:empty>
-
+			<tr>
+			<logic:iterate id="orientatorDissertation" name="orientatorDissertations">
+				<tr>
+					<td class="dissertations-table-short-cell">
+						<bean:define id="student" name="orientatorDissertation" property="student"/>
+						<bean:write name="student" property="name"/>
+					</td>
+					<td class="dissertations-table-long-cell">
+						
+							<bean:write name="orientatorDissertation" property="title"/>
+						
+					</td>
+					<td class="dissertations-table-short-cell">
+						<bean:write name="orientatorDissertation" property="state"/>
+					</td>
+				</tr>
+			</logic:iterate>
+		</table>
+	</logic:notEmpty>
+	
+	
+	<logic:empty name="orientatorDissertations">
+		<span class="error"><!-- Error messages go here --><bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.noDissertations"/></span>
+	</logic:empty>
+	
+	<h3 id="table-header2">
+		<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.coorientatorDissertations"/>
+	</h3>
+	
+	<logic:notEmpty name="coorientatorDissertations">
+		<bean:define id="dissertation" name="coorientatorDissertations"/>
+		<table class="tstyle2 mtop15 tdcenter inobullet" id="table2">
+			<tr>
+				<th class="listClasses-header dissertations-table-short-cell" >
+					<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.student"/>
+				</th>
+				<th class="listClasses-header dissertations-table-long-cell" >
+					<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.title"/>
+				</th>
+				<th class="listClasses-header dissertations-table-short-cell" >
+					<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.state"/>
+				</th>
+			</tr>
+			<tr>
+			<logic:iterate id="coorientatorDissertation" name="coorientatorDissertations">
+				<tr>
+					<td class="dissertations-table-short-cell">
+						<bean:define id="student" name="coorientatorDissertation" property="student"/>
+						<bean:write name="student" property="name"/>
+					</td>
+					<td class="dissertations-table-long-cell">
+						<bean:write name="coorientatorDissertation" property="title"/>
+					</td>
+					<td class="dissertations-table-short-cell">
+						<bean:write name="coorientatorDissertation" property="state"/>
+					</td>
+				</tr>
+			</logic:iterate>
+		</table>
+	</logic:notEmpty>
+	
+	<logic:empty name="coorientatorDissertations">
+		<span class="error"><!-- Error messages go here --><bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.noDissertations"/></span>
+	</logic:empty>
+	
+	<h3 id="table-header3">
+		<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.submitedOrientatorProposal"/>
+	</h3>
+	
+	<logic:notEmpty name="orientatorProposals">
+		<bean:define id="proposal" name="orientatorProposals"/>
+		<table class="tstyle2 mtop15 tdcenter inobullet" id="table3">
+			<tr>
+				<th class="listClasses-header dissertations-table-long-cell">
+					<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.title"/>
+				</th>
+				<th class="listClasses-header dissertations-table-short-cell">
+					<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.state"/>
+				</th>
+			</tr>
+			<tr>
+			<logic:iterate id="orientatorProposal" name="orientatorProposals">
+				<tr>
+					<td class="dissertations-table-long-cell">
+						<bean:write name="orientatorProposal" property="title.content"/>
+					</td>
+					<td class="dissertations-table-short-cell">
+						<bean:define id="dissertationState" name="orientatorProposal"/>
+						<bean:write name="orientatorProposal" property="dissertationState.dissertationStateValueDescription.content"/>
+						
+					</td>
+				</tr>
+			</logic:iterate>
+		</table>
+	</logic:notEmpty>
+	
+	<logic:empty name="orientatorProposals">
+		<span class="error"><!-- Error messages go here --><bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.noProposals"/></span>
+	</logic:empty>
+	
+	<h3 id="table-header4">
+		<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.submitedCoorientatorProposal"/>
+	</h3>
+		
+	<logic:notEmpty name="coorientatorProposals">
+		<bean:define id="coorientatorProposals" name="coorientatorProposals"/>
+		<bean:define id="proposal" name="coorientatorProposals"/>
+		<table class="tstyle2 mtop15 tdcenter inobullet" id="table4">
+			<tr>
+				<th class="listClasses-header dissertations-table-short-cell">
+					<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.proposal"/>
+				</th>
+				<th class="listClasses-header dissertations-table-long-cell">
+					<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.title"/>
+				</th>
+				<th class="listClasses-header dissertations-table-short-cell">
+					<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.state"/>
+				</th>
+			</tr>
+			<tr>
+			<logic:iterate id="coorientatorProposal" name="coorientatorProposals">
+				<tr>
+					<td class="dissertations-table-short-cell">
+						<bean:write name="coorientatorProposal" property="proposalNumber"/>
+					</td>
+					<td class="dissertations-table-long-cell">
+						
+							<bean:write name="coorientatorProposal" property="title"/>
+						
+					</td>
+					<td class="dissertations-table-short-cell">
+						<bean:define id="status" name="coorientatorProposal" property="status"/>
+						<bean:write name="status" property="key"/>
+					</td>
+				</tr>
+			</logic:iterate>
+		</table></logic:notEmpty>
+	
+	<logic:empty name="coorientatorProposals">
+		<span class="error"><!-- Error messages go here --><bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.dissertations.noProposals"/></span>
+	</logic:empty>
+</logic:equal>
 
 <script type="text/javascript" language="javascript">
 switchGlobal();
