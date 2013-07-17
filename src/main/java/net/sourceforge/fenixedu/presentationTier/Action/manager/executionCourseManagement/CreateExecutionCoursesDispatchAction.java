@@ -29,6 +29,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import pt.utl.ist.fenix.tools.util.Pair;
+
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
@@ -82,7 +84,7 @@ public class CreateExecutionCoursesDispatchAction extends FenixDispatchAction {
         Integer[] degreeCurricularPlansIDs = (Integer[]) actionForm.get("degreeCurricularPlansIDs");
         Integer executionPeriodID = (Integer) actionForm.get("executionPeriodID");
         try {
-            HashMap<Integer, Integer> result =
+            HashMap<Integer, Pair<Integer, String>> result =
                     CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod.run(degreeCurricularPlansIDs,
                             executionPeriodID);
 
@@ -98,7 +100,8 @@ public class CreateExecutionCoursesDispatchAction extends FenixDispatchAction {
                         RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanID);
                 addActionMessage("successDCP", request,
                         "message.executionCourseManagement.createExecutionCoursesForDegreeCurricularPlan.successDCP",
-                        degreeCurricularPlan.getPresentationName(), result.get(degreeCurricularPlanID).toString());
+                        degreeCurricularPlan.getPresentationName(), result.get(degreeCurricularPlanID).getKey().toString(),
+                        result.get(degreeCurricularPlanID).getValue());
             }
 
         } catch (DomainException e) {
