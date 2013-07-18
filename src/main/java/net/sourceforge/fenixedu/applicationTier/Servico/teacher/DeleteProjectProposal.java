@@ -8,31 +8,34 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExportGrouping;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.GroupsAndShiftsManagementLog;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author joaosa & rmalo
  * 
  */
 
-public class DeleteProjectProposal extends FenixService {
+public class DeleteProjectProposal {
 
-    public Boolean run(Integer objectCode, Integer groupPropertiesCode, Integer executionCourseCode,
+    protected Boolean run(Integer objectCode, Integer groupPropertiesCode, Integer executionCourseCode,
             String withdrawalPersonUsername) throws FenixServiceException {
 
         Person withdrawalPerson = Teacher.readTeacherByUsername(withdrawalPersonUsername).getPerson();
-        Grouping groupProperties = rootDomainObject.readGroupingByOID(groupPropertiesCode);
-        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseCode);
-        ExecutionCourse startExecutionCourse = rootDomainObject.readExecutionCourseByOID(objectCode);
+        Grouping groupProperties = RootDomainObject.getInstance().readGroupingByOID(groupPropertiesCode);
+        ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseCode);
+        ExecutionCourse startExecutionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(objectCode);
 
         if (groupProperties == null) {
             throw new InvalidArgumentsServiceException("error.noGroupProperties");
@@ -108,4 +111,16 @@ public class DeleteProjectProposal extends FenixService {
 
         return true;
     }
+
+    // Service Invokers migrated from Berserk
+
+    private static final DeleteProjectProposal serviceInstance = new DeleteProjectProposal();
+
+    @Service
+    public static Boolean runDeleteProjectProposal(Integer objectCode, Integer groupPropertiesCode, Integer executionCourseCode,
+            String withdrawalPersonUsername) throws FenixServiceException, NotAuthorizedException {
+        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(objectCode);
+        return serviceInstance.run(objectCode, groupPropertiesCode, executionCourseCode, withdrawalPersonUsername);
+    }
+
 }

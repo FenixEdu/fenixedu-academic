@@ -8,6 +8,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.researchActivity.MergeEventEditions;
 import net.sourceforge.fenixedu.dataTransferObject.MergeEventEditionPageContainerBean;
 import net.sourceforge.fenixedu.dataTransferObject.MergeResearchActivityPageContainerBean;
 import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
@@ -65,8 +67,8 @@ public class MergeEventEditionsDA extends MergeResearchActivityDA {
     }
 
     @Override
-    protected String getServiceName() {
-        return "MergeEventEditions";
+    protected void executeService(MergeResearchActivityPageContainerBean bean) throws NotAuthorizedException {
+        MergeEventEditions.runMergeEventEditions((MergeEventEditionPageContainerBean) bean);
     }
 
 }

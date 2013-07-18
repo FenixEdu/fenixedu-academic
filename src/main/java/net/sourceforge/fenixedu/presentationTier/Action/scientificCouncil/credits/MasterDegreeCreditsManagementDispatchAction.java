@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.credits.EditTeacherMasterDegreeCredits;
 import net.sourceforge.fenixedu.commons.OrderedIterator;
@@ -83,7 +82,7 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
     private final static String LINE_BRAKE = "\n";
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixFilterException, FenixServiceException {
+            throws  FenixServiceException {
 
         final List<ExecutionYear> notClosedExecutionYears = ExecutionYear.readNotClosedExecutionYears();
 
@@ -124,7 +123,7 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
     }
 
     public ActionForward viewMasterDegreeCredits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         DynaActionForm dynaForm = (DynaActionForm) form;
         Integer executionDegreeID = (Integer) dynaForm.get("executionDegreeID");
@@ -149,7 +148,7 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
     }
 
     public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         DynaActionForm dynaForm = (DynaActionForm) form;
 
@@ -181,7 +180,7 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
     }
 
     public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixFilterException, FenixServiceException {
+            throws  FenixServiceException {
 
         IUserView userView = UserView.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
@@ -193,7 +192,7 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
     }
 
     public ActionForward exportToExcel(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException, FenixFilterException {
+            HttpServletResponse response) throws FenixServiceException {
 
         ExecutionDegree executionDegree = getExecutionDegreeFromParameter(request);
         List<MasterDegreeCreditsDTO> listing = getListing(executionDegree);

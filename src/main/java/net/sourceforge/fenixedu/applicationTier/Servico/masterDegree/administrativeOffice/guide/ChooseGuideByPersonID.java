@@ -9,11 +9,11 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideWithPersonAndExecutionDegreeAndContributor;
 import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -24,14 +24,14 @@ import pt.ist.fenixWebFramework.services.Service;
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class ChooseGuideByPersonID extends FenixService {
+public class ChooseGuideByPersonID {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
     public static List run(Integer personID) throws Exception {
 
         // Check if person exists
-        Person person = (Person) rootDomainObject.readPartyByOID(personID);
+        Person person = (Person) RootDomainObject.getInstance().readPartyByOID(personID);
 
         if (person == null) {
             throw new NonExistingServiceException();

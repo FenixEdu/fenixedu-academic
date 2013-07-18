@@ -13,16 +13,15 @@ import java.util.TreeMap;
 import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionYears;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ReadDetailedTeacherProfessorshipsByExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDepartment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.DetailedProfessorship;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -51,18 +50,18 @@ public class ReadTeacherProfessorshipsByExecutionYearAction extends AbstractRead
 
     @Override
     List getDetailedProfessorships(IUserView userView, Integer teacherId, DynaActionForm actionForm, HttpServletRequest request)
-            throws FenixServiceException, FenixFilterException {
+            throws FenixServiceException {
 
         List detailedInfoProfessorshipList =
-                (List) ServiceUtils.executeService("ReadDetailedTeacherProfessorshipsByExecutionYear", new Object[] { teacherId,
-                        actionForm.get("executionYearId") });
+                ReadDetailedTeacherProfessorshipsByExecutionYear.runReadDetailedTeacherProfessorshipsByExecutionYear(teacherId,
+                        (Integer) actionForm.get("executionYearId"));
         request.setAttribute("args", new TreeMap());
         return detailedInfoProfessorshipList;
     }
 
     @Override
     protected void extraPreparation(IUserView userView, InfoTeacher infoTeacher, HttpServletRequest request,
-            DynaActionForm dynaForm) throws FenixServiceException, FenixFilterException {
+            DynaActionForm dynaForm) throws FenixServiceException {
 
         prepareConstants(userView, infoTeacher, request);
         prepareForm(dynaForm, request);
@@ -101,7 +100,7 @@ public class ReadTeacherProfessorshipsByExecutionYearAction extends AbstractRead
     }
 
     private void prepareConstants(IUserView userView, InfoTeacher infoTeacher, HttpServletRequest request)
-            throws FenixServiceException, FenixFilterException {
+            throws FenixServiceException {
 
         List executionYears = ReadNotClosedExecutionYears.run();
 

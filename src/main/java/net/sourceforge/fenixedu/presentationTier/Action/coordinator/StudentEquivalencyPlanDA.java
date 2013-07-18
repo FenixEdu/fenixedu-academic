@@ -6,8 +6,8 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.CreateStudentCurricularPlanEquivalencePlan;
+import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.DeleteEquivalencePlanEntry;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.EquivalencePlanEntry;
@@ -125,8 +125,7 @@ public class StudentEquivalencyPlanDA extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         getStudent(request);
         final EquivalencePlanEntry equivalencePlanEntry = getEquivalencePlanEntry(request);
-        final Object[] args = { equivalencePlanEntry };
-        executeService("DeleteEquivalencePlanEntry", args);
+        DeleteEquivalencePlanEntry.runDeleteEquivalencePlanEntry(equivalencePlanEntry);
         return showTable(mapping, actionForm, request, response);
     }
 
@@ -147,8 +146,9 @@ public class StudentEquivalencyPlanDA extends FenixDispatchAction {
                 getStudentCurricularPlanEquivalencePlan(request, student);
         final EquivalencePlanEntry equivalencePlanEntry = getEquivalencePlanEntry(request);
         final Object[] args = { studentCurricularPlanEquivalencePlan, equivalencePlanEntry };
-        executeService(service, args);
-        return showTable(mapping, actionForm, request, response);
+//        ServiceManagerServiceFactory.executeService(service, args);
+//        return showTable(mapping, actionForm, request, response);
+        throw new UnsupportedOperationException("Service " + service + " no longer exists");
     }
 
     private EquivalencePlanEntry getEquivalencePlanEntry(HttpServletRequest request) {
@@ -159,7 +159,7 @@ public class StudentEquivalencyPlanDA extends FenixDispatchAction {
     }
 
     private StudentCurricularPlanEquivalencePlan getStudentCurricularPlanEquivalencePlan(final HttpServletRequest request,
-            final Student student) throws FenixFilterException, FenixServiceException {
+            final Student student) throws  FenixServiceException {
         return CreateStudentCurricularPlanEquivalencePlan.run(student);
     }
 

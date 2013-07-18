@@ -8,10 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoInquiryStatistics;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
@@ -23,15 +25,17 @@ import net.sourceforge.fenixedu.util.tests.ResponseSTR;
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.util.LabelValueBean;
 
+import pt.ist.fenixWebFramework.services.Service;
+
 /**
  * @author Susana Fernandes
  */
-public class ReadInquiryStatistics extends FenixService {
+public class ReadInquiryStatistics {
 
     public List<InfoInquiryStatistics> run(Integer executionCourseId, Integer distributedTestId, String path)
             throws FenixServiceException {
         List<InfoInquiryStatistics> infoInquiryStatisticsList = new ArrayList<InfoInquiryStatistics>();
-        DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
+        DistributedTest distributedTest = RootDomainObject.getInstance().readDistributedTestByOID(distributedTestId);
         if (distributedTest == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -93,4 +97,16 @@ public class ReadInquiryStatistics extends FenixService {
         }
         return infoInquiryStatisticsList;
     }
+
+    // Service Invokers migrated from Berserk
+
+    private static final ReadInquiryStatistics serviceInstance = new ReadInquiryStatistics();
+
+    @Service
+    public static List<InfoInquiryStatistics> runReadInquiryStatistics(Integer executionCourseId, Integer distributedTestId,
+            String path) throws FenixServiceException, NotAuthorizedException {
+        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
+        return serviceInstance.run(executionCourseId, distributedTestId, path);
+    }
+
 }

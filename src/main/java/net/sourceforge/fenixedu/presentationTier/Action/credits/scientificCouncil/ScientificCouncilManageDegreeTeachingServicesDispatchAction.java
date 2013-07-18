@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.credits.scientificCounc
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -35,7 +34,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 public class ScientificCouncilManageDegreeTeachingServicesDispatchAction extends ManageDegreeTeachingServicesDispatchAction {
 
     public ActionForward showTeachingServiceDetails(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws NumberFormatException,  FenixServiceException {
 
         DynaActionForm dynaForm = (DynaActionForm) form;
         Integer professorshipID = (Integer) dynaForm.get("professorshipID");
@@ -50,7 +49,7 @@ public class ScientificCouncilManageDegreeTeachingServicesDispatchAction extends
     }
 
     public ActionForward updateTeachingServices(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws NumberFormatException,  FenixServiceException {
         return updateTeachingServices(mapping, form, request, RoleType.SCIENTIFIC_COUNCIL);
     }
 }

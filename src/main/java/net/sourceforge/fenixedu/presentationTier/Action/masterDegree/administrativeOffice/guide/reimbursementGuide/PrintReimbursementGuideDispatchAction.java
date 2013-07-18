@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ReadStudentsByPerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.reimbursementGuide.ViewReimbursementGuide;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
@@ -25,7 +25,6 @@ import net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -41,7 +40,7 @@ import pt.ist.fenixWebFramework.security.UserView;
 public class PrintReimbursementGuideDispatchAction extends FenixDispatchAction {
 
     public ActionForward print(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixActionException, FenixFilterException {
+            throws FenixActionException {
 
         IUserView userView = UserView.getUser();
 
@@ -54,9 +53,7 @@ public class PrintReimbursementGuideDispatchAction extends FenixDispatchAction {
         try {
             infoReimbursementGuide = ViewReimbursementGuide.run(reimbursementGuideId);
 
-            Object args2[] = { infoReimbursementGuide.getInfoGuide().getInfoPerson() };
-
-            infoStudents = (List) ServiceUtils.executeService("ReadStudentsByPerson", args2);
+            infoStudents = ReadStudentsByPerson.runReadStudentsByPerson(infoReimbursementGuide.getInfoGuide().getInfoPerson());
 
             Iterator it = infoStudents.iterator();
             while (it.hasNext()) {

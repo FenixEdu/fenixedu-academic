@@ -6,7 +6,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.executionCourseManagement.ReadExecutionCourseWithShiftsAndCurricularCoursesByOID;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.executionCourseManagement.ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYear;
@@ -47,7 +46,7 @@ import org.apache.struts.util.LabelValueBean;
 public class SeperateExecutionCourseDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareTransfer(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException, FenixFilterException {
+            HttpServletResponse response) throws FenixServiceException {
 
         String executionCourseId = RequestUtils.getAndSetStringToRequest(request, "executionCourseId");
         String originExecutionDegreeId = RequestUtils.getAndSetStringToRequest(request, "originExecutionDegreeId");
@@ -72,7 +71,7 @@ public class SeperateExecutionCourseDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward prepareSeparate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException, FenixFilterException {
+            HttpServletResponse response) throws FenixServiceException {
 
         String executionCourseId = RequestUtils.getAndSetStringToRequest(request, "executionCourseId");
         String originExecutionDegreeId = RequestUtils.getAndSetStringToRequest(request, "originExecutionDegreeId");
@@ -90,7 +89,7 @@ public class SeperateExecutionCourseDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward manageCurricularSeparation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException, FenixFilterException, FenixActionException {
+            HttpServletResponse response) throws FenixServiceException, FenixActionException {
 
         // FIXME:  ugly code to get attribute before parameter (parameter needs to be changed when coming from separate)
         String executionCourseId = (String) request.getAttribute("executionCourseId");
@@ -178,7 +177,7 @@ public class SeperateExecutionCourseDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward changeDestinationContext(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException, FenixFilterException {
+            HttpServletResponse response) throws FenixServiceException {
 
         prepareTransfer(mapping, form, request, response);
 
@@ -204,8 +203,7 @@ public class SeperateExecutionCourseDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward transfer(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixServiceException, FenixFilterException, FenixActionException {
-
+            throws FenixServiceException, FenixActionException {
         DynaActionForm dynaActionForm = (DynaActionForm) form;
 
         String executionCourseId = RequestUtils.getAndSetStringToRequest(request, "executionCourseId");
@@ -289,7 +287,7 @@ public class SeperateExecutionCourseDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward separate(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixServiceException, FenixFilterException, FenixActionException {
+            throws FenixServiceException, FenixActionException {
 
         DynaActionForm dynaActionForm = (DynaActionForm) form;
 

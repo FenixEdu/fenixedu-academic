@@ -5,25 +5,24 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.AutoCompleteSearchService;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionUnit;
-import pt.ist.fenixframework.DomainObject;
+import net.sourceforge.fenixedu.presentationTier.renderers.providers.AutoCompleteProvider;
 
-public class SearchOtherFormationInstitutions extends FenixService implements AutoCompleteSearchService {
+public class SearchOtherFormationInstitutions implements AutoCompleteProvider<AcademicalInstitutionUnit> {
 
     @Override
-    public Collection run(Class type, String value, final int limit, Map<String, String> arguments) {
+    public Collection<AcademicalInstitutionUnit> getSearchResults(Map<String, String> argsMap, String value, int maxCount) {
 
         value = value.toLowerCase();
-        List<DomainObject> result = new ArrayList<DomainObject>();
+        List<AcademicalInstitutionUnit> result = new ArrayList<AcademicalInstitutionUnit>();
+
         // TODO filter by foreign units only
         for (AcademicalInstitutionUnit unit : AcademicalInstitutionUnit.readOtherAcademicUnits()) {
             if (unit.getName().toLowerCase().contains(value)) {
                 result.add(unit);
             }
 
-            if (result.size() >= limit) {
+            if (result.size() >= maxCount) {
                 break;
             }
         }

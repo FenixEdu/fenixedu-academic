@@ -14,8 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.services.UpdateDegreeTeachingServices;
 import net.sourceforge.fenixedu.commons.OrderedIterator;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Shift;
@@ -23,7 +23,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -52,7 +51,7 @@ public class ManageDegreeTeachingServicesDispatchAction extends FenixDispatchAct
             };
 
     protected void teachingServiceDetailsProcess(Professorship professorship, HttpServletRequest request, DynaActionForm dynaForm)
-            throws NumberFormatException, FenixFilterException, FenixServiceException {
+            throws NumberFormatException,  FenixServiceException {
 
         List<TeachingServicePercentage> teachingServicePercentages = new ArrayList<TeachingServicePercentage>();
         HashMap<String, Double> teacherPercentageMap = new HashMap<String, Double>();
@@ -78,7 +77,7 @@ public class ManageDegreeTeachingServicesDispatchAction extends FenixDispatchAct
     }
 
     protected ActionForward updateTeachingServices(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            RoleType roleType) throws NumberFormatException, FenixFilterException, FenixServiceException {
+            RoleType roleType) throws NumberFormatException,  FenixServiceException {
 
         DynaActionForm teachingServiceForm = (DynaActionForm) form;
         IUserView userView = UserView.getUser();
@@ -100,8 +99,7 @@ public class ManageDegreeTeachingServicesDispatchAction extends FenixDispatchAct
         }
 
         try {
-            Object[] args = { professorshipID, shiftIDPercentages, roleType };
-            ServiceUtils.executeService("UpdateDegreeTeachingServices", args);
+            UpdateDegreeTeachingServices.runUpdateDegreeTeachingServices(professorshipID, shiftIDPercentages, roleType);
         } catch (DomainException domainException) {
             ActionMessages actionMessages = new ActionMessages();
             actionMessages.add("error", new ActionMessage(domainException.getMessage(), domainException.getArgs()));
@@ -115,7 +113,7 @@ public class ManageDegreeTeachingServicesDispatchAction extends FenixDispatchAct
     }
 
     public ActionForward cancel(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws NumberFormatException, FenixFilterException, FenixServiceException {
+            throws NumberFormatException,  FenixServiceException {
 
         return mapping.findForward("sucessfull-edit");
     }

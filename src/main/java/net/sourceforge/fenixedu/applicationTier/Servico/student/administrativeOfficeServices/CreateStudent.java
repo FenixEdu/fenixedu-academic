@@ -3,7 +3,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.student.administrativeOfficeServices;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.ExecutionDegreeBean;
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.IngressionInformationBean;
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.OriginInformationBean;
@@ -24,7 +24,7 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author - �ngela Almeida (argelina@ist.utl.pt)
  * 
  */
-public class CreateStudent extends FenixService {
+public class CreateStudent {
 
     @Checked("AcademicPredicates.CREATE_REGISTRATION")
     @Service

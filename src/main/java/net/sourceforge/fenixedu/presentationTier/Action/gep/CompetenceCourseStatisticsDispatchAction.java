@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionYears;
 import net.sourceforge.fenixedu.applicationTier.Servico.department.ComputeCurricularCourseStatistics;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -49,14 +48,14 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 public class CompetenceCourseStatisticsDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         request.setAttribute("executionYears", ReadNotClosedExecutionYears.run());
         return mapping.findForward("chooseExecutionYear");
     }
 
     public ActionForward selectExecutionYear(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException, IOException {
+            HttpServletResponse response) throws  FenixServiceException, IOException {
 
         IUserView userView = getUserView(request);
         DynaActionForm dynaActionForm = (DynaActionForm) actionForm;

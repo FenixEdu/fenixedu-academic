@@ -6,7 +6,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.PedagogicalCouncilAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.TutorshipAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.PerformanceGridTableDTO;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.PerformanceGridTableDTO.PerformanceGridLine;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.PerformanceGridTableDTO.PerformanceGridLine.PerformanceGridLineYearGroup;
@@ -16,10 +19,11 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Tutorship;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
+import pt.ist.fenixWebFramework.services.Service;
 
-public class CreatePerformanceGridTable extends FenixService {
+public class CreatePerformanceGridTable {
 
-    public PerformanceGridTableDTO run(List<Tutorship> tutorships, ExecutionYear studentEntryYear, ExecutionYear monitoringYear) {
+    protected PerformanceGridTableDTO run(List<Tutorship> tutorships, ExecutionYear studentEntryYear, ExecutionYear monitoringYear) {
         PerformanceGridTableDTO performanceGrid = new PerformanceGridTableDTO(studentEntryYear, monitoringYear);
 
         for (Tutorship tutorship : tutorships) {
@@ -140,4 +144,30 @@ public class CreatePerformanceGridTable extends FenixService {
 
         newLine.setStudentPerformanceByYear(Arrays.asList(studentPerformanceByYearArray));
     }
+
+    // Service Invokers migrated from Berserk
+
+    private static final CreatePerformanceGridTable serviceInstance = new CreatePerformanceGridTable();
+
+    @Service
+    public static PerformanceGridTableDTO runCreatePerformanceGridTable(List<Tutorship> tutorships,
+            ExecutionYear studentEntryYear, ExecutionYear monitoringYear) throws NotAuthorizedException {
+        try {
+            PedagogicalCouncilAuthorizationFilter.instance.execute();
+            return serviceInstance.run(tutorships, studentEntryYear, monitoringYear);
+        } catch (NotAuthorizedException ex1) {
+            try {
+                TeacherAuthorizationFilter.instance.execute();
+                return serviceInstance.run(tutorships, studentEntryYear, monitoringYear);
+            } catch (NotAuthorizedException ex2) {
+                try {
+                    TutorshipAuthorizationFilter.instance.execute();
+                    return serviceInstance.run(tutorships, studentEntryYear, monitoringYear);
+                } catch (NotAuthorizedException ex3) {
+                    throw ex3;
+                }
+            }
+        }
+    }
+
 }

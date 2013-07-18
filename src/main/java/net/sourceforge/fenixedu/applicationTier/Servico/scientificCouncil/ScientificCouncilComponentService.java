@@ -5,7 +5,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Factory.ScientificCouncilComponentBuilder;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
@@ -19,7 +19,7 @@ import pt.ist.fenixWebFramework.services.Service;
  *         23/Jul/2003 fenix-head ServidorAplicacao.Servico.scientificCouncil
  * 
  */
-public class ScientificCouncilComponentService extends FenixService {
+public class ScientificCouncilComponentService {
 
     @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
     @Service

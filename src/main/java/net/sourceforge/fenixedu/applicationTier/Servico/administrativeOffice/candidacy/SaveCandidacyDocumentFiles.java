@@ -9,7 +9,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.CandidacyDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
@@ -33,7 +32,7 @@ import pt.utl.ist.fenix.tools.file.VirtualPathNode;
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-public class SaveCandidacyDocumentFiles extends FenixService {
+public class SaveCandidacyDocumentFiles {
 
     @Service
     public static void run(List<CandidacyDocumentUploadBean> candidacyDocuments) {

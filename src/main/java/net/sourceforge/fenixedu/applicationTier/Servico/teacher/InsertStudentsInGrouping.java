@@ -6,30 +6,33 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.GroupsAndShiftsManagementLog;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author joaosa & rmalo
  * 
  */
 
-public class InsertStudentsInGrouping extends FenixService {
+public class InsertStudentsInGrouping {
 
-    public Boolean run(final Integer executionCourseCode, final Integer groupPropertiesCode, final String[] selected)
+    protected Boolean run(final Integer executionCourseCode, final Integer groupPropertiesCode, final String[] selected)
             throws FenixServiceException {
 
         if (selected == null) {
             return Boolean.TRUE;
         }
 
-        final Grouping groupProperties = rootDomainObject.readGroupingByOID(groupPropertiesCode);
+        final Grouping groupProperties = RootDomainObject.getInstance().readGroupingByOID(groupPropertiesCode);
         if (groupProperties == null) {
             throw new ExistingServiceException();
         }
@@ -43,7 +46,7 @@ public class InsertStudentsInGrouping extends FenixService {
         for (final String number : selected) {
             if (number.equals("Todos os Alunos")) {
             } else {
-                Registration registration = rootDomainObject.readRegistrationByOID(new Integer(number));
+                Registration registration = RootDomainObject.getInstance().readRegistrationByOID(new Integer(number));
                 if (!studentHasSomeAttendsInGrouping(registration, groupProperties)) {
                     final Attends attends = findAttends(registration, executionCourses);
                     if (attends != null) {
@@ -89,6 +92,17 @@ public class InsertStudentsInGrouping extends FenixService {
             }
         }
         return null;
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final InsertStudentsInGrouping serviceInstance = new InsertStudentsInGrouping();
+
+    @Service
+    public static Boolean runInsertStudentsInGrouping(Integer executionCourseCode, Integer groupPropertiesCode, String[] selected)
+            throws FenixServiceException, NotAuthorizedException {
+        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseCode);
+        return serviceInstance.run(executionCourseCode, groupPropertiesCode, selected);
     }
 
 }

@@ -9,8 +9,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.EmployeeAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.distribution.DistributionTeacherServicesByTeachersDTO;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.distribution.DistributionTeacherServicesByTeachersDTO.TeacherDistributionServiceEntryDTO;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -21,6 +24,7 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.TeacherCredits;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
@@ -29,17 +33,19 @@ import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCa
 
 import org.joda.time.Duration;
 
+import pt.ist.fenixWebFramework.services.Service;
+
 /**
  * 
  * @author jpmsit, amak
  */
-public class ReadTeacherServiceDistributionByTeachers extends FenixService {
+public class ReadTeacherServiceDistributionByTeachers {
 
-    public List run(Integer departmentId, List<Integer> executionPeriodsIDs) throws FenixServiceException, ParseException {
+    protected List run(Integer departmentId, List<Integer> executionPeriodsIDs) throws FenixServiceException, ParseException {
 
         final List<ExecutionSemester> executionPeriodList = new ArrayList<ExecutionSemester>();
         for (Integer executionPeriodID : executionPeriodsIDs) {
-            executionPeriodList.add(rootDomainObject.readExecutionSemesterByOID(executionPeriodID));
+            executionPeriodList.add(RootDomainObject.getInstance().readExecutionSemesterByOID(executionPeriodID));
         }
 
         final ExecutionSemester startPeriod = ExecutionSemester.readStartExecutionSemesterForCredits();
@@ -48,7 +54,7 @@ public class ReadTeacherServiceDistributionByTeachers extends FenixService {
 
         DistributionTeacherServicesByTeachersDTO returnDTO = new DistributionTeacherServicesByTeachersDTO();
 
-        Department department = rootDomainObject.readDepartmentByOID(departmentId);
+        Department department = RootDomainObject.getInstance().readDepartmentByOID(departmentId);
 
         for (ExecutionSemester executionPeriodEntry : executionPeriodList) {
 
@@ -162,4 +168,31 @@ public class ReadTeacherServiceDistributionByTeachers extends FenixService {
         }
         return endPeriod;
     }
+
+    // Service Invokers migrated from Berserk
+
+    private static final ReadTeacherServiceDistributionByTeachers serviceInstance =
+            new ReadTeacherServiceDistributionByTeachers();
+
+    @Service
+    public static List runReadTeacherServiceDistributionByTeachers(Integer departmentId, List<Integer> executionPeriodsIDs)
+            throws FenixServiceException, ParseException, NotAuthorizedException {
+        try {
+            DepartmentMemberAuthorizationFilter.instance.execute();
+            return serviceInstance.run(departmentId, executionPeriodsIDs);
+        } catch (NotAuthorizedException ex1) {
+            try {
+                TeacherAuthorizationFilter.instance.execute();
+                return serviceInstance.run(departmentId, executionPeriodsIDs);
+            } catch (NotAuthorizedException ex2) {
+                try {
+                    EmployeeAuthorizationFilter.instance.execute();
+                    return serviceInstance.run(departmentId, executionPeriodsIDs);
+                } catch (NotAuthorizedException ex3) {
+                    throw ex3;
+                }
+            }
+        }
+    }
+
 }

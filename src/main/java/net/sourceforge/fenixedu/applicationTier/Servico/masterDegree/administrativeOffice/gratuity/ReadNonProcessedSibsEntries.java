@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.sibs.InfoSibsPaymentFileEntry;
 import net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFileEntry;
@@ -15,7 +14,7 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
  * 
  */
-public class ReadNonProcessedSibsEntries extends FenixService {
+public class ReadNonProcessedSibsEntries {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service

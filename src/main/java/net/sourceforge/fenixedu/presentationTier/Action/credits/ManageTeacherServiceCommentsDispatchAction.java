@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.credits;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -21,7 +20,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ManageTeacherServiceCommentsDispatchAction extends FenixDispatchAction {
 
     public ActionForward editTeacherServiceComment(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws NumberFormatException,  FenixServiceException {
 
         TeacherServiceComment teacherServiceComment =
                 AbstractDomainObject.fromExternalId((String) getFromRequest(request, "teacherServiceCommentOid"));
@@ -41,7 +40,7 @@ public class ManageTeacherServiceCommentsDispatchAction extends FenixDispatchAct
     }
 
     public ActionForward deleteTeacherServiceComment(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws NumberFormatException,  FenixServiceException {
 
         TeacherServiceComment teacherServiceComment =
                 AbstractDomainObject.fromExternalId((String) getFromRequest(request, "teacherServiceCommentOid"));

@@ -5,19 +5,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ShiftProfessorship;
 import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.SupportLesson;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class DissociateProfessorShipsAndResponsibleFor extends FenixService {
+public class DissociateProfessorShipsAndResponsibleFor {
 
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
@@ -38,7 +38,7 @@ public class DissociateProfessorShipsAndResponsibleFor extends FenixService {
         if (professorships != null && responsibleFors != null) {
             List<Professorship> newProfessorships = new ArrayList<Professorship>();
             for (Integer professorshipId : professorships) {
-                Professorship professorship = rootDomainObject.readProfessorshipByOID(professorshipId);
+                Professorship professorship = RootDomainObject.getInstance().readProfessorshipByOID(professorshipId);
                 if (professorship == null) {
                     throw new FenixServiceException("nullPSNorRF");
                 }
@@ -51,7 +51,7 @@ public class DissociateProfessorShipsAndResponsibleFor extends FenixService {
 
             List<Professorship> newResponsibleFor = new ArrayList<Professorship>();
             for (Integer responsibleForId : responsibleFors) {
-                Professorship responsibleFor = rootDomainObject.readProfessorshipByOID(responsibleForId);
+                Professorship responsibleFor = RootDomainObject.getInstance().readProfessorshipByOID(responsibleForId);
                 if (responsibleFor == null) {
                     throw new FenixServiceException("nullPSNorRF");
                 }

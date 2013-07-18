@@ -11,7 +11,6 @@ import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -26,7 +25,7 @@ import pt.ist.fenixWebFramework.services.Service;
  * 
  */
 
-public class ReadTeachersCreditsResumeByPeriodAndUnit extends FenixService {
+public class ReadTeachersCreditsResumeByPeriodAndUnit {
 
     @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
     @Service

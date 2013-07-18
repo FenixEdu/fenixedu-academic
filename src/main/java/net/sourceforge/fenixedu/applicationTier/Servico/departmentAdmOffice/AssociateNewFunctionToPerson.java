@@ -4,29 +4,62 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
+import net.sourceforge.fenixedu.applicationTier.Filtro.ManagerAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.OperatorAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ScientificCouncilAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 
 import org.joda.time.YearMonthDay;
 
-public class AssociateNewFunctionToPerson extends FenixService {
+import pt.ist.fenixWebFramework.services.Service;
 
-    public void run(Integer functionID, Integer personID, Double credits, YearMonthDay begin, YearMonthDay end)
+public class AssociateNewFunctionToPerson {
+
+    protected void run(Integer functionID, Integer personID, Double credits, YearMonthDay begin, YearMonthDay end)
             throws FenixServiceException, DomainException {
 
-        Person person = (Person) rootDomainObject.readPartyByOID(personID);
+        Person person = (Person) RootDomainObject.getInstance().readPartyByOID(personID);
         if (person == null) {
             throw new FenixServiceException("error.noPerson");
         }
 
-        Function function = (Function) rootDomainObject.readAccountabilityTypeByOID(functionID);
+        Function function = (Function) RootDomainObject.getInstance().readAccountabilityTypeByOID(functionID);
         if (function == null) {
             throw new FenixServiceException("error.noFunction");
         }
 
         person.addPersonFunction(function, begin, end, credits);
     }
+
+    // Service Invokers migrated from Berserk
+
+    private static final AssociateNewFunctionToPerson serviceInstance = new AssociateNewFunctionToPerson();
+
+    @Service
+    public static void runAssociateNewFunctionToPerson(Integer functionID, Integer personID, Double credits, YearMonthDay begin,
+            YearMonthDay end) throws FenixServiceException, DomainException, NotAuthorizedException {
+        try {
+            ManagerAuthorizationFilter.instance.execute();
+            serviceInstance.run(functionID, personID, credits, begin, end);
+        } catch (NotAuthorizedException ex1) {
+            try {
+                OperatorAuthorizationFilter.instance.execute();
+                serviceInstance.run(functionID, personID, credits, begin, end);
+            } catch (NotAuthorizedException ex2) {
+                try {
+                    ScientificCouncilAuthorizationFilter.instance.execute();
+                    serviceInstance.run(functionID, personID, credits, begin, end);
+                } catch (NotAuthorizedException ex3) {
+                    throw ex3;
+                }
+            }
+        }
+    }
+
 }

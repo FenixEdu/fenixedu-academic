@@ -4,7 +4,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.person.ReadQualificationsAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.person.InfoQualification;
 import net.sourceforge.fenixedu.dataTransferObject.person.InfoQualificationWithPersonAndCountry;
@@ -15,9 +16,11 @@ import net.sourceforge.fenixedu.domain.Qualification;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-public class ReadQualifications extends FenixService {
+import pt.ist.fenixWebFramework.services.Service;
 
-    public InfoSiteQualifications run(String user) {
+public class ReadQualifications {
+
+    protected InfoSiteQualifications run(String user) {
 
         final Person person = Person.readPersonByUsername(user);
 
@@ -59,6 +62,16 @@ public class ReadQualifications extends FenixService {
         infoSiteQualifications.setInfoPerson(InfoPerson.newInfoFromDomain(person));
 
         return infoSiteQualifications;
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final ReadQualifications serviceInstance = new ReadQualifications();
+
+    @Service
+    public static InfoSiteQualifications runReadQualifications(String user) throws NotAuthorizedException {
+        ReadQualificationsAuthorizationFilter.instance.execute(user);
+        return serviceInstance.run(user);
     }
 
 }

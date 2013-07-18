@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManag
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
@@ -17,7 +16,7 @@ import pt.ist.fenixWebFramework.services.Service;
 /**
  * @author Luis Cruz & Sara Ribeiro
  */
-public class ReadEmptyRoomsForExam extends FenixService {
+public class ReadEmptyRoomsForExam {
 
     @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
     @Service

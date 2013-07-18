@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
@@ -11,13 +10,14 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Fernanda Quitério 01/07/2003
  * 
  */
-public class ReadCurricularCoursesByDegree extends FenixService {
+public class ReadCurricularCoursesByDegree {
 
     @Service
     public static List run(String executionYearString, String degreeName) throws FenixServiceException {
@@ -44,7 +44,7 @@ public class ReadCurricularCoursesByDegree extends FenixService {
 
     @Service
     public static List run(Integer degreeCurricularPlanID) {
-        DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+        DegreeCurricularPlan degreeCurricularPlan = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanID);
 
         List<InfoCurricularCourse> infoCurricularCourses = new ArrayList<InfoCurricularCourse>();
         for (CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCourses()) {

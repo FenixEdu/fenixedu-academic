@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -55,7 +54,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class DepartmentAdmOfficeManageTeacherAdviseServiceDispatchAction extends ManageTeacherAdviseServiceDispatchAction {
 
     public ActionForward showTeacherAdvises(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws NumberFormatException,  FenixServiceException {
 
         DynaActionForm dynaForm = (DynaActionForm) form;
         IUserView userView = UserView.getUser();
@@ -77,13 +76,13 @@ public class DepartmentAdmOfficeManageTeacherAdviseServiceDispatchAction extends
     }
 
     public ActionForward editAdviseService(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws NumberFormatException,  FenixServiceException {
 
         return editAdviseService(form, request, mapping, RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE);
     }
 
     public ActionForward deleteAdviseService(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws NumberFormatException,  FenixServiceException {
 
         deleteAdviseService(request, RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE);
         return mapping.findForward("successfull-delete");

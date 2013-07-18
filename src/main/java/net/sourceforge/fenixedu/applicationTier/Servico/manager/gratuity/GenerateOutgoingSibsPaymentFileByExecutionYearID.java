@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu._development.LogLevel;
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.gratuity.masterDegree.FileNotCreatedServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.gratuity.masterDegree.InsufficientSibsPaymentPhaseCodesServiceException;
@@ -22,6 +21,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.GratuitySituation;
 import net.sourceforge.fenixedu.domain.GratuityValues;
 import net.sourceforge.fenixedu.domain.InsuranceValue;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentType;
@@ -31,7 +31,7 @@ import net.sourceforge.fenixedu.util.gratuity.fileParsers.sibs.SibsOutgoingPayme
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class GenerateOutgoingSibsPaymentFileByExecutionYearID extends FenixService {
+public class GenerateOutgoingSibsPaymentFileByExecutionYearID {
 
     @Checked("RolePredicates.MANAGER_PREDICATE")
     @Service
@@ -39,7 +39,7 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID extends FenixServi
 
         StringBuilder outgoingSibsPaymentFile = new StringBuilder();
 
-        ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
+        ExecutionYear executionYear = RootDomainObject.getInstance().readExecutionYearByOID(executionYearID);
 
         InsuranceValue insuranceValue = executionYear.getInsuranceValue();
         if (insuranceValue == null) {

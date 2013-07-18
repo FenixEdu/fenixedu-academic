@@ -13,14 +13,15 @@ import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionDeg
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.degree.ReadNumerusClausus;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.commons.candidate.ApproveCandidates;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.commons.candidate.ReadAdmitedCandidates;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.commons.candidate.ReadCandidates;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.commons.candidate.ReadCandidatesForSelection;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.commons.candidate.ReadSubstituteCandidates;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateApproval;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateApprovalGroup;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
@@ -115,9 +116,8 @@ public class SelectCandidatesDispatchAction extends FenixDispatchAction {
         activeSituations.add(new SituationName(SituationName.PENDENT_CONFIRMADO));
         activeSituations.add(new SituationName(SituationName.FALTA_CERTIFICADO));
 
-        Object args[] = { executionDegree, activeSituations };
         try {
-            candidateList = (ArrayList) ServiceManagerServiceFactory.executeService("ReadCandidatesForSelection", args);
+            candidateList = ReadCandidatesForSelection.runReadCandidatesForSelection(executionDegree, activeSituations);
 
         } catch (NonExistingServiceException e) {
             ActionErrors errors = new ActionErrors();
@@ -488,12 +488,7 @@ public class SelectCandidatesDispatchAction extends FenixDispatchAction {
 
         if ((request.getParameter("OK") != null) && (request.getParameter("notOK") == null)) {
 
-            Object args[] = { candidateList, ids, remarks, substitutes };
-            try {
-                ServiceManagerServiceFactory.executeService("ApproveCandidates", args);
-            } catch (ExistingServiceException e) {
-                throw new ExistingActionException(e);
-            }
+            ApproveCandidates.runApproveCandidates(candidateList, ids, remarks, substitutes);
 
             substituteForm.set("substitutes", substitutes);
             request.setAttribute("candidatesID", ids);

@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.PublishMarks;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadStudentsAndMarksByEvaluation;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.TeacherAdministrationSiteComponentService;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
@@ -14,7 +17,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteMarks;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
@@ -35,12 +37,11 @@ public class MarksListAction extends FenixDispatchAction {
         Integer evaluationCode = getFromRequest("evaluationCode", request);
 
         ISiteComponent commonComponent = new InfoSiteCommon();
-        Object[] args = { executionCourseCode, commonComponent, new InfoEvaluation(), null, evaluationCode, null };
 
         try {
             TeacherAdministrationSiteView siteView =
-                    (TeacherAdministrationSiteView) ServiceUtils
-                            .executeService("TeacherAdministrationSiteComponentService", args);
+                    TeacherAdministrationSiteComponentService.runTeacherAdministrationSiteComponentService(executionCourseCode,
+                            commonComponent, new InfoEvaluation(), null, evaluationCode, null);
 
             request.setAttribute("siteView", siteView);
             request.setAttribute("objectCode", ((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse()
@@ -64,12 +65,12 @@ public class MarksListAction extends FenixDispatchAction {
 
         Integer evaluationCode = getFromRequest("evaluationCode", request);
 
-        Object[] args = { executionCourseCode, evaluationCode };
-
         TeacherAdministrationSiteView siteView = null;
 
         try {
-            siteView = (TeacherAdministrationSiteView) ServiceUtils.executeService("ReadStudentsAndMarksByEvaluation", args);
+            siteView =
+                    (TeacherAdministrationSiteView) ReadStudentsAndMarksByEvaluation.runReadStudentsAndMarksByEvaluation(
+                            executionCourseCode, evaluationCode);
         } catch (FenixServiceException e) {
             e.printStackTrace();
             throw new FenixActionException(e.getMessage());
@@ -94,12 +95,11 @@ public class MarksListAction extends FenixDispatchAction {
 
         ISiteComponent commonComponent = new InfoSiteCommon();
         IUserView userView = getUserView(request);
-        Object[] args = { infoExecutionCourseCode, commonComponent, new InfoEvaluation(), null, evaluationCode, null };
         TeacherAdministrationSiteView siteView = null;
         try {
             siteView =
-                    (TeacherAdministrationSiteView) ServiceUtils
-                            .executeService("TeacherAdministrationSiteComponentService", args);
+                    TeacherAdministrationSiteComponentService.runTeacherAdministrationSiteComponentService(
+                            infoExecutionCourseCode, commonComponent, new InfoEvaluation(), null, evaluationCode, null);
 
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
@@ -129,10 +129,9 @@ public class MarksListAction extends FenixDispatchAction {
             announcementTitle = messages.getMessage("message.publishment");
         }
 
-        Object[] args = { objectCode, evaluationCode, publishmentMessage, sendSMS, announcementTitle };
         IUserView userView = getUserView(request);
         try {
-            ServiceUtils.executeService("PublishMarks", args);
+            PublishMarks.runPublishMarks(objectCode, evaluationCode, publishmentMessage, sendSMS, announcementTitle);
         } catch (FenixServiceException e) {
             e.printStackTrace();
             throw new FenixActionException(e.getMessage());

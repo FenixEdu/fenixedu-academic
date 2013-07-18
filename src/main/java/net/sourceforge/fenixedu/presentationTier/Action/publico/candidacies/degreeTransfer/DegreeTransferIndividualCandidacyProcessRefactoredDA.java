@@ -5,7 +5,6 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
@@ -162,7 +161,7 @@ public class DegreeTransferIndividualCandidacyProcessRefactoredDA extends Refact
     }
 
     public ActionForward submitCandidacy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws IOException, FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws IOException,  FenixServiceException {
         try {
             ActionForward actionForwardError = verifySubmissionPreconditions(mapping);
             if (actionForwardError != null) {
@@ -260,7 +259,7 @@ public class DegreeTransferIndividualCandidacyProcessRefactoredDA extends Refact
     }
 
     public ActionForward editCandidacyProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException, FenixFilterException {
+            HttpServletResponse response) throws FenixServiceException {
         DegreeTransferIndividualCandidacyProcessBean bean =
                 (DegreeTransferIndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
         try {
@@ -286,7 +285,7 @@ public class DegreeTransferIndividualCandidacyProcessRefactoredDA extends Refact
     }
 
     public ActionForward editCandidacyQualifications(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         ActionForward actionForwardError = verifySubmissionPreconditions(mapping);
         if (actionForwardError != null) {
             return actionForwardError;

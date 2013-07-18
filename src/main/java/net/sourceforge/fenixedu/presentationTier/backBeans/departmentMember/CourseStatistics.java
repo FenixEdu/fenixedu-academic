@@ -11,9 +11,11 @@ import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 import javax.servlet.ServletOutputStream;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecutionPeriod;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionYears;
+import net.sourceforge.fenixedu.applicationTier.Servico.department.ComputeCompetenceCourseStatistics;
+import net.sourceforge.fenixedu.applicationTier.Servico.department.ComputeDegreeCourseStatistics;
+import net.sourceforge.fenixedu.applicationTier.Servico.department.ComputeExecutionCourseStatistics;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
@@ -29,7 +31,6 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.studentCurriculum.BranchCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
 import org.joda.time.DateTime;
@@ -100,19 +101,19 @@ public class CourseStatistics extends FenixBackingBean {
         setRequestAttribute("executionPeriodId", executionPeriodId);
     }
 
-    public void onExecutionPeriodChangeForCompetenceCourses(ValueChangeEvent valueChangeEvent) throws FenixFilterException,
+    public void onExecutionPeriodChangeForCompetenceCourses(ValueChangeEvent valueChangeEvent) throws 
             FenixServiceException {
         setExecutionPeriodId((Integer) valueChangeEvent.getNewValue());
         loadCompetenceCourses();
     }
 
-    public void onExecutionPeriodChangeForDegreeCourses(ValueChangeEvent valueChangeEvent) throws FenixFilterException,
+    public void onExecutionPeriodChangeForDegreeCourses(ValueChangeEvent valueChangeEvent) throws 
             FenixServiceException {
         setExecutionPeriodId((Integer) valueChangeEvent.getNewValue());
         loadDegreeCourses();
     }
 
-    public void onExecutionPeriodChangeForExecutionCourses(ValueChangeEvent valueChangeEvent) throws FenixFilterException,
+    public void onExecutionPeriodChangeForExecutionCourses(ValueChangeEvent valueChangeEvent) throws 
             FenixServiceException {
         setExecutionPeriodId((Integer) valueChangeEvent.getNewValue());
         loadExecutionCourses();
@@ -136,14 +137,13 @@ public class CourseStatistics extends FenixBackingBean {
         return this.executionPeriods;
     }
 
-    private void loadCompetenceCourses() throws FenixFilterException, FenixServiceException {
+    private void loadCompetenceCourses() throws  FenixServiceException {
         Integer departmentID = getUserView().getPerson().getTeacher().getLastWorkingDepartment().getIdInternal();
-        Object args[] = { departmentID, this.getExecutionPeriodId() };
         competenceCourses =
-                (List<CompetenceCourseStatisticsDTO>) ServiceUtils.executeService("ComputeCompetenceCourseStatistics", args);
+                ComputeCompetenceCourseStatistics.runComputeCompetenceCourseStatistics(departmentID, this.getExecutionPeriodId());
     }
 
-    public List<CompetenceCourseStatisticsDTO> getCompetenceCourses() throws FenixFilterException, FenixServiceException {
+    public List<CompetenceCourseStatisticsDTO> getCompetenceCourses() throws  FenixServiceException {
         if (competenceCourses == null) {
             loadCompetenceCourses();
         }
@@ -151,13 +151,12 @@ public class CourseStatistics extends FenixBackingBean {
         return competenceCourses;
     }
 
-    private void loadDegreeCourses() throws FenixFilterException, FenixServiceException {
+    private void loadDegreeCourses() throws  FenixServiceException {
         degreeCourses =
-                (List<DegreeCourseStatisticsDTO>) ServiceUtils.executeService("ComputeDegreeCourseStatistics", new Object[] {
-                        getCompetenceCourseId(), getExecutionPeriodId() });
+                ComputeDegreeCourseStatistics.runComputeDegreeCourseStatistics(getCompetenceCourseId(), getExecutionPeriodId());
     }
 
-    public List<DegreeCourseStatisticsDTO> getDegreeCourses() throws FenixFilterException, FenixServiceException {
+    public List<DegreeCourseStatisticsDTO> getDegreeCourses() throws  FenixServiceException {
         if (degreeCourses == null) {
             loadDegreeCourses();
         }
@@ -165,13 +164,13 @@ public class CourseStatistics extends FenixBackingBean {
         return degreeCourses;
     }
 
-    private void loadExecutionCourses() throws FenixFilterException, FenixServiceException {
+    private void loadExecutionCourses() throws  FenixServiceException {
         executionCourses =
-                (List<ExecutionCourseStatisticsDTO>) ServiceUtils.executeService("ComputeExecutionCourseStatistics",
-                        new Object[] { this.getCompetenceCourseId(), this.getDegreeId(), getExecutionPeriodId() });
+                ComputeExecutionCourseStatistics.runComputeExecutionCourseStatistics(this.getCompetenceCourseId(),
+                        this.getDegreeId(), getExecutionPeriodId());
     }
 
-    public List<ExecutionCourseStatisticsDTO> getExecutionCourses() throws FenixFilterException, FenixServiceException {
+    public List<ExecutionCourseStatisticsDTO> getExecutionCourses() throws  FenixServiceException {
         if (executionCourses == null) {
             loadExecutionCourses();
         }
@@ -179,13 +178,13 @@ public class CourseStatistics extends FenixBackingBean {
         return executionCourses;
     }
 
-    public void onCompetenceCourseSelect(ActionEvent event) throws FenixFilterException, FenixServiceException {
+    public void onCompetenceCourseSelect(ActionEvent event) throws  FenixServiceException {
 
         int competenceCourseId = Integer.parseInt(getRequestParameter("competenceCourseId"));
         setCompetenceCourseId(competenceCourseId);
     }
 
-    public void onDegreeCourseSelect(ActionEvent event) throws FenixFilterException, FenixServiceException {
+    public void onDegreeCourseSelect(ActionEvent event) throws  FenixServiceException {
         int degreeId = Integer.parseInt(getRequestParameter("degreeId"));
         setDegreeId(degreeId);
     }

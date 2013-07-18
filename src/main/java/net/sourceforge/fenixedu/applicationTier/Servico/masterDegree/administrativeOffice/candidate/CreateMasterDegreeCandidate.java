@@ -6,7 +6,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 
 import java.util.Calendar;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
@@ -15,6 +14,7 @@ import net.sourceforge.fenixedu.domain.CandidateSituation;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -29,7 +29,7 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author <a href="mailto:amam@mega.ist.utl.pt">Amin Amirali </a>
  * @author <a href="mailto:shezad@ist.utl.pt">Shezad Anavarali </a>
  */
-public class CreateMasterDegreeCandidate extends FenixService {
+public class CreateMasterDegreeCandidate {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
@@ -37,7 +37,7 @@ public class CreateMasterDegreeCandidate extends FenixService {
             String identificationDocumentNumber, IDDocumentType identificationDocumentType) throws Exception {
 
         // Read the Execution of this degree in the current execution Year
-        final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
+        final ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeID);
         Person person = Person.readByDocumentIdNumberAndIdDocumentType(identificationDocumentNumber, identificationDocumentType);
 
         if (person == null) {

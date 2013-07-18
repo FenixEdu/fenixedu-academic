@@ -3,14 +3,13 @@ package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManag
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class ReadExecutionDegreesByExecutionYear extends FenixService {
+public class ReadExecutionDegreesByExecutionYear {
 
     @Service
     public static List run(InfoExecutionYear infoExecutionYear) {

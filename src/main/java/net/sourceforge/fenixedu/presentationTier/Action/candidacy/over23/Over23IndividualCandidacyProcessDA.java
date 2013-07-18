@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.candidacy.over23;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
@@ -156,7 +155,7 @@ public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProce
     }
 
     public ActionForward executeEditCandidacyPersonalInformation(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
         try {
             executeActivity(getProcess(request), "EditCandidacyPersonalInformation", getIndividualCandidacyProcessBean());
         } catch (DomainException e) {
@@ -191,7 +190,7 @@ public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProce
     }
 
     public ActionForward executeEditCandidacyInformation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         try {
             boolean isValid =
                     validateOver23IndividualCandidacy(request, getIndividualCandidacyProcessBean()) && hasInvalidViewState();
@@ -222,7 +221,7 @@ public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProce
     }
 
     public ActionForward executeIntroduceCandidacyResult(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
         try {
             executeActivity(getProcess(request), "IntroduceCandidacyResult", getCandidacyResultBean());
         } catch (DomainException e) {
@@ -244,7 +243,7 @@ public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProce
     }
 
     public ActionForward executeCreateRegistration(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         try {
             executeActivity(getProcess(request), "CreateRegistration");
         } catch (final DomainException e) {
@@ -308,7 +307,7 @@ public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProce
 
     @Override
     public ActionForward createNewProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         Over23IndividualCandidacyProcessBean bean = getIndividualCandidacyProcessBean();
 
         boolean isValid = validateOver23IndividualCandidacy(request, bean) && hasInvalidViewState();

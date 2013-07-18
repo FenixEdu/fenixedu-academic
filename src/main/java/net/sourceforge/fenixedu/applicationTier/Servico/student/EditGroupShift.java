@@ -11,7 +11,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.ServiceMonitoring;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
@@ -44,7 +45,7 @@ import pt.ist.fenixWebFramework.services.Service;
  * 
  */
 
-public class EditGroupShift extends FenixService {
+public class EditGroupShift {
 
     private static final MessageResources messages = MessageResources.getMessageResources("resources/GlobalResources");
 
@@ -53,17 +54,19 @@ public class EditGroupShift extends FenixService {
     public static Boolean run(Integer studentGroupID, Integer groupingID, Integer newShiftID, String username)
             throws FenixServiceException {
 
-        final Grouping grouping = rootDomainObject.readGroupingByOID(groupingID);
+        ServiceMonitoring.logService(EditGroupShift.class, studentGroupID, groupingID, newShiftID, username);
+
+        final Grouping grouping = RootDomainObject.getInstance().readGroupingByOID(groupingID);
         if (grouping == null) {
             throw new ExistingServiceException();
         }
 
-        final StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupID);
+        final StudentGroup studentGroup = RootDomainObject.getInstance().readStudentGroupByOID(studentGroupID);
         if (studentGroup == null) {
             throw new InvalidArgumentsServiceException();
         }
 
-        final Shift shift = rootDomainObject.readShiftByOID(newShiftID);
+        final Shift shift = RootDomainObject.getInstance().readShiftByOID(newShiftID);
         if (grouping.getShiftType() == null || !shift.containsType(grouping.getShiftType())) {
             throw new InvalidStudentNumberServiceException();
         }
@@ -127,7 +130,7 @@ public class EditGroupShift extends FenixService {
         final Collection<Recipient> recipients =
                 Collections.singletonList(new Recipient(groupName, new FixedSetGroup(recievers)));
 
-        SystemSender systemSender = rootDomainObject.getSystemSender();
+        SystemSender systemSender = RootDomainObject.getInstance().getSystemSender();
         new Message(systemSender, systemSender.getConcreteReplyTos(), recipients,
                 messages.getMessage("message.subject.grouping.change"), message, "");
     }

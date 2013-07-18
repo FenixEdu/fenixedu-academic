@@ -497,9 +497,9 @@
 		<property name="size" value="50"/>
 		<property name="labelField" value="nameWithTitle"/>
 		<property name="indicatorShown" value="true"/>		
-		<property name="serviceName" value="SearchInternalPersons"/>
-		<property name="serviceName" value="SearchPhdParticipantsByProcess"/>
-		<property name="serviceArgs" value="phdProcessOID=${individualProgramProcess.externalId}"/>
+		<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchInternalPersons"/>
+		<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.phd.SearchPhdParticipantsByProcess"/>
+		<property name="args" value="phdProcessOID=${individualProgramProcess.externalId}"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.phd.PhdParticipant"/>
 		<property name="minChars" value="3"/>				
 	</slot>
@@ -536,8 +536,8 @@
 		<property name="size" value="50"/>
 		<property name="labelField" value="person.name"/>
 		<property name="indicatorShown" value="true"/>		
-		<property name="serviceName" value="SearchInternalPersons"/>
-		<property name="serviceArgs" value="size=50"/>
+		<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchInternalPersons"/>
+		<property name="args" value="size=50"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.person.PersonName"/>
 		<property name="minChars" value="4"/>				
 	</slot>

@@ -6,19 +6,19 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.MetaDomainObject;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixframework.FenixFramework;
 import dml.DomainClass;
 
-public class CreateMetaDomainObectTypes extends FenixService {
+public class CreateMetaDomainObectTypes {
 
     @Service
     public static void run() throws FenixServiceException {
         List<DomainClass> domainClasses = new ArrayList<DomainClass>(FenixFramework.getDomainModel().getDomainClasses());
-        Set<MetaDomainObject> metaDomainObjectsSet = new HashSet<MetaDomainObject>(rootDomainObject.getMetaDomainObjectsSet());
+        Set<MetaDomainObject> metaDomainObjectsSet = new HashSet<MetaDomainObject>(RootDomainObject.getInstance().getMetaDomainObjectsSet());
 
         for (DomainClass domainClass : domainClasses) {
             MetaDomainObject metaDomainObject = getMetaDomainObject(metaDomainObjectsSet, domainClass.getFullName());

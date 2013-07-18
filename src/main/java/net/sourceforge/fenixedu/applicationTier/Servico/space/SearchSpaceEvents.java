@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.spaceManager.OccupationType;
 import net.sourceforge.fenixedu.dataTransferObject.spaceManager.SearchSpaceEventsBean;
 import net.sourceforge.fenixedu.dataTransferObject.spaceManager.SpaceOccupationEventBean;
@@ -22,7 +21,7 @@ import org.joda.time.Interval;
 
 import pt.ist.fenixWebFramework.services.Service;
 
-public class SearchSpaceEvents extends FenixService {
+public class SearchSpaceEvents {
 
     public static Collection<SpaceOccupationEventBean> run(SearchSpaceEventsBean bean) {
         return run(bean.getBuilding(), bean.getStart().toDateTimeAtStartOfDay(), bean.getEnd().toDateTimeAtStartOfDay(),

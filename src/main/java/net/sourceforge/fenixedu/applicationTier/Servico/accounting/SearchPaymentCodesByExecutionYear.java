@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.AutoCompleteSearchService;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
 import net.sourceforge.fenixedu.domain.accounting.events.AnnualEvent;
@@ -16,14 +15,14 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.degreeChange.DegreeChang
 import net.sourceforge.fenixedu.domain.candidacyProcess.degreeTransfer.DegreeTransferCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPersonProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleCandidacyProcess;
+import net.sourceforge.fenixedu.presentationTier.renderers.providers.AutoCompleteProvider;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
-import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-public class SearchPaymentCodesByExecutionYear implements AutoCompleteSearchService, IService {
+public class SearchPaymentCodesByExecutionYear implements AutoCompleteProvider<PaymentCode> {
 
     @Override
-    public Collection run(final Class type, final String value, int limit, final Map<String, String> arguments) {
-        final ExecutionYear executionYear = getExecutionYear(arguments.get("executionYearOid"));
+    public Collection<PaymentCode> getSearchResults(Map<String, String> argsMap, String value, int maxCount) {
+        final ExecutionYear executionYear = getExecutionYear(argsMap.get("executionYearOid"));
 
         final Collection<PaymentCode> result = findAnnualEventsPaymentCodeFor(value, executionYear);
 

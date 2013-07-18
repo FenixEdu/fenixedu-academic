@@ -4,16 +4,19 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Filtro.teacher;
 
+import java.util.List;
+
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByRoleFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoOrientation;
+import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoPublicationsNumber;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoServiceProviderRegime;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoWeeklyOcupation;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import pt.utl.ist.berserk.ServiceRequest;
-import pt.utl.ist.berserk.ServiceResponse;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 /**
  * @author Leonor Almeida
@@ -22,21 +25,21 @@ import pt.utl.ist.berserk.ServiceResponse;
  */
 public class EditTeacherInformationAuthorizationFilter extends AuthorizationByRoleFilter {
 
+    public static final EditTeacherInformationAuthorizationFilter instance = new EditTeacherInformationAuthorizationFilter();
+
     @Override
     protected RoleType getRoleType() {
         return RoleType.TEACHER;
     }
 
-    @Override
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-        IUserView id = getRemoteUser(request);
-        Object[] arguments = getServiceCallArguments(request);
+    public void execute(InfoServiceProviderRegime infoServiceProviderRegime, InfoWeeklyOcupation infoWeeklyOcupation,
+            List<InfoOrientation> infoOrientations, List<InfoPublicationsNumber> infoPublicationsNumbers)
+            throws NotAuthorizedException {
+        IUserView id = AccessControl.getUserView();
         try {
-            if (((id != null && id.getRoleTypes() != null && !id.hasRoleType(getRoleType())))
-                    || (id == null)
+            if (((id != null && id.getRoleTypes() != null && !id.hasRoleType(getRoleType()))) || (id == null)
                     || (id.getRoleTypes() == null)
-                    || (!argumentsBelongToTeacher(id, (InfoServiceProviderRegime) arguments[0],
-                            (InfoWeeklyOcupation) arguments[1]))) {
+                    || (!argumentsBelongToTeacher(id, infoServiceProviderRegime, infoWeeklyOcupation))) {
                 throw new NotAuthorizedException();
             }
         } catch (RuntimeException e) {

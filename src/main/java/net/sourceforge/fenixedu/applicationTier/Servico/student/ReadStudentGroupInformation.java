@@ -10,7 +10,6 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentGroup;
@@ -18,6 +17,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentInformation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentGroupWithAttendsAndGroupingAndShift;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -29,7 +29,7 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author asnr and scpo
  * 
  */
-public class ReadStudentGroupInformation extends FenixService {
+public class ReadStudentGroupInformation {
 
     @Checked("RolePredicates.STUDENT_PREDICATE")
     @Service
@@ -40,7 +40,7 @@ public class ReadStudentGroupInformation extends FenixService {
         Grouping grouping = null;
         List groupAttendsList = null;
 
-        studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupCode);
+        studentGroup = RootDomainObject.getInstance().readStudentGroupByOID(studentGroupCode);
 
         if (studentGroup == null) {
             return null;

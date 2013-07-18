@@ -10,10 +10,9 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
+import net.sourceforge.fenixedu.applicationTier.Servico.Authenticate;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.SetUserUID;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.BaseAuthenticationAction;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -44,7 +43,6 @@ public class Authentication extends FenixAction {
         final String requestURL = request.getRequestURL().toString();
         boolean result = false;
         final String remoteHostName = BaseAuthenticationAction.getRemoteHostName(request);
-        Object argsAutenticacao[] = { username, password, requestURL, remoteHostName };
         try {
             String scheme = request.getScheme();
 
@@ -58,8 +56,8 @@ public class Authentication extends FenixAction {
                     SetUserUID.run(person);
                 }
 
-                ServiceManagerServiceFactory.executeService(PropertiesManager.getProperty("authenticationService"),
-                        argsAutenticacao);
+                Authenticate.runAuthenticate(username, password, requestURL, remoteHostName);
+
                 result = true;
             }
 

@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.student.studentCurricularPlan.ReadPosGradStudentCurricularPlans;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
@@ -34,7 +33,7 @@ public class SeeStudentCurricularPlansAction extends FenixAction {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixActionException, FenixFilterException {
+            throws FenixActionException {
 
         String studentId1 = this.getFromRequest("studentId", request);
         Integer studentId2 = null;

@@ -6,7 +6,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.CreateUnavailablePeriod;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.DeleteUnavailablePeriodByOID;
@@ -246,7 +245,7 @@ public class UnavailablePeriodManagement extends FenixDispatchAction {
         request.setAttribute("bean", bean);
     }
 
-    private void deletePeriod(HttpServletRequest request) throws FenixFilterException, FenixServiceException {
+    private void deletePeriod(HttpServletRequest request) throws  FenixServiceException {
         String id = request.getParameter("oid");
         Integer idInternal = Integer.valueOf(id);
 

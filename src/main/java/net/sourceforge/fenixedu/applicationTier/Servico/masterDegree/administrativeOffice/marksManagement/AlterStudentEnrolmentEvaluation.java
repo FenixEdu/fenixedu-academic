@@ -1,12 +1,13 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.marksManagement;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import pt.ist.fenixWebFramework.services.Service;
 
@@ -14,7 +15,7 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author Angela 04/07/2003
  * 
  */
-public class AlterStudentEnrolmentEvaluation extends FenixService {
+public class AlterStudentEnrolmentEvaluation {
 
     @Service
     public static void run(Integer curricularCourseCode, Integer enrolmentEvaluationCode,
@@ -30,7 +31,7 @@ public class AlterStudentEnrolmentEvaluation extends FenixService {
             throw new NonExistingServiceException();
         }
 
-        EnrolmentEvaluation enrolmentEvaluationCopy = rootDomainObject.readEnrolmentEvaluationByOID(enrolmentEvaluationCode);
+        EnrolmentEvaluation enrolmentEvaluationCopy = RootDomainObject.getInstance().readEnrolmentEvaluationByOID(enrolmentEvaluationCode);
         if (enrolmentEvaluationCopy == null) {
             throw new NonExistingServiceException();
         }

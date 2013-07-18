@@ -1,13 +1,12 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.externalServices;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.parking.CreateParkingParty;
 import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationEntry;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class SetParkingCardId extends FenixService {
+public class SetParkingCardId {
 
     public static class NotAuthorizedException extends FenixServiceException {
     }

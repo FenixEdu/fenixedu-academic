@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.manager.personManagemen
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.AddPersonRole;
 import net.sourceforge.fenixedu.domain.Person;
@@ -36,12 +35,12 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 public class CreatePersonAction extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixFilterException, FenixServiceException {
+            throws  FenixServiceException {
         return mapping.findForward("Prepare");
     }
 
     public ActionForward create(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixFilterException, FenixServiceException {
+            throws  FenixServiceException {
 
         final Person person = (Person) RenderUtils.getViewState().getMetaObject().getObject();
 

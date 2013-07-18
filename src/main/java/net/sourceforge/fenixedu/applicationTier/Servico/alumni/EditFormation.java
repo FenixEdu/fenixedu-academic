@@ -4,14 +4,15 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.alumni.formation.AlumniFormation;
 import net.sourceforge.fenixedu.domain.Formation;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class EditFormation extends FormationManagement {
 
-    public void run(final AlumniFormation formation) {
+    protected void run(final AlumniFormation formation) {
         editAlumniFormation(formation);
     }
 
-    public void run(final List<AlumniFormation> formationList) {
+    protected void run(final List<AlumniFormation> formationList) {
 
         for (AlumniFormation formation : formationList) {
             editAlumniFormation(formation);
@@ -22,6 +23,15 @@ public class EditFormation extends FormationManagement {
 
         Formation dbFormation = formation.getAssociatedFormation();
         dbFormation.edit(formation, getFormationInstitution(formation));
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final EditFormation serviceInstance = new EditFormation();
+
+    @Service
+    public static void runEditFormation(AlumniFormation formation) {
+        serviceInstance.run(formation);
     }
 
 }

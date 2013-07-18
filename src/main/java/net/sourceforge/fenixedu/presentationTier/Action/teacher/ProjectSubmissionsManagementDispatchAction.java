@@ -9,7 +9,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.NotifyStudentGroup;
 import net.sourceforge.fenixedu.dataTransferObject.VariantBean;
@@ -52,7 +51,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 public class ProjectSubmissionsManagementDispatchAction extends FenixDispatchAction {
 
     public ActionForward viewLastProjectSubmissionForEachGroup(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
 
         final Project project = getProject(request);
         final List<ProjectSubmission> projectSubmissions =
@@ -73,7 +72,7 @@ public class ProjectSubmissionsManagementDispatchAction extends FenixDispatchAct
     }
 
     public ActionForward viewProjectSubmissionsByGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
 
         final Project project = getProject(request);
         final List<ProjectSubmission> projectSubmissions =
@@ -91,7 +90,7 @@ public class ProjectSubmissionsManagementDispatchAction extends FenixDispatchAct
     }
 
     public ActionForward downloadProjectsInZipFormat(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException, IOException, ServletException {
+            HttpServletResponse response) throws FenixActionException,  IOException, ServletException {
 
         final Project project = getProject(request);
         final List<ProjectSubmission> projectSubmissions =
@@ -112,7 +111,7 @@ public class ProjectSubmissionsManagementDispatchAction extends FenixDispatchAct
     }
 
     public ActionForward prepareSelectiveDownload(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException, IOException, ServletException {
+            HttpServletResponse response) throws FenixActionException,  IOException, ServletException {
 
         IViewState viewState = RenderUtils.getViewState("selectiveDownload");
         Integer value = (viewState != null) ? (Integer) viewState.getMetaObject().getObject() : null;
@@ -133,7 +132,7 @@ public class ProjectSubmissionsManagementDispatchAction extends FenixDispatchAct
     }
 
     public ActionForward selectiveDownload(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException, IOException, ServletException {
+            HttpServletResponse response) throws FenixActionException,  IOException, ServletException {
 
         final Project project = getProject(request);
         final Integer startIndex = Integer.valueOf(request.getParameter("startIndex"));
@@ -171,7 +170,7 @@ public class ProjectSubmissionsManagementDispatchAction extends FenixDispatchAct
     }
 
     public ActionForward sendCommentThroughEmail(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         final Project project = getProject(request);
 

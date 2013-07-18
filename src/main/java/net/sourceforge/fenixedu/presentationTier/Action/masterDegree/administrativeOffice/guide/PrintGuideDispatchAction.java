@@ -8,17 +8,17 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ReadStudentsByPerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.ChooseGuide;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideWithPersonAndExecutionDegreeAndContributor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -70,7 +70,7 @@ public class PrintGuideDispatchAction extends FenixDispatchAction {
         try {
             Object args[] = { number, year, version };
 
-            infoGuide = (InfoGuide) ServiceManagerServiceFactory.executeService("ChooseGuide", args);
+            infoGuide = (InfoGuide) ChooseGuide.runChooseGuide(number, year, version);
         } catch (FenixServiceException e) {
             throw new FenixActionException();
         }
@@ -78,10 +78,8 @@ public class PrintGuideDispatchAction extends FenixDispatchAction {
         InfoStudent infoStudent = null;
         List infoStudents = null;
 
-        Object args2[] = { infoGuide.getInfoPerson() };
-
         try {
-            infoStudents = (List) ServiceUtils.executeService("ReadStudentsByPerson", args2);
+            infoStudents = ReadStudentsByPerson.runReadStudentsByPerson(infoGuide.getInfoPerson());
 
             Iterator it = infoStudents.iterator();
             while (it.hasNext()) {

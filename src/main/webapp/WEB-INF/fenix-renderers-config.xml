@@ -381,13 +381,6 @@ Documentation:
         <property name="minChars" value="3"/>
         <property name="valueField" value="externalId" />
     </renderer>
-
-    <renderer mode="input" type="pt.ist.fenixframework.DomainObject" layout="simpleAutoComplete" class="net.sourceforge.fenixedu.presentationTier.renderers.SimpleAutoCompleteRenderer">
-        <property name="autoCompleteItemsStyleClass" value="autoCompleteItems"/>
-        <property name="autoCompleteStyleClass" value="autoComplete"/>
-        <property name="minChars" value="3"/>
-        <property name="valueField" value="externalId"/>
-    </renderer>
         
     <renderer mode="input" type="net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.BolonhaStudentEnrollmentBean" layout="bolonha-student-enrolment" class="net.sourceforge.fenixedu.presentationTier.renderers.student.enrollment.bolonha.BolonhaStudentEnrollmentInputRenderer"/>
     

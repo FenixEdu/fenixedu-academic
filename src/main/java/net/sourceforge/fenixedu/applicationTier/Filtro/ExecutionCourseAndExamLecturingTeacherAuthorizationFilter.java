@@ -4,23 +4,26 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Filtro;
 
+import java.util.List;
+
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import pt.utl.ist.berserk.ServiceRequest;
-import pt.utl.ist.berserk.ServiceResponse;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 /**
  * @author Luis Egidio, lmre@mega.ist.utl.pt Nuno Ochoa, nmgo@mega.ist.utl.pt
  * 
  */
 public class ExecutionCourseAndExamLecturingTeacherAuthorizationFilter extends AuthorizationByRoleFilter {
+
+    public static final ExecutionCourseAndExamLecturingTeacherAuthorizationFilter instance =
+            new ExecutionCourseAndExamLecturingTeacherAuthorizationFilter();
 
     public ExecutionCourseAndExamLecturingTeacherAuthorizationFilter() {
     }
@@ -30,41 +33,31 @@ public class ExecutionCourseAndExamLecturingTeacherAuthorizationFilter extends A
         return RoleType.TEACHER;
     }
 
-    @Override
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-        IUserView id = getRemoteUser(request);
-        Object[] arguments = getServiceCallArguments(request);
+    public void execute(Integer executionCourseID, Integer evaluationID, List<Integer> roomIDs, Boolean sendSMS,
+            Boolean distributeOnlyEnroledStudents) throws NotAuthorizedException {
+        IUserView id = AccessControl.getUserView();
 
         try {
             if ((id == null) || (id.getRoleTypes() == null) || !id.hasRoleType(getRoleType())
-                    || !lecturesExecutionCourse(id, arguments) || !examBelongsExecutionCourse(id, arguments)) {
-                throw new NotAuthorizedFilterException();
+                    || !lecturesExecutionCourse(id, executionCourseID)
+                    || !examBelongsExecutionCourse(id, executionCourseID, evaluationID)) {
+                throw new NotAuthorizedException();
             }
         } catch (RuntimeException e) {
-            throw new NotAuthorizedFilterException();
+            throw new NotAuthorizedException();
         }
 
     }
 
-    private boolean lecturesExecutionCourse(IUserView id, Object[] argumentos) {
-
-        Integer executionCourseID = null;
-
-        if (argumentos == null) {
+    private boolean lecturesExecutionCourse(IUserView id, Integer executionCourseID) {
+        if (executionCourseID == null) {
             return false;
         }
         try {
-            if (argumentos[0] instanceof InfoExecutionCourse) {
-                InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) argumentos[0];
-                executionCourseID = infoExecutionCourse.getIdInternal();
-            } else {
-                executionCourseID = (Integer) argumentos[0];
-            }
-
             Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
             Professorship professorship = null;
             if (teacher != null) {
-                ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
+                ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseID);
                 professorship = teacher.getProfessorshipByExecutionCourse(executionCourse);
             }
             return professorship != null;
@@ -74,33 +67,16 @@ public class ExecutionCourseAndExamLecturingTeacherAuthorizationFilter extends A
         }
     }
 
-    private boolean examBelongsExecutionCourse(IUserView id, Object[] argumentos) {
-        InfoExecutionCourse infoExecutionCourse = null;
-        ExecutionCourse executionCourse = null;
-
-        if (argumentos == null) {
+    private boolean examBelongsExecutionCourse(IUserView id, Integer executionCourseID, Integer evaluationID) {
+        if (executionCourseID == null || evaluationID == null) {
             return false;
         }
         try {
+            ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseID);
 
-            if (argumentos[0] instanceof InfoExecutionCourse) {
-                infoExecutionCourse = (InfoExecutionCourse) argumentos[0];
-                executionCourse = rootDomainObject.readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
-            } else {
-                executionCourse = rootDomainObject.readExecutionCourseByOID((Integer) argumentos[0]);
-            }
-
-            Integer examId;
-            if (argumentos[1] instanceof InfoExam) {
-                InfoExam infoExam = (InfoExam) argumentos[1];
-                examId = infoExam.getIdInternal();
-            } else {
-                examId = (Integer) argumentos[1];
-            }
-
-            if (executionCourse != null && examId != null) {
+            if (executionCourse != null && evaluationID != null) {
                 for (Evaluation associatedEvaluation : executionCourse.getAssociatedEvaluations()) {
-                    if (associatedEvaluation.getIdInternal().equals(examId)) {
+                    if (associatedEvaluation.getIdInternal().equals(evaluationID)) {
                         return true;
                     }
                 }

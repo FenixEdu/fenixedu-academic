@@ -609,8 +609,8 @@
 		<property name="size" value="70"/>
 		<property name="rawSlotName" value="name"/>
 		<property name="indicatorShown" value="true"/>
-		<property name="serviceName" value="SearchInternalPersons"/>
-		<property name="serviceArgs" value="slot=name,size=30"/>
+		<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchInternalPersons"/>
+		<property name="args" value="slot=name,size=30"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.person.PersonName"/>				
 		<property name="minChars" value="4"/>
 		<property name="labelField" value="person.name"/>
@@ -794,8 +794,8 @@
 		<property name="format" value="${code} (${state})"/>
 		<property name="indicatorShown" value="true"/>
 				
-		<property name="serviceName" value="SearchPaymentCodesByExecutionYear"/>
-		<property name="serviceArgs" value="executionYearOid=${executionInterval.OID}"/>
+		<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.accounting.SearchPaymentCodesByExecutionYear"/>
+		<property name="args" value="executionYearOid=${executionInterval.OID}"/>
 		
 		<property name="className" value="net.sourceforge.fenixedu.domain.accounting.PaymentCode"/>
 		<property name="minChars" value="4"/>
@@ -806,8 +806,8 @@
 		<property name="format" value="${code} (${state})"/>
 		<property name="indicatorShown" value="true"/>
 				
-		<property name="serviceName" value="SearchPaymentCodesByExecutionYear"/>
-		<property name="serviceArgs" value="executionYearOid=${executionInterval.OID}"/>
+		<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.accounting.SearchPaymentCodesByExecutionYear"/>
+		<property name="args" value="executionYearOid=${executionInterval.OID}"/>
 		
 		<property name="className" value="net.sourceforge.fenixedu.domain.accounting.PaymentCode"/>
 		<property name="minChars" value="4"/>

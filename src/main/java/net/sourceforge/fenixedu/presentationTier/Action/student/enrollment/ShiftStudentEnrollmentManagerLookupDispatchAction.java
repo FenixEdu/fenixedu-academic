@@ -12,7 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift.ReadClassTimeTableByStudent;
+import net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift.WriteStudentAttendingCourse;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadStudentTimeTable;
@@ -21,7 +22,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.TransactionalLookupDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixTransactionException;
 
@@ -93,7 +93,7 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
     }
 
     public ActionForward addCourses(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixTransactionException, FenixFilterException {
+            HttpServletResponse response) throws FenixTransactionException {
 
         super.validateToken(request, actionForm, mapping, "error.transaction.enrollment");
 
@@ -110,8 +110,7 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
         final Integer executionCourseId = (Integer) form.get("wantedCourse");
 
         try {
-            ServiceManagerServiceFactory.executeService("WriteStudentAttendingCourse", new Object[] { registration,
-                    executionCourseId });
+            WriteStudentAttendingCourse.runWriteStudentAttendingCourse(registration, executionCourseId);
 
         } catch (NotAuthorizedException exception) {
             addActionMessage(request, "error.attend.curricularCourse.impossibleToEnroll");
@@ -130,7 +129,7 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
     }
 
     public ActionForward removeCourses(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixTransactionException, FenixFilterException {
+            HttpServletResponse response) throws FenixTransactionException {
 
         super.validateToken(request, actionForm, mapping, "error.transaction.enrollment");
 
@@ -159,7 +158,7 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
     }
 
     public ActionForward proceedToShiftEnrolment(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         checkParameter(request);
         final Integer classIdSelected = readClassSelected(request);
@@ -184,8 +183,7 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
         final IUserView userView = getUserView(request);
 
         final List infoClasslessons =
-                (List) ServiceManagerServiceFactory.executeService("ReadClassTimeTableByStudent", new Object[] { registration,
-                        schoolClass, executionCourse });
+                ReadClassTimeTableByStudent.runReadClassTimeTableByStudent(registration, schoolClass, executionCourse);
 
         request.setAttribute("infoClasslessons", infoClasslessons);
         request.setAttribute("infoClasslessonsEndTime", Integer.valueOf(getEndTime(infoClasslessons)));

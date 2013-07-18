@@ -10,6 +10,8 @@ import java.util.Calendar;
  * @author jpvl
  */
 public class ReadStudentTestToDoFilter extends ReadStudentTestBaseFilter {
+
+    public static final ReadStudentTestToDoFilter instance = new ReadStudentTestToDoFilter();
     public ReadStudentTestToDoFilter() {
 
     }

@@ -6,10 +6,10 @@ package net.sourceforge.fenixedu.applicationTier.Servico.publico.inquiries;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.InfoOldInquiriesSummary;
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.oldInquiries.OldInquiriesSummary;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -21,11 +21,11 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author João Fialho & Rita Ferreira
  * 
  */
-public class ReadOldIquiriesSummaryByDegreeID extends FenixService {
+public class ReadOldIquiriesSummaryByDegreeID {
 
     @Service
     public static List run(Integer degreeID) throws FenixServiceException {
-        Degree degree = rootDomainObject.readDegreeByOID(degreeID);
+        Degree degree = RootDomainObject.getInstance().readDegreeByOID(degreeID);
 
         if (degree == null) {
             throw new FenixServiceException("nullDegreeId");

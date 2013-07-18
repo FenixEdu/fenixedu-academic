@@ -6,10 +6,10 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 import java.util.ArrayList;
 import java.util.Collection;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.MasterDegreeProofVersion;
 import net.sourceforge.fenixedu.domain.MasterDegreeThesis;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeThesisState;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
@@ -18,14 +18,14 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-public class ReadActiveMasterDegreeThesis extends FenixService {
+public class ReadActiveMasterDegreeThesis {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
     public static Collection<MasterDegreeThesis> run(MasterDegreeThesisState thesisState, Integer year, Degree degree) {
 
         Collection<MasterDegreeThesis> result = new ArrayList<MasterDegreeThesis>();
-        for (MasterDegreeThesis masterDegreeThesis : rootDomainObject.getMasterDegreeThesiss()) {
+        for (MasterDegreeThesis masterDegreeThesis : RootDomainObject.getInstance().getMasterDegreeThesiss()) {
 
             if (masterDegreeThesis.getStudentCurricularPlan().getDegree() != degree) {
                 continue;

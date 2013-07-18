@@ -1,9 +1,14 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
+import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentAdministrativeOfficeAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ScientificCouncilAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.SupportLessonDTO;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -11,12 +16,13 @@ import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherServiceLog;
 import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.WeekDay;
+import pt.ist.fenixWebFramework.services.Service;
 
-public class EditSupportLesson extends FenixService {
+public class EditSupportLesson {
 
-    public void run(SupportLessonDTO supportLessonDTO, RoleType roleType) {
+    protected void run(SupportLessonDTO supportLessonDTO, RoleType roleType) {
 
-        Professorship professorship = rootDomainObject.readProfessorshipByOID(supportLessonDTO.getProfessorshipID());
+        Professorship professorship = RootDomainObject.getInstance().readProfessorshipByOID(supportLessonDTO.getProfessorshipID());
         ExecutionSemester executionSemester = professorship.getExecutionCourse().getExecutionPeriod();
         Teacher teacher = professorship.getTeacher();
         TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
@@ -27,7 +33,7 @@ public class EditSupportLesson extends FenixService {
 
         final StringBuilder log = new StringBuilder();
 
-        SupportLesson supportLesson = rootDomainObject.readSupportLessonByOID(supportLessonDTO.getIdInternal());
+        SupportLesson supportLesson = RootDomainObject.getInstance().readSupportLessonByOID(supportLessonDTO.getIdInternal());
         if (supportLesson == null) {
             supportLesson = new SupportLesson(supportLessonDTO, professorship, roleType);
             log.append(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources",
@@ -52,4 +58,29 @@ public class EditSupportLesson extends FenixService {
 
         new TeacherServiceLog(teacherService, log.toString());
     }
+
+    // Service Invokers migrated from Berserk
+
+    private static final EditSupportLesson serviceInstance = new EditSupportLesson();
+
+    @Service
+    public static void runEditSupportLesson(SupportLessonDTO supportLessonDTO, RoleType roleType) throws NotAuthorizedException {
+        try {
+            ScientificCouncilAuthorizationFilter.instance.execute();
+            serviceInstance.run(supportLessonDTO, roleType);
+        } catch (NotAuthorizedException ex1) {
+            try {
+                DepartmentMemberAuthorizationFilter.instance.execute();
+                serviceInstance.run(supportLessonDTO, roleType);
+            } catch (NotAuthorizedException ex2) {
+                try {
+                    DepartmentAdministrativeOfficeAuthorizationFilter.instance.execute();
+                    serviceInstance.run(supportLessonDTO, roleType);
+                } catch (NotAuthorizedException ex3) {
+                    throw ex3;
+                }
+            }
+        }
+    }
+
 }

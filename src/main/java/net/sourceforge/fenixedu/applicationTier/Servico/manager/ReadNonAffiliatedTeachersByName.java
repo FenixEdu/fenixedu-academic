@@ -8,18 +8,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ManagerAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.gep.GEPAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoNonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Ricardo Rodrigues
  * 
  */
 
-public class ReadNonAffiliatedTeachersByName extends FenixService {
+public class ReadNonAffiliatedTeachersByName {
 
-    public List run(String nameToSearch) {
+    protected List run(String nameToSearch) {
         String names[] = nameToSearch.split(" ");
         StringBuilder nonAffiliatedTeacherName = new StringBuilder(".*");
 
@@ -40,6 +43,25 @@ public class ReadNonAffiliatedTeachersByName extends FenixService {
         }
 
         return infoNonAffiliatedTeachers;
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final ReadNonAffiliatedTeachersByName serviceInstance = new ReadNonAffiliatedTeachersByName();
+
+    @Service
+    public static List runReadNonAffiliatedTeachersByName(String nameToSearch) throws NotAuthorizedException {
+        try {
+            ManagerAuthorizationFilter.instance.execute();
+            return serviceInstance.run(nameToSearch);
+        } catch (NotAuthorizedException ex1) {
+            try {
+                GEPAuthorizationFilter.instance.execute();
+                return serviceInstance.run(nameToSearch);
+            } catch (NotAuthorizedException ex2) {
+                throw ex2;
+            }
+        }
     }
 
 }

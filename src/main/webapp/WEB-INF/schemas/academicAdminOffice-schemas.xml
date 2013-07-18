@@ -191,8 +191,8 @@
 		<property name="labelField" value="name"/>
 		<property name="format" value="${name} - (${district.name})"/>
 		<property name="indicatorShown" value="true"/>		
-		<property name="serviceName" value="SearchDistrictSubdivisions"/>
-		<property name="serviceArgs" value="slot=name,size=20"/>
+		<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchDistrictSubdivisions"/>
+		<property name="args" value="slot=name,size=20"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.DistrictSubdivision"/>
 		<property name="minChars" value="2"/>
 	</slot>	
@@ -238,8 +238,8 @@
 		<property name="size" value="50"/>
 		<property name="labelField" value="unit.name"/>
 		<property name="indicatorShown" value="true"/>		
-		<property name="serviceName" value="SearchExternalUnits"/>
-		<property name="serviceArgs" value="slot=name,size=20"/>
+		<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchExternalUnits"/>
+		<property name="args" value="slot=name,size=20"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>
 		<property name="minChars" value="2"/>
 		<property name="rawSlotName" value="institutionName"/>
@@ -282,8 +282,8 @@
 		<property name="size" value="40"/>
 		<property name="labelField" value="unit.name"/>
 		<property name="indicatorShown" value="true"/>		
-		<property name="serviceName" value="SearchExternalUnits"/>
-		<property name="serviceArgs" value="slot=name,size=20"/>
+		<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchExternalUnits"/>
+		<property name="args" value="slot=name,size=20"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>
 		<property name="minChars" value="2"/>
 		<property name="rawSlotName" value="institutionName"/>

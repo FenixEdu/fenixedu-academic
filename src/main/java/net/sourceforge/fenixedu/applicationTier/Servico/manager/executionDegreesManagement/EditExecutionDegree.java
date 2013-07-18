@@ -2,11 +2,11 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager.executionDegree
 
 import java.util.Date;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.space.Campus;
 
 import org.joda.time.YearMonthDay;
@@ -14,7 +14,7 @@ import org.joda.time.YearMonthDay;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class EditExecutionDegree extends FenixService {
+public class EditExecutionDegree {
 
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
@@ -25,17 +25,17 @@ public class EditExecutionDegree extends FenixService {
             Date periodExamsSpecialSeasonEnd, Date gradeSubmissionNormalSeason1EndDate, Date gradeSubmissionNormalSeason2EndDate,
             Date gradeSubmissionSpecialSeasonEndDate) throws FenixServiceException {
 
-        final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
+        final ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeID);
         if (executionDegree == null) {
             throw new FenixServiceException("error.noExecutionDegree");
         }
 
-        final ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
+        final ExecutionYear executionYear = RootDomainObject.getInstance().readExecutionYearByOID(executionYearID);
         if (executionYear == null) {
             throw new FenixServiceException("error.noExecutionDegree");
         }
 
-        final Campus campus = (Campus) rootDomainObject.readResourceByOID(campusID);
+        final Campus campus = (Campus) RootDomainObject.getInstance().readResourceByOID(campusID);
         if (campus == null) {
             throw new FenixServiceException("error.noCampus");
         }

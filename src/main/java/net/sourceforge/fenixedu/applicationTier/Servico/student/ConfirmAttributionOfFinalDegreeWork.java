@@ -5,8 +5,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
@@ -16,7 +16,7 @@ import pt.ist.fenixWebFramework.services.Service;
 /**
  * @author Luis Cruz
  */
-public class ConfirmAttributionOfFinalDegreeWork extends FenixService {
+public class ConfirmAttributionOfFinalDegreeWork {
 
     public ConfirmAttributionOfFinalDegreeWork() {
         super();
@@ -25,7 +25,7 @@ public class ConfirmAttributionOfFinalDegreeWork extends FenixService {
     @Checked("RolePredicates.STUDENT_PREDICATE")
     @Service
     public static Boolean run(String username, Integer selectedGroupProposalOID) throws FenixServiceException {
-        GroupProposal groupProposal = rootDomainObject.readGroupProposalByOID(selectedGroupProposalOID);
+        GroupProposal groupProposal = RootDomainObject.getInstance().readGroupProposalByOID(selectedGroupProposalOID);
 
         if (groupProposal != null) {
             FinalDegreeWorkGroup groupAttributed = groupProposal.getFinalDegreeWorkProposal().getGroupAttributedByTeacher();

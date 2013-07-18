@@ -11,7 +11,6 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.accounting.PostingRulesManager;
 import net.sourceforge.fenixedu.applicationTier.Servico.accounting.gratuity.paymentPlan.GratuityPaymentPlanManager;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -206,7 +205,7 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward editDFAGratuityPR(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         try {
 
@@ -243,7 +242,7 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward editSpecializationDegreeGratuityPR(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         try {
 
@@ -260,7 +259,7 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward deleteDegreeCurricularPlanPostingRule(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
 
         try {
             PostingRulesManager.deletePostingRule(getPostingRule(request));
@@ -428,7 +427,7 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward createPaymentPlan(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         try {
             GratuityPaymentPlanManager.create(getPaymentPlanBean());
@@ -638,7 +637,7 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward createDFAGratuityPR(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         try {
             PostingRulesManager.createDFAGratuityPostingRule(getCreateDFAGratuityPostingRuleBeanFromRequest());
@@ -690,7 +689,7 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward createSpecializationDegreeGratuityPR(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         try {
             PostingRulesManager
@@ -734,7 +733,7 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward createDEAGratuityPR(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
 
         InstallmentBean installment = getInstallment();

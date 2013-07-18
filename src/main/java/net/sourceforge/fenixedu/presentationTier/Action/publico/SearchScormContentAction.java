@@ -6,7 +6,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.SearchDSpaceBean;
 import net.sourceforge.fenixedu.dataTransferObject.SearchDSpaceBean.SearchElement;
@@ -59,7 +58,7 @@ public class SearchScormContentAction extends SearchDSpaceGeneralAction {
     }
 
     public ActionForward prepareSearchForExecutionCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         String executionCourseId = request.getParameter("executionCourseID");
         if (executionCourseId == null) {
@@ -81,7 +80,7 @@ public class SearchScormContentAction extends SearchDSpaceGeneralAction {
     }
 
     public ActionForward changeTimeStamp(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         SearchDSpaceCoursesBean bean = (SearchDSpaceCoursesBean) RenderUtils.getViewState("search").getMetaObject().getObject();
         RenderUtils.invalidateViewState("executionPeriodField");
@@ -94,29 +93,29 @@ public class SearchScormContentAction extends SearchDSpaceGeneralAction {
     }
 
     public ActionForward addNewSearchCriteria(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         return super.addNewSearchCriteria(mapping, form, request, response, "search");
     }
 
     public ActionForward removeSearchCriteria(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         return super.removeSearchCriteria(mapping, form, request, response, "search");
     }
 
     public ActionForward prepareSearchScormContents(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         return super.prepareSearch(mapping, form, request, response, "search");
     }
 
     public ActionForward searchScormContents(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         return super.searchContent(mapping, form, request, response, "search");
     }
 
     public ActionForward moveIndex(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         return super.moveIndex(mapping, form, request, response, "search");
     }

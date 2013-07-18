@@ -3,34 +3,32 @@ package net.sourceforge.fenixedu.applicationTier.Filtro;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import pt.utl.ist.berserk.ServiceRequest;
-import pt.utl.ist.berserk.ServiceResponse;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 public class BolonhaOrLEECCoordinatorAuthorizationFilter extends AuthorizationByRoleFilter {
+
+    public static final BolonhaOrLEECCoordinatorAuthorizationFilter instance = new BolonhaOrLEECCoordinatorAuthorizationFilter();
 
     @Override
     protected RoleType getRoleType() {
         return RoleType.COORDINATOR;
     }
 
-    @Override
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-        Person person = getRemoteUser(request).getPerson();
+    public void execute(Integer executionDegreeID) throws NotAuthorizedException {
+        Person person = AccessControl.getUserView().getPerson();
 
         if (!person.hasRole(getRoleType())) {
-            throw new NotAuthorizedFilterException();
+            throw new NotAuthorizedException();
         }
 
-        Object[] args = getServiceCallArguments(request);
-        Integer executionDegreeID = (Integer) args[0];
-
         if (!(executionDegreeIsBolonhaOrLEEC(executionDegreeID) || isCoordinatorOfExecutionDegree(person, executionDegreeID))) {
-            throw new NotAuthorizedFilterException();
+            throw new NotAuthorizedException();
         }
     }
 
@@ -39,7 +37,7 @@ public class BolonhaOrLEECCoordinatorAuthorizationFilter extends AuthorizationBy
             return false;
         }
 
-        final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
+        final ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeID);
 
         if (executionDegree.isBolonhaDegree() && executionDegree.getDegree().getSigla().equals("LEEC-pB")) {
             return true;
@@ -53,7 +51,7 @@ public class BolonhaOrLEECCoordinatorAuthorizationFilter extends AuthorizationBy
             return false;
         }
 
-        final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
+        final ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeID);
 
         List<Coordinator> coordinators = new ArrayList<Coordinator>();
         coordinators.addAll(person.getCoordinators());

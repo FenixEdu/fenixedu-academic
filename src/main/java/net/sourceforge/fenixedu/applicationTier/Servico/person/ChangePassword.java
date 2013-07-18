@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.person;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidPasswordServiceException;
 import net.sourceforge.fenixedu.domain.Person;
@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class ChangePassword extends FenixService {
+public class ChangePassword {
 
     @Checked("RolePredicates.PERSON_PREDICATE")
     @Service

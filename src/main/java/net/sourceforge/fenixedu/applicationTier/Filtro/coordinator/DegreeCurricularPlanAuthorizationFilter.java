@@ -13,6 +13,8 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 
 public class DegreeCurricularPlanAuthorizationFilter extends DomainObjectAuthorizationFilter {
 
+    public static final DegreeCurricularPlanAuthorizationFilter instance = new DegreeCurricularPlanAuthorizationFilter();
+
     @Override
     protected RoleType getRoleType() {
         return RoleType.COORDINATOR;

@@ -10,8 +10,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.AssociateTSDCourseWithTeacherServiceDistribution;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.AssociateTSDTeacherWithTeacherServiceDistribution;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.CreateTeacherServiceDistribution;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.DeleteTeacherServiceDistribution;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.DissociateTSDCourseWithTeacherServiceDistribution;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.DissociateTSDTeacherWithTeacherServiceDistribution;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.MergeTeacherServiceDistributions;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.SetCoursesAndTeachersValuationPermission;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.SetPersonPermissionsOnTSDProcess;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.dataTransferObject.teacherServiceDistribution.PersonPermissionsDTOEntry;
 import net.sourceforge.fenixedu.dataTransferObject.teacherServiceDistribution.TeacherServiceDistributionDTOEntry;
@@ -23,7 +31,6 @@ import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcessPhas
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDTeacher;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
@@ -38,7 +45,7 @@ public class TeacherServiceDistributionSupportAction extends FenixDispatchAction
     private static final Integer VIEW_PERMISSIONS_BY_VALUATION_GROUPING = 2;
 
     public ActionForward prepareForTeacherServiceDistributionSupportServices(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
         DynaActionForm dynaForm = (DynaActionForm) form;
 
         getFromRequestAndSetOnFormTSDProcessId(request, dynaForm);
@@ -46,7 +53,7 @@ public class TeacherServiceDistributionSupportAction extends FenixDispatchAction
     }
 
     public ActionForward loadTeacherServiceDistributions(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         IUserView userView = UserView.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
@@ -115,7 +122,7 @@ public class TeacherServiceDistributionSupportAction extends FenixDispatchAction
     }
 
     public ActionForward createTeacherServiceDistribution(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         IUserView userView = UserView.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
 
@@ -127,17 +134,17 @@ public class TeacherServiceDistributionSupportAction extends FenixDispatchAction
     }
 
     public ActionForward deleteTeacherServiceDistribution(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         IUserView userView = UserView.getUser();
 
         TeacherServiceDistribution tsd = getSelectedTeacherServiceDistribution((DynaActionForm) form, null);
-        ServiceUtils.executeService("DeleteTeacherServiceDistribution", new Object[] { tsd.getIdInternal() });
+        DeleteTeacherServiceDistribution.runDeleteTeacherServiceDistribution(tsd.getIdInternal());
 
         return loadTeacherServiceDistributions(mapping, form, request, response);
     }
 
     public ActionForward associateTSDTeacher(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         IUserView userView = UserView.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
@@ -145,16 +152,14 @@ public class TeacherServiceDistributionSupportAction extends FenixDispatchAction
         TeacherServiceDistribution selectedTeacherServiceDistribution = getSelectedTeacherServiceDistribution(dynaForm, null);
         TSDTeacher selectedTSDTeacher = getSelectedTSDTeacher(dynaForm);
 
-        Object[] parameters =
-                new Object[] { selectedTeacherServiceDistribution.getIdInternal(), selectedTSDTeacher.getIdInternal() };
-
-        ServiceUtils.executeService("AssociateTSDTeacherWithTeacherServiceDistribution", parameters);
+        AssociateTSDTeacherWithTeacherServiceDistribution.runAssociateTSDTeacherWithTeacherServiceDistribution(
+                selectedTeacherServiceDistribution.getIdInternal(), selectedTSDTeacher.getIdInternal());
 
         return loadTeacherServiceDistributions(mapping, form, request, response);
     }
 
     public ActionForward dissociateTSDTeacher(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         IUserView userView = UserView.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
@@ -162,16 +167,14 @@ public class TeacherServiceDistributionSupportAction extends FenixDispatchAction
         TeacherServiceDistribution selectedTeacherServiceDistribution = getSelectedTeacherServiceDistribution(dynaForm, null);
         TSDTeacher selectedTSDTeacher = rootDomainObject.readTSDTeacherByOID((Integer) dynaForm.get("tsdTeacherDissociation"));
 
-        Object[] parameters =
-                new Object[] { selectedTeacherServiceDistribution.getIdInternal(), selectedTSDTeacher.getIdInternal() };
-
-        ServiceUtils.executeService("DissociateTSDTeacherWithTeacherServiceDistribution", parameters);
+        DissociateTSDTeacherWithTeacherServiceDistribution.runDissociateTSDTeacherWithTeacherServiceDistribution(
+                selectedTeacherServiceDistribution.getIdInternal(), selectedTSDTeacher.getIdInternal());
 
         return loadTeacherServiceDistributions(mapping, form, request, response);
     }
 
     public ActionForward associateCompetenceCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         IUserView userView = UserView.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
@@ -179,16 +182,14 @@ public class TeacherServiceDistributionSupportAction extends FenixDispatchAction
         TeacherServiceDistribution selectedTeacherServiceDistribution = getSelectedTeacherServiceDistribution(dynaForm, null);
         TSDCourse selectedTSDCourse = getSelectedTSDCourse(dynaForm);
 
-        Object[] parameters =
-                new Object[] { selectedTeacherServiceDistribution.getIdInternal(), selectedTSDCourse.getIdInternal() };
-
-        ServiceUtils.executeService("AssociateTSDCourseWithTeacherServiceDistribution", parameters);
+        AssociateTSDCourseWithTeacherServiceDistribution.runAssociateTSDCourseWithTeacherServiceDistribution(
+                selectedTeacherServiceDistribution.getIdInternal(), selectedTSDCourse.getIdInternal());
 
         return loadTeacherServiceDistributions(mapping, form, request, response);
     }
 
     public ActionForward dissociateCompetenceCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         IUserView userView = UserView.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
@@ -196,22 +197,21 @@ public class TeacherServiceDistributionSupportAction extends FenixDispatchAction
         TeacherServiceDistribution selectedTeacherServiceDistribution = getSelectedTeacherServiceDistribution(dynaForm, null);
         Integer tsdCourseId = (Integer) dynaForm.get("tsdCourseDissociation");
 
-        Object[] parameters = new Object[] { selectedTeacherServiceDistribution.getIdInternal(), tsdCourseId };
-
-        ServiceUtils.executeService("DissociateTSDCourseWithTeacherServiceDistribution", parameters);
+        DissociateTSDCourseWithTeacherServiceDistribution.runDissociateTSDCourseWithTeacherServiceDistribution(
+                selectedTeacherServiceDistribution.getIdInternal(), tsdCourseId);
 
         return loadTeacherServiceDistributions(mapping, form, request, response);
     }
 
     public ActionForward prepareForPermissionServices(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         getFromRequestAndSetOnFormTSDProcessId(request, (DynaActionForm) form);
 
         return loadTeacherServiceDistributionsForPermissionServices(mapping, form, request, response);
     }
 
     public ActionForward loadTeacherServiceDistributionsForPermissionServices(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
         IUserView userView = UserView.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
 
@@ -350,20 +350,18 @@ public class TeacherServiceDistributionSupportAction extends FenixDispatchAction
     }
 
     public ActionForward addCoursesAndTeachersValuationPermissionToPerson(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
         IUserView userView = UserView.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
 
         TSDProcess tsdProcess = getTSDProcess(dynaForm);
         TeacherServiceDistribution rootTeacherServiceDistribution = tsdProcess.getCurrentTSDProcessPhase().getRootTSD();
 
-        Object[] parameters =
-                new Object[] { getSelectedTeacherServiceDistribution(dynaForm, rootTeacherServiceDistribution).getIdInternal(),
-                        getSelectedPerson(dynaForm, null).getIdInternal(), getSelectedCourseValuationManagers(dynaForm),
-                        getSelectedTeachersValuationManagers(dynaForm), getSelectedCourseManagementPermission(dynaForm),
-                        getSelectedTeachersManagementPersmission(dynaForm) };
-
-        ServiceUtils.executeService("SetCoursesAndTeachersValuationPermission", parameters);
+        SetCoursesAndTeachersValuationPermission.runSetCoursesAndTeachersValuationPermission(
+                getSelectedTeacherServiceDistribution(dynaForm, rootTeacherServiceDistribution).getIdInternal(),
+                getSelectedPerson(dynaForm, null).getIdInternal(), getSelectedCourseValuationManagers(dynaForm),
+                getSelectedTeachersValuationManagers(dynaForm), getSelectedCourseManagementPermission(dynaForm),
+                getSelectedTeachersManagementPersmission(dynaForm));
 
         return loadTeacherServiceDistributionsForPermissionServices(mapping, form, request, response);
     }
@@ -390,37 +388,32 @@ public class TeacherServiceDistributionSupportAction extends FenixDispatchAction
     }
 
     public ActionForward removeCoursesAndTeachersValuationPermissionToPerson(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
         IUserView userView = UserView.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
 
         TeacherServiceDistribution rootTeacherServiceDistribution =
                 getTSDProcess(dynaForm).getCurrentTSDProcessPhase().getRootTSD();
 
-        Object[] parameters =
-                new Object[] { getSelectedTeacherServiceDistribution(dynaForm, rootTeacherServiceDistribution).getIdInternal(),
-                        getSelectedPerson(dynaForm, null).getIdInternal(), false };
-
-        ServiceUtils.executeService("SetCoursesAndTeachersValuationPermission", parameters);
+        SetCoursesAndTeachersValuationPermission.runSetCoursesAndTeachersValuationPermission(
+                getSelectedTeacherServiceDistribution(dynaForm, rootTeacherServiceDistribution).getIdInternal(),
+                getSelectedPerson(dynaForm, null).getIdInternal(), false, false, false, false);
 
         return loadTeacherServiceDistributionsForPermissionServices(mapping, form, request, response);
     }
 
     public ActionForward setPermissionsToPerson(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         IUserView userView = UserView.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
 
         TSDProcess tsdProcess = getTSDProcess(dynaForm);
         Person selectedPerson = getSelectedPerson(dynaForm, null);
 
-        Object[] parameters =
-                new Object[] { tsdProcess.getIdInternal(), selectedPerson.getIdInternal(),
-                        getSelectedPhaseManagementPermission(dynaForm), getSelectedAutomaticValuationPermission(dynaForm),
-                        getSelectedOmissionConfigurationPermission(dynaForm),
-                        getSelectedCompetenceCoursesAndTeachersManagementPermission(dynaForm) };
-
-        ServiceUtils.executeService("SetPersonPermissionsOnTSDProcess", parameters);
+        SetPersonPermissionsOnTSDProcess.runSetPersonPermissionsOnTSDProcess(tsdProcess.getIdInternal(),
+                selectedPerson.getIdInternal(), getSelectedPhaseManagementPermission(dynaForm),
+                getSelectedAutomaticValuationPermission(dynaForm), getSelectedOmissionConfigurationPermission(dynaForm),
+                getSelectedCompetenceCoursesAndTeachersManagementPermission(dynaForm));
 
         return loadTeacherServiceDistributionsForPermissionServices(mapping, form, request, response);
     }
@@ -488,33 +481,31 @@ public class TeacherServiceDistributionSupportAction extends FenixDispatchAction
         return personList;
     }
 
-    private TSDCourse getSelectedTSDCourse(DynaActionForm dynaForm) throws FenixFilterException, FenixServiceException {
+    private TSDCourse getSelectedTSDCourse(DynaActionForm dynaForm) throws  FenixServiceException {
         return rootDomainObject.readTSDCourseByOID((Integer) dynaForm.get("tsdCourse"));
     }
 
-    private TSDTeacher getSelectedTSDTeacher(DynaActionForm dynaForm) throws FenixFilterException, FenixServiceException {
+    private TSDTeacher getSelectedTSDTeacher(DynaActionForm dynaForm) throws  FenixServiceException {
         return rootDomainObject.readTSDTeacherByOID((Integer) dynaForm.get("tsdTeacher"));
     }
 
     private TeacherServiceDistribution getSelectedTeacherServiceDistribution(DynaActionForm dynaForm,
-            TeacherServiceDistribution rootTeacherServiceDistribution) throws FenixFilterException, FenixServiceException {
+            TeacherServiceDistribution rootTeacherServiceDistribution) throws  FenixServiceException {
         TeacherServiceDistribution selectedTeacherServiceDistribution =
                 rootDomainObject.readTeacherServiceDistributionByOID((Integer) dynaForm.get("tsd"));
         return (selectedTeacherServiceDistribution == null) ? rootTeacherServiceDistribution : selectedTeacherServiceDistribution;
     }
 
     private TeacherServiceDistribution createTeacherServiceDistribution(IUserView userView, TSDProcess tsdProcess,
-            DynaActionForm dynaForm) throws FenixFilterException, FenixServiceException {
+            DynaActionForm dynaForm) throws  FenixServiceException {
         TSDProcessPhase currentValuation = tsdProcess.getCurrentTSDProcessPhase();
         TeacherServiceDistribution selectedTeacherServiceDistribution = getSelectedTeacherServiceDistribution(dynaForm, null);
-        Object[] parameters =
-                new Object[] { currentValuation.getIdInternal(), selectedTeacherServiceDistribution.getIdInternal(),
-                        (String) dynaForm.get("name") };
 
-        return (TeacherServiceDistribution) ServiceUtils.executeService("CreateTeacherServiceDistribution", parameters);
+        return CreateTeacherServiceDistribution.runCreateTeacherServiceDistribution(currentValuation.getIdInternal(),
+                selectedTeacherServiceDistribution.getIdInternal(), (String) dynaForm.get("name"));
     }
 
-    private TSDProcess getTSDProcess(DynaActionForm dynaForm) throws FenixServiceException, FenixFilterException {
+    private TSDProcess getTSDProcess(DynaActionForm dynaForm) throws FenixServiceException {
         return rootDomainObject.readTSDProcessByOID((Integer) dynaForm.get("tsdProcess"));
     }
 
@@ -527,7 +518,7 @@ public class TeacherServiceDistributionSupportAction extends FenixDispatchAction
     /*
      * public ActionForward mergeTeacherServiceDistributions( ActionMapping
      * mapping, ActionForm form, HttpServletRequest request, HttpServletResponse
-     * response) throws FenixFilterException, FenixServiceException {
+     * response) throws  FenixServiceException {
      * 
      * DynaActionForm dynaForm = (DynaActionForm) form;
      * 
@@ -545,44 +536,42 @@ public class TeacherServiceDistributionSupportAction extends FenixDispatchAction
      */
 
     public ActionForward changeTeacherServiceDistributionName(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         DynaActionForm dynaForm = (DynaActionForm) form;
 
         Integer selectedGroupingId = (Integer) dynaForm.get("tsd");
         Integer otherGroupingId = (Integer) dynaForm.get("otherGrouping");
 
-        Object[] parameters = new Object[] { selectedGroupingId, otherGroupingId };
-
-        ServiceUtils.executeService("MergeTeacherServiceDistributions", parameters);
+        MergeTeacherServiceDistributions.runMergeTeacherServiceDistributions(selectedGroupingId, otherGroupingId);
 
         return loadTeacherServiceDistributions(mapping, form, request, response);
     }
 
     public ActionForward associateAllTSDTeachers(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         IUserView userView = UserView.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
 
         TeacherServiceDistribution selectedTeacherServiceDistribution = getSelectedTeacherServiceDistribution(dynaForm, null);
-        Object[] parameters = new Object[] { selectedTeacherServiceDistribution.getIdInternal(), null };
 
-        ServiceUtils.executeService("AssociateTSDTeacherWithTeacherServiceDistribution", parameters);
+        AssociateTSDTeacherWithTeacherServiceDistribution.runAssociateTSDTeacherWithTeacherServiceDistribution(
+                selectedTeacherServiceDistribution.getIdInternal(), null);
 
         return loadTeacherServiceDistributions(mapping, form, request, response);
     }
 
     public ActionForward associateAllCompetenceCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         IUserView userView = UserView.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
 
         TeacherServiceDistribution selectedTeacherServiceDistribution = getSelectedTeacherServiceDistribution(dynaForm, null);
-        Object[] parameters = new Object[] { selectedTeacherServiceDistribution.getIdInternal(), null };
 
-        ServiceUtils.executeService("AssociateTSDCourseWithTeacherServiceDistribution", parameters);
+        AssociateTSDCourseWithTeacherServiceDistribution.runAssociateTSDCourseWithTeacherServiceDistribution(
+                selectedTeacherServiceDistribution.getIdInternal(), null);
 
         return loadTeacherServiceDistributions(mapping, form, request, response);
     }

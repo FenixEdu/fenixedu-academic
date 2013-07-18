@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
@@ -20,7 +19,7 @@ import pt.ist.fenixWebFramework.services.Service;
 /**
  * @author Ana e Ricardo
  */
-public class ReadAvailableRoomsForExam extends FenixService {
+public class ReadAvailableRoomsForExam {
 
     @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
     @Service

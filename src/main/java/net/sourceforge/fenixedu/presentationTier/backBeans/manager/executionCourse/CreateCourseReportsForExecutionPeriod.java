@@ -5,7 +5,6 @@ import java.util.List;
 import javax.faces.event.ActionEvent;
 import javax.faces.model.SelectItem;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionPeriods;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.gesdis.CreateCourseReports;
@@ -25,7 +24,7 @@ public class CreateCourseReportsForExecutionPeriod extends FenixBackingBean {
 
     private Integer executionPeriodID;
 
-    public List getExecutionPeriods() throws FenixFilterException, FenixServiceException {
+    public List getExecutionPeriods() throws  FenixServiceException {
 
         List executionPeriods = ReadNotClosedExecutionPeriods.run();
 
@@ -43,7 +42,7 @@ public class CreateCourseReportsForExecutionPeriod extends FenixBackingBean {
 
     }
 
-    public void create(ActionEvent evt) throws FenixFilterException, FenixServiceException {
+    public void create(ActionEvent evt) throws FenixServiceException {
         CreateCourseReports.run(getExecutionPeriodID());
         addInfoMessage(BundleUtil.getStringFromResourceBundle("resources.ManagerResources",
                 "message.manager.createCourseReports.success"));

@@ -16,12 +16,12 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NoChangeMadeS
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonValidChangeServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.ChangeGuideSituation;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.ChooseGuide;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.EditGuideInformation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoContributor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
 import net.sourceforge.fenixedu.domain.GuideState;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartySocialSecurityNumber;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidChangeActionException;
@@ -56,11 +56,9 @@ public class EditGuideDispatchAction extends FenixDispatchAction {
         Integer guideYear = new Integer(request.getParameter("year"));
         Integer guideVersion = new Integer(request.getParameter("version"));
 
-        Object args[] = { guideNumber, guideYear, guideVersion };
-
         InfoGuide infoGuide = null;
         try {
-            infoGuide = (InfoGuide) ServiceManagerServiceFactory.executeService("ChooseGuide", args);
+            infoGuide = ChooseGuide.runChooseGuide(guideNumber, guideYear, guideVersion);
         } catch (NonExistingServiceException e) {
             throw new NonExistingActionException("A Versão da Guia", e);
         }
@@ -152,14 +150,12 @@ public class EditGuideDispatchAction extends FenixDispatchAction {
         Integer guideNumber = new Integer(request.getParameter("number"));
         Integer guideVersion = new Integer(request.getParameter("version"));
 
-        Object args[] = { guideNumber, guideYear, guideVersion };
-
         // Read the Guide
 
         InfoGuide infoGuide = null;
 
         try {
-            infoGuide = (InfoGuide) ServiceManagerServiceFactory.executeService("ChooseGuide", args);
+            infoGuide = ChooseGuide.runChooseGuide(guideNumber, guideYear, guideVersion);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
@@ -211,8 +207,7 @@ public class EditGuideDispatchAction extends FenixDispatchAction {
 
         InfoGuide infoGuide = null;
         try {
-            Object args[] = { guideNumber, guideYear, guideVersion };
-            infoGuide = (InfoGuide) ServiceManagerServiceFactory.executeService("ChooseGuide", args);
+            infoGuide = ChooseGuide.runChooseGuide(guideNumber, guideYear, guideVersion);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
@@ -286,8 +281,7 @@ public class EditGuideDispatchAction extends FenixDispatchAction {
 
         List guideList = null;
         try {
-            Object args[] = { guideNumber, guideYear };
-            guideList = (List) ServiceManagerServiceFactory.executeService("ChooseGuide", args);
+            guideList = ChooseGuide.runChooseGuide(guideNumber, guideYear);
         } catch (NonExistingServiceException e) {
             throw new NonExistingActionException("A Guia", e);
         }

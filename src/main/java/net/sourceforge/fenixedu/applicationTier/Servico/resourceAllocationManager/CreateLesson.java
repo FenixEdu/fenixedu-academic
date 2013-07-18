@@ -6,13 +6,13 @@ package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManag
 
 import java.util.Calendar;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoomOccupationEditor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.domain.Lesson;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.util.DiaSemana;
@@ -22,7 +22,7 @@ import org.joda.time.YearMonthDay;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class CreateLesson extends FenixService {
+public class CreateLesson {
 
     @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
     @Service
@@ -31,10 +31,10 @@ public class CreateLesson extends FenixService {
             throws FenixServiceException {
 
         final ExecutionSemester executionSemester =
-                rootDomainObject.readExecutionSemesterByOID(infoShift.getInfoDisciplinaExecucao().getInfoExecutionPeriod()
+                RootDomainObject.getInstance().readExecutionSemesterByOID(infoShift.getInfoDisciplinaExecucao().getInfoExecutionPeriod()
                         .getIdInternal());
 
-        final Shift shift = rootDomainObject.readShiftByOID(infoShift.getIdInternal());
+        final Shift shift = RootDomainObject.getInstance().readShiftByOID(infoShift.getIdInternal());
 
         AllocatableSpace room = null;
         if (infoRoomOccupation != null) {

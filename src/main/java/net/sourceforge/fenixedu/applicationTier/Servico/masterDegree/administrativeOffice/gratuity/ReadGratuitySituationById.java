@@ -1,11 +1,12 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituationWithInfoPersonAndInfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.GratuitySituation;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
@@ -15,14 +16,14 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
  * 
  */
-public class ReadGratuitySituationById extends FenixService {
+public class ReadGratuitySituationById {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
     public static InfoGratuitySituation run(Integer gratuitySituationID) throws FenixServiceException {
         InfoGratuitySituation infoGratuitySituation = null;
 
-        GratuitySituation gratuitySituation = rootDomainObject.readGratuitySituationByOID(gratuitySituationID);
+        GratuitySituation gratuitySituation = RootDomainObject.getInstance().readGratuitySituationByOID(gratuitySituationID);
         if (gratuitySituation == null) {
             throw new NonExistingServiceException("error.exception.masterDegree.gratuity.notExistingGratuitySituation");
         }

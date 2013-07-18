@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.research.activity;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.research.activity.ParticipantBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.activity.ResearchCooperationCreationBean;
@@ -24,7 +24,7 @@ import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
-public class CreateResearchActivityParticipation extends FenixService {
+public class CreateResearchActivityParticipation {
 
     @Checked("ResultPredicates.author")
     @Service

@@ -1,13 +1,13 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class DeleteExamCoordinator extends FenixService {
+public class DeleteExamCoordinator {
 
     @Service
     public static void run(ExamCoordinator coordinator) {

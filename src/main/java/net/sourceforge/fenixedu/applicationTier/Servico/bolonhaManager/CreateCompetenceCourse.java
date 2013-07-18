@@ -3,12 +3,13 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingCompetenceCourseInformationException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CompetenceCourseType;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLevel;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
@@ -17,7 +18,7 @@ import net.sourceforge.fenixedu.util.StringFormatter;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class CreateCompetenceCourse extends FenixService {
+public class CreateCompetenceCourse {
 
     @Checked("RolePredicates.BOLONHA_MANAGER_PREDICATE")
     @Service
@@ -25,7 +26,7 @@ public class CreateCompetenceCourse extends FenixService {
             CompetenceCourseLevel competenceCourseLevel, CompetenceCourseType type, Integer unitID,
             ExecutionSemester startSemester) throws FenixServiceException {
 
-        final CompetenceCourseGroupUnit unit = (CompetenceCourseGroupUnit) rootDomainObject.readPartyByOID(unitID);
+        final CompetenceCourseGroupUnit unit = (CompetenceCourseGroupUnit) RootDomainObject.getInstance().readPartyByOID(unitID);
         if (unit == null) {
             throw new FenixServiceException("error.invalidUnit");
         }

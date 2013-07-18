@@ -85,61 +85,6 @@
       <!-- ========== Action Mapping Definitions =============================== -->
       <action-mappings type="org.apache.struts.action.ActionMapping">
             <action forward="index" path="/index"></action>
-            <action className="net.sourceforge.fenixedu.presentationTier.mapping.framework.SearchActionMapping" parameter="method" scope="request" input="/searchTeachersInformation?method=searchForm" name="searchInformationForm" type="net.sourceforge.fenixedu.presentationTier.Action.gep.SearchTeachersInformationAction" path="/searchTeachersInformation">
-                  <set-property value="ReadTeachersInformation" property="serviceName"></set-property>
-                  <set-property value="infoSiteTeacherInformation" property="objectAttribute"></set-property>
-                  <set-property value="infoSiteTeachersInformation" property="listAttribute"></set-property>
-                  <set-property value="label.gep.notFound" property="notFoundMessageKey"></set-property>
-                  <forward path="search-teachers-information" name="search-form"></forward>
-                  <forward path="view-teachers-information" name="list-one"></forward>
-                  <forward path="view-teachers-information" name="list-many"></forward>
-            </action>
-            <action className="net.sourceforge.fenixedu.presentationTier.mapping.framework.SearchActionMapping" parameter="method" scope="request" input="/searchCoursesInformation.do?method=searchForm" name="searchInformationForm" type="net.sourceforge.fenixedu.presentationTier.Action.gep.SearchCoursesInformationAction" path="/searchCoursesInformation">
-                  <set-property value="ReadCoursesInformation" property="serviceName"></set-property>
-                  <set-property value="infoSiteCourseInformation" property="objectAttribute"></set-property>
-                  <set-property value="infoSiteCoursesInformation" property="listAttribute"></set-property>
-                  <set-property value="label.gep.notFound" property="notFoundMessageKey"></set-property>
-                  <forward path="search-courses-information" name="search-form"></forward>
-                  <forward path="view-courses-information" name="list-one"></forward>
-                  <forward path="view-courses-information" name="list-many"></forward>
-            </action>
-            <!-- Read Teacher Information -->
-            <action className="net.sourceforge.fenixedu.presentationTier.mapping.framework.SearchActionMapping" parameter="method" scope="request" input="/listCoursesInformation.do?method=searchForm" type="net.sourceforge.fenixedu.presentationTier.Action.gep.SearchCoursesInformationAction" path="/listCoursesInformation">
-                  <set-property value="ReadCoursesInformation" property="serviceName"></set-property>
-                  <set-property value="infoSiteCourseInformation" property="objectAttribute"></set-property>
-                  <set-property value="infoSiteCoursesInformation" property="listAttribute"></set-property>
-                  <set-property value="label.gep.notFound" property="notFoundMessageKey"></set-property>
-                  <forward path="search-courses-information" name="search-form"></forward>
-                  <forward path="list-courses-information" name="list-one"></forward>
-                  <forward path="list-courses-information" name="list-many"></forward>
-            </action>
-            <action className="net.sourceforge.fenixedu.presentationTier.mapping.framework.SearchActionMapping" parameter="method" scope="request" input="/listCoursesInformationEnglish.do?method=searchForm" type="net.sourceforge.fenixedu.presentationTier.Action.gep.SearchCoursesInformationAction" path="/listCoursesInformationEnglish">
-                  <set-property value="ReadCoursesInformation" property="serviceName"></set-property>
-                  <set-property value="infoSiteCourseInformation" property="objectAttribute"></set-property>
-                  <set-property value="infoSiteCoursesInformation" property="listAttribute"></set-property>
-                  <set-property value="label.gep.notFound" property="notFoundMessageKey"></set-property>
-                  <forward path="search-courses-information" name="search-form"></forward>
-                  <forward path="list-courses-information-english" name="list-one"></forward>
-                  <forward path="list-courses-information-english" name="list-many"></forward>
-            </action>
-            <action className="net.sourceforge.fenixedu.presentationTier.mapping.framework.SearchActionMapping" parameter="method" scope="request" input="/listCoursesAcreditation.do?method=searchForm" type="net.sourceforge.fenixedu.presentationTier.Action.gep.SearchCoursesInformationAction" path="/listCoursesAcreditation">
-                  <set-property value="ReadCoursesInformation" property="serviceName"></set-property>
-                  <set-property value="infoSiteCourseInformation" property="objectAttribute"></set-property>
-                  <set-property value="infoSiteCoursesInformation" property="listAttribute"></set-property>
-                  <set-property value="label.gep.notFound" property="notFoundMessageKey"></set-property>
-                  <forward path="search-courses-information" name="search-form"></forward>
-                  <forward path="list-courses-acreditation" name="list-one"></forward>
-                  <forward path="list-courses-acreditation" name="list-many"></forward>
-            </action>
-            <action className="net.sourceforge.fenixedu.presentationTier.mapping.framework.SearchActionMapping" parameter="method" scope="request" input="/listTeachersAcreditation.do?method=searchForm" type="net.sourceforge.fenixedu.presentationTier.Action.gep.SearchTeachersInformationAction" path="/listTeachersAcreditation">
-                  <set-property value="ReadTeachersInformation" property="serviceName"></set-property>
-                  <set-property value="infoSiteTeacherInformation" property="objectAttribute"></set-property>
-                  <set-property value="infoSiteTeachersInformation" property="listAttribute"></set-property>
-                  <set-property value="label.gep.notFound" property="notFoundMessageKey"></set-property>
-                  <forward path="search-teachers-information" name="search-form"></forward>
-                  <forward path="list-teachers-acreditation" name="list-one"></forward>
-                  <forward path="list-teachers-acreditation" name="list-many"></forward>
-            </action>
             <!-- Teaching Report -->
             <!-- ==================== View Curricular Course Historic ================== -->
             <!-- ==================== Inquiries ================== -->

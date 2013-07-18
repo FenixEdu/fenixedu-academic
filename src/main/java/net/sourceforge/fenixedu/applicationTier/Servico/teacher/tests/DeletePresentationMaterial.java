@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DeleteFileRequest;
 import net.sourceforge.fenixedu.domain.tests.NewMathMlMaterial;
@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.tests.PictureMaterialFile;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class DeletePresentationMaterial extends FenixService {
+public class DeletePresentationMaterial {
     @Service
     public static void run(NewMathMlMaterial mathMlMaterial) throws FenixServiceException {
         mathMlMaterial.delete();

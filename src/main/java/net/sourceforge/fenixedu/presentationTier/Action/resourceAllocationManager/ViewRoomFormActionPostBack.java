@@ -6,7 +6,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
@@ -30,7 +29,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 public class ViewRoomFormActionPostBack extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixServiceException, FenixFilterException {
+            throws FenixServiceException {
         RoomOccupationWeekBean roomOccupationWeekBean = new RoomOccupationWeekBean();
 
         DynaActionForm indexForm = (DynaActionForm) form;

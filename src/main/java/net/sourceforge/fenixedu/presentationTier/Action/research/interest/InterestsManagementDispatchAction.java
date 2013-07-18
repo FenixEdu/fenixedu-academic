@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.research.interest.ChangeResearchInterestOrder;
 import net.sourceforge.fenixedu.applicationTier.Servico.research.interest.DeleteResearchInterest;
@@ -111,7 +110,7 @@ public class InterestsManagementDispatchAction extends FenixDispatchAction {
         return mapping.findForward("EditInterest");
     }
 
-    private void changeOrder(HttpServletRequest request, int direction) throws FenixFilterException, FenixServiceException {
+    private void changeOrder(HttpServletRequest request, int direction) throws  FenixServiceException {
         Integer oid = Integer.parseInt(request.getParameter("oid"));
 
         IUserView userView = getUserView(request);
@@ -170,7 +169,7 @@ public class InterestsManagementDispatchAction extends FenixDispatchAction {
         }
     }
 
-    private List<ResearchInterest> getOrderedInterests(HttpServletRequest request) throws FenixFilterException,
+    private List<ResearchInterest> getOrderedInterests(HttpServletRequest request) throws 
             FenixServiceException {
 
         List<ResearchInterest> researchInterests = getUserView(request).getPerson().getResearchInterests();

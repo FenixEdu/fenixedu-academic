@@ -7,8 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.publico.ReadDegreeByOID;
 import net.sourceforge.fenixedu.commons.collections.Table;
 import net.sourceforge.fenixedu.dataTransferObject.ClassView;
@@ -143,8 +141,7 @@ public class ShowClassesDispatchAction extends FenixDispatchAction {
         return new ClassView(schoolClass);
     }
 
-    private void getInfoDegreeCurricularPlan(HttpServletRequest request, Degree degree) throws FenixServiceException,
-            FenixFilterException {
+    private void getInfoDegreeCurricularPlan(HttpServletRequest request, Degree degree) {
 
         InfoDegree infoDegree = ReadDegreeByOID.run(degree.getIdInternal());
         request.setAttribute("infoDegree", infoDegree);

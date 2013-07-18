@@ -11,16 +11,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadCurricularCourse;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadExecutionCoursesByCurricularCourse;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadInterminatedCurricularCourseScopes;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -52,7 +51,7 @@ public class ReadCurricularCourseAction extends FenixAction {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixActionException, FenixFilterException {
+            throws FenixActionException {
 
         IUserView userView = UserView.getUser();
         Integer curricularCourseId = new Integer(request.getParameter("curricularCourseId"));
@@ -65,8 +64,7 @@ public class ReadCurricularCourseAction extends FenixAction {
 
         try {
             infoCurricularCourse =
-                    (InfoCurricularCourse) ServiceUtils.executeService("ReadCurricularCourse",
-                            new Object[] { curricularCourseId });
+                    (InfoCurricularCourse) ReadCurricularCourse.runReadCurricularCourse( curricularCourseId );
 
         } catch (NonExistingServiceException e) {
             throw new NonExistingActionException("message.nonExistingCurricularCourse", "", e);

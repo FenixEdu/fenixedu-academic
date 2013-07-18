@@ -3,7 +3,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.domain.util.workflow.IState;
 import net.sourceforge.fenixedu.domain.util.workflow.StateBean;
 import net.sourceforge.fenixedu.domain.util.workflow.StateMachine;
@@ -13,7 +13,7 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-public class StateMachineRunner extends FenixService {
+public class StateMachineRunner {
 
     @Service
     public static void run(DefaultRunnerArgs defaultRunnerArgs) {

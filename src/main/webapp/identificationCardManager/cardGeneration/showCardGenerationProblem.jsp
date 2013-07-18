@@ -91,8 +91,8 @@
 								<fr:property name="size" value="30"/>
 								<fr:property name="rawSlotName" value="name"/>
 								<fr:property name="indicatorShown" value="true"/>
-								<fr:property name="serviceName" value="SearchInternalPersons"/>
-								<fr:property name="serviceArgs" value="slot=name,size=30"/>
+								<fr:property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchInternalPersons"/>
+								<fr:property name="args" value="slot=name,size=30"/>
 								<fr:property name="className" value="net.sourceforge.fenixedu.domain.person.PersonName"/>				
 								<fr:property name="minChars" value="4"/>
 								<fr:property name="labelField" value="person.name"/>

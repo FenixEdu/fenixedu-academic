@@ -4,13 +4,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class AddVigilantsToGroup extends FenixService {
+public class AddVigilantsToGroup {
 
     @Service
     public static void run(Map<VigilantGroup, List<Person>> peopleToAdd) {

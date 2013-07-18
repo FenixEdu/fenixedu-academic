@@ -9,10 +9,12 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.SeminaryCoordinatorOrStudentFilter;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCaseStudy;
 import net.sourceforge.fenixedu.domain.Seminaries.CaseStudy;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -21,9 +23,9 @@ import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BD
  *         Created at 3/Set/2003, 14:22:08
  * 
  */
-public class GetAllCasesStudy extends FenixService {
+public class GetAllCasesStudy {
 
-    public List run() throws BDException {
+    protected List run() throws BDException {
         List infoCases = new LinkedList();
 
         List cases = CaseStudy.getAllCaseStudies();
@@ -35,6 +37,16 @@ public class GetAllCasesStudy extends FenixService {
         }
 
         return infoCases;
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final GetAllCasesStudy serviceInstance = new GetAllCasesStudy();
+
+    @Service
+    public static List runGetAllCasesStudy() throws BDException, NotAuthorizedException {
+        SeminaryCoordinatorOrStudentFilter.instance.execute();
+        return serviceInstance.run();
     }
 
 }

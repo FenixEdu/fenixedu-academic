@@ -8,8 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.ChooseGuide;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
 import net.sourceforge.fenixedu.domain.GuideState;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidGuideSituationActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -52,7 +51,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 public class ViewReimbursementGuidesDispatchAction extends FenixDispatchAction {
 
     public ActionForward view(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixActionException, FenixFilterException {
+            throws FenixActionException {
 
         IUserView userView = UserView.getUser();
 
@@ -62,9 +61,8 @@ public class ViewReimbursementGuidesDispatchAction extends FenixDispatchAction {
 
         InfoGuide infoGuide = null;
 
-        Object args[] = { guideNumber, guideYear, guideVersion };
         try {
-            infoGuide = (InfoGuide) ServiceUtils.executeService("ChooseGuide", args);
+            infoGuide = ChooseGuide.runChooseGuide(guideNumber, guideYear, guideVersion);
 
             request.setAttribute(PresentationConstants.REIMBURSEMENT_GUIDES_LIST, infoGuide.getInfoReimbursementGuides());
         } catch (FenixServiceException e) {

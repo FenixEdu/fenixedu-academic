@@ -8,7 +8,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.teachersManagement.DissociateProfessorShipsAndResponsibleFor;
@@ -35,7 +34,7 @@ public class DissociateProfShipsAndRespForDispatchAction extends FenixDispatchAc
     }
 
     public ActionForward prepareDissociateECShowProfShipsAndRespFor(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
 
         DynaActionForm teacherIdForm = (DynaActionForm) form;
 
@@ -59,7 +58,7 @@ public class DissociateProfShipsAndRespForDispatchAction extends FenixDispatchAc
     }
 
     public ActionForward dissociateProfShipsAndRespFor(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
 
         DynaActionForm teacherForm = (DynaActionForm) form;
         String personNumber = (String) teacherForm.get("teacherId");

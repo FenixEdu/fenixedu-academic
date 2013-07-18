@@ -11,13 +11,13 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoViewClassSchedule;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Lesson;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
@@ -27,7 +27,7 @@ import pt.ist.fenixWebFramework.services.Service;
 /**
  * TODO Remove cloner deste servi�o...
  */
-public class ReadDegreesClassesLessons extends FenixService {
+public class ReadDegreesClassesLessons {
 
     @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
     @Service
@@ -38,7 +38,7 @@ public class ReadDegreesClassesLessons extends FenixService {
         List classes = new ArrayList();
         for (int i = 0; i < infoExecutionDegrees.size(); i++) {
             InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) infoExecutionDegrees.get(i);
-            ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
+            ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
             List degreeClasses = executionDegree.getSchoolClasses();
             for (Iterator iterator = degreeClasses.iterator(); iterator.hasNext();) {
                 SchoolClass klass = (SchoolClass) iterator.next();

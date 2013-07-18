@@ -6,10 +6,10 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.DeleteCourseLoad;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.EditExecutionCourse;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadClassesByExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.CourseLoadBean;
@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.domain.CourseLoad;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
@@ -116,11 +115,10 @@ public class ManageExecutionCourseDA extends FenixExecutionCourseAndExecutionDeg
     }
 
     private void readAndSetExecutionCourseClasses(HttpServletRequest request, ExecutionCourse executionCourse)
-            throws FenixFilterException, FenixServiceException {
+            throws  FenixServiceException {
 
         List<InfoClass> infoClasses =
-                (List<InfoClass>) ServiceManagerServiceFactory.executeService("ReadClassesByExecutionCourse",
-                        new Object[] { executionCourse });
+                (List<InfoClass>) ReadClassesByExecutionCourse.runReadClassesByExecutionCourse( executionCourse );
 
         if (infoClasses != null && !infoClasses.isEmpty()) {
             Collections.sort(infoClasses, new BeanComparator("nome"));

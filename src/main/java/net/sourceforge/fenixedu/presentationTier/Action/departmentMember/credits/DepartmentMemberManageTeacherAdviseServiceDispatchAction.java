@@ -4,7 +4,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -47,7 +46,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class DepartmentMemberManageTeacherAdviseServiceDispatchAction extends ManageTeacherAdviseServiceDispatchAction {
 
     public ActionForward showTeacherAdvises(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws NumberFormatException,  FenixServiceException {
 
         DynaActionForm dynaForm = (DynaActionForm) form;
 
@@ -77,13 +76,13 @@ public class DepartmentMemberManageTeacherAdviseServiceDispatchAction extends Ma
     }
 
     public ActionForward editAdviseService(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws NumberFormatException,  FenixServiceException {
 
         return editAdviseService(form, request, mapping, RoleType.DEPARTMENT_MEMBER);
     }
 
     public ActionForward deleteAdviseService(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws NumberFormatException,  FenixServiceException {
 
         deleteAdviseService(request, RoleType.DEPARTMENT_MEMBER);
         return mapping.findForward("successfull-delete");

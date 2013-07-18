@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.phd.student.enrolments;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.phd.student.PhdStudentEnrolmentBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.BolonhaStudentEnrollmentBean;
@@ -135,7 +134,7 @@ public class PhdStudentEnrolmentDA extends BolonhaStudentEnrollmentDispatchActio
 
     @Override
     public ActionForward enrolInOptionalCurricularCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         final BolonhaStudentOptionalEnrollmentBean bean = getBolonhaStudentOptionalEnrollmentBeanFromViewState();
         addCompetenceCoursesAvalailableToEnrol(request, bean.getStudentCurricularPlan());
@@ -150,7 +149,7 @@ public class PhdStudentEnrolmentDA extends BolonhaStudentEnrollmentDispatchActio
 
     @Override
     public ActionForward enrolInCycleCourseGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         throw new RuntimeException("error.PhdStudentEnrolmentBean.unsupported.operation");
     }
 

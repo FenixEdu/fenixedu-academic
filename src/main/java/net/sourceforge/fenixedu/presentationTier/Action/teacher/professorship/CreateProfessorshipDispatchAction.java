@@ -10,7 +10,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionPeriods;
 import net.sourceforge.fenixedu.applicationTier.Servico.degree.execution.ReadExecutionCoursesByExecutionDegreeService;
 import net.sourceforge.fenixedu.applicationTier.Servico.degree.execution.ReadExecutionDegreesByExecutionYearAndDegreeType;
@@ -57,7 +56,7 @@ public class CreateProfessorshipDispatchAction extends FenixDispatchAction {
         return mapping.findForward("final-step");
     }
 
-    private List getExecutionDegrees(HttpServletRequest request) throws FenixServiceException, FenixFilterException {
+    private List getExecutionDegrees(HttpServletRequest request) throws FenixServiceException {
         InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute("infoExecutionPeriod");
 
         List<InfoExecutionDegree> executionDegrees =
@@ -83,13 +82,13 @@ public class CreateProfessorshipDispatchAction extends FenixDispatchAction {
     }
 
     private void prepareConstants(DynaActionForm personExecutionCourseForm, HttpServletRequest request)
-            throws FenixServiceException, FenixFilterException {
+            throws FenixServiceException {
 
         request.setAttribute("infoPerson", InfoPerson.newInfoFromDomain(getPerson(personExecutionCourseForm)));
     }
 
     private void prepareFirstStep(DynaValidatorForm personExecutionCourseForm, HttpServletRequest request)
-            throws FenixServiceException, FenixFilterException {
+            throws FenixServiceException {
         prepareConstants(personExecutionCourseForm, request);
 
         List executionPeriodsNotClosed = ReadNotClosedExecutionPeriods.run();
@@ -103,14 +102,14 @@ public class CreateProfessorshipDispatchAction extends FenixDispatchAction {
     }
 
     private void prepareSecondStep(DynaValidatorForm personExecutionCourseForm, HttpServletRequest request)
-            throws FenixServiceException, FenixFilterException {
+            throws FenixServiceException {
         prepareFirstStep(personExecutionCourseForm, request);
         List executionDegrees = getExecutionDegrees(request);
         request.setAttribute("executionDegrees", executionDegrees);
     }
 
     private void prepareThirdStep(DynaValidatorForm personExecutionCourseForm, HttpServletRequest request)
-            throws FenixServiceException, FenixFilterException {
+            throws FenixServiceException {
         prepareSecondStep(personExecutionCourseForm, request);
         Integer executionDegreeId = Integer.valueOf((String) personExecutionCourseForm.get("executionDegreeId"));
         Integer executionPeriodId = Integer.valueOf((String) personExecutionCourseForm.get("executionPeriodId"));

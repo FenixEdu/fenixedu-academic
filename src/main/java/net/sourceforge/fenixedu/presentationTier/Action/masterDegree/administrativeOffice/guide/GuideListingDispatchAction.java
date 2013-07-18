@@ -13,12 +13,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.ChooseGuide;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.ChooseGuideByPersonID;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadStudentByNumberAndDegreeType;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
@@ -60,11 +60,9 @@ public class GuideListingDispatchAction extends FenixDispatchAction {
         // Get the Information
         Integer guideYear = new Integer((String) chooseGuideForm.get("year"));
 
-        Object args[] = { guideYear };
-
         List result = null;
         try {
-            result = (List) ServiceManagerServiceFactory.executeService("ChooseGuide", args);
+            result = ChooseGuide.runChooseGuide(guideYear);
         } catch (NonExistingServiceException e) {
             throw new NonExistingActionException("A Guia", e);
         }
@@ -82,11 +80,9 @@ public class GuideListingDispatchAction extends FenixDispatchAction {
         Integer guideYear = new Integer(request.getParameter("year"));
         Integer guideNumber = new Integer(request.getParameter("number"));
 
-        Object args[] = { guideNumber, guideYear };
-
         List result = null;
         try {
-            result = (List) ServiceManagerServiceFactory.executeService("ChooseGuide", args);
+            result = ChooseGuide.runChooseGuide(guideNumber, guideYear);
         } catch (NonExistingServiceException e) {
             throw new NonExistingActionException("A Guia", e);
         }
@@ -139,11 +135,9 @@ public class GuideListingDispatchAction extends FenixDispatchAction {
             identificationDocumentType = infoStudent.getInfoPerson().getTipoDocumentoIdentificacao();
         }
 
-        Object args[] = { identificationDocumentNumber, identificationDocumentType };
-
         List result = null;
         try {
-            result = (List) ServiceManagerServiceFactory.executeService("ChooseGuide", args);
+            result = ChooseGuide.runChooseGuide(identificationDocumentNumber, identificationDocumentType);
         } catch (NonExistingServiceException e) {
             throw new NonExistingActionException("A Person", e);
         }

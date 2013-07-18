@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.InsertGratuityData;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.ReadGratuityValuesByExecutionDegree;
@@ -150,7 +149,7 @@ public class InsertGratuityDataLookupDispatchAction extends FenixLookupDispatchA
     }
 
     public ActionForward insertGratuityData(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException {
+            HttpServletResponse response)  {
         IUserView userView = UserView.getUser();
         ActionErrors errors = new ActionErrors();
         DynaValidatorForm gratuityForm = (DynaValidatorForm) form;

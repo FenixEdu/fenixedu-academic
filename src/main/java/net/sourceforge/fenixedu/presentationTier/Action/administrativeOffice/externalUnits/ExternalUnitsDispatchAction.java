@@ -6,7 +6,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.externalUnits.CreateExternalCurricularCourse;
 import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.externalUnits.CreateExternalUnit;
 import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.externalUnits.DeleteExternalCurricularCourse;
@@ -210,7 +209,7 @@ public class ExternalUnitsDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward createExternalUnit(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         final CreateExternalUnitBean externalUnitBean = getRenderedObject();
 
@@ -233,7 +232,7 @@ public class ExternalUnitsDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward editExternalUnit(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         final EditExternalUnitBean externalUnitBean = getRenderedObject();
 
@@ -253,7 +252,7 @@ public class ExternalUnitsDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward deleteExternalUnit(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         final Unit unit = getUnit(request);
         final Unit parent = getAnyParentUnit(unit);
@@ -311,7 +310,7 @@ public class ExternalUnitsDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward createExternalCurricularCourse(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         final CreateExternalCurricularCourseBean externalCurricularCourseBean = getRenderedObject();
 
@@ -340,7 +339,7 @@ public class ExternalUnitsDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward deleteExternalCurricularCourse(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         final ExternalCurricularCourse externalCurricularCourse = getExternalCurricularCourse(request);
         final Unit parent = externalCurricularCourse.getUnit();
@@ -364,7 +363,7 @@ public class ExternalUnitsDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward editExternalCurricularCourse(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         final EditExternalCurricularCourseBean externalCurricularCourseBean = getRenderedObject();
 
@@ -410,7 +409,7 @@ public class ExternalUnitsDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward editExternalEnrolment(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         final EditExternalEnrolmentBean externalEnrolmentBean = getRenderedObject();
         try {

@@ -2,14 +2,13 @@ package net.sourceforge.fenixedu.applicationTier.Servico;
 
 import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu._development.PropertiesManager;
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 
 import org.apache.log4j.Logger;
 
 import pt.ist.fenixWebFramework.services.Service;
 
-public class CheckIsAliveService extends FenixService {
+public class CheckIsAliveService {
 
     private static final Logger logger = Logger.getLogger(CheckIsAliveService.class);
 

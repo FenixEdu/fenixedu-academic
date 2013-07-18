@@ -3,10 +3,15 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
+import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentAdministrativeOfficeAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ScientificCouncilAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -14,16 +19,17 @@ import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherServiceLog;
 import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.WeekDay;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Ricardo Rodrigues
  * 
  */
 
-public class DeleteSupportLesson extends FenixService {
+public class DeleteSupportLesson {
 
-    public void run(Integer supportLessonID, RoleType roleType) {
-        SupportLesson supportLesson = rootDomainObject.readSupportLessonByOID(supportLessonID);
+    protected void run(Integer supportLessonID, RoleType roleType) {
+        SupportLesson supportLesson = RootDomainObject.getInstance().readSupportLessonByOID(supportLessonID);
         log(supportLesson);
         supportLesson.delete(roleType);
     }
@@ -53,6 +59,30 @@ public class DeleteSupportLesson extends FenixService {
         final ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
         final Teacher teacher = professorship.getTeacher();
         return teacher.getTeacherServiceByExecutionPeriod(executionSemester);
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final DeleteSupportLesson serviceInstance = new DeleteSupportLesson();
+
+    @Service
+    public static void runDeleteSupportLesson(Integer supportLessonID, RoleType roleType) throws NotAuthorizedException {
+        try {
+            ScientificCouncilAuthorizationFilter.instance.execute();
+            serviceInstance.run(supportLessonID, roleType);
+        } catch (NotAuthorizedException ex1) {
+            try {
+                DepartmentMemberAuthorizationFilter.instance.execute();
+                serviceInstance.run(supportLessonID, roleType);
+            } catch (NotAuthorizedException ex2) {
+                try {
+                    DepartmentAdministrativeOfficeAuthorizationFilter.instance.execute();
+                    serviceInstance.run(supportLessonID, roleType);
+                } catch (NotAuthorizedException ex3) {
+                    throw ex3;
+                }
+            }
+        }
     }
 
 }

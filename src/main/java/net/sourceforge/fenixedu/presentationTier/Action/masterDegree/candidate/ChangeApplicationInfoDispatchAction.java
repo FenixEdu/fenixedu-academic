@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.general.ReadAllCountries;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.candidate.ChangeApplicationInfo;
@@ -218,7 +217,7 @@ public class ChangeApplicationInfoDispatchAction extends FenixDispatchAction {
     }
 
     private InfoMasterDegreeCandidate readMasterDegreeCandidate(IUserView userView, Integer candidateID)
-            throws FenixFilterException, FenixActionException {
+            throws  FenixActionException {
         InfoMasterDegreeCandidate masterDegreeCandidate = null;
         masterDegreeCandidate = ReadMasterDegreeCandidateByID.run(candidateID);
         return masterDegreeCandidate;

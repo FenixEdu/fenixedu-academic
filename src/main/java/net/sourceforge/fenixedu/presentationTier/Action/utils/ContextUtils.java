@@ -14,7 +14,6 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecutionPeriod;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurricularYearByOID;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionCourseByOID;
@@ -559,7 +558,7 @@ public class ContextUtils {
         return anosCurriculares;
     }
 
-    public static List createExecutionDegreeList(HttpServletRequest request) throws FenixServiceException, FenixFilterException {
+    public static List createExecutionDegreeList(HttpServletRequest request) throws FenixServiceException {
         IUserView userView = UserView.getUser();
 
         InfoExecutionPeriod infoExecutionPeriod =

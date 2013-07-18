@@ -10,7 +10,6 @@ import java.util.ResourceBundle;
 
 import javax.faces.context.FacesContext;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -250,7 +249,7 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
         this.maximumYearString = maximumYearString;
     }
 
-    public List<Entry<StudentCurricularPlan, RegistrationStateType>> getStudentCurricularPlans() throws FenixFilterException,
+    public List<Entry<StudentCurricularPlan, RegistrationStateType>> getStudentCurricularPlans() throws 
             FenixServiceException {
         Map<StudentCurricularPlan, RegistrationStateType> studentCurricularPlans = filterPageStudentCurricularPlans();
 
@@ -345,7 +344,7 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
         this.minIndex = minIndex;
     }
 
-    public List<Integer> getIndexes() throws FenixFilterException, FenixServiceException {
+    public List<Integer> getIndexes() throws  FenixServiceException {
         final List<Integer> indexes = new ArrayList<Integer>();
         final double numberIndexes = Math.ceil(0.5 + getNumberResults() / RESULTS_PER_PAGE);
         for (int i = 1; i <= numberIndexes; i++) {

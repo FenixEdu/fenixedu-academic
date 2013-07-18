@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
@@ -21,7 +20,7 @@ public class WrittenEvaluationsByRoomBackingBean extends
         net.sourceforge.fenixedu.presentationTier.backBeans.sop.evaluation.WrittenEvaluationsByRoomBackingBean {
 
     @Override
-    public Map<AllocatableSpace, List<CalendarLink>> getWrittenEvaluationCalendarLinks() throws FenixFilterException,
+    public Map<AllocatableSpace, List<CalendarLink>> getWrittenEvaluationCalendarLinks() throws 
             FenixServiceException {
         final Collection<AllocatableSpace> rooms = getRoomsToDisplayMap();
         if (rooms != null) {

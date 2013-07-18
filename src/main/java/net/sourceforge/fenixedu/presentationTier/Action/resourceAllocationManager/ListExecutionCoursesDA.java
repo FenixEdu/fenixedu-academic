@@ -13,7 +13,6 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.ContextSelectionBean;
 import net.sourceforge.fenixedu.domain.Attends;
@@ -81,7 +80,7 @@ public class ListExecutionCoursesDA extends FenixDispatchAction {
         return null;
     }
 
-    private ExecutionSemester retrieveDomainObject(ActionForm form, HttpServletRequest request) throws FenixFilterException,
+    private ExecutionSemester retrieveDomainObject(ActionForm form, HttpServletRequest request) throws 
             FenixServiceException {
         final DynaActionForm dynaActionForm = (DynaActionForm) form;
         final String executionPeriodIDString = (String) dynaActionForm.get("executionPeriodID");

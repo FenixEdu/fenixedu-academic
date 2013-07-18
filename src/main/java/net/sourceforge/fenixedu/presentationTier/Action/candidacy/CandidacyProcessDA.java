@@ -11,7 +11,6 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
@@ -344,7 +343,7 @@ abstract public class CandidacyProcessDA extends CaseHandlingDispatchAction {
 
     @Override
     public ActionForward createNewProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         try {
             return super.createNewProcess(mapping, form, request, response);
         } catch (final DomainException e) {
@@ -368,7 +367,7 @@ abstract public class CandidacyProcessDA extends CaseHandlingDispatchAction {
     }
 
     public ActionForward executeEditCandidacyPeriod(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         try {
             executeActivity(getProcess(request), "EditCandidacyPeriod", getRenderedObject("candidacyProcessBean"));
@@ -501,7 +500,7 @@ abstract public class CandidacyProcessDA extends CaseHandlingDispatchAction {
     }
 
     public ActionForward executeSelectAvailableDegrees(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         try {
             executeActivity(getProcess(request), "SelectAvailableDegrees", getRenderedObject("candidacyProcessBean"));
         } catch (final DomainException e) {

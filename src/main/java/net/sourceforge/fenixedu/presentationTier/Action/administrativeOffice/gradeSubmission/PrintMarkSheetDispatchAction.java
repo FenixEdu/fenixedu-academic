@@ -13,7 +13,6 @@ import java.util.TreeMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.UnableToPrintServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -172,7 +171,7 @@ public class PrintMarkSheetDispatchAction extends MarkSheetDispatchAction {
     }
 
     public ActionForward printMarkSheets(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         DynaActionForm form = (DynaActionForm) actionForm;
         String markSheet = form.getString("markSheet");
         if (markSheet.equals("all")) {
@@ -183,7 +182,7 @@ public class PrintMarkSheetDispatchAction extends MarkSheetDispatchAction {
     }
 
     private ActionForward printMarkSheet(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         DynaActionForm form = (DynaActionForm) actionForm;
         String printerName = form.getString("printerName");
         String markSheetString = form.getString("markSheet");
@@ -201,7 +200,7 @@ public class PrintMarkSheetDispatchAction extends MarkSheetDispatchAction {
     }
 
     private ActionForward printWebMarkSheets(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         final DynaActionForm form = (DynaActionForm) actionForm;
         final String printerName = form.getString("printerName");

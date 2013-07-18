@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -28,7 +27,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ProjectTutorialExecutionCoursesDA extends FenixDispatchAction {
 
     public ActionForward showDepartmentExecutionCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws NumberFormatException,  FenixServiceException {
         DepartmentCreditsBean departmentCreditsBean = getRenderedObject();
         if (departmentCreditsBean == null) {
             departmentCreditsBean = new DepartmentCreditsBean();
@@ -39,7 +38,7 @@ public class ProjectTutorialExecutionCoursesDA extends FenixDispatchAction {
     }
 
     public ActionForward changeExecutionCourseType(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws NumberFormatException,  FenixServiceException {
 
         ExecutionCourse executionCourse =
                 AbstractDomainObject.fromExternalId((String) getFromRequest(request, "executionCourseOid"));

@@ -1,12 +1,12 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class AttributeFinalDegreeWork extends FenixService {
+public class AttributeFinalDegreeWork {
 
     @Service
     public static void run(GroupProposal groupProposal) {

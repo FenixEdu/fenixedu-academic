@@ -6,14 +6,14 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import pt.utl.ist.berserk.ServiceRequest;
-import pt.utl.ist.berserk.ServiceResponse;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
@@ -21,15 +21,16 @@ import pt.utl.ist.berserk.ServiceResponse;
  */
 public class WriteCandidateEnrolmentsAuhorizationFilter extends Filtro {
 
-    @Override
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-        IUserView id = getRemoteUser(request);
-        Object[] argumentos = getServiceCallArguments(request);
+    public static final WriteCandidateEnrolmentsAuhorizationFilter instance = new WriteCandidateEnrolmentsAuhorizationFilter();
+
+    public void execute(Set<Integer> selectedCurricularCoursesIDs, Integer candidateID, Double credits, String givenCreditsRemarks)
+            throws NotAuthorizedException {
+        IUserView id = AccessControl.getUserView();
 
         if ((id != null && id.getRoleTypes() != null && !containsRoleType(id.getRoleTypes()))
-                || (id != null && id.getRoleTypes() != null && !hasPrivilege(id, argumentos)) || (id == null)
-                || (id.getRoleTypes() == null)) {
-            throw new NotAuthorizedFilterException();
+                || (id != null && id.getRoleTypes() != null && !hasPrivilege(id, selectedCurricularCoursesIDs, candidateID))
+                || (id == null) || (id.getRoleTypes() == null)) {
+            throw new NotAuthorizedException();
         }
     }
 
@@ -41,17 +42,16 @@ public class WriteCandidateEnrolmentsAuhorizationFilter extends Filtro {
         return roles;
     }
 
-    private boolean hasPrivilege(IUserView id, Object[] arguments) {
+    private boolean hasPrivilege(IUserView id, Set<Integer> selectedCurricularCoursesIDs, Integer candidateID) {
         if (id.hasRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE)) {
             return true;
         }
 
         if (id.hasRoleType(RoleType.COORDINATOR)) {
-            Set<Integer> selection = (Set<Integer>) arguments[0];
-            Integer candidateID = (Integer) arguments[1];
             final Person person = id.getPerson();
 
-            MasterDegreeCandidate masterDegreeCandidate = rootDomainObject.readMasterDegreeCandidateByOID(candidateID);
+            MasterDegreeCandidate masterDegreeCandidate =
+                    RootDomainObject.getInstance().readMasterDegreeCandidateByOID(candidateID);
 
             if (masterDegreeCandidate == null) {
                 return false;
@@ -64,12 +64,12 @@ public class WriteCandidateEnrolmentsAuhorizationFilter extends Filtro {
                 return false;
             }
 
-            for (Integer selectedCurricularCourse : selection) {
+            for (Integer selectedCurricularCourse : selectedCurricularCoursesIDs) {
 
                 // Modified by Fernanda Quitério
 
                 CurricularCourse curricularCourse =
-                        (CurricularCourse) rootDomainObject.readDegreeModuleByOID(selectedCurricularCourse);
+                        (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(selectedCurricularCourse);
                 if (!curricularCourse.getDegreeCurricularPlan().equals(
                         masterDegreeCandidate.getExecutionDegree().getDegreeCurricularPlan())) {
                     return false;

@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteObjectByOID;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.TransferDomainObjectProperty;
@@ -62,7 +61,7 @@ public class MergePersonsDA extends FenixDispatchAction {
     }
 
     public ActionForward chooseObjects(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException, IllegalAccessException,
+            HttpServletResponse response) throws  FenixServiceException, IllegalAccessException,
             NoSuchMethodException, ClassNotFoundException {
         Person person = checkUser();
 
@@ -97,7 +96,7 @@ public class MergePersonsDA extends FenixDispatchAction {
     }
 
     public ActionForward chooseObjects(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response, String leftOid, String rightOid, String currentClass) throws FenixFilterException,
+            HttpServletResponse response, String leftOid, String rightOid, String currentClass) throws 
             FenixServiceException, IllegalAccessException, NoSuchMethodException, ClassNotFoundException {
 
         DomainObject domainObject1 = RootDomainObject.fromExternalId(leftOid);
@@ -235,7 +234,7 @@ public class MergePersonsDA extends FenixDispatchAction {
     }
 
     public ActionForward mergeProperty(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException, IllegalAccessException,
+            HttpServletResponse response) throws  FenixServiceException, IllegalAccessException,
             InvocationTargetException, NoSuchMethodException, ClassNotFoundException {
         MergePersonsBean mergePersonsBean = getMergePersonsBean(request);
         request.setAttribute("mergePersonsBean", mergePersonsBean);
@@ -258,7 +257,7 @@ public class MergePersonsDA extends FenixDispatchAction {
     }
 
     public void mergeProperty(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response,
-            String leftOid, String rightOid, String currentClass) throws FenixFilterException, FenixServiceException,
+            String leftOid, String rightOid, String currentClass) throws  FenixServiceException,
             IllegalAccessException, InvocationTargetException, NoSuchMethodException, ClassNotFoundException {
 
         IUserView userView = UserView.getUser();
@@ -275,7 +274,7 @@ public class MergePersonsDA extends FenixDispatchAction {
     }
 
     public ActionForward mergeStudents(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException, IllegalAccessException,
+            HttpServletResponse response) throws  FenixServiceException, IllegalAccessException,
             NoSuchMethodException, ClassNotFoundException {
         MergePersonsBean mergePersonsBean = getMergePersonsBean(request);
         request.setAttribute("mergePersonsBean", mergePersonsBean);
@@ -293,7 +292,7 @@ public class MergePersonsDA extends FenixDispatchAction {
     }
 
     public ActionForward prepareTransferRegistrations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException, IllegalAccessException,
+            HttpServletResponse response) throws  FenixServiceException, IllegalAccessException,
             NoSuchMethodException, ClassNotFoundException {
         MergePersonsBean mergePersonsBean = getMergePersonsBean(request);
         request.setAttribute("mergePersonsBean", mergePersonsBean);
@@ -368,7 +367,7 @@ public class MergePersonsDA extends FenixDispatchAction {
     }
 
     public ActionForward transferRegistrations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException, FenixFilterException, IllegalAccessException,
+            HttpServletResponse response) throws FenixServiceException,  IllegalAccessException,
             NoSuchMethodException, ClassNotFoundException {
         MergePersonsBean mergePersonsBean = getMergePersonsBean(request);
         request.setAttribute("mergePersonsBean", mergePersonsBean);
@@ -385,7 +384,7 @@ public class MergePersonsDA extends FenixDispatchAction {
     }
 
     public ActionForward prepareTransferEventsAndAccounts(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException, IllegalAccessException,
+            HttpServletResponse response) throws  FenixServiceException, IllegalAccessException,
             NoSuchMethodException, ClassNotFoundException {
         MergePersonsBean mergePersonsBean = getMergePersonsBean(request);
         request.setAttribute("mergePersonsBean", mergePersonsBean);
@@ -399,7 +398,7 @@ public class MergePersonsDA extends FenixDispatchAction {
     }
 
     public ActionForward transferEventsAndAccounts(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException, IllegalAccessException,
+            HttpServletResponse response) throws  FenixServiceException, IllegalAccessException,
             NoSuchMethodException, ClassNotFoundException {
         MergePersonsBean mergePersonsBean = getMergePersonsBean(request);
         request.setAttribute("mergePersonsBean", mergePersonsBean);

@@ -16,11 +16,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.tests.InvalidXMLFilesException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
@@ -31,6 +33,7 @@ import net.sourceforge.fenixedu.utilTests.ParseQuestionException;
 
 import org.apache.struts.util.LabelValueBean;
 
+import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.servlets.commons.UploadedFile;
 
 import com.sun.faces.el.impl.parser.ParseException;
@@ -38,7 +41,7 @@ import com.sun.faces.el.impl.parser.ParseException;
 /**
  * @author Susana Fernandes
  */
-public class InsertExercise extends FenixService {
+public class InsertExercise {
 
     private static final double FILE_SIZE_LIMIT = Math.pow(2, 20);
 
@@ -47,7 +50,7 @@ public class InsertExercise extends FenixService {
         List<String> badXmls = new ArrayList<String>();
         String replacedPath = path.replace('\\', '/');
         boolean createAny = false;
-        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
+        ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseId);
         if (executionCourse == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -220,4 +223,16 @@ public class InsertExercise extends FenixService {
             unzipDir.delete();
         }
     }
+
+    // Service Invokers migrated from Berserk
+
+    private static final InsertExercise serviceInstance = new InsertExercise();
+
+    @Service
+    public static List<String> runInsertExercise(Integer executionCourseId, UploadedFile xmlZipFile, String path)
+            throws FenixServiceException, NotAuthorizedException {
+        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
+        return serviceInstance.run(executionCourseId, xmlZipFile, path);
+    }
+
 }

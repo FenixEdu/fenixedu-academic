@@ -5,9 +5,10 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.domain.Lesson;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
 
 /**
@@ -15,11 +16,11 @@ import pt.ist.fenixWebFramework.services.Service;
  * 
  * 
  */
-public class ReadLessonByOID extends FenixService {
+public class ReadLessonByOID {
 
     @Service
     public static InfoLesson run(Integer oid) {
-        final Lesson lesson = rootDomainObject.readLessonByOID(oid);
+        final Lesson lesson = RootDomainObject.getInstance().readLessonByOID(oid);
         return (lesson != null) ? InfoLesson.newInfoFromDomain(lesson) : null;
 
     }

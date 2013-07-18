@@ -135,8 +135,8 @@
 		<property name="size" value="60"/>
 		<property name="labelField" value="partyPresentationName"/>
 		<property name="indicatorShown" value="true"/>		
-		<property name="serviceName" value="SearchAllActivePartiesByName"/>
-		<property name="serviceArgs" value="slot=name,size=20"/>
+		<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchAllActivePartiesByName"/>
+		<property name="args" value="slot=name,size=20"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.Party"/>
 		<property name="minChars" value="2"/>	
 	</slot>
@@ -177,8 +177,8 @@
 		<property name="size" value="60"/>
 		<property name="labelField" value="partyPresentationName"/>
 		<property name="indicatorShown" value="true"/>		
-		<property name="serviceName" value="SearchAllActivePartiesByName"/>
-		<property name="serviceArgs" value="slot=name,size=20"/>
+		<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchAllActivePartiesByName"/>
+		<property name="args" value="slot=name,size=20"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.Party"/>
 		<property name="minChars" value="2"/>	
 	</slot>

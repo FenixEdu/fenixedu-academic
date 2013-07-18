@@ -8,12 +8,14 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Mark;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
@@ -28,24 +30,25 @@ import net.sourceforge.fenixedu.util.tests.ResponseNUM;
 import net.sourceforge.fenixedu.util.tests.ResponseSTR;
 import net.sourceforge.fenixedu.util.tests.TestQuestionStudentsChangesType;
 import net.sourceforge.fenixedu.util.tests.TestType;
+import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
-public class ChangeStudentTestQuestionMark extends FenixService {
-    public void run(Integer executionCourseId, Integer distributedTestId, Double newMark, Integer questionId, Integer studentId,
-            TestQuestionStudentsChangesType studentsType, String path) throws FenixServiceException {
+public class ChangeStudentTestQuestionMark {
+    protected void run(Integer executionCourseId, Integer distributedTestId, Double newMark, Integer questionId,
+            Integer studentId, TestQuestionStudentsChangesType studentsType, String path) throws FenixServiceException {
         path = path.replace('\\', '/');
 
-        DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
+        DistributedTest distributedTest = RootDomainObject.getInstance().readDistributedTestByOID(distributedTestId);
         Question question = distributedTest.findQuestionByOID(questionId);
 
         List<StudentTestQuestion> studentsTestQuestionList = new ArrayList<StudentTestQuestion>();
         if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.THIS_STUDENT) {
-            final Registration registration = rootDomainObject.readRegistrationByOID(studentId);
+            final Registration registration = RootDomainObject.getInstance().readRegistrationByOID(studentId);
             studentsTestQuestionList.add(StudentTestQuestion.findStudentTestQuestion(question, registration, distributedTest));
         } else if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.STUDENTS_FROM_TEST_VARIATION) {
             studentsTestQuestionList.addAll(StudentTestQuestion.findStudentTestQuestions(question, distributedTest));
         } else if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.STUDENTS_FROM_TEST) {
-            final Registration registration = rootDomainObject.readRegistrationByOID(studentId);
+            final Registration registration = RootDomainObject.getInstance().readRegistrationByOID(studentId);
             final StudentTestQuestion studentTestQuestion =
                     StudentTestQuestion.findStudentTestQuestion(question, registration, distributedTest);
             studentsTestQuestionList.addAll(distributedTest.findStudentTestQuestionsByTestQuestionOrder(studentTestQuestion
@@ -82,7 +85,7 @@ public class ChangeStudentTestQuestionMark extends FenixService {
                     studentTestQuestion.setResponse(response);
                 }
                 OnlineTest onlineTest = studentTestQuestion.getDistributedTest().getOnlineTest();
-                ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
+                ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseId);
                 Attends attend = studentTestQuestion.getStudent().readAttendByExecutionCourse(executionCourse);
                 Mark mark = onlineTest.getMarkByAttend(attend);
                 final String markValue =
@@ -115,6 +118,18 @@ public class ChangeStudentTestQuestionMark extends FenixService {
         decimalFormatSymbols.setDecimalSeparator('.');
         df.setDecimalFormatSymbols(decimalFormatSymbols);
         return (df.format(Math.max(0, totalMark)));
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final ChangeStudentTestQuestionMark serviceInstance = new ChangeStudentTestQuestionMark();
+
+    @Service
+    public static void runChangeStudentTestQuestionMark(Integer executionCourseId, Integer distributedTestId, Double newMark,
+            Integer questionId, Integer studentId, TestQuestionStudentsChangesType studentsType, String path)
+            throws FenixServiceException, NotAuthorizedException {
+        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
+        serviceInstance.run(executionCourseId, distributedTestId, newMark, questionId, studentId, studentsType, path);
     }
 
 }

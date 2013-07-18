@@ -15,7 +15,6 @@ import java.util.ResourceBundle;
 import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecutionPeriod;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionPeriod;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionYear;
@@ -61,7 +60,7 @@ public abstract class RequestUtils {
     }
 
     public static final InfoExecutionCourse getExecutionCourseFromRequest(HttpServletRequest request)
-            throws FenixActionException, FenixFilterException, FenixServiceException {
+            throws FenixActionException, FenixServiceException {
         InfoExecutionCourse infoExecutionCourse = null;
         InfoExecutionPeriod infoExecutionPeriod = getExecutionPeriodFromRequest(request);
         String code = request.getParameter("exeCode");
@@ -71,7 +70,7 @@ public abstract class RequestUtils {
     }
 
     public static final InfoExecutionYear getExecutionYearFromRequest(HttpServletRequest request) throws FenixActionException,
-            FenixFilterException, FenixServiceException {
+            FenixServiceException {
         InfoExecutionYear infoExecutionYear = null;
         String year = (String) request.getAttribute("eYName");
         if (year == null) {
@@ -85,8 +84,7 @@ public abstract class RequestUtils {
         return infoExecutionYear;
     }
 
-    public static final InfoExecutionPeriod getExecutionPeriodFromRequest(HttpServletRequest request)
-            throws FenixActionException, FenixFilterException {
+    public static final InfoExecutionPeriod getExecutionPeriodFromRequest(HttpServletRequest request) throws FenixActionException {
         InfoExecutionPeriod infoExecutionPeriod = null;
         InfoExecutionYear infoExecutionYear;
         try {
@@ -106,7 +104,7 @@ public abstract class RequestUtils {
         return infoExecutionPeriod;
     }
 
-    public static final InfoSite getSiteFromRequest(HttpServletRequest request) throws FenixActionException, FenixFilterException {
+    public static final InfoSite getSiteFromRequest(HttpServletRequest request) throws FenixActionException {
         InfoSite infoSite = null;
 
         try {
@@ -122,7 +120,7 @@ public abstract class RequestUtils {
     }
 
     public static final InfoExecutionDegree getExecutionDegreeFromRequest(HttpServletRequest request,
-            InfoExecutionYear infoExecutionYear) throws FenixActionException, FenixFilterException {
+            InfoExecutionYear infoExecutionYear) throws FenixActionException {
 
         InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute("exeDegree");
         if (infoExecutionDegree != null) {
@@ -194,8 +192,7 @@ public abstract class RequestUtils {
         request.setAttribute("eYName", request.getParameter("eYName"));
     }
 
-    public static final InfoExecutionPeriod setExecutionContext(HttpServletRequest request) throws FenixActionException,
-            FenixFilterException {
+    public static final InfoExecutionPeriod setExecutionContext(HttpServletRequest request) throws FenixActionException {
 
         IUserView userView = UserView.getUser();
 

@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManag
 import java.util.Collections;
 import java.util.Iterator;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.GenericEvent;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PunctualRoomsOccupationComment;
@@ -15,7 +14,7 @@ import org.joda.time.DateTime;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class ClosePunctualRoomsOccupationRequest extends FenixService {
+public class ClosePunctualRoomsOccupationRequest {
 
     public static final MessageResources messages = MessageResources
             .getMessageResources("resources/ResourceAllocationManagerResources");

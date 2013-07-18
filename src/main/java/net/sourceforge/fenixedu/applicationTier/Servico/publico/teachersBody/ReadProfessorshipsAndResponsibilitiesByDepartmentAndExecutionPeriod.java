@@ -6,7 +6,6 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
@@ -17,6 +16,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -24,7 +24,7 @@ import org.apache.commons.collections.Transformer;
 
 import pt.ist.fenixWebFramework.services.Service;
 
-public class ReadProfessorshipsAndResponsibilitiesByDepartmentAndExecutionPeriod extends FenixService {
+public class ReadProfessorshipsAndResponsibilitiesByDepartmentAndExecutionPeriod {
 
     @Service
     public static List run(Integer departmentId, Integer executionYearID, Integer semester, Integer teacherType)
@@ -32,7 +32,7 @@ public class ReadProfessorshipsAndResponsibilitiesByDepartmentAndExecutionPeriod
 
         ExecutionYear executionYear = null;
         if (executionYearID != null) {
-            executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
+            executionYear = RootDomainObject.getInstance().readExecutionYearByOID(executionYearID);
         }
 
         final ExecutionSemester executionSemester = executionYear.getExecutionSemesterFor(semester);
@@ -40,7 +40,7 @@ public class ReadProfessorshipsAndResponsibilitiesByDepartmentAndExecutionPeriod
             throw new FenixServiceException("error.noExecutionPeriod");
         }
 
-        final Department department = rootDomainObject.readDepartmentByOID(departmentId);
+        final Department department = RootDomainObject.getInstance().readDepartmentByOID(departmentId);
         if (department == null) {
             throw new FenixServiceException("error.noDepartment");
         }

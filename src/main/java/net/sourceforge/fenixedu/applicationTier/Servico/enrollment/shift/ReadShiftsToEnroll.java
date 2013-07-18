@@ -3,17 +3,19 @@ package net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.ClassEnrollmentAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.ShiftToEnrol;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import pt.ist.fenixWebFramework.services.Service;
 
-public class ReadShiftsToEnroll extends FenixService {
+public class ReadShiftsToEnroll {
 
-    public List run(Registration registration) throws FenixServiceException {
+    protected List run(Registration registration) throws FenixServiceException {
 
         checkStudentRestrictionsForShiftsEnrolments(registration);
 
@@ -126,6 +128,16 @@ public class ReadShiftsToEnroll extends FenixService {
                 && shift.containsType(ShiftType.TUTORIAL_ORIENTATION)) {
             result.setTutorialOrientationShift(shift);
         }
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final ReadShiftsToEnroll serviceInstance = new ReadShiftsToEnroll();
+
+    @Service
+    public static List runReadShiftsToEnroll(Registration registration) throws FenixServiceException  , NotAuthorizedException {
+        ClassEnrollmentAuthorizationFilter.instance.execute(registration);
+        return serviceInstance.run(registration);
     }
 
 }

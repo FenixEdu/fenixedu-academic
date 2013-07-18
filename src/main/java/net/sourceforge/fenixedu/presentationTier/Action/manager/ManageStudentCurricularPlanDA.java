@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateStudentCurricularPlan;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteEnrollment;
@@ -169,7 +168,7 @@ public class ManageStudentCurricularPlanDA extends FenixDispatchAction {
     }
 
     protected void putStudentCurricularInformationInRequest(final HttpServletRequest request, final Integer studentNumber,
-            final DegreeType degreeType) throws FenixFilterException, FenixServiceException {
+            final DegreeType degreeType) throws  FenixServiceException {
         final IUserView userView = UserView.getUser();
 
         final List infoStudentCurricularPlans = ReadStudentCurricularInformation.run(studentNumber, degreeType);

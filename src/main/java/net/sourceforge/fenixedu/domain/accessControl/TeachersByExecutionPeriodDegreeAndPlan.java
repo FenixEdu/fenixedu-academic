@@ -4,7 +4,6 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
-import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.IdOperator;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.OidOperator;
 
 public abstract class TeachersByExecutionPeriodDegreeAndPlan extends LeafGroup {

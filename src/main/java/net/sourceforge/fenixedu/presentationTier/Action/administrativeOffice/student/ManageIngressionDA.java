@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.st
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.factoryExecutors.RegistrationIngressionFactorExecutor.RegistrationIngressionEditor;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -60,7 +59,7 @@ public class ManageIngressionDA extends FenixDispatchAction {
     }
 
     public ActionForward editIngression(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         try {
             executeFactoryMethod();
         } catch (final DomainException e) {

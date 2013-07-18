@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
@@ -20,28 +20,30 @@ import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.GroupsAndShiftsManagementLog;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.util.ProposalState;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author joaosa & rmalo
  * 
  */
-public class AcceptNewProjectProposal extends FenixService {
+public class AcceptNewProjectProposal {
 
-    public Boolean run(Integer executionCourseId, Integer groupPropertiesId, String acceptancePersonUserName)
+    protected Boolean run(Integer executionCourseId, Integer groupPropertiesId, String acceptancePersonUserName)
             throws FenixServiceException {
 
         if (groupPropertiesId == null) {
             return Boolean.FALSE;
         }
 
-        final Grouping grouping = rootDomainObject.readGroupingByOID(groupPropertiesId);
+        final Grouping grouping = RootDomainObject.getInstance().readGroupingByOID(groupPropertiesId);
         if (grouping == null) {
             throw new NotAuthorizedException();
         }
 
-        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
+        final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseId);
         final ExportGrouping groupPropertiesExecutionCourse = executionCourse.getExportGrouping(grouping);
 
         if (groupPropertiesExecutionCourse == null) {
@@ -120,6 +122,17 @@ public class AcceptNewProjectProposal extends FenixService {
         groupPropertiesExecutionCourse.setReceiverPerson(receiverPerson);
 
         return Boolean.TRUE;
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final AcceptNewProjectProposal serviceInstance = new AcceptNewProjectProposal();
+
+    @Service
+    public static Boolean runAcceptNewProjectProposal(Integer executionCourseId, Integer groupPropertiesId,
+            String acceptancePersonUserName) throws FenixServiceException, NotAuthorizedException {
+        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
+        return serviceInstance.run(executionCourseId, groupPropertiesId, acceptancePersonUserName);
     }
 
 }

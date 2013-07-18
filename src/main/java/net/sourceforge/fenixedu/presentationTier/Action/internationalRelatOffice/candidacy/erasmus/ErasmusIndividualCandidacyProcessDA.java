@@ -10,7 +10,6 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.administrativeOfficeServices.CreateExtraEnrolment;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.enrolment.bolonha.EnrolBolonhaStudent;
@@ -112,7 +111,7 @@ public class ErasmusIndividualCandidacyProcessDA extends
     }
 
     public ActionForward executeSetGriValidation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         try {
             MobilityIndividualApplicationProcessBean bean = getIndividualCandidacyProcessBean();
 
@@ -152,7 +151,7 @@ public class ErasmusIndividualCandidacyProcessDA extends
     }
 
     public ActionForward executeCreateStudentData(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
 
         try {
@@ -188,7 +187,7 @@ public class ErasmusIndividualCandidacyProcessDA extends
     }
 
     public ActionForward executeSetEIdentifierForTesting(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
         final MobilityIndividualApplicationProcessBean bean = new MobilityIndividualApplicationProcessBean(getProcess(request));
         request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
 
@@ -230,7 +229,7 @@ public class ErasmusIndividualCandidacyProcessDA extends
     }
 
     public ActionForward markAlertAsViewed(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         ErasmusAlert alert = ErasmusAlert.fromExternalId(request.getParameter("erasmusAlertId"));
         executeActivity(getProcess(request), "MarkAlertAsViewed", alert);
 
@@ -238,7 +237,7 @@ public class ErasmusIndividualCandidacyProcessDA extends
     }
 
     public ActionForward sendEmailToAcceptedStudent(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         ApprovedLearningAgreementDocumentFile file =
                 ApprovedLearningAgreementDocumentFile.fromExternalId(request.getParameter("approvedLearningAgreementId"));
         executeActivity(getProcess(request), "SendEmailToAcceptedStudent", null);
@@ -267,7 +266,7 @@ public class ErasmusIndividualCandidacyProcessDA extends
     }
 
     public ActionForward revokeApprovedLearningAgreement(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         ApprovedLearningAgreementDocumentFile file =
                 ApprovedLearningAgreementDocumentFile.fromExternalId(request.getParameter("approvedLearningAgreementId"));
         CandidacyProcessDocumentUploadBean documentBean = new CandidacyProcessDocumentUploadBean();
@@ -286,7 +285,7 @@ public class ErasmusIndividualCandidacyProcessDA extends
     }
 
     public ActionForward executeRevertCandidacyToStandBy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         try {
             executeActivity(getProcess(request), "RevertCandidacyToStandBy", null);
         } catch (DomainException e) {
@@ -297,7 +296,7 @@ public class ErasmusIndividualCandidacyProcessDA extends
     }
 
     public ActionForward enrolStudent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         MobilityIndividualApplicationProcess process = getProcess(request);
         MobilityIndividualApplication candidacy = process.getCandidacy();
         Boolean restrictEnrollment;
@@ -330,7 +329,7 @@ public class ErasmusIndividualCandidacyProcessDA extends
     }
 
     public ActionForward postBack(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixFilterException, FenixServiceException {
+            throws  FenixServiceException {
         MobilityIndividualApplicationProcess process = getProcess(request);
         MobilityIndividualApplication candidacy = process.getCandidacy();
         ExecutionSemester semester = ((ErasmusBolonhaStudentEnrollmentBean) getRenderedObject()).getExecutionPeriod();
@@ -342,7 +341,7 @@ public class ErasmusIndividualCandidacyProcessDA extends
     }
 
     public ActionForward doEnrol(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixFilterException, FenixServiceException {
+            throws  FenixServiceException {
         ErasmusBolonhaStudentEnrollmentBean erasmusBolonhaStudentEnrollmentBean =
                 (ErasmusBolonhaStudentEnrollmentBean) getRenderedObject();
         try {
@@ -445,7 +444,7 @@ public class ErasmusIndividualCandidacyProcessDA extends
     }
 
     public ActionForward save(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixFilterException, FenixServiceException {
+            throws  FenixServiceException {
 
         return null;
 
@@ -472,12 +471,12 @@ public class ErasmusIndividualCandidacyProcessDA extends
     }
 
     public ActionForward cancelChooseCycleCourseGroupToEnrol(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         return enrolStudent(mapping, form, request, response);
     }
 
     public ActionForward enrolInCycleCourseGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         final CycleEnrolmentBean cycleEnrolmentBean = getCycleEnrolmentBeanFromViewState();
 

@@ -358,8 +358,8 @@
 		<property name="rawSlotName" value="name"/>		
 		<property name="format" value="${text}"/>
 		<property name="indicatorShown" value="true"/>		
-		<property name="serviceName" value="SearchExternalPersons"/>
-		<property name="serviceArgs" value="slot=name"/>
+		<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchExternalPersons"/>
+		<property name="args" value="slot=name"/>
 		<property name="minChars" value="3"/>
 		<property name="errorStyleClass" value="error0"/>
 	</slot>
@@ -401,8 +401,8 @@
 		<property name="rawSlotName" value="unitName"/>		
 		<property name="format" value="${unit.presentationNameWithParents}"/>
 		<property name="indicatorShown" value="true"/>		
-		<property name="serviceName" value="SearchExternalUnits"/>
-		<property name="serviceArgs" value="slot=name"/>	
+		<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchExternalUnits"/>
+		<property name="args" value="slot=name"/>	
 		<property name="minChars" value="3"/>
 		<property name="errorStyleClass" value="error0"/>
 	</slot>

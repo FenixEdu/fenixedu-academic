@@ -11,7 +11,6 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.CreateNewProcess;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean;
@@ -342,7 +341,7 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
     }
 
     protected IndividualCandidacyProcess createNewPublicProcess(IndividualCandidacyProcessBean bean) throws DomainException,
-            FenixFilterException, FenixServiceException {
+             FenixServiceException {
         return (IndividualCandidacyProcess) CreateNewProcess.run(getProcessType(), bean,
                 buildActivitiesForApplicationSubmission(bean.getPublicCandidacyHashCode()));
     }
@@ -529,7 +528,7 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
     }
 
     public ActionForward editCandidacyDocuments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException, FenixFilterException, IOException {
+            HttpServletResponse response) throws FenixServiceException,  IOException {
         CandidacyProcessDocumentUploadBean uploadBean =
                 (CandidacyProcessDocumentUploadBean) getObjectFromViewState("individualCandidacyProcessBean.document.file");
         try {
@@ -609,7 +608,7 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
     }
 
     public ActionForward uploadPhoto(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException, FenixFilterException, IOException {
+            HttpServletResponse response) throws FenixServiceException,  IOException {
         CandidacyProcessDocumentUploadBean uploadBean =
                 (CandidacyProcessDocumentUploadBean) getObjectFromViewState("individualCandidacyProcessBean.document.file");
         try {

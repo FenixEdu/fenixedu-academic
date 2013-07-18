@@ -18,6 +18,8 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
  */
 public class ReadCourseInformationAuthorizationFilter extends DomainObjectAuthorizationFilter {
 
+    public static final ReadCourseInformationAuthorizationFilter instance = new ReadCourseInformationAuthorizationFilter();
+
     @Override
     protected RoleType getRoleType() {
         return RoleType.PERSON;

@@ -9,7 +9,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.candidacy.SaveCandidacyDocumentFiles;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.CandidacyDocumentUploadBean;
@@ -76,7 +75,7 @@ public class ViewCandidaciesDsipatchAction extends FenixDispatchAction {
     }
 
     public ActionForward uploadDocuments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         List<CandidacyDocumentUploadBean> beans =
                 (List<CandidacyDocumentUploadBean>) RenderUtils.getViewState("candidacyDocuments").getMetaObject().getObject();

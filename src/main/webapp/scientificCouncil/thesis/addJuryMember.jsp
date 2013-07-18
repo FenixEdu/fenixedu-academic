@@ -33,9 +33,9 @@
 				<fr:property name="size" value="70" />
 				<fr:property name="labelField" value="name" />
 				<fr:property name="format" value="${presentationName}" />
-				<fr:property name="serviceArgs" value="slot=name,size=20" />
+				<fr:property name="args" value="slot=name,size=20" />
 				<fr:property name="minChars" value="3" />
-				<fr:property name="serviceName" value="SearchPeopleByNameOrISTID" />
+				<fr:property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchPeopleByNameOrISTID" />
 				<fr:property name="indicatorShown" value="true" />
 				<fr:property name="className" value="net.sourceforge.fenixedu.domain.Person" />
 				<fr:property name="required" value="true"/>

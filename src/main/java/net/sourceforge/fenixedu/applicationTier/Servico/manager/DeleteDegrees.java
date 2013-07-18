@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
@@ -15,7 +15,7 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author lmac1
  */
 
-public class DeleteDegrees extends FenixService {
+public class DeleteDegrees {
 
     // delete a set of degrees
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
@@ -26,7 +26,7 @@ public class DeleteDegrees extends FenixService {
         List<String> undeletedDegreesNames = new ArrayList<String>();
         while (iter.hasNext()) {
             Integer internalId = (Integer) iter.next();
-            Degree degree = rootDomainObject.readDegreeByOID(internalId);
+            Degree degree = RootDomainObject.getInstance().readDegreeByOID(internalId);
 
             if (degree != null) {
 

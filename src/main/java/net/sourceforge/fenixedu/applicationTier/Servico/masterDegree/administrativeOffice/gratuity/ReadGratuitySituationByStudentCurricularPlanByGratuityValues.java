@@ -4,12 +4,13 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituationWithInfoPersonAndInfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.GratuitySituation;
 import net.sourceforge.fenixedu.domain.GratuityValues;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
@@ -18,7 +19,7 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author Tânia Pousão
  * 
  */
-public class ReadGratuitySituationByStudentCurricularPlanByGratuityValues extends FenixService {
+public class ReadGratuitySituationByStudentCurricularPlanByGratuityValues {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
@@ -26,8 +27,8 @@ public class ReadGratuitySituationByStudentCurricularPlanByGratuityValues extend
 
         GratuitySituation gratuitySituation = null;
 
-        StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanID);
-        GratuityValues gratuityValues = rootDomainObject.readGratuityValuesByOID(gratuityValuesID);
+        StudentCurricularPlan studentCurricularPlan = RootDomainObject.getInstance().readStudentCurricularPlanByOID(studentCurricularPlanID);
+        GratuityValues gratuityValues = RootDomainObject.getInstance().readGratuityValuesByOID(gratuityValuesID);
         gratuitySituation = studentCurricularPlan.getGratuitySituationByGratuityValues(gratuityValues);
 
         InfoGratuitySituation infoGratuitySituation = null;

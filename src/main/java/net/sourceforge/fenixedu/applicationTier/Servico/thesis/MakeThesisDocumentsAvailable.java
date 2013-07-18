@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.thesis;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.domain.File;
 import net.sourceforge.fenixedu.domain.accessControl.CurrentDegreeScientificCommissionMembersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisFile;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class MakeThesisDocumentsAvailable extends FenixService {
+public class MakeThesisDocumentsAvailable {
 
     @Service
     public static void run(Thesis thesis) {

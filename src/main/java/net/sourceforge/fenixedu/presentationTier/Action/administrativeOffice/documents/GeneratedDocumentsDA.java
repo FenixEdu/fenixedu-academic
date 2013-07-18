@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sf.jasperreports.engine.JRException;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchParameters;
@@ -64,7 +63,7 @@ public class GeneratedDocumentsDA extends FenixDispatchAction {
     }
 
     public ActionForward searchPerson(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         final SimpleSearchPersonWithStudentBean searchPersonBean =
                 (SimpleSearchPersonWithStudentBean) getObjectFromViewState("searchPersonBean");
         request.setAttribute("searchPersonBean", searchPersonBean);
@@ -76,7 +75,7 @@ public class GeneratedDocumentsDA extends FenixDispatchAction {
 
     @SuppressWarnings("unchecked")
     private Collection<Person> searchPerson(HttpServletRequest request, SimpleSearchPersonWithStudentBean searchPersonBean)
-            throws FenixFilterException, FenixServiceException {
+            throws  FenixServiceException {
         final SearchParameters searchParameters =
                 new SearchPerson.SearchParameters(searchPersonBean.getName(), null, searchPersonBean.getUsername(),
                         searchPersonBean.getDocumentIdNumber(), searchPersonBean.getIdDocumentType() != null ? searchPersonBean
@@ -85,8 +84,7 @@ public class GeneratedDocumentsDA extends FenixDispatchAction {
 
         final SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(searchParameters);
 
-        final CollectionPager<Person> result =
-                (CollectionPager<Person>) executeService("SearchPerson", new Object[] { searchParameters, predicate });
+        final CollectionPager<Person> result = SearchPerson.runSearchPerson(searchParameters, predicate);
 
         return result.getCollection();
     }

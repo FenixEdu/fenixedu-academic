@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.externalPerson.InsertExternalPerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.institution.ReadAllInstitutions;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
@@ -80,7 +79,7 @@ public class InsertExternalPersonDispatchAction extends FenixDispatchAction {
 
     }
 
-    private List getInstitutions(HttpServletRequest request) throws FenixActionException, FenixFilterException {
+    private List getInstitutions(HttpServletRequest request) throws FenixActionException {
         IUserView userView = UserView.getUser();
         List institutions = null;
 

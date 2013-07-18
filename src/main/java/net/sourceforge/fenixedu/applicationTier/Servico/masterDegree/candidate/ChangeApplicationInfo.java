@@ -12,7 +12,7 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.candidate;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.util.SituationName;
 import net.sourceforge.fenixedu.util.State;
 
@@ -32,7 +33,7 @@ import org.joda.time.YearMonthDay;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class ChangeApplicationInfo extends FenixService {
+public class ChangeApplicationInfo {
 
     @Checked("RolePredicates.MASTER_DEGREE_CANDIDATE_PREDICATE")
     @Service
@@ -40,7 +41,7 @@ public class ChangeApplicationInfo extends FenixService {
             InfoPersonEditor infoPersonEditor, IUserView userView, Boolean isNewPerson) throws FenixServiceException {
 
         final ExecutionDegree executionDegree =
-                rootDomainObject.readExecutionDegreeByOID(newMasterDegreeCandidate.getInfoExecutionDegree().getIdInternal());
+                RootDomainObject.getInstance().readExecutionDegreeByOID(newMasterDegreeCandidate.getInfoExecutionDegree().getIdInternal());
 
         Person person =
                 Person.readByDocumentIdNumberAndIdDocumentType(newMasterDegreeCandidate.getInfoPerson()

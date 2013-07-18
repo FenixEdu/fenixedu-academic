@@ -12,7 +12,6 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
@@ -141,7 +140,7 @@ public class DegreeCandidacyForGraduatedPersonProcessDA extends CandidacyProcess
     }
 
     public ActionForward executeSendToCoordinator(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         try {
             executeActivity(getProcess(request), "SendToCoordinator");
         } catch (DomainException e) {
@@ -157,7 +156,7 @@ public class DegreeCandidacyForGraduatedPersonProcessDA extends CandidacyProcess
     }
 
     public ActionForward executeSendToScientificCouncil(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         try {
             executeActivity(getProcess(request), "SendToScientificCouncil");
         } catch (final DomainException e) {

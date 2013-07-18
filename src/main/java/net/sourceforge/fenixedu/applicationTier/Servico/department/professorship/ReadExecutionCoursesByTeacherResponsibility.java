@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.department.professorshi
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
@@ -19,7 +18,7 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author João Mota
  * 
  */
-public class ReadExecutionCoursesByTeacherResponsibility extends FenixService {
+public class ReadExecutionCoursesByTeacherResponsibility {
 
     @Service
     public static List run(String id) throws FenixServiceException {

@@ -5,9 +5,13 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.services;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentAdministrativeOfficeAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ScientificCouncilAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -19,19 +23,21 @@ import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
+import pt.ist.fenixWebFramework.services.Service;
+
 /**
  * @author Ricardo Rodrigues
  * 
  */
 
-public class EditTeacherAdviseService extends FenixService {
+public class EditTeacherAdviseService {
 
-    public void run(Teacher teacher, Integer executionPeriodID, final Integer studentNumber, Double percentage,
+    protected void run(Teacher teacher, Integer executionPeriodID, final Integer studentNumber, Double percentage,
             AdviseType adviseType, RoleType roleType) throws FenixServiceException {
 
-        ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
+        ExecutionSemester executionSemester = RootDomainObject.getInstance().readExecutionSemesterByOID(executionPeriodID);
 
-        List<Registration> students = rootDomainObject.getRegistrations();
+        List<Registration> students = RootDomainObject.getInstance().getRegistrations();
         Registration registration = (Registration) CollectionUtils.find(students, new Predicate() {
             @Override
             public boolean evaluate(Object arg0) {
@@ -63,4 +69,30 @@ public class EditTeacherAdviseService extends FenixService {
             teacherAdviseService.updatePercentage(percentage, roleType);
         }
     }
+
+    // Service Invokers migrated from Berserk
+
+    private static final EditTeacherAdviseService serviceInstance = new EditTeacherAdviseService();
+
+    @Service
+    public static void runEditTeacherAdviseService(Teacher teacher, Integer executionPeriodID, Integer studentNumber,
+            Double percentage, AdviseType adviseType, RoleType roleType) throws FenixServiceException, NotAuthorizedException {
+        try {
+            ScientificCouncilAuthorizationFilter.instance.execute();
+            serviceInstance.run(teacher, executionPeriodID, studentNumber, percentage, adviseType, roleType);
+        } catch (NotAuthorizedException ex1) {
+            try {
+                DepartmentMemberAuthorizationFilter.instance.execute();
+                serviceInstance.run(teacher, executionPeriodID, studentNumber, percentage, adviseType, roleType);
+            } catch (NotAuthorizedException ex2) {
+                try {
+                    DepartmentAdministrativeOfficeAuthorizationFilter.instance.execute();
+                    serviceInstance.run(teacher, executionPeriodID, studentNumber, percentage, adviseType, roleType);
+                } catch (NotAuthorizedException ex3) {
+                    throw ex3;
+                }
+            }
+        }
+    }
+
 }

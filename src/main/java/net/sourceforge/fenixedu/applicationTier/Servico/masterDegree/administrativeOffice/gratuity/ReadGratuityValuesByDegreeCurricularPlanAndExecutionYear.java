@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuityValues;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuityValuesWithInfoExecutionDegree;
@@ -17,6 +16,7 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.GratuityValues;
 import net.sourceforge.fenixedu.domain.PaymentPhase;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -28,7 +28,7 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author T�nia Pous�o
  * 
  */
-public class ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear extends FenixService {
+public class ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
@@ -40,7 +40,7 @@ public class ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear extends Fe
         GratuityValues gratuityValues = null;
         List infoPaymentPhases = null;
 
-        DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+        DegreeCurricularPlan degreeCurricularPlan = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanID);
         final ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(executionYearName);
         if (degreeCurricularPlan == null || executionYear == null) {
             throw new FenixServiceException("error.impossible.noGratuityValues");

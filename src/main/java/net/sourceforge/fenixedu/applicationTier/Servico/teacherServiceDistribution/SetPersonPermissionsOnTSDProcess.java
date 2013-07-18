@@ -1,16 +1,22 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcess;
 
-public class SetPersonPermissionsOnTSDProcess extends FenixService {
-    public void run(Integer tsdProcessId, Integer personId, Boolean phaseManagementPermission,
+import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.EmployeeAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcess;
+import pt.ist.fenixWebFramework.services.Service;
+
+public class SetPersonPermissionsOnTSDProcess {
+    protected void run(Integer tsdProcessId, Integer personId, Boolean phaseManagementPermission,
             Boolean automaticValuationPermission, Boolean omissionConfigurationPermission,
             Boolean tsdCoursesAndTeachersManagementPermission) {
 
-        TSDProcess tsdProcess = rootDomainObject.readTSDProcessByOID(tsdProcessId);
-        Person person = (Person) rootDomainObject.readPartyByOID(personId);
+        TSDProcess tsdProcess = RootDomainObject.getInstance().readTSDProcessByOID(tsdProcessId);
+        Person person = (Person) RootDomainObject.getInstance().readPartyByOID(personId);
 
         if (phaseManagementPermission) {
             tsdProcess.addPhasesManagementPermission(person);
@@ -36,4 +42,34 @@ public class SetPersonPermissionsOnTSDProcess extends FenixService {
             tsdProcess.removeCompetenceCoursesAndTeachersManagement(person);
         }
     }
+
+    // Service Invokers migrated from Berserk
+
+    private static final SetPersonPermissionsOnTSDProcess serviceInstance = new SetPersonPermissionsOnTSDProcess();
+
+    @Service
+    public static void runSetPersonPermissionsOnTSDProcess(Integer tsdProcessId, Integer personId,
+            Boolean phaseManagementPermission, Boolean automaticValuationPermission, Boolean omissionConfigurationPermission,
+            Boolean tsdCoursesAndTeachersManagementPermission) throws NotAuthorizedException {
+        try {
+            DepartmentMemberAuthorizationFilter.instance.execute();
+            serviceInstance.run(tsdProcessId, personId, phaseManagementPermission, automaticValuationPermission,
+                    omissionConfigurationPermission, tsdCoursesAndTeachersManagementPermission);
+        } catch (NotAuthorizedException ex1) {
+            try {
+                TeacherAuthorizationFilter.instance.execute();
+                serviceInstance.run(tsdProcessId, personId, phaseManagementPermission, automaticValuationPermission,
+                        omissionConfigurationPermission, tsdCoursesAndTeachersManagementPermission);
+            } catch (NotAuthorizedException ex2) {
+                try {
+                    EmployeeAuthorizationFilter.instance.execute();
+                    serviceInstance.run(tsdProcessId, personId, phaseManagementPermission, automaticValuationPermission,
+                            omissionConfigurationPermission, tsdCoursesAndTeachersManagementPermission);
+                } catch (NotAuthorizedException ex3) {
+                    throw ex3;
+                }
+            }
+        }
+    }
+
 }

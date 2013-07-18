@@ -5,8 +5,10 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.Test;
@@ -15,10 +17,13 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.beanutils.BeanComparator;
 
-public class DeleteExercise extends FenixService {
+import pt.ist.fenixWebFramework.services.Service;
 
-    public void run(Integer executionCourseId, Integer metadataId) throws InvalidArgumentsServiceException, ExcepcaoPersistencia {
-        Metadata metadata = rootDomainObject.readMetadataByOID(metadataId);
+public class DeleteExercise {
+
+    protected void run(Integer executionCourseId, Integer metadataId) throws InvalidArgumentsServiceException,
+            ExcepcaoPersistencia {
+        Metadata metadata = RootDomainObject.getInstance().readMetadataByOID(metadataId);
         if (metadata == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -62,6 +67,17 @@ public class DeleteExercise extends FenixService {
         }
         testQuestion.delete();
         test.setLastModifiedDate(Calendar.getInstance().getTime());
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final DeleteExercise serviceInstance = new DeleteExercise();
+
+    @Service
+    public static void runDeleteExercise(Integer executionCourseId, Integer metadataId) throws InvalidArgumentsServiceException,
+            ExcepcaoPersistencia, NotAuthorizedException {
+        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
+        serviceInstance.run(executionCourseId, metadataId);
     }
 
 }

@@ -9,7 +9,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.dismissal.DeleteCredits;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean;
@@ -210,7 +209,7 @@ public class StudentDismissalsDA extends FenixDispatchAction {
     }
 
     public ActionForward createDismissals(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         final DismissalBean dismissalBean = getRenderedObject();
 
@@ -235,7 +234,7 @@ public class StudentDismissalsDA extends FenixDispatchAction {
     }
 
     public ActionForward deleteCredits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         final String[] creditsIDs = ((DynaActionForm) form).getStrings("creditsToDelete");
         final StudentCurricularPlan studentCurricularPlan = getSCP(request);

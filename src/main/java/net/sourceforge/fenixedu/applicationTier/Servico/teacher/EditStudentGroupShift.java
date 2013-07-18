@@ -6,37 +6,40 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.GroupsAndShiftsManagementLog;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author asnr and scpo
  * 
  */
 
-public class EditStudentGroupShift extends FenixService {
+public class EditStudentGroupShift {
 
-    public Boolean run(Integer executionCourseCode, Integer studentGroupCode, Integer groupPropertiesCode, Integer newShiftCode)
+    protected Boolean run(Integer executionCourseCode, Integer studentGroupCode, Integer groupPropertiesCode, Integer newShiftCode)
             throws FenixServiceException {
 
-        Grouping grouping = rootDomainObject.readGroupingByOID(groupPropertiesCode);
+        Grouping grouping = RootDomainObject.getInstance().readGroupingByOID(groupPropertiesCode);
 
         if (grouping == null) {
             throw new ExistingServiceException();
         }
 
-        Shift shift = rootDomainObject.readShiftByOID(newShiftCode);
+        Shift shift = RootDomainObject.getInstance().readShiftByOID(newShiftCode);
 
         // grouping.checkShiftCapacity(shift);
 
-        StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupCode);
+        StudentGroup studentGroup = RootDomainObject.getInstance().readStudentGroupByOID(studentGroupCode);
 
         if (studentGroup == null) {
             throw new InvalidArgumentsServiceException();
@@ -53,4 +56,16 @@ public class EditStudentGroupShift extends FenixService {
 
         return Boolean.TRUE;
     }
+
+    // Service Invokers migrated from Berserk
+
+    private static final EditStudentGroupShift serviceInstance = new EditStudentGroupShift();
+
+    @Service
+    public static Boolean runEditStudentGroupShift(Integer executionCourseCode, Integer studentGroupCode,
+            Integer groupPropertiesCode, Integer newShiftCode) throws FenixServiceException, NotAuthorizedException {
+        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseCode);
+        return serviceInstance.run(executionCourseCode, studentGroupCode, groupPropertiesCode, newShiftCode);
+    }
+
 }

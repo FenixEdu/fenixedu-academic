@@ -10,9 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionYears;
 import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.LoggedCoordinatorCanEdit;
+import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.ReadCurrentExecutionDegreeByDegreeCurricularPlanID;
+import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.degreeCurricularPlanManagement.EditCurriculumForCurricularCourse;
+import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.degreeCurricularPlanManagement.ReadActiveDegreeCurricularPlanScopes;
 import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.degreeCurricularPlanManagement.ReadCurrentCurriculumByCurricularCourseCode;
 import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.degreeCurricularPlanManagement.ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName;
 import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.degreeCurricularPlanManagement.ReadDegreeCurricularPlanHistoryByDegreeCurricularPlanID;
@@ -29,7 +31,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -76,16 +77,13 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
     }
 
     public ActionForward showActiveCurricularCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
 
         final Integer degreeCurricularPlanID = getAndSetIntegerToRequest("degreeCurricularPlanID", request);
         List activeCurricularCourseScopes = null;
-        final Object[] args = { degreeCurricularPlanID };
         try {
-            activeCurricularCourseScopes = (List) ServiceUtils.executeService("ReadActiveDegreeCurricularPlanScopes", args);
-
-        } catch (NonExistingServiceException e) {
-            addErrorMessage(request, "chosenDegree", "error.coordinator.noExecutionDegree");
+            activeCurricularCourseScopes =
+                    ReadActiveDegreeCurricularPlanScopes.runReadActiveDegreeCurricularPlanScopes(degreeCurricularPlanID);
 
         } catch (FenixServiceException e) {
             if (e.getMessage().equals("nullDegree")) {
@@ -120,7 +118,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
     }
 
     public ActionForward showCurricularCoursesHistory(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
 
         Integer degreeCurricularPlanID = getAndSetIntegerToRequest("degreeCurricularPlanID", request);
 
@@ -225,8 +223,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
     // ===================================== Curricular Course Management
 
     public ActionForward viewActiveCurricularCourseInformation(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixServiceException,
-            FenixFilterException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixServiceException {
 
         IUserView userView = getUserView(request);
 
@@ -234,10 +231,10 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
         Integer degreeCurricularPlanID = getAndSetIntegerToRequest("degreeCurricularPlanID", request);
 
         Integer infoExecutionDegreeCode = null;
-        Object[] infoArgs = { degreeCurricularPlanID };
 
         InfoExecutionDegree infoExecutionDegree =
-                (InfoExecutionDegree) executeService("ReadCurrentExecutionDegreeByDegreeCurricularPlanID", infoArgs);
+                ReadCurrentExecutionDegreeByDegreeCurricularPlanID
+                        .runReadCurrentExecutionDegreeByDegreeCurricularPlanID(degreeCurricularPlanID);
 
         infoExecutionDegreeCode = infoExecutionDegree.getIdInternal();
 
@@ -310,7 +307,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
     }
 
     public ActionForward prepareViewCurricularCourseInformationHistory(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
         List infoExecutionYears = null;
 
         infoExecutionYears = ReadNotClosedExecutionYears.run();
@@ -332,7 +329,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
     }
 
     public ActionForward viewCurricularCourseInformationHistory(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
 
         Integer infoCurricularCourseCode = getAndSetIntegerToRequest("infoCurricularCourseCode", request);
         String executionYear = getAndSetStringToRequest("executionYear", request);
@@ -383,7 +380,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
     }
 
     public ActionForward prepareEditCurriculum(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
         IUserView userView = getUserView(request);
 
         Integer infoExecutionDegreeCode = getAndSetIntegerToRequest("infoExecutionDegreeCode", request);
@@ -464,7 +461,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
     }
 
     public ActionForward editCurriculum(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixServiceException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException, FenixServiceException {
         IUserView userView = getUserView(request);
 
         Integer infoExecutionDegreeCode = getAndSetIntegerToRequest("infoExecutionDegreeCode", request);
@@ -475,11 +472,11 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
         InfoCurriculum infoCurriculum = getDataFromForm(form, language);
 
         Boolean result = Boolean.FALSE;
-        Object[] args =
-                { infoExecutionDegreeCode, infoCurriculumCode, infoCurricularCourseCode, infoCurriculum,
-                        userView.getUtilizador(), language };
+
         try {
-            result = (Boolean) ServiceUtils.executeService("EditCurriculumForCurricularCourse", args);
+            result =
+                    EditCurriculumForCurricularCourse.runEditCurriculumForCurricularCourse(infoExecutionDegreeCode,
+                            infoCurriculumCode, infoCurricularCourseCode, infoCurriculum, userView.getUtilizador(), language);
         } catch (NonExistingServiceException e) {
             if (e.getMessage().equals("noCurricularCourse")) {
                 addErrorMessage(request, "chosenCurricularCourse", "error.coordinator.chosenCurricularCourse");

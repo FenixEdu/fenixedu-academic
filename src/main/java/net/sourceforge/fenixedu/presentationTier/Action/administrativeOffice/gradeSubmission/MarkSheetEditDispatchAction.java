@@ -6,7 +6,6 @@ import java.util.HashSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.gradeSubmission.EditMarkSheet;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -60,7 +59,7 @@ public class MarkSheetEditDispatchAction extends MarkSheetDispatchAction {
     }
 
     public ActionForward updateMarkSheet(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         MarkSheetManagementEditBean editBean = getMarkSheetManagementEditBean();
         request.setAttribute("edit", editBean);
@@ -94,7 +93,7 @@ public class MarkSheetEditDispatchAction extends MarkSheetDispatchAction {
     }
 
     public ActionForward editMarkSheet(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         MarkSheetManagementEditBean editBean = getMarkSheetManagementEditBean();
 

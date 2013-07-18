@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.fileManager;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.person.PhotographUploadBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PhotoType;
@@ -17,7 +16,7 @@ import pt.ist.fenixWebFramework.services.Service;
 /**
  * @author Pedro Santos (pmrsa)
  */
-public class UploadOwnPhoto extends FenixService {
+public class UploadOwnPhoto {
 
     @Checked("RolePredicates.PERSON_PREDICATE")
     @Service

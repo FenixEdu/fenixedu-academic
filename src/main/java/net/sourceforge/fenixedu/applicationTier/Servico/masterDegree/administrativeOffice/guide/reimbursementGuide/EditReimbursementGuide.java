@@ -7,7 +7,6 @@ import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
@@ -20,6 +19,7 @@ import net.sourceforge.fenixedu.domain.GratuitySituation;
 import net.sourceforge.fenixedu.domain.GuideEntry;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PersonAccount;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide;
@@ -48,13 +48,13 @@ import pt.ist.fenixWebFramework.services.Service;
  *         current state is payed it cannot be changed d) if the current state
  *         is annuled it cannot be changed
  */
-public class EditReimbursementGuide extends FenixService {
+public class EditReimbursementGuide {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
     public static void run(Integer reimbursementGuideId, String situation, Date officialDate, String remarks, IUserView userView)
             throws FenixServiceException {
-        ReimbursementGuide reimbursementGuide = rootDomainObject.readReimbursementGuideByOID(reimbursementGuideId);
+        ReimbursementGuide reimbursementGuide = RootDomainObject.getInstance().readReimbursementGuideByOID(reimbursementGuideId);
         if (reimbursementGuide == null) {
             throw new NonExistingServiceException();
         }
@@ -222,7 +222,7 @@ public class EditReimbursementGuide extends FenixService {
             // because of an OJB with cache bug we have to read the guide entry
             // again
             reimbursementGuideEntryTmp =
-                    rootDomainObject.readReimbursementGuideEntryByOID(reimbursementGuideEntryTmp.getIdInternal());
+                    RootDomainObject.getInstance().readReimbursementGuideEntryByOID(reimbursementGuideEntryTmp.getIdInternal());
 
             if (reimbursementGuideEntryTmp.getReimbursementGuide().getActiveReimbursementGuideSituation()
                     .getReimbursementGuideState().equals(ReimbursementGuideState.PAYED)) {

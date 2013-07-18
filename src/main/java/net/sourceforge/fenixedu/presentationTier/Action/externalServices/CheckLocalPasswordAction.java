@@ -4,10 +4,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.Authenticate;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoAutenticacao;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidPasswordServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.PasswordExpiredServiceException;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.BaseAuthenticationAction;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NotAuthorizedActionException;
@@ -47,14 +47,13 @@ public class CheckLocalPasswordAction extends FenixAction {
             final String username = request.getParameter("username");
             final String password = request.getParameter("password");
             final String requestURL = request.getRequestURL().toString();
-            final Object authenticationArgs[] =
-                    { username, password, requestURL, BaseAuthenticationAction.getRemoteHostName(request) };
 
             String result = null;
 
             try {
                 final IUserView userView =
-                        (IUserView) ServiceManagerServiceFactory.executeService("LocalAuthenticate", authenticationArgs);
+                        Authenticate.runLocalAuthenticate(username, password, requestURL,
+                                BaseAuthenticationAction.getRemoteHostName(request));
 
                 result = SUCCESS_MESSAGE;
 
@@ -76,5 +75,4 @@ public class CheckLocalPasswordAction extends FenixAction {
         return null;
 
     }
-
 }

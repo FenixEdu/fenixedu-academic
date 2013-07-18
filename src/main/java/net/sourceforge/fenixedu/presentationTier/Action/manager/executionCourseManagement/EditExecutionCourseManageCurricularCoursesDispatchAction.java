@@ -8,7 +8,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.executionCourseManagement.AssociateCurricularCoursesToExecutionCourse;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.executionCourseManagement.DissociateCurricularCourseByExecutionCourseId;
@@ -61,7 +60,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 public class EditExecutionCourseManageCurricularCoursesDispatchAction extends FenixDispatchAction {
 
     public ActionForward dissociateCurricularCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
 
         String executionCourseId = RequestUtils.getAndSetStringToRequest(request, "executionCourseId");
         String curricularCourseId = RequestUtils.getAndSetStringToRequest(request, "curricularCourseId");
@@ -89,7 +88,7 @@ public class EditExecutionCourseManageCurricularCoursesDispatchAction extends Fe
     }
 
     public ActionForward prepareAssociateCurricularCourseChooseDegreeCurricularPlan(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
 
         //TODO: check & clean up attributes that are not needed
         //processing attributes
@@ -159,7 +158,7 @@ public class EditExecutionCourseManageCurricularCoursesDispatchAction extends Fe
     }
 
     public ActionForward prepareAssociateCurricularCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
 
         //TODO: check and clean up unneeded attributes
         //informative and destination attributes
@@ -217,7 +216,7 @@ public class EditExecutionCourseManageCurricularCoursesDispatchAction extends Fe
     }
 
     public ActionForward associateCurricularCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
 
         DynaActionForm executionCourseForm = (DynaValidatorForm) form;
         RequestUtils.getAndSetStringToRequest(request, "executionPeriodId");

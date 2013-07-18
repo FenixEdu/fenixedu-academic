@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.Alumni;
 import net.sourceforge.fenixedu.domain.AlumniIdentityCheckRequest;
 import net.sourceforge.fenixedu.domain.AlumniRequestType;
@@ -18,7 +17,7 @@ import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
-public class AlumniNotificationService extends FenixService {
+public class AlumniNotificationService {
 
     static ResourceBundle getAlumniBundle() {
         return ResourceBundle.getBundle("resources.AlumniResources", Language.getLocale());

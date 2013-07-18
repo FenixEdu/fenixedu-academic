@@ -15,7 +15,6 @@ import java.util.Set;
 
 import javax.faces.model.SelectItem;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularYear;
@@ -140,7 +139,7 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
 
     private Collection<AllocatableSpace> allRooms = null;
 
-    private Collection<AllocatableSpace> getAllRooms() throws FenixFilterException, FenixServiceException {
+    private Collection<AllocatableSpace> getAllRooms() throws  FenixServiceException {
         if (allRooms == null) {
             allRooms = AllocatableSpace.getAllActiveAllocatableSpacesForEducation();
         }
@@ -167,7 +166,7 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
         return selectedRoomIDs;
     }
 
-    private Collection<AllocatableSpace> searchRooms() throws FenixFilterException, FenixServiceException {
+    private Collection<AllocatableSpace> searchRooms() throws  FenixServiceException {
 
         final String name = getName();
         final Integer building = (getBuilding() != null && getBuilding().length() > 0) ? Integer.valueOf(getBuilding()) : null;
@@ -206,15 +205,15 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
         return selectedRooms;
     }
 
-    public Collection<AllocatableSpace> getRooms() throws FenixFilterException, FenixServiceException {
+    public Collection<AllocatableSpace> getRooms() throws  FenixServiceException {
         return getSubmittedForm() ? searchRooms() : null;
     }
 
-    public Collection<Building> getBuildings() throws FenixFilterException, FenixServiceException {
+    public Collection<Building> getBuildings() throws  FenixServiceException {
         return Space.getAllActiveBuildings();
     }
 
-    public Collection<AllocatableSpace> getRoomsToDisplayMap() throws FenixFilterException, FenixServiceException {
+    public Collection<AllocatableSpace> getRoomsToDisplayMap() throws  FenixServiceException {
         final Set<Integer> selectedRoomIDs = getSelectedRoomIDs();
         if (selectedRoomIDs != null) {
             return filterRooms(getAllRooms(), selectedRoomIDs);
@@ -244,7 +243,7 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
 
     };
 
-    public Collection<SelectItem> getBuildingSelectItems() throws FenixFilterException, FenixServiceException {
+    public Collection<SelectItem> getBuildingSelectItems() throws  FenixServiceException {
         final List<Building> buildings = (List<Building>) getBuildings();
         final List<SelectItem> buildingSelectItems = new ArrayList<SelectItem>();
         for (final Building building : buildings) {
@@ -254,7 +253,7 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
         return buildingSelectItems;
     }
 
-    public Collection<SelectItem> getRoomTypeSelectItems() throws FenixFilterException, FenixServiceException {
+    public Collection<SelectItem> getRoomTypeSelectItems() throws  FenixServiceException {
         List<RoomClassification> roomClassificationsForEducation = rootDomainObject.getRoomClassification();
         final List<SelectItem> roomTypeSelectItems = new ArrayList<SelectItem>();
         for (RoomClassification classification : RoomClassification
@@ -268,26 +267,26 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
     }
 
     @Deprecated
-    public ExecutionSemester getExecutionPeriod() throws FenixFilterException, FenixServiceException {
+    public ExecutionSemester getExecutionPeriod() throws  FenixServiceException {
         return (ExecutionSemester) (getAcademicIntervalObject() != null ? ExecutionSemester
                 .getExecutionInterval(getAcademicIntervalObject()) : null);
     }
 
-    public Date getCalendarBegin() throws FenixFilterException, FenixServiceException, ParseException {
+    public Date getCalendarBegin() throws  FenixServiceException, ParseException {
         if (getStartDate() != null && getStartDate().length() > 0) {
             return DateFormatUtil.parse("dd/MM/yyyy", getStartDate());
         }
         return getAcademicIntervalObject().getStart().toDate();
     }
 
-    public Date getCalendarEnd() throws FenixFilterException, FenixServiceException, ParseException {
+    public Date getCalendarEnd() throws  FenixServiceException, ParseException {
         if (getEndDate() != null && getEndDate().length() > 0) {
             return DateFormatUtil.parse("dd/MM/yyyy", getEndDate());
         }
         return getAcademicIntervalObject().getEnd().toDate();
     }
 
-    public Map<AllocatableSpace, List<CalendarLink>> getWrittenEvaluationCalendarLinks() throws FenixFilterException,
+    public Map<AllocatableSpace, List<CalendarLink>> getWrittenEvaluationCalendarLinks() throws 
             FenixServiceException {
         final Collection<AllocatableSpace> rooms = getRoomsToDisplayMap();
         if (rooms != null) {
@@ -339,7 +338,7 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
     }
 
     public List<Entry<AllocatableSpace, List<CalendarLink>>> getWrittenEvaluationCalendarLinksEntryList()
-            throws FenixFilterException, FenixServiceException {
+            throws  FenixServiceException {
         final Map<AllocatableSpace, List<CalendarLink>> calendarLinks = getWrittenEvaluationCalendarLinks();
         return (calendarLinks != null) ? new ArrayList<Entry<AllocatableSpace, List<CalendarLink>>>(calendarLinks.entrySet()) : null;
     }

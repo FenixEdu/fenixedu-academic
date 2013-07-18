@@ -7,13 +7,16 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
 
+import net.sourceforge.fenixedu.applicationTier.Filtro.SiteManagerScormFileAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.FileContentCreationBean.EducationalResourceType;
+import pt.ist.fenixWebFramework.services.Service;
 import pt.linkare.scorm.utils.ScormMetaDataHash;
 import pt.utl.ist.fenix.tools.file.FileDescriptor;
 import pt.utl.ist.fenix.tools.file.FileManagerFactory;
@@ -132,7 +135,7 @@ public class CreateScormFile extends CreateFileContent {
 
     private ThreadLocal<ScormMetaDataHash> extraScormParam = null;
 
-    public void run(CreateScormFileItemForItemArgs args) throws FenixServiceException, DomainException, IOException {
+    protected void run(CreateScormFileItemForItemArgs args) throws FenixServiceException, DomainException, IOException {
         extraScormParam = new ThreadLocal<ScormMetaDataHash>();
         extraScormParam.set(args.getScormParameters());
 
@@ -155,6 +158,16 @@ public class CreateScormFile extends CreateFileContent {
                 is.close();
             }
         }
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final CreateScormFile serviceInstance = new CreateScormFile();
+
+    @Service
+    public static void runCreateScormFile(CreateScormFileItemForItemArgs args) throws FenixServiceException, DomainException, IOException  , NotAuthorizedException {
+        SiteManagerScormFileAuthorizationFilter.instance.execute(args);
+        serviceInstance.run(args);
     }
 
 }

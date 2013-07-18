@@ -5,7 +5,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -28,7 +27,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ShowStudentTimeTable extends ViewStudentTimeTable {
 
     public ActionForward prepareForSupervisor(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws FenixActionException,  FenixServiceException {
 
         final String personId = request.getParameter("personId");
         Person person = AbstractDomainObject.fromExternalId(personId);

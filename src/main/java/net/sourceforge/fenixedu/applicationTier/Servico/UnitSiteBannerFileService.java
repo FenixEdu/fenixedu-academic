@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.UnitSiteBanner;
@@ -26,7 +25,7 @@ import pt.utl.ist.fenix.tools.file.IFileManager;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
-public class UnitSiteBannerFileService extends FenixService {
+public class UnitSiteBannerFileService {
 
     protected UnitSiteBannerFile createBannerFile(UnitSite site, File fileToUpload, String name) throws FenixServiceException,
             IOException {

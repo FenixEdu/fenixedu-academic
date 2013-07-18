@@ -4,14 +4,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.TeacherAdministrationSiteComponentService;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -25,7 +24,7 @@ public class ShowMarksListOptionsAction extends FenixDispatchAction {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixActionException, FenixFilterException {
+            throws FenixActionException {
 
         IUserView userView = getUserView(request);
 
@@ -44,13 +43,12 @@ public class ShowMarksListOptionsAction extends FenixDispatchAction {
         evaluationCode = new Integer(evaluationCodeString);
 
         ISiteComponent commonComponent = new InfoSiteCommon();
-        Object[] args = { executionCourseCode, commonComponent, null, null, null, null };
 
         TeacherAdministrationSiteView siteView = null;
         try {
             siteView =
-                    (TeacherAdministrationSiteView) ServiceUtils
-                            .executeService("TeacherAdministrationSiteComponentService", args);
+                    TeacherAdministrationSiteComponentService.runTeacherAdministrationSiteComponentService(executionCourseCode,
+                            commonComponent, null, null, null, null);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }

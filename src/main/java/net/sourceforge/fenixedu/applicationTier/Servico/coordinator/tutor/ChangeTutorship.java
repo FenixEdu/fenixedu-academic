@@ -3,22 +3,29 @@ package net.sourceforge.fenixedu.applicationTier.Servico.coordinator.tutor;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Filtro.BolonhaOrLEECCoordinatorAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.CoordinatorAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.TutorshipAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.ChangeTutorshipByEntryYearBean.ChangeTutorshipBean;
 import net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.TutorshipErrorBean;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Tutorship;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Partial;
 
+import pt.ist.fenixWebFramework.services.Service;
+
 public class ChangeTutorship extends TutorshipManagement {
 
     public List<TutorshipErrorBean> run(Integer executionDegreeID, List<ChangeTutorshipBean> beans) throws FenixServiceException {
 
-        final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
+        final ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeID);
         final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
 
         List<TutorshipErrorBean> studentsWithErrors = new ArrayList<TutorshipErrorBean>();
@@ -49,4 +56,22 @@ public class ChangeTutorship extends TutorshipManagement {
 
         return studentsWithErrors;
     }
+
+    // Service Invokers migrated from Berserk
+
+    private static final ChangeTutorship serviceInstance = new ChangeTutorship();
+
+    @Service
+    public static List<TutorshipErrorBean> runChangeTutorship(Integer executionDegreeID, List<ChangeTutorshipBean> beans)
+            throws FenixServiceException, NotAuthorizedException {
+        try {
+            TutorshipAuthorizationFilter.instance.execute();
+            return serviceInstance.run(executionDegreeID, beans);
+        } catch (NotAuthorizedException ex1) {
+            CoordinatorAuthorizationFilter.instance.execute();
+            BolonhaOrLEECCoordinatorAuthorizationFilter.instance.execute(executionDegreeID);
+            return serviceInstance.run(executionDegreeID, beans);
+        }
+    }
+
 }

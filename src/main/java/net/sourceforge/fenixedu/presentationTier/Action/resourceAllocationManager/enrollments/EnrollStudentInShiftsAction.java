@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift.EnrollStudentInShifts;
 import net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift.EnrollStudentInShifts.StudentNotFoundServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.enrollment.shift.ShiftEnrollmentErrorReport;
@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
@@ -34,7 +33,7 @@ public class EnrollStudentInShiftsAction extends FenixAction {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException {
+            HttpServletResponse response)  {
 
         final IUserView userView = getUserView(request);
 
@@ -45,8 +44,7 @@ public class EnrollStudentInShiftsAction extends FenixAction {
 
         try {
             ShiftEnrollmentErrorReport errorReport =
-                    (ShiftEnrollmentErrorReport) ServiceUtils.executeService("EnrollStudentInShifts", new Object[] {
-                            getRegistration(request), shiftId });
+                    EnrollStudentInShifts.runEnrollStudentInShifts(getRegistration(request), shiftId);
 
             if (errorReport.getUnAvailableShifts().size() > 0) {
                 for (final Shift shift : (List<Shift>) errorReport.getUnAvailableShifts()) {

@@ -3,12 +3,11 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class ReadNotClosedExecutionYears extends FenixService {
+public class ReadNotClosedExecutionYears {
 
     @Service
     public static List<InfoExecutionYear> run() {

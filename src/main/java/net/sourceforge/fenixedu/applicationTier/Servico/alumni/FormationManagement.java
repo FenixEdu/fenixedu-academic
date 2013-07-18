@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.alumni;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.dataTransferObject.alumni.formation.AlumniFormation;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionUnit;
@@ -13,7 +13,7 @@ import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
-public class FormationManagement extends FenixService {
+public class FormationManagement {
 
     protected AcademicalInstitutionUnit getFormationInstitution(final AlumniFormation formation) {
         AcademicalInstitutionUnit institutionUnit = formation.getInstitution();

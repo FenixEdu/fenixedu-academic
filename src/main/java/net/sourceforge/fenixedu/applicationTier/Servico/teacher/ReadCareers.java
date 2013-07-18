@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoCareer;
@@ -20,7 +19,7 @@ import org.apache.commons.beanutils.BeanComparator;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class ReadCareers extends FenixService {
+public class ReadCareers {
 
     @Checked("RolePredicates.TEACHER_PREDICATE")
     @Service

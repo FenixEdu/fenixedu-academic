@@ -3,7 +3,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoGroup;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
@@ -16,7 +16,7 @@ import pt.ist.fenixWebFramework.services.Service;
 /**
  * @author Luis Cruz
  */
-public class ReadFinalDegreeWorkStudentGroupByUsername extends FenixService {
+public class ReadFinalDegreeWorkStudentGroupByUsername {
 
     @Checked("RolePredicates.STUDENT_PREDICATE")
     @Service

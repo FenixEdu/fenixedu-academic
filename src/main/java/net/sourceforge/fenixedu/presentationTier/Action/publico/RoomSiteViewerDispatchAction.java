@@ -10,11 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecutionPeriod;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionPeriodByOID;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.publico.ExecutionCourseSiteComponentService;
 import net.sourceforge.fenixedu.applicationTier.Servico.publico.RoomSiteComponentServiceByExecutionPeriodID;
 import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseSiteView;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
@@ -31,7 +31,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatc
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -46,7 +45,7 @@ import org.joda.time.DateMidnight;
 public class RoomSiteViewerDispatchAction extends FenixContextDispatchAction {
 
     public ActionForward curricularCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
         setFromRequest(request);
         String curricularCourseIdString = request.getParameter("ccCode");
         if (curricularCourseIdString == null) {
@@ -61,8 +60,7 @@ public class RoomSiteViewerDispatchAction extends FenixContextDispatchAction {
     }
 
     private SiteView readSiteView(HttpServletRequest request, ISiteComponent firstPageComponent, Integer infoExecutionCourseCode,
-            Integer sectionIndex, Integer curricularCourseId) throws FenixActionException, FenixFilterException,
-            FenixFilterException {
+            Integer sectionIndex, Integer curricularCourseId) throws FenixActionException {
         Integer objectCode = null;
         if (infoExecutionCourseCode == null) {
             String objectCodeString = request.getParameter("objectCode");
@@ -75,12 +73,10 @@ public class RoomSiteViewerDispatchAction extends FenixContextDispatchAction {
 
         ISiteComponent commonComponent = new InfoSiteCommon();
 
-        Object[] args =
-                { commonComponent, firstPageComponent, objectCode, infoExecutionCourseCode, sectionIndex, curricularCourseId };
-
         try {
             ExecutionCourseSiteView siteView =
-                    (ExecutionCourseSiteView) ServiceUtils.executeService("ExecutionCourseSiteComponentService", args);
+                    ExecutionCourseSiteComponentService.runExecutionCourseSiteComponentService(commonComponent,
+                            firstPageComponent, objectCode, infoExecutionCourseCode, sectionIndex, curricularCourseId);
 
             List curricularCoursesByDegree = ((InfoSiteCommon) siteView.getCommonComponent()).getAssociatedDegreesByDegree();
             Collections.sort(curricularCoursesByDegree, new BeanComparator("infoDegreeCurricularPlan.infoDegree.sigla"));

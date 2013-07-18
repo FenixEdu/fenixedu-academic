@@ -10,7 +10,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
@@ -18,6 +17,7 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 import pt.ist.fenixWebFramework.services.Service;
@@ -26,13 +26,13 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-public class ComputeCurricularCourseStatistics extends FenixService {
+public class ComputeCurricularCourseStatistics {
 
     @Service
     public static String run(Integer degreeCurricularPlanID, Integer executionYearID, RegistrationAgreement agreement) {
 
-        ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
-        DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+        ExecutionYear executionYear = RootDomainObject.getInstance().readExecutionYearByOID(executionYearID);
+        DegreeCurricularPlan degreeCurricularPlan = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanID);
         List<CurricularCourse> curricularCourses = degreeCurricularPlan.getCurricularCourses();
 
         Formatter result = new Formatter();

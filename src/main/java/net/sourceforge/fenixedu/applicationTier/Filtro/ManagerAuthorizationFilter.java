@@ -10,6 +10,8 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
  */
 public class ManagerAuthorizationFilter extends AuthorizationByRoleFilter {
 
+    public static final ManagerAuthorizationFilter instance = new ManagerAuthorizationFilter();
+
     @Override
     protected RoleType getRoleType() {
         return RoleType.MANAGER;

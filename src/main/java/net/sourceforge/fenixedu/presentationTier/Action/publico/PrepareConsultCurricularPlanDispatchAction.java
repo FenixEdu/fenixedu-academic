@@ -6,7 +6,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionPeriodsByExecutionYear;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.publico.ReadPublicExecutionDegreeByDCPID;
@@ -35,7 +34,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 public class PrepareConsultCurricularPlanDispatchAction extends FenixContextDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixActionException, FenixFilterException, FenixServiceException {
+            throws FenixActionException,  FenixServiceException {
 
         request.removeAttribute(PresentationConstants.LABELLIST_EXECUTIONPERIOD);
 

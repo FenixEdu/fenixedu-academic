@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -19,7 +18,7 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author Luis Cruz
  * 
  */
-public class ReadStudentCurricularInformation extends FenixService {
+public class ReadStudentCurricularInformation {
 
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service

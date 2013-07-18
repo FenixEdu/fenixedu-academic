@@ -4,21 +4,21 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegreeEditor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class EditExecutionDegreePeriods extends FenixService {
+public class EditExecutionDegreePeriods {
 
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
     public static void run(InfoExecutionDegreeEditor infoExecutionDegree) {
 
-        final ExecutionDegree oldExecutionDegree = rootDomainObject.readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
+        final ExecutionDegree oldExecutionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
 
         OccupationPeriod periodLessonsFirstSemester = setCompositePeriod(infoExecutionDegree.getInfoPeriodLessonsFirstSemester());
         oldExecutionDegree.setPeriodLessonsFirstSemester(periodLessonsFirstSemester);

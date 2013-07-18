@@ -5,24 +5,28 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.WriteCandidateEnrolmentsAuhorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.CandidateEnrolment;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
-public class WriteCandidateEnrolments extends FenixService {
+import pt.ist.fenixWebFramework.services.Service;
 
-    public void run(Set<Integer> selectedCurricularCoursesIDs, Integer candidateID, Double credits, String givenCreditsRemarks)
+public class WriteCandidateEnrolments {
+
+    protected void run(Set<Integer> selectedCurricularCoursesIDs, Integer candidateID, Double credits, String givenCreditsRemarks)
             throws FenixServiceException {
 
-        MasterDegreeCandidate masterDegreeCandidate = rootDomainObject.readMasterDegreeCandidateByOID(candidateID);
+        MasterDegreeCandidate masterDegreeCandidate = RootDomainObject.getInstance().readMasterDegreeCandidateByOID(candidateID);
         if (masterDegreeCandidate == null) {
             throw new NonExistingServiceException();
         }
@@ -78,7 +82,7 @@ public class WriteCandidateEnrolments extends FenixService {
         while (iterCurricularCourseIds.hasNext()) {
 
             CurricularCourse curricularCourse =
-                    (CurricularCourse) rootDomainObject.readDegreeModuleByOID((Integer) iterCurricularCourseIds.next());
+                    (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID((Integer) iterCurricularCourseIds.next());
 
             if (curricularCourse == null) {
                 throw new NonExistingServiceException();
@@ -89,6 +93,18 @@ public class WriteCandidateEnrolments extends FenixService {
             masterDegreeCandidate.addCandidateEnrolments(candidateEnrolment);
             candidateEnrolment.setCurricularCourse(curricularCourse);
         }
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final WriteCandidateEnrolments serviceInstance = new WriteCandidateEnrolments();
+
+    @Service
+    public static void runWriteCandidateEnrolments(Set<Integer> selectedCurricularCoursesIDs, Integer candidateID,
+            Double credits, String givenCreditsRemarks) throws FenixServiceException, NotAuthorizedException {
+        WriteCandidateEnrolmentsAuhorizationFilter.instance.execute(selectedCurricularCoursesIDs, candidateID, credits,
+                givenCreditsRemarks);
+        serviceInstance.run(selectedCurricularCoursesIDs, candidateID, credits, givenCreditsRemarks);
     }
 
 }

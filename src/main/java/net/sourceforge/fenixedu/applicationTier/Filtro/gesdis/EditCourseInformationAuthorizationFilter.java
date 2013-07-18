@@ -14,9 +14,9 @@ import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoCourseReport;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import pt.utl.ist.berserk.ServiceRequest;
-import pt.utl.ist.berserk.ServiceResponse;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 /**
  * @author Leonor Almeida
@@ -25,19 +25,20 @@ import pt.utl.ist.berserk.ServiceResponse;
  */
 public class EditCourseInformationAuthorizationFilter extends AuthorizationByRoleFilter {
 
+    public static final EditCourseInformationAuthorizationFilter instance = new EditCourseInformationAuthorizationFilter();
+
     @Override
     protected RoleType getRoleType() {
         return RoleType.TEACHER;
     }
 
-    @Override
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-        IUserView id = getRemoteUser(request);
-        Object[] arguments = getServiceCallArguments(request);
+    public void execute(Integer courseReportID, InfoCourseReport infoCourseReport, String newReport)
+            throws NotAuthorizedException {
+        IUserView id = AccessControl.getUserView();
 
         try {
             if (((id != null && id.getRoleTypes() != null && !id.hasRoleType(getRoleType()))) || (id == null)
-                    || (id.getRoleTypes() == null) || (!isResponsibleFor(id, (InfoCourseReport) arguments[1]))) {
+                    || (id.getRoleTypes() == null) || (!isResponsibleFor(id, infoCourseReport))) {
                 throw new NotAuthorizedException();
             }
         } catch (RuntimeException e) {
@@ -49,7 +50,8 @@ public class EditCourseInformationAuthorizationFilter extends AuthorizationByRol
         final Person person = id.getPerson();
 
         InfoExecutionCourse infoExecutionCourse = infoCourseReport.getInfoExecutionCourse();
-        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
+        ExecutionCourse executionCourse =
+                RootDomainObject.getInstance().readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
 
         List<Professorship> responsiblesFor = executionCourse.responsibleFors();
 

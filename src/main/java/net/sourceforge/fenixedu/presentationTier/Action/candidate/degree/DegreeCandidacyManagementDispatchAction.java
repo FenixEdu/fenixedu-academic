@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.candidacy.ExecuteStateOperation;
 import net.sourceforge.fenixedu.applicationTier.Servico.candidacy.LogFirstTimeCandidacyTimestamp;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -58,7 +57,7 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
     }
 
     public ActionForward showCandidacyDetails(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws FenixActionException,  FenixServiceException {
 
         final StudentCandidacy candidacy = getCandidacy(request);
         request.setAttribute("candidacy", candidacy);
@@ -79,7 +78,7 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
     }
 
     public ActionForward doOperation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws FenixActionException,  FenixServiceException {
 
         final CandidacyOperation operation =
                 (CandidacyOperation) getCandidacy(request).getActiveCandidacySituation().getOperationByTypeAndPerson(
@@ -104,7 +103,7 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
     }
 
     public ActionForward processForm(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws FenixActionException,  FenixServiceException {
         request.setAttribute("candidacy", getCandidacy(request));
 
         final CandidacyOperation operation =
@@ -210,7 +209,7 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
 
     private ActionForward executeOperation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response, CandidacyOperation candidacyOperation) throws FenixServiceException,
-            FenixFilterException, FenixActionException {
+             FenixActionException {
 
         final IUserView userView = getUserView(request);
 
@@ -364,7 +363,7 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
     }
 
     public ActionForward showCurrentForm(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws FenixActionException,  FenixServiceException {
 
         request.setAttribute("candidacy", getCandidacy(request));
         request.setAttribute("operation", RenderUtils.getViewState("operation-view-state").getMetaObject().getObject());

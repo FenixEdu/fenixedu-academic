@@ -8,7 +8,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
@@ -23,6 +22,7 @@ import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 
@@ -33,7 +33,7 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 
 import pt.ist.fenixWebFramework.services.Service;
 
-public class ReadStudentsAndMarksByCurricularCourse extends FenixService {
+public class ReadStudentsAndMarksByCurricularCourse {
 
     @Service
     public static InfoSiteEnrolmentEvaluation run(Integer curricularCourseCode, String yearString) throws FenixServiceException {
@@ -41,7 +41,7 @@ public class ReadStudentsAndMarksByCurricularCourse extends FenixService {
         List infoEnrolmentEvaluations = new ArrayList();
         Date lastEvaluationDate = null;
 
-        final CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseCode);
+        final CurricularCourse curricularCourse = (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(curricularCourseCode);
         final List<Enrolment> enrolments =
                 (yearString != null) ? curricularCourse.getEnrolmentsByYear(yearString) : curricularCourse.getEnrolments();
 

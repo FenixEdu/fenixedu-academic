@@ -4,13 +4,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoDistributedTest;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoQuestion;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteStudentTestFeedback;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestion;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.Test;
 import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
@@ -21,11 +23,13 @@ import net.sourceforge.fenixedu.util.tests.TestType;
 
 import org.apache.commons.beanutils.BeanComparator;
 
-public class SimulateTest extends FenixService {
+import pt.ist.fenixWebFramework.services.Service;
 
-    private String path = new String();
+public class SimulateTest {
 
-    public InfoSiteStudentTestFeedback run(Integer executionCourseId, Integer testId, Response[] responses,
+    private final String path = new String();
+
+    protected InfoSiteStudentTestFeedback run(Integer executionCourseId, Integer testId, Response[] responses,
             String[] questionCodes, String[] optionShuffle, TestType testType, CorrectionAvailability correctionAvailability,
             Boolean imsfeedback, String testInformation, String path) throws FenixServiceException {
 
@@ -153,7 +157,7 @@ public class SimulateTest extends FenixService {
             throws InvalidArgumentsServiceException, FenixServiceException {
         List<InfoStudentTestQuestion> infoStudentTestQuestionList = new ArrayList<InfoStudentTestQuestion>();
 
-        Test test = rootDomainObject.readTestByOID(testId);
+        Test test = RootDomainObject.getInstance().readTestByOID(testId);
         List<TestQuestion> testQuestionList = new ArrayList<TestQuestion>(test.getTestQuestions());
         Collections.sort(testQuestionList, new BeanComparator("testQuestionOrder"));
         for (int i = 0; i < testQuestionList.size(); i++) {
@@ -166,7 +170,7 @@ public class SimulateTest extends FenixService {
             infoStudentTestQuestion.setCorrectionFormula(testQuestionExample.getCorrectionFormula());
             infoStudentTestQuestion.setTestQuestionMark(Double.valueOf(0));
             infoStudentTestQuestion.setResponse(null);
-            Question question = rootDomainObject.readQuestionByOID(Integer.valueOf(questionCodes[i]));
+            Question question = RootDomainObject.getInstance().readQuestionByOID(Integer.valueOf(questionCodes[i]));
             if (question == null) {
                 throw new InvalidArgumentsServiceException();
             }
@@ -187,6 +191,19 @@ public class SimulateTest extends FenixService {
             infoStudentTestQuestionList.add(infoStudentTestQuestion);
         }
         return infoStudentTestQuestionList;
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final SimulateTest serviceInstance = new SimulateTest();
+
+    @Service
+    public static InfoSiteStudentTestFeedback runSimulateTest(Integer executionCourseId, Integer testId, Response[] responses,
+            String[] questionCodes, String[] optionShuffle, TestType testType, CorrectionAvailability correctionAvailability,
+            Boolean imsfeedback, String testInformation, String path) throws FenixServiceException, NotAuthorizedException {
+        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
+        return serviceInstance.run(executionCourseId, testId, responses, questionCodes, optionShuffle, testType,
+                correctionAvailability, imsfeedback, testInformation, path);
     }
 
 }

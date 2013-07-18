@@ -6,7 +6,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExamWithRoomOccupationsAndScopesWithCurricularCoursesWithDegreeAndSemesterAndYear;
@@ -22,7 +21,7 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class ReadExamsByDate extends FenixService {
+public class ReadExamsByDate {
 
     @Service
     public static InfoViewExam run(Calendar examDay, Calendar examStartTime, Calendar examEndTime) {

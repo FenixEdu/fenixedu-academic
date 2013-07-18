@@ -8,7 +8,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.ChangeConvokeActive;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.ChangeConvokeStatus;
@@ -371,7 +370,7 @@ public class ConvokeManagement extends FenixDispatchAction {
         return mapping.findForward("prepareGenerateConvokes");
     }
 
-    private ExamCoordinator getCoordinatorForCurrentYear(HttpServletRequest request) throws FenixFilterException,
+    private ExamCoordinator getCoordinatorForCurrentYear(HttpServletRequest request) throws 
             FenixServiceException {
         ExecutionYear currentYear = ExecutionYear.readCurrentExecutionYear();
         Person person = getLoggedPerson(request);
@@ -387,7 +386,7 @@ public class ConvokeManagement extends FenixDispatchAction {
         return mapping.findForward(forwardTo);
     }
 
-    private void recoverBeanFromRequest(HttpServletRequest request) throws FenixFilterException, FenixServiceException {
+    private void recoverBeanFromRequest(HttpServletRequest request) throws  FenixServiceException {
         ConvokeBean bean = new ConvokeBean();
         String vigilantGroup = request.getParameter("gid");
         String incompatiblities = request.getParameter("showIncompatibilities");
@@ -424,7 +423,7 @@ public class ConvokeManagement extends FenixDispatchAction {
     }
 
     private void putInformationOnRequest(HttpServletRequest request, VigilantGroup group, boolean showVigilants,
-            ExecutionYear executionYear) throws FenixFilterException, FenixServiceException {
+            ExecutionYear executionYear) throws  FenixServiceException {
 
         if (showVigilants) {
             request.setAttribute("group", group);

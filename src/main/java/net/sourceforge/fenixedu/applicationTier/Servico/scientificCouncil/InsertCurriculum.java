@@ -5,11 +5,12 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Curriculum;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 import org.joda.time.DateTime;
 
@@ -22,7 +23,7 @@ import pt.ist.fenixWebFramework.services.Service;
  *         23/Jul/2003 fenix-head ServidorAplicacao.Servico.scientificCouncil
  * 
  */
-public class InsertCurriculum extends FenixService {
+public class InsertCurriculum {
 
     @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
     @Service
@@ -30,7 +31,7 @@ public class InsertCurriculum extends FenixService {
             String operacionalObjectivesEn, String generalObjectives, String generalObjectivesEn, DateTime lastModification,
             Boolean basic) throws FenixServiceException {
 
-        CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseId);
+        CurricularCourse curricularCourse = (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(curricularCourseId);
 
         if (curricularCourse == null) {
             throw new InvalidArgumentsServiceException();

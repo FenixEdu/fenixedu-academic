@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.gradeSubmission.CreateMarkSheetByTeacher;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -99,7 +98,7 @@ public class MarkSheetTeacherManagementDispatchAction extends ManageExecutionCou
     }
 
     public ActionForward gradeSubmissionStepTwo(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         IUserView userView = getUserView(request);
         MarkSheetTeacherGradeSubmissionBean submissionBean =
@@ -125,7 +124,7 @@ public class MarkSheetTeacherManagementDispatchAction extends ManageExecutionCou
     }
 
     public ActionForward backToMainPage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         return mapping.findForward("mainPage");
     }

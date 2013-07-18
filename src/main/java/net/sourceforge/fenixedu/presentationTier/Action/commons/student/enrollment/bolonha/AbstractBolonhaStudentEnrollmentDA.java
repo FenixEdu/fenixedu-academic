@@ -7,7 +7,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.enrolment.bolonha.EnrolBolonhaStudent;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.enrolment.bolonha.EnrolInAffinityCycle;
@@ -80,7 +79,7 @@ public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAc
     }
 
     public ActionForward enrolInDegreeModules(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         final BolonhaStudentEnrollmentBean bolonhaStudentEnrollmentBean = getBolonhaStudentEnrollmentBeanFromViewState();
         try {
@@ -149,7 +148,7 @@ public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAc
     }
 
     public ActionForward enrolInOptionalCurricularCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         final BolonhaStudentOptionalEnrollmentBean optionalStudentEnrollmentBean =
                 getBolonhaStudentOptionalEnrollmentBeanFromViewState();
@@ -246,7 +245,7 @@ public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAc
     }
 
     public ActionForward enrolInCycleCourseGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         final CycleEnrolmentBean cycleEnrolmentBean = getCycleEnrolmentBeanFromViewState();
 

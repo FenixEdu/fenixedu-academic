@@ -3,12 +3,11 @@ package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManag
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBuilding;
 import net.sourceforge.fenixedu.domain.space.Building;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class ReadBuildings extends FenixService {
+public class ReadBuildings {
 
     @Service
     public static List<InfoBuilding> run() {

@@ -1,15 +1,17 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ClosePunctualRoomsOccupationRequest;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.RoomsReserveBean;
 import net.sourceforge.fenixedu.domain.PunctualRoomsOccupationRequest;
 
 import org.joda.time.DateTime;
 
-public class CreateNewRoomsReserveComment extends FenixService {
+import pt.ist.fenixWebFramework.services.Service;
 
-    public void run(RoomsReserveBean bean, boolean reOpenRequest, boolean resolveRequest) {
+public class CreateNewRoomsReserveComment {
+
+    protected void run(RoomsReserveBean bean, boolean reOpenRequest, boolean resolveRequest) {
 
         if (bean != null && bean.getReserveRequest() != null) {
 
@@ -28,4 +30,13 @@ public class CreateNewRoomsReserveComment extends FenixService {
             }
         }
     }
+    // Service Invokers migrated from Berserk
+
+    private static final CreateNewRoomsReserveComment serviceInstance = new CreateNewRoomsReserveComment();
+
+    @Service
+    public static void runCreateNewRoomsReserveComment(RoomsReserveBean bean, boolean reOpenRequest, boolean resolveRequest) {
+        serviceInstance.run(bean, reOpenRequest, resolveRequest);
+    }
+
 }

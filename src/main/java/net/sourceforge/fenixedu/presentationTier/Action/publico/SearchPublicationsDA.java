@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.publico;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.SearchDSpaceBean;
 import net.sourceforge.fenixedu.dataTransferObject.SearchDSpaceBean.SearchElement;
@@ -24,7 +23,7 @@ public class SearchPublicationsDA extends SearchPublicationsAction {
 
     @Override
     public ActionForward prepareSearchPublication(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         SearchDSpaceBean bean = createNewBean();
         bean.addSearchElement();

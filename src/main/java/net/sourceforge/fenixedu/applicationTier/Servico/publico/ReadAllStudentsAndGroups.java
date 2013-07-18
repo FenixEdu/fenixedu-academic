@@ -9,7 +9,6 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGrouping;
@@ -19,6 +18,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentsAndGroups;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentGroup;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -29,13 +29,13 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author joaosa & rmalo
  * 
  */
-public class ReadAllStudentsAndGroups extends FenixService {
+public class ReadAllStudentsAndGroups {
 
     @Service
     public static InfoSiteStudentsAndGroups run(Integer groupingId) throws FenixServiceException {
         InfoSiteStudentsAndGroups infoSiteStudentsAndGroups = new InfoSiteStudentsAndGroups();
 
-        Grouping grouping = rootDomainObject.readGroupingByOID(groupingId);
+        Grouping grouping = RootDomainObject.getInstance().readGroupingByOID(groupingId);
 
         if (grouping == null) {
             throw new ExistingServiceException();

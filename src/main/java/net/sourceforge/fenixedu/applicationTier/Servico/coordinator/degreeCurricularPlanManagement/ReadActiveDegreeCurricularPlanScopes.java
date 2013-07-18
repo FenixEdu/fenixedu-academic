@@ -2,7 +2,10 @@ package net.sourceforge.fenixedu.applicationTier.Servico.coordinator.degreeCurri
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Filtro.CoordinatorAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.ReadDegreeCurricularPlanBaseService;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Fernanda Quitério 5/Nov/2003
@@ -15,9 +18,20 @@ import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.ReadDegreeCu
 
 public class ReadActiveDegreeCurricularPlanScopes extends ReadDegreeCurricularPlanBaseService {
 
-    public List run(final Integer degreeCurricularPlanId) {
+    protected List run(final Integer degreeCurricularPlanId) {
 
         return super.readActiveCurricularCourseScopes(degreeCurricularPlanId);
 
     }
+
+    // Service Invokers migrated from Berserk
+
+    private static final ReadActiveDegreeCurricularPlanScopes serviceInstance = new ReadActiveDegreeCurricularPlanScopes();
+
+    @Service
+    public static List runReadActiveDegreeCurricularPlanScopes(Integer degreeCurricularPlanId) throws NotAuthorizedException {
+        CoordinatorAuthorizationFilter.instance.execute();
+        return serviceInstance.run(degreeCurricularPlanId);
+    }
+
 }

@@ -8,11 +8,11 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -25,11 +25,11 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author <a href="mailto:frnp@mega.ist.utl.pt">Francisco Paulo</a>
  * 
  */
-public class ReadExecutionYearsByDegreeCurricularPlanID extends FenixService {
+public class ReadExecutionYearsByDegreeCurricularPlanID {
 
     @Service
     public static List run(Integer degreeCurricularPlanID) {
-        DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+        DegreeCurricularPlan degreeCurricularPlan = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanID);
 
         List<ExecutionYear> executionYears =
                 (List<ExecutionYear>) CollectionUtils.collect(degreeCurricularPlan.getExecutionDegrees(), new Transformer() {

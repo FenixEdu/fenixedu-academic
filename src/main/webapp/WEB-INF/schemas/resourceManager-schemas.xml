@@ -29,8 +29,8 @@
 		<property name="size" value="60"/>
 		<property name="labelField" value="presentationNameWithParents"/>
 		<property name="indicatorShown" value="true"/>		
-		<property name="serviceName" value="SearchAllActiveInternalUnits"/>
-		<property name="serviceArgs" value="slot=nameWithAcronym,size=20"/>
+		<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchAllActiveInternalUnits"/>
+		<property name="args" value="slot=nameWithAcronym,size=20"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"/>
 		<property name="minChars" value="2"/>	
 	</slot>
@@ -45,8 +45,8 @@
 		<property name="size" value="60"/>
 		<property name="labelField" value="presentationNameWithParents"/>
 		<property name="indicatorShown" value="true"/>		
-		<property name="serviceName" value="SearchAllActiveInternalUnits"/>
-		<property name="serviceArgs" value="slot=nameWithAcronym,size=20"/>
+		<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchAllActiveInternalUnits"/>
+		<property name="args" value="slot=nameWithAcronym,size=20"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"/>
 		<property name="minChars" value="2"/>	
 	</slot>

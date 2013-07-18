@@ -6,8 +6,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.publico.ReadActiveDegreeCurricularPlanByID;
 import net.sourceforge.fenixedu.applicationTier.Servico.publico.ReadPublicExecutionDegreeByDCPID;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
@@ -48,7 +47,7 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction {
     }
 
     private ActionForward showOldDegreeCurricularPlan(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            Integer degreeCurricularPlanId) throws FenixFilterException, FenixActionException {
+            Integer degreeCurricularPlanId) throws  FenixActionException {
         final ActionErrors errors = new ActionErrors();
 
         InfoExecutionDegree infoExecutionDegreeForPeriod = null;
@@ -130,15 +129,16 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction {
             final Object[] args = { infoExecutionDegree, selectedExecutionPeriod, curricularYear, getLocale(request) };
             try {
                 activeCurricularCourseScopes =
-                        (List) ServiceManagerServiceFactory.executeService("ReadActiveDegreeCurricularPlanByID", args);
+                        ReadActiveDegreeCurricularPlanByID.runReadActiveDegreeCurricularPlanByID(infoExecutionDegree,
+                                selectedExecutionPeriod, curricularYear, getLocale(request));
             } catch (FenixServiceException e) {
                 return new ActionForward(mapping.getInput());
             }
         } else {
-            final Object[] args = { degreeCurricularPlanId, selectedExecutionPeriod.getIdInternal(), getLocale(request), "" };
             try {
                 activeCurricularCourseScopes =
-                        (List) ServiceManagerServiceFactory.executeService("ReadActiveDegreeCurricularPlanByID", args);
+                        ReadActiveDegreeCurricularPlanByID.runReadActiveDegreeCurricularPlanByID(degreeCurricularPlanId,
+                                selectedExecutionPeriod.getIdInternal(), getLocale(request), "");
             } catch (FenixServiceException e) {
                 return new ActionForward(mapping.getInput());
             }

@@ -20,8 +20,8 @@
 				<fr:property name="labelField" value="person.name"/>
 				<fr:property name="format" value="${person.name} (${person.username})"/>
 				<fr:property name="indicatorShown" value="true"/>
-				<fr:property name="serviceName" value="SearchTeachersByNameOrISTID"/>
-				<fr:property name="serviceArgs" value="slot=person.name"/>
+				<fr:property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchTeachersByNameOrISTID"/>
+				<fr:property name="args" value="slot=person.name"/>
 				<fr:property name="minChars" value="3"/>
 				<fr:property name="errorStyleClass" value="error0"/>
 				<fr:validator name="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredAutoCompleteSelectionValidator" />

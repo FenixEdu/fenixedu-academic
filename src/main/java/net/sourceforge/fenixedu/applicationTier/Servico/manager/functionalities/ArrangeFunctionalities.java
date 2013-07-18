@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.functionalities.IFunctionality;
 import net.sourceforge.fenixedu.domain.functionalities.Module;
@@ -16,7 +15,7 @@ import pt.utl.ist.fenix.tools.util.Pair;
  * 
  * @author cfgi
  */
-public class ArrangeFunctionalities extends FenixService {
+public class ArrangeFunctionalities {
 
     /**
      * Every pair in the given list will be changed so that the value is make a

@@ -8,8 +8,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.tutor.CreatePerformanceGridTable;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.PerformanceGridTableDTO;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.PerformanceGridTableDTO.PerformanceGridLine;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.TutorStatisticsBean;
@@ -23,13 +23,11 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 public abstract class StudentsPerformanceGridDispatchAction extends FenixDispatchAction {
 
     protected PerformanceGridTableDTO createPerformanceGridTable(HttpServletRequest request, List<Tutorship> tutors,
-            ExecutionYear entryYear, ExecutionYear monitoringYear) throws FenixFilterException {
+            ExecutionYear entryYear, ExecutionYear monitoringYear)  {
 
         PerformanceGridTableDTO performanceGridTable = null;
         try {
-            performanceGridTable =
-                    (PerformanceGridTableDTO) executeService("CreatePerformanceGridTable", new Object[] { tutors, entryYear,
-                            monitoringYear });
+            performanceGridTable = CreatePerformanceGridTable.runCreatePerformanceGridTable(tutors, entryYear, monitoringYear);
         } catch (FenixServiceException ex) {
             addActionMessage(request, ex.getMessage(), ex.getArgs());
         }

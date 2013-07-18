@@ -5,11 +5,13 @@ import java.util.Collection;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationEntry;
 import net.sourceforge.fenixedu.domain.person.PersonNamePart;
 
 import org.apache.commons.collections.Predicate;
 
+import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 public class SearchPersonWithCard extends SearchPerson {
@@ -40,7 +42,7 @@ public class SearchPersonWithCard extends SearchPerson {
     private Collection<Person> findPersons(String searchName) {
         Collection<Person> persons = new ArrayList<Person>();
 
-        for (CardGenerationEntry cardGenerationEntry : rootDomainObject.getCardGenerationEntriesSet()) {
+        for (CardGenerationEntry cardGenerationEntry : RootDomainObject.getInstance().getCardGenerationEntriesSet()) {
             if (cardGenerationEntry.getPerson() != null) {
                 if (matchableSearchNameAndCardName(searchName, cardGenerationEntry.getLine().substring(178).trim().toLowerCase())) {
                     persons.add(cardGenerationEntry.getPerson());
@@ -61,4 +63,13 @@ public class SearchPersonWithCard extends SearchPerson {
         }
         return true;
     }
+    // Service Invokers migrated from Berserk
+
+    private static final SearchPersonWithCard serviceInstance = new SearchPersonWithCard();
+
+    @Service
+    public static CollectionPager<Person> runSearchPersonWithCard(SearchParameters searchParameters, Predicate predicate) {
+        return serviceInstance.run(searchParameters, predicate);
+    }
+
 }

@@ -6,7 +6,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.contacts.CreatePartyContact;
 import net.sourceforge.fenixedu.applicationTier.Servico.contacts.DeletePartyContact;
 import net.sourceforge.fenixedu.applicationTier.Servico.contacts.EditPartyContact;
@@ -162,7 +161,7 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward createPartyContact(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         if (getRenderedObject("edit-contact") instanceof PartyContactBean) {
             PartyContactBean contact = getRenderedObject("edit-contact");
             PartyContact newPartyContact = null;
@@ -226,7 +225,7 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward editPartyContact(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         if (getRenderedObject("edit-contact") instanceof PartyContactBean) {
             PartyContactBean contact = getRenderedObject("edit-contact");
             Boolean wasValidated = false;
@@ -298,7 +297,7 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward deletePartyContact(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         try {
             final PartyContact partyContact = getPartyContact(request);
             deleteContact(partyContact);

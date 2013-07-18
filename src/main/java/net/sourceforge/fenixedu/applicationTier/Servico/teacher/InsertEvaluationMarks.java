@@ -6,10 +6,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Factory.TeacherAdministrationSiteComponentBuilder;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.DegreeCurricularPlanStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.IDegreeCurricularPlanStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.strategys.IDegreeCurricularPlanStrategy;
@@ -26,17 +27,19 @@ import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.Mark;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Fernanda Quitério
  * 
  */
-public class InsertEvaluationMarks extends FenixService {
+public class InsertEvaluationMarks {
 
-    public Object run(Integer executionCourseCode, Integer evaluationCode, HashMap hashMarks) throws ExcepcaoInexistente,
-            FenixServiceException {
+    protected TeacherAdministrationSiteView run(Integer executionCourseCode, Integer evaluationCode, HashMap hashMarks)
+            throws ExcepcaoInexistente, FenixServiceException {
 
         ExecutionCourseSite site = null;
         Evaluation evaluation = null;
@@ -45,11 +48,11 @@ public class InsertEvaluationMarks extends FenixService {
         HashMap<String, String> newHashMarks = new HashMap<String, String>();
 
         // Site
-        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseCode);
+        final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseCode);
         site = executionCourse.getSite();
 
         // Evaluation
-        evaluation = rootDomainObject.readEvaluationByOID(evaluationCode);
+        evaluation = RootDomainObject.getInstance().readEvaluationByOID(evaluationCode);
 
         // Attend List
         attendList = executionCourse.getAttends();
@@ -99,7 +102,7 @@ public class InsertEvaluationMarks extends FenixService {
         return createSiteView(site, evaluation, newHashMarks, marksErrorsInvalidMark, attendList, hashMarks);
     }
 
-    private Object createSiteView(ExecutionCourseSite site, Evaluation evaluation, HashMap hashMarks,
+    private TeacherAdministrationSiteView createSiteView(ExecutionCourseSite site, Evaluation evaluation, HashMap hashMarks,
             List marksErrorsInvalidMark, List attendList, HashMap nonExistingStudents) throws FenixServiceException {
         InfoSiteMarks infoSiteMarks = new InfoSiteMarks();
 
@@ -144,4 +147,16 @@ public class InsertEvaluationMarks extends FenixService {
         return degreeCurricularPlanStrategy.checkMark(mark, InfoEvaluation.newInfoFromDomain(evaluation).getEvaluationType());
 
     }
+
+    // Service Invokers migrated from Berserk
+
+    private static final InsertEvaluationMarks serviceInstance = new InsertEvaluationMarks();
+
+    @Service
+    public static TeacherAdministrationSiteView runInsertEvaluationMarks(Integer executionCourseCode, Integer evaluationCode,
+            HashMap hashMarks) throws ExcepcaoInexistente, FenixServiceException, NotAuthorizedException {
+        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseCode);
+        return serviceInstance.run(executionCourseCode, evaluationCode, hashMarks);
+    }
+
 }

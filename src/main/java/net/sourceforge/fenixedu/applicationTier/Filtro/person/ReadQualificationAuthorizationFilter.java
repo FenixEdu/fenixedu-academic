@@ -1,14 +1,15 @@
 package net.sourceforge.fenixedu.applicationTier.Filtro.person;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Qualification;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import pt.utl.ist.berserk.ServiceRequest;
-import pt.utl.ist.berserk.ServiceResponse;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
-public class ReadQualificationAuthorizationFilter extends Filtro {
+public class ReadQualificationAuthorizationFilter {
+
+    public static final ReadQualificationAuthorizationFilter instance = new ReadQualificationAuthorizationFilter();
 
     public ReadQualificationAuthorizationFilter() {
     }
@@ -21,19 +22,15 @@ public class ReadQualificationAuthorizationFilter extends Filtro {
         return RoleType.ALUMNI;
     }
 
-    @Override
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-        IUserView id = getRemoteUser(request);
-        Object[] arguments = getServiceCallArguments(request);
+    public void execute(Integer objectId) throws NotAuthorizedException {
+        IUserView id = AccessControl.getUserView();
         try {
-            boolean isNew = ((arguments[0] == null) || ((Integer) arguments[0]).equals(Integer.valueOf(0)));
+            boolean isNew = (objectId == null) || objectId.equals(Integer.valueOf(0));
 
             // Verify if needed fields are null
             if ((id == null) || (id.getRoleTypes() == null)) {
                 throw new NotAuthorizedException();
             }
-
-            Integer objectId = (Integer) arguments[0];
 
             // Verify if:
             // 1: The user is a Grant Owner Manager and the qualification
@@ -60,7 +57,7 @@ public class ReadQualificationAuthorizationFilter extends Filtro {
     }
 
     private boolean isOwnQualification(IUserView userView, Integer objectId) {
-        final Qualification qualification = rootDomainObject.readQualificationByOID(objectId);
+        final Qualification qualification = RootDomainObject.getInstance().readQualificationByOID(objectId);
         return qualification.getPerson() == userView.getPerson();
     }
 }

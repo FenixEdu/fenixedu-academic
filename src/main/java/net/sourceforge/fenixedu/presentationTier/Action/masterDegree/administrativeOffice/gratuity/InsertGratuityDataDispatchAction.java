@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionYears;
 import net.sourceforge.fenixedu.applicationTier.Servico.degree.execution.ReadExecutionDegreesByExecutionYearAndDegreeType;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -61,7 +60,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 public class InsertGratuityDataDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareInsertChooseExecutionYear(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
         // execution years
         List executionYears = ReadNotClosedExecutionYears.run();
 
@@ -92,7 +91,7 @@ public class InsertGratuityDataDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward prepareInsertGratuityDataChooseDegree(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
         IUserView userView = UserView.getUser();
         DynaActionForm gratuityForm = (DynaActionForm) form;
 
@@ -144,7 +143,7 @@ public class InsertGratuityDataDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward prepareInsertGratuityData(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException {
+            HttpServletResponse response)  {
         IUserView userView = UserView.getUser();
         DynaValidatorForm gratuityForm = (DynaValidatorForm) form;
         ActionErrors errors = new ActionErrors();

@@ -13,10 +13,11 @@ import java.util.List;
 import javax.faces.component.html.HtmlInputHidden;
 import javax.faces.model.SelectItem;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecutionPeriod;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionPeriodsByDegreeCurricularPlan;
+import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.ReadExecutionCoursesByDegreeCurricularPlanAndExecutionPeriodAndCurricularYear;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Evaluation;
@@ -24,7 +25,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -125,7 +125,7 @@ public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean
         return this.curricularYearsLabels;
     }
 
-    public ExecutionCourse getExecutionCourse() throws FenixFilterException, FenixServiceException {
+    public ExecutionCourse getExecutionCourse() throws  FenixServiceException {
         return rootDomainObject.readExecutionCourseByOID(this.getExecutionCourseID());
     }
 
@@ -134,12 +134,12 @@ public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean
             return this.executionCourses;
         }
         try {
-            final Object args[] = { getDegreeCurricularPlanID(), getExecutionPeriodID(), getCurricularYearID() };
             this.executionCourses =
-                    (List) ServiceManagerServiceFactory.executeService(
-                            "ReadExecutionCoursesByDegreeCurricularPlanAndExecutionPeriodAndCurricularYear", args);
+                    ReadExecutionCoursesByDegreeCurricularPlanAndExecutionPeriodAndCurricularYear
+                            .runReadExecutionCoursesByDegreeCurricularPlanAndExecutionPeriodAndCurricularYear(
+                                    getDegreeCurricularPlanID(), getExecutionPeriodID(), getCurricularYearID());
             return this.executionCourses;
-        } catch (FenixFilterException e) {
+        } catch (NotAuthorizedException e) {
         } catch (FenixServiceException e) {
             setErrorMessage(e.getMessage());
         }

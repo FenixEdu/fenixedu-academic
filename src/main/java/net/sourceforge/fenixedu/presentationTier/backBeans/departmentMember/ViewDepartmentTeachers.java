@@ -13,11 +13,15 @@ import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecutionYear;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionYears;
+import net.sourceforge.fenixedu.applicationTier.Servico.department.ReadDepartmentTeachersByDepartmentIDAndExecutionYearID;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.function.ReadPersonFunctionsByPersonIDAndExecutionYearID;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadGuidedMasterDegreeThesisByTeacherIDAndExecutionYearID;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadLecturedExecutionCoursesByTeacherIDAndExecutionYearIDAndDegreeType;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadTeacherByOID;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.advise.ReadTeacherAdvisesByTeacherIDAndAdviseTypeAndExecutionYearID;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -29,7 +33,6 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.teacher.Advise;
 import net.sourceforge.fenixedu.domain.teacher.AdviseType;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -87,7 +90,7 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
         this.getViewState().setAttribute("selectedTeacherId", selectedTeacherId);
     }
 
-    public Integer getSelectedExecutionYearID() throws FenixFilterException, FenixServiceException {
+    public Integer getSelectedExecutionYearID() throws  FenixServiceException {
 
         if (this.selectedExecutionYearID == null) {
 
@@ -107,7 +110,7 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
         this.selectedExecutionYearID = selectedExecutionYearID;
     }
 
-    public List<Teacher> getDepartmentTeachers() throws FenixFilterException, FenixServiceException {
+    public List<Teacher> getDepartmentTeachers() throws  FenixServiceException {
         Integer executionYearID = getSelectedExecutionYearID();
 
         if (executionYearID == 0) {
@@ -115,9 +118,10 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
         }
 
         List<Teacher> result =
-                new ArrayList<Teacher>((List<Teacher>) ServiceUtils.executeService(
-                        "ReadDepartmentTeachersByDepartmentIDAndExecutionYearID", new Object[] { getDepartment().getIdInternal(),
-                                executionYearID }));
+                new ArrayList<Teacher>(
+                        ReadDepartmentTeachersByDepartmentIDAndExecutionYearID
+                                .runReadDepartmentTeachersByDepartmentIDAndExecutionYearID(getDepartment().getIdInternal(),
+                                        executionYearID));
 
         ComparatorChain comparatorChain = new ComparatorChain();
         comparatorChain.addComparator(new BeanComparator("teacherId"));
@@ -132,24 +136,23 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
 
     }
 
-    public void selectTeacher(ActionEvent event) throws NumberFormatException, FenixFilterException, FenixServiceException {
+    public void selectTeacher(ActionEvent event) throws NumberFormatException,  FenixServiceException {
 
         String teacherId = getRequestParameter("teacherId");
 
         setSelectedTeacherID(teacherId);
     }
 
-    public InfoTeacher getSelectedTeacher() throws FenixFilterException, FenixServiceException {
+    public InfoTeacher getSelectedTeacher() throws  FenixServiceException {
 
         if (this.selectedTeacher == null) {
-            this.selectedTeacher =
-                    (InfoTeacher) ServiceUtils.executeService("ReadTeacherByOID", new Object[] { getSelectedTeacherID() });
+            this.selectedTeacher = (InfoTeacher) ReadTeacherByOID.runReadTeacherByOID(getSelectedTeacherID());
         }
 
         return this.selectedTeacher;
     }
 
-    public List<SelectItem> getExecutionYears() throws FenixFilterException, FenixServiceException {
+    public List<SelectItem> getExecutionYears() throws  FenixServiceException {
 
         if (this.executionYearItems == null) {
 
@@ -169,7 +172,7 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
 
     }
 
-    public List<ExecutionCourse> getLecturedDegreeExecutionCourses() throws FenixFilterException, FenixServiceException {
+    public List<ExecutionCourse> getLecturedDegreeExecutionCourses() throws  FenixServiceException {
 
         if (this.lecturedDegreeExecutionCourses == null && this.getSelectedExecutionYearID() != null) {
             this.lecturedDegreeExecutionCourses = readLecturedExecutionCourses(DegreeType.DEGREE);
@@ -181,7 +184,7 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
         return this.lecturedDegreeExecutionCourses;
     }
 
-    public List<ExecutionCourse> getLecturedMasterDegreeExecutionCourses() throws FenixFilterException, FenixServiceException {
+    public List<ExecutionCourse> getLecturedMasterDegreeExecutionCourses() throws  FenixServiceException {
 
         if (this.lecturedMasterDegreeExecutionCourses == null && this.getSelectedExecutionYearID() != null) {
             this.lecturedMasterDegreeExecutionCourses = readLecturedExecutionCourses(DegreeType.MASTER_DEGREE);
@@ -201,7 +204,7 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
         return lecturedMasterDegreeExecutionCourseDegreeNames;
     }
 
-    private List<ExecutionCourse> readLecturedExecutionCourses(DegreeType degreeType) throws FenixFilterException,
+    private List<ExecutionCourse> readLecturedExecutionCourses(DegreeType degreeType) throws 
             FenixServiceException {
 
         Integer executionYearID = getSelectedExecutionYearID();
@@ -211,9 +214,9 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
         }
 
         List<ExecutionCourse> lecturedExecutionCourses =
-                (List<ExecutionCourse>) ServiceUtils.executeService(
-                        "ReadLecturedExecutionCoursesByTeacherIDAndExecutionYearIDAndDegreeType", new Object[] {
-                                getSelectedTeacherID(), executionYearID, degreeType });
+                ReadLecturedExecutionCoursesByTeacherIDAndExecutionYearIDAndDegreeType
+                        .runReadLecturedExecutionCoursesByTeacherIDAndExecutionYearIDAndDegreeType(getSelectedTeacherID(),
+                                executionYearID, degreeType);
 
         List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
 
@@ -266,7 +269,7 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
 
     }
 
-    public List<Advise> getFinalDegreeWorkAdvises() throws FenixFilterException, FenixServiceException {
+    public List<Advise> getFinalDegreeWorkAdvises() throws  FenixServiceException {
 
         if (this.finalDegreeWorkAdvises == null && this.getSelectedExecutionYearID() != null) {
             Integer executionYearID = this.getSelectedExecutionYearID();
@@ -276,9 +279,10 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
             }
 
             List<Advise> result =
-                    new ArrayList<Advise>((List<Advise>) ServiceUtils.executeService(
-                            "ReadTeacherAdvisesByTeacherIDAndAdviseTypeAndExecutionYearID", new Object[] {
-                                    AdviseType.FINAL_WORK_DEGREE, getSelectedTeacherID(), executionYearID }));
+                    new ArrayList<Advise>(
+                            ReadTeacherAdvisesByTeacherIDAndAdviseTypeAndExecutionYearID
+                                    .runReadTeacherAdvisesByTeacherIDAndAdviseTypeAndExecutionYearID(
+                                            AdviseType.FINAL_WORK_DEGREE, getSelectedTeacherID(), executionYearID));
 
             ComparatorChain comparatorChain = new ComparatorChain();
             BeanComparator executionYearComparator = new BeanComparator("student.number");
@@ -293,7 +297,7 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
         return this.finalDegreeWorkAdvises;
     }
 
-    public List<MasterDegreeThesisDataVersion> getGuidedMasterDegreeThesisList() throws FenixFilterException,
+    public List<MasterDegreeThesisDataVersion> getGuidedMasterDegreeThesisList() throws 
             FenixServiceException {
         if (this.guidedMasterDegreeThesisList == null && this.getSelectedExecutionYearID() != null) {
             Integer executionYearID = this.getSelectedExecutionYearID();
@@ -303,15 +307,14 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
             }
 
             this.guidedMasterDegreeThesisList =
-                    (List<MasterDegreeThesisDataVersion>) ServiceUtils.executeService(
-                            "ReadGuidedMasterDegreeThesisByTeacherIDAndExecutionYearID", new Object[] { getSelectedTeacherID(),
-                                    executionYearID });
+                    ReadGuidedMasterDegreeThesisByTeacherIDAndExecutionYearID
+                            .runReadGuidedMasterDegreeThesisByTeacherIDAndExecutionYearID(getSelectedTeacherID(), executionYearID);
         }
 
         return this.guidedMasterDegreeThesisList;
     }
 
-    public List<PersonFunction> getTeacherFunctions() throws FenixFilterException, FenixServiceException {
+    public List<PersonFunction> getTeacherFunctions() throws  FenixServiceException {
         if (this.teacherFunctions == null && this.getSelectedExecutionYearID() != null) {
             Integer executionYearID = this.getSelectedExecutionYearID();
 

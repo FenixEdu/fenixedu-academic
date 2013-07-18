@@ -9,11 +9,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurricularCourseScopesByExecutionCourseID;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionCourseByOID;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionPeriodsByDegreeCurricularPlan;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionPeriodsByExecutionYear;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadShiftsByExecutionCourseID;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.SearchExecutionCourses;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseOccupancy;
@@ -23,7 +25,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShiftGroupStatistics;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ShiftType;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
@@ -170,12 +171,12 @@ public class ExecutionCourseInfoDispatchAction extends FenixDispatchAction {
             executionCourseName = null;
         }
 
-        Object args[] = { infoExecutionPeriod, infoExecutionDegree, infoCurricularYear, executionCourseName };
-
         List infoExecutionCourses = null;
         try {
-            infoExecutionCourses = (List) ServiceManagerServiceFactory.executeService("SearchExecutionCourses", args);
-        } catch (NotAuthorizedFilterException e) {
+            infoExecutionCourses =
+                    SearchExecutionCourses.runSearchExecutionCourses(infoExecutionPeriod, infoExecutionDegree,
+                            infoCurricularYear, executionCourseName);
+        } catch (NotAuthorizedException e) {
             return mapping.findForward("notAuthorized");
         }
 
@@ -198,10 +199,9 @@ public class ExecutionCourseInfoDispatchAction extends FenixDispatchAction {
             request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
         }
 
-        Object args[] = { new Integer(request.getParameter("executionCourseOID")) };
-
         InfoExecutionCourseOccupancy infoExecutionCourseOccupancy =
-                (InfoExecutionCourseOccupancy) ServiceManagerServiceFactory.executeService("ReadShiftsByExecutionCourseID", args);
+                ReadShiftsByExecutionCourseID.runReadShiftsByExecutionCourseID(new Integer(request
+                        .getParameter("executionCourseOID")));
 
         arranjeShifts(infoExecutionCourseOccupancy);
 

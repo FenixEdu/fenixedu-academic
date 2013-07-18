@@ -4,19 +4,20 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Luis Cruz
  */
-public class DeleteFAQEntry extends FenixService {
+public class DeleteFAQEntry {
 
     @Checked("RolePredicates.MANAGER_PREDICATE")
     @Service
     public static void run(Integer entryId) {
-        rootDomainObject.readFAQEntryByOID(entryId).delete();
+        RootDomainObject.getInstance().readFAQEntryByOID(entryId).delete();
     }
 
 }

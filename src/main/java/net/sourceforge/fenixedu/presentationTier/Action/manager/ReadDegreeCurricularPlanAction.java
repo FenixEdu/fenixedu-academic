@@ -10,15 +10,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadCurricularCoursesByDegreeCurricularPlan;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadDegreeCurricularPlan;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.commons.ReadExecutionDegreesByDegreeCurricularPlanID;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
@@ -49,7 +49,7 @@ public class ReadDegreeCurricularPlanAction extends FenixAction {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixActionException, FenixFilterException {
+            throws FenixActionException {
 
         IUserView userView = UserView.getUser();
 
@@ -61,9 +61,7 @@ public class ReadDegreeCurricularPlanAction extends FenixAction {
         InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
 
         try {
-            infoDegreeCurricularPlan =
-                    (InfoDegreeCurricularPlan) ServiceUtils.executeService("ReadDegreeCurricularPlan",
-                            new Object[] { degreeCurricularPlanId });
+            infoDegreeCurricularPlan = ReadDegreeCurricularPlan.runReadDegreeCurricularPlan(degreeCurricularPlanId);
 
         } catch (NonExistingServiceException e) {
             throw new NonExistingActionException("message.nonExistingDegreeCurricularPlan", "", e);
@@ -80,12 +78,13 @@ public class ReadDegreeCurricularPlanAction extends FenixAction {
             throw new FenixActionException(e);
         }
         Collections.sort(curricularCourses, new BeanComparator("name"));
-        Object[] args = { degreeCurricularPlanId };
         List executionDegrees = null;
         try {
             // executionDegrees =
             // ReadExecutionDegreesByDegreeCurricularPlan.run(degreeCurricularPlanId);
-            executionDegrees = (List) ServiceUtils.executeService("ReadExecutionDegreesByDegreeCurricularPlanID", args);
+            executionDegrees =
+                    ReadExecutionDegreesByDegreeCurricularPlanID
+                            .runReadExecutionDegreesByDegreeCurricularPlanID(degreeCurricularPlanId);
 
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);

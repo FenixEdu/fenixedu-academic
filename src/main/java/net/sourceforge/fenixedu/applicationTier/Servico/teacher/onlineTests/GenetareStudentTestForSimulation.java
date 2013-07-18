@@ -5,14 +5,16 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoDistributedTest;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoQuestion;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestion;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoTestScope;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.Test;
 import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
@@ -23,20 +25,22 @@ import net.sourceforge.fenixedu.util.tests.TestType;
 
 import org.apache.commons.beanutils.BeanComparator;
 
-public class GenetareStudentTestForSimulation extends FenixService {
-    public List run(Integer executionCourseId, Integer testId, String path, TestType testType,
+import pt.ist.fenixWebFramework.services.Service;
+
+public class GenetareStudentTestForSimulation {
+    protected List run(Integer executionCourseId, Integer testId, String path, TestType testType,
             CorrectionAvailability correctionAvailability, Boolean imsfeedback, String testInformation)
             throws FenixServiceException {
         List<InfoStudentTestQuestion> infoStudentTestQuestionList = new ArrayList<InfoStudentTestQuestion>();
         path = path.replace('\\', '/');
-        final Test test = rootDomainObject.readTestByOID(testId);
+        final Test test = RootDomainObject.getInstance().readTestByOID(testId);
         if (test == null) {
             throw new InvalidArgumentsServiceException();
         }
 
         TestScope testScope = TestScope.readByDomainObject(ExecutionCourse.class, executionCourseId);
         if (testScope == null) {
-            final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
+            final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseId);
             if (executionCourse == null) {
                 throw new InvalidArgumentsServiceException();
             }
@@ -98,6 +102,19 @@ public class GenetareStudentTestForSimulation extends FenixService {
             question = questions.get(questionIndex);
         }
         return question;
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final GenetareStudentTestForSimulation serviceInstance = new GenetareStudentTestForSimulation();
+
+    @Service
+    public static List runGenetareStudentTestForSimulation(Integer executionCourseId, Integer testId, String path,
+            TestType testType, CorrectionAvailability correctionAvailability, Boolean imsfeedback, String testInformation)
+            throws FenixServiceException, NotAuthorizedException {
+        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
+        return serviceInstance.run(executionCourseId, testId, path, testType, correctionAvailability, imsfeedback,
+                testInformation);
     }
 
 }

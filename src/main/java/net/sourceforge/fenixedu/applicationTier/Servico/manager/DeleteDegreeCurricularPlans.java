@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
@@ -18,7 +18,7 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author lmac1
  */
 
-public class DeleteDegreeCurricularPlans extends FenixService {
+public class DeleteDegreeCurricularPlans {
 
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
@@ -30,7 +30,7 @@ public class DeleteDegreeCurricularPlans extends FenixService {
         while (iter.hasNext()) {
 
             Integer degreeCurricularPlanId = iter.next();
-            DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
+            DegreeCurricularPlan degreeCurricularPlan = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanId);
 
             try {
                 degreeCurricularPlan.delete();

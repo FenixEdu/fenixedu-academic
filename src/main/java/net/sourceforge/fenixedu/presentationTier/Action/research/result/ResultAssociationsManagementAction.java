@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.research.result;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.research.result.CreateResultUnitAssociation;
 import net.sourceforge.fenixedu.applicationTier.Servico.research.result.DeleteResultUnitAssociation;
@@ -43,7 +42,7 @@ public class ResultAssociationsManagementAction extends ResultsManagementAction 
      * Actions for Result Unit Associations
      */
     public ActionForward prepareEditUnitAssociations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         final ResearchResult result = getResultFromRequest(request);
         if (result == null) {
             return backToResultList(mapping, form, request, response);
@@ -54,7 +53,7 @@ public class ResultAssociationsManagementAction extends ResultsManagementAction 
     }
 
     public ActionForward addSugestion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         ResultUnitAssociationCreationBean bean =
                 (ResultUnitAssociationCreationBean) RenderUtils.getViewState("suggestion").getMetaObject().getObject();
         request.setAttribute("unitBean", bean);
@@ -75,7 +74,7 @@ public class ResultAssociationsManagementAction extends ResultsManagementAction 
     }
 
     public ActionForward changeTypeOfUnit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         ResultUnitAssociationCreationBean bean =
                 (ResultUnitAssociationCreationBean) RenderUtils.getViewState("unitBean").getMetaObject().getObject();
@@ -92,13 +91,13 @@ public class ResultAssociationsManagementAction extends ResultsManagementAction 
     }
 
     public ActionForward prepareEditUnitRole(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         request.setAttribute("editExisting", "editExisting");
         return prepareEditUnitAssociations(mapping, form, request, response);
     }
 
     public ActionForward createUnitAssociation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         final ResultUnitAssociationCreationBean bean = getRenderedObject("unitBean");
         bean.setSuggestion(false);
         try {
@@ -115,7 +114,7 @@ public class ResultAssociationsManagementAction extends ResultsManagementAction 
     }
 
     public ActionForward removeUnitAssociation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         final Integer associationId = getRequestParameterAsInteger(request, "associationId");
 
         try {
@@ -129,7 +128,7 @@ public class ResultAssociationsManagementAction extends ResultsManagementAction 
         return prepareEditUnitAssociations(mapping, form, request, response);
     }
 
-    private void setResUnitAssRequestAttributes(HttpServletRequest request, ResearchResult result) throws FenixFilterException,
+    private void setResUnitAssRequestAttributes(HttpServletRequest request, ResearchResult result) throws 
             FenixServiceException {
         if (getFromRequest(request, "editExisting") != null) {
             request.setAttribute("editExisting", "editExisting");

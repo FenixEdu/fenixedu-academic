@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManag
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.AddPersonToAccessGroup;
 import net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.AccessGroupBean;
@@ -39,7 +38,7 @@ public class AccessGroupsManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward addPersonToAccessGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws InvalidArgumentException, FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws InvalidArgumentException,  FenixServiceException {
 
         AccessGroupBean bean = getRenderedObject("PersonToAccessGroupBeanID");
         ResourceAllocationAccessGroupType accessGroupType = bean != null ? bean.getAccessGroupType() : null;
@@ -68,7 +67,7 @@ public class AccessGroupsManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward removePersonFromAccessGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws InvalidArgumentException, FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws InvalidArgumentException,  FenixServiceException {
 
         Role role = Role.getRoleByRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER);
         String groupExpression = getGroupExpressionFromRequest(request);

@@ -7,7 +7,6 @@ import java.util.List;
 import javax.faces.event.ActionEvent;
 import javax.faces.model.SelectItem;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice.UpdateDepartmentsCompetenceCourseManagementGroup;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Department;
@@ -63,7 +62,7 @@ public class ManagementGroupsBackingBean extends FenixBackingBean {
         return employees.size();
     }
 
-    public List<SelectItem> getSelectedDepartmentEmployeesSelectItems() throws FenixFilterException, FenixServiceException {
+    public List<SelectItem> getSelectedDepartmentEmployeesSelectItems() throws  FenixServiceException {
 
         List<SelectItem> result = new ArrayList<SelectItem>();
 
@@ -93,7 +92,7 @@ public class ManagementGroupsBackingBean extends FenixBackingBean {
         return selectedPersonsIDsToRemove;
     }
 
-    public void addMembers(ActionEvent event) throws FenixFilterException, FenixServiceException {
+    public void addMembers(ActionEvent event) throws  FenixServiceException {
         if (selectedPersonsIDsToAdd != null) {
 
             UpdateDepartmentsCompetenceCourseManagementGroup.run(getDepartment(), selectedPersonsIDsToAdd, null);
@@ -103,7 +102,7 @@ public class ManagementGroupsBackingBean extends FenixBackingBean {
         selectedPersonsIDsToRemove = null;
     }
 
-    public void removeMembers(ActionEvent event) throws FenixFilterException, FenixServiceException {
+    public void removeMembers(ActionEvent event) throws  FenixServiceException {
         if (selectedPersonsIDsToRemove != null) {
 
             UpdateDepartmentsCompetenceCourseManagementGroup.run(getDepartment(), null, selectedPersonsIDsToRemove);

@@ -7,7 +7,6 @@ import java.util.TreeMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice.CreateExpectationEvaluationGroup;
 import net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice.DeleteExpectationEvaluationGroup;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -88,7 +87,7 @@ public class ExpectationsEvaluationGroupsDA extends FenixDispatchAction {
     }
 
     public ActionForward createGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         IViewState viewState = RenderUtils.getViewState("expectationEvaluationGroupBeanWithEvaluatedTeacher");
         ExpectationEvaluationGroupBean bean = (ExpectationEvaluationGroupBean) viewState.getMetaObject().getObject();
@@ -109,7 +108,7 @@ public class ExpectationsEvaluationGroupsDA extends FenixDispatchAction {
     }
 
     public ActionForward deleteGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         ExpectationEvaluationGroup group = getExpectationEvaluationGroupFromParameter(request);
         Teacher appraiser = group.getAppraiser();

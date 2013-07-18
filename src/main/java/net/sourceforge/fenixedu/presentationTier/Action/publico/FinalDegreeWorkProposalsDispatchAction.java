@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionDegreesByExecutionYearAndType;
+import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.ReadFinalDegreeWorkProposal;
 import net.sourceforge.fenixedu.applicationTier.Servico.publico.ReadPublishedFinalDegreeWorkProposalHeaders;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBranch;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
@@ -25,7 +26,6 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -152,8 +152,7 @@ public class FinalDegreeWorkProposalsDispatchAction extends FenixContextDispatch
                 return mapping.findForward("show-final-degree-work-proposal-not-published-page");
             }
 
-            Object[] args = { finalDegreeWorkProposalOID };
-            InfoProposal infoProposal = (InfoProposal) ServiceUtils.executeService("ReadFinalDegreeWorkProposal", args);
+            InfoProposal infoProposal = ReadFinalDegreeWorkProposal.runReadFinalDegreeWorkProposal(finalDegreeWorkProposalOID);
             infoProposal.getExecutionDegree().setGetNextExecutionYear(true);
             request.setAttribute("finalDegreeWorkProposal", infoProposal);
         }

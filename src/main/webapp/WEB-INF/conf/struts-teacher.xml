@@ -1041,36 +1041,6 @@
             <!-- by ajfe / jpvb, 1-2005 -->
             <!-- by gedl, 25-9-2003 -->
             <!-- Course Information -->
-            <!-- Teaching Report -->
-            <!-- Professional Career -->
-            <action className="net.sourceforge.fenixedu.presentationTier.mapping.framework.CRUDMapping" input="/professionalCareer.do?page=0&amp;method=prepareEdit" validate="true" scope="request" parameter="method" name="professionalCareerForm" path="/professionalCareer" type="net.sourceforge.fenixedu.presentationTier.Action.framework.CRUDActionByOID">
-                  <set-property value="EditCareer" property="editService"></set-property>
-                  <set-property value="DeleteCareer" property="deleteService"></set-property>
-                  <set-property value="ReadCareer" property="readService"></set-property>
-                  <set-property value="idInternal" property="oidProperty"></set-property>
-                  <set-property value="infoProfessionalCareer" property="requestAttribute"></set-property>
-                  <set-property value="net.sourceforge.fenixedu.dataTransferObject.teacher.InfoProfessionalCareer" property="infoObjectClassName"></set-property>
-                  <forward path="edit-professional-career" name="show-form"></forward>
-                  <forward path="/readCareers.do?careerType=PROFESSIONAL&amp;page=0" name="successfull-edit"></forward>
-                  <forward path="/readCareers.do?careerType=PROFESSIONAL&amp;page=0" name="successfull-read"></forward>
-                  <forward path="/readCareers.do?careerType=PROFESSIONAL&amp;page=0" name="successfull-delete"></forward>
-            </action>
-            <!-- Teaching Career -->
-            <!-- Read Careers -->
-            <!-- Replacement of PublicationTeacher by ResultTeacher (Sergio Patricio & Luis Santos)-->
-            <!-- External Activity -->
-            <action className="net.sourceforge.fenixedu.presentationTier.mapping.framework.CRUDMapping" input="/externalActivity.do?page=0&amp;method=prepareEdit" validate="true" scope="request" parameter="method" name="externalActivityForm" path="/externalActivity" type="net.sourceforge.fenixedu.presentationTier.Action.framework.CRUDActionByOID">
-                  <set-property value="EditExternalActivity" property="editService"></set-property>
-                  <set-property value="DeleteExternalActivity" property="deleteService"></set-property>
-                  <set-property value="ReadExternalActivity" property="readService"></set-property>
-                  <set-property value="idInternal" property="oidProperty"></set-property>
-                  <set-property value="infoExternalActivity" property="requestAttribute"></set-property>
-                  <set-property value="net.sourceforge.fenixedu.dataTransferObject.teacher.InfoExternalActivity" property="infoObjectClassName"></set-property>
-                  <forward path="edit-external-activity" name="show-form"></forward>
-                  <forward path="/readExternalActivities.do?page=0" name="successfull-edit"></forward>
-                  <forward path="/readExternalActivities.do?page=0" name="successfull-read"></forward>
-                  <forward path="/readExternalActivities.do?page=0" name="successfull-delete"></forward>
-            </action>
             <!-- Read External Activities -->
             <!-- Teacher Information -->
             <!-- ================== USE CASE: View Teacher Credits Sheet ========================== -->

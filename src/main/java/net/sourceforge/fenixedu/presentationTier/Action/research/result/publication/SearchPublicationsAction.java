@@ -8,7 +8,6 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.SearchDSpaceBean;
 import net.sourceforge.fenixedu.dataTransferObject.SearchDSpacePublicationBean;
@@ -38,30 +37,30 @@ import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 public class SearchPublicationsAction extends SearchDSpaceGeneralAction {
 
     public ActionForward addNewSearchCriteria(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         return super.addNewSearchCriteria(mapping, form, request, response, "SearchPublication");
     }
 
     public ActionForward removeSearchCriteria(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         return super.removeSearchCriteria(mapping, form, request, response, "SearchPublication");
     }
 
     public ActionForward prepareSearchPublication(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         return super.prepareSearch(mapping, form, request, response, "SearchPublication");
     }
 
     public ActionForward moveIndex(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         return super.moveIndex(mapping, form, request, response, "SearchPublication");
 
     }
 
     public ActionForward searchPublication(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         return super.searchContent(mapping, form, request, response, "SearchPublication");
     }

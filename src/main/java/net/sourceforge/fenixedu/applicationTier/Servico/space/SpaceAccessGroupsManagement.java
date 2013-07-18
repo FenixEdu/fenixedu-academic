@@ -1,12 +1,12 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.space;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.space.Space.SpaceAccessGroupType;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class SpaceAccessGroupsManagement extends FenixService {
+public class SpaceAccessGroupsManagement {
 
     @Service
     public static void run(Space space, SpaceAccessGroupType accessGroupType, boolean toAdd, boolean isToMaintainElements,

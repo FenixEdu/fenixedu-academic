@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.accessControl.CurrentDegreeScientificCommissionMembersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
@@ -32,7 +31,7 @@ import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
-public abstract class CreateThesisFile extends FenixService {
+public abstract class CreateThesisFile {
 
     public ThesisFile run(Thesis thesis, File fileToUpload, String fileName, String title, String subTitle, Language language)
             throws FenixServiceException, IOException {

@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManag
 
 import java.util.SortedSet;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.NextPossibleSummaryLessonsAndDatesBean;
 import net.sourceforge.fenixedu.domain.Lesson;
 
@@ -11,7 +10,7 @@ import org.joda.time.YearMonthDay;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class DeleteLessonInstance extends FenixService {
+public class DeleteLessonInstance {
 
     @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
     @Service

@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
@@ -19,7 +18,7 @@ import org.joda.time.YearMonthDay;
 public class FacultyAdmOfficeFunctionsManagement extends ManagerFunctionsManagementBackingBean {
 
     @Override
-    public String getUnits() throws FenixFilterException, FenixServiceException {
+    public String getUnits() throws  FenixServiceException {
         StringBuilder buffer = new StringBuilder();
         getUnitTree(buffer, UnitUtils.readInstitutionUnit());
         return buffer.toString();

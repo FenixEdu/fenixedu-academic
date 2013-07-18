@@ -18,13 +18,16 @@ import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionYea
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionYears;
 import net.sourceforge.fenixedu.applicationTier.Servico.degree.execution.ReadExecutionDegreesByExecutionYearAndDegreeType;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadExecutionDegree;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate.ReadExecutionDegreeByDegreeCurricularPlanID;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.commons.ReadExecutionDegreesByDegreeCurricularPlanID;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.ReadGratuitySituationListByExecutionDegreeAndSpecialization;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameForInfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
@@ -198,12 +201,12 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
         request.setAttribute("degree", degree);
         request.setAttribute("situation", situation);
 
-        Object[] args = { executionDegreeId, executionYear, specialization, situation };
         HashMap result = null;
         try {
             result =
-                    (HashMap) ServiceManagerServiceFactory.executeService(
-                            "ReadGratuitySituationListByExecutionDegreeAndSpecialization", args);
+                    (HashMap) ReadGratuitySituationListByExecutionDegreeAndSpecialization
+                            .runReadGratuitySituationListByExecutionDegreeAndSpecialization(executionDegreeId, executionYear,
+                                    specialization, situation);
         } catch (FenixServiceException exception) {
             exception.printStackTrace();
             if (exception.getMessage().startsWith("error.impossible.noGratuityValues.degreeName")) {
@@ -269,13 +272,12 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
         if (executionYearString == null) {
             executionYearString = "";
         }
-        Object[] args = { degreeCurricularPlanID, executionYearString };
 
         InfoExecutionDegree infoExecutionDegree = null;
         try {
             infoExecutionDegree =
-                    (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(
-                            "ReadExecutionDegreeByDegreeCurricularPlanID", args);
+                    ReadExecutionDegreeByDegreeCurricularPlanID.runReadExecutionDegreeByDegreeCurricularPlanID(
+                            degreeCurricularPlanID, executionYearString);
         } catch (FenixServiceException exception) {
             exception.printStackTrace();
             saveErrors(request, errors);
@@ -292,15 +294,13 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
         List executionYearList = ReadExecutionYearsByDegreeCurricularPlanID.run(degreeCurricularPlanID);
 
         // getting the gratuity list
-        Object[] gratuityArgs =
-                { infoExecutionDegree.getIdInternal(), infoExecutionDegree.getInfoExecutionYear().getYear(), specialization,
-                        situation };
         HashMap gratuityList = null;
 
         try {
             gratuityList =
-                    (HashMap) ServiceManagerServiceFactory.executeService(
-                            "ReadGratuitySituationListByExecutionDegreeAndSpecialization", gratuityArgs);
+                    (HashMap) ReadGratuitySituationListByExecutionDegreeAndSpecialization
+                            .runReadGratuitySituationListByExecutionDegreeAndSpecialization(infoExecutionDegree.getIdInternal(),
+                                    infoExecutionDegree.getInfoExecutionYear().getYear(), specialization, situation);
         } catch (FenixServiceException exception) {
             exception.printStackTrace();
             saveErrors(request, errors);
@@ -353,21 +353,20 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
         }
 
         InfoExecutionDegree infoExecutionDegree = null;
-        Object args[] = { executionDegreeID };
 
         try {
-            infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService("ReadExecutionDegree", args);
+            infoExecutionDegree = ReadExecutionDegree.runReadExecutionDegree(executionDegreeID);
         } catch (FenixServiceException exception) {
             throw new FenixActionException(exception);
         }
 
         List infoExecutionDegrees = null;
         Integer degreeCurricularPlanID = infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal();
-        args[0] = degreeCurricularPlanID;
 
         try {
             infoExecutionDegrees =
-                    (List) ServiceManagerServiceFactory.executeService("ReadExecutionDegreesByDegreeCurricularPlanID", args);
+                    ReadExecutionDegreesByDegreeCurricularPlanID
+                            .runReadExecutionDegreesByDegreeCurricularPlanID(executionDegreeID);
         } catch (FenixServiceException exception) {
             throw new FenixActionException(exception);
         }

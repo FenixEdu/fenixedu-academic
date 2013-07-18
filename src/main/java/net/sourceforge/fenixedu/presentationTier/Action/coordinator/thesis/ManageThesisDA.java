@@ -9,11 +9,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sf.jasperreports.engine.JRException;
+import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.thesis.ApproveThesisProposal;
 import net.sourceforge.fenixedu.applicationTier.Servico.thesis.CancelSubmitThesis;
 import net.sourceforge.fenixedu.applicationTier.Servico.thesis.ChangeThesisPerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.thesis.ChangeThesisPerson.PersonChange;
 import net.sourceforge.fenixedu.applicationTier.Servico.thesis.ChangeThesisPerson.PersonTarget;
 import net.sourceforge.fenixedu.applicationTier.Servico.thesis.CreateThesisProposal;
+import net.sourceforge.fenixedu.applicationTier.Servico.thesis.CreateThesisProposalWithAssignment;
 import net.sourceforge.fenixedu.applicationTier.Servico.thesis.DeleteThesis;
 import net.sourceforge.fenixedu.applicationTier.Servico.thesis.ReviseThesis;
 import net.sourceforge.fenixedu.applicationTier.Servico.thesis.SubmitThesis;
@@ -355,8 +357,8 @@ public class ManageThesisDA extends AbstractManageThesisDA {
 
         try {
             Thesis thesis =
-                    (Thesis) executeService("CreateThesisProposalWithAssignment", new Object[] { degreeCurricularPlan, student,
-                            enrolment.getDissertationProposal(), previousThesis });
+                    CreateThesisProposalWithAssignment.runCreateThesisProposalWithAssignment(degreeCurricularPlan, student,
+                            enrolment.getDissertationProposal(), previousThesis);
             request.setAttribute("thesis", thesis);
         } catch (DomainException e) {
             addActionMessage("error", request, e.getKey(), e.getArgs());
@@ -375,8 +377,8 @@ public class ManageThesisDA extends AbstractManageThesisDA {
 
         try {
             Thesis thesis =
-                    (Thesis) executeService("CreateThesisProposalWithAssignment", new Object[] { degreeCurricularPlan, student,
-                            enrolment.getDissertationProposal(), enrolment.getPreviousYearThesis() });
+                    CreateThesisProposalWithAssignment.runCreateThesisProposalWithAssignment(degreeCurricularPlan, student,
+                            enrolment.getDissertationProposal(), enrolment.getPreviousYearThesis());
             request.setAttribute("thesis", thesis);
         } catch (DomainException e) {
             addActionMessage("error", request, e.getKey(), e.getArgs());
@@ -765,7 +767,7 @@ public class ManageThesisDA extends AbstractManageThesisDA {
         Thesis thesis = getThesis(request);
 
         if (thesis != null) {
-            executeService("ApproveThesisProposal", new Object[] { thesis });
+            ApproveThesisProposal.runApproveThesisProposal(thesis);
             addActionMessage("mail", request, "thesis.approved.mail.sent");
             addActionMessage("nextAction", request, "thesis.approved.next.action");
         }

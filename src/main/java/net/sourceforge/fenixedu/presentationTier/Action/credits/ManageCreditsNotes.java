@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.credits;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.credits.EditTeacherServiceNotes;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
@@ -43,8 +42,7 @@ public class ManageCreditsNotes extends FenixDispatchAction {
     }
 
     protected ActionForward editNote(HttpServletRequest request, DynaActionForm dynaActionForm, Teacher teacher,
-            Integer executionPeriodId, RoleType roleType, ActionMapping mapping, String noteType) throws FenixServiceException,
-            FenixFilterException {
+            Integer executionPeriodId, RoleType roleType, ActionMapping mapping, String noteType) throws FenixServiceException {
 
         ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
         String managementFunctionNote, serviceExemptionNote, otherNote, masterDegreeTeachingNote, functionsAccumulation, thesisNote;
@@ -73,12 +71,9 @@ public class ManageCreditsNotes extends FenixDispatchAction {
                 (!StringUtils.isEmpty(dynaActionForm.getString("thesisNote"))) ? dynaActionForm.getString("thesisNote") : (noteType
                         .equals("thesisNote")) ? "" : null;
 
-        Object[] args =
-                { teacher, executionPeriodId, managementFunctionNote, serviceExemptionNote, otherNote, masterDegreeTeachingNote,
-                        functionsAccumulation, thesisNote, roleType };
-
         try {
-            ServiceUtils.executeService("EditTeacherServiceNotes", args);
+            EditTeacherServiceNotes.runEditTeacherServiceNotes(teacher, executionPeriodId, managementFunctionNote,
+                    serviceExemptionNote, otherNote, masterDegreeTeachingNote, functionsAccumulation, thesisNote, roleType);
         } catch (DomainException domainException) {
             ActionMessages actionMessages = new ActionMessages();
             actionMessages.add("error", new ActionMessage(domainException.getMessage(), domainException.getArgs()));

@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.degree.ReadAllDegreesByType;
 import net.sourceforge.fenixedu.applicationTier.Servico.department.ReadAllDepartments;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchParameters;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchPersonPredicate;
@@ -21,7 +20,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoDepartment;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.lang.StringUtils;
@@ -160,16 +158,7 @@ public class FindPersonAction extends FenixDispatchAction {
 
         SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(searchParameters);
 
-        Object[] args = { searchParameters, predicate };
-
-        CollectionPager result = null;
-        try {
-            result = (CollectionPager) ServiceManagerServiceFactory.executeService("SearchPerson", args);
-
-        } catch (FenixServiceException e) {
-            addErrorMessage(request, "impossibleFindPerson", e.getMessage());
-            return preparePerson(mapping, actionForm, request, response);
-        }
+        CollectionPager result = SearchPerson.runSearchPerson(searchParameters, predicate);
 
         if (result == null) {
             addErrorMessage(request, "impossibleFindPerson", "error.manager.implossible.findPerson");

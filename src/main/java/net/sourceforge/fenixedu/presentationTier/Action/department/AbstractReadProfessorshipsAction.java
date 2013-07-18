@@ -12,10 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadTeacherByOID;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -67,8 +66,7 @@ public abstract class AbstractReadProfessorshipsAction extends Action {
         if (infoTeacher == null) {
             final IUserView userView = UserView.getUser();
             infoTeacher =
-                    (InfoTeacher) ServiceUtils.executeService("ReadTeacherByOID",
-                            new Object[] { Integer.valueOf(dynaForm.get("idInternal").toString()) });
+                    (InfoTeacher) ReadTeacherByOID.runReadTeacherByOID(Integer.valueOf(dynaForm.get("idInternal").toString()));
             request.setAttribute("infoTeacher", infoTeacher);
 
         }
@@ -76,5 +74,5 @@ public abstract class AbstractReadProfessorshipsAction extends Action {
     }
 
     abstract List getDetailedProfessorships(IUserView userView, Integer teacherId, DynaActionForm actionForm,
-            HttpServletRequest request) throws FenixServiceException, FenixFilterException;
+            HttpServletRequest request) throws FenixServiceException;
 }

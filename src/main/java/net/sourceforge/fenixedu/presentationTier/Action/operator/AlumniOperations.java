@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.operator;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.operator.ValidateAlumniIdentity;
 import net.sourceforge.fenixedu.domain.AlumniIdentityCheckRequest;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -63,7 +64,7 @@ public class AlumniOperations extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         AlumniIdentityCheckRequest identityRequest = (AlumniIdentityCheckRequest) getObjectFromViewState("requestBody");
-        executeService("ValidateAlumniIdentity", new Object[] { identityRequest, Boolean.TRUE, getLoggedPerson(request) });
+        ValidateAlumniIdentity.runValidateAlumniIdentity(identityRequest, Boolean.TRUE, getLoggedPerson(request));
 
         request.setAttribute("identityRequestResult", "identity.validation.ok");
         return mapping.findForward("alumni.validate.request.result");
@@ -73,7 +74,7 @@ public class AlumniOperations extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         AlumniIdentityCheckRequest identityRequest = (AlumniIdentityCheckRequest) getObjectFromViewState("requestBody");
-        executeService("ValidateAlumniIdentity", new Object[] { identityRequest, Boolean.FALSE, getLoggedPerson(request) });
+        ValidateAlumniIdentity.runValidateAlumniIdentity(identityRequest, Boolean.FALSE, getLoggedPerson(request));
 
         request.setAttribute("identityRequestResult", "identity.validation.nok");
         return mapping.findForward("alumni.validate.request.result");
@@ -92,7 +93,7 @@ public class AlumniOperations extends FenixDispatchAction {
         AlumniIdentityCheckRequest checkRequest =
                 RootDomainObject.getInstance().readAlumniIdentityCheckRequestByOID(getIntegerFromRequest(request, "requestId"));
         Person alumniPerson = (Person) RootDomainObject.getInstance().readPartyByOID(getIntegerFromRequest(request, "personId"));
-        executeService("ValidateAlumniIdentity", new Object[] { checkRequest, alumniPerson });
+        ValidateAlumniIdentity.runValidateAlumniIdentity(checkRequest, alumniPerson);
         return innerPrepareValidation(mapping, request, checkRequest, alumniPerson);
     }
 

@@ -10,17 +10,16 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadDetailedTeacherProfessorshipsByExecutionYear extends ReadDetailedTeacherProfessorshipsAbstractService {
 
-    public class NotFoundExecutionYear extends FenixServiceException {
-    }
+    protected List run(Integer teacherID, Integer executionYearID) throws FenixServiceException {
 
-    public List run(Integer teacherID, Integer executionYearID) throws FenixServiceException {
-
-        final Teacher teacher = rootDomainObject.readTeacherByOID(teacherID);
+        final Teacher teacher = RootDomainObject.getInstance().readTeacherByOID(teacherID);
         if (teacher == null) {
             throw new DomainException("error.noTeacher");
         }
@@ -29,7 +28,7 @@ public class ReadDetailedTeacherProfessorshipsByExecutionYear extends ReadDetail
         if (executionYearID == null) {
             executionYear = ExecutionYear.readCurrentExecutionYear();
         } else {
-            executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
+            executionYear = RootDomainObject.getInstance().readExecutionYearByOID(executionYearID);
         }
 
         final List<Professorship> responsibleFors = new ArrayList();
@@ -40,4 +39,16 @@ public class ReadDetailedTeacherProfessorshipsByExecutionYear extends ReadDetail
         }
         return getDetailedProfessorships(teacher.getProfessorships(executionYear), responsibleFors);
     }
+
+    // Service Invokers migrated from Berserk
+
+    private static final ReadDetailedTeacherProfessorshipsByExecutionYear serviceInstance =
+            new ReadDetailedTeacherProfessorshipsByExecutionYear();
+
+    @Service
+    public static List runReadDetailedTeacherProfessorshipsByExecutionYear(Integer teacherID, Integer executionYearID)
+            throws FenixServiceException {
+        return serviceInstance.run(teacherID, executionYearID);
+    }
+
 }

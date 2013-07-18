@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManag
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.RoomsPunctualSchedulingBean;
 import net.sourceforge.fenixedu.domain.GenericEvent;
@@ -15,7 +14,7 @@ import org.joda.time.DateTimeFieldType;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class CreateRoomsPunctualScheduling extends FenixService {
+public class CreateRoomsPunctualScheduling {
 
     @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
     @Service

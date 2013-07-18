@@ -9,9 +9,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ReadDetailedTeacherProfessorshipsByExecutionPeriod;
 
 import org.apache.struts.action.DynaActionForm;
 
@@ -31,7 +30,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
         @ExceptionHandling(type = net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizeException.class,
                 key = "message.teacher-not-belong-to-department", handler = org.apache.struts.action.ExceptionHandler.class,
                 path = "/teacherSearchForShiftManagement.do?method=searchForm&page=0", scope = "request"),
-        @ExceptionHandling(type = net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException.class,
+        @ExceptionHandling(type = net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException.class,
                 key = "message.teacher-not-belong-to-department", handler = org.apache.struts.action.ExceptionHandler.class,
                 path = "/teacherSearchForShiftManagement.do?method=searchForm&page=0", scope = "request") })
 public class ReadTeacherProfessorshipsByExecutionPeriodAction extends AbstractReadProfessorshipsAction {
@@ -46,12 +45,12 @@ public class ReadTeacherProfessorshipsByExecutionPeriodAction extends AbstractRe
      */
     @Override
     List getDetailedProfessorships(IUserView userView, Integer teacherId, DynaActionForm actionForm, HttpServletRequest request)
-            throws FenixServiceException, FenixFilterException {
+            throws FenixServiceException {
         Integer executionPeriodId = (Integer) actionForm.get("executionPeriodId");
         executionPeriodId = ((executionPeriodId == null) || (executionPeriodId.intValue() == 0)) ? null : executionPeriodId;
         List detailedInfoProfessorshipList =
-                (List) ServiceUtils.executeService("ReadDetailedTeacherProfessorshipsByExecutionPeriod", new Object[] {
-                        teacherId, executionPeriodId });
+                ReadDetailedTeacherProfessorshipsByExecutionPeriod.runReadDetailedTeacherProfessorshipsByExecutionPeriod(
+                        teacherId, executionPeriodId);
         return detailedInfoProfessorshipList;
     }
 

@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.ServiceMonitoring;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategy
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
@@ -30,7 +31,7 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author asnr and scpo
  * 
  */
-public class GroupStudentEnrolment extends FenixService {
+public class GroupStudentEnrolment {
 
     private static final MessageResources messages = MessageResources.getMessageResources("resources/GlobalResources");
 
@@ -38,7 +39,9 @@ public class GroupStudentEnrolment extends FenixService {
     @Service
     public static Boolean run(Integer studentGroupCode, String username) throws FenixServiceException {
 
-        final StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupCode);
+        ServiceMonitoring.logService(GroupStudentEnrolment.class, studentGroupCode, username);
+
+        final StudentGroup studentGroup = RootDomainObject.getInstance().readStudentGroupByOID(studentGroupCode);
         if (studentGroup == null) {
             throw new InvalidArgumentsServiceException();
         }

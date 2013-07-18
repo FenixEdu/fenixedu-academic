@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteObjectByOID;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.TransferDomainObjectProperty;
@@ -57,7 +56,7 @@ public class MergeObjectsDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward chooseObjects(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException, IllegalAccessException,
+            HttpServletResponse response) throws  FenixServiceException, IllegalAccessException,
             NoSuchMethodException, ClassNotFoundException {
 
         DynaActionForm actionForm = (DynaActionForm) form;
@@ -193,7 +192,7 @@ public class MergeObjectsDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward mergeProperty(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException, IllegalAccessException,
+            HttpServletResponse response) throws  FenixServiceException, IllegalAccessException,
             InvocationTargetException, NoSuchMethodException, ClassNotFoundException {
 
         IUserView userView = UserView.getUser();
@@ -216,7 +215,7 @@ public class MergeObjectsDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixFilterException, FenixServiceException, IllegalAccessException, InvocationTargetException,
+            throws  FenixServiceException, IllegalAccessException, InvocationTargetException,
             NoSuchMethodException, ClassNotFoundException {
 
         IUserView userView = UserView.getUser();

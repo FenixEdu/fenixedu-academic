@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
@@ -17,7 +16,7 @@ import net.sourceforge.fenixedu.util.BundleUtil;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class NotifyStudentGroup extends FenixService {
+public class NotifyStudentGroup {
 
     @Checked("RolePredicates.TEACHER_PREDICATE")
     @Service

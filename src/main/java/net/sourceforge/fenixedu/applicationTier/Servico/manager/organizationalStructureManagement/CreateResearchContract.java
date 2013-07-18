@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.LoginPeriod;
@@ -22,7 +22,7 @@ import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.services.Service;
 
-public class CreateResearchContract extends FenixService {
+public class CreateResearchContract {
 
     @Service
     public static void run(ResearchContractBean bean, Person creator, String url) throws FenixServiceException {

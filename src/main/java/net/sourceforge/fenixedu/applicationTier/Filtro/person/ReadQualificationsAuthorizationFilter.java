@@ -1,13 +1,13 @@
 package net.sourceforge.fenixedu.applicationTier.Filtro.person;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import pt.utl.ist.berserk.ServiceRequest;
-import pt.utl.ist.berserk.ServiceResponse;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
-public class ReadQualificationsAuthorizationFilter extends Filtro {
+public class ReadQualificationsAuthorizationFilter {
+
+    public static final ReadQualificationsAuthorizationFilter instance = new ReadQualificationsAuthorizationFilter();
 
     public ReadQualificationsAuthorizationFilter() {
     }
@@ -16,10 +16,8 @@ public class ReadQualificationsAuthorizationFilter extends Filtro {
         return RoleType.TEACHER;
     }
 
-    @Override
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-        IUserView id = getRemoteUser(request);
-        Object[] arguments = getServiceCallArguments(request);
+    public void execute(String user) throws NotAuthorizedException {
+        IUserView id = AccessControl.getUserView();
         try {
             // Verify if needed fields are null
             if ((id == null) || (id.getRoleTypes() == null)) {

@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.UnitFile;
@@ -22,7 +21,7 @@ import pt.utl.ist.fenix.tools.file.FileSetMetaData;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
-public class CreateUnitFile extends FenixService {
+public class CreateUnitFile {
 
     private static byte[] read(final File file) {
         try {

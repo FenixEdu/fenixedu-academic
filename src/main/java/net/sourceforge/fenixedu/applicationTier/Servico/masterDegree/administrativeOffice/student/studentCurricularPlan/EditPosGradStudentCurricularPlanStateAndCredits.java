@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 import java.util.Calendar;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -11,19 +10,20 @@ import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class EditPosGradStudentCurricularPlanStateAndCredits extends FenixService {
+public class EditPosGradStudentCurricularPlanStateAndCredits {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
     public static void run(IUserView userView, Integer studentCurricularPlanId, String currentState, Double credits,
             String startDate, List<Integer> extraCurricularOIDs, String observations, Integer branchId, String specialization)
             throws FenixServiceException {
-        final StudentCurricularPlan scp = rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanId);
+        final StudentCurricularPlan scp = RootDomainObject.getInstance().readStudentCurricularPlanByOID(studentCurricularPlanId);
         if (scp == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -38,7 +38,7 @@ public class EditPosGradStudentCurricularPlanStateAndCredits extends FenixServic
             throw new InvalidArgumentsServiceException();
         }
 
-        final Branch branch = rootDomainObject.readBranchByOID(branchId);
+        final Branch branch = RootDomainObject.getInstance().readBranchByOID(branchId);
         if (branch == null) {
             throw new InvalidArgumentsServiceException();
         }

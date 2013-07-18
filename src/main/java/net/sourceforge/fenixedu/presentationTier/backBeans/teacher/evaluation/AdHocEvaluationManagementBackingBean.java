@@ -4,13 +4,14 @@ import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.CreateAdHocEvaluation;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteEvaluation;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.EditAdHocEvaluation;
 import net.sourceforge.fenixedu.domain.AdHocEvaluation;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 
@@ -27,9 +28,8 @@ public class AdHocEvaluationManagementBackingBean extends EvaluationManagementBa
 
     public String createAdHocEvaluation() {
         try {
-            final Object[] args = { getExecutionCourseID(), getName(), getDescription(), getGradeScale() };
-            ServiceUtils.executeService("CreateAdHocEvaluation", args);
-        } catch (final FenixFilterException e) {
+            CreateAdHocEvaluation.runCreateAdHocEvaluation(getExecutionCourseID(), getName(), getDescription(), getGradeScale());
+        } catch (final NotAuthorizedException e) {
             return "";
         } catch (final FenixServiceException e) {
             setErrorMessage(e.getMessage());
@@ -64,9 +64,8 @@ public class AdHocEvaluationManagementBackingBean extends EvaluationManagementBa
 
     public String deleteAdHocEvaluation() {
         try {
-            final Object[] args = { getExecutionCourseID(), getAdHocEvaluationID() };
-            ServiceUtils.executeService("DeleteEvaluation", args);
-        } catch (FenixFilterException e) {
+            DeleteEvaluation.runDeleteEvaluation(getExecutionCourseID(), getAdHocEvaluationID());
+        } catch (NotAuthorizedException e) {
         } catch (FenixServiceException e) {
             setErrorMessage(e.getMessage());
         } catch (DomainException e) {
@@ -75,7 +74,7 @@ public class AdHocEvaluationManagementBackingBean extends EvaluationManagementBa
         return "adHocEvaluationsIndex";
     }
 
-    public List<AdHocEvaluation> getAssociatedAdHocEvaluations() throws FenixFilterException, FenixServiceException {
+    public List<AdHocEvaluation> getAssociatedAdHocEvaluations() throws  FenixServiceException {
         List<AdHocEvaluation> associatedAdHocEvaluations = getExecutionCourse().getAssociatedAdHocEvaluations();
         Collections.sort(associatedAdHocEvaluations, new BeanComparator("creationDateTime"));
         return associatedAdHocEvaluations;

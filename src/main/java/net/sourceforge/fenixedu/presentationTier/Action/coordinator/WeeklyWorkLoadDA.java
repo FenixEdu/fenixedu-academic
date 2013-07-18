@@ -9,7 +9,6 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularYear;
@@ -113,7 +112,7 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
     }
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixFilterException, FenixServiceException {
+            throws  FenixServiceException {
         final Collection<ExecutionSemester> executionSemesters = rootDomainObject.getExecutionPeriodsSet();
         final Set<ExecutionSemester> sortedExecutionPeriods = new TreeSet<ExecutionSemester>(executionSemesters);
         request.setAttribute("executionPeriods", sortedExecutionPeriods);
@@ -179,7 +178,7 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
     }
 
     private DomainObject setDomainObjectInRequest(final DynaActionForm dynaActionForm, final HttpServletRequest request,
-            final Class clazz, final String formAttributeName, final String requestAttributeName) throws FenixFilterException,
+            final Class clazz, final String formAttributeName, final String requestAttributeName) throws 
             FenixServiceException {
         final String domainObjectIDString = (String) dynaActionForm.get(formAttributeName);
         final Integer domainObjectID =

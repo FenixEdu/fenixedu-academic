@@ -13,10 +13,10 @@ import net.sourceforge.fenixedu.presentationTier.renderers.providers.AutoComplet
 import net.sourceforge.fenixedu.util.StringUtils;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
-public class ExecutionDegreeAutoCompleteProvider implements AutoCompleteProvider {
+public class ExecutionDegreeAutoCompleteProvider implements AutoCompleteProvider<ExecutionDegree> {
 
     @Override
-    public Collection getSearchResults(Map<String, String> argsMap, String value, int maxCount) {
+    public Collection<ExecutionDegree> getSearchResults(Map<String, String> argsMap, String value, int maxCount) {
         final String executionYearOid = argsMap.get("executionYearOid");
         final ExecutionYear executionYear = AbstractDomainObject.fromExternalId(executionYearOid);
 

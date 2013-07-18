@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadBuildings;
@@ -95,7 +94,7 @@ public class RoomExamSearchDA extends FenixContextDispatchAction {
         return mapping.findForward("showExamsMap");
     }
 
-    private List getExamsMap(HttpServletRequest request, List infoRooms) throws FenixActionException, FenixFilterException {
+    private List getExamsMap(HttpServletRequest request, List infoRooms) throws FenixActionException {
 
         IUserView userView = getUserView(request);
 

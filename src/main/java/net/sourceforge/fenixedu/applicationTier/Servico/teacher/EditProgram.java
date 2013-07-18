@@ -1,27 +1,31 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
+import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseResponsibleForTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Curriculum;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Fernanda Quitério
  * 
  *         Modified by Tânia Pousão at 2/Dez/2003
  */
-public class EditProgram extends FenixService {
+public class EditProgram {
 
-    public Boolean run(Integer executionCourseOID, Integer curricularCourseOID, InfoCurriculum infoCurriculumNew, String username)
-            throws FenixServiceException {
+    protected Boolean run(Integer executionCourseOID, Integer curricularCourseOID, InfoCurriculum infoCurriculumNew,
+            String username) throws FenixServiceException {
 
         final Person person = Person.readPersonByUsername(username);
-        final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseOID);
-        final CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseOID);
+        final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseOID);
+        final CurricularCourse curricularCourse = (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(curricularCourseOID);
         final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
 
         Curriculum curriculum =
@@ -55,6 +59,18 @@ public class EditProgram extends FenixService {
         }
 
         return true;
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final EditProgram serviceInstance = new EditProgram();
+
+    @Service
+    public static Boolean runEditProgram(Integer executionCourseOID, Integer curricularCourseOID,
+            InfoCurriculum infoCurriculumNew, String username) throws FenixServiceException, NotAuthorizedException {
+        ExecutionCourseResponsibleForTeacherAuthorizationFilter.instance.execute(executionCourseOID, curricularCourseOID,
+                infoCurriculumNew, username);
+        return serviceInstance.run(executionCourseOID, curricularCourseOID, infoCurriculumNew, username);
     }
 
 }

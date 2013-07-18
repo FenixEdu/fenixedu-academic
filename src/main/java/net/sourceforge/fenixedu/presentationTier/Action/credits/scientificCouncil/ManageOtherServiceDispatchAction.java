@@ -6,7 +6,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.credits.scientificCounc
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -33,7 +32,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ManageOtherServiceDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareEditOtherService(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws NumberFormatException,  FenixServiceException {
         OtherService otherService = AbstractDomainObject.fromExternalId((String) getFromRequest(request, "otherServiceOid"));
         if (otherService != null) {
             request.setAttribute("otherService", otherService);
@@ -48,7 +47,7 @@ public class ManageOtherServiceDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward deleteOtherService(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws NumberFormatException,  FenixServiceException {
         OtherService otherService = AbstractDomainObject.fromExternalId((String) getFromRequest(request, "otherServiceOid"));
         request.setAttribute("teacherOid", otherService.getTeacherService().getTeacher().getExternalId());
         request.setAttribute("executionYearOid", otherService.getTeacherService().getExecutionPeriod().getExecutionYear()

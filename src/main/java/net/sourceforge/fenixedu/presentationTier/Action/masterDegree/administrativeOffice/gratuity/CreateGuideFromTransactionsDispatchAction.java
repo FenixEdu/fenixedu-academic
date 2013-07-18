@@ -10,9 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.contributor.ReadContributor;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.ReadGratuitySituationById;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.transactions.ReadAllTransactionsByGratuitySituationID;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.CreateGuideFromTransactions;
@@ -29,7 +29,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.PresentationConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -169,12 +168,11 @@ public class CreateGuideFromTransactionsDispatchAction extends FenixDispatchActi
      * @throws FenixActionException
      */
     private InfoContributor readContributor(ActionMapping errorMapping, IUserView userView, Integer contributorNumber)
-            throws NonExistingActionException, FenixActionException, FenixFilterException {
+            throws NonExistingActionException, FenixActionException {
 
         InfoContributor infoContributor = null;
-        Object argsContributor[] = { contributorNumber };
         try {
-            infoContributor = (InfoContributor) ServiceUtils.executeService("ReadContributor", argsContributor);
+            infoContributor = ReadContributor.runReadContributor(contributorNumber);
 
         } catch (ExcepcaoInexistente e) {
             throw new NonExistingActionException("error.masterDegree.administrativeOffice.nonExistingContributorSimple",
@@ -193,7 +191,7 @@ public class CreateGuideFromTransactionsDispatchAction extends FenixDispatchActi
      * @throws FenixActionException
      */
     private InfoGratuitySituation readGratuitySituation(IUserView userView, Integer gratuitySituationId)
-            throws FenixActionException, FenixFilterException {
+            throws FenixActionException {
         InfoGratuitySituation infoGratuitySituation = null;
 
         try {
@@ -216,7 +214,7 @@ public class CreateGuideFromTransactionsDispatchAction extends FenixDispatchActi
      * @throws NonExistingActionException
      */
     private InfoStudent readStudent(ActionMapping mapping, IUserView userView, Integer studentId) throws FenixActionException,
-            NonExistingActionException, FenixFilterException {
+            NonExistingActionException {
         InfoStudent infoStudent = null;
 
         try {

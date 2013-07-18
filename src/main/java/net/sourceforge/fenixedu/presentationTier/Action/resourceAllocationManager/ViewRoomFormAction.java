@@ -6,7 +6,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
@@ -31,7 +30,7 @@ public class ViewRoomFormAction extends FenixSelectedRoomsAndSelectedRoomIndexCo
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixServiceException, FenixFilterException {
+            throws FenixServiceException {
         try {
             super.execute(mapping, form, request, response);
         } catch (Exception e2) {

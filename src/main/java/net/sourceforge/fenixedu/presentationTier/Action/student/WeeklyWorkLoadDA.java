@@ -12,7 +12,6 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.CreateWeeklyWorkLoad;
 import net.sourceforge.fenixedu.domain.Attends;
@@ -104,7 +103,7 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
     }
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixFilterException, FenixServiceException {
+            throws  FenixServiceException {
 
         final Collection<ExecutionSemester> executionSemesters = rootDomainObject.getExecutionPeriodsSet();
         final Set<ExecutionSemester> sortedExecutionPeriods = new TreeSet<ExecutionSemester>(executionSemesters);
@@ -181,7 +180,7 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
     }
 
     private Attends findFirstAttends(final HttpServletRequest request, final ExecutionSemester selectedExecutionPeriod)
-            throws FenixFilterException, FenixServiceException {
+            throws  FenixServiceException {
         for (final Registration registration : getUserView(request).getPerson().getStudents()) {
             for (final Attends attend : registration.getOrderedAttends()) {
                 final ExecutionCourse executionCourse = attend.getExecutionCourse();
@@ -194,7 +193,7 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
     }
 
     public ActionForward create(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixFilterException, FenixServiceException {
+            throws  FenixServiceException {
         final WeeklyWorkLoadBean weeklyWorkLoadBean = getWeeklyWorkLoadBean(request);
 
         final Integer attendsID = weeklyWorkLoadBean.getAttendsID();
@@ -208,7 +207,7 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
     }
 
     public ActionForward createFromForm(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         final DynaActionForm dynaActionForm = (DynaActionForm) form;
 
         final Integer attendsID = getInteger(dynaActionForm, "attendsID");
@@ -226,7 +225,7 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
     }
 
     public void create(final HttpServletRequest request, final Integer attendsID, final Integer contact,
-            final Integer autonomousStudy, final Integer other) throws FenixFilterException, FenixServiceException {
+            final Integer autonomousStudy, final Integer other) throws  FenixServiceException {
 
         CreateWeeklyWorkLoad.run(attendsID, contact, autonomousStudy, other);
     }

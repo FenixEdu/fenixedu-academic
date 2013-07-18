@@ -6,7 +6,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoExternalActivity;
@@ -25,7 +24,7 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author Sergio Montelobo
  * 
  */
-public class ReadExternalActivities extends FenixService {
+public class ReadExternalActivities {
 
     @Checked("RolePredicates.TEACHER_PREDICATE")
     @Service

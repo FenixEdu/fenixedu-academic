@@ -13,12 +13,10 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.Authenticate;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.externalServices.ReadStudentGroupsExternalInformationByExecutionCourseIDAndStudentUsername;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.BaseAuthenticationAction;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -79,7 +77,7 @@ public class InfoGroupsByExecutionCourse extends FenixAction {
         return null;
     }
 
-    private String buildInfo(Integer integer, IUserView userView) throws FenixFilterException, FenixServiceException {
+    private String buildInfo(Integer integer, IUserView userView) throws  FenixServiceException {
 
         Collection info =
                 ReadStudentGroupsExternalInformationByExecutionCourseIDAndStudentUsername.run(integer, userView.getUtilizador());
@@ -114,11 +112,8 @@ public class InfoGroupsByExecutionCourse extends FenixAction {
     }
 
     private IUserView authenticate(String username, String password, String requestURL, String remoteHostName)
-            throws FenixServiceException, FenixFilterException {
-        Object argsAutenticacao[] = { username, password, requestURL, remoteHostName };
-        IUserView userView =
-                (IUserView) ServiceManagerServiceFactory.executeService(PropertiesManager.getProperty("authenticationService"),
-                        argsAutenticacao);
+            throws FenixServiceException {
+        IUserView userView = Authenticate.runAuthenticate(username, password, requestURL, remoteHostName);
         return userView;
     }
 

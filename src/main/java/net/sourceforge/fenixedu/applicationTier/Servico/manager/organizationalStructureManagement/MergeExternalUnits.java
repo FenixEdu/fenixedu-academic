@@ -5,8 +5,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.SystemSender;
@@ -18,7 +18,7 @@ import org.apache.commons.lang.StringUtils;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class MergeExternalUnits extends FenixService {
+public class MergeExternalUnits {
 
     @Checked("RolePredicates.MANAGER_PREDICATE")
     @Service
@@ -53,7 +53,7 @@ public class MergeExternalUnits extends FenixService {
                                     new String[] { person.getName(), person.getUsername(), fromUnitName, fromUnitID.toString(),
                                             destinationUnit.getName(), destinationUnit.getIdInternal().toString() });
 
-                    SystemSender systemSender = rootDomainObject.getSystemSender();
+                    SystemSender systemSender = RootDomainObject.getInstance().getSystemSender();
                     new Message(systemSender, systemSender.getConcreteReplyTos(), Collections.EMPTY_LIST, subject, body,
                             resultEmails);
                 }

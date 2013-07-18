@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ReadProfessorshipSupportLessons;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.ProfessorshipSupportLessonsDTO;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -44,9 +44,8 @@ public class ReadTeacherSupportLessonsAction extends Action {
         Integer teacherId = (Integer) professorShipForm.get("teacherId");
         Integer executionCourseId = (Integer) professorShipForm.get("executionCourseId");
 
-        Object args[] = { teacherId, executionCourseId };
         ProfessorshipSupportLessonsDTO professorshipSupportLessonsDTO =
-                (ProfessorshipSupportLessonsDTO) ServiceUtils.executeService("ReadProfessorshipSupportLessons", args);
+                ReadProfessorshipSupportLessons.runReadProfessorshipSupportLessons(teacherId, executionCourseId);
 
         ComparatorChain comparatorChain = new ComparatorChain();
 

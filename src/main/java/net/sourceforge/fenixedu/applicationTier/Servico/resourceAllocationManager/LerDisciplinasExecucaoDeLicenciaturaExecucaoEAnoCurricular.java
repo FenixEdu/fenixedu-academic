@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
@@ -12,11 +11,12 @@ import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular extends FenixService {
+public class LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular {
 
     @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
     @Service
@@ -25,10 +25,10 @@ public class LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular extends 
 
         List listInfoDE = new ArrayList();
 
-        CurricularYear curricularYear = rootDomainObject.readCurricularYearByOID(curricularYearID);
-        ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(infoExecutionPeriod.getIdInternal());
+        CurricularYear curricularYear = RootDomainObject.getInstance().readCurricularYearByOID(curricularYearID);
+        ExecutionSemester executionSemester = RootDomainObject.getInstance().readExecutionSemesterByOID(infoExecutionPeriod.getIdInternal());
         DegreeCurricularPlan degreeCurricularPlan =
-                rootDomainObject.readDegreeCurricularPlanByOID(infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal());
+                RootDomainObject.getInstance().readDegreeCurricularPlanByOID(infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal());
 
         if (executionSemester != null) {
             List<ExecutionCourse> listDCDE =
@@ -53,9 +53,9 @@ public class LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular extends 
 
         List listInfoDE = new ArrayList();
 
-        CurricularYear curricularYear = rootDomainObject.readCurricularYearByOID(curricularYearID);
+        CurricularYear curricularYear = RootDomainObject.getInstance().readCurricularYearByOID(curricularYearID);
         DegreeCurricularPlan degreeCurricularPlan =
-                rootDomainObject.readDegreeCurricularPlanByOID(infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal());
+                RootDomainObject.getInstance().readDegreeCurricularPlanByOID(infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal());
 
         if (academicInterval != null) {
             List<ExecutionCourse> listDCDE =

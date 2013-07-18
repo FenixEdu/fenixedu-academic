@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.coordinator.candidacy.s
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
 
@@ -76,7 +75,7 @@ public class StandaloneIndividualCandidacyProcessDA extends
 
     @Override
     public ActionForward executeEditCandidacyPersonalInformation(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
         throw new RuntimeException("not allowed");
     }
 
@@ -94,7 +93,7 @@ public class StandaloneIndividualCandidacyProcessDA extends
 
     @Override
     public ActionForward executeEditCandidacyInformation(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
         throw new RuntimeException("not allowed");
     }
 
@@ -112,19 +111,19 @@ public class StandaloneIndividualCandidacyProcessDA extends
 
     @Override
     public ActionForward executeIntroduceCandidacyResult(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
         throw new RuntimeException("not allowed");
     }
 
     @Override
     public ActionForward prepareExecuteCreateRegistration(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
         throw new RuntimeException("not allowed");
     }
 
     @Override
     public ActionForward executeCreateRegistration(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         throw new RuntimeException("not allowed");
     }
 

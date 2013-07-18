@@ -25,8 +25,8 @@
 				<fr:property name="labelField" value="name"/>
 				<fr:property name="format" value="${name} - (${district.name})"/>
 				<fr:property name="indicatorShown" value="true"/>		
-				<fr:property name="serviceName" value="SearchDistrictSubdivisions"/>
-				<fr:property name="serviceArgs" value="slot=name,size=20"/>
+				<fr:property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchDistrictSubdivisions"/>
+				<fr:property name="args" value="slot=name,size=20"/>
 				<fr:property name="className" value="net.sourceforge.fenixedu.domain.DistrictSubdivision"/>
 				<fr:property name="minChars" value="2"/>
 			</fr:slot>	    
@@ -35,8 +35,8 @@
 				<fr:property name="size" value="50"/>
 				<fr:property name="labelField" value="unit.name"/>
 				<fr:property name="indicatorShown" value="true"/>
-				<fr:property name="serviceName" value="SearchExternalUnits"/>
-				<fr:property name="serviceArgs" value="slot=name,size=50"/>
+				<fr:property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchExternalUnits"/>
+				<fr:property name="args" value="slot=name,size=50"/>
 				<fr:property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>
 				<fr:property name="minChars" value="1"/>
 				<fr:property name="rawSlotName" value="grantOwnerProviderName"/>

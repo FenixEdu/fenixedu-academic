@@ -2,22 +2,28 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.ServiceMonitoring;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ExamStudentAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
+import pt.ist.fenixWebFramework.services.Service;
 
-public class EnrolStudentInWrittenEvaluation extends FenixService {
+public class EnrolStudentInWrittenEvaluation {
 
-    public void run(String username, Integer writtenEvaluationOID) throws FenixServiceException {
+    protected void run(String username, Integer writtenEvaluationOID) throws FenixServiceException {
+
+        ServiceMonitoring.logService(this.getClass(), username, writtenEvaluationOID);
 
         final WrittenEvaluation writtenEvaluation =
-                (WrittenEvaluation) rootDomainObject.readEvaluationByOID(writtenEvaluationOID);
+                (WrittenEvaluation) RootDomainObject.getInstance().readEvaluationByOID(writtenEvaluationOID);
         final Person person = Person.readPersonByUsername(username);
         final Student student = person.getStudent();
         final Registration registration = findCorrectRegistration(student, writtenEvaluation.getAssociatedExecutionCoursesSet());
@@ -45,4 +51,16 @@ public class EnrolStudentInWrittenEvaluation extends FenixService {
     public void enrolmentAction(final WrittenEvaluation writtenEvaluation, final Registration registration) {
         writtenEvaluation.enrolStudent(registration);
     }
+
+    // Service Invokers migrated from Berserk
+
+    private static final EnrolStudentInWrittenEvaluation serviceInstance = new EnrolStudentInWrittenEvaluation();
+
+    @Service
+    public static void runEnrolStudentInWrittenEvaluation(String username, Integer writtenEvaluationOID)
+            throws FenixServiceException, NotAuthorizedException {
+        ExamStudentAuthorizationFilter.instance.execute(username, writtenEvaluationOID);
+        serviceInstance.run(username, writtenEvaluationOID);
+    }
+
 }

@@ -6,13 +6,12 @@ package net.sourceforge.fenixedu.presentationTier.Action.manager;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.InsertProfessorShip;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -32,15 +31,14 @@ public class InsertProfessorShipByNumberDA extends FenixDispatchAction {
     }
 
     public ActionForward insert(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
 
         final DynaActionForm form = (DynaValidatorForm) actionForm;
-        final Integer teacherId = Integer.valueOf(form.getString("id"));
+        final String teacherId = form.getString("id");
         final Integer executionCourseId = Integer.valueOf(request.getParameter("executionCourseId"));
 
         try {
-            final Object args[] = { executionCourseId, teacherId, Boolean.FALSE, 0.0 };
-            ServiceUtils.executeService("InsertProfessorShip", args);
+            InsertProfessorShip.runInsertProfessorShip(executionCourseId, teacherId, Boolean.FALSE, 0.0);
 
         } catch (NonExistingServiceException ex) {
             throw new NonExistingActionException(ex.getMessage(), mapping.findForward("insertProfessorShip"));

@@ -5,31 +5,31 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.AutoCompleteSearchService;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.SchoolLevelType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.raides.DegreeDesignation;
+import net.sourceforge.fenixedu.presentationTier.renderers.providers.AutoCompleteProvider;
 import net.sourceforge.fenixedu.util.StringUtils;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
-public class SearchRaidesDegreeDesignations extends FenixService implements AutoCompleteSearchService {
+public class SearchRaidesDegreeDesignations implements AutoCompleteProvider<DegreeDesignation> {
 
     private static int DEFAULT_SIZE = 50;
 
     @Override
-    public Collection run(Class type, String value, final int limit, Map<String, String> arguments) {
+    public Collection<DegreeDesignation> getSearchResults(Map<String, String> argsMap, String value, int maxCount) {
 
-        int maxLimit = getSize(arguments);
+        int maxLimit = getSize(argsMap);
 
-        Unit unit = getFilterUnit(arguments);
-        SchoolLevelType schoolLevel = getFilterSchoolLevel(arguments);
+        Unit unit = getFilterUnit(argsMap);
+        SchoolLevelType schoolLevel = getFilterSchoolLevel(argsMap);
 
         value = StringUtils.normalize(value);
         List<DegreeDesignation> result = new ArrayList<DegreeDesignation>();
         Collection<DegreeDesignation> possibleDesignations = null;
         if (unit == null) {
-            possibleDesignations = rootDomainObject.getDegreeDesignationsSet();
+            possibleDesignations = RootDomainObject.getInstance().getDegreeDesignationsSet();
         } else {
             possibleDesignations = unit.getDegreeDesignation();
         }

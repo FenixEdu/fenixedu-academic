@@ -7,8 +7,9 @@ import java.util.Iterator;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.services.DeleteTeacherAdviseServiceByOID;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.services.EditTeacherAdviseService;
 import net.sourceforge.fenixedu.commons.OrderedIterator;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -57,7 +58,7 @@ public class ManageTeacherAdviseServiceDispatchAction extends FenixDispatchActio
     }
 
     protected ActionForward editAdviseService(ActionForm form, HttpServletRequest request, ActionMapping mapping,
-            RoleType roleType) throws NumberFormatException, FenixFilterException, FenixServiceException {
+            RoleType roleType) throws NumberFormatException,  FenixServiceException {
 
         DynaActionForm adviseServiceForm = (DynaActionForm) form;
 
@@ -65,9 +66,9 @@ public class ManageTeacherAdviseServiceDispatchAction extends FenixDispatchActio
         Double percentage = Double.valueOf(adviseServiceForm.getString("percentage"));
         Teacher teacher = AbstractDomainObject.fromExternalId((String) adviseServiceForm.get("teacherId"));
         Integer executionPeriodID = (Integer) adviseServiceForm.get("executionPeriodId");
-        Object[] args = { teacher, executionPeriodID, studentNumber, percentage, AdviseType.FINAL_WORK_DEGREE, roleType };
         try {
-            executeService("EditTeacherAdviseService", args);
+            EditTeacherAdviseService.runEditTeacherAdviseService(teacher, executionPeriodID, studentNumber, percentage,
+                    AdviseType.FINAL_WORK_DEGREE, roleType);
 
         } catch (AdvisePercentageException ape) {
             ActionMessages actionMessages = new ActionMessages();
@@ -83,11 +84,11 @@ public class ManageTeacherAdviseServiceDispatchAction extends FenixDispatchActio
     }
 
     protected void deleteAdviseService(HttpServletRequest request, RoleType roleType) throws NumberFormatException,
-            FenixFilterException, FenixServiceException {
+             FenixServiceException {
 
         Integer adviseServiceID = Integer.valueOf(request.getParameter("teacherAdviseServiceID"));
         try {
-            executeService("DeleteTeacherAdviseServiceByOID", new Object[] { adviseServiceID, roleType });
+            DeleteTeacherAdviseServiceByOID.runDeleteTeacherAdviseServiceByOID(adviseServiceID, roleType);
         } catch (DomainException e) {
             saveMessages(request, e);
         }

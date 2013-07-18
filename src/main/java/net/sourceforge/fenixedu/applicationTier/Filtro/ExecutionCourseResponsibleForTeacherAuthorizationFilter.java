@@ -6,20 +6,23 @@
 package net.sourceforge.fenixedu.applicationTier.Filtro;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import pt.utl.ist.berserk.ServiceRequest;
-import pt.utl.ist.berserk.ServiceResponse;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 /**
  * @author João Mota
  * 
  */
 public class ExecutionCourseResponsibleForTeacherAuthorizationFilter extends AuthorizationByRoleFilter {
+
+    public static final ExecutionCourseResponsibleForTeacherAuthorizationFilter instance =
+            new ExecutionCourseResponsibleForTeacherAuthorizationFilter();
 
     public ExecutionCourseResponsibleForTeacherAuthorizationFilter() {
 
@@ -30,18 +33,17 @@ public class ExecutionCourseResponsibleForTeacherAuthorizationFilter extends Aut
         return RoleType.TEACHER;
     }
 
-    @Override
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-        IUserView id = getRemoteUser(request);
-        Object[] arguments = getServiceCallArguments(request);
+    public void execute(Integer executionCourseOID, Integer curricularCourseOID, InfoCurriculum infoCurriculumNew, String username)
+            throws NotAuthorizedException {
+        IUserView id = AccessControl.getUserView();
 
         try {
             if ((id == null) || (id.getRoleTypes() == null) || !id.hasRoleType(getRoleType())
-                    || !isResponsibleForExecutionCourse(id, arguments)) {
-                throw new NotAuthorizedFilterException();
+                    || !isResponsibleForExecutionCourse(id, executionCourseOID)) {
+                throw new NotAuthorizedException();
             }
         } catch (RuntimeException e) {
-            throw new NotAuthorizedFilterException();
+            throw new NotAuthorizedException();
         }
     }
 
@@ -50,21 +52,14 @@ public class ExecutionCourseResponsibleForTeacherAuthorizationFilter extends Aut
      * @param argumentos
      * @return
      */
-    private boolean isResponsibleForExecutionCourse(IUserView id, Object[] argumentos) {
-
-        InfoExecutionCourse infoExecutionCourse = null;
-        ExecutionCourse executionCourse = null;
+    private boolean isResponsibleForExecutionCourse(IUserView id, Integer executionCourseOID) {
         Professorship responsibleFor = null;
-        if (argumentos == null) {
+        if (executionCourseOID == null) {
             return false;
         }
         try {
-            if (argumentos[0] instanceof InfoExecutionCourse) {
-                infoExecutionCourse = (InfoExecutionCourse) argumentos[0];
-                executionCourse = rootDomainObject.readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
-            } else {
-                executionCourse = rootDomainObject.readExecutionCourseByOID((Integer) argumentos[0]);
-            }
+            ExecutionCourse executionCourse =
+                    executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseOID);
 
             Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
             responsibleFor = teacher.isResponsibleFor(executionCourse);

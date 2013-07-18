@@ -11,10 +11,10 @@ import java.util.ResourceBundle;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.research.activity.CreateJournalIssue;
 import net.sourceforge.fenixedu.applicationTier.Servico.research.activity.CreateResearchEventEdition;
+import net.sourceforge.fenixedu.applicationTier.Servico.research.result.publication.ImportBibtexPublication;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.OpenFileBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultDocumentFileSubmissionBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultParticipationCreationBean.ParticipationType;
@@ -203,7 +203,7 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
     }
 
     private List<BibtexParticipatorBean> getParticipators(HttpServletRequest request, BibtexPersonList bibtexPersons,
-            ResultParticipationRole role) throws FenixFilterException, FenixServiceException {
+            ResultParticipationRole role) throws  FenixServiceException {
         List<BibtexParticipatorBean> participators = new ArrayList<BibtexParticipatorBean>();
         List<BibtexPerson> persons = bibtexPersons.getList();
         for (BibtexPerson person : persons) {
@@ -344,7 +344,7 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward createPublicationWrapper(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         ImportBibtexBean importBibtexBean =
                 (ImportBibtexBean) RenderUtils.getViewState("importBibtexBean").getMetaObject().getObject();
@@ -362,7 +362,7 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward createEventWorkFlow(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         ImportBibtexBean importBean = (ImportBibtexBean) RenderUtils.getViewState("importBibtexBean").getMetaObject().getObject();
         ConferenceArticlesBean bean = (ConferenceArticlesBean) importBean.getCurrentPublicationBean();
@@ -401,7 +401,7 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward createJournalWorkFlow(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         ImportBibtexBean importBean = (ImportBibtexBean) RenderUtils.getViewState("importBibtexBean").getMetaObject().getObject();
         ArticleBean bean = (ArticleBean) importBean.getCurrentPublicationBean();
@@ -447,7 +447,7 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward changeSpecialIssueInImport(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         final ImportBibtexBean bean = getRenderedObject("importBibtexBean");
         CreateIssueBean issueBean = getRenderedObject("createMagazine");
@@ -465,10 +465,10 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
                 (ImportBibtexBean) RenderUtils.getViewState("importBibtexBean").getMetaObject().getObject();
 
         try {
-            Object[] arguments =
-                    new Object[] { getUserView(request).getPerson(), importBibtexBean.getCurrentPublicationBean(),
-                            importBibtexBean.getCurrentBibtexPublication() };
-            ResearchResultPublication result = (ResearchResultPublication) executeService("ImportBibtexPublication", arguments);
+
+            ResearchResultPublication result =
+                    ImportBibtexPublication.runImportBibtexPublication(getUserView(request).getPerson(),
+                            importBibtexBean.getCurrentPublicationBean(), importBibtexBean.getCurrentBibtexPublication());
             request.setAttribute("result", result);
             ResultDocumentFileSubmissionBean fileBean = new ResultDocumentFileSubmissionBean(result);
             request.setAttribute("fileBean", fileBean);

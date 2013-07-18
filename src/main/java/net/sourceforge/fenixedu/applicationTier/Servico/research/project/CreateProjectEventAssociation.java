@@ -1,9 +1,10 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.research.project;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.research.ProjectEventAssociationFullCreationBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.ProjectEventAssociationSimpleCreationBean;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
 import net.sourceforge.fenixedu.domain.research.project.Project;
 import net.sourceforge.fenixedu.domain.research.project.ProjectEventAssociation;
@@ -11,7 +12,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class CreateProjectEventAssociation extends FenixService {
+public class CreateProjectEventAssociation {
 
     /**
      * Service responsible for creating an association between a project and an
@@ -33,7 +34,7 @@ public class CreateProjectEventAssociation extends FenixService {
     public static ProjectEventAssociation run(ProjectEventAssociationSimpleCreationBean bean, Integer projectId)
             throws FenixServiceException {
         ProjectEventAssociation association = null;
-        final Project project = rootDomainObject.readProjectByOID(projectId);
+        final Project project = RootDomainObject.getInstance().readProjectByOID(projectId);
         if (project == null) {
             throw new FenixServiceException();
         }
@@ -66,7 +67,7 @@ public class CreateProjectEventAssociation extends FenixService {
             throws FenixServiceException {
         final ProjectEventAssociation association;
 
-        final Project project = rootDomainObject.readProjectByOID(projectId);
+        final Project project = RootDomainObject.getInstance().readProjectByOID(projectId);
         if (project == null) {
             throw new FenixServiceException();
         }

@@ -12,8 +12,6 @@ import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
 import org.joda.time.DateTime;
 
-import pt.utl.ist.codeGenerator.database.EvaluationRoomManager;
-
 public class WrittenTestsRoomManager extends HashSet<Room> {
 
     private final Map<ExecutionSemester, EvaluationRoomManager> evaluationRoomManagerMap = new HashMap<ExecutionSemester, EvaluationRoomManager>();

@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
@@ -9,7 +9,7 @@ import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.services.Service;
 
-public class CreateVigilantGroup extends FenixService {
+public class CreateVigilantGroup {
 
     @Service
     public static void run(String name, Unit unit, String convokeStrategy, String contactEmail, String rulesLink,

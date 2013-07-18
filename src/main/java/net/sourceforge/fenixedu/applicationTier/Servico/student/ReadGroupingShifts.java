@@ -9,7 +9,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
@@ -20,6 +19,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteShifts;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
@@ -29,7 +29,7 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author asnr and scpo
  * 
  */
-public class ReadGroupingShifts extends FenixService {
+public class ReadGroupingShifts {
 
     @Checked("RolePredicates.STUDENT_PREDICATE")
     @Service
@@ -41,13 +41,13 @@ public class ReadGroupingShifts extends FenixService {
         boolean result = false;
 
         StudentGroup studentGroup = null;
-        grouping = rootDomainObject.readGroupingByOID(groupingCode);
+        grouping = RootDomainObject.getInstance().readGroupingByOID(groupingCode);
         if (grouping == null) {
             throw new ExistingServiceException();
         }
         if (studentGroupCode != null) {
 
-            studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupCode);
+            studentGroup = RootDomainObject.getInstance().readStudentGroupByOID(studentGroupCode);
 
             if (studentGroup == null) {
                 throw new InvalidSituationServiceException();

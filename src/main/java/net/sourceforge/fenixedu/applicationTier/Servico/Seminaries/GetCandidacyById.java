@@ -5,11 +5,15 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.Seminaries;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
+import net.sourceforge.fenixedu.applicationTier.Filtro.Seminaries.CandidacyAccessFilter;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCandidacy;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCandidacyWithCaseStudyChoices;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -18,15 +22,25 @@ import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BD
  *         Created at 26/Ago/2003, 14:50:16
  * 
  */
-public class GetCandidacyById extends FenixService {
+public class GetCandidacyById {
 
-    public InfoCandidacy run(Integer id) throws BDException {
+    protected InfoCandidacy run(Integer id) throws BDException {
         InfoCandidacy infoCandidacy = null;
 
-        SeminaryCandidacy candidacy = rootDomainObject.readSeminaryCandidacyByOID(id);
+        SeminaryCandidacy candidacy = RootDomainObject.getInstance().readSeminaryCandidacyByOID(id);
         infoCandidacy = InfoCandidacyWithCaseStudyChoices.newInfoFromDomain(candidacy);
 
         return infoCandidacy;
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final GetCandidacyById serviceInstance = new GetCandidacyById();
+
+    @Service
+    public static InfoCandidacy runGetCandidacyById(Integer id) throws BDException  , NotAuthorizedException {
+        CandidacyAccessFilter.instance.execute(id);
+        return serviceInstance.run(id);
     }
 
 }

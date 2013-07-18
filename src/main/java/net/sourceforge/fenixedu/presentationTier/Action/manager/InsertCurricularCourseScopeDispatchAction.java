@@ -11,7 +11,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionPeriods;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -67,7 +66,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 public class InsertCurricularCourseScopeDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareInsert(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
 
         Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
 
@@ -122,7 +121,7 @@ public class InsertCurricularCourseScopeDispatchAction extends FenixDispatchActi
     }
 
     public ActionForward insert(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixActionException, FenixFilterException {
+            throws FenixActionException {
 
         DynaActionForm dynaForm = (DynaValidatorForm) form;
 

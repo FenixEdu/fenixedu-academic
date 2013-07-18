@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.research.activity;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.research.activity.ResearchActivityParticipantEditionBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -11,7 +10,7 @@ import net.sourceforge.fenixedu.domain.research.activity.Participation;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class EditResearchActivityParticipants extends FenixService {
+public class EditResearchActivityParticipants {
 
     @Checked("ResultPredicates.author")
     @Service

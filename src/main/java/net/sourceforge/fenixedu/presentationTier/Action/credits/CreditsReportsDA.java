@@ -9,7 +9,6 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Department;
@@ -45,7 +44,7 @@ import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 public class CreditsReportsDA extends FenixDispatchAction {
 
     public ActionForward prepareExportDepartmentCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws NumberFormatException, FenixServiceException {
         DepartmentCreditsBean departmentCreditsBean = new DepartmentCreditsBean();
         departmentCreditsBean.setAvailableDepartments(Department.readActiveDepartments());
         request.setAttribute("departmentCreditsBean", departmentCreditsBean);
@@ -53,7 +52,7 @@ public class CreditsReportsDA extends FenixDispatchAction {
     }
 
     public ActionForward prepareExportDepartmentCredits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         DepartmentCreditsBean departmentCreditsBean = new DepartmentCreditsBean();
         departmentCreditsBean.setAvailableDepartments(Department.readActiveDepartments());
         request.setAttribute("departmentCreditsBean", departmentCreditsBean);
@@ -61,7 +60,7 @@ public class CreditsReportsDA extends FenixDispatchAction {
     }
 
     public ActionForward exportDepartmentCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException, IOException {
+            HttpServletResponse response) throws NumberFormatException, FenixServiceException, IOException {
         DepartmentCreditsBean departmentCreditsBean = getRenderedObject();
         List<Department> departments = new ArrayList<Department>();
         if (departmentCreditsBean.getDepartment() != null) {
@@ -108,7 +107,7 @@ public class CreditsReportsDA extends FenixDispatchAction {
     }
 
     public ActionForward exportDepartmentPersonFunctions(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException, IOException {
+            HttpServletResponse response) throws NumberFormatException, FenixServiceException, IOException {
         DepartmentCreditsBean departmentCreditsBean = getRenderedObject();
         List<Department> departments = new ArrayList<Department>();
         if (departmentCreditsBean.getDepartment() != null) {
@@ -162,7 +161,7 @@ public class CreditsReportsDA extends FenixDispatchAction {
     }
 
     public ActionForward exportDepartmentCredits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException, IOException {
+            HttpServletResponse response) throws NumberFormatException, FenixServiceException, IOException {
         DepartmentCreditsBean departmentCreditsBean = getRenderedObject();
         List<Department> departments = new ArrayList<Department>();
         if (departmentCreditsBean.getDepartment() != null) {

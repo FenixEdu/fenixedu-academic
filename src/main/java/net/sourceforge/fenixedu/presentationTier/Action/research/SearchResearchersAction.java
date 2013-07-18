@@ -9,8 +9,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchParameters;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchPersonPredicate;
@@ -99,14 +97,7 @@ public class SearchResearchersAction extends FenixDispatchAction {
 
             final SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(parameters);
 
-            CollectionPager<Person> result = null;
-            try {
-                result = (CollectionPager<Person>) executeService("SearchPerson", new Object[] { parameters, predicate });
-            } catch (FenixFilterException e) {
-                e.printStackTrace();
-            } catch (FenixServiceException e) {
-                e.printStackTrace();
-            }
+            CollectionPager<Person> result = SearchPerson.runSearchPerson(parameters, predicate);
 
             List<Researcher> results = new ArrayList<Researcher>();
             for (Person person : result.getCollection()) {

@@ -5,7 +5,6 @@ import java.util.SortedSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.space.DeleteRoomClassification;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -57,7 +56,7 @@ public class RoomClassificationDA extends FenixDispatchAction {
     }
 
     public ActionForward deleteRoomClassification(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         final RoomClassification roomClassification = retrieveRoomClassification(request);
 

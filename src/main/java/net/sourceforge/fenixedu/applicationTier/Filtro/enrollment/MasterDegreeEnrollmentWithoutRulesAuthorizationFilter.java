@@ -9,17 +9,22 @@ import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByManyRolesFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 /**
  * @author David Santos in Mar 1, 2004
  */
 
-public class MasterDegreeEnrollmentWithoutRulesAuthorizationFilter extends AuthorizationByManyRolesFilter {
+public class MasterDegreeEnrollmentWithoutRulesAuthorizationFilter extends Filtro {
+
+    public static final MasterDegreeEnrollmentWithoutRulesAuthorizationFilter instance =
+            new MasterDegreeEnrollmentWithoutRulesAuthorizationFilter();
     private static DegreeType DEGREE_TYPE = DegreeType.MASTER_DEGREE;
 
     @Override
@@ -29,14 +34,13 @@ public class MasterDegreeEnrollmentWithoutRulesAuthorizationFilter extends Autho
         return roles;
     }
 
-    @Override
-    protected String hasPrevilege(IUserView id, Object[] arguments) {
+    protected String hasPrevilege(IUserView id, Object registration, DegreeType degreeType) {
         try {
-            if (!verifyDegreeTypeIsMasterDegree(arguments)) {
+            if (!verifyDegreeTypeIsMasterDegree(degreeType)) {
                 return "error.degree.type";
             }
 
-            if (!verifyStudentIsFromMasterDegree(arguments)) {
+            if (!verifyStudentIsFromMasterDegree(registration)) {
                 return "error.student.degree.nonMaster";
             }
 
@@ -47,18 +51,17 @@ public class MasterDegreeEnrollmentWithoutRulesAuthorizationFilter extends Autho
         }
     }
 
-    private boolean verifyDegreeTypeIsMasterDegree(Object[] arguments) {
+    private boolean verifyDegreeTypeIsMasterDegree(DegreeType degreeType) {
         boolean isNonMaster = false;
 
-        if (arguments != null && arguments[1] != null) {
-            isNonMaster = DEGREE_TYPE.equals(arguments[1]);
+        if (degreeType != null) {
+            isNonMaster = DEGREE_TYPE.equals(degreeType);
         }
 
         return isNonMaster;
     }
 
-    private boolean verifyStudentIsFromMasterDegree(Object[] arguments) {
-        Object object = arguments[0];
+    private boolean verifyStudentIsFromMasterDegree(Object object) {
         DegreeType degreeType = null;
         if (object instanceof Registration) {
             Registration registration = (Registration) object;
@@ -71,5 +74,16 @@ public class MasterDegreeEnrollmentWithoutRulesAuthorizationFilter extends Autho
 
         return (degreeType != null && (degreeType.equals(DegreeType.MASTER_DEGREE) || degreeType
                 .equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA)));
+    }
+
+    public void execute(Object registration, DegreeType degreeType) throws NotAuthorizedException {
+        IUserView id = AccessControl.getUserView();
+        String messageException = hasPrevilege(id, registration, degreeType);
+
+        if ((id != null && id.getRoleTypes() != null && !containsRoleType(id.getRoleTypes()))
+                || (id != null && id.getRoleTypes() != null && messageException != null) || (id == null)
+                || (id.getRoleTypes() == null)) {
+            throw new NotAuthorizedException(messageException);
+        }
     }
 }

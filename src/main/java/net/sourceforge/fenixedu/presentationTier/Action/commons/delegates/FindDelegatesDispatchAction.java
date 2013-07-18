@@ -8,7 +8,6 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchParameters;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchPersonPredicate;
@@ -122,13 +121,7 @@ public class FindDelegatesDispatchAction extends FenixDispatchAction {
 
         Object[] args = { searchParameters, predicate };
 
-        CollectionPager<Person> result = null;
-        try {
-            result = (CollectionPager<Person>) executeService("SearchPerson", args);
-
-        } catch (FenixServiceException e) {
-            addActionMessage(request, "error.delegates.searchDelegates.impossibleToFindDelegate", e.getMessage());
-        }
+        CollectionPager<Person> result = SearchPerson.runSearchPerson(searchParameters, predicate);
 
         List<DelegateSearchBean> delegatesFound = new ArrayList<DelegateSearchBean>();
         if (result == null) {

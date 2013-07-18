@@ -6,7 +6,6 @@ import java.io.InputStream;
 import java.util.Collection;
 import java.util.Collections;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.spaceManager.CreateBlueprintSubmissionBean;
 import net.sourceforge.fenixedu.domain.Person;
@@ -23,7 +22,7 @@ import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 
-public abstract class BlueprintVersionManagmentService extends FenixService {
+public abstract class BlueprintVersionManagmentService {
 
     protected Space getSpace(CreateBlueprintSubmissionBean blueprintSubmissionBean) throws FenixServiceException {
         final SpaceInformation spaceInformation = blueprintSubmissionBean.getSpaceInformation();
