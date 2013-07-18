@@ -8,9 +8,10 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.CreateSummary;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteSummary;
 import net.sourceforge.fenixedu.dataTransferObject.ShowSummariesBean;
 import net.sourceforge.fenixedu.dataTransferObject.ShowSummariesBean.ListSummaryType;
 import net.sourceforge.fenixedu.dataTransferObject.ShowSummariesBean.SummariesOrder;
@@ -246,28 +247,26 @@ public class SummariesManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward createSummary(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         final IViewState viewState = RenderUtils.getViewState();
         SummariesManagementBean bean = (SummariesManagementBean) viewState.getMetaObject().getObject();
         readAndSaveTeacher(bean, (DynaActionForm) form, request, mapping);
 
-        String service = "CreateSummary";
-        if (bean.getSummary() != null) {
-            service = "EditSummary";
-        }
-
         if (bean.getTaught() == false) {
             bean.setTitle(new MultiLanguageString("Not Taught."));
         }
 
-        final Object args[] = { bean };
         try {
-            executeService(service, args);
+            if (bean.getSummary() == null) {
+                CreateSummary.runCreateSummary(bean);
+            } else {
+                CreateSummary.runEditSummary(bean);
+            }
         } catch (DomainException e) {
             addActionMessage(request, e.getMessage());
             return goToSummaryManagementPageAgain(mapping, request, (DynaActionForm) form, bean);
-        } catch (NotAuthorizedFilterException e) {
+        } catch (NotAuthorizedException e) {
             addActionMessage(request, e.getMessage());
             return goToSummaryManagementPageAgain(mapping, request, (DynaActionForm) form, bean);
         }
@@ -276,20 +275,19 @@ public class SummariesManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward createSummaryAndNew(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         final IViewState viewState = RenderUtils.getViewState();
         SummariesManagementBean bean = (SummariesManagementBean) viewState.getMetaObject().getObject();
         readAndSaveTeacher(bean, (DynaActionForm) form, request, mapping);
 
-        final Object args[] = { bean };
         try {
-            executeService("CreateSummary", args);
+            CreateSummary.runCreateSummary(bean);
 
         } catch (DomainException e) {
             addActionMessage(request, e.getMessage());
             return goToSummaryManagementPageAgain(mapping, request, (DynaActionForm) form, bean);
-        } catch (NotAuthorizedFilterException e) {
+        } catch (NotAuthorizedException e) {
             addActionMessage(request, e.getMessage());
             return goToSummaryManagementPageAgain(mapping, request, (DynaActionForm) form, bean);
         }
@@ -299,19 +297,18 @@ public class SummariesManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward createSummaryAndSame(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         final IViewState viewState = RenderUtils.getViewState();
         SummariesManagementBean bean = (SummariesManagementBean) viewState.getMetaObject().getObject();
         readAndSaveTeacher(bean, (DynaActionForm) form, request, mapping);
 
-        final Object args[] = { bean };
         try {
-            executeService("CreateSummary", args);
+            CreateSummary.runCreateSummary(bean);
         } catch (DomainException e) {
             addActionMessage(request, e.getMessage());
             return goToSummaryManagementPageAgain(mapping, request, (DynaActionForm) form, bean);
-        } catch (NotAuthorizedFilterException e) {
+        } catch (NotAuthorizedException e) {
             addActionMessage(request, e.getMessage());
             return goToSummaryManagementPageAgain(mapping, request, (DynaActionForm) form, bean);
         }
@@ -334,7 +331,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward prepareEditSummary(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         Professorship teacherLogged = ((Professorship) request.getAttribute("loggedTeacherProfessorship"));
         DynaActionForm dynaActionForm = (DynaActionForm) form;
@@ -363,19 +360,18 @@ public class SummariesManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward deleteSummary(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         Summary summary = getSummaryFromParameter(request);
         Professorship professorshipLogged = (Professorship) request.getAttribute("loggedTeacherProfessorship");
         ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
 
-        final Object args[] = { executionCourse, summary, professorshipLogged };
         try {
-            executeService("DeleteSummary", args);
+            DeleteSummary.runDeleteSummary(executionCourse, summary, professorshipLogged);
         } catch (DomainException e) {
             addActionMessage(request, e.getMessage());
             return prepareShowSummaries(mapping, form, request, response);
-        } catch (NotAuthorizedFilterException e) {
+        } catch (NotAuthorizedException e) {
             addActionMessage(request, e.getMessage());
             return prepareShowSummaries(mapping, form, request, response);
         }
@@ -555,7 +551,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward createComplexSummary(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         SummariesManagementBean summaryBean = getSummariesManagementBean();
         readAndSaveTeacher(summaryBean, (DynaActionForm) form, request, mapping);
@@ -572,14 +568,13 @@ public class SummariesManagementDA extends FenixDispatchAction {
                 summaryBean.setTitle(new MultiLanguageString("Not Taught."));
             }
 
-            final Object args[] = { summaryBean };
             try {
-                executeService("CreateSummary", args);
+                CreateSummary.runCreateSummary(summaryBean);
 
             } catch (DomainException e) {
                 return returnToCreateComplexSummary(mapping, form, request, summaryBean, e);
 
-            } catch (NotAuthorizedFilterException e) {
+            } catch (NotAuthorizedException e) {
                 return returnToCreateComplexSummary(mapping, form, request, summaryBean, e);
             }
         }

@@ -8,10 +8,10 @@ import java.util.Map;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
 
-public class ExternalUnitAutoCompleteProvider implements AutoCompleteProvider {
+public class ExternalUnitAutoCompleteProvider implements AutoCompleteProvider<Unit> {
 
     @Override
-    public Collection getSearchResults(Map<String, String> argsMap, String value, int maxCount) {
+    public Collection<Unit> getSearchResults(Map<String, String> argsMap, String value, int maxCount) {
         final List<Unit> result = new ArrayList<Unit>();
         for (final UnitName unitName : UnitName.findExternalUnit(value, maxCount)) {
             final Unit unit = unitName.getUnit();

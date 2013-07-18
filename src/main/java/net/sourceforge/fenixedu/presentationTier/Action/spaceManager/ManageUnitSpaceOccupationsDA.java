@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.spaceManager;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.space.DeleteUnitSpaceOccupation;
 import net.sourceforge.fenixedu.dataTransferObject.parking.SearchPartyBean;
@@ -36,14 +35,14 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 public class ManageUnitSpaceOccupationsDA extends FenixDispatchAction {
 
     public ActionForward prepareManageUnitSpaceOccupations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         readAndSetAllAttributes(request);
         return mapping.findForward("prepareManageUnitSpaceOccupations");
     }
 
     public ActionForward prepareManageUnitOccupationInterval(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
         setSpaceInformation(request, spaceInformation);
@@ -53,7 +52,7 @@ public class ManageUnitSpaceOccupationsDA extends FenixDispatchAction {
     }
 
     public ActionForward prepareAddExternalUnit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
         setSpaceInformation(request, spaceInformation);
@@ -69,7 +68,7 @@ public class ManageUnitSpaceOccupationsDA extends FenixDispatchAction {
     }
 
     public ActionForward deleteUnitSpaceOccupation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         UnitSpaceOccupation unitSpaceOccupation = getUnitSpaceOccupation(request);
 
@@ -83,7 +82,7 @@ public class ManageUnitSpaceOccupationsDA extends FenixDispatchAction {
     }
 
     public ActionForward prepareEditUnitSpaceOccupation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
         setSpaceInformation(request, spaceInformation);
@@ -101,7 +100,7 @@ public class ManageUnitSpaceOccupationsDA extends FenixDispatchAction {
         return rootDomainObject.readSpaceInformationByOID(spaceInformationID);
     }
 
-    private void readAndSetAllAttributes(HttpServletRequest request) throws FenixFilterException, FenixServiceException {
+    private void readAndSetAllAttributes(HttpServletRequest request) throws  FenixServiceException {
 
         SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
         request.setAttribute("selectedSpaceInformation", spaceInformation);

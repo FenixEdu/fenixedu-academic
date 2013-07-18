@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.I
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ManualBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.OtherPublicationBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ProceedingsBean;
+import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.TechnicalReportBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ThesisBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.bibtex.BibtexParticipatorBean;
@@ -18,10 +19,11 @@ import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.b
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
 import net.sourceforge.fenixedu.util.researcher.ResearchResultMetaDataManager;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ImportBibtexPublication extends ResultPublicationService {
 
-    public ResearchResultPublication run(Person personImporting, BookBean bean, BibtexPublicationBean bibtexPublicationBean)
+    protected ResearchResultPublication run(Person personImporting, BookBean bean, BibtexPublicationBean bibtexPublicationBean)
             throws FenixServiceException {
         if (bean == null) {
             throw new NullPointerException();
@@ -36,7 +38,7 @@ public class ImportBibtexPublication extends ResultPublicationService {
         return (ResearchResultPublication) ResearchResultMetaDataManager.addDefaultDocument(publication);
     }
 
-    public ResearchResultPublication run(Person personImporting, BookPartBean bean, BibtexPublicationBean bibtexPublicationBean)
+    protected ResearchResultPublication run(Person personImporting, BookPartBean bean, BibtexPublicationBean bibtexPublicationBean)
             throws FenixServiceException {
         if (bean == null) {
             throw new NullPointerException();
@@ -51,7 +53,7 @@ public class ImportBibtexPublication extends ResultPublicationService {
         return (ResearchResultPublication) ResearchResultMetaDataManager.addDefaultDocument(publication);
     }
 
-    public ResearchResultPublication run(Person personImporting, ArticleBean bean, BibtexPublicationBean bibtexPublicationBean)
+    protected ResearchResultPublication run(Person personImporting, ArticleBean bean, BibtexPublicationBean bibtexPublicationBean)
             throws FenixServiceException {
         if (bean == null) {
             throw new NullPointerException();
@@ -65,7 +67,7 @@ public class ImportBibtexPublication extends ResultPublicationService {
         return (ResearchResultPublication) ResearchResultMetaDataManager.addDefaultDocument(publication);
     }
 
-    public ResearchResultPublication run(Person personImporting, InproceedingsBean bean,
+    protected ResearchResultPublication run(Person personImporting, InproceedingsBean bean,
             BibtexPublicationBean bibtexPublicationBean) throws FenixServiceException {
         if (bean == null) {
             throw new NullPointerException();
@@ -80,8 +82,8 @@ public class ImportBibtexPublication extends ResultPublicationService {
         return (ResearchResultPublication) ResearchResultMetaDataManager.addDefaultDocument(publication);
     }
 
-    public ResearchResultPublication run(Person personImporting, ProceedingsBean bean, BibtexPublicationBean bibtexPublicationBean)
-            throws FenixServiceException {
+    protected ResearchResultPublication run(Person personImporting, ProceedingsBean bean,
+            BibtexPublicationBean bibtexPublicationBean) throws FenixServiceException {
         if (bean == null) {
             throw new NullPointerException();
         }
@@ -94,7 +96,7 @@ public class ImportBibtexPublication extends ResultPublicationService {
         return (ResearchResultPublication) ResearchResultMetaDataManager.addDefaultDocument(publication);
     }
 
-    public ResearchResultPublication run(Person personImporting, ThesisBean bean, BibtexPublicationBean bibtexPublicationBean)
+    protected ResearchResultPublication run(Person personImporting, ThesisBean bean, BibtexPublicationBean bibtexPublicationBean)
             throws FenixServiceException {
         if (bean == null) {
             throw new NullPointerException();
@@ -108,7 +110,7 @@ public class ImportBibtexPublication extends ResultPublicationService {
         return (ResearchResultPublication) ResearchResultMetaDataManager.addDefaultDocument(publication);
     }
 
-    public ResearchResultPublication run(Person personImporting, ManualBean bean, BibtexPublicationBean bibtexPublicationBean)
+    protected ResearchResultPublication run(Person personImporting, ManualBean bean, BibtexPublicationBean bibtexPublicationBean)
             throws FenixServiceException {
         if (bean == null) {
             throw new NullPointerException();
@@ -122,7 +124,7 @@ public class ImportBibtexPublication extends ResultPublicationService {
         return (ResearchResultPublication) ResearchResultMetaDataManager.addDefaultDocument(publication);
     }
 
-    public ResearchResultPublication run(Person personImporting, TechnicalReportBean bean,
+    protected ResearchResultPublication run(Person personImporting, TechnicalReportBean bean,
             BibtexPublicationBean bibtexPublicationBean) throws FenixServiceException {
         if (bean == null) {
             throw new NullPointerException();
@@ -136,7 +138,7 @@ public class ImportBibtexPublication extends ResultPublicationService {
         return (ResearchResultPublication) ResearchResultMetaDataManager.addDefaultDocument(publication);
     }
 
-    public ResearchResultPublication run(Person personImporting, OtherPublicationBean bean,
+    protected ResearchResultPublication run(Person personImporting, OtherPublicationBean bean,
             BibtexPublicationBean bibtexPublicationBean) throws FenixServiceException {
         if (bean == null) {
             throw new NullPointerException();
@@ -188,4 +190,41 @@ public class ImportBibtexPublication extends ResultPublicationService {
         throw new FenixServiceException("error.importBibtex.personImportingNotInParticipants");
     }
 
+    // Service Invokers migrated from Berserk
+
+    private static final ImportBibtexPublication serviceInstance = new ImportBibtexPublication();
+
+    @Service
+    public static ResearchResultPublication runImportBibtexPublication(Person personImporting, BookBean bean,
+            BibtexPublicationBean bibtexPublicationBean) throws FenixServiceException {
+        return serviceInstance.run(personImporting, bean, bibtexPublicationBean);
+    }
+
+    @Service
+    public static ResearchResultPublication runImportBibtexPublication(Person person,
+            ResultPublicationBean currentPublicationBean, BibtexPublicationBean currentBibtexPublication)
+            throws FenixServiceException {
+        if (currentPublicationBean instanceof BookBean) {
+            return serviceInstance.run(person, (BookBean) currentPublicationBean, currentBibtexPublication);
+        } else if (currentPublicationBean instanceof BookPartBean) {
+            return serviceInstance.run(person, (BookPartBean) currentPublicationBean, currentBibtexPublication);
+        } else if (currentPublicationBean instanceof ArticleBean) {
+            return serviceInstance.run(person, (ArticleBean) currentPublicationBean, currentBibtexPublication);
+        } else if (currentPublicationBean instanceof InproceedingsBean) {
+            return serviceInstance.run(person, (InproceedingsBean) currentPublicationBean, currentBibtexPublication);
+        } else if (currentPublicationBean instanceof ProceedingsBean) {
+            return serviceInstance.run(person, (ProceedingsBean) currentPublicationBean, currentBibtexPublication);
+        } else if (currentPublicationBean instanceof ThesisBean) {
+            return serviceInstance.run(person, (ThesisBean) currentPublicationBean, currentBibtexPublication);
+        } else if (currentPublicationBean instanceof ManualBean) {
+            return serviceInstance.run(person, (ManualBean) currentPublicationBean, currentBibtexPublication);
+        } else if (currentPublicationBean instanceof TechnicalReportBean) {
+            return serviceInstance.run(person, (TechnicalReportBean) currentPublicationBean, currentBibtexPublication);
+        } else if (currentPublicationBean instanceof OtherPublicationBean) {
+            return serviceInstance.run(person, (OtherPublicationBean) currentPublicationBean, currentBibtexPublication);
+        } else {
+            throw new UnsupportedOperationException("Sorry, I don't know how to handle "
+                    + currentPublicationBean.getClass().getSimpleName());
+        }
+    }
 }

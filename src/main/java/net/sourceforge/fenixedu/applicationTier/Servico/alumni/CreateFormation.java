@@ -5,14 +5,15 @@ import java.util.ArrayList;
 import net.sourceforge.fenixedu.dataTransferObject.alumni.formation.AlumniFormation;
 import net.sourceforge.fenixedu.domain.Alumni;
 import net.sourceforge.fenixedu.domain.Formation;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateFormation extends FormationManagement {
 
-    public void run(final Alumni alumni, final AlumniFormation formation) {
+    protected void run(final Alumni alumni, final AlumniFormation formation) {
         createAlumniFormation(alumni, formation);
     }
 
-    public void run(final Alumni alumni, final ArrayList<AlumniFormation> formationList) {
+    protected void run(final Alumni alumni, final ArrayList<AlumniFormation> formationList) {
         for (AlumniFormation formation : formationList) {
             createAlumniFormation(alumni, formation);
         }
@@ -24,6 +25,15 @@ public class CreateFormation extends FormationManagement {
                 formation.getEducationArea(), formation.getFormationBeginYear(), formation.getFormationEndYear(),
                 formation.getFormationCredits(), formation.getFormationHours(), getFormationInstitution(formation),
                 formation.getParentInstitution(), formation.getInstitutionType(), formation.getCountryUnit());
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final CreateFormation serviceInstance = new CreateFormation();
+
+    @Service
+    public static void runCreateFormation(Alumni alumni, AlumniFormation formation) {
+        serviceInstance.run(alumni, formation);
     }
 
 }

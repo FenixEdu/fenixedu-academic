@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.SetPersonRoles;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson;
@@ -102,15 +101,15 @@ public class ManageRolesDA extends FenixDispatchAction {
         return prepareAddRoleToPerson(mapping, form, request, response);
     }
 
-    private Person getPerson(final String username) throws FenixFilterException, FenixServiceException {
+    private Person getPerson(final String username) throws  FenixServiceException {
         return getPerson(username, "");
     }
 
-    private Person getPerson(final DynaActionForm dynaActionForm) throws FenixFilterException, FenixServiceException {
+    private Person getPerson(final DynaActionForm dynaActionForm) throws  FenixServiceException {
         return getPerson(dynaActionForm.getString("username"), dynaActionForm.getString("documentIdNumber"));
     }
 
-    private Person getPerson(final String username, final String documentIdNumber) throws FenixFilterException,
+    private Person getPerson(final String username, final String documentIdNumber) throws 
             FenixServiceException {
         final SearchPerson.SearchParameters parameters =
                 new SearchParameters(null, null, username, documentIdNumber, null, null, null, null, null, null, null, null,
@@ -118,7 +117,7 @@ public class ManageRolesDA extends FenixDispatchAction {
         final SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(parameters);
 
         final Collection<Person> persons =
-                ((CollectionPager<Person>) executeService("SearchPerson", new Object[] { parameters, predicate }))
+                ((CollectionPager<Person>) SearchPerson.runSearchPerson( parameters, predicate ))
                         .getCollection();
 
         return persons.isEmpty() ? null : persons.iterator().next();
@@ -141,10 +140,10 @@ public class ManageRolesDA extends FenixDispatchAction {
      * Prepare information to show existing execution periods and working areas.
      * 
      * @throws FenixServiceException
-     * @throws FenixFilterException
+     * @
      */
     public ActionForward setPersonRoles(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         DynaActionForm rolesForm = (DynaActionForm) form;
         String[] roleOIDsAsStrings = (String[]) rolesForm.get("roleOIDs");

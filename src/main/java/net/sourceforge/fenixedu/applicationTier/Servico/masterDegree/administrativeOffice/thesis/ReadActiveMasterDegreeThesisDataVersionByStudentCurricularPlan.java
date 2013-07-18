@@ -1,12 +1,13 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.thesis;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeThesisDataVersion;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeThesisDataVersionWithGuidersAndRespAndThesis;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
@@ -17,7 +18,7 @@ import pt.ist.fenixWebFramework.services.Service;
  *         (naat@mega.ist.utl.pt)
  * 
  */
-public class ReadActiveMasterDegreeThesisDataVersionByStudentCurricularPlan extends FenixService {
+public class ReadActiveMasterDegreeThesisDataVersionByStudentCurricularPlan {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
@@ -26,7 +27,7 @@ public class ReadActiveMasterDegreeThesisDataVersionByStudentCurricularPlan exte
         InfoMasterDegreeThesisDataVersion infoMasterDegreeThesisDataVersion = null;
 
         StudentCurricularPlan studentCurricularPlan =
-                rootDomainObject.readStudentCurricularPlanByOID(infoStudentCurricularPlan.getIdInternal());
+                RootDomainObject.getInstance().readStudentCurricularPlanByOID(infoStudentCurricularPlan.getIdInternal());
 
         MasterDegreeThesisDataVersion masterDegreeThesisDataVersion =
                 studentCurricularPlan.readActiveMasterDegreeThesisDataVersion();

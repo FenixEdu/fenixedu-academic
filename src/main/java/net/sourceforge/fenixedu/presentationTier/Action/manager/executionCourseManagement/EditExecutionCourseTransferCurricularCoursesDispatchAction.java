@@ -11,7 +11,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurricularCourseByID;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionCourseByOID;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -57,7 +56,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 public class EditExecutionCourseTransferCurricularCoursesDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareTransferCurricularCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException, FenixFilterException {
+            HttpServletResponse response) throws FenixServiceException {
 
         Integer executionCourseId = Integer.valueOf(RequestUtils.getAndSetStringToRequest(request, "executionCourseId"));
         Integer curricularCourseId = Integer.valueOf(RequestUtils.getAndSetStringToRequest(request, "curricularCourseId"));
@@ -85,7 +84,7 @@ public class EditExecutionCourseTransferCurricularCoursesDispatchAction extends 
     }
 
     public ActionForward selectExecutionDegree(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException, FenixFilterException {
+            HttpServletResponse response) throws FenixServiceException {
 
         DynaActionForm dynaActionForm = (DynaActionForm) form;
 
@@ -112,7 +111,7 @@ public class EditExecutionCourseTransferCurricularCoursesDispatchAction extends 
     }
 
     public ActionForward transferCurricularCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException, FenixFilterException {
+            HttpServletResponse response) throws FenixServiceException {
 
         DynaActionForm dynaActionForm = (DynaActionForm) form;
 

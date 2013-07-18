@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.UnitBoardPermittedGroupType;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
@@ -210,7 +209,7 @@ public class WebSiteAnnouncementManagement extends AnnouncementManagement {
         return showStickyAnnoucements(mapping, form, request, response);
     }
 
-    private void changeOrder(AnnouncementBoard board, HttpServletRequest request, int direction) throws FenixFilterException,
+    private void changeOrder(AnnouncementBoard board, HttpServletRequest request, int direction) throws 
             FenixServiceException {
         Integer oid = Integer.parseInt(request.getParameter("oid"));
 
@@ -282,7 +281,7 @@ public class WebSiteAnnouncementManagement extends AnnouncementManagement {
     }
 
     private List<Announcement> getOrderedStickies(AnnouncementBoard board, HttpServletRequest request)
-            throws FenixFilterException, FenixServiceException {
+            throws  FenixServiceException {
         return super.getStickyAnnouncements(board, request);
 
     }

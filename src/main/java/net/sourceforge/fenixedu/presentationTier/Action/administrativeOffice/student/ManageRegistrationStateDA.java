@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.st
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationStateBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -42,7 +41,7 @@ public class ManageRegistrationStateDA extends FenixDispatchAction {
     }
 
     public ActionForward createNewState(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         try {
             final RegistrationStateCreator creator = (RegistrationStateCreator) getFactoryObject();
@@ -63,7 +62,7 @@ public class ManageRegistrationStateDA extends FenixDispatchAction {
     }
 
     public ActionForward deleteState(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         try {
             executeFactoryMethod(new RegistrationStateDeleter(Integer.valueOf(request.getParameter("registrationStateId"))));

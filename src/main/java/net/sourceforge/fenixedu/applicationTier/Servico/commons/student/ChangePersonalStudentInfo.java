@@ -12,23 +12,24 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.commons.student;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPersonEditor;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class ChangePersonalStudentInfo extends FenixService {
+public class ChangePersonalStudentInfo {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
     public static InfoPerson run(InfoPersonEditor newInfoPerson) throws FenixServiceException {
 
-        final Person person = (Person) rootDomainObject.readPartyByOID(newInfoPerson.getIdInternal());
+        final Person person = (Person) RootDomainObject.getInstance().readPartyByOID(newInfoPerson.getIdInternal());
         if (person == null) {
             throw new ExcepcaoInexistente("error.changePersonalStudentInfo.noPerson");
         }

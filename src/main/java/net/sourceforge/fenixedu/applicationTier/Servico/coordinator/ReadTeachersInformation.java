@@ -7,19 +7,23 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Filtro.CoordinatorAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.gep.GEPAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadTeacherInformation;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoSiteTeacherInformation;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
+import pt.ist.fenixWebFramework.services.Service;
 
-public class ReadTeachersInformation extends FenixService {
+public class ReadTeachersInformation {
 
-    public List run(Integer executionDegreeId, Boolean basic, String executionYearString) throws FenixServiceException {
+    @Service
+    public static List run(Integer executionDegreeId, Boolean basic, String executionYearString) {
 
         List<Professorship> professorships = null;
         ExecutionYear executionYear = null;
@@ -45,7 +49,7 @@ public class ReadTeachersInformation extends FenixService {
                                 executionDegressExecutionYear, basic);
             }
         } else {
-            ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);
+            ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeId);
 
             if (basic == null) {
                 professorships =
@@ -87,12 +91,32 @@ public class ReadTeachersInformation extends FenixService {
 
     }
 
-    private List<DegreeCurricularPlan> getDegreeCurricularPlans(final List<ExecutionDegree> executionDegrees) {
+    private static List<DegreeCurricularPlan> getDegreeCurricularPlans(final List<ExecutionDegree> executionDegrees) {
         final List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
         for (final ExecutionDegree executionDegree : executionDegrees) {
             result.add(executionDegree.getDegreeCurricularPlan());
         }
         return result;
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final ReadTeachersInformation serviceInstance = new ReadTeachersInformation();
+
+    @Service
+    public static List runReadTeachersInformation(Integer executionDegreeId, Boolean basic, String executionYearString)
+            throws NotAuthorizedException {
+        try {
+            CoordinatorAuthorizationFilter.instance.execute();
+            return serviceInstance.run(executionDegreeId, basic, executionYearString);
+        } catch (NotAuthorizedException ex1) {
+            try {
+                GEPAuthorizationFilter.instance.execute();
+                return serviceInstance.run(executionDegreeId, basic, executionYearString);
+            } catch (NotAuthorizedException ex2) {
+                throw ex2;
+            }
+        }
     }
 
 }

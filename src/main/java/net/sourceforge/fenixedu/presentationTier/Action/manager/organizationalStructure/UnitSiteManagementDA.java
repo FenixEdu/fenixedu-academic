@@ -5,7 +5,6 @@ import java.util.Collections;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.CreateUnitSite;
 import net.sourceforge.fenixedu.dataTransferObject.VariantBean;
@@ -54,7 +53,7 @@ public class UnitSiteManagementDA extends CustomUnitSiteManagementDA {
     }
 
     public ActionForward createSite(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         Unit unit = getUnit(request);
 
         try {

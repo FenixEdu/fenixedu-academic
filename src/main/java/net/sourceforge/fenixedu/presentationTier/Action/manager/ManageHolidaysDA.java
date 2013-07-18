@@ -5,7 +5,6 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteHoliday;
 import net.sourceforge.fenixedu.domain.Holiday;
@@ -25,13 +24,13 @@ public class ManageHolidaysDA extends FenixDispatchAction {
     }
 
     public ActionForward create(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixFilterException, FenixServiceException {
+            throws  FenixServiceException {
         executeFactoryMethod();
         return prepare(mapping, form, request, response);
     }
 
     public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixFilterException, FenixServiceException {
+            throws  FenixServiceException {
         final String holidayIDString = request.getParameter("holidayID");
         if (holidayIDString != null && StringUtils.isNumeric(holidayIDString)) {
             final Integer holidayID = Integer.valueOf(holidayIDString);

@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetEnrolmentEvaluationBean;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementCreateBean;
@@ -124,7 +123,7 @@ public class MarkSheetCreateDispatchAction extends MarkSheetDispatchAction {
     }
 
     public ActionForward createMarkSheetStepTwo(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         MarkSheetManagementCreateBean createBean =
                 (MarkSheetManagementCreateBean) RenderUtils.getViewState("edit-invisible").getMetaObject().getObject();
@@ -147,7 +146,7 @@ public class MarkSheetCreateDispatchAction extends MarkSheetDispatchAction {
     }
 
     public ActionForward createMarkSheetStepTwoInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         /*
          * - This method is used when a validation error occurs. Instead of
          * creating a new bean we use the existing one. - If we dont't use this

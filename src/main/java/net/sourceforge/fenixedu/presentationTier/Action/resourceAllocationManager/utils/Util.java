@@ -5,7 +5,6 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadBuildings;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBuilding;
@@ -21,7 +20,7 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class Util {
 
-    public static List<LabelValueBean> readExistingBuldings(String name, String value) throws FenixFilterException,
+    public static List<LabelValueBean> readExistingBuldings(String name, String value) throws 
             FenixServiceException {
         List<LabelValueBean> edificios = new ArrayList<LabelValueBean>();
 

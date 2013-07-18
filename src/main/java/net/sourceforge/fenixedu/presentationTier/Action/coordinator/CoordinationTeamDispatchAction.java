@@ -8,16 +8,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.AddCoordinator;
+import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.ReadCoordinationResponsibility;
+import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.ReadCoordinationTeam;
+import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.RemoveCoordinators;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.commons.ReadExecutionDegreesByDegreeCurricularPlanID;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -43,7 +47,7 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward chooseExecutionYear(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixServiceException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException, FenixServiceException {
 
         IUserView userView = UserView.getUser();
 
@@ -53,8 +57,9 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
             request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
         }
 
-        Object[] args = { degreeCurricularPlanID };
-        List executionDegrees = (List) ServiceUtils.executeService("ReadExecutionDegreesByDegreeCurricularPlanID", args);
+        List<InfoExecutionDegree> executionDegrees =
+                ReadExecutionDegreesByDegreeCurricularPlanID
+                        .runReadExecutionDegreesByDegreeCurricularPlanID(degreeCurricularPlanID);
 
         request.setAttribute("executionDegrees", executionDegrees);
 
@@ -62,7 +67,7 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward viewTeam(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixActionException, FenixServiceException, FenixFilterException {
+            throws FenixActionException, FenixServiceException {
 
         IUserView userView = getUserView(request);
 
@@ -79,8 +84,8 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
         Object[] args = { executionDegreeID };
         List coordinators = new ArrayList();
         try {
-            coordinators = (List) ServiceUtils.executeService("ReadCoordinationTeam", args);
-        } catch (NotAuthorizedFilterException e) {
+            coordinators = ReadCoordinationTeam.runReadCoordinationTeam(executionDegreeID);
+        } catch (NotAuthorizedException e) {
             actionErrors.add("error", new ActionError("noAuthorization"));
             saveErrors(request, actionErrors);
             return mapping.findForward("noAuthorization");
@@ -90,9 +95,8 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
             return mapping.findForward("noAuthorization");
         }
         Boolean result = Boolean.FALSE;
-        Object[] args1 = { executionDegreeID, userView };
         try {
-            result = (Boolean) ServiceUtils.executeService("ReadCoordinationResponsibility", args1);
+            result = ReadCoordinationResponsibility.runReadCoordinationResponsibility(executionDegreeID, userView);
         } catch (FenixServiceException e) {
             actionErrors.add("error", new ActionError(e.getMessage()));
             saveErrors(request, actionErrors);
@@ -105,7 +109,7 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward prepareAddCoordinator(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
         IUserView userView = getUserView(request);
 
         Integer degreeCurricularPlanID = new Integer(Integer.parseInt(request.getParameter("degreeCurricularPlanID")));
@@ -115,10 +119,8 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
         Integer infoExecutionDegreeId = new Integer(infoExecutionDegreeIdString);
         request.setAttribute("infoExecutionDegreeId", infoExecutionDegreeId);
         Boolean result = new Boolean(false);
-        Object[] args1 = { infoExecutionDegreeId, userView };
         try {
-            result = (Boolean) ServiceUtils.executeService("ReadCoordinationResponsibility", args1);
-
+            result = ReadCoordinationResponsibility.runReadCoordinationResponsibility(infoExecutionDegreeId, userView);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
@@ -130,16 +132,15 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward AddCoordinator(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
         IUserView userView = getUserView(request);
         DynaActionForm teacherForm = (DynaActionForm) form;
         String istUsername = new String((String) teacherForm.get("newCoordinatorIstUsername"));
         String infoExecutionDegreeIdString = request.getParameter("infoExecutionDegreeId");
         Integer infoExecutionDegreeId = new Integer(infoExecutionDegreeIdString);
         request.setAttribute("infoExecutionDegreeId", infoExecutionDegreeId);
-        Object[] args = { infoExecutionDegreeId, istUsername };
         try {
-            ServiceUtils.executeService("AddCoordinator", args);
+            AddCoordinator.runAddCoordinator(infoExecutionDegreeId, istUsername);
         } catch (NonExistingServiceException e) {
             ActionErrors actionErrors = new ActionErrors();
             actionErrors.add("unknownTeacher", new ActionError("error.nonExistingTeacher"));
@@ -167,19 +168,17 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward removeCoordinators(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixServiceException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException, FenixServiceException {
         IUserView userView = getUserView(request);
         DynaActionForm removeCoordinatorsForm = (DynaActionForm) form;
         Integer[] coordinatorsIds = (Integer[]) removeCoordinatorsForm.get("coordinatorsIds");
-        List coordinators = Arrays.asList(coordinatorsIds);
+        List<Integer> coordinators = Arrays.asList(coordinatorsIds);
 
         String infoExecutionDegreeIdString = request.getParameter("infoExecutionDegreeId");
         Integer infoExecutionDegreeId = new Integer(infoExecutionDegreeIdString);
         request.setAttribute("infoExecutionDegreeId", infoExecutionDegreeId);
-        Object[] args = { infoExecutionDegreeId, coordinators };
         try {
-            ServiceUtils.executeService("RemoveCoordinators", args);
-
+            RemoveCoordinators.runRemoveCoordinators(infoExecutionDegreeId, coordinators);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }

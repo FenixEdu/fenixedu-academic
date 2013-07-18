@@ -9,11 +9,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.EditDegreeCurricularPlan;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlanEditor;
@@ -26,7 +26,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActio
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidArgumentsActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.util.MarkType;
 
 import org.apache.struts.action.ActionForm;
@@ -72,7 +71,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
 
         IUserView userView = UserView.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
@@ -81,10 +80,8 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction 
 
         InfoDegreeCurricularPlan oldInfoDegreeCP = null;
 
-        Object args[] = { degreeCurricularPlanId };
-
         try {
-            oldInfoDegreeCP = (InfoDegreeCurricularPlan) ServiceUtils.executeService("ReadDegreeCurricularPlan", args);
+            oldInfoDegreeCP = ReadDegreeCurricularPlan.runReadDegreeCurricularPlan(degreeCurricularPlanId);
 
         } catch (NonExistingServiceException e) {
             throw new NonExistingActionException("message.nonExistingDegreeCurricularPlan", mapping.findForward("readDegree"));
@@ -137,7 +134,7 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction 
     }
 
     public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixActionException, FenixFilterException {
+            throws FenixActionException {
 
         IUserView userView = UserView.getUser();
         DynaActionForm dynaForm = (DynaValidatorForm) form;

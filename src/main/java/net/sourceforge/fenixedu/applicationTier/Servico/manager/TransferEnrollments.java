@@ -1,14 +1,15 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class TransferEnrollments extends FenixService {
+public class TransferEnrollments {
 
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
@@ -18,11 +19,11 @@ public class TransferEnrollments extends FenixService {
         if (destinationCurriculumGroupID != null) {
 
             CurriculumGroup curriculumGroup =
-                    (CurriculumGroup) rootDomainObject.readCurriculumModuleByOID(destinationCurriculumGroupID);
+                    (CurriculumGroup) RootDomainObject.getInstance().readCurriculumModuleByOID(destinationCurriculumGroupID);
             StudentCurricularPlan studentCurricularPlan = curriculumGroup.getStudentCurricularPlan();
 
             for (final Integer enrollmentIDToTransfer : enrollmentIDsToTransfer) {
-                Enrolment enrolment = (Enrolment) rootDomainObject.readCurriculumModuleByOID(enrollmentIDToTransfer);
+                Enrolment enrolment = (Enrolment) RootDomainObject.getInstance().readCurriculumModuleByOID(enrollmentIDToTransfer);
 
                 fixEnrolmentCurricularCourse(studentCurricularPlan, enrolment);
 
@@ -33,9 +34,9 @@ public class TransferEnrollments extends FenixService {
         } else {
 
             final StudentCurricularPlan studentCurricularPlan =
-                    rootDomainObject.readStudentCurricularPlanByOID(destinationStudentCurricularPlanId);
+                    RootDomainObject.getInstance().readStudentCurricularPlanByOID(destinationStudentCurricularPlanId);
             for (final Integer enrollmentIDToTransfer : enrollmentIDsToTransfer) {
-                final Enrolment enrollment = (Enrolment) rootDomainObject.readCurriculumModuleByOID(enrollmentIDToTransfer);
+                final Enrolment enrollment = (Enrolment) RootDomainObject.getInstance().readCurriculumModuleByOID(enrollmentIDToTransfer);
 
                 fixEnrolmentCurricularCourse(studentCurricularPlan, enrollment);
 

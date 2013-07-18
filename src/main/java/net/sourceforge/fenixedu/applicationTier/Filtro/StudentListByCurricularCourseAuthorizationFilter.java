@@ -6,20 +6,23 @@ import java.util.List;
 import java.util.ListIterator;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import pt.utl.ist.berserk.ServiceRequest;
-import pt.utl.ist.berserk.ServiceResponse;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
  * @author Joana Mota (jccm@rnl.ist.utl.pt)
  */
 public class StudentListByCurricularCourseAuthorizationFilter extends Filtro {
+
+    public static final StudentListByCurricularCourseAuthorizationFilter instance =
+            new StudentListByCurricularCourseAuthorizationFilter();
 
     /**
      * 
@@ -28,20 +31,12 @@ public class StudentListByCurricularCourseAuthorizationFilter extends Filtro {
         super();
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk
-     * .ServiceRequest, pt.utl.ist.berserk.ServiceResponse)
-     */
-    @Override
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-        IUserView id = (IUserView) request.getRequester();
+    public void execute(IUserView userView, Integer curricularCourseID, String executionYear) throws NotAuthorizedException {
+        IUserView id = AccessControl.getUserView();
         if ((id != null && id.getRoleTypes() != null && !containsRoleType(id.getRoleTypes()))
-                || (id != null && id.getRoleTypes() != null && !hasPrivilege(id, request.getServiceParameters().parametersArray()))
-                || (id == null) || (id.getRoleTypes() == null)) {
-            throw new NotAuthorizedFilterException();
+                || (id != null && id.getRoleTypes() != null && !hasPrivilege(id, curricularCourseID)) || (id == null)
+                || (id.getRoleTypes() == null)) {
+            throw new NotAuthorizedException();
         }
     }
 
@@ -61,14 +56,13 @@ public class StudentListByCurricularCourseAuthorizationFilter extends Filtro {
      * @param argumentos
      * @return
      */
-    private boolean hasPrivilege(IUserView id, Object[] arguments) {
-        Integer curricularCourseID = (Integer) arguments[1];
+    private boolean hasPrivilege(IUserView id, Integer curricularCourseID) {
 
         CurricularCourse curricularCourse = null;
 
         // Read The DegreeCurricularPlan
         try {
-            curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseID);
+            curricularCourse = (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(curricularCourseID);
         } catch (Exception e) {
             return false;
         }

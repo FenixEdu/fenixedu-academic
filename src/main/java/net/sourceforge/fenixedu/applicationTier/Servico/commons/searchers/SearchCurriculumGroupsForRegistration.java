@@ -3,16 +3,15 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers;
 import java.util.Collection;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.AutoCompleteSearchService;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
+import net.sourceforge.fenixedu.presentationTier.renderers.providers.AutoCompleteProvider;
 
-public class SearchCurriculumGroupsForRegistration extends FenixService implements AutoCompleteSearchService {
+public class SearchCurriculumGroupsForRegistration implements AutoCompleteProvider<CurriculumGroup> {
 
     @Override
-    public Collection<CurriculumGroup> run(Class type, String value, int limit, Map<String, String> arguments) {
-        return getRegistration(arguments).getAllCurriculumGroupsWithoutNoCourseGroupCurriculumGroups();
+    public Collection<CurriculumGroup> getSearchResults(Map<String, String> argsMap, String value, int maxCount) {
+        return getRegistration(argsMap).getAllCurriculumGroupsWithoutNoCourseGroupCurriculumGroups();
     }
 
     private Registration getRegistration(Map<String, String> arguments) {

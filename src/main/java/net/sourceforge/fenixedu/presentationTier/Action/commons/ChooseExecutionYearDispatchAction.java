@@ -7,8 +7,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.commons.ReadExecutionDegreesByDegreeCurricularPlanID;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.student.listings.ReadAllMasterDegrees;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.student.listings.ReadCPlanFromChosenMasterDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
@@ -16,9 +16,7 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
@@ -85,14 +83,9 @@ public class ChooseExecutionYearDispatchAction extends FenixDispatchAction {
         if (curricularPlanID == null) {
             curricularPlanID = (Integer) request.getAttribute("curricularPlanID");
         }
-        List executionYearList = null;
-        Object args[] = { curricularPlanID };
-        try {
-            executionYearList =
-                    (ArrayList) ServiceManagerServiceFactory.executeService("ReadExecutionDegreesByDegreeCurricularPlanID", args);
-        } catch (ExistingServiceException e) {
-            throw new ExistingActionException(e);
-        }
+        List<InfoExecutionDegree> executionYearList =
+                ReadExecutionDegreesByDegreeCurricularPlanID.runReadExecutionDegreesByDegreeCurricularPlanID(curricularPlanID);
+
         List executionYearsLabels = transformIntoLabels(executionYearList);
         request.setAttribute(PresentationConstants.EXECUTION_YEAR_LIST, executionYearsLabels);
         request.setAttribute(PresentationConstants.EXECUTION_DEGREE, curricularPlanID);

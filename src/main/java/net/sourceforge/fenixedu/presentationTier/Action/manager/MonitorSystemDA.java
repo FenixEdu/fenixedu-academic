@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -53,10 +52,10 @@ public class MonitorSystemDA extends FenixDispatchAction {
 
         IUserView userView = UserView.getUser();
 
-        SystemInfo systemInfoApplicationServer = ServiceManagerServiceFactory.getSystemInfo(userView);
+        SystemInfo systemInfoApplicationServer = new SystemInfo();
         request.setAttribute("systemInfoApplicationServer", systemInfoApplicationServer);
 
-        SystemInfo systemInfoWebContainer = ServiceManagerServiceFactory.getSystemInfo(userView);
+        SystemInfo systemInfoWebContainer = new SystemInfo();
         request.setAttribute("systemInfoWebContainer", systemInfoWebContainer);
 
         String useBarraAsAuth = PropertiesManager.getProperty("barra.as.authentication.broker");

@@ -1,11 +1,11 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class DeletePersistentGroup extends FenixService {
+public class DeletePersistentGroup {
 
     @Checked("RolePredicates.MANAGER_PREDICATE")
     @Service

@@ -7,29 +7,27 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.beanutils.PropertyUtils;
 
-import pt.ist.fenixframework.DomainObject;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
-public abstract class AbstractSearchObjects extends FenixService implements AutoCompleteSearchService {
+public abstract class AbstractSearchObjects<T> {
 
-    protected Collection process(Collection objects, String value, int limit, Map<String, String> arguments) {
-        List result;
+    protected Collection<T> process(Collection<T> objects, String value, int limit, Map<String, String> arguments) {
+        List<T> result;
 
         String slotName = arguments.get("slot");
 
         if (value == null) {
-            result = (List) objects;
+            result = (List<T>) objects;
         } else {
-            result = new ArrayList<DomainObject>();
+            result = new ArrayList<T>();
             String[] values = StringNormalizer.normalize(value).toLowerCase().split("\\p{Space}+");
 
-            outter: for (Object object : objects) {
+            outter: for (T object : objects) {
                 try {
                     String objectValue = (String) PropertyUtils.getProperty(object, slotName);
 

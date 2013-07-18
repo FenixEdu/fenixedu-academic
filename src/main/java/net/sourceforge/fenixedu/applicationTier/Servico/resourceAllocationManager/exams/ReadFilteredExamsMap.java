@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.PublishedExamsMapAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExamWithRoomOccupationsAndScopesWithCurricularCoursesWithDegreeAndSemesterAndYear;
@@ -22,14 +22,18 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import pt.ist.fenixWebFramework.services.Service;
 
-public class ReadFilteredExamsMap extends FenixService {
+public class ReadFilteredExamsMap {
 
     public class ExamsPeriodUndefined extends FenixServiceException {
         private static final long serialVersionUID = 1L;
     }
 
-    public InfoExamsMap run(InfoExecutionDegree infoExecutionDegree, List<Integer> curricularYears,
+    protected InfoExamsMap run(InfoExecutionDegree infoExecutionDegree, List<Integer> curricularYears,
             InfoExecutionPeriod infoExecutionPeriod) throws FenixServiceException {
 
         InfoExamsMap result = new InfoExamsMap();
@@ -37,7 +41,7 @@ public class ReadFilteredExamsMap extends FenixService {
         result.setInfoExecutionPeriod(infoExecutionPeriod);
         result.setCurricularYears(curricularYears);
 
-        ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
+        ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
 
         obtainExamSeasonInfo(result, infoExecutionPeriod.getSemester(), executionDegree);
 
@@ -46,6 +50,10 @@ public class ReadFilteredExamsMap extends FenixService {
         List<InfoExecutionCourse> infoExecutionCourses =
                 obtainInfoExecutionCourses(curricularYears, infoExecutionPeriod, executionDegree);
         result.setExecutionCourses(infoExecutionCourses);
+
+        if (!AccessControl.getUserView().hasRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER)) {
+            PublishedExamsMapAuthorizationFilter.execute(result);
+        }
 
         return result;
     }
@@ -80,7 +88,7 @@ public class ReadFilteredExamsMap extends FenixService {
     private List<InfoExecutionCourse> obtainInfoExecutionCourses(List<Integer> curricularYears,
             InfoExecutionPeriod infoExecutionPeriod, ExecutionDegree executionDegree) {
         List<InfoExecutionCourse> result = new ArrayList<InfoExecutionCourse>();
-        ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(infoExecutionPeriod.getIdInternal());
+        ExecutionSemester executionSemester = RootDomainObject.getInstance().readExecutionSemesterByOID(infoExecutionPeriod.getIdInternal());
         for (Integer curricularYear : curricularYears) {
             // Obtain list of execution courses
             List<ExecutionCourse> executionCourses =
@@ -114,7 +122,7 @@ public class ReadFilteredExamsMap extends FenixService {
                 CurricularCourse curricularCourse = degreeModuleScope.getCurricularCourse();
                 if (!checkedCurricularCourses.contains(curricularCourse)) {
                     checkedCurricularCourses.add(curricularCourse);
-                    ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
+                    ExecutionSemester executionSemester = RootDomainObject.getInstance().readExecutionSemesterByOID(executionPeriodId);
                     int numberEnroledStudentsInCurricularCourse =
                             curricularCourse.countEnrolmentsByExecutionPeriod(executionSemester);
                     numberOfStudentsForExam += numberEnroledStudentsInCurricularCourse;
@@ -135,4 +143,13 @@ public class ReadFilteredExamsMap extends FenixService {
         }
         return result;
     }
+    // Service Invokers migrated from Berserk
+
+    private static final ReadFilteredExamsMap serviceInstance = new ReadFilteredExamsMap();
+
+    @Service
+    public static InfoExamsMap runReadFilteredExamsMap(InfoExecutionDegree infoExecutionDegree, List<Integer> curricularYears, InfoExecutionPeriod infoExecutionPeriod) throws FenixServiceException  {
+        return serviceInstance.run(infoExecutionDegree, curricularYears, infoExecutionPeriod);
+    }
+
 }

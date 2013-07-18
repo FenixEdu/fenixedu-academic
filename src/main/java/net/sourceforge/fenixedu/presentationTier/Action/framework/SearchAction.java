@@ -10,21 +10,16 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionYears;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.mapping.framework.SearchActionMapping;
 
 import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -34,8 +29,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.util.LabelValueBean;
-
-import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * Example:
@@ -98,7 +91,7 @@ import pt.ist.fenixWebFramework.security.UserView;
  *       </pre>
  * 
  */
-public class SearchAction extends FenixDispatchAction {
+public abstract class SearchAction extends FenixDispatchAction {
 
     private Comparator defaultBeanComparator;
 
@@ -140,22 +133,26 @@ public class SearchAction extends FenixDispatchAction {
      */
     public ActionForward doSearch(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        SearchActionMapping searchActionMapping = (SearchActionMapping) mapping;
-        Comparator beanComparator = getDefaultBeanComparator(searchActionMapping);
-        return doSearch(searchActionMapping, form, request, response, beanComparator);
+        Comparator beanComparator = getDefaultBeanComparator();
+        return doSearch(mapping, form, request, response, beanComparator);
     }
 
-    private ActionForward doSearch(SearchActionMapping mapping, ActionForm form, HttpServletRequest request,
+    protected abstract Collection searchIt(ActionForm form, HttpServletRequest request) throws Exception;
+
+    protected abstract String getObjectAttribute();
+
+    protected abstract String getListAttribute();
+
+    protected abstract String getNotFoundMessageKey();
+
+    private ActionForward doSearch(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response, Comparator comparator) throws Exception {
-        String serviceName = mapping.getServiceName();
-        IUserView userView = UserView.getUser();
-        Object[] args = getSearchServiceArgs(request, form);
-        Collection result = (Collection) ServiceUtils.executeService(serviceName, args);
+        Collection result = searchIt(form, request);
         result = treateServiceResult(mapping, request, result);
         ActionForward actionForward = null;
         if (result.isEmpty()) {
             ActionErrors errors = new ActionErrors();
-            String notMessageKey = mapping.getNotFoundMessageKey();
+            String notMessageKey = getNotFoundMessageKey();
             ActionError error = new ActionError(notMessageKey);
             errors.add(notMessageKey, error);
             saveErrors(request, errors);
@@ -164,7 +161,7 @@ public class SearchAction extends FenixDispatchAction {
             Iterator iterator = result.iterator();
             while (iterator.hasNext()) {
                 Object object = iterator.next();
-                request.setAttribute(mapping.getObjectAttribute(), object);
+                request.setAttribute(getObjectAttribute(), object);
                 break;
             }
             actionForward = mapping.findForward("list-one");
@@ -178,10 +175,12 @@ public class SearchAction extends FenixDispatchAction {
         prepareFormConstants(mapping, request, form);
         materializeSearchCriteria(mapping, request, form);
         doAfterSearch(mapping, request, result);
-        request.setAttribute(mapping.getListAttribute(), result);
+        request.setAttribute(getListAttribute(), result);
 
         return actionForward;
     }
+
+    protected abstract String getDefaultSortBy();
 
     /**
      * After the execution of the service we may want to use the result for
@@ -191,7 +190,7 @@ public class SearchAction extends FenixDispatchAction {
      * @param request
      * @param result
      */
-    protected void doAfterSearch(SearchActionMapping mapping, HttpServletRequest request, Collection result) throws Exception {
+    protected void doAfterSearch(ActionMapping mapping, HttpServletRequest request, Collection result) throws Exception {
     }
 
     /**
@@ -202,7 +201,7 @@ public class SearchAction extends FenixDispatchAction {
      * @param request
      * @param result
      */
-    protected Collection treateServiceResult(SearchActionMapping mapping, HttpServletRequest request, Collection result)
+    protected Collection treateServiceResult(ActionMapping mapping, HttpServletRequest request, Collection result)
             throws Exception {
         return result;
     }
@@ -217,29 +216,18 @@ public class SearchAction extends FenixDispatchAction {
      * @param request
      * @param form
      */
-    protected void materializeSearchCriteria(SearchActionMapping mapping, HttpServletRequest request, ActionForm form)
-            throws Exception {
-    }
-
-    /**
-     * @param request
-     * @param form
-     * @return
-     */
-    protected Object[] getSearchServiceArgs(HttpServletRequest request, ActionForm form) throws Exception {
-        Map formProperties = BeanUtils.describe(form);
-        return new Object[] { formProperties };
+    protected void materializeSearchCriteria(ActionMapping mapping, HttpServletRequest request, ActionForm form) throws Exception {
     }
 
     /**
      * @param searchActionMapping
      * @return
      */
-    private Comparator getDefaultBeanComparator(SearchActionMapping searchActionMapping) {
+    private Comparator getDefaultBeanComparator() {
         if (!defaultComparatorInitialized.booleanValue()) {
             synchronized (defaultComparatorInitialized) {
                 if (!defaultComparatorInitialized.booleanValue()) {
-                    defaultBeanComparator = buildComparator(searchActionMapping.getDefaultSortBy());
+                    defaultBeanComparator = buildComparator(getDefaultSortBy());
                     defaultComparatorInitialized = Boolean.TRUE;
                 }
             }
@@ -280,14 +268,13 @@ public class SearchAction extends FenixDispatchAction {
      */
     public ActionForward sortBy(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        SearchActionMapping searchActionMapping = (SearchActionMapping) mapping;
         String sortBy = request.getParameter("sortBy");
         ActionForward actionForward = null;
         if (sortBy != null) {
             BeanComparator beanComparator = new BeanComparator(sortBy);
-            actionForward = doSearch(searchActionMapping, form, request, response, beanComparator);
+            actionForward = doSearch(mapping, form, request, response, beanComparator);
         } else {
-            actionForward = doSearch(searchActionMapping, form, request, response);
+            actionForward = doSearch(mapping, form, request, response);
         }
         return actionForward;
     }

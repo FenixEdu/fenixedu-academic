@@ -9,27 +9,30 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.utilTests.ParseQuestionException;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Susana Fernandes
  */
-public class AddStudentsToDistributedTest extends FenixService {
+public class AddStudentsToDistributedTest {
 
-    public void run(Integer executionCourseId, Integer distributedTestId, List<InfoStudent> infoStudentList, String contextPath)
+    protected void run(Integer executionCourseId, Integer distributedTestId, List<InfoStudent> infoStudentList, String contextPath)
             throws InvalidArgumentsServiceException {
         if (infoStudentList == null || infoStudentList.size() == 0) {
             return;
         }
-        DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
+        DistributedTest distributedTest = RootDomainObject.getInstance().readDistributedTestByOID(distributedTestId);
         if (distributedTest == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -54,7 +57,7 @@ public class AddStudentsToDistributedTest extends FenixService {
                 questionList.addAll(studentTestQuestionExample.getQuestion().getMetadata().getVisibleQuestions());
 
                 for (InfoStudent infoStudent : infoStudentList) {
-                    Registration registration = rootDomainObject.readRegistrationByOID(infoStudent.getIdInternal());
+                    Registration registration = RootDomainObject.getInstance().readRegistrationByOID(infoStudent.getIdInternal());
                     StudentTestQuestion studentTestQuestion = new StudentTestQuestion();
                     studentTestQuestion.setStudent(registration);
                     studentTestQuestion.setDistributedTest(distributedTest);
@@ -95,6 +98,18 @@ public class AddStudentsToDistributedTest extends FenixService {
         }
         return question.getSubQuestions() == null || question.getSubQuestions().size() == 0 ? new ParseSubQuestion()
                 .parseSubQuestion(question, path) : question;
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final AddStudentsToDistributedTest serviceInstance = new AddStudentsToDistributedTest();
+
+    @Service
+    public static void runAddStudentsToDistributedTest(Integer executionCourseId, Integer distributedTestId,
+            List<InfoStudent> infoStudentList, String contextPath) throws InvalidArgumentsServiceException,
+            NotAuthorizedException {
+        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
+        serviceInstance.run(executionCourseId, distributedTestId, infoStudentList, contextPath);
     }
 
 }

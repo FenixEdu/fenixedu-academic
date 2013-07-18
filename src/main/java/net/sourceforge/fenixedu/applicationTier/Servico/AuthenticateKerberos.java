@@ -7,9 +7,11 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidPasswo
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.PasswordExpiredServiceException;
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.kerberos.KerberosException;
 import net.sourceforge.fenixedu.util.kerberos.Script;
+import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixframework.pstm.Transaction;
 
 public class AuthenticateKerberos extends Authenticate {
@@ -29,7 +31,7 @@ public class AuthenticateKerberos extends Authenticate {
 
         @Override
         public void doIt() {
-            final Person person = (Person) rootDomainObject.readPartyByOID(personID);
+            final Person person = (Person) RootDomainObject.getInstance().readPartyByOID(personID);
             doIt(person);
         }
 
@@ -81,7 +83,7 @@ public class AuthenticateKerberos extends Authenticate {
     }
 
     @Override
-    public IUserView run(final String username, final String password, final String requestURL, final String remoteHost)
+    protected IUserView run(final String username, final String password, final String requestURL, final String remoteHost)
             throws ExcepcaoAutenticacao, FenixServiceException {
 
         Person person = Person.readPersonByUsernameWithOpenedLogin(username);
@@ -135,4 +137,23 @@ public class AuthenticateKerberos extends Authenticate {
             throw new FenixServiceException("error.empty.istUsername");
         }
     }
+
+    // Service Invokers migrated from Berserk
+
+    private static final AuthenticateKerberos serviceInstance = new AuthenticateKerberos();
+
+    @Service
+    public static IUserView runKerberosExternalAuthentication(final String username, final String password,
+            final String requestURL, final String remoteHost) throws ExcepcaoAutenticacao, FenixServiceException {
+        return serviceInstance.run(username, password, requestURL, remoteHost);
+    }
+
+    // Service Invokers migrated from Berserk
+
+    @Service
+    public static void runAuthenticateKerberos(final String username, final String password, final String requestURL,
+            final String remoteHost) throws ExcepcaoAutenticacao, FenixServiceException {
+        serviceInstance.run(username, password, requestURL, remoteHost);
+    }
+
 }

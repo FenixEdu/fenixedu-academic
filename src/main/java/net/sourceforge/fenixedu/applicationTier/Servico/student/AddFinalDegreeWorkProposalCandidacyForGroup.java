@@ -4,8 +4,9 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
@@ -17,12 +18,12 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author Luis Cruz
  * 
  */
-public class AddFinalDegreeWorkProposalCandidacyForGroup extends FenixService {
+public class AddFinalDegreeWorkProposalCandidacyForGroup {
 
     @Checked("RolePredicates.STUDENT_PREDICATE")
     @Service
     public static Boolean run(final FinalDegreeWorkGroup group, Integer proposalOID) throws FenixServiceException {
-        Proposal proposal = rootDomainObject.readProposalByOID(proposalOID);
+        Proposal proposal = RootDomainObject.getInstance().readProposalByOID(proposalOID);
         if (group != null && group.getGroupProposals() != null
         /* && !CollectionUtils.exists(group.getStudents(), ) */) {
             Scheduleing scheduleing = group.getExecutionDegree().getScheduling();

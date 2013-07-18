@@ -8,24 +8,27 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.GroupsAndShiftsManagementLog;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentGroup;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author joaosa & rmalo
  * 
  */
 
-public class DeleteAllGroupingMembers extends FenixService {
+public class DeleteAllGroupingMembers {
 
-    public Boolean run(Integer objectCode, Integer groupingCode) throws FenixServiceException {
-        Grouping grouping = rootDomainObject.readGroupingByOID(groupingCode);
+    protected Boolean run(Integer objectCode, Integer groupingCode) throws FenixServiceException {
+        Grouping grouping = RootDomainObject.getInstance().readGroupingByOID(groupingCode);
 
         if (grouping == null) {
             throw new ExistingServiceException();
@@ -73,4 +76,16 @@ public class DeleteAllGroupingMembers extends FenixService {
 
         return true;
     }
+
+    // Service Invokers migrated from Berserk
+
+    private static final DeleteAllGroupingMembers serviceInstance = new DeleteAllGroupingMembers();
+
+    @Service
+    public static Boolean runDeleteAllGroupingMembers(Integer objectCode, Integer groupingCode) throws FenixServiceException,
+            NotAuthorizedException {
+        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(objectCode);
+        return serviceInstance.run(objectCode, groupingCode);
+    }
+
 }

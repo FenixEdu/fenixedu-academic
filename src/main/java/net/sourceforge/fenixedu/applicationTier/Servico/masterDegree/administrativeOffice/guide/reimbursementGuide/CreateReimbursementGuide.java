@@ -7,7 +7,6 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.guide.InvalidGuideSituationServiceException;
@@ -18,6 +17,7 @@ import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.domain.GuideEntry;
 import net.sourceforge.fenixedu.domain.GuideState;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry;
@@ -43,7 +43,7 @@ import pt.ist.fenixWebFramework.services.Service;
  *         The service also generates the number of the new reimbursement guide
  *         using a sequential method.
  */
-public class CreateReimbursementGuide extends FenixService {
+public class CreateReimbursementGuide {
 
     /**
      * @throws FenixServiceException
@@ -58,7 +58,7 @@ public class CreateReimbursementGuide extends FenixService {
     public static Integer run(Integer guideId, String remarks, List infoReimbursementGuideEntries, IUserView userView)
             throws FenixServiceException {
 
-        Guide guide = rootDomainObject.readGuideByOID(guideId);
+        Guide guide = RootDomainObject.getInstance().readGuideByOID(guideId);
         if (!guide.getActiveSituation().getSituation().equals(GuideState.PAYED)) {
             throw new InvalidGuideSituationServiceException("error.exception.masterDegree.invalidGuideSituation");
         }
@@ -74,7 +74,7 @@ public class CreateReimbursementGuide extends FenixService {
             }
 
             GuideEntry guideEntry =
-                    rootDomainObject.readGuideEntryByOID(infoReimbursementGuideEntry.getInfoGuideEntry().getIdInternal());
+                    RootDomainObject.getInstance().readGuideEntryByOID(infoReimbursementGuideEntry.getInfoGuideEntry().getIdInternal());
             if (checkReimbursementGuideEntriesSum(infoReimbursementGuideEntry, guideEntry) == false) {
                 throw new InvalidReimbursementValueServiceException("error.exception.masterDegree.invalidReimbursementValue");
             }

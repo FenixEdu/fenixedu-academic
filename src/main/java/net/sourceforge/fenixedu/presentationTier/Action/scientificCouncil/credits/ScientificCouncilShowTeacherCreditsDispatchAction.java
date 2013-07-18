@@ -5,7 +5,6 @@ import java.text.ParseException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.credits.CreditLineDTO;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -29,7 +28,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 public class ScientificCouncilShowTeacherCreditsDispatchAction extends ShowTeacherCreditsDispatchAction {
 
     public ActionForward showTeacherCredits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException,
+            HttpServletResponse response) throws NumberFormatException,  FenixServiceException,
             ParseException {
 
         InfoTeacherCredits infoTeacherCredits = new InfoTeacherCredits(form, request);
@@ -61,7 +60,7 @@ public class ScientificCouncilShowTeacherCreditsDispatchAction extends ShowTeach
     }
 
     public ActionForward editTeacherCredits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException,
+            HttpServletResponse response) throws NumberFormatException,  FenixServiceException,
             ParseException {
         InfoTeacherCredits infoTeacherCredits = new InfoTeacherCredits(form, request);
         Teacher teacher = infoTeacherCredits.getTeacher();

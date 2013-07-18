@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrat
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate.GetCandidatesByID;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate.GetCandidatesByPerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate.ReadCandidateList;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.commons.candidate.ReadCandidateEnrolmentsByCandidateID;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.GenerateNewPasswordService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateSituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCountry;
@@ -41,7 +42,6 @@ import net.sourceforge.fenixedu.domain.person.GenderHelper;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -615,10 +615,9 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
     }
 
     private List getCandidateStudyPlanByCandidateID(Integer candidateID, IUserView userView) {
-        Object[] args = { candidateID };
 
         try {
-            return (List) ServiceManagerServiceFactory.executeService("ReadCandidateEnrolmentsByCandidateID", args);
+            return ReadCandidateEnrolmentsByCandidateID.runReadCandidateEnrolmentsByCandidateID(candidateID);
         } catch (Exception e) {
             e.printStackTrace();
             return null;

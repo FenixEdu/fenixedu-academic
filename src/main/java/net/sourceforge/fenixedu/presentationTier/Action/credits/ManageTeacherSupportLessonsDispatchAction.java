@@ -8,8 +8,9 @@ import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.DeleteSupportLesson;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.EditSupportLesson;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.SupportLessonDTO;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.SupportLesson;
@@ -33,7 +34,7 @@ import org.apache.struts.action.DynaActionForm;
 public class ManageTeacherSupportLessonsDispatchAction extends FenixDispatchAction {
 
     protected void prepareToEdit(SupportLesson supportLesson, Professorship professorship, DynaActionForm supportLessonForm,
-            HttpServletRequest request) throws NumberFormatException, FenixFilterException, FenixServiceException {
+            HttpServletRequest request) throws NumberFormatException,  FenixServiceException {
 
         if (supportLesson != null) {
             Date startTime = supportLesson.getStartTime();
@@ -63,7 +64,7 @@ public class ManageTeacherSupportLessonsDispatchAction extends FenixDispatchActi
     }
 
     protected void editSupportLesson(ActionForm form, HttpServletRequest request, RoleType roleType)
-            throws NumberFormatException, FenixFilterException, FenixServiceException, InvalidPeriodException {
+            throws NumberFormatException,  FenixServiceException, InvalidPeriodException {
 
         DynaActionForm supportLessonForm = (DynaActionForm) form;
         SupportLessonDTO supportLessonDTO = new SupportLessonDTO();
@@ -91,19 +92,19 @@ public class ManageTeacherSupportLessonsDispatchAction extends FenixDispatchActi
             throw new InvalidPeriodException();
         }
         try {
-            executeService("EditSupportLesson", new Object[] { supportLessonDTO, roleType });
+            EditSupportLesson.runEditSupportLesson( supportLessonDTO, roleType );
         } catch (DomainException e) {
             saveMessages(request, e);
         }
     }
 
     protected void deleteSupportLesson(HttpServletRequest request, ActionForm form, RoleType roleType)
-            throws NumberFormatException, FenixFilterException, FenixServiceException {
+            throws NumberFormatException,  FenixServiceException {
 
         DynaActionForm supportLessonForm = (DynaActionForm) form;
         Integer supportLessonID = (Integer) supportLessonForm.get("supportLessonID");
         try {
-            executeService("DeleteSupportLesson", new Object[] { supportLessonID, roleType });
+            DeleteSupportLesson.runDeleteSupportLesson( supportLessonID, roleType );
         } catch (DomainException e) {
             saveMessages(request, e);
         }

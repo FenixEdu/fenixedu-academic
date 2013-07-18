@@ -24,7 +24,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionYearsService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -65,7 +64,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         this.bundle = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
     }
 
-    public List<SelectItem> getExecutionYears() throws FenixFilterException, FenixServiceException {
+    public List<SelectItem> getExecutionYears() throws  FenixServiceException {
         final Set<ExecutionYear> executionYears = rootDomainObject.getExecutionYearsSet();
 
         List<SelectItem> result = new ArrayList<SelectItem>(executionYears.size());
@@ -88,7 +87,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         return result;
     }
 
-    public String getUnits() throws FenixFilterException, FenixServiceException {
+    public String getUnits() throws  FenixServiceException {
         StringBuilder buffer = new StringBuilder();
         YearMonthDay currentDate = new YearMonthDay();
         String partyTypeOrClassificationName = null;
@@ -190,7 +189,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         }
     }
 
-    public Map<String, Set<Unit>> getAllInstitutionSubUnits() throws FenixFilterException, FenixServiceException {
+    public Map<String, Set<Unit>> getAllInstitutionSubUnits() throws  FenixServiceException {
 
         YearMonthDay currentDate = new YearMonthDay();
 
@@ -259,7 +258,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         return null;
     }
 
-    public String getTitle() throws FenixFilterException, FenixServiceException {
+    public String getTitle() throws  FenixServiceException {
         StringBuilder buffer = new StringBuilder();
         buffer.append("<p><em>");
         buffer.append(this.getUnit().getParentUnitsPresentationName());
@@ -268,7 +267,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         return buffer.toString();
     }
 
-    public String getFunctions() throws FenixFilterException, FenixServiceException {
+    public String getFunctions() throws  FenixServiceException {
 
         StringBuilder buffer = new StringBuilder();
         YearMonthDay currentDate = new YearMonthDay();
@@ -461,7 +460,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         return functions;
     }
 
-    public ExecutionYear getExecutionYear(Integer executionYear) throws FenixFilterException, FenixServiceException {
+    public ExecutionYear getExecutionYear(Integer executionYear) throws  FenixServiceException {
 
         ExecutionYear iExecutionYear = ReadExecutionYearsService.run(executionYear);
         return iExecutionYear;
@@ -505,7 +504,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         list.add(0, firstItem);
     }
 
-    public Unit getUnit() throws FenixFilterException, FenixServiceException {
+    public Unit getUnit() throws  FenixServiceException {
         if (parentUnit == null) {
             this.parentUnit = (Unit) rootDomainObject.readPartyByOID(Integer.valueOf((String) getUnitIDHidden().getValue()));
         }

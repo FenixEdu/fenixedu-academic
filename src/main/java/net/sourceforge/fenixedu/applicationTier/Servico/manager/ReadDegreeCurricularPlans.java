@@ -9,7 +9,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.SeminaryCoordinatorOrStudentFilter;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
@@ -23,7 +24,7 @@ import pt.ist.fenixWebFramework.services.Service;
  *         Created at 4/Set/2003, 13:55:41
  * 
  */
-public class ReadDegreeCurricularPlans extends FenixService {
+public class ReadDegreeCurricularPlans {
 
     /**
      * Executes the service. Returns the current InfoDegreeCurricularPlan.
@@ -41,4 +42,14 @@ public class ReadDegreeCurricularPlans extends FenixService {
         }
         return infoCurricularPlans;
     }
+    // Service Invokers migrated from Berserk
+
+    private static final ReadDegreeCurricularPlans serviceInstance = new ReadDegreeCurricularPlans();
+
+    @Service
+    public static List runReadDegreeCurricularPlans() throws NotAuthorizedException {
+        SeminaryCoordinatorOrStudentFilter.instance.execute();
+        return serviceInstance.run();
+    }
+
 }

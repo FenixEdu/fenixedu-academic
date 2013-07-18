@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.EditCurriculum;
 import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.InsertCurriculum;
@@ -47,7 +46,7 @@ import org.joda.time.DateTime;
 public class CurricularCourseManagerDA extends FenixDispatchAction {
 
     public ActionForward prepareSelectDegree(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
         IUserView userView = getUserView(request);
         ISiteComponent component = new InfoSiteSCDegrees();
         readSiteView(request, userView, null, null, null, component);
@@ -56,7 +55,7 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
     }
 
     public ActionForward showDegreeCurricularPlans(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
         IUserView userView = getUserView(request);
 
         String degreeIdString = request.getParameter("index");
@@ -68,7 +67,7 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
     }
 
     public ActionForward showCurricularCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
         IUserView userView = getUserView(request);
 
         String degreeCurricularPlanIdString = request.getParameter("index");
@@ -80,7 +79,7 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
     }
 
     public ActionForward showBasicCurricularCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
         IUserView userView = getUserView(request);
 
         String degreeCurricularPlanIdString = request.getParameter("index");
@@ -107,7 +106,7 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
     }
 
     public ActionForward setBasicCurricularCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
         IUserView userView = getUserView(request);
 
         DynaActionForm basicCoursesList = (DynaActionForm) form;
@@ -129,7 +128,7 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
     }
 
     public ActionForward viewCurriculum(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
         IUserView userView = getUserView(request);
 
         String curricularCourseIdString = request.getParameter("index");
@@ -147,7 +146,7 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
     }
 
     public ActionForward prepareEditCurriculum(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
         IUserView userView = getUserView(request);
 
         String curriculumIdString = request.getParameter("index");
@@ -163,7 +162,7 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
     }
 
     public ActionForward editCurriculum(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
         IUserView userView = getUserView(request);
 
         String program = request.getParameter("program");
@@ -190,7 +189,7 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
     }
 
     public ActionForward prepareInsertCurriculum(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
         IUserView userView = getUserView(request);
 
         String curricularCourseIdString = request.getParameter("index");
@@ -206,7 +205,7 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
     }
 
     public ActionForward insertCurriculum(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
         IUserView userView = getUserView(request);
 
         String program = request.getParameter("program");
@@ -233,7 +232,7 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
     }
 
     private SiteView readSiteView(HttpServletRequest request, IUserView userView, Integer degreeId, Integer coursesIds,
-            Integer degreeCurricularPlanId, ISiteComponent component) throws FenixActionException, FenixFilterException {
+            Integer degreeCurricularPlanId, ISiteComponent component) throws FenixActionException {
 
         SiteView siteView = null;
         try {

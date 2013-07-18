@@ -6,21 +6,23 @@
 package net.sourceforge.fenixedu.applicationTier.Filtro;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import pt.utl.ist.berserk.ServiceRequest;
-import pt.utl.ist.berserk.ServiceResponse;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 /**
  * @author João Mota
  * 
  */
 public class CurrentDegreeCoordinatorAuthorizationFilter extends AuthorizationByRoleFilter {
+
+    public static final CurrentDegreeCoordinatorAuthorizationFilter instance = new CurrentDegreeCoordinatorAuthorizationFilter();
 
     public CurrentDegreeCoordinatorAuthorizationFilter() {
     }
@@ -35,39 +37,28 @@ public class CurrentDegreeCoordinatorAuthorizationFilter extends AuthorizationBy
         return RoleType.COORDINATOR;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * ServidorAplicacao.Filtro.AuthorizationByRoleFilter#execute(pt.utl.ist
-     * .berserk.ServiceRequest, pt.utl.ist.berserk.ServiceResponse)
-     */
-    @Override
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-        IUserView id = getRemoteUser(request);
-        Object[] argumentos = getServiceCallArguments(request);
+    public void execute(Integer infoExecutionDegreeId, Integer oldCurriculumId, Integer curricularCourseCode,
+            InfoCurriculum newInfoCurriculum, String username, String language) throws NotAuthorizedException {
+        IUserView id = AccessControl.getUserView();
         try {
             if ((id == null) || (id.getRoleTypes() == null) || !id.hasRoleType(getRoleType())
-                    || !isCoordinatorOfCurrentExecutionDegree(id, argumentos)) {
+                    || !isCoordinatorOfCurrentExecutionDegree(id, infoExecutionDegreeId)) {
                 throw new NotAuthorizedException();
             }
         } catch (RuntimeException e) {
-            throw new NotAuthorizedFilterException();
+            throw new NotAuthorizedException();
         }
     }
 
-    private boolean isCoordinatorOfCurrentExecutionDegree(IUserView id, Object[] argumentos) {
+    private boolean isCoordinatorOfCurrentExecutionDegree(IUserView id, Integer infoExecutionDegreeId) {
         boolean result = false;
-        if (argumentos == null) {
-            return result;
-        }
-        if (argumentos[0] == null) {
+        if (infoExecutionDegreeId == null) {
             return result;
         }
         try {
             final Person person = id.getPerson();
 
-            ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID((Integer) argumentos[0]);
+            ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(infoExecutionDegreeId);
             ExecutionYear executionYear = executionDegree.getExecutionYear();
 
             Coordinator coordinator = executionDegree.getCoordinatorByTeacher(person);

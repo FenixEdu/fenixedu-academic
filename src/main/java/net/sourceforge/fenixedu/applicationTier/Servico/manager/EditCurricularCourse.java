@@ -5,11 +5,11 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseEditor;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -20,7 +20,7 @@ import pt.ist.fenixWebFramework.services.Service;
 /**
  * @author lmac1
  */
-public class EditCurricularCourse extends FenixService {
+public class EditCurricularCourse {
 
     public EditCurricularCourse() {
     }
@@ -33,7 +33,7 @@ public class EditCurricularCourse extends FenixService {
         String newNameEn = null;
         String newCode = null;
 
-        oldCurricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(newInfoCurricularCourse.getIdInternal());
+        oldCurricularCourse = (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(newInfoCurricularCourse.getIdInternal());
 
         newName = newInfoCurricularCourse.getName();
         newNameEn = newInfoCurricularCourse.getNameEn();

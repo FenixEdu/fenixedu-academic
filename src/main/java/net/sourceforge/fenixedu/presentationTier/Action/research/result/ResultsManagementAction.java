@@ -3,8 +3,8 @@ package net.sourceforge.fenixedu.presentationTier.Action.research.result;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.research.prizes.DeletePrize;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -79,13 +79,13 @@ public class ResultsManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward deletePrize(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         String prizeID = request.getParameter("oid");
         Prize prize = (Prize) RootDomainObject.readDomainObjectByOID(Prize.class, Integer.valueOf(prizeID));
         if (prize.isDeletableByUser((getLoggedPerson(request)))) {
             try {
-                executeService("DeletePrize", new Object[] { prize });
+                DeletePrize.runDeletePrize(prize);
             } catch (DomainException e) {
                 addActionMessage(request, e.getMessage());
             }
@@ -94,7 +94,7 @@ public class ResultsManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward editPrize(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         String prizeID = request.getParameter("oid");
         Prize prize = (Prize) RootDomainObject.readDomainObjectByOID(Prize.class, Integer.valueOf(prizeID));

@@ -12,15 +12,17 @@ import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarDateComparator;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarHourComparator;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Mark;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
@@ -33,15 +35,16 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.tests.TestQuestionChangesType;
 import net.sourceforge.fenixedu.util.tests.TestQuestionStudentsChangesType;
 import net.sourceforge.fenixedu.util.tests.TestType;
+import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
-public class ChangeStudentTestQuestion extends FenixService {
+public class ChangeStudentTestQuestion {
 
-    public Boolean run(Integer executionCourseId, Integer distributedTestId, Integer oldQuestionId, Integer newMetadataId,
+    protected Boolean run(Integer executionCourseId, Integer distributedTestId, Integer oldQuestionId, Integer newMetadataId,
             Integer studentId, TestQuestionChangesType changesType, Boolean delete, TestQuestionStudentsChangesType studentsType,
             String path) throws FenixServiceException {
 
-        DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
+        DistributedTest distributedTest = RootDomainObject.getInstance().readDistributedTestByOID(distributedTestId);
         Question oldQuestion = distributedTest.findQuestionByOID(oldQuestionId);
 
         if (oldQuestion == null) {
@@ -52,7 +55,7 @@ public class ChangeStudentTestQuestion extends FenixService {
 
         List<Question> availableQuestions = new ArrayList<Question>();
         if (newMetadataId != null) {
-            metadata = rootDomainObject.readMetadataByOID(newMetadataId);
+            metadata = RootDomainObject.getInstance().readMetadataByOID(newMetadataId);
             if (metadata == null) {
                 throw new InvalidArgumentsServiceException();
             }
@@ -79,14 +82,14 @@ public class ChangeStudentTestQuestion extends FenixService {
             Collection<StudentTestQuestion> studentsTestQuestionList = new ArrayList<StudentTestQuestion>();
 
             if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.THIS_STUDENT) {
-                Registration registration = rootDomainObject.readRegistrationByOID(studentId);
+                Registration registration = RootDomainObject.getInstance().readRegistrationByOID(studentId);
                 if (registration == null) {
                     throw new InvalidArgumentsServiceException();
                 }
                 studentsTestQuestionList.add(StudentTestQuestion.findStudentTestQuestion(oldQuestion, registration,
                         currentDistributedTest));
             } else if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.STUDENTS_FROM_TEST) {
-                Registration registration = rootDomainObject.readRegistrationByOID(studentId);
+                Registration registration = RootDomainObject.getInstance().readRegistrationByOID(studentId);
                 if (registration == null) {
                     throw new InvalidArgumentsServiceException();
                 }
@@ -244,6 +247,19 @@ public class ChangeStudentTestQuestion extends FenixService {
         decimalFormatSymbols.setDecimalSeparator('.');
         df.setDecimalFormatSymbols(decimalFormatSymbols);
         return (df.format(Math.max(0, totalMark)));
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final ChangeStudentTestQuestion serviceInstance = new ChangeStudentTestQuestion();
+
+    @Service
+    public static Boolean runChangeStudentTestQuestion(Integer executionCourseId, Integer distributedTestId,
+            Integer oldQuestionId, Integer newMetadataId, Integer studentId, TestQuestionChangesType changesType, Boolean delete,
+            TestQuestionStudentsChangesType studentsType, String path) throws FenixServiceException, NotAuthorizedException {
+        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
+        return serviceInstance.run(executionCourseId, distributedTestId, oldQuestionId, newMetadataId, studentId, changesType,
+                delete, studentsType, path);
     }
 
 }

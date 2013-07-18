@@ -6,13 +6,14 @@ import java.util.List;
 import java.util.ListIterator;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import pt.utl.ist.berserk.ServiceRequest;
-import pt.utl.ist.berserk.ServiceResponse;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.util.SituationName;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
@@ -20,26 +21,20 @@ import pt.utl.ist.berserk.ServiceResponse;
  */
 public class ReadCandidatesForSelectionAuthorizationFilter extends Filtro {
 
+    public static final ReadCandidatesForSelectionAuthorizationFilter instance =
+            new ReadCandidatesForSelectionAuthorizationFilter();
+
     public ReadCandidatesForSelectionAuthorizationFilter() {
 
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk
-     * .ServiceRequest, pt.utl.ist.berserk.ServiceResponse)
-     */
-    @Override
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
+    public void execute(Integer executionDegreeID, List<SituationName> situationNames) throws NotAuthorizedException {
 
-        IUserView id = getRemoteUser(request);
-        Object[] argumentos = getServiceCallArguments(request);
+        IUserView id = AccessControl.getUserView();
         if ((id != null && id.getRoleTypes() != null && !containsRoleType(id.getRoleTypes()))
-                || (id != null && id.getRoleTypes() != null && !hasPrivilege(id, argumentos)) || (id == null)
+                || (id != null && id.getRoleTypes() != null && !hasPrivilege(id, executionDegreeID)) || (id == null)
                 || (id.getRoleTypes() == null)) {
-            throw new NotAuthorizedFilterException();
+            throw new NotAuthorizedException();
         }
     }
 
@@ -59,15 +54,14 @@ public class ReadCandidatesForSelectionAuthorizationFilter extends Filtro {
      * @param argumentos
      * @return
      */
-    private boolean hasPrivilege(IUserView id, Object[] arguments) {
-        Integer executionDegreeID = (Integer) arguments[0];
+    private boolean hasPrivilege(IUserView id, Integer executionDegreeID) {
 
         ExecutionDegree executionDegree = null;
 
         // Read The DegreeCurricularPlan
         try {
 
-            executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
+            executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeID);
 
         } catch (Exception e) {
             return false;

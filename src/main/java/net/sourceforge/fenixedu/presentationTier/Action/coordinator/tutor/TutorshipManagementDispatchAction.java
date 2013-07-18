@@ -6,6 +6,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.tutor.InsertTutorship;
+import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.tutor.TransferTutorship;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.TutorshipErrorBean;
 import net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.TutorshipManagementBean;
@@ -37,9 +39,8 @@ public class TutorshipManagementDispatchAction extends TutorManagementDispatchAc
 
         final Teacher teacher = bean.getTeacher();
 
-        Object[] args = new Object[] { bean.getExecutionDegreeID(), bean };
         try {
-            executeService("InsertTutorship", args);
+            InsertTutorship.runInsertTutorship(bean.getExecutionDegreeID(), bean);
         } catch (FenixServiceException e) {
             addActionMessage(request, e.getMessage(), e.getArgs());
         }
@@ -82,20 +83,21 @@ public class TutorshipManagementDispatchAction extends TutorManagementDispatchAc
         if (tutorshipsToRemove.isEmpty()) {
             addActionMessage(request, "error.coordinator.tutor.manageTutorships.mustSelectStudents");
         } else {
-            Object[] args = { bean.getExecutionDegreeID(), bean.getTeacherId(), tutorshipsToRemove };
-
-            List<TutorshipErrorBean> tutorshipsNotRemoved = new ArrayList<TutorshipErrorBean>();
-            try {
-                tutorshipsNotRemoved = (List<TutorshipErrorBean>) executeService("DeleteTutorship", args);
-            } catch (FenixServiceException e) {
-                addActionMessage(request, e.getMessage(), e.getArgs());
-            }
-
-            if (!tutorshipsNotRemoved.isEmpty()) {
-                for (TutorshipErrorBean tutorship : tutorshipsNotRemoved) {
-                    addActionMessage(request, tutorship.getMessage(), tutorship.getArgs());
-                }
-            }
+//            Object[] args = { bean.getExecutionDegreeID(), bean.getTeacherId(), tutorshipsToRemove };
+//
+//            List<TutorshipErrorBean> tutorshipsNotRemoved = new ArrayList<TutorshipErrorBean>();
+//            try {
+//                tutorshipsNotRemoved = (List<TutorshipErrorBean>) executeService("DeleteTutorship", args);
+//            } catch (FenixServiceException e) {
+//                addActionMessage(request, e.getMessage(), e.getArgs());
+//            }
+//
+//            if (!tutorshipsNotRemoved.isEmpty()) {
+//                for (TutorshipErrorBean tutorship : tutorshipsNotRemoved) {
+//                    addActionMessage(request, tutorship.getMessage(), tutorship.getArgs());
+//                }
+//            }
+            throw new UnsupportedOperationException();
         }
 
         if (!teacher.getActiveTutorships().isEmpty()) {
@@ -159,11 +161,11 @@ public class TutorshipManagementDispatchAction extends TutorManagementDispatchAc
                         .getObject();
         RenderUtils.invalidateViewState("tutorshipsToTransferBean");
 
-        Object[] args = new Object[] { targetTutorBean.getExecutionDegreeID(), targetTutorBean, tutorshipsToTransferBeans };
-
         List<TutorshipErrorBean> tutorshipsNotRemoved = new ArrayList<TutorshipErrorBean>();
         try {
-            tutorshipsNotRemoved = (List<TutorshipErrorBean>) executeService("TransferTutorship", args);
+            tutorshipsNotRemoved =
+                    TransferTutorship.runTransferTutorship(targetTutorBean.getExecutionDegreeID(), targetTutorBean,
+                            tutorshipsToTransferBeans);
         } catch (FenixServiceException e) {
             addActionMessage(request, e.getMessage(), e.getArgs());
 

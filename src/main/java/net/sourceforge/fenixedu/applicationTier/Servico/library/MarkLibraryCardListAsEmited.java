@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.library;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.library.LibraryCardDTO;
 
 import org.joda.time.DateTime;
@@ -10,7 +9,7 @@ import org.joda.time.DateTime;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class MarkLibraryCardListAsEmited extends FenixService {
+public class MarkLibraryCardListAsEmited {
 
     @Checked("RolePredicates.LIBRARY_PREDICATE")
     @Service

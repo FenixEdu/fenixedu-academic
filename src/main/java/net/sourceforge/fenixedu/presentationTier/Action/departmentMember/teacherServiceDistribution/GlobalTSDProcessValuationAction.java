@@ -10,8 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.ReadTSDCoursesFromTSDProcesses;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.ReadTSDTeachersFromTSDProcesses;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.dataTransferObject.teacherServiceDistribution.TSDCourseDTOEntry;
 import net.sourceforge.fenixedu.dataTransferObject.teacherServiceDistribution.TSDTeacherDTOEntry;
@@ -24,7 +25,6 @@ import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcess;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcessPhase;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.Predicate;
@@ -42,7 +42,7 @@ public class GlobalTSDProcessValuationAction extends FenixDispatchAction {
     private static final Integer VIEW_TEACHER_SERVICE_DISTRIBUTION_VALUATION_BY_TEACHERS_AND_COURSES = 2;
 
     public ActionForward prepareForGlobalTSDProcessValuation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         IUserView userView = UserView.getUser();
 
         DynaActionForm globalForm = (DynaActionForm) form;
@@ -82,7 +82,7 @@ public class GlobalTSDProcessValuationAction extends FenixDispatchAction {
     }
 
     public ActionForward showTSDProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         DynaActionForm globalForm = (DynaActionForm) form;
 
         initializeFormVariables(request, globalForm);
@@ -90,8 +90,7 @@ public class GlobalTSDProcessValuationAction extends FenixDispatchAction {
         return viewGlobalTSDProcessValuation(mapping, form, request, response);
     }
 
-    private void initializeFormVariables(HttpServletRequest request, DynaActionForm dynaForm) throws FenixFilterException,
-            FenixServiceException {
+    private void initializeFormVariables(HttpServletRequest request, DynaActionForm dynaForm) throws FenixServiceException {
         Integer tsdProcessId = new Integer(request.getParameter("tsdProcess"));
         dynaForm.set("tsdProcess", tsdProcessId);
 
@@ -104,7 +103,7 @@ public class GlobalTSDProcessValuationAction extends FenixDispatchAction {
     }
 
     public ActionForward changeToViewTeachers(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         DynaActionForm globalForm = (DynaActionForm) form;
         globalForm.set("viewType", VIEW_TEACHER_SERVICE_DISTRIBUTION_VALUATION_BY_TEACHERS);
 
@@ -112,7 +111,7 @@ public class GlobalTSDProcessValuationAction extends FenixDispatchAction {
     }
 
     public ActionForward changeToViewCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         DynaActionForm globalForm = (DynaActionForm) form;
         globalForm.set("viewType", VIEW_TEACHER_SERVICE_DISTRIBUTION_VALUATION_BY_COURSES);
 
@@ -120,7 +119,7 @@ public class GlobalTSDProcessValuationAction extends FenixDispatchAction {
     }
 
     public ActionForward changeToViewTeacherAndCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         DynaActionForm globalForm = (DynaActionForm) form;
         globalForm.set("viewType", VIEW_TEACHER_SERVICE_DISTRIBUTION_VALUATION_BY_TEACHERS_AND_COURSES);
 
@@ -128,7 +127,7 @@ public class GlobalTSDProcessValuationAction extends FenixDispatchAction {
     }
 
     public ActionForward viewGlobalTSDProcessValuation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         IUserView userView = UserView.getUser();
         DynaActionForm globalForm = (DynaActionForm) form;
 
@@ -205,44 +204,41 @@ public class GlobalTSDProcessValuationAction extends FenixDispatchAction {
     @SuppressWarnings("unchecked")
     private List<TSDTeacherDTOEntry> getTSDTeacherDTOEntries(IUserView userView, TSDProcessPhase selectedTSDProcessPhase,
             TeacherServiceDistribution selectedTeacherServiceDistribution, ExecutionSemester executionSemester)
-            throws FenixFilterException, FenixServiceException {
+            throws FenixServiceException {
         Map<Integer, Pair<Integer, Integer>> tsdProcessIdMap = new HashMap<Integer, Pair<Integer, Integer>>();
         tsdProcessIdMap.put(selectedTSDProcessPhase.getIdInternal(),
                 new Pair<Integer, Integer>(selectedTeacherServiceDistribution.getIdInternal(),
                         (executionSemester == null) ? 0 : executionSemester.getIdInternal()));
 
-        return (List<TSDTeacherDTOEntry>) ServiceUtils.executeService("ReadTSDTeachersFromTSDProcesses",
-                new Object[] { tsdProcessIdMap });
+        return ReadTSDTeachersFromTSDProcesses.runReadTSDTeachersFromTSDProcesses(tsdProcessIdMap);
     }
 
     @SuppressWarnings("unchecked")
     private List<TSDCourseDTOEntry> getTSDCourseDTOEntries(IUserView userView, TSDProcessPhase selectedTSDProcessPhase,
             TeacherServiceDistribution selectedTeacherServiceDistribution, ExecutionSemester executionSemester)
-            throws FenixFilterException, FenixServiceException {
+            throws FenixServiceException {
         Map<Integer, Pair<Integer, Integer>> tsdProcessIdMap = new HashMap<Integer, Pair<Integer, Integer>>();
         tsdProcessIdMap.put(selectedTSDProcessPhase.getIdInternal(),
                 new Pair<Integer, Integer>(selectedTeacherServiceDistribution.getIdInternal(),
                         (executionSemester == null) ? 0 : executionSemester.getIdInternal()));
 
-        return (List<TSDCourseDTOEntry>) ServiceUtils.executeService("ReadTSDCoursesFromTSDProcesses",
-                new Object[] { tsdProcessIdMap });
+        return ReadTSDCoursesFromTSDProcesses.runReadTSDCoursesFromTSDProcesses(tsdProcessIdMap);
     }
 
     private TeacherServiceDistribution getSelectedTeacherServiceDistribution(DynaActionForm dynaForm)
-            throws FenixFilterException, FenixServiceException {
+            throws FenixServiceException {
         Integer selectedTeacherServiceDistributionId = (Integer) dynaForm.get("tsd");
         return rootDomainObject.readTeacherServiceDistributionByOID(selectedTeacherServiceDistributionId);
     }
 
-    private TSDProcessPhase getSelectedTSDProcessPhase(DynaActionForm dynaForm) throws FenixFilterException,
-            FenixServiceException {
+    private TSDProcessPhase getSelectedTSDProcessPhase(DynaActionForm dynaForm) throws FenixServiceException {
         Integer selectedTSDProcessPhaseId = (Integer) dynaForm.get("tsdProcessPhase");
         TSDProcessPhase selectedTSDProcessPhase = rootDomainObject.readTSDProcessPhaseByOID(selectedTSDProcessPhaseId);
 
         return selectedTSDProcessPhase;
     }
 
-    private TSDProcess getTSDProcess(DynaActionForm dynaForm) throws FenixServiceException, FenixFilterException {
+    private TSDProcess getTSDProcess(DynaActionForm dynaForm) throws FenixServiceException {
         Integer tsdProcessId = (Integer) dynaForm.get("tsdProcess");
         TSDProcess tsdProcess = rootDomainObject.readTSDProcessByOID(tsdProcessId);
 
@@ -265,15 +261,13 @@ public class GlobalTSDProcessValuationAction extends FenixDispatchAction {
         return viewType == null ? VIEW_TEACHER_SERVICE_DISTRIBUTION_VALUATION_BY_TEACHERS : viewType;
     }
 
-    private ExecutionYear getSelectedExecutionYear(IUserView userView, DynaActionForm globalForm) throws FenixServiceException,
-            FenixFilterException {
+    private ExecutionYear getSelectedExecutionYear(IUserView userView, DynaActionForm globalForm) {
         Integer selectedExecutionYearId = (Integer) globalForm.get("executionYear");
 
         return rootDomainObject.readExecutionYearByOID(selectedExecutionYearId);
     }
 
-    private ExecutionSemester getSelectedExecutionPeriod(DynaActionForm dynaForm) throws FenixServiceException,
-            FenixFilterException {
+    private ExecutionSemester getSelectedExecutionPeriod(DynaActionForm dynaForm) {
         Integer selectedExecutionPeriodId = (Integer) dynaForm.get("executionPeriod");
         return rootDomainObject.readExecutionSemesterByOID(selectedExecutionPeriodId);
     }

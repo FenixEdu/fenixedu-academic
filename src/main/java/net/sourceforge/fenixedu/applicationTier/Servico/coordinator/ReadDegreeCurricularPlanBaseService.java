@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -23,14 +23,14 @@ import org.apache.commons.collections.Transformer;
  *           23/11/2004
  * 
  */
-abstract public class ReadDegreeCurricularPlanBaseService extends FenixService {
+abstract public class ReadDegreeCurricularPlanBaseService {
 
     protected List<InfoCurricularCourseScope> readActiveCurricularCourseScopes(final Integer degreeCurricularPlanId) {
         List<InfoCurricularCourseScope> infoActiveScopes = null;
 
         if (degreeCurricularPlanId != null) {
 
-            DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
+            DegreeCurricularPlan degreeCurricularPlan = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanId);
             List<CurricularCourseScope> allActiveScopes = degreeCurricularPlan.getActiveCurricularCourseScopes();
 
             if (allActiveScopes != null && allActiveScopes.size() > 0) {

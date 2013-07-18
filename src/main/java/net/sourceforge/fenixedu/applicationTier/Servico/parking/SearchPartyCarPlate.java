@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.parking;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.parking.ParkingParty;
 
@@ -21,14 +21,14 @@ import pt.utl.ist.fenix.tools.util.StringNormalizer;
  * 
  */
 
-public class SearchPartyCarPlate extends FenixService {
+public class SearchPartyCarPlate {
 
     @Checked("RolePredicates.PARKING_MANAGER_PREDICATE")
     @Service
     public static List<Party> run(String nameSearch, String carPlateNumber, Long parkingCardNumber) {
         List<Party> result = new ArrayList<Party>();
         if (!StringUtils.isEmpty(carPlateNumber) || !StringUtils.isEmpty(nameSearch) || parkingCardNumber != null) {
-            List<ParkingParty> parkingParties = rootDomainObject.getParkingParties();
+            List<ParkingParty> parkingParties = RootDomainObject.getInstance().getParkingParties();
             for (ParkingParty parkingParty : parkingParties) {
                 if (parkingParty.getParty() != null) {
                     if (satisfiedParkingCardNumber(parkingParty, parkingCardNumber)

@@ -10,7 +10,6 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.gesdis.teacher.ReadTeacherByUsername;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 
@@ -34,7 +33,7 @@ public class GetEncryptedPassword extends Action {
      */
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixFilterException {
+             {
         String username = request.getParameter("login");
         String timestamp = request.getParameter("timestamp");
         String url = request.getParameter("url");

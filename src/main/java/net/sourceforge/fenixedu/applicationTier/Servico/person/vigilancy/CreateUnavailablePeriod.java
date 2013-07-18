@@ -3,9 +3,9 @@ package net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.util.email.ConcreteReplyTo;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Sender;
@@ -17,7 +17,7 @@ import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.services.Service;
 
-public class CreateUnavailablePeriod extends FenixService {
+public class CreateUnavailablePeriod {
 
     @Service
     public static void run(Person person, DateTime begin, DateTime end, String justification) {
@@ -51,7 +51,7 @@ public class CreateUnavailablePeriod extends FenixService {
                     BundleUtil.getStringFromResourceBundle("resources.VigilancyResources",
                             "email.convoke.unavailablePeriod.subject", new String[] { group.getName() });
 
-            Sender sender = rootDomainObject.getSystemSender();
+            Sender sender = RootDomainObject.getInstance().getSystemSender();
             new Message(sender, new ConcreteReplyTo(group.getContactEmail()).asCollection(), Collections.EMPTY_LIST, subject,
                     message, bccs);
         }

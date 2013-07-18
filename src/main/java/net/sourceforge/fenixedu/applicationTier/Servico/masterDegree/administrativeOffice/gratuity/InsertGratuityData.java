@@ -10,7 +10,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.ListIterator;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuityValues;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPaymentPhase;
@@ -18,6 +17,7 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.GratuityValues;
 import net.sourceforge.fenixedu.domain.PaymentPhase;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.PresentationConstants;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -29,7 +29,7 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author Tânia Pousão
  * 
  */
-public class InsertGratuityData extends FenixService {
+public class InsertGratuityData {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
@@ -54,7 +54,7 @@ public class InsertGratuityData extends FenixService {
         validateGratuity(infoGratuityValues);
 
         ExecutionDegree executionDegree =
-                rootDomainObject.readExecutionDegreeByOID(infoGratuityValues.getInfoExecutionDegree().getIdInternal());
+                RootDomainObject.getInstance().readExecutionDegreeByOID(infoGratuityValues.getInfoExecutionDegree().getIdInternal());
         GratuityValues gratuityValues = executionDegree.getGratuityValues();
 
         if (gratuityValues == null) // it doesn't exist in database, then

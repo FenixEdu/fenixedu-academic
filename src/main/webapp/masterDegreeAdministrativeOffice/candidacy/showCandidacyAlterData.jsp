@@ -65,8 +65,8 @@
 							<fr:property name="size" value="50"/>
 							<fr:property name="labelField" value="unit.name"/>
 							<fr:property name="indicatorShown" value="true"/>
-							<fr:property name="serviceName" value="SearchRaidesDegreeUnits"/>
-							<fr:property name="serviceArgs" value="slot=name,size=50"/>
+							<fr:property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchRaidesDegreeUnits"/>
+							<fr:property name="args" value="slot=name,size=50"/>
 							<fr:property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>
 							<fr:property name="minChars" value="3"/>
 							<fr:property name="rawSlotName" value="institutionName"/>
@@ -75,8 +75,8 @@
 					    	<fr:property name="size" value="50"/>
 							<fr:property name="labelField" value="description"/>
 							<fr:property name="indicatorShown" value="true"/>
-							<fr:property name="serviceName" value="SearchRaidesDegreeDesignations"/>
-							<fr:property name="serviceArgs" value="slot=description,size=50"/>
+							<fr:property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchRaidesDegreeDesignations"/>
+							<fr:property name="args" value="slot=description,size=50"/>
 							<fr:property name="className" value="net.sourceforge.fenixedu.domain.raides.DegreeDesignation"/>
 							<fr:property name="minChars" value="3"/>
 					    </fr:slot>
@@ -85,8 +85,8 @@
 							<fr:property name="size" value="50"/>
 							<fr:property name="labelField" value="unit.name"/>
 							<fr:property name="indicatorShown" value="true"/>		
-							<fr:property name="serviceName" value="SearchExternalUnits"/>
-							<fr:property name="serviceArgs" value="slot=name,size=20"/>
+							<fr:property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchExternalUnits"/>
+							<fr:property name="args" value="slot=name,size=20"/>
 							<fr:property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>
 							<fr:property name="minChars" value="2"/>
 							<fr:property name="rawSlotName" value="institutionName"/>

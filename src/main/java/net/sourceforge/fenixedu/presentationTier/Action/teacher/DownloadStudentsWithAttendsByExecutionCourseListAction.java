@@ -15,7 +15,6 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.SearchExecutionCourseAttendsBean;
 import net.sourceforge.fenixedu.domain.Attends;
@@ -88,7 +87,7 @@ public class DownloadStudentsWithAttendsByExecutionCourseListAction extends Feni
 
     @Override
     public ActionForward execute(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
-            final HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
+            final HttpServletResponse response) throws FenixActionException,  FenixServiceException {
 
         final SearchExecutionCourseAttendsBean executionCourseAttendsBean = getRenderedObject("downloadViewState");
         executionCourseAttendsBean.getExecutionCourse().searchAttends(executionCourseAttendsBean);

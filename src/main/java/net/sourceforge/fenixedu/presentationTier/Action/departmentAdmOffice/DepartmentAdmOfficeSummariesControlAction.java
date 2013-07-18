@@ -6,7 +6,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Person;
@@ -27,7 +26,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 public class DepartmentAdmOfficeSummariesControlAction extends SummariesControlAction {
 
     @Override
-    protected void readAndSaveAllDepartments(HttpServletRequest request) throws FenixFilterException, FenixServiceException {
+    protected void readAndSaveAllDepartments(HttpServletRequest request) throws  FenixServiceException {
 
         List<LabelValueBean> departments = new ArrayList<LabelValueBean>();
         final IUserView userView = UserView.getUser();

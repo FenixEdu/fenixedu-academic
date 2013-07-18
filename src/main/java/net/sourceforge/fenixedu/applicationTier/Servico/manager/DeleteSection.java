@@ -4,19 +4,32 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
  * 
  * @author lmac1
  */
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
+import net.sourceforge.fenixedu.applicationTier.Filtro.SiteManagerAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Site;
+import pt.ist.fenixWebFramework.services.Service;
 
-public class DeleteSection extends FenixService {
+public class DeleteSection {
 
-    public Boolean run(Site site, final Section section) {
+    protected Boolean run(Site site, final Section section) {
         if (section != null) {
             section.delete();
             return Boolean.TRUE;
         } else {
             return Boolean.FALSE;
         }
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final DeleteSection serviceInstance = new DeleteSection();
+
+    @Service
+    public static Boolean runDeleteSection(Site site, Section section) throws NotAuthorizedException {
+        SiteManagerAuthorizationFilter.instance.execute(site);
+        return serviceInstance.run(site, section);
     }
 
 }

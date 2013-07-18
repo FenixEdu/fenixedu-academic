@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.publico;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
@@ -15,10 +14,11 @@ import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.Curriculum;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.util.PeriodState;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class ReadCurriculumByCurricularCourseCode extends FenixService {
+public class ReadCurriculumByCurricularCourseCode {
 
     @Service
     public static InfoCurriculum run(final Integer curricularCourseCode) throws FenixServiceException {
@@ -27,7 +27,7 @@ public class ReadCurriculumByCurricularCourseCode extends FenixService {
             throw new FenixServiceException("nullCurricularCourse");
         }
 
-        final CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseCode);
+        final CurricularCourse curricularCourse = (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(curricularCourseCode);
         if (curricularCourse == null) {
             throw new NonExistingServiceException();
         }

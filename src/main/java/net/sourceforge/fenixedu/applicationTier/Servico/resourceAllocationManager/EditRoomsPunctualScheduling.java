@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManag
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.RoomsPunctualSchedulingBean;
 import net.sourceforge.fenixedu.domain.GenericEvent;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
@@ -14,7 +13,7 @@ import org.apache.struts.util.MessageResources;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class EditRoomsPunctualScheduling extends FenixService {
+public class EditRoomsPunctualScheduling {
 
     public static final MessageResources messages = MessageResources
             .getMessageResources("resources/ResourceAllocationManagerResources");

@@ -1,13 +1,14 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.precedences;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.precedences.Precedence;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class MergePrecedencesForDegreeCurricularPlan extends FenixService {
+public class MergePrecedencesForDegreeCurricularPlan {
 
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
@@ -17,8 +18,8 @@ public class MergePrecedencesForDegreeCurricularPlan extends FenixService {
             throw new InvalidArgumentsServiceException("error.manager.samePrecedencesForMerge");
         }
 
-        Precedence firstPrecedence = rootDomainObject.readPrecedenceByOID(firstPrecedenceID);
-        Precedence secondPrecedence = rootDomainObject.readPrecedenceByOID(secondPrecedenceID);
+        Precedence firstPrecedence = RootDomainObject.getInstance().readPrecedenceByOID(firstPrecedenceID);
+        Precedence secondPrecedence = RootDomainObject.getInstance().readPrecedenceByOID(secondPrecedenceID);
 
         firstPrecedence.mergePrecedences(secondPrecedence);
     }

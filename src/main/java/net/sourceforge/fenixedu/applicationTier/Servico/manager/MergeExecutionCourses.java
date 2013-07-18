@@ -14,9 +14,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.ServiceMonitoring;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ManagerAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.OperatorAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ResourceAllocationManagerAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.CourseLoad;
 import net.sourceforge.fenixedu.domain.Evaluation;
@@ -28,6 +32,7 @@ import net.sourceforge.fenixedu.domain.FinalEvaluation;
 import net.sourceforge.fenixedu.domain.LessonInstance;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.Summary;
@@ -59,13 +64,14 @@ import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 import net.sourceforge.fenixedu.util.BundleUtil;
+import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
  * @author <a href="mailto:joao.mota@ist.utl.pt"> João Mota </a> 29/Nov/2003
  * 
  */
-public class MergeExecutionCourses extends FenixService {
+public class MergeExecutionCourses {
 
     public class SourceAndDestinationAreTheSameException extends FenixServiceException {
         private static final long serialVersionUID = 3761968254943244338L;
@@ -75,18 +81,20 @@ public class MergeExecutionCourses extends FenixService {
         private static final long serialVersionUID = 3761968254943244338L;
     }
 
-    public void run(Integer executionCourseDestinationId, Integer executionCourseSourceId) throws FenixServiceException {
+    protected void run(Integer executionCourseDestinationId, Integer executionCourseSourceId) throws FenixServiceException {
+
+        ServiceMonitoring.logService(this.getClass(), executionCourseDestinationId, executionCourseSourceId);
 
         if (executionCourseDestinationId.equals(executionCourseSourceId)) {
             throw new SourceAndDestinationAreTheSameException();
         }
 
-        final ExecutionCourse executionCourseFrom = rootDomainObject.readExecutionCourseByOID(executionCourseSourceId);
+        final ExecutionCourse executionCourseFrom = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseSourceId);
         if (executionCourseFrom == null) {
             throw new InvalidArgumentsServiceException();
         }
 
-        final ExecutionCourse executionCourseTo = rootDomainObject.readExecutionCourseByOID(executionCourseDestinationId);
+        final ExecutionCourse executionCourseTo = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseDestinationId);
         if (executionCourseTo == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -374,7 +382,7 @@ public class MergeExecutionCourses extends FenixService {
 
             message.append(BundleUtil.getStringFromResourceBundle("resources.GlobalResources",
                     "mergeExecutionCourses.email.greetings"));
-            SystemSender systemSender = rootDomainObject.getSystemSender();
+            SystemSender systemSender = RootDomainObject.getInstance().getSystemSender();
             new Message(systemSender, systemSender.getConcreteReplyTos(), Collections.EMPTY_LIST,
                     BundleUtil.getStringFromResourceBundle("resources.GlobalResources", "mergeExecutionCourses.email.subject",
                             new String[] { executionCourseTo.getNome() }), message.toString(), bccs);
@@ -539,6 +547,31 @@ public class MergeExecutionCourses extends FenixService {
             executionCourseLog.setExecutionCourse(executionCourseTo);
         }
 
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final MergeExecutionCourses serviceInstance = new MergeExecutionCourses();
+
+    @Service
+    public static void runMergeExecutionCourses(Integer executionCourseDestinationId, Integer executionCourseSourceId)
+            throws FenixServiceException, NotAuthorizedException {
+        try {
+            ManagerAuthorizationFilter.instance.execute();
+            serviceInstance.run(executionCourseDestinationId, executionCourseSourceId);
+        } catch (NotAuthorizedException ex1) {
+            try {
+                ResourceAllocationManagerAuthorizationFilter.instance.execute();
+                serviceInstance.run(executionCourseDestinationId, executionCourseSourceId);
+            } catch (NotAuthorizedException ex2) {
+                try {
+                    OperatorAuthorizationFilter.instance.execute();
+                    serviceInstance.run(executionCourseDestinationId, executionCourseSourceId);
+                } catch (NotAuthorizedException ex3) {
+                    throw ex3;
+                }
+            }
+        }
     }
 
 }

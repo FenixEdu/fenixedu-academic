@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategy
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -28,24 +29,24 @@ import pt.ist.fenixWebFramework.services.Service;
  * 
  */
 
-public class EnrollGroupShift extends FenixService {
+public class EnrollGroupShift {
 
     @Checked("RolePredicates.STUDENT_PREDICATE")
     @Service
     public static Boolean run(Integer studentGroupCode, Integer groupPropertiesCode, Integer newShiftCode, String username)
             throws FenixServiceException {
 
-        Grouping groupProperties = rootDomainObject.readGroupingByOID(groupPropertiesCode);
+        Grouping groupProperties = RootDomainObject.getInstance().readGroupingByOID(groupPropertiesCode);
         if (groupProperties == null) {
             throw new ExistingServiceException();
         }
 
-        StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupCode);
+        StudentGroup studentGroup = RootDomainObject.getInstance().readStudentGroupByOID(studentGroupCode);
         if (studentGroup == null) {
             throw new InvalidArgumentsServiceException();
         }
 
-        Shift shift = rootDomainObject.readShiftByOID(newShiftCode);
+        Shift shift = RootDomainObject.getInstance().readShiftByOID(newShiftCode);
         if (groupProperties.getShiftType() == null || studentGroup.getShift() != null
                 || (!shift.containsType(groupProperties.getShiftType()))) {
             throw new InvalidStudentNumberServiceException();

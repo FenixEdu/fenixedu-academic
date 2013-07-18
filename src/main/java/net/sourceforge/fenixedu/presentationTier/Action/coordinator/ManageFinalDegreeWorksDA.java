@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.coordinator;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -26,7 +25,7 @@ public class ManageFinalDegreeWorksDA extends FenixDispatchAction {
     }
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixFilterException, FenixServiceException {
+            throws  FenixServiceException {
 
         final DegreeCurricularPlan degreeCurricularPlan = readDegreeCurricularPlan(request);
         request.setAttribute("degreeCurricularPlan", degreeCurricularPlan);
@@ -69,7 +68,7 @@ public class ManageFinalDegreeWorksDA extends FenixDispatchAction {
         return mostRecentExecutionDegree;
     }
 
-    private DegreeCurricularPlan readDegreeCurricularPlan(final HttpServletRequest request) throws FenixFilterException,
+    private DegreeCurricularPlan readDegreeCurricularPlan(final HttpServletRequest request) throws 
             FenixServiceException {
         String degreeCurricularPlanIDString = request.getParameter("degreeCurricularPlanID");
         if (degreeCurricularPlanIDString == null || degreeCurricularPlanIDString.length() == 0) {

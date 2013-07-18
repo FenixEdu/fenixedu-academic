@@ -6,19 +6,22 @@
 package net.sourceforge.fenixedu.applicationTier.Filtro;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import pt.utl.ist.berserk.ServiceRequest;
-import pt.utl.ist.berserk.ServiceResponse;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 /**
  * @author João Mota
  * 
  */
 public class ResponsibleDegreeCoordinatorAuthorizationFilter extends AuthorizationByRoleFilter {
+
+    public static final ResponsibleDegreeCoordinatorAuthorizationFilter instance =
+            new ResponsibleDegreeCoordinatorAuthorizationFilter();
 
     public ResponsibleDegreeCoordinatorAuthorizationFilter() {
 
@@ -34,25 +37,15 @@ public class ResponsibleDegreeCoordinatorAuthorizationFilter extends Authorizati
         return RoleType.COORDINATOR;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * ServidorAplicacao.Filtro.AuthorizationByRoleFilter#execute(pt.utl.ist
-     * .berserk.ServiceRequest, pt.utl.ist.berserk.ServiceResponse)
-     */
-    @Override
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-        IUserView id = getRemoteUser(request);
-        Object[] arguments = getServiceCallArguments(request);
-
+    public void execute(Integer executionDegreeId) throws NotAuthorizedException {
+        IUserView id = AccessControl.getUserView();
         try {
             if ((id == null) || (id.getRoleTypes() == null) || !id.hasRoleType(getRoleType())
-                    || !isResponsibleCoordinatorOfExecutionDegree(id, arguments)) {
-                throw new NotAuthorizedFilterException();
+                    || !isResponsibleCoordinatorOfExecutionDegree(id, executionDegreeId)) {
+                throw new NotAuthorizedException();
             }
         } catch (RuntimeException e) {
-            throw new NotAuthorizedFilterException();
+            throw new NotAuthorizedException();
         }
     }
 
@@ -61,15 +54,15 @@ public class ResponsibleDegreeCoordinatorAuthorizationFilter extends Authorizati
      * @param argumentos
      * @return
      */
-    private boolean isResponsibleCoordinatorOfExecutionDegree(IUserView id, Object[] argumentos) {
+    private boolean isResponsibleCoordinatorOfExecutionDegree(IUserView id, Integer executionDegreeId) {
         boolean result = false;
-        if (argumentos == null) {
+        if (executionDegreeId == null) {
             return result;
         }
         try {
             final Person person = id.getPerson();
 
-            ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID((Integer) argumentos[0]);
+            ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeId);
             Coordinator coordinator = executionDegree.getCoordinatorByTeacher(person);
 
             result = (coordinator != null) && coordinator.getResponsible().booleanValue();

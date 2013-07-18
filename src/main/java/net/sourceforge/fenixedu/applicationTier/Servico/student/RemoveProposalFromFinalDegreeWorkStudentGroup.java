@@ -1,13 +1,13 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class RemoveProposalFromFinalDegreeWorkStudentGroup extends FenixService {
+public class RemoveProposalFromFinalDegreeWorkStudentGroup {
 
     @Checked("RolePredicates.STUDENT_PREDICATE")
     @Service

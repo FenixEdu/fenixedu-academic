@@ -2,14 +2,13 @@ package net.sourceforge.fenixedu.applicationTier.Servico.research.interest;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.research.ResearchInterest;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class ChangeResearchInterestOrder extends FenixService {
+public class ChangeResearchInterestOrder {
 
     @Checked("ResultPredicates.author")
     @Service

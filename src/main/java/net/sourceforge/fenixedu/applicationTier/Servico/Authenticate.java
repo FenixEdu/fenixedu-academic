@@ -17,10 +17,8 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import jvstm.TransactionalCommand;
 import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu._development.PropertiesManager;
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
@@ -39,8 +37,8 @@ import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.FenixWebFramework;
+import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
-import pt.ist.fenixframework.pstm.Transaction;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 import edu.yale.its.tp.cas.client.CASAuthenticationException;
 import edu.yale.its.tp.cas.client.CASReceipt;
@@ -50,7 +48,7 @@ import edu.yale.its.tp.cas.client.ProxyTicketValidator;
  * @author Luis Cruz
  * 
  */
-public class Authenticate extends FenixService implements Serializable {
+public class Authenticate implements Serializable {
 
     private static final String URL_ENCODING = CharEncoding.UTF_8;
 
@@ -215,7 +213,7 @@ public class Authenticate extends FenixService implements Serializable {
         return userView instanceof UserView;
     }
 
-    public IUserView run(final String username, final String password, final String requestURL, final String remoteHost)
+    protected IUserView run(final String username, final String password, final String requestURL, final String remoteHost)
             throws ExcepcaoAutenticacao, FenixServiceException {
 
         Person person = Person.readPersonByUsernameWithOpenedLogin(username);
@@ -244,8 +242,8 @@ public class Authenticate extends FenixService implements Serializable {
         }
     }
 
-    public IUserView run(final CASReceipt receipt, final String requestURL, final String remoteHost) throws ExcepcaoAutenticacao,
-            ExcepcaoPersistencia {
+    protected IUserView run(final CASReceipt receipt, final String requestURL, final String remoteHost)
+            throws ExcepcaoAutenticacao, ExcepcaoPersistencia {
         final String username = receipt.getUserName();
 
         Person person = Person.readPersonByUsernameWithOpenedLogin(username);
@@ -265,36 +263,6 @@ public class Authenticate extends FenixService implements Serializable {
             }
         } else {
             return getUserView(person, requestURL);
-        }
-    }
-
-    public static class RegisterUserLoginThread extends Thread implements TransactionalCommand {
-
-        private final Integer userID;
-        private final String remoteHost;
-
-        public RegisterUserLoginThread(final User user, final String remoteHost) {
-            userID = user.getIdInternal();
-            this.remoteHost = remoteHost;
-        }
-
-        @Override
-        public void run() {
-            Transaction.withTransaction(this);
-        }
-
-        @Override
-        public void doIt() {
-            final User user = rootDomainObject.readUserByOID(userID);
-            user.setLastLoginHost(user.getCurrentLoginHost());
-            user.setLastLoginDateTimeDateTime(user.getCurrentLoginDateTimeDateTime());
-            user.setCurrentLoginDateTimeDateTime(new DateTime());
-            user.setCurrentLoginHost(remoteHost);
-        }
-
-        protected static void runThread(final User user, final String remoteHost) {
-            final RegisterUserLoginThread registerUserLoginThread = new RegisterUserLoginThread(user, remoteHost);
-            registerUserLoginThread.start();
         }
     }
 
@@ -344,6 +312,30 @@ public class Authenticate extends FenixService implements Serializable {
 
     public IUserView mock(final Person person, final String requestURL) {
         return getUserView(person, requestURL);
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final Authenticate serviceInstance = new Authenticate();
+
+    @Service
+    public static IUserView runAuthenticate(String username, String password, String requestURL, String remoteHost)
+            throws ExcepcaoAutenticacao, FenixServiceException {
+        return serviceInstance.run(username, password, requestURL, remoteHost);
+    }
+
+    @Service
+    public static IUserView runAuthenticate(final CASReceipt receipt, final String requestURL, final String remoteHost)
+            throws ExcepcaoAutenticacao, FenixServiceException, ExcepcaoPersistencia {
+        return serviceInstance.run(receipt, requestURL, remoteHost);
+    }
+
+    // Service Invokers migrated from Berserk
+
+    @Service
+    public static IUserView runLocalAuthenticate(String username, String password, String requestURL, String remoteHost)
+            throws ExcepcaoAutenticacao, FenixServiceException {
+        return serviceInstance.run(username, password, requestURL, remoteHost);
     }
 
 }

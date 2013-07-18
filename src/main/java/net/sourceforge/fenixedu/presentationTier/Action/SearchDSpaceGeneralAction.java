@@ -8,7 +8,6 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.SearchDSpaceBean;
 import net.sourceforge.fenixedu.dataTransferObject.SearchDSpaceBean.SearchElement;
@@ -32,7 +31,7 @@ import pt.utl.ist.fenix.tools.file.VirtualPath;
 public abstract class SearchDSpaceGeneralAction extends FenixDispatchAction {
 
     protected ActionForward prepareSearch(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response, String forwardTo) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response, String forwardTo) throws  FenixServiceException {
 
         SearchDSpaceBean bean = createNewBean();
         bean.addSearchElement();
@@ -41,7 +40,7 @@ public abstract class SearchDSpaceGeneralAction extends FenixDispatchAction {
     }
 
     protected ActionForward addNewSearchCriteria(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response, String forwardTo) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response, String forwardTo) throws  FenixServiceException {
 
         SearchDSpaceBean bean = getBean(request);
         String addIndex = request.getParameter("addIndex");
@@ -57,7 +56,7 @@ public abstract class SearchDSpaceGeneralAction extends FenixDispatchAction {
     }
 
     protected ActionForward removeSearchCriteria(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response, String forwardTo) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response, String forwardTo) throws  FenixServiceException {
 
         SearchDSpaceBean bean = getBean(request);
         String removeIndex = request.getParameter("removeIndex");
@@ -82,7 +81,7 @@ public abstract class SearchDSpaceGeneralAction extends FenixDispatchAction {
     }
 
     protected ActionForward moveIndex(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response, String forwardTo) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response, String forwardTo) throws  FenixServiceException {
 
         SearchDSpaceBean bean = reconstructBeanFromRequest(request);
 
@@ -95,7 +94,7 @@ public abstract class SearchDSpaceGeneralAction extends FenixDispatchAction {
     }
 
     protected ActionForward searchContent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response, String forwardTo) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response, String forwardTo) throws  FenixServiceException {
         IViewState viewState = RenderUtils.getViewState("search");
         if (viewState == null) {
             return prepareSearch(mapping, form, request, response, forwardTo);

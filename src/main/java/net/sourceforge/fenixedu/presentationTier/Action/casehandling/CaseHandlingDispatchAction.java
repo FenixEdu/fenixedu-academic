@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.CreateNewProcess;
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.ExecuteProcessActivity;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -96,17 +95,17 @@ public abstract class CaseHandlingDispatchAction extends FenixDispatchAction {
             HttpServletResponse response);
 
     public ActionForward createNewProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         Process process = CreateNewProcess.run(getProcessType().getName(), getRenderedObject());
         request.setAttribute("process", process);
         return listProcessAllowedActivities(mapping, form, request, response);
     }
 
-    protected void executeActivity(Process process, String activityId) throws FenixFilterException, FenixServiceException {
+    protected void executeActivity(Process process, String activityId) throws  FenixServiceException {
         executeActivity(process, activityId, null);
     }
 
-    protected Process executeActivity(Process process, String activityId, Object object) throws FenixFilterException,
+    protected Process executeActivity(Process process, String activityId, Object object) throws 
             FenixServiceException {
         return ExecuteProcessActivity.run(process, activityId, object);
     }

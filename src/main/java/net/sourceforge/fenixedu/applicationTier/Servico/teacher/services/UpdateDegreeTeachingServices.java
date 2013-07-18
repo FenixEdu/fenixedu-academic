@@ -2,9 +2,13 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.services;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentAdministrativeOfficeAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentMemberAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ScientificCouncilAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -13,12 +17,13 @@ import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherServiceLog;
 import net.sourceforge.fenixedu.presentationTier.Action.credits.ManageDegreeTeachingServicesDispatchAction.ShiftIDTeachingPercentage;
 import net.sourceforge.fenixedu.util.BundleUtil;
+import pt.ist.fenixWebFramework.services.Service;
 
-public class UpdateDegreeTeachingServices extends FenixService {
+public class UpdateDegreeTeachingServices {
 
-    public void run(Integer professorshipID, List<ShiftIDTeachingPercentage> shiftsIDsTeachingPercentages, RoleType roleType) {
+    protected void run(Integer professorshipID, List<ShiftIDTeachingPercentage> shiftsIDsTeachingPercentages, RoleType roleType) {
 
-        Professorship professorship = rootDomainObject.readProfessorshipByOID(professorshipID);
+        Professorship professorship = RootDomainObject.getInstance().readProfessorshipByOID(professorshipID);
         Teacher teacher = professorship.getTeacher();
         ExecutionSemester executionSemester = professorship.getExecutionCourse().getExecutionPeriod();
         TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
@@ -31,7 +36,7 @@ public class UpdateDegreeTeachingServices extends FenixService {
                 "label.teacher.schedule.change"));
 
         for (ShiftIDTeachingPercentage shiftIDTeachingPercentage : shiftsIDsTeachingPercentages) {
-            Shift shift = rootDomainObject.readShiftByOID(shiftIDTeachingPercentage.getShiftID());
+            Shift shift = RootDomainObject.getInstance().readShiftByOID(shiftIDTeachingPercentage.getShiftID());
             DegreeTeachingService degreeTeachingService =
                     teacherService.getDegreeTeachingServiceByShiftAndProfessorship(shift, professorship);
             if (degreeTeachingService != null) {
@@ -54,4 +59,30 @@ public class UpdateDegreeTeachingServices extends FenixService {
 
         new TeacherServiceLog(teacherService, log.toString());
     }
+
+    // Service Invokers migrated from Berserk
+
+    private static final UpdateDegreeTeachingServices serviceInstance = new UpdateDegreeTeachingServices();
+
+    @Service
+    public static void runUpdateDegreeTeachingServices(Integer professorshipID,
+            List<ShiftIDTeachingPercentage> shiftsIDsTeachingPercentages, RoleType roleType) throws NotAuthorizedException {
+        try {
+            ScientificCouncilAuthorizationFilter.instance.execute();
+            serviceInstance.run(professorshipID, shiftsIDsTeachingPercentages, roleType);
+        } catch (NotAuthorizedException ex1) {
+            try {
+                DepartmentMemberAuthorizationFilter.instance.execute();
+                serviceInstance.run(professorshipID, shiftsIDsTeachingPercentages, roleType);
+            } catch (NotAuthorizedException ex2) {
+                try {
+                    DepartmentAdministrativeOfficeAuthorizationFilter.instance.execute();
+                    serviceInstance.run(professorshipID, shiftsIDsTeachingPercentages, roleType);
+                } catch (NotAuthorizedException ex3) {
+                    throw ex3;
+                }
+            }
+        }
+    }
+
 }

@@ -3,12 +3,12 @@ package net.sourceforge.fenixedu.applicationTier.Servico.fileManager;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.dataTransferObject.person.PhotographUploadBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PhotoType;
 import net.sourceforge.fenixedu.domain.Photograph;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.ByteArray;
 import net.sourceforge.fenixedu.util.ContentType;
@@ -20,7 +20,7 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-public class StorePersonalPhoto extends FenixService {
+public class StorePersonalPhoto {
     @Checked("RolePredicates.OPERATOR_PREDICATE")
     @Service
     public static void run(byte[] contents, byte[] compressed, ContentType contentType, String personUsername)
@@ -38,7 +38,7 @@ public class StorePersonalPhoto extends FenixService {
     @Service
     public static void run(byte[] contents, byte[] compressed, ContentType contentType, Integer personID)
             throws ExcepcaoPersistencia {
-        Person person = (Person) rootDomainObject.readPartyByOID(personID);
+        Person person = (Person) RootDomainObject.getInstance().readPartyByOID(personID);
 
         storePersonalPhoto(contents, compressed, contentType, person);
     }

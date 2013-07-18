@@ -6,7 +6,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.factoryExecutors.DocumentRequestCreator;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean;
@@ -71,14 +70,14 @@ public class DocumentRequestDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward prepareCancelAcademicServiceRequest(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
 
         getAndSetAcademicServiceRequest(request);
         return mapping.findForward("prepareCancelAcademicServiceRequest");
     }
 
     public ActionForward cancelAcademicServiceRequest(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         final AcademicServiceRequest academicServiceRequest = getAndSetAcademicServiceRequest(request);
         final String justification = ((DynaActionForm) actionForm).getString("justification");
@@ -153,7 +152,7 @@ public class DocumentRequestDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward create(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         try {
             executeFactoryMethod();
         } catch (DomainException e) {

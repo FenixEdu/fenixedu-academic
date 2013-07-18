@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Person;
@@ -18,7 +18,7 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author Luis Cruz
  * 
  */
-public class ReadActiveStudentCurricularPlanByDegreeType extends FenixService {
+public class ReadActiveStudentCurricularPlanByDegreeType {
 
     @Checked("RolePredicates.STUDENT_PREDICATE")
     @Service

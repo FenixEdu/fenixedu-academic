@@ -9,12 +9,16 @@ import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.qualification.DeleteQualification;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.qualification.EditQualification;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.qualification.ReadQualification;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCountryEditor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.person.InfoQualification;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.framework.CRUDActionByOID;
-import net.sourceforge.fenixedu.presentationTier.mapping.framework.CRUDMapping;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
@@ -29,11 +33,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  * @author barbosa
  */
 @Mapping(module = "person", path = "/qualificationForm", input = "/qualificationForm.do?method=prepareEdit&page=0",
-        attribute = "qualificationForm", formBean = "qualificationForm", scope = "request", parameter = "method",
-        customMappingClass = net.sourceforge.fenixedu.presentationTier.mapping.framework.CRUDMapping.class,
-        customMappingProperties = { "editService", "EditQualification", "deleteService", "DeleteQualification", "readService",
-                "ReadQualification", "oidProperty", "idInternal", "requestAttribute", "infoQualification", "infoObjectClassName",
-                "infoObjectClassName" })
+        attribute = "qualificationForm", formBean = "qualificationForm", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "successfull-delete", path = "/readQualifications.do?page=0"),
         @Forward(name = "successfull-edit", path = "/readQualifications.do?page=0"),
         @Forward(name = "successfull-read", path = "/readQualifications.do?page=0"),
@@ -77,9 +77,9 @@ public class QualificationAction extends CRUDActionByOID {
      * presentationTier.mapping.framework.CRUDMapping)
      */
     @Override
-    protected InfoObject populateInfoObjectFromForm(ActionForm form, CRUDMapping mapping) throws FenixActionException {
+    protected InfoObject populateInfoObjectFromForm(ActionForm form) throws FenixActionException {
         try {
-            InfoQualification infoQualification = (InfoQualification) super.populateInfoObjectFromForm(form, mapping);
+            InfoQualification infoQualification = (InfoQualification) super.populateInfoObjectFromForm(form);
             SimpleDateFormat sdf = new SimpleDateFormat(format);
             DynaActionForm dynaForm = (DynaActionForm) form;
 
@@ -98,6 +98,31 @@ public class QualificationAction extends CRUDActionByOID {
         } catch (ParseException e) {
             throw new FenixActionException(e.getMessage());
         }
+    }
+
+    @Override
+    protected InfoObject readIt(Integer idInternal) throws NotAuthorizedException {
+        return ReadQualification.runReadQualification(idInternal);
+    }
+
+    @Override
+    protected String getRequestAttribute() {
+        return "infoQualification";
+    }
+
+    @Override
+    protected void deleteIt(Integer idInternal) throws NotAuthorizedException {
+        DeleteQualification.runDeleteQualification(idInternal);
+    }
+
+    @Override
+    protected void editIt(Integer idInternal, InfoObject object) throws NotAuthorizedException, FenixServiceException {
+        EditQualification.runEditQualification(idInternal, (InfoQualification) object);
+    }
+
+    @Override
+    protected String getInfoObjectClassName() {
+        return "infoObjectClassName";
     }
 
 }

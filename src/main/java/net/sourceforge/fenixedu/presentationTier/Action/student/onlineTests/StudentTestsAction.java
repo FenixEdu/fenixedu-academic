@@ -18,8 +18,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -28,6 +26,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.student.onlineTests.Clea
 import net.sourceforge.fenixedu.applicationTier.Servico.student.onlineTests.GiveUpQuestion;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.onlineTests.InsertStudentTestResponses;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.onlineTests.ReadExecutionCoursesByStudentTests;
+import net.sourceforge.fenixedu.applicationTier.Servico.student.onlineTests.ReadStudentTest;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.onlineTests.ReadStudentTestQuestionImage;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarDateComparator;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarHourComparator;
@@ -45,7 +44,6 @@ import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.util.report.ReportsUtils;
 import net.sourceforge.fenixedu.util.tests.CardinalityType;
 import net.sourceforge.fenixedu.util.tests.QuestionType;
@@ -108,7 +106,7 @@ public class StudentTestsAction extends FenixDispatchAction {
     }
 
     public ActionForward testsFirstPage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
         final IUserView userView = getUserView(request);
         final Integer objectCode = new Integer(request.getParameter("objectCode"));
         final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(objectCode);
@@ -179,7 +177,7 @@ public class StudentTestsAction extends FenixDispatchAction {
     }
 
     public ActionForward prepareToDoTest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
         Integer testCode = null;
         request.setAttribute("date", getDate());
         try {
@@ -203,9 +201,9 @@ public class StudentTestsAction extends FenixDispatchAction {
         List<StudentTestQuestion> studentTestQuestionList = null;
         try {
             studentTestQuestionList =
-                    (List<StudentTestQuestion>) ServiceUtils.executeService("ReadStudentTestToDo", new Object[] { registration,
-                            distributedTest, new Boolean(true), getServlet().getServletContext().getRealPath("/") });
-        } catch (NotAuthorizedFilterException e) {
+                    ReadStudentTest.runReadStudentTestToDo(registration, distributedTest, new Boolean(true), getServlet()
+                            .getServletContext().getRealPath("/"));
+        } catch (NotAuthorizedException e) {
             request.setAttribute("cantDoTest", new Boolean(true));
             return mapping.findForward("testError");
         } catch (InvalidArgumentsServiceException e) {
@@ -260,7 +258,7 @@ public class StudentTestsAction extends FenixDispatchAction {
     }
 
     public ActionForward showImage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
         final String testCode = request.getParameter("testCode");
         final Integer exerciseId = getRequestParameterAsInteger(request, "exerciseCode");
         final Integer imgCode = getRequestParameterAsInteger(request, "imgCode");
@@ -310,7 +308,7 @@ public class StudentTestsAction extends FenixDispatchAction {
     }
 
     public ActionForward doTest(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixActionException, FenixFilterException {
+            throws FenixActionException {
         final String objectCode = request.getParameter("objectCode");
         final Integer studentCode = new Integer(request.getParameter("studentCode"));
         final String path = getServlet().getServletContext().getRealPath("/");
@@ -340,12 +338,7 @@ public class StudentTestsAction extends FenixDispatchAction {
 
         List<StudentTestQuestion> studentTestQuestionList;
         try {
-            studentTestQuestionList =
-                    (List) ServiceUtils.executeService("ReadStudentTestToDo", new Object[] { registration, testCode,
-                            new Boolean(false), path });
-        } catch (NotAuthorizedFilterException e) {
-            request.setAttribute("cantDoTest", new Boolean(true));
-            return mapping.findForward("testError");
+            studentTestQuestionList = ReadStudentTest.runReadStudentTestToDo(registration, testCode, new Boolean(false), path);
         } catch (NotAuthorizedException e) {
             request.setAttribute("cantDoTest", new Boolean(true));
             return mapping.findForward("testError");
@@ -395,8 +388,7 @@ public class StudentTestsAction extends FenixDispatchAction {
         try {
             infoSiteStudentTestFeedback = InsertStudentTestResponses.run(registration, studentCode, testCode, userResponse, path);
             infoStudentTestQuestionList =
-                    (List) ServiceUtils.executeService("ReadStudentTestToDo", new Object[] { registration, testCode,
-                            new Boolean(false), path });
+                    ReadStudentTest.runReadStudentTestToDo(registration, testCode, new Boolean(false), path);
         } catch (NotAuthorizedException e) {
             request.setAttribute("cantDoTest", new Boolean(true));
             return mapping.findForward("testError");
@@ -480,7 +472,7 @@ public class StudentTestsAction extends FenixDispatchAction {
     }
 
     public ActionForward prepareToGiveUp(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
         request.setAttribute("testCode", request.getParameter("testCode"));
         request.setAttribute("exerciseCode", request.getParameter("exerciseCode"));
         request.setAttribute("item", request.getParameter("item"));
@@ -489,7 +481,7 @@ public class StudentTestsAction extends FenixDispatchAction {
     }
 
     public ActionForward giveUp(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixActionException, FenixFilterException {
+            throws FenixActionException {
         request.setAttribute("exerciseCode", request.getParameter("exerciseCode"));
         request.setAttribute("item", request.getParameter("item"));
         final IUserView userView = getUserView(request);
@@ -529,7 +521,7 @@ public class StudentTestsAction extends FenixDispatchAction {
     }
 
     public ActionForward cleanSubQuestions(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
         request.setAttribute("exerciseCode", request.getParameter("exerciseCode"));
         request.setAttribute("item", request.getParameter("item"));
 
@@ -573,7 +565,7 @@ public class StudentTestsAction extends FenixDispatchAction {
     }
 
     public ActionForward showTestCorrection(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
         final String path = getServlet().getServletContext().getRealPath("/");
 
         Integer testCode = null;
@@ -597,12 +589,11 @@ public class StudentTestsAction extends FenixDispatchAction {
         List<StudentTestQuestion> studentTestQuestionList = null;
         try {
             studentTestQuestionList =
-                    (List<StudentTestQuestion>) ServiceUtils.executeService("ReadStudentTestForCorrection", new Object[] {
-                            registration, distributedTest, new Boolean(false), path });
+                    ReadStudentTest.runReadStudentTestForCorrection(registration, distributedTest, new Boolean(false), path);
         } catch (InvalidArgumentsServiceException e) {
             request.setAttribute("invalidTest", new Boolean(true));
             return mapping.findForward("testError");
-        } catch (NotAuthorizedFilterException e) {
+        } catch (NotAuthorizedException e) {
             request.setAttribute("cantShowTestCorrection", new Boolean(true));
             return mapping.findForward("testError");
         } catch (FenixServiceException e) {

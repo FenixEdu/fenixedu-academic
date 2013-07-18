@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.teacher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -22,7 +21,7 @@ public class IndexTeacherAction extends FenixAction {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixActionException, FenixFilterException {
+            throws FenixActionException {
         final InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(getUserView(request).getPerson().getTeacher());
         request.setAttribute("infoTeacher", infoTeacher);
         return mapping.findForward("success");

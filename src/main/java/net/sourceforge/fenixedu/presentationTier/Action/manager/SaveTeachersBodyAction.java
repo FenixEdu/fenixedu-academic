@@ -10,14 +10,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.SaveTeachersBody;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.UpdateNonAffiliatedTeachersProfessorship;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidArgumentsActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -34,7 +34,7 @@ public class SaveTeachersBodyAction extends FenixAction {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixActionException, FenixServiceException, FenixFilterException {
+            throws FenixActionException, FenixServiceException {
 
         IUserView userView = UserView.getUser();
         Integer executionCourseId = new Integer(request.getParameter("executionCourseId"));
@@ -45,24 +45,21 @@ public class SaveTeachersBodyAction extends FenixAction {
         Integer[] nonAffiliatedTeachersIds = (Integer[]) actionForm.get("nonAffiliatedTeachersIds");
 
         List respTeachersIds = Arrays.asList(responsibleTeachersIds);
-        List profTeachersIds = Arrays.asList(professorShipTeachersIds);
-        List nonAffilTeachersIds = Arrays.asList(nonAffiliatedTeachersIds);
+        List<Integer> profTeachersIds = Arrays.asList(professorShipTeachersIds);
+        List<Integer> nonAffilTeachersIds = Arrays.asList(nonAffiliatedTeachersIds);
 
         // TODO: Collections.sort(profTeachersIds, new BeanComparator("name"));
-        Object args[] = { respTeachersIds, profTeachersIds, executionCourseId };
         Boolean result;
 
         try {
-            result = (Boolean) ServiceUtils.executeService("SaveTeachersBody", args);
-
+            result = SaveTeachersBody.runSaveTeachersBody(respTeachersIds, profTeachersIds, executionCourseId);
         } catch (NonExistingServiceException e) {
             throw new NonExistingActionException(e.getMessage(), mapping.findForward("readCurricularCourse"));
         }
 
-        Object args1[] = { nonAffilTeachersIds, executionCourseId };
         try {
-            ServiceUtils.executeService("UpdateNonAffiliatedTeachersProfessorship", args1);
-
+            UpdateNonAffiliatedTeachersProfessorship.runUpdateNonAffiliatedTeachersProfessorship(nonAffilTeachersIds,
+                    executionCourseId);
         } catch (NonExistingServiceException e) {
             throw new NonExistingActionException(e.getMessage(), mapping.findForward("readCurricularCourse"));
         }

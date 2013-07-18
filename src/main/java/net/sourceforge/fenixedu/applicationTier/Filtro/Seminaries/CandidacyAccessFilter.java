@@ -6,14 +6,12 @@
 package net.sourceforge.fenixedu.applicationTier.Filtro.Seminaries;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import pt.utl.ist.berserk.ServiceRequest;
-import pt.utl.ist.berserk.ServiceResponse;
-import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -22,29 +20,23 @@ import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
  *         Created at 26/Ago/2003, 13:35:57
  * 
  */
-public class CandidacyAccessFilter extends Filtro {
+public class CandidacyAccessFilter {
+
+    public static final CandidacyAccessFilter instance = new CandidacyAccessFilter();
+
     public CandidacyAccessFilter() {
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk
-     * .ServiceRequest, pt.utl.ist.berserk.ServiceResponse)
-     */
-    @Override
-    public void execute(ServiceRequest request, ServiceResponse response) throws FilterException, Exception {
-        IUserView id = getRemoteUser(request);
-        Object[] argumentos = getServiceCallArguments(request);
+    public void execute(Integer candidacyID) throws NotAuthorizedException {
+        IUserView id = AccessControl.getUserView();
 
-        if ((!this.checkCandidacyOwnership(id, argumentos)) && (!this.checkCoordinatorRole(id, argumentos))) {
+        if ((!this.checkCandidacyOwnership(id, candidacyID)) && (!this.checkCoordinatorRole(id, candidacyID))) {
             throw new NotAuthorizedException();
         }
 
     }
 
-    boolean checkCoordinatorRole(IUserView id, Object[] arguments) throws Exception {
+    boolean checkCoordinatorRole(IUserView id, Integer candidacyID) {
         boolean result = true;
         // Collection roles = id.getRoles();
         // Iterator iter = roles.iterator();
@@ -59,13 +51,12 @@ public class CandidacyAccessFilter extends Filtro {
         return result;
     }
 
-    boolean checkCandidacyOwnership(IUserView id, Object[] arguments) throws Exception {
+    boolean checkCandidacyOwnership(IUserView id, Integer candidacyID) {
         boolean result = true;
-        Integer candidacyID = (Integer) arguments[0];
 
         Registration registration = Registration.readByUsername(id.getUtilizador());
         if (registration != null) {
-            SeminaryCandidacy candidacy = rootDomainObject.readSeminaryCandidacyByOID(candidacyID);
+            SeminaryCandidacy candidacy = RootDomainObject.getInstance().readSeminaryCandidacyByOID(candidacyID);
             //
             if ((candidacy != null)
                     && (candidacy.getStudent().getIdInternal().intValue() != registration.getIdInternal().intValue())) {

@@ -4,10 +4,10 @@ import java.util.Collection;
 
 import net.sourceforge.fenixedu.domain.person.PersonName;
 
-public class SearchInternalPersons extends SearchParties {
+public class SearchInternalPersons extends SearchParties<PersonName> {
 
     @Override
-    protected Collection search(String value, int size) {
+    protected Collection<PersonName> search(String value, int size) {
         return PersonName.findInternalPerson(value, size);
     }
 

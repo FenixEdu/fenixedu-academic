@@ -7,7 +7,6 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Department;
@@ -60,7 +59,7 @@ public class ManageCompetenceCourseInformationChangeRequests extends FenixDispat
     }
 
     public ActionForward viewVersion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         CompetenceCourseInformationChangeRequest changeRequest = getChangeRequest(request);
         if (changeRequest != null && isAllowedToViewChangeRequest(getLoggedPerson(request), changeRequest)) {
@@ -70,7 +69,7 @@ public class ManageCompetenceCourseInformationChangeRequests extends FenixDispat
     }
 
     public ActionForward approveRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         CompetenceCourseInformationChangeRequest changeRequest = getChangeRequest(request);
         if (changeRequest != null && isAllowedToViewChangeRequest(getLoggedPerson(request), changeRequest)) {
@@ -85,7 +84,7 @@ public class ManageCompetenceCourseInformationChangeRequests extends FenixDispat
     }
 
     public ActionForward rejectRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         CompetenceCourseInformationChangeRequest changeRequest = getChangeRequest(request);
         if (changeRequest != null && isAllowedToViewChangeRequest(getLoggedPerson(request), changeRequest)) {

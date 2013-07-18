@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchParameters;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchPersonPredicate;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPersonWithCard;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationEntry;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -61,9 +62,8 @@ public class CardGenerationSearchDA extends FenixDispatchAction {
 
         if (!searchParameters.emptyParameters()) {
             final SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(searchParameters);
-            final Object[] args = { searchParameters, predicate };
             final CollectionPager<Person> searchPersonCollectionPager =
-                    (CollectionPager<Person>) executeService("SearchPersonWithCard", args);
+                    SearchPersonWithCard.runSearchPersonWithCard(searchParameters, predicate);
             request.setAttribute("searchPersonCollectionPager", searchPersonCollectionPager);
             request.setAttribute("numberOfPages", searchPersonCollectionPager.getNumberOfPages());
             final String pageNumberString = request.getParameter("pageNumber");

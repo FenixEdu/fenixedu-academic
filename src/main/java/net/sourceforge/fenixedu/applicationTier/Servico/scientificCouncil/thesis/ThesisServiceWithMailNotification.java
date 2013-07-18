@@ -7,8 +7,6 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
@@ -19,9 +17,9 @@ import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.Sender;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
-public abstract class ThesisServiceWithMailNotification extends FenixService {
+public abstract class ThesisServiceWithMailNotification {
 
-    public void run(Thesis thesis) throws FenixServiceException {
+    public void run(Thesis thesis) {
         process(thesis);
         sendEmail(thesis);
     }

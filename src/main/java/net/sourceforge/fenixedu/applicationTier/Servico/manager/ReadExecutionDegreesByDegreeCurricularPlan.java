@@ -3,14 +3,13 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class ReadExecutionDegreesByDegreeCurricularPlan extends FenixService {
+public class ReadExecutionDegreesByDegreeCurricularPlan {
 
     @Service
     public static List<InfoExecutionDegree> run(final DegreeCurricularPlan degreeCurricularPlan) throws FenixServiceException {

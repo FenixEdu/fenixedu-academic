@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegreeEditor;
@@ -13,28 +12,29 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class InsertExecutionDegreeAtDegreeCurricularPlan extends FenixService {
+public class InsertExecutionDegreeAtDegreeCurricularPlan {
 
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
     public static void run(InfoExecutionDegreeEditor infoExecutionDegree) throws FenixServiceException {
-        final Campus campus = (Campus) rootDomainObject.readResourceByOID(infoExecutionDegree.getInfoCampus().getIdInternal());
+        final Campus campus = (Campus) RootDomainObject.getInstance().readResourceByOID(infoExecutionDegree.getInfoCampus().getIdInternal());
         if (campus == null) {
             throw new NonExistingServiceException("message.nonExistingCampus", null);
         }
 
         final DegreeCurricularPlan degreeCurricularPlan =
-                rootDomainObject.readDegreeCurricularPlanByOID(infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal());
+                RootDomainObject.getInstance().readDegreeCurricularPlanByOID(infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal());
         if (degreeCurricularPlan == null) {
             throw new NonExistingServiceException("message.nonExistingDegreeCurricularPlan", null);
         }
 
         final ExecutionYear executionYear =
-                rootDomainObject.readExecutionYearByOID(infoExecutionDegree.getInfoExecutionYear().getIdInternal());
+                RootDomainObject.getInstance().readExecutionYearByOID(infoExecutionDegree.getInfoExecutionYear().getIdInternal());
         if (executionYear == null) {
             throw new NonExistingServiceException("message.non.existing.execution.year", null);
         }

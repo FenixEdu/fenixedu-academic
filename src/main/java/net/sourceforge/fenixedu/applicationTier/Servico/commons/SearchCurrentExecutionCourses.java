@@ -7,24 +7,23 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.presentationTier.renderers.providers.AutoCompleteProvider;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.beanutils.PropertyUtils;
 
-import pt.ist.fenixframework.DomainObject;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
-public class SearchCurrentExecutionCourses extends FenixService implements AutoCompleteSearchService {
+public class SearchCurrentExecutionCourses implements AutoCompleteProvider<ExecutionCourse> {
 
     @Override
-    public Collection run(Class type, String value, int limit, Map<String, String> arguments) {
-        List<DomainObject> result = new ArrayList<DomainObject>();
+    public Collection<ExecutionCourse> getSearchResults(Map<String, String> argsMap, String value, int maxCount) {
+        List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
 
-        String slotName = arguments.get("slot");
+        String slotName = argsMap.get("slot");
         Collection<ExecutionCourse> objects = ExecutionSemester.readActualExecutionSemester().getAssociatedExecutionCourses();
 
         if (value == null) {
@@ -32,7 +31,7 @@ public class SearchCurrentExecutionCourses extends FenixService implements AutoC
         } else {
             String[] values = StringNormalizer.normalize(value).toLowerCase().split("\\p{Space}+");
 
-            outter: for (DomainObject object : objects) {
+            outter: for (ExecutionCourse object : objects) {
                 try {
                     Object objectValue = PropertyUtils.getProperty(object, slotName);
 
@@ -52,7 +51,7 @@ public class SearchCurrentExecutionCourses extends FenixService implements AutoC
 
                     result.add(object);
 
-                    if (result.size() >= limit) {
+                    if (result.size() >= maxCount) {
                         break;
                     }
 
@@ -69,4 +68,5 @@ public class SearchCurrentExecutionCourses extends FenixService implements AutoC
         Collections.sort(result, new BeanComparator(slotName));
         return result;
     }
+
 }

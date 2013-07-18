@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
@@ -22,6 +21,7 @@ import net.sourceforge.fenixedu.domain.GuideEntry;
 import net.sourceforge.fenixedu.domain.GuideSituation;
 import net.sourceforge.fenixedu.domain.GuideState;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.transactions.PaymentType;
 import net.sourceforge.fenixedu.util.CalculateGuideTotal;
@@ -32,7 +32,7 @@ import pt.ist.fenixWebFramework.services.Service;
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class CreateGuide extends FenixService {
+public class CreateGuide {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
@@ -76,11 +76,11 @@ public class CreateGuide extends FenixService {
         infoGuideSituation.setDate(calendar.getTime());
         infoGuideSituation.setSituation(situationOfGuide);
 
-        Person person = (Person) rootDomainObject.readPartyByOID(infoGuide.getInfoPerson().getIdInternal());
+        Person person = (Person) RootDomainObject.getInstance().readPartyByOID(infoGuide.getInfoPerson().getIdInternal());
         ExecutionDegree executionDegree =
-                rootDomainObject.readExecutionDegreeByOID(infoGuide.getInfoExecutionDegree().getIdInternal());
+                RootDomainObject.getInstance().readExecutionDegreeByOID(infoGuide.getInfoExecutionDegree().getIdInternal());
         final Party contributor =
-                infoGuide.getInfoContributor() != null ? rootDomainObject.readPartyByOID(infoGuide.getInfoContributor()
+                infoGuide.getInfoContributor() != null ? RootDomainObject.getInstance().readPartyByOID(infoGuide.getInfoContributor()
                         .getIdInternal()) : person;
 
         Guide guide = new Guide();

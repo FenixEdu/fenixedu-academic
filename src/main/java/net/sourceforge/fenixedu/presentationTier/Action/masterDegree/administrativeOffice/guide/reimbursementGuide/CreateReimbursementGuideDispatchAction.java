@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.ChooseGuide;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.reimbursementGuide.CreateReimbursementGuide;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideEntry;
@@ -25,7 +25,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidGuideS
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSituationActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NoEntryChosenActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler;
 
 import org.apache.struts.action.ActionForm;
@@ -59,7 +58,7 @@ public class CreateReimbursementGuideDispatchAction extends FenixDispatchAction 
 
     @Input
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixActionException, FenixFilterException {
+            throws FenixActionException {
 
         IUserView userView = UserView.getUser();
 
@@ -69,9 +68,8 @@ public class CreateReimbursementGuideDispatchAction extends FenixDispatchAction 
 
         InfoGuide infoGuide = null;
 
-        Object args[] = { guideNumber, guideYear, guideVersion };
         try {
-            infoGuide = (InfoGuide) ServiceUtils.executeService("ChooseGuide", args);
+            infoGuide = ChooseGuide.runChooseGuide(guideNumber, guideYear, guideVersion);
 
             request.setAttribute(PresentationConstants.GUIDE, infoGuide);
         } catch (FenixServiceException e) {
@@ -87,7 +85,7 @@ public class CreateReimbursementGuideDispatchAction extends FenixDispatchAction 
     }
 
     public ActionForward create(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixActionException, FenixFilterException {
+            throws FenixActionException {
         IUserView userView = UserView.getUser();
         DynaActionForm createReimbursementGuideForm = (DynaActionForm) form;
 
@@ -99,8 +97,7 @@ public class CreateReimbursementGuideDispatchAction extends FenixDispatchAction 
         Integer year = (Integer) createReimbursementGuideForm.get("year");
 
         try {
-            Object args[] = { number, year, version };
-            InfoGuide infoGuide = (InfoGuide) ServiceUtils.executeService("ChooseGuide", args);
+            InfoGuide infoGuide = ChooseGuide.runChooseGuide(number, year, version);
 
             if (infoGuide.getInfoGuideEntries().size() != valuesList.length) {
                 throw new FenixActionException("Incoerent guide entries number", mapping.findForward("start"));

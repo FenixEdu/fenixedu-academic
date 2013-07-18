@@ -7,7 +7,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.externalPerson.EditExternalPerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.externalPerson.ReadExternalPersonByID;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.institution.ReadAllInstitutions;
@@ -96,7 +95,7 @@ public class EditExternalPersonDispatchAction extends FenixDispatchAction {
 
     }
 
-    private List getInstitutions(HttpServletRequest request) throws FenixActionException, FenixFilterException {
+    private List getInstitutions(HttpServletRequest request) throws FenixActionException {
         List institutions = null;
 
         try {

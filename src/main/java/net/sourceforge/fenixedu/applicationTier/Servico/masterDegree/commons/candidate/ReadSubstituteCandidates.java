@@ -3,18 +3,18 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.commons.ca
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.util.SituationName;
 import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class ReadSubstituteCandidates extends FenixService {
+public class ReadSubstituteCandidates {
 
     @Service
     public static List<InfoMasterDegreeCandidate> run(String[] candidateList, String[] ids) throws FenixServiceException {
@@ -32,7 +32,7 @@ public class ReadSubstituteCandidates extends FenixService {
 
                 Integer idInternal = new Integer(ids[i]);
 
-                MasterDegreeCandidate masterDegreeCandidateToWrite = rootDomainObject.readMasterDegreeCandidateByOID(idInternal);
+                MasterDegreeCandidate masterDegreeCandidateToWrite = RootDomainObject.getInstance().readMasterDegreeCandidateByOID(idInternal);
                 result.add(InfoMasterDegreeCandidateWithInfoPerson.newInfoFromDomain(masterDegreeCandidateToWrite));
             }
         }

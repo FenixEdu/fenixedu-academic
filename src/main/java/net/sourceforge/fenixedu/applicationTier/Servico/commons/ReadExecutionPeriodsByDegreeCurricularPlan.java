@@ -10,19 +10,19 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class ReadExecutionPeriodsByDegreeCurricularPlan extends FenixService {
+public class ReadExecutionPeriodsByDegreeCurricularPlan {
 
     @Service
     public static List run(Integer degreeCurricularPlanID) {
 
         // Start date of the DegreeCurricularPlan
-        final Date startDate = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID).getInitialDate();
+        final Date startDate = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanID).getInitialDate();
 
         // End date of the current year
         final Date endDate = ExecutionYear.readCurrentExecutionYear().getEndDate();

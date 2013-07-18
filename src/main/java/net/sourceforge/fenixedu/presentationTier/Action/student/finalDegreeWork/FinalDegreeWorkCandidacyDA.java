@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionDegreesByExecutionYearAndType;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.AddFinalDegreeWorkProposalCandidacyForGroup;
@@ -512,7 +511,7 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
     }
 
     private boolean checkCandidacyConditions(IUserView userView, final ExecutionDegree executionDegree)
-            throws FenixServiceException, FenixFilterException {
+            throws FenixServiceException {
         return executionDegree == null || CheckCandidacyConditionsForFinalDegreeWork.run(userView, executionDegree);
     }
 
@@ -573,8 +572,7 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
         }
     }
 
-    private InfoStudentCurricularPlan getDefaultStudentCurricularPlan(IUserView userView) throws FenixServiceException,
-            FenixFilterException {
+    private InfoStudentCurricularPlan getDefaultStudentCurricularPlan(IUserView userView) throws FenixServiceException {
         InfoStudentCurricularPlan infoStudentCurricularPlan =
                 getDefaultStudentCurricularPlan(userView, DegreeType.BOLONHA_MASTER_DEGREE);
         if (infoStudentCurricularPlan == null) {
@@ -590,7 +588,7 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
     }
 
     private InfoStudentCurricularPlan getDefaultStudentCurricularPlan(IUserView userView, final DegreeType degreeType)
-            throws FenixServiceException, FenixFilterException {
+            throws FenixServiceException {
 
         return ReadActiveStudentCurricularPlanByDegreeType.run(userView, degreeType);
     }
@@ -600,7 +598,7 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
      * @param executionYear
      */
     private List placeListOfExecutionDegreesInRequest(HttpServletRequest request, ExecutionYear executionYear)
-            throws FenixServiceException, FenixFilterException {
+            throws FenixServiceException {
         if (executionYear == null) {
             return new ArrayList(0);
         }

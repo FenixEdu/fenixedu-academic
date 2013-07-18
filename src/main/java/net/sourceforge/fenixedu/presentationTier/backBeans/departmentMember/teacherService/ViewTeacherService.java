@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.backBeans.departmentMember.teacherService;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -9,12 +10,13 @@ import javax.faces.component.UISelectItems;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionPeriodsByExecutionYear;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionYearByID;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionYears;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadPreviousExecutionPeriod;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.teacherService.ReadTeacherServiceDistributionByCourse;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.teacherService.ReadTeacherServiceDistributionByTeachers;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.distribution.DistributionTeacherServicesByCourseDTO.ExecutionCourseDistributionServiceEntryDTO;
@@ -22,7 +24,6 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.distribution.Distribu
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -80,7 +81,7 @@ public class ViewTeacherService extends FenixBackingBean {
 
     }
 
-    public UISelectItems getExecutionYearItems() throws FenixFilterException, FenixServiceException {
+    public UISelectItems getExecutionYearItems() throws  FenixServiceException {
         if (this.executionYearItems == null) {
             this.executionYearItems = new UISelectItems();
             executionYearItems.setValue(this.getExecutionYears());
@@ -89,7 +90,7 @@ public class ViewTeacherService extends FenixBackingBean {
         return executionYearItems;
     }
 
-    public UISelectItems getExecutionPeriodsItems() throws FenixFilterException, FenixServiceException {
+    public UISelectItems getExecutionPeriodsItems() throws  FenixServiceException {
         if (this.executionPeriodsItems == null) {
             this.executionPeriodsItems = new UISelectItems();
             this.executionPeriodsItems.setValue(this.getExecutionPeriods());
@@ -102,7 +103,7 @@ public class ViewTeacherService extends FenixBackingBean {
         this.executionYearItems = selectItems;
     }
 
-    public Integer getSelectedExecutionYearID() throws FenixFilterException, FenixServiceException {
+    public Integer getSelectedExecutionYearID() throws  FenixServiceException {
         String executionYearIDString = this.getRequestParameter("selectedExecutionYearID");
 
         if (executionYearIDString != null) {
@@ -131,12 +132,12 @@ public class ViewTeacherService extends FenixBackingBean {
         return selectedExecutionPeriodID;
     }
 
-    public void setSelectedExecutionYearID(Integer selectedExecutionYearID) throws FenixFilterException, FenixServiceException {
+    public void setSelectedExecutionYearID(Integer selectedExecutionYearID) throws  FenixServiceException {
 
         this.selectedExecutionYearID = selectedExecutionYearID;
     }
 
-    public String getSelectedExecutionYearName() throws FenixFilterException, FenixServiceException {
+    public String getSelectedExecutionYearName() throws  FenixServiceException {
 
         return selectedExecutionYearName;
     }
@@ -145,7 +146,7 @@ public class ViewTeacherService extends FenixBackingBean {
         this.selectedExecutionYearName = selectedExecutionYearName;
     }
 
-    public List getTeacherServiceDTO() throws FenixFilterException, FenixServiceException {
+    public List getTeacherServiceDTO() throws  FenixServiceException, ParseException {
         if (teacherServiceDTO == null) {
             loadDistributionServiceData();
         }
@@ -156,7 +157,7 @@ public class ViewTeacherService extends FenixBackingBean {
         this.teacherServiceDTO = teacherServiceDTO;
     }
 
-    public List<ExecutionCourseDistributionServiceEntryDTO> getExecutionCourseServiceDTO() throws FenixFilterException,
+    public List<ExecutionCourseDistributionServiceEntryDTO> getExecutionCourseServiceDTO() throws 
             FenixServiceException {
         if (executionCourseServiceDTO == null) {
             loadDistributionServiceDataByCourse();
@@ -168,7 +169,7 @@ public class ViewTeacherService extends FenixBackingBean {
         this.executionCourseServiceDTO = executionCourseServiceDTO;
     }
 
-    private List<SelectItem> getExecutionYears() throws FenixFilterException, FenixServiceException {
+    private List<SelectItem> getExecutionYears() throws  FenixServiceException {
 
         List<InfoExecutionYear> executionYears = ReadNotClosedExecutionYears.run();
 
@@ -185,7 +186,7 @@ public class ViewTeacherService extends FenixBackingBean {
 
     }
 
-    private List<SelectItem> getExecutionPeriods() throws FenixFilterException, FenixServiceException {
+    private List<SelectItem> getExecutionPeriods() throws  FenixServiceException {
 
         ResourceBundle rb = ResourceBundle.getBundle("resources.DepartmentMemberResources", Language.getLocale());
 
@@ -205,7 +206,7 @@ public class ViewTeacherService extends FenixBackingBean {
         return currentWorkingDepartment == null ? null : currentWorkingDepartment.getRealName();
     }
 
-    public String getTeacherService() throws FenixFilterException, FenixServiceException {
+    public String getTeacherService() throws  FenixServiceException, ParseException {
 
         InfoExecutionYear infoExecutionYear = ReadExecutionYearByID.run(this.getSelectedExecutionYearID());
 
@@ -215,25 +216,22 @@ public class ViewTeacherService extends FenixBackingBean {
         return "listDistributionTeachersByTeacher";
     }
 
-    public String getTeacherServiceByCourse() throws FenixFilterException, FenixServiceException {
+    public String getTeacherServiceByCourse() throws  FenixServiceException {
         loadDistributionServiceDataByCourse();
         return "listDistributionTeachersByCourse";
     }
 
-    private void loadDistributionServiceData() throws FenixFilterException, FenixServiceException {
+    private void loadDistributionServiceData() throws  FenixServiceException, ParseException {
 
         List<Integer> ExecutionPeriodsIDs = buildExecutionPeriodsIDsList();
 
-        Object[] args =
-                { getUserView().getPerson().getEmployee().getCurrentDepartmentWorkingPlace().getIdInternal(), ExecutionPeriodsIDs };
-
         this.teacherServiceDTO =
-                (List<TeacherDistributionServiceEntryDTO>) ServiceUtils.executeService(
-                        "ReadTeacherServiceDistributionByTeachers", args);
+                ReadTeacherServiceDistributionByTeachers.runReadTeacherServiceDistributionByTeachers(getUserView().getPerson()
+                        .getEmployee().getCurrentDepartmentWorkingPlace().getIdInternal(), ExecutionPeriodsIDs);
 
     }
 
-    private void loadDistributionServiceDataByCourse() throws FenixFilterException, FenixServiceException {
+    private void loadDistributionServiceDataByCourse() throws  FenixServiceException {
 
         List<Integer> ExecutionPeriodsIDs = buildExecutionPeriodsIDsList();
 
@@ -241,12 +239,12 @@ public class ViewTeacherService extends FenixBackingBean {
                 { getUserView().getPerson().getEmployee().getCurrentDepartmentWorkingPlace().getIdInternal(), ExecutionPeriodsIDs };
 
         this.executionCourseServiceDTO =
-                (List<ExecutionCourseDistributionServiceEntryDTO>) ServiceUtils.executeService(
-                        "ReadTeacherServiceDistributionByCourse", args);
+                ReadTeacherServiceDistributionByCourse.runReadTeacherServiceDistributionByCourse(getUserView().getPerson()
+                        .getEmployee().getCurrentDepartmentWorkingPlace().getIdInternal(), ExecutionPeriodsIDs);
 
     }
 
-    private List<Integer> buildExecutionPeriodsIDsList() throws FenixFilterException, FenixServiceException {
+    private List<Integer> buildExecutionPeriodsIDsList() throws  FenixServiceException {
         List<InfoExecutionPeriod> executionPeriods = ReadExecutionPeriodsByExecutionYear.run(this.getSelectedExecutionYearID());
 
         Collections.sort(executionPeriods, new BeanComparator("beginDate"));
@@ -313,7 +311,7 @@ public class ViewTeacherService extends FenixBackingBean {
 
     private final int VIEW_CREDITS_INFORMATION = 7;
 
-    public UISelectItems getViewOptionsItems() throws FenixFilterException, FenixServiceException {
+    public UISelectItems getViewOptionsItems() throws  FenixServiceException {
         if (this.viewOptionsItems == null) {
             this.viewOptionsItems = new UISelectItems();
             viewOptionsItems.setValue(this.getViewOptions());
@@ -322,7 +320,7 @@ public class ViewTeacherService extends FenixBackingBean {
         return viewOptionsItems;
     }
 
-    public UISelectItems getViewByTeacherOptionsItems() throws FenixFilterException, FenixServiceException {
+    public UISelectItems getViewByTeacherOptionsItems() throws  FenixServiceException {
         if (this.viewOptionsItems == null) {
             this.viewOptionsItems = new UISelectItems();
             viewOptionsItems.setValue(this.getByTeacherViewOptions());
@@ -331,7 +329,7 @@ public class ViewTeacherService extends FenixBackingBean {
         return viewOptionsItems;
     }
 
-    private List<SelectItem> getViewOptions() throws FenixFilterException, FenixServiceException {
+    private List<SelectItem> getViewOptions() throws  FenixServiceException {
 
         ResourceBundle rb = ResourceBundle.getBundle("resources.DepartmentMemberResources", Language.getLocale());
 
@@ -344,7 +342,7 @@ public class ViewTeacherService extends FenixBackingBean {
         return result;
     }
 
-    private List<SelectItem> getByTeacherViewOptions() throws FenixFilterException, FenixServiceException {
+    private List<SelectItem> getByTeacherViewOptions() throws  FenixServiceException {
 
         ResourceBundle rb = ResourceBundle.getBundle("resources.DepartmentMemberResources", Language.getLocale());
         List<SelectItem> result = new ArrayList<SelectItem>();
@@ -414,7 +412,7 @@ public class ViewTeacherService extends FenixBackingBean {
         return isOptionSelected(VIEW_CREDITS_INFORMATION);
     }
 
-    public InfoExecutionYear getPreviousExecutionYear() throws FenixFilterException, FenixServiceException {
+    public InfoExecutionYear getPreviousExecutionYear() throws  FenixServiceException {
         if (previousExecutionYear == null) {
             buildExecutionPeriodsIDsList();
         }

@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidChangeServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NoChangeMadeServiceException;
@@ -23,6 +22,7 @@ import net.sourceforge.fenixedu.domain.GuideSituation;
 import net.sourceforge.fenixedu.domain.GuideState;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PersonAccount;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.transactions.GratuityTransaction;
@@ -34,7 +34,7 @@ import net.sourceforge.fenixedu.util.State;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class EditGuideInformation extends FenixService {
+public class EditGuideInformation {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
@@ -114,7 +114,7 @@ public class EditGuideInformation extends FenixService {
                 }
                 // Remove the Guide entries wich have been deleted
                 for (InfoGuideEntry infoGuideEntry : guideEntriesToRemove) {
-                    GuideEntry guideEntry = rootDomainObject.readGuideEntryByOID(infoGuideEntry.getIdInternal());
+                    GuideEntry guideEntry = RootDomainObject.getInstance().readGuideEntryByOID(infoGuideEntry.getIdInternal());
                     guideEntry.delete();
                 }
 
@@ -244,7 +244,7 @@ public class EditGuideInformation extends FenixService {
         Party contributor = Party.readByContributorNumber(infoGuide.getInfoContributor().getContributorNumber());
 
         ExecutionDegree executionDegree =
-                rootDomainObject.readExecutionDegreeByOID(infoGuide.getInfoExecutionDegree().getIdInternal());
+                RootDomainObject.getInstance().readExecutionDegreeByOID(infoGuide.getInfoExecutionDegree().getIdInternal());
         Guide guide = new Guide();
 
         // Set the fields

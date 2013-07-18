@@ -1,29 +1,25 @@
 package net.sourceforge.fenixedu.applicationTier.Filtro;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.research.Prize;
-import pt.utl.ist.berserk.ServiceRequest;
-import pt.utl.ist.berserk.ServiceResponse;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
-public class DeletePrizeFilter extends Filtro {
+public class DeletePrizeFilter {
 
-    @Override
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-        IUserView userView = getRemoteUser(request);
+    public static final DeletePrizeFilter instance = new DeletePrizeFilter();
+
+    public void execute(Prize prize) throws NotAuthorizedException {
+        IUserView userView = AccessControl.getUserView();
         Person person = userView.getPerson();
 
-        Prize prize = null;
-        if (request.getServiceParameters().getParameter(0) instanceof Prize) {
-            prize = (Prize) request.getServiceParameters().getParameter(0);
-        }
         if (prize != null) {
             if (!prize.isDeletableByUser(person)) {
-                throw new NotAuthorizedFilterException("error.not.authorized");
+                throw new NotAuthorizedException("error.not.authorized");
             }
         } else {
-            throw new NotAuthorizedFilterException("error.not.authorized");
+            throw new NotAuthorizedException("error.not.authorized");
         }
     }
 

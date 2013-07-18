@@ -17,13 +17,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ReadStudentCurricularPlansForSeminaries;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ReadStudentCurriculum;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.utils.MockUserView;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoClassification;
 import net.sourceforge.fenixedu.domain.GradeScale;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
@@ -71,8 +71,7 @@ public class ViewCandidateCurriculum extends FenixAction {
                     selectedSCP = cp;
                 }
             }
-            Object getCurriculumArgs[] = { null, selectedSCP.getIdInternal() };
-            enrollments = (ArrayList) ServiceManagerServiceFactory.executeService("ReadStudentCurriculum", getCurriculumArgs);
+            enrollments = ReadStudentCurriculum.runReadStudentCurriculum(null, selectedSCP.getIdInternal());
         } catch (NonExistingServiceException e) {
             throw new FenixActionException(e);
         }

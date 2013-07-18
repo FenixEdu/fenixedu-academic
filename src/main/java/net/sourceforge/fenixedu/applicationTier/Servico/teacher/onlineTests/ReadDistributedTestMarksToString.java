@@ -13,11 +13,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -26,14 +28,16 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
+import pt.ist.fenixWebFramework.services.Service;
+
 /**
  * @author Susana Fernandes
  * 
  */
-public class ReadDistributedTestMarksToString extends FenixService {
+public class ReadDistributedTestMarksToString {
 
-    public String run(Integer executionCourseId, Integer distributedTestId) throws FenixServiceException {
-        DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
+    protected String run(Integer executionCourseId, Integer distributedTestId) throws FenixServiceException {
+        DistributedTest distributedTest = RootDomainObject.getInstance().readDistributedTestByOID(distributedTestId);
         if (distributedTest == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -81,11 +85,11 @@ public class ReadDistributedTestMarksToString extends FenixService {
         return result.toString();
     }
 
-    public String run(Integer executionCourseId, String[] distributedTestCodes) throws FenixServiceException {
+    protected String run(Integer executionCourseId, String[] distributedTestCodes) throws FenixServiceException {
         StringBuilder result = new StringBuilder();
         result.append("Número\tNome\t");
 
-        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
+        ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseId);
         List<Registration> studentsFromAttendsList =
                 (List) CollectionUtils.collect(executionCourse.getAttends(), new Transformer() {
 
@@ -98,7 +102,7 @@ public class ReadDistributedTestMarksToString extends FenixService {
         final Set<Registration> students = new HashSet<Registration>();
         for (final String distributedTestCode : distributedTestCodes) {
             final Integer distributedTestID = Integer.valueOf(distributedTestCode);
-            final DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestID);
+            final DistributedTest distributedTest = RootDomainObject.getInstance().readDistributedTestByOID(distributedTestID);
             students.addAll(distributedTest.findStudents());
         }
 
@@ -106,7 +110,7 @@ public class ReadDistributedTestMarksToString extends FenixService {
         Double[] maxValues = new Double[distributedTestCodes.length];
 
         for (int i = 0; i < distributedTestCodes.length; i++) {
-            DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(Integer.valueOf(distributedTestCodes[i]));
+            DistributedTest distributedTest = RootDomainObject.getInstance().readDistributedTestByOID(Integer.valueOf(distributedTestCodes[i]));
             if (distributedTest == null) {
                 throw new InvalidArgumentsServiceException();
             }
@@ -132,7 +136,7 @@ public class ReadDistributedTestMarksToString extends FenixService {
                 DecimalFormat percentageFormat = new DecimalFormat("#%");
 
                 final DistributedTest distributedTest =
-                        rootDomainObject.readDistributedTestByOID(Integer.valueOf(distributedTestCodes[i]));
+                        RootDomainObject.getInstance().readDistributedTestByOID(Integer.valueOf(distributedTestCodes[i]));
                 finalMark = distributedTest.calculateTestFinalMarkForStudent(registration);
 
                 if (finalMark == null) {
@@ -176,4 +180,23 @@ public class ReadDistributedTestMarksToString extends FenixService {
         Collections.sort(sortedStudents, new BeanComparator("number"));
         return sortedStudents;
     }
+
+    // Service Invokers migrated from Berserk
+
+    private static final ReadDistributedTestMarksToString serviceInstance = new ReadDistributedTestMarksToString();
+
+    @Service
+    public static String runReadDistributedTestMarksToString(Integer executionCourseId, Integer distributedTestId)
+            throws FenixServiceException, NotAuthorizedException {
+        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
+        return serviceInstance.run(executionCourseId, distributedTestId);
+    }
+
+    @Service
+    public static String runReadDistributedTestMarksToString(Integer executionCourseId, String[] distributedTestCodes)
+            throws FenixServiceException, NotAuthorizedException {
+        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
+        return serviceInstance.run(executionCourseId, distributedTestCodes);
+    }
+
 }

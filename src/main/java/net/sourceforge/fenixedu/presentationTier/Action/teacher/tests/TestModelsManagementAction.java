@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.CreateModelGroup;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.DeleteModelRestriction;
@@ -64,7 +63,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 public class TestModelsManagementAction extends FenixDispatchAction {
 
     public ActionForward manageTestModels(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         Teacher teacher = getPerson(request).getTeacher();
 
         List<NewTestModel> testModels = new ArrayList<NewTestModel>(teacher.getTestModels());
@@ -82,14 +81,14 @@ public class TestModelsManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward createTestModel(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         // RenderUtils.invalidateViewState("create-test-model");
 
         return this.manageTestModels(mapping, form, request, response);
     }
 
     public ActionForward createModelGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         TestModelBean bean = (TestModelBean) getMetaObject("create-model-group");
 
         CreateModelGroup.run(bean.getModelGroup(), bean.getName());
@@ -102,7 +101,7 @@ public class TestModelsManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward invalidCreateModelGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         TestModelBean bean = (TestModelBean) getMetaObject("create-model-group");
 
         request.setAttribute("testModel", bean.getTestModel());
@@ -112,7 +111,7 @@ public class TestModelsManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward selectAtomicQuestionRestrictions(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         TestModelBean bean = (TestModelBean) getMetaObject("select-atomic-questions");
 
         NewModelGroup modelGroup = bean.getModelGroup();
@@ -129,7 +128,7 @@ public class TestModelsManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward invalidSelectAtomicQuestionRestrictions(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
         TestModelBean bean = (TestModelBean) getMetaObject("select-atomic-questions");
 
         request.setAttribute("testModel", bean.getTestModel());
@@ -160,7 +159,7 @@ public class TestModelsManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward selectQuestionGroupRestriction(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         TestModelBean bean = (TestModelBean) getMetaObject("select-question-group.model-group");
 
         NewTestModel testModel = bean.getTestModel();
@@ -182,7 +181,7 @@ public class TestModelsManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward invalidSelectQuestionGroupRestriction(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
         TestModelBean bean = (TestModelBean) getMetaObject("select-question-group.model-group");
 
         request.setAttribute("testModel", bean.getTestModel());
@@ -212,7 +211,7 @@ public class TestModelsManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward unselectRestriction(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         Integer modelRestrictionId = getCodeFromRequest(request, "oid");
 
         NewModelRestriction modelRestriction = (NewModelRestriction) rootDomainObject.readNewTestElementByOID(modelRestrictionId);
@@ -228,7 +227,7 @@ public class TestModelsManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward prepareDeleteTestModel(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         Integer testModelId = getCodeFromRequest(request, "oid");
 
         NewTestModel testModel = (NewTestModel) rootDomainObject.readNewTestElementByOID(testModelId);
@@ -239,7 +238,7 @@ public class TestModelsManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward editTestModel(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         Integer testModelId = getCodeFromRequest(request, "oid");
 
         NewTestModel testModel = (NewTestModel) rootDomainObject.readNewTestElementByOID(testModelId);
@@ -251,7 +250,7 @@ public class TestModelsManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward selectQuestions(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         Integer testModelId = getCodeFromRequest(request, "oid");
 
         NewTestModel testModel = (NewTestModel) rootDomainObject.readNewTestElementByOID(testModelId);
@@ -263,7 +262,7 @@ public class TestModelsManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward sortTestModel(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         Integer testModelId = getCodeFromRequest(request, "oid");
 
         NewTestModel testModel = (NewTestModel) rootDomainObject.readNewTestElementByOID(testModelId);
@@ -274,7 +273,7 @@ public class TestModelsManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward switchModelRestriction(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         Integer modelRestrictionId = getCodeFromRequest(request, "oid");
         Integer relativePosition = getCodeFromRequest(request, "relativePosition");
 
@@ -288,7 +287,7 @@ public class TestModelsManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward editModelGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         Integer modelGroupId = getCodeFromRequest(request, "oid");
 
         NewModelGroup modelGroup = (NewModelGroup) rootDomainObject.readNewTestElementByOID(modelGroupId);
@@ -299,7 +298,7 @@ public class TestModelsManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward editModelRestriction(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         Integer modelRestrictionId = getCodeFromRequest(request, "oid");
 
         NewModelRestriction modelRestriction = (NewModelRestriction) rootDomainObject.readNewTestElementByOID(modelRestrictionId);
@@ -313,7 +312,7 @@ public class TestModelsManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward deleteTestModel(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         Integer testModelId = getCodeFromRequest(request, "oid");
 
         NewTestModel testModel = (NewTestModel) rootDomainObject.readNewTestElementByOID(testModelId);
@@ -324,7 +323,7 @@ public class TestModelsManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward deleteModelRestriction(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         Integer modelRestrictionId = getCodeFromRequest(request, "oid");
 
         NewModelRestriction modelRestriction = (NewModelRestriction) rootDomainObject.readNewTestElementByOID(modelRestrictionId);
@@ -337,7 +336,7 @@ public class TestModelsManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward prepareGenerateTests(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         Integer testModelId = getCodeFromRequest(request, "oid");
 
         NewTestModel testModel = (NewTestModel) rootDomainObject.readNewTestElementByOID(testModelId);
@@ -349,7 +348,7 @@ public class TestModelsManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward continueGenerateTests(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         TestModelBean bean = (TestModelBean) getMetaObject("generate-tests");
 
         request.setAttribute("secondStep", true);
@@ -373,7 +372,7 @@ public class TestModelsManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward invalidGenerateTests(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         TestModelBean bean = (TestModelBean) getMetaObject("generate-tests");
 
         request.setAttribute("secondStep", true);
@@ -383,7 +382,7 @@ public class TestModelsManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward generateTests(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         TestModelBean bean = (TestModelBean) getMetaObject("generate-tests");
 
         GenerateTests.run(bean.getTestModel(), bean.getName(), bean.getExecutionCourse(), bean.getVariations(),

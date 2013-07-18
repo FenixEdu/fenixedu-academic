@@ -5,10 +5,12 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoQuestion;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.SubQuestion;
@@ -19,16 +21,18 @@ import net.sourceforge.fenixedu.util.tests.CorrectionFormula;
 
 import org.apache.commons.beanutils.BeanComparator;
 
-public class InsertTestQuestion extends FenixService {
+import pt.ist.fenixWebFramework.services.Service;
+
+public class InsertTestQuestion {
 
     private String path = new String();
 
-    public void run(Integer executionCourseId, Integer testId, String[] metadataId, Integer questionOrder, Double questionValue,
-            CorrectionFormula formula, String path) throws FenixServiceException {
+    protected void run(Integer executionCourseId, Integer testId, String[] metadataId, Integer questionOrder,
+            Double questionValue, CorrectionFormula formula, String path) throws FenixServiceException {
         this.path = path.replace('\\', '/');
 
         for (String element : metadataId) {
-            Metadata metadata = rootDomainObject.readMetadataByOID(new Integer(element));
+            Metadata metadata = RootDomainObject.getInstance().readMetadataByOID(new Integer(element));
             if (metadata == null) {
                 throw new InvalidArgumentsServiceException();
             }
@@ -41,7 +45,7 @@ public class InsertTestQuestion extends FenixService {
             if (question == null) {
                 throw new InvalidArgumentsServiceException();
             }
-            Test test = rootDomainObject.readTestByOID(testId);
+            Test test = RootDomainObject.getInstance().readTestByOID(testId);
             if (test == null) {
                 throw new InvalidArgumentsServiceException();
             }
@@ -94,4 +98,17 @@ public class InsertTestQuestion extends FenixService {
             testQuestion.setCorrectionFormula(formula);
         }
     }
+
+    // Service Invokers migrated from Berserk
+
+    private static final InsertTestQuestion serviceInstance = new InsertTestQuestion();
+
+    @Service
+    public static void runInsertTestQuestion(Integer executionCourseId, Integer testId, String[] metadataId,
+            Integer questionOrder, Double questionValue, CorrectionFormula formula, String path) throws FenixServiceException,
+            NotAuthorizedException {
+        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
+        serviceInstance.run(executionCourseId, testId, metadataId, questionOrder, questionValue, formula, path);
+    }
+
 }

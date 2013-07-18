@@ -8,20 +8,23 @@ package net.sourceforge.fenixedu.applicationTier.Filtro;
 import java.util.Iterator;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.BibliographicReference;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import pt.utl.ist.berserk.ServiceRequest;
-import pt.utl.ist.berserk.ServiceResponse;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 /**
  * @author João Mota
  * 
  */
 public class ExecutionCourseAndBibliographicReferenceLecturingTeacherAuthorizationFilter extends AuthorizationByRoleFilter {
+
+    public static final ExecutionCourseAndBibliographicReferenceLecturingTeacherAuthorizationFilter instance =
+            new ExecutionCourseAndBibliographicReferenceLecturingTeacherAuthorizationFilter();
 
     public ExecutionCourseAndBibliographicReferenceLecturingTeacherAuthorizationFilter() {
 
@@ -32,25 +35,22 @@ public class ExecutionCourseAndBibliographicReferenceLecturingTeacherAuthorizati
         return RoleType.TEACHER;
     }
 
-    @Override
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-        IUserView id = getRemoteUser(request);
-        Object[] arguments = getServiceCallArguments(request);
+    public void execute(Integer bibliographicReferenceID) throws NotAuthorizedException {
+        IUserView id = AccessControl.getUserView();
         if ((id == null) || (id.getRoleTypes() == null) || !id.hasRoleType(getRoleType())
-                || !bibliographicReferenceBelongsToTeacherExecutionCourse(id, arguments)) {
-            throw new NotAuthorizedFilterException();
+                || !bibliographicReferenceBelongsToTeacherExecutionCourse(id, bibliographicReferenceID)) {
+            throw new NotAuthorizedException();
         }
     }
 
-    private boolean bibliographicReferenceBelongsToTeacherExecutionCourse(IUserView id, Object[] args) {
-        if (args == null) {
+    private boolean bibliographicReferenceBelongsToTeacherExecutionCourse(IUserView id, Integer bibliographicReferenceID) {
+        if (bibliographicReferenceID == null) {
             return false;
         }
 
         boolean result = false;
-        final Integer bibliographicReferenceID = getBibliographicReference(args);
         final BibliographicReference bibliographicReference =
-                rootDomainObject.readBibliographicReferenceByOID(bibliographicReferenceID);
+                RootDomainObject.getInstance().readBibliographicReferenceByOID(bibliographicReferenceID);
         final Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
 
         if (bibliographicReference != null && teacher != null) {
@@ -69,7 +69,4 @@ public class ExecutionCourseAndBibliographicReferenceLecturingTeacherAuthorizati
         return result;
     }
 
-    private Integer getBibliographicReference(Object[] args) {
-        return (Integer) args[0];
-    }
 }

@@ -8,11 +8,12 @@ import java.util.Map;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
+import net.sourceforge.fenixedu.presentationTier.renderers.providers.AutoCompleteProvider;
 
-public class SearchInternalUnits extends AbstractSearchObjects {
+public class SearchInternalUnits extends AbstractSearchObjects<Unit> implements AutoCompleteProvider<Unit> {
 
     @Override
-    public Collection<Unit> run(Class type, String value, int limit, Map<String, String> arguments) {
+    public Collection<Unit> getSearchResults(Map<String, String> argsMap, String value, int maxCount) {
         List<Unit> units = UnitUtils.readAllActiveUnitsByType(PartyTypeEnum.DEPARTMENT);
         units.addAll(UnitUtils.readAllActiveUnitsByType(PartyTypeEnum.DEGREE_UNIT));
         // units.addAll(UnitUtils.readAllActiveUnitsByType(PartyTypeEnum.SECTION));
@@ -27,7 +28,7 @@ public class SearchInternalUnits extends AbstractSearchObjects {
             }
         }
 
-        return super.process(units, value, limit, arguments);
+        return super.process(units, value, maxCount, argsMap);
     }
 
 }

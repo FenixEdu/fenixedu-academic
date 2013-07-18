@@ -1,12 +1,12 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.gep.inquiries;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.executionCourse.ExecutionCourseSearchBean;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class SelectAllExecutionCoursesForInquiries extends FenixService {
+public class SelectAllExecutionCoursesForInquiries {
 
     @Checked("RolePredicates.GEP_PREDICATE")
     @Service

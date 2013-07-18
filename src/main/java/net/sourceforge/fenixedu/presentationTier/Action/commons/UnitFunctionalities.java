@@ -9,8 +9,11 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.research.CreatePersistentGroup;
 import net.sourceforge.fenixedu.applicationTier.Servico.research.CreateUnitFile;
+import net.sourceforge.fenixedu.applicationTier.Servico.research.DeletePersistentGroup;
 import net.sourceforge.fenixedu.applicationTier.Servico.research.DeleteUnitFile;
+import net.sourceforge.fenixedu.applicationTier.Servico.research.EditPersistentGroup;
 import net.sourceforge.fenixedu.applicationTier.Servico.research.EditUnitFile;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.UnitFile;
@@ -72,8 +75,7 @@ public abstract class UnitFunctionalities extends FenixDispatchAction {
             if (bean.getIstId() != null) {
                 bean.getPeople().add(bean.getIstId());
             }
-            executeService("CreatePersistentGroup",
-                    new Object[] { bean.getUnit(), bean.getName(), bean.getPeople(), bean.getType() });
+            CreatePersistentGroup.runCreatePersistentGroup(bean.getUnit(), bean.getName(), bean.getPeople(), bean.getType());
         }
 
         return configureGroups(mapping, form, request, response);
@@ -84,7 +86,7 @@ public abstract class UnitFunctionalities extends FenixDispatchAction {
         PersistentGroupMembers group = getGroup(request);
         if (group != null) {
             try {
-                executeService("DeletePersistentGroup", new Object[] { group });
+                DeletePersistentGroup.runDeletePersistentGroup(group);
             } catch (DomainException e) {
                 addActionMessage(request, e.getMessage());
             }
@@ -108,8 +110,7 @@ public abstract class UnitFunctionalities extends FenixDispatchAction {
                 if (bean.getIstId() != null) {
                     bean.getPeople().add(bean.getIstId());
                 }
-                executeService("EditPersistentGroup",
-                        new Object[] { bean.getGroup(), bean.getName(), bean.getPeople(), bean.getUnit() });
+                EditPersistentGroup.runEditPersistentGroup(bean.getGroup(), bean.getName(), bean.getPeople(), bean.getUnit());
             } catch (DomainException e) {
                 addActionMessage(request, e.getMessage());
             }

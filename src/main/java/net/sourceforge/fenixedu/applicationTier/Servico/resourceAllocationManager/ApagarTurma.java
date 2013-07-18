@@ -6,17 +6,18 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class ApagarTurma extends FenixService {
+public class ApagarTurma {
 
     @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
     @Service
     public static Boolean run(InfoClass infoClass) {
-        rootDomainObject.readSchoolClassByOID(infoClass.getIdInternal()).delete();
+        RootDomainObject.getInstance().readSchoolClassByOID(infoClass.getIdInternal()).delete();
         return Boolean.TRUE;
     }
 

@@ -6,7 +6,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.research.activity.CreateResearchActivityParticipation;
 import net.sourceforge.fenixedu.applicationTier.Servico.research.activity.EditResearchActivityParticipants;
@@ -166,7 +165,7 @@ public class EditResearchActivityDispatchAction extends ActivitiesManagementDisp
     }
 
     public ActionForward editParticipants(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         String forwardTo = request.getParameter("forwardTo");
 

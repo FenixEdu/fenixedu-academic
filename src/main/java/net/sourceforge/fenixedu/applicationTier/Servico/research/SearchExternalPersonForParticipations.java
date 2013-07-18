@@ -3,19 +3,14 @@ package net.sourceforge.fenixedu.applicationTier.Servico.research;
 import java.util.Collection;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.AutoCompleteSearchService;
 import net.sourceforge.fenixedu.domain.person.PersonName;
+import net.sourceforge.fenixedu.presentationTier.renderers.providers.AutoCompleteProvider;
 
-public class SearchExternalPersonForParticipations extends FenixService implements AutoCompleteSearchService {
+public class SearchExternalPersonForParticipations implements AutoCompleteProvider<PersonName> {
 
     @Override
-    public Collection<PersonName> run(Class type, String value, int limit, Map<String, String> arguments) {
-        if (type != PersonName.class) {
-            return null;
-        }
-
-        String size = arguments.get("size");
+    public Collection<PersonName> getSearchResults(Map<String, String> argsMap, String value, int maxCount) {
+        String size = argsMap.get("size");
         return PersonName.findExternalPerson(value, (size == null) ? 20 : Integer.parseInt(size));
     }
 

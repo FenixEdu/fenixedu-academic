@@ -6,7 +6,7 @@ import java.util.HashSet;
 import net.sourceforge.fenixedu.domain.person.PersonName;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
-public class SearchInternalPersonsByNameHavingTeacherOrIsResearcher extends SearchParties {
+public class SearchInternalPersonsByNameHavingTeacherOrIsResearcher extends SearchParties<PersonName> {
 
     @Override
     protected Collection<PersonName> search(String value, int size) {

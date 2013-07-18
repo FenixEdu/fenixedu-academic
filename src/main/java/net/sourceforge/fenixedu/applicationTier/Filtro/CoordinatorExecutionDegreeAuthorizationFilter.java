@@ -5,14 +5,13 @@ import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import pt.utl.ist.berserk.ServiceRequest;
-import pt.utl.ist.berserk.ServiceResponse;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 /**
  * 
@@ -21,14 +20,15 @@ import pt.utl.ist.berserk.ServiceResponse;
  */
 public class CoordinatorExecutionDegreeAuthorizationFilter extends Filtro {
 
-    @Override
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-        IUserView id = getRemoteUser(request);
-        Object[] argumentos = getServiceCallArguments(request);
+    public static final CoordinatorExecutionDegreeAuthorizationFilter instance =
+            new CoordinatorExecutionDegreeAuthorizationFilter();
+
+    public void execute(Integer executionDegreeId) throws NotAuthorizedException {
+        IUserView id = AccessControl.getUserView();
         if ((id != null && id.getRoleTypes() != null && !containsRoleType(id.getRoleTypes()))
-                || (id != null && id.getRoleTypes() != null && !hasPrivilege(id, argumentos)) || (id == null)
+                || (id != null && id.getRoleTypes() != null && !hasPrivilege(id, executionDegreeId)) || (id == null)
                 || (id.getRoleTypes() == null)) {
-            throw new NotAuthorizedFilterException();
+            throw new NotAuthorizedException();
         }
     }
 
@@ -40,24 +40,19 @@ public class CoordinatorExecutionDegreeAuthorizationFilter extends Filtro {
         return roles;
     }
 
-    private boolean hasPrivilege(IUserView id, Object[] arguments) {
+    private boolean hasPrivilege(IUserView id, Integer executionDegreeId) {
         if (id.hasRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER)) {
             return true;
         }
 
         if (id.hasRoleType(RoleType.COORDINATOR)) {
-            Integer executionDegreeID = null;
-            if (arguments[1] instanceof InfoExecutionDegree) {
-                executionDegreeID = ((InfoExecutionDegree) arguments[1]).getIdInternal();
-            } else if (arguments[0] instanceof Integer) {
-                executionDegreeID = (Integer) arguments[0];
-            }
+            Integer executionDegreeID = executionDegreeId;
 
             if (executionDegreeID == null) {
                 return false;
             }
             final Person person = id.getPerson();
-            ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
+            ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegreeID);
             if (executionDegree == null) {
                 return false;
             }

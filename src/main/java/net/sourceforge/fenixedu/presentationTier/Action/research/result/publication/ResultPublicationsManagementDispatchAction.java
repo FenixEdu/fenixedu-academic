@@ -7,12 +7,13 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.research.activity.CreateJournalIssue;
 import net.sourceforge.fenixedu.applicationTier.Servico.research.activity.CreateResearchEventEdition;
 import net.sourceforge.fenixedu.applicationTier.Servico.research.result.CreateResultUnitAssociation;
+import net.sourceforge.fenixedu.applicationTier.Servico.research.result.publication.CreateResultPublication;
 import net.sourceforge.fenixedu.applicationTier.Servico.research.result.publication.DeleteResultPublication;
+import net.sourceforge.fenixedu.applicationTier.Servico.research.result.publication.EditResultPublication;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ExecutionYearIntervalBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultDocumentFileSubmissionBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultUnitAssociationCreationBean;
@@ -94,13 +95,12 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
     }
 
     public ActionForward createJournalToAssociate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-        return createJournalWorkFlow(mapping, form, request, response, "editJournal", "ViewEditPublication", "editJournal",
-                "EditResultPublication");
+            HttpServletResponse response) throws  FenixServiceException {
+        return createJournalWorkFlow(mapping, form, request, response, "editJournal", "ViewEditPublication", "editJournal", false);
     }
 
     public ActionForward selectJournal(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         if (getFromRequest(request, "new") != null) {
             ArticleBean bean = getRenderedObject("publicationBean");
@@ -143,7 +143,7 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
     }
 
     public ActionForward prepareCreate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         ResultPublicationBean publicationBean = getRenderedObject(null);
 
         if (publicationBean == null) {
@@ -157,7 +157,7 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
     }
 
     public ActionForward createWrapper(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         if (getFromRequest(request, "new") != null) {
             return createJournal(mapping, form, request, response);
         } else {
@@ -186,8 +186,7 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
                     return mapping.findForward("PreparedToCreate");
                 }
             }
-            final Object[] args = { bean };
-            publication = (ResearchResultPublication) executeService("CreateResultPublication", args);
+            publication = CreateResultPublication.runCreateResultPublication(bean);
             if (bean.getUnit() != null) {
                 request.setAttribute("unit", bean.getUnit());
             }
@@ -212,8 +211,8 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
     }
 
     private ActionForward createJournalWorkFlow(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response, String forwardOnNextStep, String forwardOnFinish, String forwardOnError, String service)
-            throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response, String forwardOnNextStep, String forwardOnFinish, String forwardOnError, boolean create)
+            throws  FenixServiceException {
 
         final ArticleBean bean = getRenderedObject("publicationBean");
         CreateIssueBean issueBean = getRenderedObject("createMagazine");
@@ -238,7 +237,11 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
                     articleBean.setJournalIssue(issue);
                     articleBean.setCreateJournal(false);
                     final Object[] args2 = { bean };
-                    publication = (ResearchResultPublication) executeService(service, args2);
+                    if (create) {
+                        publication = CreateResultPublication.runCreateResultPublication(bean);
+                    } else {
+                        publication = EditResultPublication.runEditResultPublication(bean);
+                    }
                     if (bean.getUnit() != null) {
                         request.setAttribute("unit", bean.getUnit());
                     }
@@ -264,7 +267,7 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
     }
 
     private ActionForward changeSpecialIssue(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response, String forwardTo) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response, String forwardTo) throws  FenixServiceException {
 
         final ArticleBean bean = getRenderedObject("publicationBean");
         CreateIssueBean issueBean = getRenderedObject("createMagazine");
@@ -276,19 +279,19 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
     }
 
     public ActionForward changeSpecialIssueInEditon(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         return changeSpecialIssue(mapping, form, request, response, "editJournal");
     }
 
     public ActionForward changeSpecialIssueInCreation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         return changeSpecialIssue(mapping, form, request, response, "PreparedToCreate");
     }
 
     public ActionForward createJournal(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         return createJournalWorkFlow(mapping, form, request, response, "PreparedToCreate", "ViewEditPublication",
-                "PreparedToCreate", "CreateResultPublication");
+                "PreparedToCreate", true);
     }
 
     public ActionForward showAssociations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -338,7 +341,7 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
     }
 
     public ActionForward prepareEditData(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         ResultPublicationBean bean = getRenderedObject(null);
 
@@ -359,8 +362,7 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
         if (getFromRequest(request, "confirm") != null) {
 
             try {
-                final Object[] args = { bean };
-                publicationChanged = (ResearchResultPublication) executeService("EditResultPublication", args);
+                publicationChanged = EditResultPublication.runEditResultPublication(bean);
             } catch (DomainException ex) {
                 addActionMessage(request, ex.getMessage());
                 request.setAttribute("publicationBean", bean);
@@ -419,7 +421,7 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
     }
 
     public ActionForward changeType(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         ResultPublicationBean bean = getRenderedObject("publicationBean");
 
         if (bean != null) {
@@ -508,7 +510,13 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
                             .getEventEdition());
             ((ConferenceArticlesBean) publicationBean).setEventEdition(eventEdition);
             final Object[] args2 = { publicationBean };
-            publication = (ResearchResultPublication) executeService(service, args2);
+
+            if ("CreateResultPublication".equals(service)) {
+                CreateResultPublication.runCreateResultPublication(publicationBean);
+            } else if ("EditResultPublication".equals(service)) {
+                EditResultPublication.runEditResultPublication(publicationBean);
+            }
+
             if (publicationBean.getUnit() != null) {
                 request.setAttribute("unit", publicationBean.getUnit());
             }
@@ -550,7 +558,7 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
     }
 
     public ActionForward prepareSelectEventToAssociate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         ResultPublicationBean publicationBean = getRenderedObject("publicationBean");
         ((ConferenceArticlesBean) publicationBean).setEvent(null);
         ((ConferenceArticlesBean) publicationBean).setEventEdition(null);
@@ -561,7 +569,7 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
     }
 
     public ActionForward prepareCreateEventToAssociate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         ResultEventAssociationBean eventBean = getRenderedObject("eventEditionBean");
         ResultPublicationBean publicationBean = getRenderedObject("publicationBean");
         request.setAttribute("eventEditionBean", eventBean);
@@ -570,7 +578,7 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
     }
 
     public ActionForward createEventToAssociate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         ResultPublicationBean publicationBean = getRenderedObject("publicationBean");
         ResultEventAssociationBean eventBean = getRenderedObject("eventEditionBean");
         RenderUtils.invalidateViewState("eventEditionBean");

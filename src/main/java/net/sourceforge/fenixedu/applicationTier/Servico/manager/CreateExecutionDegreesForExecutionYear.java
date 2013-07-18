@@ -7,11 +7,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.space.Campus;
 
 import org.joda.time.YearMonthDay;
@@ -19,7 +19,7 @@ import org.joda.time.YearMonthDay;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class CreateExecutionDegreesForExecutionYear extends FenixService {
+public class CreateExecutionDegreesForExecutionYear {
 
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
@@ -33,7 +33,7 @@ public class CreateExecutionDegreesForExecutionYear extends FenixService {
             final Calendar examsSpecialSeasonEndDate, final Calendar gradeSubmissionNormalSeason1EndDate,
             final Calendar gradeSubmissionNormalSeason2EndDate, final Calendar gradeSubmissionSpecialSeasonEndDate) {
 
-        final ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
+        final ExecutionYear executionYear = RootDomainObject.getInstance().readExecutionYearByOID(executionYearID);
         final Campus campus = readCampusByName(campusName);
 
         final OccupationPeriod lessonSeason1 = getOccupationPeriod(lessonSeason1BeginDate, lessonSeason1EndDate);
@@ -61,7 +61,7 @@ public class CreateExecutionDegreesForExecutionYear extends FenixService {
         final List<DegreeCurricularPlan> created = new ArrayList<DegreeCurricularPlan>();
         for (final Integer degreeCurricularPlanID : allDegreeCurricularPlanIDs) {
             final DegreeCurricularPlan degreeCurricularPlan =
-                    rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+                    RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanID);
             if (degreeCurricularPlan == null) {
                 continue;
             }

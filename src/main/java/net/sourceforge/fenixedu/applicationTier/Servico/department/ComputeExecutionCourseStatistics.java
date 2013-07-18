@@ -14,14 +14,16 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ComputeExecutionCourseStatistics extends ComputeCourseStatistics {
 
     public List<ExecutionCourseStatisticsDTO> run(Integer competenceCourseId, Integer degreeId, Integer executionPeriodId)
             throws FenixServiceException {
-        CompetenceCourse competenceCourse = rootDomainObject.readCompetenceCourseByOID(competenceCourseId);
-        Degree degree = rootDomainObject.readDegreeByOID(degreeId);
-        ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
+        CompetenceCourse competenceCourse = RootDomainObject.getInstance().readCompetenceCourseByOID(competenceCourseId);
+        Degree degree = RootDomainObject.getInstance().readDegreeByOID(degreeId);
+        ExecutionSemester executionSemester = RootDomainObject.getInstance().readExecutionSemesterByOID(executionPeriodId);
 
         List<CurricularCourse> curricularCourses = competenceCourse.getAssociatedCurricularCoursesGroupedByDegree().get(degree);
 
@@ -79,4 +81,13 @@ public class ComputeExecutionCourseStatistics extends ComputeCourseStatistics {
 
         return degreeNames;
     }
+    // Service Invokers migrated from Berserk
+
+    private static final ComputeExecutionCourseStatistics serviceInstance = new ComputeExecutionCourseStatistics();
+
+    @Service
+    public static List<ExecutionCourseStatisticsDTO> runComputeExecutionCourseStatistics(Integer competenceCourseId, Integer degreeId, Integer executionPeriodId) throws FenixServiceException  {
+        return serviceInstance.run(competenceCourseId, degreeId, executionPeriodId);
+    }
+
 }

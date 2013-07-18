@@ -3,7 +3,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.messaging;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import pt.ist.fenixWebFramework.services.Service;
 
@@ -12,7 +12,7 @@ import pt.ist.fenixWebFramework.services.Service;
  *         Created on Jun 1, 2006, 3:15:29 PM
  * 
  */
-public class DeleteAnnouncement extends FenixService {
+public class DeleteAnnouncement {
 
     @Service
     public static void run(Announcement announcement) {

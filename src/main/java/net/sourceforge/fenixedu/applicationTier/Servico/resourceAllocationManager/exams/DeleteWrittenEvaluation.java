@@ -3,8 +3,12 @@ package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManag
 import java.util.HashSet;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.EditWrittenEvaluationAuthorization;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseCoordinatorAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ResourceAllocationManagerAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
@@ -19,16 +23,18 @@ import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.joda.time.DateTime;
 
-public class DeleteWrittenEvaluation extends FenixService {
+import pt.ist.fenixWebFramework.services.Service;
+
+public class DeleteWrittenEvaluation {
 
     /**
      * @param Integer
      *            executionCourseOID used in filtering
      *            (ExecutionCourseLecturingTeacherAuthorizationFilter)
      */
-    public void run(Integer executionCourseOID, Integer writtenEvaluationOID) throws FenixServiceException {
+    protected void run(Integer executionCourseOID, Integer writtenEvaluationOID) throws FenixServiceException {
         final WrittenEvaluation writtenEvaluationToDelete =
-                (WrittenEvaluation) rootDomainObject.readEvaluationByOID(writtenEvaluationOID);
+                (WrittenEvaluation) RootDomainObject.getInstance().readEvaluationByOID(writtenEvaluationOID);
         if (writtenEvaluationToDelete == null) {
             throw new FenixServiceException("error.noWrittenEvaluation");
         }
@@ -63,6 +69,32 @@ public class DeleteWrittenEvaluation extends FenixService {
             new Message(sender, new ConcreteReplyTo(group.getContactEmail()).asCollection(),
                     new Recipient(new FixedSetGroup(tos)).asCollection(), subject, body, "");
 
+        }
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final DeleteWrittenEvaluation serviceInstance = new DeleteWrittenEvaluation();
+
+    @Service
+    public static void runDeleteWrittenEvaluation(Integer executionCourseOID, Integer writtenEvaluationOID)
+            throws FenixServiceException, NotAuthorizedException {
+        EditWrittenEvaluationAuthorization.instance.execute(writtenEvaluationOID);
+        try {
+            ResourceAllocationManagerAuthorizationFilter.instance.execute();
+            serviceInstance.run(executionCourseOID, writtenEvaluationOID);
+        } catch (NotAuthorizedException ex1) {
+            try {
+                ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseOID);
+                serviceInstance.run(executionCourseOID, writtenEvaluationOID);
+            } catch (NotAuthorizedException ex2) {
+                try {
+                    ExecutionCourseCoordinatorAuthorizationFilter.instance.execute(executionCourseOID);
+                    serviceInstance.run(executionCourseOID, writtenEvaluationOID);
+                } catch (NotAuthorizedException ex3) {
+                    throw ex3;
+                }
+            }
         }
     }
 

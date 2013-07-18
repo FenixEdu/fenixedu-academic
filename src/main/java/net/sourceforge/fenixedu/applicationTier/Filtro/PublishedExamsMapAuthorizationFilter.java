@@ -8,25 +8,22 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExamsMap;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteEvaluation;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.commons.collections.Predicate;
-
-import pt.utl.ist.berserk.ServiceRequest;
-import pt.utl.ist.berserk.ServiceResponse;
 
 /**
  * @author Luis Cruz
  * 
  */
-public class PublishedExamsMapAuthorizationFilter extends Filtro {
+public class PublishedExamsMapAuthorizationFilter {
 
-    @Override
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-        IUserView userView = getRemoteUser(request);
+    public static void execute(Object returnedObject) {
+        IUserView userView = AccessControl.getUserView();
 
-        if (response.getReturnObject() instanceof ExecutionCourseSiteView) {
+        if (returnedObject instanceof ExecutionCourseSiteView) {
 
-            ExecutionCourseSiteView executionCourseSiteView = (ExecutionCourseSiteView) response.getReturnObject();
+            ExecutionCourseSiteView executionCourseSiteView = (ExecutionCourseSiteView) returnedObject;
             if (executionCourseSiteView.getComponent() instanceof InfoSiteEvaluation) {
 
                 InfoSiteEvaluation infoSiteEvaluation = (InfoSiteEvaluation) executionCourseSiteView.getComponent();
@@ -37,16 +34,16 @@ public class PublishedExamsMapAuthorizationFilter extends Filtro {
         } else if (((userView != null && userView.getRoleTypes() != null && !userView.hasRoleType(getRoleType())))
                 || (userView == null) || (userView.getRoleTypes() == null)) {
 
-            if (response.getReturnObject() instanceof InfoExamsMap) {
+            if (returnedObject instanceof InfoExamsMap) {
 
-                InfoExamsMap infoExamsMap = (InfoExamsMap) response.getReturnObject();
+                InfoExamsMap infoExamsMap = (InfoExamsMap) returnedObject;
                 filterUnpublishedInformation(infoExamsMap);
 
             }
         }
     }
 
-    private void filterUnpublishedInformation(InfoSiteEvaluation infoSiteEvaluation) {
+    private static void filterUnpublishedInformation(InfoSiteEvaluation infoSiteEvaluation) {
         // This code is usefull for when the exams are to be filtered from the
         // public execution course page.
         CollectionUtils.filter(infoSiteEvaluation.getInfoEvaluations(), new Predicate() {
@@ -57,7 +54,7 @@ public class PublishedExamsMapAuthorizationFilter extends Filtro {
         });
     }
 
-    private void filterUnpublishedInformation(InfoExamsMap infoExamsMap) {
+    private static void filterUnpublishedInformation(InfoExamsMap infoExamsMap) {
         if (infoExamsMap != null
                 && infoExamsMap.getInfoExecutionDegree() != null
                 && infoExamsMap.getInfoExecutionDegree().isPublishedExam(
@@ -69,7 +66,7 @@ public class PublishedExamsMapAuthorizationFilter extends Filtro {
         }
     }
 
-    protected RoleType getRoleType() {
+    protected static RoleType getRoleType() {
         return RoleType.RESOURCE_ALLOCATION_MANAGER;
     }
 

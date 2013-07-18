@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.manager;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.RemoveDegreeFromDepartment;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -19,7 +18,7 @@ import org.apache.struts.action.ActionMapping;
 public class DepartmentDegreesDA extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixActionException, FenixFilterException {
+            throws FenixActionException {
         DepartmentDegreeBean departmentDegreeBean = getRenderedObject();
         if (departmentDegreeBean == null) {
             departmentDegreeBean = new DepartmentDegreeBean();
@@ -28,13 +27,13 @@ public class DepartmentDegreesDA extends FenixDispatchAction {
     }
 
     public ActionForward associate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws FenixActionException,  FenixServiceException {
         executeFactoryMethod();
         return prepare(mapping, form, request, response);
     }
 
     public ActionForward remove(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixActionException, FenixFilterException, FenixServiceException {
+            throws FenixActionException,  FenixServiceException {
         final String departmentString = request.getParameter("departmentID");
         final String degreeString = request.getParameter("degreeID");
         final Department department = rootDomainObject.readDepartmentByOID(Integer.valueOf(departmentString));

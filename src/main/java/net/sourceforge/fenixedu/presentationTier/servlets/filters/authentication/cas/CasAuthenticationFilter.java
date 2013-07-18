@@ -40,11 +40,10 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.Authenticate;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.LogOffAction;
 import net.sourceforge.fenixedu.util.HostAccessControl;
 
@@ -81,18 +80,14 @@ public class CasAuthenticationFilter implements Filter {
             try {
                 final CASReceipt receipt = getCASReceipt(serverName, ticket, requestURL);
 
-                final Object authenticationArgs[] = { receipt, requestURL, remoteHostName };
-
                 try {
-                    final IUserView userView =
-                            (IUserView) ServiceManagerServiceFactory.executeService(
-                                    PropertiesManager.getProperty("authenticationService"), authenticationArgs);
+                    final IUserView userView = Authenticate.runAuthenticate(receipt, requestURL, remoteHostName);
                     if (userView != null && !userView.getRoleTypes().isEmpty()) {
                         final HttpSession httpSession = getHttpSession(servletRequest);
                         httpSession.setAttribute(SetUserViewFilter.USER_SESSION_ATTRIBUTE, userView);
                     }
-                } catch (FenixFilterException ex) {
                 } catch (FenixServiceException ex) {
+                } catch (ExcepcaoPersistencia e) {
                 }
             } catch (CASAuthenticationException e) {
                 e.printStackTrace();

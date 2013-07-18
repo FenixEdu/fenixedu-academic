@@ -12,9 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.EditTeacherInformation;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadTeacherInformation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoOrientation;
@@ -26,7 +27,6 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.ResultTeacher;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.util.OrientationType;
 import net.sourceforge.fenixedu.util.ProviderRegimeType;
 import net.sourceforge.fenixedu.util.PublicationArea;
@@ -53,14 +53,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Forwards(value = { @Forward(name = "successfull-read", path = "view-teacher-information"),
         @Forward(name = "show-form", path = "teacher-information-management") })
 public class TeacherInformationAction extends FenixDispatchAction {
-    private String getReadService() {
-        return "ReadTeacherInformation";
-    }
-
-    private String getEditService() {
-        return "EditTeacherInformation";
-    }
-
     /**
      * @param mapping
      * @param form
@@ -76,8 +68,8 @@ public class TeacherInformationAction extends FenixDispatchAction {
         InfoWeeklyOcupation infoWeeklyOcupation = getInfoWeeklyOcupationFromForm(form);
         List infoOrientations = getInfoOrientationsFromForm(form);
         List infoPublicationsNumber = getInfoPublicationsNumberFromForm(form);
-        Object[] args = { infoServiceProviderRegime, infoWeeklyOcupation, infoOrientations, infoPublicationsNumber };
-        ServiceUtils.executeService(getEditService(), args);
+        EditTeacherInformation.runEditTeacherInformation(infoServiceProviderRegime, infoWeeklyOcupation, infoOrientations,
+                infoPublicationsNumber);
         return read(mapping, form, request, response);
     }
 
@@ -429,7 +421,7 @@ public class TeacherInformationAction extends FenixDispatchAction {
             InfoSiteTeacherInformation infoSiteTeacherInformation = readInfoSiteTeacherInformation(mapping, form, request);
             setInfoSiteTeacherInformationToRequest(request, infoSiteTeacherInformation, mapping);
             return mapping.findForward("successfull-read");
-        } catch (NotAuthorizedFilterException e) {
+        } catch (NotAuthorizedException e) {
             return mapping.findForward("unsuccessfull-read");
         }
     }
@@ -442,10 +434,9 @@ public class TeacherInformationAction extends FenixDispatchAction {
      * @return
      */
     private InfoSiteTeacherInformation readInfoSiteTeacherInformation(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request) throws FenixServiceException, FenixFilterException {
+            HttpServletRequest request) throws FenixServiceException {
         IUserView userView = UserView.getUser();
-        Object[] args = { userView.getUtilizador(), new String() };
-        SiteView siteView = (SiteView) ServiceUtils.executeService(getReadService(), args);
+        SiteView siteView = ReadTeacherInformation.runReadTeacherInformation(userView.getUtilizador(), new String());
         return (InfoSiteTeacherInformation) siteView.getComponent();
     }
 

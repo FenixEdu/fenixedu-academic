@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Filtro.SiteManagerAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.FileContent;
@@ -20,6 +22,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.manager.FileContentCreat
 
 import org.apache.commons.io.FileUtils;
 
+import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.file.FileSetMetaData;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.file.VirtualPathNode;
@@ -29,8 +32,9 @@ import pt.utl.ist.fenix.tools.file.VirtualPathNode;
  */
 public class CreateFileContent extends FileContentService {
 
-    public void run(Site site, Container container, File file, String originalFilename, String displayName, Group permittedGroup,
-            Person person, EducationalResourceType type) throws FenixServiceException, DomainException, IOException {
+    protected void run(Site site, Container container, File file, String originalFilename, String displayName,
+            Group permittedGroup, Person person, EducationalResourceType type) throws FenixServiceException, DomainException,
+            IOException {
 
         final VirtualPath filePath = getVirtualPath(site, container);
 
@@ -96,6 +100,18 @@ public class CreateFileContent extends FileContentService {
 
         filePath.addNode(0, new VirtualPathNode("Courses", "Courses"));
         return filePath;
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final CreateFileContent serviceInstance = new CreateFileContent();
+
+    @Service
+    public static void runCreateFileContent(Site site, Container container, File file, String originalFilename,
+            String displayName, Group permittedGroup, Person person, EducationalResourceType type) throws FenixServiceException,
+            DomainException, IOException, NotAuthorizedException {
+        SiteManagerAuthorizationFilter.instance.execute(site);
+        serviceInstance.run(site, container, file, originalFilename, displayName, permittedGroup, person, type);
     }
 
 }

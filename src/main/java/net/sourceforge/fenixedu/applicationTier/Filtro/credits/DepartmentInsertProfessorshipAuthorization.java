@@ -9,11 +9,13 @@ import net.sourceforge.fenixedu.domain.Teacher;
 /**
  * @author jpvl
  */
-public class DepartmentInsertProfessorshipAuthorization extends AbstractTeacherDepartmentAuthorization {
+public class DepartmentInsertProfessorshipAuthorization extends AbstractTeacherDepartmentAuthorization<String> {
+
+    public static final DepartmentInsertProfessorshipAuthorization instance = new DepartmentInsertProfessorshipAuthorization();
 
     @Override
-    protected Integer getTeacherId(Object[] arguments) {
-        Teacher teacher = Teacher.readByIstId((String) arguments[1]);
+    protected Integer getTeacherId(String istId) {
+        Teacher teacher = Teacher.readByIstId(istId);
         return (teacher == null) ? null : teacher.getIdInternal();
     }
 

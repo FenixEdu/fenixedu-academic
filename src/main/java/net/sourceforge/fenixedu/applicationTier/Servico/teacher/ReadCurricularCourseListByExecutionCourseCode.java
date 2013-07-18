@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Factory.TeacherAdministrationSiteComponentBuilder;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
@@ -18,22 +19,25 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
+
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Tânia Pousão
  * @author Ângela
  * 
  */
-public class ReadCurricularCourseListByExecutionCourseCode extends FenixService {
+public class ReadCurricularCourseListByExecutionCourseCode {
 
-    public Object run(Integer executionCourseCode) throws ExcepcaoInexistente, FenixServiceException {
+    protected TeacherAdministrationSiteView run(Integer executionCourseCode) throws ExcepcaoInexistente, FenixServiceException {
 
         List infoCurricularCourseList = new ArrayList();
         ExecutionCourseSite site = null;
-        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseCode);
+        ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseCode);
 
         if (executionCourse != null && executionCourse.getAssociatedCurricularCourses() != null) {
             for (int i = 0; i < executionCourse.getAssociatedCurricularCourses().size(); i++) {
@@ -76,4 +80,17 @@ public class ReadCurricularCourseListByExecutionCourseCode extends FenixService 
                 new TeacherAdministrationSiteView(commonComponent, infoSiteAssociatedCurricularCourses);
         return siteView;
     }
+
+    // Service Invokers migrated from Berserk
+
+    private static final ReadCurricularCourseListByExecutionCourseCode serviceInstance =
+            new ReadCurricularCourseListByExecutionCourseCode();
+
+    @Service
+    public static TeacherAdministrationSiteView runReadCurricularCourseListByExecutionCourseCode(Integer executionCourseCode)
+            throws ExcepcaoInexistente, FenixServiceException, NotAuthorizedException {
+        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseCode);
+        return serviceInstance.run(executionCourseCode);
+    }
+
 }

@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.curricularPlans;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.DegreeOfficialPublication;
@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.DegreeSpecializationArea;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class DeleteDegreeSpecializationArea extends FenixService {
+public class DeleteDegreeSpecializationArea {
 
     /**
      * Must ensure "REQUIRED" slots are filled

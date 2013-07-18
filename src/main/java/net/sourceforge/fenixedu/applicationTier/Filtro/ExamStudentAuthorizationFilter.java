@@ -5,21 +5,21 @@
 package net.sourceforge.fenixedu.applicationTier.Filtro;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
-import net.sourceforge.fenixedu.dataTransferObject.InfoWrittenTest;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import pt.utl.ist.berserk.ServiceRequest;
-import pt.utl.ist.berserk.ServiceResponse;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 /**
  * @author Luis Egidio, lmre@mega.ist.utl.pt Nuno Ochoa, nmgo@mega.ist.utl.pt
  * 
  */
 public class ExamStudentAuthorizationFilter extends AuthorizationByRoleFilter {
+
+    public static final ExamStudentAuthorizationFilter instance = new ExamStudentAuthorizationFilter();
 
     public ExamStudentAuthorizationFilter() {
         super();
@@ -30,38 +30,25 @@ public class ExamStudentAuthorizationFilter extends AuthorizationByRoleFilter {
         return RoleType.STUDENT;
     }
 
-    @Override
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-        IUserView id = getRemoteUser(request);
-        Object[] arguments = getServiceCallArguments(request);
+    public void execute(String username, Integer writtenEvaluationOID) throws NotAuthorizedException {
+        IUserView id = AccessControl.getUserView();
         try {
             if ((id == null) || (id.getRoleTypes() == null) || !id.hasRoleType(getRoleType())
-                    || !attendsEvaluationExecutionCourse(id, arguments)) {
-                throw new NotAuthorizedFilterException();
+                    || !attendsEvaluationExecutionCourse(id, username, writtenEvaluationOID)) {
+                throw new NotAuthorizedException();
             }
         } catch (RuntimeException e) {
-            throw new NotAuthorizedFilterException();
+            throw new NotAuthorizedException();
         }
     }
 
-    private boolean attendsEvaluationExecutionCourse(IUserView id, Object[] args) {
-        if (args == null) {
+    private boolean attendsEvaluationExecutionCourse(IUserView id, String studentUsername, Integer writtenEvaluationOID) {
+        if (writtenEvaluationOID == null) {
             return false;
         }
         try {
-            Integer evaluationID;
-            if (args[1] instanceof Integer) {
-                evaluationID = (Integer) args[1];
-            } else if (args[1] instanceof InfoExam) {
-                evaluationID = ((InfoExam) args[1]).getIdInternal();
-            } else if (args[1] instanceof InfoWrittenTest) {
-                evaluationID = (Integer) args[1];
-            } else {
-                return false;
-            }
-            final Evaluation evaluation = rootDomainObject.readEvaluationByOID(evaluationID);
+            final Evaluation evaluation = RootDomainObject.getInstance().readEvaluationByOID(writtenEvaluationOID);
 
-            final String studentUsername = (String) args[0];
             for (final ExecutionCourse executionCourse : evaluation.getAssociatedExecutionCourses()) {
                 for (final Attends attend : executionCourse.getAttends()) {
                     if (attend.getRegistration().getPerson().hasUsername(studentUsername)) {

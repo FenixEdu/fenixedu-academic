@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.spaceManager;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.space.DeleteMaterialSpaceOccupation;
 import net.sourceforge.fenixedu.dataTransferObject.spaceManager.MaterialTypeBean;
@@ -40,7 +39,7 @@ public class ManageMaterialSpaceOccupationsDA extends FenixDispatchAction {
     }
 
     public ActionForward prepareInsertMaterialOccupation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         IViewState viewState = RenderUtils.getViewState("materialTypeWithMaterial");
         if (viewState != null) {
             MaterialTypeBean materialTypeBean = (MaterialTypeBean) viewState.getMetaObject().getObject();
@@ -54,7 +53,7 @@ public class ManageMaterialSpaceOccupationsDA extends FenixDispatchAction {
     }
 
     public ActionForward prepareChooseMaterial(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         IViewState viewState = RenderUtils.getViewState();
         RenderUtils.invalidateViewState();
@@ -62,7 +61,7 @@ public class ManageMaterialSpaceOccupationsDA extends FenixDispatchAction {
     }
 
     public ActionForward prepareEditMaterialSpaceOccupation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         readAndSetSpaceInformation(request);
         MaterialSpaceOccupation materialOccupation = getMaterialOccupationFromParameter(request);
@@ -71,7 +70,7 @@ public class ManageMaterialSpaceOccupationsDA extends FenixDispatchAction {
     }
 
     public ActionForward deleteMaterialSpaceOccupation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         MaterialSpaceOccupation materialOccupation = getMaterialOccupationFromParameter(request);
 
@@ -85,7 +84,7 @@ public class ManageMaterialSpaceOccupationsDA extends FenixDispatchAction {
     }
 
     public ActionForward prepareChooseMaterialType(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         SpaceInformation spaceInformation = readAndSetSpaceInformation(request);
         request.setAttribute("materialTypeBean", new MaterialTypeBean(spaceInformation));

@@ -9,7 +9,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -35,7 +34,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 public class ManageEnrolmentModelDA extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         Registration registration =
                 rootDomainObject.readRegistrationByOID(getRequestParameterAsInteger(request, "registrationID"));
         EnrolmentModelFactoryEditor enrolmentModelFactoryEditor = new EnrolmentModelFactoryEditor(registration);
@@ -45,7 +44,7 @@ public class ManageEnrolmentModelDA extends FenixDispatchAction {
     }
 
     public ActionForward setEnrolmentModel(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         EnrolmentModelFactoryEditor enrolmentModelFactoryEditor = null;
 
         if (RenderUtils.getViewState() != null) {

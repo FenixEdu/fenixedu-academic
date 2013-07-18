@@ -2,14 +2,14 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 
 import java.util.Date;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class InsertStudentsFinalEvaluation extends FenixService {
+public class InsertStudentsFinalEvaluation {
 
     @Service
     public static void run(final InfoEnrolmentEvaluation infoEnrolmentEvaluation, final String teacherId,
@@ -20,7 +20,7 @@ public class InsertStudentsFinalEvaluation extends FenixService {
         }
 
         final EnrolmentEvaluation enrolmentEvaluation =
-                rootDomainObject.readEnrolmentEvaluationByOID(infoEnrolmentEvaluation.getIdInternal());
+                RootDomainObject.getInstance().readEnrolmentEvaluationByOID(infoEnrolmentEvaluation.getIdInternal());
         enrolmentEvaluation.insertStudentFinalEvaluationForMasterDegree(infoEnrolmentEvaluation.getGradeValue(),
                 teacher.getPerson(), evaluationDate);
     }

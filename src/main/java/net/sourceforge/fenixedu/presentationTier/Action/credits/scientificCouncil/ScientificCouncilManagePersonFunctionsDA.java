@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.credits.scientificCounc
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -68,7 +67,7 @@ public class ScientificCouncilManagePersonFunctionsDA extends ManagePersonFuncti
     }
 
     public ActionForward showDepartmentPersonFunctions(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws NumberFormatException,  FenixServiceException {
         DepartmentCreditsBean departmentCreditsBean = getRenderedObject();
         if (departmentCreditsBean == null) {
             departmentCreditsBean = new DepartmentCreditsBean();

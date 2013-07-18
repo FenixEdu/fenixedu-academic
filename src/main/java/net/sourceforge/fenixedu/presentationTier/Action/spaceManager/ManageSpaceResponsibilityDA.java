@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.spaceManager;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.space.DeleteSpaceResponsibility;
 import net.sourceforge.fenixedu.dataTransferObject.parking.SearchPartyBean;
@@ -36,14 +35,14 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 public class ManageSpaceResponsibilityDA extends FenixDispatchAction {
 
     public ActionForward showSpaceResponsibility(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         readAndSetAllAttributes(request);
         return mapping.findForward("showSpaceResponsibility");
     }
 
     public ActionForward deleteSpaceResponsibility(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         SpaceResponsibility spaceResponsibility = getSpaceResponsibility(request);
 
@@ -56,7 +55,7 @@ public class ManageSpaceResponsibilityDA extends FenixDispatchAction {
         return showSpaceResponsibility(mapping, form, request, response);
     }
 
-    private void readAndSetAllAttributes(HttpServletRequest request) throws FenixFilterException, FenixServiceException {
+    private void readAndSetAllAttributes(HttpServletRequest request) throws  FenixServiceException {
 
         SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
         setSpaceInformation(request, spaceInformation);
@@ -65,7 +64,7 @@ public class ManageSpaceResponsibilityDA extends FenixDispatchAction {
     }
 
     public ActionForward prepareEditSpaceResponsibility(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
         setSpaceInformation(request, spaceInformation);
@@ -76,7 +75,7 @@ public class ManageSpaceResponsibilityDA extends FenixDispatchAction {
     }
 
     public ActionForward manageResponsabilityInterval(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
         setSpaceInformation(request, spaceInformation);
@@ -86,7 +85,7 @@ public class ManageSpaceResponsibilityDA extends FenixDispatchAction {
     }
 
     public ActionForward prepareAddExternalUnit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
         setSpaceInformation(request, spaceInformation);

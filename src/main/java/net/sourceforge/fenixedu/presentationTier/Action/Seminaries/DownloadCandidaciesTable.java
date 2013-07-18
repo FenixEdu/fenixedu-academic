@@ -15,10 +15,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.Seminaries.ReadCandidacies;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCandidacyDetails;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCaseStudy;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCaseStudyChoice;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
@@ -40,7 +42,7 @@ public class DownloadCandidaciesTable extends FenixAction {
     static final String COLUMNS_HEADERS =
             "Nº\tNome\tMédia\tCadeiras Feitas\tAprovado\tE-Mail\tSeminário\tCurso\tDisciplina\tModalidade\tTema\tMotivação\tCaso1\tCaso2\tCaso3\tCaso4\tCaso5";
 
-    Object[] getReadCandidaciesArgs(HttpServletRequest request) {
+    List doReadCandidacies(HttpServletRequest request) throws NotAuthorizedException, BDException {
         Integer modalityID;
         Integer themeID;
         Integer case1Id;
@@ -113,7 +115,9 @@ public class DownloadCandidaciesTable extends FenixAction {
         Object[] arguments =
                 { modalityID, seminaryID, themeID, case1Id, case2Id, case3Id, case4Id, case5Id, curricularCourseID, degreeID,
                         approved };
-        return arguments;
+
+        return ReadCandidacies.runReadCandidacies(modalityID, seminaryID, themeID, case1Id, case2Id, case3Id, case4Id, case5Id,
+                curricularCourseID, degreeID, approved);
     }
 
     @Override
@@ -125,8 +129,7 @@ public class DownloadCandidaciesTable extends FenixAction {
         //
         List candidacies = new LinkedList();
         try {
-            Object[] argsReadCandidacies = getReadCandidaciesArgs(request);
-            candidacies = (List) ServiceManagerServiceFactory.executeService("Seminaries.ReadCandidacies", argsReadCandidacies);
+            candidacies = doReadCandidacies(request);
             for (Iterator iterator = candidacies.iterator(); iterator.hasNext();) {
 
                 List casesChoices = null;

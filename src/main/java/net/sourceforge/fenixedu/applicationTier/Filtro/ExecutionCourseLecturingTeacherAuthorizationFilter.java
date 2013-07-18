@@ -6,21 +6,24 @@
 package net.sourceforge.fenixedu.applicationTier.Filtro;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.SummariesManagementBean;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import pt.utl.ist.berserk.ServiceRequest;
-import pt.utl.ist.berserk.ServiceResponse;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 /**
  * @author João Mota
  * 
  */
 public class ExecutionCourseLecturingTeacherAuthorizationFilter extends AuthorizationByRoleFilter {
+
+    public static final ExecutionCourseLecturingTeacherAuthorizationFilter instance =
+            new ExecutionCourseLecturingTeacherAuthorizationFilter();
 
     public ExecutionCourseLecturingTeacherAuthorizationFilter() {
 
@@ -31,22 +34,27 @@ public class ExecutionCourseLecturingTeacherAuthorizationFilter extends Authoriz
         return RoleType.TEACHER;
     }
 
-    @Override
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-        IUserView id = getRemoteUser(request);
-        Object[] arguments = getServiceCallArguments(request);
+    public void execute(Integer executionCourseCode) throws NotAuthorizedException {
+        execute(getExecutionCourse(executionCourseCode));
+    }
+
+    public void execute(SummariesManagementBean executionCourseCode) throws NotAuthorizedException {
+        execute(getExecutionCourse(executionCourseCode));
+    }
+
+    public void execute(ExecutionCourse executionCourse) throws NotAuthorizedException {
+        IUserView id = AccessControl.getUserView();
 
         try {
-            if ((id == null) || (id.getRoleTypes() == null) || !lecturesExecutionCourse(id, arguments)) {
-                throw new NotAuthorizedFilterException();
+            if ((id == null) || (id.getRoleTypes() == null) || !lecturesExecutionCourse(id, executionCourse)) {
+                throw new NotAuthorizedException();
             }
         } catch (RuntimeException e) {
-            throw new NotAuthorizedFilterException();
+            throw new NotAuthorizedException();
         }
     }
 
-    private boolean lecturesExecutionCourse(IUserView id, Object[] arguments) {
-        final ExecutionCourse executionCourse = getExecutionCourse(arguments[0]);
+    private boolean lecturesExecutionCourse(IUserView id, ExecutionCourse executionCourse) {
         if (executionCourse == null) {
             return false;
         }
@@ -72,11 +80,11 @@ public class ExecutionCourseLecturingTeacherAuthorizationFilter extends Authoriz
 
         } else if (argument instanceof InfoExecutionCourse) {
             final InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) argument;
-            return rootDomainObject.readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
+            return RootDomainObject.getInstance().readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
 
         } else if (argument instanceof Integer) {
             final Integer executionCourseID = (Integer) argument;
-            return rootDomainObject.readExecutionCourseByOID(executionCourseID);
+            return RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseID);
 
         } else if (argument instanceof SummariesManagementBean) {
             return ((SummariesManagementBean) argument).getExecutionCourse();

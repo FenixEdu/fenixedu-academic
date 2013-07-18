@@ -8,8 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.SortedSet;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlanEquivalencePlan;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInClasses;
@@ -19,25 +18,23 @@ import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.Acad
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import pt.utl.ist.berserk.ServiceRequest;
-import pt.utl.ist.berserk.ServiceResponse;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 /**
  * @author Luis Cruz
  * 
  */
-public class ClassEnrollmentAuthorizationFilter extends Filtro {
+public class ClassEnrollmentAuthorizationFilter {
+
+    public static final ClassEnrollmentAuthorizationFilter instance = new ClassEnrollmentAuthorizationFilter();
 
     private static SimpleDateFormat outputDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
     private static String comparableDateFormatString = "yyyyMMddHHmm";
 
-    @Override
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-        Person person = getRemoteUser(request).getPerson();
-
-        final Registration registration = (Registration) getServiceCallArguments(request)[0];
+    public void execute(Registration registration) throws FenixServiceException {
+        Person person = AccessControl.getUserView().getPerson();
 
         if (AcademicAuthorizationGroup.getProgramsForOperation(person, AcademicOperationType.STUDENT_ENROLMENTS).contains(
                 registration.getDegree())) {
@@ -60,9 +57,9 @@ public class ClassEnrollmentAuthorizationFilter extends Filtro {
         }
 
         boolean hasOneOpen = false;
-        Exception toThrow = null;
+        FenixServiceException toThrow = null;
         for (final StudentCurricularPlan studentCurricularPlan : activeStudentCurricularPlans) {
-            final Exception exception = verify(studentCurricularPlan);
+            final FenixServiceException exception = verify(studentCurricularPlan);
             hasOneOpen = hasOneOpen || exception == null;
             toThrow = exception == null ? toThrow : exception;
         }
@@ -71,9 +68,9 @@ public class ClassEnrollmentAuthorizationFilter extends Filtro {
         }
     }
 
-    private Exception verify(StudentCurricularPlan studentCurricularPlan) {
+    private FenixServiceException verify(StudentCurricularPlan studentCurricularPlan) {
         final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
-        Exception result = verify(degreeCurricularPlan);
+        FenixServiceException result = verify(degreeCurricularPlan);
         if (result == null) {
             return null;
         }
@@ -87,7 +84,7 @@ public class ClassEnrollmentAuthorizationFilter extends Filtro {
         return result;
     }
 
-    private Exception verify(DegreeCurricularPlan degreeCurricularPlan) {
+    private FenixServiceException verify(DegreeCurricularPlan degreeCurricularPlan) {
         final EnrolmentPeriodInClasses enrolmentPeriodInClasses = degreeCurricularPlan.getCurrentClassesEnrollmentPeriod();
         if (enrolmentPeriodInClasses == null || enrolmentPeriodInClasses.getStartDateDateTime() == null
                 || enrolmentPeriodInClasses.getEndDateDateTime() == null) {
@@ -112,16 +109,16 @@ public class ClassEnrollmentAuthorizationFilter extends Filtro {
         return null;
     }
 
-    public class NoActiveStudentCurricularPlanOfCorrectTypeException extends NotAuthorizedFilterException {
+    public class NoActiveStudentCurricularPlanOfCorrectTypeException extends FenixServiceException {
     }
 
-    public class CurrentClassesEnrolmentPeriodUndefinedForDegreeCurricularPlan extends NotAuthorizedFilterException {
+    public class CurrentClassesEnrolmentPeriodUndefinedForDegreeCurricularPlan extends FenixServiceException {
     }
 
-    public class InquiriesNotAnswered extends NotAuthorizedFilterException {
+    public class InquiriesNotAnswered extends FenixServiceException {
     }
 
-    public class OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan extends NotAuthorizedFilterException {
+    public class OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan extends FenixServiceException {
         public OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan() {
             super();
         }

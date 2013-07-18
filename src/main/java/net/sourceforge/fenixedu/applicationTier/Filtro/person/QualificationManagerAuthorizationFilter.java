@@ -5,15 +5,16 @@
 package net.sourceforge.fenixedu.applicationTier.Filtro.person;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.person.InfoQualification;
 import net.sourceforge.fenixedu.domain.Qualification;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import pt.utl.ist.berserk.ServiceRequest;
-import pt.utl.ist.berserk.ServiceResponse;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
-public class QualificationManagerAuthorizationFilter extends Filtro {
+public class QualificationManagerAuthorizationFilter {
+
+    public static final QualificationManagerAuthorizationFilter instance = new QualificationManagerAuthorizationFilter();
 
     public QualificationManagerAuthorizationFilter() {
     }
@@ -22,10 +23,8 @@ public class QualificationManagerAuthorizationFilter extends Filtro {
         return RoleType.TEACHER;
     }
 
-    @Override
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-        IUserView id = getRemoteUser(request);
-        Object[] arguments = getServiceCallArguments(request);
+    public void execute(Integer qualificationId, InfoQualification infoQualification) throws NotAuthorizedException {
+        IUserView id = AccessControl.getUserView();
 
         try {
             // Verify if needed fields are null
@@ -33,10 +32,6 @@ public class QualificationManagerAuthorizationFilter extends Filtro {
                 throw new NotAuthorizedException();
             }
 
-            InfoQualification infoQualification = null;
-
-            // New Qualification, second argument is a qualification
-            infoQualification = (InfoQualification) arguments[1];
             if (infoQualification == null) {
                 throw new NotAuthorizedException();
             }
@@ -63,7 +58,8 @@ public class QualificationManagerAuthorizationFilter extends Filtro {
         if (isNew) {
             return true;
         }
-        final Qualification qualification = rootDomainObject.readQualificationByOID(infoQualification.getIdInternal());
+        final Qualification qualification =
+                RootDomainObject.getInstance().readQualificationByOID(infoQualification.getIdInternal());
         return qualification.getPerson() == userView.getPerson();
     }
 }

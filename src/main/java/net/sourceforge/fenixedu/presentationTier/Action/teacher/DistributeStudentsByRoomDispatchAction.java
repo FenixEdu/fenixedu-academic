@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.TeacherAdministrationSiteComponentService;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.WrittenEvaluationRoomDistribution;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
@@ -15,7 +17,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteExamExecutionCourses;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ReverseComparator;
@@ -45,11 +46,10 @@ public class DistributeStudentsByRoomDispatchAction extends FenixDispatchAction 
         final Integer executionCourseCode = Integer.valueOf((String) distributionExam.get("objectCode"));
 
         final InfoSiteExamExecutionCourses infoSiteExamExecutionCourses = new InfoSiteExamExecutionCourses();
-        final Object[] args =
-                { executionCourseCode, new InfoSiteCommon(), infoSiteExamExecutionCourses, null, evaluationCode, null };
 
         final TeacherAdministrationSiteView siteView =
-                (TeacherAdministrationSiteView) ServiceUtils.executeService("TeacherAdministrationSiteComponentService", args);
+                TeacherAdministrationSiteComponentService.runTeacherAdministrationSiteComponentService(executionCourseCode,
+                        new InfoSiteCommon(), infoSiteExamExecutionCourses, null, evaluationCode, null);
 
         final InfoExam infoExam = infoSiteExamExecutionCourses.getInfoExam();
         final List<InfoExecutionCourse> infoExecutionCourses = infoSiteExamExecutionCourses.getInfoExecutionCourses();
@@ -79,9 +79,9 @@ public class DistributeStudentsByRoomDispatchAction extends FenixDispatchAction 
         final Boolean distributeOnlyEnroledStudents = Boolean.valueOf((String) distributionExam.get("enroll"));
         final List rooms = Arrays.asList((Integer[]) distributionExam.get("rooms"));
 
-        final Object[] args = { executionCourseCode, evaluationCode, rooms, Boolean.FALSE, distributeOnlyEnroledStudents };
         try {
-            ServiceUtils.executeService("WrittenEvaluationRoomDistribution", args);
+            WrittenEvaluationRoomDistribution.runWrittenEvaluationRoomDistribution(executionCourseCode, evaluationCode, rooms,
+                    Boolean.FALSE, distributeOnlyEnroledStudents);
             request.setAttribute("objectCode", executionCourseCode);
             request.setAttribute("evaluationCode", evaluationCode);
             return mapping.findForward("show-distribution");

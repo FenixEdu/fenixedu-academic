@@ -10,7 +10,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.projectSubmission.CreateProjectSubmission;
 import net.sourceforge.fenixedu.dataTransferObject.projectSubmission.CreateProjectSubmissionBean;
@@ -56,7 +55,7 @@ import pt.utl.ist.fenix.tools.util.FileUtils;
 public class ProjectSubmissionDispatchAction extends FenixDispatchAction {
 
     public ActionForward viewProjectsWithOnlineSubmission(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws FenixActionException,  FenixServiceException {
 
         Student student = getUserView(request).getPerson().getStudent();
         ManageStudentStatuteBean bean = getRenderedObject("studentBean");
@@ -72,7 +71,7 @@ public class ProjectSubmissionDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward viewProjectSubmissions(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws FenixActionException,  FenixServiceException {
 
         final Attends attends = getAttends(request);
         final Project project = getProject(request);
@@ -95,7 +94,7 @@ public class ProjectSubmissionDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward viewObservation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws FenixActionException,  FenixServiceException {
 
         ProjectSubmission submission = getProjectSubmission(request);
 
@@ -128,7 +127,7 @@ public class ProjectSubmissionDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward prepareProjectSubmission(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws FenixActionException,  FenixServiceException {
 
         Attends attends = getAttends(request);
         Project project = getProject(request);
@@ -146,7 +145,7 @@ public class ProjectSubmissionDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward submitProject(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException, IOException {
+            HttpServletResponse response) throws FenixActionException,  FenixServiceException, IOException {
 
         final IViewState viewState = RenderUtils.getViewState("createProjectSubmission");
         final CreateProjectSubmissionBean createProjectSubmissionBean =

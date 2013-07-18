@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -15,16 +15,16 @@ import org.apache.commons.collections.Transformer;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class ReadAvailableExecutionPeriods extends FenixService {
+public class ReadAvailableExecutionPeriods {
 
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
     public static List run(List<Integer> unavailableExecutionPeriodsIDs) throws FenixServiceException {
 
         final Collection<ExecutionSemester> filteredExecutionPeriods =
-                new ArrayList<ExecutionSemester>(rootDomainObject.getExecutionPeriodsSet());
+                new ArrayList<ExecutionSemester>(RootDomainObject.getInstance().getExecutionPeriodsSet());
         for (final Integer executionPeriodID : unavailableExecutionPeriodsIDs) {
-            final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
+            final ExecutionSemester executionSemester = RootDomainObject.getInstance().readExecutionSemesterByOID(executionPeriodID);
             filteredExecutionPeriods.remove(executionSemester);
         }
         return (List) CollectionUtils.collect(filteredExecutionPeriods, TRANSFORM_EXECUTIONPERIOD_TO_INFOEXECUTIONPERIOD);

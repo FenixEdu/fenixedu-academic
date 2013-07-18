@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.student.RegistrationConclusionProcess;
+import net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift.WriteStudentAttendingCourse;
 import net.sourceforge.fenixedu.applicationTier.Servico.registration.DeleteRegistrationRegime;
 import net.sourceforge.fenixedu.dataTransferObject.AddAttendsBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
@@ -296,7 +297,7 @@ public class RegistrationDA extends StudentRegistrationDA {
         final AddAttendsBean addAttendsBean = (AddAttendsBean) getObjectFromViewState("addAttendsBean");
         final ExecutionCourse executionCourse = addAttendsBean.getExecutionCourse();
 
-        executeService("WriteStudentAttendingCourse", new Object[] { registration, executionCourse.getIdInternal() });
+        WriteStudentAttendingCourse.runWriteStudentAttendingCourse( registration, executionCourse.getIdInternal() );
 
         return viewAttends(mapping, actionForm, request, response);
     }

@@ -8,7 +8,6 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
@@ -44,7 +43,7 @@ public class EvaluationMethodControlDA extends FenixDispatchAction {
     }
 
     public ActionForward exportToXLS(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException, FenixFilterException {
+            HttpServletResponse response) throws FenixServiceException {
         export(request, response, new MethodInvoker() {
             @Override
             public void export(Spreadsheet spreadsheet, OutputStream outputStream) throws IOException {
@@ -60,7 +59,7 @@ public class EvaluationMethodControlDA extends FenixDispatchAction {
     }
 
     public ActionForward exportToCSV(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException, FenixFilterException {
+            HttpServletResponse response) throws FenixServiceException {
         export(request, response, new MethodInvoker() {
             @Override
             public void export(Spreadsheet spreadsheet, OutputStream outputStream) throws IOException {
@@ -76,7 +75,7 @@ public class EvaluationMethodControlDA extends FenixDispatchAction {
     }
 
     public ActionForward export(HttpServletRequest request, HttpServletResponse response, final MethodInvoker methodInvoker)
-            throws FenixServiceException, FenixFilterException {
+            throws FenixServiceException {
 
         final ExecutionCourseWithNoEvaluationMethodSearchBean executionCourseWithNoEvaluationMethodSearchBean =
                 getSearchBean(request);

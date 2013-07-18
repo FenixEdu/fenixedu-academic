@@ -16,10 +16,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.AddCoordinat
 import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.RemoveCoordinators;
 import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.ResponsibleCoordinators;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCoordinator;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.Employee;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -48,10 +48,9 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
 
         IUserView userView = UserView.getUser();
 
-        Object[] args = { executionDegreeId };
         InfoExecutionDegree infoExecutionDegree = null;
         try {
-            infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService("ReadExecutionDegree", args);
+            infoExecutionDegree = ReadExecutionDegree.runReadExecutionDegree(executionDegreeId);
         } catch (FenixServiceException e) {
             e.printStackTrace();
             errors.add("impossibleExecutionDegree", new ActionError("error.invalidExecutionDegree"));
@@ -110,10 +109,9 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
 
         IUserView userView = UserView.getUser();
 
-        Object[] args = { executionDegreeId };
         InfoExecutionDegree infoExecutionDegree = null;
         try {
-            infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService("ReadExecutionDegree", args);
+            infoExecutionDegree = ReadExecutionDegree.runReadExecutionDegree(executionDegreeId);
         } catch (FenixServiceException e) {
             e.printStackTrace();
             errors.add("impossibleExecutionDegree", new ActionError("error.invalidExecutionDegree"));

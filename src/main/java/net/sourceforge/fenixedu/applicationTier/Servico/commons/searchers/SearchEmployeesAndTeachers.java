@@ -6,21 +6,20 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.AutoCompleteSearchService;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.presentationTier.renderers.providers.AutoCompleteProvider;
 
 import org.apache.commons.beanutils.BeanComparator;
 
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
-public class SearchEmployeesAndTeachers extends FenixService implements AutoCompleteSearchService {
+public class SearchEmployeesAndTeachers implements AutoCompleteProvider<Person> {
 
     @Override
-    public Collection run(Class type, String value, int limit, Map<String, String> arguments) {
+    public Collection<Person> getSearchResults(Map<String, String> argsMap, String value, int maxCount) {
         List<Person> result = new ArrayList<Person>();
 
-        String slotName = arguments.get("slot");
+        String slotName = argsMap.get("slot");
 
         if (value == null) {
             result = new ArrayList<Person>(Person.findInternalPerson(""));

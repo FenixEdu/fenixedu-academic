@@ -7,7 +7,6 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -138,7 +137,7 @@ public class SearchWrittenEvaluationsByDate extends FenixContextDispatchAction {
     }
 
     private AcademicInterval getAcademicInterval(DynaActionForm dynaActionForm, HttpServletRequest request)
-            throws FenixFilterException, FenixServiceException {
+            throws  FenixServiceException {
         return AcademicInterval.getAcademicIntervalFromResumedString(dynaActionForm
                 .getString(PresentationConstants.ACADEMIC_INTERVAL));
     }

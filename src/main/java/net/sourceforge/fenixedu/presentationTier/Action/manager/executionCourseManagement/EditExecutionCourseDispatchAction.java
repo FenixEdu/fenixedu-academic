@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionPeriods;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteExecutionCourses;
@@ -59,7 +58,7 @@ import pt.ist.fenixWebFramework.security.UserView;
 public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareEditECChooseExecutionPeriod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
 
         IUserView userView = UserView.getUser();
         List infoExecutionPeriods = null;
@@ -110,7 +109,7 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward prepareEditECChooseExecDegreeAndCurYear(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
 
         IUserView userView = UserView.getUser();
         buildCurricularYearLabelValueBean(request);
@@ -174,7 +173,7 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward prepareEditExecutionCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
 
         IUserView userView = UserView.getUser();
 
@@ -230,7 +229,7 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward editExecutionCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
 
         String executionCourseId = RequestUtils.getAndSetStringToRequest(request, "executionCourseId");
 
@@ -315,7 +314,7 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward deleteExecutionCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
 
         String executionCourseId = RequestUtils.getAndSetStringToRequest(request, "executionCourseId");
 

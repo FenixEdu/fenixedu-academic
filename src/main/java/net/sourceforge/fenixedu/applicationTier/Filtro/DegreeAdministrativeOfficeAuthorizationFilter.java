@@ -1,10 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Filtro;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import pt.utl.ist.berserk.ServiceRequest;
-import pt.utl.ist.berserk.ServiceResponse;
-import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 /**
  * @author David Santos
@@ -31,20 +30,12 @@ public class DegreeAdministrativeOfficeAuthorizationFilter extends Authorization
         return RoleType.DEGREE_ADMINISTRATIVE_OFFICE;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk
-     * .ServiceRequest, pt.utl.ist.berserk.ServiceResponse)
-     */
     @Override
-    public void execute(ServiceRequest request, ServiceResponse response) throws FilterException, Exception {
-        IUserView userView = (IUserView) request.getRequester();
+    public void execute() throws NotAuthorizedException {
+        IUserView userView = AccessControl.getUserView();
         if (!userView.hasRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)) {
-            super.execute(request, response);
+            super.execute();
         }
-
     }
 
 }

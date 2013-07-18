@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ExecuteFactoryMethod;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Person;
@@ -26,7 +25,6 @@ import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityCont
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.FenixActionForward;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 import net.sourceforge.fenixedu.presentationTier.util.struts.StrutsMessageResourceProvider;
 
@@ -79,11 +77,6 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 
     protected static IUserView getUserView(HttpServletRequest request) {
         return UserView.getUser();
-    }
-
-    protected Object executeService(final String serviceName, final Object[] serviceArgs) throws FenixFilterException,
-            FenixServiceException {
-        return ServiceUtils.executeService(serviceName, serviceArgs);
     }
 
     @SuppressWarnings({ "static-access", "unchecked" })
@@ -219,11 +212,11 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
         return input;
     }
 
-    protected Object executeFactoryMethod() throws FenixFilterException, FenixServiceException {
+    protected Object executeFactoryMethod() throws  FenixServiceException {
         return executeFactoryMethod(getFactoryObject());
     }
 
-    protected Object executeFactoryMethod(FactoryExecutor executor) throws FenixFilterException, FenixServiceException {
+    protected Object executeFactoryMethod(FactoryExecutor executor) throws  FenixServiceException {
         return ExecuteFactoryMethod.run(executor);
     }
 

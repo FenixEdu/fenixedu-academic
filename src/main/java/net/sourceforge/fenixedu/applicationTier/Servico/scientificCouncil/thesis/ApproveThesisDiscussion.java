@@ -10,6 +10,8 @@ import java.util.Locale;
 import java.util.Set;
 
 import jvstm.TransactionalCommand;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ScientificCouncilAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -233,6 +235,16 @@ public class ApproveThesisDiscussion extends ThesisServiceWithMailNotification {
     @Override
     protected String getSubject(Thesis thesis) {
         return getMessage(SUBJECT_KEY, thesis.getTitle().getContent());
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final ApproveThesisDiscussion serviceInstance = new ApproveThesisDiscussion();
+
+    @Service
+    public static void runApproveThesisDiscussion(Thesis thesis) throws NotAuthorizedException {
+        ScientificCouncilAuthorizationFilter.instance.execute();
+        serviceInstance.run(thesis);
     }
 
 }

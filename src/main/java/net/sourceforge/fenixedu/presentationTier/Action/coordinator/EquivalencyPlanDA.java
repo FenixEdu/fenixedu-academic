@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.DeleteEquivalencePlanEntry;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.EquivalencePlan;
 import net.sourceforge.fenixedu.domain.EquivalencePlanEntry;
@@ -85,8 +86,7 @@ public class EquivalencyPlanDA extends FenixDispatchAction {
     public ActionForward deleteEquivalency(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         final EquivalencePlanEntry equivalencePlanEntry = getEquivalencePlanEntry(request);
-        final Object[] args = { equivalencePlanEntry };
-        executeService("DeleteEquivalencePlanEntry", args);
+        DeleteEquivalencePlanEntry.runDeleteEquivalencePlanEntry(equivalencePlanEntry);
         return mapping.findForward("showPlan");
     }
 

@@ -12,9 +12,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift.EnrollStudentInShifts;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.CreateBibliographicReference;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.CreateLessonPlanning;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteBibliographicReference;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteLessonPlanning;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.EditBibliographicReference;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.EditEvaluation;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.ImportBibliographicReferences;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.ImportEvaluationMethod;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.ImportLessonPlannings;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.ImportSections;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.MoveLessonPlanning;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.OrderBibliographicReferences;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.CreateLessonPlanningBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
@@ -36,7 +46,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
@@ -89,8 +98,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         request.setAttribute("importContentBean", bean);
     }
 
-    private void importContent(HttpServletRequest request, String importContentService) throws FenixServiceException,
-            FenixFilterException {
+    private void importContent(HttpServletRequest request, String importContentService) throws FenixServiceException {
         final ExecutionCourse executionCourseTo = (ExecutionCourse) request.getAttribute("executionCourse");
         final IViewState viewState = RenderUtils.getViewState("importContentBeanWithExecutionCourse");
         final ImportContentBean bean = (ImportContentBean) viewState.getMetaObject().getObject();
@@ -99,7 +107,17 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         final ExecutionCourse executionCourseFrom = bean.getExecutionCourse();
         final Object args[] = { executionCourseTo.getIdInternal(), executionCourseTo, executionCourseFrom, null };
         try {
-            ServiceManagerServiceFactory.executeService(importContentService, args);
+            if (importContentService.equals("ImportBibliographicReferences")) {
+                ImportBibliographicReferences.runImportBibliographicReferences(executionCourseTo.getIdInternal(),
+                        executionCourseTo, executionCourseFrom, null);
+            } else if (importContentService.equals("ImportEvaluationMethod")) {
+                ImportEvaluationMethod.runImportEvaluationMethod(executionCourseTo.getIdInternal(), executionCourseTo,
+                        executionCourseFrom, null);
+            } else if (importContentService.equals("ImportSections")) {
+                ImportSections.runImportSections(executionCourseTo.getIdInternal(), executionCourseTo, executionCourseFrom, null);
+            } else {
+                throw new UnsupportedOperationException("Sorry, cannot import using " + importContentService);
+            }
         } catch (DomainException e) {
             addActionMessage(request, e.getKey(), e.getArgs());
         }
@@ -129,7 +147,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
     }
 
     public ActionForward createProgram(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws FenixActionException,  FenixServiceException {
         executeFactoryMethod();
         return mapping.findForward("program");
     }
@@ -160,7 +178,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
     }
 
     public ActionForward editProgram(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws FenixActionException,  FenixServiceException {
         executeFactoryMethod();
         return mapping.findForward("program");
     }
@@ -179,7 +197,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
     }
 
     public ActionForward createObjectives(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException, FenixActionException {
+            HttpServletResponse response) throws  FenixServiceException, FenixActionException {
         executeFactoryMethod();
         return mapping.findForward("objectives");
     }
@@ -239,8 +257,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
                 final String en = competenceCourse.getEvaluationMethodEn();
                 evaluationMethodMls = evaluationMethodMls.with(Language.pt, pt == null ? "" : pt).with(Language.en, en == null ? "" : en);
             }
-            final Object args[] = { executionCourse, evaluationMethodMls };
-            executeService("EditEvaluation", args);
+            EditEvaluation.runEditEvaluation(executionCourse, evaluationMethodMls);
             evaluationMethod = executionCourse.getEvaluationMethod();
         }
         return mapping.findForward("edit-evaluationMethod");
@@ -257,8 +274,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 
         final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
 
-        final Object args[] = { executionCourse, multiLanguageString };
-        executeService("EditEvaluation", args);
+        EditEvaluation.runEditEvaluation(executionCourse, multiLanguageString);
 
         return mapping.findForward("evaluationMethod");
     }
@@ -292,7 +308,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
     }
 
     public ActionForward importEvaluationMethod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         importContent(request, "ImportEvaluationMethod");
         return mapping.findForward("evaluationMethod");
@@ -322,8 +338,8 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
         final IUserView userView = getUserView(request);
 
-        final Object args[] = { executionCourse.getIdInternal(), title, authors, reference, year, Boolean.valueOf(optional) };
-        ServiceManagerServiceFactory.executeService("CreateBibliographicReference", args);
+        CreateBibliographicReference.runCreateBibliographicReference(executionCourse.getIdInternal(), title, authors, reference,
+                year, Boolean.valueOf(optional));
 
         return mapping.findForward("bibliographicReference");
     }
@@ -363,9 +379,8 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
                 findBibliographicReference(executionCourse, Integer.valueOf(bibliographicReferenceIDString));
         final IUserView userView = getUserView(request);
 
-        final Object args[] =
-                { bibliographicReference.getIdInternal(), title, authors, reference, year, Boolean.valueOf(optional) };
-        ServiceManagerServiceFactory.executeService("EditBibliographicReference", args);
+        EditBibliographicReference.runEditBibliographicReference(bibliographicReference.getIdInternal(), title, authors,
+                reference, year, Boolean.valueOf(optional));
 
         return mapping.findForward("bibliographicReference");
     }
@@ -375,8 +390,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 
         final String bibliographicReferenceIDString = request.getParameter("bibliographicReferenceID");
         final IUserView userView = getUserView(request);
-        final Object args[] = { Integer.valueOf(bibliographicReferenceIDString) };
-        ServiceManagerServiceFactory.executeService("DeleteBibliographicReference", args);
+        DeleteBibliographicReference.runDeleteBibliographicReference(Integer.valueOf(bibliographicReferenceIDString));
 
         return mapping.findForward("bibliographicReference");
     }
@@ -410,7 +424,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
     }
 
     public ActionForward importBibliographicReferences(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         importContent(request, "ImportBibliographicReferences");
         return mapping.findForward("bibliographicReference");
@@ -450,7 +464,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
     }
 
     public ActionForward importLessonPlannings(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         final IViewState viewState = RenderUtils.getViewState();
         ImportLessonPlanningsBean bean = (ImportLessonPlanningsBean) viewState.getMetaObject().getObject();
@@ -461,9 +475,9 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         ImportType importType = bean.getImportType();
 
         if (importType != null && importType.equals(ImportLessonPlanningsBean.ImportType.PLANNING)) {
-            final Object args[] = { executionCourseTo.getIdInternal(), executionCourseTo, executionCourseFrom, null };
             try {
-                executeService("ImportLessonPlannings", args);
+                ImportLessonPlannings.runImportLessonPlannings(executionCourseTo.getIdInternal(), executionCourseTo,
+                        executionCourseFrom, null);
             } catch (DomainException e) {
                 addActionMessage(request, e.getKey(), e.getArgs());
             }
@@ -476,7 +490,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
     }
 
     public ActionForward importLessonPlanningsBySummaries(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         final IViewState viewState = RenderUtils.getViewState();
         ImportLessonPlanningsBean bean = (ImportLessonPlanningsBean) viewState.getMetaObject().getObject();
@@ -484,9 +498,9 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         ExecutionCourse executionCourseTo = bean.getExecutionCourseTo();
         Shift shiftFrom = bean.getShift();
 
-        final Object args[] = { executionCourseTo.getIdInternal(), executionCourseTo, shiftFrom.getExecutionCourse(), shiftFrom };
         try {
-            executeService("ImportLessonPlannings", args);
+            ImportLessonPlannings.runImportLessonPlannings(executionCourseTo.getIdInternal(), executionCourseTo,
+                    shiftFrom.getExecutionCourse(), shiftFrom);
         } catch (DomainException e) {
             addActionMessage(request, e.getKey(), e.getArgs());
         }
@@ -511,14 +525,13 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
     }
 
     public ActionForward moveUpLessonPlanning(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         Integer lessonPlanningID = Integer.valueOf(request.getParameter("lessonPlanningID"));
         LessonPlanning lessonPlanning = rootDomainObject.readLessonPlanningByOID(lessonPlanningID);
-        final Object args[] =
-                { lessonPlanning.getExecutionCourse().getIdInternal(), lessonPlanning, (lessonPlanning.getOrderOfPlanning() - 1) };
         try {
-            executeService("MoveLessonPlanning", args);
+            MoveLessonPlanning.runMoveLessonPlanning(lessonPlanning.getExecutionCourse().getIdInternal(), lessonPlanning,
+                    (lessonPlanning.getOrderOfPlanning() - 1));
         } catch (DomainException e) {
             addActionMessage(request, e.getKey(), e.getArgs());
         }
@@ -527,14 +540,13 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
     }
 
     public ActionForward moveDownLessonPlanning(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         Integer lessonPlanningID = Integer.valueOf(request.getParameter("lessonPlanningID"));
         LessonPlanning lessonPlanning = rootDomainObject.readLessonPlanningByOID(lessonPlanningID);
-        final Object args[] =
-                { lessonPlanning.getExecutionCourse().getIdInternal(), lessonPlanning, (lessonPlanning.getOrderOfPlanning() + 1) };
         try {
-            executeService("MoveLessonPlanning", args);
+            MoveLessonPlanning.runMoveLessonPlanning(lessonPlanning.getExecutionCourse().getIdInternal(), lessonPlanning,
+                    (lessonPlanning.getOrderOfPlanning() + 1));
         } catch (DomainException e) {
             addActionMessage(request, e.getKey(), e.getArgs());
         }
@@ -560,17 +572,15 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
     }
 
     public ActionForward createLessonPlanning(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         IViewState viewState = RenderUtils.getViewState();
         final CreateLessonPlanningBean lessonPlanningBean = (CreateLessonPlanningBean) viewState.getMetaObject().getObject();
-        final Object args[] =
-                { lessonPlanningBean.getExecutionCourse().getIdInternal(), lessonPlanningBean.getTitle(),
-                        lessonPlanningBean.getPlanning(), lessonPlanningBean.getLessonType(),
-                        lessonPlanningBean.getExecutionCourse() };
 
         try {
-            executeService("CreateLessonPlanning", args);
+            CreateLessonPlanning.runCreateLessonPlanning(lessonPlanningBean.getExecutionCourse().getIdInternal(),
+                    lessonPlanningBean.getTitle(), lessonPlanningBean.getPlanning(), lessonPlanningBean.getLessonType(),
+                    lessonPlanningBean.getExecutionCourse());
         } catch (DomainException e) {
             addActionMessage(request, e.getKey(), e.getArgs());
             request.setAttribute("lessonPlanningBean", lessonPlanningBean);
@@ -580,14 +590,14 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
     }
 
     public ActionForward deleteLessonPlanning(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         Integer lessonPlanningID = Integer.valueOf(request.getParameter("lessonPlanningID"));
         LessonPlanning lessonPlanning = rootDomainObject.readLessonPlanningByOID(lessonPlanningID);
         if (lessonPlanning != null) {
-            final Object args[] = { lessonPlanning.getExecutionCourse().getIdInternal(), lessonPlanning, null, null };
             try {
-                executeService("DeleteLessonPlanning", args);
+                DeleteLessonPlanning.runDeleteLessonPlanning(lessonPlanning.getExecutionCourse().getIdInternal(), lessonPlanning,
+                        null, null);
             } catch (DomainException e) {
                 addActionMessage(request, e.getKey(), e.getArgs());
             }
@@ -596,15 +606,14 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
     }
 
     public ActionForward deleteLessonPlannings(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         ShiftType lessonType = ShiftType.valueOf(request.getParameter("shiftType"));
         final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
 
         if (lessonType != null && executionCourse != null) {
-            final Object args[] = { executionCourse.getIdInternal(), null, executionCourse, lessonType };
             try {
-                executeService("DeleteLessonPlanning", args);
+                DeleteLessonPlanning.runDeleteLessonPlanning(executionCourse.getIdInternal(), null, executionCourse, lessonType);
             } catch (DomainException e) {
                 addActionMessage(request, e.getKey(), e.getArgs());
             }
@@ -691,7 +700,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
     }
 
     public ActionForward importSections(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         importContent(request, "ImportSections");
         return mapping.findForward("sectionsManagement");
     }
@@ -754,7 +763,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
     }
 
     public ActionForward sortBibliographyReferences(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         ExecutionCourse executionCourse = getExecutionCourse(request);
         boolean optional = request.getParameter("optional") != null;
 
@@ -852,7 +861,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 
     @Service
     public ActionForward insertStudentInShift(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
         PersonBean bean = getRenderedObject("personBean");
         String id = bean.getUsername();
         Student student = Student.readStudentByNumber(Integer.valueOf(id));

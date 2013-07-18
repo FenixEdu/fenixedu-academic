@@ -9,29 +9,32 @@ import java.util.Calendar;
 import java.util.List;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.SubQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
 import net.sourceforge.fenixedu.util.tests.QuestionDifficultyType;
 import net.sourceforge.fenixedu.util.tests.XMLQuestion;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Susana Fernandes
  */
-public class CreateExercise extends FenixService {
+public class CreateExercise {
 
-    public Boolean run(Integer executionCourseId, Integer metadataId, String author, String description,
+    protected Boolean run(Integer executionCourseId, Integer metadataId, String author, String description,
             QuestionDifficultyType questionDifficultyType, String mainSubject, String secondarySubject, Calendar learningTime,
             String level, SubQuestion subQuestion, String questionText, String secondQuestionText, String[] options,
             String[] correctOptions, String[] shuffle, String correctFeedbackText, String wrongFeedbackText,
             Boolean breakLineBeforeResponseBox, Boolean breakLineAfterResponseBox, String path) throws FenixServiceException {
 
-        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
+        ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseId);
         if (executionCourse == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -41,7 +44,7 @@ public class CreateExercise extends FenixService {
                     new Metadata(executionCourse, author, description, questionDifficultyType.getTypeString(), learningTime,
                             mainSubject, secondarySubject, level);
         } else {
-            metadata = rootDomainObject.readMetadataByOID(metadataId);
+            metadata = RootDomainObject.getInstance().readMetadataByOID(metadataId);
             if (metadata == null) {
                 throw new InvalidArgumentsServiceException();
             }
@@ -83,4 +86,22 @@ public class CreateExercise extends FenixService {
                         breakLineBeforeResponseBox, breakLineAfterResponseBox).getBytes(), PropertiesManager.DEFAULT_CHARSET);
         return xmlFile;
     }
+
+    // Service Invokers migrated from Berserk
+
+    private static final CreateExercise serviceInstance = new CreateExercise();
+
+    @Service
+    public static Boolean runCreateExercise(Integer executionCourseId, Integer metadataId, String author, String description,
+            QuestionDifficultyType questionDifficultyType, String mainSubject, String secondarySubject, Calendar learningTime,
+            String level, SubQuestion subQuestion, String questionText, String secondQuestionText, String[] options,
+            String[] correctOptions, String[] shuffle, String correctFeedbackText, String wrongFeedbackText,
+            Boolean breakLineBeforeResponseBox, Boolean breakLineAfterResponseBox, String path) throws FenixServiceException,
+            NotAuthorizedException {
+        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
+        return serviceInstance.run(executionCourseId, metadataId, author, description, questionDifficultyType, mainSubject,
+                secondarySubject, learningTime, level, subQuestion, questionText, secondQuestionText, options, correctOptions,
+                shuffle, correctFeedbackText, wrongFeedbackText, breakLineBeforeResponseBox, breakLineAfterResponseBox, path);
+    }
+
 }

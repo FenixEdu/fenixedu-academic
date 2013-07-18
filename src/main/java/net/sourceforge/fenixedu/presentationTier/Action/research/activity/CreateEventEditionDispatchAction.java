@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.research.activity;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.research.activity.CreateResearchActivityParticipation;
 import net.sourceforge.fenixedu.applicationTier.Servico.research.activity.CreateResearchEvent;
@@ -62,7 +61,7 @@ public class CreateEventEditionDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward addNewLanguage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         ResearchEventEditionCreationBean bean = getEventEditionBean(request);
         request.setAttribute("eventEditionBean", bean);
@@ -70,7 +69,7 @@ public class CreateEventEditionDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward prepareCreateEventEditionParticipation(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
 
         ResearchEventEditionCreationBean bean = getEventEditionBean(request);
         if (bean == null) {
@@ -93,7 +92,7 @@ public class CreateEventEditionDispatchAction extends FenixDispatchAction {
     }
 
     private ActionForward createNewEditionParticipation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         ResearchEventEditionCreationBean bean = getEventEditionBean(request);
         ResearchEvent event = bean.getEvent();
         try {
@@ -112,7 +111,7 @@ public class CreateEventEditionDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward createInexistentEventEditionParticipation(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
 
         ResearchEventEditionCreationBean bean = getEventEditionBean(request);
 
@@ -134,7 +133,7 @@ public class CreateEventEditionDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward createExistentEventEditionParticipation(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
 
         Person person = getLoggedPerson(request);
         ResearchEventEditionCreationBean bean = getEventEditionBean(request);

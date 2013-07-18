@@ -6,20 +6,23 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGrouping;
 import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentGroup;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author asnr and scpo
  */
-public class EditGrouping extends FenixService {
+public class EditGrouping {
 
-    public List run(Integer executionCourseID, InfoGrouping infoGroupProperties) throws FenixServiceException {
-        final Grouping grouping = rootDomainObject.readGroupingByOID(infoGroupProperties.getIdInternal());
+    protected List run(Integer executionCourseID, InfoGrouping infoGroupProperties) throws FenixServiceException {
+        final Grouping grouping = RootDomainObject.getInstance().readGroupingByOID(infoGroupProperties.getIdInternal());
         if (grouping == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -95,4 +98,16 @@ public class EditGrouping extends FenixService {
         }
         return 0;
     }
+
+    // Service Invokers migrated from Berserk
+
+    private static final EditGrouping serviceInstance = new EditGrouping();
+
+    @Service
+    public static List runEditGrouping(Integer executionCourseID, InfoGrouping infoGroupProperties) throws FenixServiceException,
+            NotAuthorizedException {
+        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseID);
+        return serviceInstance.run(executionCourseID, infoGroupProperties);
+    }
+
 }

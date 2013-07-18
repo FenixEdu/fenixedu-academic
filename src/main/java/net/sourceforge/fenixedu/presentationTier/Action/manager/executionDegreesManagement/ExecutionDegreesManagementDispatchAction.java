@@ -11,7 +11,6 @@ import java.util.ResourceBundle;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.AddCoordinator;
 import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.RemoveCoordinators;
 import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.ResponsibleCoordinators;
@@ -207,7 +206,7 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
     }
 
     public ActionForward editExecutionDegree(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException {
+            HttpServletResponse response)  {
 
         final DynaActionForm form = (DynaActionForm) actionForm;
         final Integer executionDegreeID = (Integer) form.get("executionDegreeID");
@@ -323,7 +322,7 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
     }
 
     public ActionForward deleteExecutionDegrees(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
         DynaActionForm deleteForm = (DynaActionForm) form;
         List<Integer> executionDegreesIds = Arrays.asList((Integer[]) deleteForm.get("internalIds"));
 

@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.spaceManager;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.space.DeletePersonSpaceOccupation;
 import net.sourceforge.fenixedu.domain.Person;
@@ -51,7 +50,7 @@ public class ManagePersonSpaceOccupationsDA extends FenixDispatchAction {
     }
 
     public ActionForward showSpaceOccupations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         final SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
         setSpaceAndSpaceInfo(request, spaceInformation);
@@ -59,7 +58,7 @@ public class ManagePersonSpaceOccupationsDA extends FenixDispatchAction {
     }
 
     public ActionForward prepareEditSpacePersonOccupation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         final SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
         final PersonSpaceOccupation personSpaceOccupation = getPersonSpaceOccupationFromParameter(request);
@@ -69,7 +68,7 @@ public class ManagePersonSpaceOccupationsDA extends FenixDispatchAction {
     }
 
     public ActionForward deleteSpacePersonOccupation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         final SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
         final PersonSpaceOccupation personSpaceOccupation = getPersonSpaceOccupationFromParameter(request);

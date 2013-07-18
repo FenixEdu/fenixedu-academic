@@ -1,11 +1,11 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.credits;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.dataTransferObject.teacherCredits.TeacherCreditsPeriodBean;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class CreateTeacherCreditsFillingPeriod extends FenixService {
+public class CreateTeacherCreditsFillingPeriod {
 
     @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
     @Service

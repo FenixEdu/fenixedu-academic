@@ -10,13 +10,13 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.EditExecutionDegree;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.EditExecutionDegreePeriods;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadAllExecutionYears;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadExecutionDegree;
 import net.sourceforge.fenixedu.applicationTier.Servico.places.campus.ReadAllCampus;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCampus;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
@@ -31,7 +31,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -65,17 +64,15 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
 
         DynaActionForm dynaForm = (DynaActionForm) form;
 
         Integer executionDegreeId = new Integer(request.getParameter("executionDegreeId"));
 
         InfoExecutionDegree oldInfoExecutionDegree = null;
-        Object args[] = { executionDegreeId };
-
         try {
-            oldInfoExecutionDegree = (InfoExecutionDegree) ServiceUtils.executeService("ReadExecutionDegree", args);
+            oldInfoExecutionDegree = ReadExecutionDegree.runReadExecutionDegree(executionDegreeId);
         } catch (NonExistingServiceException e) {
             throw new NonExistingActionException("message.nonExistingExecutionDegree",
                     mapping.findForward("readDegreeCurricularPlan"));
@@ -165,7 +162,7 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixActionException, FenixFilterException {
+            throws FenixActionException {
 
         Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
         final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
@@ -212,7 +209,7 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward editPeriods(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
 
         DynaValidatorForm dynaForm = (DynaValidatorForm) form;
 
@@ -405,7 +402,7 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward addLine(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixActionException, FenixFilterException {
+            throws FenixActionException {
 
         DynaActionForm dynaForm = (DynaValidatorForm) form;
 
@@ -465,7 +462,7 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward removeLine(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
 
         DynaActionForm dynaForm = (DynaValidatorForm) form;
 

@@ -1,13 +1,14 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.GradeScale;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class EditOldCurricularCourse extends FenixService {
+public class EditOldCurricularCourse {
 
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
@@ -17,7 +18,7 @@ public class EditOldCurricularCourse extends FenixService {
             final Double credits, final Double ectsCredits, final Double theoreticalHours, final Double labHours,
             final Double praticalHours, final Double theoPratHours, final GradeScale gradeScale) throws FenixServiceException {
 
-        final CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseId);
+        final CurricularCourse curricularCourse = (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(curricularCourseId);
         if (curricularCourse == null) {
             throw new FenixServiceException("error.createOldCurricularCourse.no.courseGroup");
         }

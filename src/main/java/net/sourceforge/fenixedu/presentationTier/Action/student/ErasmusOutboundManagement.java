@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.student;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacy;
 import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyContest;
@@ -28,7 +27,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 public class ErasmusOutboundManagement extends FenixDispatchAction {
 
     public ActionForward prepare(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
-            final HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
+            final HttpServletResponse response) throws FenixActionException,  FenixServiceException {
         final Student student = getUserView(request).getPerson().getStudent();
         return prepare(mapping, request, student);
     }
@@ -39,7 +38,7 @@ public class ErasmusOutboundManagement extends FenixDispatchAction {
     }
 
     public ActionForward apply(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
-            final HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
+            final HttpServletResponse response) throws FenixActionException,  FenixServiceException {
         final Student student = getUserView(request).getPerson().getStudent();
         final OutboundMobilityCandidacyContest contest = getDomainObject(request, "contestOid");
         contest.apply(student);
@@ -47,14 +46,14 @@ public class ErasmusOutboundManagement extends FenixDispatchAction {
     }
 
     public ActionForward removeCandidacy(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
-            final HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
+            final HttpServletResponse response) throws FenixActionException,  FenixServiceException {
         final OutboundMobilityCandidacy candidacy = getDomainObject(request, "candidacyOid");
         candidacy.delete();
         return prepare(mapping, form, request, response);
     }
 
     public ActionForward reorder(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
-            final HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
+            final HttpServletResponse response) throws FenixActionException,  FenixServiceException {
         final Student student = getUserView(request).getPerson().getStudent();
         final OutboundMobilityCandidacy candidacy = getDomainObject(request, "candidacyOid");
         final int index = Integer.parseInt((String) getFromRequest(request, "index"));
@@ -63,7 +62,7 @@ public class ErasmusOutboundManagement extends FenixDispatchAction {
     }
 
     public ActionForward selectOption(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
-            final HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
+            final HttpServletResponse response) throws FenixActionException,  FenixServiceException {
         final OutboundMobilityCandidacySubmission submission = getDomainObject(request, "submissionOid");
         final OutboundMobilityCandidacyPeriodConfirmationOption option = getDomainObject(request, "optionOid");
         submission.selectOption(option);
@@ -71,7 +70,7 @@ public class ErasmusOutboundManagement extends FenixDispatchAction {
     }
 
     public ActionForward removeOption(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
-            final HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
+            final HttpServletResponse response) throws FenixActionException,  FenixServiceException {
         final OutboundMobilityCandidacySubmission submission = getDomainObject(request, "submissionOid");
         final OutboundMobilityCandidacyPeriodConfirmationOption option = getDomainObject(request, "optionOid");
         submission.removeOption(option);

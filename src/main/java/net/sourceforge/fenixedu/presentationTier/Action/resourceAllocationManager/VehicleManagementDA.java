@@ -6,7 +6,6 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.CreateVehicleAllocation;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.DeleteVehicleAllocation;
@@ -69,7 +68,7 @@ public class VehicleManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward createAllocation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws InvalidArgumentException, FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws InvalidArgumentException,  FenixServiceException {
 
         VehicleAllocationBean bean = getRenderedObject();
 
@@ -93,7 +92,7 @@ public class VehicleManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward deleteAllocation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws InvalidArgumentException, FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws InvalidArgumentException,  FenixServiceException {
 
         VehicleAllocation allocation = getAllocationFromParameter(request);
 

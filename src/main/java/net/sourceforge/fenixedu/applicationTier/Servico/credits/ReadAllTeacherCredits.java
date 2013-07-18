@@ -7,9 +7,9 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.credits.CreditLineDTO;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.TeacherCredits;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
@@ -20,13 +20,13 @@ import pt.ist.fenixWebFramework.services.Service;
  * 
  */
 
-public class ReadAllTeacherCredits extends FenixService {
+public class ReadAllTeacherCredits {
 
     @Service
     public static List<CreditLineDTO> run(Integer teacherID) throws ParseException {
 
         List<CreditLineDTO> creditLines = new ArrayList<CreditLineDTO>();
-        final Teacher teacher = rootDomainObject.readTeacherByOID(teacherID);
+        final Teacher teacher = RootDomainObject.getInstance().readTeacherByOID(teacherID);
 
         ExecutionSemester executionSemester = ExecutionSemester.readStartExecutionSemesterForCredits();
 

@@ -13,9 +13,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.Seminaries.GetAllSeminaries;
+import net.sourceforge.fenixedu.applicationTier.Servico.Seminaries.GetCandidaciesByStudentID;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCandidacy;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoSeminaryWithEquivalencies;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
@@ -35,10 +36,7 @@ public class ListAllSeminaries extends FenixAction {
             throws FenixActionException {
         List currentCandidacies = null;
         try {
-            Object[] argsReadCandidacies = { userView.getPerson() };
-            currentCandidacies =
-                    (List) ServiceManagerServiceFactory.executeService("Seminaries.GetCandidaciesByStudentID",
-                            argsReadCandidacies);
+            currentCandidacies = GetCandidaciesByStudentID.runGetCandidaciesByStudentID(userView.getPerson());
         } catch (Exception e) {
             throw new FenixActionException(e);
         }
@@ -55,8 +53,7 @@ public class ListAllSeminaries extends FenixAction {
         List currentCandidacies = setCurrentCandidaciesInfo(mapping, request, userView);
         List candidaciesToDisplay = new LinkedList();
         try {
-            Object[] args = { new Boolean(true) };
-            seminaries = (List) ServiceManagerServiceFactory.executeService("Seminaries.GetAllSeminaries", args);
+            seminaries = GetAllSeminaries.runGetAllSeminaries(new Boolean(true));
             for (Iterator iter = currentCandidacies.iterator(); iter.hasNext();) {
                 InfoCandidacy infoCandidacy = (InfoCandidacy) iter.next();
                 Integer seminaryID = infoCandidacy.getInfoSeminary().getIdInternal();

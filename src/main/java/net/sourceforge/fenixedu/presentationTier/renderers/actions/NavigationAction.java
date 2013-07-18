@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.renderers.actions;
 import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
@@ -38,7 +37,7 @@ public abstract class NavigationAction extends Action {
         return request.getParameter("layout");
     }
 
-    protected DomainObject getTargetObject(HttpServletRequest request) throws FenixFilterException, FenixServiceException,
+    protected DomainObject getTargetObject(HttpServletRequest request) throws  FenixServiceException,
             ClassNotFoundException {
         Integer oid = getGivenOid(request);
         Class type = getGivenType(request);

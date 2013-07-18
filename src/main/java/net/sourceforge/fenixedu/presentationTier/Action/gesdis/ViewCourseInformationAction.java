@@ -7,13 +7,13 @@ package net.sourceforge.fenixedu.presentationTier.Action.gesdis;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.applicationTier.Servico.gesdis.ReadCourseInformation;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -48,10 +48,9 @@ public class ViewCourseInformationAction extends FenixAction {
         }
 
         SiteView siteView = null;
-        Object[] args = { new Integer(executionCourseId) };
         try {
-            siteView = (SiteView) ServiceUtils.executeService("ReadCourseInformation", args);
-        } catch (NotAuthorizedFilterException e) {
+            siteView = ReadCourseInformation.runReadCourseInformation(new Integer(executionCourseId));
+        } catch (NotAuthorizedException e) {
             errors.add("notResponsible", new ActionError("label.notAuthorized.courseInformation"));
             saveErrors(request, errors);
 

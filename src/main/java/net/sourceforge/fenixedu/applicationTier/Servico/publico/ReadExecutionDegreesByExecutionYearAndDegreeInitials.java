@@ -1,13 +1,13 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.publico;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class ReadExecutionDegreesByExecutionYearAndDegreeInitials extends FenixService {
+public class ReadExecutionDegreesByExecutionYearAndDegreeInitials {
 
     @Service
     public static InfoExecutionDegree run(final InfoExecutionYear infoExecutionYear, final String degreeInitials,

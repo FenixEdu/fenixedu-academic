@@ -4,7 +4,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.CreateCurrentDegreeInfo;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -111,7 +110,7 @@ public class DegreeSiteManagementDispatchAction extends SiteManagementDA {
     }
 
     public ActionForward viewInformation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         RequestUtils.getAndSetStringToRequest(request, "info");
 
         Integer degreeCurricularPlanID =
@@ -175,7 +174,7 @@ public class DegreeSiteManagementDispatchAction extends SiteManagementDA {
     }
 
     public ActionForward viewHistoric(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException {
+            HttpServletResponse response)  {
         // read execution degree
         Integer degreeCurricularPlanID =
                 Integer.valueOf(RequestUtils.getAndSetStringToRequest(request, "degreeCurricularPlanID"));

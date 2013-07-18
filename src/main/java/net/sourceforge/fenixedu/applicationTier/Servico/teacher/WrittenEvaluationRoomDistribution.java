@@ -3,21 +3,24 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseAndExamLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import pt.ist.fenixWebFramework.services.Service;
 
-public class WrittenEvaluationRoomDistribution extends FenixService {
+public class WrittenEvaluationRoomDistribution {
 
-    public void run(Integer executionCourseID, Integer evaluationID, List<Integer> roomIDs, Boolean sendSMS,
+    protected void run(Integer executionCourseID, Integer evaluationID, List<Integer> roomIDs, Boolean sendSMS,
             Boolean distributeOnlyEnroledStudents) throws FenixServiceException {
 
-        final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) rootDomainObject.readEvaluationByOID(evaluationID);
+        final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) RootDomainObject.getInstance().readEvaluationByOID(evaluationID);
         if (writtenEvaluation == null) {
             throw new FenixServiceException("error.noWrittenEvaluation");
         }
@@ -89,4 +92,18 @@ public class WrittenEvaluationRoomDistribution extends FenixService {
     private void sendSMSToStudents(WrittenEvaluation writtenEvaluation) {
         // TODO: Send SMS method: fill this method when we have sms
     }
+
+    // Service Invokers migrated from Berserk
+
+    private static final WrittenEvaluationRoomDistribution serviceInstance = new WrittenEvaluationRoomDistribution();
+
+    @Service
+    public static void runWrittenEvaluationRoomDistribution(Integer executionCourseID, Integer evaluationID,
+            List<Integer> roomIDs, Boolean sendSMS, Boolean distributeOnlyEnroledStudents) throws FenixServiceException,
+            NotAuthorizedException {
+        ExecutionCourseAndExamLecturingTeacherAuthorizationFilter.instance.execute(executionCourseID, evaluationID, roomIDs,
+                sendSMS, distributeOnlyEnroledStudents);
+        serviceInstance.run(executionCourseID, evaluationID, roomIDs, sendSMS, distributeOnlyEnroledStudents);
+    }
+
 }

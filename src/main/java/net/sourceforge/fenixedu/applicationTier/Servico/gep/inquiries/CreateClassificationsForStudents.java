@@ -17,21 +17,27 @@ import java.util.ListIterator;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ManagerAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.OperatorAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.gep.GEPAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.Closure;
 import org.apache.commons.collections.Transformer;
 
+import pt.ist.fenixWebFramework.services.Service;
+
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-public class CreateClassificationsForStudents extends FenixService {
+public class CreateClassificationsForStudents {
 
     private static Transformer getEntryGradeTransformer = new Transformer() {
         @Override
@@ -84,7 +90,7 @@ public class CreateClassificationsForStudents extends FenixService {
         }
     };
 
-    public ByteArrayOutputStream run(Integer[] entryGradeLimits, Integer[] approvationRatioLimits,
+    protected ByteArrayOutputStream run(Integer[] entryGradeLimits, Integer[] approvationRatioLimits,
             Integer[] arithmeticMeanLimits, Integer degreeCurricularPlanID) throws FileNotFoundException {
 
         ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
@@ -92,7 +98,7 @@ public class CreateClassificationsForStudents extends FenixService {
         List<Registration> otherYearsStudents = new ArrayList<Registration>();
         List<Registration> firstYearStudents = new ArrayList<Registration>();
 
-        DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+        DegreeCurricularPlan degreeCurricularPlan = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanID);
         for (Registration registration : degreeCurricularPlan.getRegistrations()) {
             if (registration.isInRegisteredState() && registration.getRegistrationAgreement().isNormal()) {
                 if (registration.getRegistrationYear() == currentExecutionYear) {
@@ -256,6 +262,34 @@ public class CreateClassificationsForStudents extends FenixService {
 
         return null;
 
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final CreateClassificationsForStudents serviceInstance = new CreateClassificationsForStudents();
+
+    @Service
+    public static ByteArrayOutputStream runCreateClassificationsForStudents(Integer[] entryGradeLimits,
+            Integer[] approvationRatioLimits, Integer[] arithmeticMeanLimits, Integer degreeCurricularPlanID)
+            throws FileNotFoundException, NotAuthorizedException {
+        try {
+            ManagerAuthorizationFilter.instance.execute();
+            return serviceInstance.run(entryGradeLimits, approvationRatioLimits, arithmeticMeanLimits, degreeCurricularPlanID);
+        } catch (NotAuthorizedException ex1) {
+            try {
+                GEPAuthorizationFilter.instance.execute();
+                return serviceInstance
+                        .run(entryGradeLimits, approvationRatioLimits, arithmeticMeanLimits, degreeCurricularPlanID);
+            } catch (NotAuthorizedException ex2) {
+                try {
+                    OperatorAuthorizationFilter.instance.execute();
+                    return serviceInstance.run(entryGradeLimits, approvationRatioLimits, arithmeticMeanLimits,
+                            degreeCurricularPlanID);
+                } catch (NotAuthorizedException ex3) {
+                    throw ex3;
+                }
+            }
+        }
     }
 
 }

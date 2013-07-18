@@ -9,36 +9,30 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByRoleFilter;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import pt.utl.ist.berserk.ServiceRequest;
-import pt.utl.ist.berserk.ServiceResponse;
-import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
-/**
- * @author Leonor Almeida
- * @author Sergio Montelobo
- * 
- */
 public class ReadTeacherInformationCoordinatorAuthorizationFilter extends AuthorizationByRoleFilter {
+
+    public static final ReadTeacherInformationCoordinatorAuthorizationFilter instance =
+            new ReadTeacherInformationCoordinatorAuthorizationFilter();
 
     @Override
     protected RoleType getRoleType() {
         return RoleType.COORDINATOR;
     }
 
-    @Override
-    public void execute(ServiceRequest arg0, ServiceResponse arg1) throws FilterException, Exception {
-        IUserView id = (IUserView) arg0.getRequester();
-        Object[] arguments = arg0.getArguments();
+    public void execute(String user, String argExecutionYear) throws NotAuthorizedException {
+        IUserView id = AccessControl.getUserView();
         if (((id != null && id.getRoleTypes() != null && !id.hasRoleType(getRoleType()))) || (id == null)
-                || (id.getRoleTypes() == null) || !verifyCondition(id, (String) arguments[0])) {
-            throw new NotAuthorizedFilterException();
+                || (id.getRoleTypes() == null) || !verifyCondition(id, user)) {
+            throw new NotAuthorizedException();
         }
     }
 

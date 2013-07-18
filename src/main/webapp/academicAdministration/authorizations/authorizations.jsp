@@ -39,8 +39,8 @@
 								<fr:property name="size" value="50" />
 								<fr:property name="labelField" value="presentationName" />
 								<fr:property name="indicatorShown" value="true" />
-								<fr:property name="serviceName" value="SearchAllActiveParties" />
-								<fr:property name="serviceArgs" value="slot=name,size=50,internal=true" />
+								<fr:property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchAllActiveParties" />
+								<fr:property name="args" value="slot=name,size=50,internal=true" />
 								<fr:property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.Party" />
 								<fr:property name="minChars" value="4" />
 							</fr:slot>

@@ -10,13 +10,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurricularCourseScopesByExecutionCourseID;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionCourseByOID;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadShiftsByExecutionCourseID;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.SearchExecutionCourses;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseOccupancy;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShiftGroupStatistics;
 import net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.ContextSelectionBean;
 import net.sourceforge.fenixedu.domain.ShiftType;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixExecutionDegreeAndCurricularYearContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
@@ -57,18 +58,16 @@ public class ManageExecutionCoursesDA extends FenixExecutionDegreeAndCurricularY
 
         List<InfoExecutionCourse> infoExecutionCourses = null;
 
-        Object[] args = null;
         if (contextSelectionBean.getCurricularYear() == null) {
-            args =
-                    new Object[] { contextSelectionBean.getAcademicInterval(), contextSelectionBean.getExecutionDegree(),
-                            contextSelectionBean.getCourseName() };
+            infoExecutionCourses =
+                    SearchExecutionCourses.runSearchExecutionCourses(contextSelectionBean.getAcademicInterval(),
+                            contextSelectionBean.getExecutionDegree(), contextSelectionBean.getCourseName());
         } else {
-            args =
-                    new Object[] { contextSelectionBean.getAcademicInterval(), contextSelectionBean.getExecutionDegree(),
-                            contextSelectionBean.getCurricularYear(), contextSelectionBean.getCourseName() };
+            infoExecutionCourses =
+                    SearchExecutionCourses.runSearchExecutionCourses(contextSelectionBean.getAcademicInterval(),
+                            contextSelectionBean.getExecutionDegree(), contextSelectionBean.getCurricularYear(),
+                            contextSelectionBean.getCourseName());
         }
-        infoExecutionCourses =
-                (List<InfoExecutionCourse>) ServiceManagerServiceFactory.executeService("SearchExecutionCourses", args);
 
         if (infoExecutionCourses != null) {
 
@@ -100,10 +99,9 @@ public class ManageExecutionCoursesDA extends FenixExecutionDegreeAndCurricularY
     public ActionForward showOccupancyLevels(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        Object args[] = { new Integer(request.getParameter("executionCourseOID")) };
-
         InfoExecutionCourseOccupancy infoExecutionCourseOccupancy =
-                (InfoExecutionCourseOccupancy) ServiceManagerServiceFactory.executeService("ReadShiftsByExecutionCourseID", args);
+                ReadShiftsByExecutionCourseID.runReadShiftsByExecutionCourseID(new Integer(request
+                        .getParameter("executionCourseOID")));
 
         arranjeShifts(infoExecutionCourseOccupancy);
 

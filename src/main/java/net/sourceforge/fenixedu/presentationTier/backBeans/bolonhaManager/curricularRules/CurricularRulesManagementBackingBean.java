@@ -12,11 +12,11 @@ import javax.faces.component.UISelectItems;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.CreateRule;
 import net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.DeleteCurricularRule;
 import net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.EditCurricularRule;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.CurricularPeriodInfoDTO;
 import net.sourceforge.fenixedu.dataTransferObject.bolonhaManager.CurricularRuleParametersDTO;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -701,7 +701,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
             return "setCurricularRules";
         } catch (FenixActionException e) {
             addErrorMessage(bolonhaResources.getString(e.getMessage()));
-        } catch (FenixFilterException e) {
+        } catch (NotAuthorizedException e) {
             addErrorMessage(bolonhaResources.getString("error.notAuthorized"));
         } catch (FenixServiceException e) {
             addErrorMessage(bolonhaResources.getString(e.getMessage()));
@@ -738,14 +738,13 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
         return "";
     }
 
-    private void checkSelectedAttributes() throws FenixActionException, FenixFilterException, FenixServiceException {
+    private void checkSelectedAttributes() throws FenixActionException, FenixServiceException {
         if (getSelectedCurricularRuleType() == null || getSelectedCurricularRuleType().equals(NO_SELECTION_STRING)) {
             throw new FenixActionException("must.select.curricular.rule.type");
         }
     }
 
-    private CurricularRuleParametersDTO buildCurricularRuleParametersDTO() throws FenixFilterException, FenixServiceException,
-            NumberFormatException {
+    private CurricularRuleParametersDTO buildCurricularRuleParametersDTO() throws FenixServiceException, NumberFormatException {
         final CurricularRuleParametersDTO parametersDTO = new CurricularRuleParametersDTO();
         parametersDTO.setSelectedDegreeModuleID(getSelectedDegreeModuleID());
         parametersDTO.setContextCourseGroupID((getSelectedContextCourseGroupID() == null || getSelectedContextCourseGroupID()

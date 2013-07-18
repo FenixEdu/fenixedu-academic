@@ -8,13 +8,15 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.CreateWrittenEvaluation;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.DeleteWrittenEvaluation;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.EditWrittenEvaluation;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 public class CoordinatorWrittenTestsManagementBackingBean extends CoordinatorWrittenTestsInformationBackingBean {
 
@@ -35,15 +37,13 @@ public class CoordinatorWrittenTestsManagementBackingBean extends CoordinatorWri
             executionCourseIDs.add(this.getExecutionCourseID().toString());
             final List<String> degreeModuleScopeIDs = getDegreeModuleScopeIDs(executionCourse);
 
-            final Object[] args =
-                    { this.getExecutionCourseID(), this.getBegin().getTime(), this.getBegin().getTime(), this.getEnd().getTime(),
-                            executionCourseIDs, degreeModuleScopeIDs, null, null, null, this.getDescription() };
-
-            ServiceUtils.executeService("CreateWrittenEvaluation", args);
+            CreateWrittenEvaluation.runCreateWrittenEvaluation(this.getExecutionCourseID(), this.getBegin().getTime(), this
+                    .getBegin().getTime(), this.getEnd().getTime(), executionCourseIDs, degreeModuleScopeIDs, null, null, null,
+                    this.getDescription());
 
         } catch (Exception e) {
             String errorMessage = e.getMessage();
-            if (e instanceof NotAuthorizedFilterException) {
+            if (e instanceof NotAuthorizedException) {
                 errorMessage = "message.error.notAuthorized";
             }
             this.setErrorMessage(errorMessage);
@@ -63,16 +63,13 @@ public class CoordinatorWrittenTestsManagementBackingBean extends CoordinatorWri
             executionCourseIDs.add(this.getExecutionCourseID().toString());
             final List<String> degreeModuleScopeIDs = getDegreeModuleScopeIDs(executionCourse);
 
-            final Object[] args =
-                    { executionCourse.getIdInternal(), this.getBegin().getTime(), this.getBegin().getTime(),
-                            this.getEnd().getTime(), executionCourseIDs, degreeModuleScopeIDs, null, this.getEvaluationID(),
-                            null, this.getDescription(), null };
-
-            ServiceUtils.executeService("EditWrittenEvaluation", args);
+            EditWrittenEvaluation.runEditWrittenEvaluation(executionCourse.getIdInternal(), this.getBegin().getTime(), this
+                    .getBegin().getTime(), this.getEnd().getTime(), executionCourseIDs, degreeModuleScopeIDs, null, this
+                    .getEvaluationID(), null, this.getDescription(), null);
 
         } catch (Exception e) {
             String errorMessage = e.getMessage();
-            if (e instanceof NotAuthorizedFilterException) {
+            if (e instanceof NotAuthorizedException) {
                 errorMessage = "message.error.notAuthorized";
             }
             this.setErrorMessage(errorMessage);
@@ -83,11 +80,10 @@ public class CoordinatorWrittenTestsManagementBackingBean extends CoordinatorWri
 
     public String deleteWrittenTest() {
         try {
-            final Object args[] = { this.getExecutionCourseID(), this.getEvaluationID() };
-            ServiceUtils.executeService("DeleteWrittenEvaluation", args);
+            DeleteWrittenEvaluation.runDeleteWrittenEvaluation(this.getExecutionCourseID(), this.getEvaluationID());
         } catch (Exception e) {
             String errorMessage = e.getMessage();
-            if (e instanceof NotAuthorizedFilterException) {
+            if (e instanceof NotAuthorizedException) {
                 errorMessage = "message.error.notAuthorized";
             }
             this.setErrorMessage(errorMessage);

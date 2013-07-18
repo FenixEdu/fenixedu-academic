@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.applicationTier.Servico.Seminaries.DeleteCandidacy;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
@@ -48,8 +48,7 @@ public class CancelCandidacy extends FenixAction {
         }
         ActionForward destiny = null;
         try {
-            Object[] argsReadSeminary = { candidacyID };
-            ServiceManagerServiceFactory.executeService("Seminaries.DeleteCandidacy", argsReadSeminary);
+            DeleteCandidacy.runDeleteCandidacy(candidacyID);
         } catch (Exception e) {
             throw new FenixActionException();
         }

@@ -3,6 +3,9 @@ package net.sourceforge.fenixedu.presentationTier.Action.alumni;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.alumni.CreateFormation;
+import net.sourceforge.fenixedu.applicationTier.Servico.alumni.EditFormation;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.qualification.DeleteQualification;
 import net.sourceforge.fenixedu.dataTransferObject.alumni.formation.AlumniFormation;
 import net.sourceforge.fenixedu.dataTransferObject.alumni.formation.AlumniFormationBean;
 import net.sourceforge.fenixedu.domain.Formation;
@@ -86,9 +89,9 @@ public class AlumniFormationManagementDA extends AlumniEntityManagementDA {
 
         try {
             if (formationInfo.hasAssociatedFormation()) {
-                executeService("EditFormation", new Object[] { formationInfo });
+                EditFormation.runEditFormation(formationInfo);
             } else {
-                executeService("CreateFormation", new Object[] { getAlumniFromLoggedPerson(request), formationInfo });
+                CreateFormation.runCreateFormation(getAlumniFromLoggedPerson(request), formationInfo);
             }
         } catch (DomainException e) {
             addActionMessage("error", request, e.getMessage());
@@ -124,7 +127,7 @@ public class AlumniFormationManagementDA extends AlumniEntityManagementDA {
 
         if (getFromRequest(request, "cancel") == null) {
             try {
-                executeService("DeleteQualification", new Object[] { getIntegerFromRequest(request, "formationId") });
+                DeleteQualification.runDeleteQualification(getIntegerFromRequest(request, "formationId"));
             } catch (DomainException e) {
                 addActionMessage(request, e.getKey(), e.getArgs());
             }

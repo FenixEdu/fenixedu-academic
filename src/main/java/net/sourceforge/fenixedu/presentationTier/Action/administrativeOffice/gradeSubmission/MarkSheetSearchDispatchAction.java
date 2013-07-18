@@ -9,7 +9,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.gradeSubmission.SearchMarkSheets;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -58,7 +57,7 @@ public class MarkSheetSearchDispatchAction extends MarkSheetDispatchAction {
     }
 
     public ActionForward prepareSearchMarkSheetFilled(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         MarkSheetManagementSearchBean markSheetBean = new MarkSheetManagementSearchBean();
         fillMarkSheetSearchBean(actionForm, request, markSheetBean);
@@ -71,7 +70,7 @@ public class MarkSheetSearchDispatchAction extends MarkSheetDispatchAction {
     }
 
     public ActionForward searchMarkSheets(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         MarkSheetManagementSearchBean searchBean =
                 (MarkSheetManagementSearchBean) RenderUtils.getViewState().getMetaObject().getObject();
@@ -155,7 +154,7 @@ public class MarkSheetSearchDispatchAction extends MarkSheetDispatchAction {
     }
 
     public ActionForward choosePrinter(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException {
+            HttpServletResponse response)  {
         DynaActionForm form = (DynaActionForm) actionForm;
         Integer markSheetID = (Integer) form.get("msID");
         request.setAttribute("markSheet", markSheetID.toString());
@@ -163,7 +162,7 @@ public class MarkSheetSearchDispatchAction extends MarkSheetDispatchAction {
     }
 
     public ActionForward searchConfirmedMarkSheets(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException {
+            HttpServletResponse response)  {
         MarkSheetManagementSearchBean searchBean = getRenderedObject();
 
         Collection<MarkSheet> result = new ArrayList<MarkSheet>();
@@ -181,7 +180,7 @@ public class MarkSheetSearchDispatchAction extends MarkSheetDispatchAction {
     }
 
     public ActionForward listMarkSheet(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException {
+            HttpServletResponse response) {
         DynaActionForm form = (DynaActionForm) actionForm;
         Integer markSheetID = (Integer) form.get("msID");
 
@@ -194,7 +193,7 @@ public class MarkSheetSearchDispatchAction extends MarkSheetDispatchAction {
     }
 
     public ActionForward searchConfirmedMarkSheetsFilled(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException {
+            HttpServletRequest request, HttpServletResponse response)  {
         MarkSheetManagementSearchBean searchBean = new MarkSheetManagementSearchBean();
         fillMarkSheetBean(actionForm, request, searchBean);
 
@@ -213,7 +212,7 @@ public class MarkSheetSearchDispatchAction extends MarkSheetDispatchAction {
     }
 
     public ActionForward removeGrades(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         DynaActionForm form = (DynaActionForm) actionForm;
         Integer markSheetID = (Integer) form.get("msID");
 

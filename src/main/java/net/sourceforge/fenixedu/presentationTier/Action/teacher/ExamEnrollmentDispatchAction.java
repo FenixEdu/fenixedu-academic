@@ -10,8 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.EditWrittenEvaluationEnrolmentPeriod;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.TeacherAdministrationSiteComponentService;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
@@ -20,7 +21,6 @@ import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -43,7 +43,7 @@ public class ExamEnrollmentDispatchAction extends FenixDispatchAction {
      * 
      */
     public ActionForward prepareEnrolmentManagement(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
 
         IUserView userView = getUserView(request);
 
@@ -53,13 +53,12 @@ public class ExamEnrollmentDispatchAction extends FenixDispatchAction {
 
         ISiteComponent commonComponent = new InfoSiteCommon();
         InfoEvaluation evaluationComponent = new InfoEvaluation();
-        Object[] args = { executionCourseCode, commonComponent, evaluationComponent, null, evaluationCode, null };
 
         TeacherAdministrationSiteView siteView = null;
         try {
             siteView =
-                    (TeacherAdministrationSiteView) ServiceUtils
-                            .executeService("TeacherAdministrationSiteComponentService", args);
+                    TeacherAdministrationSiteComponentService.runTeacherAdministrationSiteComponentService(executionCourseCode,
+                            commonComponent, evaluationComponent, null, evaluationCode, null);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
@@ -88,7 +87,7 @@ public class ExamEnrollmentDispatchAction extends FenixDispatchAction {
      * 
      */
     public ActionForward prepareEditEvaluationEnrolment(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
 
         IUserView userView = getUserView(request);
 
@@ -98,13 +97,12 @@ public class ExamEnrollmentDispatchAction extends FenixDispatchAction {
 
         ISiteComponent commonComponent = new InfoSiteCommon();
         InfoEvaluation evaluationComponent = new InfoEvaluation();
-        Object[] args = { executionCourseCode, commonComponent, evaluationComponent, null, evaluationCode, null };
 
         TeacherAdministrationSiteView siteView = null;
         try {
             siteView =
-                    (TeacherAdministrationSiteView) ServiceUtils
-                            .executeService("TeacherAdministrationSiteComponentService", args);
+                    TeacherAdministrationSiteComponentService.runTeacherAdministrationSiteComponentService(executionCourseCode,
+                            commonComponent, evaluationComponent, null, evaluationCode, null);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
@@ -128,7 +126,7 @@ public class ExamEnrollmentDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward editExamEnrollment(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
         DynaActionForm examEnrollmentForm = (DynaActionForm) form;
 
         IUserView userView = UserView.getUser();
@@ -169,12 +167,9 @@ public class ExamEnrollmentDispatchAction extends FenixDispatchAction {
         endTime.set(Calendar.HOUR_OF_DAY, new Integer(enrollmentEndHourArray[0]).intValue());
         endTime.set(Calendar.MINUTE, new Integer(enrollmentEndHourArray[1]).intValue());
 
-        Object args[] =
-                { disciplinaExecucaoIdInternal, examIdInternal, beginDate.getTime(), endDate.getTime(), beginTime.getTime(),
-                        endTime };
-
         try {
-            ServiceUtils.executeService("EditWrittenEvaluationEnrolmentPeriod", args);
+            EditWrittenEvaluationEnrolmentPeriod.runEditWrittenEvaluationEnrolmentPeriod(disciplinaExecucaoIdInternal,
+                    examIdInternal, beginDate.getTime(), endDate.getTime(), beginTime.getTime(), endTime.getTime());
         } catch (DomainException e) {
             setErrorMessage(request, e.getKey());
             return mapping.getInputForward();

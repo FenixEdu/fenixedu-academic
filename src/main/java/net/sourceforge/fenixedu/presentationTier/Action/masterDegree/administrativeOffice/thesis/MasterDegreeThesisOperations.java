@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -29,7 +28,7 @@ import org.apache.struts.action.DynaActionForm;
 public class MasterDegreeThesisOperations extends FenixDispatchAction {
 
     public boolean getStudentByNumberAndDegreeType(ActionForm form, HttpServletRequest request, ActionErrors actionErrors)
-            throws FenixActionException, FenixFilterException {
+            throws FenixActionException {
 
         DynaActionForm getStudentByNumberAndDegreeTypeForm = (DynaActionForm) form;
 
@@ -61,7 +60,7 @@ public class MasterDegreeThesisOperations extends FenixDispatchAction {
     }
 
     public List<Teacher> getTeachersByNumbers(ActionForm form, HttpServletRequest request, String teachersNumbersListField,
-            String sessionConstant, ActionErrors actionErrors) throws FenixActionException, FenixFilterException {
+            String sessionConstant, ActionErrors actionErrors) throws FenixActionException {
 
         final List<Teacher> teachers = Teacher.readByNumbers(getTeachersNumbers(form, teachersNumbersListField));
         if (!teachers.isEmpty()) {
@@ -84,7 +83,7 @@ public class MasterDegreeThesisOperations extends FenixDispatchAction {
     }
 
     public void getExternalPersonsByName(ActionForm form, HttpServletRequest request, String externalPersonNameField,
-            String sessionConstant, ActionErrors actionErrors) throws FenixActionException, FenixFilterException {
+            String sessionConstant, ActionErrors actionErrors) throws FenixActionException {
 
         DynaActionForm masterDegreeThesisForm = (DynaActionForm) form;
         String externalAssistentGuiderName = (String) masterDegreeThesisForm.get(externalPersonNameField);
@@ -111,8 +110,7 @@ public class MasterDegreeThesisOperations extends FenixDispatchAction {
     }
 
     public List<ExternalContract> getExternalPersonsByIDs(ActionForm form, HttpServletRequest request,
-            String externalPersonsIDsListField, String sessionConstant, ActionErrors actionErrors) throws FenixActionException,
-            FenixFilterException {
+            String externalPersonsIDsListField, String sessionConstant, ActionErrors actionErrors) {
 
         List<ExternalContract> externalPersons =
                 ExternalContract.readByIDs(getExternalPersonsIDs(form, externalPersonsIDsListField));

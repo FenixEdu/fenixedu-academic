@@ -5,12 +5,17 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
+import net.sourceforge.fenixedu.applicationTier.ServiceMonitoring;
+import net.sourceforge.fenixedu.applicationTier.Filtro.SummaryManagementToDepartmentAdmOfficeAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.SummaryManagementToTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Summary;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author João Mota
@@ -19,10 +24,12 @@ import net.sourceforge.fenixedu.domain.Summary;
  *         21/Jul/2003 fenix-head ServidorAplicacao.Servico.teacher
  * 
  */
-public class DeleteSummary extends FenixService {
+public class DeleteSummary {
 
-    public Boolean run(ExecutionCourse executionCourse, Summary summary, Professorship professorship)
+    protected Boolean run(ExecutionCourse executionCourse, Summary summary, Professorship professorship)
             throws FenixServiceException {
+
+        ServiceMonitoring.logService(this.getClass(), executionCourse, summary, professorship);
 
         if (summary == null) {
             throw new InvalidArgumentsServiceException();
@@ -30,6 +37,26 @@ public class DeleteSummary extends FenixService {
 
         summary.delete();
         return true;
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final DeleteSummary serviceInstance = new DeleteSummary();
+
+    @Service
+    public static Boolean runDeleteSummary(ExecutionCourse executionCourse, Summary summary, Professorship professorship)
+            throws FenixServiceException, NotAuthorizedException {
+        try {
+            SummaryManagementToTeacherAuthorizationFilter.instance.execute(summary, professorship);
+            return serviceInstance.run(executionCourse, summary, professorship);
+        } catch (NotAuthorizedException ex1) {
+            try {
+                SummaryManagementToDepartmentAdmOfficeAuthorizationFilter.instance.execute(summary, professorship);
+                return serviceInstance.run(executionCourse, summary, professorship);
+            } catch (NotAuthorizedException ex2) {
+                throw ex2;
+            }
+        }
     }
 
 }

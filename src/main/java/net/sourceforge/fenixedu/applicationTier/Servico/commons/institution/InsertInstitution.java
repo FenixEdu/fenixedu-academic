@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.commons.institution;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -11,7 +11,7 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author - Shezad Anavarali (sana@mega.ist.utl.pt)
  * @author - Nadir Tarmahomed (naat@mega.ist.utl.pt)
  */
-public class InsertInstitution extends FenixService {
+public class InsertInstitution {
 
     @Service
     public static Unit run(String institutionName) throws FenixServiceException {

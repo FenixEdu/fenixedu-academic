@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.DateTime;
 
+import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -226,6 +227,15 @@ public class ApproveThesisProposal extends ThesisServiceWithMailNotification {
         }
 
         return null;
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final ApproveThesisProposal serviceInstance = new ApproveThesisProposal();
+
+    @Service
+    public static void runApproveThesisProposal(Thesis thesis) {
+        serviceInstance.run(thesis);
     }
 
 }

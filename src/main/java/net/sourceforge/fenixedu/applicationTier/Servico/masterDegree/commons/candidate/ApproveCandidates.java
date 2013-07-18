@@ -2,22 +2,25 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.commons.ca
 
 import java.util.Calendar;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.CandidateApprovalAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.CandidateSituation;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.util.SituationName;
 import net.sourceforge.fenixedu.util.State;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class ApproveCandidates extends FenixService {
+public class ApproveCandidates {
 
-    public void run(String[] situations, String[] ids, String[] remarks, String[] substitutes) {
+    protected void run(String[] situations, String[] ids, String[] remarks, String[] substitutes) {
 
         for (int i = 0; i < situations.length; i++) {
 
-            MasterDegreeCandidate masterDegreeCandidate = rootDomainObject.readMasterDegreeCandidateByOID(new Integer(ids[i]));
+            MasterDegreeCandidate masterDegreeCandidate = RootDomainObject.getInstance().readMasterDegreeCandidateByOID(new Integer(ids[i]));
             CandidateSituation candidateSituationOldFromBD = masterDegreeCandidate.getActiveCandidateSituation();
 
             candidateSituationOldFromBD.setValidation(new State(State.INACTIVE));
@@ -40,4 +43,14 @@ public class ApproveCandidates extends FenixService {
         }
 
     }
+    // Service Invokers migrated from Berserk
+
+    private static final ApproveCandidates serviceInstance = new ApproveCandidates();
+
+    @Service
+    public static void runApproveCandidates(String[] situations, String[] ids, String[] remarks, String[] substitutes) throws NotAuthorizedException {
+        CandidateApprovalAuthorizationFilter.instance.execute(situations, ids, remarks, substitutes);
+        serviceInstance.run(situations, ids, remarks, substitutes);
+    }
+
 }

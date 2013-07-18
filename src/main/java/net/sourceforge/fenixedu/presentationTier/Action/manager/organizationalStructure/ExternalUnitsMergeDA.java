@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.manager.organizationalS
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.MergeExternalUnits;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -72,7 +71,7 @@ public class ExternalUnitsMergeDA extends FenixDispatchAction {
     }
 
     public ActionForward mergeUnits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         Unit fromUnit = null, destinationUnit = null;
         IViewState viewState = RenderUtils.getViewState("noOfficialMerge");

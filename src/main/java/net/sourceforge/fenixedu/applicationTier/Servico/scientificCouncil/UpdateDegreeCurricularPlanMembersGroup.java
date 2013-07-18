@@ -3,19 +3,19 @@ package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class UpdateDegreeCurricularPlanMembersGroup extends FenixService {
+public class UpdateDegreeCurricularPlanMembersGroup {
 
     @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
     @Service
@@ -57,7 +57,7 @@ public class UpdateDegreeCurricularPlanMembersGroup extends FenixService {
             List<Person> result = new ArrayList<Person>();
 
             for (Integer personID : personsIDs) {
-                result.add((Person) rootDomainObject.readPartyByOID(personID));
+                result.add((Person) RootDomainObject.getInstance().readPartyByOID(personID));
             }
 
             return result;
@@ -84,7 +84,7 @@ public class UpdateDegreeCurricularPlanMembersGroup extends FenixService {
             }
         }
 
-        List<Department> departments = rootDomainObject.getDepartments();
+        List<Department> departments = RootDomainObject.getInstance().getDepartments();
         for (Department department : departments) {
             Group group = department.getCompetenceCourseMembersGroup();
             if (group != null && group.isMember(person)) {

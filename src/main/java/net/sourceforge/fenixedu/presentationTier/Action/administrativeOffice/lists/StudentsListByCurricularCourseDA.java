@@ -16,7 +16,6 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.academicAdministration.SearchStudentsByCurricularCourseParametersBean;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -64,7 +63,7 @@ import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
         @Forward(name = "studentByCurricularCourse", path = "/academicAdminOffice/lists/studentsByCurricularCourses.jsp") })
 public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
     public ActionForward prepareByCurricularCourse(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException {
 
         request.setAttribute("searchBean", getOrCreateSearchBean());
         return mapping.findForward("chooseCurricularCourse");
@@ -91,7 +90,7 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
     }
 
     public ActionForward showActiveCurricularCourseScope(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws FenixActionException,  FenixServiceException {
 
         final SearchStudentsByCurricularCourseParametersBean searchBean = getOrCreateSearchBean();
 
@@ -111,7 +110,7 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
     }
 
     public ActionForward searchByCurricularCourse(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException {
+            HttpServletResponse response)  {
 
         final CurricularCourse curricularCourse =
                 (CurricularCourse) rootDomainObject.readDegreeModuleByOID(getIntegerFromRequest(request, "curricularCourseCode"));
@@ -146,17 +145,17 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
     }
 
     public ActionForward exportInfoToExcel(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException, FenixFilterException {
+            HttpServletResponse response) throws FenixServiceException {
         return doExportInfoToExcel(mapping, actionForm, request, response, false);
     }
 
     public ActionForward exportDetailedInfoToExcel(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException, FenixFilterException {
+            HttpServletResponse response) throws FenixServiceException {
         return doExportInfoToExcel(mapping, actionForm, request, response, true);
     }
 
     public ActionForward doExportInfoToExcel(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response, Boolean detailed) throws FenixServiceException, FenixFilterException {
+            HttpServletResponse response, Boolean detailed) throws FenixServiceException {
 
         final CurricularCourse curricularCourse =
                 (CurricularCourse) rootDomainObject.readDegreeModuleByOID(getIntegerFromRequest(request, "curricularCourseCode"));

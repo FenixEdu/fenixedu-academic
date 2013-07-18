@@ -12,10 +12,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import pt.utl.ist.berserk.ServiceRequest;
-import pt.utl.ist.berserk.ServiceResponse;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 /**
  * Base class for authorization issues on credits information edition done by
@@ -23,21 +23,20 @@ import pt.utl.ist.berserk.ServiceResponse;
  * 
  * @author jpvl
  */
-public abstract class AbstractTeacherDepartmentAuthorization extends Filtro {
+public abstract class AbstractTeacherDepartmentAuthorization<T> extends Filtro {
 
-    @Override
-    public void execute(ServiceRequest serviceRequest, ServiceResponse serviceResponse) throws Exception {
-        IUserView requester = (IUserView) serviceRequest.getRequester();
+    public void execute(T object) throws FenixServiceException {
+        IUserView requester = AccessControl.getUserView();
         if ((requester == null) || !requester.hasRoleType(RoleType.DEPARTMENT_CREDITS_MANAGER)) {
             throw new NotAuthorizedException();
         }
 
-        Integer teacherId = getTeacherId(serviceRequest.getServiceParameters().parametersArray());
+        Integer teacherId = getTeacherId(object);
         if (teacherId != null) {
 
             final Person requesterPerson = requester.getPerson();
 
-            Teacher teacher = rootDomainObject.readTeacherByOID(teacherId);
+            Teacher teacher = RootDomainObject.getInstance().readTeacherByOID(teacherId);
 
             Department teacherDepartment = teacher.getCurrentWorkingDepartment();
 
@@ -50,5 +49,5 @@ public abstract class AbstractTeacherDepartmentAuthorization extends Filtro {
 
     }
 
-    protected abstract Integer getTeacherId(Object[] arguments) throws FenixServiceException;
+    protected abstract Integer getTeacherId(T object) throws FenixServiceException;
 }

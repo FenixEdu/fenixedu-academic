@@ -8,7 +8,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.publico;
 
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Factory.PublicSiteComponentBuilder;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
@@ -18,6 +17,7 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import pt.ist.fenixWebFramework.services.Service;
 
@@ -26,7 +26,7 @@ import pt.ist.fenixWebFramework.services.Service;
  * 
  * 
  */
-public class ClassSiteComponentService extends FenixService {
+public class ClassSiteComponentService {
 
     @Service
     public static Object run(ISiteComponent bodyComponent, String executionYearName, String executionPeriodName,
@@ -51,7 +51,7 @@ public class ClassSiteComponentService extends FenixService {
             }
         } else {
 
-            domainClass = rootDomainObject.readSchoolClassByOID(classId);
+            domainClass = RootDomainObject.getInstance().readSchoolClassByOID(classId);
         }
         bodyComponent = componentBuilder.getComponent(bodyComponent, domainClass);
         SiteView siteView = new SiteView(bodyComponent);

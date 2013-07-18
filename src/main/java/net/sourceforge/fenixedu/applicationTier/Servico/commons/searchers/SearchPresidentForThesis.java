@@ -5,31 +5,28 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.AutoCompleteSearchService;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ScientificCommission;
 import net.sourceforge.fenixedu.domain.person.PersonName;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
+import net.sourceforge.fenixedu.presentationTier.renderers.providers.AutoCompleteProvider;
 
-public class SearchPresidentForThesis extends FenixService implements AutoCompleteSearchService {
+public class SearchPresidentForThesis implements AutoCompleteProvider<PersonName> {
 
     @Override
-    public Collection<PersonName> run(final Class type, final String value, final int limit, final Map<String, String> arguments) {
-        if (type != PersonName.class) {
-            return null;
-        }
+    public Collection<PersonName> getSearchResults(Map<String, String> argsMap, String value, int maxCount) {
 
-        final String thesisIdString = arguments.get("thesis");
+        final String thesisIdString = argsMap.get("thesis");
         if (thesisIdString == null) {
             return null;
         }
 
         final Integer thesisId = new Integer(thesisIdString);
-        final Thesis thesis = rootDomainObject.readThesisByOID(thesisId);
+        final Thesis thesis = RootDomainObject.getInstance().readThesisByOID(thesisId);
         if (thesis == null) {
             return null;
         }

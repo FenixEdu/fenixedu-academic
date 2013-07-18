@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.ChooseGuide;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
@@ -57,11 +57,9 @@ public class ChooseGuideDispatchAction extends FenixDispatchAction {
         Integer guideNumber = new Integer((String) chooseGuide.get("guideNumber"));
         Integer guideYear = new Integer((String) chooseGuide.get("guideYear"));
 
-        Object args[] = { guideNumber, guideYear };
-
         List result = null;
         try {
-            result = (List) ServiceManagerServiceFactory.executeService("ChooseGuide", args);
+            result = ChooseGuide.runChooseGuide(guideNumber, guideYear);
         } catch (NonExistingServiceException e) {
             throw new NonExistingActionException("A Guia", e);
         }
@@ -89,16 +87,14 @@ public class ChooseGuideDispatchAction extends FenixDispatchAction {
         InfoGuide infoGuide = null;
 
         try {
-            Object args[] = { guideNumber, guideYear, guideVersion };
-            infoGuide = (InfoGuide) ServiceManagerServiceFactory.executeService("ChooseGuide", args);
+            infoGuide = ChooseGuide.runChooseGuide(guideNumber, guideYear, guideVersion);
         } catch (NonExistingServiceException e) {
             throw new NonExistingActionException("A Versão da Guia", e);
         }
 
         List guideList = null;
         try {
-            Object args[] = { guideNumber, guideYear };
-            guideList = (List) ServiceManagerServiceFactory.executeService("ChooseGuide", args);
+            guideList = ChooseGuide.runChooseGuide(guideNumber, guideYear);
         } catch (NonExistingServiceException e) {
             throw new NonExistingActionException("A Guia", e);
         }

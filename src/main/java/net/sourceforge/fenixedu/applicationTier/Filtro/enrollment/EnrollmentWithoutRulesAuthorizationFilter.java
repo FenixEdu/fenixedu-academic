@@ -5,13 +5,17 @@ import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByManyRolesFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
-public class EnrollmentWithoutRulesAuthorizationFilter extends AuthorizationByManyRolesFilter {
+public class EnrollmentWithoutRulesAuthorizationFilter extends Filtro {
+
+    public static final EnrollmentWithoutRulesAuthorizationFilter instance = new EnrollmentWithoutRulesAuthorizationFilter();
 
     private static DegreeType DEGREE_TYPE = DegreeType.DEGREE;
 
@@ -28,15 +32,14 @@ public class EnrollmentWithoutRulesAuthorizationFilter extends AuthorizationByMa
         return roles;
     }
 
-    @Override
-    protected String hasPrevilege(IUserView id, Object[] arguments) {
+    protected String hasPrevilege(IUserView id, Object registration, DegreeType degreeType) {
         if (id.hasRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE)) {
 
-            if (!(checkDegreeType(arguments, MASTER_DEGREE_TYPE) || checkDegreeType(arguments, DFA_TYPE))) {
+            if (!(checkDegreeType(degreeType, MASTER_DEGREE_TYPE) || checkDegreeType(degreeType, DFA_TYPE))) {
                 return "error.masterDegree.type";
             }
 
-            if (!(checkStudentType(arguments, MASTER_DEGREE_TYPE) || checkStudentType(arguments, DFA_TYPE))) {
+            if (!(checkStudentType(registration, MASTER_DEGREE_TYPE) || checkStudentType(registration, DFA_TYPE))) {
                 return "error.student.degree.master";
             }
         }
@@ -44,23 +47,22 @@ public class EnrollmentWithoutRulesAuthorizationFilter extends AuthorizationByMa
         if (id.hasRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE)
                 || id.hasRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)) {
 
-            if (!checkDegreeType(arguments, DEGREE_TYPE)) {
+            if (!checkDegreeType(degreeType, DEGREE_TYPE)) {
                 return "error.degree.type";
             }
 
-            if (!checkStudentType(arguments, DEGREE_TYPE)) {
+            if (!checkStudentType(registration, DEGREE_TYPE)) {
                 return "error.student.degree.nonMaster";
             }
         }
         return null;
     }
 
-    private boolean checkDegreeType(Object[] args, DegreeType degreeType) {
-        return (args != null && args[1] != null && degreeType.equals(args[1]));
+    private boolean checkDegreeType(DegreeType toCheck, DegreeType degreeType) {
+        return (toCheck != null && degreeType.equals(toCheck));
     }
 
-    private boolean checkStudentType(Object[] args, DegreeType degreeType) {
-        Object object = args[0];
+    private boolean checkStudentType(Object object, DegreeType degreeType) {
         DegreeType type = null;
         if (object instanceof Registration) {
             Registration registration = (Registration) object;
@@ -72,5 +74,16 @@ public class EnrollmentWithoutRulesAuthorizationFilter extends AuthorizationByMa
         }
 
         return type != null ? type.equals(degreeType) : false;
+    }
+
+    public void execute(Object registration, DegreeType degreeType) throws NotAuthorizedException {
+        IUserView id = AccessControl.getUserView();
+        String messageException = hasPrevilege(id, registration, degreeType);
+
+        if ((id != null && id.getRoleTypes() != null && !containsRoleType(id.getRoleTypes()))
+                || (id != null && id.getRoleTypes() != null && messageException != null) || (id == null)
+                || (id.getRoleTypes() == null)) {
+            throw new NotAuthorizedException(messageException);
+        }
     }
 }

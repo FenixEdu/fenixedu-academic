@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -35,7 +34,7 @@ public class DepartmentAdmOfficeManageTeacherInstitutionWorkingTimeDispatchActio
         ManageTeacherInstitutionWorkingTimeDispatchAction {
     @Override
     public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws NumberFormatException,  FenixServiceException {
         InstitutionWorkTime institutionWorkTime =
                 AbstractDomainObject.fromExternalId((String) getFromRequest(request, "institutionWorkTimeOid"));
         Teacher teacher = institutionWorkTime.getTeacherService().getTeacher();
@@ -62,7 +61,7 @@ public class DepartmentAdmOfficeManageTeacherInstitutionWorkingTimeDispatchActio
     }
 
     public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws NumberFormatException, FenixFilterException, FenixServiceException {
+            throws NumberFormatException,  FenixServiceException {
         return delete(mapping, form, request, response, RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE);
     }
 

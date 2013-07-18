@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.Seminaries.GetEquivalency;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoEquivalency;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
@@ -43,9 +43,7 @@ public class ShowCandidacyForm extends FenixAction {
         InfoEquivalency equivalency = null;
         ActionForward destiny = null;
         try {
-            Object[] argsReadSeminary = { equivalencyID };
-            equivalency =
-                    (InfoEquivalency) ServiceManagerServiceFactory.executeService("Seminaries.GetEquivalency", argsReadSeminary);
+            equivalency = GetEquivalency.runGetEquivalency(equivalencyID);
         } catch (Exception e) {
             throw new FenixActionException();
         }

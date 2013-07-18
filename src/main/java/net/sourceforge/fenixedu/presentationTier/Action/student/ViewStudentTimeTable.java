@@ -5,7 +5,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadStudentTimeTable;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
@@ -36,7 +35,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 public class ViewStudentTimeTable extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixActionException, FenixFilterException, FenixServiceException {
+            throws FenixActionException,  FenixServiceException {
 
         List<Registration> registrations = getUserView(request).getPerson().getStudent().getActiveRegistrations();
         if (registrations.size() == 1) {
@@ -48,19 +47,19 @@ public class ViewStudentTimeTable extends FenixDispatchAction {
     }
 
     public ActionForward showTimeTable(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws FenixActionException,  FenixServiceException {
 
         return forwardToShowTimeTable(getRegistration(actionForm, request), mapping, request);
     }
 
     protected ActionForward forwardToShowTimeTableForSupervisor(Registration registration, ActionMapping mapping,
-            HttpServletRequest request) throws FenixActionException, FenixFilterException, FenixServiceException {
+            HttpServletRequest request) throws FenixActionException,  FenixServiceException {
 
         return forwardToShowTimeTable(registration, mapping, request);
     }
 
     public static ActionForward forwardToShowTimeTable(Registration registration, ActionMapping mapping,
-            HttpServletRequest request) throws FenixActionException, FenixFilterException, FenixServiceException {
+            HttpServletRequest request) throws FenixActionException,  FenixServiceException {
 
         List<InfoLesson> infoLessons = ReadStudentTimeTable.run(registration);
 

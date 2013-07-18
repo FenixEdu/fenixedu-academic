@@ -8,8 +8,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.CopyTSDProcess;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.CreateTSDProcess;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.DeleteTSDProcess;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -17,7 +19,6 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcess;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -87,10 +88,9 @@ public class TSDProcessAction extends FenixDispatchAction {
         Integer selectedDepartmentId = userView.getPerson().getTeacher().getCurrentWorkingDepartment().getIdInternal();
         String name = (String) dynaForm.get("name");
 
-        Object[] parameters =
-                new Object[] { selectedExecutionPeriodIdList, selectedDepartmentId, userView.getPerson().getIdInternal(), name };
-
-        TSDProcess tsdProcess = (TSDProcess) ServiceUtils.executeService("CreateTSDProcess", parameters);
+        TSDProcess tsdProcess =
+                CreateTSDProcess.runCreateTSDProcess(selectedExecutionPeriodIdList, selectedDepartmentId, userView.getPerson()
+                        .getIdInternal(), name);
 
         return loadTSDProcessServices(mapping, request, tsdProcess.getIdInternal(), userView);
     }
@@ -281,11 +281,9 @@ public class TSDProcessAction extends FenixDispatchAction {
             }
         }
 
-        Object[] parameters =
-                new Object[] { selectedExecutionPeriodListForCopyId, selectedTSDProcess.getIdInternal(),
-                        userView.getPerson().getIdInternal(), name };
-
-        TSDProcess tsdProcess = (TSDProcess) ServiceUtils.executeService("CopyTSDProcess", parameters);
+        TSDProcess tsdProcess =
+                CopyTSDProcess.runCopyTSDProcess(selectedExecutionPeriodListForCopyId, selectedTSDProcess.getIdInternal(),
+                        userView.getPerson().getIdInternal(), name);
 
         request.setAttribute("tsdProcess", tsdProcess);
         return loadTSDProcessServices(mapping, request, tsdProcess.getIdInternal(), userView);
@@ -296,13 +294,13 @@ public class TSDProcessAction extends FenixDispatchAction {
         Integer tsdProcessId = new Integer(request.getParameter("tsdProcess"));
         IUserView userView = UserView.getUser();
 
-        ServiceUtils.executeService("DeleteTSDProcess", new Object[] { tsdProcessId });
+        DeleteTSDProcess.runDeleteTSDProcess(tsdProcessId);
 
         return prepareForTSDProcessEdition(mapping, form, request, response);
     }
 
     private ExecutionYear getSelectedExecutionYear(IUserView userView, DynaActionForm dynaForm,
-            List<ExecutionYear> executionYearList) throws FenixServiceException, FenixFilterException {
+            List<ExecutionYear> executionYearList) throws FenixServiceException {
         Integer selectedExecutionYearId = (Integer) dynaForm.get("executionYear");
 
         ExecutionYear selectedExecutionYear = rootDomainObject.readExecutionYearByOID(selectedExecutionYearId);
@@ -319,7 +317,7 @@ public class TSDProcessAction extends FenixDispatchAction {
     }
 
     private ExecutionSemester getSelectedExecutionPeriod(IUserView userView, DynaActionForm dynaForm)
-            throws FenixServiceException, FenixFilterException {
+            throws FenixServiceException {
         Integer selectedExeuctionPeriodId = (Integer) dynaForm.get("executionPeriod");
 
         if (selectedExeuctionPeriodId == NOT_SELECTED_EXECUTION_PERIOD) {
@@ -332,7 +330,7 @@ public class TSDProcessAction extends FenixDispatchAction {
     }
 
     private void setCurrentExecutionYearInDynamicForm(IUserView userView, DynaActionForm dynaForm, ExecutionYear executionYear)
-            throws FenixServiceException, FenixFilterException {
+            throws FenixServiceException {
         dynaForm.set("executionYear", executionYear.getIdInternal());
     }
 
@@ -347,7 +345,7 @@ public class TSDProcessAction extends FenixDispatchAction {
     }
 
     private ExecutionYear getSelectedExecutionYearForCopy(IUserView userView, DynaActionForm dynaForm,
-            List<ExecutionYear> executionYearList) throws FenixFilterException, FenixServiceException {
+            List<ExecutionYear> executionYearList) throws FenixServiceException {
         Integer selectedExecutionYearId = (Integer) dynaForm.get("executionYearForCopy");
 
         ExecutionYear selectedExecutionYear = rootDomainObject.readExecutionYearByOID(selectedExecutionYearId);
@@ -364,7 +362,7 @@ public class TSDProcessAction extends FenixDispatchAction {
     }
 
     private ExecutionSemester getSelectedExecutionPeriodForCopy(IUserView userView, DynaActionForm dynaForm)
-            throws FenixFilterException, FenixServiceException {
+            throws FenixServiceException {
         Integer selectedExecutionPeriodId = (Integer) dynaForm.get("executionPeriodForCopy");
 
         ExecutionSemester selectedExecutionPeriod = rootDomainObject.readExecutionSemesterByOID(selectedExecutionPeriodId);
@@ -372,8 +370,7 @@ public class TSDProcessAction extends FenixDispatchAction {
         return selectedExecutionPeriod;
     }
 
-    private TSDProcess getSelectedTSDProcess(IUserView userView, DynaActionForm dynaForm) throws FenixServiceException,
-            FenixFilterException {
+    private TSDProcess getSelectedTSDProcess(IUserView userView, DynaActionForm dynaForm) {
         Integer tsdProcessId = (Integer) dynaForm.get("tsdProcess");
         TSDProcess tsdProcess = rootDomainObject.readTSDProcessByOID(tsdProcessId);
 

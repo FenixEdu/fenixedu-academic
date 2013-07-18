@@ -5,7 +5,7 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategy
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
 import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -27,12 +28,12 @@ import pt.ist.fenixWebFramework.services.Service;
  * 
  */
 
-public class VerifyStudentGroupAtributes extends FenixService {
+public class VerifyStudentGroupAtributes {
 
     private static boolean checkGroupStudentEnrolment(Integer studentGroupCode, String username) throws FenixServiceException {
         boolean result = false;
 
-        StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupCode);
+        StudentGroup studentGroup = RootDomainObject.getInstance().readStudentGroupByOID(studentGroupCode);
         if (studentGroup == null) {
             throw new FenixServiceException();
         }
@@ -62,7 +63,7 @@ public class VerifyStudentGroupAtributes extends FenixService {
     private static boolean checkGroupEnrolment(Integer groupPropertiesCode, Integer shiftCode, String username)
             throws FenixServiceException {
         boolean result = false;
-        final Grouping groupProperties = rootDomainObject.readGroupingByOID(groupPropertiesCode);
+        final Grouping groupProperties = RootDomainObject.getInstance().readGroupingByOID(groupPropertiesCode);
         if (groupProperties == null) {
             throw new InvalidChangeServiceException();
         }
@@ -74,7 +75,7 @@ public class VerifyStudentGroupAtributes extends FenixService {
             throw new NotAuthorizedException();
         }
 
-        Shift shift = rootDomainObject.readShiftByOID(shiftCode);
+        Shift shift = RootDomainObject.getInstance().readShiftByOID(shiftCode);
         result = strategy.checkNumberOfGroups(groupProperties, shift);
 
         if (!result) {
@@ -94,7 +95,7 @@ public class VerifyStudentGroupAtributes extends FenixService {
 
         boolean result = false;
 
-        StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupCode);
+        StudentGroup studentGroup = RootDomainObject.getInstance().readStudentGroupByOID(studentGroupCode);
         if (studentGroup == null) {
             throw new FenixServiceException();
         }
@@ -124,12 +125,12 @@ public class VerifyStudentGroupAtributes extends FenixService {
             throws FenixServiceException {
         boolean result = false;
 
-        Grouping groupProperties = rootDomainObject.readGroupingByOID(groupPropertiesCode);
+        Grouping groupProperties = RootDomainObject.getInstance().readGroupingByOID(groupPropertiesCode);
         if (groupProperties == null) {
             throw new ExistingServiceException();
         }
 
-        StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupCode);
+        StudentGroup studentGroup = RootDomainObject.getInstance().readStudentGroupByOID(studentGroupCode);
         if (studentGroup == null) {
             throw new FenixServiceException();
         }
@@ -156,12 +157,12 @@ public class VerifyStudentGroupAtributes extends FenixService {
     private static boolean checkEnrollStudentGroupShift(Integer studentGroupCode, Integer groupPropertiesCode, String username)
             throws FenixServiceException {
         boolean result = false;
-        Grouping groupProperties = rootDomainObject.readGroupingByOID(groupPropertiesCode);
+        Grouping groupProperties = RootDomainObject.getInstance().readGroupingByOID(groupPropertiesCode);
         if (groupProperties == null) {
             throw new ExistingServiceException();
         }
 
-        StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupCode);
+        StudentGroup studentGroup = RootDomainObject.getInstance().readStudentGroupByOID(studentGroupCode);
         if (studentGroup == null) {
             throw new FenixServiceException();
         }

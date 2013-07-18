@@ -3,20 +3,19 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers;
 import java.util.Collection;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.AutoCompleteSearchService;
+import net.sourceforge.fenixedu.presentationTier.renderers.providers.AutoCompleteProvider;
 
-public abstract class SearchParties extends FenixService implements AutoCompleteSearchService {
+public abstract class SearchParties<T> implements AutoCompleteProvider<T> {
 
     private static int DEFAULT_SIZE = 50;
 
     @Override
-    public Collection run(Class type, String value, int limit, Map<String, String> arguments) {
-        int size = getSize(arguments);
+    public Collection<T> getSearchResults(Map<String, String> argsMap, String value, int maxCount) {
+        int size = getSize(argsMap);
         return search(value, size);
     }
 
-    protected abstract Collection search(String value, int size);
+    protected abstract Collection<T> search(String value, int size);
 
     private int getSize(Map<String, String> arguments) {
         String size = arguments.get("size");

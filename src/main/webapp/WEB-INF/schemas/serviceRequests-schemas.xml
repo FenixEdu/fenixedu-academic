@@ -345,8 +345,8 @@
 		<property name="labelField" value="name.content"/>
 		<property name="format" value="${name.content} (${studentCurricularPlan.name})"/>
 		<property name="indicatorShown" value="true"/>		
-		<property name="serviceName" value="SearchCurriculumGroupsForRegistration"/>
-		<property name="serviceArgs" value="registrationID=${registration.externalId}"/>
+		<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchCurriculumGroupsForRegistration"/>
+		<property name="args" value="registrationID=${registration.externalId}"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup"/>
 		<property name="minChars" value="0"/>
 		<property name="rawSlotName" value="branch"/>
@@ -435,8 +435,8 @@
 		<property name="size" value="40"/>
 		<property name="labelField" value="unit.name"/>
 		<property name="indicatorShown" value="true"/>		
-		<property name="serviceName" value="SearchExternalUnits"/>
-		<property name="serviceArgs" value="slot=name,size=20"/>
+		<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchExternalUnits"/>
+		<property name="args" value="slot=name,size=20"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>
 		<property name="minChars" value="2"/>
 	</slot>
@@ -513,8 +513,8 @@
 		<property name="size" value="40"/>
 		<property name="labelField" value="unit.name"/>
 		<property name="indicatorShown" value="true"/>		
-		<property name="serviceName" value="SearchExternalUnits"/>
-		<property name="serviceArgs" value="slot=name,size=20"/>
+		<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchExternalUnits"/>
+		<property name="args" value="slot=name,size=20"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>
 		<property name="minChars" value="2"/>
 	</slot>

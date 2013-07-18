@@ -6,22 +6,22 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.presentationTier.renderers.providers.AutoCompleteProvider;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
-public class ExternalUnitSearchService extends FenixService implements AutoCompleteSearchService {
+public class ExternalUnitSearchService implements AutoCompleteProvider<Unit> {
 
     @Override
-    public Collection run(Class type, String value, int limit, Map<String, String> arguments) {
+    public Collection<Unit> getSearchResults(Map<String, String> argsMap, String value, int maxCount) {
         final List<Unit> result = new ArrayList<Unit>();
         if (value != null && value.length() > 0) {
             final String[] nameValues = StringNormalizer.normalize(value).toLowerCase().split("\\p{Space}+");
 
             for (final Party party : RootDomainObject.getInstance().getExternalInstitutionUnit().getSubUnits()) {
-                if (result.size() >= limit) {
+                if (result.size() >= maxCount) {
                     break;
                 }
                 if (!party.isPerson()) {

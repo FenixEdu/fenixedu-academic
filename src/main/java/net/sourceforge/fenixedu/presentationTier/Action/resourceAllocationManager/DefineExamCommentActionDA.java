@@ -5,7 +5,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.DefineExamComment;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadExamsMap;
@@ -85,7 +84,7 @@ public class DefineExamCommentActionDA extends
         return mapping.findForward("showExamsMap");
     }
 
-    private InfoExamsMap getExamsMap(HttpServletRequest request) throws FenixActionException, FenixFilterException {
+    private InfoExamsMap getExamsMap(HttpServletRequest request) throws FenixActionException {
         InfoExecutionDegree infoExecutionDegree =
                 (InfoExecutionDegree) request.getAttribute(PresentationConstants.EXECUTION_DEGREE);
 

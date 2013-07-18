@@ -4,13 +4,11 @@
  */
 package net.sourceforge.fenixedu.presentationTier.backBeans.coordinator.evaluation;
 
-import java.text.ParseException;
-
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteEvaluation;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.Project;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 public class CoordinatorProjectsManagementBackingBean extends CoordinatorProjectsInformationBackingBean {
@@ -30,46 +28,44 @@ public class CoordinatorProjectsManagementBackingBean extends CoordinatorProject
     }
 
     public String createProject() {
-        try {
-            final Object[] args =
-                    { getExecutionCourseID(), getName(), DateFormatUtil.parse("dd/MM/yyyy HH:mm", getBeginString()),
-                            DateFormatUtil.parse("dd/MM/yyyy HH:mm", getEndString()), getDescription(), null };
-            ServiceUtils.executeService("CreateProject", args);
-        } catch (final FenixFilterException e) {
-            return "";
-        } catch (final FenixServiceException e) {
-            setErrorMessage(e.getMessage());
-            return "";
-        } catch (final ParseException e) {
-            setErrorMessage("error.invalidDate");
-            return "";
-        }
-        return this.showProjectsForExecutionCourses();
+//        try {
+//            CreateProject.runCreateProject(getExecutionCourseID(), getName(),
+//                    DateFormatUtil.parse("dd/MM/yyyy HH:mm", getBeginString()),
+//                    DateFormatUtil.parse("dd/MM/yyyy HH:mm", getEndString()), getDescription(), null);
+//        } catch (final FenixFilterException e) {
+//            return "";
+//        } catch (final FenixServiceException e) {
+//            setErrorMessage(e.getMessage());
+//            return "";
+//        } catch (final ParseException e) {
+//            setErrorMessage("error.invalidDate");
+//            return "";
+//        }
+//        return this.showProjectsForExecutionCourses();
+        throw new UnsupportedOperationException();
     }
 
     public String editProject() {
-        try {
-            final Object[] args =
-                    { getExecutionCourseID(), getEvaluationID(), getName(),
-                            DateFormatUtil.parse("dd/MM/yyyy HH:mm", getBeginString()),
-                            DateFormatUtil.parse("dd/MM/yyyy HH:mm", getEndString()), getDescription(), null };
-            ServiceUtils.executeService("EditProject", args);
-        } catch (final FenixFilterException e) {
-        } catch (final FenixServiceException e) {
-            setErrorMessage(e.getMessage());
-            return "";
-        } catch (ParseException e) {
-            setErrorMessage("error.invalidDate");
-            return "";
-        }
-        return this.showProjectsForExecutionCourses();
+//        try {
+//            EditProject.runEditProject(getExecutionCourseID(), getEvaluationID(), getName(),
+//                    DateFormatUtil.parse("dd/MM/yyyy HH:mm", getBeginString()),
+//                    DateFormatUtil.parse("dd/MM/yyyy HH:mm", getEndString()), getDescription(), null);
+//        } catch (final FenixFilterException e) {
+//        } catch (final FenixServiceException e) {
+//            setErrorMessage(e.getMessage());
+//            return "";
+//        } catch (ParseException e) {
+//            setErrorMessage("error.invalidDate");
+//            return "";
+//        }
+//        return this.showProjectsForExecutionCourses();
+        throw new UnsupportedOperationException();
     }
 
     public String deleteProject() {
         try {
-            final Object[] args = { getExecutionCourseID(), getEvaluationID() };
-            ServiceUtils.executeService("DeleteEvaluation", args);
-        } catch (FenixFilterException e) {
+            DeleteEvaluation.runDeleteEvaluation(getExecutionCourseID(), getEvaluationID());
+        } catch (NotAuthorizedException e) {
         } catch (FenixServiceException e) {
             setErrorMessage(e.getMessage());
         }

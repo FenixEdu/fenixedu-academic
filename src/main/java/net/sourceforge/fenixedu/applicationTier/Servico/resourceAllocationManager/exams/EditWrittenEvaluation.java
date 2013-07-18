@@ -5,9 +5,13 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.EditWrittenEvaluationAuthorization;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseCoordinatorAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ResourceAllocationManagerAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.GOPSendMessageService;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.Exam;
@@ -35,17 +39,19 @@ import net.sourceforge.fenixedu.util.Season;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
-public class EditWrittenEvaluation extends FenixService {
+import pt.ist.fenixWebFramework.services.Service;
 
-    public void run(Integer executionCourseID, Date writtenEvaluationDate, Date writtenEvaluationStartTime,
+public class EditWrittenEvaluation {
+
+    protected void run(Integer executionCourseID, Date writtenEvaluationDate, Date writtenEvaluationStartTime,
             Date writtenEvaluationEndTime, List<String> executionCourseIDs, List<String> degreeModuleScopeIDs,
             List<String> roomIDs, Integer writtenEvaluationOID, Season examSeason, String writtenTestDescription,
             GradeScale gradeScale) throws FenixServiceException {
 
-        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
+        ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseID);
 
         final WrittenEvaluation writtenEvaluation =
-                (WrittenEvaluation) rootDomainObject.readEvaluationByOID(writtenEvaluationOID);
+                (WrittenEvaluation) RootDomainObject.getInstance().readEvaluationByOID(writtenEvaluationOID);
         if (writtenEvaluation == null) {
             throw new FenixServiceException("error.noWrittenEvaluation");
         }
@@ -129,7 +135,7 @@ public class EditWrittenEvaluation extends FenixService {
     private List<AllocatableSpace> readRooms(final List<String> roomIDs) throws FenixServiceException {
         final List<AllocatableSpace> result = new ArrayList<AllocatableSpace>();
         for (final String roomID : roomIDs) {
-            final AllocatableSpace room = (AllocatableSpace) rootDomainObject.readResourceByOID(Integer.valueOf(roomID));
+            final AllocatableSpace room = (AllocatableSpace) RootDomainObject.getInstance().readResourceByOID(Integer.valueOf(roomID));
             if (room == null) {
                 throw new FenixServiceException("error.noRoom");
             }
@@ -164,7 +170,7 @@ public class EditWrittenEvaluation extends FenixService {
 
         final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
         for (final String executionCourseID : executionCourseIDs) {
-            final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(Integer.valueOf(executionCourseID));
+            final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(Integer.valueOf(executionCourseID));
             if (executionCourse == null) {
                 throw new FenixServiceException("error.invalidExecutionCourse");
             }
@@ -202,4 +208,39 @@ public class EditWrittenEvaluation extends FenixService {
                     new Recipient(new FixedSetGroup(tos)).asCollection(), subject, body, "");
         }
     }
+
+    // Service Invokers migrated from Berserk
+
+    private static final EditWrittenEvaluation serviceInstance = new EditWrittenEvaluation();
+
+    @Service
+    public static void runEditWrittenEvaluation(Integer executionCourseID, Date writtenEvaluationDate,
+            Date writtenEvaluationStartTime, Date writtenEvaluationEndTime, List<String> executionCourseIDs,
+            List<String> degreeModuleScopeIDs, List<String> roomIDs, Integer writtenEvaluationOID, Season examSeason,
+            String writtenTestDescription, GradeScale gradeScale) throws FenixServiceException, NotAuthorizedException {
+        EditWrittenEvaluationAuthorization.instance.execute(writtenEvaluationOID);
+        try {
+            ResourceAllocationManagerAuthorizationFilter.instance.execute();
+            serviceInstance.run(executionCourseID, writtenEvaluationDate, writtenEvaluationStartTime, writtenEvaluationEndTime,
+                    executionCourseIDs, degreeModuleScopeIDs, roomIDs, writtenEvaluationOID, examSeason, writtenTestDescription,
+                    gradeScale);
+        } catch (NotAuthorizedException ex1) {
+            try {
+                ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseID);
+                serviceInstance.run(executionCourseID, writtenEvaluationDate, writtenEvaluationStartTime,
+                        writtenEvaluationEndTime, executionCourseIDs, degreeModuleScopeIDs, roomIDs, writtenEvaluationOID,
+                        examSeason, writtenTestDescription, gradeScale);
+            } catch (NotAuthorizedException ex2) {
+                try {
+                    ExecutionCourseCoordinatorAuthorizationFilter.instance.execute(executionCourseID);
+                    serviceInstance.run(executionCourseID, writtenEvaluationDate, writtenEvaluationStartTime,
+                            writtenEvaluationEndTime, executionCourseIDs, degreeModuleScopeIDs, roomIDs, writtenEvaluationOID,
+                            examSeason, writtenTestDescription, gradeScale);
+                } catch (NotAuthorizedException ex3) {
+                    throw ex3;
+                }
+            }
+        }
+    }
+
 }

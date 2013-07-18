@@ -9,27 +9,30 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseSiteView;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteStudentsTestMarksStatistics;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.util.tests.CorrectionFormula;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Susana Fernandes
  * 
  */
-public class ReadDistributedTestMarksStatistics extends FenixService {
+public class ReadDistributedTestMarksStatistics {
 
-    public SiteView run(Integer executionCourseId, Integer distributedTestId) throws FenixServiceException {
+    protected SiteView run(Integer executionCourseId, Integer distributedTestId) throws FenixServiceException {
 
         InfoSiteStudentsTestMarksStatistics infoSiteStudentsTestMarksStatistics = new InfoSiteStudentsTestMarksStatistics();
 
-        DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
+        DistributedTest distributedTest = RootDomainObject.getInstance().readDistributedTestByOID(distributedTestId);
         if (distributedTest == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -79,4 +82,16 @@ public class ReadDistributedTestMarksStatistics extends FenixService {
         SiteView siteView = new ExecutionCourseSiteView(infoSiteStudentsTestMarksStatistics, infoSiteStudentsTestMarksStatistics);
         return siteView;
     }
+
+    // Service Invokers migrated from Berserk
+
+    private static final ReadDistributedTestMarksStatistics serviceInstance = new ReadDistributedTestMarksStatistics();
+
+    @Service
+    public static SiteView runReadDistributedTestMarksStatistics(Integer executionCourseId, Integer distributedTestId)
+            throws FenixServiceException, NotAuthorizedException {
+        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
+        return serviceInstance.run(executionCourseId, distributedTestId);
+    }
+
 }

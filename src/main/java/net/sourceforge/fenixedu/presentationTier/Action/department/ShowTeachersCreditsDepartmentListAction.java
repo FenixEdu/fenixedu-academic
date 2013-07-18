@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionPeriods;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.commons.OrderedIterator;
@@ -52,7 +51,7 @@ public class ShowTeachersCreditsDepartmentListAction extends FenixAction {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws NumberFormatException, FenixFilterException, FenixServiceException, ParseException {
+            throws NumberFormatException,  FenixServiceException, ParseException {
 
         DynaActionForm dynaActionForm = (DynaActionForm) form;
         IUserView userView = UserView.getUser();
@@ -119,7 +118,7 @@ public class ShowTeachersCreditsDepartmentListAction extends FenixAction {
         return orderedIterator;
     }
 
-    private void readAndSaveAllExecutionPeriods(HttpServletRequest request) throws FenixFilterException, FenixServiceException {
+    private void readAndSaveAllExecutionPeriods(HttpServletRequest request) throws  FenixServiceException {
         List<InfoExecutionPeriod> notClosedExecutionPeriods = new ArrayList<InfoExecutionPeriod>();
 
         notClosedExecutionPeriods = ReadNotClosedExecutionPeriods.run();

@@ -3,16 +3,16 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class GetEnrolmentList extends FenixService {
+public class GetEnrolmentList {
 
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
@@ -73,7 +73,7 @@ public class GetEnrolmentList extends FenixService {
     }
 
     private static StudentCurricularPlan getStudentCurricularPlan(Integer studentCurricularPlanID) {
-        return rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanID);
+        return RootDomainObject.getInstance().readStudentCurricularPlanByOID(studentCurricularPlanID);
     }
 
 }

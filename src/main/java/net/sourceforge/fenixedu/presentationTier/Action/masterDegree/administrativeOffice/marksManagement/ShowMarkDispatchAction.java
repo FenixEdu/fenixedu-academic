@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.marksManagement.ReadStudentMarksListByCurricularCourse;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionError;
@@ -36,11 +36,11 @@ public class ShowMarkDispatchAction extends FenixDispatchAction {
         MarksManagementDispatchAction.getFromRequest("degreeId", request);
         // Get students List
         IUserView userView = UserView.getUser();
-        Object args[] = { userView, Integer.valueOf(curricularCourseId), null };
         List listEnrolmentEvaluation = null;
         try {
             listEnrolmentEvaluation =
-                    (List) ServiceManagerServiceFactory.executeService("ReadStudentMarksListByCurricularCourse", args);
+                    ReadStudentMarksListByCurricularCourse.runReadStudentMarksListByCurricularCourse(userView,
+                            Integer.valueOf(curricularCourseId), null);
         } catch (NotAuthorizedException e) {
             return mapping.findForward("NotAuthorized");
         } catch (NonExistingServiceException e) {

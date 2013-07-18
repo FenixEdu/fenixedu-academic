@@ -7,7 +7,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.elections.AddCandidateYearDelegateElections;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.elections.RemoveCandidateYearDelegateElections;
@@ -149,7 +148,7 @@ public class YearDelegateManagementDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward vote(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException, Exception {
+            HttpServletResponse response) throws  FenixServiceException, Exception {
 
         final Person person = getLoggedPerson(request);
         final YearDelegateElection yearDelegateElection = getYearDelegateElectionForStudent(person.getStudent());
@@ -168,7 +167,7 @@ public class YearDelegateManagementDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward prepareVote(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException, Exception {
+            HttpServletResponse response) throws  FenixServiceException, Exception {
 
         final Person person = getLoggedPerson(request);
         final YearDelegateElection yearDelegateElection = getYearDelegateElectionForStudent(person.getStudent());

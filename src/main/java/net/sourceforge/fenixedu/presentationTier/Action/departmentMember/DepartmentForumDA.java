@@ -6,7 +6,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Person;
@@ -39,7 +38,7 @@ public class DepartmentForumDA extends ForunsManagement {
     }
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixActionException, FenixFilterException, FenixServiceException {
+            throws FenixActionException,  FenixServiceException {
         List<DepartmentForum> foruns = new ArrayList<DepartmentForum>();
         Person loggedPerson = getLoggedPerson(request);
         for (Department department : rootDomainObject.getDepartments()) {

@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateSituation;
@@ -18,13 +17,14 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWith
 import net.sourceforge.fenixedu.domain.CandidateSituation;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.util.State;
 import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class GetCandidatesByID extends FenixService {
+public class GetCandidatesByID {
 
     @Service
     public static InfoMasterDegreeCandidate run(Integer candidateID) throws FenixServiceException {
@@ -34,7 +34,7 @@ public class GetCandidatesByID extends FenixService {
             throw new NonExistingServiceException();
         }
 
-        masterDegreeCandidate = rootDomainObject.readMasterDegreeCandidateByOID(candidateID);
+        masterDegreeCandidate = RootDomainObject.getInstance().readMasterDegreeCandidateByOID(candidateID);
 
         InfoMasterDegreeCandidate infoMasterDegreeCandidate =
                 InfoMasterDegreeCandidateWithInfoPerson.newInfoFromDomain(masterDegreeCandidate);

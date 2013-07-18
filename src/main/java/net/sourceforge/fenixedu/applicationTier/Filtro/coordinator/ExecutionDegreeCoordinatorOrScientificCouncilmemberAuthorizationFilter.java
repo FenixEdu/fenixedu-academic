@@ -7,8 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Filtro.coordinator;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -24,32 +23,31 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseG
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import pt.utl.ist.berserk.ServiceRequest;
-import pt.utl.ist.berserk.ServiceResponse;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
  * 
  */
-public class ExecutionDegreeCoordinatorOrScientificCouncilmemberAuthorizationFilter extends Filtro {
+public class ExecutionDegreeCoordinatorOrScientificCouncilmemberAuthorizationFilter {
 
-    @Override
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-        final IUserView userView = getRemoteUser(request);
-        final Object[] arguments = getServiceCallArguments(request);
-        if (arguments == null || arguments.length < 1 || arguments[0] == null) {
-            throw new NotAuthorizedFilterException();
+    public static final ExecutionDegreeCoordinatorOrScientificCouncilmemberAuthorizationFilter instance =
+            new ExecutionDegreeCoordinatorOrScientificCouncilmemberAuthorizationFilter();
+
+    public void execute(ExecutionDegree executionDegree) throws NotAuthorizedException {
+        final IUserView userView = AccessControl.getUserView();
+        if (executionDegree == null) {
+            throw new NotAuthorizedException();
         }
-        final ExecutionDegree executionDegree = (ExecutionDegree) arguments[0];
 
         if (userView == null || userView.getRoleTypes() == null || !verifyCondition(userView, executionDegree)) {
-            throw new NotAuthorizedFilterException();
+            throw new NotAuthorizedException();
         }
 
         if (((userView != null && userView.getRoleTypes() != null && !verifyCondition(userView, executionDegree)))
                 || (userView == null) || (userView.getRoleTypes() == null)) {
-            throw new NotAuthorizedFilterException();
+            throw new NotAuthorizedException();
         }
 
     }

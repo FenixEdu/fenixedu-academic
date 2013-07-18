@@ -8,8 +8,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.candidate.ReadPersonCandidates;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.commons.candidate.ReadCandidateEnrolmentsByCandidateID;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
@@ -55,11 +55,8 @@ public class ShowStudyPlanForCandidateAction extends FenixAction {
     }
 
     private ArrayList getCandidateStudyPlanByCandidateID(Integer candidateID, IUserView userView) {
-        Object[] args = { candidateID };
-
         try {
-            return (ArrayList) ServiceManagerServiceFactory
-                    .executeService(userView, "ReadCandidateEnrolmentsByCandidateID", args);
+            return (ArrayList) ReadCandidateEnrolmentsByCandidateID.runReadCandidateEnrolmentsByCandidateID(candidateID);
         } catch (Exception e) {
             return null;
         }

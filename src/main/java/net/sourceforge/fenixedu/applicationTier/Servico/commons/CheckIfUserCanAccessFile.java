@@ -3,7 +3,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.domain.File;
 import net.sourceforge.fenixedu.domain.Person;
 import pt.ist.fenixWebFramework.services.Service;
@@ -13,7 +13,7 @@ import pt.ist.fenixWebFramework.services.Service;
  * @author naat
  * 
  */
-public class CheckIfUserCanAccessFile extends FenixService {
+public class CheckIfUserCanAccessFile {
 
     @Service
     public static Boolean run(final String username, final String externalStorageIdentification) {

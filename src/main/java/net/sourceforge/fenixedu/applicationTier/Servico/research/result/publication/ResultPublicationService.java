@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.research.result.publication;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ArticleBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.BookBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.BookPartBean;
@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.domain.research.result.publication.Proceedings;
 import net.sourceforge.fenixedu.domain.research.result.publication.TechnicalReport;
 import net.sourceforge.fenixedu.domain.research.result.publication.Thesis;
 
-public abstract class ResultPublicationService extends FenixService {
+public abstract class ResultPublicationService {
 
     protected static CreateResultPublication getCreateService() {
         return new CreateResultPublication();

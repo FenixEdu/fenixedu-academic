@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.candidacy.degreeChange;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
@@ -115,7 +114,7 @@ public class DegreeChangeIndividualCandidacyProcessDA extends IndividualCandidac
     }
 
     public ActionForward executeEditCandidacyPersonalInformation(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
         try {
             executeActivity(getProcess(request), "EditCandidacyPersonalInformation", getIndividualCandidacyProcessBean());
         } catch (final DomainException e) {
@@ -141,7 +140,7 @@ public class DegreeChangeIndividualCandidacyProcessDA extends IndividualCandidac
     }
 
     public ActionForward executeEditCandidacyInformation(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
         try {
             DegreeChangeIndividualCandidacyProcessBean bean = getIndividualCandidacyProcessBean();
 
@@ -168,7 +167,7 @@ public class DegreeChangeIndividualCandidacyProcessDA extends IndividualCandidac
     }
 
     public ActionForward executeEditCandidacyCurricularCoursesInformation(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
         try {
             executeActivity(getProcess(request), "EditCandidacyCurricularCoursesInformation", getIndividualCandidacyProcessBean());
         } catch (final DomainException e) {
@@ -202,7 +201,7 @@ public class DegreeChangeIndividualCandidacyProcessDA extends IndividualCandidac
     }
 
     public ActionForward executeChangeIndividualCandidacyState(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
 
         try {
             executeActivity(getProcess(request), "ChangeIndividualCandidacyState", getCandidacyResultBean());
@@ -221,7 +220,7 @@ public class DegreeChangeIndividualCandidacyProcessDA extends IndividualCandidac
     }
 
     public ActionForward executeIntroduceCandidacyResult(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
 
         try {
             executeActivity(getProcess(request), "IntroduceCandidacyResult", getCandidacyResultBean());
@@ -238,13 +237,13 @@ public class DegreeChangeIndividualCandidacyProcessDA extends IndividualCandidac
     }
 
     public ActionForward prepareExecuteCreateRegistration(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
         request.setAttribute("degree", getProcess(request).getCandidacySelectedDegree());
         return mapping.findForward("create-registration");
     }
 
     public ActionForward executeCreateRegistration(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
         try {
             executeActivity(getProcess(request), "CreateRegistration");
         } catch (final DomainException e) {
@@ -264,7 +263,7 @@ public class DegreeChangeIndividualCandidacyProcessDA extends IndividualCandidac
 
     @Override
     public ActionForward createNewProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws  FenixServiceException {
 
         boolean isValid = hasInvalidViewState();
         if (!isValid) {

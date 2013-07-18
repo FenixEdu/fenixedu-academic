@@ -21,7 +21,6 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.DepartmentSummaryElement;
 import net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.DepartmentSummaryElement.SummaryControlCategory;
@@ -243,7 +242,7 @@ public class SummariesControlAction extends FenixDispatchAction {
     }
 
     private void setAllDepartmentsSummaryResume(HttpServletRequest request, String executionPeriodOID)
-            throws FenixFilterException, FenixServiceException {
+            throws  FenixServiceException {
 
         final ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodOID);
 
@@ -472,7 +471,7 @@ public class SummariesControlAction extends FenixDispatchAction {
         return departments;
     }
 
-    protected void readAndSaveAllDepartments(HttpServletRequest request) throws FenixFilterException, FenixServiceException {
+    protected void readAndSaveAllDepartments(HttpServletRequest request) throws  FenixServiceException {
         Collection<Department> allDepartments = rootDomainObject.getDepartments();
         List<LabelValueBean> departments = getAllDepartments(allDepartments);
         request.setAttribute("allDepartments", allDepartments);

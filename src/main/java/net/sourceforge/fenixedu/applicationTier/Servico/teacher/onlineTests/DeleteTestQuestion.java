@@ -1,17 +1,23 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
+import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.onlineTests.Test;
 import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-public class DeleteTestQuestion extends FenixService {
+import pt.ist.fenixWebFramework.services.Service;
 
-    public void run(Integer executionCourseId, Integer testId, final Integer questionId) throws InvalidArgumentsServiceException {
-        Test test = rootDomainObject.readTestByOID(testId);
+public class DeleteTestQuestion {
+
+    protected void run(Integer executionCourseId, Integer testId, final Integer questionId)
+            throws InvalidArgumentsServiceException {
+        Test test = RootDomainObject.getInstance().readTestByOID(testId);
         if (test == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -28,6 +34,17 @@ public class DeleteTestQuestion extends FenixService {
         }
 
         test.deleteTestQuestion(testQuestion);
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final DeleteTestQuestion serviceInstance = new DeleteTestQuestion();
+
+    @Service
+    public static void runDeleteTestQuestion(Integer executionCourseId, Integer testId, Integer questionId)
+            throws InvalidArgumentsServiceException, NotAuthorizedException {
+        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
+        serviceInstance.run(executionCourseId, testId, questionId);
     }
 
 }

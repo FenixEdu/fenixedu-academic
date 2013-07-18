@@ -3,17 +3,16 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers;
 import java.util.Collection;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.AutoCompleteSearchService;
 import net.sourceforge.fenixedu.domain.DistrictSubdivision;
+import net.sourceforge.fenixedu.presentationTier.renderers.providers.AutoCompleteProvider;
 
-public class SearchDistrictSubdivisions extends FenixService implements AutoCompleteSearchService {
+public class SearchDistrictSubdivisions implements AutoCompleteProvider<DistrictSubdivision> {
 
     private static int DEFAULT_SIZE = 50;
 
     @Override
-    public Collection run(Class type, String value, int limit, Map<String, String> arguments) {
-        return DistrictSubdivision.findByName(value, getSize(arguments));
+    public Collection<DistrictSubdivision> getSearchResults(Map<String, String> argsMap, String value, int maxCount) {
+        return DistrictSubdivision.findByName(value, getSize(argsMap));
     }
 
     private int getSize(Map<String, String> arguments) {

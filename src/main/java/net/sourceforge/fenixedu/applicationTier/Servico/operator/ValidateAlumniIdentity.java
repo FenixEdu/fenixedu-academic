@@ -3,16 +3,31 @@ package net.sourceforge.fenixedu.applicationTier.Servico.operator;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.alumni.AlumniNotificationService;
 import net.sourceforge.fenixedu.domain.AlumniIdentityCheckRequest;
 import net.sourceforge.fenixedu.domain.Person;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ValidateAlumniIdentity extends AlumniNotificationService {
 
-    public void run(AlumniIdentityCheckRequest identityRequest, Boolean approval, Person operator) {
+    protected void run(AlumniIdentityCheckRequest identityRequest, Boolean approval, Person operator) {
         identityRequest.validate(approval, operator);
         sendIdentityCheckEmail(identityRequest, approval);
     }
 
-    public void run(AlumniIdentityCheckRequest identityRequest, Person alumniPerson) {
+    protected void run(AlumniIdentityCheckRequest identityRequest, Person alumniPerson) {
         alumniPerson.setSocialSecurityNumber(identityRequest.getSocialSecurityNumber());
+    }
+
+    // Service Invokers migrated from Berserk
+
+    private static final ValidateAlumniIdentity serviceInstance = new ValidateAlumniIdentity();
+
+    @Service
+    public static void runValidateAlumniIdentity(AlumniIdentityCheckRequest identityRequest, Boolean approval, Person operator) {
+        serviceInstance.run(identityRequest, approval, operator);
+    }
+
+    @Service
+    public static void runValidateAlumniIdentity(AlumniIdentityCheckRequest identityRequest, Person alumniPerson) {
+        serviceInstance.run(identityRequest, alumniPerson);
     }
 
 }

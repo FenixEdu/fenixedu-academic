@@ -1,12 +1,12 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.site;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
+
 import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
-public class ManageVirtualFunction extends FenixService {
+public class ManageVirtualFunction {
 
     protected void checkFunction(UnitSite site, Function function) {
         checkUnit(site, function.getUnit());
