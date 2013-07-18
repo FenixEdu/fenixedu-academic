@@ -1201,15 +1201,6 @@
     </service>
 
     <service>
-        <name>EditProjectAccess</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement.EditProjectAccess</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="ProjectsManagerAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
         <name>EditQualification</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.qualification.EditQualification</implementationClass>
         <isTransactional>true</isTransactional>
@@ -1563,15 +1554,6 @@
         <isTransactional>true</isTransactional>
         <filterChains>
             <chain name="ExecutionCourseLecturingTeacherAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
-        <name>InsertNewProjectAccess</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement.InsertNewProjectAccess</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="ProjectsManagerAuthorization"/>
         </filterChains>
     </service>
 
@@ -1938,24 +1920,6 @@
     </service>
 
     <service>
-        <name>ReadCoordinators</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement.ReadCoordinators</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="ProjectsManagerAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
-        <name>ReadCostCenter</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement.ReadCostCenter</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="ProjectsManagerAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
         <name>ReadCourseHistoric</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.gesdis.ReadCourseHistoric</implementationClass>
         <isTransactional>true</isTransactional>
@@ -2215,15 +2179,6 @@
     </service>
 
     <service>
-        <name>ReadExpensesReport</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement.ReadExpensesReport</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="ProjectsManagerAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
         <name>ReadExternalActivity</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadExternalActivity</implementationClass>
         <isTransactional>true</isTransactional>
@@ -2332,33 +2287,6 @@
     </service>
 
     <service>
-        <name>ReadOpeningProjectFileReport</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement.ReadOpeningProjectFileReport</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="ProjectsManagerAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
-        <name>ReadOverheadReport</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement.ReadOverheadReport</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="ProjectsManagerAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
-        <name>ReadPersonToDelegateAccess</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement.ReadPersonToDelegateAccess</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="ProjectsManagerAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
         <name>ReadProfessorshipByOID</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ReadProfessorshipByOID</implementationClass>
         <isTransactional>true</isTransactional>
@@ -2384,24 +2312,6 @@
     </service>
 
     <service>
-        <name>ReadProjectAccesses</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement.ReadProjectAccesses</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="ProjectsManagerAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
-        <name>ReadProjectWithoutPersonAccess</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement.ReadProjectWithoutPersonAccess</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="ProjectsManagerAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
         <name>ReadQualification</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.qualification.ReadQualification</implementationClass>
         <isTransactional>true</isTransactional>
@@ -2416,24 +2326,6 @@
         <isTransactional>true</isTransactional>
         <filterChains>
             <chain name="ReadQualificationsAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
-        <name>ReadReport</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement.ReadReport</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="ProjectsManagerAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
-        <name>ReadRubric</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement.ReadRubric</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="ProjectsManagerAuthorization"/>
         </filterChains>
     </service>
 
@@ -2627,15 +2519,6 @@
     </service>
 
     <service>
-        <name>ReadSummaryReport</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement.ReadSummaryReport</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="ProjectsManagerAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
         <name>ReadSupportLessonByOID</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ReadSupportLessonByOID</implementationClass>
         <isTransactional>true</isTransactional>
@@ -2742,24 +2625,6 @@
     </service>
 
     <service>
-        <name>ReadUserCostCenters</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement.ReadUserCostCenters</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="ProjectsManagerAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
-        <name>ReadUserProjects</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement.ReadUserProjects</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="ProjectsManagerAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
         <name>RearrangeUnitSiteFunctions</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.site.RearrangeUnitSiteFunctions</implementationClass>
         <isTransactional>true</isTransactional>
@@ -2857,15 +2722,6 @@
     </service>
 
     <service>
-        <name>RemoveProjectAccess</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement.RemoveProjectAccess</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="ProjectsManagerAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
         <name>RemoveTeacherFromTeacherServiceDistributions</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.RemoveTeacherFromTeacherServiceDistributions</implementationClass>
         <isTransactional>true</isTransactional>
@@ -2880,15 +2736,6 @@
         <isTransactional>true</isTransactional>
         <filterChains>
             <chain name="UnitSiteManagerOrManagerAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
-        <name>ReviewProjectAccess</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement.ReviewProjectAccess</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="ProjectsManagerAuthorization"/>
         </filterChains>
     </service>
 

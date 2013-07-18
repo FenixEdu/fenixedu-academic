@@ -113,7 +113,6 @@ import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContract
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalData;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PHDProgramCandidacy;
-import net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess;
 import net.sourceforge.fenixedu.domain.research.Researcher;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
@@ -143,7 +142,6 @@ import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.persistenceTierOracle.BackendInstance;
 import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.ByteArray;
 import net.sourceforge.fenixedu.util.ContentType;
@@ -1427,7 +1425,7 @@ public class Person extends Person_Base {
                 && !hasAnyPunctualRoomsOccupationRequests() && !hasAnyPunctualRoomsOccupationRequestsToProcess()
                 && !hasAnyAssociatedQualifications() && !hasAnyAssociatedAlteredCurriculums() && !hasAnyEnrolmentEvaluations()
                 && !hasAnyExportGroupingSenders() && !hasAnyResponsabilityTransactions() && !hasAnyMasterDegreeCandidates()
-                && !hasAnyGuides() && !hasAnyProjectAccesses() && !hasEmployee() && !hasTeacher() && !hasAnyPayedGuides()
+                && !hasAnyGuides() && !hasEmployee() && !hasTeacher() && !hasAnyPayedGuides()
                 && !hasAnyPayedReceipts() && !hasParking() && !hasAnyResearchInterests() && !hasAnyProjectParticipations()
                 && !hasAnyParticipations() && !hasAnyBoards() && !hasAnyPersonFunctions()
                 && (!hasHomepage() || getHomepage().isDeletable()) && !hasLibraryCard() && !hasAnyCardGenerationEntries()
@@ -1624,9 +1622,6 @@ public class Person extends Person_Base {
                 removeRoleIfPresent(person, RoleType.DEPARTMENT_CREDITS_MANAGER);
                 removeRoleIfPresent(person, RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE);
                 removeRoleIfPresent(person, RoleType.PERSONNEL_SECTION);
-                // removeRoleIfPresent(person, RoleType.PROJECTS_MANAGER);
-                // removeRoleIfPresent(person,
-                // RoleType.INSTITUCIONAL_PROJECTS_MANAGER);
                 break;
 
             case STUDENT:
@@ -1984,20 +1979,6 @@ public class Person extends Person_Base {
             }
         }
         return studentCurricularPlans;
-    }
-
-    public List<ProjectAccess> readProjectAccessesByCoordinator(final Integer coordinatorCode, final BackendInstance instance) {
-        final List<ProjectAccess> result = new ArrayList<ProjectAccess>();
-
-        for (final ProjectAccess projectAccess : getProjectAccessesSet()) {
-            if (projectAccess.getKeyProjectCoordinator().equals(coordinatorCode) && projectAccess.getInstance() == instance) {
-                if (!projectAccess.getProjectAccessInterval().containsNow()) {
-                    continue;
-                }
-                result.add(projectAccess);
-            }
-        }
-        return result;
     }
 
     public Set<Attends> getCurrentAttends() {

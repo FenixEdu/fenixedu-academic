@@ -3,25 +3,6 @@
       <data-sources></data-sources>
       <!-- ========== Form Bean Definitions =================================== -->
       <form-beans type="org.apache.struts.action.ActionFormBean">
-            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="rubricForm">
-                  <form-property type="java.lang.String" name="rubric"></form-property>
-                  <form-property type="java.lang.String" name="reportType"></form-property>
-                  <form-property type="java.lang.String" name="projectCode"></form-property>
-            </form-bean>
-            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="accessForm">
-                  <form-property type="java.lang.String" name="username"></form-property>
-                  <form-property type="java.lang.String" name="personCode"></form-property>
-                  <form-property type="java.lang.String" name="projectCode"></form-property>
-                  <form-property type="java.lang.String" name="projectCodes"></form-property>
-                  <form-property type="java.lang.String" name="beginDay"></form-property>
-                  <form-property type="java.lang.String" name="beginMonth"></form-property>
-                  <form-property type="java.lang.String" name="beginYear"></form-property>
-                  <form-property type="java.lang.String" name="endDay"></form-property>
-                  <form-property type="java.lang.String" name="endMonth"></form-property>
-                  <form-property type="java.lang.String" name="endYear"></form-property>
-                  <form-property type="java.lang.String" name="method"></form-property>
-                  <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
-            </form-bean>
       </form-beans>
       <!-- ========== Global Exception Definitions ============================== -->
       <global-exceptions>
@@ -46,14 +27,6 @@
             <action type="net.sourceforge.fenixedu.presentationTier.Action.projectsManagement.IndexAction" path="/index">
                   <forward path="df.page.projectManager" name="success"></forward>
             </action>
-<!-- 
-            <action type="net.sourceforge.fenixedu.presentationTier.Action.projectsManagement.IndexAction" path="/itProjectIndex">
-                  <forward path="df.page.projectManager" name="success"></forward>
-            </action>
-            <action type="net.sourceforge.fenixedu.presentationTier.Action.projectsManagement.IndexAction" path="/istidProjectIndex">
-                  <forward path="df.page.projectManager" name="success"></forward>
-            </action>
- -->
             <action type="org.apache.struts.actions.SwitchAction" path="/switchAction"></action>
             <action validate="true" type="net.sourceforge.fenixedu.presentationTier.Action.projectsManagement.ProjectAccessDelegationDispatchAction" parameter="method" scope="request" input="/projectAccess.do?method=showPersonAccesses&amp;page=0" name="accessForm" path="/projectAccess">
                   <forward path="choose-Person" name="choosePerson"></forward>

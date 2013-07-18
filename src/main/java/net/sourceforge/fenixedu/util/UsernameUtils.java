@@ -207,13 +207,6 @@ public class UsernameUtils extends FenixUtil {
 //                return "B" + person.getEmployee().getEmployeeNumber();
 //            }
 
-        } else if (roleType.equals(RoleType.PROJECTS_MANAGER) || roleType.equals(RoleType.INSTITUCIONAL_PROJECTS_MANAGER)
-                || roleType.equals(RoleType.IT_PROJECTS_MANAGER) || roleType.equals(RoleType.ISTID_PROJECTS_MANAGER)
-                || roleType.equals(RoleType.ADIST_PROJECTS_MANAGER)
-                || roleType.equals(RoleType.ISTID_INSTITUCIONAL_PROJECTS_MANAGER)
-                || roleType.equals(RoleType.ADIST_INSTITUCIONAL_PROJECTS_MANAGER)) {
-            return "G" + person.getIdInternal();
-
         } else if (roleType.equals(RoleType.ALUMNI)) {
             Registration registration = person.getStudentByType(DegreeType.DEGREE);
             if (registration != null) {

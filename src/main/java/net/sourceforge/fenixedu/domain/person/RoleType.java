@@ -79,10 +79,19 @@ public enum RoleType implements IPresentableEnum {
 
     DELEGATE("Delegate"),
 
+    /**
+     * @deprecated This is discontinued, don't use it!
+     */
     PROJECTS_MANAGER("Projects Management"),
 
+    /**
+     * @deprecated This is discontinued, don't use it!
+     */
     IT_PROJECTS_MANAGER("IT Projects Management"),
 
+    /**
+     * @deprecated This is discontinued, don't use it!
+     */
     INSTITUCIONAL_PROJECTS_MANAGER("Institutional Projects Management"),
 
     BOLONHA_MANAGER("Bolonha Process Management"),
@@ -123,12 +132,24 @@ public enum RoleType implements IPresentableEnum {
 
     RECTORATE("Rectorate"),
 
+    /**
+     * @deprecated This is discontinued, don't use it!
+     */
     ISTID_PROJECTS_MANAGER("IST-ID Projects Management"),
 
+    /**
+     * @deprecated This is discontinued, don't use it!
+     */
     ISTID_INSTITUCIONAL_PROJECTS_MANAGER("IST-ID Institutional Projects Management"),
 
+    /**
+     * @deprecated This is discontinued, don't use it!
+     */
     ADIST_PROJECTS_MANAGER("ADIST Projects Management"),
 
+    /**
+     * @deprecated This is discontinued, don't use it!
+     */
     ADIST_INSTITUCIONAL_PROJECTS_MANAGER("ADIST Institutional Projects Management"),
 
     HTML_CAPABLE_SENDER("Html capable sender"),
@@ -147,13 +168,6 @@ public enum RoleType implements IPresentableEnum {
         rolesImportance.add(RoleType.EMPLOYEE);
         rolesImportance.add(RoleType.STUDENT);
         rolesImportance.add(RoleType.GRANT_OWNER);
-        rolesImportance.add(RoleType.ADIST_INSTITUCIONAL_PROJECTS_MANAGER);
-        rolesImportance.add(RoleType.ISTID_INSTITUCIONAL_PROJECTS_MANAGER);
-        rolesImportance.add(RoleType.INSTITUCIONAL_PROJECTS_MANAGER);
-        rolesImportance.add(RoleType.ADIST_PROJECTS_MANAGER);
-        rolesImportance.add(RoleType.ISTID_PROJECTS_MANAGER);
-        rolesImportance.add(RoleType.IT_PROJECTS_MANAGER);
-        rolesImportance.add(RoleType.PROJECTS_MANAGER);
         rolesImportance.add(RoleType.ALUMNI);
         rolesImportance.add(RoleType.CANDIDATE);
         rolesImportance.add(RoleType.MASTER_DEGREE_CANDIDATE);

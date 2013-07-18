@@ -7,7 +7,7 @@
 	  <put name="title" value="Gestão de Projectos" />
 	  <put name="serviceName" value="Portal Gestor de Projectos" />
 	  <put name="navGeral" value="/teacher/commonNavGeralTeacher.jsp" />
-	  <put name="navLocal" value="/projectsManagement/navBar.jsp" />
+	  <put name="navLocal" value="/commons/blank.jsp" />
 	  <put name="body-context" value="/commons/blank.jsp"/>
 	  <put name="body" value="/commons/blank.jsp" />
 	  <put name="footer" value="/copyright.jsp" />

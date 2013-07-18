@@ -4470,16 +4470,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
             PeriodToApplyRestriction periodToApplyRestriction;
         }
 
-    class projectsManagement.ProjectAccess  {
-        DateTime beginDateTime;
-        Boolean costCenter;
-        DateTime endDateTime;
-        String keyProject;
-        Integer keyProjectCoordinator;
-        Boolean itProject;
-        BackendInstance instance;
-    }
-
     class reimbursementGuide.ReimbursementGuide  {
         YearMonthDay creationYearMonthDay;
         Integer number;
@@ -13072,13 +13062,6 @@ relation PersonPersonSpaceOccupation {
     Person playsRole person;
 }
 
-relation PersonProjectAccess {
-    projectsManagement.ProjectAccess playsRole projectAccesses {
-        multiplicity *;
-    }
-    Person playsRole person;
-}
-
 relation PersonRole {
     Person playsRole associatedPersons {
         multiplicity *;
@@ -15199,13 +15182,6 @@ relation RootDomainObjectProfessorship {
 relation RootDomainObjectProject {
     RootDomainObject playsRole rootDomainObject;
     research.project.Project playsRole projects {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectProjectAccess {
-    RootDomainObject playsRole rootDomainObject;
-    projectsManagement.ProjectAccess playsRole projectAccesss {
         multiplicity *;
     }
 }

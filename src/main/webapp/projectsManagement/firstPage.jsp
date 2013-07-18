@@ -37,7 +37,7 @@
 <br />
 
 <p>
-	<span class="error">Esta interface vai ser descontinuada brevemente.</span>
+	<span class="error">Esta interface foi descontinuada.</span>
 </p>
 <p>
 	Todas as informa&#231;&#245;es relativas aos projetos podem ser consultados na p&#225;gina da respetiva unidade nos seguintes endere&#231;os, conforme a institui&#231;&#227;o em que o projeto decorre:

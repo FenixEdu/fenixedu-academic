@@ -193,12 +193,7 @@ public class Login extends Login_Base {
 
         if (!person.hasRole(RoleType.TEACHER) && !person.hasRole(RoleType.RESEARCHER) && !person.hasRole(RoleType.EMPLOYEE)
                 && !person.hasRole(RoleType.STUDENT) && !person.hasRole(RoleType.ALUMNI) && !person.hasRole(RoleType.CANDIDATE)
-                && !person.hasRole(RoleType.ADIST_INSTITUCIONAL_PROJECTS_MANAGER)
-                && !person.hasRole(RoleType.ISTID_INSTITUCIONAL_PROJECTS_MANAGER)
-                && !person.hasRole(RoleType.INSTITUCIONAL_PROJECTS_MANAGER) && !person.hasRole(RoleType.PROJECTS_MANAGER)
-                && !person.hasRole(RoleType.IT_PROJECTS_MANAGER) && !person.hasRole(RoleType.ISTID_PROJECTS_MANAGER)
-                && !person.hasRole(RoleType.ADIST_PROJECTS_MANAGER) && !person.hasRole(RoleType.MANAGER)
-                && !person.hasRole(RoleType.GRANT_OWNER)) {
+                && !person.hasRole(RoleType.MANAGER) && !person.hasRole(RoleType.GRANT_OWNER)) {
 
             // minusDays(1) -> This is for person dont make login today
             YearMonthDay currentDate = new YearMonthDay().minusDays(1);
@@ -219,12 +214,6 @@ public class Login extends Login_Base {
         case STUDENT:
         case ALUMNI:
         case CANDIDATE:
-        case INSTITUCIONAL_PROJECTS_MANAGER:
-        case ISTID_INSTITUCIONAL_PROJECTS_MANAGER:
-        case ADIST_INSTITUCIONAL_PROJECTS_MANAGER:
-        case ISTID_PROJECTS_MANAGER:
-        case ADIST_PROJECTS_MANAGER:
-        case PROJECTS_MANAGER:
         case GRANT_OWNER:
             for (LoginPeriod loginPeriod : getLoginPeriodsSet()) {
                 if (loginPeriod.getEndDate() == null) {

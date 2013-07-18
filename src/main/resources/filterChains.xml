@@ -506,13 +506,6 @@
     </filterChain>
 
     <filterChain>
-        <name>ProjectsManagerAuthorization</name>
-        <expression>ProjectsManagerAuthorization</expression>
-        <invocationTiming>1</invocationTiming>
-        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
-    </filterChain>
-
-    <filterChain>
         <name>QualificationManagerAuthorization</name>
         <expression>QualificationManagerAuthorization</expression>
         <invocationTiming>1</invocationTiming>

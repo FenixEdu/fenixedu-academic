@@ -82,8 +82,6 @@ public class DataInitializer {
 
     private static void createRoles() {
         new Role(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE, "/academicAdminOffice", "/index.do", "portal.academicAdminOffice");
-        new Role(RoleType.ADIST_INSTITUCIONAL_PROJECTS_MANAGER, "/", "/.do", "portal.");
-        new Role(RoleType.ADIST_PROJECTS_MANAGER, "/", "/.do", "portal.");
         new Role(RoleType.ALUMNI, "/alumin", "/index.do", "portal.alumni");
         new Role(RoleType.BOLONHA_MANAGER, "/bolonhaManager", "/index.do", "portal.bolonhaManager");
         new Role(RoleType.CANDIDATE, "/candidate", "/index.do", "portal.candidate");
@@ -107,14 +105,7 @@ public class DataInitializer {
         new Role(RoleType.HTML_CAPABLE_SENDER, "/messaging", "/index.do", "portal.messaging");
         new Role(RoleType.IDENTIFICATION_CARD_MANAGER, "/identificationCardManager", "/index.do",
                 "portal.identificationCardManager");
-        new Role(RoleType.INSTITUCIONAL_PROJECTS_MANAGER, "/institucionalProjectsManagement", "/institucionalProjectIndex.do",
-                "portal.institucionalProjectsManager");
         new Role(RoleType.INTERNATIONAL_RELATION_OFFICE, "/internationalRelatOffice", "/index.do", "portal.internRelationOffice");
-        new Role(RoleType.ISTID_INSTITUCIONAL_PROJECTS_MANAGER, "/istidInstitutionalProjectsManagement",
-                "/istidInstitutionalProjectIndex.do", "portal.istidInstitutionalProjectsManager");
-        new Role(RoleType.ISTID_PROJECTS_MANAGER, "/istidProjectsManagement", "/istidProjectIndex.do",
-                "portal.istidProjectsManager");
-        new Role(RoleType.IT_PROJECTS_MANAGER, "/itProjectsManagement", "/itProjectIndex.do", "portal.itProjectsManager");
         new Role(RoleType.LIBRARY, "/library", "/index.do", "portal.library");
         new Role(RoleType.MANAGER, "/manager", "/index.do", "portal.manager");
         new Role(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE, "/masterDegreeAdministrativeOffice", "/index.do",
@@ -127,7 +118,6 @@ public class DataInitializer {
         new Role(RoleType.PEDAGOGICAL_COUNCIL, "/pedagogicalCouncil", "/index.do", "portal.PedagogicalCouncil");
         new Role(RoleType.PERSON, "/person", "/index.do", "portal.person");
         new Role(RoleType.PERSONNEL_SECTION, "/personnelSection", "/index.do", "portal.personnelSection");
-        new Role(RoleType.PROJECTS_MANAGER, "/projectsManagement", "/index.do", "portal.projectsManager");
         new Role(RoleType.PUBLIC_RELATIONS_OFFICE, "/publicRelations", "/index.do", "portal.publicRelations");
         new Role(RoleType.RECTORATE, "/rectorate", "/index.do", "portal.rectorate");
         new Role(RoleType.RESEARCHER, "/researcher", "/index.do", "portal.researcher");

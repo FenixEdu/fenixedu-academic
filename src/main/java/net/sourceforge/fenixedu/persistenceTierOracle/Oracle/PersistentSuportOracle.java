@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTierOracle.BackendInstance;
 import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentSuportOracle;
 
 public class PersistentSuportOracle implements IPersistentSuportOracle {
@@ -35,22 +34,6 @@ public class PersistentSuportOracle implements IPersistentSuportOracle {
 
     public PersistentSuportOracle(String userNamePropertyName, String userPassPropertyName, String urlPropertyName) {
         connectionProperties = new ConnectionProperties(userNamePropertyName, userPassPropertyName, urlPropertyName);
-    }
-
-    public static synchronized PersistentSuportOracle getProjectDBInstance(final BackendInstance instance) {
-        if (instance == BackendInstance.IST) {
-            return PersistentSuportMGP.getProjectDBInstance();
-        }
-        if (instance == BackendInstance.IT) {
-            return PersistentSuportMGPIT.getProjectDBInstance();
-        }
-        if (instance == BackendInstance.IST_ID) {
-            return PersistentSuportMGPISTID.getProjectDBInstance();
-        }
-        if (instance == BackendInstance.ADIST) {
-            return PersistentSuportMGPADIST.getProjectDBInstance();
-        }
-        throw new Error("no valid backend was specified.");
     }
 
     private void openConnection() throws ExcepcaoPersistencia {
