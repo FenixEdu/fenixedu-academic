@@ -39,24 +39,11 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.validator.DynaValidatorForm;
 
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-
 /*
  * 
  * @author Fernanda Quitério 23/Dez/2003
  *  
  */
-@Mapping(module = "manager", path = "/editExecutionCourseManageCurricularCourses",
-        input = "/editExecutionCourse.do?method=prepareEditExecutionCourse&page=0", attribute = "executionCourseForm",
-        formBean = "executionCourseForm", scope = "request", parameter = "method")
-@Forwards(value = {
-        @Forward(name = "editExecutionCourse", path = "/editExecutionCourse.do?method=editExecutionCourse&page=0"),
-        @Forward(name = "manageCurricularSeparation", path = "/seperateExecutionCourse.do?method=manageCurricularSeparation"),
-        @Forward(name = "associateCurricularCourse", path = "/manager/executionCourseManagement/associateCurricularCourse.jsp"),
-        @Forward(name = "prepareAssociateCurricularCourseChooseDegreeCurricularPlan",
-                path = "/manager/executionCourseManagement/prepareAssociateCurricularCourseChooseDegreeCurricularPlan.jsp") })
 public class EditExecutionCourseManageCurricularCoursesDispatchAction extends FenixDispatchAction {
 
     public ActionForward dissociateCurricularCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -122,39 +109,6 @@ public class EditExecutionCourseManageCurricularCoursesDispatchAction extends Fe
         ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(Integer.valueOf(executionPeriodId));
         request.setAttribute("executionPeriodName", executionSemester.getQualifiedName());
         return mapping.findForward("prepareAssociateCurricularCourseChooseDegreeCurricularPlan");
-    }
-
-    private void buildExecutionDegreeLabelValueBean(List<InfoExecutionDegree> executionDegreeList, List<LabelValueBean> courses) {
-
-        for (InfoExecutionDegree infoExecutionDegree : executionDegreeList) {
-            String name =
-                    infoExecutionDegree.getInfoDegreeCurricularPlan().getDegreeCurricularPlan()
-                            .getPresentationName(infoExecutionDegree.getInfoExecutionYear().getExecutionYear());
-            /*
-            TODO: DUPLICATE check really needed?
-            name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getDegreeType().getLocalizedName() + " em " + name;
-
-            name += duplicateInfoDegree(executionDegreeList, infoExecutionDegree) ? "-" + infoExecutionDegree.getInfoDegreeCurricularPlan().getName() : "";
-            */
-            // courses.add(new LabelValueBean(name, name + "~" + infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal().toString()));
-            courses.add(new LabelValueBean(name, infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal().toString()));
-        }
-    }
-
-    private boolean duplicateInfoDegree(List executionDegreeList, InfoExecutionDegree infoExecutionDegree) {
-
-        InfoDegree infoDegree = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree();
-        Iterator iterator = executionDegreeList.iterator();
-
-        while (iterator.hasNext()) {
-            InfoExecutionDegree infoExecutionDegree2 = (InfoExecutionDegree) iterator.next();
-            if (infoDegree.equals(infoExecutionDegree2.getInfoDegreeCurricularPlan().getInfoDegree())
-                    && !(infoExecutionDegree.equals(infoExecutionDegree2))) {
-                return true;
-            }
-
-        }
-        return false;
     }
 
     public ActionForward prepareAssociateCurricularCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -256,6 +210,23 @@ public class EditExecutionCourseManageCurricularCoursesDispatchAction extends Fe
         return mapping.findForward("manageCurricularSeparation");
     }
 
+    protected void buildExecutionDegreeLabelValueBean(List<InfoExecutionDegree> executionDegreeList, List<LabelValueBean> courses) {
+
+        for (InfoExecutionDegree infoExecutionDegree : executionDegreeList) {
+            String name =
+                    infoExecutionDegree.getInfoDegreeCurricularPlan().getDegreeCurricularPlan()
+                            .getPresentationName(infoExecutionDegree.getInfoExecutionYear().getExecutionYear());
+            /*
+            TODO: DUPLICATE check really needed?
+            name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getDegreeType().getLocalizedName() + " em " + name;
+
+            name += duplicateInfoDegree(executionDegreeList, infoExecutionDegree) ? "-" + infoExecutionDegree.getInfoDegreeCurricularPlan().getName() : "";
+            */
+            // courses.add(new LabelValueBean(name, name + "~" + infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal().toString()));
+            courses.add(new LabelValueBean(name, infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal().toString()));
+        }
+    }
+
     private List<Integer> getInformationToDissociate(HttpServletRequest request, Integer curricularCoursesListSize, String what,
             String property, String formProperty) {
 
@@ -283,32 +254,20 @@ public class EditExecutionCourseManageCurricularCoursesDispatchAction extends Fe
         return itemToDelete;
     }
 
-    private Integer separateLabel(ActionForm form, HttpServletRequest request, String property, String id, String name) {
+    //not used
+    private boolean duplicateInfoDegree(List executionDegreeList, InfoExecutionDegree infoExecutionDegree) {
 
-        DynaActionForm executionCourseForm = (DynaActionForm) form;
+        InfoDegree infoDegree = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree();
+        Iterator iterator = executionDegreeList.iterator();
 
-        // the value returned to action is a string name~idInternal
-        String object = (String) executionCourseForm.get(property);
-        if (object == null || object.length() <= 0) {
-            object = (String) request.getAttribute(property);
-            if (object == null) {
-                object = request.getParameter(property);
+        while (iterator.hasNext()) {
+            InfoExecutionDegree infoExecutionDegree2 = (InfoExecutionDegree) iterator.next();
+            if (infoDegree.equals(infoExecutionDegree2.getInfoDegreeCurricularPlan().getInfoDegree())
+                    && !(infoExecutionDegree.equals(infoExecutionDegree2))) {
+                return true;
             }
+
         }
-
-        Integer objectId = null;
-        String objectName = null;
-        if (object != null && object.length() > 0 && object.indexOf("~") > 0) {
-            executionCourseForm.set(property, object);
-            request.setAttribute(property, object);
-
-            objectId = Integer.valueOf(StringUtils.substringAfter(object, "~"));
-            request.setAttribute(id, objectId);
-
-            objectName = object.substring(0, object.indexOf("~"));
-            request.setAttribute(name, objectName);
-        }
-
-        return objectId;
+        return false;
     }
 }

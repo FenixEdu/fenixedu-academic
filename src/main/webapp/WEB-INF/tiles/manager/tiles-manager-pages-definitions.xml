@@ -243,10 +243,12 @@
 		<put name="body" value="/manager/executionCourseManagement/insertExecutionCourse.jsp" />
 	</definition>	
 	
+	<!-- ist150958: obsolete -->
 	<definition name="df.executionCourseManagement.prepareEditECChooseExecutionPeriod" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/executionCourseManagement/prepareEditECChooseExecutionPeriod.jsp" />
 	</definition>	
 	
+	<!-- ist150958: obsolete -->
 	<definition name="df.executionCourseManagement.prepareEditECChooseExecDegreeAndCurYear" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/executionCourseManagement/prepareEditECChooseExecDegreeAndCurYear.jsp" />
 	</definition>	
@@ -255,12 +257,15 @@
 		<put name="body" value="/manager/executionCourseManagement/showCreatedSites.jsp" />
 	</definition>	
 	
+	<!-- ist150958: obsolete -->
 	<definition name="df.executionCourseManagement.prepareEditExecutionCourse" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/executionCourseManagement/prepareEditExecutionCourse.jsp" />
-	</definition>	
+	</definition>
+	<!-- ist150958: obsolete -->
 	<definition name="df.executionCourseManagement.editExecutionCourse" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/executionCourseManagement/editExecutionCourse.jsp" />
-	</definition>	
+	</definition>
+	<!-- ist150958: obsolete -->
 	<definition name="df.executionCourseManagement.viewExecutionCourse" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/executionCourseManagement/viewExecutionCourse.jsp" />
 	</definition>
@@ -284,7 +289,8 @@
 	</definition>
 	<definition name="df.executionCourseManagement.createExecutionCoursesSuccess" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/executionCourseManagement/createExecutionCoursesSuccess.jsp" />
-	</definition>			
+	</definition>
+	<!-- ist150958: obsolete -->
 	<definition name="df.executionCourseManagement.listExecutionCourseActions" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/executionCourseManagement/listExecutionCourseActions.jsp" />
 	</definition>
