@@ -31,6 +31,15 @@
 		</span>
 	</p>
 </logic:messagesPresent>
+<logic:messagesPresent message="true" property="info">
+	<p>
+		<span class="infoop4">
+			<html:messages id="messages" message="true" bundle="MANAGER_RESOURCES" property="info">
+				<bean:write name="messages" />
+			</html:messages>
+		</span>
+	</p>
+</logic:messagesPresent>
 
 <bean:define id="linkGetRequestBigMessage" value="" /> <%-- bean redefined ahead --%>
 <bean:define id="linkGetRequestLilMessage" value="" /> <%-- bean redefined ahead --%>
@@ -38,8 +47,6 @@
 <bean:define id="executionDegreeId" name="sessionBean" /> <%-- bean redefined ahead --%>
 <bean:define id="curricularYearId" name="sessionBean" /> <%-- bean redefined ahead --%>
 <bean:define id="notLinked" name="sessionBean" property="chooseNotLinked"/>
-<bean:define id="executionDegree" name="sessionBean" property="executionDegree"/>
-
 <logic:equal name="sessionBean" property="chooseNotLinked" value="false">
 	<bean:define id="executionDegreeId" name="sessionBean" property="executionDegree.idInternal" />
 	<bean:define id="executionDegreePName" name="sessionBean" property="executionDegree.presentationName" />
@@ -88,6 +95,8 @@
 	<bean:define id="parametersForManageSeparation"
 		value="<%="&amp;executionPeriodId=" + executionPeriodId.toString()
 				+ "&amp;executionCoursesNotLinked=" + notLinked	%>"/>
+	
+	<bean:define id="executionDegree" name="sessionBean" />
 </logic:equal>
 
 
@@ -113,9 +122,10 @@
 		<fr:property name="order(manageCurricularSeparation)" value="3" />
 		<fr:property name="key(manageCurricularSeparation)" value="link.executionCourseManagement.curricular.manageCurricularSeparation" />
 		<fr:property name="bundle(manageCurricularSeparation)" value="MANAGER_RESOURCES" />
-		
-		<academic:allowed operation="MANAGE_EXECUTION_COURSES_ADV"
-				program="<%=executionDegree == null ? null : (AcademicProgram)((ExecutionDegree)executionDegree).getDegree()%>">
+
+		<logic:present name="sessionBean" property="executionDegree">
+			<bean:define id="degree" name="sessionBean" property="executionDegree.degree"/>
+			<academic:allowed operation="MANAGE_EXECUTION_COURSES_ADV" program="<%= (AcademicProgram) degree %>">
 		<fr:property name="linkFormat(delete)"
 					 value="<%="/editExecutionCourse.do?method=deleteExecutionCourse"
 					 		+ "&amp;executionCourseId=${idInternal}"
@@ -127,7 +137,23 @@
 		<fr:property name="confirmationKey(delete)" value="label.manager.delete.selected.executionCourses.certainty"/>
 		<fr:property name="confirmationBundle(delete)" value="MANAGER_RESOURCES"/>
 		<fr:property name="confirmationArgs(delete)" value="${nome},${sigla}"/>
-		</academic:allowed>
+			</academic:allowed>
+		</logic:present>
+		<logic:notPresent name="sessionBean" property="executionDegree">
+			<academic:allowed operation="MANAGE_EXECUTION_COURSES_ADV" program="<%= null %>">
+		<fr:property name="linkFormat(delete)"
+					 value="<%="/editExecutionCourse.do?method=deleteExecutionCourse"
+					 		+ "&amp;executionCourseId=${idInternal}"
+					 		+ linkGetRequestBigMessage.toString() %>" />
+		<fr:property name="order(delete)" value="4" />
+		<fr:property name="key(delete)" value="label.manager.executionCourseManagement.delete" />
+		<fr:property name="visibleIf(delete)" value="deletable" />
+		<fr:property name="bundle(delete)" value="MANAGER_RESOURCES" />
+		<fr:property name="confirmationKey(delete)" value="label.manager.delete.selected.executionCourses.certainty"/>
+		<fr:property name="confirmationBundle(delete)" value="MANAGER_RESOURCES"/>
+		<fr:property name="confirmationArgs(delete)" value="${nome},${sigla}"/>
+			</academic:allowed>
+		</logic:notPresent>
 
 		<fr:property name="linkFormat(sentEmails)" value="/emails.do?method=viewSentEmails&senderId=${sender.idInternal}" />
 		<fr:property name="order(sentEmails)" value="5" />

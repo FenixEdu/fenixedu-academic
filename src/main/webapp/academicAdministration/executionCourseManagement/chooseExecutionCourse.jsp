@@ -61,7 +61,7 @@
 				<fr:slot name="destinationExecutionCourse" layout="menu-select" key="executionCourse.destination">
 					<fr:property name="format" value="${nome} - ${sigla} - (${degreePresentationString})"/>
 					<fr:property name="sortBy" value="nome"/>
-					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.academicAdministration.ExecutionCoursesProvider"/>
+					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.academicAdminOffice.ExecutionCoursesProvider"/>
 					<fr:property name="saveOptions" value="true"/>
 					<fr:property name="classes" value="selectWidth600px"/>
 				</fr:slot>

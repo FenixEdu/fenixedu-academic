@@ -68,7 +68,7 @@
 		requestConfirmation('submitForm','<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="message.mergedegrees.mergecourses.confirmation"/>','<bean:message bundle="HTMLALT_RESOURCES" key="submit.confirm"/>');return false;
 	</bean:define>	
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick="<%= deleteConfirm %>">
-		<bean:message bundle="MANAGER_RESOURCES" key="button.save"/>
+		<bean:message bundle="MANAGER_RESOURCES" key="button.continue"/>
 	</html:submit>
 </html:form>
 

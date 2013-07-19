@@ -62,7 +62,7 @@
 	<br/>
 	<br/>
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
-		<bean:message bundle="MANAGER_RESOURCES" key="button.save" />
+		<bean:message bundle="MANAGER_RESOURCES" key="button.continue" />
 	</html:submit>
 </html:form>
 

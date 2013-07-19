@@ -195,6 +195,7 @@
 			(<bean:message key="message.manager.executionCourseManagement.noShifts.this" bundle="MANAGER_RESOURCES"/>)
 		</logic:empty>
 		<br/>
+		<br/>
 		<bean:define id="transferConfirm">
 			return confirm('<bean:message bundle="MANAGER_RESOURCES" key="message.manager.executionCourseManagement.transferCourse.confirm"/>')
 		</bean:define>

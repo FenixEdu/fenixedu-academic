@@ -49,7 +49,6 @@
 
 <bean:define id="degreeAndYearParameter" value="" /> <%-- bean redefined ahead --%>
 <bean:define id="notLinkedCoursesParameter" value="" /> <%-- bean redefined ahead --%>
-<bean:define id="originExecutionDegree" name="sessionBean" property="executionDegree" />
 <logic:notEqual name="sessionBean" property="chooseNotLinked" value="true">
 	<bean:define id="curricularYearName">
 		<bean:message bundle="ENUMERATION_RESOURCES" key="<%= pageContext.findAttribute("curricularYearId") + ".ordinal.short" %>"/>
@@ -94,8 +93,9 @@
 				<bean:message bundle="MANAGER_RESOURCES" key="link.executionCourseManagement.curricular.associate"/>
 			</html:link>
 			<logic:equal name="<%=PresentationConstants.EXECUTION_COURSE%>" property="executionCourse.splittable" value="true" >
-			<academic:allowed operation="MANAGE_EXECUTION_COURSES_ADV"
-					program="<%=originExecutionDegree == null ? null : (AcademicProgram)((ExecutionDegree)originExecutionDegree).getDegree()%>">
+			<logic:present name="sessionBean" property="executionDegree">
+			<bean:define id="degree" name="sessionBean" property="executionDegree.degree"/>
+			<academic:allowed operation="MANAGE_EXECUTION_COURSES_ADV" program="<%= (AcademicProgram) degree %>">
 			|
 			<html:link module="/academicAdministration"
 					   page="<%="/seperateExecutionCourse.do?method=prepareTransfer" 
@@ -109,6 +109,7 @@
 				<bean:message bundle="MANAGER_RESOURCES" key="link.executionCourseManagement.curricular.split"/>
 			</html:link>
 			</academic:allowed>
+			</logic:present>
 			</logic:equal>
 		</li>
 	</ul>
@@ -131,12 +132,14 @@
 									<bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.degreeCurricularPlan" />
 								</th>
 								<logic:equal name="<%=PresentationConstants.EXECUTION_COURSE%>" property="canRemoveCurricularCourses" value="true">
-								<academic:allowed operation="MANAGE_EXECUTION_COURSES_ADV"
-											program="<%=originExecutionDegree == null ? null : (AcademicProgram)((ExecutionDegree)originExecutionDegree).getDegree()%>">
+								<logic:present name="sessionBean" property="executionDegree">
+								<bean:define id="degree" name="sessionBean" property="executionDegree.degree"/>
+								<academic:allowed operation="MANAGE_EXECUTION_COURSES_ADV" program="<%= (AcademicProgram) degree %>">
 								<th class="listClasses-header">
 									&nbsp;
 								</th>
 								</academic:allowed>
+								</logic:present>
 								</logic:equal>
 							</tr>
 
@@ -153,8 +156,9 @@
 										<bean:write name="curricularCourse" property="infoDegreeCurricularPlan.name"/>
 									</td>
 									<logic:equal name="<%=PresentationConstants.EXECUTION_COURSE%>" property="canRemoveCurricularCourses" value="true">
-									<academic:allowed operation="MANAGE_EXECUTION_COURSES_ADV"
-											program="<%=originExecutionDegree == null ? null : (AcademicProgram)((ExecutionDegree)originExecutionDegree).getDegree()%>">
+									<logic:present name="sessionBean" property="executionDegree">
+									<bean:define id="degree" name="sessionBean" property="executionDegree.degree"/>
+									<academic:allowed operation="MANAGE_EXECUTION_COURSES_ADV" program="<%= (AcademicProgram) degree %>">
 									<td class="listClasses">
 										&nbsp;
 										<bean:define id="dissociateConfirm">
@@ -170,6 +174,7 @@
 										&nbsp;
 									</td>
 									</academic:allowed>
+									</logic:present>
 									</logic:equal>
 				 				</tr>
 				 			</logic:iterate>

@@ -87,18 +87,23 @@ public class MergeExecutionCourseDispatchionAction extends FenixDispatchAction {
 
         Boolean error = false;
 
+        String sourceName = sourceExecutionCourse.getName() + " [" + sourceExecutionCourse.getDegreePresentationString() + "]";
+        String destinationName =
+                destinationExecutionCourse.getName() + " [" + destinationExecutionCourse.getDegreePresentationString() + "]";
+        String periodName =
+                destinationExecutionCourse.getExecutionPeriod().getName() + " "
+                        + destinationExecutionCourse.getExecutionPeriod().getYear();
+
         try {
             MergeExecutionCourses.runMergeExecutionCourses(destinationExecutionCourseId, sourceExecutionCourseId);
-        } catch (FenixServiceException fse) {
-            error = true;
-            addActionMessageLiteral("errorFenixException", request, fse.getMessage());
         } catch (DomainException ex) {
             error = true;
             addActionMessage("error", request, ex.getMessage());
         }
 
         if (!error) {
-            addActionMessage("success", request, "message.merge.execution.courses.success");
+            addActionMessage("success", request, "message.merge.execution.courses.success", sourceName, destinationName,
+                    periodName);
         }
         return mapping.findForward("sucess");
     }

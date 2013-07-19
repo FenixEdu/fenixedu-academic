@@ -45,7 +45,7 @@ public class CreateExecutionCoursesDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward chooseDegreeCurricularPlans(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         try {
 
@@ -61,8 +61,7 @@ public class CreateExecutionCoursesDispatchAction extends FenixDispatchAction {
             }
 
             Collection<InfoDegreeCurricularPlan> degreeCurricularPlans =
-                    ReadActiveDegreeCurricularPlansByDegreeType.run(DegreeType.valueOf(degreeType));
-
+                    ReadActiveDegreeCurricularPlansByDegreeType.runForAcademicAdmin(DegreeType.valueOf(degreeType));
             List<InfoExecutionPeriod> executionPeriods = ReadNotClosedExecutionPeriods.run();
 
             request.setAttribute("degreeCurricularPlans", degreeCurricularPlans);
@@ -78,7 +77,7 @@ public class CreateExecutionCoursesDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward createExecutionCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         DynaActionForm actionForm = (DynaActionForm) form;
         Integer[] degreeCurricularPlansIDs = (Integer[]) actionForm.get("degreeCurricularPlansIDs");
@@ -111,5 +110,4 @@ public class CreateExecutionCoursesDispatchAction extends FenixDispatchAction {
         return mapping.findForward("createExecutionCoursesSuccess");
 
     }
-
 }

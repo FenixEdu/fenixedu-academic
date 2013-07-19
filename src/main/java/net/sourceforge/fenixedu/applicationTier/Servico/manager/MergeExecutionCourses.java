@@ -15,12 +15,8 @@ import java.util.Map;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.ServiceMonitoring;
-import net.sourceforge.fenixedu.applicationTier.Filtro.ManagerAuthorizationFilter;
-import net.sourceforge.fenixedu.applicationTier.Filtro.OperatorAuthorizationFilter;
-import net.sourceforge.fenixedu.applicationTier.Filtro.ResourceAllocationManagerAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.CourseLoad;
 import net.sourceforge.fenixedu.domain.Evaluation;
@@ -73,11 +69,11 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
  */
 public class MergeExecutionCourses {
 
-    public static class SourceAndDestinationAreTheSameException extends FenixServiceException {
+    public class SourceAndDestinationAreTheSameException extends FenixServiceException {
         private static final long serialVersionUID = 3761968254943244338L;
     }
 
-    public static class DuplicateShiftNameException extends FenixServiceException {
+    public class DuplicateShiftNameException extends FenixServiceException {
         private static final long serialVersionUID = 3761968254943244338L;
     }
 
@@ -142,13 +138,13 @@ public class MergeExecutionCourses {
         executionCourseFrom.delete();
     }
 
-    private static void copyVigilantGroups(ExecutionCourse executionCourseFrom, ExecutionCourse executionCourseTo) {
+    private void copyVigilantGroups(ExecutionCourse executionCourseFrom, ExecutionCourse executionCourseTo) {
         if (!executionCourseTo.hasVigilantGroup()) {
             executionCourseTo.setVigilantGroup(executionCourseFrom.getVigilantGroup());
         }
     }
 
-    private static void copyDistributedTestStuff(final ExecutionCourse executionCourseFrom,
+    private void copyDistributedTestStuff(final ExecutionCourse executionCourseFrom,
             final ExecutionCourse executionCourseTo) {
         for (final Metadata metadata : executionCourseFrom.getMetadatasSet()) {
             metadata.setExecutionCourse(executionCourseTo);
@@ -162,7 +158,7 @@ public class MergeExecutionCourses {
         }
     }
 
-    private static void copyInquiries(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo) {
+    private void copyInquiries(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo) {
         for (final InquiriesCourse inquiriesCourse : executionCourseFrom.getAssociatedInquiriesCoursesSet()) {
             inquiriesCourse.setExecutionCourse(executionCourseTo);
         }
@@ -181,7 +177,7 @@ public class MergeExecutionCourses {
         }
     }
 
-    private static void copyBoard(ExecutionCourse executionCourseFrom, ExecutionCourse executionCourseTo) {
+    private void copyBoard(ExecutionCourse executionCourseFrom, ExecutionCourse executionCourseTo) {
         final ExecutionCourseAnnouncementBoard executionCourseAnnouncementBoardFrom = executionCourseFrom.getBoard();
         final ExecutionCourseAnnouncementBoard executionCourseAnnouncementBoardTo = executionCourseTo.getBoard();
 
@@ -199,7 +195,7 @@ public class MergeExecutionCourses {
         executionCourseAnnouncementBoardFrom.delete();
     }
 
-    private static boolean haveShiftsWithSameName(final ExecutionCourse executionCourseFrom,
+    private boolean haveShiftsWithSameName(final ExecutionCourse executionCourseFrom,
             final ExecutionCourse executionCourseTo) {
         final Set<String> shiftNames = new HashSet<String>();
         for (final Shift shift : executionCourseFrom.getAssociatedShifts()) {
@@ -213,13 +209,13 @@ public class MergeExecutionCourses {
         return false;
     }
 
-    private static boolean isMergeAllowed(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo) {
+    private boolean isMergeAllowed(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo) {
         return executionCourseTo != null && executionCourseFrom != null
                 && executionCourseFrom.getExecutionPeriod().equals(executionCourseTo.getExecutionPeriod())
                 && executionCourseFrom != executionCourseTo;
     }
 
-    private static void copySummaries(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo) {
+    private void copySummaries(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo) {
         final List<Summary> associatedSummaries = new ArrayList<Summary>();
         associatedSummaries.addAll(executionCourseFrom.getAssociatedSummaries());
         for (final Summary summary : associatedSummaries) {
@@ -227,7 +223,7 @@ public class MergeExecutionCourses {
         }
     }
 
-    private static void copyGroupPropertiesExecutionCourse(final ExecutionCourse executionCourseFrom,
+    private void copyGroupPropertiesExecutionCourse(final ExecutionCourse executionCourseFrom,
             final ExecutionCourse executionCourseTo) {
         final List<ExportGrouping> associatedGroupPropertiesExecutionCourse = new ArrayList<ExportGrouping>();
         associatedGroupPropertiesExecutionCourse.addAll(executionCourseFrom.getExportGroupings());
@@ -241,7 +237,7 @@ public class MergeExecutionCourses {
         }
     }
 
-    private static void removeEvaluations(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo)
+    private void removeEvaluations(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo)
             throws FenixServiceException {
         while (!executionCourseFrom.getAssociatedEvaluations().isEmpty()) {
             final Evaluation evaluation = executionCourseFrom.getAssociatedEvaluations().get(0);
@@ -259,7 +255,7 @@ public class MergeExecutionCourses {
         }
     }
 
-    private static void copyBibliographicReference(final ExecutionCourse executionCourseFrom,
+    private void copyBibliographicReference(final ExecutionCourse executionCourseFrom,
             final ExecutionCourse executionCourseTo) {
         for (; !executionCourseFrom.getAssociatedBibliographicReferences().isEmpty(); executionCourseTo
                 .getAssociatedBibliographicReferences().add(executionCourseFrom.getAssociatedBibliographicReferences().get(0))) {
@@ -267,7 +263,7 @@ public class MergeExecutionCourses {
         }
     }
 
-    private static void copyShifts(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo) {
+    private void copyShifts(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo) {
         final List<Shift> associatedShifts = new ArrayList<Shift>(executionCourseFrom.getAssociatedShifts());
         for (final Shift shift : associatedShifts) {
             List<CourseLoad> courseLoadsFrom = new ArrayList<CourseLoad>(shift.getCourseLoads());
@@ -286,7 +282,7 @@ public class MergeExecutionCourses {
         }
     }
 
-    private static void copyLessonsInstances(ExecutionCourse executionCourseFrom, ExecutionCourse executionCourseTo) {
+    private void copyLessonsInstances(ExecutionCourse executionCourseFrom, ExecutionCourse executionCourseTo) {
         final List<LessonInstance> associatedLessons =
                 new ArrayList<LessonInstance>(executionCourseFrom.getAssociatedLessonInstances());
         for (final LessonInstance lessonInstance : associatedLessons) {
@@ -301,7 +297,7 @@ public class MergeExecutionCourses {
         }
     }
 
-    private static void copyAttends(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo)
+    private void copyAttends(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo)
             throws FenixServiceException {
         while (!executionCourseFrom.getAttends().isEmpty()) {
             final Attends attends = executionCourseFrom.getAttends().get(0);
@@ -351,7 +347,7 @@ public class MergeExecutionCourses {
         }
     }
 
-    private static void copySite(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo) {
+    private void copySite(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo) {
         final Site siteFrom = executionCourseFrom.getSite();
         final Site siteTo = executionCourseTo.getSite();
 
@@ -361,7 +357,7 @@ public class MergeExecutionCourses {
         }
     }
 
-    private static void copyContents(final ExecutionCourse executionCourseTo, final Container parentTo,
+    private void copyContents(final ExecutionCourse executionCourseTo, final Container parentTo,
             final Collection<Node> nodes) {
         final Set<Content> transferedContents = new HashSet<Content>();
 
@@ -397,7 +393,7 @@ public class MergeExecutionCourses {
         }
     }
 
-    private static void changeGroups(final ExecutionCourse executionCourseTo, final Content content,
+    private void changeGroups(final ExecutionCourse executionCourseTo, final Content content,
             final Set<Content> transferedContents) {
         if (content.getAvailabilityPolicy() != null) {
             content.getAvailabilityPolicy().delete();
@@ -423,7 +419,7 @@ public class MergeExecutionCourses {
         }
     }
 
-    private static Set<String> createListOfEmailAddresses(final ExecutionCourse executionCourseTo) {
+    private Set<String> createListOfEmailAddresses(final ExecutionCourse executionCourseTo) {
         final Set<String> emails = new HashSet<String>();
         for (final Professorship professorship : executionCourseTo.getProfessorshipsSet()) {
             emails.add(professorship.getPerson().getEmail());
@@ -431,7 +427,7 @@ public class MergeExecutionCourses {
         return emails;
     }
 
-    private static Group createExecutionCourseResponsibleTeachersGroup(final ExecutionCourse executionCourseTo) {
+    private Group createExecutionCourseResponsibleTeachersGroup(final ExecutionCourse executionCourseTo) {
         final Set<IGroup> groups = new HashSet<IGroup>();
         for (final Professorship professorship : executionCourseTo.getProfessorshipsSet()) {
             if (professorship.isResponsibleFor()) {
@@ -441,7 +437,7 @@ public class MergeExecutionCourses {
         return groups.isEmpty() ? null : new GroupUnion(groups);
     }
 
-    private static void copyProfessorships(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo) {
+    private void copyProfessorships(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo) {
         for (; !executionCourseFrom.getProfessorships().isEmpty();) {
             final Professorship professorship = executionCourseFrom.getProfessorships().get(0);
             final Professorship otherProfessorship = findProfessorShip(executionCourseTo, professorship.getPerson());
@@ -473,7 +469,7 @@ public class MergeExecutionCourses {
         }
     }
 
-    private static Professorship findProfessorShip(final ExecutionCourse executionCourseTo, final Person person) {
+    private Professorship findProfessorShip(final ExecutionCourse executionCourseTo, final Person person) {
         for (final Professorship professorship : executionCourseTo.getProfessorships()) {
             if (professorship.getPerson() == person) {
                 return professorship;
@@ -482,7 +478,7 @@ public class MergeExecutionCourses {
         return null;
     }
 
-    private static void copyForuns(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo)
+    private void copyForuns(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo)
             throws FenixServiceException {
 
         if (!executionCourseTo.hasSite()) {
@@ -507,7 +503,7 @@ public class MergeExecutionCourses {
         }
     }
 
-    private static void copyForumSubscriptions(ExecutionCourseForum sourceForum, ExecutionCourseForum targetForum) {
+    private void copyForumSubscriptions(ExecutionCourseForum sourceForum, ExecutionCourseForum targetForum) {
 
         while (!sourceForum.getForumSubscriptions().isEmpty()) {
             ForumSubscription sourceForumSubscription = sourceForum.getForumSubscriptions().get(0);
@@ -531,7 +527,7 @@ public class MergeExecutionCourses {
         }
     }
 
-    private static void copyThreads(ExecutionCourseForum sourceForum, ExecutionCourseForum targetForum) {
+    private void copyThreads(ExecutionCourseForum sourceForum, ExecutionCourseForum targetForum) {
 
         while (!sourceForum.getConversationThreads().isEmpty()) {
             ConversationThread sourceConversationThread = sourceForum.getConversationThreads().get(0);
@@ -550,7 +546,7 @@ public class MergeExecutionCourses {
         }
     }
 
-    private static void copyExecutionCourseLogs(ExecutionCourse executionCourseFrom, ExecutionCourse executionCourseTo) {
+    private void copyExecutionCourseLogs(ExecutionCourse executionCourseFrom, ExecutionCourse executionCourseTo) {
         for (ExecutionCourseLog executionCourseLog : executionCourseFrom.getExecutionCourseLogs()) {
             executionCourseLog.setExecutionCourse(executionCourseTo);
         }
@@ -563,23 +559,8 @@ public class MergeExecutionCourses {
 
     @Service
     public static void runMergeExecutionCourses(Integer executionCourseDestinationId, Integer executionCourseSourceId)
-            throws FenixServiceException, NotAuthorizedException {
-        try {
-            ManagerAuthorizationFilter.instance.execute();
-            serviceInstance.run(executionCourseDestinationId, executionCourseSourceId);
-        } catch (NotAuthorizedException ex1) {
-            try {
-                ResourceAllocationManagerAuthorizationFilter.instance.execute();
-                serviceInstance.run(executionCourseDestinationId, executionCourseSourceId);
-            } catch (NotAuthorizedException ex2) {
-                try {
-                    OperatorAuthorizationFilter.instance.execute();
-                    serviceInstance.run(executionCourseDestinationId, executionCourseSourceId);
-                } catch (NotAuthorizedException ex3) {
-                    throw ex3;
-                }
-            }
-        }
+            throws FenixServiceException {
+        serviceInstance.run(executionCourseDestinationId, executionCourseSourceId);
     }
 
 }
