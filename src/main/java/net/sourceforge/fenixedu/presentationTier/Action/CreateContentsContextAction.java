@@ -23,13 +23,17 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
+@Mapping(path = "/home")
 public class CreateContentsContextAction extends FenixAction {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        final FunctionalityContext functionalityContext = new FilterFunctionalityContext(request, Collections.EMPTY_LIST);
+        final FunctionalityContext functionalityContext =
+                new FilterFunctionalityContext(request, Collections.<Content> emptyList());
         request.setAttribute(FunctionalityContext.CONTEXT_KEY, functionalityContext);
 
         final MenuEntry initialMenuEntry = getInitialMenuEntry(functionalityContext);

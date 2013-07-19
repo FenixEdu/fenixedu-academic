@@ -4,31 +4,6 @@
       <data-sources></data-sources>
       <!-- ========== Form Bean Definitions ================================== -->
       <form-beans type="org.apache.struts.action.ActionFormBean">
-            <form-bean name="authenticationForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-                  <form-property name="username" type="java.lang.String"></form-property>
-                  <form-property name="pendingRequest" type="java.lang.String"></form-property>
-                  <form-property name="password" type="java.lang.String"></form-property>
-            </form-bean>
-            <form-bean name="authenticationExpiredForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-                  <form-property name="username" type="java.lang.String"></form-property>
-                  <form-property name="password" type="java.lang.String"></form-property>
-                  <form-property name="newPassword" type="java.lang.String"></form-property>
-                  <form-property name="reTypeNewPassword" type="java.lang.String"></form-property>
-                  <form-property name="page" type="java.lang.Integer"></form-property>
-                  <form-property name="fromCAS" type="java.lang.String"></form-property>
-            </form-bean>
-            <form-bean name="errorMailForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-                  <form-property name="email" type="java.lang.String"></form-property>
-                  <form-property name="subject" type="java.lang.String"></form-property>
-                  <form-property name="body" type="java.lang.String"></form-property>
-                  <form-property name="exceptionInfo" type="java.lang.String"></form-property>
-            </form-bean>
-            <form-bean name="changeLocaleForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-                  <form-property name="windowLocation" type="java.lang.String"></form-property>
-                  <form-property name="newLanguage" type="java.lang.String"></form-property>
-                  <form-property name="newCountry" type="java.lang.String"></form-property>
-                  <form-property name="newVariant" type="java.lang.String"></form-property>
-            </form-bean>
       </form-beans>
       <!-- ========== Global Exception Definitions ============================== -->
       <global-exceptions>
@@ -38,87 +13,13 @@
       </global-exceptions>
       <!-- ========== Global Forward Definitions =============================== -->
       <global-forwards type="org.apache.struts.action.ActionForward">
-            <forward name="index" path="/index.do" redirect="true"></forward>
-            <forward name="logoff" path="/logoff.do" contextRelative="true"></forward>
-            <forward name="redirect" path="/redirect.do" contextRelative="true"></forward>
-            <forward name="home" path="/mainPortalPage.jsp" redirect="true" contextRelative="true"></forward>
-            <forward name="firstPage" path="/loginPage.jsp"></forward>
-            <forward name="exceptionHandling" path="/exceptionHandlingAction.do?method=goBack" contextRelative="true"></forward>
       </global-forwards>
       <!-- ========== Action Mapping Definitions =============================== -->
       <action-mappings type="org.apache.struts.action.ActionMapping">
-            <action path="/showErrorPage" forward="/supportHelpInquiry.jsp"></action>
-            <action path="/showErrorPageRegistered" forward="/exception/errorRegistered.jsp"></action>
-            <action path="/naoAutorizado" forward="/error.jsp"></action>
-            <action path="/naoExecutado" forward="/error.jsp"></action>
-            <action path="/notAuthorized" forward="df.layout.notAuthorized"></action>
-            <action path="/autenticacao" forward="/autenticacao.jsp"></action>
-            <action path="/naoExistente" forward="/error.jsp"></action>
-            <action path="/nonExistingObject" forward="/nonExistingError.jsp"></action>
-            <action path="/publicNotAuthorized" forward="/exception/publicNotAuthorized.jsp"></action>
-            <action path="/userDoesNotExistOrIsInactive" forward="/userDoesNotExistOrIsInactive.jsp"></action>
-            <action path="/alumniReminder" forward="/showAlumniDataReminder.jsp"></action>
-            <action path="/siteMap" type="net.sourceforge.fenixedu.presentationTier.Action.SiteMapAction">
-                  <forward name="site-map" path="/siteMap.jsp"></forward>
-            </action>
-            <action path="/home" type="net.sourceforge.fenixedu.presentationTier.Action.CreateContentsContextAction"></action>
-            <action path="/login" type="net.sourceforge.fenixedu.presentationTier.Action.LocalAuthenticationAction" name="authenticationForm" input="/loginPage.jsp" scope="request" className="net.sourceforge.fenixedu.presentationTier.mapping.ActionMappingForAuthentication">
-                  <exception type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidPasswordServiceException" key="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidPasswordServiceException" handler="net.sourceforge.fenixedu.presentationTier.config.LoginInvalidPasswordExceptionHandler"></exception>
-                  <exception type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.PasswordExpiredServiceException" key="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.PasswordExpiredServiceException" path="/loginExpired.do?method=start"></exception>
-                  <forward name="sucess" path="/home.do" redirect="true"></forward>
-                  <forward name="changePass" path="/person/changePasswordForward.do"></forward>
-                  <forward name="expirationWarning" path="/expirationWarning.jsp"></forward>
-            </action>
-            <action path="/loginCAS" type="net.sourceforge.fenixedu.presentationTier.Action.CASAuthenticationAction" scope="request">
-                  <forward name="sucess" path="/home.do" redirect="true"></forward>
-                  <forward name="error" path="/loginPage.jsp" redirect="true"></forward>
-                  <forward name="expirationWarning" path="/expirationWarning.jsp"></forward>
-            </action>
-            <action path="/redirect" type="net.sourceforge.fenixedu.presentationTier.Action.commons.LoginRedirectAction">
-                  <forward name="show-redirect-page" path="/redirect.jsp"></forward>
-            </action>
-            <action path="/loginExpired" type="net.sourceforge.fenixedu.presentationTier.Action.AuthenticationExpiredAction" name="authenticationExpiredForm" parameter="method" input="/loginExpired.jsp" scope="request">
-                  <forward name="sucess" path="/home.do"></forward>
-                  <forward name="changePass" path="/loginExpired.jsp"></forward>
-            </action>
-            <action path="/logoff" type="net.sourceforge.fenixedu.presentationTier.Action.commons.LogOffAction">
-                  <forward name="showLoginPage" path="/loginPage.jsp"></forward>
-                  <forward name="showBlankPage" path="/commons/blankWithTitle.jsp"></forward>
-            </action>
-            <action path="/exceptionHandlingAction" parameter="method" name="errorMailForm" scope="request" type="net.sourceforge.fenixedu.presentationTier.Action.ExceptionHandlingAction">
-                  <forward name="supportHelpInquiry" path="/supportHelpInquiry.jsp"></forward>
-            </action>
-            <action path="/isAlive" type="net.sourceforge.fenixedu.presentationTier.Action.CheckIsAliveAction">
-                  <forward name="Success" path="/ok.jsp"></forward>
-            </action>
-            <action path="/checkPasswordKerberos" type="net.sourceforge.fenixedu.presentationTier.Action.CheckPasswordKerberosAction" scope="request">
-                  <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NotAuthorizedActionException" key="error.NotAuthorized" path="/publicNotAuthorized.do"></exception>
-            </action>
-            <action path="/respondToAlumniInquiriesQuestion" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.RespondToAlumniInquiriesQuestion">
-                  <forward name="respondToInquiriesQuestion" path="/respondToAlumniInquiriesQuestion.jsp"></forward>
-            </action>
-            <action path="/respondToInquiriesQuestion" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.RespondToInquiriesQuestion">
-                  <forward name="respondToInquiriesQuestion" path="/respondToInquiriesQuestion.jsp"></forward>
-                  <forward name="respondToTeacherInquiriesQuestion" path="/respondToTeacherInquiriesQuestion.jsp"></forward>
-            </action>
-            <action path="/respondToTeachingInquiriesQuestion" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.RespondToTeachingInquiriesQuestion">
-                  <forward name="respondToInquiriesQuestion" path="/respondToTeachingInquiriesQuestion.jsp"></forward>
-            </action>
-            <action path="/respondToRegentInquiriesQuestion" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.RespondToRegentInquiriesQuestion">
-                  <forward name="respondToInquiriesQuestion" path="/respondToRegentInquiriesQuestion.jsp"></forward>
-            </action>
-            <action path="/respondToCoordinationExecutionDegreeReportsQuestion" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.RespondToCoordinationExecutionDegreeReportsQuestion">
-                  <forward name="respondToInquiriesQuestion" path="/respondToCoordinationExecutionDegreeReportsQuestion.jsp"></forward>
-            </action>
-            <action path="/respondToYearDelegateInquiriesQuestion" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.RespondToYearDelegateInquiriesQuestion">
-                  <forward name="respondToYearDelegateInquiriesQuestion" path="/respondToYearDelegateInquiriesQuestion.jsp"></forward>
-            </action>
-            <action path="/respondToFirstTimeCycleInquiry" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.RespondToFirstTimeCycleInquiry">
-                  <forward name="inquiryNotice" path="/firstTimeCycleInquiryWarning.jsp"></forward>
-            </action>            
+            <!-- <action path="/notAuthorized" forward="df.layout.notAuthorized"></action> -->
       </action-mappings>
       <!-- ========== Controller Configuration ================================ -->
-      <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"></controller>
+      <controller processorClass="pt.ist.fenixWebFramework.renderers.plugin.SimpleRenderersRequestProcessor"></controller>
       <!-- ========== Message Resources Definitions ============================ -->
       <message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"></message-resources>
       <message-resources parameter="resources.ImageResources" key="IMAGE_RESOURCES" null="false"></message-resources>
@@ -149,14 +50,7 @@
       <message-resources null="false" key="TITLES_RESOURCES" parameter="resources.TitlesResources"></message-resources>
       <!-- ========== Plug Ins Configuration ================================= -->
       <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
-            <set-property property="pathnames" value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-default.xml"></set-property>
-      </plug-in>
-      <plug-in className="pt.ist.fenixWebFramework.struts.tiles.FenixTilesPlugin">
-            <set-property value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml" property="definitions-config"></set-property>
-            <set-property value="true" property="moduleAware"></set-property>
-            <set-property value="true" property="definitions-parser-validate"></set-property>
-            <set-property value="pt.ist.fenixWebFramework.struts.tiles.FenixDefinitionsFactory" property="factoryClassname"></set-property>
-            <set-property value="df.layout.one-column" property="defaultTileDefinition"></set-property>
+            <set-property property="pathnames" value="/WEB-INF/validator-rules.xml"></set-property>
       </plug-in>
       <plug-in className="pt.ist.fenixWebFramework.renderers.plugin.RenderersPlugin">
             <set-property property="metaObjectFactory" value="pt.ist.fenixWebFramework.rendererExtensions.factories.FenixMetaObjectFactory"></set-property>

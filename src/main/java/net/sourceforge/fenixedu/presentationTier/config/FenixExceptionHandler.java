@@ -64,7 +64,7 @@ public class FenixExceptionHandler extends ExceptionHandler {
             ActionErrors errors = new ActionErrors();
             errors.add("error.invalid.session", new ActionError("error.invalid.session"));
             request.setAttribute(Globals.ERROR_KEY, errors);
-            return mapping.findForward("firstPage");
+            return new ActionForward("/loginPage.jsp");
         }
 
         request.setAttribute(PresentationConstants.ORIGINAL_MAPPING_KEY, mapping);

@@ -18,30 +18,112 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidPasswo
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.presentationTier.Action.AuthenticationExpiredAction.AuthenticationExpiredForm;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.validator.GenericValidator;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.DynaActionForm;
+import org.apache.struts.action.ActionMessage;
+import org.apache.struts.validator.ValidatorForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
+@Mapping(path = "/loginExpired", formBeanClass = AuthenticationExpiredForm.class, input = "/loginExpired.jsp?")
 public class AuthenticationExpiredAction extends FenixDispatchAction {
+
+    public static class AuthenticationExpiredForm extends ValidatorForm {
+
+        private static final long serialVersionUID = 316277744795378668L;
+
+        private String username;
+        private String password;
+        private String newPassword;
+        private String reTypeNewPassword;
+        private String fromCAS;
+
+        public String getUsername() {
+            return username;
+        }
+
+        public void setUsername(String username) {
+            this.username = username;
+        }
+
+        public String getPassword() {
+            return password;
+        }
+
+        public void setPassword(String password) {
+            this.password = password;
+        }
+
+        public String getNewPassword() {
+            return newPassword;
+        }
+
+        public void setNewPassword(String newPassword) {
+            this.newPassword = newPassword;
+        }
+
+        public String getReTypeNewPassword() {
+            return reTypeNewPassword;
+        }
+
+        public void setReTypeNewPassword(String reTypeNewPassword) {
+            this.reTypeNewPassword = reTypeNewPassword;
+        }
+
+        public String getFromCAS() {
+            return fromCAS;
+        }
+
+        public void setFromCAS(String fromCAS) {
+            this.fromCAS = fromCAS;
+        }
+
+        @Override
+        public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
+            ActionErrors errors = new ActionErrors();
+
+            if (StringUtils.isEmpty(username)) {
+                errors.add("label.username", new ActionMessage("errors.required", "Username"));
+            }
+            if (StringUtils.isEmpty(password)) {
+                errors.add("label.pass", new ActionMessage("errors.required", "Password"));
+            }
+
+            if (!GenericValidator.isBlankOrNull(newPassword)) {
+                try {
+                    if (!newPassword.equals(reTypeNewPassword)) {
+                        errors.add("label.candidate.newPasswordError", new ActionMessage("errors.different.passwords"));
+                    }
+                } catch (Exception e) {
+                    errors.add("label.candidate.newPasswordError", new ActionMessage("errors.different.passwords"));
+                }
+            }
+
+            return errors;
+        }
+
+    }
 
     protected static final boolean useCASAuthentication = PropertiesManager.getBooleanProperty("cas.enabled");
 
     public ActionForward start(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        DynaActionForm actionForm = (DynaActionForm) form;
-        actionForm.set("username", request.getParameter("username"));
-        actionForm.set("page", 0);
-        actionForm.set("fromCAS", request.getParameter("fromCAS"));
+        AuthenticationExpiredForm actionForm = (AuthenticationExpiredForm) form;
+        actionForm.setUsername(request.getParameter("username"));
+        actionForm.setPage(0);
+        actionForm.setFromCAS(request.getParameter("fromCAS"));
         saveErrors(request, null);
-        return mapping.findForward("changePass");
+        return new ActionForward("/loginExpired.jsp");
     }
 
     public ActionForward changePass(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -57,7 +139,7 @@ public class AuthenticationExpiredAction extends FenixDispatchAction {
             // TODO: remove when fenix CAS support is activated
             // This is here until we move authentication expiration page to
             // CAS
-            String fromCAS = ((DynaActionForm) form).getString("fromCAS");
+            String fromCAS = ((AuthenticationExpiredForm) form).getFromCAS();
 
             if (useCASAuthentication || (fromCAS != null && fromCAS.equalsIgnoreCase("true"))) {
                 String casLoginUrl = PropertiesManager.getProperty("cas.loginUrl");
@@ -83,7 +165,7 @@ public class AuthenticationExpiredAction extends FenixDispatchAction {
                                     .iterator().next()));
                     return buildRoleForward(firstInfoRole);
                 } else {
-                    return mapping.findForward("sucess");
+                    return new ActionForward("/home.do");
                 }
 
             }
@@ -152,11 +234,11 @@ public class AuthenticationExpiredAction extends FenixDispatchAction {
     }
 
     private IUserView changePasswordAndAuthenticateUser(final ActionForm form, final HttpServletRequest request)
-            throws FenixServiceException,  ExcepcaoPersistencia {
-        DynaActionForm authenticationForm = (DynaActionForm) form;
-        final String username = (String) authenticationForm.get("username");
-        final String password = (String) authenticationForm.get("password");
-        final String newPassword = (String) authenticationForm.get("newPassword");
+            throws FenixServiceException, ExcepcaoPersistencia {
+        AuthenticationExpiredForm authenticationForm = (AuthenticationExpiredForm) form;
+        final String username = authenticationForm.getUsername();
+        final String password = authenticationForm.getPassword();
+        final String newPassword = authenticationForm.getNewPassword();
         final String requestURL = request.getRequestURL().toString();
 
         String remoteHostName = BaseAuthenticationAction.getRemoteHostName(request);

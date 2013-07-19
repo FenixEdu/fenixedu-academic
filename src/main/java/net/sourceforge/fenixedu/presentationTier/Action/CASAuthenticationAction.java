@@ -20,16 +20,23 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.Config.CasConfig;
 import pt.ist.fenixWebFramework.FenixWebFramework;
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import edu.yale.its.tp.cas.client.CASAuthenticationException;
 import edu.yale.its.tp.cas.client.CASReceipt;
 
+@Mapping(path = "/loginCAS")
+@Forwards({ @Forward(name = "success", path = "/home.do", redirect = true),
+        @Forward(name = "error", path = "/loginPage.jsp", redirect = true),
+        @Forward(name = "expirationWarning", path = "/expirationWarning.jsp") })
 public class CASAuthenticationAction extends BaseAuthenticationAction {
 
     private static final String USER_DOES_NOT_EXIST_ATTRIBUTE = "user-does-not-exist";
 
     @Override
     protected IUserView doAuthentication(ActionForm form, HttpServletRequest request, String remoteHostName)
-            throws  FenixServiceException {
+            throws FenixServiceException {
 
         final String serverName = request.getServerName();
         final CasConfig casConfig = FenixWebFramework.getConfig().getCasConfig(serverName);

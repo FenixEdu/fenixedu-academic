@@ -29,7 +29,9 @@ import pt.ist.fenixWebFramework.Config.CasConfig;
 import pt.ist.fenixWebFramework.FenixWebFramework;
 import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.servlets.filters.I18NFilter;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
+@Mapping(path = "/logoff")
 public class LogOffAction extends Action {
 
     @Override
@@ -44,14 +46,14 @@ public class LogOffAction extends Action {
         if (casConfig != null && casConfig.isCasEnabled()) {
             if (request.getParameter("logoutFromCAS") != null && request.getParameter("logoutFromCAS").equals("true")) {
                 killSession(request);
-                result = mapping.findForward("showBlankPage");
+                result = new ActionForward("/commons/blankWithTitle.jsp");
             } else {
                 result = getCasLogoutActionForward(casConfig);
                 killSession(request);
             }
         } else {
             killSession(request);
-            result = mapping.findForward("showLoginPage");
+            result = new ActionForward("/loginPage.jsp");
         }
         // this way, we always put the locale as the default we want
         I18NFilter.setDefaultLocale(request, request.getSession());

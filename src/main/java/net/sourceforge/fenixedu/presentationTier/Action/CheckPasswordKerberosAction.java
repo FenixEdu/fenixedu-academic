@@ -9,14 +9,18 @@ import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoAutenticacao;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidPasswordServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.PasswordExpiredServiceException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NotAuthorizedActionException;
 import net.sourceforge.fenixedu.util.HostAccessControl;
 import net.sourceforge.fenixedu.util.kerberos.KerberosException;
 
+import org.apache.struts.action.ActionError;
+import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
+@Mapping(path = "/checkPasswordKerberos")
 public class CheckPasswordKerberosAction extends FenixAction {
 
     private static final String SUCCESS_MESSAGE = "SUCCESS";
@@ -29,7 +33,10 @@ public class CheckPasswordKerberosAction extends FenixAction {
 
         // check hosts accessing this action
         if (!HostAccessControl.isAllowed(this, request)) {
-            throw new NotAuthorizedActionException("error.NotAuthorized");
+            ActionErrors errors = new ActionErrors();
+            errors.add(ActionErrors.GLOBAL_ERROR, new ActionError("error.NotAuthorized"));
+            saveErrors(request, errors);
+            return new ActionForward("/exception/publicNotAuthorized.jsp");
         }
 
         if (request.getMethod().equalsIgnoreCase("post")) {
@@ -67,5 +74,4 @@ public class CheckPasswordKerberosAction extends FenixAction {
         return null;
 
     }
-
 }
