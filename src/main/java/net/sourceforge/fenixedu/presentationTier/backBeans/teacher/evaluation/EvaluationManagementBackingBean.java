@@ -48,6 +48,8 @@ import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.FinalEvaluation;
 import net.sourceforge.fenixedu.domain.FinalMark;
 import net.sourceforge.fenixedu.domain.GradeScale;
@@ -585,7 +587,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         return this.getEvaluation().getClass().getSimpleName();
     }
 
-    public String editMarks() throws FenixServiceException {
+    public String editMarks() throws FenixServiceException, IllegalDataAccessException {
         if (getEvaluationID() == null) {
             WriteMarks.writeByAttend(getExecutionCourseID(), getEvaluationID(), buildAttendsMark());
             return "";
@@ -598,6 +600,10 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
                         domainException.getArgs()));
             }
             return "";
+        } catch (IllegalDataAccessException idae) {
+        	addErrorMessage(getFormatedMessage("resources/ApplicationResources", "message.teacger.evaluation.editMarks",
+        			ExecutionSemester.readActualExecutionSemester().getExecutionYear().getName(), ExecutionSemester.readActualExecutionSemester().getName()));
+        	return "";
         }
         return getEvaluation().getClass().getSimpleName();
     }
