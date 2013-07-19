@@ -69,7 +69,7 @@
 				<tr>
 					<th style="width: 175px;"><bean:message key="label.over23.qualifications.name" bundle="CANDIDATE_RESOURCES"/>: <span class="red">*</span></th>
 					<td>
-						<div class="flowerror_hide">
+						<div class="flowerror_public_hide">
 						<fr:edit 	id='<%= designationId %>' 
 									name="qualification"
 									schema="PublicCandidacyProcessBean.formation.designation">
@@ -87,7 +87,7 @@
 				<tr>
 					<th><bean:message key="label.over23.school" bundle="CANDIDATE_RESOURCES"/>: <span class="red">*</span></th>
 					<td>
-						<div class="flowerror_hide">
+						<div class="flowerror_public_hide">
 						<fr:edit 	id='<%= institutionNameId %>' 
 							name="qualification"
 							schema="PublicCandidacyProcessBean.formation.institutionUnitName">
@@ -133,7 +133,7 @@
 				<tr>
 					<th style="width: 175px;"><bean:message key="label.over23.qualifications.name" bundle="CANDIDATE_RESOURCES"/>: <span class="red">*</span></th>
 					<td>
-						<div class="flowerror_hide">
+						<div class="flowerror_public_hide">
 						<fr:edit 	id='<%= designationId %>' 
 									name="qualification"
 									schema="PublicCandidacyProcessBean.formation.designation">
@@ -151,7 +151,7 @@
 				<tr>
 					<th><bean:message key="label.over23.school" bundle="CANDIDATE_RESOURCES"/>: <span class="red">*</span></th>
 					<td>
-						<div class="flowerror_hide">
+						<div class="flowerror_public_hide">
 						<fr:edit 	id='<%= institutionNameId %>' 
 							name="qualification"
 							schema="PublicCandidacyProcessBean.formation.institutionUnitName">

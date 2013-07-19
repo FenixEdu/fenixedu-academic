@@ -1909,7 +1909,7 @@ div.flowerror span span span span { color: #c00; background-color: #ffeadd; }
 div.flowerror span span span span span { color: #000; background: #fff; }
 div.flowerror ul.autoCompleteItems { color: #000; }
 
-div.flowerror_hide span span span span + span { display: none; }
+div.flowerror_public_hide span span span span + span { display: none; }
 
 .steps { color: #000; }
 .steps span { border-bottom: 1px dotted #000; padding: 1px; }
