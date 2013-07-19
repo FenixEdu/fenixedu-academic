@@ -53,6 +53,7 @@ public class UploadPhotoDA extends FenixDispatchAction {
         request.setAttribute("phroperCaption", bundle.getString("phroper.caption"));
         request.setAttribute("phroperSubCaption", bundle.getString("phroper.subCaption"));
         request.setAttribute("phroperButtonCaption", bundle.getString("phroper.buttonCaption"));
+        request.setAttribute("phroperLoadingCaption", bundle.getString("phroper.loadingCaption"));
         request.setAttribute("buttonClean", bundle.getString("button.clean"));
         return mapping.findForward("upload");
     }
@@ -64,7 +65,7 @@ public class UploadPhotoDA extends FenixDispatchAction {
         String base64Image = request.getParameter("encodedPicture");
         if (base64Image != null) {
             photo.setFilename("mylovelypic.png");
-            photo.setBase64RawContent(base64Image.split(",")[1]);
+            photo.setBase64RawThumbnail(base64Image.split(",")[1]);
             photo.setContentType(base64Image.split(",")[0].split(":")[1].split(";")[0]);
         }
 

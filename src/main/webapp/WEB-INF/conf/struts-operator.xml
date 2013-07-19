@@ -8,11 +8,6 @@
                   <form-property type="java.lang.String" name="documentIdNumber"></form-property>
                   <form-property type="java.lang.Integer" name="page"></form-property>
             </form-bean>
-            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="submitPhotoForm">
-                  <form-property type="java.lang.String" name="username"></form-property>
-                  <form-property type="java.lang.String" name="theFile"></form-property>
-                  <form-property type="java.lang.Integer" name="page"></form-property>
-            </form-bean>
             <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="generateNewPasswordsForm">
                   <form-property type="java.lang.String" name="fromNumber"></form-property>
                   <form-property type="java.lang.String" name="toNumber"></form-property>
@@ -224,9 +219,6 @@
             <action validate="true" scope="request" parameter="method" input="/generateNewPassword.do?method=prepare&amp;page=0" path="/generateNewPassword" type="net.sourceforge.fenixedu.presentationTier.Action.commons.password.GenerateNewPasswordDispatchAction">
                   <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler" key="resources.Action.exceptions.NonExistingActionException" type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"></exception>
                   <forward path="/password/newPasswordTemplate.jsp" name="Success"></forward>
-            </action>
-            <action scope="request" type="net.sourceforge.fenixedu.presentationTier.Action.operator.SubmitPhotoAction" name="submitPhotoForm" input="/submitPhoto.do?method=preparePhotoUpload&amp;page=0" validate="true" parameter="method" path="/submitPhoto">
-                  <forward path="/photo/submitPhoto.jsp" name="chooseFile"></forward>
             </action>
             <action scope="request" type="net.sourceforge.fenixedu.presentationTier.Action.operator.GeneratePasswordsForCandidaciesAction" name="generatePasswordsForCandidaciesForm" parameter="method" input="/generatePasswordForCandidacies.do?method=chooseExecutionDegree&amp;page=0" path="/generatePasswordsForCandidacies">
                   <forward path="df.candidacy.password.chooseExecutionDegreeAndEntryPhase" name="chooseExecutionDegree"></forward>

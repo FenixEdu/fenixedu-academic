@@ -31,6 +31,9 @@
 			if ($('#phroperButtonCaption').attr('value')) {
 				captions[2] = $('#phroperButtonCaption').attr('value');
 			}
+			if ($('#phroperButtonCaption').attr('value')) {
+				captions[3] = $('#phroperLoadingCaption').attr('value');
+			}
 			if (phroper.testEnvironment()) {
 				$('#old-info-panel').remove();
 				$('<div id="photo-uploader"></div>').prependTo('#photoForm').css('margin-bottom','15px');
@@ -71,6 +74,7 @@
 		<input type="hidden" id="phroperCaption" value="<%= request.getAttribute("phroperCaption") != null ? request.getAttribute("phroperCaption") : "" %>" />
 		<input type="hidden" id="phroperSubCaption" value="<%= request.getAttribute("phroperSubCaption") != null ? request.getAttribute("phroperSubCaption") : "" %>" />
 		<input type="hidden" id="phroperButtonCaption" value="<%= request.getAttribute("phroperButtonCaption") != null ? request.getAttribute("phroperButtonCaption") : "" %>" />
+		<input type="hidden" id="phroperLoadingCaption" value="<%= request.getAttribute("phroperLoadingCaption") != null ? request.getAttribute("phroperLoadingCaption") : "" %>" />
 	</logic:notPresent>
 
     <logic:notPresent name="preview">
