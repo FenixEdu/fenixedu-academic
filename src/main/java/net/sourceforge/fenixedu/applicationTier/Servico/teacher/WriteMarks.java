@@ -16,16 +16,17 @@ import net.sourceforge.fenixedu.domain.exceptions.InvalidMarkDomainException;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class WriteMarks {
 
     @Atomic
-    @Checked("RolePredicates.TEACHER_PREDICATE")
     public static void writeByStudent(final String executioCourseOID, final String evaluationOID, final List<StudentMark> marks)
             throws FenixServiceException {
+        check(RolePredicates.TEACHER_PREDICATE);
 
         final Evaluation evaluation = FenixFramework.getDomainObject(evaluationOID);
         final ExecutionCourse executionCourse = FenixFramework.getDomainObject(executioCourseOID);
@@ -34,9 +35,9 @@ public class WriteMarks {
     }
 
     @Atomic
-    @Checked("RolePredicates.TEACHER_PREDICATE")
     public static void writeByAttend(final String executioCourseOID, final String evaluationOID, final List<AttendsMark> marks)
             throws FenixServiceException {
+        check(RolePredicates.TEACHER_PREDICATE);
 
         final Evaluation evaluation = FenixFramework.getDomainObject(evaluationOID);
         final ExecutionCourse executionCourse = FenixFramework.getDomainObject(executioCourseOID);

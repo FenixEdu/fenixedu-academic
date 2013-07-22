@@ -12,7 +12,8 @@ import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 
 public class DFAGratuityByEnrolmentsPR extends DFAGratuityByEnrolmentsPR_Base {
     private static final int SCALE_FOR_INTERMEDIATE_CALCULATIONS = 8;
@@ -97,14 +98,14 @@ public class DFAGratuityByEnrolmentsPR extends DFAGratuityByEnrolmentsPR_Base {
                 "error.accounting.postingRules.gratuity.DFAGratuityByEnrolmentsPR.cannot.modify.dfaAmountPerEnrolment");
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     public DFAGratuityByEnrolmentsPR edit(Money dfaTotalAmount, Money dfaAmountPerEnrolment, BigDecimal partialAcceptedPercentage) {
+        check(this, RolePredicates.MANAGER_PREDICATE);
         return edit(new DateTime(), dfaTotalAmount, dfaAmountPerEnrolment, partialAcceptedPercentage);
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     public DFAGratuityByEnrolmentsPR edit(DateTime startDate, Money dfaTotalAmount, Money dfaAmountPerEnrolment,
             BigDecimal partialAcceptedPercentage) {
+        check(this, RolePredicates.MANAGER_PREDICATE);
 
         deactivate(startDate);
 

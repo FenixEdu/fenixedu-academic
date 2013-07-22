@@ -18,7 +18,8 @@ import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.SpacePredicates;
 
 public class WrittenEvaluationSpaceOccupation extends WrittenEvaluationSpaceOccupation_Base {
 
@@ -55,8 +56,8 @@ public class WrittenEvaluationSpaceOccupation extends WrittenEvaluationSpaceOccu
     }
 
     @Override
-    @Checked("SpacePredicates.checkPermissionsToManageWrittenEvaluationSpaceOccupations")
     public void delete() {
+        check(this, SpacePredicates.checkPermissionsToManageWrittenEvaluationSpaceOccupations);
         if (canBeDeleted()) {
             super.delete();
         }

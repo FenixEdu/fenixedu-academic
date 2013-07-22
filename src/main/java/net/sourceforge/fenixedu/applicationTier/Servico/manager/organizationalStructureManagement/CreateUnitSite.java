@@ -7,14 +7,15 @@ import net.sourceforge.fenixedu.applicationTier.Servico.manager.messaging.announ
 import net.sourceforge.fenixedu.domain.UnitBoardPermittedGroupType;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 
 public class CreateUnitSite {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     @Atomic
     public static void run(Unit unit) throws FenixServiceException {
+        check(RolePredicates.MANAGER_PREDICATE);
         unit.initializeSite();
         createBoards(unit);
     }

@@ -9,7 +9,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
@@ -22,9 +23,9 @@ public class ConfirmAttributionOfFinalDegreeWork {
         super();
     }
 
-    @Checked("RolePredicates.STUDENT_PREDICATE")
     @Atomic
     public static Boolean run(String username, String selectedGroupProposalOID) throws FenixServiceException {
+        check(RolePredicates.STUDENT_PREDICATE);
         GroupProposal groupProposal = FenixFramework.getDomainObject(selectedGroupProposalOID);
 
         if (groupProposal != null) {

@@ -12,46 +12,47 @@ import net.sourceforge.fenixedu.domain.research.activity.Participation;
 import net.sourceforge.fenixedu.domain.research.activity.ResearchEvent;
 import net.sourceforge.fenixedu.domain.research.activity.ScientificJournal;
 import net.sourceforge.fenixedu.domain.research.activity.ScientificJournalParticipation;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.ResultPredicates;
 import pt.ist.fenixframework.Atomic;
 
 public class RemoveResearchActivityParticipation {
 
-    @Checked("ResultPredicates.author")
     @Atomic
     public static void run(EventParticipation participation) {
+        check(ResultPredicates.author);
         ResearchEvent event = participation.getEvent();
         participation.delete();
         event.sweep();
     }
 
-    @Checked("ResultPredicates.author")
     @Atomic
     public static void run(ScientificJournalParticipation participation) {
+        check(ResultPredicates.author);
         ScientificJournal journal = participation.getScientificJournal();
         participation.delete();
         journal.sweep();
     }
 
-    @Checked("ResultPredicates.author")
     @Atomic
     public static void run(EventEditionParticipation participation) {
+        check(ResultPredicates.author);
         EventEdition edition = participation.getEventEdition();
         participation.delete();
         edition.sweep();
     }
 
-    @Checked("ResultPredicates.author")
     @Atomic
     public static void run(JournalIssueParticipation participation) {
+        check(ResultPredicates.author);
         JournalIssue issue = participation.getJournalIssue();
         participation.delete();
         issue.sweep();
     }
 
-    @Checked("ResultPredicates.author")
     @Atomic
     public static void run(CooperationParticipation participation) {
+        check(ResultPredicates.author);
         Cooperation cooperation = participation.getCooperation();
         participation.delete();
         cooperation.sweet();

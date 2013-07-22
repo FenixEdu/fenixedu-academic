@@ -10,7 +10,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 
 import org.apache.commons.beanutils.PropertyUtils;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.DomainObject;
 import pt.ist.fenixframework.core.WriteOnReadError;
@@ -21,9 +22,9 @@ import pt.ist.fenixframework.core.WriteOnReadError;
  */
 public class TransferDomainObjectProperty {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     @Atomic
     public static void run(DomainObject srcObject, DomainObject dstObject, String slotName) throws FenixServiceException {
+        check(RolePredicates.MANAGER_PREDICATE);
         try {
             Object srcProperty = PropertyUtils.getSimpleProperty(srcObject, slotName);
 

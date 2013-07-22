@@ -15,7 +15,8 @@ import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.lang.StringUtils;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.ResourceAllocationRolePredicates;
 
 public class ResourceAllocationRole extends ResourceAllocationRole_Base {
 
@@ -123,9 +124,9 @@ public class ResourceAllocationRole extends ResourceAllocationRole_Base {
         }
     }
 
-    @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageAccessGroups")
     public void addOrRemovePersonFromAccessGroup(String expression, ResourceAllocationAccessGroupType accessGroupType,
             boolean toAdd) {
+        check(this, ResourceAllocationRolePredicates.checkPermissionsToManageAccessGroups);
 
         if (StringUtils.isEmpty(expression)) {
             throw new DomainException("error.ResourceAllocation.access.groups.management.no.person");

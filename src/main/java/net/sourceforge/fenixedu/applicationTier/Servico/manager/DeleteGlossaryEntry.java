@@ -5,7 +5,8 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import net.sourceforge.fenixedu.domain.support.GlossaryEntry;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
@@ -14,9 +15,9 @@ import pt.ist.fenixframework.FenixFramework;
  */
 public class DeleteGlossaryEntry {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     @Atomic
     public static void run(String entryId) {
+        check(RolePredicates.MANAGER_PREDICATE);
         FenixFramework.<GlossaryEntry> getDomainObject(entryId).delete();
     }
 

@@ -2,7 +2,8 @@ package net.sourceforge.fenixedu.domain.degreeStructure;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 
 public class BranchCourseGroup extends BranchCourseGroup_Base {
 
@@ -10,8 +11,8 @@ public class BranchCourseGroup extends BranchCourseGroup_Base {
         super();
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     public BranchCourseGroup(final String name, final String nameEn, final BranchType branchType) {
+        check(this, RolePredicates.MANAGER_PREDICATE);
         super.init(name, nameEn);
         String[] args = {};
         if (branchType == null) {

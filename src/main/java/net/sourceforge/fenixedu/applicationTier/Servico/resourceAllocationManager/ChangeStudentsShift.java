@@ -16,16 +16,17 @@ import net.sourceforge.fenixedu.domain.util.email.ConcreteReplyTo;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.Sender;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class ChangeStudentsShift {
 
     @Atomic
-    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
     public static void run(IUserView userView, String oldShiftId, String newShiftId, final Set<Registration> registrations)
             throws FenixServiceException {
+        check(RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE);
 
         final Shift oldShift = FenixFramework.getDomainObject(oldShiftId);
         final Shift newShift = FenixFramework.getDomainObject(newShiftId);

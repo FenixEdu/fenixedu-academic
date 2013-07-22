@@ -3,7 +3,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities
 
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.functionalities.ExpressionGroupAvailability;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 
 /**
@@ -14,9 +15,9 @@ import pt.ist.fenixframework.Atomic;
  */
 public class CreateGroupAvailability {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     @Atomic
     public static ExpressionGroupAvailability run(Content functionality, String expression) {
+        check(RolePredicates.MANAGER_PREDICATE);
         if (!isEmpty(expression)) {
             return new ExpressionGroupAvailability(functionality, expression);
         } else {

@@ -19,7 +19,8 @@ import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.AcademicPredicates;
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -196,9 +197,9 @@ public abstract class PostingRule extends PostingRule_Base {
         throw new DomainException("error.accounting.agreement.postingRule.cannot.modify.eventType");
     }
 
-    @Checked("AcademicPredicates.MANAGE_PAYMENTS")
     @Override
     public void setStartDate(DateTime startDate) {
+        check(this, AcademicPredicates.MANAGE_PAYMENTS);
         super.setStartDate(startDate);
     }
 
@@ -219,8 +220,8 @@ public abstract class PostingRule extends PostingRule_Base {
         super.setEndDate(when.minus(10000));
     }
 
-    @Checked("AcademicPredicates.MANAGE_PAYMENTS")
     public final void delete() {
+        check(this, AcademicPredicates.MANAGE_PAYMENTS);
         super.setServiceAgreementTemplate(null);
         setRootDomainObject(null);
         removeOtherRelations();

@@ -12,15 +12,16 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class ReadCompetenceCoursesByDepartment {
 
-    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Atomic
     public static List<InfoCompetenceCourse> run(String departmentID) throws NotExistingServiceException {
+        check(RolePredicates.MANAGER_OR_OPERATOR_PREDICATE);
 
         final List<InfoCompetenceCourse> result = new ArrayList<InfoCompetenceCourse>();
         if (departmentID != null) {

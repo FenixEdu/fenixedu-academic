@@ -12,19 +12,20 @@ import net.sourceforge.fenixedu.domain.space.Campus;
 
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class EditUnit {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     @Atomic
     public static void run(String unitID, MultiLanguageString unitName, String unitNameCard, String unitCostCenter,
             String acronym, YearMonthDay begin, YearMonthDay end, String departmentID, String degreeID,
             String administrativeOfficeID, String webAddress, UnitClassification classification,
             Boolean canBeResponsibleOfSpaces, String campusID) throws FenixServiceException, DomainException {
+        check(RolePredicates.MANAGER_PREDICATE);
 
         ServiceMonitoring.logService(EditUnit.class, unitID, unitName, unitNameCard, unitCostCenter, acronym, begin, end,
                 departmentID, degreeID, administrativeOfficeID, webAddress, classification, canBeResponsibleOfSpaces, campusID);

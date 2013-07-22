@@ -21,7 +21,8 @@ import net.sourceforge.fenixedu.util.Money;
 import org.apache.commons.collections.CollectionUtils;
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 abstract public class PaymentPlan extends PaymentPlan_Base {
@@ -357,8 +358,8 @@ abstract public class PaymentPlan extends PaymentPlan_Base {
 
     abstract public ServiceAgreementTemplate getServiceAgreementTemplate();
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     public void delete() {
+        check(this, RolePredicates.MANAGER_PREDICATE);
         if (!getGratuityEventsWithPaymentPlan().isEmpty()) {
             throw new DomainException("error.accounting.PaymentPlan.cannot.delete.with.already.associated.gratuity.events");
         }

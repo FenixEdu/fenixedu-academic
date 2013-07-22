@@ -4,14 +4,15 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.CreditNote;
 import net.sourceforge.fenixedu.domain.accounting.CreditNoteState;
 import net.sourceforge.fenixedu.domain.accounting.PaymentMode;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.AcademicPredicates;
 import pt.ist.fenixframework.Atomic;
 
 public class ChangeCreditNoteState {
 
-    @Checked("AcademicPredicates.MANAGE_STUDENT_PAYMENTS")
     @Atomic
     public static void run(final Person responsible, final CreditNote creditNote, final CreditNoteState state) {
+        check(AcademicPredicates.MANAGE_STUDENT_PAYMENTS);
         creditNote.changeState(responsible, PaymentMode.CASH, state);
     }
 

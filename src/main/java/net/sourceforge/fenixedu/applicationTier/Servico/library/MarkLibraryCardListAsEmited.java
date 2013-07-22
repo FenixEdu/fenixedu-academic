@@ -6,14 +6,15 @@ import net.sourceforge.fenixedu.dataTransferObject.library.LibraryCardDTO;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 
 public class MarkLibraryCardListAsEmited {
 
-    @Checked("RolePredicates.LIBRARY_PREDICATE")
     @Atomic
     public static void run(List<LibraryCardDTO> libraryCardList) {
+        check(RolePredicates.LIBRARY_PREDICATE);
         for (LibraryCardDTO libraryCardDTO : libraryCardList) {
             libraryCardDTO.getLibraryCard().setCardEmitionDate(new DateTime());
         }

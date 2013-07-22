@@ -25,7 +25,8 @@ import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.WrittenTestPredicates;
 
 /**
  * @author Ana e Ricardo
@@ -76,8 +77,8 @@ public class WrittenTest extends WrittenTest_Base {
     }
 
     @Override
-    @Checked("WrittenTestPredicates.changeDatePredicate")
     public void setDayDate(Date date) {
+        check(this, WrittenTestPredicates.changeDatePredicate);
         final IUserView requestor = AccessControl.getUserView();
         if (hasTimeTableManagerPrivledges(requestor) || hasCoordinatorPrivledges(requestor) || isTeacher(requestor)
                 && allowedPeriod(date)) {

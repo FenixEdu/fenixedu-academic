@@ -10,7 +10,8 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.project.Project;
 import net.sourceforge.fenixedu.domain.research.project.ProjectParticipation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.ResultPredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
@@ -30,10 +31,10 @@ public class CreateProjectParticipant {
      * @throws FenixServiceException
      *             - In case the project doesn't exist.
      */
-    @Checked("ResultPredicates.author")
     @Atomic
     public static ProjectParticipation run(ProjectParticipantSimpleCreationBean bean, String projectId)
             throws FenixServiceException {
+        check(ResultPredicates.author);
         ProjectParticipation participation = null;
         final Project project = FenixFramework.getDomainObject(projectId);
         if (project == null) {
@@ -61,10 +62,10 @@ public class CreateProjectParticipant {
      * @throws FenixServiceException
      *             - In case the project doesn't exist.
      */
-    @Checked("ResultPredicates.author")
     @Atomic
     public static ProjectParticipation run(ProjectParticipantFullCreationBean bean, String projectId)
             throws FenixServiceException {
+        check(ResultPredicates.author);
         final ProjectParticipation participation;
         final ExternalContract externalPerson;
 
@@ -95,10 +96,10 @@ public class CreateProjectParticipant {
         return participation;
     }
 
-    @Checked("ResultPredicates.author")
     @Atomic
     public static ProjectParticipation run(ProjectParticipantUnitCreationBean bean, String projectId)
             throws FenixServiceException {
+        check(ResultPredicates.author);
         final ProjectParticipation participation;
         final Unit unit;
 

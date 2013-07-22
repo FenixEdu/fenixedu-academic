@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.Collator;
@@ -24,6 +26,7 @@ import net.sourceforge.fenixedu.domain.util.email.ExecutionCourseSender;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.predicates.ResourceAllocationRolePredicates;
 import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.WeekDay;
@@ -31,7 +34,6 @@ import net.sourceforge.fenixedu.util.WeekDay;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.Duration;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
@@ -68,8 +70,8 @@ public class Shift extends Shift_Base {
         Registration.getRelationShiftStudent().addListener(new ShiftStudentListener());
     }
 
-    @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageShifts")
     public Shift(final ExecutionCourse executionCourse, Collection<ShiftType> types, final Integer lotacao) {
+//        check(this, ResourceAllocationRolePredicates.checkPermissionsToManageShifts);
         super();
         setRootDomainObject(RootDomainObject.getInstance());
         shiftTypeManagement(types, executionCourse);
@@ -81,9 +83,9 @@ public class Shift extends Shift_Base {
         }
     }
 
-    @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageShifts")
     public void edit(List<ShiftType> newTypes, Integer newCapacity, ExecutionCourse newExecutionCourse, String newName,
             String comment) {
+        check(this, ResourceAllocationRolePredicates.checkPermissionsToManageShifts);
 
         ExecutionCourse beforeExecutionCourse = getExecutionCourse();
 
@@ -122,8 +124,8 @@ public class Shift extends Shift_Base {
         return Collections.unmodifiableSet(result);
     }
 
-    @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageShifts")
     public void delete() {
+        check(this, ResourceAllocationRolePredicates.checkPermissionsToManageShifts);
         if (canBeDeleted()) {
 
             final ExecutionCourse executionCourse = getExecutionCourse();
@@ -762,4 +764,3 @@ public class Shift extends Shift_Base {
     }
 
 }
-

@@ -17,7 +17,8 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.ContextPredicates;
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 public class Context extends Context_Base implements Comparable<Context> {
@@ -221,20 +222,20 @@ public class Context extends Context_Base implements Comparable<Context> {
     }
 
     @Override
-    @Checked("ContextPredicates.curricularPlanMemberWritePredicate")
     public void setParentCourseGroup(CourseGroup courseGroup) {
+        check(this, ContextPredicates.curricularPlanMemberWritePredicate);
         super.setParentCourseGroup(courseGroup);
     }
 
     @Override
-    @Checked("ContextPredicates.curricularPlanMemberWritePredicate")
     public void setCurricularPeriod(CurricularPeriod curricularPeriod) {
+        check(this, ContextPredicates.curricularPlanMemberWritePredicate);
         super.setCurricularPeriod(curricularPeriod);
     }
 
     @Override
-    @Checked("ContextPredicates.curricularPlanMemberWritePredicate")
     public void setChildDegreeModule(DegreeModule degreeModule) {
+        check(this, ContextPredicates.curricularPlanMemberWritePredicate);
         super.setChildDegreeModule(degreeModule);
     }
 

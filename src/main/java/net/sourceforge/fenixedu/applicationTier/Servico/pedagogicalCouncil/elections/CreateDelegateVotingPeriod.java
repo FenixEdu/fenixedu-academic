@@ -9,15 +9,16 @@ import net.sourceforge.fenixedu.domain.elections.DelegateElection;
 import net.sourceforge.fenixedu.domain.elections.DelegateElectionVotingPeriod;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Student;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class CreateDelegateVotingPeriod {
 
-    @Checked("RolePredicates.PEDAGOGICAL_COUNCIL_PREDICATE")
     @Atomic
     public static void run(ElectionPeriodBean bean) throws FenixServiceException {
+        check(RolePredicates.PEDAGOGICAL_COUNCIL_PREDICATE);
 
         try {
             DelegateElection election = bean.getElection();
@@ -31,9 +32,9 @@ public class CreateDelegateVotingPeriod {
         }
     }
 
-    @Checked("RolePredicates.PEDAGOGICAL_COUNCIL_PREDICATE")
     @Atomic
     public static void run(ElectionPeriodBean bean, String degreeOID) throws FenixServiceException {
+        check(RolePredicates.PEDAGOGICAL_COUNCIL_PREDICATE);
         final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
         final Degree degree = FenixFramework.getDomainObject(degreeOID);
 
@@ -45,10 +46,10 @@ public class CreateDelegateVotingPeriod {
 
     }
 
-    @Checked("RolePredicates.PEDAGOGICAL_COUNCIL_PREDICATE")
     @Atomic
     public static void run(ElectionPeriodBean bean, NewRoundElectionBean newRoundElectionsCandidatesBean,
             NewRoundElectionBean newRoundElectionsNotCandidatesBean) throws FenixServiceException {
+        check(RolePredicates.PEDAGOGICAL_COUNCIL_PREDICATE);
 
         run(bean);
         // Gets a new period. This period have been created by method "run"

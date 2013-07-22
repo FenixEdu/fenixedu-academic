@@ -16,15 +16,16 @@ import net.sourceforge.fenixedu.domain.Shift;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class ReadShiftsByClass {
 
-    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
     @Atomic
     public static Object run(InfoClass infoClass) {
+        check(RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE);
         SchoolClass schoolClass = FenixFramework.getDomainObject(infoClass.getExternalId());
 
         Collection<Shift> shifts = schoolClass.getAssociatedShifts();

@@ -80,7 +80,8 @@ import org.joda.time.YearMonthDay;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.StudentPredicates;import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 
 public class Student extends Student_Base {
@@ -890,10 +891,10 @@ public class Student extends Student_Base {
         return enrolments.isEmpty() ? null : enrolments.last();
     }
 
-    @Checked("RolePredicates.STUDENT_PREDICATE")
     @Atomic
     public void setSpentTimeInPeriodForInquiry(List<CurricularCourseInquiriesRegistryDTO> courses, Integer weeklySpentHours,
             ExecutionSemester executionSemester) {
+        check(this, RolePredicates.STUDENT_PREDICATE);
 
         if (!StudentInquiryRegistry.checkTotalPercentageDistribution(courses)) {
             throw new DomainException("error.weeklyHoursSpentPercentage.is.not.100.percent");
@@ -949,10 +950,10 @@ public class Student extends Student_Base {
         return inquiryTemplate == null ? null : getStudentInquiryExecutionPeriod(inquiryTemplate.getExecutionPeriod());
     }
 
-    @Checked("RolePredicates.STUDENT_PREDICATE")
     @Atomic
     public Collection<StudentInquiryRegistry> retrieveAndCreateMissingInquiryRegistriesForPeriod(
             ExecutionSemester executionSemester) {
+        check(this, RolePredicates.STUDENT_PREDICATE);
         final Map<ExecutionCourse, StudentInquiryRegistry> coursesToAnswer =
                 getExistingStudentInquiryRegistryMap(executionSemester);
 
@@ -1160,8 +1161,8 @@ public class Student extends Student_Base {
         return false;
     }
 
-    @Checked("StudentPredicates.checkIfLoggedPersonIsStudentOwnerOrManager")
     public List<Registration> getTransitionRegistrations() {
+        check(this, StudentPredicates.checkIfLoggedPersonIsStudentOwnerOrManager);
         final List<Registration> result = new ArrayList<Registration>();
         for (final Registration registration : super.getRegistrationsSet()) {
             if (registration.isTransition()) {
@@ -1171,8 +1172,8 @@ public class Student extends Student_Base {
         return result;
     }
 
-    @Checked("StudentPredicates.checkIfLoggedPersonIsCoordinator")
     public List<Registration> getTransitionRegistrationsForDegreeCurricularPlansManagedByCoordinator(final Person coordinator) {
+        check(this, StudentPredicates.checkIfLoggedPersonIsCoordinator);
         final List<Registration> result = new ArrayList<Registration>();
         for (final Registration registration : super.getRegistrationsSet()) {
             if (registration.isTransition()
@@ -1184,8 +1185,8 @@ public class Student extends Student_Base {
         return result;
     }
 
-    @Checked("StudentPredicates.checkIfLoggedPersonIsStudentOwnerOrManager")
     public List<Registration> getTransitedRegistrations() {
+        check(this, StudentPredicates.checkIfLoggedPersonIsStudentOwnerOrManager);
         List<Registration> result = new ArrayList<Registration>();
         for (Registration registration : super.getRegistrationsSet()) {
             if (registration.isTransited()) {

@@ -7,7 +7,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.CantDeleteSer
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
@@ -16,9 +17,9 @@ import pt.ist.fenixframework.FenixFramework;
  */
 public class DeleteCurricularCourseScope {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     @Atomic
     public static void run(String scopeId) throws FenixServiceException {
+        check(RolePredicates.MANAGER_PREDICATE);
         CurricularCourseScope scope = FenixFramework.getDomainObject(scopeId);
         if (scope != null) {
 

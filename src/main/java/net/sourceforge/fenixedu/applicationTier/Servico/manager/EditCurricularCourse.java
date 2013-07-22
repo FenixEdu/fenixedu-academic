@@ -13,7 +13,8 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
@@ -25,9 +26,9 @@ public class EditCurricularCourse {
     public EditCurricularCourse() {
     }
 
-    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Atomic
     public static void run(InfoCurricularCourseEditor newInfoCurricularCourse) throws FenixServiceException {
+        check(RolePredicates.MANAGER_OR_OPERATOR_PREDICATE);
         CurricularCourse oldCurricularCourse = null;
         String newName = null;
         String newNameEn = null;

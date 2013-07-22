@@ -13,7 +13,8 @@ import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class Entry extends Entry_Base {
@@ -189,8 +190,8 @@ public class Entry extends Entry_Base {
         return false;
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     void delete() {
+        check(this, RolePredicates.MANAGER_PREDICATE);
         if (!canBeDeleted()) {
             throw new DomainException("error.accounting.Entry.belongs.to.receipt");
         }

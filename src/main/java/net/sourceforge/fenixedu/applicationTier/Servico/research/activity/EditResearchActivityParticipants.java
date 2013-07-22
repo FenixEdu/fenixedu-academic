@@ -7,15 +7,16 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.research.activity.ResearchActivityParticipantEditionBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.research.activity.Participation;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.ResultPredicates;
 import pt.ist.fenixframework.Atomic;
 
 public class EditResearchActivityParticipants {
 
-    @Checked("ResultPredicates.author")
     @Atomic
     public static List<ResearchActivityParticipantEditionBean> run(List<ResearchActivityParticipantEditionBean> beans)
             throws FenixServiceException {
+        check(ResultPredicates.author);
 
         List<ResearchActivityParticipantEditionBean> notEditedParticipants =
                 new ArrayList<ResearchActivityParticipantEditionBean>();

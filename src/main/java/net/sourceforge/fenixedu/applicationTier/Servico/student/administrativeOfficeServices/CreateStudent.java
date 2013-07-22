@@ -16,7 +16,8 @@ import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.student.PersonalIngressionData;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.AcademicPredicates;
 import pt.ist.fenixframework.Atomic;
 
 /**
@@ -26,11 +27,11 @@ import pt.ist.fenixframework.Atomic;
  */
 public class CreateStudent {
 
-    @Checked("AcademicPredicates.CREATE_REGISTRATION")
     @Atomic
     public static Registration run(PersonBean personBean, ExecutionDegreeBean executionDegreeBean,
             PrecedentDegreeInformationBean precedentDegreeInformationBean, IngressionInformationBean ingressionInformationBean,
             OriginInformationBean originInformationBean) {
+        check(AcademicPredicates.CREATE_REGISTRATION);
 
         // get or update person
         Person person = getPerson(personBean);

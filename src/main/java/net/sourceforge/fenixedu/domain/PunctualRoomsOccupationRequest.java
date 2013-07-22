@@ -14,7 +14,6 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class PunctualRoomsOccupationRequest extends PunctualRoomsOccupationRequest_Base {
@@ -33,8 +32,8 @@ public class PunctualRoomsOccupationRequest extends PunctualRoomsOccupationReque
         ((ComparatorChain) COMPARATOR_BY_INSTANT).addComparator(DomainObjectUtil.COMPARATOR_BY_ID);
     }
 
-    @Checked("ResourceAllocationRolePredicates.checkPermissionsToManagePunctualRoomsOccupationRequests")
     public PunctualRoomsOccupationRequest(Person requestor, MultiLanguageString subject, MultiLanguageString description) {
+//        check(this, ResourceAllocationRolePredicates.checkPermissionsToManagePunctualRoomsOccupationRequests);
         super();
         checkIfRequestAlreadyExists(requestor, subject, description);
         setRootDomainObject(RootDomainObject.getInstance());

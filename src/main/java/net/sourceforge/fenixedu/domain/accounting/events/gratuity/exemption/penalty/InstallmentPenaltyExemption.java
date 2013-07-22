@@ -10,7 +10,8 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 public class InstallmentPenaltyExemption extends InstallmentPenaltyExemption_Base {
@@ -68,9 +69,9 @@ public class InstallmentPenaltyExemption extends InstallmentPenaltyExemption_Bas
         }
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     @Override
     public void setInstallment(Installment installment) {
+        check(this, RolePredicates.MANAGER_PREDICATE);
         super.setInstallment(installment);
     }
 

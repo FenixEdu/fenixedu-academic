@@ -21,7 +21,8 @@ import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.Prese
 
 import org.apache.commons.beanutils.BeanComparator;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
@@ -31,9 +32,9 @@ import pt.ist.fenixframework.FenixFramework;
  */
 public class InsertGratuityData {
 
-    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Atomic
     public static Object run(InfoGratuityValues infoGratuityValues) throws FenixServiceException {
+        check(RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE);
         if (infoGratuityValues == null) {
             throw new FenixServiceException("impossible.insertGratuityValues");
         }

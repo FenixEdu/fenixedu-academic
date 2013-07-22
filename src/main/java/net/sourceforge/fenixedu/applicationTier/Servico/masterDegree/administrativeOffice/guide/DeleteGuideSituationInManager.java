@@ -1,7 +1,8 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide;
 
 import net.sourceforge.fenixedu.domain.GuideSituation;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
@@ -12,9 +13,9 @@ import pt.ist.fenixframework.FenixFramework;
  */
 public class DeleteGuideSituationInManager {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     @Atomic
     public static void run(String guideSituationID) {
+        check(RolePredicates.MANAGER_PREDICATE);
         GuideSituation guideSituation = FenixFramework.getDomainObject(guideSituationID);
         guideSituation.delete();
     }

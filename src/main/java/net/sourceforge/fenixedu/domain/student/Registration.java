@@ -122,8 +122,9 @@ import org.joda.time.YearMonthDay;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RegistrationPredicates;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class Registration extends Registration_Base {
@@ -2848,8 +2849,8 @@ public class Registration extends Registration_Base {
         getConclusionProcess().update(editor, finalAverage, average, conclusion.toLocalDate(), notes);
     }
 
-    @Checked("RegistrationPredicates.MANAGE_CONCLUSION_PROCESS")
     public void conclude(final CycleCurriculumGroup cycleCurriculumGroup) {
+        check(this, RegistrationPredicates.MANAGE_CONCLUSION_PROCESS);
         if (!isBolonha()) {
             throw new DomainException("error.Registration.cannot.apply.to.preBolonha");
         }
@@ -3586,8 +3587,8 @@ public class Registration extends Registration_Base {
 
     }
 
-    @Checked("RegistrationPredicates.TRANSIT_TO_BOLONHA")
     public void transitToBolonha(final Person person, final DateTime when) {
+        check(this, RegistrationPredicates.TRANSIT_TO_BOLONHA);
 
         if (!isActive()) {
             throw new DomainException("error.student.Registration.cannot.transit.non.active.registrations");

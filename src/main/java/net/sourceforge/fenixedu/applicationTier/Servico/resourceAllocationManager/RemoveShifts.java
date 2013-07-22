@@ -6,15 +6,16 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class RemoveShifts {
 
-    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
     @Atomic
     public static Boolean run(final InfoClass infoClass, final List<String> shiftOIDs) {
+        check(RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE);
         final SchoolClass schoolClass = FenixFramework.getDomainObject(infoClass.getExternalId());
         final Collection<Shift> shifts = schoolClass.getAssociatedShiftsSet();
 

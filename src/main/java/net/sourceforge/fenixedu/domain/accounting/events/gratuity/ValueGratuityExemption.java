@@ -11,7 +11,8 @@ import net.sourceforge.fenixedu.util.Money;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 
 public class ValueGratuityExemption extends ValueGratuityExemption_Base {
 
@@ -43,9 +44,9 @@ public class ValueGratuityExemption extends ValueGratuityExemption_Base {
         }
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     @Override
     public void setValue(Money value) {
+        check(this, RolePredicates.MANAGER_PREDICATE);
         super.setValue(value);
         final DateTime now = new DateTime();
         getGratuityEvent().forceChangeState(EventState.OPEN, now);

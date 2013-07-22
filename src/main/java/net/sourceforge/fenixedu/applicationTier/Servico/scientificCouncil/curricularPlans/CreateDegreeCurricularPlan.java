@@ -6,15 +6,16 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class CreateDegreeCurricularPlan {
 
-    @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
     @Atomic
     public static void run(String degreeId, String name, GradeScale gradeScale) throws FenixServiceException {
+        check(RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE);
 
         if (degreeId == null || name == null) {
             throw new InvalidArgumentsServiceException();

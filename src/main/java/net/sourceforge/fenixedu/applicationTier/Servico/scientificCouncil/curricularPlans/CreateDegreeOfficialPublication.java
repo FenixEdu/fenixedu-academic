@@ -8,7 +8,8 @@ import net.sourceforge.fenixedu.domain.DegreeOfficialPublication;
 
 import org.joda.time.LocalDate;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 
 public class CreateDegreeOfficialPublication {
@@ -20,9 +21,9 @@ public class CreateDegreeOfficialPublication {
      * @param date
      * @throws FenixServiceException
      */
-    @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
     @Atomic
     public static void run(Degree degree, LocalDate date, String officialReference) throws FenixServiceException {
+        check(RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE);
 
         if (degree == null || date == null) {
             throw new InvalidArgumentsServiceException();

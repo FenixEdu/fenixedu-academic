@@ -17,7 +17,8 @@ import net.sourceforge.fenixedu.domain.teacher.ExternalActivity;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 
 /**
@@ -27,9 +28,9 @@ import pt.ist.fenixframework.Atomic;
  */
 public class ReadExternalActivities {
 
-    @Checked("RolePredicates.TEACHER_PREDICATE")
     @Atomic
     public static SiteView run(String user) {
+        check(RolePredicates.TEACHER_PREDICATE);
         Teacher teacher = Teacher.readTeacherByUsername(user);
         InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(teacher);
 

@@ -42,7 +42,8 @@ import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -104,8 +105,8 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
         }
     }
 
-    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     public void editPeriod(YearMonthDay begin, YearMonthDay end) throws DomainException {
+        check(this, RolePredicates.MANAGER_OR_OPERATOR_PREDICATE);
         if (begin == null || end == null || end.isBefore(begin)) {
             throw new DomainException("error.ExecutionPeriod.invalid.dates");
         }

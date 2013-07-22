@@ -5,7 +5,8 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
 import net.sourceforge.fenixedu.util.Month;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.ResultPredicates;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 import bibtex.dom.BibtexEntry;
 import bibtex.dom.BibtexFile;
@@ -38,10 +39,10 @@ public class TechnicalReport extends TechnicalReport_Base {
                 month, url);
     }
 
-    @Checked("ResultPredicates.writePredicate")
     public void setEditAll(String title, MultiLanguageString keywords, String institution, Integer year,
             String technicalReportType, String number, String address, MultiLanguageString note, Integer numberPages,
             String language, Month month, String url) {
+        check(this, ResultPredicates.writePredicate);
         super.checkRequiredParameters(keywords, note);
         checkRequiredParameters(title, institution, year);
         fillAllAttributes(title, keywords, institution, year, technicalReportType, number, address, note, numberPages, language,

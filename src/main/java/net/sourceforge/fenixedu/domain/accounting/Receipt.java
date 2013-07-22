@@ -24,7 +24,8 @@ import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.AcademicPredicates;import net.sourceforge.fenixedu.predicates.RolePredicates;
 
 public class Receipt extends Receipt_Base {
 
@@ -347,15 +348,15 @@ public class Receipt extends Receipt_Base {
         return result;
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     public void deleteReceiptPrintVersions() {
+        check(this, RolePredicates.MANAGER_PREDICATE);
         for (; hasAnyReceiptsVersions(); getReceiptsVersions().iterator().next().delete()) {
             ;
         }
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     public void delete() {
+        check(this, RolePredicates.MANAGER_PREDICATE);
 
         if (!canBeDeleted()) {
             throw new DomainException("error.accounting.Receipt.cannot.be.deleted");
@@ -395,8 +396,8 @@ public class Receipt extends Receipt_Base {
         return super.getNumber();
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     public void changeContributor(final Party contributor) {
+        check(this, RolePredicates.MANAGER_PREDICATE);
         super.setContributorParty(contributor);
     }
 
@@ -412,16 +413,16 @@ public class Receipt extends Receipt_Base {
 
     }
 
-    @Checked("AcademicPredicates.MANAGE_STUDENT_PAYMENTS")
     public void edit(final Person responsible, final Party contributorParty, final String contributorName) {
+        check(this, AcademicPredicates.MANAGE_STUDENT_PAYMENTS);
         markChange(responsible);
         checkContributorParameters(contributorParty, contributorName);
         super.setContributorParty(contributorParty);
         super.setContributorName(contributorName);
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     public void changeStateAndEntries(final ReceiptState state, final Set<Entry> newEntries) {
+        check(this, RolePredicates.MANAGER_PREDICATE);
 
         super.setState(state);
 

@@ -5,14 +5,15 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.elections.YearDelegateElection;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Student;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 
 public class RemoveCandidateYearDelegateElections {
 
-    @Checked("RolePredicates.STUDENT_PREDICATE")
     @Atomic
     public static void run(YearDelegateElection yearDelegateElection, Student student) throws FenixServiceException {
+        check(RolePredicates.STUDENT_PREDICATE);
 
         try {
             yearDelegateElection.removeCandidates(student);

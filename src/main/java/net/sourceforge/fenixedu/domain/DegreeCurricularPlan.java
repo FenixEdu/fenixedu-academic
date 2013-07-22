@@ -63,7 +63,8 @@ import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.DegreeCurricularPlanPredicates;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -1182,44 +1183,44 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     @Override
-    @Checked("DegreeCurricularPlanPredicates.scientificCouncilWritePredicate")
     public void setCurricularPlanMembersGroup(Group curricularPlanMembersGroup) {
+        check(this, DegreeCurricularPlanPredicates.scientificCouncilWritePredicate);
         super.setCurricularPlanMembersGroup(curricularPlanMembersGroup);
     }
 
     @Override
-    @Checked("DegreeCurricularPlanPredicates.scientificCouncilWritePredicate")
     public void setCurricularStage(CurricularStage curricularStage) {
+        check(this, DegreeCurricularPlanPredicates.scientificCouncilWritePredicate);
         super.setCurricularStage(curricularStage);
     }
 
     @Override
-    @Checked("DegreeCurricularPlanPredicates.scientificCouncilWritePredicate")
     public void setDegree(Degree degree) {
+        check(this, DegreeCurricularPlanPredicates.scientificCouncilWritePredicate);
         super.setDegree(degree);
     }
 
     @Override
-    @Checked("DegreeCurricularPlanPredicates.scientificCouncilWritePredicate")
     public void setRoot(RootCourseGroup courseGroup) {
+        check(this, DegreeCurricularPlanPredicates.scientificCouncilWritePredicate);
         super.setRoot(courseGroup);
     }
 
     @Override
-    @Checked("DegreeCurricularPlanPredicates.scientificCouncilWritePredicate")
     public void setDegreeStructure(CurricularPeriod degreeStructure) {
+        check(this, DegreeCurricularPlanPredicates.scientificCouncilWritePredicate);
         super.setDegreeStructure(degreeStructure);
     }
 
     @Override
-    @Checked("DegreeCurricularPlanPredicates.scientificCouncilWritePredicate")
     public void setGradeScale(GradeScale gradeScale) {
+        check(this, DegreeCurricularPlanPredicates.scientificCouncilWritePredicate);
         super.setGradeScale(gradeScale);
     }
 
     @Override
-    @Checked("DegreeCurricularPlanPredicates.scientificCouncilWritePredicate")
     public void setName(String name) {
+        check(this, DegreeCurricularPlanPredicates.scientificCouncilWritePredicate);
         super.setName(name);
     }
 

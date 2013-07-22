@@ -7,7 +7,8 @@ import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddressData;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddressValidation;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 
 public class PhysicalAddressBean extends PartyContactBean {
@@ -132,8 +133,8 @@ public class PhysicalAddressBean extends PartyContactBean {
     }
 
     @Override
-    @Checked("RolePredicates.PARTY_CONTACT_BEAN_PREDICATE")
     public PartyContact createNewContact() {
+        check(this, RolePredicates.PARTY_CONTACT_BEAN_PREDICATE);
         return PhysicalAddress.createPhysicalAddress(getParty(), new PhysicalAddressData(getAddress(), getAreaCode(),
                 getAreaOfAreaCode(), getArea(), getParishOfResidence(), getDistrictSubdivisionOfResidence(),
                 getDistrictOfResidence(), getCountryOfResidence()), getType(), getDefaultContact());

@@ -6,7 +6,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
@@ -17,9 +18,9 @@ import pt.ist.fenixframework.FenixFramework;
  * 
  */
 public class ReadDegreeCurricularPlanHistoryByDegreeCurricularPlanID {
-    @Checked("RolePredicates.COORDINATOR_PREDICATE")
     @Atomic
     public static InfoDegreeCurricularPlan run(String degreeCurricularPlanID) throws FenixServiceException {
+        check(RolePredicates.COORDINATOR_PREDICATE);
 
         InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
 

@@ -25,7 +25,8 @@ import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.Prese
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 import pt.ist.fenixframework.core.WriteOnReadError;
@@ -52,10 +53,10 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization {
      * payed values 3. in third, a double with the total of list's remaning
      * values
      */
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     @Atomic
     public static Object run(String executionDegreeId, String executionYearName, String persistentSupportecializationName,
             String gratuitySituationTypeName) throws FenixServiceException {
+        check(RolePredicates.MANAGER_PREDICATE);
 
         // at least one of the arguments it's obligator
         if (executionDegreeId == null && executionYearName == null) {

@@ -12,7 +12,8 @@ import net.sourceforge.fenixedu.domain.Curriculum;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
@@ -24,11 +25,11 @@ import pt.ist.fenixframework.FenixFramework;
  */
 public class InsertCurriculum {
 
-    @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
     @Atomic
     public static Boolean run(String curricularCourseId, String program, String programEn, String operacionalObjectives,
             String operacionalObjectivesEn, String generalObjectives, String generalObjectivesEn, DateTime lastModification,
             Boolean basic) throws FenixServiceException {
+        check(RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE);
 
         CurricularCourse curricularCourse = (CurricularCourse) FenixFramework.getDomainObject(curricularCourseId);
 

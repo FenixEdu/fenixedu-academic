@@ -18,7 +18,8 @@ import net.sourceforge.fenixedu.util.Money;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.EventsPredicates;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class ResidenceEvent extends ResidenceEvent_Base {
@@ -86,8 +87,8 @@ public class ResidenceEvent extends ResidenceEvent_Base {
     }
 
     @Override
-    @Checked("EventsPredicates.MANAGER_OR_RESIDENCE_UNIT_EMPLOYEE")
     public void cancel(Person responsible) {
+        check(this, EventsPredicates.MANAGER_OR_RESIDENCE_UNIT_EMPLOYEE);
         super.cancel(responsible);
     }
 

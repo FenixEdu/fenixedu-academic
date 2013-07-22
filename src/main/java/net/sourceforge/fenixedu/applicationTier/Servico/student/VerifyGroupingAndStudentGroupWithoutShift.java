@@ -10,7 +10,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.StudentGroup;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
@@ -20,10 +21,10 @@ import pt.ist.fenixframework.FenixFramework;
  */
 public class VerifyGroupingAndStudentGroupWithoutShift {
 
-    @Checked("RolePredicates.STUDENT_PREDICATE")
     @Atomic
     public static Integer run(String studentGroupCode, String groupPropertiesCode, String shiftCodeString, String username)
             throws FenixServiceException {
+        check(RolePredicates.STUDENT_PREDICATE);
         Grouping groupProperties = FenixFramework.getDomainObject(groupPropertiesCode);
 
         if (groupProperties == null) {

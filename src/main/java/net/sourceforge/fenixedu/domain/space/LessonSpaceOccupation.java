@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.space;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +11,7 @@ import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.predicates.SpacePredicates;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
@@ -16,12 +19,10 @@ import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 public class LessonSpaceOccupation extends LessonSpaceOccupation_Base {
 
-    @Checked("SpacePredicates.checkPermissionsToManageLessonSpaceOccupations")
     public LessonSpaceOccupation(AllocatableSpace allocatableSpace, Lesson lesson) {
+//        check(this, SpacePredicates.checkPermissionsToManageLessonSpaceOccupations);
 
         super();
 
@@ -44,8 +45,8 @@ public class LessonSpaceOccupation extends LessonSpaceOccupation_Base {
         setResource(allocatableSpace);
     }
 
-    @Checked("SpacePredicates.checkPermissionsToManageLessonSpaceOccupations")
     public void edit(AllocatableSpace allocatableSpace) {
+        check(this, SpacePredicates.checkPermissionsToManageLessonSpaceOccupations);
 
         if (getPeriod() == null) {
             throw new DomainException("error.LessonSpaceOccupation.empty.period");
@@ -61,8 +62,8 @@ public class LessonSpaceOccupation extends LessonSpaceOccupation_Base {
     }
 
     @Override
-    @Checked("SpacePredicates.checkPermissionsToDeleteLessonSpaceOccupations")
     public void delete() {
+        check(this, SpacePredicates.checkPermissionsToDeleteLessonSpaceOccupations);
         super.setLesson(null);
         super.delete();
     }

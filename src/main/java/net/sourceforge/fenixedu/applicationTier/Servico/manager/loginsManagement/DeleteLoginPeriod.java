@@ -2,14 +2,15 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager.loginsManagemen
 
 
 import net.sourceforge.fenixedu.domain.LoginPeriod;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 
 public class DeleteLoginPeriod {
 
-    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Atomic
     public static void run(LoginPeriod loginPeriod) {
+        check(RolePredicates.MANAGER_OR_OPERATOR_PREDICATE);
         if (loginPeriod != null) {
             loginPeriod.delete();
         }

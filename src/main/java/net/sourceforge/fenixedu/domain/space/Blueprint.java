@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.space;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -10,14 +12,12 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.FenixDomainObjectActionLogAnnotation;
+import net.sourceforge.fenixedu.predicates.SpacePredicates;
 
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 public class Blueprint extends Blueprint_Base implements Comparable<Blueprint> {
 
-    @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageBlueprints")
     @FenixDomainObjectActionLogAnnotation(actionName = "Created space blueprint", parameters = { "space", "person" })
     public Blueprint(Space space, Person person) {
         super();
@@ -29,9 +29,10 @@ public class Blueprint extends Blueprint_Base implements Comparable<Blueprint> {
         super.setValidFrom(new YearMonthDay());
     }
 
-    @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageBlueprints")
     @FenixDomainObjectActionLogAnnotation(actionName = "Deleted space blueprint", parameters = {})
     public void delete() {
+        check(this, SpacePredicates.checkIfLoggedPersonHasPermissionsToManageBlueprints);
+
         Space space = getSpace();
         refreshBlueprintsDates(space);
         super.setSpace(null);
@@ -131,13 +132,13 @@ public class Blueprint extends Blueprint_Base implements Comparable<Blueprint> {
 
     public static class BlueprintTextRectangle {
 
-        private BlueprintPoint p1;
+        private final BlueprintPoint p1;
 
-        private BlueprintPoint p2;
+        private final BlueprintPoint p2;
 
-        private BlueprintPoint p3;
+        private final BlueprintPoint p3;
 
-        private BlueprintPoint p4;
+        private final BlueprintPoint p4;
 
         public BlueprintTextRectangle(String text, double x, double y, int fontSize) {
 
@@ -171,9 +172,9 @@ public class Blueprint extends Blueprint_Base implements Comparable<Blueprint> {
 
     public static class BlueprintPoint {
 
-        private int x;
+        private final int x;
 
-        private int y;
+        private final int y;
 
         public BlueprintPoint(int x, int y) {
             this.x = x;
@@ -188,6 +189,7 @@ public class Blueprint extends Blueprint_Base implements Comparable<Blueprint> {
             return y;
         }
     }
+
     @Deprecated
     public boolean hasValidFrom() {
         return getValidFrom() != null;

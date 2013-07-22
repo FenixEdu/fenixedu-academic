@@ -23,7 +23,8 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
@@ -36,9 +37,9 @@ public class ReadStudentsWithoutGroup {
     public class NewStudentGroupAlreadyExists extends FenixServiceException {
     }
 
-    @Checked("RolePredicates.STUDENT_PREDICATE")
     @Atomic
     public static ISiteComponent run(final String groupPropertiesCode, final String username) throws FenixServiceException {
+        check(RolePredicates.STUDENT_PREDICATE);
 
         final InfoSiteStudentsWithoutGroup infoSiteStudentsWithoutGroup = new InfoSiteStudentsWithoutGroup();
         final Grouping grouping = FenixFramework.getDomainObject(groupPropertiesCode);

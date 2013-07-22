@@ -11,7 +11,8 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideWithPersonAndExecutionDegreeAndContributor;
 import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.domain.GuideState;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 
 /**
@@ -19,9 +20,9 @@ import pt.ist.fenixframework.Atomic;
  */
 public class ListGuidesByState {
 
-    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Atomic
     public static List run(Integer guideYear, GuideState situationOfGuide) throws Exception {
+        check(RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE);
         List guides = Guide.readByYearAndState(guideYear, situationOfGuide);
 
         Iterator iterator = guides.iterator();

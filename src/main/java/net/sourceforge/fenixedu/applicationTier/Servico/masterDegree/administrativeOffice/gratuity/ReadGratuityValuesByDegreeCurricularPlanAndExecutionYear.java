@@ -20,7 +20,8 @@ import net.sourceforge.fenixedu.domain.PaymentPhase;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
@@ -30,9 +31,9 @@ import pt.ist.fenixframework.FenixFramework;
  */
 public class ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear {
 
-    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Atomic
     public static Object run(String degreeCurricularPlanID, String executionYearName) throws FenixServiceException {
+        check(RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE);
         if (degreeCurricularPlanID == null || executionYearName == null) {
             throw new FenixServiceException("error.impossible.noGratuityValues");
         }

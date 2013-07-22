@@ -10,7 +10,8 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.InfoInstitution;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 
 /**
@@ -20,9 +21,9 @@ import pt.ist.fenixframework.Atomic;
 
 public class ReadInstitutions {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     @Atomic
     public static List run() {
+        check(RolePredicates.MANAGER_PREDICATE);
 
         List<Unit> institutions = UnitUtils.readAllExternalInstitutionUnits();
 

@@ -17,7 +17,8 @@ import net.sourceforge.fenixedu.domain.Person;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
@@ -26,9 +27,9 @@ import pt.ist.fenixframework.FenixFramework;
  */
 public class ChooseGuideByPersonID {
 
-    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Atomic
     public static List run(String personID) throws Exception {
+        check(RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE);
 
         // Check if person exists
         Person person = (Person) FenixFramework.getDomainObject(personID);

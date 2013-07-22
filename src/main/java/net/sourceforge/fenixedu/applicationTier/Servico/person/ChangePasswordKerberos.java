@@ -9,14 +9,15 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.kerberos.KerberosException;
 import net.sourceforge.fenixedu.util.kerberos.Script;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 
 public class ChangePasswordKerberos {
 
     @Atomic
-    @Checked("RolePredicates.PERSON_PREDICATE")
     public static void run(IUserView userView, String oldPassword, String newPassword) throws Exception {
+        check(RolePredicates.PERSON_PREDICATE);
         Person person = userView.getPerson();
 
         try {

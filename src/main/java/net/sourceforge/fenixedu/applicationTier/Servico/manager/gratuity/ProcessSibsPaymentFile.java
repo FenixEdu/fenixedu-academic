@@ -5,7 +5,8 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 
 public class ProcessSibsPaymentFile {
@@ -18,9 +19,9 @@ public class ProcessSibsPaymentFile {
      * @throws FenixServiceException
      * @throws ExcepcaoPersistencia
      */
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     @Atomic
     public static void run(String filename, List fileEntries, IUserView userView) throws FenixServiceException {
+        check(RolePredicates.MANAGER_PREDICATE);
 
         throw new UnsupportedOperationException("TO REMOVE");
         //

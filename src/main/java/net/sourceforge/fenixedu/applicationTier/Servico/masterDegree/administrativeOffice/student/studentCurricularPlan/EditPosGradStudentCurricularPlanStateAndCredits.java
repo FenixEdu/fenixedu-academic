@@ -12,17 +12,18 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class EditPosGradStudentCurricularPlanStateAndCredits {
 
-    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Atomic
     public static void run(IUserView userView, String studentCurricularPlanId, String currentState, Double credits,
             String startDate, List<String> extraCurricularOIDs, String observations, String branchId, String specialization)
             throws FenixServiceException {
+        check(RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE);
         final StudentCurricularPlan scp = FenixFramework.getDomainObject(studentCurricularPlanId);
         if (scp == null) {
             throw new InvalidArgumentsServiceException();

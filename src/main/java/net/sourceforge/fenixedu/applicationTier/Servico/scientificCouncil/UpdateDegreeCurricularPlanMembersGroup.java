@@ -13,15 +13,16 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class UpdateDegreeCurricularPlanMembersGroup {
 
-    @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
     @Atomic
     public static void run(DegreeCurricularPlan degreeCurricularPlan, String[] add, String[] remove) {
+        check(RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE);
         List<Person> toAdd = materializePersons(add);
         List<Person> toRemove = materializePersons(remove);
         List<Person> finalList = new ArrayList<Person>();

@@ -20,7 +20,8 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 
 public abstract class AnnualEvent extends AnnualEvent_Base {
 
@@ -69,9 +70,9 @@ public abstract class AnnualEvent extends AnnualEvent_Base {
         return super.getExecutionYear() == executionYear;
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     @Override
     protected void disconnect() {
+        check(this, RolePredicates.MANAGER_PREDICATE);
         super.setExecutionYear(null);
         super.disconnect();
     }

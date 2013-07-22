@@ -5,10 +5,10 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.exceptions.PhdDomainOperationException;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 
 import org.joda.time.DateTime;
-
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 public class PhdCandidacyFeedbackState extends PhdCandidacyFeedbackState_Base {
 
@@ -60,8 +60,8 @@ public class PhdCandidacyFeedbackState extends PhdCandidacyFeedbackState_Base {
         super.disconnect();
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     static public PhdCandidacyFeedbackState create(PhdCandidacyFeedbackRequestProcess process, PhdCandidacyFeedbackStateType type) {
+        AccessControl.check(RolePredicates.MANAGER_PREDICATE);
         final PhdCandidacyFeedbackState result = new PhdCandidacyFeedbackState();
 
         result.check(process, type);

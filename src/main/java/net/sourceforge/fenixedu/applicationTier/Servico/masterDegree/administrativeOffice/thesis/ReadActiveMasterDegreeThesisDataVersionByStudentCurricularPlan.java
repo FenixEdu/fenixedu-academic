@@ -8,7 +8,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeThesisDataVer
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
@@ -20,10 +21,10 @@ import pt.ist.fenixframework.FenixFramework;
  */
 public class ReadActiveMasterDegreeThesisDataVersionByStudentCurricularPlan {
 
-    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Atomic
     public static InfoMasterDegreeThesisDataVersion run(InfoStudentCurricularPlan infoStudentCurricularPlan)
             throws FenixServiceException {
+        check(RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE);
         InfoMasterDegreeThesisDataVersion infoMasterDegreeThesisDataVersion = null;
 
         StudentCurricularPlan studentCurricularPlan =

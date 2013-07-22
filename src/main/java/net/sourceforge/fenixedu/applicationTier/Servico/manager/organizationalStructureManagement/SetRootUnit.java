@@ -3,14 +3,15 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalS
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 
 public class SetRootUnit {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     @Atomic
     public static void run(final Unit unit, final Boolean institutionUnit) {
+        check(RolePredicates.MANAGER_PREDICATE);
 
         if (unit.isPlanetUnit()) {
             RootDomainObject.getInstance().setEarthUnit(unit);

@@ -17,7 +17,8 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.TeacherCredits;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 
 /**
@@ -27,10 +28,10 @@ import pt.ist.fenixframework.Atomic;
 
 public class ReadTeachersCreditsResumeByPeriodAndUnit {
 
-    @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
     @Atomic
     public static List<TeacherCreditsReportDTO> run(Unit department, ExecutionSemester fromExecutionPeriod,
             ExecutionSemester untilExecutionPeriod) throws FenixServiceException {
+        check(RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE);
         try {
             SortedSet<ExecutionSemester> executionPeriodsBetween =
                     getExecutionPeriodsBetween(fromExecutionPeriod, untilExecutionPeriod);

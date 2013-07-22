@@ -22,7 +22,8 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
@@ -31,10 +32,10 @@ import pt.ist.fenixframework.FenixFramework;
  */
 public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName {
 
-    @Checked("RolePredicates.COORDINATOR_PREDICATE")
     @Atomic
     public static InfoCurriculum run(Integer executionDegreeCode, String curricularCourseCode, String stringExecutionYear)
             throws FenixServiceException {
+        check(RolePredicates.COORDINATOR_PREDICATE);
         InfoCurriculum infoCurriculum = null;
 
         if (curricularCourseCode == null) {

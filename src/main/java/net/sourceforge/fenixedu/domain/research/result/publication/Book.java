@@ -5,7 +5,8 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
 import net.sourceforge.fenixedu.util.Month;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.ResultPredicates;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 import bibtex.dom.BibtexEntry;
 import bibtex.dom.BibtexFile;
@@ -39,10 +40,10 @@ public class Book extends Book_Base {
                 country, scope, note, month, url);
     }
 
-    @Checked("ResultPredicates.writePredicate")
     public void setEditAll(String title, MultiLanguageString keywords, String publisher, Integer year, String volume,
             String series, String address, String edition, String isbn, Integer numberPages, String language, Country country,
             ScopeType scope, MultiLanguageString note, Month month, String url) {
+        check(this, ResultPredicates.writePredicate);
         super.checkRequiredParameters(keywords, note);
         checkRequiredParameters(title, note, keywords, publisher, year);
         fillAllAttributes(title, keywords, publisher, year, volume, series, address, edition, isbn, numberPages, language,

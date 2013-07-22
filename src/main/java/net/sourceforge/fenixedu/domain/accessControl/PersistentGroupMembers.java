@@ -1,19 +1,20 @@
 package net.sourceforge.fenixedu.domain.accessControl;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+
 import java.util.Collection;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.predicates.PersistentGroupMembersPredicates;
 
 import org.apache.commons.lang.StringUtils;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 public class PersistentGroupMembers extends PersistentGroupMembers_Base {
 
-    @Checked("PersistentGroupMembersPredicates.checkPermissionsToManagePersistentGroups")
     public PersistentGroupMembers(String name, PersistentGroupMembersType type) {
+//        check(this, PersistentGroupMembersPredicates.checkPermissionsToManagePersistentGroups);
         super();
         setRootDomainObject(RootDomainObject.getInstance());
         setName(name);
@@ -21,15 +22,15 @@ public class PersistentGroupMembers extends PersistentGroupMembers_Base {
         checkIfPersistenGroupAlreadyExists(name, type);
     }
 
-    @Checked("PersistentGroupMembersPredicates.checkPermissionsToManagePersistentGroups")
     public void edit(String name, PersistentGroupMembersType type) {
+        check(this, PersistentGroupMembersPredicates.checkPermissionsToManagePersistentGroups);
         setName(name);
         setType(type);
         checkIfPersistenGroupAlreadyExists(name, type);
     }
 
-    @Checked("PersistentGroupMembersPredicates.checkPermissionsToManagePersistentGroups")
     public void delete() {
+        check(this, PersistentGroupMembersPredicates.checkPermissionsToManagePersistentGroups);
         getPersons().clear();
         if (hasUnit()) {
             getUnit().removeGroupFromUnitFiles(this);
@@ -39,8 +40,8 @@ public class PersistentGroupMembers extends PersistentGroupMembers_Base {
         deleteDomainObject();
     }
 
-    @Checked("PersistentGroupMembersPredicates.checkPermissionsToManagePersistentGroups")
     public void setNewPersonToMembersList(Person person) {
+        check(this, PersistentGroupMembersPredicates.checkPermissionsToManagePersistentGroups);
         if (person == null) {
             throw new DomainException("error.PersistentGroupMembers.empty.person");
         }
@@ -48,8 +49,8 @@ public class PersistentGroupMembers extends PersistentGroupMembers_Base {
     }
 
     @Override
-    @Checked("PersistentGroupMembersPredicates.checkPermissionsToManagePersistentGroups")
     public void removePersons(Person person) {
+        check(this, PersistentGroupMembersPredicates.checkPermissionsToManagePersistentGroups);
         super.removePersons(person);
     }
 

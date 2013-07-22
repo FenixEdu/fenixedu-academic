@@ -15,13 +15,13 @@ import net.sourceforge.fenixedu.domain.space.Campus;
 
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class CreateExecutionDegreesForExecutionYear {
 
-    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Atomic
     public static List<DegreeCurricularPlan> run(final String[] degreeCurricularPlansIDs,
             final String[] bolonhaDegreeCurricularPlansIDs, final String executionYearID, final String campusName,
@@ -32,6 +32,7 @@ public class CreateExecutionDegreesForExecutionYear {
             final Calendar examsSeason2EndDate, final Calendar examsSpecialSeasonBeginDate,
             final Calendar examsSpecialSeasonEndDate, final Calendar gradeSubmissionNormalSeason1EndDate,
             final Calendar gradeSubmissionNormalSeason2EndDate, final Calendar gradeSubmissionSpecialSeasonEndDate) {
+        check(RolePredicates.MANAGER_OR_OPERATOR_PREDICATE);
 
         final ExecutionYear executionYear = FenixFramework.getDomainObject(executionYearID);
         final Campus campus = readCampusByName(campusName);

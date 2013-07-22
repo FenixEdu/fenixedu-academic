@@ -31,7 +31,8 @@ import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
@@ -40,10 +41,10 @@ import pt.ist.fenixframework.FenixFramework;
  */
 public class PrepareCreateGuide {
 
-    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Atomic
     public static InfoGuide run(String graduationType, InfoExecutionDegree infoExecutionDegree, Integer number,
             String requesterType, Party contributorParty) throws FenixServiceException {
+        check(RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE);
 
         MasterDegreeCandidate masterDegreeCandidate = null;
         InfoGuide infoGuide = new InfoGuideWithPersonAndExecutionDegreeAndContributor();

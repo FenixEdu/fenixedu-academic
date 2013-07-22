@@ -26,15 +26,16 @@ import net.sourceforge.fenixedu.domain.Teacher;
 
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 
 public class CreateMarkSheetByTeacher {
 
-    @Checked("RolePredicates.TEACHER_PREDICATE")
     @Atomic
     public static List<EnrolmentEvaluation> run(MarkSheetTeacherGradeSubmissionBean submissionBean)
             throws InvalidArgumentsServiceException {
+        check(RolePredicates.TEACHER_PREDICATE);
 
         ExecutionCourse executionCourse = submissionBean.getExecutionCourse();
         Teacher teacher = submissionBean.getResponsibleTeacher();

@@ -1,7 +1,8 @@
 package net.sourceforge.fenixedu.domain.research.result.publication;
 
 import net.sourceforge.fenixedu.util.Month;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.ResultPredicates;
 import bibtex.dom.BibtexEntry;
 
 /**
@@ -15,8 +16,8 @@ public abstract class ConferenceArticles extends ConferenceArticles_Base {
     }
 
     @Override
-    @Checked("ResultPredicates.writePredicate")
     public void delete() {
+        check(this, ResultPredicates.writePredicate);
         if (this.hasEventConferenceArticlesAssociation()) {
             this.getEventConferenceArticlesAssociation().delete();
             this.setEventConferenceArticlesAssociation(null);

@@ -10,7 +10,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExistingServiceException;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
@@ -21,10 +22,10 @@ import pt.ist.fenixframework.FenixFramework;
 
 public class InsertNonAffiliatedTeacher {
 
-    @Checked("RolePredicates.GEP_PREDICATE")
     @Atomic
     public static NonAffiliatedTeacher run(String nonAffiliatedTeacherName, String institutionID)
             throws NotExistingServiceException {
+        check(RolePredicates.GEP_PREDICATE);
         final Unit institution = (Unit) FenixFramework.getDomainObject(institutionID);
         if (institution == null) {
             throw new NotExistingServiceException("no.institution");

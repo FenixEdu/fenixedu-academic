@@ -24,7 +24,8 @@ import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.CreditsPredicates;
 
 public class Credits extends Credits_Base {
 
@@ -195,8 +196,8 @@ public class Credits extends Credits_Base {
         return null;
     }
 
-    @Checked("CreditsPredicates.DELETE")
     final public void delete() {
+        check(this, CreditsPredicates.DELETE);
         disconnect();
         super.deleteDomainObject();
     }

@@ -12,14 +12,15 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 
 public class ReadEnroledExecutionCourses {
 
-    @Checked("RolePredicates.STUDENT_PREDICATE")
     @Atomic
     public static List<ExecutionCourse> run(final Registration registration) {
+        check(RolePredicates.STUDENT_PREDICATE);
 
         final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
         final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();

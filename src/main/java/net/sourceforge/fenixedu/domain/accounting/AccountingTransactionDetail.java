@@ -5,7 +5,8 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 
 public class AccountingTransactionDetail extends AccountingTransactionDetail_Base {
 
@@ -59,8 +60,8 @@ public class AccountingTransactionDetail extends AccountingTransactionDetail_Bas
         throw new DomainException("error.accounting.AccountingTransactionDetail.cannot.modify.transaction");
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     void delete() {
+        check(this, RolePredicates.MANAGER_PREDICATE);
         super.setTransaction(null);
         setRootDomainObject(null);
         super.deleteDomainObject();

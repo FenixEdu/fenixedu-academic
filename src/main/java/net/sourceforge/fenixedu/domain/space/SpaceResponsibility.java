@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.space;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+
 import java.text.Collator;
 import java.util.Comparator;
 
@@ -10,12 +12,11 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.resource.Resource;
 import net.sourceforge.fenixedu.domain.resource.ResourceResponsibility;
 import net.sourceforge.fenixedu.injectionCode.FenixDomainObjectActionLogAnnotation;
+import net.sourceforge.fenixedu.predicates.SpacePredicates;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.YearMonthDay;
-
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 public class SpaceResponsibility extends SpaceResponsibility_Base {
 
@@ -28,7 +29,6 @@ public class SpaceResponsibility extends SpaceResponsibility_Base {
         ((ComparatorChain) COMPARATOR_BY_UNIT_NAME_AND_RESPONSIBILITY_INTERVAL).addComparator(DomainObjectUtil.COMPARATOR_BY_ID);
     }
 
-    @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageResponsabilityUnits")
     @FenixDomainObjectActionLogAnnotation(actionName = "Created space responsibility", parameters = { "space", "unit", "begin",
             "end" })
     public SpaceResponsibility(final Space space, final Unit unit, final YearMonthDay begin, final YearMonthDay end) {
@@ -41,18 +41,18 @@ public class SpaceResponsibility extends SpaceResponsibility_Base {
         super.setEnd(end);
     }
 
-    @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageResponsabilityUnits")
     @FenixDomainObjectActionLogAnnotation(actionName = "Edited space responsibility", parameters = { "begin", "end" })
     public void setSpaceResponsibilityInterval(final YearMonthDay begin, final YearMonthDay end) {
+        check(this, SpacePredicates.checkIfLoggedPersonHasPermissionsToManageResponsabilityUnits);
         checkSpaceResponsabilityIntersection(begin, end, getUnit(), getSpace());
         super.setBegin(begin);
         super.setEnd(end);
     }
 
     @Override
-    @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageResponsabilityUnits")
     @FenixDomainObjectActionLogAnnotation(actionName = "Deleted space responsibility", parameters = {})
     public void delete() {
+        check(this, SpacePredicates.checkIfLoggedPersonHasPermissionsToManageResponsabilityUnits);
         super.delete();
     }
 

@@ -1,17 +1,16 @@
 package net.sourceforge.fenixedu.domain.space;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.Building.BuildingFactoryEditor;
 import net.sourceforge.fenixedu.injectionCode.FenixDomainObjectActionLogAnnotation;
+import net.sourceforge.fenixedu.predicates.SpacePredicates;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 public class BuildingInformation extends BuildingInformation_Base {
 
-    @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageSpaceInformation")
     @FenixDomainObjectActionLogAnnotation(actionName = "Created building information", parameters = { "building", "name",
             "begin", "end", "blueprintNumber" })
     public BuildingInformation(Building building, String name, YearMonthDay begin, YearMonthDay end, String blueprintNumber,
@@ -24,11 +23,11 @@ public class BuildingInformation extends BuildingInformation_Base {
         setEmails(emails);
     }
 
-    @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToEditSpaceInformation")
     @FenixDomainObjectActionLogAnnotation(actionName = "Edited building information", parameters = { "name", "begin", "end",
             "blueprintNumber" })
     public void editBuildingCharacteristics(String name, YearMonthDay begin, YearMonthDay end, String blueprintNumber,
             String emails) {
+        check(this, SpacePredicates.checkIfLoggedPersonHasPermissionsToEditSpaceInformation);
         setName(name);
         setBlueprintNumber(blueprintNumber);
         editTimeInterval(begin, end);
@@ -36,9 +35,9 @@ public class BuildingInformation extends BuildingInformation_Base {
     }
 
     @Override
-    @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageSpaceInformation")
     @FenixDomainObjectActionLogAnnotation(actionName = "Deleted building information", parameters = {})
     public void delete() {
+        check(this, SpacePredicates.checkIfLoggedPersonHasPermissionsToManageSpaceInformation);
         super.delete();
     }
 
@@ -78,6 +77,7 @@ public class BuildingInformation extends BuildingInformation_Base {
         // Necessary for Renderers
         return null;
     }
+
     @Deprecated
     public boolean hasName() {
         return getName() != null;

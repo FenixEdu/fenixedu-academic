@@ -14,16 +14,17 @@ import net.sourceforge.fenixedu.util.State;
 
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 
 public class EditMasterDegreeCandidate {
 
-    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Atomic
     public static InfoMasterDegreeCandidate run(MasterDegreeCandidate oldMasterDegreeCandidate,
             InfoMasterDegreeCandidate newCandidate, InfoPersonEditor infoPersonEditor) throws ExcepcaoInexistente,
             FenixServiceException {
+        check(RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE);
 
         if (oldMasterDegreeCandidate == null) {
             throw new ExcepcaoInexistente("Unknown Candidate !!");

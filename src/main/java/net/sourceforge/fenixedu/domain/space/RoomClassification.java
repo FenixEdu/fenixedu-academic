@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.space;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Comparator;
@@ -11,11 +13,11 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.injectionCode.FenixDomainObjectActionLogAnnotation;
+import net.sourceforge.fenixedu.predicates.SpacePredicates;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.utl.ist.fenix.tools.util.CollectionUtils;
 import pt.utl.ist.fenix.tools.util.StringAppender;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -31,7 +33,6 @@ public class RoomClassification extends RoomClassification_Base {
     public static final Comparator<RoomClassification> COMPARATORY_BY_PARENT_ROOM_CLASSIFICATION_AND_CODE = new BeanComparator(
             "absoluteCode");
 
-    @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageRoomClassifications")
     @FenixDomainObjectActionLogAnnotation(actionName = "Created room classification", parameters = { "parentRoomClassification",
             "code", "name" })
     public RoomClassification(final RoomClassification parentRoomClassification, final Integer code,
@@ -41,10 +42,10 @@ public class RoomClassification extends RoomClassification_Base {
         edit(parentRoomClassification, code, name);
     }
 
-    @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageRoomClassifications")
     @FenixDomainObjectActionLogAnnotation(actionName = "Edited room classification", parameters = { "parentRoomClassification",
             "code", "name" })
     public void edit(final RoomClassification parentRoomClassification, final Integer code, final MultiLanguageString name) {
+        check(this, SpacePredicates.checkIfLoggedPersonHasPermissionsToManageRoomClassifications);
 
         final Set<RoomClassification> childRoomClassifications =
                 parentRoomClassification == null ? getRootDomainObject().getRoomClassificationSet() : parentRoomClassification
@@ -75,9 +76,9 @@ public class RoomClassification extends RoomClassification_Base {
         }
     }
 
-    @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageRoomClassifications")
     @FenixDomainObjectActionLogAnnotation(actionName = "Deleted room classification", parameters = {})
     public void delete() {
+        check(this, SpacePredicates.checkIfLoggedPersonHasPermissionsToManageRoomClassifications);
         if (getChildRoomClassificationsSet().isEmpty()) {
             while (hasAnyRoomInformations()) {
                 getRoomInformations().iterator().next().setRoomClassification(null);
@@ -261,6 +262,7 @@ public class RoomClassification extends RoomClassification_Base {
             return null;
         }
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.space.RoomClassification> getChildRoomClassifications() {
         return getChildRoomClassificationsSet();

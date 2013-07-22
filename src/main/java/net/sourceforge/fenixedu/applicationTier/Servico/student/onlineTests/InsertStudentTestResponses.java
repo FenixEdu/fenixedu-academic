@@ -36,7 +36,8 @@ import net.sourceforge.fenixedu.util.tests.TestType;
 
 import org.apache.log4j.Logger;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.StringAppender;
@@ -46,10 +47,10 @@ public class InsertStudentTestResponses {
 
     private static String path;
 
-    @Checked("RolePredicates.STUDENT_PREDICATE")
     @Atomic
     public static InfoSiteStudentTestFeedback run(Registration registration, Integer studentNumber,
             final String distributedTestId, Response[] response, String path) throws FenixServiceException {
+        check(RolePredicates.STUDENT_PREDICATE);
 
         ServiceMonitoring.logService(InsertStudentTestResponses.class, registration, studentNumber, distributedTestId, response,
                 path);

@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.space;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+
 import java.text.Collator;
 import java.util.Collection;
 import java.util.Comparator;
@@ -9,10 +11,9 @@ import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.injectionCode.FenixDomainObjectActionLogAnnotation;
+import net.sourceforge.fenixedu.predicates.SpacePredicates;
 
 import org.joda.time.YearMonthDay;
-
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 public class PersonSpaceOccupation extends PersonSpaceOccupation_Base {
 
@@ -43,7 +44,6 @@ public class PersonSpaceOccupation extends PersonSpaceOccupation_Base {
                 }
             };
 
-    @Checked("SpacePredicates.checkPermissionsToManagePersonSpaceOccupations")
     @FenixDomainObjectActionLogAnnotation(actionName = "Created person occupation", parameters = { "space", "person", "begin",
             "end" })
     public PersonSpaceOccupation(final Space space, final Person person, final YearMonthDay begin, final YearMonthDay end) {
@@ -56,18 +56,18 @@ public class PersonSpaceOccupation extends PersonSpaceOccupation_Base {
         super.setEnd(end);
     }
 
-    @Checked("SpacePredicates.checkPermissionsToManagePersonSpaceOccupations")
     @FenixDomainObjectActionLogAnnotation(actionName = "Edited person occupation", parameters = { "begin", "end" })
     public void setOccupationInterval(final YearMonthDay begin, final YearMonthDay end) {
+        check(this, SpacePredicates.checkPermissionsToManagePersonSpaceOccupations);
         checkPersonSpaceOccupationIntersection(begin, end, getPerson(), getSpace());
         super.setBegin(begin);
         super.setEnd(end);
     }
 
     @Override
-    @Checked("SpacePredicates.checkPermissionsToManagePersonSpaceOccupations")
     @FenixDomainObjectActionLogAnnotation(actionName = "Deleted person occupation", parameters = {})
     public void delete() {
+        check(this, SpacePredicates.checkPermissionsToManagePersonSpaceOccupations);
         super.setPerson(null);
         super.delete();
     }

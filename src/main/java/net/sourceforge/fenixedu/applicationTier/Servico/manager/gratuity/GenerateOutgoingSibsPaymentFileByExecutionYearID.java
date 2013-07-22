@@ -28,15 +28,16 @@ import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.util.gratuity.fileParsers.sibs.SibsOutgoingPaymentFileConstants;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class GenerateOutgoingSibsPaymentFileByExecutionYearID {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     @Atomic
     public static byte[] run(String executionYearID, Date paymentEndDate) throws FenixServiceException {
+        check(RolePredicates.MANAGER_PREDICATE);
 
         StringBuilder outgoingSibsPaymentFile = new StringBuilder();
 
@@ -142,10 +143,10 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID {
      * @param outgoingSibsPaymentFile
      * @throws FileNotCreatedServiceException
      */
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     @Atomic
     private static byte[] writeOutgoingSibsPaymentFile(ExecutionYear executionYear, StringBuilder outgoingSibsPaymentFile)
             throws FileNotCreatedServiceException {
+        check(RolePredicates.MANAGER_PREDICATE);
         ByteArrayOutputStream file = new ByteArrayOutputStream();
         /*
          * String year = executionYear.getYear().replace('/', '-'); try {

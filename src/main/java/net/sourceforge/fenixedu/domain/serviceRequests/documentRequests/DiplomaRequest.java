@@ -26,7 +26,8 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.LocalDate;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.AcademicPredicates;
 
 public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaRequest, IRectorateSubmissionBatchDocumentEntry {
 
@@ -441,8 +442,8 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
     }
 
     @Override
-    @Checked("AcademicPredicates.SERVICE_REQUESTS_REVERT_TO_PROCESSING_STATE")
     public void revertToProcessingState() {
+        check(this, AcademicPredicates.SERVICE_REQUESTS_REVERT_TO_PROCESSING_STATE);
         internalRevertToProcessingState();
     }
 

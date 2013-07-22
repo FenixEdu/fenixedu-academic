@@ -18,7 +18,8 @@ import net.sourceforge.fenixedu.util.State;
 
 import org.apache.commons.collections.CollectionUtils;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
@@ -30,11 +31,11 @@ import pt.ist.fenixframework.FenixFramework;
  */
 public class CreateMasterDegreeThesis {
 
-    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Atomic
     public static void run(IUserView userView, String studentCurricularPlanID, String dissertationTitle,
             List<String> guidersNumbers, List<String> assistentGuidersNumbers, List<String> externalGuidersIDs,
             List<String> externalAssistentGuidersIDs) throws FenixServiceException {
+        check(RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE);
 
         // check duplicate guiders and assistent guiders
         if (CollectionUtils.intersection(guidersNumbers, assistentGuidersNumbers).size() > 0) {

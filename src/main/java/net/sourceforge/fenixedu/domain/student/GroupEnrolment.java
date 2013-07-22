@@ -24,7 +24,8 @@ import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
@@ -34,10 +35,10 @@ import pt.ist.fenixframework.FenixFramework;
  */
 public class GroupEnrolment {
 
-    @Checked("RolePredicates.STUDENT_AND_TEACHER_PREDICATE")
     @Atomic
     public static Boolean run(String groupingID, String shiftID, Integer groupNumber, List<String> studentUsernames,
             String studentUsername) throws FenixServiceException {
+        check(RolePredicates.STUDENT_AND_TEACHER_PREDICATE);
         return enrole(groupingID, shiftID, groupNumber, studentUsernames, studentUsername);
     }
 

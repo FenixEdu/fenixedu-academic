@@ -22,7 +22,8 @@ import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
@@ -126,9 +127,9 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
         return getStudentCurricularPlan().getRegistration();
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     @Override
     public void setStudentCurricularPlan(StudentCurricularPlan studentCurricularPlan) {
+        check(this, RolePredicates.MANAGER_PREDICATE);
         super.setStudentCurricularPlan(studentCurricularPlan);
     }
 
@@ -197,9 +198,9 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
         return hasGratuityExemption() ? getGratuityExemption().calculateDiscountPercentage(amount) : BigDecimal.ZERO;
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     @Override
     protected void disconnect() {
+        check(this, RolePredicates.MANAGER_PREDICATE);
         super.setStudentCurricularPlan(null);
         super.disconnect();
     }

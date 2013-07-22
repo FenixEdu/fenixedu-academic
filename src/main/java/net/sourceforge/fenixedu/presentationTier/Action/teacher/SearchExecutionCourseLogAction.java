@@ -140,7 +140,6 @@ public class SearchExecutionCourseLogAction extends FenixDispatchAction {
     }
 
     // copied from ExecutionCourse, was public
-    // @Checked("ExecutionCoursePredicates.executionCourseLecturingTeacherOrDegreeCoordinator")
     private void searchLogs(SearchExecutionCourseLogBean bean) {
         final Predicate<ExecutionCourseLog> filter = bean.getFilters();
         final Collection<ExecutionCourseLog> validLogs = new HashSet<ExecutionCourseLog>();

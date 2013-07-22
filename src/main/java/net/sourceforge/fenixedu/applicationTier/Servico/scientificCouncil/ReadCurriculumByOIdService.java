@@ -9,7 +9,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.domain.Curriculum;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
@@ -21,9 +22,9 @@ import pt.ist.fenixframework.FenixFramework;
  */
 public class ReadCurriculumByOIdService {
 
-    @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
     @Atomic
     public static SiteView run(String curriculumId) throws FenixServiceException {
+        check(RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE);
         Curriculum curriculum = FenixFramework.getDomainObject(curriculumId);
         InfoCurriculum infoCurriculum = InfoCurriculum.newInfoFromDomain(curriculum);
         SiteView siteView = new SiteView(infoCurriculum);

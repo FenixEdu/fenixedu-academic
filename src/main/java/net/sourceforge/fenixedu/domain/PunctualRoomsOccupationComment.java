@@ -1,15 +1,17 @@
 package net.sourceforge.fenixedu.domain;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+
 import java.util.Collection;
 import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.predicates.ResourceAllocationRolePredicates;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class PunctualRoomsOccupationComment extends PunctualRoomsOccupationComment_Base {
@@ -20,9 +22,9 @@ public class PunctualRoomsOccupationComment extends PunctualRoomsOccupationComme
         ((ComparatorChain) COMPARATOR_BY_INSTANT).addComparator(DomainObjectUtil.COMPARATOR_BY_ID);
     }
 
-    @Checked("ResourceAllocationRolePredicates.checkPermissionsToManagePunctualRoomsOccupationComments")
     public PunctualRoomsOccupationComment(PunctualRoomsOccupationRequest request, MultiLanguageString subject,
             MultiLanguageString description, Person owner, DateTime instant) {
+//        check(this, ResourceAllocationRolePredicates.checkPermissionsToManagePunctualRoomsOccupationComments);
 
         super();
         checkIfCommentAlreadyExists(owner, subject, description);
@@ -34,8 +36,8 @@ public class PunctualRoomsOccupationComment extends PunctualRoomsOccupationComme
         setInstant(instant);
     }
 
-    @Checked("ResourceAllocationRolePredicates.checkPermissionsToManagePunctualRoomsOccupationComments")
     public void edit(MultiLanguageString subject, MultiLanguageString description) {
+        check(this, ResourceAllocationRolePredicates.checkPermissionsToManagePunctualRoomsOccupationComments);
         if (!getRequest().getCurrentState().equals(RequestState.NEW)) {
             throw new DomainException("error.PunctualRoomsOccupationRequest.impossible.edit");
         }

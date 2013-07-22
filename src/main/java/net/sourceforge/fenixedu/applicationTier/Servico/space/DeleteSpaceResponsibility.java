@@ -2,14 +2,15 @@ package net.sourceforge.fenixedu.applicationTier.Servico.space;
 
 
 import net.sourceforge.fenixedu.domain.space.SpaceResponsibility;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 
 public class DeleteSpaceResponsibility {
 
-    @Checked("RolePredicates.SPACE_MANAGER_PREDICATE")
     @Atomic
     public static Boolean run(SpaceResponsibility spaceResponsibility) {
+        check(RolePredicates.SPACE_MANAGER_PREDICATE);
         if (spaceResponsibility != null) {
             spaceResponsibility.delete();
         }

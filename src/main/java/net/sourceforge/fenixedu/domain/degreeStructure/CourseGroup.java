@@ -27,7 +27,8 @@ import net.sourceforge.fenixedu.util.StringFormatter;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ReverseComparator;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.CourseGroupPredicates;
 
 public class CourseGroup extends CourseGroup_Base {
 
@@ -254,14 +255,14 @@ public class CourseGroup extends CourseGroup_Base {
     }
 
     @Override
-    @Checked("CourseGroupPredicates.curricularPlanMemberWritePredicate")
     public void setName(String name) {
+        check(this, CourseGroupPredicates.curricularPlanMemberWritePredicate);
         super.setName(name);
     }
 
     @Override
-    @Checked("CourseGroupPredicates.curricularPlanMemberWritePredicate")
     public void setNameEn(String nameEn) {
+        check(this, CourseGroupPredicates.curricularPlanMemberWritePredicate);
         super.setNameEn(nameEn);
     }
 

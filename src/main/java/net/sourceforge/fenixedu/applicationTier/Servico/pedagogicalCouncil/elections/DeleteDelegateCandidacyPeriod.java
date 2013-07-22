@@ -6,15 +6,16 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.elections.DelegateElection;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class DeleteDelegateCandidacyPeriod {
 
-    @Checked("RolePredicates.PEDAGOGICAL_COUNCIL_PREDICATE")
     @Atomic
     public static void run(ElectionPeriodBean bean) throws FenixServiceException {
+        check(RolePredicates.PEDAGOGICAL_COUNCIL_PREDICATE);
         try {
             DelegateElection election = bean.getElection();
             election.deleteCandidacyPeriod();
@@ -23,9 +24,9 @@ public class DeleteDelegateCandidacyPeriod {
         }
     }
 
-    @Checked("RolePredicates.PEDAGOGICAL_COUNCIL_PREDICATE")
     @Atomic
     public static void run(ElectionPeriodBean bean, String degreeOID) throws FenixServiceException {
+        check(RolePredicates.PEDAGOGICAL_COUNCIL_PREDICATE);
         final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
 
         Degree degree = FenixFramework.getDomainObject(degreeOID);

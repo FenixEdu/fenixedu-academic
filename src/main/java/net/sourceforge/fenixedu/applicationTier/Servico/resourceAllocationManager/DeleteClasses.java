@@ -8,15 +8,16 @@ package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManag
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.SchoolClass;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class DeleteClasses {
 
-    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
     @Atomic
     public static Boolean run(final List<String> classOIDs) {
+        check(RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE);
         for (final String classId : classOIDs) {
             FenixFramework.<SchoolClass> getDomainObject(classId).delete();
         }

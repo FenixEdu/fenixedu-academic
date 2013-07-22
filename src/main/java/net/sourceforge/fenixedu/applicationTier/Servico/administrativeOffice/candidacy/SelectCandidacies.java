@@ -8,7 +8,8 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.candidacy.SelectDFACandidacyBean;
 import net.sourceforge.fenixedu.domain.candidacy.SubstituteCandidacySituation;
 import net.sourceforge.fenixedu.domain.util.workflow.StateMachine;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 
 /**
@@ -17,10 +18,10 @@ import pt.ist.fenixframework.Atomic;
  */
 public class SelectCandidacies {
 
-    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Atomic
     public static void run(List<SelectDFACandidacyBean> admittedCandidacies, List<SelectDFACandidacyBean> substituteCandidacies,
             List<SelectDFACandidacyBean> notAdmittedCandidacies) {
+        check(RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE);
 
         createNewCandidacySituations(notAdmittedCandidacies);
         createNewCandidacySituations(admittedCandidacies);

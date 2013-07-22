@@ -9,7 +9,8 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 
 public class ShiftDistributionEntry extends ShiftDistributionEntry_Base {
 
@@ -72,8 +73,8 @@ public class ShiftDistributionEntry extends ShiftDistributionEntry_Base {
         super.setShift(newShift);
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     public void changeExecutionDegree(final ExecutionDegree executionDegree) {
+        check(this, RolePredicates.MANAGER_PREDICATE);
         super.setExecutionDegree(executionDegree);
     }
 

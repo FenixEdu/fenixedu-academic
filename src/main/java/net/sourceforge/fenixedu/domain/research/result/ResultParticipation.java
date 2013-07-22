@@ -9,7 +9,8 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.BundleUtil;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.ResultPredicates;
 import pt.ist.fenixframework.FenixFramework;
 
 public class ResultParticipation extends ResultParticipation_Base {
@@ -70,14 +71,14 @@ public class ResultParticipation extends ResultParticipation_Base {
         fillAllAttributes(result, participator, role, order);
     }
 
-    @Checked("ResultPredicates.participationWritePredicate")
     public void setEditAll(ResearchResult result, Person participator, ResultParticipationRole role, Integer order) {
+        check(this, ResultPredicates.participationWritePredicate);
         fillAllAttributes(result, participator, role, order);
         setChangedBy();
     }
 
-    @Checked("ResultPredicates.participationWritePredicate")
     public final void movePersonToDesiredOrder(OrderChange orderChange) {
+        check(this, ResultPredicates.participationWritePredicate);
         if (orderChange == null) {
             throw new DomainException("error.researcher.ResultParticipation.orderChange.null");
         }
@@ -86,8 +87,8 @@ public class ResultParticipation extends ResultParticipation_Base {
     }
 
     @Override
-    @Checked("ResultPredicates.participationWritePredicate")
     public void setRole(ResultParticipationRole role) {
+        check(this, ResultPredicates.participationWritePredicate);
         if (role == null) {
             throw new DomainException("error.researcher.ResultEventAssociation.role.null");
         }

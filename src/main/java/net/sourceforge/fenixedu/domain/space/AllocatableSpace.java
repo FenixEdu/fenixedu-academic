@@ -27,7 +27,8 @@ import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.SpacePredicates;
 
 public abstract class AllocatableSpace extends AllocatableSpace_Base {
 
@@ -96,8 +97,8 @@ public abstract class AllocatableSpace extends AllocatableSpace_Base {
         return !StringUtils.isEmpty(getIdentification());
     }
 
-    @Checked("SpacePredicates.checkPermissionsToManageRoomCapacities")
     public void editCapacities(Integer capacidadeNormal, Integer capacidadeExame) {
+        check(this, SpacePredicates.checkPermissionsToManageRoomCapacities);
         setNormalCapacity(capacidadeNormal);
         setExamCapacity(capacidadeExame);
     }

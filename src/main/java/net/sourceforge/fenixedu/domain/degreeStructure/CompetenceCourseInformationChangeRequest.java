@@ -12,7 +12,8 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUni
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 
 public class CompetenceCourseInformationChangeRequest extends CompetenceCourseInformationChangeRequest_Base {
@@ -153,9 +154,9 @@ public class CompetenceCourseInformationChangeRequest extends CompetenceCourseIn
         APPROVED, REJECTED, ON_HOLD;
     }
 
-    @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
     @Atomic
     public void reject(Person analisedBy) {
+        check(this, RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE);
         if (getApproved() != null) {
             throw new DomainException("error.request.already.processed");
         }
@@ -163,9 +164,9 @@ public class CompetenceCourseInformationChangeRequest extends CompetenceCourseIn
         setAnalizedBy(analisedBy);
     }
 
-    @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
     @Atomic
     public void approve(Person analisedBy) {
+        check(this, RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE);
         if (getApproved() != null) {
             throw new DomainException("error.request.already.processed");
         }

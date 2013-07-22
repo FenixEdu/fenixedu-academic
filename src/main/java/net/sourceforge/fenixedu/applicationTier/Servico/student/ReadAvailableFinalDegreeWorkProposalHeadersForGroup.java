@@ -16,7 +16,8 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
@@ -26,9 +27,9 @@ import pt.ist.fenixframework.FenixFramework;
  */
 public class ReadAvailableFinalDegreeWorkProposalHeadersForGroup {
 
-    @Checked("RolePredicates.STUDENT_PREDICATE")
     @Atomic
     public static List run(String groupOID) {
+        check(RolePredicates.STUDENT_PREDICATE);
         final List<FinalDegreeWorkProposalHeader> result = new ArrayList<FinalDegreeWorkProposalHeader>();
 
         final FinalDegreeWorkGroup group = FenixFramework.getDomainObject(groupOID);

@@ -33,7 +33,8 @@ import net.sourceforge.fenixedu.util.report.ReportsUtils;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.MarkSheetPredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -261,9 +262,9 @@ public class MarkSheet extends MarkSheet_Base {
         setCreator(creator);
     }
 
-    @Checked("MarkSheetPredicates.editPredicate")
     private void addEnrolmentEvaluationsWithoutResctrictions(Teacher responsibleTeacher,
             Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeans, EnrolmentEvaluationState enrolmentEvaluationState) {
+        check(this, MarkSheetPredicates.editPredicate);
 
         final ExecutionDegree executionDegree = getExecutionDegree(getCurricularCourse(), getExecutionPeriod());
 
@@ -282,9 +283,9 @@ public class MarkSheet extends MarkSheet_Base {
         }
     }
 
-    @Checked("MarkSheetPredicates.editPredicate")
     private void addEnrolmentEvaluationsWithResctrictions(Teacher responsibleTeacher,
             Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeans, EnrolmentEvaluationState enrolmentEvaluationState) {
+        check(this, MarkSheetPredicates.editPredicate);
 
         final ExecutionDegree executionDegree = getExecutionDegree(getCurricularCourse(), getExecutionPeriod());
         final Set<Enrolment> enrolmentsNotInAnyMarkSheet =
@@ -307,9 +308,9 @@ public class MarkSheet extends MarkSheet_Base {
         }
     }
 
-    @Checked("MarkSheetPredicates.editPredicate")
     private void addEnrolmentEvaluationToMarkSheet(Teacher responsibleTeacher, EnrolmentEvaluationState enrolmentEvaluationState,
             final MarkSheetEnrolmentEvaluationBean evaluationBean, ExecutionDegree executionDegree) {
+        check(this, MarkSheetPredicates.editPredicate);
 
         checkIfEvaluationDateIsInExamsPeriod(getCurricularCourse(), executionDegree, getExecutionPeriod(),
                 evaluationBean.getEvaluationDate(), getMarkSheetType());
@@ -347,8 +348,8 @@ public class MarkSheet extends MarkSheet_Base {
         return hasMarkSheetState(MarkSheetState.RECTIFICATION) || hasMarkSheetState(MarkSheetState.RECTIFICATION_NOT_CONFIRMED);
     }
 
-    @Checked("MarkSheetPredicates.editPredicate")
     public void editNormal(Teacher responsibleTeacher, Date newEvaluationDate) {
+        check(this, MarkSheetPredicates.editPredicate);
 
         if (isConfirmed()) {
             throw new DomainException("error.markSheet.already.confirmed");
@@ -374,8 +375,8 @@ public class MarkSheet extends MarkSheet_Base {
         }
     }
 
-    @Checked("MarkSheetPredicates.editPredicate")
     public void editRectification(MarkSheetEnrolmentEvaluationBean enrolmentEvaluationBean) {
+        check(this, MarkSheetPredicates.editPredicate);
 
         if (isConfirmed()) {
             throw new DomainException("error.markSheet.already.confirmed");
@@ -392,9 +393,9 @@ public class MarkSheet extends MarkSheet_Base {
         }
     }
 
-    @Checked("MarkSheetPredicates.editPredicate")
     private void editMarkSheetEnrolmentEvaluationsWithSameEvaluationDate(Teacher responsibleTeacher, Date oldEvaluationDate,
             Date newEvaluationDate, Set<EnrolmentEvaluation> enrolmentEvaluationsToEdit) {
+        check(this, MarkSheetPredicates.editPredicate);
 
         String dateFormat = "dd/MM/yyyy";
         final ExecutionDegree executionDegree = getExecutionDegree(getCurricularCourse(), getExecutionPeriod());
@@ -407,10 +408,10 @@ public class MarkSheet extends MarkSheet_Base {
         }
     }
 
-    @Checked("MarkSheetPredicates.editPredicate")
     public void editNormal(Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeansToEdit,
             Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeansToAppend,
             Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeansToRemove) {
+        check(this, MarkSheetPredicates.editPredicate);
 
         if (isConfirmed()) {
             throw new DomainException("error.markSheet.already.confirmed");
@@ -437,8 +438,8 @@ public class MarkSheet extends MarkSheet_Base {
         }
     }
 
-    @Checked("MarkSheetPredicates.editPredicate")
     protected void editEnrolmentEvaluations(Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeansToEdit) {
+        check(this, MarkSheetPredicates.editPredicate);
 
         final ExecutionDegree executionDegree = getExecutionDegree(getCurricularCourse(), getExecutionPeriod());
 
@@ -459,8 +460,8 @@ public class MarkSheet extends MarkSheet_Base {
         }
     }
 
-    @Checked("MarkSheetPredicates.editPredicate")
     private void removeEnrolmentEvaluations(Collection<MarkSheetEnrolmentEvaluationBean> enrolmentEvaluationBeansToRemove) {
+        check(this, MarkSheetPredicates.editPredicate);
         for (MarkSheetEnrolmentEvaluationBean enrolmentEvaluationBean : enrolmentEvaluationBeansToRemove) {
             enrolmentEvaluationBean.getEnrolmentEvaluation().removeFromMarkSheet();
             enrolmentEvaluationBean.getEnrolmentEvaluation().setGrade(Grade.createEmptyGrade());
@@ -472,8 +473,8 @@ public class MarkSheet extends MarkSheet_Base {
                 EnrolmentEvaluationState.TEMPORARY_OBJ);
     }
 
-    @Checked("MarkSheetPredicates.confirmPredicate")
     public void confirm(Person validator) {
+        check(this, MarkSheetPredicates.confirmPredicate);
         if (validator == null) {
             throw new DomainException("error.markSheet.invalid.arguments");
         }

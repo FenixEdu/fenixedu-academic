@@ -72,7 +72,8 @@ import org.joda.time.Interval;
 import org.joda.time.Period;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.ExecutionCoursePredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 import pt.utl.ist.fenix.tools.predicates.Predicate;
@@ -2239,8 +2240,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         return dcps;
     }
 
-    @Checked("ExecutionCoursePredicates.executionCourseLecturingTeacherOrDegreeCoordinator")
     public void searchAttends(SearchExecutionCourseAttendsBean attendsBean) {
+        check(this, ExecutionCoursePredicates.executionCourseLecturingTeacherOrDegreeCoordinator);
         final Predicate<Attends> filter = attendsBean.getFilters();
         final Collection<Attends> validAttends = new HashSet<Attends>();
         final Map<Integer, Integer> enrolmentNumberMap = new HashMap<Integer, Integer>();

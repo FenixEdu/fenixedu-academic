@@ -42,7 +42,8 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 
 public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_Base {
 
@@ -471,8 +472,8 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
     }
 
     @Override
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     protected void disconnect() {
+        check(this, RolePredicates.MANAGER_PREDICATE);
         if (hasCustomGratuityPaymentPlan()) {
             ((CustomGratuityPaymentPlan) super.getGratuityPaymentPlan()).delete();
         }

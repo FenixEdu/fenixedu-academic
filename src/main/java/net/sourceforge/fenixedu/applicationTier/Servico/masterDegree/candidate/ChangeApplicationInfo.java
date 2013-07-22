@@ -29,16 +29,17 @@ import net.sourceforge.fenixedu.util.State;
 
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class ChangeApplicationInfo {
 
-    @Checked("RolePredicates.MASTER_DEGREE_CANDIDATE_PREDICATE")
     @Atomic
     public static InfoMasterDegreeCandidate run(InfoMasterDegreeCandidate newMasterDegreeCandidate,
             InfoPersonEditor infoPersonEditor, IUserView userView, Boolean isNewPerson) throws FenixServiceException {
+        check(RolePredicates.MASTER_DEGREE_CANDIDATE_PREDICATE);
 
         final ExecutionDegree executionDegree =
                 FenixFramework.getDomainObject(newMasterDegreeCandidate.getInfoExecutionDegree().getExternalId());

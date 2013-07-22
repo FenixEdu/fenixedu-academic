@@ -22,7 +22,8 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.AcademicPredicates;
 import pt.ist.fenixframework.Atomic;
 
 public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCertificateRequest_Base {
@@ -337,8 +338,8 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 
     @Atomic
     @Override
-    @Checked("AcademicPredicates.SERVICE_REQUESTS_REVERT_TO_PROCESSING_STATE")
     public void revertToProcessingState() {
+        check(this, AcademicPredicates.SERVICE_REQUESTS_REVERT_TO_PROCESSING_STATE);
         internalRevertToProcessingState();
     }
 

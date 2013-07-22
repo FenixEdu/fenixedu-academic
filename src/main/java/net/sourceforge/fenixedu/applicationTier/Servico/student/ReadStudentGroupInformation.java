@@ -22,7 +22,8 @@ import net.sourceforge.fenixedu.domain.StudentGroup;
 
 import org.apache.commons.beanutils.BeanComparator;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
@@ -32,9 +33,9 @@ import pt.ist.fenixframework.FenixFramework;
  */
 public class ReadStudentGroupInformation {
 
-    @Checked("RolePredicates.STUDENT_PREDICATE")
     @Atomic
     public static ISiteComponent run(String studentGroupCode) throws FenixServiceException {
+        check(RolePredicates.STUDENT_PREDICATE);
 
         InfoSiteStudentGroup infoSiteStudentGroup = new InfoSiteStudentGroup();
         StudentGroup studentGroup = null;

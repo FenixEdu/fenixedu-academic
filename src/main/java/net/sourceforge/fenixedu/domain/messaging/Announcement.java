@@ -13,7 +13,8 @@ import net.sourceforge.fenixedu.domain.space.Campus;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.AnnouncementPredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -112,9 +113,9 @@ public class Announcement extends Announcement_Base {
         this.updateLastModification();
     }
 
-    @Checked("AnnouncementPredicates.approvePredicate")
     @Override
     public void setApproved(Boolean aproved) {
+        check(this, AnnouncementPredicates.approvePredicate);
         super.setApproved(aproved);
         this.updateLastModification();
     }

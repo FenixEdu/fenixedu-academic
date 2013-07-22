@@ -3,7 +3,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities
 
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.functionalities.Functionality;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 
 /**
@@ -19,9 +20,9 @@ public class DeleteFunctionality {
      * 
      * @see Functionality#delete()
      */
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     @Atomic
     public static void run(Content functionality) {
+        check(RolePredicates.MANAGER_PREDICATE);
         functionality.delete();
     }
 

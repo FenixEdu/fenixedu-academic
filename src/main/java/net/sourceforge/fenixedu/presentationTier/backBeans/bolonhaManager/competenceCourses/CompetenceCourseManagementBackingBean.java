@@ -54,7 +54,8 @@ import net.sourceforge.fenixedu.util.StringUtils;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ReverseComparator;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
@@ -1020,9 +1021,9 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         return (ScientificAreaUnit) FenixFramework.getDomainObject(transferToScientificAreaUnitID);
     }
 
-    @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
     @Atomic
     public String transferCompetenceCourse() {
+        check(this, RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE);
         try {
             if (getCompetenceCourse() == null || readCompetenceCourseGroupUnitToTransferTo() == null
                     || getExecutionSemester() == null) {

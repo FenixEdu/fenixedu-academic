@@ -7,7 +7,8 @@ import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
 import net.sourceforge.fenixedu.domain.research.project.Project;
 import net.sourceforge.fenixedu.domain.research.project.ProjectEventAssociation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.ResultPredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
@@ -28,10 +29,10 @@ public class CreateProjectEventAssociation {
      * @throws FenixServiceException
      *             - In case the project doesn't exist.
      */
-    @Checked("ResultPredicates.author")
     @Atomic
     public static ProjectEventAssociation run(ProjectEventAssociationSimpleCreationBean bean, String projectId)
             throws FenixServiceException {
+        check(ResultPredicates.author);
         ProjectEventAssociation association = null;
         final Project project = FenixFramework.getDomainObject(projectId);
         if (project == null) {
@@ -60,10 +61,10 @@ public class CreateProjectEventAssociation {
      * @throws FenixServiceException
      *             - In case the project doesn't exist.
      */
-    @Checked("ResultPredicates.author")
     @Atomic
     public static ProjectEventAssociation run(ProjectEventAssociationFullCreationBean bean, String projectId)
             throws FenixServiceException {
+        check(ResultPredicates.author);
         final ProjectEventAssociation association;
 
         final Project project = FenixFramework.getDomainObject(projectId);

@@ -10,13 +10,14 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 
 import org.joda.time.LocalDate;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 
 public class GratuityReportingService {
 
-    @Checked("RolePredicates.DIRECTIVE_COUNCIL_PREDICATE")
     public GratuityReport createGratuityReport(final ExecutionYear executionYear, final LocalDate startDate,
             final LocalDate endDate, final Collection<DegreeType> degreeTypes) {
+        check(this, RolePredicates.DIRECTIVE_COUNCIL_PREDICATE);
 
         final GratuityReport report = new GratuityReport();
 

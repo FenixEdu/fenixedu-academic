@@ -31,7 +31,8 @@ import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.utl.ist.fenix.tools.predicates.AndPredicate;
 import pt.utl.ist.fenix.tools.predicates.Predicate;
 import pt.utl.ist.fenix.tools.predicates.ResultCollection;
@@ -130,9 +131,9 @@ public class CurriculumGroup extends CurriculumGroup_Base {
         }
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     @Override
     public void deleteRecursive() {
+        check(this, RolePredicates.MANAGER_PREDICATE);
         for (final CurriculumModule child : getCurriculumModules()) {
             child.deleteRecursive();
         }

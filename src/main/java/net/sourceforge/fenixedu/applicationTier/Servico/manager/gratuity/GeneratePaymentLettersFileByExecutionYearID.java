@@ -32,7 +32,8 @@ import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.util.gratuity.fileParsers.sibs.SibsOutgoingPaymentFileConstants;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
@@ -168,9 +169,9 @@ public class GeneratePaymentLettersFileByExecutionYearID {
 
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     @Atomic
     public static byte[] run(String executionYearID, Date paymentEndDate) throws FenixServiceException {
+        check(RolePredicates.MANAGER_PREDICATE);
         ExecutionYear executionYear = FenixFramework.getDomainObject(executionYearID);
         InsuranceValue insuranceValue = executionYear.getInsuranceValue();
         if (insuranceValue == null) {

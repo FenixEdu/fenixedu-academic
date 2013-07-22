@@ -17,7 +17,8 @@ import net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
@@ -26,18 +27,18 @@ import pt.ist.fenixframework.FenixFramework;
  */
 public class ReadStudentTest {
 
-    @Checked("RolePredicates.STUDENT_PREDICATE")
     @Atomic
     public static List<StudentTestQuestion> run(Registration registration, String distributedTestId, Boolean log, String path)
             throws FenixServiceException {
+        check(RolePredicates.STUDENT_PREDICATE);
         final DistributedTest distributedTest = FenixFramework.getDomainObject(distributedTestId);
         return run(registration, distributedTest, log, path);
     }
 
-    @Checked("RolePredicates.STUDENT_PREDICATE")
     @Atomic
     public static List<StudentTestQuestion> run(Registration registration, DistributedTest distributedTest, Boolean log,
             String path) throws FenixServiceException {
+        check(RolePredicates.STUDENT_PREDICATE);
         if (distributedTest == null) {
             throw new InvalidArgumentsServiceException();
         }

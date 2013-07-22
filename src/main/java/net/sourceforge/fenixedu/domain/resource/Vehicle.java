@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.resource;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -7,17 +9,16 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.predicates.ResourcePredicates;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 public class Vehicle extends Vehicle_Base {
 
-    @Checked("ResourcePredicates.checkPermissionsToManageVehicle")
     public Vehicle(String numberPlate, String make, String model, YearMonthDay acquisition, YearMonthDay cease,
             BigDecimal allocationCostMultiplier) {
+//        check(this, ResourcePredicates.checkPermissionsToManageVehicle);
         super();
         setNumberPlate(numberPlate);
         setMake(make);
@@ -27,9 +28,9 @@ public class Vehicle extends Vehicle_Base {
         setAllocationCostMultiplier(allocationCostMultiplier);
     }
 
-    @Checked("ResourcePredicates.checkPermissionsToManageVehicle")
     public void edit(String numberPlate, String make, String model, YearMonthDay acquisition, YearMonthDay cease,
             BigDecimal allocationCostMultiplier) {
+        check(this, ResourcePredicates.checkPermissionsToManageVehicle);
         setNumberPlate(numberPlate);
         setMake(make);
         setModel(model);
@@ -38,9 +39,9 @@ public class Vehicle extends Vehicle_Base {
         setAllocationCostMultiplier(allocationCostMultiplier);
     }
 
-    @Checked("ResourcePredicates.checkPermissionsToManageVehicle")
     @Override
     public void delete() {
+        check(this, ResourcePredicates.checkPermissionsToManageVehicle);
         super.delete();
     }
 
@@ -149,6 +150,7 @@ public class Vehicle extends Vehicle_Base {
         }
         return result;
     }
+
     @Deprecated
     public boolean hasAcquisition() {
         return getAcquisition() != null;

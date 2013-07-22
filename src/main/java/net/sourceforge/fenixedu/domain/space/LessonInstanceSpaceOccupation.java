@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.space;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -11,6 +13,7 @@ import net.sourceforge.fenixedu.domain.LessonInstance;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.resource.ResourceAllocation;
+import net.sourceforge.fenixedu.predicates.SpacePredicates;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
@@ -19,12 +22,10 @@ import org.joda.time.Interval;
 import org.joda.time.TimeOfDay;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation_Base {
 
-    @Checked("SpacePredicates.checkPermissionsToManageLessonInstanceSpaceOccupationsWithTeacherCheck")
     public LessonInstanceSpaceOccupation(AllocatableSpace allocatableSpace) {
+//        check(this, SpacePredicates.checkPermissionsToManageLessonInstanceSpaceOccupationsWithTeacherCheck);
 
         super();
 
@@ -37,8 +38,8 @@ public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation
         setResource(allocatableSpace);
     }
 
-    @Checked("SpacePredicates.checkPermissionsToManageLessonInstanceSpaceOccupationsWithTeacherCheck")
     public void edit(LessonInstance lessonInstance) {
+        check(this, SpacePredicates.checkPermissionsToManageLessonInstanceSpaceOccupationsWithTeacherCheck);
 
         if (getLessonInstancesSet().contains(lessonInstance)) {
             removeLessonInstances(lessonInstance);
@@ -48,8 +49,8 @@ public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation
         //final ExecutionCourse executionCourse = lessonInstance.getLesson().getExecutionCourse();
         if (/*!space.isOccupiedByExecutionCourse(executionCourse, lessonInstance.getBeginDateTime(),
                 lessonInstance.getEndDateTime())
-                &&*/ !space.isFree(lessonInstance.getDay(), lessonInstance.getDay(), lessonInstance.getStartTime(),
-                        lessonInstance.getEndTime(), lessonInstance.getDayOfweek(), null, null, null)) {
+                &&*/!space.isFree(lessonInstance.getDay(), lessonInstance.getDay(), lessonInstance.getStartTime(),
+                lessonInstance.getEndTime(), lessonInstance.getDayOfweek(), null, null, null)) {
 
             throw new DomainException("error.LessonInstanceSpaceOccupation.room.is.not.free", space.getIdentification(),
                     lessonInstance.getDay().toString("dd-MM-yy"));
@@ -59,8 +60,8 @@ public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation
     }
 
     @Override
-    @Checked("SpacePredicates.checkPermissionsToManageLessonInstanceSpaceOccupations")
     public void delete() {
+        check(this, SpacePredicates.checkPermissionsToManageLessonInstanceSpaceOccupations);
         if (canBeDeleted()) {
             super.delete();
         }

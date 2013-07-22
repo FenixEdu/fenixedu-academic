@@ -163,7 +163,8 @@ import org.joda.time.Months;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.AcademicPredicates;import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
@@ -452,8 +453,8 @@ public class Person extends Person_Base {
         setIdentification(documentIDNumber, documentType);
     }
 
-    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
     public Person edit(final PersonBean personBean) {
+        check(this, RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE);
         setProperties(personBean);
         setDefaultPhysicalAddressData(personBean.getPhysicalAddressData(), true);
         setDefaultPhoneNumber(personBean.getPhone());
@@ -463,8 +464,8 @@ public class Person extends Person_Base {
         return this;
     }
 
-    @Checked("AcademicPredicates.EDIT_STUDENT_PERSONAL_DATA")
     public Person editPersonalInformation(final PersonBean personBean) {
+        check(this, AcademicPredicates.EDIT_STUDENT_PERSONAL_DATA);
         setProperties(personBean);
         return this;
     }

@@ -1,19 +1,19 @@
 package net.sourceforge.fenixedu.domain.material;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.space.MaterialSpaceOccupation;
+import net.sourceforge.fenixedu.predicates.ResourcePredicates;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 public class FireExtinguisher extends FireExtinguisher_Base {
 
-    @Checked("ResourcePredicates.checkPermissionsToManageMaterial")
     public FireExtinguisher(String identification, String barCodeNumber, YearMonthDay acquisition, YearMonthDay cease,
             Unit owner, String delivererEnterprise, YearMonthDay loadedDate, YearMonthDay toBeInspectedDate) {
+//       check(this, ResourcePredicates.checkPermissionsToManageMaterial);
 
         super();
         super.init(identification, barCodeNumber, acquisition, cease, owner);
@@ -22,9 +22,9 @@ public class FireExtinguisher extends FireExtinguisher_Base {
         setToBeInspectedDate(toBeInspectedDate);
     }
 
-    @Checked("ResourcePredicates.checkPermissionsToManageMaterial")
     public void edit(String identification, String barCodeNumber, YearMonthDay acquisition, YearMonthDay cease, Unit owner,
             String delivererEnterprise, YearMonthDay loadedDate, YearMonthDay toBeInspectedDate) {
+        check(this, ResourcePredicates.checkPermissionsToManageMaterial);
 
         super.edit(identification, barCodeNumber, acquisition, cease, owner);
         setDelivererEnterprise(delivererEnterprise);
@@ -32,9 +32,9 @@ public class FireExtinguisher extends FireExtinguisher_Base {
         setToBeInspectedDate(toBeInspectedDate);
     }
 
-    @Checked("ResourcePredicates.checkPermissionsToManageMaterial")
     @Override
     public void delete() {
+        check(this, ResourcePredicates.checkPermissionsToManageMaterial);
         super.delete();
     }
 
@@ -81,6 +81,7 @@ public class FireExtinguisher extends FireExtinguisher_Base {
     public boolean isFireExtinguisher() {
         return true;
     }
+
     @Deprecated
     public boolean hasDelivererEnterprise() {
         return getDelivererEnterprise() != null;

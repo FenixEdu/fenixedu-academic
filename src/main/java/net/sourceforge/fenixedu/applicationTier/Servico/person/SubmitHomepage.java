@@ -3,13 +3,13 @@ package net.sourceforge.fenixedu.applicationTier.Servico.person;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.homepage.Homepage;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class SubmitHomepage {
 
-    @Checked("RolePredicates.PERSON_PREDICATE")
     @Atomic
     public static void run(final Person person, final Boolean activated, final Boolean showUnit, final Boolean showCategory,
             final Boolean showPhoto, final Boolean showResearchUnitHomepage, final Boolean showCurrentExecutionCourses,
@@ -17,6 +17,7 @@ public class SubmitHomepage {
             final MultiLanguageString researchUnit, final Boolean showCurrentAttendingExecutionCourses,
             final Boolean showPublications, final Boolean showPatents, final Boolean showInterests,
             final Boolean showParticipations, final Boolean showPrizes) {
+        check(RolePredicates.PERSON_PREDICATE);
 
         Homepage homepage = person.initializeSite();
 

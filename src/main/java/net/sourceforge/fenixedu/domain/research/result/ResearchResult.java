@@ -23,7 +23,8 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.ResultPredicates;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.file.FileSetMetaData;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
@@ -66,8 +67,8 @@ public abstract class ResearchResult extends ResearchResult_Base {
         return resume;
     }
 
-    @Checked("ResultPredicates.createPredicate")
     private void setOnCreateAtributes() {
+        check(this, ResultPredicates.createPredicate);
         if (AccessControl.getUserView() != null) {
             super.setModifiedBy(AccessControl.getPerson().getName());
             setCreator(AccessControl.getPerson());
@@ -75,21 +76,21 @@ public abstract class ResearchResult extends ResearchResult_Base {
         super.setLastModificationDate(new DateTime());
     }
 
-    @Checked("ResultPredicates.createPredicate")
     public ResultParticipation setCreatorParticipation(Person participator, ResultParticipationRole role) {
+        check(this, ResultPredicates.createPredicate);
         return new ResultParticipation(this, participator, role, this.getResultParticipationsSet().size());
     }
 
-    @Checked("ResultPredicates.writePredicate")
     public ResultParticipation addParticipation(Person participator, ResultParticipationRole role) {
+        check(this, ResultPredicates.writePredicate);
         final ResultParticipation participation =
                 new ResultParticipation(this, participator, role, this.getResultParticipationsSet().size());
         updateModifiedByAndDate();
         return participation;
     }
 
-    @Checked("ResultPredicates.writePredicate")
     public void removeParticipation(ResultParticipation participation) {
+        check(this, ResultPredicates.writePredicate);
 
         Person person = participation.getPerson();
         if (person.equals(this.getCreator())) {
@@ -110,30 +111,30 @@ public abstract class ResearchResult extends ResearchResult_Base {
         return false;
     }
 
-    @Checked("ResultPredicates.writePredicate")
     public ResultUnitAssociation addUnitAssociation(Unit unit, ResultUnitAssociationRole role) {
+        check(this, ResultPredicates.writePredicate);
         final ResultUnitAssociation association = new ResultUnitAssociation(this, unit, role);
         updateModifiedByAndDate();
         return association;
     }
 
-    @Checked("ResultPredicates.writePredicate")
     public void removeUnitAssociation(ResultUnitAssociation association) {
+        check(this, ResultPredicates.writePredicate);
         association.delete();
         updateModifiedByAndDate();
     }
 
-    @Checked("ResultPredicates.writePredicate")
     public ResearchResultDocumentFile addDocumentFile(final VirtualPath path, Collection<FileSetMetaData> metadata,
             byte[] content, String filename, String displayName, FileResultPermittedGroupType permittedGroupType,
             Group permittedGroup) {
+        check(this, ResultPredicates.writePredicate);
         return addDocumentFile(path, metadata, content, filename, displayName, permittedGroupType, permittedGroup, Boolean.TRUE);
     }
 
-    @Checked("ResultPredicates.writePredicate")
     public ResearchResultDocumentFile addDocumentFile(final VirtualPath path, Collection<FileSetMetaData> metadata,
             byte[] content, String filename, String displayName, FileResultPermittedGroupType permittedGroupType,
             Group permittedGroup, Boolean isVisible) {
+        check(this, ResultPredicates.writePredicate);
         final ResearchResultDocumentFile documentFile =
                 new ResearchResultDocumentFile(path, metadata, content, this, filename, displayName, permittedGroupType,
                         permittedGroup);
@@ -142,25 +143,25 @@ public abstract class ResearchResult extends ResearchResult_Base {
         return documentFile;
     }
 
-    @Checked("ResultPredicates.writePredicate")
     public void removeDocumentFile(ResearchResultDocumentFile documentFile) {
+        check(this, ResultPredicates.writePredicate);
         documentFile.delete();
         updateModifiedByAndDate();
     }
 
-    @Checked("ResultPredicates.writePredicate")
     public void setParticipationsOrder(List<ResultParticipation> newParticipationsOrder) {
+        check(this, ResultPredicates.writePredicate);
         reOrderParticipations(newParticipationsOrder);
         updateModifiedByAndDate();
     }
 
-    @Checked("ResultPredicates.writePredicate")
     public void setModifiedByAndDate() {
+        check(this, ResultPredicates.writePredicate);
         updateModifiedByAndDate();
     }
 
-    @Checked("ResultPredicates.writePredicate")
     public void delete() {
+        check(this, ResultPredicates.writePredicate);
         Person requestingPerson = AccessControl.getPerson();
         if (!hasPersonParticipation(requestingPerson) && !this.getCreator().equals(requestingPerson)) {
             throw new DomainException("error.researcher.Result.onlyParticipantsCanDelete");

@@ -12,7 +12,8 @@ import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 
 public class SpecializationDegreeGratuityByAmountPerEctsPR extends SpecializationDegreeGratuityByAmountPerEctsPR_Base {
 
@@ -101,16 +102,16 @@ public class SpecializationDegreeGratuityByAmountPerEctsPR extends Specializatio
         return result;
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     public SpecializationDegreeGratuityByAmountPerEctsPR edit(Money specializationDegreeTotalAmount,
             Money specializationDegreeAmountPerEctsCredit, BigDecimal partialAcceptedPercentage) {
+        check(this, RolePredicates.MANAGER_PREDICATE);
         return edit(new DateTime(), specializationDegreeTotalAmount, specializationDegreeAmountPerEctsCredit,
                 partialAcceptedPercentage);
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     public SpecializationDegreeGratuityByAmountPerEctsPR edit(DateTime startDate, Money specializationDegreeTotalAmount,
             Money specializationDegreeAmountPerEctsCredit, BigDecimal partialAcceptedPercentage) {
+        check(this, RolePredicates.MANAGER_PREDICATE);
         deactivate(startDate);
 
         return new SpecializationDegreeGratuityByAmountPerEctsPR(startDate, null, getServiceAgreementTemplate(),

@@ -8,7 +8,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoPrice;
 import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.domain.GraduationType;
 import net.sourceforge.fenixedu.domain.Price;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 
 /**
@@ -16,9 +17,9 @@ import pt.ist.fenixframework.Atomic;
  */
 public class ReadCertificateList {
 
-    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Atomic
     public static List run(GraduationType graduationType, List<DocumentType> documentTypes) throws FenixServiceException {
+        check(RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE);
         final List<InfoPrice> result = new ArrayList<InfoPrice>();
         for (final Price price : Price.readByGraduationTypeAndDocumentTypes(graduationType, documentTypes)) {
             result.add(InfoPrice.newInfoFromDoaim(price));

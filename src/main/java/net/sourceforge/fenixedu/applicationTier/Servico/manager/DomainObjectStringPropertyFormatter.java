@@ -12,7 +12,8 @@ import net.sourceforge.fenixedu.util.StringFormatter;
 
 import org.apache.commons.beanutils.PropertyUtils;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.DomainObject;
 
@@ -22,9 +23,9 @@ import pt.ist.fenixframework.DomainObject;
  */
 public class DomainObjectStringPropertyFormatter {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     @Atomic
     public static void run(Class clazz, String slotName) throws FenixServiceException {
+        check(RolePredicates.MANAGER_PREDICATE);
 
         try {
             Collection<DomainObject> domainObjects = DomainObjectUtil.readAllDomainObjects(clazz);

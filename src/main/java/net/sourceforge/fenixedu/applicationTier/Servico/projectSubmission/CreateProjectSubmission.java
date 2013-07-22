@@ -29,7 +29,8 @@ import net.sourceforge.fenixedu.presentationTier.Action.manager.FileContentCreat
 
 import org.apache.commons.io.IOUtils;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.file.FileManagerException;
 import pt.utl.ist.fenix.tools.file.FileSetMetaData;
@@ -42,10 +43,10 @@ public class CreateProjectSubmission {
         super();
     }
 
-    @Checked("RolePredicates.STUDENT_PREDICATE")
     @Atomic
     public static void run(java.io.File uploadFile, String filename, Attends attends, Project project, StudentGroup studentGroup,
             Person person) throws FenixServiceException, IOException {
+        check(RolePredicates.STUDENT_PREDICATE);
 
 //	checkPermissions(attends, person);
         final Group permittedGroup = createPermittedGroup(attends, studentGroup, project);

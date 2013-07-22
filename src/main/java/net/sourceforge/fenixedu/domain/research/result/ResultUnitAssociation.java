@@ -3,7 +3,8 @@ package net.sourceforge.fenixedu.domain.research.result;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.ResultPredicates;
 import pt.ist.fenixframework.FenixFramework;
 
 public class ResultUnitAssociation extends ResultUnitAssociation_Base {
@@ -28,8 +29,8 @@ public class ResultUnitAssociation extends ResultUnitAssociation_Base {
     }
 
     @Override
-    @Checked("ResultPredicates.unitWritePredicate")
     public void setRole(ResultUnitAssociationRole role) {
+        check(this, ResultPredicates.unitWritePredicate);
         if (role == null) {
             throw new DomainException("error.researcher.ResultUnitAssociation.role.null");
         }

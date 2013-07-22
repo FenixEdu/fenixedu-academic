@@ -31,7 +31,8 @@ import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.utl.ist.fenix.tools.predicates.Predicate;
 import pt.utl.ist.fenix.tools.predicates.ResultCollection;
 import pt.utl.ist.fenix.tools.util.StringAppender;
@@ -70,8 +71,8 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
         setCreationDateDateTime(new DateTime());
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     public void deleteRecursive() {
+        check(this, RolePredicates.MANAGER_PREDICATE);
         delete();
     }
 

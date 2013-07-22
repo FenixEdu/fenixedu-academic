@@ -31,7 +31,8 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.AcademicPredicates;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public abstract class Event extends Event_Base {
@@ -213,8 +214,8 @@ public abstract class Event extends Event_Base {
     }
 
     @Override
-    @Checked("AcademicPredicates.MANAGE_PAYMENTS")
     public void setEventStateDate(DateTime eventStateDate) {
+        check(this, AcademicPredicates.MANAGE_PAYMENTS);
         super.setEventStateDate(eventStateDate);
     }
 
@@ -710,8 +711,8 @@ public abstract class Event extends Event_Base {
         return result;
     }
 
-    @Checked("AcademicPredicates.MANAGE_PAYMENTS")
     public final void forceChangeState(EventState state, DateTime when) {
+        check(this, AcademicPredicates.MANAGE_PAYMENTS);
         changeState(state, when);
     }
 
@@ -779,8 +780,8 @@ public abstract class Event extends Event_Base {
         return result;
     }
 
-    @Checked("AcademicPredicates.MANAGE_PAYMENTS")
     public void rollbackCompletly() {
+        check(this, AcademicPredicates.MANAGE_PAYMENTS);
         while (!getNonAdjustingTransactions().isEmpty()) {
             getNonAdjustingTransactions().iterator().next().delete();
         }
@@ -792,8 +793,8 @@ public abstract class Event extends Event_Base {
         }
     }
 
-    @Checked("AcademicPredicates.MANAGE_PAYMENTS")
     public Set<AccountingEventPaymentCode> getExistingPaymentCodes() {
+        check(this, AcademicPredicates.MANAGE_PAYMENTS);
         return Collections.unmodifiableSet(super.getPaymentCodesSet());
     }
 

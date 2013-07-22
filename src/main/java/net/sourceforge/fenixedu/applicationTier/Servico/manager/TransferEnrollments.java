@@ -7,16 +7,17 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 
 import org.apache.commons.lang.StringUtils;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class TransferEnrollments {
 
-    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Atomic
     public static void run(final String destinationStudentCurricularPlanId, final String[] enrollmentIDsToTransfer,
             final String destinationCurriculumGroupID) {
+        check(RolePredicates.MANAGER_OR_OPERATOR_PREDICATE);
 
         if (!StringUtils.isEmpty(destinationCurriculumGroupID)) {
 

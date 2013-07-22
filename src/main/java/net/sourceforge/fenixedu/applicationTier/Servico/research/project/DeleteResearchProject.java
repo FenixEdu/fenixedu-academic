@@ -2,15 +2,16 @@ package net.sourceforge.fenixedu.applicationTier.Servico.research.project;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.research.project.Project;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.ResultPredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class DeleteResearchProject {
 
-    @Checked("ResultPredicates.author")
     @Atomic
     public static void run(String oid) throws FenixServiceException {
+        check(ResultPredicates.author);
         Project project = FenixFramework.getDomainObject(oid);
         if (project == null) {
             throw new FenixServiceException();

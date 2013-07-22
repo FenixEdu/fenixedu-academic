@@ -7,7 +7,8 @@ import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.ResultPredicates;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 import pt.utl.ist.fenix.tools.file.FileSetMetaData;
@@ -38,8 +39,8 @@ public class ResearchResultDocumentFile extends ResearchResultDocumentFile_Base 
         init(path, filename, displayName, metadata, content, permittedGroup);
     }
 
-    @Checked("ResultPredicates.documentFileWritePredicate")
     public void setEdit(String displayName, FileResultPermittedGroupType fileResultPermittedGroupType) {
+        check(this, ResultPredicates.documentFileWritePredicate);
         super.setDisplayName(displayName);
         changeFilePermission(fileResultPermittedGroupType);
         this.getResult().setModifiedByAndDate();

@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Comparator;
@@ -7,15 +9,13 @@ import java.util.Comparator;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.LessonInstanceSpaceOccupation;
+import net.sourceforge.fenixedu.predicates.ResourceAllocationRolePredicates;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
 import org.joda.time.DateTime;
 import org.joda.time.Minutes;
 import org.joda.time.YearMonthDay;
-
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixframework.FenixFramework;
 
 public class LessonInstance extends LessonInstance_Base {
 
@@ -29,8 +29,8 @@ public class LessonInstance extends LessonInstance_Base {
 
     };
 
-    @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageLessonInstancesWithTeacherCheck")
     public LessonInstance(Summary summary, Lesson lesson) {
+//        check(this, ResourceAllocationRolePredicates.checkPermissionsToManageLessonInstancesWithTeacherCheck);
 
         super();
 
@@ -70,8 +70,8 @@ public class LessonInstance extends LessonInstance_Base {
         lessonInstanceSpaceOccupationManagement(room);
     }
 
-    @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageLessonInstancesWithTeacherCheck")
     public LessonInstance(Lesson lesson, YearMonthDay day) {
+//        check(this, ResourceAllocationRolePredicates.checkPermissionsToManageLessonInstancesWithTeacherCheck);
 
         super();
 
@@ -107,8 +107,8 @@ public class LessonInstance extends LessonInstance_Base {
         lessonInstanceSpaceOccupationManagement(room);
     }
 
-    @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageLessonInstances")
     public void delete() {
+        check(this, ResourceAllocationRolePredicates.checkPermissionsToManageLessonInstances);
 
         if (!canBeDeleted()) {
             throw new DomainException("error.LessonInstance.cannot.be.deleted");
@@ -126,8 +126,8 @@ public class LessonInstance extends LessonInstance_Base {
         deleteDomainObject();
     }
 
-    @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageLessonInstancesWithTeacherCheck")
     public void summaryAndCourseLoadManagement(Summary summary, Lesson lesson) {
+        check(this, ResourceAllocationRolePredicates.checkPermissionsToManageLessonInstancesWithTeacherCheck);
         CourseLoad courseLoad = null;
         if (lesson != null && summary != null) {
             courseLoad = lesson.getExecutionCourse().getCourseLoadByShiftType(summary.getSummaryType());

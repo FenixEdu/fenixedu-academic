@@ -11,7 +11,8 @@ import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.Money;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 
 public class PastDegreeGratuityEvent extends PastDegreeGratuityEvent_Base {
 
@@ -48,9 +49,9 @@ public class PastDegreeGratuityEvent extends PastDegreeGratuityEvent_Base {
 
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     @Override
     public void setPastDegreeGratuityAmount(Money pastDegreeGratuityAmount) {
+        check(this, RolePredicates.MANAGER_PREDICATE);
         super.setPastDegreeGratuityAmount(pastDegreeGratuityAmount);
     }
 

@@ -93,7 +93,8 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.StudentCurricularPlanPredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.predicates.AndPredicate;
 import pt.utl.ist.fenix.tools.predicates.Predicate;
@@ -2059,10 +2060,10 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return isBolonhaDegree() ? getRoot().getDegreeModulesToEvaluate(executionSemester) : Collections.EMPTY_SET;
     }
 
-    @Checked("StudentCurricularPlanPredicates.ENROL")
     final public RuleResult enrol(final ExecutionSemester executionSemester,
             final Set<IDegreeModuleToEvaluate> degreeModulesToEnrol, final List<CurriculumModule> curriculumModulesToRemove,
             final CurricularRuleLevel curricularRuleLevel) {
+        check(this, StudentCurricularPlanPredicates.ENROL);
 
         final EnrolmentContext enrolmentContext =
                 new EnrolmentContext(this, executionSemester, degreeModulesToEnrol, curriculumModulesToRemove,
@@ -2076,8 +2077,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return enrol(executionSemester, Collections.EMPTY_SET, Collections.EMPTY_LIST, curricularRuleLevel);
     }
 
-    @Checked("StudentCurricularPlanPredicates.ENROL_IN_AFFINITY_CYCLE")
     public void enrolInAffinityCycle(final CycleCourseGroup cycleCourseGroup, final ExecutionSemester executionSemester) {
+        check(this, StudentCurricularPlanPredicates.ENROL_IN_AFFINITY_CYCLE);
         CurriculumGroupFactory.createGroup(getRoot(), cycleCourseGroup, executionSemester);
     }
 
@@ -2580,8 +2581,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return hasRegistration() && getRegistration().getLastStudentCurricularPlan() == this;
     }
 
-    @Checked("StudentCurricularPlanPredicates.MOVE_CURRICULUM_LINES")
     public void moveCurriculumLines(final MoveCurriculumLinesBean moveCurriculumLinesBean) {
+        check(this, StudentCurricularPlanPredicates.MOVE_CURRICULUM_LINES);
         boolean runRules = false;
         Person responsible = AccessControl.getPerson();
 
@@ -2626,9 +2627,9 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         }
     }
 
-    @Checked("StudentCurricularPlanPredicates.MOVE_CURRICULUM_LINES_WITHOUT_RULES")
     public void moveCurriculumLinesWithoutRules(final Person responsiblePerson,
             final MoveCurriculumLinesBean moveCurriculumLinesBean) {
+        check(this, StudentCurricularPlanPredicates.MOVE_CURRICULUM_LINES_WITHOUT_RULES);
 
         for (final CurriculumLineLocationBean curriculumLineLocationBean : moveCurriculumLinesBean.getCurriculumLineLocations()) {
 

@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.space;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -32,6 +34,7 @@ import net.sourceforge.fenixedu.domain.resource.ResourceResponsibility;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.FenixDomainObjectActionLogAnnotation;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
+import net.sourceforge.fenixedu.predicates.SpacePredicates;
 
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
@@ -40,7 +43,6 @@ import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixframework.DomainObject;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
@@ -128,9 +130,9 @@ public abstract class Space extends Space_Base {
         setCreatedOn(new YearMonthDay());
     }
 
-    @Checked("SpacePredicates.checkPermissionsToManageSpace")
     @FenixDomainObjectActionLogAnnotation(actionName = "Set new Parent space", parameters = { "this", "newParentSpace" })
     public void setNewPossibleParentSpace(Space newParentSpace) {
+        check(this, SpacePredicates.checkPermissionsToManageSpace);
         if (newParentSpace != null) {
             setSuroundingSpace(newParentSpace);
         }
@@ -728,11 +730,11 @@ public abstract class Space extends Space_Base {
         return null;
     }
 
-    @Checked("SpacePredicates.checkIfLoggedPersonIsSpaceAdministrator")
     @FenixDomainObjectActionLogAnnotation(actionName = "Add or remove person from access group", parameters = { "this",
             "accessGroupType", "toAdd", "isToMaintainElements", "expression" })
     public void addOrRemovePersonFromAccessGroup(SpaceAccessGroupType accessGroupType, Boolean toAdd,
             Boolean isToMaintainElements, String expression) throws DomainException {
+        check(this, SpacePredicates.checkIfLoggedPersonIsSpaceAdministrator);
 
         if (StringUtils.isEmpty(expression)) {
             throw new DomainException("error.space.access.groups.management.no.person");

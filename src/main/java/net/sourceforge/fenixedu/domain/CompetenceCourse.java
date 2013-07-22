@@ -34,7 +34,8 @@ import net.sourceforge.fenixedu.util.UniqueAcronymCreator;
 import org.apache.commons.collections.Predicate;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.CompetenceCoursePredicates;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -945,38 +946,38 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     @Override
-    @Checked("CompetenceCoursePredicates.writePredicate")
     public void addCompetenceCourseInformations(CompetenceCourseInformation competenceCourseInformations) {
+        check(this, CompetenceCoursePredicates.writePredicate);
         super.addCompetenceCourseInformations(competenceCourseInformations);
     }
 
     @Override
-    @Checked("CompetenceCoursePredicates.writePredicate")
     public void addDepartments(Department departments) {
+        check(this, CompetenceCoursePredicates.writePredicate);
         super.addDepartments(departments);
     }
 
     @Override
-    @Checked("CompetenceCoursePredicates.writePredicate")
     public void removeCompetenceCourseInformations(CompetenceCourseInformation competenceCourseInformations) {
+        check(this, CompetenceCoursePredicates.writePredicate);
         super.removeCompetenceCourseInformations(competenceCourseInformations);
     }
 
     @Override
-    @Checked("CompetenceCoursePredicates.writePredicate")
     public void removeDepartments(Department departments) {
+        check(this, CompetenceCoursePredicates.writePredicate);
         super.removeDepartments(departments);
     }
 
     @Override
-    @Checked("CompetenceCoursePredicates.writePredicate")
     public void setCode(String code) {
+        check(this, CompetenceCoursePredicates.writePredicate);
         super.setCode(code);
     }
 
     @Override
-    @Checked("CompetenceCoursePredicates.editCurricularStagePredicate")
     public void setCurricularStage(CurricularStage curricularStage) {
+        check(this, CompetenceCoursePredicates.editCurricularStagePredicate);
         if (this.hasAnyAssociatedCurricularCourses() && curricularStage.equals(CurricularStage.DRAFT)) {
             throw new DomainException("competenceCourse.has.already.associated.curricular.courses");
         }
@@ -984,14 +985,14 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     @Override
-    @Checked("CompetenceCoursePredicates.writePredicate")
     public void setName(String name) {
+        check(this, CompetenceCoursePredicates.writePredicate);
         super.setName(name);
     }
 
     @Override
-    @Checked("CompetenceCoursePredicates.writePredicate")
     public void addAssociatedCurricularCourses(CurricularCourse associatedCurricularCourses) {
+        check(this, CompetenceCoursePredicates.writePredicate);
         super.addAssociatedCurricularCourses(associatedCurricularCourses);
     }
 
@@ -1273,8 +1274,8 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     @Deprecated
-    @Checked("CompetenceCoursePredicates.writePredicate")
     public void setCreationDate(java.util.Date date) {
+        check(this, CompetenceCoursePredicates.writePredicate);
         if (date == null) {
             setCreationDateYearMonthDay(null);
         } else {

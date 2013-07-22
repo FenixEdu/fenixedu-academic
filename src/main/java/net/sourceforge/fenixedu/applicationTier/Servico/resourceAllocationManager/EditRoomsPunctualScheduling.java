@@ -11,7 +11,8 @@ import net.sourceforge.fenixedu.domain.space.GenericEventSpaceOccupation;
 
 import org.apache.struts.util.MessageResources;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 
 public class EditRoomsPunctualScheduling {
@@ -19,9 +20,9 @@ public class EditRoomsPunctualScheduling {
     public static final MessageResources messages = MessageResources
             .getMessageResources("resources/ResourceAllocationManagerResources");
 
-    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
     @Atomic
     public static void run(RoomsPunctualSchedulingBean bean) {
+        check(RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE);
 
         List<AllocatableSpace> roomsToInsert = bean.getRooms();
         GenericEvent genericEvent = bean.getGenericEvent();

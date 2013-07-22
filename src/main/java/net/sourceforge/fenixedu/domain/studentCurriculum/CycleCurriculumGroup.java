@@ -29,7 +29,8 @@ import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.CycleCurriculumGroupPredicates;import net.sourceforge.fenixedu.predicates.RolePredicates;
 
 /**
  * 
@@ -147,8 +148,8 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
     }
 
     @Override
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     public void deleteRecursive() {
+        check(this, RolePredicates.MANAGER_PREDICATE);
         for (final CurriculumModule child : getCurriculumModules()) {
             child.deleteRecursive();
         }
@@ -186,8 +187,8 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
         return false;
     }
 
-    @Checked("CycleCurriculumGroupPredicates.MANAGE_CONCLUSION_PROCESS")
     public void conclude() {
+        check(this, CycleCurriculumGroupPredicates.MANAGE_CONCLUSION_PROCESS);
         if (isConclusionProcessed()) {
             if (!getRegistration().canRepeatConclusionProcess(AccessControl.getPerson())) {
                 throw new DomainException("error.CycleCurriculumGroup.cycle.is.already.concluded", getCycleCourseGroup()

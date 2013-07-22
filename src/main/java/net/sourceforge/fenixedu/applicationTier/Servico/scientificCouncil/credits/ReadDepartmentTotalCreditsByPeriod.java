@@ -11,15 +11,16 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 
 public class ReadDepartmentTotalCreditsByPeriod {
 
-    @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
     @Atomic
     public static Map<ExecutionYear, PeriodCreditsReportDTO> run(Unit department, ExecutionSemester fromExecutionPeriod,
             ExecutionSemester untilExecutionPeriod) throws ParseException {
+        check(RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE);
 
         List<ExecutionSemester> executionPeriodsBetween = getExecutionPeriodsBetween(fromExecutionPeriod, untilExecutionPeriod);
 

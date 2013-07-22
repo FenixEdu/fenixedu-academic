@@ -17,7 +17,8 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.transactions.GratuityTransaction;
 import net.sourceforge.fenixedu.domain.transactions.TransactionType;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
@@ -27,9 +28,9 @@ import pt.ist.fenixframework.FenixFramework;
  */
 public class CreateGratuityTransaction {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     @Atomic
     public static void run(String guideEntryID, IUserView userView) {
+        check(RolePredicates.MANAGER_PREDICATE);
 
         GuideEntry guideEntry = FenixFramework.getDomainObject(guideEntryID);
 

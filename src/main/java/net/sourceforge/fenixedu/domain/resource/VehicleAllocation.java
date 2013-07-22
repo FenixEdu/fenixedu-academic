@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.resource;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Collection;
@@ -12,14 +14,13 @@ import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
+import net.sourceforge.fenixedu.predicates.ResourceAllocationPredicates;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.Minutes;
-
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 public class VehicleAllocation extends VehicleAllocation_Base {
 
@@ -29,9 +30,9 @@ public class VehicleAllocation extends VehicleAllocation_Base {
         ((ComparatorChain) COMPARATOR_BY_VEHICLE_NUMBER_PLATE).addComparator(DomainObjectUtil.COMPARATOR_BY_ID);
     }
 
-    @Checked("ResourceAllocationPredicates.checkPermissionsToManageVehicleAllocations")
     public VehicleAllocation(DateTime beginDateTime, DateTime endDateTime, Vehicle vehicle, Party requestor, String reason,
             BigDecimal distance, BigDecimal amountCharged) {
+//        check(this, ResourceAllocationPredicates.checkPermissionsToManageVehicleAllocations);
 
         super();
         setResource(vehicle);
@@ -42,9 +43,9 @@ public class VehicleAllocation extends VehicleAllocation_Base {
         setAmountCharged(amountCharged);
     }
 
-    @Checked("ResourceAllocationPredicates.checkPermissionsToManageVehicleAllocations")
     public void edit(DateTime beginDateTime, DateTime endDateTime, Vehicle vehicle, Party requestor, String reason,
             BigDecimal distance, BigDecimal amountCharged) {
+        check(this, ResourceAllocationPredicates.checkPermissionsToManageVehicleAllocations);
 
         setResource(vehicle);
         setRequestor(requestor);
@@ -55,8 +56,8 @@ public class VehicleAllocation extends VehicleAllocation_Base {
     }
 
     @Override
-    @Checked("ResourceAllocationPredicates.checkPermissionsToManageVehicleAllocations")
     public void delete() {
+        check(this, ResourceAllocationPredicates.checkPermissionsToManageVehicleAllocations);
         DateTime currentDateTime = new DateTime();
         if (occursInThePast(currentDateTime)) {
             throw new DomainException("error.cannot.delete.allocation.already.occured");

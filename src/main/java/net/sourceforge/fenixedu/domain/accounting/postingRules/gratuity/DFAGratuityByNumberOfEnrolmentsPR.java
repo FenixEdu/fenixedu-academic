@@ -13,7 +13,8 @@ import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 
 public class DFAGratuityByNumberOfEnrolmentsPR extends DFAGratuityByNumberOfEnrolmentsPR_Base {
 
@@ -71,13 +72,13 @@ public class DFAGratuityByNumberOfEnrolmentsPR extends DFAGratuityByNumberOfEnro
         return result.lessOrEqualThan(getDfaTotalAmount()) ? result : getDfaTotalAmount();
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     public DFAGratuityByNumberOfEnrolmentsPR edit(Money dfaTotalAmount, BigDecimal partialAcceptedPercentage) {
+        check(this, RolePredicates.MANAGER_PREDICATE);
         return edit(new DateTime(), dfaTotalAmount, partialAcceptedPercentage);
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     public DFAGratuityByNumberOfEnrolmentsPR edit(DateTime startDate, Money dfaTotalAmount, BigDecimal partialAcceptedPercentage) {
+        check(this, RolePredicates.MANAGER_PREDICATE);
 
         deactivate(startDate);
 

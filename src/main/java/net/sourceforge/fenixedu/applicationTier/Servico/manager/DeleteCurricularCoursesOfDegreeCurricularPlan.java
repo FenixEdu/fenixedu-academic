@@ -17,7 +17,8 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.apache.commons.collections.Predicate;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
@@ -27,9 +28,9 @@ import pt.ist.fenixframework.FenixFramework;
 public class DeleteCurricularCoursesOfDegreeCurricularPlan {
 
     // delete a set of curricularCourses
-    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Atomic
     public static List run(List<String> curricularCoursesIds) throws FenixServiceException {
+        check(RolePredicates.MANAGER_OR_OPERATOR_PREDICATE);
 
         Iterator<String> iter = curricularCoursesIds.iterator();
         List undeletedCurricularCourses = new ArrayList();

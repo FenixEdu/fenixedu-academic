@@ -1,15 +1,16 @@
 package net.sourceforge.fenixedu.domain;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
+import net.sourceforge.fenixedu.predicates.ResourceAllocationRolePredicates;
 
 import org.apache.commons.lang.StringUtils;
-
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 /**
  * 
@@ -26,9 +27,9 @@ public class SchoolClass extends SchoolClass_Base {
 
     };
 
-    @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageSchoolClass")
     public SchoolClass(final ExecutionDegree executionDegree, final ExecutionSemester executionSemester, final String name,
             final Integer curricularYear) {
+//        check(this, ResourceAllocationRolePredicates.checkPermissionsToManageSchoolClass);
         super();
 
         checkIfExistsSchoolClassWithSameName(executionDegree, executionSemester, curricularYear, name);
@@ -40,8 +41,8 @@ public class SchoolClass extends SchoolClass_Base {
         setNome(name);
     }
 
-    @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageSchoolClass")
     public SchoolClass(ExecutionDegree executionDegree, AcademicInterval academicInterval, String name, Integer curricularYear) {
+//        check(this, ResourceAllocationRolePredicates.checkPermissionsToManageSchoolClass);
         super();
 
         ExecutionSemester executionInterval = (ExecutionSemester) ExecutionInterval.getExecutionInterval(academicInterval);
@@ -56,8 +57,8 @@ public class SchoolClass extends SchoolClass_Base {
         setNome(name);
     }
 
-    @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageSchoolClass")
     public void edit(String name) {
+        check(this, ResourceAllocationRolePredicates.checkPermissionsToManageSchoolClass);
         if (name != null && !StringUtils.isEmpty(name.trim())) {
             final SchoolClass otherClassWithSameNewName =
                     getExecutionDegree().findSchoolClassesByExecutionPeriodAndName(getExecutionPeriod(), name.trim());
@@ -68,8 +69,8 @@ public class SchoolClass extends SchoolClass_Base {
         setNome(name);
     }
 
-    @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageSchoolClass")
     public void delete() {
+        check(this, ResourceAllocationRolePredicates.checkPermissionsToManageSchoolClass);
         getAssociatedShifts().clear();
         super.setExecutionDegree(null);
         super.setExecutionPeriod(null);

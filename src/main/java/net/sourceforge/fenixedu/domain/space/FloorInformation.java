@@ -1,16 +1,15 @@
 package net.sourceforge.fenixedu.domain.space;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.Floor.FloorFactoryEditor;
 import net.sourceforge.fenixedu.injectionCode.FenixDomainObjectActionLogAnnotation;
+import net.sourceforge.fenixedu.predicates.SpacePredicates;
 
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 public class FloorInformation extends FloorInformation_Base {
 
-    @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageSpaceInformation")
     @FenixDomainObjectActionLogAnnotation(actionName = "Created floor information", parameters = { "floor", "level", "begin",
             "end", "blueprintNumber" })
     public FloorInformation(Floor floor, Integer level, YearMonthDay begin, YearMonthDay end, String blueprintNumber) {
@@ -21,19 +20,19 @@ public class FloorInformation extends FloorInformation_Base {
         setFirstTimeInterval(begin, end);
     }
 
-    @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToEditSpaceInformation")
     @FenixDomainObjectActionLogAnnotation(actionName = "Edited floor information", parameters = { "level", "begin", "end",
             "blueprintNumber" })
     public void editFloorCharacteristics(Integer level, YearMonthDay begin, YearMonthDay end, String blueprintNumber) {
+        check(this, SpacePredicates.checkIfLoggedPersonHasPermissionsToEditSpaceInformation);
         setLevel(level);
         setBlueprintNumber(blueprintNumber);
         editTimeInterval(begin, end);
     }
 
     @Override
-    @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToManageSpaceInformation")
     @FenixDomainObjectActionLogAnnotation(actionName = "Deleted floor information", parameters = {})
     public void delete() {
+        check(this, SpacePredicates.checkIfLoggedPersonHasPermissionsToManageSpaceInformation);
         super.delete();
     }
 
@@ -89,6 +88,7 @@ public class FloorInformation extends FloorInformation_Base {
         // Necessary for Renderers
         return null;
     }
+
     @Deprecated
     public boolean hasLevel() {
         return getLevel() != null;

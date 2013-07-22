@@ -2,15 +2,16 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidChangeServiceException;
 import net.sourceforge.fenixedu.domain.GuideEntry;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class DeleteGuideEntryAndPaymentTransactionInManager {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     @Atomic
     public static void run(String guideEntryID) throws InvalidChangeServiceException {
+        check(RolePredicates.MANAGER_PREDICATE);
         GuideEntry guideEntry = FenixFramework.getDomainObject(guideEntryID);
 
         if (!guideEntry.canBeDeleted()) {

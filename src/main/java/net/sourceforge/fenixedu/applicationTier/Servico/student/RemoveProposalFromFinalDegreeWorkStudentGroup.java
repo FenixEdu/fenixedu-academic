@@ -3,14 +3,15 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 
 public class RemoveProposalFromFinalDegreeWorkStudentGroup {
 
-    @Checked("RolePredicates.STUDENT_PREDICATE")
     @Atomic
     public static Boolean run(final FinalDegreeWorkGroup group, String groupProposalOID) throws FenixServiceException {
+        check(RolePredicates.STUDENT_PREDICATE);
         final GroupProposal groupProposal = findGroupProposal(group, groupProposalOID);
         if (groupProposal != null) {
             if (group.getProposalAttributed() == groupProposal.getFinalDegreeWorkProposal()) {

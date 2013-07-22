@@ -55,7 +55,8 @@ import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.ThesisPredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -267,8 +268,8 @@ public class Thesis extends Thesis_Base {
     }
 
     @Override
-    @Checked("ThesisPredicates.studentOrAcademicAdministrativeOfficeOrScientificCouncil")
     public void setDiscussed(DateTime discussed) {
+        check(this, ThesisPredicates.studentOrAcademicAdministrativeOfficeOrScientificCouncil);
         if (discussed != null && getEnrolment().getCreationDateDateTime().isAfter(discussed)) {
             throw new DomainException("thesis.invalid.discussed.date.time");
         }
@@ -276,14 +277,14 @@ public class Thesis extends Thesis_Base {
     }
 
     @Override
-    @Checked("ThesisPredicates.waitingConfirmation")
     public void setThesisAbstract(MultiLanguageString thesisAbstract) {
+        check(this, ThesisPredicates.waitingConfirmation);
         super.setThesisAbstract(thesisAbstract);
     }
 
     @Override
-    @Checked("ThesisPredicates.waitingConfirmation")
     public void setKeywords(MultiLanguageString keywords) {
+        check(this, ThesisPredicates.waitingConfirmation);
         super.setKeywords(keywords);
     }
 
@@ -362,8 +363,8 @@ public class Thesis extends Thesis_Base {
         return result;
     }
 
-    @Checked("ThesisPredicates.isScientificCommission")
     public void delete() {
+        check(this, ThesisPredicates.isScientificCommission);
 
         if (!canBeDeleted()) {
             throw new DomainException("thesis.delete.notDraft");
@@ -553,8 +554,8 @@ public class Thesis extends Thesis_Base {
     }
 
     // / DRAFT -> SUBMITTED
-    @Checked("ThesisPredicates.isScientificCommission")
     public void submit() {
+        check(this, ThesisPredicates.isScientificCommission);
         if (getState() != ThesisState.DRAFT) {
             throw new DomainException("thesis.submit.notDraft");
         }
@@ -577,8 +578,8 @@ public class Thesis extends Thesis_Base {
     }
 
     // / SUBMITTED -> DRAFT
-    @Checked("ThesisPredicates.isScientificCommission")
     public void cancelSubmit() {
+        check(this, ThesisPredicates.isScientificCommission);
         switch (getState()) {
         case SUBMITTED:
             break;
@@ -613,8 +614,8 @@ public class Thesis extends Thesis_Base {
     // }
 
     // SUBMITTED -> APPROVED
-    @Checked("ThesisPredicates.isScientificCouncilOrCoordinatorAndNotOrientatorOrCoorientator")
     public void approveProposal() {
+        check(this, ThesisPredicates.isScientificCouncilOrCoordinatorAndNotOrientatorOrCoorientator);
         if (getState() != ThesisState.APPROVED) {
             if (getState() != ThesisState.SUBMITTED) {
                 throw new DomainException("thesis.approve.notSubmitted");
@@ -628,8 +629,8 @@ public class Thesis extends Thesis_Base {
     }
 
     // (SUBMITTED | APPROVED) -> DRAFT
-    @Checked("ThesisPredicates.isScientificCouncilOrCoordinatorAndNotOrientatorOrCoorientator")
     public void rejectProposal(String rejectionComment) {
+        check(this, ThesisPredicates.isScientificCouncilOrCoordinatorAndNotOrientatorOrCoorientator);
         if (getState() != ThesisState.SUBMITTED && getState() != ThesisState.APPROVED) {
             throw new DomainException("thesis.reject.notSubmittedNorApproved");
         }
@@ -1397,8 +1398,8 @@ public class Thesis extends Thesis_Base {
         return getThesisAbstractLanguage("pt");
     }
 
-    @Checked("ThesisPredicates.waitingConfirmation")
     public void setThesisAbstractPt(String text) {
+        check(this, ThesisPredicates.waitingConfirmation);
         setThesisAbstractLanguage("pt", text);
     }
 
@@ -1406,8 +1407,8 @@ public class Thesis extends Thesis_Base {
         return getThesisAbstractLanguage("en");
     }
 
-    @Checked("ThesisPredicates.waitingConfirmation")
     public void setThesisAbstractEn(String text) {
+        check(this, ThesisPredicates.waitingConfirmation);
         setThesisAbstractLanguage("en", text);
     }
 
@@ -1448,8 +1449,8 @@ public class Thesis extends Thesis_Base {
         return getKeywordsLanguage("pt");
     }
 
-    @Checked("ThesisPredicates.waitingConfirmation")
     public void setKeywordsPt(String text) {
+        check(this, ThesisPredicates.waitingConfirmation);
         setKeywordsLanguage("pt", normalizeKeywords(text));
     }
 
@@ -1457,8 +1458,8 @@ public class Thesis extends Thesis_Base {
         return getKeywordsLanguage("en");
     }
 
-    @Checked("ThesisPredicates.waitingConfirmation")
     public void setKeywordsEn(String text) {
+        check(this, ThesisPredicates.waitingConfirmation);
         setKeywordsLanguage("en", normalizeKeywords(text));
     }
 
@@ -1526,8 +1527,8 @@ public class Thesis extends Thesis_Base {
         }
     }
 
-    @Checked("ThesisPredicates.isScientificCommissionOrScientificCouncil")
     public void setOrientator(Person person) {
+        check(this, ThesisPredicates.isScientificCommissionOrScientificCouncil);
         setParticipation(person, ThesisParticipationType.ORIENTATOR);
 
         if (!isCreditsDistributionNeeded()) {
@@ -1535,8 +1536,8 @@ public class Thesis extends Thesis_Base {
         }
     }
 
-    @Checked("ThesisPredicates.isScientificCommissionOrScientificCouncil")
     public void setCoorientator(Person person) {
+        check(this, ThesisPredicates.isScientificCommissionOrScientificCouncil);
         setParticipation(person, ThesisParticipationType.COORIENTATOR);
 
         if (!isCreditsDistributionNeeded()) {
@@ -1544,8 +1545,8 @@ public class Thesis extends Thesis_Base {
         }
     }
 
-    @Checked("ThesisPredicates.isScientificCommissionOrScientificCouncil")
     public void setPresident(Person person) {
+        check(this, ThesisPredicates.isScientificCommissionOrScientificCouncil);
         setParticipation(person, ThesisParticipationType.PRESIDENT);
     }
 
@@ -1577,8 +1578,8 @@ public class Thesis extends Thesis_Base {
         }
     }
 
-    @Checked("ThesisPredicates.isScientificCommissionOrScientificCouncil")
     public void addVowel(Person person) {
+        check(this, ThesisPredicates.isScientificCommissionOrScientificCouncil);
         if (person != null) {
             new ThesisEvaluationParticipant(this, person, ThesisParticipationType.VOWEL);
         }
@@ -1672,8 +1673,8 @@ public class Thesis extends Thesis_Base {
         return getCurrentDiscussedDate() != null;
     }
 
-    @Checked("ThesisPredicates.isScientificCommission")
     public void checkIsScientificCommission() {
+        check(this, ThesisPredicates.isScientificCommission);
         // Nothing to do here... just the access control stuff that is injected
         // whenever necessary
     }

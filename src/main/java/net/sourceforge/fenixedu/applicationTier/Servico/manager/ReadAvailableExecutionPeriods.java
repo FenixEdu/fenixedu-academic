@@ -12,15 +12,16 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class ReadAvailableExecutionPeriods {
 
-    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Atomic
     public static List run(List<String> unavailableExecutionPeriodsIDs) throws FenixServiceException {
+        check(RolePredicates.MANAGER_OR_OPERATOR_PREDICATE);
 
         final Collection<ExecutionSemester> filteredExecutionPeriods =
                 new ArrayList<ExecutionSemester>(RootDomainObject.getInstance().getExecutionPeriodsSet());

@@ -15,7 +15,8 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 
 /**
@@ -24,9 +25,9 @@ import pt.ist.fenixframework.Atomic;
  */
 public class EstablishFinalDegreeWorkStudentGroup {
 
-    @Checked("RolePredicates.STUDENT_PREDICATE")
     @Atomic
     public static Boolean run(Person person, final ExecutionDegree executionDegree) throws FenixServiceException {
+        check(RolePredicates.STUDENT_PREDICATE);
         final Registration registration = getRegistrationForExecutionDegree(person, executionDegree);
         if (registration == null) {
             throw new StudentCannotBeACandidateForSelectedDegree("Student.Cannot.Be.A.Candidate.For.Selected.Degree");

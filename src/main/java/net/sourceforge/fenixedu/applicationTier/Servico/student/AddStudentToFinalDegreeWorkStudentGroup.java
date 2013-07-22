@@ -28,7 +28,8 @@ import net.sourceforge.fenixedu.domain.student.Student;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
@@ -37,9 +38,9 @@ import pt.ist.fenixframework.FenixFramework;
  */
 public class AddStudentToFinalDegreeWorkStudentGroup {
 
-    @Checked("RolePredicates.STUDENT_PREDICATE")
     @Atomic
     public static Boolean run(String groupOID, String username) throws FenixServiceException {
+        check(RolePredicates.STUDENT_PREDICATE);
         FinalDegreeWorkGroup group = FenixFramework.getDomainObject(groupOID);
         Registration registration = findSomeRegistration(username);
         if (group == null

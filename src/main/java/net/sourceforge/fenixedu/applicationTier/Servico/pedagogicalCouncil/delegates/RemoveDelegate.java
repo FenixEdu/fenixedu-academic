@@ -18,20 +18,21 @@ import net.sourceforge.fenixedu.domain.student.Student;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 
 public class RemoveDelegate {
 
-    @Checked("RolePredicates.PEDAGOGICAL_COUNCIL_PREDICATE")
     @Atomic
     public static void run(Student student) throws FenixServiceException {
+        check(RolePredicates.PEDAGOGICAL_COUNCIL_PREDICATE);
         run(student, FunctionType.DELEGATE_OF_YEAR);
     }
 
-    @Checked("RolePredicates.PEDAGOGICAL_COUNCIL_PREDICATE")
     @Atomic
     public static void run(PersonFunction personFunction, LocalDate newEndDate) throws FenixServiceException {
+        check(RolePredicates.PEDAGOGICAL_COUNCIL_PREDICATE);
         Student student = personFunction.getPerson().getStudent();
 
         if (!personFunction.getBeginDate().isBefore(newEndDate)) {
@@ -49,9 +50,9 @@ public class RemoveDelegate {
 
     }
 
-    @Checked("RolePredicates.PEDAGOGICAL_COUNCIL_PREDICATE")
     @Atomic
     public static void run(PersonFunction personFunction) throws FenixServiceException {
+        check(RolePredicates.PEDAGOGICAL_COUNCIL_PREDICATE);
         Student student = personFunction.getPerson().getStudent();
         YearMonthDay yesterday = new YearMonthDay().minusDays(1);
         if (!personFunction.getBeginDate().isBefore(yesterday)) {
@@ -65,9 +66,9 @@ public class RemoveDelegate {
 
     }
 
-    @Checked("RolePredicates.PEDAGOGICAL_COUNCIL_PREDICATE")
     @Atomic
     public static void run(Student student, FunctionType delegateFunctionType) throws FenixServiceException {
+        check(RolePredicates.PEDAGOGICAL_COUNCIL_PREDICATE);
         final DegreeUnit degreeUnit = student.getLastActiveRegistration().getDegree().getUnit();
 
         if (delegateFunctionType.equals(FunctionType.DELEGATE_OF_YEAR)) {
@@ -90,9 +91,9 @@ public class RemoveDelegate {
         }
     }
 
-    @Checked("RolePredicates.PEDAGOGICAL_COUNCIL_PREDICATE")
     @Atomic
     public static void run(Person person, Function delegateFunction) throws FenixServiceException {
+        check(RolePredicates.PEDAGOGICAL_COUNCIL_PREDICATE);
         PedagogicalCouncilUnit unit = (PedagogicalCouncilUnit) delegateFunction.getUnit();
 
         unit.removeActiveDelegatePersonFunctionFromPersonByFunction(person, delegateFunction);

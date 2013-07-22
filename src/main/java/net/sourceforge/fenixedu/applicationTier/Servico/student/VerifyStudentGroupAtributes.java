@@ -18,7 +18,8 @@ import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
@@ -191,10 +192,10 @@ public class VerifyStudentGroupAtributes {
      * @throws ExcepcaoPersistencia
      */
 
-    @Checked("RolePredicates.STUDENT_PREDICATE")
     @Atomic
     public static Boolean run(String groupPropertiesCode, String shiftCode, String studentGroupCode, String username,
             Integer option) throws FenixServiceException {
+        check(RolePredicates.STUDENT_PREDICATE);
 
         boolean result = false;
 

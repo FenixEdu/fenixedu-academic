@@ -15,7 +15,8 @@ import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.predicates.UnitSitePredicates;
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -59,50 +60,50 @@ public class UnitSite extends UnitSite_Base {
     }
 
     @Override
-    @Checked("UnitSitePredicates.managers")
     public void setDescription(MultiLanguageString description) {
+        check(this, UnitSitePredicates.managers);
         super.setDescription(description == null || description.isEmpty() ? null : description);
     }
 
     @Override
-    @Checked("UnitSitePredicates.managers")
     public void setSideBanner(MultiLanguageString sideBanner) {
+        check(this, UnitSitePredicates.managers);
         super.setSideBanner(sideBanner);
     }
 
     @Override
-    @Checked("UnitSitePredicates.managers")
     public void setShowAnnouncements(Boolean showAnnouncements) {
+        check(this, UnitSitePredicates.managers);
         super.setShowAnnouncements(showAnnouncements);
     }
 
     @Override
-    @Checked("UnitSitePredicates.managers")
     public void setShowEvents(Boolean showEvents) {
+        check(this, UnitSitePredicates.managers);
         super.setShowEvents(showEvents);
     }
 
     @Override
-    @Checked("UnitSitePredicates.managers")
     public void setShowBanner(Boolean showBanner) {
+        check(this, UnitSitePredicates.managers);
         super.setShowBanner(showBanner);
     }
 
     @Override
-    @Checked("UnitSitePredicates.managers")
     public void setShowIntroduction(Boolean showIntroduction) {
+        check(this, UnitSitePredicates.managers);
         super.setShowIntroduction(showIntroduction);
     }
 
     @Override
-    @Checked("UnitSitePredicates.managers")
     public void setPersonalizedLogo(Boolean personalizedLogo) {
+        check(this, UnitSitePredicates.managers);
         super.setPersonalizedLogo(personalizedLogo);
     }
 
     @Override
-    @Checked("UnitSitePredicates.managers")
     public void setShowFlags(Boolean showFlags) {
+        check(this, UnitSitePredicates.managers);
         super.setShowFlags(showFlags);
     }
 
