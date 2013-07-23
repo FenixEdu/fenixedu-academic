@@ -70,6 +70,7 @@ import net.sourceforge.fenixedu.domain.accessControl.PedagogicalCouncilMembersGr
 import net.sourceforge.fenixedu.domain.accessControl.PersistentGroup;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.accessControl.PersonsInFunctionGroup;
+import net.sourceforge.fenixedu.domain.accessControl.PhdProcessGuidingsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ProfessorshipsForCurrentSemester;
 import net.sourceforge.fenixedu.domain.accessControl.ProfessorshipsForCurrentYear;
 import net.sourceforge.fenixedu.domain.accessControl.ProjectDepartmentAccessGroup;
@@ -288,6 +289,7 @@ public class GroupBuilderRegistry {
 
         register("searchDegreeStudentsGroup", SearchDegreeStudentsGroup.class, new SearchDegreeStudentsGroup.Builder());
         register("academic", AcademicAuthorizationGroup.class, new AcademicAuthorizationGroupBuilder());
+        register("phdProcessGuidingsGroup", PhdProcessGuidingsGroup.class, new PhdProcessGuidingsGroup.Builder());
 
         registerGroupsWithNoArguments();
     }

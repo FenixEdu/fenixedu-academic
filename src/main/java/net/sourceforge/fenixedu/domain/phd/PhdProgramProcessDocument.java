@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.CurrentDegreeCoordinatorsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
+import net.sourceforge.fenixedu.domain.accessControl.PhdProcessGuidingsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -68,8 +69,9 @@ public class PhdProgramProcessDocument extends PhdProgramProcessDocument_Base {
         final PhdIndividualProgramProcess individualProgramProcess = process.getIndividualProgramProcess();
         final PhdProgram phdProgram = individualProgramProcess.getPhdProgram();
         final Group coordinatorGroup = new CurrentDegreeCoordinatorsGroup(phdProgram.getDegree());
+        final Group guidingsGroup = new PhdProcessGuidingsGroup(individualProgramProcess);
 
-        final Group group = new GroupUnion(roleGroup, coordinatorGroup);
+        final Group group = new GroupUnion(roleGroup, coordinatorGroup, guidingsGroup);
         super.init(getVirtualPath(), filename, filename, Collections.EMPTY_SET, content, group);
     }
 
