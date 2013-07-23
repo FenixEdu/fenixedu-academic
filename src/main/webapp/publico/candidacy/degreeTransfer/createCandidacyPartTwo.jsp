@@ -96,7 +96,7 @@
 	
 			<logic:equal name="individualCandidacyProcessBean" property="externalPrecedentDegreeType" value="true">
 				<p style="margin-bottom: 0.5em;"><bean:message key="label.university.enrolled" bundle="CANDIDATE_RESOURCES"/>: <span class="red">*</span></p>
-				<div class="flowerror">
+				<div class="flowerror_public_hide">
 				<fr:edit id="individualCandidacyProcessBean.institutionUnitName"
 					name="individualCandidacyProcessBean"
 					schema="PublicCandidacyProcessBean.institutionUnitName.manage">
@@ -107,7 +107,7 @@
 				</div>
 				
 				<p style="margin-bottom: 0.5em;"><bean:message key="label.degree.enrolled" bundle="CANDIDATE_RESOURCES"/>: <span class="red">*</span></p>
-				<div class="flowerror">
+				<div class="flowerror_public_hide">
 				<fr:edit id="individualCandidacyProcessBean.degreeDesignation"
 					name="individualCandidacyProcessBean"
 					schema="PublicCandidacyProcessBean.degreeDesignation.manage">
@@ -118,7 +118,7 @@
 				</div>
 				
 				<p style="margin-bottom: 0.5em;"><bean:message key="label.numberOfPreviousYearEnrolmentsInPrecedentDegree" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <span class="red">*</span></p>
-				<div class="flowerror">
+				<div class="flowerror_public_hide">
 				<fr:edit id="individualCandidacyProcessBean.numberOfPreviousYearEnrolmentsInPrecedentDegree"
 					name="individualCandidacyProcessBean">
 					<fr:schema type="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean" bundle="ACADEMIC_OFFICE_RESOURCES">
@@ -158,7 +158,7 @@
 					<tr>
 						<th><bean:message key="label.other.academic.titles.program.name" bundle="CANDIDATE_RESOURCES"/>: <span class="red">*</span></th>
 						<td>
-							<div class="flowerror_hide">
+							<div class="flowerror_public_hide">
 								<fr:edit 	id='<%= designationId %>' 
 											name="academicTitle"
 											schema="PublicCandidacyProcessBean.formation.designation">
@@ -176,7 +176,7 @@
 					<tr>
 						<th><bean:message key="label.other.academic.titles.institution" bundle="CANDIDATE_RESOURCES"/>: <span class="red">*</span></th>
 						<td>
-							<div class="flowerror_hide">
+							<div class="flowerror_public_hide">
 								<fr:edit 	id='<%= institutionNameId %>' 
 									name="academicTitle"
 									schema="PublicCandidacyProcessBean.formation.institutionUnitName">
@@ -191,7 +191,7 @@
 					<tr>
 						<th><bean:message key="label.other.academic.titles.conclusion.date" bundle="CANDIDATE_RESOURCES"/>: <span class="red">*</span></th>
 						<td>
-							<div class="flowerror_hide">
+							<div class="flowerror_public_hide">
 								<fr:edit 	id='<%= endYearId %>'
 											name="academicTitle"
 											schema="PublicCandidacyProcessBean.formation.conclusion.date">
@@ -207,7 +207,7 @@
 					<tr>
 						<th><bean:message key="label.other.academic.titles.conclusion.grade" bundle="CANDIDATE_RESOURCES"/>: <span class="red">*</span></th>
 						<td>
-							<div class="flowerror_hide">
+							<div class="flowerror_public_hide">
 								<fr:edit 	id='<%= conclusionGradeId %>'
 											name="academicTitle"
 											schema="PublicCandidacyProcessBean.formation.conclusion.grade">

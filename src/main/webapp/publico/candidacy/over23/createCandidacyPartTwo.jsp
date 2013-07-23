@@ -102,7 +102,7 @@
 				<tr>
 					<th><bean:message key="label.over23.execution.year.conclusion" bundle="CANDIDATE_RESOURCES"/>: <span class="red">*</span></th>
 					<td>
-						<div class="flowerror_hide">
+						<div class="flowerror_public_hide">
 						<fr:edit 	id='<%= endYearId %>'
 									name="qualification"
 									schema="PublicCandidacyProcessBean.over23.execution.year.conclusion">
@@ -173,7 +173,7 @@
 		<h3><bean:message key="label.over23.languages" bundle="CANDIDATE_RESOURCES"/></h3>
 		
 		<p class="mbottom05"><bean:message key="label.over23.languages.read" bundle="CANDIDATE_RESOURCES"/>&nbsp;<bean:message key="label.delimited.by.commas" bundle="CANDIDATE_RESOURCES"/>:</p>
-		<div class="flowerror">
+		<div class="flowerror_public_hide">
 		<fr:edit 	id='PublicCandidacyProcessBean.over23.languages.read' 
 					name="individualCandidacyProcessBean"
 					schema="PublicCandidacyProcessBean.over23.languages.read">
@@ -182,7 +182,7 @@
 		</div>	
 		
 		<p class="mbottom05"><bean:message key="label.over23.languages.write" bundle="CANDIDATE_RESOURCES"/>&nbsp;<bean:message key="label.delimited.by.commas" bundle="CANDIDATE_RESOURCES"/>:</p>
-		<div class="flowerror">
+		<div class="flowerror_public_hide">
 		<fr:edit 	id='PublicCandidacyProcessBean.over23.languages.write' 
 					name="individualCandidacyProcessBean"
 					schema="PublicCandidacyProcessBean.over23.languages.write">
@@ -191,7 +191,7 @@
 		</div>	
 
 		<p class="mbottom05"><bean:message key="label.over23.languages.speak" bundle="CANDIDATE_RESOURCES"/>&nbsp;<bean:message key="label.delimited.by.commas" bundle="CANDIDATE_RESOURCES"/>:</p>
-		<div class="flowerror">
+		<div class="flowerror_public_hide">
 		<fr:edit 	id='PublicCandidacyProcessBean.over23.languages.speak' 
 					name="individualCandidacyProcessBean"
 					schema="PublicCandidacyProcessBean.over23.languages.speak">
@@ -234,7 +234,7 @@
 	
 		<h2 style="margin-top: 1em;"><bean:message key="label.over23.disabilities" bundle="CANDIDATE_RESOURCES"/></h2>
 		<p class="mbottom05"><bean:message key="message.over23.disabilities.detail" bundle="CANDIDATE_RESOURCES"/>:</p>
-		<div class="flowerror">
+		<div class="flowerror_public_hide">
 		<fr:edit 	id="individualCandidacyProcessBean.disabilities"
 					name="individualCandidacyProcessBean"
 					schema="PublicCandidacyProcessBean.over23.disabilities">

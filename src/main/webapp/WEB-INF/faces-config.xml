@@ -546,7 +546,7 @@
 		<description>Provides statistics with various degrees of granularity</description>
 		<managed-bean-name>courseStatistics</managed-bean-name>
 		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.departmentMember.CourseStatistics</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
+		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 	<!-- END: DEPARTMENT MEMBER Managed Beans -->
 	
