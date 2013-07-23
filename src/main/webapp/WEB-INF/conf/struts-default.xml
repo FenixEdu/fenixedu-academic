@@ -18,7 +18,7 @@
       <!-- ========== Controller Configuration ================================ -->
       <controller processorClass="pt.ist.fenixWebFramework.renderers.plugin.SimpleRenderersRequestProcessor"></controller>
       <!-- ========== Message Resources Definitions ============================ -->
-      <message-resources parameter="resources.HtmlAltResources" key="HTMLALT_RESOURCES" null="false"></message-resources>
+
       <!-- ========== Plug Ins Configuration ================================= -->
       <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
             <set-property property="pathnames" value="/WEB-INF/validator-rules.xml"></set-property>

@@ -4,7 +4,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
 
 <ft:tilesView definition="definition.student.masterPage" attributeName="body-inline">
-	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
+	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/StudentResources" var="bundle"/>
 
 	<h:outputText value="<em>#{bundle['title.student.portalTitle']}</em>" escape="false"/>

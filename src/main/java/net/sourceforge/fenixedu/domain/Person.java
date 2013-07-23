@@ -4487,10 +4487,10 @@ public class Person extends Person_Base {
         Object argNew, argOld;
         String strNew, strOld;
         argOld =
-                valueToUpdateIfNewNotNull(BundleUtil.getStringFromResourceBundle("resources.HtmlAltResources", "text.dateEmpty"),
+                valueToUpdateIfNewNotNull(BundleUtil.getStringFromResourceBundle("resources.HtmlaltResources", "text.dateEmpty"),
                         oldValue);
         argNew =
-                valueToUpdateIfNewNotNull(BundleUtil.getStringFromResourceBundle("resources.HtmlAltResources", "text.dateEmpty"),
+                valueToUpdateIfNewNotNull(BundleUtil.getStringFromResourceBundle("resources.HtmlaltResources", "text.dateEmpty"),
                         newValue);
 
         if (argOld instanceof YearMonthDay) {

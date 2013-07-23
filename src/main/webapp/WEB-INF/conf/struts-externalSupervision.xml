@@ -42,7 +42,7 @@
       <message-resources null="false" key="APPLICATION_RESOURCES" parameter="resources.ApplicationResources"></message-resources>
       <message-resources null="false" key="GLOBAL_RESOURCES" parameter="resources.GlobalResources"></message-resources>
       <message-resources null="false" key="IMAGE_RESOURCES" parameter="resources.ImageResources"></message-resources>
-      <message-resources null="false" key="HTMLALT_RESOURCES" parameter="resources.HtmlAltResources"></message-resources>
+      <message-resources null="false" key="HTMLALT_RESOURCES" parameter="resources.HtmlaltResources"></message-resources>
       <message-resources null="false" key="PORTAL_RESOURCES" parameter="resources.PortalResources"></message-resources>
       <message-resources null="false" key="ENUMERATION_RESOURCES" parameter="resources.EnumerationResources"></message-resources>
       <message-resources null="false" key="DOMAIN_EXCEPTION_RESOURCES" parameter="resources.DomainExceptionResources"></message-resources>

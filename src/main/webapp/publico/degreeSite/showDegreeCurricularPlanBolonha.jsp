@@ -4,13 +4,13 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
 
 <ft:tilesView locale="<%=request.getAttribute(org.apache.struts.Globals.LOCALE_KEY).toString()%>" definition="definition.public.mainPageIST" attributeName="body-inline">
-	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
+	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/ApplicationResources" var="applicationBundle"/>
 	<f:loadBundle basename="resources/GlobalResources" var="globalBundle"/>
 	<f:loadBundle basename="resources/PublicDegreeInformation" var="publicDegreeInfoBundle"/>
 	<f:loadBundle basename="resources/BolonhaManagerResources" var="bolonhaBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
-	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
+	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 
 	<h:outputText value="<div class='breadcumbs mvert0'>"  escape="false"/>
 	<h:outputLink value="#{globalBundle['institution.url']}" >

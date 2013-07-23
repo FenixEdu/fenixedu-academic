@@ -4,7 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 
 <ft:tilesView definition="definition.manager.masterPage" attributeName="body-inline">
-	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
+	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/BolonhaManagerResources" var="bolonhaBundle"/>
 	<f:loadBundle basename="resources/ManagerResources" var="managerBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>

@@ -4,7 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 
 <ft:tilesView definition="pedagogicalCouncil.masterPage-without-local-navigation" attributeName="body-inline">
-	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
+	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/BolonhaManagerResources" var="bolonhaBundle"/>
 	
 	<h:outputText value="#{CourseGroupReport.degreeCurricularPlan.name}" style="font-style: italic"/>
