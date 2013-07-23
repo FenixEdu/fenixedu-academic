@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumen
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.RegistryDiplomaRequest;
 import net.sourceforge.fenixedu.util.StringUtils;
 
+import org.apache.commons.lang.WordUtils;
 import org.joda.time.LocalDate;
 
 public class RegistryDiploma extends AdministrativeOfficeDocument {
@@ -48,15 +49,39 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
 
         addParameter("thirdParagraph", MessageFormat.format(thirdParagraph, dateWord[0], dateWord[1], dateWord[2]));
 
-        String fifthParagraph = getResourceBundle().getString("label.phd.registryDiploma.fifthParagraph");
-        addParameter("fifthParagraph", MessageFormat.format(fifthParagraph, getDocumentRequest().getFinalAverage(getLocale()),
-                getResourceBundle().getString(getDocumentRequest().getQualifiedAverageGrade(getLocale()))));
+        if (getDocumentRequest().isRequestForRegistration()) {
+            setFifthParagraph();
+        }
 
         addParameter("studentName", person.getValidatedName());
 
-        addParameter("graduateTitle", request.getGraduateTitle(getLocale()));
+        String graduateTitle = request.getGraduateTitle(getLocale());
+
+        if (graduateTitle.contains("Graduated")) {
+            graduateTitle = graduateTitle.replace("Graduated", "Licenciado");
+        }
+
+        if (graduateTitle.contains("Master")) {
+            graduateTitle = graduateTitle.replace("Master", "Mestre");
+        }
+
+        addParameter("graduateTitle", graduateTitle);
 
         setFooter();
+    }
+
+    private void setFifthParagraph() {
+        String fifthParagraph;
+        if (getUniversity(getDocumentRequest().getRequestDate()) != getUniversity(getDocumentRequest().getConclusionDate()
+                .toDateTimeAtCurrentTime())) {
+            fifthParagraph = getResourceBundle().getString("label.phd.registryDiploma.fifthParagraph.UTL.UL");
+        } else {
+            fifthParagraph = getResourceBundle().getString("label.phd.registryDiploma.fifthParagraph");
+        }
+        addParameter("fifthParagraph", MessageFormat.format(fifthParagraph,
+                getEnumerationBundle().getString(getDocumentRequest().getFinalAverage(getLocale())), getDocumentRequest()
+                        .getFinalAverage(getLocale()),
+                getResourceBundle().getString(getDocumentRequest().getQualifiedAverageGrade(getLocale()))));
     }
 
     protected void setHeader() {
@@ -69,11 +94,11 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
 
     protected void setFirstParagraph(IRegistryDiplomaRequest request) {
 
-        final UniversityUnit university = UniversityUnit.getInstitutionsUniversityUnit();
+        final UniversityUnit university = getUniversity(request.getRequestDate());
         String universityName = university.getPartyName().getPreferedContent();
 
         final Person rectorIst =
-                UniversityUnit.getInstitutionsUniversityUnit().getInstitutionsUniversityResponsible(FunctionType.PRINCIPAL);
+                getUniversity(request.getRequestDate()).getInstitutionsUniversityResponsible(FunctionType.PRINCIPAL);
 
         String rectorGender, rectorGrant;
 
@@ -101,25 +126,27 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
 
         String secondParagraph = getResourceBundle().getString("label.phd.registryDiploma.secondParagraph");
 
-        String parishOfBirth;
-        if (person.getParishOfBirth() != null && !person.getParishOfBirth().isEmpty()) {
-            parishOfBirth = person.getParishOfBirth();
+        String country;
+        String countryUpperCase;
+        if (person.getCountry() != null) {
+            countryUpperCase = person.getCountry().getCountryNationality().getContent(getLanguage()).toLowerCase();
+            country = WordUtils.capitalize(countryUpperCase);
         } else {
             throw new DomainException("error.personWithoutParishOfBirth");
         }
 
         addParameter("secondParagraph", MessageFormat.format(secondParagraph, studentGender,
-                getEnumerationBundle().getString(person.getIdDocumentType().getName()), person.getDocumentIdNumber(),
-                parishOfBirth, getDegreeDescription()));
+                getEnumerationBundle().getString(person.getIdDocumentType().getName()), person.getDocumentIdNumber(), country,
+                getCycleDescription()));
     }
 
     protected void setFooter() {
 
         final Person presidentIst =
-                UniversityUnit.getInstitutionsUniversityUnit().getInstitutionsUniversityResponsible(FunctionType.PRESIDENT);
+                getUniversity(getDocumentRequest().getRequestDate()).getInstitutionsUniversityResponsible(FunctionType.PRESIDENT);
 
         final Person rectorIst =
-                UniversityUnit.getInstitutionsUniversityUnit().getInstitutionsUniversityResponsible(FunctionType.PRINCIPAL);
+                getUniversity(getDocumentRequest().getRequestDate()).getInstitutionsUniversityResponsible(FunctionType.PRINCIPAL);
 
         String presidentGender;
 
@@ -137,7 +164,7 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
         }
 
         final String institutionUnitName = getMLSTextContent(RootDomainObject.getInstance().getInstitutionUnit().getPartyName());
-        final UniversityUnit university = UniversityUnit.getInstitutionsUniversityUnit();
+        final UniversityUnit university = getUniversity(getDocumentRequest().getRequestDate());
         String universityName = university.getPartyName().getPreferedContent();
 
         addParameter("dateParagraph", getFormatedCurrentDate(universityName));
@@ -151,18 +178,12 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
         String dayOrdinal = Integer.toString(date.getDayOfMonth());
         String day = getEnumerationBundle().getString(dayOrdinal);
         String month = date.toString("MMMM", getLocale());
-        result.append(universityName);
-        result.append(", ");
-        result.append(getResourceBundle().getString("label.the.female"));
-        result.append(" ");
-        result.append(day);
-        result.append(" ");
+        result.append(universityName).append(", ");
+        result.append(getResourceBundle().getString("label.in"));
+        result.append(" " + day + " ");
         result.append(getApplicationBundle().getString("label.of"));
-        result.append(" ");
-        result.append(month);
-        result.append(", ");
-        result.append(date.getYear());
-        result.append(".");
+        result.append(" " + month + ", ");
+        result.append(date.getYear()).append(".");
         return result.toString();
     }
 
@@ -178,13 +199,31 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
 
     protected String[] getDateByWords(LocalDate date) {
 
-        String dayOrdinal = Integer.toString(date.getDayOfMonth()) + ".ordinal";
+        String dayOrdinal = Integer.toString(date.getDayOfMonth());
         String day = getEnumerationBundle().getString(dayOrdinal);
         String month = date.toString("MMMM", getLocale());
         String year = getEnumerationBundle().getString(Integer.toString(date.getYear()));
         String finalDate[] = new String[] { day, month, year };
         return finalDate;
 
+    }
+
+    protected String getCycleDescription() {
+
+        final StringBuilder res = new StringBuilder();
+        RegistryDiplomaRequest request = (RegistryDiplomaRequest) getDocumentRequest();
+        CycleType cycle = request.getRequestedCycle();
+        Degree degree = request.getDegree();
+        final DegreeType degreeType = request.getDegreeType();
+        if (degreeType.hasAnyCycleTypes()) {
+            res.append(cycle.getDescription(getLocale()));
+            res.append(StringUtils.SINGLE_SPACE).append(getResourceBundle().getString("label.of.both"))
+                    .append(StringUtils.SINGLE_SPACE);
+        }
+        if (!degree.isEmpty()) {
+            res.append(degreeType.getFilteredName(getLocale()));
+        }
+        return res.toString();
     }
 
     @Override

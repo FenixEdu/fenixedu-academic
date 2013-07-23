@@ -168,6 +168,10 @@ public class AdministrativeOfficeDocument extends FenixReport {
         return getDocumentRequest().getDocumentTemplateKey();
     }
 
+    protected UniversityUnit getUniversity(DateTime date) {
+        return UniversityUnit.getInstitutionsUniversityUnitByDate(date);
+    }
+
     @Override
     public String getReportFileName() {
         final StringBuilder result = new StringBuilder();
@@ -267,7 +271,9 @@ public class AdministrativeOfficeDocument extends FenixReport {
         addParameter("supervisingUnit", getResourceBundle().getString("label.academicDocument.direcaoAcademica"));
 
         addParameter("institutionName", getMLSTextContent(RootDomainObject.getInstance().getInstitutionUnit().getPartyName()));
-        addParameter("universityName", getMLSTextContent(UniversityUnit.getInstitutionsUniversityUnit().getPartyName()));
+        addParameter("universityName",
+                getMLSTextContent(UniversityUnit.getInstitutionsUniversityUnitByDate(getDocumentRequest().getRequestDate())
+                        .getPartyName()));
     }
 
     protected void setDocumentTitle() {

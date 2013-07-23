@@ -90,16 +90,48 @@ public class UniversityUnit extends UniversityUnit_Base {
 
     @SuppressWarnings("unchecked")
     final static public UniversityUnit getInstitutionsUniversityUnit() {
-        final Unit institutionUnit = RootDomainObject.getInstance().getInstitutionUnit();
+        /*final Unit institutionUnit = RootDomainObject.getInstance().getInstitutionUnit();
         final Collection<UniversityUnit> parentUniversityUnits =
                 (Collection<UniversityUnit>) institutionUnit.getParentParties(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE,
                         UniversityUnit.class);
 
         if (parentUniversityUnits.size() != 1) {
             throw new DomainException("UniversityUnit.unable.to.determine.single.university.unit.for.institution.unit");
+        }*/
+
+        /* return parentUniversityUnits.iterator().next();*/
+        return getInstitutionsUniversityUnitByDate(new DateTime());
+    }
+
+    @SuppressWarnings("unchecked")
+    final static public UniversityUnit getInstitutionsUniversityUnitByDate(DateTime dateTime) {
+        final Unit institutionUnit = RootDomainObject.getInstance().getInstitutionUnit();
+        final Collection<UniversityUnit> parentUniversityUnits =
+                (Collection<UniversityUnit>) institutionUnit.getParentPartiesByDates(
+                        AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE, UniversityUnit.class, dateTime);
+
+        /*for (Object element : parentUniversityUnits) {
+            UniversityUnit universityUnit = (UniversityUnit) element;
+            DateTime beginDate = new DateTime(universityUnit.getBeginDateYearMonthDay().toDateTimeAtCurrentTime());
+            if (universityUnit.getEndDateYearMonthDay() != null) {
+                DateTime endDate = new DateTime(universityUnit.getEndDateYearMonthDay());
+                if (beginDate.isBefore(dateTime) || endDate.isAfter(dateTime)) {
+                    return universityUnit;
+                }
+            } else {
+                if (beginDate.isBefore(dateTime)) {
+                    return universityUnit;
+                }
+            }
+
+        }*/
+
+        if (parentUniversityUnits.size() != 1) {
+            throw new DomainException("UniversityUnit.unable.to.determine.single.university.unit.for.institution.unit");
         }
 
         return parentUniversityUnits.iterator().next();
+
     }
 
     /**

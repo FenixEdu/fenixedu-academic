@@ -63,6 +63,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
+import org.joda.time.DateTime;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -228,6 +229,24 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
         for (final Accountability accountability : getParentsSet()) {
             if (parentPartyClass.isAssignableFrom(accountability.getParentParty().getClass())) {
                 result.add(accountability.getParentParty());
+            }
+        }
+        return result;
+    }
+
+    public Collection<? extends Party> getParentPartiesByDates(AccountabilityTypeEnum accountabilityTypeEnum,
+            Class<? extends Party> parentPartyClass, DateTime dateTime) {
+        final Set<Party> result = new HashSet<Party>();
+        for (final Accountability accountability : getParentsSet()) {
+            if (parentPartyClass.isAssignableFrom(accountability.getParentParty().getClass())
+                    && accountability.getBeginDate().toDateTimeAtCurrentTime().isBefore(dateTime)) {
+                if (accountability.getEndDate() == null) {
+                    result.add(accountability.getParentParty());
+                }
+                if (accountability.getEndDate() != null
+                        && accountability.getEndDate().toDateTimeAtCurrentTime().isAfter(dateTime)) {
+                    result.add(accountability.getParentParty());
+                }
             }
         }
         return result;

@@ -4,11 +4,13 @@ import java.text.MessageFormat;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.serviceRequests.documentRequests.PhdRegistryDiplomaRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.IRegistryDiplomaRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
+
+import org.apache.commons.lang.WordUtils;
+
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -39,15 +41,22 @@ public class PhdRegistryDiploma extends RegistryDiploma {
         setFirstParagraph(request);
         setSecondParagraph(person, request);
 
-        String thirdParagraph = getResourceBundle().getString("label.phd.registryDiploma.phdThirdParagraph");
+        addParameter("thirdParagraph", getResourceBundle().getString("label.phd.registryDiploma.phdThirdParagraph"));
 
         String dateWord[] = getDateByWords(request.getConclusionDate());
 
-        addParameter("thirdParagraph", MessageFormat.format(thirdParagraph, dateWord[0], dateWord[1], dateWord[2]));
+        String fourthParagraph = getResourceBundle().getString("label.phd.registryDiploma.phdfourthParagraph");
 
-        addParameter("fourthParagraph", getResourceBundle().getString("label.phd.registryDiploma.fourthParagraph"));
+        addParameter("fourthParagraph", MessageFormat.format(fourthParagraph, dateWord[0], dateWord[1], dateWord[2]));
 
-        String fifthParagraph = getResourceBundle().getString("label.phd.registryDiploma.phdFifthParagraph");
+        String fifthParagraph;
+        if (getUniversity(getDocumentRequest().getRequestDate()) != getUniversity(getDocumentRequest().getConclusionDate()
+                .toDateTimeAtCurrentTime())) {
+            fifthParagraph = getResourceBundle().getString("label.phd.registryDiploma.phdFifthParagraph.UTL");
+        } else {
+            fifthParagraph = getResourceBundle().getString("label.phd.registryDiploma.phdFifthParagraph");
+        }
+
         addParameter("fifthParagraph", MessageFormat.format(fifthParagraph, getDocumentRequest().getFinalAverage(getLocale())));
 
         setFooter();
@@ -75,21 +84,21 @@ public class PhdRegistryDiploma extends RegistryDiploma {
             studentGender = getResourceBundle().getString("label.phd.registryDiploma.studentHolderFemale");
         }
 
-        String parishOfBirth;
-        if (person.getParishOfBirth() != null && !person.getParishOfBirth().isEmpty()) {
-            parishOfBirth = person.getParishOfBirth();
+        String country;
+        String countryUpperCase;
+        if (person.getCountry() != null) {
+            countryUpperCase = person.getCountry().getCountryNationality().getContent(getLanguage()).toLowerCase();
+            country = WordUtils.capitalize(countryUpperCase);
         } else {
             throw new DomainException("error.personWithoutParishOfBirth");
         }
 
         PhdRegistryDiplomaRequest phdRequest = getDocumentRequest();
-        CycleType cycle = request.getRequestedCycle();
 
         String secondParagraph = getResourceBundle().getString("label.phd.registryDiploma.phdSecondParagraph");
         addParameter("secondParagraph", MessageFormat.format(secondParagraph, studentGender,
-                getEnumerationBundle().getString(person.getIdDocumentType().getName()), person.getDocumentIdNumber(),
-                parishOfBirth, cycle.getDescription((getLocale())), phdRequest.getPhdIndividualProgramProcess().getPhdProgram()
-                        .getName().getContent(getLanguage())));
+                getEnumerationBundle().getString(person.getIdDocumentType().getName()), person.getDocumentIdNumber(), country,
+                phdRequest.getPhdIndividualProgramProcess().getPhdProgram().getName().getContent(getLanguage())));
     }
 
 }
