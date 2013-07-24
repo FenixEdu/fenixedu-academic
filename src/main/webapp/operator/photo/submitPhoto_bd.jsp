@@ -16,7 +16,7 @@
 </style>
 
 <script src="<%= request.getContextPath() + "/javaScript/phroper/fabric-1.2.0.all.min.js" %>" type="text/javascript" ></script>
-<script src="<%= request.getContextPath() + "/javaScript/phroper/phroper-1.1.0.min.js" %>" type="text/javascript" ></script>
+<script src="<%= request.getContextPath() + "/javaScript/phroper/phroper-1.2.0.min.js" %>" type="text/javascript" ></script>
 
 <script type="text/javascript">
 	$(document).ready( function () {
@@ -36,12 +36,22 @@
 			$('#photoForm table tr:not(:first)').toggle();
 			
 			$('#submitButton').click( function () {
-				var base64Picture = phroper.getPicture();
-				$('<input type="hidden" name="encodedPicture" value="'+base64Picture+'">').appendTo('#photoForm');
+				if (phroper.hasLoadedPicture()) {
+					var base64Thumbnail = phroper.getThumbnail();
+					$('<input type="hidden" name="encodedThumbnail" value="'+base64Thumbnail+'">').appendTo('#photoForm');
+					var base64Picture = phroper.getPicture();
+					$('<input type="hidden" name="encodedPicture" value="'+base64Picture+'">').appendTo('#photoForm');
+				}
 			});
 			
 			$('<button id="resetButton" type="button"><%= request.getAttribute("buttonClean") != null ? request.getAttribute("buttonClean") : "Clear canvas"  %></button>').appendTo('#photoForm').click( function () {
-				phroper.reset();
+				phroper.reset(true);
+			});
+			$('<button id="toggleClassic" type="button"><%= request.getAttribute("buttonRevert") != null ? request.getAttribute("buttonRevert") : "Use old version"  %></button>').appendTo('#photoForm').click( function () {
+				$('#photo-uploader').toggle();
+				$('#photoForm table tr:not(:first)').toggle();
+				$('#resetButton').toggle();
+				$('#toggleClassic').toggle();
 			});
 		}
 	});

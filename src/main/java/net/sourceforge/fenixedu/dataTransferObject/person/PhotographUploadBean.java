@@ -54,8 +54,9 @@ public class PhotographUploadBean implements Serializable {
     private String username;
 
     public InputStream getFileInputStream() throws FileNotFoundException {
-        if (base64RawThumbnail != null) {
-            this.rawContents = BaseEncoding.base64().decode(base64RawThumbnail);
+        if (base64RawContent != null && base64RawThumbnail != null) {
+            this.rawContents = BaseEncoding.base64().decode(base64RawContent);
+            this.compressedContents = BaseEncoding.base64().decode(base64RawThumbnail);
             return new ByteArrayInputStream(rawContents);
         }
         if (rawContents != null) {
@@ -151,6 +152,9 @@ public class PhotographUploadBean implements Serializable {
     }
 
     public void processImage() throws IOException, UnableToProcessTheImage {
+        if (base64RawContent != null && base64RawThumbnail != null) {
+            return;
+        }
         try {
             BufferedImage image = ImageIO.read(new ByteArrayInputStream(rawContents));
             if (image == null) {

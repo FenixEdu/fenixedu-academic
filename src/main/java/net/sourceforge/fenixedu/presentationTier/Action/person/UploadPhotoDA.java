@@ -21,6 +21,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
+import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -55,6 +56,7 @@ public class UploadPhotoDA extends FenixDispatchAction {
         request.setAttribute("phroperButtonCaption", bundle.getString("phroper.buttonCaption"));
         request.setAttribute("phroperLoadingCaption", bundle.getString("phroper.loadingCaption"));
         request.setAttribute("buttonClean", bundle.getString("button.clean"));
+        request.setAttribute("buttonRevert", bundle.getString("button.phroper.revert"));
         return mapping.findForward("upload");
     }
 
@@ -62,10 +64,14 @@ public class UploadPhotoDA extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         PhotographUploadBean photo = getRenderedObject();
         RenderUtils.invalidateViewState();
+        String base64Thumbnail = request.getParameter("encodedThumbnail");
         String base64Image = request.getParameter("encodedPicture");
-        if (base64Image != null) {
-            photo.setFilename("mylovelypic.png");
-            photo.setBase64RawThumbnail(base64Image.split(",")[1]);
+        if (base64Image != null && base64Thumbnail != null) {
+            DateTime now = new DateTime();
+            photo.setFilename("mylovelypic_" + now.getYear() + now.getMonthOfYear() + now.getDayOfMonth() + now.getHourOfDay()
+                    + now.getMinuteOfDay() + now.getSecondOfMinute() + ".png");
+            photo.setBase64RawContent(base64Image.split(",")[1]);
+            photo.setBase64RawThumbnail(base64Thumbnail.split(",")[1]);
             photo.setContentType(base64Image.split(",")[0].split(":")[1].split(";")[0]);
         }
 
