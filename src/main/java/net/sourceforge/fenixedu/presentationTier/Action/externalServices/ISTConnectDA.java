@@ -87,12 +87,6 @@ public class ISTConnectDA extends ExternalInterfaceDispatchAction {
         outputStream.close();
     }
 
-    private void writeJSONObject(HttpServletResponse response, final JSONObject jsonObject) throws IOException {
-        final ServletOutputStream outputStream = response.getOutputStream();
-        outputStream.write(jsonObject.toJSONString().getBytes());
-        outputStream.close();
-    }
-
     public ActionForward getExternalIds(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         final String externalIds = (String) getFromRequest(request, "externalIds");
