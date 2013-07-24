@@ -1,38 +1,22 @@
-<%@page import="java.util.TreeSet"%>
-<%@page import="java.util.SortedSet"%>
-<%@page import="net.sourceforge.fenixedu.domain.LessonInstance"%>
+<%@page import="java.util.List"%>
+<%@page import="net.sourceforge.fenixedu.domain.space.AllocatableSpace"%>
+<%@page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants"%>
+<%@page import="org.joda.time.Weeks"%>
+<%@page import="org.joda.time.Interval"%>
+<%@page import="net.sourceforge.fenixedu.domain.OccupationPeriod"%>
+<%@page import="net.sourceforge.fenixedu.dataTransferObject.InfoLesson"%>
+<%@page import="org.joda.time.YearMonthDay"%>
+<%@page import="net.sourceforge.fenixedu.domain.ExecutionDegree"%>
+<%@page import="java.util.Set"%>
+<%@page import="net.sourceforge.fenixedu.domain.ExecutionCourse"%>
+<%@page import="net.sourceforge.fenixedu.domain.Lesson"%>
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
-<%@page import="org.joda.time.Weeks"%>
-<%@page import="org.joda.time.Days"%>
-<%@page import="org.joda.time.Period"%>
-<%@page import="net.sourceforge.fenixedu.domain.OccupationPeriodReference"%>
-<%@page import="net.sourceforge.fenixedu.dataTransferObject.InfoLesson"%>
-<%@page import="org.joda.time.Interval"%>
-<%@page import="java.util.HashSet"%>
-<%@page import="net.sourceforge.fenixedu.domain.ExecutionDegree"%>
-<%@page import="java.util.Set"%>
-<%@page import="net.sourceforge.fenixedu.domain.OccupationPeriod"%>
-<%@page import="net.sourceforge.fenixedu.domain.ExecutionCourse"%>
-<%@page import="org.joda.time.YearMonthDay"%>
-<%@page import="net.sourceforge.fenixedu.domain.Lesson"%>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants"%>
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <html:xhtml/>
-
-<h2><bean:message key="title.show.all.lesson.dates" bundle="SOP_RESOURCES"/></h2>
-
-<script type="text/javascript">
-	function invertSelection() {
-		$('input[name="lessonDatesToDelete"]').each(function() {
-			var inputVal = $(this).val();
-			$(this).attr('checked', !($(this).is(':checked')));
-		});
-	};
-</script>
 
 <style>
 <!--
@@ -46,27 +30,10 @@
 -->
 </style>
 
-<logic:present role="RESOURCE_ALLOCATION_MANAGER">
+<em><bean:message key="title.resourceAllocationManager.management"/></em>
+<h2><bean:message key="link.manage.turnos"/></h2>
 
-	<p>
-	<span class="error0"><!-- Error messages go here -->
-		<html:errors/>
-	</span>
-	</p>
-
-	<bean:define id="parameters"><%=PresentationConstants.LESSON_OID%>=<bean:write name="lesson_" property="idInternal"/>&amp;<%=PresentationConstants.SHIFT_OID%>=<bean:write name="shift" property="idInternal"/>&amp;<%=PresentationConstants.EXECUTION_COURSE_OID%>=<bean:write name="execution_course" property="idInternal"/>&amp;<%=PresentationConstants.ACADEMIC_INTERVAL%>=<%= pageContext.findAttribute(PresentationConstants.ACADEMIC_INTERVAL).toString()%>&amp;<%=PresentationConstants.CURRICULAR_YEAR_OID%>=<bean:write name="curricular_year" property="idInternal"/>&amp;<%=PresentationConstants.EXECUTION_DEGREE_OID%>=<bean:write name="execution_degree" property="idInternal"/></bean:define>	
-	<bean:define id="linkToReturn">/manageShift.do?method=prepareEditShift&amp;page=0&amp;<bean:write name="parameters" filter="false"/></bean:define>
-	<bean:define id="linkToCreateNewLessonInstance">/manageLesson.do?method=prepareCreateNewLessonInstance&amp;page=0&amp;<bean:write name="parameters" filter="false"/></bean:define>
-	
-	<p class="mtop20">
-		<ul class="mvert">
-			<li>						
-				<html:link page="<%= linkToReturn %>">
-					<bean:message key="link.return"/>
-				</html:link>		
-			</li>			
-		</ul>	
-	</p>
+<jsp:include page="context.jsp"/>
 
 	<%
 		final Lesson lesson = ((InfoLesson) request.getAttribute("lesson")).getLesson();
@@ -77,14 +44,6 @@
 		<h4>
 		</h4>
 		<table class="tstyle1 mtop025 mbottom0 tdcenter">
-			<tr>
-				<th>
-					<bean:message key="label.semester" bundle="SOP_RESOURCES"/>
-				</th>
-				<td>
-					<%= lesson.getExecutionPeriod().getQualifiedName() %>
-				</td>
-			</tr>
 			<tr>
 				<th>
 					<bean:message key="label.executionCourse" bundle="SOP_RESOURCES"/>
@@ -201,30 +160,51 @@
 			</logic:iterate>
 		</table>
 
-	<%-- Delete Lesson Instances --%>		
-	<bean:define id="linkToDelete">/manageLesson.do?method=deleteLessonInstance&amp;<bean:write name="parameters" filter="false"/></bean:define>
-	<bean:define id="linkToDeleteMultiple">/resourceAllocationManager/manageLesson.do?method=deleteLessonInstances&amp;<bean:write name="parameters" filter="false"/></bean:define>
-	<a href="#" onclick="invertSelection();"><bean:message key="label.invert.selection" bundle="SOP_RESOURCES"/></a>
-	<form action="<%= request.getContextPath() + linkToDeleteMultiple %>" method="post">
+		<h2>
+			<bean:message key="title.editAula"/>
+		</h2>
+		<html:form action="/manageLesson.do?method=changeRoom">
+
+			<html:hidden alt="<%= PresentationConstants.EXECUTION_PERIOD_OID %>" property="<%= PresentationConstants.EXECUTION_PERIOD_OID %>"
+						 value="<%= pageContext.findAttribute("executionPeriodOID").toString() %>"/>
+			<html:hidden alt="<%= PresentationConstants.EXECUTION_DEGREE_OID %>" property="<%= PresentationConstants.EXECUTION_DEGREE_OID %>"
+			 			value="<%= pageContext.findAttribute("executionDegreeOID").toString() %>"/>
+			<html:hidden alt="<%= PresentationConstants.CURRICULAR_YEAR_OID %>" property="<%= PresentationConstants.CURRICULAR_YEAR_OID %>"
+			 			value="<%= pageContext.findAttribute("curricularYearOID").toString() %>"/>
+			<html:hidden alt="<%= PresentationConstants.EXECUTION_COURSE_OID %>" property="<%= PresentationConstants.EXECUTION_COURSE_OID %>"
+			 			value="<%= pageContext.findAttribute("executionCourseOID").toString() %>"/>
+			<html:hidden alt="<%= PresentationConstants.LESSON_OID %>" property="<%= PresentationConstants.LESSON_OID %>"
+			 			value="<%= pageContext.findAttribute("lessonOID").toString() %>"/>
+			<html:hidden alt="<%= PresentationConstants.SHIFT_OID %>" property="<%= PresentationConstants.SHIFT_OID %>"
+			 			value="<%= lesson.getShift().getIdInternal().toString() %>"/>
+
+			<select name="spaceOID">
+				<% for (final AllocatableSpace space : (List<AllocatableSpace>) request.getAttribute("emptySpaces")) { %>
+					<option value="<%= space.getExternalId() %>"><%= space.getCompleteIdentification() %></option>
+				<% } %>
+			</select>
+
+			<br/>
+
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.operation" property="operation" styleClass="inputbutton">
+				<bean:message key="label.save"/>
+			</html:submit>
+		</html:form>
+
+		<br/>
+
 		<table class="tstyle1 mtop025 mbottom0 tdcenter">
 			<tr>
-				<th></th>
 				<th><bean:message bundle="SOP_RESOURCES" key="label.lesson.week"/></th>
 				<th><bean:message bundle="SOP_RESOURCES" key="property.weekday"/></th>
 				<th><bean:message bundle="SOP_RESOURCES" key="label.lesson.day"/></th>
 				<th><bean:message bundle="SOP_RESOURCES" key="property.room"/></th>
 				<th><bean:message bundle="SOP_RESOURCES" key="label.lesson.summary"/></th>
 				<th><bean:message bundle="SOP_RESOURCES" key="label.lesson.instance"/></th>
-				<th></th>
 			</tr>
 			<logic:iterate id="lessonDate" name="lessonDates" type="net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.NextPossibleSummaryLessonsAndDatesBean">
 				<bean:define id="selectableValue" name="lessonDate" property="checkBoxValue"/>
 				<tr>
-					<td>
-						<logic:equal name="lessonDate" property="isPossibleDeleteLessonInstance" value="true">
-							<input type="checkbox" name="lessonDatesToDelete" value="<%= selectableValue %>"/>
-						</logic:equal>
-					</td>
 					<td>
 						<%= Weeks.weeksBetween(firstPossibleLessonDay, lessonDate.getDate()).getWeeks() + 1 %>
 					</td>
@@ -233,14 +213,7 @@
 					<td><logic:present name="lessonDate" property="room"><bean:write name="lessonDate" property="room.name"/></logic:present></td>
 					<td><fr:view name="lessonDate" property="writtenSummary"/></td>
 					<td><fr:view name="lessonDate" property="hasLessonInstance"/></td>
-					<td>
-						<logic:equal name="lessonDate" property="isPossibleDeleteLessonInstance" value="true">
-							<html:link action="<%= linkToDelete %>" paramId="lessonDate" paramName="lessonDate" paramProperty="checkBoxValue"><bean:message bundle="SOP_RESOURCES" key="label.delete"/></html:link>
-						</logic:equal>
-					</td>
 				</tr>
 			</logic:iterate>
 		</table>
-		<html:submit><bean:message bundle="SOP_RESOURCES" key="label.delete"/></html:submit>
-	</form>
-</logic:present>
+

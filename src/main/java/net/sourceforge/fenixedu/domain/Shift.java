@@ -629,4 +629,15 @@ public class Shift extends Shift_Base {
         }
         return result;
     }
+
+    public boolean isTotalShiftLoadExceeded() {
+        final BigDecimal totalHours = getTotalHours();
+        for (final CourseLoad courseLoad : getCourseLoadsSet()) {
+            if (totalHours.compareTo(courseLoad.getTotalQuantity()) == 1) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

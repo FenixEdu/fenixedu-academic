@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.NextPossibleSummaryLessonsAndDatesBean;
 import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.domain.Lesson;
+import net.sourceforge.fenixedu.domain.LessonInstance;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
@@ -42,6 +43,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
+import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
 /**
@@ -70,15 +72,27 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
     public ActionForward viewAllLessonDates(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        InfoLesson infoLesson = (InfoLesson) request.getAttribute(PresentationConstants.LESSON);
-        Lesson lesson = rootDomainObject.readLessonByOID(infoLesson.getIdInternal());
-        SortedSet<YearMonthDay> allLessonDates = lesson.getAllLessonDates();
-        Set<NextPossibleSummaryLessonsAndDatesBean> lessonDatesBean =
+        final InfoLesson infoLesson = (InfoLesson) request.getAttribute(PresentationConstants.LESSON);
+        final Lesson lesson = infoLesson.getLesson();
+        final Set<NextPossibleSummaryLessonsAndDatesBean> lessonDatesBean =
                 new TreeSet<NextPossibleSummaryLessonsAndDatesBean>(
                         NextPossibleSummaryLessonsAndDatesBean.COMPARATOR_BY_DATE_AND_HOUR);
 
-        for (YearMonthDay lessonDate : allLessonDates) {
-            lessonDatesBean.add(new NextPossibleSummaryLessonsAndDatesBean(lesson, lessonDate));
+        for (final LessonInstance instance : infoLesson.getLesson().getLessonInstances()) {
+            final NextPossibleSummaryLessonsAndDatesBean bean =
+                    new NextPossibleSummaryLessonsAndDatesBean(lesson, instance.getDay());
+            bean.setRoom(instance.getRoom());
+            bean.setTime(instance.getStartTime());
+            lessonDatesBean.add(bean);
+        }
+        if (!lesson.wasFinished()) {
+            for (final YearMonthDay yearMonthDay : lesson.getAllLessonDatesWithoutInstanceDates()) {
+                final NextPossibleSummaryLessonsAndDatesBean bean =
+                        new NextPossibleSummaryLessonsAndDatesBean(lesson, yearMonthDay);
+                bean.setRoom(lesson.getSala());
+                bean.setTime(lesson.getBeginHourMinuteSecond());
+                lessonDatesBean.add(bean);
+            }
         }
 
         request.setAttribute("lessonDates", lessonDatesBean);
@@ -208,6 +222,36 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
 
         request.setAttribute("action", "edit");
         return mapping.findForward("ShowLessonForm");
+    }
+
+    public ActionForward prepareChangeRoom(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        viewAllLessonDates(mapping, form, request, response);
+
+        final InfoLesson infoLesson = (InfoLesson) request.getAttribute(PresentationConstants.LESSON);
+        final Interval[] intervals = infoLesson.getLesson().getAllLessonIntervals().toArray(new Interval[0]);
+        final List<AllocatableSpace> emptySpaces = ReadAvailableRoomsForExam.findAllocatableSpace(null, Boolean.TRUE, intervals);
+        Collections.sort(emptySpaces, AllocatableSpace.COMPARATOR_BY_PRESENTATION_NAME);
+        request.setAttribute("emptySpaces", emptySpaces);
+
+        return mapping.findForward("ChangeRoom");
+    }
+
+    public ActionForward changeRoom(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        final InfoLesson infoLesson = (InfoLesson) request.getAttribute(PresentationConstants.LESSON);
+        final AllocatableSpace space = getDomainObject(request, "spaceOID");
+
+        try {
+            EditLesson.run(infoLesson.getLesson(), space);
+        } catch (final DomainException domainException) {
+            final ActionErrors actionErrors = new ActionErrors();
+            actionErrors.add(domainException.getMessage(),
+                    new ActionError(domainException.getMessage(), domainException.getArgs()));
+            saveErrors(request, actionErrors);
+        }
+
+        return viewAllLessonDates(mapping, form, request, response);
     }
 
     public ActionForward chooseRoom(ActionMapping mapping, ActionForm form, HttpServletRequest request,

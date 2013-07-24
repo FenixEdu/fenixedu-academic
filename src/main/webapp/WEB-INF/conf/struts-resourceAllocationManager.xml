@@ -549,6 +549,7 @@
                   <forward name="EditShift" path="/manageShift.do?method=prepareEditShift&amp;page=0"></forward>
                   <forward name="LessonDeleted" path="/manageShift.do?method=prepareEditShift&amp;page=0"></forward>
                   <forward name="ViewAllLessonDates" path="view.all.lesson.dates"></forward>
+                  <forward name="ChangeRoom" path="/changeRoom.jsp"></forward>
             </action>
             <action path="/manageClasses" input="/manageClasses.do?method=listClasses&amp;page=0" type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ManageClassesDA" name="classForm" parameter="method" scope="request" validate="true">
                   <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException" key="resources.Action.exceptions.ExistingActionException" handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"></exception>
