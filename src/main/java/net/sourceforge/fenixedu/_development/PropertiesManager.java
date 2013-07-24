@@ -27,6 +27,8 @@ import pt.ist.fenixframework.project.DmlFile;
 import pt.ist.fenixframework.project.exception.FenixFrameworkProjectException;
 import pt.ist.fenixframework.pstm.dml.FenixDomainModelWithOCC;
 
+import com.google.common.base.Strings;
+
 /**
  * @author Luis Cruz
  * 
@@ -62,6 +64,10 @@ public class PropertiesManager extends pt.utl.ist.fenix.tools.util.PropertiesMan
 
     public static boolean useBarraAsAuthenticationBroker() {
         return PropertiesManager.getBooleanProperty("barra.as.authentication.broker");
+    }
+
+    public static boolean hasGoogleAnalytics() {
+        return !Strings.isNullOrEmpty(PropertiesManager.getProperty("google.analytics.snippet"));
     }
 
     public static String getProperty(final String key) {
