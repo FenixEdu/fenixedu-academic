@@ -6,12 +6,12 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseEditor;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class EditExecutionCourseInfo {
 
-    @Service
+    @Atomic
     public static InfoExecutionCourse run(InfoExecutionCourseEditor infoExecutionCourse) throws InvalidArgumentsServiceException {
 
         final ExecutionCourse executionCourse = FenixFramework.getDomainObject(infoExecutionCourse.getExternalId());

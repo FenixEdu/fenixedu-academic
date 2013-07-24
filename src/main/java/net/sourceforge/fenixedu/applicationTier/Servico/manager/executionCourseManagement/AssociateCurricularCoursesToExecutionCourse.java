@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /*
@@ -16,7 +16,7 @@ import pt.ist.fenixframework.FenixFramework;
  */
 public class AssociateCurricularCoursesToExecutionCourse {
 
-    @Service
+    @Atomic
     public static void run(String executionCourseId, List<String> curricularCourseIds) throws FenixServiceException {
         if (executionCourseId == null) {
             throw new FenixServiceException("nullExecutionCourseId");

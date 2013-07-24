@@ -71,7 +71,7 @@ public class PictureAvatar extends PictureAvatar_Base {
 
     @Override
     public void delete() {
-        removePhotograph();
+        setPhotograph(null);
         super.delete();
     }
 

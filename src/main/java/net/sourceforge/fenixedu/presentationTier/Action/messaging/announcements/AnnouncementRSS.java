@@ -14,19 +14,17 @@ import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.publico.rss.RSSAction;
 
-import org.apache.commons.lang.math.NumberUtils;
 import org.apache.struts.util.MessageResources;
 import org.apache.struts.util.ModuleUtils;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.DomainObject;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 import com.sun.syndication.feed.synd.SyndContent;
 import com.sun.syndication.feed.synd.SyndContentImpl;
@@ -173,7 +171,7 @@ public class AnnouncementRSS extends RSSAction {
 
     protected final AnnouncementBoard getSelectedBoard(HttpServletRequest request) {
         final String id = request.getParameter("announcementBoardId");
-        final DomainObject object = AbstractDomainObject.fromExternalId(id);
+        final DomainObject object = FenixFramework.getDomainObject(id);
         return object instanceof AnnouncementBoard ? (AnnouncementBoard) object : null;
     }
 

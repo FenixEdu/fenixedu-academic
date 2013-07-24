@@ -28,7 +28,7 @@ public class ReadActiveDegreeCurricularPlansByDegreeType {
         return getActiveDegreeCurricularPlansByDegreeType(degreeType, null);
     }
 
-    @Service
+    @Atomic
     public static Collection<InfoDegreeCurricularPlan> runForAcademicAdmin(final DegreeType degreeType) {
         return getActiveDegreeCurricularPlansByDegreeType(degreeType, AcademicPredicates.MANAGE_EXECUTION_COURSES);
     }

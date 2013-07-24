@@ -81,7 +81,7 @@ public class JournalIssue extends JournalIssue_Base implements ParticipationsInt
         for (; !this.getArticleAssociations().isEmpty(); this.getArticleAssociations().iterator().next().delete()) {
             ;
         }
-        for (; !this.getParticipations().isEmpty(); this.getParticipations().get(0).delete()) {
+        for (; !this.getParticipations().isEmpty(); this.getParticipations().iterator().next().delete()) {
             ;
         }
         setScientificJournal(null);
@@ -152,6 +152,7 @@ public class JournalIssue extends JournalIssue_Base implements ParticipationsInt
         }
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.research.activity.ArticleAssociation> getArticleAssociations() {
         return getArticleAssociationsSet();

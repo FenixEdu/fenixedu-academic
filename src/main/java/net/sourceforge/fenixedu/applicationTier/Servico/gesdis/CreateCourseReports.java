@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.FinalEvaluation;
 import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -19,7 +19,7 @@ import pt.ist.fenixframework.FenixFramework;
  */
 public class CreateCourseReports {
 
-    @Service
+    @Atomic
     public static void run(String executionPeriodID) {
         Set<String> courseReportsExecutionCoursesIDs = new HashSet<String>();
 

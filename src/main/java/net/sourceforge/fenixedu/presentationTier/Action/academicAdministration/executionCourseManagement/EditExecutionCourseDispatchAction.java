@@ -35,7 +35,7 @@ import org.apache.struts.validator.DynaValidatorForm;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Fernanda Quitério 19/Dez/2003
@@ -118,7 +118,7 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
 
         List<String> errorCodes = new ArrayList<String>();
 
-        ExecutionCourse executionCourseToBeDeleted = AbstractDomainObject.fromExternalId(executionCourseId);
+        ExecutionCourse executionCourseToBeDeleted = FenixFramework.getDomainObject(executionCourseId);
         String executionCourseName = executionCourseToBeDeleted.getNome();
         String executionCourseSigla = executionCourseToBeDeleted.getSigla();
 
@@ -181,9 +181,9 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
 
         ExecutionCourse executionCourse = null;
         if (!net.sourceforge.fenixedu.util.StringUtils.isEmpty(executionCourseId)) {
-            executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
+            executionCourse = FenixFramework.getDomainObject(executionCourseId);
         }
-        ExecutionSemester executionPeriod = AbstractDomainObject.fromExternalId(executionPeriodId);
+        ExecutionSemester executionPeriod = FenixFramework.getDomainObject(executionPeriodId);
 
         ExecutionCourseBean sessionBean = new ExecutionCourseBean();
 
@@ -195,8 +195,8 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
             String executionDegreeId = (String) request.getAttribute("executionDegreeId");
             String curricularYearId = (String) request.getAttribute("curYearId");
 
-            ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeId);
-            CurricularYear curYear = AbstractDomainObject.fromExternalId(curricularYearId);
+            ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreeId);
+            CurricularYear curYear = FenixFramework.getDomainObject(curricularYearId);
 
             sessionBean.setExecutionDegree(executionDegree);
             sessionBean.setCurricularYear(curYear);

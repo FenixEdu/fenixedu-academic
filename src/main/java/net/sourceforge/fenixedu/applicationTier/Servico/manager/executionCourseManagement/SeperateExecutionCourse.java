@@ -25,12 +25,12 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class SeperateExecutionCourse {
 
-    @Service
+    @Atomic
     public static ExecutionCourse run(final ExecutionCourse originExecutionCourse, ExecutionCourse destinationExecutionCourse,
             final List<Shift> shiftsToTransfer, final List<CurricularCourse> curricularCourseToTransfer) {
 
@@ -203,7 +203,7 @@ public class SeperateExecutionCourse {
         return false;
     }
 
-    @Service
+    @Atomic
     public static ExecutionCourse run(String executionCourseId, String destinationExecutionCourseID, String[] shiftIdsToTransfer,
             String[] curricularCourseIdsToTransfer) {
 

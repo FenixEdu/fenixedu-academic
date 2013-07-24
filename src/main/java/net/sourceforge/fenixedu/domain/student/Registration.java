@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.student;
 
+import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -109,6 +111,7 @@ import net.sourceforge.fenixedu.domain.tests.NewTestGroup;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.predicates.RegistrationPredicates;
 import net.sourceforge.fenixedu.util.PeriodState;
 import net.sourceforge.fenixedu.util.StringUtils;
 
@@ -122,9 +125,7 @@ import org.joda.time.YearMonthDay;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import pt.ist.fenixWebFramework.services.Service;
-import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
-import net.sourceforge.fenixedu.predicates.RegistrationPredicates;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class Registration extends Registration_Base {
@@ -1848,7 +1849,7 @@ public class Registration extends Registration_Base {
         }
     }
 
-    @Service
+    @Atomic
     final public void removeAttendFor(final ExecutionCourse executionCourse) {
         final Attends attend = readRegistrationAttendByExecutionCourse(executionCourse);
         if (attend != null) {
@@ -3739,7 +3740,7 @@ public class Registration extends Registration_Base {
         return false;
     }
 
-    @Service
+    @Atomic
     public StudentStatute grantSeniorStatute(ExecutionYear executionYear) {
         return StudentStatuteType.SENIOR.createStudentStatute(getStudent(), this, executionYear.getFirstExecutionPeriod(),
                 executionYear.getLastExecutionPeriod());

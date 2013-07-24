@@ -68,7 +68,7 @@ public class SearchExecutionCourseAttendsAction extends FenixDispatchAction {
         String executionCourseID = request.getParameter("executionCourse");
         if (executionCourseID != null) {
             SearchExecutionCourseAttendsBean searchExecutionCourseAttendsBean =
-                    new SearchExecutionCourseAttendsBean(AbstractDomainObject.<ExecutionCourse> fromExternalId(executionCourseID));
+                    new SearchExecutionCourseAttendsBean(FenixFramework.<ExecutionCourse> getDomainObject(executionCourseID));
 
             String viewPhoto = request.getParameter("viewPhoto");
             if (viewPhoto != null && viewPhoto.equalsIgnoreCase("true")) {
@@ -99,7 +99,7 @@ public class SearchExecutionCourseAttendsAction extends FenixDispatchAction {
             if (degreeCurricularPlans != null) {
                 List<DegreeCurricularPlan> list = new ArrayList<DegreeCurricularPlan>();
                 for (String degreeCurricularPlan : degreeCurricularPlans.split(":")) {
-                    list.add(AbstractDomainObject.<DegreeCurricularPlan> fromExternalId(degreeCurricularPlan));
+                    list.add(FenixFramework.<DegreeCurricularPlan> getDomainObject(degreeCurricularPlan));
                 }
                 searchExecutionCourseAttendsBean.setDegreeCurricularPlans(list);
             }
@@ -109,7 +109,7 @@ public class SearchExecutionCourseAttendsAction extends FenixDispatchAction {
                 List<Shift> list = new ArrayList<Shift>();
                 for (String shift : shifts.split(":")) {
                     if (!StringUtils.isEmpty(shift)) {
-                        list.add(AbstractDomainObject.<Shift> fromExternalId(shift));
+                        list.add(FenixFramework.<Shift> getDomainObject(shift));
                     }
                 }
                 searchExecutionCourseAttendsBean.setShifts(list);

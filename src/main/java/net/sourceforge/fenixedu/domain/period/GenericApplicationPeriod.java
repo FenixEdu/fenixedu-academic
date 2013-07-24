@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class GenericApplicationPeriod extends GenericApplicationPeriod_Base {
@@ -57,7 +57,7 @@ public class GenericApplicationPeriod extends GenericApplicationPeriod_Base {
         return result;
     }
 
-    @Service
+    @Atomic
     public GenericApplication createApplication(final String email) {
         for (final GenericApplication genericApplication : getGenericApplicationSet()) {
             if (genericApplication.getEmail().equalsIgnoreCase(email)) {
@@ -75,7 +75,7 @@ public class GenericApplicationPeriod extends GenericApplicationPeriod_Base {
         return result;
     }
 
-    @Service
+    @Atomic
     public void removeManagerService(final User user) {
         if (isCurrentUserAllowedToMange()) {
             removeManager(user);

@@ -19,7 +19,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/announcementSwap", module = "academicAdministration")
 @Forwards({ @Forward(name = "chooseExecutionCourse",
@@ -33,8 +33,8 @@ public class AnnouncementSwap extends FenixDispatchAction {
         String executionCourseId = request.getParameter("executionCourseId");
         String executionPeriodId = request.getParameter("executionPeriodId");
 
-        ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(executionCourseId);
-        ExecutionSemester executionPeriod = AbstractDomainObject.fromExternalId(executionPeriodId);
+        ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseId);
+        ExecutionSemester executionPeriod = FenixFramework.getDomainObject(executionPeriodId);
 
         ExecutionCourseBean sessionBean = new ExecutionCourseBean();
 
@@ -46,8 +46,8 @@ public class AnnouncementSwap extends FenixDispatchAction {
             String executionDegreeId = request.getParameter("executionDegreeId");
             String curricularYearId = request.getParameter("curYearId");
 
-            ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(executionDegreeId);
-            CurricularYear curYear = AbstractDomainObject.fromExternalId(curricularYearId);
+            ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreeId);
+            CurricularYear curYear = FenixFramework.getDomainObject(curricularYearId);
 
             sessionBean.setExecutionDegree(executionDegree);
             sessionBean.setCurricularYear(curYear);

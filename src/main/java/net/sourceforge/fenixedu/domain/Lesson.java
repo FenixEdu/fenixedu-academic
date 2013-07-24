@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -24,6 +25,8 @@ import net.sourceforge.fenixedu.domain.space.LessonInstanceSpaceOccupation;
 import net.sourceforge.fenixedu.domain.space.LessonSpaceOccupation;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.domain.util.icalendar.EventBean;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.predicates.ResourceAllocationRolePredicates;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 import net.sourceforge.fenixedu.util.WeekDay;
@@ -37,9 +40,6 @@ import org.joda.time.LocalTime;
 import org.joda.time.Minutes;
 import org.joda.time.Weeks;
 import org.joda.time.YearMonthDay;
-
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixframework.FenixFramework;
 
 public class Lesson extends Lesson_Base {
 
@@ -63,7 +63,6 @@ public class Lesson extends Lesson_Base {
 
     };
 
-    @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageLessons")
     public Lesson(DiaSemana diaSemana, Calendar inicio, Calendar fim, Shift shift, FrequencyType frequency,
             ExecutionSemester executionSemester, OccupationPeriod period, AllocatableSpace room) {
 
@@ -94,7 +93,6 @@ public class Lesson extends Lesson_Base {
         }
     }
 
-    @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageLessons")
     public Lesson(DiaSemana diaSemana, Calendar inicio, Calendar fim, Shift shift, FrequencyType frequency,
             ExecutionSemester executionSemester, YearMonthDay beginDate, YearMonthDay endDate, AllocatableSpace room) {
 
@@ -128,9 +126,9 @@ public class Lesson extends Lesson_Base {
         }
     }
 
-    @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageLessons")
     public void edit(YearMonthDay newBeginDate, YearMonthDay newEndDate, DiaSemana diaSemana, Calendar inicio, Calendar fim,
             FrequencyType frequency, Boolean createLessonInstances, AllocatableSpace newRoom) {
+        AccessControl.check(this, ResourceAllocationRolePredicates.checkPermissionsToManageLessons);
 
         if (newBeginDate != null && newEndDate != null && newBeginDate.isAfter(newEndDate)) {
             throw new DomainException("error.Lesson.new.begin.date.after.new.end.date");
@@ -160,13 +158,13 @@ public class Lesson extends Lesson_Base {
         lessonSpaceOccupationManagement(newRoom);
     }
 
-    @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageLessons")
     public void edit(final AllocatableSpace newRoom) {
+        AccessControl.check(this, ResourceAllocationRolePredicates.checkPermissionsToManageLessons);
         lessonSpaceOccupationManagement(newRoom);
     }
 
-    @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageLessons")
     public void delete() {
+        AccessControl.check(this, ResourceAllocationRolePredicates.checkPermissionsToManageLessons);
         final Shift shift = getShift();
         final boolean isLastLesson = isLastLesson(shift);
 
@@ -240,11 +238,11 @@ public class Lesson extends Lesson_Base {
         for (final LessonInstance lessonInstance : getLessonInstancesSet()) {
             if (lessonInstance.getDay().isAfter(new LocalDate())) {
                 if (newRoom == null) {
-                    lessonInstance.removeLessonInstanceSpaceOccupation();
+                    lessonInstance.setLessonInstanceSpaceOccupation(null);
                 } else {
                     LessonInstanceSpaceOccupation allocation =
-                        (LessonInstanceSpaceOccupation) newRoom
-                                .getFirstOccurrenceOfResourceAllocationByClass(LessonInstanceSpaceOccupation.class);
+                            (LessonInstanceSpaceOccupation) newRoom
+                                    .getFirstOccurrenceOfResourceAllocationByClass(LessonInstanceSpaceOccupation.class);
                     allocation.edit(lessonInstance);
                 }
             }
@@ -926,7 +924,7 @@ public class Lesson extends Lesson_Base {
 
         if (shift != null) {
 
-            List<CourseLoad> courseLoads = shift.getCourseLoads();
+            Collection<CourseLoad> courseLoads = shift.getCourseLoads();
 
             if (courseLoads.size() == 1) {
 
@@ -1151,13 +1149,12 @@ public class Lesson extends Lesson_Base {
             if (i == 0) {
                 builder.append(weeksA[i]);
             } else if (i == weeksA.length - 1 || ((int) weeksA[i]) + 1 != ((int) weeksA[i + 1])) {
-                final String seperator = ((int) weeksA[i - 1]) + 1 == ((int) weeksA[i])
-                        ? " - " : ", ";
+                final String seperator = ((int) weeksA[i - 1]) + 1 == ((int) weeksA[i]) ? " - " : ", ";
                 builder.append(seperator);
-                builder.append(weeksA[i]);                    
-            } else if (((int) weeksA[i - 1]) + 1 !=  (int) weeksA[i]) {
+                builder.append(weeksA[i]);
+            } else if (((int) weeksA[i - 1]) + 1 != (int) weeksA[i]) {
                 builder.append(", ");
-                builder.append(weeksA[i]);                
+                builder.append(weeksA[i]);
             }
         }
         return builder.toString();
@@ -1201,6 +1198,10 @@ public class Lesson extends Lesson_Base {
     @Deprecated
     public boolean hasLessonSpaceOccupation() {
         return getLessonSpaceOccupation() != null;
+    }
+
+    private boolean hasAnyLessonInstances() {
+        return !getLessonInstancesSet().isEmpty();
     }
 
 }

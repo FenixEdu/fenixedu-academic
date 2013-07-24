@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseEditor;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -16,12 +16,11 @@ import pt.ist.fenixframework.FenixFramework;
  */
 public class InsertExecutionCourseAtExecutionPeriod {
 
-    @Service
+    @Atomic
     public static void run(InfoExecutionCourseEditor infoExecutionCourse) throws FenixServiceException {
 
         final ExecutionSemester executionSemester =
-                FenixFramework.getDomainObject(
-                        infoExecutionCourse.getInfoExecutionPeriod().getExternalId());
+                FenixFramework.getDomainObject(infoExecutionCourse.getInfoExecutionPeriod().getExternalId());
         if (executionSemester == null) {
             throw new DomainException("message.nonExistingExecutionPeriod");
         }

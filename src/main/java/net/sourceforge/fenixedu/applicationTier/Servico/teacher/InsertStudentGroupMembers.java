@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.GroupsAndShiftsManagementLog;
 import net.sourceforge.fenixedu.domain.StudentGroup;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class InsertStudentGroupMembers {
@@ -70,7 +70,7 @@ public class InsertStudentGroupMembers {
 
     private static final InsertStudentGroupMembers serviceInstance = new InsertStudentGroupMembers();
 
-    @Service
+    @Atomic
     public static Boolean runInsertStudentGroupMembers(String executionCourseID, String studentGroupID, String groupPropertiesID,
             List<String> studentUsernames) throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseID);
