@@ -17,7 +17,9 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.PeriodState;
+import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -31,18 +33,10 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.validator.DynaValidatorForm;
 
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-
 /**
  * @author Fernanda Quitério 17/Dez/2003
  * 
  */
-@Mapping(module = "manager", path = "/insertExecutionCourse", attribute = "insertExecutionCourseForm",
-        formBean = "insertExecutionCourseForm", scope = "request", parameter = "method")
-@Forwards({ @Forward(name = "firstPage", path = "df.executionCourseManagement.page.firstPage"),
-        @Forward(name = "insertExecutionCourse", path = "df.executionCourseManagement.page.insertExecutionCourse") })
 public class InsertExecutionCourseDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
@@ -104,7 +98,15 @@ public class InsertExecutionCourseDispatchAction extends FenixDispatchAction {
     public ActionForward insertExecutionCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
 
-        InfoExecutionCourseEditor infoExecutionCourse = fillInfoExecutionCourse(form, request);
+        InfoExecutionCourseEditor infoExecutionCourse = null;
+        try {
+            infoExecutionCourse = fillInfoExecutionCourse(form, request);
+            checkInfoExecutionCourse(infoExecutionCourse);
+        } catch (DomainException ex) {
+            //ugly hack to simulate a form validator and its error messages
+            addActionMessageLiteral("error", request, ex.getKey());
+            return prepareInsertExecutionCourse(mapping, form, request, response);
+        }
 
         try {
             InsertExecutionCourseAtExecutionPeriod.run(infoExecutionCourse);
@@ -124,7 +126,6 @@ public class InsertExecutionCourseDispatchAction extends FenixDispatchAction {
     private InfoExecutionCourseEditor fillInfoExecutionCourse(ActionForm form, HttpServletRequest request) {
 
         DynaActionForm dynaForm = (DynaValidatorForm) form;
-
         InfoExecutionCourseEditor infoExecutionCourse = new InfoExecutionCourseEditor();
 
         String name = (String) dynaForm.get("name");
@@ -134,9 +135,11 @@ public class InsertExecutionCourseDispatchAction extends FenixDispatchAction {
         infoExecutionCourse.setSigla(code);
 
         String executionPeriodId = (String) dynaForm.get("executionPeriodId");
-
-        InfoExecutionPeriod infoExecutionPeriod =
-                new InfoExecutionPeriod(rootDomainObject.readExecutionSemesterByOID(new Integer(executionPeriodId)));
+        InfoExecutionPeriod infoExecutionPeriod = null;
+        if (!StringUtils.isEmpty(executionPeriodId) && StringUtils.isNumeric(executionPeriodId)) {
+            infoExecutionPeriod =
+                    new InfoExecutionPeriod(rootDomainObject.readExecutionSemesterByOID(Integer.valueOf(executionPeriodId)));
+        }
         infoExecutionCourse.setInfoExecutionPeriod(infoExecutionPeriod);
 
         String comment = "";
@@ -153,5 +156,28 @@ public class InsertExecutionCourseDispatchAction extends FenixDispatchAction {
         infoExecutionCourse.setEntryPhase(entryPhase);
 
         return infoExecutionCourse;
+    }
+
+    private void checkInfoExecutionCourse(InfoExecutionCourseEditor infoExecutionCourse) {
+        StringBuilder errors = new StringBuilder();
+        if (infoExecutionCourse.getInfoExecutionPeriod() == null) {
+            errors.append(errorStringBuilder("property.executionPeriod"));
+        }
+        if (StringUtils.isEmpty(infoExecutionCourse.getNome())) {
+            errors.append(errorStringBuilder("label.name"));
+        }
+        if (StringUtils.isEmpty(infoExecutionCourse.getSigla())) {
+            errors.append(errorStringBuilder("label.code"));
+        }
+        if (errors.length() > 0) {
+            //ugly hack to simulate a form validator and its error messages
+            throw new DomainException(errors.toString());
+        }
+    }
+
+    private String errorStringBuilder(String property) {
+        return BundleUtil.getStringFromResourceBundle("resources.ManagerResources", "errors.required",
+                BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", property))
+                + " ";
     }
 }

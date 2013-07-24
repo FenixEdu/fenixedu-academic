@@ -15,8 +15,8 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.utl.ist.fenix.tools.util.Pair;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -24,9 +24,8 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod {
 
-    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
-    public static HashMap<Integer, Integer> run(Integer[] degreeCurricularPlansIDs, Integer executionPeriodID) {
+    public static HashMap<Integer, Pair<Integer, String>> run(Integer[] degreeCurricularPlansIDs, Integer executionPeriodID) {
         final ExecutionSemester executionSemester = RootDomainObject.getInstance().readExecutionSemesterByOID(executionPeriodID);
         if (executionSemester == null) {
             throw new DomainException("error.selection.noPeriod");
@@ -37,9 +36,10 @@ public class CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod {
             throw new DomainException("error.selection.noDegree");
         }
 
-        HashMap<Integer, Integer> numberExecutionCoursesPerDCP = new HashMap<Integer, Integer>();
+        HashMap<Integer, Pair<Integer, String>> numberExecutionCoursesPerDCP = new HashMap<Integer, Pair<Integer, String>>();
         for (final Integer degreeCurricularPlanID : degreeCurricularPlansIDs) {
             int numberExecutionCourses = 0;
+            StringBuilder curricularCodes = new StringBuilder();
             final DegreeCurricularPlan degreeCurricularPlan =
                     RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanID);
             final List<CurricularCourse> curricularCourses = degreeCurricularPlan.getCurricularCourses();
@@ -58,10 +58,15 @@ public class CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod {
                         executionCourse.createSite();
                         curricularCourse.addAssociatedExecutionCourses(executionCourse);
                         numberExecutionCourses++;
+                        curricularCodes.append(curricularCourse.getAcronym() + ", ");
                     }
                 }
             }
-            numberExecutionCoursesPerDCP.put(degreeCurricularPlanID, Integer.valueOf(numberExecutionCourses));
+            if (curricularCodes.length() > 0) {
+                curricularCodes.setLength(curricularCodes.length() - 2); // trim last ", "
+            }
+            numberExecutionCoursesPerDCP.put(degreeCurricularPlanID,
+                    new Pair<Integer, String>(Integer.valueOf(numberExecutionCourses), curricularCodes.toString()));
         }
 
         return numberExecutionCoursesPerDCP;

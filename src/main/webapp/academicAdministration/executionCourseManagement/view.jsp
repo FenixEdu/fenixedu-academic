@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
-
+<%-- INCOMPLETE, OBSOLETE, DELETE THIS --%>
 <html:xhtml/>
 
 <bean:define id="semester" name="executionCourse" property="executionPeriod" />

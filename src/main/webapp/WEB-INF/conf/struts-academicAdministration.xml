@@ -104,6 +104,62 @@
               <form-property type="java.lang.String" name="degreeType"></form-property>
               <form-property type="java.lang.String" name="enrolmentPeriodClass"></form-property>
         </form-bean>
+        <!-- EXECUTION COURSE MANAGEMENT - CREATE EXECUTION COURSES - MIGRATED FROM MANAGER -->
+		<form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="createExecutionCoursesForm">
+        	<form-property type="java.lang.String" name="degreeType"></form-property>
+			<form-property type="java.lang.Integer[]" name="degreeCurricularPlansIDs"></form-property>
+			<form-property type="java.lang.Integer" name="executionPeriodID"></form-property>
+			<form-property type="java.lang.String" name="method"></form-property>
+			<form-property initial="0" type="java.lang.Integer" name="page"></form-property>
+		</form-bean>
+		<!-- EXECUTION COURSE MANAGEMENT - MERGE EXECUTION COURSES - MIGRATED FROM MANAGER -->
+		<form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="mergeExecutionCoursesForm">
+			<form-property type="java.lang.Integer" name="sourceExecutionCourseId"></form-property>
+			<form-property type="java.lang.Integer" name="destinationExecutionCourseId"></form-property>
+			<form-property initial="0" type="java.lang.Integer" name="page"></form-property>
+		</form-bean>
+		<!-- EXECUTION COURSE MANAGEMENT - EDIT EXECUTION COURSES - MIGRATED FROM MANAGER -->
+		<form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="executionCourseForm">
+			<form-property type="java.lang.String" name="name"></form-property>
+			<form-property type="java.lang.String" name="code"></form-property>
+			<form-property type="java.lang.String" name="semester"></form-property>
+			<form-property type="java.lang.String" name="comment"></form-property>
+			<form-property type="java.lang.String" name="executionPeriod"></form-property>
+			<form-property type="java.lang.String" name="executionPeriodId"></form-property>
+			<form-property type="java.lang.String" name="executionDegree"></form-property>
+			<form-property type="java.lang.String" name="executionDegreeId"></form-property>
+			<form-property type="java.lang.String" name="executionCourseId"></form-property>
+			<form-property type="java.lang.String" name="degreeCurricularPlan"></form-property>
+			<form-property type="java.lang.String" name="degreeCurricularPlanId"></form-property>
+			<form-property type="java.lang.String" name="curYear"></form-property>
+			<form-property type="java.lang.Boolean" name="executionCoursesNotLinked"></form-property>
+			<form-property type="java.lang.Integer" name="curricularCoursesListSize"></form-property>
+			<form-property type="java.lang.Integer[]" name="internalIds"></form-property>
+			<form-property initial="0" type="java.lang.Integer" name="page"></form-property>
+			<form-property type="java.lang.String" name="availableGradeSubmission"></form-property>
+			<form-property type="java.lang.String" name="entryPhase"></form-property>
+		</form-bean>
+		<!-- EXECUTION COURSE MANAGEMENT - SEPARATE EXECUTION COURSES - MIGRATED FROM MANAGER -->
+		<form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="separateExecutionCourseForm">
+			<form-property type="java.lang.Integer" name="page"></form-property>
+			<form-property type="java.lang.Integer" name="originExecutionDegreeId"></form-property>
+			<form-property type="java.lang.Integer" name="curricularYearId"></form-property>
+			<form-property type="java.lang.String" name="destinationExecutionDegreeId"></form-property>
+			<form-property type="java.lang.String" name="destinationCurricularYear"></form-property>
+			<form-property type="java.lang.String" name="destinationExecutionCourseId"></form-property>
+			<form-property type="java.lang.String[]" name="shiftIdsToTransfer"></form-property>
+			<form-property type="java.lang.String[]" name="curricularCourseIdsToTransfer"></form-property>
+		</form-bean>
+		<!-- EXECUTION COURSE MANAGEMENT - INSERT EXECUTION COURSES - MIGRATED FROM MANAGER -->
+		<form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="insertExecutionCourseForm">
+        	<form-property type="java.lang.String" name="name"></form-property>
+        	<form-property type="java.lang.String" name="code"></form-property>
+        	<form-property type="java.lang.String" name="semester"></form-property>
+        	<form-property type="java.lang.String" name="comment"></form-property>
+        	<form-property type="java.lang.String" name="executionPeriodId"></form-property>
+        	<form-property initial="0" type="java.lang.Integer" name="page"></form-property>
+        	<form-property type="java.lang.String" name="entryPhase"></form-property>
+		</form-bean>
       </form-beans>
       <!-- ========== Global Exception Definitions ============================== -->
       <global-exceptions>
@@ -132,6 +188,7 @@
       <message-resources null="false" key="COMMON_RESOURCES" parameter="resources.CommonResources"></message-resources>
       <message-resources null="false" key="MANAGER_RESOURCES" parameter="resources.ManagerResources"></message-resources>
       <message-resources null="false" key="SCIENTIFIC_COUNCIL_RESOURCES" parameter="resources.ScientificCouncilResources"></message-resources>
+      <message-resources null="false" key="SOP_RESOURCES" parameter="resources.ResourceAllocationManagerResources"></message-resources>
       <!-- ========== Plug Ins Configuration ================================= -->
       <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
             <set-property value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-default.xml" property="pathnames"></set-property>

@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
 /**
@@ -17,7 +16,6 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class InsertExecutionCourseAtExecutionPeriod {
 
-    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
     public static void run(InfoExecutionCourseEditor infoExecutionCourse) throws FenixServiceException {
 

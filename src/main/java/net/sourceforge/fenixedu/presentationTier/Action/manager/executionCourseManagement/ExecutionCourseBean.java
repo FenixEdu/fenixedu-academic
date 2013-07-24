@@ -2,8 +2,9 @@ package net.sourceforge.fenixedu.presentationTier.Action.manager.executionCourse
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Collection;
 import java.util.List;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularYear;
@@ -91,7 +92,7 @@ public class ExecutionCourseBean implements Serializable, HasExecutionSemester, 
         setSourceExecutionCourse(executionCourse);
     }
 
-    public List<ExecutionCourse> getExecutionCourses() {
+    public Collection<ExecutionCourse> getExecutionCourses() {
         List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
         if (this.chooseNotLinked) {
             result = this.getExecutionSemester().getExecutionCoursesWithNoCurricularCourses();
@@ -103,8 +104,10 @@ public class ExecutionCourseBean implements Serializable, HasExecutionSemester, 
                 }
             }
         }
-        Collections.sort(result, ExecutionCourse.EXECUTION_COURSE_NAME_COMPARATOR);
-        return result;
+        TreeSet<ExecutionCourse> finalResult = new TreeSet<ExecutionCourse>(ExecutionCourse.EXECUTION_COURSE_NAME_COMPARATOR);
+        finalResult.addAll(result);
+        return finalResult;
+
     }
 
     private DegreeCurricularPlan getDegreeCurricularPlan() {

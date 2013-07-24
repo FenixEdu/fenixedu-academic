@@ -10,15 +10,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(path = "/editExecutionCourseChooseExPeriod", module = "manager")
-@Forwards({
-        @Forward(name = "editChooseExecutionPeriod", path = "/manager/executionCourseManagement/editChooseExecutionPeriod.jsp"),
-        @Forward(name = "editChooseCourseAndYear", path = "/manager/executionCourseManagement/editChooseCourseAndYear.jsp"),
-        @Forward(name = "editExecutionCourse", path = "/manager/executionCourseManagement/listExecutionCourseActions.jsp") })
 public class EditExecutionCourseDA extends FenixDispatchAction {
 
     public ActionForward prepareEditExecutionCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,

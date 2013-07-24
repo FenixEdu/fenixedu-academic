@@ -61,7 +61,8 @@ public class SeperateExecutionCourseDispatchAction extends FenixDispatchAction {
         request.setAttribute("infoExecutionCourse", infoExecutionCourse);
 
         List executionDegrees =
-                ReadExecutionDegreesByExecutionPeriodId.run(infoExecutionCourse.getInfoExecutionPeriod().getIdInternal());
+                ReadExecutionDegreesByExecutionPeriodId.runForAcademicAdminAdv(infoExecutionCourse.getInfoExecutionPeriod()
+                        .getIdInternal());
         transformExecutionDegreesIntoLabelValueBean(executionDegrees);
         request.setAttribute("executionDegrees", executionDegrees);
 
@@ -359,7 +360,7 @@ public class SeperateExecutionCourseDispatchAction extends FenixDispatchAction {
     }
 
     private boolean isSet(String parameter) {
-        return parameter != null && parameter.length() > 0 && StringUtils.isNumeric(parameter);
+        return !StringUtils.isEmpty(parameter) && StringUtils.isNumeric(parameter);
     }
 
     private String makeObjectStringFromArray(String[] ids, Class objectType) {
@@ -399,5 +400,4 @@ public class SeperateExecutionCourseDispatchAction extends FenixDispatchAction {
         Shift shift = RootDomainObject.getInstance().readShiftByOID(Integer.valueOf(id));
         return shift.getPresentationName();
     }
-
 }

@@ -675,11 +675,13 @@
                   <forward path="manageCoordinators" name="manageCoordinators"></forward>
             </action>
             <!-- ========== EXECUTION COURSE MANAGEMENT ========== -->
+            <!-- ist150958: POSSIBLY OBSOLETE -->
             <action input="/editExecutionCourseChooseExDegree.do?method=prepareEditECChooseExecDegreeAndCurYear&amp;page=0" scope="request" name="executionCourseForm" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.manager.executionCourseManagement.EditExecutionCourseDispatchAction" path="/editExecutionCourseChooseExDegree">
                   <forward path="df.executionCourseManagement.prepareEditECChooseExecDegreeAndCurYear" name="prepareEditECChooseExecDegreeAndCurYear"></forward>
                   <forward path="df.executionCourseManagement.prepareEditExecutionCourse" name="prepareEditExecutionCourse"></forward>
                   <forward path="df.executionCourseManagement.editExecutionCourse" name="editExecutionCourse"></forward>
             </action>
+             <!-- ist150958: OBSOLETE Manager to AcademicAdmin migration  -->
             <action input="/editExecutionCourse.do?method=prepareEditECChooseExecDegreeAndCurYear&amp;page=0" scope="request" name="executionCourseForm" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.manager.executionCourseManagement.EditExecutionCourseDispatchAction" path="/editExecutionCourse">
                   <forward path="df.executionCourseManagement.prepareEditECChooseExecutionPeriod" name="prepareEditECChooseExecutionPeriod"></forward>
                   <forward path="df.executionCourseManagement.prepareEditECChooseExecDegreeAndCurYear" name="prepareEditECChooseExecDegreeAndCurYear"></forward>

@@ -62,7 +62,9 @@ public enum AcademicOperationType implements IPresentableEnum {
 
     SERVICE_REQUESTS_RECTORAL_SENDING(true, true, Scope.OFFICE),
 
-    MANAGE_EXECUTION_COURSES(true, true, Scope.ADMINISTRATION),
+    MANAGE_EXECUTION_COURSES(true, true, Scope.ADMINISTRATION), // Migrated from Manager
+
+    MANAGE_EXECUTION_COURSES_ADV(true, true, Scope.ADMINISTRATION), // Migrated from Manager
 
     MANAGE_DEGREE_CURRICULAR_PLANS(true, true, Scope.ADMINISTRATION),
 
