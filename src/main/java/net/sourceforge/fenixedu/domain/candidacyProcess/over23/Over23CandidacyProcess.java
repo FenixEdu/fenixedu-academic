@@ -7,12 +7,14 @@ import java.util.Set;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.domain.AcademicProgram;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessSelectDegreesBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessState;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
@@ -51,6 +53,7 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
         activities.add(new EditCandidacyPeriod());
         activities.add(new SendInformationToJury());
         activities.add(new PrintCandidacies());
+        activities.add(new SelectAvailableDegrees());
     }
 
     private Over23CandidacyProcess() {
@@ -199,6 +202,36 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
         protected Over23CandidacyProcess executeActivity(Over23CandidacyProcess process, IUserView userView, Object object) {
             return process; // for now, nothing to be done
         }
+    }
+
+    static private class SelectAvailableDegrees extends Activity<Over23CandidacyProcess> {
+
+        @Override
+        public void checkPreConditions(Over23CandidacyProcess process, IUserView userView) {
+            if (!isAllowedToManageProcess(userView)) {
+                throw new PreConditionNotValidException();
+            }
+        }
+
+        @Override
+        protected Over23CandidacyProcess executeActivity(Over23CandidacyProcess process, IUserView userView, Object object) {
+            final CandidacyProcessSelectDegreesBean bean = (CandidacyProcessSelectDegreesBean) object;
+            final List<Degree> degrees = bean.getDegrees();
+            process.getDegreeSet().addAll(degrees);
+            process.getDegreeSet().retainAll(degrees);
+            return process;
+        }
+
+        @Override
+        public Boolean isVisibleForCoordinator() {
+            return Boolean.FALSE;
+        }
+
+        @Override
+        public Boolean isVisibleForGriOffice() {
+            return Boolean.FALSE;
+        }
+
     }
 
 }
