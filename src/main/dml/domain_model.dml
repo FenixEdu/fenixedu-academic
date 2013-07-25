@@ -341,6 +341,7 @@ valueType net.sourceforge.fenixedu.domain.util.EmailAddressList as EmailAddressL
     }
 }
 
+
 valueType net.sourceforge.fenixedu.util.ByteArray as ByteArray {
     externalizeWith {
         bytearray getBytes();
@@ -1500,9 +1501,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
     class StrikeDay  {
         LocalDate date;
     }
-
-	class StrikeDayTask extends .pt.ist.fenixframework.plugins.scheduler.domain.Task {
-	}
 
     class Identification  {
         Boolean active;
@@ -8130,12 +8128,6 @@ class phd.debts.PhdGratuityFineExemption extends phd.debts.PhdEventExemption{
 class phd.debts.PhdGratuityPriceQuirk  {
 	int year;
 	Money gratuity;
-}
-
-class util.MessageTask extends .pt.ist.fenixframework.plugins.scheduler.domain.Task {
-}
-
-class util.EmailTask extends .pt.ist.fenixframework.plugins.scheduler.domain.Task {
 }
 
 class raides.DegreeDesignation  {
@@ -17234,6 +17226,11 @@ relation UserPerson {
     User playsRole user;
 }
 
+relation BennuUserPerson {
+    Person playsRole person;
+    .pt.ist.bennu.core.domain.User playsRole bennuUser;
+}
+
 relation VehicleAllocationRequestor {
     organizationalStructure.Party playsRole requestor;
     resource.VehicleAllocation playsRole vehicleAllocations {
@@ -19708,7 +19705,7 @@ relation RootDomainObjectEmailQueue {
 	}
 }
 
-relation EmailMessageTransportResult {
+relation FenixEmailMessageTransportResult {
 	util.Email playsRole email;
 	util.email.MessageTransportResult playsRole messageTransportResult {
 		multiplicity *;

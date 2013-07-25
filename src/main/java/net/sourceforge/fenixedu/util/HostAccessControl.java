@@ -18,10 +18,8 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import pt.ist.fenixWebFramework.servlets.filters.PathAccessControlFilter;
-
 public class HostAccessControl {
-    private static final Logger logger = LoggerFactory.getLogger(PathAccessControlFilter.class);
+    private static final Logger logger = LoggerFactory.getLogger(HostAccessControl.class);
 
     private static final String HOST_CONTROL_NAME_PREFIX = "host.control.name.";
 

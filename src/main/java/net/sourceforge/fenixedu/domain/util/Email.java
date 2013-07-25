@@ -30,6 +30,7 @@ import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import pt.ist.bennu.email.util.EmailAddressList;
 import pt.utl.ist.fenix.tools.util.StringAppender;
 
 public class Email extends Email_Base {

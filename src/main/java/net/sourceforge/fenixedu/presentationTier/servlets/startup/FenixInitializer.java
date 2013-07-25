@@ -51,7 +51,6 @@ public class FenixInitializer implements ServletContextListener {
     public void contextInitialized(ServletContextEvent event) {
 
         logger.info("Initializing Fenix");
-        FenixWebFramework.initialize(PropertiesManager.getFenixWebFrameworkConfig());
 
         try {
             final InputStream inputStream = Authenticate.class.getResourceAsStream("/build.version");
@@ -101,7 +100,6 @@ public class FenixInitializer implements ServletContextListener {
         loadUnitNames();
         loadRoles();
         startContactValidationServices();
-        initScheduler();
         logger.info("Fenix initialized successfully");
     }
 
@@ -112,16 +110,6 @@ public class FenixInitializer implements ServletContextListener {
 
     private void startContactValidationServices() {
         PhoneValidationUtils.getInstance();
-    }
-
-    @Atomic
-    private void initScheduler() {
-        final String scheduleSystemFlag = PropertiesManager.getProperty("schedule.system");
-        if (scheduleSystemFlag == null || scheduleSystemFlag.isEmpty() || !scheduleSystemFlag.equalsIgnoreCase("active")) {
-            SchedulerSystem.getInstance().clearAllScheduledTasks();
-        } else {
-            Scheduler.initialize();
-        }
     }
 
     private void loadLogins() {

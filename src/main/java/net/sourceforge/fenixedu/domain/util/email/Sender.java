@@ -29,7 +29,7 @@ public class Sender extends Sender_Base {
         }
 
     };
-
+ 
     public Sender() {
         super();
         setRootDomainObject(RootDomainObject.getInstance());

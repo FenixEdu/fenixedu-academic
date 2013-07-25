@@ -6,13 +6,14 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Sender;
-import pt.ist.fenixframework.Atomic;
+import pt.ist.bennu.scheduler.CronTask;
+import pt.ist.bennu.scheduler.annotation.Task;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
-public class MessageTask extends MessageTask_Base {
+@Task(englishTitle = "Message Task")
+public class MessageTask extends CronTask {
 
     @Override
-    @Atomic
     public void runTask() {
         Language.setLocale(Language.getDefaultLocale());
         final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
