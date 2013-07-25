@@ -30,6 +30,11 @@
 			</html:link>
 		</li>
 		<li>
+			<html:link page="/courseStatistics.do?method=showCompetenceCourses">
+				<bean:message key="link.competenceCourses"/>
+			</html:link>
+		</li>
+		<li>
 			<html:link page="/courseStatistics/viewCompetenceCourses.faces">
 				<bean:message key="link.departmentCourses"/>
 			</html:link>
