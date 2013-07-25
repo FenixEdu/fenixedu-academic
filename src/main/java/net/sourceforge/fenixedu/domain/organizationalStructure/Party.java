@@ -239,12 +239,11 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
         final Set<Party> result = new HashSet<Party>();
         for (final Accountability accountability : getParentsSet()) {
             if (parentPartyClass.isAssignableFrom(accountability.getParentParty().getClass())
-                    && accountability.getBeginDate().toDateTimeAtCurrentTime().isBefore(dateTime)) {
+                    && accountability.getBeginDate().toDateTimeAtMidnight().isBefore(dateTime)) {
                 if (accountability.getEndDate() == null) {
                     result.add(accountability.getParentParty());
                 }
-                if (accountability.getEndDate() != null
-                        && accountability.getEndDate().toDateTimeAtCurrentTime().isAfter(dateTime)) {
+                if (accountability.getEndDate() != null && accountability.getEndDate().toDateTimeAtMidnight().isAfter(dateTime)) {
                     result.add(accountability.getParentParty());
                 }
             }
