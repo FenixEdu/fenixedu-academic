@@ -1,3 +1,6 @@
+<%@page import="net.sourceforge.fenixedu.domain.CourseLoad"%>
+<%@page import="net.sourceforge.fenixedu.dataTransferObject.InfoShift"%>
+<%@page import="net.sourceforge.fenixedu.domain.Shift"%>
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
@@ -7,6 +10,17 @@
 <html:xhtml/>
 
 <p class="mtop2 mbottom05"><strong>Aulas já atribuidas ao turno:</strong></p>
+
+<%
+	final Shift shift = ((InfoShift) request.getAttribute("shift")).getShift();
+	if (shift.isTotalShiftLoadExceeded()) {
+	    for (final CourseLoad courseLoad : shift.getCourseLoadsSet()) {
+	        if (shift.getTotalHours().compareTo(courseLoad.getTotalQuantity()) == 1) {
+%>
+				<p class="error2">
+					<bean:message key="error.Lesson.shift.load.total.quantity.exceeded" arg0="<%= shift.getTotalHours().toString() %>" arg1="<%= courseLoad.getTotalQuantity().toString() %>"/>
+				</p>
+<% } } } %>
 
 <logic:present name="shift" property="infoLessons">
   <html:form action="/manageShiftMultipleItems">
@@ -49,6 +63,7 @@
 		        </th>
 				<th> </th>
 				<th> </th>
+				<th> </th>
 		        <th> </th>
 			</tr>
 			<bean:define id="deleteConfirm">
@@ -89,6 +104,7 @@
 						</logic:notEmpty>
 					</td>
 					<td>
+						<logic:empty name="lesson" property="lesson.lessonInstancesSet">
 	               		<html:link page="<%= "/manageLesson.do?method=prepareEdit&amp;page=0&amp;"
     	           							+ PresentationConstants.LESSON_OID
 				  							+ "="
@@ -114,6 +130,35 @@
   											+ "="
   											+ pageContext.findAttribute("executionDegreeOID") %>">
 							<bean:message key="link.edit"/>
+						</html:link>
+						</logic:empty>
+					</td>
+					<td>
+	               		<html:link page="<%= "/manageLesson.do?method=prepareChangeRoom&amp;page=0&amp;"
+    	           							+ PresentationConstants.LESSON_OID
+				  							+ "="
+            	   				   			+ pageContext.findAttribute("lessonOID")
+               					   			+ "&amp;"
+    	           							+ PresentationConstants.SHIFT_OID
+				  							+ "="
+            	   				   			+ pageContext.findAttribute("shiftOID")
+               					   			+ "&amp;"
+			  								+ PresentationConstants.EXECUTION_COURSE_OID
+  											+ "="
+  											+ pageContext.findAttribute("executionCourseOID")
+               				   				+ "&amp;"
+			  								+ PresentationConstants.ACADEMIC_INTERVAL
+  											+ "="
+	  										+ pageContext.findAttribute(PresentationConstants.ACADEMIC_INTERVAL)
+  											+ "&amp;"
+  											+ PresentationConstants.CURRICULAR_YEAR_OID
+				  							+ "="
+  											+ pageContext.findAttribute("curricularYearOID")
+  											+ "&amp;"
+			  								+ PresentationConstants.EXECUTION_DEGREE_OID
+  											+ "="
+  											+ pageContext.findAttribute("executionDegreeOID") %>">
+							<bean:message key="link.change.room"/>
 						</html:link>
 					</td>
 					<td>

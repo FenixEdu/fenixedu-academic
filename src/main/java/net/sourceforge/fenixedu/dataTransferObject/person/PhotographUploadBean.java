@@ -47,11 +47,16 @@ public class PhotographUploadBean implements Serializable {
 
     private String contentType;
 
+    private String base64RawThumbnail;
+
     private String base64RawContent;
 
+    private String username;
+
     public InputStream getFileInputStream() throws FileNotFoundException {
-        if (base64RawContent != null) {
+        if (base64RawContent != null && base64RawThumbnail != null) {
             this.rawContents = BaseEncoding.base64().decode(base64RawContent);
+            this.compressedContents = BaseEncoding.base64().decode(base64RawThumbnail);
             return new ByteArrayInputStream(rawContents);
         }
         if (rawContents != null) {
@@ -68,12 +73,28 @@ public class PhotographUploadBean implements Serializable {
         this.rawContents = (inputStream != null) ? new ByteArray(inputStream).getBytes() : null;
     }
 
+    public String getBase64RawThumbnail() {
+        return base64RawThumbnail;
+    }
+
+    public void setBase64RawThumbnail(String base64RawThumbnail) {
+        this.base64RawThumbnail = base64RawThumbnail;
+    }
+
     public String getBase64RawContent() {
         return base64RawContent;
     }
 
     public void setBase64RawContent(String base64RawContent) {
         this.base64RawContent = base64RawContent;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public InputStream getCompressedInputStream() throws FileNotFoundException {
@@ -131,6 +152,9 @@ public class PhotographUploadBean implements Serializable {
     }
 
     public void processImage() throws IOException, UnableToProcessTheImage {
+        if (base64RawContent != null && base64RawThumbnail != null) {
+            return;
+        }
         try {
             BufferedImage image = ImageIO.read(new ByteArrayInputStream(rawContents));
             if (image == null) {

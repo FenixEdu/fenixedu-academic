@@ -156,6 +156,18 @@ public abstract class EventSpaceOccupation extends EventSpaceOccupation_Base {
         return false;
     }
 
+    public boolean overlaps(final Interval[] intervals) {
+        for (final Interval interval : intervals) {
+            final DateTime start = interval.getStart();
+            final DateTime end = interval.getEnd();
+            if (alreadyWasOccupiedIn(start.toYearMonthDay(), end.toYearMonthDay(), new HourMinuteSecond(start.toDate()),
+                    new HourMinuteSecond(end.toDate()), null, null, null, null)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public List<Interval> getEventSpaceOccupationIntervals(DateTime start, DateTime end) {
         final Interval i = new Interval(start, end);
         final List<Interval> intervals = getEventSpaceOccupationIntervals(start.toYearMonthDay(), end.toYearMonthDay());

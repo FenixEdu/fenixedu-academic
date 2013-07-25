@@ -1,3 +1,12 @@
+<%@page import="java.util.TreeSet"%>
+<%@page import="java.util.SortedSet"%>
+<%@page import="net.sourceforge.fenixedu.domain.LessonInstance"%>
+<%@ page language="java" %>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
+<%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 <%@page import="org.joda.time.Weeks"%>
 <%@page import="org.joda.time.Days"%>
 <%@page import="org.joda.time.Period"%>
@@ -11,11 +20,6 @@
 <%@page import="net.sourceforge.fenixedu.domain.ExecutionCourse"%>
 <%@page import="org.joda.time.YearMonthDay"%>
 <%@page import="net.sourceforge.fenixedu.domain.Lesson"%>
-<%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
-<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants"%>
 <html:xhtml/>
 
@@ -29,6 +33,18 @@
 		});
 	};
 </script>
+
+<style>
+<!--
+.selectedLesson {
+	font-weight: bolder;
+	font-size: large;
+}
+.notSelectedLesson {
+	color: gray;
+}
+-->
+</style>
 
 <logic:present role="RESOURCE_ALLOCATION_MANAGER">
 
@@ -59,13 +75,32 @@
 		final YearMonthDay firstPossibleLessonDay = executionCourse.getMaxLessonsPeriod().getLeft();
 	%>
 		<h4>
-			<bean:message key="label.lesson.period" bundle="SOP_RESOURCES"/>:
 		</h4>
-		<ul>
+		<table class="tstyle1 mtop025 mbottom0 tdcenter">
+			<tr>
+				<th>
+					<bean:message key="label.semester" bundle="SOP_RESOURCES"/>
+				</th>
+				<td>
+					<%= lesson.getExecutionPeriod().getQualifiedName() %>
+				</td>
+			</tr>
+			<tr>
+				<th>
+					<bean:message key="label.executionCourse" bundle="SOP_RESOURCES"/>
+				</th>
+				<td>
+					<%= lesson.getExecutionCourse().getName() %> (<%= executionCourse.getDegreePresentationString() %>)
+				</td>
+			</tr>
+			<tr>
+				<th>
+					<bean:message key="label.lesson.period" bundle="SOP_RESOURCES"/>
+				</th>
+				<td>
 	<%
 		for (final OccupationPeriod occupationPeriod : executionCourse.getLessonPeriods()) {
 	%>
-			<li>
 				<% for (final Interval interval : occupationPeriod.getIntervals()) { %>
 					<% if (!interval.getStart().equals(occupationPeriod.getIntervals().iterator().next().getStart())) { %>
 						;
@@ -74,22 +109,98 @@
 					-
 					<%= interval.getEnd().toString("yyyy-MM-dd") %>
 				<% } %>
-				<span style="color: gray;">
-				(
-				<% for (final ExecutionDegree executionDegree : executionDegrees) {
-				    for (final OccupationPeriodReference ref : occupationPeriod.getExecutionDegreesSet()) {
-				        if (ref.getExecutionDegree() == executionDegree) {
-				%>
-							<%= executionDegree.getDegree().getSigla() %>
-				<%  } } } %>
-				)
-				</span>
-			</li>
 	<%
 		}
 	%>
-		</ul>
-				
+				</td>
+			</tr>
+			<tr>
+				<th>
+					<bean:message key="label.shift" bundle="SOP_RESOURCES"/>
+				</th>
+				<td>
+					<%= lesson.getShift().getNome() %>
+				</td>
+			</tr>
+			<tr>
+				<th>
+					<bean:message key="property.capacity" bundle="SOP_RESOURCES"/>
+				</th>
+				<td>
+					<%= lesson.getShift().getLotacao() %>
+				</td>
+			</tr>
+		</table>
+
+		<table class="tstyle4 thlight tdcenter">
+			<tr>
+				<th>
+					<bean:message key="label.lesson.period" bundle="SOP_RESOURCES"/>
+				</th>
+				<th>
+					<bean:message key="property.weekday"/>
+				</th>
+				<th>
+					<bean:message key="property.time.start"/>
+				</th>
+		        <th>
+		        	<bean:message key="property.time.end"/>
+	    	    </th>
+				<th>
+					<bean:message key="property.room"/>
+				</th>
+				<th>
+		        	<bean:message key="property.capacity"/>
+		        </th>
+			</tr>
+			<logic:iterate id="olesson" name="lesson" property="lesson.shift.associatedLessonsSet">
+				<tr <% if (olesson == lesson) { %> class="selectedLesson" <% } else { %> class="notSelectedLesson" <% } %>>
+					<td>
+	<%
+		for (OccupationPeriod occupationPeriod = ((Lesson) olesson).getPeriod(); occupationPeriod != null; occupationPeriod = occupationPeriod.getNextPeriod()) {
+	%>
+				<% if (occupationPeriod.hasPreviousPeriod()) { %>
+					<br/>
+				<% } %>
+				<% for (final Interval interval : occupationPeriod.getIntervals()) { %>
+					<% if (!interval.getStart().equals(occupationPeriod.getIntervals().iterator().next().getStart())) { %>
+						;
+					<% } %>
+					<%= interval.getStart().toString("yyyy-MM-dd") %>
+					-
+					<%= interval.getEnd().toString("yyyy-MM-dd") %>
+				<% } %>
+	<%
+		}
+	%>
+					</td>
+					<td>
+						<bean:write name="olesson" property="diaSemana"/>
+					</td>
+					<td>
+						<dt:format pattern="HH:mm">
+							<bean:write name="olesson" property="inicio.timeInMillis"/>
+						</dt:format>
+					</td>
+					<td>
+						<dt:format pattern="HH:mm">
+							<bean:write name="olesson" property="fim.timeInMillis"/>
+						</dt:format>
+					</td>
+					<td>
+						<logic:notEmpty name="olesson" property="sala">
+							<bean:write name="olesson" property="sala.nome"/>
+						</logic:notEmpty>	
+					</td>
+					<td>
+						<logic:notEmpty name="olesson" property="sala">
+							<bean:write name="olesson" property="sala.capacidadeNormal"/>
+						</logic:notEmpty>
+					</td>
+				</tr>
+			</logic:iterate>
+		</table>
+
 	<%-- Delete Lesson Instances --%>		
 	<bean:define id="linkToDelete">/manageLesson.do?method=deleteLessonInstance&amp;<bean:write name="parameters" filter="false"/></bean:define>
 	<bean:define id="linkToDeleteMultiple">/resourceAllocationManager/manageLesson.do?method=deleteLessonInstances&amp;<bean:write name="parameters" filter="false"/></bean:define>
@@ -99,12 +210,9 @@
 			<tr>
 				<th></th>
 				<th><bean:message bundle="SOP_RESOURCES" key="label.lesson.week"/></th>
+				<th><bean:message bundle="SOP_RESOURCES" key="property.weekday"/></th>
 				<th><bean:message bundle="SOP_RESOURCES" key="label.lesson.day"/></th>
-				<th><bean:message bundle="SOP_RESOURCES" key="label.lesson.month"/></th>
-				<th><bean:message bundle="SOP_RESOURCES" key="label.lesson.year"/></th>
-				<th><bean:message bundle="SOP_RESOURCES" key="label.lesson"/></th>
-				<th><bean:message bundle="SOP_RESOURCES" key="label.lesson.type"/></th>
-				<th><bean:message bundle="SOP_RESOURCES" key="label.shift"/></th>
+				<th><bean:message bundle="SOP_RESOURCES" key="property.room"/></th>
 				<th><bean:message bundle="SOP_RESOURCES" key="label.lesson.summary"/></th>
 				<th><bean:message bundle="SOP_RESOURCES" key="label.lesson.instance"/></th>
 				<th></th>
@@ -120,12 +228,9 @@
 					<td>
 						<%= Weeks.weeksBetween(firstPossibleLessonDay, lessonDate.getDate()).getWeeks() + 1 %>
 					</td>
-					<td><bean:write name="lessonDate" property="date.dayOfMonth"/></td>
-					<td><bean:write name="lessonDate" property="monthString"/></td>
-					<td><bean:write name="lessonDate" property="date.year"/></td>
-					<td><bean:write name="lessonDate" property="lessonInstancePrettyPrint"/></td>
-					<td><bean:write name="lessonDate" property="shiftTypesPrettyPrint"/></td>
-					<td class="smalltxt"><fr:view name="lessonDate" property="shift" layout="shift-plain"/></td>
+					<td><%= lessonDate.getDate().toLocalDate().toString("E") %></td>
+					<td><%= lessonDate.getDate().toLocalDate().toString("yyyy-MM-dd") %></td>
+					<td><logic:present name="lessonDate" property="room"><bean:write name="lessonDate" property="room.name"/></logic:present></td>
 					<td><fr:view name="lessonDate" property="writtenSummary"/></td>
 					<td><fr:view name="lessonDate" property="hasLessonInstance"/></td>
 					<td>

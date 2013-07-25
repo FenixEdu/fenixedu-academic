@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.accessControl.academicAdministration;
 
+import java.text.Collator;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -30,7 +31,7 @@ public class PersistentAcademicAuthorizationGroup extends PersistentAcademicAuth
                 public int compare(final PersistentAcademicAuthorizationGroup p1, final PersistentAcademicAuthorizationGroup p2) {
                     String operationName1 = p1.getOperation().getLocalizedName();
                     String operationName2 = p2.getOperation().getLocalizedName();
-                    int res = operationName1.compareTo(operationName2);
+                    int res = Collator.getInstance().compare(operationName1, operationName2);
                     return res;
                 }
             };

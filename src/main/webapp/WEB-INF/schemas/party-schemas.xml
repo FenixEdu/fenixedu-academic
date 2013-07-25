@@ -262,6 +262,14 @@
 		<property name="fileContentTypeSlot" value="contentType" />
 	</slot>
 </schema>
+<schema name="party.photo.operatorUpload" type="net.sourceforge.fenixedu.dataTransferObject.person.PhotographUploadBean"
+	bundle="APPLICATION_RESOURCES">
+	<slot name="username" key="label.istid" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="fileInputStream" key="label.person.photo.selectfile">
+		<property name="fileNameSlot" value="filename" />
+		<property name="fileContentTypeSlot" value="contentType" />
+	</slot>
+</schema>
 <schema name="party.photo.upload.clean" type="net.sourceforge.fenixedu.dataTransferObject.person.PhotographUploadBean"
     bundle="APPLICATION_RESOURCES">
 </schema>

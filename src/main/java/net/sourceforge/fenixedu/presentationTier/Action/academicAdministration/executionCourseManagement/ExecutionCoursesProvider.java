@@ -5,6 +5,7 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.presentationTier.renderers.providers.AbstractDomainObjectProvider;
 
+@Deprecated
 public class ExecutionCoursesProvider extends AbstractDomainObjectProvider {
 
     @Override

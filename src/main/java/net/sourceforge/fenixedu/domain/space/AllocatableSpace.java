@@ -23,6 +23,7 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
+import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
@@ -219,30 +220,11 @@ public abstract class AllocatableSpace extends AllocatableSpace_Base {
     }
 
     public static List<AllocatableSpace> getAllActiveAllocatableSpacesExceptLaboratoriesForEducation() {
-        List<AllocatableSpace> result = new ArrayList<AllocatableSpace>();
-        for (Resource space : RootDomainObject.getInstance().getResources()) {
-            if (space.isAllocatableSpace() && ((AllocatableSpace) space).isActive()
-                    && ((AllocatableSpace) space).isForEducation()) {
-                RoomClassification roomClassification = (((AllocatableSpace) space)).getRoomClassification();
-                if (roomClassification == null
-                        || (!roomClassification.getPresentationCode().equals(RoomClassification.LABORATORY_FOR_EDUCATION_CODE) && !roomClassification
-                                .getPresentationCode().equals(RoomClassification.LABORATORY_FOR_RESEARCHER_CODE))) {
-                    result.add((AllocatableSpace) space);
-                }
-            }
-        }
-        return result;
+        return findAllocatableSpacesByPredicates(ACTIVE_FOR_EDUCATION_EXCEPT_LABS_PREDICATE);
     }
 
     public static List<AllocatableSpace> getAllActiveAllocatableSpacesForEducation() {
-        List<AllocatableSpace> result = new ArrayList<AllocatableSpace>();
-        for (Resource space : RootDomainObject.getInstance().getResources()) {
-            if (space.isAllocatableSpace() && ((AllocatableSpace) space).isActive()
-                    && ((AllocatableSpace) space).isForEducation()) {
-                result.add((AllocatableSpace) space);
-            }
-        }
-        return result;
+        return findAllocatableSpacesByPredicates(ACTIVE_FOR_EDUCATION_PREDICATE);
     }
 
     public static List<AllocatableSpace> getAllActiveAllocatableSpacesForEducationAndPunctualOccupations() {
@@ -262,33 +244,179 @@ public abstract class AllocatableSpace extends AllocatableSpace_Base {
         return result;
     }
 
-    public static List<AllocatableSpace> findActiveAllocatableSpacesForEducationWithNormalCapacity(Integer normalCapacity) {
-        List<AllocatableSpace> result = new ArrayList<AllocatableSpace>();
-        if (normalCapacity != null) {
-            for (Resource space : RootDomainObject.getInstance().getResources()) {
-                if (space.isAllocatableSpace() && ((AllocatableSpace) space).isActive()
-                        && ((AllocatableSpace) space).isForEducation() && ((AllocatableSpace) space).getNormalCapacity() != null
-                        && ((AllocatableSpace) space).getNormalCapacity().intValue() >= normalCapacity.intValue()) {
-                    result.add((AllocatableSpace) space);
+    public static interface AllocatableSpacePredicate {
+
+        public boolean eval(final AllocatableSpace space);
+
+    }
+
+    public static interface AllocatableSpaceTransformer<T> {
+
+        public T transform(final AllocatableSpace space);
+
+    }
+
+    public static final AllocatableSpaceTransformer<AllocatableSpace> NO_TRANSFORMER = new AllocatableSpaceTransformer<AllocatableSpace>() {
+        @Override
+        public AllocatableSpace transform(final AllocatableSpace space) {
+            return space;
+        }
+    };
+
+    public static <T> List<T> findAllocatableSpacesByPredicates(final AllocatableSpaceTransformer<T> transformer,
+            final AllocatableSpacePredicate... predicates) {
+        final List<T> result = new ArrayList<T>();
+        for (final Resource resource : RootDomainObject.getInstance().getResources()) {
+            if (resource.isAllocatableSpace()) {
+                final AllocatableSpace allocatableSpace = (AllocatableSpace) resource;
+                if (allocatableSpace.matchesAllPredicates(predicates)) {
+                    result.add(transformer.transform(allocatableSpace));
                 }
             }
         }
         return result;
     }
 
+    public static List<AllocatableSpace> findAllocatableSpacesByPredicates(final AllocatableSpacePredicate... predicates) {
+        return findAllocatableSpacesByPredicates(NO_TRANSFORMER, predicates);
+    }
+
+    private boolean matchesAllPredicates(final AllocatableSpacePredicate... predicates) {
+        for (final AllocatableSpacePredicate predicate : predicates) {
+            if (!predicate.eval(this)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static class ActiveForEducationPredicate implements AllocatableSpacePredicate {
+
+        @Override
+        public boolean eval(final AllocatableSpace space) {
+            return space.isActive() && space.isForEducation();
+        }
+
+    }
+
+    public static final ActiveForEducationPredicate ACTIVE_FOR_EDUCATION_PREDICATE = new ActiveForEducationPredicate();
+
+    public static class ActiveForEducationWithNormalCapacityPredicate extends ActiveForEducationPredicate {
+
+        private final Integer normalCapacity;
+
+        public ActiveForEducationWithNormalCapacityPredicate(final Integer normalCapacity) {
+            this.normalCapacity = normalCapacity;
+        }
+
+        @Override
+        public boolean eval(final AllocatableSpace space) {
+            return normalCapacity != null && space.getNormalCapacity() != null
+                    && space.getNormalCapacity().intValue() >= normalCapacity.intValue() && super.eval(space);
+        }
+
+    }
+
+    public static class ActiveForEducationForRoomTypePredicate extends ActiveForEducationPredicate {
+
+        private final RoomClassification roomType;
+
+        public ActiveForEducationForRoomTypePredicate(final RoomClassification roomType) {
+            this.roomType = roomType;
+        }
+
+        @Override
+        public boolean eval(final AllocatableSpace space) {
+            return roomType != null && roomType == space.getRoomClassification() && super.eval(space);
+        }
+
+    }
+
+    public static class ActiveForEducationExceptLabsPredicate extends ActiveForEducationPredicate {
+
+        @Override
+        public boolean eval(final AllocatableSpace space) {
+            return super.eval(space) && isNotALab(space);
+
+        }
+
+        private boolean isNotALab(final AllocatableSpace space) {
+            final RoomClassification roomClassification = space.getRoomClassification();
+            return roomClassification == null
+                    || (!roomClassification.getPresentationCode().equals(RoomClassification.LABORATORY_FOR_EDUCATION_CODE) && !roomClassification
+                            .getPresentationCode().equals(RoomClassification.LABORATORY_FOR_RESEARCHER_CODE));
+        }
+
+    }
+
+    public static final ActiveForEducationExceptLabsPredicate ACTIVE_FOR_EDUCATION_EXCEPT_LABS_PREDICATE =
+            new ActiveForEducationExceptLabsPredicate();
+
+    public static class IsFreePredicate implements AllocatableSpacePredicate {
+
+        private final YearMonthDay startDate;
+        private final YearMonthDay endDate;
+        private final HourMinuteSecond startTime;
+        private final HourMinuteSecond endTime;
+        private final DiaSemana dayOfWeek;
+        private final FrequencyType frequency;
+        private final Boolean dailyFrequencyMarkSaturday;
+        private final Boolean dailyFrequencyMarkSunday;
+
+        public IsFreePredicate(YearMonthDay startDate, YearMonthDay endDate, HourMinuteSecond startTime,
+                HourMinuteSecond endTime, DiaSemana dayOfWeek, FrequencyType frequency, Boolean dailyFrequencyMarkSaturday,
+                Boolean dailyFrequencyMarkSunday) {
+            this.startDate = startDate;
+            this.endDate = endDate;
+            this.startTime = startTime;
+            this.endTime = endTime;
+            this.dayOfWeek = dayOfWeek;
+            this.frequency = frequency;
+            this.dailyFrequencyMarkSaturday = dailyFrequencyMarkSaturday;
+            this.dailyFrequencyMarkSunday = dailyFrequencyMarkSunday;
+        }
+
+        @Override
+        public boolean eval(final AllocatableSpace space) {
+            return space.isFree(startDate, endDate, startTime, endTime, dayOfWeek, frequency, dailyFrequencyMarkSaturday,
+                    dailyFrequencyMarkSunday);
+        }
+
+    }
+
+    public static class IsFreeIntervalPredicate implements AllocatableSpacePredicate {
+
+        private final Interval[] intervals;
+
+        public IsFreeIntervalPredicate(final Interval[] intervals) {
+            this.intervals = intervals;
+        }
+
+        @Override
+        public boolean eval(final AllocatableSpace space) {
+            return space.isFree(intervals);
+        }
+
+    }
+
+    public static List<AllocatableSpace> findActiveAllocatableSpacesForEducationWithNormalCapacity(Integer normalCapacity) {
+        return findAllocatableSpacesByPredicates(new ActiveForEducationWithNormalCapacityPredicate(normalCapacity));
+    }
+
     public static List<AllocatableSpace> findActiveAllocatableSpacesForEducationByRoomType(RoomClassification roomType) {
-        List<AllocatableSpace> result = new ArrayList<AllocatableSpace>();
-        if (roomType != null) {
-            for (Resource space : RootDomainObject.getInstance().getResources()) {
-                if (space.isAllocatableSpace() && ((AllocatableSpace) space).isActive()
-                        && ((AllocatableSpace) space).isForEducation()
-                        && ((AllocatableSpace) space).getRoomClassification() != null
-                        && ((AllocatableSpace) space).getRoomClassification().equals(roomType)) {
-                    result.add((AllocatableSpace) space);
+        return findAllocatableSpacesByPredicates(new ActiveForEducationForRoomTypePredicate(roomType));
+    }
+
+    public boolean isFree(final Interval[] intervals) {
+        for (final ResourceAllocation spaceOccupation : getResourceAllocationsForCheck()) {
+            if (spaceOccupation.isEventSpaceOccupation()) {
+                final EventSpaceOccupation occupation = (EventSpaceOccupation) spaceOccupation;
+                if (occupation.overlaps(intervals)) {
+                    return false;
                 }
             }
         }
-        return result;
+        return true;
     }
 
     public boolean isFree(YearMonthDay startDate, YearMonthDay endDate, HourMinuteSecond startTime, HourMinuteSecond endTime,

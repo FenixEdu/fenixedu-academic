@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.Campus;
+import net.sourceforge.fenixedu.domain.space.LessonInstanceSpaceOccupation;
 import net.sourceforge.fenixedu.domain.space.LessonSpaceOccupation;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.domain.util.icalendar.EventBean;
@@ -159,6 +160,11 @@ public class Lesson extends Lesson_Base {
     }
 
     @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageLessons")
+    public void edit(final AllocatableSpace newRoom) {
+        lessonSpaceOccupationManagement(newRoom);
+    }
+
+    @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageLessons")
     public void delete() {
         final Shift shift = getShift();
         final boolean isLastLesson = isLastLesson(shift);
@@ -228,6 +234,18 @@ public class Lesson extends Lesson_Base {
         } else {
             if (lessonSpaceOccupation != null) {
                 lessonSpaceOccupation.delete();
+            }
+        }
+        for (final LessonInstance lessonInstance : getLessonInstancesSet()) {
+            if (lessonInstance.getDay().isAfter(new LocalDate())) {
+                if (newRoom == null) {
+                    lessonInstance.removeLessonInstanceSpaceOccupation();
+                } else {
+                    LessonInstanceSpaceOccupation allocation =
+                        (LessonInstanceSpaceOccupation) newRoom
+                                .getFirstOccurrenceOfResourceAllocationByClass(LessonInstanceSpaceOccupation.class);
+                    allocation.edit(lessonInstance);
+                }
             }
         }
     }
@@ -918,10 +936,10 @@ public class Lesson extends Lesson_Base {
                             courseLoad.getUnitQuantity().toString());
                 }
 
-                if (shift.getTotalHours().compareTo(courseLoad.getTotalQuantity()) == 1) {
-                    throw new DomainException("error.Lesson.shift.load.total.quantity.exceeded",
-                            shift.getTotalHours().toString(), courseLoad.getTotalQuantity().toString());
-                }
+//                if (shift.getTotalHours().compareTo(courseLoad.getTotalQuantity()) == 1) {
+//                    throw new DomainException("error.Lesson.shift.load.total.quantity.exceeded",
+//                            shift.getTotalHours().toString(), courseLoad.getTotalQuantity().toString());
+//                }
 
             } else if (courseLoads.size() > 1) {
 
@@ -945,10 +963,10 @@ public class Lesson extends Lesson_Base {
                     }
                 }
 
-                if (!totalValid) {
-                    throw new DomainException("error.Lesson.shift.load.total.quantity.exceeded.2", shift.getTotalHours()
-                            .toString());
-                }
+//                if (!totalValid) {
+//                    throw new DomainException("error.Lesson.shift.load.total.quantity.exceeded.2", shift.getTotalHours()
+//                            .toString());
+//                }
                 if (!unitValid) {
                     throw new DomainException("error.Lesson.shift.load.unit.quantity.exceeded.2", getUnitHours().toString());
                 }

@@ -15,12 +15,8 @@ import java.util.Map;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.ServiceMonitoring;
-import net.sourceforge.fenixedu.applicationTier.Filtro.ManagerAuthorizationFilter;
-import net.sourceforge.fenixedu.applicationTier.Filtro.OperatorAuthorizationFilter;
-import net.sourceforge.fenixedu.applicationTier.Filtro.ResourceAllocationManagerAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.CourseLoad;
 import net.sourceforge.fenixedu.domain.Evaluation;
@@ -89,12 +85,16 @@ public class MergeExecutionCourses {
             throw new SourceAndDestinationAreTheSameException();
         }
 
-        final ExecutionCourse executionCourseFrom = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseSourceId);
+        final ExecutionCourse executionCourseFrom =
+                RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseSourceId);
+
         if (executionCourseFrom == null) {
             throw new InvalidArgumentsServiceException();
         }
 
-        final ExecutionCourse executionCourseTo = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseDestinationId);
+        final ExecutionCourse executionCourseTo =
+                RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseDestinationId);
+
         if (executionCourseTo == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -144,7 +144,8 @@ public class MergeExecutionCourses {
         }
     }
 
-    private void copyDistributedTestStuff(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo) {
+    private void copyDistributedTestStuff(final ExecutionCourse executionCourseFrom,
+            final ExecutionCourse executionCourseTo) {
         for (final Metadata metadata : executionCourseFrom.getMetadatasSet()) {
             metadata.setExecutionCourse(executionCourseTo);
         }
@@ -194,7 +195,8 @@ public class MergeExecutionCourses {
         executionCourseAnnouncementBoardFrom.delete();
     }
 
-    private boolean haveShiftsWithSameName(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo) {
+    private boolean haveShiftsWithSameName(final ExecutionCourse executionCourseFrom,
+            final ExecutionCourse executionCourseTo) {
         final Set<String> shiftNames = new HashSet<String>();
         for (final Shift shift : executionCourseFrom.getAssociatedShifts()) {
             shiftNames.add(shift.getNome());
@@ -253,7 +255,8 @@ public class MergeExecutionCourses {
         }
     }
 
-    private void copyBibliographicReference(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo) {
+    private void copyBibliographicReference(final ExecutionCourse executionCourseFrom,
+            final ExecutionCourse executionCourseTo) {
         for (; !executionCourseFrom.getAssociatedBibliographicReferences().isEmpty(); executionCourseTo
                 .getAssociatedBibliographicReferences().add(executionCourseFrom.getAssociatedBibliographicReferences().get(0))) {
             ;
@@ -354,7 +357,8 @@ public class MergeExecutionCourses {
         }
     }
 
-    private void copyContents(final ExecutionCourse executionCourseTo, final Container parentTo, final Collection<Node> nodes) {
+    private void copyContents(final ExecutionCourse executionCourseTo, final Container parentTo,
+            final Collection<Node> nodes) {
         final Set<Content> transferedContents = new HashSet<Content>();
 
         for (final Node node : nodes) {
@@ -555,23 +559,8 @@ public class MergeExecutionCourses {
 
     @Service
     public static void runMergeExecutionCourses(Integer executionCourseDestinationId, Integer executionCourseSourceId)
-            throws FenixServiceException, NotAuthorizedException {
-        try {
-            ManagerAuthorizationFilter.instance.execute();
-            serviceInstance.run(executionCourseDestinationId, executionCourseSourceId);
-        } catch (NotAuthorizedException ex1) {
-            try {
-                ResourceAllocationManagerAuthorizationFilter.instance.execute();
-                serviceInstance.run(executionCourseDestinationId, executionCourseSourceId);
-            } catch (NotAuthorizedException ex2) {
-                try {
-                    OperatorAuthorizationFilter.instance.execute();
-                    serviceInstance.run(executionCourseDestinationId, executionCourseSourceId);
-                } catch (NotAuthorizedException ex3) {
-                    throw ex3;
-                }
-            }
-        }
+            throws FenixServiceException {
+        serviceInstance.run(executionCourseDestinationId, executionCourseSourceId);
     }
 
 }

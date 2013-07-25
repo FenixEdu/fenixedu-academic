@@ -45,9 +45,8 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
         @Forward(name = "send-to-jury", path = "/candidacy/over23/sendToJury.jsp"),
         @Forward(name = "view-candidacy-results", path = "/candidacy/over23/viewCandidacyResults.jsp"),
         @Forward(name = "insert-candidacy-results", path = "/candidacy/over23/introduceCandidacyResults.jsp"),
-        @Forward(name = "create-registrations", path = "/candidacy/createRegistrations.jsp")
-
-})
+        @Forward(name = "create-registrations", path = "/candidacy/createRegistrations.jsp"),
+        @Forward(name = "prepare-select-available-degrees", path = "/candidacy/selectAvailableDegrees.jsp") })
 public class Over23CandidacyProcessDA extends CandidacyProcessDA {
 
     @Override
@@ -98,7 +97,7 @@ public class Over23CandidacyProcessDA extends CandidacyProcessDA {
     }
 
     public ActionForward executeSendInformationToJury(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         try {
             executeActivity(getProcess(request), "SendInformationToJury", null);
         } catch (final DomainException e) {

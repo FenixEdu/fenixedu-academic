@@ -60,6 +60,11 @@ twilio.from.number=
 barra.as.authentication.broker=false
 barra.loginUrl=https://barra.ist.utl.pt/login
 
+#---------------------------------------------------------------
+# Google Analytics snippet configuration (without <script> tags)
+#---------------------------------------------------------------
+google.analytics.snippet=
+
 #
 #
 #------------------------------------------------------------------------------
@@ -366,6 +371,8 @@ consult.roles.admin.allowed.hosts=127.0.0.1,localhost,192.168.1.101
 consult.roles.admin.password=xPtO
 parkingCardId.admin.allowed.hosts=localhost,0:0:0:0:0:0:0:1
 parkingCardId.admin.password=pass
+externalServices.AEIST.username=u
+externalServices.AEIST.password=p
 externalServices.StudentInfoByUsername.externalAppPassword=xpto
 webServices.PersonManagement.getPersonInformation.username=u
 webServices.PersonManagement.getPersonInformation.password=p

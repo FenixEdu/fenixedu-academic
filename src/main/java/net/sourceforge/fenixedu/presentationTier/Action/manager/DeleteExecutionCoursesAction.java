@@ -33,9 +33,11 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  * @author lmac1
  */
 
+//TODO (ist150958) delete me: not used in any functionality
 @Mapping(module = "manager", path = "/deleteExecutionCourses", attribute = "executionCourseForm",
         formBean = "executionCourseForm", scope = "request")
 @Forwards(value = { @Forward(name = "readExecutionCourses", path = "/readExecutionCourses.do") })
+@Deprecated
 public class DeleteExecutionCoursesAction extends FenixAction {
 
     @Override

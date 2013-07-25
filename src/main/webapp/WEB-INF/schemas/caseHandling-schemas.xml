@@ -474,6 +474,16 @@
 	<slot name="end" key="label.end" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 </schema>
 
+<schema name="Over23CandidacyProcessBean.selectDegrees" type="net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessSelectDegreesBean" bundle="APPLICATION_RESOURCES">
+	<slot name="degrees" key="label.candidacy.choosed.degree" layout="option-select">
+        <property name="from" value="firstCycleDegrees" />
+        <property name="eachSchema" value="degreeName-schema"/>
+        <property name="eachLayout" value="values"/>
+        <property name="classes" value="nobullet noindent"/>
+        <property name="sortBy" value="presentationName"/>
+	</slot>
+</schema>
+
 <schema name="Over23IndividualCandidacyProcess.view" type="net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyProcess" bundle="APPLICATION_RESOURCES"
 		extends="IndividualCandidacyProcess.view">
 	<slot name="processCode" layout="null-as-label" key="label.process.id" bundle="CANDIDATE_RESOURCES"/>

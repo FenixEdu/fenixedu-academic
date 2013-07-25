@@ -55,6 +55,26 @@ public class AcademicPredicates {
         };
     };
 
+    public static final AccessControlPredicate<Object> MANAGE_EXECUTION_COURSES = new AccessControlPredicate<Object>() {
+        @Override
+        public boolean evaluate(final Object program) {
+            Set<AcademicProgram> allowedPrograms = new HashSet<AcademicProgram>();
+            allowedPrograms.addAll(AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
+                    AcademicOperationType.MANAGE_EXECUTION_COURSES));
+            return allowedPrograms.contains(program);
+        };
+    };
+
+    public static final AccessControlPredicate<Object> MANAGE_EXECUTION_COURSES_ADV = new AccessControlPredicate<Object>() {
+        @Override
+        public boolean evaluate(final Object program) {
+            Set<AcademicProgram> allowedPrograms = new HashSet<AcademicProgram>();
+            allowedPrograms.addAll(AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
+                    AcademicOperationType.MANAGE_EXECUTION_COURSES_ADV));
+            return allowedPrograms.contains(program);
+        };
+    };
+
     public static final AccessControlPredicate<Object> CREATE_REGISTRATION = new AccessControlPredicate<Object>() {
         @Override
         public boolean evaluate(Object unused) {

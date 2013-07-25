@@ -157,7 +157,7 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
     }
 
     protected String fillGroup2() {
-        final UniversityUnit institutionsUniversityUnit = UniversityUnit.getInstitutionsUniversityUnit();
+        final UniversityUnit institutionsUniversityUnit = getUniversity(getDocumentRequest().getRequestDate());
         String degreeDesignation = getDegreeDesignation();
 
         String graduateTitleNative = getDocumentRequest().getGraduateTitle(getLocale());

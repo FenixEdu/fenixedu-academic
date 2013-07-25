@@ -44,18 +44,14 @@ public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation
         }
 
         AllocatableSpace space = (AllocatableSpace) getResource();
-        final ExecutionCourse executionCourse = lessonInstance.getLesson().getExecutionCourse();
-        if (!space.isOccupiedByExecutionCourse(executionCourse, lessonInstance.getBeginDateTime(),
+        //final ExecutionCourse executionCourse = lessonInstance.getLesson().getExecutionCourse();
+        if (/*!space.isOccupiedByExecutionCourse(executionCourse, lessonInstance.getBeginDateTime(),
                 lessonInstance.getEndDateTime())
-                && !space.isFree(lessonInstance.getDay(), lessonInstance.getDay(), lessonInstance.getStartTime(),
+                &&*/ !space.isFree(lessonInstance.getDay(), lessonInstance.getDay(), lessonInstance.getStartTime(),
                         lessonInstance.getEndTime(), lessonInstance.getDayOfweek(), null, null, null)) {
 
-            // TODO : remove this check after end of term.
-            final YearMonthDay day = lessonInstance.getDay();
-            if (!(day.getYear() == 2012 && day.getMonthOfYear() == 1 && (day.getDayOfMonth() > 1 && day.getDayOfMonth() < 7))) {
-                throw new DomainException("error.LessonInstanceSpaceOccupation.room.is.not.free", space.getIdentification(),
-                        lessonInstance.getDay().toString("dd-MM-yy"));
-            }
+            throw new DomainException("error.LessonInstanceSpaceOccupation.room.is.not.free", space.getIdentification(),
+                    lessonInstance.getDay().toString("dd-MM-yy"));
         }
 
         addLessonInstances(lessonInstance);

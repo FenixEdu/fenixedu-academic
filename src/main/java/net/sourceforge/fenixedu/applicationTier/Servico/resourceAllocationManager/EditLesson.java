@@ -37,4 +37,11 @@ public class EditLesson {
             aula.edit(newBeginDate, newEndDate, weekDay, begin, end, frequency, createLessonInstances, newRoom);
         }
     }
+
+    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
+    @Service
+    public static void run(final Lesson lesson, final AllocatableSpace space) throws FenixServiceException {
+        lesson.edit(space);
+    }
+
 }

@@ -1,17 +1,19 @@
 package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice;
 
+import java.text.MessageFormat;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
-import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.StringFormatter;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.WordUtils;
 import org.joda.time.LocalDate;
 
 public class Diploma extends AdministrativeOfficeDocument {
@@ -45,19 +47,45 @@ public class Diploma extends AdministrativeOfficeDocument {
             addParameter("dissertationTitle", diplomaRequest.getDissertationThesisTitle());
         }
 
+        String finalAverage = getResourceBundle().getString("diploma.finalAverage");
+        addParameter("finalAverageDescription", MessageFormat.format(finalAverage,
+                getEnumerationBundle().getString(diplomaRequest.getFinalAverage().toString()), diplomaRequest.getFinalAverage()
+                        .toString(), diplomaRequest.getFinalAverageQualified()));
         addParameter("conclusionStatus", getConclusionStatusAndDegreeType(diplomaRequest, getRegistration()));
         addParameter("degreeFilteredName", diplomaRequest.getDegreeFilteredName());
 
-        addParameter("graduateTitle", diplomaRequest.getGraduateTitle(getLocale()));
+        String graduateTitle = diplomaRequest.getGraduateTitle(getLocale());
+
+        if (graduateTitle.contains("Graduated")) {
+            graduateTitle = graduateTitle.replace("Graduated", "Licenciado");
+        }
+
+        if (graduateTitle.contains("Master")) {
+            graduateTitle = graduateTitle.replace("Master", "Mestre");
+        }
+
+        addParameter("graduateTitle", graduateTitle);
     }
 
     @Override
     protected void addIntroParameters() {
         super.addIntroParameters();
         Person principal =
-                UniversityUnit.getInstitutionsUniversityUnit().getInstitutionsUniversityResponsible(FunctionType.PRINCIPAL);
+                getUniversity(getDocumentRequest().getRequestDate()).getInstitutionsUniversityResponsible(FunctionType.PRINCIPAL);
         addParameter("universityPrincipal", principal);
         addParameter("universityPrincipalName", principal.getValidatedName());
+
+        if (getUniversity(getDocumentRequest().getRequestDate()) != getUniversity(getDocumentRequest().getConclusionDate()
+                .toDateTimeAtCurrentTime())) {
+            addParameter("UTLDescription", getResourceBundle().getString("label.diploma.UTLDescription"));
+            addParameter("certification",
+                    "pelo que, em conformidade com o disposto no Decreto-Lei nº 266-E, de 31 de Dezembro de 2012, e "
+                            + "demais disposições legais em vigor, " + "lhe manda passar a presente Carta de Curso.");
+        } else {
+            addParameter("UTLDescription", StringUtils.EMPTY);
+            addParameter("certification",
+                    "pelo que, em conformidade com as disposições legais em vigor, lhe manda passar a presente Carta de Curso.");
+        }
     }
 
     @Override
@@ -66,7 +94,18 @@ public class Diploma extends AdministrativeOfficeDocument {
         addParameter("name", StringFormatter.prettyPrint(person.getName()));
         addParameter("nameOfFather", StringFormatter.prettyPrint(person.getNameOfFather()));
         addParameter("nameOfMother", StringFormatter.prettyPrint(person.getNameOfMother()));
-        addParameter("birthLocale", getBirthLocale(person, true));
+
+        String country;
+        String countryUpperCase;
+        if (person.getCountry() != null) {
+            countryUpperCase = person.getCountry().getCountryNationality().getContent(getLanguage()).toLowerCase();
+            country = WordUtils.capitalize(countryUpperCase);
+        } else {
+            throw new DomainException("error.personWithoutParishOfBirth");
+        }
+
+        String nationality = getResourceBundle().getString("diploma.nationality");
+        addParameter("birthLocale", MessageFormat.format(nationality, country));
     }
 
     private String getFormatedCurrentDate() {

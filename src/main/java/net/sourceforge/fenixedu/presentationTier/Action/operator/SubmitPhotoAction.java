@@ -1,24 +1,20 @@
 package net.sourceforge.fenixedu.presentationTier.Action.operator;
 
-import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Hashtable;
+import java.util.ResourceBundle;
 
-import javax.imageio.IIOImage;
-import javax.imageio.ImageIO;
-import javax.imageio.ImageWriteParam;
-import javax.imageio.ImageWriter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
-import net.sourceforge.fenixedu.applicationTier.Servico.fileManager.StorePersonalPhoto;
+import net.sourceforge.fenixedu.dataTransferObject.person.PhotographUploadBean;
+import net.sourceforge.fenixedu.dataTransferObject.person.PhotographUploadBean.UnableToProcessTheImage;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.PhotoType;
+import net.sourceforge.fenixedu.domain.Photograph;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.util.ByteArray;
 import net.sourceforge.fenixedu.util.ContentType;
 
 import org.apache.struts.action.ActionForm;
@@ -26,105 +22,107 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
-import org.apache.struts.action.DynaActionForm;
+import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixWebFramework.servlets.commons.UploadedFile;
-import pt.ist.fenixWebFramework.servlets.filters.RequestWrapperFilter;
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
+@Mapping(module = "operator", path = "/submitPhoto", scope = "request", parameter = "method")
+@Forwards(value = { @Forward(name = "chooseFile", path = "/operator/photo/submitPhoto_bd.jsp", tileProperties = @Tile(
+        title = "private.operator.submitphotos")) })
 public class SubmitPhotoAction extends FenixDispatchAction {
 
-    private static int outputPhotoWidth = 100;
-
-    private static int outputPhotoHeight = 100;
+    private static final int MAX_RAW_SIZE = 1000000; // 2M
 
     public ActionForward preparePhotoUpload(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
+        final ResourceBundle bundle = ResourceBundle.getBundle("resources/ApplicationResources", Language.getLocale());
+        request.setAttribute("photo", new PhotographUploadBean());
+        request.setAttribute("phroperCaption", bundle.getString("phroper.caption"));
+        request.setAttribute("phroperSubCaption", bundle.getString("phroper.subCaption"));
+        request.setAttribute("phroperButtonCaption", bundle.getString("phroper.buttonCaption"));
+        request.setAttribute("phroperLoadingCaption", bundle.getString("phroper.loadingCaption"));
+        request.setAttribute("buttonClean", bundle.getString("button.clean"));
+        request.setAttribute("buttonRevert", bundle.getString("button.phroper.revert"));
+
         return mapping.findForward("chooseFile");
     }
 
-    public ActionForward photoUpload(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+    public ActionForward photoUpload(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        IUserView userView = UserView.getUser();
+        PhotographUploadBean photo = getRenderedObject();
+        RenderUtils.invalidateViewState();
+        String base64Thumbnail = request.getParameter("encodedThumbnail");
+        String base64Image = request.getParameter("encodedPicture");
+        if (base64Image != null && base64Thumbnail != null) {
+            DateTime now = new DateTime();
+            photo.setFilename("mylovelypic_" + now.getYear() + now.getMonthOfYear() + now.getDayOfMonth() + now.getHourOfDay()
+                    + now.getMinuteOfDay() + now.getSecondOfMinute() + ".png");
+            photo.setBase64RawContent(base64Image.split(",")[1]);
+            photo.setBase64RawThumbnail(base64Thumbnail.split(",")[1]);
+            photo.setContentType(base64Image.split(",")[0].split(":")[1].split(";")[0]);
+        }
 
-        DynaActionForm photoForm = (DynaActionForm) form;
-
-        String fileName = (String) photoForm.get("theFile");
-        String username = (String) photoForm.get("username");
         ActionMessages actionMessages = new ActionMessages();
-
-        if (fileName == null || (fileName != null && fileName.length() == 0)) {
-            actionMessages.add("fileRequired", new ActionMessage("errors.fileRequired"));
+        if (photo.getFileInputStream() == null) {
+            actionMessages.add("error", new ActionMessage("errors.fileRequired"));
             saveMessages(request, actionMessages);
-            return mapping.findForward("chooseFile");
+            return preparePhotoUpload(mapping, actionForm, request, response);
         }
 
-        final UploadedFile formFile =
-                ((Hashtable<String, UploadedFile>) request
-                        .getAttribute(RequestWrapperFilter.FenixHttpServletRequestWrapper.ITEM_MAP_ATTRIBUTE)).get("theFile");
-
-        ContentType contentType = ContentType.getContentType(formFile.getContentType());
-        if (contentType == null) {
-            actionMessages.add("unsupportedFile", new ActionMessage("errors.unsupportedFile"));
+        if (ContentType.getContentType(photo.getContentType()) == null) {
+            actionMessages.add("error", new ActionMessage("errors.unsupportedFile"));
             saveMessages(request, actionMessages);
-            return mapping.findForward("chooseFile");
+            return preparePhotoUpload(mapping, actionForm, request, response);
         }
 
-        // process image
-
-        ByteArrayOutputStream outputStream = processImage(formFile.getFileData(), contentType);
+        if (photo.getRawSize() > MAX_RAW_SIZE) {
+            actionMessages.add("error", new ActionMessage("errors.fileTooLarge"));
+            saveMessages(request, actionMessages);
+            photo.deleteTemporaryFiles();
+            return preparePhotoUpload(mapping, actionForm, request, response);
+        }
 
         try {
-
-            StorePersonalPhoto.run(formFile.getFileData(), outputStream.toByteArray(), contentType, username);
-
-        } catch (ExcepcaoInexistente e) {
-            actionMessages.add("unknownPerson", new ActionMessage("error.exception.nonExistingPerson", username));
+            photo.processImage();
+        } catch (UnableToProcessTheImage e) {
+            actionMessages.add("error", new ActionMessage("errors.unableToProcessImage"));
             saveMessages(request, actionMessages);
-            return mapping.findForward("chooseFile");
+            photo.deleteTemporaryFiles();
+            return preparePhotoUpload(mapping, actionForm, request, response);
         }
 
-        actionMessages.add("updateCompleted", new ActionMessage("label.operator.submit.ok", ""));
+        try {
+            updatePersonPhoto(photo);
+        } catch (Exception e) {
+            actionMessages.add("error", new ActionMessage("errors.unableToSaveImage"));
+            saveMessages(request, actionMessages);
+            photo.deleteTemporaryFiles();
+            return preparePhotoUpload(mapping, actionForm, request, response);
+        }
+
+        actionMessages.add("success", new ActionMessage("label.operator.submit.ok", ""));
         saveMessages(request, actionMessages);
-        return mapping.findForward("chooseFile");
+        return preparePhotoUpload(mapping, actionForm, request, response);
     }
 
-    private ByteArrayOutputStream processImage(byte[] content, ContentType contentType) throws IOException {
-        ByteArrayInputStream inputStream = new ByteArrayInputStream(content);
-        BufferedImage photoImage = ImageIO.read(inputStream);
-
-        // calculate resize factor
-        double resizeFactor =
-                Math.min((double) outputPhotoWidth / photoImage.getWidth(), (double) outputPhotoHeight / photoImage.getHeight());
-
-        if (resizeFactor == 1) {
-            final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            outputStream.write(content);
-            return outputStream;
+    @Service
+    private void updatePersonPhoto(final PhotographUploadBean photo) throws FileNotFoundException, IOException {
+        if (photo.getUsername() == null) {
+            throw new DomainException("error.operatorPhotoUpload.null.username");
         }
-
-        // resize image
-        AffineTransform tx = new AffineTransform();
-        tx.scale(resizeFactor, resizeFactor);
-        AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
-        photoImage = op.filter(photoImage, null);
-
-        // set compression
-        ImageWriter writer = ImageIO.getImageWritersByMIMEType(contentType.getMimeType()).next();
-        ImageWriteParam param = writer.getDefaultWriteParam();
-        if (contentType.equals(ContentType.JPG)) {
-            param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
-            param.setCompressionQuality(1);
+        final Person person = Person.readPersonByUsername(photo.getUsername());
+        if (person == null) {
+            throw new DomainException("error.operatorPhotoUpload.invalid.username");
         }
-
-        // write to stream
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        writer.setOutput(ImageIO.createImageOutputStream(outputStream));
-        writer.write(null, new IIOImage(photoImage, null, null), param);
-
-        return outputStream;
-
+        person.setPersonalPhoto(new Photograph(ContentType.getContentType(photo.getContentType()), new ByteArray(photo
+                .getFileInputStream()), new ByteArray(photo.getCompressedInputStream()), PhotoType.INSTITUTIONAL));
     }
 }

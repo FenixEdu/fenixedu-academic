@@ -16,7 +16,7 @@
 </style>
 
 <script src="<%= request.getContextPath() + "/javaScript/phroper/fabric-1.2.0.all.min.js" %>" type="text/javascript" ></script>
-<script src="<%= request.getContextPath() + "/javaScript/phroper/phroper-1.1.0.min.js" %>" type="text/javascript" ></script>
+<script src="<%= request.getContextPath() + "/javaScript/phroper/phroper-1.2.0.min.js" %>" type="text/javascript" ></script>
 
 <logic:notPresent name="preview">
 	<script type="text/javascript">
@@ -31,19 +31,33 @@
 			if ($('#phroperButtonCaption').attr('value')) {
 				captions[2] = $('#phroperButtonCaption').attr('value');
 			}
+			if ($('#phroperButtonCaption').attr('value')) {
+				captions[3] = $('#phroperLoadingCaption').attr('value');
+			}
 			if (phroper.testEnvironment()) {
-				$('#old-info-panel').remove();
+				$('#old-info-panel').toggle();
 				$('<div id="photo-uploader"></div>').prependTo('#photoForm').css('margin-bottom','15px');
 				phroper.start(false,captions);
 				$('#photoForm table').toggle();
 				
 				$('#submitButton').click( function () {
-					var base64Picture = phroper.getPicture();
-					$('<input type="hidden" name="encodedPicture" value="'+base64Picture+'">').appendTo('#photoForm');
+					if (phroper.hasLoadedPicture()) {
+						var base64Thumbnail = phroper.getThumbnail();
+						$('<input type="hidden" name="encodedThumbnail" value="'+base64Thumbnail+'">').appendTo('#photoForm');
+						var base64Picture = phroper.getPicture();
+						$('<input type="hidden" name="encodedPicture" value="'+base64Picture+'">').appendTo('#photoForm');
+					}
 				});
 				
 				$('<button id="resetButton" type="button"><%= request.getAttribute("buttonClean") != null ? request.getAttribute("buttonClean") : "Clear canvas"  %></button>').appendTo('#photoForm').click( function () {
-					phroper.reset();
+					phroper.reset(true);
+				});
+				$('<button id="toggleClassic" type="button"><%= request.getAttribute("buttonRevert") != null ? request.getAttribute("buttonRevert") : "Use old version"  %></button>').appendTo('#photoForm').click( function () {
+					$('#old-info-panel').toggle();
+					$('#photo-uploader').toggle();
+					$('#photoForm table').toggle();
+					$('#resetButton').toggle();
+					$('#toggleClassic').toggle();
 				});
 			}
 		});
@@ -71,6 +85,7 @@
 		<input type="hidden" id="phroperCaption" value="<%= request.getAttribute("phroperCaption") != null ? request.getAttribute("phroperCaption") : "" %>" />
 		<input type="hidden" id="phroperSubCaption" value="<%= request.getAttribute("phroperSubCaption") != null ? request.getAttribute("phroperSubCaption") : "" %>" />
 		<input type="hidden" id="phroperButtonCaption" value="<%= request.getAttribute("phroperButtonCaption") != null ? request.getAttribute("phroperButtonCaption") : "" %>" />
+		<input type="hidden" id="phroperLoadingCaption" value="<%= request.getAttribute("phroperLoadingCaption") != null ? request.getAttribute("phroperLoadingCaption") : "" %>" />
 	</logic:notPresent>
 
     <logic:notPresent name="preview">

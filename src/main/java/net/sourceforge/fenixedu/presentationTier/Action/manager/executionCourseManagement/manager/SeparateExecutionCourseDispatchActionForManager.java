@@ -15,6 +15,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
                         path = "/manager/executionCourseManagement/manageCurricularSeparation.jsp"),
                 @Forward(name = "showTransferPage", path = "/manager/executionCourseManagement/transferCurricularCourses.jsp"),
                 @Forward(name = "showSeparationPage", path = "/manager/executionCourseManagement/separateExecutionCourse.jsp") })
-public class SeperateExecutionCourseDispatchActionForManager extends
+public class SeparateExecutionCourseDispatchActionForManager extends
         net.sourceforge.fenixedu.presentationTier.Action.manager.executionCourseManagement.SeperateExecutionCourseDispatchAction {
 }

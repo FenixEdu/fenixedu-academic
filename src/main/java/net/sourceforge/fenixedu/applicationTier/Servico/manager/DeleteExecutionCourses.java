@@ -9,7 +9,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
 /**
@@ -18,7 +17,11 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class DeleteExecutionCourses {
 
-    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
+    //ist150958: @Checked removed, however, service is used elsewhere in Manager
+    // called from AssociateExecutionCourseToCurricularCourseDA
+    //      (Admin -> Gest Estr Ensino -> Estr Cursos Antiga -> ...(curriculares)... -> Escolher disc exec)
+    // called from ReadExecutionCourseAction
+    //      (not present in any funcionality)
     @Service
     public static List<String> run(final List<Integer> executionCourseIDs) throws FenixServiceException {
         final List<String> undeletedExecutionCoursesCodes = new ArrayList<String>();
