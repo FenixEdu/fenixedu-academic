@@ -8,6 +8,8 @@
 <!-- TODO Show information about scopes -->
 <!-- TODO Show add cancel -->
 <fr:form action="/oauth.do?method=userConfirmation">
+<input name="client_id" value="<%= request.getParameter("client_id") %>" type="hidden">
+<input name="redirect_uri" value="<%= request.getParameter("redirect_uri") %>" type="hidden">
 	<html:submit>
 		<bean:message key="button.submit" />
 	</html:submit>

@@ -34,10 +34,10 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Forwards({
 	@Forward(name = "showAuthorizationPage", path = "showAuthorizationPage"),
 	@Forward(name = "oauthErrorPage", path = "/auth/oauthErrorPage.jsp")	
-	})
+})
 
 public class OAuthAction extends FenixDispatchAction {
-	
+
 	//http://localhost:8080/ciapl/external/oauth.do?method=getUserPermission&client_id=123123&redirect_uri=http://www.google.com
 	public ActionForward getUserPermission(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -49,31 +49,33 @@ public class OAuthAction extends FenixDispatchAction {
 		} else {
 			return mapping.findForward("showAuthorizationPage");
 		}
-		
+
 	}
-	
+
 	//http://localhost:8080/ciapl/external/oauth.do?method=userConfirmation&...
 	public ActionForward userConfirmation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		OAuthIssuer oauthIssuerImpl = new OAuthIssuerImpl(new MD5Generator());
-		
+
 		Person person = getLoggedPerson(request);
 		if (person == null) {
 			return null;
 		}
-		
+
 		//TODO check if redirect_uri and client_id are correct
-		
+		String client_id = request.getParameter("client_id");
+		String redirect_uri = request.getParameter("redirect_uri");
+
 		try {
 			String code = oauthIssuerImpl.authorizationCode();
-			//TODO change the location. Get location from domain or request.getParameter("redirect_uri")
 			OAuthResponse resp = OAuthASResponse
 					.authorizationResponse(request, HttpServletResponse.SC_FOUND)
-					.location("fenix://mobile/")
+					.location(redirect_uri)
 					.setCode(code)
 					.buildQueryMessage();			
 			
-			//TODO save code/state(?) > domain
+			//TODO save code/state(?) > domain <-> time
+			//Build object
 			response.sendRedirect(resp.getLocationUri());
 
 		} catch (OAuthSystemException e) {
@@ -83,7 +85,7 @@ public class OAuthAction extends FenixDispatchAction {
 		}		
 		return null;
 	}
-	
+
 	//http://localhost:8080/ciapl/external/oauth.do?method=getTokens&...
 	public ActionForward getTokens(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -91,10 +93,12 @@ public class OAuthAction extends FenixDispatchAction {
 		OAuthTokenRequest oauthRequest = new OAuthTokenRequest(request);
 		OAuthIssuer oauthIssuerImpl = new OAuthIssuerImpl(new MD5Generator());
 
-		//Get client_id
-		//Get client_secret
-		//get redirect_uri
+		String client_id = oauthRequest.getClientId();
+		String client_secret = oauthRequest.getClientSecret();
+		String redirect_uri = oauthRequest.getRedirectURI();
 		String authzCode = oauthRequest.getCode();
+		String expires = "3600";
+			
 		//TODO check if all the information is correct
 
 		//build tokens base64(oid_app ; istid ; rand ; device_id(?))
@@ -102,12 +106,13 @@ public class OAuthAction extends FenixDispatchAction {
 		String refreshToken = oauthIssuerImpl.refreshToken();
 
 		//TODO save access, refresh token and timestamp
+		//clean Code
 
 		OAuthResponse r = OAuthASResponse
 				.tokenResponse(HttpServletResponse.SC_OK)
-				.location("fenix://mobile")
+				.location(redirect_uri)
 				.setAccessToken(accessToken)
-				.setExpiresIn("3600")
+				.setExpiresIn(expires)
 				.setRefreshToken(refreshToken)
 				.buildJSONMessage();
 
