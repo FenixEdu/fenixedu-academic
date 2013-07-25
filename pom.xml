@@ -558,6 +558,11 @@
 		    <groupId>org.imgscalr</groupId>
 		    <artifactId>imgscalr-lib</artifactId>
 		    <version>4.2</version>
+		</dependency>        
+		<dependency>
+			<groupId>org.apache.amber</groupId>
+			<artifactId>amber-oauth2-authzserver</artifactId>
+			<version>0.22-incubating</version>
 		</dependency>
 	</dependencies>
 
@@ -618,20 +623,20 @@
 						</configuration>
 						<executions>
 							<execution>
-							<id>copy-images</id>
-							<phase>validate</phase>
-							<goals>
-								<goal>copy-resources</goal>
-							</goals>
-							<configuration>
-								<outputDirectory>${basedir}/target/classes/images</outputDirectory>
-								<resources>          
-									<resource>
-										<directory>src/main/webapp/images</directory>
-										<filtering>false</filtering>
-									</resource>
-								</resources>              
-							</configuration>  
+								<id>copy-images</id>
+								<phase>validate</phase>
+								<goals>
+									<goal>copy-resources</goal>
+								</goals>
+								<configuration>
+									<outputDirectory>${basedir}/target/classes/images</outputDirectory>
+									<resources>
+										<resource>
+											<directory>src/main/webapp/images</directory>
+											<filtering>false</filtering>
+										</resource>
+									</resources>
+								</configuration>
 							</execution>
 						</executions>
 					</plugin>

@@ -384,6 +384,10 @@ public abstract class BaseAuthenticationAction extends FenixAction {
             }
 
             final String requestChecksumParameter = pendingRequest.getRequestChecksumParameter();
+            
+            if (url.contains("/external/") && requestChecksumParameter == null) { //TODO: check if it is necessary
+            	return true;
+            }
             return GenericChecksumRewriter.calculateChecksum(url).equals(requestChecksumParameter);
         } catch (VersionNotAvailableException ex) {
             return false;
