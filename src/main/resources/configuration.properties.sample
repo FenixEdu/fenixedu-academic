@@ -60,6 +60,11 @@ twilio.from.number=
 barra.as.authentication.broker=false
 barra.loginUrl=https://barra.ist.utl.pt/login
 
+#---------------------------------------------------------------
+# Google Analytics snippet configuration (without <script> tags)
+#---------------------------------------------------------------
+google.analytics.snippet=
+
 #
 #
 #------------------------------------------------------------------------------
