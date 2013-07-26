@@ -772,6 +772,16 @@
 		<slot name="url"/>
 	</schema>
 	
+	     <schema name="my.schema.confirm.app"  type="net.sourceforge.fenixedu.domain.ExternalApplication" bundle="APPLICATION_RESOURCES">
+        <slot name="name"/>
+                <slot name="scopes" layout="list">
+                        <property name="eachLayout" value="values"></property>
+                        <property name="eachSchema" value="my.scopes.schema"></property>
+                </slot>
+        <slot name="author.userUId"/>
+        <slot name="author.person.email"/>
+        </schema>
+	
 
 	
 	
