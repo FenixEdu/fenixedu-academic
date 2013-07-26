@@ -5,11 +5,18 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 <html:xhtml/>
+	
+	<script>
+		$(document).ready( function () {
+			$('#firstItem').prependTo($('#perfnav ul:eq(1)'));
+			$('#perfnav ul:first').remove();
+		});
+	</script>
 
 	<logic:present name="site">
 
 		<ul>
-			<li>
+			<li id="firstItem">
 				<bean:define id="siteId" name="site" property="idInternal"/>
 				<html:link page="<%= "/researchSite/viewResearchUnitSite.do?method=frontPage&amp;siteID=" + siteId %>">
 					<bean:message key="label.siteUnit.section.start" bundle="MESSAGING_RESOURCES"/>
