@@ -13,7 +13,7 @@ import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.AddContextToCurricularCourse;
 import net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.CreateCurricularCourse;
 import net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.DeleteContextFromDegreeModule;
@@ -705,7 +705,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     }
 
     private Department getPersonDepartment() {
-        final IUserView userView = getUserView();
+        final User userView = getUserView();
         final Person person = userView == null ? null : userView.getPerson();
         final Employee employee = person == null ? null : person.getEmployee();
         return employee == null ? null : employee.getCurrentDepartmentWorkingPlace();

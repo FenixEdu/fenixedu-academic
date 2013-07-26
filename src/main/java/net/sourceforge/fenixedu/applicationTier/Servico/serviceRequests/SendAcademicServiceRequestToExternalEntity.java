@@ -48,7 +48,7 @@ import org.joda.time.YearMonthDay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -132,7 +132,7 @@ public class SendAcademicServiceRequestToExternalEntity {
             final String restPass = PropertiesManager.getProperty("jersey.password");
 
             Client client = new Client();
-            final String username = UserView.getUser().getUsername();
+            final String username = Authenticate.getUser().getUsername();
             final FormDataMultiPart formDataMultiPart = new FormDataMultiPart();
             StreamDataBodyPart streamPart = new StreamDataBodyPart("stream", byteArrayInputStream);
             formDataMultiPart.bodyPart(streamPart);

@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -25,7 +25,7 @@ import pt.ist.fenixframework.FenixFramework;
 public class ChangeStudentsShift {
 
     @Atomic
-    public static void run(IUserView userView, String oldShiftId, String newShiftId, final Set<Registration> registrations)
+    public static void run(User userView, String oldShiftId, String newShiftId, final Set<Registration> registrations)
             throws FenixServiceException {
         check(RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE);
 

@@ -16,7 +16,7 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ReadStudentCurricularPlan;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ReadStudentCurricularPlans;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ReadStudentCurriculum;
@@ -84,7 +84,7 @@ import org.apache.struts.action.DynaActionFormClass;
 import org.apache.struts.config.FormBeanConfig;
 import org.apache.struts.config.ModuleConfig;
 
-import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -203,7 +203,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
         }
 
         try {
-            IUserView userView = UserView.getUser();
+            User userView = Authenticate.getUser();
             SubmitFinalWorkProposal.runSubmitFinalWorkProposal(infoFinalWorkProposal);
         } catch (DomainException ex) {
             ActionErrors actionErrors = new ActionErrors();
@@ -236,7 +236,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
     public ActionForward chooseDegree(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixServiceException, IllegalAccessException,
             InstantiationException {
-        final IUserView userView = UserView.getUser();
+        final User userView = Authenticate.getUser();
 
         final DynaActionForm finalWorkForm = (DynaActionForm) form;
         finalWorkForm.set("role", "responsable");
@@ -300,7 +300,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
     public ActionForward listProposals(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixServiceException, IllegalAccessException,
             InstantiationException {
-        final IUserView userView = UserView.getUser();
+        final User userView = Authenticate.getUser();
 
         TreeSet<Proposal> proposals = new TreeSet<Proposal>(new Comparator<Proposal>() {
 
@@ -352,7 +352,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 
     public ActionForward prepareFinalWorkInformation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixServiceException {
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         DynaActionForm finalWorkForm = (DynaActionForm) form;
         String role = (String) finalWorkForm.get("role");
@@ -420,7 +420,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 
     public ActionForward showTeacherName(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixServiceException {
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         DynaActionForm finalWorkForm = (DynaActionForm) form;
         String alteredField = (String) finalWorkForm.get("alteredField");
@@ -548,7 +548,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
         String finalDegreeWorkProposalOIDString = request.getParameter("finalDegreeWorkProposalOID");
 
         if (finalDegreeWorkProposalOIDString != null) {
-            IUserView userView = UserView.getUser();
+            User userView = Authenticate.getUser();
 
             try {
                 InfoProposal infoProposal =
@@ -568,7 +568,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
     public ActionForward print(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixActionException {
         final String finalDegreeWorkProposalOIDString = request.getParameter("finalDegreeWorkProposalOID");
-        final IUserView userView = getUserView(request);
+        final User userView = getUserView(request);
         if (finalDegreeWorkProposalOIDString != null && userView != null) {
             final String finalDegreeWorkProposalOID = finalDegreeWorkProposalOIDString;
             final Proposal finalDegreeWorkProposal = FenixFramework.getDomainObject(finalDegreeWorkProposalOID);
@@ -585,7 +585,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
         String finalDegreeWorkProposalOIDString = request.getParameter("finalDegreeWorkProposalOID");
 
         if (finalDegreeWorkProposalOIDString != null) {
-            IUserView userView = UserView.getUser();
+            User userView = Authenticate.getUser();
 
             try {
                 InfoProposal infoProposal =
@@ -725,7 +725,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 
         String selectedGroupProposalOID = (String) finalWorkAttributionForm.get("selectedGroupProposal");
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         if (selectedGroupProposalOID != null && !selectedGroupProposalOID.equals("")) {
 
@@ -755,7 +755,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
     public ActionForward getCurriculum(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         String studentCurricularPlanID = request.getParameter("studentCPID");
         if (studentCurricularPlanID == null) {
@@ -792,7 +792,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
     public ActionForward getStudentCP(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         String studentNumber = getStudent(request);
         List infoStudents = null;
@@ -800,7 +800,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
         if (studentNumber == null) {
             try {
 
-                InfoPerson infoPerson = ReadPersonByUsername.run(userView.getUtilizador());
+                InfoPerson infoPerson = ReadPersonByUsername.run(userView.getUsername());
 
                 infoStudents = ReadStudentsByPerson.runReadStudentsByPerson(infoPerson);
             } catch (FenixServiceException e) {

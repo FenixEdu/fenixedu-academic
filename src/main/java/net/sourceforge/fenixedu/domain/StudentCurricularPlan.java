@@ -97,6 +97,7 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.predicates.AndPredicate;
 import pt.utl.ist.fenix.tools.predicates.Predicate;
@@ -2126,8 +2127,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
                     executionSemester.getQualifiedName() });
         }
 
-        new OptionalEnrolment(this, curriculumGroup, curricularCourse, executionSemester, enrollmentCondition, AccessControl
-                .getUserView().getUtilizador(), optionalCurricularCourse);
+        new OptionalEnrolment(this, curriculumGroup, curricularCourse, executionSemester, enrollmentCondition, Authenticate.getUser().getUsername(), optionalCurricularCourse);
     }
 
     final public RuleResult createNoCourseGroupCurriculumGroupEnrolment(final NoCourseGroupEnrolmentBean bean) {

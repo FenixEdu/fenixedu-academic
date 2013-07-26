@@ -10,7 +10,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
@@ -74,12 +74,12 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
     static public class RequestThesis extends PhdThesisActivity {
 
         @Override
-        public void activityPreConditions(PhdThesisProcess process, IUserView userView) {
+        public void activityPreConditions(PhdThesisProcess process, User userView) {
             // Activity on main process ensures access control
         }
 
         @Override
-        protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
+        protected PhdThesisProcess executeActivity(PhdThesisProcess process, User userView, Object object) {
 
             final PhdThesisProcessBean bean = (PhdThesisProcessBean) object;
             LocalDate whenThesisDiscussionRequired = bean.getWhenThesisDiscussionRequired();
@@ -149,7 +149,7 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
     }
 
     @Override
-    public boolean isAllowedToManageProcess(IUserView userView) {
+    public boolean isAllowedToManageProcess(User userView) {
         return this.getIndividualProgramProcess().isAllowedToManageProcess(userView);
     }
 
@@ -206,7 +206,7 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
     }
 
     @Override
-    public boolean canExecuteActivity(IUserView userView) {
+    public boolean canExecuteActivity(User userView) {
         return false;
     }
 
@@ -524,7 +524,7 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
         getMostRecentState().delete();
     }
 
-    public PhdThesisProcess edit(final IUserView userView, final PhdThesisProcessBean bean) {
+    public PhdThesisProcess edit(final User userView, final PhdThesisProcessBean bean) {
 
         setWhenThesisDiscussionRequired(bean.getWhenThesisDiscussionRequired());
 

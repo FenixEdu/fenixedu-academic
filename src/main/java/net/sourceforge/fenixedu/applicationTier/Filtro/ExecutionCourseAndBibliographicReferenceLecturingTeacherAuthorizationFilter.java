@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.applicationTier.Filtro;
 
 import java.util.Iterator;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.BibliographicReference;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -15,6 +14,8 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -36,21 +37,21 @@ public class ExecutionCourseAndBibliographicReferenceLecturingTeacherAuthorizati
     }
 
     public void execute(String bibliographicReferenceID) throws NotAuthorizedException {
-        IUserView id = AccessControl.getUserView();
-        if ((id == null) || (id.getRoleTypes() == null) || !id.hasRoleType(getRoleType())
+        User id = Authenticate.getUser();
+        if ((id == null) || (id.getPerson().getPersonRolesSet() == null) || !id.getPerson().hasRole(getRoleType())
                 || !bibliographicReferenceBelongsToTeacherExecutionCourse(id, bibliographicReferenceID)) {
             throw new NotAuthorizedException();
         }
     }
 
-    private boolean bibliographicReferenceBelongsToTeacherExecutionCourse(IUserView id, String bibliographicReferenceID) {
+    private boolean bibliographicReferenceBelongsToTeacherExecutionCourse(User id, String bibliographicReferenceID) {
         if (bibliographicReferenceID == null) {
             return false;
         }
 
         boolean result = false;
         final BibliographicReference bibliographicReference = FenixFramework.getDomainObject(bibliographicReferenceID);
-        final Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
+        final Teacher teacher = Teacher.readTeacherByUsername(id.getUsername());
 
         if (bibliographicReference != null && teacher != null) {
             final ExecutionCourse executionCourse = bibliographicReference.getExecutionCourse();

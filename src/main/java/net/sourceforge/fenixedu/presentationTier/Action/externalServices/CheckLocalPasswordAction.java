@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.externalServices;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.Authenticate;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoAutenticacao;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidPasswordServiceException;
@@ -51,7 +51,7 @@ public class CheckLocalPasswordAction extends FenixAction {
             String result = null;
 
             try {
-                final IUserView userView =
+                final User userView =
                         Authenticate.runLocalAuthenticate(username, password, requestURL,
                                 BaseAuthenticationAction.getRemoteHostName(request));
 

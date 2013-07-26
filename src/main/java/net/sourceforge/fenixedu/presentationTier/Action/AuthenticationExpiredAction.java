@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.Authenticate.UserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.AuthenticateExpiredKerberos;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoAutenticacao;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -31,8 +31,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.validator.ValidatorForm;
 
-import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter;
+import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.security.SetUserViewFilter;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/loginExpired", formBeanClass = AuthenticationExpiredForm.class, input = "/loginExpired.jsp?")
@@ -130,9 +130,9 @@ public class AuthenticationExpiredAction extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         try {
 
-            final IUserView userView = changePasswordAndAuthenticateUser(form, request);
+            final User userView = changePasswordAndAuthenticateUser(form, request);
 
-            if (userView == null || userView.getRoleTypes().isEmpty()) {
+            if (userView == null || userView.getPerson().getPersonRolesSet().isEmpty()) {
                 return authenticationFailedForward(mapping, request, "errors.noAuthorization");
             }
 
@@ -158,11 +158,11 @@ public class AuthenticationExpiredAction extends FenixDispatchAction {
                 UserView.setUser(userView);
                 session.setAttribute(SetUserViewFilter.USER_SESSION_ATTRIBUTE, userView);
 
-                int numberOfSubApplications = getNumberOfSubApplications(userView.getRoleTypes());
-                if (numberOfSubApplications == 1 || !userView.hasRoleType(RoleType.PERSON)) {
+                int numberOfSubApplications = getNumberOfSubApplications(userView.getPerson().getPersonRolesSet());
+                if (numberOfSubApplications == 1 || !userView.getPerson().hasRole(RoleType.PERSON)) {
                     final Role firstInfoRole =
-                            ((userView.getRoleTypes().isEmpty()) ? null : Role.getRoleByRoleType(userView.getRoleTypes()
-                                    .iterator().next()));
+                            ((userView.getPerson().getPersonRolesSet().isEmpty()) ? null : userView.getPerson()
+                                    .getPersonRolesSet().iterator().next());
                     return buildRoleForward(firstInfoRole);
                 } else {
                     return new ActionForward("/home.do");
@@ -193,10 +193,9 @@ public class AuthenticationExpiredAction extends FenixDispatchAction {
      * @param userRoles
      * @return
      */
-    private int getNumberOfSubApplications(Collection<RoleType> roleTypes) {
+    private int getNumberOfSubApplications(Collection<Role> roles) {
         final Set<String> subApplications = new HashSet<String>();
-        for (final RoleType roleType : roleTypes) {
-            final Role role = Role.getRoleByRoleType(roleType);
+        for (final Role role : roles) {
             final String subApplication = role.getPortalSubApplication();
             if (!subApplications.contains(subApplication) && !subApplication.equals("/teacher")) {
                 subApplications.add(subApplication);
@@ -233,7 +232,7 @@ public class AuthenticationExpiredAction extends FenixDispatchAction {
         return null;
     }
 
-    private IUserView changePasswordAndAuthenticateUser(final ActionForm form, final HttpServletRequest request)
+    private User changePasswordAndAuthenticateUser(final ActionForm form, final HttpServletRequest request)
             throws FenixServiceException, ExcepcaoPersistencia {
         AuthenticationExpiredForm authenticationForm = (AuthenticationExpiredForm) form;
         final String username = authenticationForm.getUsername();

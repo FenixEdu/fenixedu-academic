@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico;
 
 import jvstm.TransactionalCommand;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidPasswordServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.PasswordExpiredServiceException;
@@ -83,7 +83,7 @@ public class AuthenticateKerberos extends Authenticate {
     }
 
     @Override
-    protected IUserView run(final String username, final String password, final String requestURL, final String remoteHost)
+    protected User run(final String username, final String password, final String requestURL, final String remoteHost)
             throws ExcepcaoAutenticacao, FenixServiceException {
 
         Person person = Person.readPersonByUsernameWithOpenedLogin(username);
@@ -112,7 +112,7 @@ public class AuthenticateKerberos extends Authenticate {
                     return super.run(username, password, requestURL, remoteHost);
                 }
             } else {
-                final IUserView userView = super.run(username, password, requestURL, remoteHost);
+                final User userView = super.run(username, password, requestURL, remoteHost);
                 if (userView != null) {
                     try {
                         Script.createUser(person.getIstUsername(), password);
@@ -143,7 +143,7 @@ public class AuthenticateKerberos extends Authenticate {
     private static final AuthenticateKerberos serviceInstance = new AuthenticateKerberos();
 
     @Atomic
-    public static IUserView runKerberosExternalAuthentication(final String username, final String password,
+    public static User runKerberosExternalAuthentication(final String username, final String password,
             final String requestURL, final String remoteHost) throws ExcepcaoAutenticacao, FenixServiceException {
         return serviceInstance.run(username, password, requestURL, remoteHost);
     }

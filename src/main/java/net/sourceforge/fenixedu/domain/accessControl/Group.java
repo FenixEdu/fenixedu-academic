@@ -15,7 +15,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.ArgumentList;
@@ -103,7 +103,7 @@ public abstract class Group implements Serializable, IGroup {
     }
 
     @Override
-    public boolean allows(IUserView userView) {
+    public boolean allows(User userView) {
         return isMember(userView == null ? null : userView.getPerson());
     }
 

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.SetUserUID;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidPasswordServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.ChangePasswordKerberos;
@@ -46,7 +46,7 @@ public class ChangePersonPasswordAction extends FenixAction {
 
         DynaActionForm changePasswordForm = (DynaActionForm) form;
 
-        IUserView userView = new MockUserView((String) changePasswordForm.get("user"), new ArrayList(), null);
+        User userView = new MockUserView((String) changePasswordForm.get("user"), new ArrayList(), null);
         String oldPassword = (String) changePasswordForm.get("oldPassword");
         String newPassword = (String) changePasswordForm.get("newPassword");
 

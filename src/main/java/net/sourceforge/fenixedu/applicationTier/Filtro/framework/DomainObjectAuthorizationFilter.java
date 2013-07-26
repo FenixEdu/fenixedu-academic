@@ -4,11 +4,12 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Filtro.framework;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByRoleFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.security.Authenticate;
 
 /**
  * @author Leonor Almeida
@@ -22,7 +23,7 @@ public abstract class DomainObjectAuthorizationFilter extends AuthorizationByRol
 
     public void execute(String externalId) throws NotAuthorizedException {
         try {
-            IUserView id = AccessControl.getUserView();
+            User id = Authenticate.getUser();
 
             /*
              * note: if it is neither an Integer nor an InfoObject representing
@@ -33,8 +34,9 @@ public abstract class DomainObjectAuthorizationFilter extends AuthorizationByRol
 
             boolean isNew = externalId == null;
 
-            if (((id != null && id.getRoleTypes() != null && !id.hasRoleType(getRoleType()))) || (id == null)
-                    || (id.getRoleTypes() == null) || ((!isNew) && (!verifyCondition(id, externalId)))) {
+            if (((id != null && id.getPerson().getPersonRolesSet() != null && !id.getPerson().hasRole(getRoleType())))
+                    || (id == null) || (id.getPerson().getPersonRolesSet() == null)
+                    || ((!isNew) && (!verifyCondition(id, externalId)))) {
                 throw new NotAuthorizedException();
             }
         } catch (RuntimeException e) {
@@ -43,5 +45,5 @@ public abstract class DomainObjectAuthorizationFilter extends AuthorizationByRol
         }
     }
 
-    abstract protected boolean verifyCondition(IUserView id, String objectId);
+    abstract protected boolean verifyCondition(User id, String objectId);
 }

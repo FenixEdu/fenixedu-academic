@@ -23,7 +23,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.credits.ReadDepartmentTotalCreditsByPeriod;
 import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.credits.ReadDepartmentTotalCreditsByPeriod.PeriodCreditsReportDTO;
@@ -48,7 +48,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
-import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
 import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -102,7 +102,7 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
     public ActionForward viewDetailedCreditsReport(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException, InvalidPeriodException {
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
 
         String fromExecutionYearID = dynaForm.getString("fromExecutionYearID");
@@ -113,7 +113,7 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
         return mapping.findForward("showCreditsReport");
     }
 
-    private Map<Department, Map<Unit, List>> getDetailedTeachersCreditsMap(HttpServletRequest request, IUserView userView,
+    private Map<Department, Map<Unit, List>> getDetailedTeachersCreditsMap(HttpServletRequest request, User userView,
             String fromExecutionYearID, String untilExecutionYearID, String departmentID) throws InvalidPeriodException,
             FenixServiceException {
 
@@ -186,7 +186,7 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
     public ActionForward viewGlobalCreditsReport(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException, InvalidPeriodException, ParseException {
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
 
         String fromExecutionYearID = dynaForm.getString("fromExecutionYearID");
@@ -346,7 +346,7 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
     }
 
     private SortedMap<Department, Map<ExecutionYear, PeriodCreditsReportDTO>> getGlobalDepartmentCreditsMap(
-            HttpServletRequest request, IUserView userView, String fromExecutionYearID, String untilExecutionYearID,
+            HttpServletRequest request, User userView, String fromExecutionYearID, String untilExecutionYearID,
             String departmentID) throws ParseException, InvalidPeriodException, FenixServiceException {
 
         request.setAttribute("fromExecutionYearID", fromExecutionYearID);
@@ -402,7 +402,7 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
     public ActionForward exportToExcel(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException, InvalidPeriodException {
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         String fromExecutionYearID = request.getParameter("fromExecutionYearID");
         String untilExecutionYearID = request.getParameter("untilExecutionYearID");

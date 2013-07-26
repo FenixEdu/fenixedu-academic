@@ -6,7 +6,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
@@ -86,7 +86,7 @@ public final class GroupIntersection extends NodeGroup {
     }
 
     @Override
-    public boolean allows(IUserView userView) {
+    public boolean allows(User userView) {
         for (IGroup group : getChildren()) {
             if (!group.allows(userView)) {
                 return false;

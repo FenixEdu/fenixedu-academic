@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ExecuteFactoryMethod;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Person;
@@ -46,7 +46,7 @@ import pt.ist.fenixWebFramework.renderers.model.MetaObject;
 import pt.ist.fenixWebFramework.renderers.plugin.ExceptionHandler;
 import pt.ist.fenixWebFramework.renderers.plugin.RenderersRequestProcessorImpl;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixframework.DomainObject;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
@@ -75,12 +75,12 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
         return actionForward;
     }
 
-    protected static IUserView getUserView(HttpServletRequest request) {
-        return UserView.getUser();
+    protected static User getUserView(HttpServletRequest request) {
+        return Authenticate.getUser();
     }
 
     protected Person getLoggedPerson(HttpServletRequest request) {
-        final IUserView userView = getUserView(request);
+        final User userView = getUserView(request);
         return (userView == null) ? null : userView.getPerson();
     }
 

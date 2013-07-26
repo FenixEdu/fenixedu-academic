@@ -4,8 +4,6 @@ import java.io.UnsupportedEncodingException;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.Authenticate;
 import net.sourceforge.fenixedu.applicationTier.Servico.Authenticate.NonExistingUserException;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoAutenticacao;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -17,9 +15,11 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import pt.ist.fenixWebFramework.Config.CasConfig;
-import pt.ist.fenixWebFramework.FenixWebFramework;
-import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.filters.CasAuthenticationFilter;
+import pt.ist.bennu.core.security.Authenticate;
+import pt.ist.bennu.core.util.ConfigurationManager;
+import pt.ist.bennu.core.util.ConfigurationManager.CasConfig;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -35,16 +35,16 @@ public class CASAuthenticationAction extends BaseAuthenticationAction {
     private static final String USER_DOES_NOT_EXIST_ATTRIBUTE = "user-does-not-exist";
 
     @Override
-    protected IUserView doAuthentication(ActionForm form, HttpServletRequest request, String remoteHostName)
+    protected User doAuthentication(ActionForm form, HttpServletRequest request, String remoteHostName)
             throws FenixServiceException {
 
         final String serverName = request.getServerName();
-        final CasConfig casConfig = FenixWebFramework.getConfig().getCasConfig(serverName);
+        final CasConfig casConfig = ConfigurationManager.getCasConfig();
         if (casConfig == null || !casConfig.isCasEnabled()) {
             throw new ExcepcaoAutenticacao("errors.noAuthorization");
         }
 
-        IUserView userView = getCurrentUserView(request);
+        User userView = Authenticate.getUser();
 
         if (userView == null) {
             final String casTicket = request.getParameter("ticket");
@@ -55,7 +55,7 @@ public class CASAuthenticationAction extends BaseAuthenticationAction {
             }
             CASReceipt receipt;
             try {
-                receipt = Authenticate.getCASReceipt(request.getServerName(), casTicket, requestURL);
+                receipt = CasAuthenticationFilter.getCASReceipt(request.getServerName(), casTicket, requestURL);
             } catch (UnsupportedEncodingException e) {
                 throw new ExcepcaoAutenticacao(e);
             } catch (CASAuthenticationException e) {
@@ -95,7 +95,4 @@ public class CASAuthenticationAction extends BaseAuthenticationAction {
         }
     }
 
-    private IUserView getCurrentUserView(HttpServletRequest request) {
-        return UserView.getUser();
-    }
 }

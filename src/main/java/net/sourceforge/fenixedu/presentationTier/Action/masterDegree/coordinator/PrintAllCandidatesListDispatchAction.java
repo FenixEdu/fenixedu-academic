@@ -7,7 +7,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.ReadDegreeCandidatesWithFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
@@ -88,7 +88,7 @@ public class PrintAllCandidatesListDispatchAction extends FenixDispatchAction {
             reqExportToExcel = false;
         }
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         // parse do valor do filtro e do dcpID
         if (reqFilterBy != null) {
@@ -170,7 +170,7 @@ public class PrintAllCandidatesListDispatchAction extends FenixDispatchAction {
             reqExportToExcel = false;
         }
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         try {
             filterBy = PrintAllCandidatesFilter.valueOf(reqFilterBy);
@@ -196,7 +196,7 @@ public class PrintAllCandidatesListDispatchAction extends FenixDispatchAction {
     }
 
     /** lista todos os candidatos :: listagem ou csv **/
-    private ActionForward callServiceListAllCandidatesAndForward(IUserView userView, HttpServletRequest request,
+    private ActionForward callServiceListAllCandidatesAndForward(User userView, HttpServletRequest request,
             HttpServletResponse response, ActionMapping mapping, String degreeCurricularID, PrintAllCandidatesFilter filterBy,
             String filterValue, boolean exportToCSV) throws FenixActionException, IOException {
         List candidates = null;

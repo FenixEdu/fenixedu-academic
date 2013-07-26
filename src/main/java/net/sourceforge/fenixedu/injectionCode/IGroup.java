@@ -5,7 +5,7 @@ package net.sourceforge.fenixedu.injectionCode;
 
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.domain.Person;
 
 /**
@@ -21,7 +21,7 @@ public interface IGroup {
 
     public boolean isMember(Person person);
 
-    public boolean allows(IUserView userView);
+    public boolean allows(User userView);
 
     public Set<Person> getElements();
 

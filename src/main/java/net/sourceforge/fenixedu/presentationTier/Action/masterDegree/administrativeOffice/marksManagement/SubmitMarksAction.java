@@ -9,7 +9,7 @@ import java.util.HashSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
@@ -34,7 +34,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -52,7 +52,7 @@ public class SubmitMarksAction extends FenixDispatchAction {
 
         // Get students List
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = null;
         try {
             infoSiteEnrolmentEvaluation = ReadStudentsAndMarksByCurricularCourse.run(curricularCourseCode, null);

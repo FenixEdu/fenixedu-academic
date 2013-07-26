@@ -5,7 +5,7 @@ import java.io.InputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ExecuteFactoryMethod;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.parking.AcceptRegulation;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.parking.CreateParkingParty;
@@ -31,7 +31,7 @@ import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -49,7 +49,7 @@ import com.google.common.io.ByteStreams;
 public class ParkingDispatchAction extends FenixDispatchAction {
     public ActionForward prepareParking(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         ParkingParty parkingParty = userView.getPerson().getParkingParty();
         if (parkingParty == null) {
             parkingParty = CreateParkingParty.run(userView.getPerson());
@@ -68,7 +68,7 @@ public class ParkingDispatchAction extends FenixDispatchAction {
 
     public ActionForward acceptRegulation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         ParkingParty parkingParty = userView.getPerson().getParkingParty();
         if (parkingParty != null) {
             AcceptRegulation.run(parkingParty);
@@ -79,7 +79,7 @@ public class ParkingDispatchAction extends FenixDispatchAction {
     public ActionForward prepareEditParking(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         ParkingParty parkingParty = userView.getPerson().getParkingParty();
         request.setAttribute("parkingParty", parkingParty);
 
@@ -379,7 +379,7 @@ public class ParkingDispatchAction extends FenixDispatchAction {
 
     private boolean checkRequestFields(ParkingRequestFactory parkingRequestFactory, HttpServletRequest request,
             DynaActionForm parkingForm) {
-        final IUserView userView = UserView.getUser();
+        final User userView = Authenticate.getUser();
         final boolean isStudent = isStudent(userView);
         ActionMessages actionMessages = new ActionMessages();
         boolean result = true;
@@ -636,13 +636,13 @@ public class ParkingDispatchAction extends FenixDispatchAction {
         return element == null || element.length() == 0;
     }
 
-    private boolean isStudent(IUserView userView) {
+    private boolean isStudent(User userView) {
         return (userView.getPerson().getTeacher() != null || userView.getPerson().getEmployee() != null) ? false : true;
     }
 
     public ActionForward renewUnlimitedParkingRequest(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         RenewUnlimitedParkingRequest.run(userView.getPerson().getParkingParty().getFirstRequest(), Boolean.TRUE);
         request.setAttribute("renewUnlimitedParkingRequest.sucess", true);
         return prepareParking(mapping, actionForm, request, response);

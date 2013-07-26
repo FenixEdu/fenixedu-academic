@@ -7,7 +7,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <%@page import="pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter"%>
 <%@page import="pt.ist.fenixWebFramework.security.UserView"%>
-<%@page import="net.sourceforge.fenixedu.applicationTier.IUserView"%>
+<%@page import="net.sourceforge.fenixedu.applicationTier.User"%>
 <%@page import="net.sourceforge.fenixedu.dataTransferObject.support.SupportRequestBean"%>
 <html:html xhtml="true">
 

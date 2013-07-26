@@ -10,7 +10,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.guide.InvalidGuideSituationServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.guide.InvalidReimbursementValueServiceException;
@@ -57,7 +57,7 @@ public class CreateReimbursementGuide {
      */
 
     @Atomic
-    public static String run(String guideId, String remarks, List infoReimbursementGuideEntries, IUserView userView)
+    public static String run(String guideId, String remarks, List infoReimbursementGuideEntries, User userView)
             throws FenixServiceException {
         check(RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE);
 

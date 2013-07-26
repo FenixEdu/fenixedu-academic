@@ -9,7 +9,7 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -30,7 +30,7 @@ import net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType;
 import org.apache.commons.beanutils.BeanComparator;
 import org.joda.time.LocalDate;
 
-import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.bennu.core.security.Authenticate;
 
 public class AnnualTeachingCreditsBean implements Serializable {
     private ExecutionYear executionYear;
@@ -335,7 +335,7 @@ public class AnnualTeachingCreditsBean implements Serializable {
     }
 
     public boolean getCanUserSeeTeacherServiceLogs() {
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         Teacher loggedTeacher = userView.getPerson().getTeacher();
         Department department = getTeacher().getCurrentWorkingDepartment();
         return userView.getPerson().hasRole(RoleType.SCIENTIFIC_COUNCIL)

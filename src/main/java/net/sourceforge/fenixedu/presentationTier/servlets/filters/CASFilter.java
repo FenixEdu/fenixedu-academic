@@ -9,14 +9,14 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.RequestUtils;
 import pt.ist.fenixWebFramework.Config.CasConfig;
-import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.bennu.core.security.Authenticate;
 
 public class CASFilter extends pt.ist.fenixWebFramework.servlets.filters.CASFilter {
 
     @Override
     protected void redirectToCAS(final CasConfig casConfig, final HttpServletRequest request, final HttpServletResponse response)
             throws IOException, ServletException {
-        if (UserView.getUser() == null) {
+        if (Authenticate.getUser() == null) {
             String pendingRequest = request.getParameter("pendingRequest");
             if (pendingRequest == null) {
                 pendingRequest = (String) request.getAttribute("pendingRequest");

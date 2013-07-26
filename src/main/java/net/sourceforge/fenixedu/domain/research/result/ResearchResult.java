@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.predicates.ResultPredicates;
 
 import org.joda.time.DateTime;
 
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.file.FileSetMetaData;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
@@ -70,7 +71,7 @@ public abstract class ResearchResult extends ResearchResult_Base {
 
     private void setOnCreateAtributes() {
         check(this, ResultPredicates.createPredicate);
-        if (AccessControl.getUserView() != null) {
+        if (Authenticate.getUser() != null) {
             super.setModifiedBy(AccessControl.getPerson().getName());
             setCreator(AccessControl.getPerson());
         }
@@ -278,7 +279,7 @@ public abstract class ResearchResult extends ResearchResult_Base {
     }
 
     private void updateModifiedByAndDate() {
-        if (AccessControl.getUserView() != null) {
+        if (Authenticate.getUser() != null) {
             super.setModifiedBy(AccessControl.getPerson().getName());
         }
         super.setLastModificationDate(new DateTime());

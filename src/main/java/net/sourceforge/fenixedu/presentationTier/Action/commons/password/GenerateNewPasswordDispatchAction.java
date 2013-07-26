@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.commons.password;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.SetUserUID;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -39,7 +39,7 @@ public class GenerateNewPasswordDispatchAction extends FenixDispatchAction {
     public ActionForward findPerson(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         DynaActionForm newPasswordForm = (DynaActionForm) form;
 
@@ -61,7 +61,7 @@ public class GenerateNewPasswordDispatchAction extends FenixDispatchAction {
     public ActionForward generatePassword(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         String personID = request.getParameter("personID");
 

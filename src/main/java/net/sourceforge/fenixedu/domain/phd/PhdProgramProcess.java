@@ -9,7 +9,8 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.security.Authenticate;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -117,7 +118,7 @@ abstract public class PhdProgramProcess extends PhdProgramProcess_Base {
         return filterLatestDocumentVersions(documents);
     }
 
-    static public boolean isParticipant(PhdProgramProcess process, IUserView userView) {
+    static public boolean isParticipant(PhdProgramProcess process, User userView) {
         return process.isAllowedToManageProcess(userView)
                 || process.getIndividualProgramProcess().isCoordinatorForPhdProgram(userView.getPerson())
                 || process.getIndividualProgramProcess().isGuiderOrAssistentGuider(userView.getPerson())
@@ -197,12 +198,12 @@ abstract public class PhdProgramProcess extends PhdProgramProcess_Base {
      * 
      * @see AcademicOperationType
      */
-    abstract protected boolean isAllowedToManageProcess(IUserView userView);
+    abstract protected boolean isAllowedToManageProcess(User userView);
 
     public static final Predicate<PhdProgramProcess> IS_ALLOWED_TO_MANAGE_PROCESS_PREDICATE = new Predicate<PhdProgramProcess>() {
         @Override
         public boolean apply(PhdProgramProcess process) {
-            return process.isAllowedToManageProcess(AccessControl.getUserView());
+            return process.isAllowedToManageProcess(Authenticate.getUser());
         }
     };
 

@@ -13,7 +13,6 @@ import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionYears;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ReadDetailedTeacherProfessorshipsByExecutionYear;
@@ -29,6 +28,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.struts.action.DynaActionForm;
 
+import pt.ist.bennu.core.domain.User;
 import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
 import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -50,7 +50,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 public class ReadTeacherProfessorshipsByExecutionYearAction extends AbstractReadProfessorshipsAction {
 
     @Override
-    List getDetailedProfessorships(IUserView userView, String teacherId, DynaActionForm actionForm, HttpServletRequest request)
+    List getDetailedProfessorships(User userView, String teacherId, DynaActionForm actionForm, HttpServletRequest request)
             throws FenixServiceException {
 
         List detailedInfoProfessorshipList =
@@ -61,8 +61,8 @@ public class ReadTeacherProfessorshipsByExecutionYearAction extends AbstractRead
     }
 
     @Override
-    protected void extraPreparation(IUserView userView, InfoTeacher infoTeacher, HttpServletRequest request,
-            DynaActionForm dynaForm) throws FenixServiceException {
+    protected void extraPreparation(User userView, InfoTeacher infoTeacher, HttpServletRequest request, DynaActionForm dynaForm)
+            throws FenixServiceException {
 
         prepareConstants(userView, infoTeacher, request);
         prepareForm(dynaForm, request);
@@ -100,7 +100,7 @@ public class ReadTeacherProfessorshipsByExecutionYearAction extends AbstractRead
 
     }
 
-    private void prepareConstants(IUserView userView, InfoTeacher infoTeacher, HttpServletRequest request)
+    private void prepareConstants(User userView, InfoTeacher infoTeacher, HttpServletRequest request)
             throws FenixServiceException {
 
         List executionYears = ReadNotClosedExecutionYears.run();
@@ -119,7 +119,7 @@ public class ReadTeacherProfessorshipsByExecutionYearAction extends AbstractRead
         Department department = infoTeacher.getTeacher().getCurrentWorkingDepartment();
         InfoDepartment teacherDepartment = InfoDepartment.newInfoFromDomain(department);
 
-        if (userView == null || !userView.hasRoleType(RoleType.CREDITS_MANAGER)) {
+        if (userView == null || !userView.getPerson().hasRole(RoleType.CREDITS_MANAGER)) {
 
             final Collection<Department> departmentList = userView.getPerson().getManageableDepartmentCredits();
             request.setAttribute("isDepartmentManager", Boolean.valueOf(departmentList.contains(department)));

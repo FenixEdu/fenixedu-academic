@@ -8,11 +8,10 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.contents.Content;
-import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.security.Authenticate;
 
 /**
  * Provides the default behaviour for a context.
@@ -21,8 +20,8 @@ import pt.ist.fenixWebFramework.security.UserView;
  */
 public abstract class AbstractFunctionalityContext implements FunctionalityContext {
 
-    private HttpServletRequest request;
-    private IUserView userView;
+    private final HttpServletRequest request;
+    private User userView;
 
     protected String encoding = PropertiesManager.DEFAULT_CHARSET;
 
@@ -30,8 +29,8 @@ public abstract class AbstractFunctionalityContext implements FunctionalityConte
         super();
 
         this.request = request;
-        this.userView = UserView.getUser();
-        this.userView = UserView.getUser();
+        this.userView = Authenticate.getUser();
+        this.userView = Authenticate.getUser();
     }
 
     @Override
@@ -40,13 +39,13 @@ public abstract class AbstractFunctionalityContext implements FunctionalityConte
     }
 
     @Override
-    public IUserView getUserView() {
+    public User getUserView() {
         return this.userView;
     }
 
     @Override
     public User getLoggedUser() {
-        final IUserView userView = getUserView();
+        final User userView = getUserView();
         return userView == null ? null : userView.getPerson().getUser();
     }
 

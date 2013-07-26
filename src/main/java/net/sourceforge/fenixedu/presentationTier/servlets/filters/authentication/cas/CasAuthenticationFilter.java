@@ -40,7 +40,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.Authenticate;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -49,8 +48,8 @@ import net.sourceforge.fenixedu.util.HostAccessControl;
 
 import org.apache.commons.lang.CharEncoding;
 
-import pt.ist.fenixWebFramework.FenixWebFramework;
-import pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter;
+import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.security.SetUserViewFilter;
 import edu.yale.its.tp.cas.client.CASAuthenticationException;
 import edu.yale.its.tp.cas.client.CASReceipt;
 import edu.yale.its.tp.cas.client.ProxyTicketValidator;
@@ -81,8 +80,8 @@ public class CasAuthenticationFilter implements Filter {
                 final CASReceipt receipt = getCASReceipt(serverName, ticket, requestURL);
 
                 try {
-                    final IUserView userView = Authenticate.runAuthenticate(receipt, requestURL, remoteHostName);
-                    if (userView != null && !userView.getRoleTypes().isEmpty()) {
+                    final User userView = Authenticate.runAuthenticate(receipt, requestURL, remoteHostName);
+                    if (userView != null && !userView.getPerson().getPersonRolesSet().isEmpty()) {
                         final HttpSession httpSession = getHttpSession(servletRequest);
                         httpSession.setAttribute(SetUserViewFilter.USER_SESSION_ATTRIBUTE, userView);
                     }

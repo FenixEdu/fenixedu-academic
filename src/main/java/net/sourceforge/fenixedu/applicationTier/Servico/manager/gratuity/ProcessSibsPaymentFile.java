@@ -4,7 +4,7 @@ import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
@@ -21,7 +21,7 @@ public class ProcessSibsPaymentFile {
      * @throws ExcepcaoPersistencia
      */
     @Atomic
-    public static void run(String filename, List fileEntries, IUserView userView) throws FenixServiceException {
+    public static void run(String filename, List fileEntries, User userView) throws FenixServiceException {
         check(RolePredicates.MANAGER_PREDICATE);
 
         throw new UnsupportedOperationException("TO REMOVE");
@@ -44,7 +44,7 @@ public class ProcessSibsPaymentFile {
         // buildTransactionsAndStoreFile(sibsPaymentFile, userView);
     }
 //
-//    private static void buildTransactionsAndStoreFile(SibsPaymentFile sibsPaymentFile, IUserView userView) {
+//    private static void buildTransactionsAndStoreFile(SibsPaymentFile sibsPaymentFile, User userView) {
 //
 //        Collection<SibsPaymentFileEntry> sibsPaymentFileEntries = sibsPaymentFile.getSibsPaymentFileEntries();
 //
@@ -91,7 +91,7 @@ public class ProcessSibsPaymentFile {
 //                continue;
 //            }
 //
-//            Person responsiblePerson = Person.readPersonByUsername(userView.getUtilizador());
+//            Person responsiblePerson = Person.readPersonByUsername(userView.getUsername());
 //
 //            PersonAccount personAccount = registration.getPerson().getAssociatedPersonAccount();
 //            if (personAccount == null) {

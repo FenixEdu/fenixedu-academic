@@ -9,6 +9,8 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.struts.taglib.logic.ConditionalTagBase;
 
+import pt.ist.bennu.core.security.Authenticate;
+
 public class ActivityAvailableTag extends ConditionalTagBase {
 
     static private final long serialVersionUID = 1L;
@@ -45,7 +47,7 @@ public class ActivityAvailableTag extends ConditionalTagBase {
         }
 
         try {
-            activity.checkPreConditions(getProcess(), AccessControl.getUserView());
+            activity.checkPreConditions(getProcess(), Authenticate.getUser());
             return true;
         } catch (final PreConditionNotValidException e) {
             return false;

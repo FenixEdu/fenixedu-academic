@@ -17,7 +17,7 @@ public class RectorateSubmissionBatch extends RectorateSubmissionBatch_Base {
     public RectorateSubmissionBatch(AdministrativeOffice administrativeOffice) {
         super();
         setCreation(new DateTime());
-        setCreator(AccessControl.hasPerson() ? AccessControl.getPerson() : null);
+        setCreator(AccessControl.getPerson());
         setState(RectorateSubmissionState.UNSENT);
         setAdministrativeOffice(administrativeOffice);
         setRootDomainObject(RootDomainObject.getInstance());

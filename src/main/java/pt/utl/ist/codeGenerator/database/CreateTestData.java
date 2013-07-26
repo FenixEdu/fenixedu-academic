@@ -3,14 +3,11 @@ package pt.utl.ist.codeGenerator.database;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.Authenticate;
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.SupportLessonDTO;
@@ -64,7 +61,6 @@ import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
@@ -146,7 +142,7 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.bennu.core.domain.User;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -174,7 +170,7 @@ public class CreateTestData {
     }
 
     private static void setPrivledges() {
-        UserView.setUser(new MockUserView());
+        // UserView.setUser(new MockUserView());
     }
 
     private static RootDomainObject getRootDomainObject() {
@@ -990,8 +986,8 @@ public class CreateTestData {
             //final Person person = Role.getRoleByRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER).getAssociatedPersonsSet().iterator().next();
             final Person person = RootDomainObject.getInstance().getUsersSet().iterator().next().getPerson();
             Role.getRoleByRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER).addAssociatedPersons(person);
-            final IUserView userView = new Authenticate().mock(person, "://localhost");
-            UserView.setUser(userView);
+            // final User userView = new Authenticate().mock(person, "://localhost");
+            // UserView.setUser(userView);
 
             final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
             for (final ExecutionSemester executionPeriod : rootDomainObject.getExecutionPeriodsSet()) {
@@ -1151,8 +1147,8 @@ public class CreateTestData {
 
         EmailAddress.createEmailAddress(person, "abc" + person.getExternalId() + "@gmail.com", PartyContactType.PERSONAL, true);
 
-        final User user = person.getUser();
-        final Login login = user.readUserLoginIdentification();
+        final User user = person.getBennuUser();
+        final Login login = null; // user.readUserLoginIdentification();
         login.setPassword(PasswordEncryptor.encryptPassword("pass"));
         login.setActive(Boolean.TRUE);
         LoginAlias.createNewCustomLoginAlias(login, usernamePrefix + i);
@@ -1587,65 +1583,6 @@ public class CreateTestData {
             }
         }
         return false;
-    }
-
-    private static class MockUserView implements IUserView {
-        private final DateTime userCreationDateTime = new DateTime();
-
-        @Override
-        public DateTime getExpirationDate() {
-            return null;
-        }
-
-        @Override
-        public String getFullName() {
-            return null;
-        }
-
-        @Override
-        public Person getPerson() {
-            return null;
-        }
-
-        @Override
-        public Collection<RoleType> getRoleTypes() {
-            return null;
-        }
-
-        @Override
-        public String getUtilizador() {
-            return null;
-        }
-
-        @Override
-        public boolean hasRoleType(RoleType roleType) {
-            return true;
-        }
-
-        @Override
-        public String getPrivateConstantForDigestCalculation() {
-            return null;
-        }
-
-        @Override
-        public String getUsername() {
-            return null;
-        }
-
-        @Override
-        public boolean hasRole(String role) {
-            return false;
-        }
-
-        @Override
-        public DateTime getLastLogoutDateTime() {
-            return null;
-        }
-
-        @Override
-        public DateTime getUserCreationDateTime() {
-            return userCreationDateTime;
-        }
     }
 
 }

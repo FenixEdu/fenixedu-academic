@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.Action;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.AuthenticateKerberos;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoAutenticacao;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidPasswordServiceException;
@@ -48,7 +48,7 @@ public class CheckPasswordKerberosAction extends FenixAction {
             String result = null;
 
             try {
-                final IUserView userView =
+                final User userView =
                         AuthenticateKerberos.runKerberosExternalAuthentication(username, password, requestURL,
                                 BaseAuthenticationAction.getRemoteHostName(request));
 

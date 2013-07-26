@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Filtro;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.security.Authenticate;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.UnitSite;
@@ -11,7 +12,7 @@ public class ResearchSiteManagerAuthorizationFilter {
     public static final ResearchSiteManagerAuthorizationFilter instance = new ResearchSiteManagerAuthorizationFilter();
 
     public void execute(UnitSite site) throws NotAuthorizedException {
-        IUserView userView = AccessControl.getUserView();
+        User userView = Authenticate.getUser();
         Person person = userView.getPerson();
 
         if (!site.getManagersSet().contains(person)) {

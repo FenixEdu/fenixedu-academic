@@ -9,14 +9,14 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.UIViewState;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 
 import org.apache.commons.lang.StringUtils;
 
-import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.bennu.core.security.Authenticate;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class FenixBackingBean {
@@ -35,8 +35,8 @@ public class FenixBackingBean {
         facesContext.getViewRoot().setLocale(locale);
     }
 
-    public IUserView getUserView() {
-        return UserView.getUser();
+    public User getUserView() {
+        return Authenticate.getUser();
     }
 
     public String getErrorMessage() {

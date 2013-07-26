@@ -114,6 +114,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -235,7 +236,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
         predicate.add(new Predicate<PhdIndividualProgramProcess>() {
             @Override
             public boolean eval(PhdIndividualProgramProcess process) {
-                return process.isAllowedToManageProcess(AccessControl.getUserView());
+                return process.isAllowedToManageProcess(Authenticate.getUser());
             }
         });
 
@@ -1452,7 +1453,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
         processData.getPhdMigrationIndividualPersonalData().setPersonalBean(personalDataBean);
 
         try {
-            processData.proceedWithMigration(AccessControl.getUserView());
+            processData.proceedWithMigration(Authenticate.getUser());
             addSuccessMessage(request, "message.migration.manual.candidacy.success");
         } catch (PhdMigrationException e) {
             addErrorMessage(request, e.getKey());

@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidPasswordServiceException;
 import net.sourceforge.fenixedu.domain.Person;
@@ -12,7 +12,7 @@ import pt.ist.fenixframework.Atomic;
 
 public class AuthenticateExpiredKerberos extends Authenticate {
 
-    protected IUserView run(final String username, final String password, final String newPassword, final String requestURL,
+    protected User run(final String username, final String password, final String newPassword, final String requestURL,
             String remoteHostName) throws ExcepcaoPersistencia, ExcepcaoAutenticacao, FenixServiceException {
 
         Person person = Person.readPersonByUsernameWithOpenedLogin(username);
@@ -65,7 +65,7 @@ public class AuthenticateExpiredKerberos extends Authenticate {
     private static final AuthenticateExpiredKerberos serviceInstance = new AuthenticateExpiredKerberos();
 
     @Atomic
-    public static IUserView runAuthenticationExpired(String username, String password, String newPassword, String requestURL,
+    public static User runAuthenticationExpired(String username, String password, String newPassword, String requestURL,
             String remoteHostName) throws ExcepcaoPersistencia, ExcepcaoAutenticacao, FenixServiceException {
         return serviceInstance.run(username, password, newPassword, requestURL, remoteHostName);
     }

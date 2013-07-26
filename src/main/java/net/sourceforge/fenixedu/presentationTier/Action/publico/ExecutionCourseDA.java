@@ -15,7 +15,6 @@ import java.util.TreeMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLessonInstanceAggregation;
 import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.StudentInquiriesCourseResultBean;
 import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.TeachingInquiryDTO;
@@ -59,8 +58,9 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.RequestUtils;
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixframework.DomainObject;
+import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixframework.FenixFramework;
 
 public class ExecutionCourseDA extends SiteVisualizationDA {
@@ -210,12 +210,12 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
             return true;
         }
 
-        if (!UserView.hasUser()) { //public access
+        if (!Authenticate.hasUser()) { //public access
             return false;
         }
 
-        final IUserView userview = (IUserView) UserView.getUser();
-        if (userview.hasRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER)) { // allow gop to view
+        final User userview = Authenticate.getUser();
+        if (userview.getPerson().hasRole(RoleType.RESOURCE_ALLOCATION_MANAGER)) { // allow gop to view
             return true;
         }
 

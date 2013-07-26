@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain.caseHandling;
 
 import java.util.Comparator;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 import org.joda.time.DateTime;
@@ -17,12 +17,12 @@ public class ProcessLog extends ProcessLog_Base {
         }
     };
 
-    public ProcessLog(Process process, IUserView userView, Activity<?> activity) {
+    public ProcessLog(Process process, User userView, Activity<?> activity) {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
         setProcess(process);
 
-        setUserName(userView != null ? userView.getUtilizador() : "PUBLICO");
+        setUserName(userView != null ? userView.getUsername() : "PUBLICO");
         setActivity(activity.getClass().getName());
         setWhenDateTime(new DateTime());
     }

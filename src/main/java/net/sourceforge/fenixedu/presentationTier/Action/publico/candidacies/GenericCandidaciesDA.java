@@ -7,8 +7,6 @@ import java.util.SortedSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.candidacy.GenericApplication;
 import net.sourceforge.fenixedu.domain.candidacy.GenericApplicationFile;
 import net.sourceforge.fenixedu.domain.candidacy.GenericApplicationLetterOfRecomentation;
@@ -29,6 +27,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -47,8 +47,8 @@ public class GenericCandidaciesDA extends FenixDispatchAction {
         final SortedSet<GenericApplicationPeriod> periods = GenericApplicationPeriod.getPeriods();
         request.setAttribute("periods", periods);
 
-        final IUserView userView = AccessControl.getUserView();
-        if (userView != null && userView.hasRoleType(RoleType.MANAGER)) {
+        final User userView = Authenticate.getUser();
+        if (userView != null && userView.getPerson().hasRole(RoleType.MANAGER)) {
             final GenericApplicationPeriodBean genericApplicationPeriodBean = new GenericApplicationPeriodBean();
             request.setAttribute("genericApplicationPeriodBean", genericApplicationPeriodBean);
         }

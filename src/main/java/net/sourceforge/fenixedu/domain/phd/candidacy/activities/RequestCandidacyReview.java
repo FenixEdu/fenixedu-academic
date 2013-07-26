@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.domain.phd.candidacy.activities;
 import java.util.Arrays;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
@@ -28,7 +28,7 @@ public class RequestCandidacyReview extends PhdProgramCandidacyProcessActivity {
     PhdProgramCandidacyProcessState.WAITING_FOR_SCIENTIFIC_COUNCIL_RATIFICATION);
 
     @Override
-    protected void activityPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
+    protected void activityPreConditions(PhdProgramCandidacyProcess process, User userView) {
         if (PREVIOUS_STATE.contains(process.getActiveState())) {
             return;
         }
@@ -36,7 +36,7 @@ public class RequestCandidacyReview extends PhdProgramCandidacyProcessActivity {
     }
 
     @Override
-    protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
+    protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, User userView, Object object) {
 
         final PhdIndividualProgramProcess mainProcess = process.getIndividualProgramProcess();
         if (!mainProcess.hasPhdProgram()) {

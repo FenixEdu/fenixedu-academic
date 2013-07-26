@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.ExternalUser;
 import net.sourceforge.fenixedu.domain.Photograph;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -27,6 +26,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixWebFramework.servlets.filters.I18NFilter;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
@@ -117,7 +118,7 @@ public class ExportPhdIndividualProgramProcessInformation extends FenixAction {
 
     private ActionForward checkPermissions(final HttpServletRequest request, final HttpServletResponse response)
             throws IOException {
-        final IUserView userView = AccessControl.getUserView();
+        final User userView = Authenticate.getUser();
         if (userView == null) {
             final String externalUser = (String) request.getSession().getAttribute(getClass().getName());
             if (externalUser != null && !externalUser.isEmpty()) {
@@ -132,7 +133,7 @@ public class ExportPhdIndividualProgramProcessInformation extends FenixAction {
                 request.getSession().setAttribute(getClass().getName(), username);
                 return null;
             }
-        } else if (userView.hasRoleType(RoleType.MANAGER)) {
+        } else if (userView.getPerson().hasRole(RoleType.MANAGER)) {
             return null;
         }
         return displayUnAuhtorizedPage(request, response);

@@ -7,7 +7,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.security.Authenticate;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.MetaDomainObject;
 import net.sourceforge.fenixedu.domain.Section;
@@ -99,7 +100,7 @@ public class ViewGenericContents extends FenixDispatchAction {
         String type = getType(request);
         String forwardSufix = type.substring(type.lastIndexOf(".") + 1, type.length());
         FilterFunctionalityContext context = getContext(request);
-        IUserView userView = AccessControl.getUserView();
+        User userView = Authenticate.getUser();
 
         if (section.isAvailable(context)) {
             prepareProtectedItems(request, userView, section.getOrderedItems(), context);
@@ -168,7 +169,7 @@ public class ViewGenericContents extends FenixDispatchAction {
                 .getAssociatedPortal();
     }
 
-    private void prepareProtectedItems(HttpServletRequest request, IUserView userView, Collection<Item> items,
+    private void prepareProtectedItems(HttpServletRequest request, User userView, Collection<Item> items,
             FunctionalityContext context) {
         List<ProtectedItem> protectedItems = setupItems(request, context, items);
 
@@ -199,7 +200,7 @@ public class ViewGenericContents extends FenixDispatchAction {
         return protectedItems;
     }
 
-    private boolean isAuthenticated(IUserView userView) {
+    private boolean isAuthenticated(User userView) {
         return userView != null;
     }
 }

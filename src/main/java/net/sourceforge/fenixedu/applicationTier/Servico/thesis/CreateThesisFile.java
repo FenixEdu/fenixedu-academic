@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.commons.io.FileUtils;
 
+import pt.ist.bennu.core.security.Authenticate;
 import pt.utl.ist.fenix.tools.file.FileDescriptor;
 import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 import pt.utl.ist.fenix.tools.file.FileSetMetaData;
@@ -36,11 +37,11 @@ public abstract class CreateThesisFile {
     public ThesisFile run(Thesis thesis, File fileToUpload, String fileName, String title, String subTitle, Language language)
             throws FenixServiceException, IOException {
 
-        if (!thesis.isWaitingConfirmation() && !AccessControl.getUserView().hasRoleType(RoleType.SCIENTIFIC_COUNCIL)) {
+        if (!thesis.isWaitingConfirmation() && !Authenticate.getUser().getPerson().hasRole(RoleType.SCIENTIFIC_COUNCIL)) {
             throw new DomainException("thesis.files.submit.unavailable");
         }
 
-        if (!thesis.isDeclarationAccepted() && !AccessControl.getUserView().hasRoleType(RoleType.SCIENTIFIC_COUNCIL)) {
+        if (!thesis.isDeclarationAccepted() && !Authenticate.getUser().getPerson().hasRole(RoleType.SCIENTIFIC_COUNCIL)) {
             throw new DomainException("thesis.files.submit.unavailable");
         }
 

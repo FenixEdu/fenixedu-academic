@@ -8,7 +8,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.DeleteAnswer;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.GetStudentTest;
@@ -140,7 +140,7 @@ public class TestsStudentAction extends FenixDispatchAction {
     }
 
     private Person getPerson(HttpServletRequest request) {
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         return userView.getPerson();
     }

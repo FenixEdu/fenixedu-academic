@@ -7,7 +7,7 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -15,7 +15,8 @@ import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.BundleUtil;
-import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.bennu.core.security.Authenticate;
+
 import pt.ist.fenixframework.Atomic;
 
 public class Sender extends Sender_Base {
@@ -29,7 +30,7 @@ public class Sender extends Sender_Base {
         }
 
     };
- 
+
     public Sender() {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
@@ -62,9 +63,9 @@ public class Sender extends Sender_Base {
     }
 
     public static boolean hasAvailableSender() {
-        final IUserView userView = UserView.getUser();
+        final User userView = Authenticate.getUser();
         if (userView != null) {
-            if (userView.hasRoleType(RoleType.MANAGER)) {
+            if (userView.getPerson().hasRole(RoleType.MANAGER)) {
                 return true;
             }
 
@@ -82,16 +83,16 @@ public class Sender extends Sender_Base {
         return false;
     }
 
-    protected boolean allows(final IUserView userView) {
+    protected boolean allows(final User userView) {
         return getMembers().allows(userView);
     }
 
     public static Set<Sender> getAvailableSenders() {
-        final IUserView userView = UserView.getUser();
+        final User userView = Authenticate.getUser();
 
         final Set<Sender> senders = new TreeSet<Sender>(Sender.COMPARATOR_BY_FROM_NAME);
         for (final Sender sender : RootDomainObject.getInstance().getUtilEmailSendersSet()) {
-            if (sender.getMembers().allows(userView) || (userView != null && userView.hasRoleType(RoleType.MANAGER))) {
+            if (sender.getMembers().allows(userView) || (userView != null && userView.getPerson().hasRole(RoleType.MANAGER))) {
                 senders.add(sender);
             }
         }

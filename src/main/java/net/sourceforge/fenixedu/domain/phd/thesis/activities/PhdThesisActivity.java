@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain.phd.thesis.activities;
 
 import java.util.Collections;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
@@ -20,15 +20,15 @@ import net.sourceforge.fenixedu.util.phd.PhdProperties;
 abstract public class PhdThesisActivity extends Activity<PhdThesisProcess> {
 
     @Override
-    final public void checkPreConditions(final PhdThesisProcess process, final IUserView userView) {
+    final public void checkPreConditions(final PhdThesisProcess process, final User userView) {
         processPreConditions(process, userView);
         activityPreConditions(process, userView);
     }
 
-    protected void processPreConditions(final PhdThesisProcess process, final IUserView userView) {
+    protected void processPreConditions(final PhdThesisProcess process, final User userView) {
     }
 
-    abstract protected void activityPreConditions(final PhdThesisProcess process, final IUserView userView);
+    abstract protected void activityPreConditions(final PhdThesisProcess process, final User userView);
 
     public static String getAccessInformation(PhdIndividualProgramProcess process, PhdParticipant participant,
             String coordinatorMessage, String teacherMessage) {
@@ -57,7 +57,7 @@ abstract public class PhdThesisActivity extends Activity<PhdThesisProcess> {
     }
 
     @Override
-    protected void log(PhdThesisProcess process, IUserView userView, Object object) {
+    protected void log(PhdThesisProcess process, User userView, Object object) {
         PhdLog.logActivity(this, process, userView, object);
     }
 

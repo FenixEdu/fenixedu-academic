@@ -15,7 +15,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ReadStudentCurricularPlansForSeminaries;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ReadStudentCurriculum;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
@@ -54,9 +54,9 @@ public class ViewCandidateCurriculum extends FenixAction {
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
         String username = request.getParameter("username");
-        IUserView studentUserView = new MockUserView(username, new ArrayList(0), null);
+        User studentUserView = new MockUserView(username, new ArrayList(0), null);
         List cps = null;
         List enrollments = null;
         InfoStudentCurricularPlan selectedSCP = null;

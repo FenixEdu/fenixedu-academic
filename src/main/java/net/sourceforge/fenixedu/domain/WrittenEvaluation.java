@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope.DegreeModuleScopeCurricularCourseScope;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context.DegreeModuleScopeContext;
@@ -34,6 +33,8 @@ import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.security.Authenticate;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
@@ -188,8 +189,8 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
     }
 
     protected void checkIntervalBetweenEvaluations() {
-        final IUserView userView = AccessControl.getUserView();
-        if (userView == null || !userView.hasRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER)) {
+        final User userView = Authenticate.getUser();
+        if (userView == null || !userView.getPerson().hasRole(RoleType.RESOURCE_ALLOCATION_MANAGER)) {
             checkIntervalBetweenEvaluationsCondition();
         }
     }

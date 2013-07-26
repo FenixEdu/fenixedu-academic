@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -44,7 +45,7 @@ public class PhdProgram extends PhdProgram_Base {
         super();
         setRootDomainObject(RootDomainObject.getInstance());
         setWhenCreated(new DateTime());
-        setCreator(AccessControl.getUserView().getUtilizador());
+        setCreator(Authenticate.getUser().getUsername());
         new PhdProgramServiceAgreementTemplate(this);
     }
 

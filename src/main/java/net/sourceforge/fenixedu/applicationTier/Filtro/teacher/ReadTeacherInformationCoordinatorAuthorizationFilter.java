@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.applicationTier.Filtro.teacher;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByRoleFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -17,6 +16,8 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.security.Authenticate;
 
 public class ReadTeacherInformationCoordinatorAuthorizationFilter extends AuthorizationByRoleFilter {
 
@@ -29,14 +30,14 @@ public class ReadTeacherInformationCoordinatorAuthorizationFilter extends Author
     }
 
     public void execute(String user, String argExecutionYear) throws NotAuthorizedException {
-        IUserView id = AccessControl.getUserView();
-        if (((id != null && id.getRoleTypes() != null && !id.hasRoleType(getRoleType()))) || (id == null)
-                || (id.getRoleTypes() == null) || !verifyCondition(id, user)) {
+        User id = Authenticate.getUser();
+        if (((id != null && id.getPerson().getPersonRolesSet() != null && !id.getPerson().hasRole(getRoleType())))
+                || (id == null) || (id.getPerson().getPersonRolesSet() == null) || !verifyCondition(id, user)) {
             throw new NotAuthorizedException();
         }
     }
 
-    protected boolean verifyCondition(IUserView id, String user) {
+    protected boolean verifyCondition(User id, String user) {
         final Person person = id.getPerson();
 
         List<ExecutionDegree> executionDegrees = ExecutionDegree.getAllCoordinatedByTeacher(person);

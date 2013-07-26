@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.phd.thesis.activities;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.phd.alert.AlertService;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessStateType;
 public class RejectJuryElementsDocuments extends PhdThesisActivity {
 
     @Override
-    protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
+    protected void activityPreConditions(PhdThesisProcess process, User userView) {
 
         if (!process.getActiveState().equals(PhdThesisProcessStateType.JURY_WAITING_FOR_VALIDATION)) {
             throw new PreConditionNotValidException();
@@ -32,7 +32,7 @@ public class RejectJuryElementsDocuments extends PhdThesisActivity {
     }
 
     @Override
-    protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
+    protected PhdThesisProcess executeActivity(PhdThesisProcess process, User userView, Object object) {
         final PhdThesisProcessBean bean = (PhdThesisProcessBean) object;
 
         process.deleteLastState();

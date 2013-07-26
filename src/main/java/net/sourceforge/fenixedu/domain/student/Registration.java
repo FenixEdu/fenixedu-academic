@@ -18,7 +18,8 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.security.Authenticate;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -1838,7 +1839,7 @@ public class Registration extends Registration_Base {
     // ;
 
     private void checkIfReachedAttendsLimit() {
-        final IUserView userView = AccessControl.getUserView();
+        final User userView = Authenticate.getUser();
         if (userView == null
                 || !AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(),
                         AcademicOperationType.STUDENT_ENROLMENTS).contains(this.getDegree())) {

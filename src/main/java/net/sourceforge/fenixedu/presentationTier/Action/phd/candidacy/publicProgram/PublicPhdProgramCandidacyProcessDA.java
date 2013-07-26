@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.utils.MockUserView;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Person;
@@ -23,6 +22,8 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.bennu.core.domain.User;
 
 public abstract class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProcessDA {
     private static final String SIBS_ENTITY_CODE = PropertiesManager.getProperty("sibs.entityCode");
@@ -79,7 +80,7 @@ public abstract class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandi
         addActionMessage("validation", request, key, args);
     }
 
-    protected IUserView createMockUserView(final Person person) {
+    protected User createMockUserView(final Person person) {
         return new MockUserView(null, Collections.EMPTY_LIST, person);
     }
 

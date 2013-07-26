@@ -5,7 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift.EnrollStudentInShifts;
 import net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift.EnrollStudentInShifts.StudentNotFoundServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -76,7 +76,7 @@ public class EnrollStudentInShiftsAction extends FenixAction {
         return FenixFramework.getDomainObject(request.getParameter("registrationOID"));
     }
 
-    private Registration getStudent(final IUserView userView) {
+    private Registration getStudent(final User userView) {
         Registration registration = userView.getPerson().getStudentByUsername();
         if (registration == null) {
             registration = userView.getPerson().getStudentByType(DegreeType.DEGREE);

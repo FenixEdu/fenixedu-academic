@@ -13,7 +13,7 @@ import org.apache.commons.beanutils.BeanComparator;
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
-import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.bennu.core.security.Authenticate;
 
 public class PortalProvider implements DataProvider {
 
@@ -27,7 +27,7 @@ public class PortalProvider implements DataProvider {
         for (Section portal : RootDomainObject.getInstance().getRootPortal().getChildren(Section.class)) {
             if (portal.hasAvailabilityPolicy()) {
                 if (portal.getAvailabilityPolicy().getTargetGroup()
-                        .isMember(Person.readPersonByUsername(UserView.getUser().getUsername()))) {
+                        .isMember(Person.readPersonByUsername(Authenticate.getUser().getUsername()))) {
                     portalSet.add(portal);
                 }
             } else {

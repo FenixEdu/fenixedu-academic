@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.guide.InvalidGuideSituationServiceException;
@@ -53,7 +53,7 @@ import pt.ist.fenixframework.FenixFramework;
 public class EditReimbursementGuide {
 
     @Atomic
-    public static void run(String reimbursementGuideId, String situation, Date officialDate, String remarks, IUserView userView)
+    public static void run(String reimbursementGuideId, String situation, Date officialDate, String remarks, User userView)
             throws FenixServiceException {
         check(RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE);
         ReimbursementGuide reimbursementGuide = FenixFramework.getDomainObject(reimbursementGuideId);
@@ -68,7 +68,7 @@ public class EditReimbursementGuide {
         }
         ReimbursementGuideSituation newActiveSituation = new ReimbursementGuideSituation();
 
-        Person person = Person.readPersonByUsername(userView.getUtilizador());
+        Person person = Person.readPersonByUsername(userView.getUsername());
         Employee employee = person.getEmployee();
 
         newActiveSituation.setEmployee(employee);

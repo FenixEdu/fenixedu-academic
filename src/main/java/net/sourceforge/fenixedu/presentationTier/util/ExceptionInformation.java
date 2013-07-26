@@ -5,14 +5,14 @@ import java.util.Enumeration;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.dataTransferObject.support.SupportRequestBean;
 import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.struts.action.ActionMapping;
 
-import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.bennu.core.security.Authenticate;
 
 public class ExceptionInformation {
 
@@ -99,9 +99,9 @@ public class ExceptionInformation {
         exceptionInfo.append("[UserLoggedIn] ");
 
         SupportRequestBean requestBean;
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         if (userView != null) {
-            exceptionInfo.append(userView.getUtilizador()).append("\n");
+            exceptionInfo.append(userView.getUsername()).append("\n");
             requestBean = SupportRequestBean.generateExceptionBean(userView.getPerson());
             if (AbstractFunctionalityContext.getCurrentContext(request) != null) {
                 requestBean.setRequestContext(AbstractFunctionalityContext.getCurrentContext(request)

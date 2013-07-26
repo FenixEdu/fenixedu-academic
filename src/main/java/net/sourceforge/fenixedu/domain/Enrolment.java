@@ -54,6 +54,7 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.consistencyPredicates.ConsistencyPredicate;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -1662,7 +1663,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         enrolment.setEnrollmentState(optionalEnrolment.getEnrollmentState());
         enrolment.setExecutionPeriod(optionalEnrolment.getExecutionPeriod());
         enrolment.setEnrolmentEvaluationType(optionalEnrolment.getEnrolmentEvaluationType());
-        enrolment.setCreatedBy(AccessControl.getUserView().getUtilizador());
+        enrolment.setCreatedBy(Authenticate.getUser().getUsername());
         enrolment.setCreationDateDateTime(optionalEnrolment.getCreationDateDateTime());
         enrolment.setEnrolmentCondition(optionalEnrolment.getEnrolmentCondition());
         enrolment.setCurriculumGroup(curriculumGroup);

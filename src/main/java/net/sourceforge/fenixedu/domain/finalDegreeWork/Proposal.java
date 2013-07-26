@@ -8,7 +8,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -169,16 +169,16 @@ public class Proposal extends Proposal_Base {
         return false;
     }
 
-    public boolean canBeReadBy(final IUserView userView) {
+    public boolean canBeReadBy(final User userView) {
         if (getStatus() != null && getStatus().equals(FinalDegreeWorkProposalStatus.PUBLISHED_STATUS)) {
             return true;
         }
         if (getOrientator() != null && getOrientator() != null && userView != null
-                && getOrientator().getUsername().equals(userView.getUtilizador())) {
+                && getOrientator().getUsername().equals(userView.getUsername())) {
             return true;
         }
         if (getCoorientator() != null && getCoorientator() != null && userView != null
-                && getCoorientator().getUsername().equals(userView.getUtilizador())) {
+                && getCoorientator().getUsername().equals(userView.getUsername())) {
             return true;
         }
         if (userView != null) {

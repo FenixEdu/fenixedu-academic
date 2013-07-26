@@ -5,7 +5,7 @@ import java.text.ParseException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -19,7 +19,7 @@ import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 
-import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixframework.FenixFramework;
 
 public class DepartmentMemberShowTeacherCreditsDispatchAction extends ShowTeacherCreditsDispatchAction {
@@ -33,7 +33,7 @@ public class DepartmentMemberShowTeacherCreditsDispatchAction extends ShowTeache
 
         Teacher requestedTeacher = FenixFramework.getDomainObject((String) teacherCreditsForm.get("teacherId"));
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         Teacher loggedTeacher = userView.getPerson().getTeacher();
 
         if (requestedTeacher == null || loggedTeacher != requestedTeacher) {

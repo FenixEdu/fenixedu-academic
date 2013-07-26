@@ -12,7 +12,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.Seminaries.GetAllSeminaries;
 import net.sourceforge.fenixedu.applicationTier.Servico.Seminaries.GetCandidaciesByStudentID;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCandidacy;
@@ -32,7 +32,7 @@ import org.apache.struts.action.ActionMapping;
  * 
  */
 public class ListAllSeminaries extends FenixAction {
-    public List setCurrentCandidaciesInfo(ActionMapping mapping, HttpServletRequest request, IUserView userView)
+    public List setCurrentCandidaciesInfo(ActionMapping mapping, HttpServletRequest request, User userView)
             throws FenixActionException {
         List currentCandidacies = null;
         try {
@@ -47,7 +47,7 @@ public class ListAllSeminaries extends FenixAction {
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixActionException {
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
         List seminaries = null;
         ActionForward destiny = null;
         List currentCandidacies = setCurrentCandidaciesInfo(mapping, request, userView);

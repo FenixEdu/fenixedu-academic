@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.candidacy.ExecuteStateOperation;
 import net.sourceforge.fenixedu.applicationTier.Servico.candidacy.LogFirstTimeCandidacyTimestamp;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -152,7 +152,7 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
             HttpServletResponse response, CandidacyOperation candidacyOperation) throws FenixServiceException,
             FenixActionException {
 
-        final IUserView userView = getUserView(request);
+        final User userView = getUserView(request);
 
         if (candidacyOperation == null) {
             // possible due to first-time candidacy summary generation link in manager portal

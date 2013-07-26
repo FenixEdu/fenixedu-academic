@@ -3,7 +3,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@page import="org.joda.time.LocalDate"%>
-<%@page import="pt.ist.fenixWebFramework.security.UserView"%><html:xhtml/>
+<html:xhtml/>
 
 <%@page import="net.sourceforge.fenixedu.injectionCode.AccessControl" %>
 

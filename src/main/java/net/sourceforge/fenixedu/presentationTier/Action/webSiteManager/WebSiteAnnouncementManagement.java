@@ -10,7 +10,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.UnitBoardPermittedGroupType;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
@@ -212,7 +212,7 @@ public class WebSiteAnnouncementManagement extends AnnouncementManagement {
     private void changeOrder(AnnouncementBoard board, HttpServletRequest request, int direction) throws FenixServiceException {
         String oid = request.getParameter("oid");
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         Announcement announcement = FenixFramework.getDomainObject(oid);
         List<Announcement> orderedAnnouncements = getOrderedStickies(board, request);

@@ -6,6 +6,8 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.DateTime;
 
+import pt.ist.bennu.core.security.Authenticate;
+
 public class EnrolmentEvaluationLog extends EnrolmentEvaluationLog_Base {
 
     EnrolmentEvaluationLog() {
@@ -50,7 +52,7 @@ public class EnrolmentEvaluationLog extends EnrolmentEvaluationLog_Base {
     }
 
     protected String getCurrentUser() {
-        return AccessControl.getUserView() != null ? AccessControl.getUserView().getUtilizador() : null;
+        return Authenticate.getUser() != null ? Authenticate.getUser().getUsername() : null;
     }
 
     @Deprecated

@@ -15,6 +15,8 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.bennu.core.security.Authenticate;
+
 public class EPFLCandidatesReport extends PhdReport {
 
     private final ResourceBundle bundle;
@@ -40,7 +42,7 @@ public class EPFLCandidatesReport extends PhdReport {
 
         int i = 2;
         for (PhdIndividualProgramProcess process : processes) {
-            if (isProcessFromEPFL(process) && process.isAllowedToManageProcess(AccessControl.getUserView())) {
+            if (isProcessFromEPFL(process) && process.isAllowedToManageProcess(Authenticate.getUser())) {
                 HSSFRow row = sheet.createRow(i);
 
                 fillRow(process, row);

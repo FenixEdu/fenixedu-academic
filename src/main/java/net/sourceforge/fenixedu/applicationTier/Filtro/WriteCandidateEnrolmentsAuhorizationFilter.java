@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -13,6 +12,8 @@ import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -25,11 +26,11 @@ public class WriteCandidateEnrolmentsAuhorizationFilter extends Filtro {
 
     public void execute(Set<String> selectedCurricularCoursesIDs, String candidateID, Double credits, String givenCreditsRemarks)
             throws NotAuthorizedException {
-        IUserView id = AccessControl.getUserView();
+        User id = Authenticate.getUser();
 
-        if ((id != null && id.getRoleTypes() != null && !containsRoleType(id.getRoleTypes()))
-                || (id != null && id.getRoleTypes() != null && !hasPrivilege(id, selectedCurricularCoursesIDs, candidateID))
-                || (id == null) || (id.getRoleTypes() == null)) {
+        if ((id != null && id.getPerson().getPersonRolesSet() != null && !containsRoleType(id.getPerson().getPersonRolesSet()))
+                || (id != null && id.getPerson().getPersonRolesSet() != null && !hasPrivilege(id, selectedCurricularCoursesIDs,
+                        candidateID)) || (id == null) || (id.getPerson().getPersonRolesSet() == null)) {
             throw new NotAuthorizedException();
         }
     }
@@ -42,12 +43,12 @@ public class WriteCandidateEnrolmentsAuhorizationFilter extends Filtro {
         return roles;
     }
 
-    private boolean hasPrivilege(IUserView id, Set<String> selectedCurricularCoursesIDs, String candidateID) {
-        if (id.hasRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE)) {
+    private boolean hasPrivilege(User id, Set<String> selectedCurricularCoursesIDs, String candidateID) {
+        if (id.getPerson().hasRole(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE)) {
             return true;
         }
 
-        if (id.hasRoleType(RoleType.COORDINATOR)) {
+        if (id.getPerson().hasRole(RoleType.COORDINATOR)) {
             final Person person = id.getPerson();
 
             MasterDegreeCandidate masterDegreeCandidate = FenixFramework.getDomainObject(candidateID);
@@ -67,8 +68,7 @@ public class WriteCandidateEnrolmentsAuhorizationFilter extends Filtro {
 
                 // Modified by Fernanda Quitério
 
-                CurricularCourse curricularCourse =
-                        (CurricularCourse) FenixFramework.getDomainObject(selectedCurricularCourse);
+                CurricularCourse curricularCourse = (CurricularCourse) FenixFramework.getDomainObject(selectedCurricularCourse);
                 if (!curricularCourse.getDegreeCurricularPlan().equals(
                         masterDegreeCandidate.getExecutionDegree().getDegreeCurricularPlan())) {
                     return false;

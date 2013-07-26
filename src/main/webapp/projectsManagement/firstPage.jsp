@@ -1,5 +1,5 @@
 <%@page import="net.sourceforge.fenixedu.domain.person.RoleType"%>
-<%@page import="net.sourceforge.fenixedu.applicationTier.IUserView"%>
+<%@page import="pt.ist.bennu.core.domain.User"%>
 <%@page import="net.sourceforge.fenixedu.injectionCode.AccessControl"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <html:xhtml/>

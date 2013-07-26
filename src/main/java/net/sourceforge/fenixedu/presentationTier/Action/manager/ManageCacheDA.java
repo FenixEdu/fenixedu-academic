@@ -50,7 +50,7 @@ public class ManageCacheDA extends FenixDispatchAction {
         Profiler.report();
         Profiler.resetInstance();
 
-        // IUserView userView = UserView.getUser();
+        // User userView = Authenticate.getUser();
 
         Integer numberCachedItems = ReadNumberCachedItems.run();
 

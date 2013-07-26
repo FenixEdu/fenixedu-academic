@@ -19,7 +19,7 @@ import java.util.Set;
 import javax.faces.component.html.HtmlInputHidden;
 import javax.faces.model.SelectItem;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice.AssociateNewFunctionToPerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice.DeletePersonFunction;
 import net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice.EditPersonFunction;
@@ -488,7 +488,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 
     public Unit getEmployeeDepartmentUnit() {
 
-        IUserView userView = getUserView();
+        User userView = getUserView();
         Employee personEmployee = userView.getPerson().getEmployee();
         Unit departmentUnit = null;
 

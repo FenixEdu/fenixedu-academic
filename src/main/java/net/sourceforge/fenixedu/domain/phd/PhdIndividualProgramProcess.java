@@ -11,7 +11,8 @@ import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.security.Authenticate;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.AcademicProgram;
@@ -197,7 +198,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
      * Checks whether the specified user is allowed to manage this process.
      */
     @Override
-    public boolean isAllowedToManageProcess(IUserView userView) {
+    public boolean isAllowedToManageProcess(User userView) {
         Set<AcademicProgram> programs =
                 AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(),
                         AcademicOperationType.MANAGE_PHD_PROCESSES);
@@ -206,14 +207,14 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public boolean isCurrentUserAllowedToManageProcess() {
-        return isAllowedToManageProcess(AccessControl.getUserView());
+        return isAllowedToManageProcess(Authenticate.getUser());
     }
 
     /**
      * Checks whether the specified user has permission to manage this process,
      * as well as its state
      */
-    public boolean isAllowedToManageProcessState(IUserView userView) {
+    public boolean isAllowedToManageProcessState(User userView) {
         if (!isAllowedToManageProcess(userView)) {
             return false;
         }
@@ -226,19 +227,19 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public boolean isCurrentUserAllowedToManageProcessState() {
-        return isAllowedToManageProcessState(AccessControl.getUserView());
+        return isAllowedToManageProcessState(Authenticate.getUser());
     }
 
     @StartActivity
     static public class CreateCandidacy extends PhdIndividualProgramProcessActivity {
 
         @Override
-        protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+        protected void activityPreConditions(PhdIndividualProgramProcess process, User userView) {
             // no precondition to check
         }
 
         @Override
-        protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess noProcess, IUserView userView,
+        protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess noProcess, User userView,
                 Object object) {
 
             final PhdProgramCandidacyProcessBean bean = (PhdProgramCandidacyProcessBean) object;
@@ -355,7 +356,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     @Override
-    public boolean canExecuteActivity(IUserView userView) {
+    public boolean canExecuteActivity(User userView) {
         return true;
     }
 
@@ -426,7 +427,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
         return getPhdIndividualProcessNumber().getFullProcessNumber();
     }
 
-    public PhdIndividualProgramProcess edit(final IUserView userView, final PhdIndividualProgramProcessBean bean) {
+    public PhdIndividualProgramProcess edit(final User userView, final PhdIndividualProgramProcessBean bean) {
 
         checkParameters(getPerson(), getExecutionYear());
 
@@ -1006,7 +1007,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
         static public class CreatePublicCandidacy extends CreateCandidacy {
 
             @Override
-            protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+            protected void activityPreConditions(PhdIndividualProgramProcess process, User userView) {
                 // no precondition to check
             }
 
@@ -1032,7 +1033,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
             }
 
             @Override
-            protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess noProcess, IUserView userView,
+            protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess noProcess, User userView,
                     Object object) {
                 final PhdProgramCandidacyProcessBean bean = (PhdProgramCandidacyProcessBean) object;
 

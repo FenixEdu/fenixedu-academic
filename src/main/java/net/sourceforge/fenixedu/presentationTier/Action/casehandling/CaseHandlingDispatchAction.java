@@ -7,7 +7,8 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.security.Authenticate;
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.CreateNewProcess;
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.ExecuteProcessActivity;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -48,7 +49,7 @@ public abstract class CaseHandlingDispatchAction extends FenixDispatchAction {
         }
     }
 
-    protected Collection<Process> getAllowedProcessInstances(final IUserView userView) {
+    protected Collection<Process> getAllowedProcessInstances(final User userView) {
         final Set<Process> result = new TreeSet<Process>();
         for (final Process process : rootDomainObject.getProcesses()) {
             if (process.getClass().equals(getProcessType()) && process.canExecuteActivity(userView)) {
@@ -69,14 +70,14 @@ public abstract class CaseHandlingDispatchAction extends FenixDispatchAction {
     public ActionForward listProcesses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
         request.setAttribute("canCreateProcess", canCreateProcess(getProcessType().getName()));
-        request.setAttribute("processes", getAllowedProcessInstances(AccessControl.getUserView()));
+        request.setAttribute("processes", getAllowedProcessInstances(Authenticate.getUser()));
         return mapping.findForward("list-processes");
     }
 
     protected Object canCreateProcess(final String name) {
         try {
             final Activity<?> startActivity = Process.getStartActivity(name);
-            startActivity.checkPreConditions(null, AccessControl.getUserView());
+            startActivity.checkPreConditions(null, Authenticate.getUser());
         } catch (PreConditionNotValidException e) {
             return false;
         }
@@ -86,7 +87,7 @@ public abstract class CaseHandlingDispatchAction extends FenixDispatchAction {
     public ActionForward listProcessAllowedActivities(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
         final Process process = getProcess(request);
-        request.setAttribute("activities", process.getAllowedActivities(AccessControl.getUserView()));
+        request.setAttribute("activities", process.getAllowedActivities(Authenticate.getUser()));
         return mapping.findForward("list-allowed-activities");
     }
 

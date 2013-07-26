@@ -11,7 +11,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.Seminaries.GetCaseStudiesByEquivalencyID;
 import net.sourceforge.fenixedu.applicationTier.Servico.Seminaries.GetCaseStudiesByThemeID;
 import net.sourceforge.fenixedu.applicationTier.Servico.Seminaries.GetEquivalency;
@@ -38,10 +38,10 @@ import org.apache.struts.action.ActionMapping;
  */
 public class ShowCandidacySecondForm extends FenixAction {
 
-    public InfoStudent readStudentByUserView(IUserView userView) throws FenixActionException {
+    public InfoStudent readStudentByUserView(User userView) throws FenixActionException {
         InfoStudent student = null;
         try {
-            student = ReadStudentByUsername.runReadStudentByUsername(userView.getUtilizador());
+            student = ReadStudentByUsername.runReadStudentByUsername(userView.getUsername());
         } catch (Exception e) {
             throw new FenixActionException();
         }
@@ -51,7 +51,7 @@ public class ShowCandidacySecondForm extends FenixAction {
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixActionException {
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
         // externalId is equivalency's ExternalId
         String equivalencyIDString = request.getParameter("externalId");
         String themeIDString = request.getParameter("themeID");

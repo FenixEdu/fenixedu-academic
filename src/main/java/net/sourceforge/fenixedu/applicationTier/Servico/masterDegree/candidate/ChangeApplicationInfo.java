@@ -14,7 +14,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.candidate;
 
 
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
@@ -38,7 +38,7 @@ public class ChangeApplicationInfo {
 
     @Atomic
     public static InfoMasterDegreeCandidate run(InfoMasterDegreeCandidate newMasterDegreeCandidate,
-            InfoPersonEditor infoPersonEditor, IUserView userView, Boolean isNewPerson) throws FenixServiceException {
+            InfoPersonEditor infoPersonEditor, User userView, Boolean isNewPerson) throws FenixServiceException {
         check(RolePredicates.MASTER_DEGREE_CANDIDATE_PREDICATE);
 
         final ExecutionDegree executionDegree =

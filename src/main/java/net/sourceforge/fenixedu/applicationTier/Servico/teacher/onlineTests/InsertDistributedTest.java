@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -34,7 +34,8 @@ import net.sourceforge.fenixedu.utilTests.ParseQuestionException;
 
 import org.apache.commons.beanutils.BeanComparator;
 
-import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.bennu.core.security.Authenticate;
+import pt.ist.bennu.core.security.UserSession;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
@@ -57,7 +58,7 @@ public class InsertDistributedTest {
         try {
             final DistributedTestCreator distributedTestCreator =
                     new DistributedTestCreator(executionCourse, test, testInformation, evaluationTitle, beginDate, beginHour,
-                            endDate, endHour, testType, correctionAvaiability, imsFeedback, (IUserView) UserView.getUser());
+                            endDate, endHour, testType, correctionAvaiability, imsFeedback, (User) Authenticate.getUser());
             distributedTestCreator.start();
             distributedTestCreator.join();
 
@@ -100,7 +101,7 @@ public class InsertDistributedTest {
 
         private final Boolean imsFeedback;
 
-        private final IUserView userView;
+        private final User userView;
 
         private String tempDistributedTestId = null;
 
@@ -109,7 +110,7 @@ public class InsertDistributedTest {
         public DistributedTestCreator(final ExecutionCourse executionCourse, final Test test, final String testInformation,
                 final String evaluationTitle, final Calendar beginDate, final Calendar beginHour, final Calendar endDate,
                 final Calendar endHour, final TestType testType, final CorrectionAvailability correctionAvaiability,
-                final Boolean imsFeedback, IUserView userView) {
+                final Boolean imsFeedback, User userView) {
             this.executionCourseId = executionCourse.getExternalId();
             this.testId = test.getExternalId();
             this.testInformation = testInformation;
@@ -128,11 +129,11 @@ public class InsertDistributedTest {
         @Override
         public void run() {
             try {
-                UserView.setUser(userView);
+                Authenticate.setUser(userView);
                 doIt();
                 distributedTestId = tempDistributedTestId;
             } finally {
-                UserView.setUser(null);
+                Authenticate.setUser((UserSession) null);
             }
         }
 
@@ -178,7 +179,7 @@ public class InsertDistributedTest {
         protected static void runThread(final ExecutionCourse executionCourse, final Test test, final String testInformation,
                 final String evaluationTitle, final Calendar beginDate, final Calendar beginHour, final Calendar endDate,
                 final Calendar endHour, final TestType testType, final CorrectionAvailability correctionAvaiability,
-                final Boolean imsFeedback, final IUserView userView) {
+                final Boolean imsFeedback, final User userView) {
             final DistributedTestCreator distributedTestCreator =
                     new DistributedTestCreator(executionCourse, test, testInformation, evaluationTitle, beginDate, beginHour,
                             endDate, endHour, testType, correctionAvaiability, imsFeedback, userView);

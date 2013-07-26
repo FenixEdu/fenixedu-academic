@@ -2,7 +2,8 @@ package net.sourceforge.fenixedu.domain.vigilancy;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.security.Authenticate;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -123,7 +124,7 @@ public class UnavailablePeriod extends UnavailablePeriod_Base {
 
     private boolean isExamCoordinatorRequesting(Person person) {
 
-        IUserView userview = AccessControl.getUserView();
+        User userview = Authenticate.getUser();
 
         if (userview != null) {
             Person loggedPerson = userview.getPerson();

@@ -10,7 +10,7 @@ import java.util.Collection;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.presentationTier.Action.messaging.AnnouncementManagement;
 
@@ -47,7 +47,7 @@ public class ManageAdvisoriesDA extends AnnouncementManagement {
 
     @Override
     protected Collection<AnnouncementBoard> boardsToView(HttpServletRequest request) throws Exception {
-        final IUserView userView = getUserView(request);
+        final User userView = getUserView(request);
         final Collection<AnnouncementBoard> boardsToShow = new ArrayList<AnnouncementBoard>();
         for (AnnouncementBoard board : rootDomainObject.getInstitutionUnit().getBoards()) {
             if (board.getWriters() == null || board.getWriters().allows(userView)) {

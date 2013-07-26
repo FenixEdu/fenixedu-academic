@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 
@@ -31,7 +31,7 @@ public class PersonalGroup extends PersonalGroup_Base implements IGroup {
     }
 
     @Override
-    public boolean allows(IUserView userView) {
+    public boolean allows(User userView) {
         return this.getGroup().allows(userView);
     }
 

@@ -11,7 +11,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -55,7 +55,7 @@ public class EditStudentGroupShiftDispatchAction extends FenixDispatchAction {
     public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
         String studentGroupCodeString = request.getParameter("studentGroupCode");
@@ -64,7 +64,7 @@ public class EditStudentGroupShiftDispatchAction extends FenixDispatchAction {
 
         try {
             VerifyStudentGroupAtributes
-                    .run(groupPropertiesCode, null, studentGroupCode, userView.getUtilizador(), new Integer(4));
+                    .run(groupPropertiesCode, null, studentGroupCode, userView.getUsername(), new Integer(4));
 
         } catch (NotAuthorizedException e) {
             ActionErrors actionErrors2 = new ActionErrors();
@@ -176,7 +176,7 @@ public class EditStudentGroupShiftDispatchAction extends FenixDispatchAction {
             throws FenixActionException {
         DynaActionForm editStudentGroupForm = (DynaActionForm) form;
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         String studentGroupCodeString = request.getParameter("studentGroupCode");
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
@@ -196,7 +196,7 @@ public class EditStudentGroupShiftDispatchAction extends FenixDispatchAction {
         String newShiftCode = newShiftString;
 
         try {
-            EditGroupShift.run(studentGroupCode, groupPropertiesCode, newShiftCode, userView.getUtilizador());
+            EditGroupShift.run(studentGroupCode, groupPropertiesCode, newShiftCode, userView.getUsername());
         } catch (NotAuthorizedException e) {
             ActionErrors actionErrors2 = new ActionErrors();
             ActionError error2 = null;
