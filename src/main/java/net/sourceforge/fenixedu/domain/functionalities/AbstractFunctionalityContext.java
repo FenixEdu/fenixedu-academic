@@ -46,7 +46,7 @@ public abstract class AbstractFunctionalityContext implements FunctionalityConte
     @Override
     public User getLoggedUser() {
         final User userView = getUserView();
-        return userView == null ? null : userView.getPerson().getUser();
+        return userView == null ? null : userView.getPerson().getBennuUser();
     }
 
     protected String getPath(final String encoding) {

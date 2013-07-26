@@ -45,7 +45,7 @@ public class TestFilterContext implements FunctionalityContext {
 
     @Override
     public User getLoggedUser() {
-        return this.userView == null ? null : AccessControl.getPerson().getUser();
+        return this.userView == null ? null : AccessControl.getPerson().getBennuUser();
     }
 
     public Module getSelectedModule() {

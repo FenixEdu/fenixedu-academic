@@ -1,13 +1,11 @@
 package net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.publicProgram;
 
 import java.util.Collection;
-import java.util.Collections;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
-import net.sourceforge.fenixedu.applicationTier.utils.MockUserView;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
@@ -81,7 +79,7 @@ public abstract class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandi
     }
 
     protected User createMockUserView(final Person person) {
-        return new MockUserView(null, Collections.EMPTY_LIST, person);
+        return person.getBennuUser();
     }
 
     public abstract ActionForward fillPersonalDataInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,

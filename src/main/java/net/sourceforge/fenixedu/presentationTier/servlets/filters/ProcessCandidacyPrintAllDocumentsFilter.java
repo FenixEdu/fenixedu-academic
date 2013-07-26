@@ -55,7 +55,7 @@ import org.w3c.dom.NodeList;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 import org.xml.sax.SAXException;
 
-import pt.ist.fenixWebFramework.FenixWebFramework;
+import pt.ist.bennu.core.util.ConfigurationManager;
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.ResponseWrapper;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
@@ -478,7 +478,7 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
 
     private void patchLinks(Document doc, HttpServletRequest request) {
         // build basePath
-        String appContext = FenixWebFramework.getConfig().getAppContext();
+        String appContext = ConfigurationManager.getProperty("app.context");
 
         // patch css link nodes
         NodeList linkNodes = doc.getElementsByTagName("link");

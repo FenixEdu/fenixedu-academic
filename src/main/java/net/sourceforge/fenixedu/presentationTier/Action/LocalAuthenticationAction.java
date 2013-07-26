@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.presentationTier.Action;
 
 import javax.servlet.http.HttpServletRequest;
 
-import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.Authenticate;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoAutenticacao;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -20,8 +19,9 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import pt.ist.fenixWebFramework.Config.CasConfig;
-import pt.ist.fenixWebFramework.FenixWebFramework;
+import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.util.ConfigurationManager;
+import pt.ist.bennu.core.util.ConfigurationManager.CasConfig;
 import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
 import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -80,7 +80,7 @@ public class LocalAuthenticationAction extends BaseAuthenticationAction {
             throws FenixServiceException {
 
         final String serverName = request.getServerName();
-        final CasConfig casConfig = FenixWebFramework.getConfig().getCasConfig(serverName);
+        final CasConfig casConfig = ConfigurationManager.getCasConfig();
         if (casConfig != null && casConfig.isCasEnabled()) {
             throw new ExcepcaoAutenticacao("errors.noAuthorization");
         }

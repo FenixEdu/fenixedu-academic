@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico;
 
 import jvstm.TransactionalCommand;
-import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidPasswordServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.PasswordExpiredServiceException;
@@ -10,6 +9,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.kerberos.KerberosException;
 import net.sourceforge.fenixedu.util.kerberos.Script;
+import pt.ist.bennu.core.domain.User;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
@@ -98,7 +98,7 @@ public class AuthenticateKerberos extends Authenticate {
                     if (!PasswordEncryptor.areEquals(person.getPassword(), password)) {
                         SetPasswordThread.setPassword(person, password);
                     }
-                    return getUserView(person, requestURL);
+                    return person.getBennuUser();
                 } catch (KerberosException ke) {
                     if (ke.getReturnCode().equals(KerberosException.CHANGE_PASSWORD_EXPIRED)) {
                         throw new PasswordExpiredServiceException(ke.getMessage());
@@ -143,17 +143,9 @@ public class AuthenticateKerberos extends Authenticate {
     private static final AuthenticateKerberos serviceInstance = new AuthenticateKerberos();
 
     @Atomic
-    public static User runKerberosExternalAuthentication(final String username, final String password,
-            final String requestURL, final String remoteHost) throws ExcepcaoAutenticacao, FenixServiceException {
-        return serviceInstance.run(username, password, requestURL, remoteHost);
-    }
-
-    // Service Invokers migrated from Berserk
-
-    @Atomic
-    public static void runAuthenticateKerberos(final String username, final String password, final String requestURL,
+    public static User runKerberosExternalAuthentication(final String username, final String password, final String requestURL,
             final String remoteHost) throws ExcepcaoAutenticacao, FenixServiceException {
-        serviceInstance.run(username, password, requestURL, remoteHost);
+        return serviceInstance.run(username, password, requestURL, remoteHost);
     }
 
 }

@@ -10,7 +10,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
 
-import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -34,6 +33,7 @@ import net.sourceforge.fenixedu.utilTests.ParseQuestionException;
 
 import org.apache.commons.beanutils.BeanComparator;
 
+import pt.ist.bennu.core.domain.User;
 import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.bennu.core.security.UserSession;
 import pt.ist.fenixframework.Atomic;
@@ -58,7 +58,7 @@ public class InsertDistributedTest {
         try {
             final DistributedTestCreator distributedTestCreator =
                     new DistributedTestCreator(executionCourse, test, testInformation, evaluationTitle, beginDate, beginHour,
-                            endDate, endHour, testType, correctionAvaiability, imsFeedback, (User) Authenticate.getUser());
+                            endDate, endHour, testType, correctionAvaiability, imsFeedback, Authenticate.getUser());
             distributedTestCreator.start();
             distributedTestCreator.join();
 

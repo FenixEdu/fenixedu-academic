@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico;
 
-import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidPasswordServiceException;
 import net.sourceforge.fenixedu.domain.Person;
@@ -8,6 +7,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.kerberos.KerberosException;
 import net.sourceforge.fenixedu.util.kerberos.Script;
+import pt.ist.bennu.core.domain.User;
 import pt.ist.fenixframework.Atomic;
 
 public class AuthenticateExpiredKerberos extends Authenticate {
@@ -24,13 +24,13 @@ public class AuthenticateExpiredKerberos extends Authenticate {
 
             try {
                 Script.verifyPass(person.getIstUsername(), password);
-                return getUserView(person, requestURL);
+                return person.getBennuUser();
             } catch (KerberosException e) {
                 if (e.getReturnCode().equals(KerberosException.CHANGE_PASSWORD_EXPIRED)) {
                     try {
                         person.changePassword(password, newPassword);
                         Script.changeKerberosPass(person.getIstUsername(), newPassword);
-                        return getUserView(person, requestURL);
+                        return person.getBennuUser();
                     } catch (DomainException de) {
                         throw new InvalidPasswordServiceException(de.getKey());
                     } catch (KerberosException ke) {

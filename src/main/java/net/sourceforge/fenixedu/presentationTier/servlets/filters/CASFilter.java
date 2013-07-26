@@ -8,8 +8,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.RequestUtils;
-import pt.ist.fenixWebFramework.Config.CasConfig;
 import pt.ist.bennu.core.security.Authenticate;
+import pt.ist.bennu.core.util.ConfigurationManager.CasConfig;
 
 public class CASFilter extends pt.ist.fenixWebFramework.servlets.filters.CASFilter {
 

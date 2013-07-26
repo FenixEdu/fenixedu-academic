@@ -4,16 +4,12 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager.kerberosTest;
 
-import java.util.ArrayList;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.SetUserUID;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidPasswordServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.ChangePasswordKerberos;
-import net.sourceforge.fenixedu.applicationTier.utils.MockUserView;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidPasswordActionException;
 
@@ -22,6 +18,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import pt.ist.bennu.core.domain.User;
 import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
 import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -46,7 +43,7 @@ public class ChangePersonPasswordAction extends FenixAction {
 
         DynaActionForm changePasswordForm = (DynaActionForm) form;
 
-        User userView = new MockUserView((String) changePasswordForm.get("user"), new ArrayList(), null);
+        User userView = User.findByUsername((String) changePasswordForm.get("user"));
         String oldPassword = (String) changePasswordForm.get("oldPassword");
         String newPassword = (String) changePasswordForm.get("newPassword");
 
