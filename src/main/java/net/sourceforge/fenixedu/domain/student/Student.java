@@ -44,6 +44,7 @@ import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.candidacy.PersonalInformationBean;
 import net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopApplication;
 import net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopConfirmationEvent;
+import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.elections.DelegateElection;
 import net.sourceforge.fenixedu.domain.elections.DelegateElectionVotingPeriod;
@@ -2067,11 +2068,12 @@ public class Student extends Student_Base {
             studentInfoForJobBank.put("dateOfBirth", person.getDateOfBirthYearMonthDay() == null ? null : person
                     .getDateOfBirthYearMonthDay().toString());
             studentInfoForJobBank.put("nationality", person.getCountry() == null ? null : person.getCountry().getName());
-            studentInfoForJobBank.put("address", person.getDefaultPhysicalAddress().getAddress());
-            studentInfoForJobBank.put("area", person.getDefaultPhysicalAddress().getArea());
-            studentInfoForJobBank.put("areaCode", person.getDefaultPhysicalAddress().getAreaCode());
-            studentInfoForJobBank.put("districtSubdivisionOfResidence", person.getDefaultPhysicalAddress()
-                    .getDistrictSubdivisionOfResidence());
+            PhysicalAddress defaultPhysicalAddress = person.getDefaultPhysicalAddress();
+            studentInfoForJobBank.put("address", defaultPhysicalAddress == null ? null : defaultPhysicalAddress.getAddress());
+            studentInfoForJobBank.put("area", defaultPhysicalAddress == null ? null : defaultPhysicalAddress.getArea());
+            studentInfoForJobBank.put("areaCode", defaultPhysicalAddress == null ? null : defaultPhysicalAddress.getAreaCode());
+            studentInfoForJobBank.put("districtSubdivisionOfResidence",
+                    defaultPhysicalAddress == null ? null : defaultPhysicalAddress.getDistrictSubdivisionOfResidence());
             studentInfoForJobBank.put("mobilePhone", person.getDefaultMobilePhoneNumber());
             studentInfoForJobBank.put("phone", person.getDefaultPhoneNumber());
             studentInfoForJobBank.put("email", person.getEmailForSendingEmails());
@@ -2080,12 +2082,6 @@ public class Student extends Student_Base {
             studentInfoForJobBank.put("degreeOID", registration.getDegree().getExternalId());
             studentInfoForJobBank.put("isConcluded", String.valueOf(registration.isRegistrationConclusionProcessed()));
             studentInfoForJobBank.put("curricularYear", String.valueOf(registration.getCurricularYear()));
-            //	    for (CycleType cycleType : registration.getDegreeType().getCycleTypes()) {
-            //		CycleCurriculumGroup cycle = registration.getLastStudentCurricularPlan().getCycle(cycleType);
-            //		if (cycle != null) {
-            //		    studentInfoForJobBank.put(cycle.getCycleType().name(), cycle.getAverage().toString());
-            //		}
-            //	    }
             for (CycleCurriculumGroup cycleCurriculumGroup : registration.getLastStudentCurricularPlan()
                     .getCycleCurriculumGroups()) {
                 studentInfoForJobBank.put(cycleCurriculumGroup.getCycleType().name(), cycleCurriculumGroup.getAverage()
