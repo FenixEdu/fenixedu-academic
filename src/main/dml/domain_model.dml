@@ -6699,6 +6699,55 @@ class period.CandidacyPeriod  {
     	class phd.candidacy.EPFLPhdCandidacyPeriod extends phd.candidacy.PhdCandidacyPeriod {
     	}
 
+    class period.GenericApplicationPeriod extends period.CandidacyPeriod {
+    	Integer periodNumber;
+    	MultiLanguageString title;
+    	MultiLanguageString description;
+    } 
+
+class candidacy.GenericApplication {
+	String applicationNumber;
+	String email;
+	String confirmationCode;
+
+	String name;
+    Gender gender;
+    String profession;
+    MaritalStatus maritalStatus;
+    YearMonthDay dateOfBirthYearMonthDay;
+    String fiscalCode;
+    String documentIdNumber;
+    IDDocumentType idDocumentType;
+    YearMonthDay emissionDateOfDocumentIdYearMonthDay;
+    YearMonthDay expirationDateOfDocumentIdYearMonthDay;
+    String emissionLocationOfDocumentId;
+    String telephoneContact;
+    String address;
+    String area;
+    String areaCode;
+    String areaOfAreaCode;
+
+	String candidateObservations;
+}
+
+class candidacy.GenericApplicationRecomentation {
+	String name;
+	String institution;
+	String email;
+	String confirmationCode;
+}
+
+class candidacy.GenericApplicationComment {
+	DateTime created;
+	String comment;
+}
+
+class candidacy.GenericApplicationFile extends File {
+}
+
+class candidacy.GenericApplicationLetterOfRecomentation extends File {
+}
+
 class candidacyProcess.CandidacyProcess extends caseHandling.Process {
     CandidacyProcessState state;
 }
@@ -20566,4 +20615,61 @@ relation AnnualTeachingCreditsDocumentAnnualTeachingCredits {
 		multiplicity *;
 	}
 	credits.AnnualTeachingCredits playsRole annualTeachingCredits;
+}
+
+
+relation RootDomainObjectGenericApplication {
+	RootDomainObject playsRole rootDomainObject; 
+	candidacy.GenericApplication playsRole genericApplication {
+		multiplicity *;
+	}
+}
+
+relation GenericApplicationPeriodGenericApplication {
+	period.GenericApplicationPeriod playsRole genericApplicationPeriod; 
+	candidacy.GenericApplication playsRole genericApplication {
+		multiplicity *;
+	}
+}
+
+relation GenericApplicationGenericApplicationFile {
+	candidacy.GenericApplication playsRole genericApplication;
+	candidacy.GenericApplicationFile playsRole genericApplicationFile {
+		multiplicity *;
+	}
+}
+
+relation GenericApplicationNationality {
+	candidacy.GenericApplication playsRole genericApplication {
+		multiplicity *;
+	}
+	Country playsRole nationality;
+}
+
+relation RootDomainObjectGenericApplicationRecomentation {
+	RootDomainObject playsRole rootDomainObject; 
+	candidacy.GenericApplicationRecomentation playsRole genericApplicationRecomentation {
+		multiplicity *;
+	}
+}
+
+relation GenericApplicationGenericApplicationRecomentation {
+	candidacy.GenericApplication playsRole genericApplication;
+	candidacy.GenericApplicationRecomentation playsRole genericApplicationRecomentation {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectGenericApplicationComment {
+	RootDomainObject playsRole rootDomainObject; 
+	candidacy.GenericApplicationComment playsRole genericApplicationComment {
+		multiplicity *;
+	}
+}
+
+relation GenericApplicationGenericApplicationComment {
+	candidacy.GenericApplication playsRole genericApplication;
+	candidacy.GenericApplicationComment playsRole genericApplicationComment {
+		multiplicity *;
+	}
 }

@@ -1369,4 +1369,17 @@
 		<put name="body" value="/publico/candidacy/mobility/candidacyProcessClosed.jsp"/>
 		<put name="hideLanguage" value="true" />
 	</definition>
+
+	<definition name="genericApplications.listApplicationPeriods" extends="definition.candidacy.process">
+		<put name="titleString" value="public.candidacy.degreeTransfer.uploadPhoto" />
+		<put name="body" value="/publico/candidacy/genericApplications/listApplicationPeriods.jsp"/>
+	</definition>
+	<definition name="genericApplications.viewApplicationPeriod" extends="definition.candidacy.process">
+		<put name="titleString" value="public.candidacy.degreeTransfer.uploadPhoto" />
+		<put name="body" value="/publico/candidacy/genericApplications/viewApplicationPeriod.jsp"/>
+	</definition>
+	<definition name="genericApplications.confirmEmail" extends="definition.candidacy.process">
+		<put name="titleString" value="public.candidacy.degreeTransfer.uploadPhoto" />
+		<put name="body" value="/publico/candidacy/genericApplications/confirmEmail.jsp"/>
+	</definition>
 </tiles-definitions>
