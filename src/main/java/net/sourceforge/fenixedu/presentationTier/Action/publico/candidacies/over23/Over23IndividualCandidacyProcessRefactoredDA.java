@@ -269,7 +269,7 @@ public class Over23IndividualCandidacyProcessRefactoredDA extends RefactoredIndi
     }
 
     public ActionForward submitCandidacy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws IOException,  FenixServiceException {
+            HttpServletResponse response) throws IOException, FenixServiceException {
         try {
             ActionForward actionForwardError = verifySubmissionPreconditions(mapping);
             if (actionForwardError != null) {
@@ -287,8 +287,11 @@ public class Over23IndividualCandidacyProcessRefactoredDA extends RefactoredIndi
                 return mapping.findForward("candidacy-continue-creation");
             }
 
-            if (candidacyIndividualProcessExistsForThisEmail(bean.getPersonBean().getEmail())) {
-                return beginCandidacyProcessIntro(mapping, form, request, response);
+            if (candidacyIndividualProcessExistsForThisEmail(bean.getPersonBean().getEmail(), bean.getSelectedDegrees())) {
+                addActionMessage("error", request, "error.candidacy.hash.code.already.bounded");
+                invalidateDocumentFileRelatedViewStates();
+                request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+                return mapping.findForward("candidacy-continue-creation");
             }
 
             if (!bean.getHonorAgreement()) {
@@ -410,7 +413,7 @@ public class Over23IndividualCandidacyProcessRefactoredDA extends RefactoredIndi
     }
 
     public ActionForward editCandidacyHabilitations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         Over23IndividualCandidacyProcessBean bean = (Over23IndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
         try {
             boolean isValid = validateOver23IndividualCandidacy(request, bean) && hasInvalidViewState();

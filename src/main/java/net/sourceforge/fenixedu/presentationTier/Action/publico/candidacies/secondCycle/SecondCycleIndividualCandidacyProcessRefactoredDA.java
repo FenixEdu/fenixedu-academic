@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.Action.publico.candidacies.secondCycle;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -164,7 +166,7 @@ public class SecondCycleIndividualCandidacyProcessRefactoredDA extends Refactore
     }
 
     public ActionForward submitCandidacy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws IOException,  FenixServiceException {
+            HttpServletResponse response) throws IOException, FenixServiceException {
         try {
             ActionForward actionForwardError = verifySubmissionPreconditions(mapping);
             if (actionForwardError != null) {
@@ -182,8 +184,12 @@ public class SecondCycleIndividualCandidacyProcessRefactoredDA extends Refactore
                 return mapping.findForward("candidacy-continue-creation");
             }
 
-            if (candidacyIndividualProcessExistsForThisEmail(bean.getPersonBean().getEmail())) {
-                return beginCandidacyProcessIntro(mapping, form, request, response);
+            List<Degree> degreeList = new ArrayList<Degree>(bean.getSelectedDegreeList());
+            if (candidacyIndividualProcessExistsForThisEmail(bean.getPersonBean().getEmail(), degreeList)) {
+                addActionMessage("error", request, "error.candidacy.hash.code.already.bounded");
+                invalidateDocumentFileRelatedViewStates();
+                request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+                return mapping.findForward("candidacy-continue-creation");
             }
 
             if (!bean.getHonorAgreement()) {
@@ -247,7 +253,7 @@ public class SecondCycleIndividualCandidacyProcessRefactoredDA extends Refactore
     }
 
     public ActionForward editCandidacyQualifications(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         ActionForward actionForwardError = verifySubmissionPreconditions(mapping);
         if (actionForwardError != null) {
             return actionForwardError;

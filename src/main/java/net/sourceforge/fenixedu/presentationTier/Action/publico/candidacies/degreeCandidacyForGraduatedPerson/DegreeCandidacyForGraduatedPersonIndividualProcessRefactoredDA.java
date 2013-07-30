@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.Action.publico.candidacies.degreeCandidacyForGraduatedPerson;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -8,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCode;
@@ -29,7 +32,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Mapping(path = "/candidacies/caseHandlingDegreeCandidacyForGraduatedPersonIndividualProcess", module = "publico",
         formBeanClass = FenixActionForm.class)
 @Forwards({
-        @Forward(name = "begin-candidacy-process-intro", path = "degree.candidacy.for.graduated.person.candidacy.process.intro"),
+        @Forward(name = "begin-candidacy-process-intro", path = "degree.candidacy.for.graduated.person.candidacy.process.   "),
         @Forward(name = "begin-candidacy-process-intro-en",
                 path = "degree.candidacy.for.graduated.person.candidacy.process.intro.en"),
         @Forward(name = "open-candidacy-process-closed", path = "candidacy.process.closed"),
@@ -161,7 +164,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcessRefactoredDA exte
     }
 
     public ActionForward submitCandidacy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws IOException,  FenixServiceException {
+            HttpServletResponse response) throws IOException, FenixServiceException {
         try {
             ActionForward actionForwardError = verifySubmissionPreconditions(mapping);
             if (actionForwardError != null) {
@@ -179,8 +182,13 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcessRefactoredDA exte
                 return mapping.findForward("candidacy-continue-creation");
             }
 
-            if (candidacyIndividualProcessExistsForThisEmail(bean.getPersonBean().getEmail())) {
-                return beginCandidacyProcessIntro(mapping, form, request, response);
+            List<Degree> degreeList = new ArrayList<Degree>();
+            degreeList.add(bean.getSelectedDegree());
+            if (candidacyIndividualProcessExistsForThisEmail(bean.getPersonBean().getEmail(), degreeList)) {
+                addActionMessage("error", request, "error.candidacy.hash.code.already.bounded");
+                invalidateDocumentFileRelatedViewStates();
+                request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+                return mapping.findForward("candidacy-continue-creation");
             }
 
             if (!bean.getHonorAgreement()) {
@@ -237,7 +245,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcessRefactoredDA exte
     }
 
     public ActionForward editCandidacyQualifications(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         ActionForward actionForwardError = verifySubmissionPreconditions(mapping);
         if (actionForwardError != null) {
             return actionForwardError;
