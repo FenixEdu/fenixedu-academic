@@ -150,7 +150,8 @@ public class AnnouncementBoardExport extends ExternalInterfaceDispatchAction {
             try {
                 if ((announcement.getPublication() == null ? false : announcement.getPublication())
                         && (selectedYear == null || selectedMonth == null
-                                || (announcement.isActiveIn(selectedYear, selectedMonth)) || announcement.getSticky())) {
+                                || (announcement.isActiveIn(selectedYear, selectedMonth)) || announcement.getSticky())
+                        && testContentAvailabilityForLanguage(announcement, language)) {
                     result.add(new AnnouncementDTO(announcement, language));
                 }
             } catch (IllegalFieldValueException e) {
@@ -187,5 +188,21 @@ public class AnnouncementBoardExport extends ExternalInterfaceDispatchAction {
 
     private String buildInfo(Collection announcements) {
         return new XStream().toXML(announcements);
+    }
+
+    private boolean testContentAvailabilityForLanguage(Announcement announcement, Language language) {
+        if (announcement.getSubject() != null && !announcement.getSubject().hasLanguage(language)) {
+            return false;
+        }
+        if (announcement.getBody() != null && !announcement.getBody().hasLanguage(language)) {
+            return false;
+        }
+        if (announcement.getExcerpt() != null && !announcement.getExcerpt().hasLanguage(language)) {
+            return false;
+        }
+        if (announcement.getKeywords() != null && !announcement.getKeywords().hasLanguage(language)) {
+            return false;
+        }
+        return true;
     }
 }
