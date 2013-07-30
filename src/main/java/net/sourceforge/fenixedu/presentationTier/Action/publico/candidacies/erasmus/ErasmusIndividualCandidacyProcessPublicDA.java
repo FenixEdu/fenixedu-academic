@@ -401,7 +401,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
     }
 
     public ActionForward submitCandidacy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws IOException,  FenixServiceException {
+            HttpServletResponse response) throws IOException, FenixServiceException {
         try {
             ActionForward actionForwardError = verifySubmissionPreconditions(mapping);
             if (actionForwardError != null) {
@@ -420,7 +420,10 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
             }
 
             if (candidacyIndividualProcessExistsForThisEmail(bean.getPersonBean().getEmail())) {
-                return beginCandidacyProcessIntro(mapping, form, request, response);
+                addActionMessage("error", request, "error.candidacy.hash.code.already.bounded");
+                invalidateDocumentFileRelatedViewStates();
+                request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+                return mapping.findForward("candidacy-continue-creation");
             }
 
             if (!bean.getHonorAgreement()) {
@@ -902,7 +905,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
     }
 
     public ActionForward bindLinkSubmitedIndividualCandidacyWithStork(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException {
         AttributesManagement attrManagement = null;
         try {
             String memcachedCode = request.getParameter("key");
@@ -942,7 +945,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
     }
 
     public ActionForward answerNationalIdCardAvoidanceQuestion(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException {
         MobilityIndividualApplicationProcessBean bean =
                 (MobilityIndividualApplicationProcessBean) getIndividualCandidacyProcessBean();
 
@@ -960,7 +963,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
     }
 
     public ActionForward answerNationalIdCardAvoidanceQuestionInvalid(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException {
         MobilityIndividualApplicationProcessBean bean =
                 (MobilityIndividualApplicationProcessBean) getIndividualCandidacyProcessBean();
         request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
@@ -969,7 +972,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
     }
 
     public ActionForward answerNationalIdCardAvoidanceQuestionPostback(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException {
         MobilityIndividualApplicationProcessBean bean =
                 (MobilityIndividualApplicationProcessBean) getIndividualCandidacyProcessBean();
         request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
