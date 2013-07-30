@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.CreateNewPr
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -336,12 +337,16 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
     }
 
     protected boolean candidacyIndividualProcessExistsForThisEmail(String email) {
+        return candidacyIndividualProcessExistsForThisEmail(email, new ArrayList<Degree>());
+    }
+
+    protected boolean candidacyIndividualProcessExistsForThisEmail(String email, List<Degree> degreeList) {
         return DegreeOfficePublicCandidacyHashCode.getPublicCandidacyHashCodeByEmailAndCandidacyProcessType(email,
-                getProcessType(), getCurrentOpenParentProcess()) != null;
+                getProcessType(), getCurrentOpenParentProcess(), degreeList) != null;
     }
 
     protected IndividualCandidacyProcess createNewPublicProcess(IndividualCandidacyProcessBean bean) throws DomainException,
-             FenixServiceException {
+            FenixServiceException {
         return (IndividualCandidacyProcess) CreateNewProcess.run(getProcessType(), bean,
                 buildActivitiesForApplicationSubmission(bean.getPublicCandidacyHashCode()));
     }
@@ -528,7 +533,7 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
     }
 
     public ActionForward editCandidacyDocuments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException,  IOException {
+            HttpServletResponse response) throws FenixServiceException, IOException {
         CandidacyProcessDocumentUploadBean uploadBean =
                 (CandidacyProcessDocumentUploadBean) getObjectFromViewState("individualCandidacyProcessBean.document.file");
         try {
@@ -608,7 +613,7 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
     }
 
     public ActionForward uploadPhoto(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException,  IOException {
+            HttpServletResponse response) throws FenixServiceException, IOException {
         CandidacyProcessDocumentUploadBean uploadBean =
                 (CandidacyProcessDocumentUploadBean) getObjectFromViewState("individualCandidacyProcessBean.document.file");
         try {
