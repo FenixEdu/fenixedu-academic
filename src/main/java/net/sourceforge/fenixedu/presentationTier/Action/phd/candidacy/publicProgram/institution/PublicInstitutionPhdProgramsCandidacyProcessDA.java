@@ -185,7 +185,9 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
         final PhdProgramPublicCandidacyHashCode hashCode =
                 PhdProgramPublicCandidacyHashCode.getOrCreatePhdProgramCandidacyHashCode(bean.getEmail());
 
-        if (hashCode.hasCandidacyProcess()) {
+        if (hashCode.hasCandidacyProcess()
+                && hashCode.getPhdProgramCandidacyProcess().getCandidacy().getDegreeCurricularPlan()
+                        .equals(bean.getProcess().getCandidacy().getDegreeCurricularPlan())) {
             addErrorMessage(request, "error.PhdProgramPublicCandidacyHashCode.already.has.candidacy");
             return prepareCreateIdentification(mapping, form, request, response);
         }
@@ -233,7 +235,7 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
             HttpServletResponse response) {
         final PhdProgramCandidacyProcessBean bean = getCandidacyBean();
         final PhdProgramPublicCandidacyHashCode hashCode =
-                PhdProgramPublicCandidacyHashCode.getPhdProgramCandidacyHashCode(bean.getEmail());
+                PhdProgramPublicCandidacyHashCode.getPhdProgramCandidacyHashCode(bean.getEmail(), bean.getProgram());
 
         if (hashCode != null) {
             if (hashCode.hasCandidacyProcess()) {
@@ -339,6 +341,11 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
         }
 
         final PhdProgramCandidacyProcessBean bean = getCandidacyBean();
+        if (PhdProgramPublicCandidacyHashCode.getPhdProgramCandidacyHashCode(bean.getCandidacyHashCode().getEmail(),
+                bean.getProgram()) != null) {
+            addErrorMessage(request, "error.PhdProgramPublicCandidacyHashCode.already.has.candidacy");
+            return fillPersonalDataInvalid(mapping, form, request, response);
+        }
         PhdIndividualProgramProcess process =
                 (PhdIndividualProgramProcess) CreateNewProcess.run(PublicPhdIndividualProgramProcess.class, bean);
         sendApplicationSuccessfullySubmitedEmail(bean.getCandidacyHashCode(), request);
