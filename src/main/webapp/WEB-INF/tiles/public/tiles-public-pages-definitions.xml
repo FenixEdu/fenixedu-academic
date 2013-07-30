@@ -1382,4 +1382,8 @@
 		<put name="titleString" value="public.candidacy.degreeTransfer.uploadPhoto" />
 		<put name="body" value="/publico/candidacy/genericApplications/confirmEmail.jsp"/>
 	</definition>
+	<definition name="genericApplications.uploadRecommendation" extends="definition.candidacy.process">
+		<put name="titleString" value="public.candidacy.degreeTransfer.uploadPhoto" />
+		<put name="body" value="/publico/candidacy/genericApplications/uploadRecommendation.jsp"/>
+	</definition>
 </tiles-definitions>

@@ -15,3 +15,10 @@ alter table `GENERIC_APPLICATION` add `EMISSION_LOCATION_OF_DOCUMENT_ID` text, a
 create table `GENERIC_APPLICATION_RECOMENTATION` (`OID` bigint unsigned, `NAME` text, `OID_DOMAIN_META_OBJECT` bigint unsigned, `OID_GENERIC_APPLICATION` bigint unsigned, `INSTITUTION` text, `EMAIL` text, `OID_ROOT_DOMAIN_OBJECT` bigint unsigned, `CONFIRMATION_CODE` text, `ID_INTERNAL` int(11) NOT NULL auto_increment, primary key (ID_INTERNAL), index (OID), index (OID_GENERIC_APPLICATION), index (OID_ROOT_DOMAIN_OBJECT)) ENGINE=InnoDB, character set utf8;
 create table `GENERIC_APPLICATION_COMMENT` (`OID` bigint unsigned, `OID_DOMAIN_META_OBJECT` bigint unsigned, `OID_GENERIC_APPLICATION` bigint unsigned, `COMMENT` text, `CREATED` timestamp NULL default NULL, `OID_ROOT_DOMAIN_OBJECT` bigint unsigned, `ID_INTERNAL` int(11) NOT NULL auto_increment, primary key (ID_INTERNAL), index (OID), index (OID_GENERIC_APPLICATION), index (OID_ROOT_DOMAIN_OBJECT)) ENGINE=InnoDB, character set utf8;
 alter table `GENERIC_APPLICATION` add `CANDIDATE_OBSERVATIONS` text;
+
+
+
+-- Inserted at 2013-07-29T19:06:09.213+01:00
+
+alter table `FILE` add `OID_RECOMENTATION` bigint unsigned;
+alter table `GENERIC_APPLICATION_RECOMENTATION` add `OID_LETTER_OF_RECOMENTATION` bigint unsigned;

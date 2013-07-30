@@ -1,3 +1,4 @@
+<%@page import="net.sourceforge.fenixedu.domain.candidacy.GenericApplicationRecomentation"%>
 <%@page import="org.apache.struts.action.ActionMessages"%>
 <%@page import="net.sourceforge.fenixedu.domain.candidacy.GenericApplicationFile"%>
 <%@page import="net.sourceforge.fenixedu.domain.candidacy.GenericApplication"%>
@@ -473,6 +474,94 @@
 	</fr:edit>
 	<p><em><bean:message key="message.max.file.size" bundle="CANDIDATE_RESOURCES"/></em></p>
 	<p><em><bean:message key="message.candidacy.upload.pdf.documents" bundle="CANDIDATE_RESOURCES"/></em></p>
+	<html:submit><bean:message key="button.submit" bundle="APPLICATION_RESOURCES" /></html:submit>		
+</fr:form>
+
+
+<h3><bean:message key="label.recommendations" bundle="CANDIDATE_RESOURCES"/></h3>
+
+<% if (genericApplication.getGenericApplicationRecomentationSet().isEmpty()) { %>
+	<div><bean:message key="label.recommendations.none" bundle="CANDIDATE_RESOURCES"/></div>
+	<br/>
+<% } else { %>
+<bean:define id="downloadRecommendationUrl">/publico/genericApplications.do?method=downloadRecommendationFile&applicationExternalId=<%= genericApplication.getExternalId() %>&confirmationCode=<%= genericApplication.getConfirmationCode() %></bean:define>
+<bean:define id="resendRequestUrl">/publico/genericApplications.do?method=resendRecommendationRequest&applicationExternalId=<%= genericApplication.getExternalId() %>&confirmationCode=<%= genericApplication.getConfirmationCode() %></bean:define>
+<table class="tstyle2 thlight thcenter mtop15">
+	<tr>
+		<th>
+			<bean:message bundle="CANDIDATE_RESOURCES" key="label.name.person"/>
+		</th>
+		<th>
+			<bean:message bundle="CANDIDATE_RESOURCES" key="label.recommendation.institution"/>
+		</th>
+		<th>
+			<bean:message bundle="CANDIDATE_RESOURCES" key="label.email"/>
+		</th>
+		<th>
+			<bean:message bundle="CANDIDATE_RESOURCES" key="label.recommendation.document"/>
+		</th>
+		<th>
+		</th>
+	</tr>
+<%
+	for (final GenericApplicationRecomentation recomentation : genericApplication.getGenericApplicationRecomentationSet()) {
+%>
+		<tr>
+			<td>
+				<%= recomentation.getName() %>
+			</td>
+			<td>
+				<%= recomentation.getInstitution() %>
+			</td>
+			<td>
+				<%= recomentation.getEmail() %>
+			</td>
+			<td>
+				<% if (recomentation.hasLetterOfRecomentation()) { %>
+					<bean:message bundle="CANDIDATE_RESOURCES" key="label.recommendation.document.submitted"/>
+				<% } else { %>
+					<bean:message bundle="CANDIDATE_RESOURCES" key="label.recommendation.document.request.sent"/>
+				<% } %>
+			</td>
+			<td>
+				<% if (!recomentation.hasLetterOfRecomentation()) { %>
+					<a href="<%= request.getContextPath() +  resendRequestUrl + "&recomentationId=" + recomentation.getExternalId() %>">
+						<bean:message bundle="CANDIDATE_RESOURCES" key="label.recommendation.request.resend"/>
+					</a>
+				<% } %>
+			</td>
+		</tr>
+<%
+	}
+%>
+</table>
+<% } %>
+
+<a href="#" onclick="toggleById('#genericApplicationRecommendationForm');">
+	<bean:message bundle="CANDIDATE_RESOURCES" key="label.request.recommendation"/>
+</a>
+
+<fr:form id="genericApplicationRecommendationForm" action="/genericApplications.do" encoding="multipart/form-data" style="display: none;">
+	<input type="hidden" name="method" value="requestRecommendation"/>
+	<input type="hidden" name="applicationExternalId" value="<%= genericApplication.getExternalId() %>"/>
+	<input type="hidden" name="confirmationCode" value="<%= genericApplication.getConfirmationCode() %>"/>
+
+	<fr:edit id="recommendationBean" name="recommendationBean">
+		<fr:schema bundle="CANDIDATE_RESOURCES" type="net.sourceforge.fenixedu.domain.candidacy.util.GenericApplicationUploadBean">
+			<fr:slot name="name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+				<fr:property name="size" value="50"/>
+			</fr:slot>
+			<fr:slot name="email" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+				<fr:property name="size" value="50"/>
+			</fr:slot>
+			<fr:slot name="institution" key="label.recommendation.institution" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+				<fr:property name="size" value="50"/>
+			</fr:slot>
+		</fr:schema>
+		<fr:layout>
+			<fr:property name="classes" value="tstyle2 thcenter mtop15"/>
+		</fr:layout>
+	</fr:edit>
 	<html:submit><bean:message key="button.submit" bundle="APPLICATION_RESOURCES" /></html:submit>		
 </fr:form>
 

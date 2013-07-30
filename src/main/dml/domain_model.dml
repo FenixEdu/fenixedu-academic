@@ -20673,3 +20673,9 @@ relation GenericApplicationGenericApplicationComment {
 		multiplicity *;
 	}
 }
+
+relation GenericApplicationRecomentationGenericApplicationLetterOfRecomentation {
+	candidacy.GenericApplicationRecomentation playsRole recomentation;
+	candidacy.GenericApplicationLetterOfRecomentation playsRole letterOfRecomentation;
+}
+

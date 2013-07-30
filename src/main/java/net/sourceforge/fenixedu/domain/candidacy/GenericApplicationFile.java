@@ -14,7 +14,6 @@ public class GenericApplicationFile extends GenericApplicationFile_Base {
     public GenericApplicationFile(final GenericApplication application, final String displayName, final String fileName, final byte[] content) {
         super();
         final Collection<FileSetMetaData> metadata = Collections.emptySet();
-        // TODO: Rethink permittedGroup
         init(getVirtualPath(application), fileName, displayName, metadata, content, new NoOneGroup());
         setGenericApplication(application);
     }

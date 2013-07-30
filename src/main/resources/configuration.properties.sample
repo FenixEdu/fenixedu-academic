@@ -588,7 +588,7 @@ phd.epfl.public.candidacy.submission.link=http://fenix.ist.utl.pt/applications/e
 phd.epfl.public.candidacy.referee.form.link=http://fenix.ist.utl.pt/applications/epfl/referee-form
 
 generic.application.email.confirmation.link=http://localhost:8080/fenix/publico/genericApplications.do?method=confirmEmail&contentContextPath_PATH=/candidaturas&confirmationCode=
-
+generic.application.email.recommendation.link=http://localhost:8080/fenix/publico/genericApplications.do?method=uploadRecommendation&contentContextPath_PATH=/candidaturas&confirmationCode=
 
 #-----------------------------------------------------------------
 # Unfortunately phd program process documents are write to DSpace when

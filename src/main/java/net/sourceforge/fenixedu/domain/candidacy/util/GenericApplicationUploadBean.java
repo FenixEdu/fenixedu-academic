@@ -9,6 +9,8 @@ import pt.ist.fenixWebFramework.services.Service;
 
 import net.sourceforge.fenixedu.domain.candidacy.GenericApplication;
 import net.sourceforge.fenixedu.domain.candidacy.GenericApplicationFile;
+import net.sourceforge.fenixedu.domain.candidacy.GenericApplicationLetterOfRecomentation;
+import net.sourceforge.fenixedu.domain.candidacy.GenericApplicationRecomentation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class GenericApplicationUploadBean implements Serializable {
@@ -80,6 +82,19 @@ public class GenericApplicationUploadBean implements Serializable {
         try {
             final byte[] content = readStreamContents();
             new GenericApplicationFile(application, displayName, fileName, content);
+        } catch (final IOException ex) {
+            throw new Error(ex);
+        }
+    }
+
+    @Service
+    public void uploadTo(final GenericApplicationRecomentation recomentation) {
+        try {
+            final byte[] content = readStreamContents();
+            if (recomentation.hasLetterOfRecomentation()) {
+                recomentation.getLetterOfRecomentation().delete();
+            }                
+            new GenericApplicationLetterOfRecomentation(recomentation, displayName, fileName, content);
         } catch (final IOException ex) {
             throw new Error(ex);
         }
