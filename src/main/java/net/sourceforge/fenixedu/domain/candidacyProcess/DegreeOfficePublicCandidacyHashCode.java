@@ -1,14 +1,20 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.candidacyProcess.exceptions.HashCodeForEmailAndProcessAlreadyBounded;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityApplicationProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityEmailTemplate;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityEmailTemplateType;
 import net.sourceforge.fenixedu.domain.period.MobilityApplicationPeriod;
+
+import org.apache.commons.collections.CollectionUtils;
+
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -19,11 +25,17 @@ public class DegreeOfficePublicCandidacyHashCode extends DegreeOfficePublicCandi
     }
 
     public boolean isAssociatedWithEmailAndCandidacyProcess(String email, Class<? extends IndividualCandidacyProcess> type,
-            CandidacyProcess process) {
-        return email.equals(this.getEmail()) && this.hasIndividualCandidacyProcess()
+            CandidacyProcess process, List<Degree> degreeList) {
+        if (email.equals(this.getEmail()) && this.hasIndividualCandidacyProcess()
                 && !getIndividualCandidacyProcess().isCandidacyCancelled()
                 && this.getIndividualCandidacyProcess().getClass() == type
-                && this.getIndividualCandidacyProcess().getCandidacyProcess() == process;
+                && this.getIndividualCandidacyProcess().getCandidacyProcess() == process) {
+            return CollectionUtils.disjunction(this.getIndividualCandidacyProcess().getCandidacy().getAllDegrees(), degreeList)
+                    .isEmpty();
+
+        } else {
+            return false;
+        }
     }
 
     @Override
@@ -177,6 +189,12 @@ public class DegreeOfficePublicCandidacyHashCode extends DegreeOfficePublicCandi
 
     public static DegreeOfficePublicCandidacyHashCode getPublicCandidacyHashCodeByEmailAndCandidacyProcessType(
             final String email, Class<? extends IndividualCandidacyProcess> processType, CandidacyProcess process) {
+        return getPublicCandidacyHashCodeByEmailAndCandidacyProcessType(email, processType, process, new ArrayList<Degree>());
+    }
+
+    public static DegreeOfficePublicCandidacyHashCode getPublicCandidacyHashCodeByEmailAndCandidacyProcessType(
+            final String email, Class<? extends IndividualCandidacyProcess> processType, CandidacyProcess process,
+            List<Degree> degreeList) {
 
         for (final PublicCandidacyHashCode hashCode : getHashCodesAssociatedWithEmail(email)) {
             if (!hashCode.isFromDegreeOffice()) {
@@ -184,7 +202,7 @@ public class DegreeOfficePublicCandidacyHashCode extends DegreeOfficePublicCandi
             }
 
             final DegreeOfficePublicCandidacyHashCode hash = (DegreeOfficePublicCandidacyHashCode) hashCode;
-            if (hash.isAssociatedWithEmailAndCandidacyProcess(email, processType, process)) {
+            if (hash.isAssociatedWithEmailAndCandidacyProcess(email, processType, process, degreeList)) {
                 return hash;
             }
         }
