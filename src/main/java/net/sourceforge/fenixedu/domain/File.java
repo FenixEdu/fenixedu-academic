@@ -18,11 +18,11 @@ import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.ByteArray;
+import net.sourceforge.fenixedu.util.ConnectionManager;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.joda.time.DateTime;
 
-import pt.ist.bennu.backend.util.ConnectionManager;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.file.FileDescriptor;
 import pt.utl.ist.fenix.tools.file.FileManagerFactory;
