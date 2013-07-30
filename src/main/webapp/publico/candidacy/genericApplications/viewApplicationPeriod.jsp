@@ -1,3 +1,6 @@
+<%@page import="net.sourceforge.fenixedu.domain.person.RoleType"%>
+<%@page import="net.sourceforge.fenixedu.injectionCode.AccessControl"%>
+<%@page import="net.sourceforge.fenixedu.applicationTier.IUserView"%>
 <%@ page language="java"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
@@ -28,6 +31,54 @@
 -
 <%= genericApplicationPeriod.getEnd().toString("yyyy-MM-dd") %>
 </p>
+
+<%
+	final IUserView userView = AccessControl.getUserView();
+	if (userView != null && userView.hasRoleType(RoleType.MANAGER)) {
+%>
+	<br/>
+	<a href="#" onclick="toggleById('#createPeriodBlock');">
+		<bean:message bundle="CANDIDATE_RESOURCES" key="label.application.period.edit.application.period"/>
+	</a>
+	<div id="createPeriodBlock" style="display: none;">
+	<br/>
+	<fr:form id="genericApplicationRecommendationForm" action="/genericApplications.do" encoding="multipart/form-data">
+		<input type="hidden" name="method" value="viewApplicationPeriod"/>
+		<input type="hidden" name="applicationPeriodId" value="<%= genericApplicationPeriod.getExternalId() %>"/>
+
+		<fr:edit id="genericApplicationPeriodEdit" name="applicationPeriod">
+			<fr:schema type="net.sourceforge.fenixedu.domain.period.GenericApplicationPeriod" bundle="CANDIDATE_RESOURCES">
+				<fr:slot name="title" key="label.application.period.title" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+   					<fr:property name="size" value="50"/>
+				</fr:slot>
+				<fr:slot name="start" key="label.application.period.start" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+				<fr:slot name="end" key="label.application.period.end" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+				<fr:slot name="description" key="label.application.period.description" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="rich-text">
+					<fr:property name="safe" value="true" />
+					<fr:property name="columns" value="70"/>
+					<fr:property name="rows" value="16"/>
+				</fr:slot>
+			</fr:schema>
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="thlight thleft"/>
+		        <fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
+		        <fr:property name="requiredMarkShown" value="true" />
+			</fr:layout>
+			<fr:destination name="invalid" path="/genericApplications.do?method=listApplicationPeriods" />
+			<fr:destination name="cancel" path="/genericApplications.do?method=listApplicationPeriods" />
+		</fr:edit>
+
+		<p class="mtop15">
+			<html:submit>
+				<bean:message key="button.edit" bundle="APPLICATION_RESOURCES"/>
+			</html:submit>
+		</p>
+	</fr:form>
+	</div>
+	<br/>
+<%
+	}
+%>
 
 <br/>
 
