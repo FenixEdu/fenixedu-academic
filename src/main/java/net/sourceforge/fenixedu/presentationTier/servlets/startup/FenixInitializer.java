@@ -22,7 +22,6 @@ import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
-import net.sourceforge.fenixedu.applicationTier.Servico.Authenticate;
 import net.sourceforge.fenixedu.applicationTier.Servico.CheckIsAliveService;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecutionPeriod;
 import net.sourceforge.fenixedu.applicationTier.Servico.content.CreateMetaDomainObectTypes;
@@ -53,7 +52,7 @@ public class FenixInitializer implements ServletContextListener {
         logger.info("Initializing Fenix");
 
         try {
-            final InputStream inputStream = Authenticate.class.getResourceAsStream("/build.version");
+            final InputStream inputStream = FenixInitializer.class.getResourceAsStream("/build.version");
             PendingRequest.buildVersion = FileUtils.readFile(inputStream);
             inputStream.close();
         } catch (IOException e) {
