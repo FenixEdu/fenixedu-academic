@@ -3,7 +3,7 @@
 <!-- TODO: make this a public id or at least obsolute 
      Currently there is a semi-hack built in the RendererPlugin to accept this format.
 -->
-<!DOCTYPE renderers-config SYSTEM "renderers-config.dtd">
+<!DOCTYPE renderers-config SYSTEM "../fenix-renderers-config.dtd">
 
 <renderers-config>
 <!--
