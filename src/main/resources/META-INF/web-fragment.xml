@@ -227,10 +227,6 @@
 		<url-pattern>/domainbrowser/*</url-pattern>
 	</filter-mapping>
 	<filter-mapping>
-	    <filter-name>RequestWrapperFilter</filter-name>
-	    <url-pattern>/*</url-pattern>
-	</filter-mapping>
-	<filter-mapping>
  		 <filter-name>ProfilingFilter</filter-name>
  		 <url-pattern>/*</url-pattern>
 	</filter-mapping>
