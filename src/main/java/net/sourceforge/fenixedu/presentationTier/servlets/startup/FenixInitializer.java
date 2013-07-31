@@ -39,12 +39,14 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.UnitNamePart;
 import net.sourceforge.fenixedu.domain.person.PersonNamePart;
 import net.sourceforge.fenixedu.presentationTier.Action.externalServices.PhoneValidationUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
 
 import org.apache.commons.fileupload.FileUpload;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter;
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestChecksumFilter;
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestChecksumFilter.ChecksumPredicate;
 
@@ -109,6 +111,7 @@ public class FenixInitializer implements ServletContextListener {
         startContactValidationServices();
 
         registerChecksumFilterRules();
+        registerContentInjectionRewriter();
 
         logger.info("Fenix initialized successfully");
     }
@@ -283,6 +286,15 @@ public class FenixInitializer implements ServletContextListener {
 
             private FilterFunctionalityContext getContextAttibute(final HttpServletRequest httpServletRequest) {
                 return (FilterFunctionalityContext) httpServletRequest.getAttribute(FunctionalityContext.CONTEXT_KEY);
+            }
+        });
+    }
+
+    private void registerContentInjectionRewriter() {
+        RequestRewriterFilter.registerRequestRewriter(new RequestRewriterFactory() {
+            @Override
+            public RequestRewriter createRequestRewriter(HttpServletRequest request) {
+                return new ContentInjectionRewriter(request);
             }
         });
     }
