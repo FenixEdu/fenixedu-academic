@@ -27,10 +27,7 @@
     <td class="infoop"><strong><html:link page="/chooseExecutionPeriod.do?method=prepare"><bean:message key="link.schedules.management" bundle="SOP_RESOURCES"/></html:link></strong></td>
   </tr>
 </table>
-<p>Na &aacute;rea da Gest&atilde;o de Hor&aacute;rios pode proceder &agrave; gest&atilde;o
-  de <strong>turmas</strong> (criar e alterar turmas), gest&atilde;o de <strong>turnos</strong> (criar,
-  alterar e apagar turnos), assim como proceder &agrave; gest&atilde;o de <strong>aulas</strong> (criar
-e alterar aulas).</p>
+<p><bean:message key="introduction.schedules"/></p>
 
 <br />
 
@@ -52,8 +49,7 @@ e alterar aulas).</p>
     <td class="infoop"><strong><html:link page="/manageExecutionCourses.do?method=prepareSearch&amp;page=0"><bean:message key="link.courses.management" bundle="SOP_RESOURCES"/></html:link></strong></td>
   </tr>
 </table>
-<p>Na &aacute;rea da Gest&atilde;o de Disciplinas pode efectuar algumas opera&ccedil;&otilde;es sobre <strong>disciplinas de execu&ccedil;&atilde;o</strong> 
-	(agrupar disciplinas de execu&ccedil;&atilde;o e gerir cargas horárias).</p>
+<p><bean:message key="introduction.disciplinesExecution"/></p>
 
 <br/>
 
@@ -83,8 +79,8 @@ e alterar aulas).</p>
     <td class="infoop"><strong><html:link page="/principalSalas.do"><bean:message key="link.rooms.management" bundle="SOP_RESOURCES"/></html:link></strong></td>
   </tr>
 </table>
-<p>Este m&oacute;dulo visa uma gest&atilde;o eficiente das <strong>salas de aulas</strong> dispon&iacute;veis
-  e a sua calendariza&ccedil;&atilde;o.</p>
+<p><bean:message key="introduction.rooms"/></p>
+
 <%
 	}
 %>

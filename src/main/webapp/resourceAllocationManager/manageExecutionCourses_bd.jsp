@@ -9,19 +9,16 @@
 	import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants"%>
 <%@ page import="java.util.List"%>
 
-<em><bean:message key="label.manager.executionCourses" /></em>
-<h2>Gestão de Disciplinas</h2>
+<em><bean:message key="label.manager.executionCourses"/></em>
+<h2><bean:message key="label.manager.executionCourses"/></h2>
 
 <p><span class="error"><!-- Error messages go here --><html:errors /></span></p>
 
 <fr:form action="/manageExecutionCourses.do?method=search">
 	<div class="infoop3">
-	<p class="mvert025">Nota: Na indicaçãodo nome pode ser fornecido apenas parte do nome da
-	disciplina.</p>
-	<p class="mvert025">Exemplo 1: Para selecionar todas as disciplinas que começam com a letra "A"
-	escreva <strong>A%</strong></p>
-	<p class="mvert025">Exemplo 2: Para selecionar todas as disciplinas que começam com a letra "A"
-	e que tenham um segundo nome que começa com a letra "M" escreva <strong>A% M%</strong></p>
+	<p class="mvert025"><bean:message key="information.disciplinesExecution.note"/></p>
+	<p class="mvert025"><bean:message key="information.disciplinesExecution.exampleOne"/></p>
+	<p class="mvert025"><bean:message key="information.disciplinesExecution.exampleTwo"/></p>
 	</div>
 
 	<fr:edit name="<%=PresentationConstants.CONTEXT_SELECTION_BEAN%>" schema="executionCourseContext.choose">
