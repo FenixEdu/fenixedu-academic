@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.externalServices;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
+import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.StudentDataShareAuthorization;
@@ -29,8 +29,8 @@ public class AEISTUserInformationDA extends ExternalInterfaceDispatchAction {
     private boolean doLogin(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
         final String username = (String) getFromRequest(request, "username");
         final String password = (String) getFromRequest(request, "password");
-        final String usernameProp = PropertiesManager.getProperty(USERNAME_KEY);
-        final String passwordProp = PropertiesManager.getProperty(PASSWORD_KEY);
+        final String usernameProp = ConfigurationManager.getProperty(USERNAME_KEY);
+        final String passwordProp = ConfigurationManager.getProperty(PASSWORD_KEY);
         if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password) || StringUtils.isEmpty(usernameProp)
                 || StringUtils.isEmpty(passwordProp)) {
             return false;

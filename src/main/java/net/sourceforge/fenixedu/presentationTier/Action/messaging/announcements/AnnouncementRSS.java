@@ -12,7 +12,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
+import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
@@ -103,7 +103,7 @@ public class AnnouncementRSS extends RSSAction {
         String scheme = request.getScheme();
         int serverPort = request.getServerPort();
         String serverName = request.getServerName();
-        String appContext = PropertiesManager.getProperty("app.context");
+        String appContext = ConfigurationManager.getProperty("app.context");
         String context = appContext != null && appContext.length() > 0 ? "/" + appContext : "";
         String module = ModuleUtils.getInstance().getModuleName(request, getServlet().getServletContext());
         String actionPath = "/announcementsRSS.do";
@@ -133,7 +133,7 @@ public class AnnouncementRSS extends RSSAction {
         String scheme = request.getScheme();
         int serverPort = request.getServerPort();
         String serverName = request.getServerName();
-        String appContext = PropertiesManager.getProperty("app.context");
+        String appContext = ConfigurationManager.getProperty("app.context");
         String context = appContext != null && appContext.length() > 0 ? "/" + appContext : "";
 
         if (actionPath.indexOf("?") == -1) {

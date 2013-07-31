@@ -23,7 +23,7 @@ import javax.faces.component.html.HtmlInputHidden;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
+import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionYearsService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -342,7 +342,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     private String getHomePageUrl(Person person) {
         StringBuilder buffer = new StringBuilder();
-        String appContext = PropertiesManager.getProperty("app.context");
+        String appContext = ConfigurationManager.getProperty("app.context");
 
         if (person.getHomepage() != null && person.getHomepage().getActivated()) {
             buffer.append(getRequest().getScheme()).append("://").append(getRequest().getServerName()).append(":")

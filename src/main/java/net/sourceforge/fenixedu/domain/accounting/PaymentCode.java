@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.domain.accounting;
 import java.util.Comparator;
 import java.util.ResourceBundle;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
+import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -21,7 +21,7 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public abstract class PaymentCode extends PaymentCode_Base {
 
-    private static final String ENTITY_CODE = PropertiesManager.getProperty("sibs.entityCode");
+    private static final String ENTITY_CODE = ConfigurationManager.getProperty("sibs.entityCode");
     public static final String SIBS_IGNORE_MAX_AMOUNT = "99999999.99";
 
     public static Comparator<PaymentCode> COMPARATOR_BY_CODE = new Comparator<PaymentCode>() {

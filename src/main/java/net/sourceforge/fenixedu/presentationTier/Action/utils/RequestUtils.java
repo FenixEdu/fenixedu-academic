@@ -20,7 +20,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.PendingRequest;
@@ -32,6 +31,8 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 import org.apache.struts.util.LabelValueBean;
 
+import pt.ist.bennu.core.util.ConfigurationManager;
+
 /**
  * 
  * @author Luis Cruz
@@ -41,7 +42,7 @@ import org.apache.struts.util.LabelValueBean;
  */
 public class RequestUtils {
 
-    private static final boolean STORE_PENDING_REQUEST = PropertiesManager.getBooleanProperty("store.pending.request");
+    private static final boolean STORE_PENDING_REQUEST = ConfigurationManager.getBooleanProperty("store.pending.request", false);
 
     public static String getAndSetStringToRequest(HttpServletRequest request, String name) {
         String parameter = request.getParameter(name);

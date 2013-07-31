@@ -12,7 +12,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
+import pt.ist.bennu.core.util.ConfigurationManager;
 import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ExecuteFactoryMethod;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -54,7 +54,7 @@ import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 public abstract class FenixDispatchAction extends DispatchAction implements ExceptionHandler {
 
     protected static final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
-    private static boolean DEBUG_ACTIONS = Boolean.parseBoolean(PropertiesManager.getProperty("debug.actions"));
+    private static boolean DEBUG_ACTIONS = Boolean.parseBoolean(ConfigurationManager.getProperty("debug.actions"));
     protected static final String ACTION_MESSAGES_REQUEST_KEY = "FENIX_ACTION_MESSAGES";
 
     @Override

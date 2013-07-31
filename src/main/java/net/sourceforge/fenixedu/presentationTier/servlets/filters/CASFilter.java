@@ -13,7 +13,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
+import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.RequestUtils;
 import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.bennu.core.util.ConfigurationManager;
@@ -28,12 +28,12 @@ public class CASFilter implements Filter {
             if (pendingRequest == null) {
                 pendingRequest = (String) request.getAttribute("pendingRequest");
             }
-            final String barraAsAuthBroker = PropertiesManager.getProperty("barra.as.authentication.broker");
+            final String barraAsAuthBroker = ConfigurationManager.getProperty("barra.as.authentication.broker");
             final boolean useBarraAsAuthenticationBroker = barraAsAuthBroker != null && barraAsAuthBroker.equals("true");
             final String serviceString = encodeUrl(RequestUtils.generateRedirectLink(casConfig.getServiceUrl(), pendingRequest));
             String casLoginUrl = "";
             if (useBarraAsAuthenticationBroker) {
-                final String barraLoginUrl = PropertiesManager.getProperty("barra.loginUrl");
+                final String barraLoginUrl = ConfigurationManager.getProperty("barra.loginUrl");
                 casLoginUrl += barraLoginUrl;
                 casLoginUrl += "?next=";
             }

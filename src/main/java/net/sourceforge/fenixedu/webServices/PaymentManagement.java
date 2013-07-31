@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.webServices;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
+import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationEntry;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
@@ -17,8 +17,8 @@ public class PaymentManagement implements IPaymentManagement {
     private static final String CC = "CC";
 
     static {
-        storedUsername = PropertiesManager.getProperty("webServices.PaymentManagement.username");
-        storedPassword = PropertiesManager.getProperty("webServices.PaymentManagement.password");
+        storedUsername = ConfigurationManager.getProperty("webServices.PaymentManagement.username");
+        storedPassword = ConfigurationManager.getProperty("webServices.PaymentManagement.password");
     }
 
     @Override

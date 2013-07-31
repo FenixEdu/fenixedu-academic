@@ -14,7 +14,7 @@ import java.util.TreeSet;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
+import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Evaluation;
@@ -365,7 +365,7 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
     }
 
     public String getApplicationContext() {
-        final String appContext = PropertiesManager.getProperty("app.context");
+        final String appContext = ConfigurationManager.getProperty("app.context");
         return (appContext != null && appContext.length() > 0) ? "/" + appContext : "";
     }
 

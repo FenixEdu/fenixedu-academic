@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.externalServices.epfl;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.Locale;
 import java.util.Set;
 
@@ -8,7 +9,6 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.ExternalUser;
 import net.sourceforge.fenixedu.domain.Photograph;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -103,7 +103,7 @@ public class ExportPhdIndividualProgramProcessInformation extends FenixAction {
 
     private void exportInformationXml(final HttpServletRequest request, final HttpServletResponse response) throws Exception {
         response.addHeader("Content-Disposition", "attachment; filename=epfl.xml");
-        response.setContentType(PropertiesManager.DEFAULT_CHARSET);
+        response.setContentType(Charset.defaultCharset().name());
         final byte[] content = ExportEPFLPhdProgramCandidacies.run();
         writeResponse(response, content, "application/xml");
     }

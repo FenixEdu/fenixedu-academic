@@ -24,7 +24,7 @@
 	
 	<p>Copie os URL's para o leitor RSS.</p>	PAPADA SHORT !!!
 	
-		<% final String appContext = net.sourceforge.fenixedu._development.PropertiesManager.getProperty("app.context"); %>
+		<% final String appContext = pt.ist.bennu.core.util.ConfigurationManager.getProperty("app.context"); %>
 		<% final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : ""; %>
 
 		<bean:define id="linkRSS" type="java.lang.String"><%=request.getScheme()%>://<%=request.getServerName()%>:<%=request.getServerPort()%><%=context%></bean:define>

@@ -27,7 +27,7 @@ import javax.faces.model.SelectItem;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
+import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceMultipleException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -845,7 +845,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     }
 
     protected String getApplicationContext() {
-        final String appContext = PropertiesManager.getProperty("app.context");
+        final String appContext = ConfigurationManager.getProperty("app.context");
         return (appContext != null && appContext.length() > 0) ? "/" + appContext : "";
     }
 

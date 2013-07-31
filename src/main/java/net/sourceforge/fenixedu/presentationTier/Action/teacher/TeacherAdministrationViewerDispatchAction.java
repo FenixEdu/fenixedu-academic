@@ -12,7 +12,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
+import pt.ist.bennu.core.util.ConfigurationManager;
 import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionCourseByOID;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
@@ -159,7 +159,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     }
 
     public static String mailingListDomainConfiguration() {
-        return PropertiesManager.getProperty("mailingList.host.name");
+        return ConfigurationManager.getProperty("mailingList.host.name");
     }
 
     public ActionForward submitDataToImportCustomizationOptions(ActionMapping mapping, ActionForm actionForm,

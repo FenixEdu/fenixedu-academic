@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.externalServices;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
+import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.parking.CreateParkingParty;
 import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationEntry;
@@ -18,7 +18,7 @@ public class SetParkingCardId {
 
     private static final String password;
     static {
-        password = PropertiesManager.getProperty("parkingCardId.admin.password");
+        password = ConfigurationManager.getProperty("parkingCardId.admin.password");
     }
 
     public static boolean isAllowed(final String password) {

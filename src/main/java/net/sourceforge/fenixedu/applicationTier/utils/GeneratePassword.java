@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.utils;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
+import pt.ist.bennu.core.util.ConfigurationManager;
 
 /**
  * @author Barbosa
@@ -23,7 +23,7 @@ public class GeneratePassword {
 
     private static IGeneratePassword getSpecificInstance() {
         try {
-            String stringClass = PropertiesManager.getProperty("password.generator");
+            String stringClass = ConfigurationManager.getProperty("password.generator");
             Class clazz = Class.forName(stringClass);
             return (IGeneratePassword) clazz.newInstance();
         } catch (Exception e) {

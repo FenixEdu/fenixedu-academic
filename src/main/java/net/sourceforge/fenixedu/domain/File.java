@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 
 import javax.activation.MimetypesFileTypeMap;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
+import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -115,7 +115,7 @@ public abstract class File extends File_Base {
         }
     }
 
-    public static final String ACTION_PATH = PropertiesManager.getProperty("file.download.url.local.content");
+    public static final String ACTION_PATH = ConfigurationManager.getProperty("file.download.url.local.content");
 
     /**
      * @return returns a public url that can be used by a client to download the

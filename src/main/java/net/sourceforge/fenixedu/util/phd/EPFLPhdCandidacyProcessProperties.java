@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.util.phd;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
+import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
 
 public class EPFLPhdCandidacyProcessProperties {
@@ -8,7 +8,7 @@ public class EPFLPhdCandidacyProcessProperties {
     static private final long serialVersionUID = 1L;
 
     static private String getProperty(final String key) {
-        return PropertiesManager.getProperty(key);
+        return ConfigurationManager.getProperty(key);
     }
 
     static public String getPublicCandidacyAccessLink() {

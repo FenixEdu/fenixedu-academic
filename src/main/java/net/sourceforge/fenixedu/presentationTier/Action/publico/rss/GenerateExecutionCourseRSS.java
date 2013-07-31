@@ -6,7 +6,7 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
+import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 import pt.ist.fenixframework.DomainObject;
@@ -30,7 +30,7 @@ public abstract class GenerateExecutionCourseRSS extends InformaRSSAction {
             final ChannelIF channel = builder.createChannel(executionCourseName);
             channel.setDescription(StringAppender.append(getDescriptionPrefix(), " da disciplina ", executionCourseName));
 
-            final String appContext = PropertiesManager.getProperty("app.context");
+            final String appContext = ConfigurationManager.getProperty("app.context");
             final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : "";
             final String commonLocalUrl =
                     StringAppender.append(context, "/publico/executionCourse.do?method=", getMethodName(), "&executionCourseID=",

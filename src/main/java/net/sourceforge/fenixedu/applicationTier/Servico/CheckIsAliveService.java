@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico;
 
 import net.sourceforge.fenixedu._development.LogLevel;
-import net.sourceforge.fenixedu._development.PropertiesManager;
+import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 
 import org.slf4j.Logger;
@@ -16,7 +16,7 @@ public class CheckIsAliveService {
     private static boolean CHECK_DB = false;
 
     static {
-        final String checkDB = PropertiesManager.getProperty("script.isAlive.check.db");
+        final String checkDB = ConfigurationManager.getProperty("script.isAlive.check.db");
         if ("true".equalsIgnoreCase(checkDB)) {
             CHECK_DB = true;
         }

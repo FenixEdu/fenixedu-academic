@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.externalServices;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
+import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.User;
@@ -38,14 +38,14 @@ public class SetEmail {
     private static final Set<String> allowedHosts = new HashSet<String>();
     private static final String password;
     static {
-        final String allowedHostString = PropertiesManager.getProperty("email.admin.allowed.hosts");
+        final String allowedHostString = ConfigurationManager.getProperty("email.admin.allowed.hosts");
         if (allowedHostString != null) {
             final String[] allowedHostTokens = allowedHostString.split(",");
             for (String allowedHostToken : allowedHostTokens) {
                 allowedHosts.add(allowedHostToken);
             }
         }
-        password = PropertiesManager.getProperty("email.admin.password");
+        password = ConfigurationManager.getProperty("email.admin.password");
     }
 
     public static boolean isAllowed(final String host, final String ip, final String password) {

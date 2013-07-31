@@ -2,12 +2,12 @@ package net.sourceforge.fenixedu.domain.functionalities;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.nio.charset.Charset;
 import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import pt.ist.bennu.core.domain.User;
@@ -23,7 +23,7 @@ public abstract class AbstractFunctionalityContext implements FunctionalityConte
     private final HttpServletRequest request;
     private User userView;
 
-    protected String encoding = PropertiesManager.DEFAULT_CHARSET;
+    protected String encoding = Charset.defaultCharset().name();
 
     public AbstractFunctionalityContext(HttpServletRequest request) {
         super();

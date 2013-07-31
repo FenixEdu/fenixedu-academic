@@ -100,7 +100,7 @@
           
           <tr>
             <td> <bean:message key="label.candidate.accessAddress"/> </td>
-            <td> <%= net.sourceforge.fenixedu._development.PropertiesManager.getProperty("login.page") %> </td>
+            <td> <%= pt.ist.bennu.core.util.ConfigurationManager.getProperty("login.page") %> </td>
           </tr>
 
           <tr>

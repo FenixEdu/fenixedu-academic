@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain.candidacy;
 
 import java.util.Random;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
+import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.util.BundleUtil;
@@ -47,7 +47,7 @@ public class GenericApplicationRecomentation extends GenericApplicationRecomenta
     }
 
     private String generateConfirmationLink() {
-        return PropertiesManager.getProperty("generic.application.email.recommendation.link") + getConfirmationCode()
+        return ConfigurationManager.getProperty("generic.application.email.recommendation.link") + getConfirmationCode()
                 + "&recommendationExternalId=" + getExternalId();
     }
 

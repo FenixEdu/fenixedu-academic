@@ -17,7 +17,7 @@ import java.util.zip.ZipOutputStream;
 
 import javax.ws.rs.core.MediaType;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
+import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -125,11 +125,11 @@ public class SendAcademicServiceRequestToExternalEntity {
 
             final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(resultStream.toByteArray());
 
-            final String restEndpoint = PropertiesManager.getProperty("external.application.workflow.equivalences.uri");
+            final String restEndpoint = ConfigurationManager.getProperty("external.application.workflow.equivalences.uri");
             System.out.println("SendAcademicServiceRequestToExternalEntity : " + restEndpoint);
 
-            final String restUser = PropertiesManager.getProperty("jersey.username");
-            final String restPass = PropertiesManager.getProperty("jersey.password");
+            final String restUser = ConfigurationManager.getProperty("jersey.username");
+            final String restPass = ConfigurationManager.getProperty("jersey.password");
 
             Client client = new Client();
             final String username = Authenticate.getUser().getUsername();

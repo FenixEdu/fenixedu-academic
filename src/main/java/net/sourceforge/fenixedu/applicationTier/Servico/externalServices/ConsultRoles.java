@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.externalServices;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
+import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.Person;
@@ -19,14 +19,14 @@ public class ConsultRoles {
     private static final Set<String> allowedHosts = new HashSet<String>();
     private static final String password;
     static {
-        final String allowedHostString = PropertiesManager.getProperty("consult.roles.admin.allowed.hosts");
+        final String allowedHostString = ConfigurationManager.getProperty("consult.roles.admin.allowed.hosts");
         if (allowedHostString != null) {
             final String[] allowedHostTokens = allowedHostString.split(",");
             for (String allowedHostToken : allowedHostTokens) {
                 allowedHosts.add(allowedHostToken);
             }
         }
-        password = PropertiesManager.getProperty("consult.roles.admin.password");
+        password = ConfigurationManager.getProperty("consult.roles.admin.password");
     }
 
     public static boolean isAllowed(final String host, final String ip, final String password) {

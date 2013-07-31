@@ -5,8 +5,7 @@ import java.beans.XMLEncoder;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
-
-import net.sourceforge.fenixedu._development.PropertiesManager;
+import java.nio.charset.Charset;
 
 import org.apache.commons.lang.CharEncoding;
 
@@ -24,7 +23,7 @@ public class ResponseExternalization {
             // first place.
             // WARNING: If this is changed, the internalize method
             // should be changed accordingly.
-            return out.toString(PropertiesManager.DEFAULT_CHARSET);
+            return out.toString(Charset.defaultCharset().name());
         } catch (UnsupportedEncodingException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

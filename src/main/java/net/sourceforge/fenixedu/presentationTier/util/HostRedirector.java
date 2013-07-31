@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
+import pt.ist.bennu.core.util.ConfigurationManager;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -23,7 +23,7 @@ public class HostRedirector {
     }
 
     private static void constructRedirectMap(final Map<String, String> redirectPageMap, final String prefix) {
-        final Properties properties = PropertiesManager.getProperties();
+        final Properties properties = ConfigurationManager.getProperties();
         for (final Iterator iterator = properties.entrySet().iterator(); iterator.hasNext();) {
             final Entry entry = (Entry) iterator.next();
             final String hostnameKey = (String) entry.getKey();

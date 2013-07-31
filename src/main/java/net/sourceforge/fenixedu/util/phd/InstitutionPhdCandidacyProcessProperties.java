@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.util.phd;
 
 import java.util.Locale;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
+import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
 
@@ -13,7 +13,7 @@ public class InstitutionPhdCandidacyProcessProperties {
     static private final long serialVersionUID = 1L;
 
     static private String getProperty(final String key) {
-        return PropertiesManager.getProperty(key);
+        return ConfigurationManager.getProperty(key);
     }
 
     static public String getPublicCandidacyAccessLink(final Locale locale) {

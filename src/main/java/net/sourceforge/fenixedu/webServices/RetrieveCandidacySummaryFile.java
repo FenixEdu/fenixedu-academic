@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.webServices;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
+import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.applicationTier.Servico.candidacy.LogFirstTimeCandidacyTimestamp;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacySummaryFile;
@@ -15,8 +15,8 @@ public class RetrieveCandidacySummaryFile implements IRetrieveCandidacySummaryFi
     private static final String storedUsername;
 
     static {
-        storedUsername = PropertiesManager.getProperty("webServices.PersonManagement.getPersonInformation.username");
-        storedPassword = PropertiesManager.getProperty("webServices.PersonManagement.getPersonInformation.password");
+        storedUsername = ConfigurationManager.getProperty("webServices.PersonManagement.getPersonInformation.username");
+        storedPassword = ConfigurationManager.getProperty("webServices.PersonManagement.getPersonInformation.password");
     }
 
     @Override

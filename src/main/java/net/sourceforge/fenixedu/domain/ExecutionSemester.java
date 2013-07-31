@@ -13,7 +13,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Set;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
+import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionPeriods;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
@@ -575,8 +575,8 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
     static private ExecutionSemester readFromProperties(ExecutionSemester executionSemester, String yearKey, String semesterKey) {
         if (executionSemester == null || executionSemester.getRootDomainObject() != RootDomainObject.getInstance()) {
 
-            final String yearString = PropertiesManager.getProperty(yearKey);
-            final String semesterString = PropertiesManager.getProperty(semesterKey);
+            final String yearString = ConfigurationManager.getProperty(yearKey);
+            final String semesterString = ConfigurationManager.getProperty(semesterKey);
 
             if (yearString == null || yearString.length() == 0 || semesterString == null || semesterString.length() == 0) {
                 executionSemester = null;

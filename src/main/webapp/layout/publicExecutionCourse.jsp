@@ -4,7 +4,7 @@
 <%@page import="net.sourceforge.fenixedu.domain.contents.Node"%>
 <%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext"%>
 <%@page import="net.sourceforge.fenixedu.domain.ExecutionCourse"%>
-<%@page import="net.sourceforge.fenixedu._development.PropertiesManager"%>
+<%@page import="pt.ist.bennu.core.util.ConfigurationManager"%>
 <%@page import="net.sourceforge.fenixedu.injectionCode.AccessControl"%>
 <%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
@@ -69,7 +69,7 @@
 	</head>
 
 	<body>
-	<% if (PropertiesManager.useBarraAsAuthenticationBroker()) { %>
+	<% if (ConfigurationManager.getBooleanProperty("barra.as.authentication.broker", false)) { %>
 	<script id="ist-bar" data-logout="https://fenix.ist.utl.pt/logoff.do" data-login="https://fenix.ist.utl.pt/loginPage.jsp" data-fluid="true" <% if(AccessControl.getUserView() == null) {%> data-use-offline="true" <%} %> data-next-param="service" src="https://barra.ist.utl.pt/site_media/static/js/barra.js"></script>
 	<% } %>
 	<jsp:include page="deployWarning.jsp" flush="true"/>

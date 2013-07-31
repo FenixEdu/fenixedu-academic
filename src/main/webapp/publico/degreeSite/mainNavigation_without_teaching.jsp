@@ -1,7 +1,7 @@
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 
-<% final String url = net.sourceforge.fenixedu._development.PropertiesManager.getProperty("institution.url"); %>
+<% final String url = pt.ist.bennu.core.util.ConfigurationManager.getProperty("institution.url"); %>
 <div id="latnav">
         <ul>
         	<li><a href="<%= url %>/html/instituto/">Instituto</a></li>

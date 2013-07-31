@@ -264,7 +264,7 @@ if (month != null && year!=null)
 	<logic:present name="announcementBoard">
 		<bean:define id="board" name="announcementBoard" type="net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard"/>
 		<%
-		final String appContext = net.sourceforge.fenixedu._development.PropertiesManager.getProperty("app.context");
+		final String appContext = pt.ist.bennu.core.util.ConfigurationManager.getProperty("app.context");
 		final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : "";
 	    final String module = org.apache.struts.util.ModuleUtils.getInstance().getModuleConfig(request).getPrefix();
 		%>

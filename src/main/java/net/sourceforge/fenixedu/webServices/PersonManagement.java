@@ -5,7 +5,7 @@ package net.sourceforge.fenixedu.webServices;
 
 import javax.servlet.ServletRequest;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
+import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.UpdatePersonInformationFromCitizenCard;
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.PersonInformationDTO;
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.PersonInformationFromUniqueCardDTO;
@@ -27,8 +27,8 @@ public class PersonManagement implements IPersonManagement {
     private static final String storedUsername;
 
     static {
-        storedUsername = PropertiesManager.getProperty("webServices.PersonManagement.getPersonInformation.username");
-        storedPassword = PropertiesManager.getProperty("webServices.PersonManagement.getPersonInformation.password");
+        storedUsername = ConfigurationManager.getProperty("webServices.PersonManagement.getPersonInformation.username");
+        storedPassword = ConfigurationManager.getProperty("webServices.PersonManagement.getPersonInformation.password");
     }
 
     @Override

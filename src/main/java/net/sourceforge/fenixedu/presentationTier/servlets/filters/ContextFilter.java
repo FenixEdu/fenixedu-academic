@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.servlets.filters;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -11,7 +12,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.contents.InvalidContentPathException;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
@@ -79,7 +79,7 @@ public class ContextFilter implements Filter {
     }
 
     private FunctionalityContext createContext(final HttpServletRequest httpServletRequest) {
-        return new FilterFunctionalityContext(httpServletRequest, PropertiesManager.DEFAULT_CHARSET);
+        return new FilterFunctionalityContext(httpServletRequest, Charset.defaultCharset().name());
     }
 
     private void setContextAttibute(final HttpServletRequest servletRequest, final FunctionalityContext context) {

@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
+import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.CreditNoteEntryDTO;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -32,13 +32,13 @@ public class Receipt extends Receipt_Base {
 
     public static final String GENERIC_CONTRIBUTOR_PARTY_NUMBER = " ";
 
-    private static final Integer MIN_YEAR_TO_CREATE_RECEIPTS = PropertiesManager.getIntegerProperty("receipt.min.year.to.create");
+    private static final Integer MIN_YEAR_TO_CREATE_RECEIPTS = ConfigurationManager.getIntegerProperty("receipt.min.year.to.create");
 
     private static final Map<Integer, String> NUMBER_SERIES_BY_YEAR = new HashMap<Integer, String>();
 
     static {
 
-        final String[] parts = PropertiesManager.getProperty("receipt.numberSeries.for.years").split(",");
+        final String[] parts = ConfigurationManager.getProperty("receipt.numberSeries.for.years").split(",");
 
         for (final String part : parts) {
             if (!StringUtils.isEmpty(part)) {

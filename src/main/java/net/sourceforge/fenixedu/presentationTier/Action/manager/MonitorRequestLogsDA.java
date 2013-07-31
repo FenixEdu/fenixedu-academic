@@ -23,7 +23,7 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
+import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.ConfirmManagerIdentity;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.util.renderer.BarChart;
@@ -63,8 +63,8 @@ public class MonitorRequestLogsDA extends FenixDispatchAction {
         DynaActionForm actionForm = (DynaActionForm) form;
         String logDirName = (String) actionForm.get("logDirName");
         if (logDirName == null || logDirName.length() == 0 || logFileName == null || logFileName.length() == 0) {
-            logDirName = PropertiesManager.getProperty("log.profile.dir");
-            logFileName = PropertiesManager.getProperty("log.profile.filename");
+            logDirName = ConfigurationManager.getProperty("log.profile.dir");
+            logFileName = ConfigurationManager.getProperty("log.profile.filename");
         }
 
         File logDir = new File(logDirName);
@@ -136,7 +136,7 @@ public class MonitorRequestLogsDA extends FenixDispatchAction {
     }
 
     private void setLogImageDir() {
-        logImageDir = PropertiesManager.getProperty("log.image.directory");
+        logImageDir = ConfigurationManager.getProperty("log.image.directory");
     }
 
     private SortedSet sortProfileMap(Map profileMap) {

@@ -1,13 +1,13 @@
 package net.sourceforge.fenixedu.util.phd;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
+import pt.ist.bennu.core.util.ConfigurationManager;
 
 public class PhdProperties {
 
     static private final long serialVersionUID = 1L;
 
     static private String getProperty(final String key) {
-        return PropertiesManager.getProperty(key);
+        return ConfigurationManager.getProperty(key);
     }
 
     static public String getPublicCandidacyAccessLink() {

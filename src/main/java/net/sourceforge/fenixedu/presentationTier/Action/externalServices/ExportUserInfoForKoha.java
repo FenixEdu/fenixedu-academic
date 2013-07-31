@@ -11,7 +11,7 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
+import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Department;
@@ -61,8 +61,8 @@ public class ExportUserInfoForKoha extends ExternalInterfaceDispatchAction {
     private boolean chackCredentials(final HttpServletRequest request) {
         final String username = (String) getFromRequest(request, "username");
         final String password = (String) getFromRequest(request, "password");
-        final String usernameProp = PropertiesManager.getProperty(USERNAME_KEY);
-        final String passwordProp = PropertiesManager.getProperty(PASSWORD_KEY);
+        final String usernameProp = ConfigurationManager.getProperty(USERNAME_KEY);
+        final String passwordProp = ConfigurationManager.getProperty(PASSWORD_KEY);
 
         return !StringUtils.isEmpty(username) && !StringUtils.isEmpty(password) && !StringUtils.isEmpty(usernameProp)
                 && !StringUtils.isEmpty(passwordProp) && username.equals(usernameProp) && password.equals(passwordProp);

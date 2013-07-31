@@ -6,7 +6,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
+import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.ResearcherDTO;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -24,8 +24,8 @@ public class SearchResearcher implements ISearchResearcher {
     private static final String storedUsername;
 
     static {
-        storedUsername = PropertiesManager.getProperty("webServices.PersonManagement.getPersonInformation.username");
-        storedPassword = PropertiesManager.getProperty("webServices.PersonManagement.getPersonInformation.password");
+        storedUsername = ConfigurationManager.getProperty("webServices.PersonManagement.getPersonInformation.username");
+        storedPassword = ConfigurationManager.getProperty("webServices.PersonManagement.getPersonInformation.password");
     }
 
     @Override

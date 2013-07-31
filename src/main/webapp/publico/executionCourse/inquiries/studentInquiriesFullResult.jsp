@@ -1,6 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
-<%@page import="net.sourceforge.fenixedu._development.PropertiesManager"%>
+<%@page import="pt.ist.bennu.core.util.ConfigurationManager"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.Map"%>
 <%@page import="java.net.URLEncoder"%>
@@ -94,18 +94,18 @@
 		session.setAttribute("ORIGINAL_PARAMETER_MAP", map);
 		session.setAttribute("ORIGINAL_ATTRIBUTE_MAP", map);
 
-	boolean isCasEnabled = PropertiesManager.getBooleanProperty("cas.enabled");
+	boolean isCasEnabled = ConfigurationManager.getBooleanProperty("cas.enabled");
 		if (isCasEnabled) {
 			String casValue = request.getScheme() + "://" + request.getServerName()
 				+ port + request.getContextPath() + "/loginCAS.do";
 			String urlSuffix = "?service=" + casValue;
-		    String loginPage = PropertiesManager.getProperty("cas.loginUrl") + urlSuffix;
+		    String loginPage = ConfigurationManager.getProperty("cas.loginUrl") + urlSuffix;
 	%>
 			<html:link href="<%= loginPage %>">Login</html:link>
 	<%
 		} else {
 			String urlSuffix = "?service=" + value;
-			String loginPage = PropertiesManager.getProperty("login.page") + urlSuffix;
+			String loginPage = ConfigurationManager.getProperty("login.page") + urlSuffix;
 	%>
 			<html:link href="<%= loginPage %>">Login</html:link>
 	<%

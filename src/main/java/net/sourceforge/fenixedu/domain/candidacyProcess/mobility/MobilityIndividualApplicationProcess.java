@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
+import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.domain.AcademicProgram;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -1380,14 +1380,14 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
     }
 
     private static boolean importToLDAP(MobilityIndividualApplicationProcess process) {
-        String ldapServiceImportationURL = PropertiesManager.getProperty("ldap.user.importation.service.url");
+        String ldapServiceImportationURL = ConfigurationManager.getProperty("ldap.user.importation.service.url");
 
         Request request =
                 new Request(Method.POST, ldapServiceImportationURL + process.getPersonalDetails().getPerson().getIstUsername());
         ChallengeScheme scheme = ChallengeScheme.HTTP_BASIC;
 
-        String ldapServiceUsername = PropertiesManager.getProperty("ldap.user.importation.service.username");
-        String ldapServicePassword = PropertiesManager.getProperty("ldap.user.importation.service.password");
+        String ldapServiceUsername = ConfigurationManager.getProperty("ldap.user.importation.service.username");
+        String ldapServicePassword = ConfigurationManager.getProperty("ldap.user.importation.service.password");
 
         ChallengeResponse authentication = new ChallengeResponse(scheme, ldapServiceUsername, ldapServicePassword);
         request.setChallengeResponse(authentication);

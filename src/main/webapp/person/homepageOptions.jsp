@@ -50,7 +50,7 @@
     </p>
     
 
-    <% final String appContext = net.sourceforge.fenixedu._development.PropertiesManager.getProperty("app.context"); %>
+    <% final String appContext = pt.ist.bennu.core.util.ConfigurationManager.getProperty("app.context"); %>
     <% final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : ""; %>
 
     <bean:define id="homepageURL" type="java.lang.String"><%= request.getScheme() %>://<%= request.getServerName() %>:<%= request.getServerPort() %><%= context %>/homepage/<bean:write name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.user.userUId"/></bean:define>

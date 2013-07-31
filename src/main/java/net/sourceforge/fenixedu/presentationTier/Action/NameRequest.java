@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.Action;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
+import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -24,8 +24,8 @@ public class NameRequest extends FenixDispatchAction {
     private static final String storedUsername;
 
     static {
-        storedUsername = PropertiesManager.getProperty("nameresolution.name");
-        storedPassword = PropertiesManager.getProperty("nameresolution.password");
+        storedUsername = ConfigurationManager.getProperty("nameresolution.name");
+        storedPassword = ConfigurationManager.getProperty("nameresolution.password");
     }
 
     public ActionForward resolve(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

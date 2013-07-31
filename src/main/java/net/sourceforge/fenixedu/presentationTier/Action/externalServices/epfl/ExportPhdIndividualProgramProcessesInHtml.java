@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
@@ -18,7 +19,6 @@ import java.util.TreeSet;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Photograph;
@@ -603,7 +603,7 @@ public class ExportPhdIndividualProgramProcessesInHtml {
         }
 
         public Page write(final String value) throws IOException {
-            writer.write(value.getBytes(PropertiesManager.DEFAULT_CHARSET));
+            writer.write(value.getBytes(Charset.defaultCharset().name()));
             writer.write("\n".getBytes());
             return this;
         }

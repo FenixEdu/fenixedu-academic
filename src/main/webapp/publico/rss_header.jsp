@@ -6,7 +6,7 @@
 
 <logic:present name="siteView">
 	<logic:present name="siteView" property="commonComponent.executionCourse.nome">
-		<% final String appContext = net.sourceforge.fenixedu._development.PropertiesManager.getProperty("app.context"); %>
+		<% final String appContext = pt.ist.bennu.core.util.ConfigurationManager.getProperty("app.context"); %>
 		<% final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : ""; %>
 
 		<bean:define id="executionCourseName" name="siteView" property="commonComponent.executionCourse.nome" />

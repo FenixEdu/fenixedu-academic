@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
+import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.QueueJobResult;
 import net.sourceforge.fenixedu.domain.parking.ParkingParty;
@@ -45,7 +45,7 @@ public class ParkingDataReportFile extends ParkingDataReportFile_Base {
     public QueueJobResult execute() throws Exception {
         QueueJobResult queueJobResult = null;
 
-        final String inputFilename = PropertiesManager.getProperty("export.parking.data.report.input.file");
+        final String inputFilename = ConfigurationManager.getProperty("export.parking.data.report.input.file");
         if (inputFilename != null) {
             File parkingDataFile = FileUtils.copyToTemporaryFile(new FileInputStream(inputFilename));
             renderReport(parkingDataFile);

@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -13,7 +14,6 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExternalTeacherAuthorization;
@@ -201,7 +201,7 @@ public class TeacherAuthorizationManagement extends FenixDispatchAction {
         public String getFileContent() {
             if (fileContent == null) {
                 try {
-                    fileContent = FileUtils.readFile(new InputStreamReader(inputStream, PropertiesManager.DEFAULT_CHARSET));
+                    fileContent = FileUtils.readFile(new InputStreamReader(inputStream, Charset.defaultCharset().name()));
                 } catch (final UnsupportedEncodingException e) {
                     throw new Error(e);
                 } catch (final IOException e) {

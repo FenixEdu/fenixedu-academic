@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.domain.candidacy;
 import java.util.Comparator;
 import java.util.Random;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
+import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.period.GenericApplicationPeriod;
@@ -67,7 +67,7 @@ public class GenericApplication extends GenericApplication_Base {
                 DigestUtils.sha512Hex(getEmail() + System.currentTimeMillis() + hashCode()
                         + new Random(System.currentTimeMillis()).nextGaussian());
         setConfirmationCode(confirmationCode);
-        return PropertiesManager.getProperty("generic.application.email.confirmation.link") + confirmationCode
+        return ConfigurationManager.getProperty("generic.application.email.confirmation.link") + confirmationCode
                 + "&applicationExternalId=" + getExternalId();
     }
 

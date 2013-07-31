@@ -13,7 +13,7 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
+import pt.ist.bennu.core.util.ConfigurationManager;
 import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.candidacy.ExecuteStateOperation;
 import net.sourceforge.fenixedu.applicationTier.Servico.candidacy.LogFirstTimeCandidacyTimestamp;
@@ -197,7 +197,7 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
                     "firstInstallmentEndDate",
                     calculateFirstInstallmentEndDate(candidacy.getRegistration(), getCandidacy(request)
                             .getAvailablePaymentCodes()));
-            request.setAttribute("sibsEntityCode", PropertiesManager.getProperty("sibs.entityCode"));
+            request.setAttribute("sibsEntityCode", ConfigurationManager.getProperty("sibs.entityCode"));
 
             final List<InfoShowOccupation> infoLessons = ReadStudentTimeTable.run(candidacy.getRegistration(), null);
             request.setAttribute("infoLessons", infoLessons);
@@ -222,7 +222,7 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
         } else if (candidacyOperation.getType() == CandidacyOperationType.PRINT_GRATUITY_PAYMENT_CODES) {
             request.setAttribute("registration", getCandidacy(request).getRegistration());
             request.setAttribute("paymentCodes", getCandidacy(request).getAvailablePaymentCodes());
-            request.setAttribute("sibsEntityCode", PropertiesManager.getProperty("sibs.entityCode"));
+            request.setAttribute("sibsEntityCode", ConfigurationManager.getProperty("sibs.entityCode"));
             request.setAttribute("administrativeOfficeFeeAndInsurancePaymentCode",
                     administrativeOfficeFeeAndInsurancePaymentCode(getCandidacy(request).getAvailablePaymentCodes()));
             request.setAttribute("installmentPaymentCodes", installmmentPaymentCodes(getCandidacy(request)

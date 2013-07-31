@@ -24,7 +24,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebListener;
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
+import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.applicationTier.Servico.CheckIsAliveService;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecutionPeriod;
 import net.sourceforge.fenixedu.applicationTier.Servico.content.CreateMetaDomainObectTypes;
@@ -194,7 +194,7 @@ public class FenixInitializer implements ServletContextListener {
 
         try {
             Calendar calendar = Calendar.getInstance();
-            String hourString = PropertiesManager.getProperty("gratuity.situation.creator.task.hour");
+            String hourString = ConfigurationManager.getProperty("gratuity.situation.creator.task.hour");
             int scheduledHour = Integer.parseInt(hourString);
             if (scheduledHour == -1) {
                 return;
@@ -220,7 +220,7 @@ public class FenixInitializer implements ServletContextListener {
 
     }
 
-    static final int APP_CONTEXT_LENGTH = PropertiesManager.getProperty("app.context").length() + 1;
+    static final int APP_CONTEXT_LENGTH = ConfigurationManager.getProperty("app.context").length() + 1;
 
     private void registerChecksumFilterRules() {
         RequestChecksumFilter.registerFilterRule(new ChecksumPredicate() {

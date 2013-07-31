@@ -9,13 +9,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.File;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.commons.httpclient.HttpStatus;
 
+import pt.ist.bennu.core.util.ConfigurationManager;
 import pt.ist.fenixframework.FenixFramework;
 
 @WebServlet(urlPatterns = "/downloadFile/*")
@@ -57,12 +57,12 @@ public class FileDownloadServlet extends HttpServlet {
     }
 
     private String sendLoginRedirect(final HttpServletRequest request, final File file) {
-        final boolean isCasEnabled = PropertiesManager.getBooleanProperty("cas.enabled");
+        final boolean isCasEnabled = ConfigurationManager.getBooleanProperty("cas.enabled", false);
         final String loginLinkPropery = isCasEnabled ? "cas.loginUrl" : "login.page";
         final String serviceLink =
-                isCasEnabled ? PropertiesManager.getProperty("file.download.url.local.content") + file.getExternalId() : request
+                isCasEnabled ? ConfigurationManager.getProperty("file.download.url.local.content") + file.getExternalId() : request
                         .getRequestURI();
-        return PropertiesManager.getProperty(loginLinkPropery) + "?service=" + serviceLink;
+        return ConfigurationManager.getProperty(loginLinkPropery) + "?service=" + serviceLink;
     }
 
     private void sendBadRequest(final HttpServletResponse response) throws IOException {

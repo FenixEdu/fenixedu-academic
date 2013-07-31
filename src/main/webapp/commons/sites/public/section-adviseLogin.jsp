@@ -1,7 +1,4 @@
 <%@page import="net.sourceforge.fenixedu.presentationTier.util.HostRedirector"%>
-<%@page import="pt.ist.fenixWebFramework.Config.CasConfig"%>
-<%@page import="pt.ist.fenixWebFramework.Config"%>
-<%@page import="pt.ist.fenixWebFramework.FenixWebFramework"%>
 <%@page import="pt.ist.fenixframework.FenixFramework"%>
 <%@ page language="java" %>
 
@@ -31,10 +28,7 @@
     <p>
        <em><bean:message key="message.section.view.mustLogin" bundle="SITE_RESOURCES"/></em>
 		<%
-			final Config c = FenixWebFramework.getConfig();
-			final String serverName = request.getServerName();
-			final CasConfig casConfig = c.getCasConfig(serverName);
-			if (casConfig != null && casConfig.isCasEnabled()) {
+			if (pt.ist.bennu.core.util.ConfigurationManager.getCasConfig().isCasEnabled()) {
 			    final String schema = request.getScheme();
 			    final String server = request.getServerName();
 			    final int port = request.getServerPort();

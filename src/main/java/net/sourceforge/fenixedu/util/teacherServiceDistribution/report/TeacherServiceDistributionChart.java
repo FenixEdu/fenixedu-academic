@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
+import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
 
@@ -84,8 +84,8 @@ public abstract class TeacherServiceDistributionChart {
                                     PlotOrientation.VERTICAL, true, true, false);
 
                     ChartUtilities.writeChartAsPNG(outputStream, chart,
-                            Integer.parseInt(PropertiesManager.getProperty("tsdProcess.chart.width")),
-                            Integer.parseInt(PropertiesManager.getProperty("tsdProcess.chart.height")));
+                            Integer.parseInt(ConfigurationManager.getProperty("tsdProcess.chart.width")),
+                            Integer.parseInt(ConfigurationManager.getProperty("tsdProcess.chart.height")));
                 }
             }
         };
@@ -123,8 +123,8 @@ public abstract class TeacherServiceDistributionChart {
                                     PlotOrientation.VERTICAL, true, true, false);
 
                     ChartUtilities.writeChartAsPNG(outputStream, chart,
-                            Integer.parseInt(PropertiesManager.getProperty("tsdProcess.chart.width")),
-                            Integer.parseInt(PropertiesManager.getProperty("tsdProcess.chart.height")));
+                            Integer.parseInt(ConfigurationManager.getProperty("tsdProcess.chart.width")),
+                            Integer.parseInt(ConfigurationManager.getProperty("tsdProcess.chart.height")));
                 }
             }
         };
@@ -164,8 +164,8 @@ public abstract class TeacherServiceDistributionChart {
                                     true, true, false);
 
                     ChartUtilities.writeChartAsPNG(outputStream, chart,
-                            Integer.parseInt(PropertiesManager.getProperty("tsdProcess.chart.width")),
-                            Integer.parseInt(PropertiesManager.getProperty("tsdProcess.chart.height")));
+                            Integer.parseInt(ConfigurationManager.getProperty("tsdProcess.chart.width")),
+                            Integer.parseInt(ConfigurationManager.getProperty("tsdProcess.chart.height")));
                 }
 
             }
@@ -206,8 +206,8 @@ public abstract class TeacherServiceDistributionChart {
                                     dataset, true, true, false);
 
                     ChartUtilities.writeChartAsPNG(outputStream, chart,
-                            Integer.parseInt(PropertiesManager.getProperty("tsdProcess.chart.width")),
-                            Integer.parseInt(PropertiesManager.getProperty("tsdProcess.chart.height")));
+                            Integer.parseInt(ConfigurationManager.getProperty("tsdProcess.chart.width")),
+                            Integer.parseInt(ConfigurationManager.getProperty("tsdProcess.chart.height")));
                 }
 
             }

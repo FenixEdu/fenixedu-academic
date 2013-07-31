@@ -3,7 +3,7 @@
  */
 package net.sourceforge.fenixedu.webServices;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
+import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.PersonInformationBean;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.webServices.exceptions.NotAuthorizedException;
@@ -17,8 +17,8 @@ public class PersonInformation implements IPersonInformation {
     private static final String storedUsername;
 
     static {
-        storedUsername = PropertiesManager.getProperty("webServices.PersonInformation.getPersonInformation.username");
-        storedPassword = PropertiesManager.getProperty("webServices.PersonInformation.getPersonInformation.password");
+        storedUsername = ConfigurationManager.getProperty("webServices.PersonInformation.getPersonInformation.username");
+        storedPassword = ConfigurationManager.getProperty("webServices.PersonInformation.getPersonInformation.password");
     }
 
     @Override

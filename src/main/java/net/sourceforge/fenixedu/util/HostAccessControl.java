@@ -12,7 +12,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu._development.LogLevel;
-import net.sourceforge.fenixedu._development.PropertiesManager;
+import pt.ist.bennu.core.util.ConfigurationManager;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -40,7 +40,7 @@ public class HostAccessControl {
     private void setupConfiguration() {
         this.configuration = new HashMap<String, List<InetAddress>>();
 
-        Properties properties = PropertiesManager.getProperties();
+        Properties properties = ConfigurationManager.getProperties();
         logger.info("setup configuration for host access control");
         for (Object key : properties.keySet()) {
             String keyName = (String) key;

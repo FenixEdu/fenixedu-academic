@@ -16,8 +16,6 @@ import javax.net.ssl.X509TrustManager;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.logging.SystemInfo;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CourseLoad;
@@ -67,7 +65,7 @@ import org.restlet.util.Series;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.bennu.core.util.ConfigurationManager;
 
 /**
  * @author Luis Cruz
@@ -79,15 +77,13 @@ public class MonitorSystemDA extends FenixDispatchAction {
     public ActionForward monitor(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
-        IUserView userView = UserView.getUser();
-
         SystemInfo systemInfoApplicationServer = new SystemInfo();
         request.setAttribute("systemInfoApplicationServer", systemInfoApplicationServer);
 
         SystemInfo systemInfoWebContainer = new SystemInfo();
         request.setAttribute("systemInfoWebContainer", systemInfoWebContainer);
 
-        String useBarraAsAuth = PropertiesManager.getProperty("barra.as.authentication.broker");
+        String useBarraAsAuth = ConfigurationManager.getProperty("barra.as.authentication.broker");
         request.setAttribute("useBarraAsAuth", useBarraAsAuth);
 
         request.setAttribute("startMillis", ""
@@ -105,11 +101,11 @@ public class MonitorSystemDA extends FenixDispatchAction {
 
         MessageDigest messageDigest = MessageDigest.getInstance("MD5");
         byte[] hashedSecret =
-                messageDigest.digest(PropertiesManager.getProperty("external.application.workflow.equivalences.uri.secret")
+                messageDigest.digest(ConfigurationManager.getProperty("external.application.workflow.equivalences.uri.secret")
                         .getBytes());
 
         final Reference reference =
-                new Reference(PropertiesManager.getProperty("external.application.workflow.equivalences.uri") + "aaaa")
+                new Reference(ConfigurationManager.getProperty("external.application.workflow.equivalences.uri") + "aaaa")
                         .addQueryParameter("creator", "xxxx").addQueryParameter("requestor", "yyyyy")
                         .addQueryParameter("base64Secret", new String(Base64.encode(hashedSecret)));
 
@@ -169,7 +165,7 @@ public class MonitorSystemDA extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         final String useBarraAsAuth = request.getParameter("useBarraAsAuth");
-        PropertiesManager.setProperty("barra.as.authentication.broker", useBarraAsAuth);
+        ConfigurationManager.setProperty("barra.as.authentication.broker", useBarraAsAuth);
 
         return monitor(mapping, form, request, response);
     }
@@ -278,7 +274,7 @@ public class MonitorSystemDA extends FenixDispatchAction {
         degreeModule.getName();
         if (degreeModule.isCourseGroup()) {
             final CourseGroup courseGroup = (CourseGroup) degreeModule;
-            for (final net.sourceforge.fenixedu.domain.degreeStructure.Context context: courseGroup.getChildContextsSet()) {
+            for (final net.sourceforge.fenixedu.domain.degreeStructure.Context context : courseGroup.getChildContextsSet()) {
                 final DegreeModule child = context.getChildDegreeModule();
                 load(child);
             }

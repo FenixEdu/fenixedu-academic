@@ -15,13 +15,13 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
+import pt.ist.bennu.core.util.ConfigurationManager;
 
 @WebFilter(urlPatterns = "/jersey/services/*")
 public class JerseyAuthFilter implements Filter {
 
-    final static String systemUsername = PropertiesManager.getProperty("jersey.username");
-    final static String systemPassword = PropertiesManager.getProperty("jersey.password");
+    final static String systemUsername = ConfigurationManager.getProperty("jersey.username");
+    final static String systemPassword = ConfigurationManager.getProperty("jersey.password");
     final static String USERNAME_KEY = "__username__";
     final static String PASSWORD_KEY = "__password__";
 

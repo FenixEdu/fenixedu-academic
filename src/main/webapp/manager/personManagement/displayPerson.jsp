@@ -210,7 +210,7 @@ function check(e,v){
                     </fr:view>
                     
 					<logic:equal name="personalInfo" property="homePageAvailable" value="true">
-						<% final String appContext = net.sourceforge.fenixedu._development.PropertiesManager.getProperty("app.context"); %>
+						<% final String appContext = pt.ist.bennu.core.util.ConfigurationManager.getProperty("app.context"); %>
 						<% final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : ""; %>				
 						<bean:define id="homepageURL" type="java.lang.String"><%= request.getScheme() %>://<%= request.getServerName() %>:<%= request.getServerPort() %><%= context %>/homepage/<bean:write name="personalInfo" property="istUsername"/></bean:define>						
 						<tr>

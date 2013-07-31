@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
+import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.applicationTier.ServiceMonitoring;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
@@ -40,7 +40,7 @@ import pt.ist.fenixframework.FenixFramework;
 public class UnEnrollStudentInGroup {
 
     public static String mailServer() {
-        final String server = PropertiesManager.getProperty("mail.smtp.host");
+        final String server = ConfigurationManager.getProperty("mail.smtp.host");
         return (server != null) ? server : "mail.adm";
     }
 

@@ -8,7 +8,7 @@ import java.io.OutputStreamWriter;
 
 import net.sourceforge.fenixedu._development.Custodian;
 import net.sourceforge.fenixedu._development.LogLevel;
-import net.sourceforge.fenixedu._development.PropertiesManager;
+import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.joda.time.DateTime;
@@ -18,7 +18,7 @@ import pt.utl.ist.fenix.tools.util.StringAppender;
 public class Script {
 
     private static String createCommand(final String scriptName, final String user) {
-        final String script = PropertiesManager.getProperty(scriptName);
+        final String script = ConfigurationManager.getProperty(scriptName);
         return StringAppender.append(script, " ", user);
     }
 
@@ -89,7 +89,7 @@ public class Script {
         Process process = null;
         BufferedWriter outCommand = null;
         BufferedReader bufferedReader = null;
-        ScriptWatchDog watchDog = new ScriptWatchDog(Float.valueOf(PropertiesManager.getProperty("scriptTimeout")).longValue());
+        ScriptWatchDog watchDog = new ScriptWatchDog(Float.valueOf(ConfigurationManager.getProperty("scriptTimeout")).longValue());
 
         try {
             process = Runtime.getRuntime().exec(cmd);

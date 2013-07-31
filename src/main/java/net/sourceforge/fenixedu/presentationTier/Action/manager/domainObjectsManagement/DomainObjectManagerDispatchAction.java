@@ -12,7 +12,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
+import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteObjectByOID;
 import net.sourceforge.fenixedu.domain.Person;
@@ -129,7 +129,7 @@ public class DomainObjectManagerDispatchAction extends FenixDispatchAction {
 
     private Person checkUser() {
         Person person = AccessControl.getPerson();
-        String ciistCostCenterCode = PropertiesManager.getProperty("ciistCostCenterCode");
+        String ciistCostCenterCode = ConfigurationManager.getProperty("ciistCostCenterCode");
         Unit ciistUnit = Unit.readByCostCenterCode(Integer.valueOf(ciistCostCenterCode));
         Unit currentWorkingPlace = person.getEmployee().getCurrentWorkingPlace();
         if ((currentWorkingPlace != null && ciistUnit != null && !currentWorkingPlace.equals(ciistUnit))

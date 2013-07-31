@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Serializable;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -20,7 +21,6 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -79,7 +79,7 @@ public class ShiftDistributionFirstYearDA extends FenixDispatchAction {
 
         ShiftDistributionFileBean fileBean = getRenderedObject();
         String fileContents =
-                FileUtils.readFile(new InputStreamReader(fileBean.getInputStream(), PropertiesManager.DEFAULT_CHARSET));
+                FileUtils.readFile(new InputStreamReader(fileBean.getInputStream(), Charset.defaultCharset().name()));
         final String[] data = fileContents.split("\n");
 
         List<ShiftDistributionDTO> shiftDistributionFromFile = new ArrayList<ShiftDistributionDTO>(data.length);

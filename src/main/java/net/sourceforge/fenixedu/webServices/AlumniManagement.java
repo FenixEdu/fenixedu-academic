@@ -4,7 +4,7 @@ import java.util.UUID;
 
 import javax.servlet.ServletRequest;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
+import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.domain.AlumniIdentityCheckRequest;
 import net.sourceforge.fenixedu.util.HostAccessControl;
 import net.sourceforge.fenixedu.webServices.exceptions.NotAuthorizedException;
@@ -19,8 +19,8 @@ public class AlumniManagement implements IAlumniManagement {
     private static final String storedUsername;
 
     static {
-        storedUsername = PropertiesManager.getProperty("webServices.PersonManagement.getPersonInformation.username");
-        storedPassword = PropertiesManager.getProperty("webServices.PersonManagement.getPersonInformation.password");
+        storedUsername = ConfigurationManager.getProperty("webServices.PersonManagement.getPersonInformation.username");
+        storedPassword = ConfigurationManager.getProperty("webServices.PersonManagement.getPersonInformation.password");
     }
 
     @Override

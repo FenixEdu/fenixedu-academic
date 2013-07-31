@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.utils;
 
 import java.security.SecureRandom;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
+import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.domain.Person;
 
 import com.Ostermiller.util.PasswordVerifier;
@@ -34,7 +34,7 @@ public class GeneratePasswordBase implements IGeneratePassword {
     @Override
     public String generatePassword(Person person) {
 
-        return randPass.getPass(PropertiesManager.getIntegerProperty("passSize"));
+        return randPass.getPass(ConfigurationManager.getIntegerProperty("passSize"));
 
     }
 }

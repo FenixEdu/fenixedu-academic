@@ -7,7 +7,7 @@ import java.util.Properties;
 import javax.print.PrintService;
 import javax.print.PrintServiceLookup;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
+import pt.ist.bennu.core.util.ConfigurationManager;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,7 +45,7 @@ public class PrinterManager {
     }
 
     private static void loadPrinterNames() {
-        Properties properties = PropertiesManager.getProperties();
+        Properties properties = ConfigurationManager.getProperties();
         for (Object key : properties.keySet()) {
             String function = (String) key;
             if (function.startsWith(PREFIX)) {

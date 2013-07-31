@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
+import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -25,9 +25,9 @@ public abstract class DebtsFile extends DebtsFile_Base {
     protected static final String DESTINATION_INSTITUTION_ID;
 
     static {
-        ENTITY_CODE = PropertiesManager.getProperty("sibs.entityCode");
-        SOURCE_INSTITUTION_ID = PropertiesManager.getProperty("sibs.sourceInstitutionId");
-        DESTINATION_INSTITUTION_ID = PropertiesManager.getProperty("sibs.destinationInstitutionId");
+        ENTITY_CODE = ConfigurationManager.getProperty("sibs.entityCode");
+        SOURCE_INSTITUTION_ID = ConfigurationManager.getProperty("sibs.sourceInstitutionId");
+        DESTINATION_INSTITUTION_ID = ConfigurationManager.getProperty("sibs.destinationInstitutionId");
     }
 
     public DebtsFile() {

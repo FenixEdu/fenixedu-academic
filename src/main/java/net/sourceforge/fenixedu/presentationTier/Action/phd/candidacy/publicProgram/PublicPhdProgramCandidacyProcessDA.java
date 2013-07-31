@@ -5,7 +5,7 @@ import java.util.Collection;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
+import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
@@ -24,7 +24,7 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.bennu.core.domain.User;
 
 public abstract class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProcessDA {
-    private static final String SIBS_ENTITY_CODE = PropertiesManager.getProperty("sibs.entityCode");
+    private static final String SIBS_ENTITY_CODE = ConfigurationManager.getProperty("sibs.entityCode");
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

@@ -7,7 +7,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
+import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.applicationTier.Servico.messaging.ExpandExecutionCourseMailAlias;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -102,7 +102,7 @@ public class ExecutionCourseAliasExpandingAction extends FenixAction {
     }
 
     public static String mailingListDomainConfiguration() {
-        return PropertiesManager.getProperty("mailingList.host.name");
+        return ConfigurationManager.getProperty("mailingList.host.name");
     }
 
     private void sendAnswer(HttpServletResponse response, String result) throws IOException {

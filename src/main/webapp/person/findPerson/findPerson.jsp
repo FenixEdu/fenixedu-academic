@@ -316,7 +316,7 @@ function check(e,v){
 					<logic:equal name="personalInfo" property="homePageAvailable"
 						value="true">
 						<%
-						    final String appContext = net.sourceforge.fenixedu._development.PropertiesManager
+						    final String appContext = pt.ist.bennu.core.util.ConfigurationManager
 										.getProperty("app.context");
 						%>
 						<%

@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
+import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -35,7 +35,7 @@ public class MergeExternalUnits {
 
             if (sendMail != null && sendMail.booleanValue()) {
 
-                String emails = PropertiesManager.getProperty("merge.units.emails");
+                String emails = ConfigurationManager.getProperty("merge.units.emails");
                 if (!StringUtils.isEmpty(emails)) {
 
                     Set<String> resultEmails = new HashSet<String>();

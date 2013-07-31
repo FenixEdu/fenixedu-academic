@@ -10,7 +10,7 @@ import java.util.Map;
 
 import javax.faces.model.SelectItem;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
+import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -318,7 +318,7 @@ public class PublicEvaluationsBackingBean extends FenixBackingBean {
     }
 
     public String getApplicationContext() {
-        final String appContext = PropertiesManager.getProperty("app.context");
+        final String appContext = ConfigurationManager.getProperty("app.context");
         return (appContext != null && appContext.length() > 0) ? "/" + appContext : "";
     }
 

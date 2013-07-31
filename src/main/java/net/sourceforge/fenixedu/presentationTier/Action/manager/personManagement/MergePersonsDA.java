@@ -9,7 +9,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
+import pt.ist.bennu.core.util.ConfigurationManager;
 import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteObjectByOID;
@@ -434,7 +434,7 @@ public class MergePersonsDA extends FenixDispatchAction {
 
     private Person checkUser() {
         Person person = AccessControl.getPerson();
-        String ciistCostCenterCode = PropertiesManager.getProperty("ciistCostCenterCode");
+        String ciistCostCenterCode = ConfigurationManager.getProperty("ciistCostCenterCode");
         Unit ciistUnit = Unit.readByCostCenterCode(Integer.valueOf(ciistCostCenterCode));
         Unit currentWorkingPlace = person.getEmployee().getCurrentWorkingPlace();
         if ((currentWorkingPlace != null && ciistUnit != null && !currentWorkingPlace.equals(ciistUnit))

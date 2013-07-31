@@ -8,7 +8,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
+import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.CreateNewProcess;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean;
@@ -71,7 +71,7 @@ import pt.ist.fenixframework.FenixFramework;
 
 public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchAction {
 
-    private static final String SIBS_ENTITY_CODE = PropertiesManager.getProperty("sibs.entityCode");
+    private static final String SIBS_ENTITY_CODE = ConfigurationManager.getProperty("sibs.entityCode");
 
     abstract protected Class getParentProcessType();
 

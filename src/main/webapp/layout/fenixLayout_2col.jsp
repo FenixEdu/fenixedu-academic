@@ -6,7 +6,7 @@
 <%@page import="org.apache.struts.tiles.DirectStringAttribute"%>
 <%@page import="pt.utl.ist.fenix.tools.util.i18n.Language"%>
 <%@page import="net.sourceforge.fenixedu.injectionCode.AccessControl"%>
-<%@page import="net.sourceforge.fenixedu._development.PropertiesManager"%>
+<%@page import="pt.ist.bennu.core.util.ConfigurationManager"%>
 <%@page import="net.sourceforge.fenixedu.presentationTier.tiles.LayoutLinkInjector"%>
 <html:html xhtml="true">
 <head>
@@ -42,7 +42,7 @@
 </head>
 
 <body>
-<% if (PropertiesManager.useBarraAsAuthenticationBroker()) { %>
+<% if (ConfigurationManager.getBooleanProperty("barra.as.authentication.broker", false)) { %>
 <script id="ist-bar" data-logout="https://fenix.ist.utl.pt/logoff.do" data-login="https://fenix.ist.utl.pt/loginPage.jsp" data-fluid="true" data-lang="<%= Language.getLocale().getLanguage() %>" <% if(AccessControl.getUserView() == null) {%> data-use-offline="true" <%} %> data-next-param="service" src="https://barra.ist.utl.pt/site_media/static/js/barra.js"></script>
 <% } %>
 <jsp:include page="deployWarning.jsp" flush="true"/>
@@ -55,7 +55,7 @@
 <!--End Context -->
 
 <!-- Header -->
-<% if (!PropertiesManager.useBarraAsAuthenticationBroker()) { %>
+<% if (!ConfigurationManager.getBooleanProperty("barra.as.authentication.broker", false)) { %>
 <div id="top">
 	<h1 id="logo">
 		<img alt="<bean:message key="institution.logo" bundle="IMAGE_RESOURCES" />" style="padding-left:30px;padding-top:20px;" src="<bean:message key="fenix.logo.location" bundle="GLOBAL_RESOURCES" arg0="<%= contextPath %>"/>"/>
@@ -71,7 +71,7 @@
 
 <!-- NavGeral -->
 <div id="navtop">
-	<% if (PropertiesManager.useBarraAsAuthenticationBroker()) { %>
+	<% if (ConfigurationManager.getBooleanProperty("barra.as.authentication.broker", false)) { %>
 	<h1 class="applicationName">
 		<bean:message key="application.name" bundle="GLOBAL_RESOURCES" /><span class="applicationName-subtle"><bean:message key="application.name.subtle" bundle="GLOBAL_RESOURCES" /></span>
 	</h1>

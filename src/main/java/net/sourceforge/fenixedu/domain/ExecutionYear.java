@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
+import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
 import net.sourceforge.fenixedu.domain.accounting.events.AnnualEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.DfaGratuityEvent;
@@ -393,7 +393,7 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
     static private ExecutionYear readFromProperties(ExecutionYear executionYear, String yearKey) {
         if (executionYear == null || executionYear.getRootDomainObject() != RootDomainObject.getInstance()) {
 
-            final String yearString = PropertiesManager.getProperty(yearKey);
+            final String yearString = ConfigurationManager.getProperty(yearKey);
             if (yearString == null || yearString.length() == 0) {
                 executionYear = null;
             } else {
