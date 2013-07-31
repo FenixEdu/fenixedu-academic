@@ -248,7 +248,7 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
 
         if (persons.size() > 1) {
             addActionMessage("individualCandidacyMessages", request, getProcessType().getSimpleName()
-                    + ".error.public.candidacies.fill.personal.information.and.institution.id");
+                    + ".error.public.candidacies.fill.personal.information.and.institution.id.person.already.exist");
             return executeCreateCandidacyPersonalInformationInvalid(mapping, form, request, response);
         }
 
@@ -260,14 +260,14 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
                 if (!person.getDateOfBirthYearMonthDay().equals(personBean.getDateOfBirth())) {
                     // found person with diff date
                     addActionMessage("individualCandidacyMessages", request, getProcessType().getSimpleName()
-                            + ".error.public.candidacies.fill.personal.information.and.institution.id");
+                            + ".error.public.candidacies.fill.personal.information.and.institution.id.birth");
                     return executeCreateCandidacyPersonalInformationInvalid(mapping, form, request, response);
                 } else if (!StringUtils.isEmpty(personBean.getSocialSecurityNumber())
                         && !StringUtils.isEmpty(person.getSocialSecurityNumber())
                         && !person.getSocialSecurityNumber().equals(personBean.getSocialSecurityNumber())) {
                     // found person with diff social security number
                     addActionMessage("individualCandidacyMessages", request, getProcessType().getSimpleName()
-                            + ".error.public.candidacies.fill.personal.information.and.institution.id");
+                            + ".error.public.candidacies.fill.personal.information.and.institution.id.contributorNumber");
                     return executeCreateCandidacyPersonalInformationInvalid(mapping, form, request, response);
                 } else {
                     personBean.setPerson(person);
@@ -275,21 +275,21 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
             } else {
                 // found person with diff ist userid
                 addActionMessage("individualCandidacyMessages", request, getProcessType().getSimpleName()
-                        + ".error.public.candidacies.fill.personal.information.and.institution.id");
+                        + ".error.public.candidacies.fill.personal.information.and.institution.id.userId");
                 return executeCreateCandidacyPersonalInformationInvalid(mapping, form, request, response);
             }
         } else {
             if (Person.readByContributorNumber(personBean.getSocialSecurityNumber()) != null) {
                 // found person with same contributor number
                 addActionMessage("individualCandidacyMessages", request, getProcessType().getSimpleName()
-                        + ".error.public.candidacies.fill.personal.information.and.institution.id");
+                        + ".error.public.candidacies.fill.personal.information.and.institution.id.contributorNumber");
                 return executeCreateCandidacyPersonalInformationInvalid(mapping, form, request, response);
             }
 
             if (!StringUtils.isEmpty(bean.getPersonNumber())) {
                 // person must fill ist userid
                 addActionMessage("individualCandidacyMessages", request, getProcessType().getSimpleName()
-                        + ".error.public.candidacies.fill.personal.information.and.institution.id");
+                        + ".error.public.candidacies.fill.personal.information.and.institution.id.userId.missing");
                 return executeCreateCandidacyPersonalInformationInvalid(mapping, form, request, response);
             } else {
                 fillExternalPrecedentInformation(mapping, form, request, response);
