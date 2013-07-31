@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.presentationTier.Action.manager;
+package net.sourceforge.fenixedu.presentationTier.Action.academicAdministration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,9 +26,22 @@ import org.joda.time.Partial;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
+@Mapping(module = "academicAdministration", path = "/academicCalendarsManagement", input = "/index.do",
+        attribute = "academicCalendarsManagementForm", formBean = "academicCalendarsManagementForm", scope = "request",
+        parameter = "method")
+@Forwards(
+        value = {
+                @Forward(name = "viewAcademicCalendar",
+                        path = "/academicAdministration/academicCalendarsManagement/viewAcademicCalendar.jsp"),
+                @Forward(name = "prepareCreateCalendarEntry",
+                        path = "/academicAdministration/academicCalendarsManagement/createCalendarEntry.jsp"),
+                @Forward(name = "prepareChooseCalendar",
+                        path = "/academicAdministration/academicCalendarsManagement/chooseCalendar.jsp") })
 public class AcademicCalendarsManagementDA extends FenixDispatchAction {
-
     public ActionForward prepareCreateAcademicCalendar(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 

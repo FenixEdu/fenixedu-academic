@@ -7,9 +7,6 @@
                   <form-property type="java.lang.Integer" name="fromUnitID"></form-property>
                   <form-property type="java.lang.Integer" name="destinationUnitID"></form-property>
             </form-bean>
-            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="academicCalendarsManagementForm">
-                  <form-property type="java.lang.String" name="method"></form-property>
-            </form-bean>
             <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="chooseDegreesForExecutionCourseMerge">
                   <form-property type="java.lang.Integer" name="sourceDegreeId"></form-property>
                   <form-property type="java.lang.Integer" name="destinationDegreeId"></form-property>

@@ -748,18 +748,6 @@
 		<put name="body" value="/manager/loginsManagement/createNewLoginPeriod.jsp" />
 	</definition>	
 
-	<!--  ###################  Academic Calendar Management #######################
--->
-	<definition name="prepare-choose-calendar" extends="definition.manager.masterPage" >
-		<put name="body" value="/manager/academicCalendarsManagement/chooseCalendar.jsp" />
-	</definition>	
-	<definition name="view-academic-calendar" extends="definition.manager.masterPage" >
-		<put name="body" value="/manager/academicCalendarsManagement/viewAcademicCalendar.jsp" />
-	</definition>		
-	<definition name="prepare-create-calendar-entry" extends="definition.manager.masterPage" >
-		<put name="body" value="/manager/academicCalendarsManagement/createCalendarEntry.jsp" />
-	</definition>	
-	
 	<!--  ###################  Units Merge ####################### -->
 	<definition name="choose-unit-to-merge" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/organizationalStructureManagament/mergeUnits/chooseUnitToStart.jsp" />
