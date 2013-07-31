@@ -79,6 +79,12 @@ public class FinalDegreeWorkGroup extends FinalDegreeWorkGroup_Base {
     public static final Comparator<FinalDegreeWorkGroup> COMPARATOR_BY_STUDENT_NUMBERS = new Comparator<FinalDegreeWorkGroup>() {
         @Override
         public int compare(final FinalDegreeWorkGroup group1, final FinalDegreeWorkGroup group2) {
+            if (group1.getGroupStudentsSet().isEmpty()) {
+                return -1;
+            }
+            if (group2.getGroupStudentsSet().isEmpty()) {
+                return 1;
+            }
             final GroupStudent groupStudent1 =
                     Collections.min(group1.getGroupStudentsSet(), GroupStudent.COMPARATOR_BY_STUDENT_NUMBER);
             final GroupStudent groupStudent2 =
