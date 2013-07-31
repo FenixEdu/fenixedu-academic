@@ -23,7 +23,7 @@
       <action-mappings type="org.apache.struts.action.ActionMapping">
       </action-mappings>
       <!-- ========== Controller Configuration ================================ -->
-      <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"></controller>
+      <controller processorClass="pt.ist.fenixWebFramework.renderers.plugin.RenderersRequestProcessor"></controller>
       <!-- ========== Message Resources Definitions ============================ -->
       <message-resources null="false" key="ACCOUNTING_RESOURCES" parameter="resources.AccountingResources"></message-resources>
       <message-resources null="false" key="TREASURY_RESOURCES" parameter="resources.TreasuryResources"></message-resources>

@@ -19,6 +19,8 @@ import java.util.TimerTask;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+import javax.servlet.ServletException;
+import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebListener;
 import javax.servlet.http.HttpServletRequest;
 
@@ -28,27 +30,36 @@ import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecu
 import net.sourceforge.fenixedu.applicationTier.Servico.content.CreateMetaDomainObectTypes;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.CreateGratuitySituationsForCurrentExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
+import net.sourceforge.fenixedu.dataTransferObject.support.SupportRequestBean;
 import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.PendingRequest;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.contents.Container;
+import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitNamePart;
 import net.sourceforge.fenixedu.domain.person.PersonNamePart;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.presentationTier.Action.externalServices.PhoneValidationUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
+import net.sourceforge.fenixedu.presentationTier.util.ExceptionInformation;
 
 import org.apache.commons.fileupload.FileUpload;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter;
+import pt.ist.bennu.core.presentationTier.servlets.filters.ExceptionHandlerFilter;
+import pt.ist.bennu.core.presentationTier.servlets.filters.ExceptionHandlerFilter.CustomeHandler;
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestChecksumFilter;
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestChecksumFilter.ChecksumPredicate;
+import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter;
+import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriterFilter;
+import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriterFilter.RequestRewriterFactory;
 
 @WebListener
 public class FenixInitializer implements ServletContextListener {
@@ -112,6 +123,7 @@ public class FenixInitializer implements ServletContextListener {
 
         registerChecksumFilterRules();
         registerContentInjectionRewriter();
+        registerUncaughtExceptionHandler();
 
         logger.info("Fenix initialized successfully");
     }
@@ -297,6 +309,40 @@ public class FenixInitializer implements ServletContextListener {
                 return new ContentInjectionRewriter(request);
             }
         });
+    }
+
+    public static class FenixCustomExceptionHandler extends CustomeHandler {
+        @Override
+        public boolean isCustomizedFor(Throwable t) {
+            return true;
+        }
+
+        @Override
+        public void handle(HttpServletRequest request, ServletResponse response, final Throwable t) throws ServletException,
+                IOException {
+
+            if (request.getAttribute("requestBean") == null) {
+
+                SupportRequestBean requestBean = SupportRequestBean.generateExceptionBean(AccessControl.getPerson());
+
+                if (AbstractFunctionalityContext.getCurrentContext(request) != null) {
+                    requestBean.setRequestContext(AbstractFunctionalityContext.getCurrentContext(request)
+                            .getSelectedTopLevelContainer());
+                }
+                request.setAttribute("requestBean", requestBean);
+                request.setAttribute("exceptionInfo", ExceptionInformation.buildUncaughtExceptionInfo(request, t));
+            }
+
+            t.printStackTrace();
+
+            String urlToForward =
+                    t instanceof IllegalDataAccessException ? "/exception/notAuthorizedForward.jsp" : "/showErrorPage.do";
+            request.getRequestDispatcher(urlToForward).forward(request, response);
+        }
+    }
+
+    private void registerUncaughtExceptionHandler() {
+        ExceptionHandlerFilter.register(new FenixCustomExceptionHandler());
     }
 
 }

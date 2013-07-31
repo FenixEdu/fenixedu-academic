@@ -5,13 +5,13 @@ import java.util.Enumeration;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.dataTransferObject.support.SupportRequestBean;
 import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.bennu.core.domain.User;
 import pt.ist.bennu.core.security.Authenticate;
 
 public class ExceptionInformation {
@@ -109,7 +109,7 @@ public class ExceptionInformation {
             }
         } else {
             exceptionInfo.append("No user logged in, or session was lost.\n");
-            requestBean = new SupportRequestBean();
+            requestBean = SupportRequestBean.generateExceptionBean(null);
         }
         exceptionInfo.append("\n");
         return requestBean;

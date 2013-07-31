@@ -27,7 +27,7 @@
             <action forward="show-create-space-form" scope="request" name="spaceContextForm" type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction" path="/showCreateSpaceForm"></action>
       </action-mappings>
       <!-- ========== Controller Configuration ================================ -->
-      <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"></controller>
+      <controller processorClass="pt.ist.fenixWebFramework.renderers.plugin.RenderersRequestProcessor"></controller>
       <!-- ========== Message Resources Definitions ============================ -->
       <message-resources null="false" key="GLOBAL_RESOURCES" parameter="resources.GlobalResources"></message-resources>
       <message-resources null="false" key="SPACE_RESOURCES" parameter="resources.SpaceResources"></message-resources>

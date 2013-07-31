@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
+import net.sourceforge.fenixedu.presentationTier.servlets.startup.FenixInitializer.FenixCustomExceptionHandler;
 
 /**
  * This filter restricts the access to certain functionalities based on the
@@ -40,6 +41,8 @@ public class CheckAvailabilityFilter implements Filter {
 
     private static final String errorPage = "/publico/notFound.do";
     private static final String unathorizedPage = "/publico/notAuthorized.do";
+
+    private final FenixCustomExceptionHandler exceptionHandler = new FenixCustomExceptionHandler();
 
     /**
      * Initializes the filter. There are two init parameters that are used by
@@ -86,7 +89,12 @@ public class CheckAvailabilityFilter implements Filter {
             }
         }
 
-        filterChain.doFilter(httpServletRequest, httpServletResponse);
+        try {
+            filterChain.doFilter(httpServletRequest, httpServletResponse);
+        } catch (Throwable t) {
+            // Manually handle exceptions in functionalities
+            exceptionHandler.handle(httpServletRequest, httpServletResponse, t);
+        }
     }
 
     private boolean isActionRequest(final HttpServletRequest httpServletRequest) {

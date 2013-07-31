@@ -1,26 +1,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<%@page import="pt.ist.fenixWebFramework.security.User"%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
-<%@page import="pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter"%>
-<%@page import="pt.ist.fenixWebFramework.security.UserView"%>
-<%@page import="net.sourceforge.fenixedu.applicationTier.User"%>
 <%@page import="net.sourceforge.fenixedu.dataTransferObject.support.SupportRequestBean"%>
 <html:html xhtml="true">
 
-<%
-	try {
-		final HttpSession httpSession = request.getSession(false);
-		if (httpSession != null) {
-		    final User user = (User) httpSession.getAttribute(pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE);
-	    	if (user != null) {
-				UserView.setUser(user);
-	    	}
-		}
-%>
 
 <head>
 	<title>
@@ -130,11 +116,5 @@
 </table>
 
 </body>
-
-<%
-	} finally {
-	    UserView.setUser(null);
-	}
-%>
 
 </html:html>

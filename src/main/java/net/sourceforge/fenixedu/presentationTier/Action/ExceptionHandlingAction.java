@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.ExceptionHandlingAction.ErrorMailForm;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
@@ -159,7 +160,7 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
     public ActionForward prepareSupportHelp(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        SupportRequestBean requestBean = new SupportRequestBean();
+        SupportRequestBean requestBean = SupportRequestBean.generateExceptionBean(AccessControl.getPerson());
         requestBean.setResponseEmail(getLoggedPerson(request).getInstitutionalOrDefaultEmailAddressValue());
         final String parameter = request.getParameter("contextId");
         if (parameter != null && !parameter.isEmpty()) {

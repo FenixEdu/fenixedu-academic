@@ -614,7 +614,7 @@
             <!-- =================== Access Groups Management  =================== -->
       </action-mappings>
       <!-- ========== Controller Configuration ================================ -->
-      <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"></controller>
+      <controller processorClass="pt.ist.fenixWebFramework.renderers.plugin.RenderersRequestProcessor"></controller>
       <!-- ========== Message Resources Definitions ============================ -->
       <message-resources parameter="resources.ResourceAllocationManagerResources" null="false"></message-resources>
       <message-resources parameter="resources.ResourceAllocationManagerResources" key="SOP_RESOURCES" null="false"></message-resources>

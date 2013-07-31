@@ -148,10 +148,6 @@
 	    <filter-name>MissingCandidacyInformationFilter</filter-name>
 	    <filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.MissingCandidacyInformationFilter</filter-class>
 	</filter>
-   	<filter>
-	    <filter-name>UncaughtExceptionFilter</filter-name>
-	    <filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.UncaughtExceptionFilter</filter-class>
-	</filter>
 	<filter>
 		<filter-name>ProcessCandidacyPrintAllDocumentsFilter</filter-name>
 		<filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.ProcessCandidacyPrintAllDocumentsFilter</filter-class>
@@ -208,10 +204,6 @@
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>SetUserViewFilter</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
-	<filter-mapping>
-		<filter-name>UncaughtExceptionFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	<filter-mapping>
@@ -364,15 +356,6 @@
 	<welcome-file-list>
     	<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
-	
-	<error-page>
-	    <exception-type>net.sourceforge.fenixedu.accessControl.IllegalDataAccessException</exception-type>
-	    <location>/exception/notAuthorizedForward.jsp</location>
-	</error-page>
-	<error-page>
-	    <exception-type>java.lang.Exception</exception-type>
-	    <location>/showErrorPage.do</location>
-	</error-page>
 	
     <jsp-config>
 		<jsp-property-group>
