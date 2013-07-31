@@ -20774,8 +20774,7 @@ relation PhotographSantanderPhotoEntry {
 
 class ExternalApplication  {
         String name;
-        String oauthKey;
-        String clientID;
+        String secret;
         String url;
     }
     
@@ -20785,8 +20784,10 @@ class AuthScope  {
     }
     
 class AppUserSession {
+	String code;
+	DateTime codeExpirationDate;
 	String accessToken;
-	String refresToken;
+	String refreshToken;
 	DateTime expirationDate;
 }    
      
@@ -20834,18 +20835,18 @@ relation PermissionsScope {
 
 relation AppUserSessionApplication {
 	AppUserSession playsRole appUserSession {
-		multiplicity 1;
+		multiplicity *;
 	}
 	ExternalApplication playsRole application {
-		multiplicity *;
+		multiplicity 1;
 	}
 }
 
 relation UserAppUserSession {
 	AppUserSession playsRole appUserSession {
-		multiplicity 1;
+		multiplicity *;
 	}
 	User playsRole user {
-		multiplicity *;
+		multiplicity 1;
 	}
 } 

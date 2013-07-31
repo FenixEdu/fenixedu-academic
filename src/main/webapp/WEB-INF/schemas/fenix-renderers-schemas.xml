@@ -772,6 +772,18 @@
 		<slot name="url"/>
 	</schema>
 	
+		<schema name="my.list.ownedapps" type="net.sourceforge.fenixedu.domain.ExternalApplication" bundle="APPLICATION_RESOURCES">
+		<slot name="name"/>
+		<slot name="oid"/>
+		<slot name="secret"/>
+		<slot name="oauthKey"/>
+		<slot name="scopes" layout="list">
+			<property name="eachLayout" value="values"></property>
+			<property name="eachSchema" value="my.scopes.schema"></property>
+		</slot>
+		<slot name="url"/>
+	</schema>
+	
 	     <schema name="my.schema.confirm.app"  type="net.sourceforge.fenixedu.domain.ExternalApplication" bundle="APPLICATION_RESOURCES">
         <slot name="name"/>
                 <slot name="scopes" layout="list">

@@ -142,14 +142,12 @@ public class AuthDispatchAction extends FenixDispatchAction {
         System.out.println("appsAuth size: " + (authApps != null ? authApps.size() : 0));
         System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 
-        p.getUser().getAppAuthorized().add(app);
+        app.addUser(p.getUser());
+        //p.getUser().getAppAuthorized().add(app);
 
         AppUserSession aus = new AppUserSession();
-        aus.addApplication(app);
-        aus.addUser(p.getUser());
-
-        p.getUser().setAppUserSession(aus);
-        app.setAppUserSession(aus);
+        aus.setApplication(app);
+        aus.setUser(p.getUser());
 
         request.setAttribute("authApps", authApps);
 

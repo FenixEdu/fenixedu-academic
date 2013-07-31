@@ -20,7 +20,7 @@
 
 <logic:present name="appsOwned">
 	<logic:iterate id="app" name="appsOwned" type="net.sourceforge.fenixedu.domain.ExternalApplication">
-		<fr:view name="app" layout="tabular" schema="my.list.apps" />
+		<fr:view name="app" layout="tabular" schema="my.list.ownedapps" />
 				<p><a href="<%= "externalAuth.do?method=addAuth&oid=" + app.getExternalId()%>">Adicionar</a>
 	</logic:iterate>
 

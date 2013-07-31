@@ -17,3 +17,15 @@ create table `AUTH_SCOPE` (`OID` bigint unsigned, `NAME` text, `OID_DOMAIN_META_
 create table `EXTERNAL_APPLICATION` (`OID` bigint unsigned, `OAUTH_KEY` text, `NAME` text, `OID_DOMAIN_META_OBJECT` bigint unsigned, `OID_AUTHOR` bigint unsigned, `OID_APP_USER_SESSION` bigint unsigned, `URL` text, `OID_ROOT_DOMAIN_OBJECT` bigint unsigned, `CLIENT_I_D` text, `ID_INTERNAL` int(11) NOT NULL auto_increment, primary key (ID_INTERNAL), index (OID), index (OID_AUTHOR), index (OID_APP_USER_SESSION), index (OID_ROOT_DOMAIN_OBJECT)) ENGINE=InnoDB, character set utf8;
 create table `APP_USER_SESSION` (`EXPIRATION_DATE` timestamp NULL default NULL, `OID` bigint unsigned, `REFRES_TOKEN` text, `ACCESS_TOKEN` text, `OID_DOMAIN_META_OBJECT` bigint unsigned, `ID_INTERNAL` int(11) NOT NULL auto_increment, primary key (ID_INTERNAL), index (OID)) ENGINE=InnoDB, character set utf8;
 create table `USER_APP_PERMISSIONS` (`OID_EXTERNAL_APPLICATION` bigint unsigned, `OID_USER` bigint unsigned, primary key (OID_EXTERNAL_APPLICATION, OID_USER), index (OID_EXTERNAL_APPLICATION), index (OID_USER)) ENGINE=InnoDB, character set utf8;
+
+
+
+-- Inserted at 2013-07-30T19:29:27.038+01:00
+
+alter table `EXTERNAL_APPLICATION` add `SECRET` text;
+alter table `APP_USER_SESSION` add `REFRESH_TOKEN` text, add `CODE_EXPIRATION_DATE` timestamp NULL default NULL, add `OID_USER` bigint unsigned, add `OID_APPLICATION` bigint unsigned, add `CODE` text, add index (OID_USER), add index (OID_APPLICATION);
+
+
+
+-- Inserted at 2013-07-31T16:29:55.606+01:00
+

@@ -39,6 +39,10 @@
 		<filter-name>JerseyAuthFilter</filter-name>
 		<filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.JerseyAuthFilter</filter-class>
 	</filter>
+		<filter>
+		<filter-name>JerseyOAuth2</filter-name>
+		<filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.JerseyOAuth2</filter-class>
+	</filter>
 	<filter>
 		<filter-name>CharsetEncoding</filter-name>
 		<filter-class>pt.ist.fenixWebFramework.servlets.filters.CharsetEncodingFilter</filter-class>
@@ -175,7 +179,11 @@
 	<!-- Filter Mapping -->
 	<filter-mapping>
 		<filter-name>JerseyAuthFilter</filter-name>
-		<url-pattern>/jersey/*</url-pattern>
+		<url-pattern>/jersey/services/*</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>JerseyOAuth2</filter-name>
+		<url-pattern>/jersey/services/v1/*</url-pattern>
 	</filter-mapping>
 	<filter-mapping>
  		 <filter-name>RequestIgnorer</filter-name>
