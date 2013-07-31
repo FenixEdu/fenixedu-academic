@@ -23,6 +23,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/home")
@@ -75,13 +76,7 @@ public class CreateContentsContextAction extends FenixAction {
         }
 
         String realPath = buffer.toString();
-        final String seperator = realPath.indexOf('?') >= 0 ? "&" : "?";
-        actionForward.setPath(realPath
-                + seperator
-                + pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.CHECKSUM_ATTRIBUTE_NAME
-                + "="
-                + pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.calculateChecksum(request
-                        .getContextPath() + realPath));
+        actionForward.setPath(realPath);
         return actionForward;
     }
 
