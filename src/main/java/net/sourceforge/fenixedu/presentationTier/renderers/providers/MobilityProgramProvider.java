@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityProgram;
 import net.sourceforge.fenixedu.domain.institutionalRelations.academic.Program;
 import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
+import pt.ist.bennu.core.presentationTier.renderers.autoCompleteProvider.AutoCompleteProvider;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 public class MobilityProgramProvider implements AutoCompleteProvider<MobilityProgram> {
