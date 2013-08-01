@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.messaging.RegistrationsBean;
-import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -20,6 +19,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.joda.time.DateTime;
 
+import pt.ist.bennu.core.domain.User;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -84,7 +84,7 @@ public class ICalStudentTimeTable extends FenixDispatchAction {
             if (AccessControl.getPerson().getUser().getPrivateKeyValidity() != null) {
                 request.setAttribute("expirationDate",
                         AccessControl.getPerson().getUser().getPrivateKeyValidity().toString("dd/MM/yyyy HH:mm"));
-                request.setAttribute("user", AccessControl.getPerson().getUser().getUserUId());
+                request.setAttribute("user", AccessControl.getPerson().getUser().getUsername());
                 request.setAttribute("classURL", getUrl("syncClasses", registration, request));
                 request.setAttribute("examsURL", getUrl("syncExams", registration, request));
             }
@@ -120,14 +120,13 @@ public class ICalStudentTimeTable extends FenixDispatchAction {
                     scheme + "://" + serverName + ((serverPort == 80 || serverPort == 443) ? "" : ":" + serverPort)
                             + request.getContextPath();
             url +=
-                    "/external/iCalendarSync.do?method=" + to + "&user=" + AccessControl.getPerson().getUser().getUserUId() + ""
+                    "/external/iCalendarSync.do?method=" + to + "&user=" + AccessControl.getPerson().getUser().getUsername() + ""
                             + "&registrationID=" + registration.getExternalId() + "&payload="
                             + calculatePayload(to, registration, AccessControl.getPerson().getUser());
             return url;
         } catch (Exception e) {
             return null;
         }
-
     }
 
 }

@@ -1106,7 +1106,7 @@ public class CreateTestData {
         final Teacher teacher = new Teacher(person);
         person.addPersonRoleByRoleType(RoleType.EMPLOYEE);
         person.addPersonRoleByRoleType(RoleType.TEACHER);
-        final Login login = person.getUser().readUserLoginIdentification();
+        final Login login = Login.readUserLoginIdentification(person.getUser());
         login.openLoginIfNecessary(RoleType.TEACHER);
         new EmployeeContract(person, new YearMonthDay().minusYears(2), new YearMonthDay().plusYears(2), RootDomainObject
                 .getInstance().getInstitutionUnit(), AccountabilityTypeEnum.WORKING_CONTRACT, true);
@@ -1147,8 +1147,8 @@ public class CreateTestData {
 
         EmailAddress.createEmailAddress(person, "abc" + person.getExternalId() + "@gmail.com", PartyContactType.PERSONAL, true);
 
-        final User user = person.getBennuUser();
-        final Login login = null; // user.readUserLoginIdentification();
+        final User user = person.getUser();
+        final Login login = Login.readUserLoginIdentification(user);
         login.setPassword(PasswordEncryptor.encryptPassword("pass"));
         login.setActive(Boolean.TRUE);
         LoginAlias.createNewCustomLoginAlias(login, usernamePrefix + i);
@@ -1178,7 +1178,7 @@ public class CreateTestData {
                 StudentCurricularPlan.createWithEmptyStructure(registration, degreeCurricularPlan,
                         new YearMonthDay().minusMonths(6));
         person.addPersonRoleByRoleType(RoleType.STUDENT);
-        final Login login = person.getUser().readUserLoginIdentification();
+        final Login login = Login.readUserLoginIdentification(person.getUser());
         login.openLoginIfNecessary(RoleType.STUDENT);
         createStudentEnrolments(studentCurricularPlan);
         new DegreeCurricularPlanServiceAgreement(student.getPerson(), degreeCurricularPlan.getServiceAgreementTemplate());

@@ -767,7 +767,7 @@
 	</slot>
 </schema>
 
-<schema name="EditUserDomainObject" type="net.sourceforge.fenixedu.domain.User" bundle="MANAGER_RESOURCES">
+<schema name="EditUserDomainObject" type="pt.ist.bennu.core.domain.User" bundle="MANAGER_RESOURCES">
 	<slot name="userUId" />
 </schema>
 

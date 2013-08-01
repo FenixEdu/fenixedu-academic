@@ -425,7 +425,7 @@ public final class DomainObjectUtil {
                 return RootDomainObject.getInstance().getLoginAliasSet();
             }
         });
-        closureAccessMap.put(net.sourceforge.fenixedu.domain.User.class.getName(), new DomainObjectReader() {
+        closureAccessMap.put(pt.ist.bennu.core.domain.User.class.getName(), new DomainObjectReader() {
             @Override
             public java.util.Set readAllDomainObjects() {
                 return RootDomainObject.getInstance().getUsersSet();

@@ -7,6 +7,8 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.joda.time.DateTime;
 
+import pt.ist.bennu.core.domain.User;
+
 /**
  * @author mrsp
  */

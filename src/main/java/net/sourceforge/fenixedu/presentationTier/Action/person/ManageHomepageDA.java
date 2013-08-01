@@ -186,7 +186,7 @@ public class ManageHomepageDA extends SiteManagementDA {
 
     @Override
     protected String getItemLocationForFile(HttpServletRequest request, Item item, Section section) {
-        String userUId = getUserView(request).getPerson().getUser().getUserUId();
+        String userUId = getUserView(request).getPerson().getUser().getUsername();
         try {
             return RequestUtils.absoluteURL(request, "/homepage/" + userUId).toString();
         } catch (MalformedURLException e) {

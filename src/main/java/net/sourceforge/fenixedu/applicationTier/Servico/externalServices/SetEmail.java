@@ -3,13 +3,14 @@ package net.sourceforge.fenixedu.applicationTier.Servico.externalServices;
 import java.util.HashSet;
 import java.util.Set;
 
-import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.User;
 
 import org.apache.commons.lang.StringUtils;
 
+import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.util.ConfigurationManager;
 import pt.ist.fenixframework.Atomic;
 
 public class SetEmail {
@@ -54,7 +55,7 @@ public class SetEmail {
     }
 
     private static void set(final String userUId, final String email) throws FenixServiceException {
-        final User user = User.readUserByUserUId(userUId);
+        final User user = Login.readUserByUserUId(userUId);
         if (user == null) {
             throw new UserDoesNotExistException();
         }

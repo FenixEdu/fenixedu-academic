@@ -15,10 +15,10 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.TutorBean;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Tutorship;
-import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
 
@@ -65,8 +65,7 @@ public class TutorManagementDispatchAction extends FenixDispatchAction {
             bean = getTutorshipBeanWithRequestParameters(request);
         }
 
-        final ExecutionDegree executionDegree =
-                (ExecutionDegree) FenixFramework.getDomainObject(bean.getExecutionDegreeID());
+        final ExecutionDegree executionDegree = (ExecutionDegree) FenixFramework.getDomainObject(bean.getExecutionDegreeID());
 
         if (!validateDegreeTypeAccessRestrictions(executionDegree)) {
             addActionMessage(request, "error.tutor.notAuthorized.notBolonhaOrLEEC");
@@ -106,7 +105,7 @@ public class TutorManagementDispatchAction extends FenixDispatchAction {
         TutorshipManagementBean bean = (TutorshipManagementBean) request.getAttribute("tutorshipManagementBean");
 
         final ExecutionDegree executiondegree = FenixFramework.getDomainObject(bean.getExecutionDegreeID());
-        final Teacher teacher = User.readUserByUserUId(bean.getTeacherId()).getPerson().getTeacher();
+        final Teacher teacher = Login.readUserByUserUId(bean.getTeacherId()).getPerson().getTeacher();
 
         if (teacher == null) {
             addActionMessage(request, "error.tutor.unExistTeacher", new String[] { bean.getTeacherId() });
@@ -153,7 +152,7 @@ public class TutorManagementDispatchAction extends FenixDispatchAction {
 
         TutorshipManagementBean bean = getTutorshipBeanWithRequestParameters(request);
 
-        final Teacher teacher = User.readUserByUserUId(bean.getTeacherId()).getPerson().getTeacher();
+        final Teacher teacher = Login.readUserByUserUId(bean.getTeacherId()).getPerson().getTeacher();
         bean.setTeacher(teacher);
         bean.setNumberOfCurrentTutorships(teacher.getNumberOfActiveTutorships());
         bean.setNumberOfPastTutorships(teacher.getNumberOfPastTutorships());

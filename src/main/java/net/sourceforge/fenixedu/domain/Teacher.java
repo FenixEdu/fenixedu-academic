@@ -66,6 +66,8 @@ import org.joda.time.LocalDate;
 import org.joda.time.PeriodType;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.bennu.core.domain.User;
+
 public class Teacher extends Teacher_Base {
 
     public static final Comparator<Teacher> TEACHER_COMPARATOR_BY_CATEGORY_AND_NUMBER = new Comparator<Teacher>() {
@@ -99,7 +101,7 @@ public class Teacher extends Teacher_Base {
     }
 
     public static Teacher readByIstId(String istId) {
-        User user = User.readUserByUserUId(istId);
+        User user = Login.readUserByUserUId(istId);
         if (user != null) {
             return user.getPerson().getTeacher();
         } else {

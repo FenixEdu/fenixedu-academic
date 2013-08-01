@@ -1316,7 +1316,7 @@ public class RootDomainObject extends RootDomainObject_Base {
     }
 
     @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.User> getUsers() {
+    public java.util.Set<pt.ist.bennu.core.domain.User> getUsers() {
         return getUsersSet();
     }
 

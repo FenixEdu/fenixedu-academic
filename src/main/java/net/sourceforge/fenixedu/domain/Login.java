@@ -15,6 +15,8 @@ import net.sourceforge.fenixedu.util.UsernameUtils;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.bennu.core.domain.User;
+
 public class Login extends Login_Base {
 
     public Login(User user) {
@@ -100,7 +102,7 @@ public class Login extends Login_Base {
             final String userUId = UsernameUtils.updateIstUsername(getUser().getPerson());
             if (!StringUtils.isEmpty(userUId)) {
                 LoginAlias.createNewInstitutionalLoginAlias(this, userUId);
-                getUser().setUserUId(userUId);
+                getUser().setUsername(userUId);
             }
         }
     }
@@ -189,6 +191,20 @@ public class Login extends Login_Base {
         return loginAlias == null ? null : loginAlias.getLogin();
     }
 
+    public static User readUserByUserUId(final String userUId) {
+        final Login login = Login.readLoginByUsername(userUId);
+        return login == null ? null : login.getUser();
+    }
+
+    public static Login readUserLoginIdentification(User user) {
+        for (Identification identification : user.getIdentificationsSet()) {
+            if (identification.isLogin()) {
+                return (Login) identification;
+            }
+        }
+        return null;
+    }
+
     public void closeLoginIfNecessary() {
         Person person = getUser().getPerson();
 
@@ -245,7 +261,7 @@ public class Login extends Login_Base {
 
     private void checkIfUserAlreadyHaveLogin(User user) {
         if (user != null) {
-            Login login = user.readUserLoginIdentification();
+            Login login = readUserLoginIdentification(user);
             if (login != null && !login.equals(this)) {
                 throw new DomainException("error.user.login.already.exists");
             }

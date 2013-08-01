@@ -3,8 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.Action;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import pt.ist.bennu.core.util.ConfigurationManager;
-import net.sourceforge.fenixedu.domain.User;
+import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.codec.digest.DigestUtils;
@@ -13,6 +12,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.util.ConfigurationManager;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 import com.lowagie.text.DocumentException;
@@ -37,7 +38,7 @@ public class NameRequest extends FenixDispatchAction {
 
         if (storedUsername.equals(providedUsername) && digest.equals(providedDigest)) {
             String id = request.getParameter("id");
-            User user = User.readUserByUserUId(id);
+            User user = Login.readUserByUserUId(id);
 
             String name = user.getPerson().getName();
             String nickName = user.getPerson().getNickname();

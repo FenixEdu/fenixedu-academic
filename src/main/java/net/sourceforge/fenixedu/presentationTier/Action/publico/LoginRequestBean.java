@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.publico;
 
 import java.io.Serializable;
 
+import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.LoginRequest;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.Gender;
@@ -108,7 +109,7 @@ public class LoginRequestBean implements Serializable {
         this.documentType = person.getIdDocuments().iterator().next().getIdDocumentType().getValue();
         this.email = person.getEmail();
         this.gender = null;
-        this.username = person.getUser().readUserLoginIdentification().getUsername();
+        this.username = Login.readUserLoginIdentification(person.getUser()).getUsername();
         this.password = null;
         this.phone = person.getDefaultPhoneNumber();
     }

@@ -17,11 +17,11 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExternalTeacherAuthorization;
+import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.TeacherAuthorization;
-import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
 import net.sourceforge.fenixedu.domain.teacher.CategoryType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -34,6 +34,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.bennu.core.domain.User;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -92,7 +93,7 @@ public class TeacherAuthorizationManagement extends FenixDispatchAction {
         @Atomic
         ExternalTeacherAuthorization create() throws FenixActionException {
 
-            User user = User.readUserByUserUId(getIstUsername());
+            User user = Login.readUserByUserUId(getIstUsername());
             if (user == null) {
                 throw new FenixActionException("label.invalid.istUsername");
             }
@@ -239,7 +240,7 @@ public class TeacherAuthorizationManagement extends FenixDispatchAction {
                     final Boolean canHaveCard = Boolean.valueOf("S".equalsIgnoreCase(parts[4].trim()));
                     final Department department = Department.find(parts[5].trim());
 
-                    if (istUsername == null || istUsername.isEmpty() || User.readUserByUserUId(istUsername) == null) {
+                    if (istUsername == null || istUsername.isEmpty() || Login.readUserByUserUId(istUsername) == null) {
                         messages.add(BundleUtil.getStringFromResourceBundle("resources.ScientificCouncilResources",
                                 "label.message.istUsername.invalid", Integer.toString(lineCount), parts[0].trim()));
                         continue;

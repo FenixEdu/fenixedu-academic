@@ -167,6 +167,7 @@ import org.joda.time.LocalDate;
 import org.joda.time.Months;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.bennu.core.domain.User;
 import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
@@ -637,7 +638,7 @@ public class Person extends Person_Base {
 
     public Login getLoginIdentification() {
         final User personUser = getUser();
-        return personUser == null ? null : personUser.readUserLoginIdentification();
+        return personUser == null ? null : Login.readUserLoginIdentification(personUser);
     }
 
     public Set<LoginAlias> getLoginAliasOrderByImportance() {
@@ -666,7 +667,14 @@ public class Person extends Person_Base {
     }
 
     public String getUserAliass() {
-        return getUser().getAliass();
+        final StringBuilder aliass = new StringBuilder();
+        for (final LoginAlias loginAlias : Login.readUserLoginIdentification(getUser()).getLoginAliasOrderByImportance()) {
+            if (aliass.length() > 0) {
+                aliass.append(", ");
+            }
+            aliass.append(loginAlias.getAlias());
+        }
+        return aliass.toString();
     }
 
     public String getPassword() {
@@ -696,7 +704,7 @@ public class Person extends Person_Base {
         if (login == null) {
             User user = getUser();
             if (user == null) {
-                user = new User(this);
+                user = new User((String) null);
             }
             login = new Login(getUser());
         }
@@ -704,7 +712,7 @@ public class Person extends Person_Base {
     }
 
     public String getIstUsername() {
-        return getUser() != null ? getUser().getUserUId() : null;
+        return getUser() != null ? getUser().getUsername() : null;
     }
 
     public void changeUsername(final RoleType roleType) {
@@ -1392,9 +1400,13 @@ public class Person extends Person_Base {
         }
 
         getPersonRoles().clear();
-        if (hasUser()) {
-            getUser().delete();
-        }
+
+        /*
+         * One does not simply delete a User...
+         */
+//        if (hasUser()) {
+//            getUser().delete();
+//        }
 
         getPersonRoleOperationLog().clear();
         getGivenRoleOperationLog().clear();
@@ -1849,7 +1861,7 @@ public class Person extends Person_Base {
     }
 
     public static Person readPersonByIstUsername(final String istUsername) {
-        final User user = User.readUserByUserUId(istUsername);
+        final User user = Login.readUserByUserUId(istUsername);
         return user == null ? null : user.getPerson();
     }
 
@@ -4237,7 +4249,7 @@ public class Person extends Person_Base {
     }
 
     public static Person findByUsername(final String username) {
-        final User user = User.readUserByUserUId(username);
+        final User user = Login.readUserByUserUId(username);
         return user == null ? null : user.getPerson();
     }
 
@@ -4416,7 +4428,7 @@ public class Person extends Person_Base {
                 if (email != null) {
                     final User user = person.getUser();
                     if (user != null) {
-                        final String username = user.getUserUId();
+                        final String username = user.getUsername();
                         builder.append(username);
                         builder.append("\t");
                         builder.append(email);
@@ -4442,10 +4454,10 @@ public class Person extends Person_Base {
         }
         final StringBuilder builder = new StringBuilder();
         for (final User user : RootDomainObject.getInstance().getUsersSet()) {
-            if (!StringUtils.isEmpty(user.getUserUId())) {
+            if (!StringUtils.isEmpty(user.getUsername())) {
                 final Person person = user.getPerson();
                 if (roles.length == 0 || person.hasAnyRole(roles)) {
-                    builder.append(user.getUserUId());
+                    builder.append(user.getUsername());
                     builder.append("\t");
                     builder.append(person.getName());
                     builder.append("\t");

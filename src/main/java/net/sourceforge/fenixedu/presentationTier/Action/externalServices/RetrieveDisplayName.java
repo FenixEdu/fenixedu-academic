@@ -5,14 +5,15 @@ import java.io.OutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.util.HostAccessControl;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.bennu.core.domain.User;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(module = "external", path = "/retrieveDisplayName", scope = "request", parameter = "method")
@@ -39,7 +40,7 @@ public class RetrieveDisplayName extends ExternalInterfaceDispatchAction {
     }
 
     private String getNickname(final String username) {
-        return username == null || username.isEmpty() ? "" : getNickname(User.readUserByUserUId(username));
+        return username == null || username.isEmpty() ? "" : getNickname(Login.readUserByUserUId(username));
     }
 
     private String getNickname(final User user) {

@@ -1,5 +1,11 @@
 package net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.payments;
 
+import pt.ist.bennu.core.domain.User;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.utl.ist.fenix.tools.util.CollectionPager;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,8 +28,8 @@ import net.sourceforge.fenixedu.dataTransferObject.accounting.CancelEventBean;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.DepositAmountBean;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.TransferPaymentsToOtherEventAndCancelBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.SimpleSearchPersonWithStudentBean;
+import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
 import net.sourceforge.fenixedu.domain.accounting.Discount;
 import net.sourceforge.fenixedu.domain.accounting.Event;
@@ -114,7 +120,7 @@ public class PaymentsManagementDA extends FenixDispatchAction {
         request.setAttribute("event", event);
 
         if (!StringUtils.isEmpty(event.getCreatedBy())) {
-            User responsible = User.readUserByUserUId(event.getCreatedBy());
+            User responsible = Login.readUserByUserUId(event.getCreatedBy());
             request.setAttribute("responsible", responsible.getPerson());
         }
 

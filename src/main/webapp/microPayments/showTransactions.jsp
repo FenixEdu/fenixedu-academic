@@ -1,4 +1,4 @@
-<%@page import="net.sourceforge.fenixedu.domain.User"%>
+<%@page import="pt.ist.bennu.core.domain.User"%>
 <%@page import="net.sourceforge.fenixedu.domain.accounting.events.InstitutionAffiliationEvent"%>
 <%@page import="net.sourceforge.fenixedu.util.Money"%>
 <%@page import="java.util.ArrayList"%>

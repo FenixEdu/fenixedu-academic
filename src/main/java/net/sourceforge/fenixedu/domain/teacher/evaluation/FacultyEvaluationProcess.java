@@ -7,16 +7,17 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.Interval;
 
+import pt.ist.bennu.core.domain.User;
 import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -155,7 +156,7 @@ public class FacultyEvaluationProcess extends FacultyEvaluationProcess_Base impl
 
     private Person findPerson(final String string) {
         if (string != null) {
-            final User user = User.readUserByUserUId(string);
+            final User user = Login.readUserByUserUId(string);
             if (user != null) {
                 return user.getPerson();
             }

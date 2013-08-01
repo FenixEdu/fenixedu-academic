@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.ResourceAllocationRole;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.CountryUnit;
@@ -23,6 +22,7 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 
 import org.joda.time.YearMonthDay;
 
+import pt.ist.bennu.core.domain.User;
 import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -171,7 +171,7 @@ public class DataInitializer {
         person.addPersonRoles(Role.getRoleByRoleType(RoleType.MANAGER));
         person.setIsPassInKerberos(Boolean.FALSE);
         final User user = person.getUser();
-        final Login login = user.readUserLoginIdentification();
+        final Login login = Login.readUserLoginIdentification(user);
         login.setActive(Boolean.TRUE);
         LoginAlias.createNewCustomLoginAlias(login, "admin");
         login.openLoginIfNecessary(RoleType.MANAGER);

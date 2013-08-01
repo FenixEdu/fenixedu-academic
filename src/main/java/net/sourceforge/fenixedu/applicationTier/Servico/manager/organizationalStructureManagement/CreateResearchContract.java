@@ -1,12 +1,10 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement;
 
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.LoginPeriod;
 import net.sourceforge.fenixedu.domain.LoginRequest;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchContract;
 import net.sourceforge.fenixedu.domain.person.Gender;
@@ -20,6 +18,7 @@ import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.joda.time.YearMonthDay;
 
+import pt.ist.bennu.core.domain.User;
 import pt.ist.fenixframework.Atomic;
 
 public class CreateResearchContract {
@@ -46,7 +45,7 @@ public class CreateResearchContract {
         if (loginIdentification == null) {
             User user = person.getUser();
             if (user == null) {
-                user = new User(person);
+                user = new User((String) null);
             }
             loginIdentification = new Login(user);
             if (loginIdentification.getPassword() == null) {

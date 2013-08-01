@@ -2,12 +2,13 @@ package net.sourceforge.fenixedu.domain.accounting.events;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.joda.time.DateTime;
+
+import pt.ist.bennu.core.domain.User;
 
 public class InstitutionAffiliationEventTicket extends InstitutionAffiliationEventTicket_Base {
 
@@ -33,7 +34,7 @@ public class InstitutionAffiliationEventTicket extends InstitutionAffiliationEve
         final InstitutionAffiliationEvent event = getInstitutionAffiliationEvent();
         final Person person = event.getPerson();
         final User user = person.getUser();
-        builder.append(user.getUserUId());
+        builder.append(user.getUsername());
         builder.append(user.getExternalId());
 
         final DateTime instant = getGenerated();

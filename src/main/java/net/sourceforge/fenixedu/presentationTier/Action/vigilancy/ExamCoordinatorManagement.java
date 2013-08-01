@@ -8,8 +8,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.AddExam
 import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.DeleteExamCoordinator;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -18,6 +18,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.bennu.core.domain.User;
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -62,7 +63,7 @@ public class ExamCoordinatorManagement extends FenixDispatchAction {
         request.setAttribute("bean", bean);
 
         String username = bean.getUsername();
-        User user = User.readUserByUserUId(username);
+        User user = Login.readUserByUserUId(username);
         if (user != null && user.getPerson() != null) {
 
             AddExamCoordinator.run(user.getPerson(), bean.getExecutionYear(), bean.getSelectedUnit());

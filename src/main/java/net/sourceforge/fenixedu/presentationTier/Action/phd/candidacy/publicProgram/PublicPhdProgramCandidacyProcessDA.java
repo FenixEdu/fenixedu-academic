@@ -5,7 +5,6 @@ import java.util.Collection;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
@@ -22,6 +21,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.util.ConfigurationManager;
 
 public abstract class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProcessDA {
     private static final String SIBS_ENTITY_CODE = ConfigurationManager.getProperty("sibs.entityCode");
@@ -79,7 +79,7 @@ public abstract class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandi
     }
 
     protected User createMockUserView(final Person person) {
-        return person.getBennuUser();
+        return person.getUser();
     }
 
     public abstract ActionForward fillPersonalDataInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,

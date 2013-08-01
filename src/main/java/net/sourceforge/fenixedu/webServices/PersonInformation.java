@@ -3,12 +3,14 @@
  */
 package net.sourceforge.fenixedu.webServices;
 
-import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.PersonInformationBean;
-import net.sourceforge.fenixedu.domain.User;
+import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.webServices.exceptions.NotAuthorizedException;
 
 import org.codehaus.xfire.MessageContext;
+
+import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.util.ConfigurationManager;
 
 public class PersonInformation implements IPersonInformation {
 
@@ -25,7 +27,7 @@ public class PersonInformation implements IPersonInformation {
     public PersonInformationBean getPersonInformation(String username, String password, String istUserName, MessageContext context)
             throws NotAuthorizedException {
         checkPermissions(username, password, context);
-        User foundUser = User.readUserByUserUId(istUserName);
+        User foundUser = Login.readUserByUserUId(istUserName);
         return foundUser == null ? null : new PersonInformationBean(foundUser.getPerson());
     }
 

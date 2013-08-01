@@ -4,6 +4,8 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
+import pt.ist.bennu.core.domain.User;
+
 public class LoginRequest extends LoginRequest_Base {
 
     public LoginRequest(User user) {

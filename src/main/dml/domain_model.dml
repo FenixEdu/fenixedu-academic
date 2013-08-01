@@ -2020,19 +2020,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
         String name;
     }
 
-    class User  {
-        DateTime currentLoginDateTimeDateTime;
-        String currentLoginHost;
-        DateTime lastLoginDateTimeDateTime;
-        DateTime logoutDateTime;
-        String lastLoginHost;
-        String userUId;
-        
-        ByteArray privateKey;   
-        DateTime privateKeyCreation;
-        DateTime privateKeyValidity;
-    }
-
     class WrittenEvaluationEnrolment  {
     }
 
@@ -10121,7 +10108,7 @@ relation AccountTransactionEntry {
 }
 
 relation AccountTransactionUser {
-    User playsRole responsibleUser;
+    .pt.ist.bennu.core.domain.User playsRole responsibleUser;
     accounting.AccountingTransaction playsRole accountingTransactions {
         multiplicity *;
     }
@@ -11919,7 +11906,7 @@ relation FirstYearShiftsCapacityLogWithExecutionSemester {
 }
 
 relation FirstYearShiftsCapacityLogWithUser {
-	User playsRole creator;
+	.pt.ist.bennu.core.domain.User playsRole creator;
 	log.FirstYearShiftsCapacityToggleLog playsRole firstYearShiftsCapacityToggleLog {
 		multiplicity *;
 	}
@@ -15840,7 +15827,7 @@ relation TeacherServiceLogUser {
     teacher.TeacherServiceLog playsRole teacherServiceLog {
         multiplicity *;
     }
-    User playsRole user;
+    .pt.ist.bennu.core.domain.User playsRole user;
 }
 
 relation RootDomainObjectTeacherServiceItem {
@@ -16104,7 +16091,7 @@ relation RootDomainObjectUniversity {
 
 relation RootDomainObjectUser {
     RootDomainObject playsRole rootDomainObject;
-    User playsRole users {
+    .pt.ist.bennu.core.domain.User playsRole users {
         multiplicity *;
     }
 }
@@ -17210,7 +17197,7 @@ relation UnitUnitSpaceOccupation {
 }
 
 relation UserIdentification {
-    User playsRole user;
+    .pt.ist.bennu.core.domain.User playsRole user;
     Identification playsRole identifications {
         multiplicity *;
     }
@@ -17218,17 +17205,12 @@ relation UserIdentification {
 
 relation UserLoginRequest {
     LoginRequest playsRole loginRequest;
-    User playsRole user;
+    .pt.ist.bennu.core.domain.User playsRole user;
 }
 
 relation UserPerson {
     Person playsRole person;
-    User playsRole user;
-}
-
-relation BennuUserPerson {
-    Person playsRole person;
-    .pt.ist.bennu.core.domain.User playsRole bennuUser;
+    .pt.ist.bennu.core.domain.User playsRole user;
 }
 
 relation VehicleAllocationRequestor {
@@ -19803,14 +19785,14 @@ relation TeacherEvaluationAutoEvaluationLockUser {
 	teacher.evaluation.TeacherEvaluation playsRole lockedTeacherAutoEvaluations {
 		multiplicity *;
 	}
-	User playsRole userWhoLockedAutoEvaluation;
+	.pt.ist.bennu.core.domain.User playsRole userWhoLockedAutoEvaluation;
 }
 
 relation TeacherEvaluationEvaluationLockUser {
 	teacher.evaluation.TeacherEvaluation playsRole lockedTeacherEvaluations {
 		multiplicity *;
 	}
-	User playsRole userWhoLockedEvaluation;
+	.pt.ist.bennu.core.domain.User playsRole userWhoLockedEvaluation;
 }
 
 relation FacultyEvaluationProcessTeacherEvaluationProcess {
@@ -20793,7 +20775,7 @@ relation GenericApplicationPeriodManager {
 	period.GenericApplicationPeriod playsRole managedGenericApplicationPeriod {
 		multiplicity *;
 	}
-	User playsRole manager {
+	.pt.ist.bennu.core.domain.User playsRole manager {
 		multiplicity *;
 	}
 }

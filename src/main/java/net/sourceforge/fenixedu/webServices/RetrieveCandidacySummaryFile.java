@@ -1,14 +1,16 @@
 package net.sourceforge.fenixedu.webServices;
 
-import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.applicationTier.Servico.candidacy.LogFirstTimeCandidacyTimestamp;
-import net.sourceforge.fenixedu.domain.User;
+import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacySummaryFile;
 import net.sourceforge.fenixedu.domain.candidacy.FirstTimeCandidacyStage;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.webServices.exceptions.NotAuthorizedException;
 
 import org.codehaus.xfire.MessageContext;
+
+import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.util.ConfigurationManager;
 
 public class RetrieveCandidacySummaryFile implements IRetrieveCandidacySummaryFile {
     private static final String storedPassword;
@@ -25,7 +27,7 @@ public class RetrieveCandidacySummaryFile implements IRetrieveCandidacySummaryFi
 
         checkPermissions(username, password, context);
 
-        final User foundUser = User.readUserByUserUId(userUID);
+        final User foundUser = Login.readUserByUserUId(userUID);
         final StudentCandidacy candidacy =
                 foundUser.getPerson().getStudent().getRegistrations().iterator().next().getStudentCandidacy();
         final CandidacySummaryFile file = candidacy.getSummaryFile();

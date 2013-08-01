@@ -412,7 +412,11 @@ public class Alumni extends Alumni_Base {
     }
 
     public boolean hasPastLogin() {
-        return getStudent().getPerson().getUser().getLastLoginDateTimeDateTime() != null;
+        return false;
+        /*
+         * This slow used to exist in the old user class, however it was always null...
+         */
+        // return getStudent().getPerson().getUser().getLastLoginDateTimeDateTime() != null;
     }
 
     public boolean hasAnyPendingIdentityRequests() {
