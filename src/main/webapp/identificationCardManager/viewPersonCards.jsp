@@ -12,7 +12,7 @@
 <%@page import="net.sourceforge.fenixedu.domain.StudentCurricularPlan"%>
 <%@page import="net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationEntry"%>
 <%@page import="net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationBatch"%>
-<%@page import="net.sourceforge.fenixedu.domain.RootDomainObject"%><html:xhtml/>
+<%@page import="pt.ist.bennu.core.domain.Bennu"%><html:xhtml/>
 
 <em>Cartões de Identificação</em>
 <h2><bean:message key="link.card.generation.search.people" /></h2>

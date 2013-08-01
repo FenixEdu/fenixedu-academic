@@ -5,10 +5,10 @@ import java.io.Serializable;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.LoginAlias;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.PersonNamePart;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisLibraryState;
+import pt.ist.bennu.core.domain.Bennu;
 
 /**
  * Bean with fields to search by author, title, library reference, state or
@@ -27,7 +27,7 @@ public class ThesisSearchBean implements Serializable {
 
     public ThesisSearchBean() {
         ExecutionYear last = null;
-        for (Thesis thesis : RootDomainObject.getInstance().getTheses()) {
+        for (Thesis thesis : Bennu.getInstance().getThesesSet()) {
             if (last == null || thesis.getEnrolment().getExecutionYear().isAfter(last)) {
                 last = thesis.getEnrolment().getExecutionYear();
             }

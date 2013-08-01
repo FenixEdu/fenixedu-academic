@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import pt.ist.bennu.core.domain.User;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.UIViewState;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 
@@ -27,7 +27,7 @@ public class FenixBackingBean {
 
     private UIViewState viewState;
 
-    protected static final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
+    protected static final Bennu rootDomainObject = Bennu.getInstance();
 
     public FenixBackingBean() {
         final FacesContext facesContext = FacesContext.getCurrentInstance();

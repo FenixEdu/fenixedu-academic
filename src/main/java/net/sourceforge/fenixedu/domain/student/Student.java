@@ -28,7 +28,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Tutorship;
 import net.sourceforge.fenixedu.domain.accounting.Event;
@@ -113,7 +113,7 @@ public class Student extends Student_Base {
             number = Student.generateStudentNumber();
         }
         setNumber(number);
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public static Student createStudentWithCustomNumber(Person person, Integer number) {
@@ -140,7 +140,7 @@ public class Student extends Student_Base {
     }
 
     public static Student readStudentByNumber(final Integer number) {
-        for (final StudentNumber studentNumber : RootDomainObject.getInstance().getStudentNumbers()) {
+        for (final StudentNumber studentNumber : Bennu.getInstance().getStudentNumbers()) {
             if (studentNumber.getNumber().equals(number)) {
                 return studentNumber.getStudent();
             }
@@ -316,7 +316,7 @@ public class Student extends Student_Base {
 
     public static Integer generateStudentNumber() {
         int nextNumber = 0;
-        for (final StudentNumber studentNumber : RootDomainObject.getInstance().getStudentNumbers()) {
+        for (final StudentNumber studentNumber : Bennu.getInstance().getStudentNumbers()) {
             if (studentNumber.getNumber().intValue() < 100000 && studentNumber.getNumber().intValue() > nextNumber) {
                 nextNumber = studentNumber.getNumber().intValue();
             }
@@ -2284,7 +2284,7 @@ public class Student extends Student_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

@@ -41,6 +41,8 @@ import org.joda.time.Minutes;
 import org.joda.time.Weeks;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.bennu.core.domain.Bennu;
+
 public class Lesson extends Lesson_Base {
 
     public static int NUMBER_OF_MINUTES_IN_HOUR = 60;
@@ -78,7 +80,7 @@ public class Lesson extends Lesson_Base {
             }
         }
 
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setDiaSemana(diaSemana);
         setInicio(inicio);
         setFim(fim);
@@ -111,7 +113,7 @@ public class Lesson extends Lesson_Base {
             period = OccupationPeriod.createOccupationPeriodForLesson(executionCourse, beginDate, endDate);
         }
 
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setDiaSemana(diaSemana);
         setInicio(inicio);
         setFim(fim);
@@ -1185,7 +1187,7 @@ public class Lesson extends Lesson_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

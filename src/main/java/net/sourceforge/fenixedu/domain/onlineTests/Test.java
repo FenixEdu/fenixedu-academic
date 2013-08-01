@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.util.tests.CorrectionFormula;
 
 import org.joda.time.DateTime;
@@ -22,7 +22,7 @@ public class Test extends Test_Base {
 
     public Test(String title, String information, TestScope testScope) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setTitle(title);
         setInformation(information);
         DateTime now = new DateTime();
@@ -161,7 +161,7 @@ public class Test extends Test_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

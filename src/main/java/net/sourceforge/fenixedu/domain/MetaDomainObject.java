@@ -5,6 +5,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import net.sourceforge.fenixedu.domain.contents.Portal;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.fenixframework.DomainObject;
 
 /**
@@ -21,7 +22,7 @@ public class MetaDomainObject extends MetaDomainObject_Base {
         super();
 
         setType(type.getName());
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public MetaDomainObject(String type) throws ClassNotFoundException {
@@ -68,11 +69,11 @@ public class MetaDomainObject extends MetaDomainObject_Base {
 
     public static MetaDomainObject getMeta(Class type) {
         final MetaDomainObject result = metaDomainObjectMap.get(type);
-        if (result != null && result.getRootDomainObject() == RootDomainObject.getInstance() && type == result.getConcreteType()) {
+        if (result != null && result.getRootDomainObject() == Bennu.getInstance() && type == result.getConcreteType()) {
             return result;
         }
 
-        for (final MetaDomainObject metaDomainObject : RootDomainObject.getInstance().getMetaDomainObjects()) {
+        for (final MetaDomainObject metaDomainObject : Bennu.getInstance().getMetaDomainObjectsSet()) {
             final Class concreteType = metaDomainObject.getConcreteType();
             if (type == concreteType) {
                 metaDomainObjectMap.put(concreteType, metaDomainObject);
@@ -97,6 +98,7 @@ public class MetaDomainObject extends MetaDomainObject_Base {
     public boolean canBeDeleted() {
         return !hasAnyFunctionalityParameters() && !hasAnyPortals();
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.functionalities.FunctionalityParameter> getFunctionalityParameters() {
         return getFunctionalityParametersSet();
@@ -118,7 +120,7 @@ public class MetaDomainObject extends MetaDomainObject_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

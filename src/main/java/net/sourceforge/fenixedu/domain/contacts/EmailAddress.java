@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.domain.contacts;
 import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 
@@ -128,7 +128,7 @@ public class EmailAddress extends EmailAddress_Base {
     }
 
     static public EmailAddress find(final String emailAddressString) {
-        for (final PartyContact contact : RootDomainObject.getInstance().getPartyContactsSet()) {
+        for (final PartyContact contact : Bennu.getInstance().getPartyContactsSet()) {
             if (contact.isEmailAddress()) {
                 final EmailAddress emailAddress = (EmailAddress) contact;
                 if (emailAddress.hasValue(emailAddressString)) {

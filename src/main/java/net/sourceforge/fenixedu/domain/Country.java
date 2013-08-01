@@ -9,6 +9,7 @@ import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 
+import pt.ist.bennu.core.domain.Bennu;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -32,7 +33,7 @@ public class Country extends Country_Base {
 
     private Country() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setDefaultCountry(false);
     }
 
@@ -56,7 +57,7 @@ public class Country extends Country_Base {
      * null.
      */
     public static Country readDefault() {
-        for (final Country country : RootDomainObject.getInstance().getCountrysSet()) {
+        for (final Country country : Bennu.getInstance().getCountrysSet()) {
             if (country.isDefaultCountry()) {
                 return country;
             }
@@ -66,7 +67,7 @@ public class Country extends Country_Base {
     }
 
     public static Country readCountryByNationality(final String nationality) {
-        for (final Country country : RootDomainObject.getInstance().getCountrysSet()) {
+        for (final Country country : Bennu.getInstance().getCountrysSet()) {
             if (country.getNationality().equals(nationality)) {
                 return country;
             }
@@ -80,7 +81,7 @@ public class Country extends Country_Base {
     // where Country has many Districts
     public static Set<Country> readDistinctCountries() {
         final Set<Country> result = new HashSet<Country>();
-        for (final Country country : RootDomainObject.getInstance().getCountrysSet()) {
+        for (final Country country : Bennu.getInstance().getCountrysSet()) {
             if (!country.getName().equalsIgnoreCase(PORTUGAL)) {
                 result.add(country);
             } else {
@@ -128,7 +129,7 @@ public class Country extends Country_Base {
             return defaultCountry;
         }
 
-        for (final Country country : RootDomainObject.getInstance().getCountrysSet()) {
+        for (final Country country : Bennu.getInstance().getCountrysSet()) {
             if (country.getCode().equalsIgnoreCase(code)) {
                 return country;
             }
@@ -149,7 +150,7 @@ public class Country extends Country_Base {
             return defaultCountry;
         }
 
-        for (final Country country : RootDomainObject.getInstance().getCountrysSet()) {
+        for (final Country country : Bennu.getInstance().getCountrysSet()) {
             if (country.getThreeLetterCode() != null && country.getThreeLetterCode().equalsIgnoreCase(code)) {
                 return country;
             }
@@ -191,6 +192,7 @@ public class Country extends Country_Base {
         setRootDomainObject(null);
         deleteDomainObject();
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonGrantOwnerEquivalent> getPersonGrantOwnerEquivalences() {
         return getPersonGrantOwnerEquivalencesSet();
@@ -407,7 +409,7 @@ public class Country extends Country_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

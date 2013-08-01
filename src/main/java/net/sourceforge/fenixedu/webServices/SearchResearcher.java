@@ -6,10 +6,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.ResearcherDTO;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.research.Researcher;
 import net.sourceforge.fenixedu.webServices.exceptions.NotAuthorizedException;
@@ -17,6 +15,9 @@ import net.sourceforge.fenixedu.webServices.exceptions.NotAuthorizedException;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.codehaus.xfire.MessageContext;
+
+import pt.ist.bennu.core.domain.Bennu;
+import pt.ist.bennu.core.util.ConfigurationManager;
 
 public class SearchResearcher implements ISearchResearcher {
 
@@ -53,7 +54,7 @@ public class SearchResearcher implements ISearchResearcher {
             String[] keywordsArray = filterKeywords(keywords.split(" "));
 
             List<Researcher> results = new ArrayList<Researcher>();
-            for (Researcher researcher : RootDomainObject.getInstance().getResearchers()) {
+            for (Researcher researcher : Bennu.getInstance().getResearchersSet()) {
                 if (researcher.getAllowsToBeSearched() && researcher.hasAtLeastOneKeyword(keywordsArray)) {
                     results.add(researcher);
                 }
@@ -71,7 +72,7 @@ public class SearchResearcher implements ISearchResearcher {
         checkPermissions(username, password, context);
 
         List<Researcher> results = new ArrayList<Researcher>();
-        for (Researcher researcher : RootDomainObject.getInstance().getResearchers()) {
+        for (Researcher researcher : Bennu.getInstance().getResearchersSet()) {
             if (researcher.getPerson() != null && researcher.getAllowsToBeSearched()) {
                 results.add(researcher);
             }

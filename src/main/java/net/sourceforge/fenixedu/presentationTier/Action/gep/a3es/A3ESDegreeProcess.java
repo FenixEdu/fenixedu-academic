@@ -549,7 +549,7 @@ public class A3ESDegreeProcess implements Serializable {
 
             toplevel.put("q-cf-name", info.getTeacher().getPerson().getName());
             // toplevel.put("q-cf-ies",
-            // RootDomainObject.getInstance().getInstitutionUnit().getName());
+            // Bennu.getInstance().getInstitutionUnit().getName());
             // toplevel.put("q-cf-uo", info.getUnitName());
             toplevel.put("q-cf-cat", info.getProfessionalCategoryName());
             toplevel.put("q-cf-time", info.getProfessionalRegimeTime());
@@ -557,7 +557,7 @@ public class A3ESDegreeProcess implements Serializable {
             {
                 file.put("name", cut("nome", info.getTeacher().getPerson().getName(), output, 200));
                 // file.put("ies", cut("ies",
-                // RootDomainObject.getInstance().getInstitutionUnit().getName(),
+                // Bennu.getInstance().getInstitutionUnit().getName(),
                 // output, 200));
                 // file.put("uo", cut("uo", info.getUnitName(), output, 200));
                 file.put("cat", info.getProfessionalCategoryName());

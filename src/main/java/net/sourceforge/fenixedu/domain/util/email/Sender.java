@@ -10,7 +10,7 @@ import java.util.TreeSet;
 import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -33,7 +33,7 @@ public class Sender extends Sender_Base {
 
     public Sender() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public Sender(final String fromName, final String fromAddress, final Group members) {
@@ -74,7 +74,7 @@ public class Sender extends Sender_Base {
                 return true;
             }
 
-            for (final Sender sender : RootDomainObject.getInstance().getUtilEmailSendersSet()) {
+            for (final Sender sender : Bennu.getInstance().getUtilEmailSendersSet()) {
                 if (sender.allows(userView)) {
                     return true;
                 }
@@ -91,7 +91,7 @@ public class Sender extends Sender_Base {
         final User userView = Authenticate.getUser();
 
         final Set<Sender> senders = new TreeSet<Sender>(Sender.COMPARATOR_BY_FROM_NAME);
-        for (final Sender sender : RootDomainObject.getInstance().getUtilEmailSendersSet()) {
+        for (final Sender sender : Bennu.getInstance().getUtilEmailSendersSet()) {
             if (sender.getMembers().allows(userView) || (userView != null && userView.getPerson().hasRole(RoleType.MANAGER))) {
                 senders.add(sender);
             }
@@ -167,7 +167,7 @@ public class Sender extends Sender_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

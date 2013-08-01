@@ -6,7 +6,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Employee;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.Teacher;
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
@@ -33,7 +33,7 @@ public class TutorSearchBean implements Serializable {
                 }
             } else {
 
-                for (Teacher teacher : RootDomainObject.getInstance().getTeachersSet()) {
+                for (Teacher teacher : Bennu.getInstance().getTeachersSet()) {
                     if (!bean.getOnlyTutors() || teacher.hasAnyTutorships()) {
                         teachers.add(teacher);
                     }

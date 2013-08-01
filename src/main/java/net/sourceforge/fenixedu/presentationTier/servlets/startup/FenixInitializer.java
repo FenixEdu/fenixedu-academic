@@ -24,7 +24,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebListener;
 import javax.servlet.http.HttpServletRequest;
 
-import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.applicationTier.Servico.CheckIsAliveService;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecutionPeriod;
 import net.sourceforge.fenixedu.applicationTier.Servico.content.CreateMetaDomainObectTypes;
@@ -34,7 +33,6 @@ import net.sourceforge.fenixedu.dataTransferObject.support.SupportRequestBean;
 import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.PendingRequest;
 import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
@@ -53,8 +51,10 @@ import org.apache.commons.fileupload.FileUpload;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.bennu.core.presentationTier.servlets.filters.ExceptionHandlerFilter;
 import pt.ist.bennu.core.presentationTier.servlets.filters.ExceptionHandlerFilter.CustomeHandler;
+import pt.ist.bennu.core.util.ConfigurationManager;
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestChecksumFilter;
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestChecksumFilter.ChecksumPredicate;
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter;
@@ -80,8 +80,6 @@ public class FenixInitializer implements ServletContextListener {
             throw new Error("Unable to load build version file");
         }
 
-        RootDomainObject.ensureRootDomainObject();
-        RootDomainObject.initialize();
         RemoteSystem.init();
 
         try {
@@ -158,7 +156,7 @@ public class FenixInitializer implements ServletContextListener {
         logger.info("Load of all unit names took: " + (end - start) + "ms.");
 
         start = System.currentTimeMillis();
-        for (final UnitName unitName : RootDomainObject.getInstance().getUnitNameSet()) {
+        for (final UnitName unitName : Bennu.getInstance().getUnitNameSet()) {
             unitName.getName();
         }
         end = System.currentTimeMillis();

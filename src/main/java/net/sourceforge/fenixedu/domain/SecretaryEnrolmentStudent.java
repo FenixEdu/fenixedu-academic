@@ -1,10 +1,12 @@
 package net.sourceforge.fenixedu.domain;
 
+import pt.ist.bennu.core.domain.Bennu;
+
 public class SecretaryEnrolmentStudent extends SecretaryEnrolmentStudent_Base {
 
     public SecretaryEnrolmentStudent() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public void delete() {
@@ -19,7 +21,7 @@ public class SecretaryEnrolmentStudent extends SecretaryEnrolmentStudent_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

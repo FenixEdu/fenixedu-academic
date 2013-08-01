@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.domain.student.curriculum;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Student;
 
@@ -30,7 +30,7 @@ public class ExtraCurricularActivity extends ExtraCurricularActivity_Base {
     public ExtraCurricularActivity(Student student, ExtraCurricularActivityType type, Interval interval) {
         super();
         checkParameters(student, type, interval);
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setStudent(student);
         setType(type);
         setActivityInterval(interval);
@@ -117,7 +117,7 @@ public class ExtraCurricularActivity extends ExtraCurricularActivity_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

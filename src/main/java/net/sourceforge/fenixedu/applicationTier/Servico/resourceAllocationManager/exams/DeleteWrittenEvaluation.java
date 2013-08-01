@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.ResourceAllocationManager
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.util.email.ConcreteReplyTo;
@@ -66,7 +66,7 @@ public class DeleteWrittenEvaluation {
                 Person person = vigilancy.getVigilantWrapper().getPerson();
                 tos.add(person);
             }
-            Sender sender = RootDomainObject.getInstance().getSystemSender();
+            Sender sender = Bennu.getInstance().getSystemSender();
             new Message(sender, new ConcreteReplyTo(group.getContactEmail()).asCollection(),
                     new Recipient(new FixedSetGroup(tos)).asCollection(), subject, body, "");
 

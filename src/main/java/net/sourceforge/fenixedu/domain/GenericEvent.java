@@ -60,7 +60,7 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
             throw new DomainException("error.GenericEvent.invalid.dailyFrequency");
         }
 
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setTitle(title);
         setDescription(description);
         setFrequency(frequencyType);
@@ -190,7 +190,7 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
 
     public static Set<GenericEvent> getActiveGenericEventsForRoomOccupations() {
         Set<GenericEvent> result = new TreeSet<GenericEvent>(COMPARATOR_BY_DATE_AND_TIME);
-        for (GenericEvent genericEvent : RootDomainObject.getInstance().getGenericEvents()) {
+        for (GenericEvent genericEvent : Bennu.getInstance().getGenericEvents()) {
             if (genericEvent.isActive()) {
                 result.add(genericEvent);
             }
@@ -370,7 +370,7 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
 
     public static Set<GenericEvent> getAllGenericEvents(DateTime begin, DateTime end, AllocatableSpace allocatableSpace) {
         Set<GenericEvent> events = new TreeSet<GenericEvent>(GenericEvent.COMPARATOR_BY_DATE_AND_TIME);
-        for (GenericEvent genericEvent : RootDomainObject.getInstance().getGenericEvents()) {
+        for (GenericEvent genericEvent : Bennu.getInstance().getGenericEvents()) {
             if (genericEvent.intersectPeriod(begin, end)
                     && (allocatableSpace == null || genericEvent.constainsRoom(allocatableSpace))) {
                 events.add(genericEvent);
@@ -467,7 +467,7 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

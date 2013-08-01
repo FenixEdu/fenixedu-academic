@@ -27,6 +27,7 @@ import net.sourceforge.fenixedu.domain.contents.Node;
 import net.sourceforge.fenixedu.domain.contents.Redirect;
 import net.sourceforge.fenixedu.domain.messaging.Forum;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
+import pt.ist.bennu.core.domain.Bennu;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -38,7 +39,7 @@ public abstract class Site extends Site_Base {
     public Site() {
         super();
 
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     @Override
@@ -341,7 +342,7 @@ public abstract class Site extends Site_Base {
             return content;
         }
         Content initialContent = null;
-        if (hasRootDomainObject()) {
+        if (hasBennu()) {
             final MetaDomainObjectPortal template = getTemplate();
             if (template != null) {
 

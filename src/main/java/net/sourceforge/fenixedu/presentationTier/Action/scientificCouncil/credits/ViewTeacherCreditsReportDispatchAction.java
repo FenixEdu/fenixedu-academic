@@ -23,7 +23,6 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.credits.ReadDepartmentTotalCreditsByPeriod;
 import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.credits.ReadDepartmentTotalCreditsByPeriod.PeriodCreditsReportDTO;
@@ -48,6 +47,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
+import pt.ist.bennu.core.domain.User;
 import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
 import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
@@ -88,10 +88,10 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixServiceException {
 
-        Collection<ExecutionYear> executionYears = rootDomainObject.getExecutionYears();
+        Collection<ExecutionYear> executionYears = rootDomainObject.getExecutionYearsSet();
         List filteredExecutionYears = filterExecutionYears(executionYears);
 
-        Collection<Department> departments = rootDomainObject.getDepartments();
+        Collection<Department> departments = rootDomainObject.getDepartmentsSet();
         Iterator departmentOrderedIterator = new OrderedIterator(departments.iterator(), new BeanComparator("name"));
 
         request.setAttribute("executionYears", filteredExecutionYears);
@@ -134,7 +134,7 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
         Map<Department, List<TeacherCreditsReportDTO>> teachersCreditsByDepartment =
                 new HashMap<Department, List<TeacherCreditsReportDTO>>();
         if (StringUtils.isEmpty(departmentID)) {
-            Collection<Department> departments = rootDomainObject.getDepartments();
+            Collection<Department> departments = rootDomainObject.getDepartmentsSet();
             for (Department department : departments) {
                 Unit unit = department.getDepartmentUnit();
                 teacherCreditsReportList =
@@ -275,7 +275,7 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
 
         Set<Department> departments = new TreeSet<Department>(Department.COMPARATOR_BY_NAME);
         if (departmentID == null) {
-            departments.addAll(rootDomainObject.getDepartments());
+            departments.addAll(rootDomainObject.getDepartmentsSet());
         } else {
             departments.add(FenixFramework.<Department> getDomainObject(departmentID));
         }
@@ -375,7 +375,7 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
                 new TreeMap<Department, Map<ExecutionYear, PeriodCreditsReportDTO>>(new BeanComparator("code"));
 
         if (departmentID == null) {
-            Collection<Department> departments = rootDomainObject.getDepartments();
+            Collection<Department> departments = rootDomainObject.getDepartmentsSet();
             for (Department department : departments) {
                 Unit unit = department.getDepartmentUnit();
                 departmentPeriodTotalCredits =

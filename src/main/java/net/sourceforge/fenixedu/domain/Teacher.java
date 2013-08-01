@@ -66,6 +66,7 @@ import org.joda.time.LocalDate;
 import org.joda.time.PeriodType;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.bennu.core.domain.User;
 
 public class Teacher extends Teacher_Base {
@@ -93,7 +94,7 @@ public class Teacher extends Teacher_Base {
     public Teacher(Person person) {
         super();
         setPerson(person);
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public String getTeacherId() {
@@ -978,7 +979,7 @@ public class Teacher extends Teacher_Base {
 
     public static List<Teacher> readByNumbers(Collection<String> teacherId) {
         List<Teacher> selectedTeachers = new ArrayList<Teacher>();
-        for (final Teacher teacher : RootDomainObject.getInstance().getTeachers()) {
+        for (final Teacher teacher : Bennu.getInstance().getTeachersSet()) {
             if (teacherId.contains(teacher.getPerson().getIstUsername())) {
                 selectedTeachers.add(teacher);
             }
@@ -1748,7 +1749,7 @@ public class Teacher extends Teacher_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

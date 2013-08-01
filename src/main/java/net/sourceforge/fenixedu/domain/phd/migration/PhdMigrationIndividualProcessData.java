@@ -657,7 +657,7 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

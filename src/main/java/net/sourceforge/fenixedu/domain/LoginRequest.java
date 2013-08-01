@@ -4,6 +4,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
+import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.bennu.core.domain.User;
 
 public class LoginRequest extends LoginRequest_Base {
@@ -13,7 +14,7 @@ public class LoginRequest extends LoginRequest_Base {
             throw new DomainException("error.user.already.has.loginRequest");
         }
 
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         super.setUser(user);
         super.setHash(generateHash());
     }
@@ -40,7 +41,7 @@ public class LoginRequest extends LoginRequest_Base {
     }
 
     public static LoginRequest getLoginRequestWithHash(String hash) {
-        for (LoginRequest request : RootDomainObject.getInstance().getLoginRequests()) {
+        for (LoginRequest request : Bennu.getInstance().getLoginRequestsSet()) {
             if (request.getHash().equals(hash)) {
                 return request;
             }
@@ -59,7 +60,7 @@ public class LoginRequest extends LoginRequest_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

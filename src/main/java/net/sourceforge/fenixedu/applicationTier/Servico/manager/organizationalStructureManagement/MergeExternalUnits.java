@@ -8,7 +8,7 @@ import java.util.Set;
 
 import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.SystemSender;
@@ -55,7 +55,7 @@ public class MergeExternalUnits {
                                     new String[] { person.getName(), person.getUsername(), fromUnitName, fromUnitID,
                                             destinationUnit.getName(), destinationUnit.getExternalId().toString() });
 
-                    SystemSender systemSender = RootDomainObject.getInstance().getSystemSender();
+                    SystemSender systemSender = Bennu.getInstance().getSystemSender();
                     new Message(systemSender, systemSender.getConcreteReplyTos(), Collections.EMPTY_LIST, subject, body,
                             resultEmails);
                 }

@@ -1,6 +1,6 @@
 <%@page import="net.sourceforge.fenixedu.presentationTier.Action.library.LibraryAttendance"%>
 <%@page import="net.sourceforge.fenixedu.injectionCode.AccessControl"%>
-<%@page import="net.sourceforge.fenixedu.domain.RootDomainObject"%>
+<%@page import="pt.ist.bennu.core.domain.Bennu"%>
 <%@ page language="java"%>
 
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
@@ -209,7 +209,7 @@
 							<fr:property name="classes" value="tstyle2 thlight thleft mtop05 mbottom05" />
 						</fr:layout>
 					</fr:view>
-					<bean:define id="userHasHigherClerance" value="<%= "" + RootDomainObject.getInstance().getLibraryCardSystem().getHigherClearenceGroup().allows(AccessControl.getUserView()) %>" />
+					<bean:define id="userHasHigherClerance" value="<%= "" + Bennu.getInstance().getLibraryCardSystem().getHigherClearenceGroup().allows(AccessControl.getUserView()) %>" />
 					<logic:equal name="userHasHigherClerance" value="true">
 						<logic:notPresent name="attendance" property="personLibraryCardNumber">
 							<bean:define id="personIstUsername" name="attendance" property="person.istUsername" />

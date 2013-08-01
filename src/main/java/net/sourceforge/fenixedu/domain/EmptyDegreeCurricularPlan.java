@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.domain.student.curriculum.AverageType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.util.MarkType;
 import net.sourceforge.fenixedu.util.SituationName;
+import pt.ist.bennu.core.domain.Bennu;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class EmptyDegreeCurricularPlan extends EmptyDegreeCurricularPlan_Base {
@@ -34,7 +35,7 @@ public class EmptyDegreeCurricularPlan extends EmptyDegreeCurricularPlan_Base {
     private EmptyDegreeCurricularPlan() {
         super();
 
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     @Override
@@ -46,7 +47,7 @@ public class EmptyDegreeCurricularPlan extends EmptyDegreeCurricularPlan_Base {
         if (instance == null) {
             synchronized (EmptyDegreeCurricularPlan.class) {
                 if (instance == null) {
-                    for (final DegreeCurricularPlan iter : RootDomainObject.getInstance().getDegreeCurricularPlansSet()) {
+                    for (final DegreeCurricularPlan iter : Bennu.getInstance().getDegreeCurricularPlansSet()) {
                         if (iter.isEmpty()) {
                             instance = (EmptyDegreeCurricularPlan) iter;
                         }

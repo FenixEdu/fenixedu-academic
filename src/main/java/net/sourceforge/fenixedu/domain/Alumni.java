@@ -28,6 +28,7 @@ import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
+import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.fenixframework.Atomic;
 
 public class Alumni extends Alumni_Base {
@@ -51,7 +52,7 @@ public class Alumni extends Alumni_Base {
 
         setRegisteredWhen(new DateTime());
         setRegistered(registered);
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public Alumni readByStudentNumber(Integer studentNumber) {
@@ -67,7 +68,7 @@ public class Alumni extends Alumni_Base {
     }
 
     public static Alumni readAlumniByStudentNumber(Integer studentNumber) {
-        for (Alumni alumni : RootDomainObject.getInstance().getAlumnis()) {
+        for (Alumni alumni : Bennu.getInstance().getAlumnisSet()) {
             if (alumni.getStudent().getNumber().equals(studentNumber)) {
                 return alumni;
             }
@@ -508,7 +509,7 @@ public class Alumni extends Alumni_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

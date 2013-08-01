@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.domain.functionalities;
 
 import net.sourceforge.fenixedu.domain.MetaDomainObject;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 
 /**
  * The <code>FunctionalityParameter</code> reifies a parameters that is required
@@ -14,7 +14,7 @@ public class FunctionalityParameter extends FunctionalityParameter_Base {
 
     protected FunctionalityParameter() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public FunctionalityParameter(Functionality functionality, String name) {
@@ -43,7 +43,7 @@ public class FunctionalityParameter extends FunctionalityParameter_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

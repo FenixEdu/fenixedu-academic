@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCodeOperations;
@@ -1184,7 +1184,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
                 BundleUtil.getStringFromResourceBundle("resources.CandidateResources", "error.mobility.report.mail.subject");
         String errorReportBody = sb.toString();
 
-        SystemSender systemSender = RootDomainObject.getInstance().getSystemSender();
+        SystemSender systemSender = Bennu.getInstance().getSystemSender();
         EmailBean emailBean = new EmailBean();
         emailBean.setSender(systemSender);
         emailBean.setReplyTos(systemSender.getConcreteReplyTos());

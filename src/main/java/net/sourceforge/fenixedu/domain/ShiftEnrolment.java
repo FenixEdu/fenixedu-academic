@@ -18,7 +18,7 @@ public class ShiftEnrolment extends ShiftEnrolment_Base {
 
     public ShiftEnrolment(final Shift shift, final Registration registration) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setRegistration(registration);
         setShift(shift);
         setCreatedOn(new DateTime());
@@ -41,7 +41,7 @@ public class ShiftEnrolment extends ShiftEnrolment_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.domain.cardGeneration;
 import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 
 import org.joda.time.DateTime;
 
@@ -20,7 +20,7 @@ public class SantanderEntry extends SantanderEntry_Base {
 
     public SantanderEntry() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setCreated(new DateTime());
     }
 
@@ -59,7 +59,7 @@ public class SantanderEntry extends SantanderEntry_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

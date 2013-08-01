@@ -31,7 +31,7 @@ public class BibliographicReference extends BibliographicReference_Base {
 
     public BibliographicReference() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public void edit(final String title, final String authors, final String reference, final String year, final Boolean optional) {
@@ -99,7 +99,7 @@ public class BibliographicReference extends BibliographicReference_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

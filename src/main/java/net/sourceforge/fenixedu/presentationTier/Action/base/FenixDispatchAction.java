@@ -17,7 +17,7 @@ import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ExecuteFactoryMethod;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResultMessage;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -53,7 +53,7 @@ import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public abstract class FenixDispatchAction extends DispatchAction implements ExceptionHandler {
 
-    protected static final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
+    protected static final Bennu rootDomainObject = Bennu.getInstance();
     private static boolean DEBUG_ACTIONS = Boolean.parseBoolean(ConfigurationManager.getProperty("debug.actions"));
     protected static final String ACTION_MESSAGES_REQUEST_KEY = "FENIX_ACTION_MESSAGES";
 

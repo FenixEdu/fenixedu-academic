@@ -11,7 +11,7 @@ import java.util.UUID;
 import java.util.regex.Pattern;
 
 import net.sourceforge.fenixedu.domain.Item;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
@@ -47,7 +47,7 @@ public abstract class Content extends Content_Base {
     public Content() {
         super();
 
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         // setOjbConcreteClass(getClass().getName());
         setCreationDate(new DateTime());
         setContentId(UUID.randomUUID().toString());
@@ -558,7 +558,7 @@ public abstract class Content extends Content_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

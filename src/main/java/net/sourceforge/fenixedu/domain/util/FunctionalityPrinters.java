@@ -23,7 +23,7 @@ public class FunctionalityPrinters extends FunctionalityPrinters_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

@@ -3,8 +3,6 @@ package net.sourceforge.fenixedu.domain.candidacy;
 import java.util.Comparator;
 import java.util.Random;
 
-import pt.ist.bennu.core.util.ConfigurationManager;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.period.GenericApplicationPeriod;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
@@ -12,6 +10,9 @@ import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.apache.commons.codec.digest.DigestUtils;
+
+import pt.ist.bennu.core.domain.Bennu;
+import pt.ist.bennu.core.util.ConfigurationManager;
 
 public class GenericApplication extends GenericApplication_Base {
 
@@ -34,8 +35,7 @@ public class GenericApplication extends GenericApplication_Base {
 
     public GenericApplication(final GenericApplicationPeriod period, final String email) {
         super();
-        final RootDomainObject rdo = RootDomainObject.getInstance();
-        setRootDomainObject(rdo);
+        setRootDomainObject(Bennu.getInstance());
         setGenericApplicationPeriod(period);
         setApplicationNumber(period.generateApplicationNumber());
         if (email == null || email.isEmpty()) {
@@ -44,7 +44,7 @@ public class GenericApplication extends GenericApplication_Base {
         setEmail(email);
         sendEmailForApplication();
         setIdDocumentType(IDDocumentType.IDENTITY_CARD);
-        final Unit institutionUnit = rdo.getInstitutionUnit();
+        final Unit institutionUnit = Bennu.getInstance().getInstitutionUnit();
         if (institutionUnit != null) {
             setNationality(institutionUnit.getCountry());
         }

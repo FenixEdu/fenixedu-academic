@@ -2,15 +2,16 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.Set;
 
-import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
+import pt.ist.bennu.core.domain.Bennu;
+import pt.ist.bennu.core.domain.User;
 
 public class PersonalGroup extends PersonalGroup_Base implements IGroup {
 
     public PersonalGroup() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public void delete() {
@@ -86,7 +87,7 @@ public class PersonalGroup extends PersonalGroup_Base implements IGroup {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

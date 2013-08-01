@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.phd.candidacy;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import pt.ist.fenixframework.Atomic;
 
@@ -8,7 +8,7 @@ public class PhdCandidacyRefereeLetter extends PhdCandidacyRefereeLetter_Base {
 
     private PhdCandidacyRefereeLetter() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public PhdCandidacyRefereeLetter(final PhdCandidacyReferee referee, final PhdCandidacyRefereeLetterBean bean) {
@@ -154,7 +154,7 @@ public class PhdCandidacyRefereeLetter extends PhdCandidacyRefereeLetter_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ page import="net.sourceforge.fenixedu.domain.RootDomainObject" %>
+<%@ page import="pt.ist.bennu.core.domain.Bennu" %>
 <%@ page import="net.sourceforge.fenixedu.domain.Degree" %>
 
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %><%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>

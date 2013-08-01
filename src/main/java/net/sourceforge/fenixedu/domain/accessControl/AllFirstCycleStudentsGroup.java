@@ -6,7 +6,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
@@ -23,7 +23,7 @@ public class AllFirstCycleStudentsGroup extends Group {
     public Set<Person> getElements() {
         Set<Person> elements = new HashSet<Person>();
 
-        for (final Degree degree : RootDomainObject.getInstance().getDegreesSet()) {
+        for (final Degree degree : Bennu.getInstance().getDegreesSet()) {
             if (degree.isBolonhaDegree() && degree.getDegreeType().hasCycleTypes(CycleType.FIRST_CYCLE)) {
                 for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlansSet()) {
                     if (degreeCurricularPlan.isActive()) {

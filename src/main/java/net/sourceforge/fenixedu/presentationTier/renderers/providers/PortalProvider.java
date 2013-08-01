@@ -4,7 +4,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.contents.Content;
 
@@ -24,7 +24,7 @@ public class PortalProvider implements DataProvider {
     public Object provide(Object source, Object currentValue) {
         final Set<Content> portalSet = new TreeSet<Content>(new BeanComparator("name"));
 
-        for (Section portal : RootDomainObject.getInstance().getRootPortal().getChildren(Section.class)) {
+        for (Section portal : Bennu.getInstance().getRootPortal().getChildren(Section.class)) {
             if (portal.hasAvailabilityPolicy()) {
                 if (portal.getAvailabilityPolicy().getTargetGroup()
                         .isMember(Person.readPersonByUsername(Authenticate.getUser().getUsername()))) {

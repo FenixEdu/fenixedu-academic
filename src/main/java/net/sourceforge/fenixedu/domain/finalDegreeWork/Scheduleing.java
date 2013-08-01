@@ -13,7 +13,7 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
@@ -27,7 +27,7 @@ public class Scheduleing extends Scheduleing_Base {
 
     public Scheduleing() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setAllowSimultaneousCoorientationAndCompanion(false);
         setAttributionByTeachers(false);
         setAllowCandaciesOnlyForStudentsWithADissertationEnrolment(false);
@@ -485,7 +485,7 @@ public class Scheduleing extends Scheduleing_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

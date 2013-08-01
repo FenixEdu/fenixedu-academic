@@ -6,8 +6,8 @@ import java.util.Map;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
+import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.bennu.core.presentationTier.renderers.autoCompleteProvider.AutoCompleteProvider;
 import pt.ist.fenixframework.Atomic;
 
@@ -28,7 +28,7 @@ public class SearchTeachersByNameOrISTID implements AutoCompleteProvider<Teacher
             teachers.add(person.getTeacher());
         }
 
-        for (Teacher teacher : RootDomainObject.getInstance().getTeachers()) {
+        for (Teacher teacher : Bennu.getInstance().getTeachersSet()) {
             if (teacher.getTeacherId() != null && teacher.getTeacherId().indexOf(value) >= 0) {
                 teachers.add(teacher);
             }

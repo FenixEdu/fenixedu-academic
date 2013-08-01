@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExternalTeacherAuthorization;
 import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.TeacherAuthorization;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
@@ -34,6 +33,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.bennu.core.domain.User;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -114,7 +114,7 @@ public class TeacherAuthorizationManagement extends FenixDispatchAction {
             eta.setAuthorizer(AccessControl.getPerson());
             eta.setExecutionSemester(getExecutionSemester());
             eta.setProfessionalCategory(getProfessionalCategory());
-            eta.setRootDomainObject(RootDomainObject.getInstance());
+            eta.setRootDomainObject(Bennu.getInstance());
             eta.setActive(true);
             eta.setCanPark(getCanPark());
             eta.setCanHaveCard(false);
@@ -298,7 +298,7 @@ public class TeacherAuthorizationManagement extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         ArrayList<ExternalTeacherAuthorization> teacher = new ArrayList<ExternalTeacherAuthorization>();
 
-        for (TeacherAuthorization teacherAuthorization : RootDomainObject.getInstance().getTeacherAuthorization()) {
+        for (TeacherAuthorization teacherAuthorization : Bennu.getInstance().getTeacherAuthorizationSet()) {
             if (teacherAuthorization instanceof ExternalTeacherAuthorization) {
                 teacher.add((ExternalTeacherAuthorization) teacherAuthorization);
             }

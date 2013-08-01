@@ -1,17 +1,17 @@
 package net.sourceforge.fenixedu.domain.candidacy;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 
 public class CandidacyDocument extends CandidacyDocument_Base {
 
     public CandidacyDocument() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public CandidacyDocument(String description) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setDocumentDescription(description);
     }
 
@@ -26,7 +26,7 @@ public class CandidacyDocument extends CandidacyDocument_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

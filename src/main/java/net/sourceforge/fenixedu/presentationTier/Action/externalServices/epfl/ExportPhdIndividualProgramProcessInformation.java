@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.ExternalUser;
 import net.sourceforge.fenixedu.domain.Photograph;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessNumber;
@@ -150,7 +150,7 @@ public class ExportPhdIndividualProgramProcessInformation extends FenixAction {
     }
 
     private boolean isValidExternalUserPassword(final String username, final String password) {
-        for (final ExternalUser externalUser : RootDomainObject.getInstance().getExternalUserSet()) {
+        for (final ExternalUser externalUser : Bennu.getInstance().getExternalUserSet()) {
             if (externalUser.verify(username, password)) {
                 return true;
             }

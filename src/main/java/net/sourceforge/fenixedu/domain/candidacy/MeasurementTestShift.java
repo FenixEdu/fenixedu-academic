@@ -4,7 +4,7 @@ import java.util.Comparator;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.joda.time.DateTime;
@@ -45,7 +45,7 @@ public class MeasurementTestShift extends MeasurementTestShift_Base {
     protected MeasurementTestShift() {
         super();
 
-        super.setRootDomainObject(RootDomainObject.getInstance());
+        super.setRootDomainObject(Bennu.getInstance());
     }
 
     public MeasurementTestShift(String name, DateTime date, MeasurementTest test) {
@@ -136,7 +136,7 @@ public class MeasurementTestShift extends MeasurementTestShift_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

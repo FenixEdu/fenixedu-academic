@@ -21,7 +21,7 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.internet.MimeUtility;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.util.email.MessageId;
 import net.sourceforge.fenixedu.domain.util.email.MessageTransportResult;
 
@@ -59,7 +59,7 @@ public class Email extends Email_Base {
 
     public Email() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setRootDomainObjectFromEmailQueue(getRootDomainObject());
     }
 
@@ -447,7 +447,7 @@ public class Email extends Email_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 
@@ -497,7 +497,7 @@ public class Email extends Email_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObjectFromEmailQueue() {
+    public boolean hasBennuFromEmailQueue() {
         return getRootDomainObjectFromEmailQueue() != null;
     }
 

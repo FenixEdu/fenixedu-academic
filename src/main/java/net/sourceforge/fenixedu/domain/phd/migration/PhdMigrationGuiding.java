@@ -5,7 +5,7 @@ import java.util.NoSuchElementException;
 
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.phd.InternalPhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
@@ -23,7 +23,7 @@ public class PhdMigrationGuiding extends PhdMigrationGuiding_Base {
 
     protected PhdMigrationGuiding() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     protected PhdMigrationGuiding(String data) {
@@ -197,7 +197,7 @@ public class PhdMigrationGuiding extends PhdMigrationGuiding_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

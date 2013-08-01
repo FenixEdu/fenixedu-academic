@@ -75,7 +75,7 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
 
     private ExecutionSemester() {
         super();
-        setRootDomainObjectForExecutionPeriod(RootDomainObject.getInstance());
+        setRootDomainObjectForExecutionPeriod(Bennu.getInstance());
     }
 
     public ExecutionSemester(ExecutionYear executionYear, AcademicInterval academicInterval, String name) {
@@ -536,7 +536,7 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
     public static ExecutionSemester getExecutionPeriod(AcademicSemesterCE entry) {
         if (entry != null) {
             entry = (AcademicSemesterCE) entry.getOriginalTemplateEntry();
-            for (final ExecutionSemester executionSemester : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
+            for (final ExecutionSemester executionSemester : Bennu.getInstance().getExecutionPeriodsSet()) {
                 if (executionSemester.getAcademicInterval().getAcademicCalendarEntry().equals(entry)) {
                     return executionSemester;
                 }
@@ -560,9 +560,9 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
     static transient private ExecutionSemester lastExecutionPeriodForCredits = null;
 
     public static ExecutionSemester readActualExecutionSemester() {
-        if (currentExecutionPeriod == null || currentExecutionPeriod.getRootDomainObject() != RootDomainObject.getInstance()
+        if (currentExecutionPeriod == null || currentExecutionPeriod.getRootDomainObject() != Bennu.getInstance()
                 || !currentExecutionPeriod.isCurrent()) {
-            for (final ExecutionSemester executionSemester : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
+            for (final ExecutionSemester executionSemester : Bennu.getInstance().getExecutionPeriodsSet()) {
                 if (executionSemester.isCurrent()) {
                     currentExecutionPeriod = executionSemester;
                     break;
@@ -573,7 +573,7 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
     }
 
     static private ExecutionSemester readFromProperties(ExecutionSemester executionSemester, String yearKey, String semesterKey) {
-        if (executionSemester == null || executionSemester.getRootDomainObject() != RootDomainObject.getInstance()) {
+        if (executionSemester == null || executionSemester.getRootDomainObject() != Bennu.getInstance()) {
 
             final String yearString = ConfigurationManager.getProperty(yearKey);
             final String semesterString = ConfigurationManager.getProperty(semesterKey);
@@ -628,19 +628,19 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
     }
 
     public static ExecutionSemester readFirstExecutionSemester() {
-        final Set<ExecutionSemester> exeutionPeriods = RootDomainObject.getInstance().getExecutionPeriodsSet();
+        final Set<ExecutionSemester> exeutionPeriods = Bennu.getInstance().getExecutionPeriodsSet();
         return exeutionPeriods.isEmpty() ? null : Collections.min(exeutionPeriods);
     }
 
     public static ExecutionSemester readLastExecutionSemester() {
-        final Set<ExecutionSemester> exeutionPeriods = RootDomainObject.getInstance().getExecutionPeriodsSet();
+        final Set<ExecutionSemester> exeutionPeriods = Bennu.getInstance().getExecutionPeriodsSet();
         final int size = exeutionPeriods.size();
         return size == 0 ? null : size == 1 ? exeutionPeriods.iterator().next() : Collections.max(exeutionPeriods);
     }
 
     public static List<ExecutionSemester> readNotClosedExecutionPeriods() {
         final List<ExecutionSemester> result = new ArrayList<ExecutionSemester>();
-        for (final ExecutionSemester executionSemester : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
+        for (final ExecutionSemester executionSemester : Bennu.getInstance().getExecutionPeriodsSet()) {
             if (!executionSemester.isClosed()) {
                 result.add(executionSemester);
             }
@@ -650,7 +650,7 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
 
     public static List<ExecutionSemester> readNotOpenExecutionPeriods() {
         final List<ExecutionSemester> result = new ArrayList<ExecutionSemester>();
-        for (final ExecutionSemester executionSemester : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
+        for (final ExecutionSemester executionSemester : Bennu.getInstance().getExecutionPeriodsSet()) {
             if (!executionSemester.isNotOpen()) {
                 result.add(executionSemester);
             }
@@ -660,7 +660,7 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
 
     public static List<ExecutionSemester> readPublicExecutionPeriods() {
         final List<ExecutionSemester> result = new ArrayList<ExecutionSemester>();
-        for (final ExecutionSemester executionSemester : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
+        for (final ExecutionSemester executionSemester : Bennu.getInstance().getExecutionPeriodsSet()) {
             if (!executionSemester.isNotOpen()) {
                 result.add(executionSemester);
             }
@@ -670,7 +670,7 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
 
     public static List<ExecutionSemester> readNotClosedPublicExecutionPeriods() {
         final List<ExecutionSemester> result = new ArrayList<ExecutionSemester>();
-        for (final ExecutionSemester executionSemester : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
+        for (final ExecutionSemester executionSemester : Bennu.getInstance().getExecutionPeriodsSet()) {
             if (!executionSemester.isClosed() && !executionSemester.isNotOpen()) {
                 result.add(executionSemester);
             }
@@ -680,7 +680,7 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
 
     public static List<ExecutionSemester> readExecutionPeriodsInTimePeriod(final LocalDate beginDate, final LocalDate endDate) {
         final List<ExecutionSemester> result = new ArrayList<ExecutionSemester>();
-        for (final ExecutionSemester executionSemester : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
+        for (final ExecutionSemester executionSemester : Bennu.getInstance().getExecutionPeriodsSet()) {
             if (executionSemester.isInTimePeriod(beginDate, endDate)) {
                 result.add(executionSemester);
             }
@@ -691,7 +691,7 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
     @Deprecated
     public static List<ExecutionSemester> readExecutionPeriodsInTimePeriod(final Date beginDate, final Date endDate) {
         final List<ExecutionSemester> result = new ArrayList<ExecutionSemester>();
-        for (final ExecutionSemester executionSemester : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
+        for (final ExecutionSemester executionSemester : Bennu.getInstance().getExecutionPeriodsSet()) {
             if (executionSemester.isInTimePeriod(beginDate, endDate)) {
                 result.add(executionSemester);
             }
@@ -701,7 +701,7 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
 
     public static List<ExecutionSemester> readExecutionPeriod(final YearMonthDay beginDate, final YearMonthDay endDate) {
         final List<ExecutionSemester> result = new ArrayList<ExecutionSemester>();
-        for (final ExecutionSemester executionSemester : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
+        for (final ExecutionSemester executionSemester : Bennu.getInstance().getExecutionPeriodsSet()) {
             if (executionSemester.getBeginDateYearMonthDay().isEqual(beginDate)
                     && executionSemester.getEndDateYearMonthDay().isEqual(endDate)) {
                 result.add(executionSemester);
@@ -711,7 +711,7 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
     }
 
     public static ExecutionSemester readByNameAndExecutionYear(final String name, final String year) {
-        for (final ExecutionSemester executionSemester : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
+        for (final ExecutionSemester executionSemester : Bennu.getInstance().getExecutionPeriodsSet()) {
             if (executionSemester.getName().equals(name) && executionSemester.isFor(year)) {
                 return executionSemester;
             }
@@ -720,7 +720,7 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
     }
 
     public static ExecutionSemester readBySemesterAndExecutionYear(final Integer semester, final String year) {
-        for (final ExecutionSemester executionSemester : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
+        for (final ExecutionSemester executionSemester : Bennu.getInstance().getExecutionPeriodsSet()) {
             if (executionSemester.isForSemesterAndYear(semester, year)) {
                 return executionSemester;
             }
@@ -734,7 +734,7 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
     }
 
     public static ExecutionSemester readByYearMonthDay(final YearMonthDay yearMonthDay) {
-        for (final ExecutionSemester executionSemester : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
+        for (final ExecutionSemester executionSemester : Bennu.getInstance().getExecutionPeriodsSet()) {
             if (executionSemester.containsDay(yearMonthDay)) {
                 return executionSemester;
             }
@@ -1328,7 +1328,7 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
     }
 
     @Deprecated
-    public boolean hasRootDomainObjectForExecutionPeriod() {
+    public boolean hasBennuForExecutionPeriod() {
         return getRootDomainObjectForExecutionPeriod() != null;
     }
 

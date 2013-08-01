@@ -7,7 +7,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.research.project.CreateProjectEventAssociation;
 import net.sourceforge.fenixedu.applicationTier.Servico.research.project.CreateProjectParticipant;
 import net.sourceforge.fenixedu.applicationTier.Servico.research.project.DeleteProjectEventAssociation;
@@ -28,6 +27,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.bennu.core.domain.User;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -63,7 +63,7 @@ public class EditProjectDispatchAction extends FenixDispatchAction {
 
         final String oid = request.getParameter("projectId");
 
-        for (Project project : rootDomainObject.getProjects()) {
+        for (Project project : rootDomainObject.getProjectsSet()) {
             if (project.getExternalId().equals(oid)) {
                 request.setAttribute("selectedProject", project);
                 List<ProjectParticipation> participations = new ArrayList<ProjectParticipation>();
@@ -181,7 +181,7 @@ public class EditProjectDispatchAction extends FenixDispatchAction {
 
         final String oid = request.getParameter("projectId");
 
-        for (Project project : rootDomainObject.getProjects()) {
+        for (Project project : rootDomainObject.getProjectsSet()) {
             if (project.getExternalId().equals(oid)) {
                 request.setAttribute("selectedProject", project);
                 Collection<ProjectEventAssociation> associations = project.getAssociatedEvents();
@@ -258,7 +258,7 @@ public class EditProjectDispatchAction extends FenixDispatchAction {
 
         final String oid = request.getParameter("projectId");
 
-        for (Project project : rootDomainObject.getProjects()) {
+        for (Project project : rootDomainObject.getProjectsSet()) {
             if (project.getExternalId().equals(oid)) {
                 request.setAttribute("selectedProject", project);
                 List<ProjectParticipation> unitParticipations = new ArrayList<ProjectParticipation>();
@@ -306,7 +306,7 @@ public class EditProjectDispatchAction extends FenixDispatchAction {
     private void setAttributeSelectedProject(HttpServletRequest request) {
         final String oid = request.getParameter("projectId");
 
-        for (Project project : rootDomainObject.getProjects()) {
+        for (Project project : rootDomainObject.getProjectsSet()) {
             if (project.getExternalId().equals(oid)) {
                 request.setAttribute("selectedProject", project);
             }

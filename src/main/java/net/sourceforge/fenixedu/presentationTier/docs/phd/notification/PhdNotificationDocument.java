@@ -8,7 +8,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
@@ -142,7 +142,7 @@ public class PhdNotificationDocument extends FenixReport {
     }
 
     private String getInsuranceFee(final PhdIndividualProgramProcess individualProgramProcess) {
-        return ((FixedAmountPR) RootDomainObject
+        return ((FixedAmountPR) Bennu
                 .getInstance()
                 .getInstitutionUnit()
                 .getUnitServiceAgreementTemplate()

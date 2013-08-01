@@ -9,13 +9,13 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.joda.time.DateTime;
 
+import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.spreadsheet.SheetData;
 import pt.utl.ist.fenix.tools.spreadsheet.SpreadsheetBuilder;
@@ -29,7 +29,7 @@ public class CareerWorkshopApplicationEvent extends CareerWorkshopApplicationEve
         setBeginDate(beginDate);
         setEndDate(endDate);
         setRelatedInformation(relatedInformation);
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public void evaluateDatesConsistency(DateTime beginDate, DateTime endDate) {
@@ -58,7 +58,7 @@ public class CareerWorkshopApplicationEvent extends CareerWorkshopApplicationEve
     }
 
     public CareerWorkshopSpreadsheet getApplications() {
-        if (hasRootDomainObject()) {
+        if (hasBennu()) {
             if (getLastUpdate() == null || getSpreadsheet() == null) {
                 generateSpreadsheet();
             }
@@ -189,7 +189,7 @@ public class CareerWorkshopApplicationEvent extends CareerWorkshopApplicationEve
     }
 
     private boolean isOverlapping(DateTime beginDate, DateTime endDate) {
-        for (CareerWorkshopApplicationEvent each : RootDomainObject.getInstance().getCareerWorkshopApplicationEvents()) {
+        for (CareerWorkshopApplicationEvent each : Bennu.getInstance().getCareerWorkshopApplicationEventsSet()) {
             if ((!beginDate.isBefore(each.getBeginDate()) && !beginDate.isAfter(each.getEndDate()))
                     || (!endDate.isBefore(each.getBeginDate()) && !endDate.isAfter(each.getEndDate()))) {
                 return true;
@@ -239,7 +239,7 @@ public class CareerWorkshopApplicationEvent extends CareerWorkshopApplicationEve
     }
 
     static public CareerWorkshopApplicationEvent getActualEvent() {
-        for (CareerWorkshopApplicationEvent each : RootDomainObject.getInstance().getCareerWorkshopApplicationEvents()) {
+        for (CareerWorkshopApplicationEvent each : Bennu.getInstance().getCareerWorkshopApplicationEventsSet()) {
             if (each.isApplicationEventOpened()) {
                 return each;
             }
@@ -258,7 +258,7 @@ public class CareerWorkshopApplicationEvent extends CareerWorkshopApplicationEve
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

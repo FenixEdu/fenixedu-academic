@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.phd.debts;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.accounting.Account;
 import net.sourceforge.fenixedu.domain.accounting.AccountType;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
@@ -19,7 +19,7 @@ public class ExternalScholarshipPhdGratuityContribuitionEvent extends ExternalSc
     public ExternalScholarshipPhdGratuityContribuitionEvent(Party party) {
         super();
         init(EventType.EXTERNAL_SCOLARSHIP, party);
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     @Override

@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisFinalGrade;
@@ -23,7 +23,7 @@ public class PhdConclusionProcess extends PhdConclusionProcess_Base {
 
     protected PhdConclusionProcess() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     protected PhdConclusionProcess(final PhdConclusionProcessBean conclusionProcessBean, Person responsible) {
@@ -106,7 +106,7 @@ public class PhdConclusionProcess extends PhdConclusionProcess_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

@@ -11,7 +11,7 @@ import java.util.Comparator;
 import java.util.Set;
 import java.util.SortedSet;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.util.ByteArray;
@@ -62,7 +62,7 @@ public class CronScriptState extends CronScriptState_Base {
     public CronScriptState(final Class cronScriptClass, final Period invocationPeriod, final WhenToSendEmail whenToSendEmail,
             final String emails) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setCronScriptClassname(cronScriptClass.getName());
         this.cronScriptClass = cronScriptClass;
         // TODO : set absoluteExecutionOrder
@@ -209,7 +209,7 @@ public class CronScriptState extends CronScriptState_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

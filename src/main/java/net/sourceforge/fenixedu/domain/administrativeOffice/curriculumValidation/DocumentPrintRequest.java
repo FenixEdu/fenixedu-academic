@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.domain.administrativeOffice.curriculumValidation;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -14,7 +14,7 @@ public class DocumentPrintRequest extends DocumentPrintRequest_Base {
 
     public DocumentPrintRequest() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public DocumentPrintRequest(String conclusionDateValue, String degreeDescriptionValue, String graduatedTitleValue,
@@ -74,7 +74,7 @@ public class DocumentPrintRequest extends DocumentPrintRequest_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

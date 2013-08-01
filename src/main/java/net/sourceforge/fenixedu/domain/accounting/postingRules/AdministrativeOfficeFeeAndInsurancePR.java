@@ -9,7 +9,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.accounting.AccountingTransactionDetailDTO;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.domain.accounting.Account;
 import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
@@ -117,7 +117,7 @@ public class AdministrativeOfficeFeeAndInsurancePR extends AdministrativeOfficeF
     }
 
     public UnitServiceAgreementTemplate getServiceAgreementTemplateForInsurance() {
-        return RootDomainObject.getInstance().getInstitutionUnit().getUnitServiceAgreementTemplate();
+        return Bennu.getInstance().getInstitutionUnit().getUnitServiceAgreementTemplate();
     }
 
     @Override

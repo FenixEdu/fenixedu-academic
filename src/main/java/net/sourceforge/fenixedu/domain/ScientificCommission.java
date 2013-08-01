@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 public class ScientificCommission extends ScientificCommission_Base {
@@ -17,7 +18,7 @@ public class ScientificCommission extends ScientificCommission_Base {
             throw new DomainException("scientificCommission.person.duplicate");
         }
 
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
 
         setContact(false);
         setExecutionDegree(executionDegree);
@@ -105,8 +106,9 @@ public class ScientificCommission extends ScientificCommission_Base {
                 "resources.MessagingResources", "log.degree.scientificcomission.editmember", this.getPerson()
                         .getPresentationName(), this.getExecutionDegree().getDegree().getPresentationName());
     }
+
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

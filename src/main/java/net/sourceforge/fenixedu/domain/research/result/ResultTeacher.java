@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.domain.research.result;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.PublicationArea;
@@ -10,7 +10,7 @@ public class ResultTeacher extends ResultTeacher_Base {
 
     public ResultTeacher() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public ResultTeacher(ResearchResult result, Teacher teacher, PublicationArea area) {
@@ -62,7 +62,7 @@ public class ResultTeacher extends ResultTeacher_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

@@ -7,7 +7,7 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityAgreement;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -22,7 +22,7 @@ public class OutboundMobilityCandidacyContest extends OutboundMobilityCandidacyC
     public OutboundMobilityCandidacyContest(final OutboundMobilityCandidacyPeriod outboundMobilityCandidacyPeriod,
             final OutboundMobilityCandidacyContestGroup mobilityGroup, final MobilityAgreement mobilityAgreement,
             final Integer vacancies) {
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setOutboundMobilityCandidacyPeriod(outboundMobilityCandidacyPeriod);
         setMobilityAgreement(mobilityAgreement);
         setOutboundMobilityCandidacyContestGroup(mobilityGroup);
@@ -205,7 +205,7 @@ public class OutboundMobilityCandidacyContest extends OutboundMobilityCandidacyC
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

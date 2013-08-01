@@ -25,7 +25,7 @@ import net.sourceforge.fenixedu.domain.Photograph;
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.QualificationType;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramCollaborationType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessState;
@@ -79,7 +79,7 @@ public class ExportPhdIndividualProgramProcessesInHtml {
         final Map<PhdProgramFocusArea, Set<PhdProgramPublicCandidacyHashCode>> candidates =
                 new TreeMap<PhdProgramFocusArea, Set<PhdProgramPublicCandidacyHashCode>>(PhdProgramFocusArea.COMPARATOR_BY_NAME);
 
-        for (final PublicCandidacyHashCode hashCode : RootDomainObject.getInstance().getCandidacyHashCodesSet()) {
+        for (final PublicCandidacyHashCode hashCode : Bennu.getInstance().getCandidacyHashCodesSet()) {
             if (hashCode.isFromPhdProgram() && hashCode.hasCandidacyProcess()) {
 
                 final PhdProgramPublicCandidacyHashCode phdHashCode = (PhdProgramPublicCandidacyHashCode) hashCode;

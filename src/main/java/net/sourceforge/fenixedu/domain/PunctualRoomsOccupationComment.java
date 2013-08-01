@@ -12,6 +12,7 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.DateTime;
 
+import pt.ist.bennu.core.domain.Bennu;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class PunctualRoomsOccupationComment extends PunctualRoomsOccupationComment_Base {
@@ -28,7 +29,7 @@ public class PunctualRoomsOccupationComment extends PunctualRoomsOccupationComme
 
         super();
         checkIfCommentAlreadyExists(owner, subject, description);
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setRequest(request);
         setOwner(owner);
         setSubject(subject);
@@ -119,7 +120,7 @@ public class PunctualRoomsOccupationComment extends PunctualRoomsOccupationComme
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

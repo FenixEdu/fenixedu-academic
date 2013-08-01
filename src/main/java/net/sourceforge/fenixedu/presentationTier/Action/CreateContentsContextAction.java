@@ -8,7 +8,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.contents.MenuEntry;
@@ -61,7 +61,7 @@ public class CreateContentsContextAction extends FenixAction {
     protected ActionForward menuActionForward(Content content, HttpServletRequest request) {
         ActionForward actionForward = new ActionForward();
         actionForward.setRedirect(true);
-        Portal rootPortal = RootDomainObject.getInstance().getRootPortal();
+        Portal rootPortal = Bennu.getInstance().getRootPortal();
         List<Content> contents = rootPortal.getPathTo(content);
 
         List<String> paths = new ArrayList<String>();

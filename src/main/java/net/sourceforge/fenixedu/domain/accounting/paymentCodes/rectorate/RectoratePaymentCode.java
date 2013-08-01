@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
 import net.sourceforge.fenixedu.util.Money;
@@ -14,6 +13,8 @@ import net.sourceforge.fenixedu.util.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
+
+import pt.ist.bennu.core.domain.Bennu;
 
 public class RectoratePaymentCode extends RectoratePaymentCode_Base {
 
@@ -42,7 +43,7 @@ public class RectoratePaymentCode extends RectoratePaymentCode_Base {
     public static List<RectoratePaymentCode> getAllRectoratePaymentCodes() {
         List<RectoratePaymentCode> result = new ArrayList<RectoratePaymentCode>();
 
-        Collection<PaymentCode> paymentCodes = RootDomainObject.getInstance().getPaymentCodes();
+        Collection<PaymentCode> paymentCodes = Bennu.getInstance().getPaymentCodesSet();
 
         for (PaymentCode paymentCode : paymentCodes) {
             if (paymentCode.isForRectorate() && !StringUtils.isEmpty(paymentCode.getCode())) {

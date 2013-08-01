@@ -12,7 +12,6 @@ import java.util.regex.Pattern;
 
 import javax.activation.MimetypesFileTypeMap;
 
-import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -23,6 +22,8 @@ import net.sourceforge.fenixedu.util.ConnectionManager;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.joda.time.DateTime;
 
+import pt.ist.bennu.core.domain.Bennu;
+import pt.ist.bennu.core.util.ConfigurationManager;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.file.FileDescriptor;
 import pt.utl.ist.fenix.tools.file.FileManagerFactory;
@@ -34,7 +35,7 @@ public abstract class File extends File_Base {
 
     protected File() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     protected void init(VirtualPath path, String filename, String displayName, Collection<FileSetMetaData> metadata,
@@ -208,7 +209,7 @@ public abstract class File extends File_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

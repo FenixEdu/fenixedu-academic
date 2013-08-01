@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import pt.ist.bennu.core.presentationTier.renderers.autoCompleteProvider.AutoCompleteProvider;
@@ -20,7 +20,7 @@ public class ExternalUnitSearchService implements AutoCompleteProvider<Unit> {
         if (value != null && value.length() > 0) {
             final String[] nameValues = StringNormalizer.normalize(value).toLowerCase().split("\\p{Space}+");
 
-            for (final Party party : RootDomainObject.getInstance().getExternalInstitutionUnit().getSubUnits()) {
+            for (final Party party : Bennu.getInstance().getExternalInstitutionUnit().getSubUnits()) {
                 if (result.size() >= maxCount) {
                     break;
                 }

@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -92,7 +92,7 @@ public class UnitName extends UnitName_Base implements Comparable<UnitName> {
 
     public static class ExternalAcademicUnitNameLimitedOrderedSet extends UnitNameLimitedOrderedSet {
 
-        private final Unit institutionUnit = RootDomainObject.getInstance().getInstitutionUnit();
+        private final Unit institutionUnit = Bennu.getInstance().getInstitutionUnit();
 
         public ExternalAcademicUnitNameLimitedOrderedSet(final int maxElements) {
             super(maxElements);
@@ -108,7 +108,7 @@ public class UnitName extends UnitName_Base implements Comparable<UnitName> {
 
     public UnitName(Unit unit) {
         super();
-        this.setRootDomainObject(RootDomainObject.getInstance());
+        this.setRootDomainObject(Bennu.getInstance());
         setUnit(unit);
         setIsExternalUnit(Boolean.valueOf(!unit.isInternal()));
     }
@@ -142,7 +142,7 @@ public class UnitName extends UnitName_Base implements Comparable<UnitName> {
                 unitNameLimitedOrderedSet.addAll(unitNamePart.getUnitNameSet());
             } else {
                 final Set<UnitName> unitNames =
-                        unitNamePart == null ? RootDomainObject.getInstance().getUnitNameSet() : unitNamePart.getUnitNameSet();
+                        unitNamePart == null ? Bennu.getInstance().getUnitNameSet() : unitNamePart.getUnitNameSet();
                 for (final UnitName unitName : unitNames) {
                     final String normalizedUnitName = unitName.getName();
                     if (containsAll(normalizedUnitName, nameParts)) {
@@ -225,7 +225,7 @@ public class UnitName extends UnitName_Base implements Comparable<UnitName> {
                 unitNameLimitedOrderedSet.addAll(unitNamePart.getUnitNameSet());
             } else {
                 final Set<UnitName> unitNames =
-                        unitNamePart == null ? RootDomainObject.getInstance().getUnitNameSet() : unitNamePart.getUnitNameSet();
+                        unitNamePart == null ? Bennu.getInstance().getUnitNameSet() : unitNamePart.getUnitNameSet();
                 for (final UnitName unitName : unitNames) {
                     final String normalizedUnitName = unitName.getName();
                     if (containsAllExactWords(normalizedUnitName, nameParts)) {
@@ -326,7 +326,7 @@ public class UnitName extends UnitName_Base implements Comparable<UnitName> {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

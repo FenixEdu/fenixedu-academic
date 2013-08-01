@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.domain.phd.individualProcess.activities;
 import java.util.Collections;
 
 import pt.ist.bennu.core.domain.User;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
@@ -26,7 +26,7 @@ public abstract class PhdIndividualProgramProcessActivity extends Activity<PhdIn
     }
 
     protected void email(String email, String subject, String body) {
-        final SystemSender sender = RootDomainObject.getInstance().getSystemSender();
+        final SystemSender sender = Bennu.getInstance().getSystemSender();
         new Message(sender, sender.getConcreteReplyTos(), null, null, null, subject, body, Collections.singleton(email));
     }
 

@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -42,6 +41,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -433,7 +433,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
     private List<PhdProgram> getCoordinatedPhdPrograms() {
         List<PhdProgram> programs = new ArrayList<PhdProgram>();
 
-        for (PhdProgram program : RootDomainObject.getInstance().getPhdPrograms()) {
+        for (PhdProgram program : Bennu.getInstance().getPhdProgramsSet()) {
             if (program.isCoordinatorFor(AccessControl.getPerson(), ExecutionYear.readCurrentExecutionYear())) {
                 programs.add(program);
             }

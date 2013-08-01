@@ -7,7 +7,7 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 
 import com.google.common.base.Predicate;
 
@@ -70,7 +70,7 @@ public class PersonName extends PersonName_Base implements Comparable<PersonName
 
     public PersonName(Person person) {
         super();
-        this.setRootDomainObject(RootDomainObject.getInstance());
+        this.setRootDomainObject(Bennu.getInstance());
         setPerson(person);
         setIsExternalPerson(Boolean.valueOf(person.hasExternalContract()));
     }
@@ -108,7 +108,7 @@ public class PersonName extends PersonName_Base implements Comparable<PersonName
                 personNameLimitedOrderedSet.addAll(personNamePart.getPersonNameSet());
             } else {
                 final Set<PersonName> personNames =
-                        personNamePart == null ? RootDomainObject.getInstance().getPersonNameSet() : personNamePart
+                        personNamePart == null ? Bennu.getInstance().getPersonNameSet() : personNamePart
                                 .getPersonNameSet();
                 for (final PersonName personName : personNames) {
                     final String normalizedPersonName = personName.getName();
@@ -212,7 +212,7 @@ public class PersonName extends PersonName_Base implements Comparable<PersonName
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

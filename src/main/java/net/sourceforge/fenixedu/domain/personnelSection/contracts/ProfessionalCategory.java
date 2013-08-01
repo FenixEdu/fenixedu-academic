@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.personnelSection.contracts;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.teacher.CategoryType;
 import pt.ist.fenixframework.Atomic;
@@ -19,7 +19,7 @@ public class ProfessionalCategory extends ProfessionalCategory_Base implements C
         if (name == null) {
             throw new DomainException("", args);
         }
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setGiafId(giafId);
         setName(name);
         setCategoryType(categoryType);
@@ -97,7 +97,7 @@ public class ProfessionalCategory extends ProfessionalCategory_Base implements C
     }
 
     public static ProfessionalCategory find(final String string, final CategoryType categoryType) {
-        for (final ProfessionalCategory professionalCategory : RootDomainObject.getInstance().getProfessionalCategoriesSet()) {
+        for (final ProfessionalCategory professionalCategory : Bennu.getInstance().getProfessionalCategoriesSet()) {
             if (professionalCategory.getCategoryType() == categoryType
                     && professionalCategory.getName().getContent().equalsIgnoreCase(string)) {
                 return professionalCategory;

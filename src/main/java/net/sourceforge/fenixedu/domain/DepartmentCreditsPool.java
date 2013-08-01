@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain;
 import java.math.BigDecimal;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import pt.ist.bennu.core.domain.Bennu;
 
 public class DepartmentCreditsPool extends DepartmentCreditsPool_Base {
 
@@ -26,7 +27,7 @@ public class DepartmentCreditsPool extends DepartmentCreditsPool_Base {
             creditsPool = BigDecimal.ZERO;
         }
         setCreditsPool(creditsPool);
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public static DepartmentCreditsPool getDepartmentCreditsPool(Department department, ExecutionYear executionYear) {
@@ -37,8 +38,9 @@ public class DepartmentCreditsPool extends DepartmentCreditsPool_Base {
         }
         return null;
     }
+
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

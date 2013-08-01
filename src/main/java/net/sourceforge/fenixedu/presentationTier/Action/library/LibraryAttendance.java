@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.Sear
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExternalTeacherAuthorization;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.TeacherAuthorization;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Invitation;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -359,7 +359,7 @@ public class LibraryAttendance implements Serializable {
 
     @Atomic
     public void generateCardNumber() {
-        getPerson().setLibraryCardNumber(RootDomainObject.getInstance().getLibraryCardSystem().generateNewMilleniumCode());
+        getPerson().setLibraryCardNumber(Bennu.getInstance().getLibraryCardSystem().generateNewMilleniumCode());
         setPersonLibraryCardNumber(getPerson().getLibraryCardNumber());
     }
 

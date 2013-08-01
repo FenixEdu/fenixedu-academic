@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.contacts.PartyContactValidation;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddressValidation;
 import net.sourceforge.fenixedu.domain.util.email.Message;
@@ -21,6 +20,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -45,7 +45,7 @@ public class OperatorValidatePartyContactsDA extends FenixDispatchAction {
                         PhysicalAddressValidation.PREDICATE_FILE);
 
         final Collection<PartyContactValidation> partyContactValidation =
-                RootDomainObject.getInstance().getInvalidPartyContactValidations();
+                Bennu.getInstance().getInvalidPartyContactValidationsSet();
         final List<PartyContactValidation> invalidPartyContactValidations =
                 CollectionUtils.filter(partyContactValidation, predicate);
         request.setAttribute("partyContacts", invalidPartyContactValidations);
@@ -76,8 +76,8 @@ public class OperatorValidatePartyContactsDA extends FenixDispatchAction {
         }
         final String sendingEmail = person.getEmailForSendingEmails();
         if (!StringUtils.isEmpty(sendingEmail)) {
-            new Message(RootDomainObject.getInstance().getSystemSender(), Collections.EMPTY_LIST, Collections.EMPTY_LIST,
-                    subject, body, sendingEmail);
+            new Message(Bennu.getInstance().getSystemSender(), Collections.EMPTY_LIST, Collections.EMPTY_LIST, subject, body,
+                    sendingEmail);
         }
     }
 

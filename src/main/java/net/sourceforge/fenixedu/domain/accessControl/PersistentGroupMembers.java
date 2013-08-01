@@ -5,18 +5,19 @@ import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import java.util.Collection;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.predicates.PersistentGroupMembersPredicates;
 
 import org.apache.commons.lang.StringUtils;
+
+import pt.ist.bennu.core.domain.Bennu;
 
 public class PersistentGroupMembers extends PersistentGroupMembers_Base {
 
     public PersistentGroupMembers(String name, PersistentGroupMembersType type) {
 //        check(this, PersistentGroupMembersPredicates.checkPermissionsToManagePersistentGroups);
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setName(name);
         setType(type);
         checkIfPersistenGroupAlreadyExists(name, type);
@@ -76,7 +77,7 @@ public class PersistentGroupMembers extends PersistentGroupMembers_Base {
     }
 
     private void checkIfPersistenGroupAlreadyExists(String name, PersistentGroupMembersType type) {
-        Collection<PersistentGroupMembers> persistentGroupMembers = RootDomainObject.getInstance().getPersistentGroupMembers();
+        Collection<PersistentGroupMembers> persistentGroupMembers = Bennu.getInstance().getPersistentGroupMembersSet();
         for (PersistentGroupMembers persistentGroup : persistentGroupMembers) {
             if (!persistentGroup.equals(this) && persistentGroup.getName().equalsIgnoreCase(name)
                     && persistentGroup.getType().equals(type)) {
@@ -101,7 +102,7 @@ public class PersistentGroupMembers extends PersistentGroupMembers_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

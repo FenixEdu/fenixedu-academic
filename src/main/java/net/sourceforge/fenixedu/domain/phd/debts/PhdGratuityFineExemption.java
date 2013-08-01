@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.domain.phd.debts;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
@@ -21,7 +21,7 @@ public class PhdGratuityFineExemption extends PhdGratuityFineExemption_Base {
                         .getWhenOccured().toLocalDate(), justification);
         super.init(responsible, event, exemptionJustification);
 
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         event.recalculateState(new DateTime());
     }
 

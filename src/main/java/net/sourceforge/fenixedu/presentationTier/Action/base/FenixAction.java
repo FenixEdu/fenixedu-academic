@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
@@ -18,7 +18,7 @@ import pt.ist.bennu.core.security.Authenticate;
 
 public abstract class FenixAction extends Action {
 
-    protected static final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
+    protected static final Bennu rootDomainObject = Bennu.getInstance();
 
     private static final String ACTION_MESSAGES_REQUEST_KEY = "FENIX_ACTION_MESSAGES";
 

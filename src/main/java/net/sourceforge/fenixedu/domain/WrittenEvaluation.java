@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.util.icalendar.EventBean;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.EvaluationType;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
@@ -33,6 +32,7 @@ import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.bennu.core.domain.User;
 import pt.ist.bennu.core.security.Authenticate;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
@@ -56,7 +56,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
     public static List<WrittenEvaluation> readWrittenEvaluations() {
         List<WrittenEvaluation> result = new ArrayList<WrittenEvaluation>();
 
-        for (Evaluation evaluation : RootDomainObject.getInstance().getEvaluations()) {
+        for (Evaluation evaluation : Bennu.getInstance().getEvaluationsSet()) {
             if (evaluation instanceof Evaluation) {
                 result.add((WrittenEvaluation) evaluation);
             }

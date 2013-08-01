@@ -6,7 +6,7 @@ import pt.ist.bennu.core.domain.User;
 import pt.ist.bennu.core.security.Authenticate;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -18,7 +18,7 @@ public class UnavailablePeriod extends UnavailablePeriod_Base {
 
     public UnavailablePeriod() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public UnavailablePeriod(DateTime beginDate, DateTime endDate, String justification) {
@@ -163,7 +163,7 @@ public class UnavailablePeriod extends UnavailablePeriod_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

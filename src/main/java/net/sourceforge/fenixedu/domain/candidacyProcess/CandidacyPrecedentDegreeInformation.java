@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain.candidacyProcess;
 
 import java.math.BigDecimal;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 import org.joda.time.LocalDate;
@@ -12,7 +12,7 @@ abstract public class CandidacyPrecedentDegreeInformation extends CandidacyPrece
 
     protected CandidacyPrecedentDegreeInformation() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public boolean hasInstitution() {
@@ -69,7 +69,7 @@ abstract public class CandidacyPrecedentDegreeInformation extends CandidacyPrece
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

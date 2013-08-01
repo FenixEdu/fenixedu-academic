@@ -167,6 +167,7 @@ import org.joda.time.LocalDate;
 import org.joda.time.Months;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.bennu.core.domain.User;
 import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
 import pt.ist.fenixframework.Atomic;
@@ -1670,7 +1671,7 @@ public class Person extends Person_Base {
 
         private void sendManagerRoleMembershipChangeNotification(final Person person, final String subjectKey,
                 final String bodyKey) {
-            final Sender sender = RootDomainObject.getInstance().getSystemSender();
+            final Sender sender = Bennu.getInstance().getSystemSender();
             final Recipient recipient = new Recipient(new RoleGroup(RoleType.MANAGER));
             new Message(sender, recipient, BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", subjectKey),
                     BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", bodyKey,
@@ -1952,7 +1953,7 @@ public class Person extends Person_Base {
 
     public static List<Person> readAllPersons() {
         final List<Person> allPersons = new ArrayList<Person>();
-        for (final Party party : RootDomainObject.getInstance().getPartys()) {
+        for (final Party party : Bennu.getInstance().getPartysSet()) {
             if (party.isPerson()) {
                 allPersons.add((Person) party);
             }
@@ -2481,8 +2482,7 @@ public class Person extends Person_Base {
         externalPerson.getPendingOrValidPhysicalAddresses().iterator().next().setValid();
         externalPerson.setSocialSecurityNumber(contributorNumber);
 
-        new ExternalContract(externalPerson, RootDomainObject.getInstance().getExternalInstitutionUnit(), new YearMonthDay(),
-                null);
+        new ExternalContract(externalPerson, Bennu.getInstance().getExternalInstitutionUnit(), new YearMonthDay(), null);
 
         return externalPerson;
     }
@@ -2684,7 +2684,7 @@ public class Person extends Person_Base {
                 people.addAll(findPerson(name));
             }
             if (isSpecified(documentIdNumber)) {
-                for (final IdDocument idDocument : RootDomainObject.getInstance().getIdDocumentsSet()) {
+                for (final IdDocument idDocument : Bennu.getInstance().getIdDocumentsSet()) {
                     final String[] documentIdNumberValues =
                             documentIdNumber == null ? null : StringNormalizer.normalize(documentIdNumber).toLowerCase()
                                     .split("\\p{Space}+");
@@ -4217,7 +4217,7 @@ public class Person extends Person_Base {
     }
 
     public static Person readPersonByLibraryCardNumber(final String cardNumber) {
-        for (final LibraryCard card : RootDomainObject.getInstance().getLibraryCards()) {
+        for (final LibraryCard card : Bennu.getInstance().getLibraryCardsSet()) {
             if (card.getCardNumber() != null && card.getCardNumber().equals(cardNumber)) {
                 return card.getPerson();
             }
@@ -4421,7 +4421,7 @@ public class Person extends Person_Base {
     @Deprecated
     public static String readAllEmails() {
         final StringBuilder builder = new StringBuilder();
-        for (final Party party : RootDomainObject.getInstance().getPartysSet()) {
+        for (final Party party : Bennu.getInstance().getPartysSet()) {
             if (party.isPerson()) {
                 final Person person = (Person) party;
                 final String email = person.getEmailForSendingEmails();
@@ -4453,7 +4453,7 @@ public class Person extends Person_Base {
             roles = new RoleType[0];
         }
         final StringBuilder builder = new StringBuilder();
-        for (final User user : RootDomainObject.getInstance().getUsersSet()) {
+        for (final User user : Bennu.getInstance().getUsersSet()) {
             if (!StringUtils.isEmpty(user.getUsername())) {
                 final Person person = user.getPerson();
                 if (roles.length == 0 || person.hasAnyRole(roles)) {

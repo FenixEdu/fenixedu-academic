@@ -97,6 +97,7 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.predicates.AndPredicate;
@@ -182,7 +183,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     private StudentCurricularPlan() {
         super();
         setCurrentState(StudentCurricularPlanState.ACTIVE);
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setWhenDateTime(new DateTime());
         setGivenCredits(Double.valueOf(0));
     }
@@ -2127,7 +2128,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
                     executionSemester.getQualifiedName() });
         }
 
-        new OptionalEnrolment(this, curriculumGroup, curricularCourse, executionSemester, enrollmentCondition, Authenticate.getUser().getUsername(), optionalCurricularCourse);
+        new OptionalEnrolment(this, curriculumGroup, curricularCourse, executionSemester, enrollmentCondition, Authenticate
+                .getUser().getUsername(), optionalCurricularCourse);
     }
 
     final public RuleResult createNoCourseGroupCurriculumGroupEnrolment(final NoCourseGroupEnrolmentBean bean) {
@@ -3182,7 +3184,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

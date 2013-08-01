@@ -10,7 +10,7 @@ import java.util.Set;
 import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -66,7 +66,7 @@ public class ChangeStudentsShift {
         final String message = messagePrefix + messagePosfix;
 
         Recipient recipient = new Recipient(groupName, new FixedSetGroup(recievers));
-        Sender sender = RootDomainObject.getInstance().getSystemSender();
+        Sender sender = Bennu.getInstance().getSystemSender();
         new Message(sender, new ConcreteReplyTo("gop@ist.utl.pt").asCollection(), recipient.asCollection(), subject, message, "");
     }
 

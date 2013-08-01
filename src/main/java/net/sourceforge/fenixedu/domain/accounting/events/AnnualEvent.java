@@ -9,7 +9,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.EventState;
@@ -100,7 +100,7 @@ public abstract class AnnualEvent extends AnnualEvent_Base {
     static public Set<AccountingTransaction> readPaymentsFor(final Class<? extends AnnualEvent> eventClass,
             final YearMonthDay startDate, final YearMonthDay endDate) {
         final Set<AccountingTransaction> result = new HashSet<AccountingTransaction>();
-        for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYears()) {
+        for (final ExecutionYear executionYear : Bennu.getInstance().getExecutionYears()) {
             for (final AnnualEvent each : executionYear.getAnnualEvents()) {
                 if (eventClass.equals(each.getClass()) && !each.isCancelled()) {
                     for (final AccountingTransaction transaction : each.getNonAdjustingTransactions()) {

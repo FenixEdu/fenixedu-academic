@@ -612,7 +612,7 @@
   
   <tag>
   	<name>rootDomainObjectDefiner</name>
-      <tagclass>net.sourceforge.fenixedu.presentationTier.TagLib.RootDomainObjectDefiner</tagclass>
+      <tagclass>net.sourceforge.fenixedu.presentationTier.TagLib.BennuDefiner</tagclass>
       <bodycontent>JSP</bodycontent>
       <info>
           Defines root domain object for a given scope

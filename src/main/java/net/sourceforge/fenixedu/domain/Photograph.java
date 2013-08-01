@@ -37,6 +37,7 @@ import org.imgscalr.Scalr.Method;
 import org.imgscalr.Scalr.Mode;
 import org.joda.time.DateTime;
 
+import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -54,7 +55,7 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
 
     private Photograph() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setSubmission(new DateTime());
     }
 
@@ -116,7 +117,7 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
             super.setState(state);
             setStateChange(new DateTime());
             if (state == PhotoState.PENDING) {
-                setPendingHolder(RootDomainObject.getInstance());
+                setPendingHolder(Bennu.getInstance());
             } else {
                 setPendingHolder(null);
             }
@@ -333,7 +334,7 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

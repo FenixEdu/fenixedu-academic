@@ -13,7 +13,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.QueueJobResult;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
@@ -752,7 +752,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
     public static List<EventReportQueueJob> retrieveAllGeneratedReports() {
         List<EventReportQueueJob> reports = new ArrayList<EventReportQueueJob>();
 
-        CollectionUtils.select(RootDomainObject.getInstance().getQueueJobSet(), new Predicate() {
+        CollectionUtils.select(Bennu.getInstance().getQueueJobSet(), new Predicate() {
 
             @Override
             public boolean evaluate(Object arg0) {
@@ -767,7 +767,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
     public static List<EventReportQueueJob> retrieveDoneGeneratedReports() {
         List<EventReportQueueJob> reports = new ArrayList<EventReportQueueJob>();
 
-        CollectionUtils.select(RootDomainObject.getInstance().getQueueJobSet(), new Predicate() {
+        CollectionUtils.select(Bennu.getInstance().getQueueJobSet(), new Predicate() {
 
             @Override
             public boolean evaluate(Object arg0) {

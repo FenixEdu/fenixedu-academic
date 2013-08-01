@@ -3,7 +3,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
-<%@ page import="net.sourceforge.fenixedu.domain.RootDomainObject"%>
+<%@ page import="pt.ist.bennu.core.domain.Bennu"%>
 <%@ page import="net.sourceforge.fenixedu.domain.Department"%>
 <%@ page import="net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory"%>
 <html:xhtml/>
@@ -81,7 +81,7 @@
 <p class="mvert0">
 	<bean:message key="teacherAuthorization.upload.instructions.column.department.possible.values"/>
 	<ul>
-		<% for (final Department department : RootDomainObject.getInstance().getDepartmentsSet()) { %>
+		<% for (final Department department : Bennu.getInstance().getDepartmentsSet()) { %>
 			<li>
 				<%= department.getAcronym() %>
 			</li>
@@ -90,7 +90,7 @@
 	<bean:message key="teacherAuthorization.upload.instructions.column.professionalCategory.possible.values"/>
 	<ul>
 		<%
-			for (final ProfessionalCategory professionalCategory : RootDomainObject.getInstance().getProfessionalCategoriesSet()) {
+			for (final ProfessionalCategory professionalCategory : Bennu.getInstance().getProfessionalCategoriesSet()) {
 			    if (professionalCategory.getCategoryType() == CategoryType.TEACHER) {
 		%>
 			<li>

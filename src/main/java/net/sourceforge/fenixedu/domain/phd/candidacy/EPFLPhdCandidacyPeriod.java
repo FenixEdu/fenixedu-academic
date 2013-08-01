@@ -4,7 +4,6 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.CandidacyPeriod;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
@@ -13,6 +12,7 @@ import net.sourceforge.fenixedu.util.phd.PhdProperties;
 
 import org.joda.time.DateTime;
 
+import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -42,7 +42,7 @@ public class EPFLPhdCandidacyPeriod extends EPFLPhdCandidacyPeriod_Base {
     }
 
     private void checkIfCanCreate(final DateTime start, final DateTime end) {
-        for (final CandidacyPeriod period : RootDomainObject.getInstance().getCandidacyPeriods()) {
+        for (final CandidacyPeriod period : Bennu.getInstance().getCandidacyPeriodsSet()) {
             if (!period.equals(this) && period.isEpflCandidacyPeriod() && period.intercept(start, end)) {
                 throw new DomainException(
                         "error.EPFLInstitutionPhdCandidacyPeriod.already.contains.candidacyPeriod.in.given.dates");
@@ -74,7 +74,7 @@ public class EPFLPhdCandidacyPeriod extends EPFLPhdCandidacyPeriod_Base {
     }
 
     public static EPFLPhdCandidacyPeriod readEPFLPhdCandidacyPeriodForDateTime(final DateTime date) {
-        for (final CandidacyPeriod period : RootDomainObject.getInstance().getCandidacyPeriods()) {
+        for (final CandidacyPeriod period : Bennu.getInstance().getCandidacyPeriodsSet()) {
             if (period.isEpflCandidacyPeriod() && period.contains(date)) {
                 return (EPFLPhdCandidacyPeriod) period;
             }
@@ -86,7 +86,7 @@ public class EPFLPhdCandidacyPeriod extends EPFLPhdCandidacyPeriod_Base {
     static public EPFLPhdCandidacyPeriod getMostRecentCandidacyPeriod() {
         PhdCandidacyPeriod mostRecentCandidacyPeriod = null;
 
-        for (CandidacyPeriod candidacyPeriod : RootDomainObject.getInstance().getCandidacyPeriods()) {
+        for (CandidacyPeriod candidacyPeriod : Bennu.getInstance().getCandidacyPeriodsSet()) {
             if (!candidacyPeriod.isEpflCandidacyPeriod()) {
                 continue;
             }

@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.joda.time.DateTime;
 
+import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.bennu.core.domain.User;
 
 /**
@@ -17,7 +18,7 @@ public abstract class Identification extends Identification_Base {
 
     protected Identification() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public void delete() {
@@ -49,7 +50,7 @@ public abstract class Identification extends Identification_Base {
 
     public static List<Login> readAllLogins() {
         List<Login> logins = new ArrayList<Login>();
-        for (Identification identification : RootDomainObject.getInstance().getIdentifications()) {
+        for (Identification identification : Bennu.getInstance().getIdentificationsSet()) {
             if (identification.isLogin()) {
                 logins.add((Login) identification);
             }
@@ -103,7 +104,7 @@ public abstract class Identification extends Identification_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

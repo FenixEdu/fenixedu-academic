@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.util.email;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 
 import org.joda.time.DateTime;
 
@@ -8,7 +8,7 @@ public class MessageId extends MessageId_Base {
 
     public MessageId() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setSendTime(new DateTime());
     }
 
@@ -25,7 +25,7 @@ public class MessageId extends MessageId_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

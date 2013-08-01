@@ -13,13 +13,13 @@ import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -60,7 +60,7 @@ public class SpecialSeasonStatusTrackerDA extends FenixDispatchAction {
         List<CompetenceCourse> courses = new ArrayList<CompetenceCourse>();
         List<Department> departments = new ArrayList<Department>();
         if (getDepartment() == null) {
-            departments.addAll(RootDomainObject.getInstance().getDepartments());
+            departments.addAll(Bennu.getInstance().getDepartmentsSet());
         } else {
             departments.add(getDepartment());
         }

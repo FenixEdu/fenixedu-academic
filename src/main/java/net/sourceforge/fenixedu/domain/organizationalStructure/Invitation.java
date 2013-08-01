@@ -5,7 +5,7 @@ import java.util.Collection;
 import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.LoginPeriod;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.util.UsernameCounter;
@@ -129,7 +129,7 @@ public class Invitation extends Invitation_Base {
     }
 
     public static int nextUserIDForInvitedPerson() {
-        final UsernameCounter usernameCounter = RootDomainObject.getInstance().getUsernameCounter();
+        final UsernameCounter usernameCounter = Bennu.getInstance().getUsernameCounter();
         final int nextUserID = usernameCounter.getInvitationCounter().intValue();
         usernameCounter.setInvitationCounter(Integer.valueOf(nextUserID + 1));
         if (nextUserID > MAX_USER_UID) {

@@ -8,7 +8,7 @@ import java.util.Map;
 import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.ResidenceEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.AnnualEvent;
@@ -58,7 +58,7 @@ public abstract class DebtsFile extends DebtsFile_Base {
             }
         }
 
-        for (InstitutionAffiliationEvent event : RootDomainObject.getInstance().getInstitutionUnit().getOpenAffiliationEventSet()) {
+        for (InstitutionAffiliationEvent event : Bennu.getInstance().getInstitutionUnit().getOpenAffiliationEventSet()) {
             Person person = event.getPerson();
             if (!result.containsKey(person)) {
                 result.put(person, new ArrayList<Event>());

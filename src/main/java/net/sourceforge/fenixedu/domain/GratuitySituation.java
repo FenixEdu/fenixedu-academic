@@ -24,6 +24,8 @@ import org.joda.time.DateTime;
 import org.joda.time.Period;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.bennu.core.domain.Bennu;
+
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
@@ -36,7 +38,7 @@ public class GratuitySituation extends GratuitySituation_Base {
 
     public GratuitySituation() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public GratuitySituation(GratuityValues gratuityValues, StudentCurricularPlan studentCurricularPlan) {
@@ -380,7 +382,7 @@ public class GratuitySituation extends GratuitySituation_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

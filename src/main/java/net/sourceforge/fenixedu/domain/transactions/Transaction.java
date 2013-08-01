@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.domain.transactions;
 import java.math.BigDecimal;
 import java.util.Comparator;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
@@ -22,7 +22,7 @@ public abstract class Transaction extends Transaction_Base {
 
     public Transaction() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     @Deprecated
@@ -63,7 +63,7 @@ public abstract class Transaction extends Transaction_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

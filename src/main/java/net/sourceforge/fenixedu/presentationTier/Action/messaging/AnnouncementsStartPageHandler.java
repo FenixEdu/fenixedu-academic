@@ -179,7 +179,7 @@ public class AnnouncementsStartPageHandler extends AnnouncementManagement {
 
     private void getInstitutionalAnnouncements(HttpServletRequest request,
             final AnnouncementPresentationBean announcementPresentationBean) {
-        if (rootDomainObject.hasInstitutionUnit()) {
+        if (rootDomainObject.getInstitutionUnit() != null) {
             for (final AnnouncementBoard board : rootDomainObject.getInstitutionUnit().getBoardsSet()) {
                 addBoardAnnouncements(request, board, announcementPresentationBean);
             }

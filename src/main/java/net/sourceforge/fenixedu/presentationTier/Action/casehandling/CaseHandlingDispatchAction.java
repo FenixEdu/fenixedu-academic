@@ -7,20 +7,20 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import pt.ist.bennu.core.domain.User;
-import pt.ist.bennu.core.security.Authenticate;
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.CreateNewProcess;
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.ExecuteProcessActivity;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.caseHandling.Process;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.security.Authenticate;
 
 public abstract class CaseHandlingDispatchAction extends FenixDispatchAction {
 
@@ -51,7 +51,7 @@ public abstract class CaseHandlingDispatchAction extends FenixDispatchAction {
 
     protected Collection<Process> getAllowedProcessInstances(final User userView) {
         final Set<Process> result = new TreeSet<Process>();
-        for (final Process process : rootDomainObject.getProcesses()) {
+        for (final Process process : rootDomainObject.getProcessesSet()) {
             if (process.getClass().equals(getProcessType()) && process.canExecuteActivity(userView)) {
                 result.add(process);
             }

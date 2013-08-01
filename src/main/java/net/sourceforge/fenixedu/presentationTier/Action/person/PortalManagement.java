@@ -39,7 +39,7 @@ public class PortalManagement extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 
-        request.setAttribute("metaDomainObjects", rootDomainObject.getMetaDomainObjects());
+        request.setAttribute("metaDomainObjects", rootDomainObject.getMetaDomainObjectsSet());
 
         return mapping.findForward("selectMetaDomainObject");
     }

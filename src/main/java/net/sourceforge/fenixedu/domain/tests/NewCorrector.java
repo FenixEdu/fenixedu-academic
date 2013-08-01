@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.tests;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.tests.predicates.Predicate;
 
@@ -9,7 +9,7 @@ public class NewCorrector extends NewCorrector_Base implements Positionable {
     public NewCorrector() {
         super();
 
-        this.setRootDomainObject(RootDomainObject.getInstance());
+        this.setRootDomainObject(Bennu.getInstance());
     }
 
     public NewCorrector(NewAtomicQuestion atomicQuestion, Predicate predicate, Integer percentage) {
@@ -84,7 +84,7 @@ public class NewCorrector extends NewCorrector_Base implements Positionable {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

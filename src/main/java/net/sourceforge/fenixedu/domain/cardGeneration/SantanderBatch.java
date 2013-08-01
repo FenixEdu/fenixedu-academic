@@ -11,7 +11,7 @@ import java.util.zip.ZipOutputStream;
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.apache.commons.lang.StringUtils;
@@ -35,7 +35,7 @@ public class SantanderBatch extends SantanderBatch_Base {
 
     private SantanderBatch() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public SantanderBatch(Person requester, ExecutionYear executionYear) {
@@ -193,7 +193,7 @@ public class SantanderBatch extends SantanderBatch_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.util;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.bennu.scheduler.CronTask;
 import pt.ist.bennu.scheduler.annotation.Task;
 import pt.ist.fenixframework.Atomic;
@@ -26,7 +26,7 @@ public class EmailTask extends CronTask {
 
     @Override
     public void runTask() {
-        for (final Email email : RootDomainObject.getInstance().getEmailQueueSet()) {
+        for (final Email email : Bennu.getInstance().getEmailQueueSet()) {
             final SingleEmailDispatcher emailDispatcher = new SingleEmailDispatcher(email);
             emailDispatcher.start();
             try {

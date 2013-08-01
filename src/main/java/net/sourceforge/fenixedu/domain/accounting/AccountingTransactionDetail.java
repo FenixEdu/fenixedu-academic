@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.domain.accounting;
 
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
 
@@ -11,7 +11,7 @@ public class AccountingTransactionDetail extends AccountingTransactionDetail_Bas
 
     protected AccountingTransactionDetail() {
         super();
-        super.setRootDomainObject(RootDomainObject.getInstance());
+        super.setRootDomainObject(Bennu.getInstance());
         super.setWhenProcessed(new DateTime());
     }
 
@@ -86,7 +86,7 @@ public class AccountingTransactionDetail extends AccountingTransactionDetail_Bas
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

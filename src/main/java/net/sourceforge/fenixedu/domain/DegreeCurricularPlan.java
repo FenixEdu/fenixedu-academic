@@ -66,6 +66,7 @@ import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.bennu.core.domain.Bennu;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -125,7 +126,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     protected DegreeCurricularPlan() {
         super();
-        super.setRootDomainObject(RootDomainObject.getInstance());
+        super.setRootDomainObject(Bennu.getInstance());
         super.setApplyPreviousYearsEnrolmentRule(Boolean.TRUE);
     }
 
@@ -1293,7 +1294,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     public static List<DegreeCurricularPlan> readNotEmptyDegreeCurricularPlans() {
         final List<DegreeCurricularPlan> result =
-                new ArrayList<DegreeCurricularPlan>(RootDomainObject.getInstance().getDegreeCurricularPlans());
+                new ArrayList<DegreeCurricularPlan>(Bennu.getInstance().getDegreeCurricularPlansSet());
         result.remove(readEmptyDegreeCurricularPlan());
         return result;
     }
@@ -2213,7 +2214,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

@@ -40,7 +40,7 @@ public class Item extends Item_Base {
     protected Item() {
         super();
 
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public Item(Section section, MultiLanguageString name) {

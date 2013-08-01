@@ -46,7 +46,7 @@ public class ResidenceManagementUnit extends ResidenceManagementUnit_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObjectForResidenceUnit() {
+    public boolean hasBennuForResidenceUnit() {
         return getRootDomainObjectForResidenceUnit() != null;
     }
 

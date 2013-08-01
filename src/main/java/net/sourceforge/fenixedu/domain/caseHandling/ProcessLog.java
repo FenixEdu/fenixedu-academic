@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.domain.caseHandling;
 import java.util.Comparator;
 
 import pt.ist.bennu.core.domain.User;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 
 import org.joda.time.DateTime;
 
@@ -19,7 +19,7 @@ public class ProcessLog extends ProcessLog_Base {
 
     public ProcessLog(Process process, User userView, Activity<?> activity) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setProcess(process);
 
         setUserName(userView != null ? userView.getUsername() : "PUBLICO");
@@ -52,7 +52,7 @@ public class ProcessLog extends ProcessLog_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

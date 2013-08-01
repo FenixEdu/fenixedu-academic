@@ -394,7 +394,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         List<SelectItem> list = new ArrayList<SelectItem>();
         SelectItem selectItem = null;
 
-        Collection<Department> allDepartments = rootDomainObject.getDepartments();
+        Collection<Department> allDepartments = rootDomainObject.getDepartmentsSet();
 
         for (Department department : allDepartments) {
             selectItem = new SelectItem();
@@ -413,7 +413,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         List<SelectItem> list = new ArrayList<SelectItem>();
         SelectItem selectItem = null;
 
-        Collection<AdministrativeOffice> allAdministrativeOffices = rootDomainObject.getAdministrativeOffices();
+        Collection<AdministrativeOffice> allAdministrativeOffices = rootDomainObject.getAdministrativeOfficesSet();
         ResourceBundle bundle = getResourceBundle("resources/EnumerationResources");
 
         for (AdministrativeOffice administrativeOffice : allAdministrativeOffices) {

@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.util.email.EmailBean;
 import net.sourceforge.fenixedu.domain.util.email.ExecutionCourseSender;
@@ -108,7 +108,7 @@ public class EmailsDA extends FenixDispatchAction {
         final Set<Sender> sendersGroups = new TreeSet<Sender>(Sender.COMPARATOR_BY_FROM_NAME);
         final TreeSet<ExecutionCourseSender> sendersGroupsCourses =
                 new TreeSet<ExecutionCourseSender>(ExecutionCourseSender.COMPARATOR_BY_EXECUTION_COURSE_SENDER);
-        for (final Sender sender : RootDomainObject.getInstance().getUtilEmailSendersSet()) {
+        for (final Sender sender : Bennu.getInstance().getUtilEmailSendersSet()) {
             boolean allow = sender.getMembers().allows(userView);
             boolean isExecutionCourseSender = sender instanceof ExecutionCourseSender;
             if (allow && !isExecutionCourseSender) {

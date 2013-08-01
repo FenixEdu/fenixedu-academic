@@ -101,7 +101,7 @@ public class ManageSpacesDA extends FenixDispatchAction {
             HttpServletResponse response) {
 
         final SortedSet<Space> spaces = new TreeSet<Space>(SpaceComparator.SPACE_COMPARATOR_BY_CLASS);
-        for (final Resource resource : rootDomainObject.getResources()) {
+        for (final Resource resource : rootDomainObject.getResourcesSet()) {
             if (resource.isSpace() && !((Space) resource).hasSuroundingSpace()) {
                 spaces.add((Space) resource);
             }

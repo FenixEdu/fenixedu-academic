@@ -13,7 +13,6 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.SetPersonRoles;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson;
@@ -35,6 +34,7 @@ import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 
+import pt.ist.bennu.core.domain.User;
 import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
@@ -130,7 +130,7 @@ public class ManageRolesDA extends FenixDispatchAction {
 
     public ActionForward prepareAddRoleToPerson(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        request.setAttribute(PresentationConstants.ROLES, rootDomainObject.getRoles());
+        request.setAttribute(PresentationConstants.ROLES, rootDomainObject.getRolesSet());
         return mapping.findForward("Manage");
     }
 

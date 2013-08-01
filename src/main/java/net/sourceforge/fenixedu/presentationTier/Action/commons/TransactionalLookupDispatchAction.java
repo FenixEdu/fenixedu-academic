@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import pt.ist.bennu.core.domain.User;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixTransactionException;
 
 import org.apache.struts.action.ActionForm;
@@ -26,7 +26,7 @@ import pt.ist.bennu.core.security.Authenticate;
 
 public abstract class TransactionalLookupDispatchAction extends LookupDispatchAction {
 
-    protected static final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
+    protected static final Bennu rootDomainObject = Bennu.getInstance();
 
     private static final String ACTION_MESSAGES_REQUEST_KEY = "FENIX_ACTION_MESSAGES";
 

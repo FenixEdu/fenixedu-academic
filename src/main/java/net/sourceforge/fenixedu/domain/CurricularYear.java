@@ -3,6 +3,8 @@ package net.sourceforge.fenixedu.domain;
 import java.util.Collection;
 import java.util.Comparator;
 
+import pt.ist.bennu.core.domain.Bennu;
+
 /**
  * @author dcs-rjao
  * 
@@ -22,7 +24,7 @@ public class CurricularYear extends CurricularYear_Base implements Comparable<Cu
 
     public CurricularYear() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public CurricularYear(final Integer year, final int numberOfSemesters) {
@@ -50,7 +52,7 @@ public class CurricularYear extends CurricularYear_Base implements Comparable<Cu
     }
 
     public static CurricularYear readByYear(Integer year) {
-        Collection<CurricularYear> curricularYears = RootDomainObject.getInstance().getCurricularYears();
+        Collection<CurricularYear> curricularYears = Bennu.getInstance().getCurricularYearsSet();
         for (CurricularYear curricularYear : curricularYears) {
             if (curricularYear.getYear().equals(year)) {
                 return curricularYear;
@@ -105,7 +107,7 @@ public class CurricularYear extends CurricularYear_Base implements Comparable<Cu
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

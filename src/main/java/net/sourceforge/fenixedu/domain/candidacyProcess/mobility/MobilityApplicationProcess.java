@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.QueueJob;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
@@ -157,7 +157,7 @@ public class MobilityApplicationProcess extends MobilityApplicationProcess_Base 
     private MobilityApplicationProcess getLastSeasonProcess(ErasmusApplyForSemesterType forSemester) {
         MobilityApplicationProcess lastProcess = null;
         Boolean lookForSameSeasonType = (forSemester != null);
-        for (Process proc : RootDomainObject.getInstance().getProcessesSet()) {
+        for (Process proc : Bennu.getInstance().getProcessesSet()) {
             if (proc instanceof MobilityApplicationProcess) {
                 MobilityApplicationProcess mobAppProc = ((MobilityApplicationProcess) proc);
                 if (mobAppProc == this) {

@@ -2,9 +2,9 @@ package net.sourceforge.fenixedu.domain.inquiries;
 
 import java.util.Collection;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
-
 import org.joda.time.DateTime;
+
+import pt.ist.bennu.core.domain.Bennu;
 
 public class Student2ndCycleInquiryTemplate extends Student2ndCycleInquiryTemplate_Base {
 
@@ -14,7 +14,7 @@ public class Student2ndCycleInquiryTemplate extends Student2ndCycleInquiryTempla
     }
 
     public static Student2ndCycleInquiryTemplate getCurrentTemplate() {
-        final Collection<InquiryTemplate> inquiryTemplates = RootDomainObject.getInstance().getInquiryTemplates();
+        final Collection<InquiryTemplate> inquiryTemplates = Bennu.getInstance().getInquiryTemplatesSet();
         for (final InquiryTemplate inquiryTemplate : inquiryTemplates) {
             if (inquiryTemplate instanceof Student2ndCycleInquiryTemplate && inquiryTemplate.isOpen()) {
                 return (Student2ndCycleInquiryTemplate) inquiryTemplate;

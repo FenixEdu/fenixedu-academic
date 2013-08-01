@@ -247,7 +247,7 @@ public class SummariesControlAction extends FenixDispatchAction {
         final ExecutionSemester executionSemester = FenixFramework.getDomainObject(executionPeriodOID);
 
         List<DepartmentSummaryElement> allDepartmentsSummariesResume = new ArrayList<DepartmentSummaryElement>();
-        for (Department department : rootDomainObject.getDepartments()) {
+        for (Department department : rootDomainObject.getDepartmentsSet()) {
             DepartmentSummaryElement departmentSummariesElement = getDepartmentSummaryResume(executionSemester, department);
             allDepartmentsSummariesResume.add(departmentSummariesElement);
         }
@@ -472,7 +472,7 @@ public class SummariesControlAction extends FenixDispatchAction {
     }
 
     protected void readAndSaveAllDepartments(HttpServletRequest request) throws FenixServiceException {
-        Collection<Department> allDepartments = rootDomainObject.getDepartments();
+        Collection<Department> allDepartments = rootDomainObject.getDepartmentsSet();
         List<LabelValueBean> departments = getAllDepartments(allDepartments);
         request.setAttribute("allDepartments", allDepartments);
         request.setAttribute("departments", departments);

@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess.erasmus;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
@@ -8,7 +8,7 @@ public class ErasmusIndividualCandidacyProcessExecutedAction extends ErasmusIndi
 
     private ErasmusIndividualCandidacyProcessExecutedAction() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public ErasmusIndividualCandidacyProcessExecutedAction(MobilityIndividualApplicationProcess process, ExecutedActionType type) {

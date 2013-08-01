@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.domain.log;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -13,7 +13,7 @@ abstract public class CurriculumLineLog extends CurriculumLineLog_Base {
 
     protected CurriculumLineLog() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setDateDateTime(new DateTime());
     }
 
@@ -88,7 +88,7 @@ abstract public class CurriculumLineLog extends CurriculumLineLog_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

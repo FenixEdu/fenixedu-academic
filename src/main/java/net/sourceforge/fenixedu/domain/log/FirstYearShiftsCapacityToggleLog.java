@@ -14,7 +14,7 @@ public class FirstYearShiftsCapacityToggleLog extends FirstYearShiftsCapacityTog
         setCreationDate(new DateTime());
     }
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

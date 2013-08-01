@@ -12,6 +12,8 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 
 import org.apache.commons.lang.StringUtils;
 
+import pt.ist.bennu.core.domain.Bennu;
+
 public class LoginAlias extends LoginAlias_Base {
 
     public final static Comparator<LoginAlias> COMPARATOR_BY_TYPE_AND_ROLE_TYPE_AND_ALIAS = new Comparator<LoginAlias>() {
@@ -60,7 +62,7 @@ public class LoginAlias extends LoginAlias_Base {
         setLogin(login);
         setAlias(alias);
         setType(loginAliasType);
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     private LoginAlias(Login login, String alias, RoleType roleType, LoginAliasType loginAliasType) {
@@ -73,7 +75,7 @@ public class LoginAlias extends LoginAlias_Base {
         setAlias(alias);
         setType(loginAliasType);
         setRoleType(roleType);
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public void editCustomAlias(String alias) {
@@ -164,7 +166,7 @@ public class LoginAlias extends LoginAlias_Base {
         if (loginAliasReference != null) {
             final LoginAlias loginAlias = loginAliasReference.get();
             try {
-                if (loginAlias != null && loginAlias.getRootDomainObject() == RootDomainObject.getInstance()
+                if (loginAlias != null && loginAlias.getRootDomainObject() == Bennu.getInstance()
                         && loginAlias.getLogin() != null && loginAlias.getLogin().hasUsername(lowerCaseUsername)) {
                     return loginAlias;
                 } else {
@@ -176,7 +178,7 @@ public class LoginAlias extends LoginAlias_Base {
         }
         // *** end of hack
 
-        for (final LoginAlias loginAlias : RootDomainObject.getInstance().getLoginAlias()) {
+        for (final LoginAlias loginAlias : Bennu.getInstance().getLoginAliasSet()) {
             // Temporary solution until DML provides indexed relations.
             final String lowerCaseLoginUsername = loginAlias.getAlias().toLowerCase();
             if (!loginAliasMap.containsKey(lowerCaseLoginUsername)) {
@@ -190,13 +192,14 @@ public class LoginAlias extends LoginAlias_Base {
         }
         return null;
     }
+
     @Deprecated
     public boolean hasLogin() {
         return getLogin() != null;
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

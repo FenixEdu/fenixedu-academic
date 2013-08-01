@@ -66,7 +66,7 @@ public class UnitSiteLink extends UnitSiteLink_Base {
     public UnitSiteLink() {
         super();
 
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     @Override
@@ -90,7 +90,7 @@ public class UnitSiteLink extends UnitSiteLink_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

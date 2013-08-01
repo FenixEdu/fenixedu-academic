@@ -101,7 +101,7 @@ public class MarkSheet extends MarkSheet_Base {
 
     protected MarkSheet() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setCreationDateDateTime(new DateTime());
         setPrinted(Boolean.FALSE);
     }
@@ -716,7 +716,7 @@ public class MarkSheet extends MarkSheet_Base {
         }
     }
 
-    public void removeRootDomainObject() {
+    public void removeBennu() {
         if (isConfirmed()) {
             throw new DomainException("error.markSheet.already.confirmed");
         } else {
@@ -1030,7 +1030,7 @@ public class MarkSheet extends MarkSheet_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

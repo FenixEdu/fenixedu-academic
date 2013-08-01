@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.residenceManagement.PayR
 import net.sourceforge.fenixedu.dataTransferObject.VariantBean;
 import net.sourceforge.fenixedu.dataTransferObject.residenceManagement.ImportResidenceEventBean;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.ResidenceEvent;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -59,7 +59,7 @@ public class ResidenceEventManagementDispatchAction extends FenixDispatchAction 
     }
 
     private ResidenceManagementUnit getManagementUnit(HttpServletRequest request) {
-        return RootDomainObject.getInstance().getResidenceManagementUnit();
+        return Bennu.getInstance().getResidenceManagementUnit();
     }
 
     public ActionForward generatePaymentCodes(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

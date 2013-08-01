@@ -3,12 +3,13 @@ package net.sourceforge.fenixedu.domain;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
+import pt.ist.bennu.core.domain.Bennu;
 
 public class DegreeContext extends DegreeContext_Base {
 
     protected DegreeContext() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public DegreeContext(final DegreeCurricularPlan degreeCurricularPlan, final AcademicPeriod period,
@@ -46,7 +47,7 @@ public class DegreeContext extends DegreeContext_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

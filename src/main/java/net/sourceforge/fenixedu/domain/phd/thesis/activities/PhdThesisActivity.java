@@ -4,7 +4,7 @@ import java.util.Collections;
 
 import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.InternalPhdParticipant;
@@ -52,7 +52,7 @@ abstract public class PhdThesisActivity extends Activity<PhdThesisProcess> {
     }
 
     protected void email(String email, String subject, String body) {
-        final SystemSender sender = RootDomainObject.getInstance().getSystemSender();
+        final SystemSender sender = Bennu.getInstance().getSystemSender();
         new Message(sender, sender.getConcreteReplyTos(), null, null, null, subject, body, Collections.singleton(email));
     }
 

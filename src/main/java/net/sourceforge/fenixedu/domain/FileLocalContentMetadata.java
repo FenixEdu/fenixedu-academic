@@ -10,14 +10,11 @@ public class FileLocalContentMetadata extends FileLocalContentMetadata_Base {
         setEntry(entry);
     }
 
-    protected RootDomainObject getRootDomainObject() {
-        return getContent().getRootDomainObject();
-    }
-
     public void delete() {
         setContent(null);
         deleteDomainObject();
     }
+
     @Deprecated
     public boolean hasEntry() {
         return getEntry() != null;

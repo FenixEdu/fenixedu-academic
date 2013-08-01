@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategy
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
@@ -45,7 +45,7 @@ public class GroupEnrolment {
 
     public static Boolean enrole(String groupingID, String shiftID, Integer groupNumber, List<String> studentUsernames,
             String studentUsername) throws FenixServiceException {
-        final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
+        final Bennu rootDomainObject = Bennu.getInstance();
         final Grouping grouping = FenixFramework.getDomainObject(groupingID);
         if (grouping == null) {
             throw new NonExistingServiceException();

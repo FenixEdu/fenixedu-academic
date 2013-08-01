@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.domain.reimbursementGuide;
 
 import java.util.Calendar;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState;
 
 /**
@@ -18,7 +18,7 @@ public class ReimbursementGuideSituation extends ReimbursementGuideSituation_Bas
 
     public ReimbursementGuideSituation() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     /**
@@ -108,7 +108,7 @@ public class ReimbursementGuideSituation extends ReimbursementGuideSituation_Bas
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

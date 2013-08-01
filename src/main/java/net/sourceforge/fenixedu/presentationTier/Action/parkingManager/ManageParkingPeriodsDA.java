@@ -152,7 +152,7 @@ public class ManageParkingPeriodsDA extends FenixDispatchAction {
     public ActionForward prepareManageRequestsPeriods(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         List<ParkingRequestPeriod> parkingRequestPeriods =
-                new ArrayList<ParkingRequestPeriod>(rootDomainObject.getParkingRequestPeriods());
+                new ArrayList<ParkingRequestPeriod>(rootDomainObject.getParkingRequestPeriodsSet());
         Collections.sort(parkingRequestPeriods, new BeanComparator("beginDate"));
         request.setAttribute("parkingRequestPeriods", parkingRequestPeriods);
         return mapping.findForward("manageRequestsPeriods");
@@ -160,8 +160,7 @@ public class ManageParkingPeriodsDA extends FenixDispatchAction {
 
     public ActionForward editRequestPeriod(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        request.setAttribute("parkingRequestPeriodToEdit",
-                FenixFramework.getDomainObject(request.getParameter("externalId")));
+        request.setAttribute("parkingRequestPeriodToEdit", FenixFramework.getDomainObject(request.getParameter("externalId")));
         return prepareManageRequestsPeriods(mapping, actionForm, request, response);
     }
 

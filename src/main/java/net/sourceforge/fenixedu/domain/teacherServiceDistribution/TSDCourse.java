@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.ShiftType;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -26,7 +26,7 @@ public abstract class TSDCourse extends TSDCourse_Base {
     protected TSDCourse() {
         super();
         setIsActive(false);
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
 
         this.setFirstTimeEnrolledStudentsManual(0);
         this.setFirstTimeEnrolledStudentsType(TSDValueType.MANUAL_VALUE);
@@ -585,7 +585,7 @@ public abstract class TSDCourse extends TSDCourse_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

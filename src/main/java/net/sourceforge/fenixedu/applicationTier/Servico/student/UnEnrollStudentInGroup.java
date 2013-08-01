@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -103,7 +103,7 @@ public class UnEnrollStudentInGroup {
                 messages.getMessage("message.body.grouping.change.unenrolment", registration.getNumber().toString(), studentGroup
                         .getGroupNumber().toString(), attend.getExecutionCourse().getNome());
 
-        SystemSender systemSender = RootDomainObject.getInstance().getSystemSender();
+        SystemSender systemSender = Bennu.getInstance().getSystemSender();
         new Message(systemSender, systemSender.getConcreteReplyTos(), recipients,
                 messages.getMessage("message.subject.grouping.change"), message, "");
 

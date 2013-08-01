@@ -9,7 +9,7 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.BundleUtil;
@@ -38,7 +38,7 @@ public class FacultyEvaluationProcess extends FacultyEvaluationProcess_Base impl
 
     public FacultyEvaluationProcess() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setAreApprovedMarksPublished(false);
     }
 
@@ -353,7 +353,7 @@ public class FacultyEvaluationProcess extends FacultyEvaluationProcess_Base impl
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

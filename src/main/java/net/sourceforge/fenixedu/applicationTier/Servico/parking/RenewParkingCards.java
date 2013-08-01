@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 import net.sourceforge.fenixedu.domain.parking.ParkingGroup;
 import net.sourceforge.fenixedu.domain.parking.ParkingParty;
@@ -43,7 +43,7 @@ public class RenewParkingCards {
 
             if (emailText != null && emailText.trim().length() != 0 && email != null) {
                 ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", Language.getLocale());
-                Sender sender = RootDomainObject.getInstance().getSystemSender();
+                Sender sender = Bennu.getInstance().getSystemSender();
                 ConcreteReplyTo replyTo = new ConcreteReplyTo(bundle.getString("label.fromAddress"));
                 new Message(sender, replyTo.asCollection(), Collections.EMPTY_LIST, bundle.getString("label.subject"), emailText,
                         email);

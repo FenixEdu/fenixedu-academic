@@ -1,12 +1,13 @@
 package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu.domain.credits.event.ICreditsEventOriginator;
+import pt.ist.bennu.core.domain.Bennu;
 
 public class ShiftProfessorship extends ShiftProfessorship_Base implements ICreditsEventOriginator {
 
     public ShiftProfessorship() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public void delete() {
@@ -27,7 +28,7 @@ public class ShiftProfessorship extends ShiftProfessorship_Base implements ICred
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

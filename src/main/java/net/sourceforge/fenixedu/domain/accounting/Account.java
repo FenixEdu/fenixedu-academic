@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.domain.accounting;
 import java.util.Collections;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -16,7 +16,7 @@ public class Account extends Account_Base {
     private Account() {
         super();
         super.setCreationDate(new DateTime());
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public Account(AccountType accountType, Party party) {
@@ -109,7 +109,7 @@ public class Account extends Account_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

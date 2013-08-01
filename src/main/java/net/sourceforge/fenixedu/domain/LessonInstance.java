@@ -17,6 +17,8 @@ import org.joda.time.DateTime;
 import org.joda.time.Minutes;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.bennu.core.domain.Bennu;
+
 public class LessonInstance extends LessonInstance_Base {
 
     public static final Comparator<LessonInstance> COMPARATOR_BY_BEGIN_DATE_TIME = new Comparator<LessonInstance>() {
@@ -60,7 +62,7 @@ public class LessonInstance extends LessonInstance_Base {
                 new DateTime(day.getYear(), day.getMonthOfYear(), day.getDayOfMonth(), endTime.getHour(),
                         endTime.getMinuteOfHour(), endTime.getSecondOfMinute(), 0);
 
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setBeginDateTime(beginDateTime);
         setEndDateTime(endDateTime);
         setLesson(lesson);
@@ -99,7 +101,7 @@ public class LessonInstance extends LessonInstance_Base {
                 new DateTime(day.getYear(), day.getMonthOfYear(), day.getDayOfMonth(), endTime.getHour(),
                         endTime.getMinuteOfHour(), endTime.getSecondOfMinute(), 0);
 
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setBeginDateTime(beginDateTime);
         setEndDateTime(endDateTime);
         setLesson(lesson);
@@ -259,7 +261,7 @@ public class LessonInstance extends LessonInstance_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

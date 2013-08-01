@@ -49,7 +49,7 @@ public class Section extends Section_Base {
 
         setCreationDate(new DateTime());
         setShowSubSections(true);
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public Section(Container parent, MultiLanguageString name) {

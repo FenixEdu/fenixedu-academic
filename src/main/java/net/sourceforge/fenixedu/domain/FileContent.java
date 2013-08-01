@@ -6,6 +6,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.contents.Attachment;
+import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.file.FileSetMetaData;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
@@ -52,7 +53,7 @@ public class FileContent extends FileContent_Base {
     public static List<FileContent> readAllFileItems() {
         List<FileContent> fileItems = new ArrayList<FileContent>();
 
-        for (File file : RootDomainObject.getInstance().getFiles()) {
+        for (File file : Bennu.getInstance().getFilesSet()) {
             if (file instanceof FileContent) {
                 fileItems.add((FileContent) file);
             }
@@ -91,6 +92,7 @@ public class FileContent extends FileContent_Base {
             attachment.logItemFilePermittedGroup();
         }
     }
+
     @Deprecated
     public boolean hasAttachment() {
         return getAttachment() != null;

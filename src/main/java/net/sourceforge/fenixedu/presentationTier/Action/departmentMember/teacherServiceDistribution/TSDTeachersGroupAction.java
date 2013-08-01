@@ -7,7 +7,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.AddCourseToTeacherServiceDistribution;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.AddTeacherToTeacherServiceDistribution;
@@ -36,6 +35,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import pt.ist.bennu.core.domain.User;
 import pt.ist.bennu.core.security.Authenticate;
 import pt.ist.fenixframework.FenixFramework;
 
@@ -86,7 +86,7 @@ public class TSDTeachersGroupAction extends FenixDispatchAction {
             request.setAttribute("teachersList", teachersList);
         }
 
-        List<Department> departmentList = new ArrayList<Department>(rootDomainObject.getDepartments());
+        List<Department> departmentList = new ArrayList<Department>(rootDomainObject.getDepartmentsSet());
         Collections.sort(departmentList, new BeanComparator("realName"));
 
         dynaForm.set("department", selectedDepartment.getExternalId());
@@ -112,7 +112,7 @@ public class TSDTeachersGroupAction extends FenixDispatchAction {
             request.setAttribute("coursesList", coursesList);
         }
 
-        List<Department> departmentList = new ArrayList<Department>(rootDomainObject.getDepartments());
+        List<Department> departmentList = new ArrayList<Department>(rootDomainObject.getDepartmentsSet());
         Collections.sort(departmentList, new BeanComparator("realName"));
 
         dynaForm.set("department", selectedDepartment.getExternalId());
@@ -187,7 +187,7 @@ public class TSDTeachersGroupAction extends FenixDispatchAction {
         DynaActionForm dynaForm = (DynaActionForm) form;
 
         List<ProfessionalCategory> categoriesList = new ArrayList<ProfessionalCategory>();
-        for (ProfessionalCategory professionalCategory : rootDomainObject.getProfessionalCategories()) {
+        for (ProfessionalCategory professionalCategory : rootDomainObject.getProfessionalCategoriesSet()) {
             if (professionalCategory.getCategoryType().equals(CategoryType.TEACHER)) {
                 categoriesList.add(professionalCategory);
             }

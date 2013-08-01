@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.candidacy.PersonalInformationBean;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -32,6 +31,7 @@ import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.bennu.core.domain.Bennu;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
@@ -86,7 +86,7 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
     private List<PhdIndividualProgramProcess> retrieveProcesses(ExecutionYear executionYear) {
         List<PhdIndividualProgramProcess> phdIndividualProgramProcessList = new ArrayList<PhdIndividualProgramProcess>();
 
-        for (PhdProgram program : RootDomainObject.getInstance().getPhdPrograms()) {
+        for (PhdProgram program : Bennu.getInstance().getPhdProgramsSet()) {
             phdIndividualProgramProcessList.addAll(program.getIndividualProgramProcesses());
         }
 

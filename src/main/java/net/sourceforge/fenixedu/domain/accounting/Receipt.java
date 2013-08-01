@@ -15,7 +15,7 @@ import java.util.Set;
 import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.CreditNoteEntryDTO;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
@@ -94,7 +94,7 @@ public class Receipt extends Receipt_Base {
         checkRulesToCreate(person, year, entries);
 
         super.setNumber(generateReceiptNumber(year));
-        super.setRootDomainObject(RootDomainObject.getInstance());
+        super.setRootDomainObject(Bennu.getInstance());
         super.setYear(year);
         super.setNumberSeries(numberSeries);
         super.setPerson(person);
@@ -256,7 +256,7 @@ public class Receipt extends Receipt_Base {
 
     public static List<Receipt> getReceiptsFor(int year) {
         final List<Receipt> result = new ArrayList<Receipt>();
-        for (final Receipt receipt : RootDomainObject.getInstance().getReceipts()) {
+        for (final Receipt receipt : Bennu.getInstance().getReceipts()) {
             if (receipt.getYear().intValue() == year) {
                 result.add(receipt);
             }
@@ -504,7 +504,7 @@ public class Receipt extends Receipt_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

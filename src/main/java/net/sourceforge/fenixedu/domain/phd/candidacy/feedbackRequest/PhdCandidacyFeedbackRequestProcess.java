@@ -11,7 +11,7 @@ import pt.ist.bennu.core.domain.User;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -322,7 +322,7 @@ public class PhdCandidacyFeedbackRequestProcess extends PhdCandidacyFeedbackRequ
         }
 
         private void email(String email, String subject, String body) {
-            final SystemSender sender = RootDomainObject.getInstance().getSystemSender();
+            final SystemSender sender = Bennu.getInstance().getSystemSender();
             new Message(sender, sender.getConcreteReplyTos(), null, null, null, subject, body, Collections.singleton(email));
         }
     }

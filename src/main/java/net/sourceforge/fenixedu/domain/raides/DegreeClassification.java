@@ -1,12 +1,12 @@
 package net.sourceforge.fenixedu.domain.raides;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 
 public class DegreeClassification extends DegreeClassification_Base {
 
     public DegreeClassification(String code, String description1, String description2, String abbreviation, Integer order) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setCode(code);
         setDescription1(description1);
         setDescription2(description2);
@@ -16,7 +16,7 @@ public class DegreeClassification extends DegreeClassification_Base {
 
     public DegreeClassification(String code, String description1, String description2, String abbreviation) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setCode(code);
         setDescription1(description1);
         setDescription2(description2);
@@ -32,7 +32,7 @@ public class DegreeClassification extends DegreeClassification_Base {
     }
 
     public static DegreeClassification readByCode(String code) {
-        for (DegreeClassification degreeClassification : RootDomainObject.getInstance().getDegreeClassificationsSet()) {
+        for (DegreeClassification degreeClassification : Bennu.getInstance().getDegreeClassificationsSet()) {
             if (degreeClassification.getCode().equals(code)) {
                 return degreeClassification;
             }
@@ -50,7 +50,7 @@ public class DegreeClassification extends DegreeClassification_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

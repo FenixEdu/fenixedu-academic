@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.util.ByteArray;
+import pt.ist.bennu.core.domain.Bennu;
 import pt.utl.ist.fenix.tools.file.FileSetMetaData;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 
@@ -20,7 +21,7 @@ public class FileLocalContent extends FileLocalContent_Base {
             }
         }
         setContent(new ByteArray(content));
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public Collection<FileSetMetaData> createMetadata() {
@@ -60,7 +61,7 @@ public class FileLocalContent extends FileLocalContent_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

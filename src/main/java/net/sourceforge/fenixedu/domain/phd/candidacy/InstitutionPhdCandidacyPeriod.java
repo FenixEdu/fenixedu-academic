@@ -5,7 +5,6 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.CandidacyPeriod;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
@@ -15,6 +14,7 @@ import net.sourceforge.fenixedu.util.phd.PhdProperties;
 
 import org.joda.time.DateTime;
 
+import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -91,7 +91,7 @@ public class InstitutionPhdCandidacyPeriod extends InstitutionPhdCandidacyPeriod
     }
 
     public static InstitutionPhdCandidacyPeriod readInstitutionPhdCandidacyPeriodForDate(final DateTime date) {
-        for (final CandidacyPeriod period : RootDomainObject.getInstance().getCandidacyPeriods()) {
+        for (final CandidacyPeriod period : Bennu.getInstance().getCandidacyPeriodsSet()) {
             if (period.isInstitutionCandidacyPeriod() && period.contains(date)) {
                 return (InstitutionPhdCandidacyPeriod) period;
             }
@@ -111,7 +111,7 @@ public class InstitutionPhdCandidacyPeriod extends InstitutionPhdCandidacyPeriod
     static public InstitutionPhdCandidacyPeriod getMostRecentCandidacyPeriod() {
         PhdCandidacyPeriod mostRecentCandidacyPeriod = null;
 
-        for (CandidacyPeriod candidacyPeriod : RootDomainObject.getInstance().getCandidacyPeriods()) {
+        for (CandidacyPeriod candidacyPeriod : Bennu.getInstance().getCandidacyPeriodsSet()) {
             if (!candidacyPeriod.isInstitutionCandidacyPeriod()) {
                 continue;
             }

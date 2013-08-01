@@ -7,7 +7,7 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 
@@ -20,7 +20,7 @@ public class CerimonyInquiry extends CerimonyInquiry_Base implements Comparable<
 
     public CerimonyInquiry() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setBegin(new DateTime().plusDays(1));
         setEnd(getBegin().plusDays(15));
     }
@@ -134,7 +134,7 @@ public class CerimonyInquiry extends CerimonyInquiry_Base implements Comparable<
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

@@ -1,11 +1,11 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single;
 
 import net.sourceforge.fenixedu.commons.CollectionUtils;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType;
 
 import org.apache.commons.collections.Predicate;
 
+import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
@@ -14,7 +14,7 @@ public class FunctionProvider implements DataProvider {
 
     @Override
     public Object provide(Object source, Object currentValue) {
-        return CollectionUtils.select(RootDomainObject.getInstance().getAccountabilityTypes(), new Predicate() {
+        return CollectionUtils.select(Bennu.getInstance().getAccountabilityTypesSet(), new Predicate() {
 
             @Override
             public boolean evaluate(Object arg0) {

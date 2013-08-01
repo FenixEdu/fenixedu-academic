@@ -6,7 +6,7 @@ import java.util.ResourceBundle;
 import pt.ist.bennu.core.util.ConfigurationManager;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.accounting.util.PaymentCodeGenerator;
 import net.sourceforge.fenixedu.domain.accounting.util.PaymentCodeGeneratorFactory;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -45,7 +45,7 @@ public abstract class PaymentCode extends PaymentCode_Base {
 
     protected PaymentCode() {
         super();
-        super.setRootDomainObject(RootDomainObject.getInstance());
+        super.setRootDomainObject(Bennu.getInstance());
         super.setWhenCreated(new DateTime());
         super.setWhenUpdated(new DateTime());
         super.setState(PaymentCodeState.NEW);
@@ -247,7 +247,7 @@ public abstract class PaymentCode extends PaymentCode_Base {
         if (StringUtils.isEmpty(code)) {
             return null;
         }
-        for (final PaymentCode paymentCode : RootDomainObject.getInstance().getPaymentCodesSet()) {
+        for (final PaymentCode paymentCode : Bennu.getInstance().getPaymentCodesSet()) {
             if (paymentCode.getCode().equals(code)) {
                 return paymentCode;
             }
@@ -292,7 +292,7 @@ public abstract class PaymentCode extends PaymentCode_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

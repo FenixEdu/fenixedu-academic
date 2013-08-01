@@ -23,14 +23,14 @@ public class LoginPeriod extends LoginPeriod_Base {
         setBeginDate(begin);
         setEndDate(end);
         setLogin(login);
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public LoginPeriod(YearMonthDay begin, Login login) {
         super();
         setBeginDate(begin);
         setLogin(login);
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public void edit(YearMonthDay begin, YearMonthDay end) {
@@ -64,7 +64,7 @@ public class LoginPeriod extends LoginPeriod_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

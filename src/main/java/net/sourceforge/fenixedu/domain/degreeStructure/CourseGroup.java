@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.curricularRules.CreditsLimit;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
@@ -34,7 +34,7 @@ public class CourseGroup extends CourseGroup_Base {
 
     static public List<CourseGroup> readCourseGroups() {
         final List<CourseGroup> result = new ArrayList<CourseGroup>();
-        for (final DegreeModule degreeModule : RootDomainObject.getInstance().getDegreeModules()) {
+        for (final DegreeModule degreeModule : Bennu.getInstance().getDegreeModules()) {
             if (degreeModule instanceof CourseGroup) {
                 result.add((CourseGroup) degreeModule);
             }

@@ -4,9 +4,9 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 
-public class RootDomainObjectDefiner extends BodyTagSupport {
+public class BennuDefiner extends BodyTagSupport {
 
     private String scope;
     private String id;
@@ -45,7 +45,7 @@ public class RootDomainObjectDefiner extends BodyTagSupport {
 
     @Override
     public int doEndTag() throws JspException {
-        pageContext.setAttribute(getId(), RootDomainObject.getInstance(), getPageScope());
+        pageContext.setAttribute(getId(), Bennu.getInstance(), getPageScope());
         return super.doEndTag();
     }
 

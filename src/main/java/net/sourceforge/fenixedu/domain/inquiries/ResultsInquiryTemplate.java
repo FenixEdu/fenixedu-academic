@@ -3,17 +3,17 @@ package net.sourceforge.fenixedu.domain.inquiries;
 import java.util.Collection;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 
 public class ResultsInquiryTemplate extends ResultsInquiryTemplate_Base {
 
     public ResultsInquiryTemplate() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public static ResultsInquiryTemplate getTemplateByExecutionPeriod(ExecutionSemester executionSemester) {
-        final Collection<InquiryTemplate> inquiryTemplates = RootDomainObject.getInstance().getInquiryTemplates();
+        final Collection<InquiryTemplate> inquiryTemplates = Bennu.getInstance().getInquiryTemplatesSet();
         for (final InquiryTemplate inquiryTemplate : inquiryTemplates) {
             if (inquiryTemplate instanceof ResultsInquiryTemplate && executionSemester == inquiryTemplate.getExecutionPeriod()) {
                 return (ResultsInquiryTemplate) inquiryTemplate;

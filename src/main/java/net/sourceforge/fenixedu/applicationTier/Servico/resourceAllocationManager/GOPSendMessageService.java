@@ -8,7 +8,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
@@ -31,7 +31,7 @@ public class GOPSendMessageService {
             GOP_SENDER = initGOPSender();
             if (GOP_SENDER == null) {
                 System.out.println("WARN: GOPSender couldn't be found, using SystemSender ...");
-                GOP_SENDER = RootDomainObject.getInstance().getSystemSender();
+                GOP_SENDER = Bennu.getInstance().getSystemSender();
             }
         }
         return GOP_SENDER;

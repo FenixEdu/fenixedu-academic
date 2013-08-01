@@ -12,19 +12,20 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import pt.ist.fenixframework.Atomic;
+import pt.ist.bennu.core.domain.Bennu;
 
 public class SantanderSequenceNumberGenerator extends SantanderSequenceNumberGenerator_Base {
 
     private SantanderSequenceNumberGenerator() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setSequenceNumber(0);
         setPhotoSequenceNumber(0);
     }
 
     private static SantanderSequenceNumberGenerator getInstance() {
         final Collection<SantanderSequenceNumberGenerator> instances =
-                RootDomainObject.getInstance().getSantanderSequenceNumberGeneratorsSet();
+                Bennu.getInstance().getSantanderSequenceNumberGeneratorsSet();
         if (instances.size() > 1) {
             throw new DomainException("santanderSequenceNumberGenerator.more.than.one.instances.exist");
         }

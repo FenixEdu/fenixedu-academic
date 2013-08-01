@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.domain.PendingRequest;
 import net.sourceforge.fenixedu.domain.PendingRequestParameter;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.alumni.CerimonyInquiryPerson;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.inquiries.RegentInquiryTemplate;
@@ -269,7 +269,7 @@ public abstract class BaseAuthenticationAction extends FenixAction {
     private ActionForward handleSessionCreationAndForwardToTeachingService(HttpServletRequest request, User userView,
             HttpSession session) {
         final List<Content> contents = new ArrayList<Content>();
-        RootDomainObject.getInstance().getRootPortal().addPathContentsForTrailingPath(contents, "departamento/departamento");
+        Bennu.getInstance().getRootPortal().addPathContentsForTrailingPath(contents, "departamento/departamento");
         final FilterFunctionalityContext context = new FilterFunctionalityContext(request, contents);
         request.setAttribute(FilterFunctionalityContext.CONTEXT_KEY, context);
 
@@ -327,7 +327,7 @@ public abstract class BaseAuthenticationAction extends FenixAction {
     private ActionForward handleSessionCreationAndForwardToRAIDESInquiriesResponseQuestion(HttpServletRequest request,
             User userView, HttpSession session) {
         final List<Content> contents = new ArrayList<Content>();
-        RootDomainObject.getInstance().getRootPortal().addPathContentsForTrailingPath(contents, "estudante/estudante");
+        Bennu.getInstance().getRootPortal().addPathContentsForTrailingPath(contents, "estudante/estudante");
         final FilterFunctionalityContext context = new FilterFunctionalityContext(request, contents);
         request.setAttribute(FilterFunctionalityContext.CONTEXT_KEY, context);
 

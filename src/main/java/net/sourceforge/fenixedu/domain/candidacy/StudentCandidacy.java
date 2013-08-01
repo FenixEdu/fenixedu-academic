@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.EntryPhase;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import pt.ist.bennu.core.domain.Bennu;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -131,7 +131,7 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
     public static Set<StudentCandidacy> readByIds(final List<String> studentCandidacyIds) {
         final Set<StudentCandidacy> result = new HashSet<StudentCandidacy>();
 
-        for (final Candidacy candidacy : RootDomainObject.getInstance().getCandidaciesSet()) {
+        for (final Candidacy candidacy : Bennu.getInstance().getCandidaciesSet()) {
             if (candidacy instanceof StudentCandidacy) {
                 if (studentCandidacyIds.contains(candidacy.getExternalId())) {
                     result.add((StudentCandidacy) candidacy);
@@ -144,7 +144,7 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
 
     public static Set<StudentCandidacy> readByExecutionYear(final ExecutionYear executionYear) {
         final Set<StudentCandidacy> result = new HashSet<StudentCandidacy>();
-        for (final Candidacy candidacy : RootDomainObject.getInstance().getCandidaciesSet()) {
+        for (final Candidacy candidacy : Bennu.getInstance().getCandidaciesSet()) {
             if (candidacy instanceof StudentCandidacy) {
                 final StudentCandidacy studentCandidacy = (StudentCandidacy) candidacy;
                 if (studentCandidacy.getExecutionDegree().getExecutionYear() == executionYear) {
@@ -159,7 +159,7 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
     public static Set<StudentCandidacy> readNotConcludedBy(final ExecutionDegree executionDegree,
             final ExecutionYear executionYear, final EntryPhase entryPhase) {
         final Set<StudentCandidacy> result = new HashSet<StudentCandidacy>();
-        for (final Candidacy candidacy : RootDomainObject.getInstance().getCandidaciesSet()) {
+        for (final Candidacy candidacy : Bennu.getInstance().getCandidaciesSet()) {
             if (candidacy instanceof StudentCandidacy) {
                 final StudentCandidacy studentCandidacy = (StudentCandidacy) candidacy;
                 if (studentCandidacy.hasAnyCandidacySituations() && !studentCandidacy.isConcluded()

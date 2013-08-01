@@ -9,8 +9,8 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import pt.ist.bennu.core.domain.Bennu;
 import pt.ist.fenixframework.Atomic;
 
 public class ReadExecutionPeriodsEnrolment {
@@ -25,7 +25,7 @@ public class ReadExecutionPeriodsEnrolment {
 
     protected List<InfoExecutionPeriod> run(DegreeType degreeType) {
         final List<InfoExecutionPeriod> result = new ArrayList<InfoExecutionPeriod>();
-        for (final ExecutionSemester executionSemester : RootDomainObject.getInstance().getExecutionPeriods()) {
+        for (final ExecutionSemester executionSemester : Bennu.getInstance().getExecutionPeriodsSet()) {
             result.add(InfoExecutionPeriod.newInfoFromDomain(executionSemester));
         }
 
