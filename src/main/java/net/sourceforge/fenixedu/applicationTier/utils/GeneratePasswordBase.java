@@ -20,19 +20,15 @@ public class GeneratePasswordBase implements IGeneratePassword {
         try {
             randPass = new RandPass(SecureRandom.getInstance("SHA1PRNG"));
             randPass.setMaxRepetition(1);
-            randPass.addVerifier(getPasswordVerifier());
+            randPass.addVerifier(new PasswordVerifier() {
+                @Override
+                public boolean verify(char[] password) {
+                    return PasswordVerifierUtil.has3ClassesOfCharacters(password);
+                }
+            });
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-    }
-
-    private PasswordVerifier getPasswordVerifier() throws ClassNotFoundException, InstantiationException, IllegalAccessException {
-        String stringClass = PropertiesManager.getProperty("passVerifier");
-        if (stringClass != null) {
-            Class clazz = Class.forName(stringClass);
-            return (PasswordVerifier) clazz.newInstance();
-        }
-        return null;
     }
 
     @Override

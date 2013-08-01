@@ -649,7 +649,6 @@ passExpirationScript=/usr/local/bin/fenix_password_expiration
 scriptTimeout=15000
 
 #pass Generator
-passVerifier=net.sourceforge.fenixedu.applicationTier.utils.PasswordVerifier3Classes
 passSize=10
 
 #Credits configurations
