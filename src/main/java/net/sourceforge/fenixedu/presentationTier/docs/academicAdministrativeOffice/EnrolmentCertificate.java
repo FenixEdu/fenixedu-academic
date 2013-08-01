@@ -6,13 +6,11 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accounting.PostingRule;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.EnrolmentCertificateRequestPR;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.EnrolmentCertificateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -78,9 +76,9 @@ public class EnrolmentCertificate extends AdministrativeOfficeDocument {
     }
 
     protected void fillFirstParagraph(Person coordinator, Unit adminOfficeUnit, String coordinatorTitle) {
-        String institutionName = getMLSTextContent(RootDomainObject.getInstance().getInstitutionUnit().getPartyName());
+        String institutionName = getInstitutionName();
         String adminOfficeName = getMLSTextContent(adminOfficeUnit.getPartyName());
-        String universityName = getMLSTextContent(UniversityUnit.getInstitutionsUniversityUnit().getPartyName());
+        String universityName = getUniversityName(new DateTime());
         String stringTemplate = getResourceBundle().getString("label.academicDocument.declaration.firstParagraph");
 
         addParameter(
@@ -98,7 +96,7 @@ public class EnrolmentCertificate extends AdministrativeOfficeDocument {
         String situation = "";
         if (request.hasExecutionYear()) {
             situation = getResourceBundle().getString(getExecutionYear().containsDate(new DateTime()) ? "label.is" : "label.was");
-            //addParameter("situation", getResourceBundle().getString(situation));
+
         }
 
         String detailed =

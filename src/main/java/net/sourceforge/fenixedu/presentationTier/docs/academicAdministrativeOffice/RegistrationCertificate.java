@@ -3,11 +3,9 @@ package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOff
 import java.text.MessageFormat;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -73,8 +71,8 @@ public class RegistrationCertificate extends AdministrativeOfficeDocument {
     protected void fillFirstParagraph(Person coordinator, Unit adminOfficeUnit, String coordinatorTitle) {
 
         String adminOfficeName = getMLSTextContent(adminOfficeUnit.getPartyName());
-        String institutionName = getMLSTextContent(RootDomainObject.getInstance().getInstitutionUnit().getPartyName());
-        String universityName = getMLSTextContent(UniversityUnit.getInstitutionsUniversityUnit().getPartyName());
+        String institutionName = getInstitutionName();
+        String universityName = getUniversityName(new DateTime());
 
         String stringTemplate = getResourceBundle().getString("label.academicDocument.declaration.firstParagraph");
 

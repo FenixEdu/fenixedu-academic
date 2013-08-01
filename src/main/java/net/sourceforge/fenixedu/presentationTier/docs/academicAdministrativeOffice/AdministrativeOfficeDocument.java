@@ -172,6 +172,14 @@ public class AdministrativeOfficeDocument extends FenixReport {
         return UniversityUnit.getInstitutionsUniversityUnitByDate(date);
     }
 
+    protected String getUniversityName(DateTime date) {
+        return getUniversity(date).getPartyName().getContent(getLanguage());
+    }
+
+    protected String getInstitutionName() {
+        return RootDomainObject.getInstance().getInstitutionUnit().getPartyName().getContent(getLanguage());
+    }
+
     @Override
     public String getReportFileName() {
         final StringBuilder result = new StringBuilder();
@@ -270,10 +278,8 @@ public class AdministrativeOfficeDocument extends FenixReport {
         addParameter("employeeLocation", adminOfficeUnit.getCampus().getLocation());
         addParameter("supervisingUnit", getResourceBundle().getString("label.academicDocument.direcaoAcademica"));
 
-        addParameter("institutionName", getMLSTextContent(RootDomainObject.getInstance().getInstitutionUnit().getPartyName()));
-        addParameter("universityName",
-                getMLSTextContent(UniversityUnit.getInstitutionsUniversityUnitByDate(getDocumentRequest().getRequestDate())
-                        .getPartyName()));
+        addParameter("institutionName", getInstitutionName());
+        addParameter("universityName", getUniversityName(getDocumentRequest().getRequestDate()));
     }
 
     protected void setDocumentTitle() {
@@ -511,7 +517,7 @@ public class AdministrativeOfficeDocument extends FenixReport {
 
     protected void fillEmployeeFields() {
         final Unit adminOfficeUnit = getAdministrativeOffice().getUnit();
-        final String institutionName = getMLSTextContent(RootDomainObject.getInstance().getInstitutionUnit().getPartyName());
+        final String institutionName = getInstitutionName();
         final Person coordinator = adminOfficeUnit.getActiveUnitCoordinator();
 
         String coordinatorTitle;

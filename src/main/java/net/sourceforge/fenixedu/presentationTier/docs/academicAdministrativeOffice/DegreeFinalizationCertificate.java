@@ -12,12 +12,10 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DegreeFinalizationCertificateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
@@ -25,6 +23,9 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
 import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.StringUtils;
+
+import org.joda.time.DateTime;
+
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument {
@@ -98,8 +99,8 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
         String coordinatorTitle = getCoordinatorGender(coordinator);
 
         String adminOfficeName = getMLSTextContent(adminOfficeUnit.getPartyName());
-        String institutionName = getMLSTextContent(RootDomainObject.getInstance().getInstitutionUnit().getPartyName());
-        String universityName = getMLSTextContent(UniversityUnit.getInstitutionsUniversityUnit().getPartyName());
+        String institutionName = getInstitutionName();
+        String universityName = getUniversityName(new DateTime());
 
         String stringTemplate = getResourceBundle().getString("label.academicDocument.declaration.firstParagraph");
 

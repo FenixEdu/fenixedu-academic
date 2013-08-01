@@ -1,12 +1,14 @@
 package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice;
 
 import java.text.MessageFormat;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
+import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -34,10 +36,13 @@ public class Diploma extends AdministrativeOfficeDocument {
         super.fillReport();
         final DiplomaRequest diplomaRequest = getDocumentRequest();
 
-        addParameter("registryCode", diplomaRequest.hasRegistryCode() ? diplomaRequest.getRegistryCode().getCode() : null);
+        String universityName = getUniversity(diplomaRequest.getRequestDate()).getPartyName().getPreferedContent();
 
+        addParameter("registryCode", diplomaRequest.hasRegistryCode() ? diplomaRequest.getRegistryCode().getCode() : null);
+        addParameter("documentNumber", getResourceBundle().getString("label.diploma.documentNumber"));
         addParameter("conclusionDate", diplomaRequest.getConclusionDate().toString(getDatePattern(), getLocale()));
-        addParameter("day", getFormatedCurrentDate());
+        addParameter("day", MessageFormat.format(getResourceBundle().getString("label.diploma.university.actualDate"),
+                universityName, getFormatedCurrentDate()));
 
         if (diplomaRequest.hasFinalAverageDescription()) {
             addParameter("finalAverageDescription",
@@ -50,8 +55,10 @@ public class Diploma extends AdministrativeOfficeDocument {
         String finalAverage = getResourceBundle().getString("diploma.finalAverage");
         addParameter("finalAverageDescription", MessageFormat.format(finalAverage,
                 getEnumerationBundle().getString(diplomaRequest.getFinalAverage().toString()), diplomaRequest.getFinalAverage()
-                        .toString(), diplomaRequest.getFinalAverageQualified()));
-        addParameter("conclusionStatus", getConclusionStatusAndDegreeType(diplomaRequest, getRegistration()));
+                        .toString(), getResourceBundle().getString(getQualifiedAverageGrade(getLocale()))));
+
+        addParameter("conclusionStatus", MessageFormat.format(getResourceBundle().getString("label.diploma.conclusionStatus"),
+                getConclusionStatusAndDegreeType(diplomaRequest, getRegistration())));
         addParameter("degreeFilteredName", diplomaRequest.getDegreeFilteredName());
 
         String graduateTitle = diplomaRequest.getGraduateTitle(getLocale());
@@ -65,26 +72,57 @@ public class Diploma extends AdministrativeOfficeDocument {
         }
 
         addParameter("graduateTitle", graduateTitle);
+        addParameter("message1", getResourceBundle().getString("label.diploma.message1"));
+        addParameter("message2", getResourceBundle().getString("label.diploma.message2"));
+        addParameter("message3", getResourceBundle().getString("label.diploma.message3"));
+
     }
 
     @Override
     protected void addIntroParameters() {
         super.addIntroParameters();
+
+        final String institutionUnitName = getInstitutionName();
+
         Person principal =
                 getUniversity(getDocumentRequest().getRequestDate()).getInstitutionsUniversityResponsible(FunctionType.PRINCIPAL);
+        final Person presidentIst =
+                getUniversity(getDocumentRequest().getRequestDate()).getInstitutionsUniversityResponsible(FunctionType.PRESIDENT);
+
+        final UniversityUnit university = getUniversity(getDocumentRequest().getRequestDate());
+        String universityName = university.getPartyName().getPreferedContent();
+
+        String rectorGender, rectorGrant, presidentGender;
+
+        if (presidentIst.isMale()) {
+            presidentGender = getResourceBundle().getString("label.phd.registryDiploma.presidentMale");
+        } else {
+            presidentGender = getResourceBundle().getString("label.phd.registryDiploma.presidentFemale");
+        }
+
+        if (principal.isMale()) {
+            rectorGender = getResourceBundle().getString("label.phd.registryDiploma.rectorMale");
+            rectorGrant = getResourceBundle().getString("label.phd.registryDiploma.presidentGrantMale");
+        } else {
+            rectorGender = getResourceBundle().getString("label.phd.registryDiploma.rectorFemale");
+            rectorGrant = getResourceBundle().getString("label.phd.registryDiploma.presidentGrantFemale");
+        }
+        addParameter("theRector", rectorGender);
+        addParameter("president", MessageFormat.format(presidentGender, institutionUnitName));
+        String firstParagraph = getResourceBundle().getString("label.diploma.universityPrincipal");
+        addParameter("firstParagraph",
+                MessageFormat.format(firstParagraph, rectorGender, universityName, rectorGrant, principal.getValidatedName()));
+
         addParameter("universityPrincipal", principal);
         addParameter("universityPrincipalName", principal.getValidatedName());
 
         if (getUniversity(getDocumentRequest().getRequestDate()) != getUniversity(getDocumentRequest().getConclusionDate()
                 .toDateTimeAtCurrentTime())) {
             addParameter("UTLDescription", getResourceBundle().getString("label.diploma.UTLDescription"));
-            addParameter("certification",
-                    "pelo que, em conformidade com o disposto no Decreto-Lei nº 266-E, de 31 de Dezembro de 2012, e "
-                            + "demais disposições legais em vigor, " + "lhe manda passar a presente Carta de Curso.");
+            addParameter("certification", getResourceBundle().getString("label.diploma.certification.UTL"));
         } else {
             addParameter("UTLDescription", StringUtils.EMPTY);
-            addParameter("certification",
-                    "pelo que, em conformidade com as disposições legais em vigor, lhe manda passar a presente Carta de Curso.");
+            addParameter("certification", getResourceBundle().getString("label.diploma.certification.UL"));
         }
     }
 
@@ -144,7 +182,7 @@ public class Diploma extends AdministrativeOfficeDocument {
             result.append(SINGLE_SPACE).append(applicationResources.getString("of.masculine")).append(SINGLE_SPACE);
         }
 
-        result.append(degreeType.getPrefix()).append(degreeType.getFilteredName());
+        result.append(degreeType.getPrefix(getLocale())).append(degreeType.getFilteredName(getLocale()));
     }
 
     private void forDFA(StringBuilder result, ResourceBundle applicationResources, final DiplomaRequest diplomaRequest,
@@ -156,6 +194,24 @@ public class Diploma extends AdministrativeOfficeDocument {
             result.append(" (").append(getEnumerationBundle().getString(degreeType.getCycleType().getQualifiedName()))
                     .append(")");
         }
+    }
+
+    public String getQualifiedAverageGrade(final Locale locale) {
+        Integer finalAverage = getDocumentRequest().getFinalAverage();
+
+        String qualifiedAverageGrade;
+
+        if (finalAverage <= 13) {
+            qualifiedAverageGrade = "sufficient";
+        } else if (finalAverage <= 15) {
+            qualifiedAverageGrade = "good";
+        } else if (finalAverage <= 17) {
+            qualifiedAverageGrade = "verygood";
+        } else {
+            qualifiedAverageGrade = "excelent";
+        }
+
+        return "diploma.supplement.qualifiedgrade." + qualifiedAverageGrade;
     }
 
 }

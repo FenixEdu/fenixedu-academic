@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
@@ -65,8 +64,7 @@ public class CourseLoadRequestDocument extends AdministrativeOfficeDocument {
         String adminOfficeUnitName = getMLSTextContent(adminOfficeUnit.getPartyName()).toUpperCase();
         String universityName = getMLSTextContent(university.getPartyName()).toUpperCase();
 
-        String institutionName =
-                getMLSTextContent(RootDomainObject.getInstance().getInstitutionUnit().getPartyName()).toUpperCase();
+        String institutionName = getInstitutionName().toUpperCase();
 
         String template = getResourceBundle().getString("label.courseLoad.personalData.first");
         String firstPart =

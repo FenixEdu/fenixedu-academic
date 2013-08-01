@@ -32,6 +32,9 @@ public class PhdDiploma extends AdministrativeOfficeDocument {
     protected void fillReport() {
         addInstitutionParameters();
         addPersonParameters();
+        final UniversityUnit university = getUniversity(getDocumentRequest().getRequestDate());
+        String universityName = university.getPartyName().getPreferedContent();
+
         PhdDiplomaRequest diplomaRequest = getDocumentRequest();
         String phdProgram = getResourceBundle().getString("label.phd.diploma.pdhProgram");
         String phdProgramDescription =
@@ -43,10 +46,12 @@ public class PhdDiploma extends AdministrativeOfficeDocument {
                 MessageFormat.format(phdProgram, phdProgramDescription,
                         diplomaRequest.getConclusionDate().toString(getDatePattern(), getLocale())));
 
+        addParameter("documentNumber", getResourceBundle().getString("label.diploma.documentNumber"));
         addParameter("registryCode", diplomaRequest.hasRegistryCode() ? diplomaRequest.getRegistryCode().getCode() : null);
         addParameter("conclusionDate", diplomaRequest.getConclusionDate().toString(getDatePattern(), getLocale()));
         addParameter("institutionName", RootDomainObject.getInstance().getInstitutionUnit().getName());
-        addParameter("day", getFormatedCurrentDate());
+        addParameter("day", MessageFormat.format(getResourceBundle().getString("label.diploma.university.actualDate"),
+                universityName, getFormatedCurrentDate()));
 
         addParameter("classificationResult", MessageFormat.format(
                 getResourceBundle().getString("label.phd.Diploma.classificationResult"), diplomaRequest.getThesisFinalGrade()
@@ -57,14 +62,16 @@ public class PhdDiploma extends AdministrativeOfficeDocument {
         if (getUniversity(getDocumentRequest().getRequestDate()) != getUniversity(getDocumentRequest().getConclusionDate()
                 .toDateTimeAtCurrentTime())) {
             addParameter("UTLDescription", getResourceBundle().getString("label.diploma.UTLDescription"));
-            addParameter("certification",
-                    "pelo que, em conformidade com o disposto no Decreto-Lei nº 266-E, de 31 de Dezembro de 2012, e "
-                            + "demais disposições legais em vigor, " + "lhe manda passar a presente Carta Doutoral.");
+            addParameter("certification", getResourceBundle().getString("label.diploma.phd.certification.UTL"));
+
         } else {
             addParameter("UTLDescription", StringUtils.EMPTY);
-            addParameter("certification",
-                    "pelo que, em conformidade com as disposições legais em vigor, lhe manda passar a presente Carta Doutoral.");
+            addParameter("certification", getResourceBundle().getString("label.diploma.phd.certification.UL"));
         }
+
+        addParameter("message1", getResourceBundle().getString("label.diploma.message1"));
+        addParameter("message3", getResourceBundle().getString("label.diploma.message3"));
+        addParameter("phdmessage1", getResourceBundle().getString("label.phd.diploma.message1"));
     }
 
     private String getFormatedCurrentDate() {
@@ -102,10 +109,41 @@ public class PhdDiploma extends AdministrativeOfficeDocument {
     }
 
     private void addInstitutionParameters() {
-        final UniversityUnit institutionsUniversityUnit = getUniversity(getDocumentRequest().getRequestDate());
-        addParameter("universityName", institutionsUniversityUnit.getName());
-        addParameter("universityPrincipal",
-                institutionsUniversityUnit.getInstitutionsUniversityResponsible(FunctionType.PRINCIPAL));
+
+        addParameter("universityName", getUniversity(getDocumentRequest().getRequestDate()).getName());
+        addParameter("universityPrincipal", getUniversity(getDocumentRequest().getRequestDate())
+                .getInstitutionsUniversityResponsible(FunctionType.PRINCIPAL));
+
+        final String institutionUnitName = getInstitutionName();
+
+        Person principal =
+                getUniversity(getDocumentRequest().getRequestDate()).getInstitutionsUniversityResponsible(FunctionType.PRINCIPAL);
+        final Person presidentIst =
+                getUniversity(getDocumentRequest().getRequestDate()).getInstitutionsUniversityResponsible(FunctionType.PRESIDENT);
+
+        final UniversityUnit university = getUniversity(getDocumentRequest().getRequestDate());
+        String universityName = university.getPartyName().getPreferedContent();
+
+        String rectorGender, rectorGrant, presidentGender;
+
+        if (presidentIst.isMale()) {
+            presidentGender = getResourceBundle().getString("label.phd.registryDiploma.presidentMale");
+        } else {
+            presidentGender = getResourceBundle().getString("label.phd.registryDiploma.presidentFemale");
+        }
+
+        if (principal.isMale()) {
+            rectorGender = getResourceBundle().getString("label.phd.registryDiploma.rectorMale");
+            rectorGrant = getResourceBundle().getString("label.phd.registryDiploma.presidentGrantMale");
+        } else {
+            rectorGender = getResourceBundle().getString("label.phd.registryDiploma.rectorFemale");
+            rectorGrant = getResourceBundle().getString("label.phd.registryDiploma.presidentGrantFemale");
+        }
+        addParameter("theRector", rectorGender);
+        addParameter("president", MessageFormat.format(presidentGender, institutionUnitName));
+        String firstParagraph = getResourceBundle().getString("label.diploma.universityPrincipal");
+        addParameter("firstParagraph",
+                MessageFormat.format(firstParagraph, rectorGender, universityName, rectorGrant, principal.getValidatedName()));
     }
 
 }

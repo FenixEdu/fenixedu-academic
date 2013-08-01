@@ -7,14 +7,13 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.StandaloneEnrolmentCertificateRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.StringUtils;
 
+import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 public class StandaloneEnrolmentCertificateRequestDocument extends AdministrativeOfficeDocument {
@@ -61,8 +60,8 @@ public class StandaloneEnrolmentCertificateRequestDocument extends Administrativ
 
         Person coordinator = loggedEmployee.getCurrentWorkingPlace().getActiveUnitCoordinator();
         String adminOfficeName = getMLSTextContent(loggedEmployee.getCurrentWorkingPlace().getPartyName());
-        String institutionName = getMLSTextContent(RootDomainObject.getInstance().getInstitutionUnit().getPartyName());
-        String universityName = getMLSTextContent(UniversityUnit.getInstitutionsUniversityUnit().getPartyName());
+        String institutionName = getInstitutionName();
+        String universityName = getUniversityName(new DateTime());
 
         String stringTemplate = getResourceBundle().getString("label.academicDocument.declaration.firstParagraph");
         String coordinatorTitle = getCoordinatorGender(coordinator);
@@ -108,7 +107,7 @@ public class StandaloneEnrolmentCertificateRequestDocument extends Administrativ
 
         Person coordinator = loggedEmployee.getCurrentWorkingPlace().getActiveUnitCoordinator();
         String adminOfficeName = getMLSTextContent(loggedEmployee.getCurrentWorkingPlace().getPartyName());
-        String institutionName = getMLSTextContent(RootDomainObject.getInstance().getInstitutionUnit().getPartyName());
+        String institutionName = getInstitutionName();
         String location = loggedEmployee.getCurrentCampus().getLocation();
         String dateDD = new LocalDate().toString("dd", getLocale());
         String dateMMMM = new LocalDate().toString("MMMM", getLocale());

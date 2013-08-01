@@ -24,6 +24,13 @@
 	<parameter name="registryCode" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="UTLDescription" class="java.lang.String"/>
 	<parameter name="certification" class="java.lang.String"/>
+	<parameter name="message1" class="java.lang.String"/>
+	<parameter name="message3" class="java.lang.String"/>
+	<parameter name="message2" class="java.lang.String"/>
+	<parameter name="firstParagraph" class="java.lang.String"/>
+	<parameter name="president" class="java.lang.String"/>
+	<parameter name="theRector" class="java.lang.String"/>
+	<parameter name="documentNumber" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -38,19 +45,13 @@
 	</columnHeader>
 	<detail>
 		<band height="784" splitType="Stretch">
-			<staticText>
+			<textField>
 				<reportElement key="staticText-10" x="59" y="325" width="468" height="17"/>
-				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" lineSpacing="Single">
+				<textElement textAlignment="Center" lineSpacing="Single" markup="none">
 					<font fontName="Quadraat-Italic" size="11" isBold="false" isItalic="false" pdfFontName="QUADI___.ttf" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[faz saber que]]></text>
-			</staticText>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{message1}]]></textFieldExpression>
+			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
 				<reportElement key="textField-19" x="59" y="340" width="468" height="28"/>
 				<box>
@@ -82,21 +83,15 @@
 				<textElement textAlignment="Center" lineSpacing="Single">
 					<font fontName="Quadraat-Italic" size="11" isBold="false" isItalic="false" pdfFontName="QUADI___.ttf" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[($P{universityPrincipal}.isMale() ? "O Reitor da " : "A Reitora da ") + $P{universityName} + ($P{universityPrincipal}.isMale() ? ", Professor Doutor " : ", Professora Doutora ") + $P{universityPrincipal}.getValidatedName()]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{firstParagraph}]]></textFieldExpression>
 			</textField>
-			<staticText>
+			<textField>
 				<reportElement key="staticText-14" x="59" y="391" width="468" height="16"/>
-				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" lineSpacing="Single">
+				<textElement textAlignment="Center" lineSpacing="Single" markup="none">
 					<font fontName="Quadraat-Italic" size="11" isBold="false" isItalic="false" pdfFontName="QUADI___.ttf" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[tendo concluído em]]></text>
-			</staticText>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{message2}]]></textFieldExpression>
+			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
 				<reportElement key="textField-27" x="59" y="407" width="468" height="16"/>
 				<box>
@@ -121,7 +116,7 @@
 				<textElement textAlignment="Center" lineSpacing="Single">
 					<font fontName="Quadraat-Italic" size="11" isBold="false" isItalic="false" pdfFontName="QUADI___.ttf" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["o " + $P{conclusionStatus} + " no"]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{conclusionStatus}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
 				<reportElement key="textField-29" x="59" y="443" width="468" height="20"/>
@@ -136,19 +131,13 @@
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{institutionName}]]></textFieldExpression>
 			</textField>
-			<staticText>
+			<textField>
 				<reportElement key="staticText-15" x="59" y="463" width="468" height="15"/>
-				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" lineSpacing="Single">
+				<textElement textAlignment="Center" lineSpacing="Single" markup="none">
 					<font fontName="Quadraat-Italic" size="11" isBold="false" isItalic="false" pdfFontName="QUADI___.ttf" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[foi-lhe concedido o grau de]]></text>
-			</staticText>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{message3}]]></textFieldExpression>
+			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
 				<reportElement key="textField-30" x="59" y="477" width="468" height="45"/>
 				<box>
@@ -186,21 +175,15 @@
 				<textElement textAlignment="Center" lineSpacing="Single">
 					<font fontName="Quadraat-Regular" size="11" isBold="false" isItalic="false" pdfFontName="QUAD____.ttf" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{universityName} + ", em " + $P{day}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{day}]]></textFieldExpression>
 			</textField>
-			<staticText>
+			<textField>
 				<reportElement key="staticText-19" x="126" y="715" width="141" height="16"/>
-				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Left" verticalAlignment="Top" lineSpacing="Single">
+				<textElement textAlignment="Left" verticalAlignment="Top" lineSpacing="Single" markup="none">
 					<font fontName="Quadraat-Regular" size="8" isBold="false" isItalic="false" pdfFontName="QUAD____.ttf" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[O Presidente do Instituto Superior Técnico]]></text>
-			</staticText>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{president}]]></textFieldExpression>
+			</textField>
 			<line>
 				<reportElement key="line-1" x="109" y="711" width="156" height="1"/>
 				<graphicElement>
@@ -219,9 +202,9 @@
 				</reportElement>
 			</break>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField-34" x="380" y="715" width="53" height="16"/>
+				<reportElement key="textField-34" x="360" y="715" width="92" height="16"/>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{universityPrincipal}.isMale() ? "O Reitor" : "A Reitora"]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{theRector}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement key="staticText-14" x="59" y="521" width="468" height="16"/>
@@ -254,7 +237,7 @@
 				<textElement textAlignment="Left" verticalAlignment="Top">
 					<font size="7"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["número de registo: " + $P{registryCode}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["" + $P{documentNumber} + $P{registryCode}]]></textFieldExpression>
 			</textField>
 		</band>
 	</lastPageFooter>

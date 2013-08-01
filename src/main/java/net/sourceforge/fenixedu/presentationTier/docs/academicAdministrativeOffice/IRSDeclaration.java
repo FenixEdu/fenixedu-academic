@@ -5,13 +5,14 @@ import java.text.MessageFormat;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
-import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IRSDeclarationRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.StringUtils;
+
+import org.joda.time.DateTime;
 
 public class IRSDeclaration extends AdministrativeOfficeDocument {
 
@@ -32,8 +33,8 @@ public class IRSDeclaration extends AdministrativeOfficeDocument {
 
         addParameter("registration", registration);
         addParameter("documentTitle", getResourceBundle().getString("label.academicDocument.title.declaration"));
-        String institutionName = getMLSTextContent(RootDomainObject.getInstance().getInstitutionUnit().getPartyName());
-        String universityName = getMLSTextContent(UniversityUnit.getInstitutionsUniversityUnit().getPartyName());
+        String institutionName = getInstitutionName();
+        String universityName = getUniversityName(new DateTime());
         String socialSecurityNumber = RootDomainObject.getInstance().getInstitutionUnit().getSocialSecurityNumber().toString();
 
         String stringTemplate1 = getResourceBundle().getString("label.academicDocument.irs.declaration.firstParagraph");

@@ -4,7 +4,6 @@ import java.text.MessageFormat;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -39,7 +38,7 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
 
         setHeader();
 
-        addParameter("institution", getMLSTextContent(RootDomainObject.getInstance().getInstitutionUnit().getPartyName()));
+        addParameter("institution", getInstitutionName());
 
         setFirstParagraph(request);
         setSecondParagraph(person, request);
@@ -97,8 +96,7 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
         final UniversityUnit university = getUniversity(request.getRequestDate());
         String universityName = university.getPartyName().getPreferedContent();
 
-        final Person rectorIst =
-                getUniversity(request.getRequestDate()).getInstitutionsUniversityResponsible(FunctionType.PRINCIPAL);
+        final Person rectorIst = university.getInstitutionsUniversityResponsible(FunctionType.PRINCIPAL);
 
         String rectorGender, rectorGrant;
 
@@ -141,12 +139,11 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
     }
 
     protected void setFooter() {
+        final UniversityUnit university = getUniversity(getDocumentRequest().getRequestDate());
+        final String institutionUnitName = getInstitutionName();
+        final Person presidentIst = university.getInstitutionsUniversityResponsible(FunctionType.PRESIDENT);
 
-        final Person presidentIst =
-                getUniversity(getDocumentRequest().getRequestDate()).getInstitutionsUniversityResponsible(FunctionType.PRESIDENT);
-
-        final Person rectorIst =
-                getUniversity(getDocumentRequest().getRequestDate()).getInstitutionsUniversityResponsible(FunctionType.PRINCIPAL);
+        final Person rectorIst = university.getInstitutionsUniversityResponsible(FunctionType.PRINCIPAL);
 
         String presidentGender;
 
@@ -163,8 +160,6 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
             rectorGender = getResourceBundle().getString("label.phd.registryDiploma.rectorFemale");
         }
 
-        final String institutionUnitName = getMLSTextContent(RootDomainObject.getInstance().getInstitutionUnit().getPartyName());
-        final UniversityUnit university = getUniversity(getDocumentRequest().getRequestDate());
         String universityName = university.getPartyName().getPreferedContent();
 
         addParameter("dateParagraph", getFormatedCurrentDate(universityName));

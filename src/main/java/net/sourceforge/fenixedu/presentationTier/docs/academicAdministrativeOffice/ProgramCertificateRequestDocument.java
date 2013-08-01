@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.domain.Curriculum;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences;
@@ -75,8 +74,7 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
         String adminOfficeUnitName = getMLSTextContent(adminOfficeUnit.getPartyName()).toUpperCase();
         String universityName = getMLSTextContent(university.getPartyName()).toUpperCase();
 
-        String institutionName =
-                getMLSTextContent(RootDomainObject.getInstance().getInstitutionUnit().getPartyName()).toUpperCase();
+        String institutionName = getInstitutionName().toUpperCase();
 
         String template = getResourceBundle().getString("label.program.certificate.personalData.first");
         String firstPart =

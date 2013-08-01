@@ -5,17 +5,18 @@ import java.util.Arrays;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicServiceRequestEvent;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.phd.PhdFinalizationCertificateRequestPR;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.serviceRequests.documentRequests.certificates.PhdFinalizationCertificateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
 import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.StringUtils;
+
+import org.joda.time.DateTime;
+
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class PhdFinalizationCertificate extends AdministrativeOfficeDocument {
@@ -142,8 +143,8 @@ public class PhdFinalizationCertificate extends AdministrativeOfficeDocument {
     protected void fillFirstParagraph(Person coordinator, Unit adminOfficeUnit, String coordinatorTitle) {
 
         String adminOfficeName = getMLSTextContent(adminOfficeUnit.getPartyName());
-        String institutionName = getMLSTextContent(RootDomainObject.getInstance().getInstitutionUnit().getPartyName());
-        String universityName = getMLSTextContent(UniversityUnit.getInstitutionsUniversityUnit().getPartyName());
+        String institutionName = getInstitutionName();
+        String universityName = getUniversityName(new DateTime());
 
         String stringTemplate = getResourceBundle().getString("label.academicDocument.declaration.firstParagraph");
 
