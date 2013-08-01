@@ -7858,6 +7858,12 @@ class ExternalUser  {
 }	
 	
 	
+class UserPrivateKey {
+    ByteArray privateKey;
+    DateTime privateKeyCreation;
+    DateTime privateKeyValidity;
+}
+
 /* Students, Teacher and Courses Inquiries */	
 
 class inquiries.InquiryTemplate  {
@@ -17211,6 +17217,11 @@ relation UserLoginRequest {
 relation UserPerson {
     Person playsRole person;
     .pt.ist.bennu.core.domain.User playsRole user;
+}
+
+relation UserPrivateKeyUser {
+    UserPrivateKey playsRole privateKey;
+    .pt.ist.bennu.core.domain.User playsRole;
 }
 
 relation VehicleAllocationRequestor {

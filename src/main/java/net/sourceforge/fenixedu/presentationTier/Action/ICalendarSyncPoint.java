@@ -186,15 +186,15 @@ public class ICalendarSyncPoint extends FenixDispatchAction {
             User user = Login.readUserByUserUId(userId);
             Registration registration = (Registration) object;
 
-            if (user.getPrivateKeyValidity() != null) {
+            if (user.getPrivateKey() != null && user.getPrivateKey().getPrivateKeyValidity() != null) {
                 if (payload.equals(ICalStudentTimeTable.calculatePayload(method, registration, user))) {
-                    if (user.getPrivateKeyValidity().isBeforeNow()) {
+                    if (user.getPrivateKey().getPrivateKeyValidity().isBeforeNow()) {
                         returnError(httpServletResponse, "private.key.validity.expired");
                     } else {
                         if (user.getPerson().hasRole(RoleType.STUDENT)) {
 
                             encodeAndTransmitResponse(httpServletResponse,
-                                    getCalendar(method, user, user.getPrivateKeyValidity(), request));
+                                    getCalendar(method, user, user.getPrivateKey().getPrivateKeyValidity(), request));
 
                         } else {
                             returnError(httpServletResponse, "user.is.not.student");
