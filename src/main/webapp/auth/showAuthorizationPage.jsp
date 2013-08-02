@@ -1,7 +1,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
-<h2>Confirmar Autorização - Teste</h2>
+<h2>Confirmar AutorizaÃ§Ã£o - Teste</h2>
 
 
 <!--

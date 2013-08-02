@@ -53,11 +53,12 @@ public class OAuthAction extends FenixDispatchAction {
             return null;
         } else {
             String clientId = request.getParameter("client_id");
-            String redirectUrl = request.getParameter("redirect_url");
+            String redirectUrl = request.getParameter("redirect_uri");
 
             try {
                 ExternalApplication clientApplication = getExternalApplication(clientId);
                 if (clientApplication.matchesUrl(redirectUrl)) {
+                    request.setAttribute("app", clientApplication);
                     return mapping.findForward("showAuthorizationPage");
                 }
                 throw new OAuthNotFoundException();
@@ -69,6 +70,7 @@ public class OAuthAction extends FenixDispatchAction {
     }
 
     private ExternalApplication getExternalApplication(String clientId) throws OAuthNotFoundException {
+        //check if it is a number
         DomainObject domainObject = AbstractDomainObject.fromExternalId(clientId);
         if (domainObject == null || !(domainObject instanceof ExternalApplication)) {
             throw new OAuthNotFoundException();
@@ -87,9 +89,7 @@ public class OAuthAction extends FenixDispatchAction {
         }
 
         String clientId = request.getParameter("client_id");
-        String redirectUrl = request.getParameter("redirect_url");
-
-        // TODO check if clienteID and redirectURL are correct!
+        String redirectUrl = request.getParameter("redirect_uri");
 
         ExternalApplication clientApplication = getExternalApplication(clientId);
 
@@ -138,7 +138,7 @@ public class OAuthAction extends FenixDispatchAction {
          */
 
         try {
-            String redirectUrl = request.getParameter("redirect_url");
+            String redirectUrl = request.getParameter("redirect_uri");
 
             OAuthResponse r =
                     OAuthResponse.errorResponse(401).setErrorUri(redirectUrl).setError("Permission denied")

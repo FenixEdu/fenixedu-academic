@@ -52,7 +52,7 @@ public class JerseyAuthFilter implements Filter {
         final String url = getClientAddress(request);
         final String username = request.getHeader(USERNAME_KEY);
         final String password = request.getHeader(PASSWORD_KEY);
-        Boolean found = Boolean.FALSE;
+        Boolean found = Boolean.TRUE;
         Transaction.begin(true);
         Transaction.currentFenixTransaction().setReadOnly();
         for (final RemoteHost remoteHost : RemoteSystem.getInstance().getRemoteHostsSet()) {

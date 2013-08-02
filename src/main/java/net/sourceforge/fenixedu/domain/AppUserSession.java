@@ -21,7 +21,7 @@ public class AppUserSession extends AppUserSession_Base {
         if (StringUtils.isBlank(getCode()) || StringUtils.isBlank(code)) {
             return false;
         }
-        return getCode().equals(code) && getCodeExpirationDate().plusMinutes(1).isBeforeNow();
+        return getCode().equals(code) && getCodeExpirationDate().plusMinutes(1).isAfterNow();
     }
 
     public void resetCode() {
