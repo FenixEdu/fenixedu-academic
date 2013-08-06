@@ -442,21 +442,6 @@ public class Student extends Student_Base {
                         .getAuthorizationChoice().equals(StudentPersonalDataAuthorizationChoice.SEVERAL_ENDS));
     }
 
-    public StudentDataShareAuthorization getActivePersonalDataAuthorizationStudentsAssociation() {
-        StudentDataShareAuthorization target = null;
-        DateTime now = new DateTime();
-        for (StudentDataShareAuthorization authorization : getStudentDataShareAuthorizationSet()) {
-            if (authorization instanceof StudentDataShareStudentsAssociationAuthorization) {
-                if (authorization.getSince().isBefore(now)) {
-                    if (target == null || authorization.getSince().isAfter(target.getSince())) {
-                        target = authorization;
-                    }
-                }
-            }
-        }
-        return target;
-    }
-
     private void createCurrentYearStudentData() {
         if (getActualExecutionYearStudentData() == null) {
             new StudentDataByExecutionYear(this);

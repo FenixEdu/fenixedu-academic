@@ -22,7 +22,7 @@ public enum StudentPersonalDataAuthorizationChoice {
     SEVERAL_ENDS(false), /*
                          * several non comercial ends (biographic, recreational, cultural, etc)
                          */
-    ALL_ENDS(false), /* all ends, including comercial ones */
+    ALL_ENDS(true), /* all ends, including comercial ones */
 
     NO_END(false), /* doesn't authorize the use of the data */
 

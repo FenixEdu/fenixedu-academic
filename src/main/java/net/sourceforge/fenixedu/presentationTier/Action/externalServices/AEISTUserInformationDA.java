@@ -48,7 +48,7 @@ public class AEISTUserInformationDA extends ExternalInterfaceDispatchAction {
                 Registration registration = person.getStudent().getLastActiveRegistration();
                 if (registration != null) {
                     StudentDataShareAuthorization dataAuthorizationStudentsAssociation =
-                            registration.getStudent().getActivePersonalDataAuthorizationStudentsAssociation();
+                            registration.getStudent().getActivePersonalDataAuthorization();
                     if (dataAuthorizationStudentsAssociation != null
                             && dataAuthorizationStudentsAssociation.getAuthorizationChoice().isForStudentsAssociation()) {
                         final JSONObject jsonObject = new JSONObject();
@@ -59,8 +59,8 @@ public class AEISTUserInformationDA extends ExternalInterfaceDispatchAction {
                         jsonObject.put("address", person.getAddress());
                         jsonObject.put("locality", person.getParishOfResidence());
                         jsonObject.put("zipCode", person.getPostalCode());
-                        jsonObject.put("cellphone", person.getDefaultMobilePhone());
-                        jsonObject.put("phone", person.getDefaultPhone());
+                        jsonObject.put("cellphone", person.getDefaultMobilePhoneNumber());
+                        jsonObject.put("phone", person.getDefaultPhoneNumber());
                         jsonObject.put("nif", person.getSocialSecurityNumber());
                         jsonObject.put("citizenCard/BI", person.getDocumentIdNumber());
                         payload.put("status", SUCCESS_CODE);
