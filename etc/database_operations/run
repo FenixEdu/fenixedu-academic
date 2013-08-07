@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Remove the restriction of the 255 characters limit" alterTableRegistrationState.sql

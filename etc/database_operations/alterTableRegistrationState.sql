@@ -1,0 +1,1 @@
+alter table REGISTRATION_STATE modify REMARKS text;
