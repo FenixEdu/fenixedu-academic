@@ -1,11 +1,25 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 
 import org.joda.time.DateTime;
 
 public class TutorshipIntention extends TutorshipIntention_Base {
+
+    static final public Comparator<TutorshipIntention> COMPARATOR_FOR_ATTRIBUTING_TUTOR_STUDENTS =
+            new Comparator<TutorshipIntention>() {
+
+                @Override
+                public int compare(TutorshipIntention ti1, TutorshipIntention ti2) {
+                    return ti1.getTeacher().getPerson().getName().compareTo(ti2.getTeacher().getPerson().getName());
+                }
+            };
+
     public TutorshipIntention(DegreeCurricularPlan dcp, Teacher teacher, AcademicInterval interval) {
         super();
         setDegreeCurricularPlan(dcp);
@@ -35,6 +49,17 @@ public class TutorshipIntention extends TutorshipIntention_Base {
             }
         }
         return true;
+    }
+
+    public List<Tutorship> getTutorships() {
+        List<Tutorship> result = new ArrayList<Tutorship>();
+        for (Tutorship tutorship : getTeacher().getTutorshipsSet()) {
+            if (tutorship.getStudentCurricularPlan().getDegreeCurricularPlan().equals(getDegreeCurricularPlan())
+                    && getAcademicInterval().contains(tutorship.getStartDate().toDateTime(new DateTime(0)))) {
+                result.add(tutorship);
+            }
+        }
+        return result;
     }
 
     public void delete() {

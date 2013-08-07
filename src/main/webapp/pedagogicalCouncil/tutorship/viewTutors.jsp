@@ -35,12 +35,17 @@
 
 <logic:notEmpty name="tutorsBean" property="tutors">		
 	<fr:view name="tutorsBean" property="tutors">
-		<fr:schema type="net.sourceforge.fenixedu.domain.Person" bundle="APPLICATION_RESOURCES">
-			<fr:slot name="istUsername" key="label.istUsername"/>
-			<fr:slot name="name" key="label.name"/>
+		<fr:schema type="net.sourceforge.fenixedu.domain.TutorshipIntention" bundle="APPLICATION_RESOURCES">
+			<fr:slot name="teacher.person.istUsername" key="label.istUsername"/>
+			<fr:slot name="teacher.person.name" key="label.name"/>
 		</fr:schema>
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle1" />
+			<fr:property name="link(view)" value="/viewTutors.do?method=viewStudentsOfTutorship"/>
+			<fr:property name="param(view)" value="externalId/tutorshipIntentionID"/>
+			<fr:property name="key(view)" value="label.tutorship.students.view"/>
+			<fr:property name="bundle(view)" value="PEDAGOGICAL_COUNCIL"/>
+			<fr:property name="visibleIfNot(view)" value="deletable"/>
 		</fr:layout>
 	</fr:view>
 </logic:notEmpty>	

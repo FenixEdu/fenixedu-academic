@@ -11,9 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.TutorshipIntention;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -32,10 +30,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/viewTutors", module = "pedagogicalCouncil")
-@Forwards({ @Forward(name = "viewTutors", path = "/pedagogicalCouncil/tutorship/viewTutors.jsp") })
+@Forwards({ @Forward(name = "viewTutors", path = "/pedagogicalCouncil/tutorship/viewTutors.jsp"),
+        @Forward(name = "viewStudentOfTutor", path = "/pedagogicalCouncil/tutorship/viewStudentsOfTutor.jsp") })
 public class ViewTutorsDA extends FenixDispatchAction {
-
-    private static final Integer SEMESTER = 1;
 
     public ActionForward listTutors(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
@@ -45,6 +42,34 @@ public class ViewTutorsDA extends FenixDispatchAction {
         }
         request.setAttribute("tutorsBean", bean);
         RenderUtils.invalidateViewState();
+        return mapping.findForward("viewTutors");
+    }
+
+    public ActionForward viewStudentsOfTutorship(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        String tutorshipIntentionID = (String) getFromRequest(request, "tutorshipIntentionID");
+
+        TutorshipIntention tutorshipIntention = TutorshipIntention.fromExternalId(tutorshipIntentionID);
+        request.setAttribute("tutorshipIntention", tutorshipIntention);
+
+        return mapping.findForward("viewStudentOfTutor");
+    }
+
+    public ActionForward backToTutors(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        String tutorshipIntentionID = (String) getFromRequest(request, "tutorshipIntentionID");
+
+        TutorshipIntention tutorshipIntention = TutorshipIntention.fromExternalId(tutorshipIntentionID);
+        ExecutionDegree executionDegree =
+                tutorshipIntention.getDegreeCurricularPlan().getExecutionDegreeByAcademicInterval(
+                        tutorshipIntention.getAcademicInterval());
+        ExecutionSemester firstExecutionPeriod = executionDegree.getExecutionYear().getFirstExecutionPeriod();
+
+        ViewTutorsBean bean = new ViewTutorsBean();
+        bean.setExecutionDegree(executionDegree);
+        bean.setExecutionSemester(firstExecutionPeriod);
+
+        request.setAttribute("tutorsBean", bean);
         return mapping.findForward("viewTutors");
     }
 
@@ -80,7 +105,7 @@ public class ViewTutorsDA extends FenixDispatchAction {
         public Object provide(Object source, Object currentValue) {
             List<ExecutionSemester> executionSemesters = new ArrayList<ExecutionSemester>();
             for (ExecutionSemester executionSemester : RootDomainObject.getInstance().getExecutionPeriods()) {
-                if (executionSemester.isFor(SEMESTER)) {
+                if (executionSemester.isFirstOfYear()) {
                     executionSemesters.add(executionSemester);
                 }
             }
@@ -99,17 +124,11 @@ public class ViewTutorsDA extends FenixDispatchAction {
         private ExecutionSemester executionSemester;
         private ExecutionDegree executionDegree;
 
-        public List<Person> getTutors() {
-            List<Person> tutors = new ArrayList<Person>();
+        public List<TutorshipIntention> getTutors() {
             if (getExecutionDegree() != null) {
-                for (TutorshipIntention tutorshipIntention : getExecutionDegree().getDegreeCurricularPlan()
-                        .getTutorshipIntentionSet()) {
-                    if (tutorshipIntention.getAcademicInterval().equals(getExecutionDegree().getAcademicInterval())) {
-                        tutors.add(tutorshipIntention.getTeacher().getPerson());
-                    }
-                }
+                return getExecutionDegree().getTutorshipIntentions();
             }
-            return tutors;
+            return null;
         }
 
         public ExecutionSemester getExecutionSemester() {
