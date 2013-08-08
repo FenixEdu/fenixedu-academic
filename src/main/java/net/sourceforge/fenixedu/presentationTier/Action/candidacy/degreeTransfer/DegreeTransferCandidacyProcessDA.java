@@ -147,7 +147,7 @@ public class DegreeTransferCandidacyProcessDA extends CandidacyProcessDA {
     }
 
     public ActionForward executeSendToCoordinator(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         try {
             executeActivity(getProcess(request), "SendToCoordinator");
         } catch (DomainException e) {
@@ -163,7 +163,7 @@ public class DegreeTransferCandidacyProcessDA extends CandidacyProcessDA {
     }
 
     public ActionForward executeSendToScientificCouncil(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         try {
             executeActivity(getProcess(request), "SendToScientificCouncil");
         } catch (final DomainException e) {
@@ -421,8 +421,8 @@ public class DegreeTransferCandidacyProcessDA extends CandidacyProcessDA {
         row.setCell(degreeTransferIndividualCandidacyProcess.getPersonalDetails().getDocumentIdNumber());
         row.setCell(degreeTransferIndividualCandidacyProcess.getPersonalDetails().getCountry().getCountryNationality()
                 .getContent());
-        row.setCell(degreeTransferIndividualCandidacyProcess.getPrecedentDegreeInformation().getInstitution().getName());
-        row.setCell(degreeTransferIndividualCandidacyProcess.getPrecedentDegreeInformation().getDegreeDesignation());
+        row.setCell(degreeTransferIndividualCandidacyProcess.getPrecedentDegreeInformation().getPrecedentInstitution().getName());
+        row.setCell(degreeTransferIndividualCandidacyProcess.getPrecedentDegreeInformation().getPrecedentDegreeDesignation());
         row.setCell(degreeTransferIndividualCandidacyProcess.getCandidacy().getSelectedDegree().getName());
         row.setCell(enumerationBundle.getString(individualCandidacyProcess.getCandidacyState().getQualifiedName()));
         row.setCell(candidateBundle.getString(degreeTransferIndividualCandidacyProcess.getProcessChecked() != null
