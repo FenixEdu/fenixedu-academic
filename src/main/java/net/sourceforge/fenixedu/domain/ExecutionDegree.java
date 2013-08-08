@@ -1229,4 +1229,15 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
         return this.getPublishedExamMapsSet().contains(executionSemester);
     }
 
+    public List<TutorshipIntention> getTutorshipIntentions() {
+        List<TutorshipIntention> result = new ArrayList<TutorshipIntention>();
+        for (TutorshipIntention tutorshipIntention : getDegreeCurricularPlan().getTutorshipIntentionSet()) {
+            if (tutorshipIntention.getAcademicInterval().equals(getAcademicInterval())) {
+                result.add(tutorshipIntention);
+            }
+        }
+        Collections.sort(result, TutorshipIntention.COMPARATOR_FOR_ATTRIBUTING_TUTOR_STUDENTS);
+        return result;
+    }
+
 }
