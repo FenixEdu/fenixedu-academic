@@ -187,7 +187,14 @@
 		</tr>
 		<tr>
 			<td><strong><bean:message key="label.sibs.amount" bundle="CANDIDATE_RESOURCES"/></strong></td>
-			<td><fr:view name="individualCandidacyProcess" property="candidacy.event.amountToPay"/></td>
+			<td>
+				<logic:notEqual name="individualCandidacyProcess" property="candidacy.state.name" value="CANCELLED">
+					<fr:view name="individualCandidacyProcess" property="candidacy.event.amountToPay"/>
+				</logic:notEqual>
+				<logic:equal name="individualCandidacyProcess" property="candidacy.state.name" value="CANCELLED">
+					--
+				</logic:equal>
+			</td>
 		</tr>
 	</table>
 	</logic:notEmpty>
