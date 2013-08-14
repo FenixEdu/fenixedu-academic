@@ -60,6 +60,28 @@
 			<fr:destination name="invalid" path='<%= mappingPath + ".do?method=executeCreateCandidacyPersonalInformationInvalid" %>' />
 		</fr:edit>
 		
+		<p>&nbsp;</p>
+		<table>
+			<tr>
+				<td colspan="2">
+					<bean:message key="message.ist.former.student.employee.username.required" bundle="CANDIDATE_RESOURCES"/>
+				</td>
+			</tr>
+			<tr>
+				<td class="width175px">
+					<bean:message key="label.studentOrEmployeeNumber" bundle="CANDIDATE_RESOURCES"/>:
+				</td>
+				<td>
+					<fr:edit id="individualCandidacyProcessBean.istUsername"
+						name="individualCandidacyProcessBean" 
+						schema="PublicCandidacyProcess.candidacyDataBean.personNumber">
+						<fr:layout name="flow">
+							<fr:property name="labelExcluded" value="true"/>
+						</fr:layout>
+					</fr:edit>
+				</td>
+			</tr>			
+		</table>
 
 		<p class="mtop15">
 			<html:submit><bean:message key="button.continue" bundle="APPLICATION_RESOURCES" /> <bean:message key="label.application" bundle="CANDIDATE_RESOURCES"/></html:submit>
