@@ -9,6 +9,16 @@
 
 	<h2><bean:message key="title.dges.importation.process" bundle="MANAGER_RESOURCES" /></h2>
 
+	<logic:messagesPresent message="true">
+		<p>
+			<span class="error0"><!-- Error messages go here -->
+				<html:messages id="message" message="true" bundle="MANAGER_RESOURCES">
+					<bean:write name="message"/>
+				</html:messages>
+			</span>
+		<p>
+	</logic:messagesPresent>
+
 	<p class="mtop15 mbottom05"><strong><bean:message key="title.dges.importation.process.jobs.create" bundle="MANAGER_RESOURCES" /></strong></p>
 
 	<fr:form action="/dgesStudentImportationProcess.do?method=createNewImportationProcess" encoding="multipart/form-data">
