@@ -217,7 +217,7 @@ public class DegreeChangeIndividualCandidacyProcessDA extends RefactoredIndividu
 
             return mapping.findForward("inform-submited-candidacy");
         } catch (DomainException e) {
-            addActionMessage(request, e.getMessage(), e.getArgs());
+            addActionMessage("error", request, e.getMessage(), e.getArgs());
             e.printStackTrace();
             getIndividualCandidacyProcessBean().getPersonBean().setPerson(null);
             request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
@@ -242,10 +242,6 @@ public class DegreeChangeIndividualCandidacyProcessDA extends RefactoredIndividu
             executeActivity(bean.getIndividualCandidacyProcess(), "EditPublicCandidacyPersonalInformation",
                     getIndividualCandidacyProcessBean());
         } catch (final DomainException e) {
-            if (e.getMessage().equals("error.IndividualCandidacyEvent.invalid.payment.code")) {
-                throw e;
-            }
-
             addActionMessage(request, e.getMessage(), e.getArgs());
             request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
             return mapping.findForward("edit-candidacy");

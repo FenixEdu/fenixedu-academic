@@ -208,10 +208,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcessRefactoredDA exte
 
             return mapping.findForward("inform-submited-candidacy");
         } catch (DomainException e) {
-            if (e.getMessage().equals("error.IndividualCandidacyEvent.invalid.payment.code")) {
-                throw e;
-            }
-            addActionMessage(request, e.getMessage(), e.getArgs());
+            addActionMessage("error", request, e.getMessage(), e.getArgs());
             e.printStackTrace();
             request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
             return mapping.findForward("candidacy-continue-creation");
