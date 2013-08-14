@@ -167,6 +167,9 @@
         <li>
             <html:link page="/tutorshipSummary.do?method=searchTeacher"><bean:message key="link.teacher.tutorship.summary" bundle="APPLICATION_RESOURCES"/></html:link>
         </li>
+		<li>
+            <html:link page="/viewTutors.do?method=listTutors"><bean:message key="title.tutorship.view" bundle="PEDAGOGICAL_COUNCIL"/></html:link>
+        </li>
 	</ul>
 </logic:present>
 
