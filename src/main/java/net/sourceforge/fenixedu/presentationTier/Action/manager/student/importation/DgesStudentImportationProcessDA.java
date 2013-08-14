@@ -104,6 +104,7 @@ public class DgesStudentImportationProcessDA extends FenixDispatchAction {
 
     public ActionForward createNewImportationProcessInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
+        addActionMessage(request, "error", "error.dges.importation.file");
         return prepareCreateNewImportationProcess(mapping, form, request, response);
     }
 
