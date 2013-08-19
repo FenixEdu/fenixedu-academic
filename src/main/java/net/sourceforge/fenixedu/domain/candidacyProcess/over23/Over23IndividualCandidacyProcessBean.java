@@ -57,6 +57,7 @@ public class Over23IndividualCandidacyProcessBean extends IndividualCandidacyPro
         setLanguagesWrite(process.getLanguagesWrite());
         setLanguagesSpeak(process.getLanguagesSpeak());
         setProcessChecked(process.getProcessChecked());
+        setPaymentChecked(process.getPaymentChecked());
     }
 
     @Override

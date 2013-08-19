@@ -42,7 +42,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
         @Forward(name = "prepare-edit-candidacy-documents", path = "/candidacy/editCandidacyDocuments.jsp"),
         @Forward(name = "select-person-for-bind-with-candidacy", path = "/candidacy/selectPersonForBind.jsp"),
         @Forward(name = "edit-personal-information-for-bind", path = "/candidacy/editPersonalInformationForCandidacyBind.jsp"),
-        @Forward(name = "change-process-checked-state", path = "/candidacy/changeProcessCheckedState.jsp")
+        @Forward(name = "change-process-checked-state", path = "/candidacy/changeProcessCheckedState.jsp"),
+        @Forward(name = "change-payment-checked-state", path = "/candidacy/changePaymentCheckedState.jsp")
 
 })
 public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProcessDA {
@@ -155,7 +156,7 @@ public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProce
     }
 
     public ActionForward executeEditCandidacyPersonalInformation(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException {
         try {
             executeActivity(getProcess(request), "EditCandidacyPersonalInformation", getIndividualCandidacyProcessBean());
         } catch (DomainException e) {
@@ -189,8 +190,16 @@ public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProce
         return removeDegreeFromCandidacy(mapping, actionForm, request, response, "edit-candidacy-information");
     }
 
+    public ActionForward prepareExecuteChangePaymentCheckedState(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) {
+        request.setAttribute(getIndividualCandidacyProcessBeanName(), new Over23IndividualCandidacyProcessBean(
+                getProcess(request)));
+
+        return mapping.findForward("change-payment-checked-state");
+    }
+
     public ActionForward executeEditCandidacyInformation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         try {
             boolean isValid =
                     validateOver23IndividualCandidacy(request, getIndividualCandidacyProcessBean()) && hasInvalidViewState();
@@ -221,7 +230,7 @@ public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProce
     }
 
     public ActionForward executeIntroduceCandidacyResult(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException {
         try {
             executeActivity(getProcess(request), "IntroduceCandidacyResult", getCandidacyResultBean());
         } catch (DomainException e) {
@@ -243,7 +252,7 @@ public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProce
     }
 
     public ActionForward executeCreateRegistration(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         try {
             executeActivity(getProcess(request), "CreateRegistration");
         } catch (final DomainException e) {
@@ -307,7 +316,7 @@ public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProce
 
     @Override
     public ActionForward createNewProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         Over23IndividualCandidacyProcessBean bean = getIndividualCandidacyProcessBean();
 
         boolean isValid = validateOver23IndividualCandidacy(request, bean) && hasInvalidViewState();
