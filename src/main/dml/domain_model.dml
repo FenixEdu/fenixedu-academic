@@ -20804,8 +20804,7 @@ relation RootDomainObjectAuthScope {
   		multiplicity *;
   	}
  }
- 
-    
+  
 relation AppAuthor {
 	User playsRole author {
 		multiplicity 1;

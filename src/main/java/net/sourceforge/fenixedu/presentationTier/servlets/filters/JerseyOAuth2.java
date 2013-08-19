@@ -10,68 +10,140 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
-import pt.ist.fenixframework.plugins.remote.domain.RemoteHost;
-import pt.ist.fenixframework.plugins.remote.domain.RemoteSystem;
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.Authenticate;
+import net.sourceforge.fenixedu.domain.AppUserSession;
+
+import org.joda.time.DateTime;
+
+import org.apache.commons.codec.binary.Base64;
+
+
+import pt.ist.fenixWebFramework.security.User;
+import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixframework.DomainObject;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.ist.fenixframework.pstm.Transaction;
 
 public class JerseyOAuth2 implements Filter {
 
-    final static String systemUsername = PropertiesManager.getProperty("jersey.username");
-    final static String systemPassword = PropertiesManager.getProperty("jersey.password");
-    final static String USERNAME_KEY = "__username__";
-    final static String PASSWORD_KEY = "__password__";
+	final static String ACCESS_TOKEN = "access_token";
+	public static final String USER_SESSION_ATTRIBUTE = "username";
 
-    @Override
-    public void destroy() {
-    }
 
-    @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
-            throws IOException, ServletException {
-        final HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
-        final HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
-        doFilter(httpServletRequest, httpServletResponse, filterChain);
-    }
+	@Override
+	public void destroy() {
+	}
 
-    public void doFilter(final HttpServletRequest request, final HttpServletResponse response, final FilterChain filterChain)
-            throws IOException, ServletException {
-        if (checkAccessControl(request)) {
-            filterChain.doFilter(request, response);
-        } else {
-            throw new ServletException("Not Authorized");
-        }
-    }
+	@Override
+	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
+			throws IOException, ServletException {
+		final HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
+		final HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
+		doFilter(httpServletRequest, httpServletResponse, filterChain);
+	}
 
-    @Override
-    public void init(FilterConfig arg0) throws ServletException {
-    }
+	public void doFilter(final HttpServletRequest request, final HttpServletResponse response, final FilterChain filterChain)
+			throws IOException, ServletException {
+		if (checkAccessControl(request)) {
+			//Transaction.begin(true);
+			//Transaction.currentFenixTransaction().setReadOnly();
+			System.out.println("oiii");
+			System.out.println("UserInicio: "+ UserView.getUser().getUsername());
+			//Transaction.forceFinish();
+			
+			
+			filterChain.doFilter(request, response);
+			
+	
+			//Transaction.begin(true);
+			//Transaction.currentFenixTransaction().setReadOnly();
+			System.out.println("oiii");
+			System.out.println("UserFinal: "+ UserView.getUser().getUsername());
 
-    private Boolean checkAccessControl(final HttpServletRequest request) {
-        final String url = getClientAddress(request);
-        final String username = request.getHeader(USERNAME_KEY);
-        final String password = request.getHeader(PASSWORD_KEY);
-        Boolean found = Boolean.TRUE;
-        Transaction.begin(true);
-        Transaction.currentFenixTransaction().setReadOnly();
-        for (final RemoteHost remoteHost : RemoteSystem.getInstance().getRemoteHostsSet()) {
-            if (remoteHost.matches(url, username, password)) {
-                System.out.println("[Jersey Server Invoke by client " + url);
-                found = Boolean.TRUE;
-            }
-        }
-        System.out.println("[Jersey Server] Invoke by client " + url);
-        Transaction.forceFinish();
-        return found;
-    }
+			
+			//Transaction.forceFinish();
+		} else {
+			throw new ServletException("Not Authorized");
+		}
+	}
 
-    private String getClientAddress(final HttpServletRequest request) {
-        final String xForwardForHeader = request.getHeader("X-Forwarded-For");
-        if (xForwardForHeader != null && !xForwardForHeader.isEmpty()) {
-            final int urlSeperator = xForwardForHeader.indexOf(',');
-            return urlSeperator > 0 ? xForwardForHeader.substring(0, urlSeperator) : xForwardForHeader;
-        }
-        return request.getRemoteHost();
-    }
+	@Override
+	public void init(FilterConfig arg0) throws ServletException {
+	}
+
+	private Boolean checkAccessControl(final HttpServletRequest request) {
+
+		final String accessToken = request.getHeader(ACCESS_TOKEN);
+
+		String[] extractedAccessToken = extractAccessToken(request, accessToken);
+
+		if (extractedAccessToken == null) {
+			return Boolean.FALSE;
+		}
+
+		Boolean found = Boolean.TRUE;		
+		return found;
+	}
+
+	private String[] extractAccessToken(final HttpServletRequest request, final String accessToken) {
+
+
+		String accessTokenDecoded = new String(Base64.decodeBase64(accessToken));
+		String[] accessTokenBuilder = accessTokenDecoded.split(":");
+		System.out.println("AccessToken: "+accessTokenDecoded);
+		System.out.println("[0]: "+accessTokenBuilder[0]);
+		System.out.println("[1]: "+accessTokenBuilder[1]);
+
+		//Transaction.begin(true);
+		//Transaction.currentFenixTransaction().setReadOnly();
+
+		if (accessTokenBuilder.length != 2) {
+			System.out.println("problem length");
+			return null;
+		}
+
+		AppUserSession appUserSession = getAppUserSession(accessTokenBuilder[0]);
+		if (appUserSession == null) {
+			System.out.println("no AppUserSession");
+			return null;
+		}
+
+		System.out.println("Username: "+appUserSession.getUsername());
+		System.out.println("Author: "+appUserSession.getApplication().getAuthor().getPerson().getName());
+		System.out.println("AccessToken: "+appUserSession.getAccessToken());
+		System.out.println("AccessToken: "+appUserSession.getApplication().getName());
+
+		if (!appUserSession.matchesAccessToken(accessToken)) {				
+			System.out.println("problem in accesstoken");
+			//return null;
+		}
+
+		net.sourceforge.fenixedu.domain.User foundUser = net.sourceforge.fenixedu.domain.User.readUserByUserUId("ist158444");
+	
+		Authenticate as = new Authenticate();
+		
+		UserView.setUser(as.mock(foundUser.getPerson(),request.toString()));
+
+		
+		
+		System.out.println("intermedia");
+		System.out.println("User: "+ UserView.getUser().getUsername());
+
+		
+		//Transaction.forceFinish();
+		return accessTokenBuilder;
+	}
+
+	private AppUserSession getAppUserSession(String appUserSession) {
+		//check if it is a number
+		DomainObject domainObject = AbstractDomainObject.fromExternalId(appUserSession);
+		if (domainObject == null || !(domainObject instanceof AppUserSession)) {
+			return null;
+		}
+		return (AppUserSession) domainObject;
+	}
+
 }

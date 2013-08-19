@@ -23,7 +23,21 @@ public class AppUserSession extends AppUserSession_Base {
         }
         return getCode().equals(code) && getCodeExpirationDate().plusMinutes(1).isAfterNow();
     }
+    
+    public boolean matchesAccessToken(String accessToken) {
+        if (StringUtils.isBlank(getAccessToken()) || StringUtils.isBlank(accessToken)) {
+            return false;
+        }        
+        return getAccessToken().equals(accessToken) && getExpirationDate().plusMinutes(60).isAfterNow();
+    }
 
+    public boolean matchesRefreshToken(String refreshToken) {
+        if (StringUtils.isBlank(getRefreshToken()) || StringUtils.isBlank(refreshToken)) {
+            return false;
+        }        
+        return getRefreshToken().equals(refreshToken);
+    }
+    
     public void resetCode() {
         setCode(null);
         setCodeExpirationDate(null);

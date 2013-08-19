@@ -29,3 +29,14 @@ alter table `APP_USER_SESSION` add `REFRESH_TOKEN` text, add `CODE_EXPIRATION_DA
 
 -- Inserted at 2013-07-31T16:29:55.606+01:00
 
+
+
+
+-- Inserted at 2013-08-12T23:30:22.825+01:00
+
+alter table `APP_USER_SESSION` add `OID_ROOT_DOMAIN_OBJECT` bigint unsigned, add index (OID_ROOT_DOMAIN_OBJECT);
+
+
+
+-- Inserted at 2013-08-19T16:24:50.891+01:00
+
