@@ -5,8 +5,11 @@ import java.util.Random;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
+import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.period.GenericApplicationPeriod;
+import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.util.BundleUtil;
 
@@ -14,7 +17,8 @@ public class GenericApplication extends GenericApplication_Base {
 
     public GenericApplication(final GenericApplicationPeriod period, final String email) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        final RootDomainObject rdo = RootDomainObject.getInstance();
+        setRootDomainObject(rdo);
         setGenericApplicationPeriod(period);
         setApplicationNumber(period.generateApplicationNumber());
         if (email == null || email.isEmpty()) {
@@ -22,6 +26,11 @@ public class GenericApplication extends GenericApplication_Base {
         }
         setEmail(email);
         sendEmailForApplication();
+        setIdDocumentType(IDDocumentType.IDENTITY_CARD);
+        final Unit institutionUnit = rdo.getInstitutionUnit();
+        if (institutionUnit != null) {
+            setNationality(institutionUnit.getCountry());
+        }
     }
 
     public void sendEmailForApplication() {
