@@ -54,8 +54,8 @@
 				<fr:property name="rows" value="10"/>
 			</fr:slot>
 			<%
-				if (AccessControl.getUserView().hasRoleType(RoleType.MANAGER)
-						|| AccessControl.getUserView().hasRoleType(RoleType.HTML_CAPABLE_SENDER)) {
+				if (AccessControl.getPerson().hasRole(RoleType.MANAGER)
+						|| AccessControl.getPerson().hasRole(RoleType.HTML_CAPABLE_SENDER)) {
 			%>
 					<fr:slot name="htmlMessage" bundle="MESSAGING_RESOURCES" key="label.email.message.html.content" layout="longText">
 						<fr:property name="columns" value="80"/>
